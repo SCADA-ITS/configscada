@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.revenga.rits.front</groupId>
-	<artifactId>webapp</artifactId>
+	<artifactId>openits</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>webapp</name>
-	<description>RITS Webapp</description>
+	<name>openits</name>
+	<description>Open-ITS</description>
 
 	<properties>
 		<java.version>11</java.version>

@@ -1,4 +1,4 @@
-package com.revenga.rits.front.webapp;
+package com.revenga.rits.front.openits;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

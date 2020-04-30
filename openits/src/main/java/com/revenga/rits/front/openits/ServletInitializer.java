@@ -1,4 +1,4 @@
-package com.revenga.rits.front.webapp;
+package com.revenga.rits.front.openits;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
