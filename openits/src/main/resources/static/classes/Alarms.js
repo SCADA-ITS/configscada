@@ -126,38 +126,29 @@ export default class Alarms {
         
         let control = false;
         //this.alarmas.forEach(alarm => {
-        $$('alarmsTable').data.each(function(alarm){
-           
-            if (alarm.id === element.id) {  //ALARMA PREVIAMENTE CREADA
-                if (element.deactivation === undefined) //ES UNA MODIFICACIÓN 
-                {   
-                    
-                    //this.alarmas.push(element);
-                    let data = {
-                        id: element.id, 
-                        activation: element.activation, 
-                        recognized: element.recognized === undefined ? null : element.recognized, 
-                        deactivation: null ,
-                        alarmConfig: element.alarmConfig , 
-                        alarmLevel:element.alarmConfig , 
-                        sourceElement: element.sourceElement, 
-                        targetElement: element.targetElement 
-                    }
-                    $$('alarmsTable').updateItem(element.id, data);
-            //$$('alarmsTable').editStop();
-                    //let id = $$('alarmsTable').add(data,0);  
-                    control = true;
-                } else { //DESACTIVAMOS
-                    if (element.deactivationComments != "" && element.deactivationComments != undefined) {
-                        $$('alarmsTable').remove(element.id);
-                    }
-                    control = true;
-                }
+        $$('alarmsTable').data.each(function (alarm) {
 
-//  Object { id: "Alarm:1587118186077", alarmConfig: {…}, activation: 1587123750137, deactivation: 1587123760142, deactivationComments: "Desactivate for rule at 2020-04-17T11:42:40.142874Z", sourceElement: {…}, targetElement: {…} }
+          if (alarm.id === element.id) {  //ALARMA PREVIAMENTE CREADA
 
-//Object { id: "Alarm:1587118186078", alarmConfig: {…}, activation: 1587123770141, sourceElement: {…}, targetElement: {…} }
-            } 
+            if (element.deactivation != null && element.recognized != null) { // BORRADA
+
+              $$('alarmsTable').remove(element.id);
+
+            } else { // MODIFICACION
+
+              let data = {
+                id: element.id,
+                activation: element.activation == null ? alarm.activation : element.activation,
+                recognized: element.recognized == null ? alarm.recognized : element.recognized,
+                deactivation: element.deactivation == null ? alarm.deactivation : element.deactivation
+              }   
+              $$('alarmsTable').updateItem(element.id, data);
+            }
+            control = true;
+            //  Object { id: "Alarm:1587118186077", alarmConfig: {…}, activation: 1587123750137, deactivation: 1587123760142, deactivationComments: "Desactivate for rule at 2020-04-17T11:42:40.142874Z", sourceElement: {…}, targetElement: {…} }
+
+            //Object { id: "Alarm:1587118186078", alarmConfig: {…}, activation: 1587123770141, sourceElement: {…}, targetElement: {…} }
+          }
 
         });
 
@@ -179,8 +170,7 @@ export default class Alarms {
                       sourceElement{id alias}
                       targetElement{id alias} 
                   }
-                 }
-                          `
+                 }`
               );
       
               // loads the data
@@ -189,19 +179,20 @@ export default class Alarms {
                   alarmId: element.id
                 })
                 .then(data1 => {
-                    let data = {id: data1.id, 
-                        activation: data1.activation, 
-                        recognized: data1.recognized, 
-                        deactivation: data1.deactivation,
-                        alarmConfig: data1.alarmConfig , 
-                        alarmLevel:data1.alarmConfig , 
-                        sourceElement: data1.sourceElement, 
-                        targetElement: data1.targetElement }
-            //$$('alarmsTable').editStop();
-           
-                    let id = $$('alarmsTable').add(data,0); 
-                    
-                            
+                	
+                	if (data1 != null){
+                		
+                        let data = {id: data1.id, 
+                                activation: data1.activation, 
+                                recognized: data1.recognized, 
+                                deactivation: data1.deactivation,
+                                alarmConfig: data1.alarmConfig , 
+                                alarmLevel:data1.alarmConfig , 
+                                sourceElement: data1.sourceElement, 
+                                targetElement: data1.targetElement }
+                   
+                        $$('alarmsTable').add(data,0); 
+                	}            
                 });
         }
 
@@ -280,6 +271,7 @@ export default class Alarms {
 		}
 		return this.metadata;
     }
+
 
     getDate(timestamp)
     {

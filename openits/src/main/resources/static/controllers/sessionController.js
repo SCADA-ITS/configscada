@@ -1,14 +1,15 @@
 const language = webix.storage.session.get("app_user_language");
-    if (language) {
-        $.i18n().locale = language;
-    } else {
-        $.i18n().locale = "es";
-    }
+
+if (language) {
+    $.i18n().locale = language;
+} else {
+    $.i18n().locale = "es";
+}
 
 $.i18n().load( {
-    en: 'i18n/en.json',
-    es: 'i18n/es.json', 
-    sk: 'i18n/sk.json'
+  "en": i18_en,
+  "es": i18_es, 
+  "sk": i18_sk
 });
 
 //creates the stomp connection
@@ -52,6 +53,7 @@ function processStompMessageWithFallback(message) {
 		let value = JSON.parse(JSON.parse(message.body)).basicElementsVO[0].value;
 		$$("bell").data.badge=value;
 		$$("bell").refresh();
+		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas activas: "+value+"</div>");
 	} catch (err) {
 		console.log("Error: " + err.message);
 	}

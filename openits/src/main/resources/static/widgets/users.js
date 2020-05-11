@@ -23,14 +23,14 @@ let genericTablei18n = {
 		"autoConfig":true,
 		"select":true,
 		"columns":[
-			{ "id":"id", "header":"Id", hidden: true, width:200},
-			{ "id":"name", "header":"Name", width:300, sort:"text" },
-			{ "id":"fullName", "header":"FullName", width:300, sort:"text" },
-			{ "id":"email", "header":"Email", width:300, sort:"text" },
-			{ "id":"language", "header":"Language", sort:"text" },
-			{ "id":"timezone", "header":"Timezone", width:300, sort:"text" },
-			{ "id":"isAdmin", "header":"Admin", sort:"text" },
-			{ "id":"role", "header":"Role", "template":function(obj){ return $.i18n(obj.role.alias); }, width:200, sort:"text" }
+			{ "id":"id", "header":$.i18n("user.d.id"), hidden: true, width:200},
+			{ "id":"name", "header":$.i18n("user.d.name"), width:300, sort:"text" },
+			{ "id":"fullName", "header":$.i18n("user.d.fullname"), width:300, sort:"text" },
+			{ "id":"email", "header":$.i18n("user.d.email"), width:300, sort:"text" },
+			{ "id":"language", "header":$.i18n("user.d.language"), sort:"text" },
+			{ "id":"timezone", "header":$.i18n("user.d.timezone"), width:300, sort:"text" },
+			{ "id":"isAdmin", "header":$.i18n("user.d.admin"), sort:"text" },
+			{ "id":"role", "header":$.i18n("user.d.role"), "template":function(obj){ return $.i18n(obj.role.alias); }, width:200, sort:"text" }
 		]
 	};
 

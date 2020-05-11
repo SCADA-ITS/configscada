@@ -9,14 +9,9 @@ var graphSynoptic = webix.proxy(
     getElement(elementId: "Element:7:1")
     {
       id
-      alias
-      description
       state
-      icon
       childs{
         id    
-        positionX
-        positionY
         state
         elementType {
           id
@@ -25,7 +20,6 @@ var graphSynoptic = webix.proxy(
         elementValues{
           id
           value
-          alerted
           elementTypeParam {
             description
           }

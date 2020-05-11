@@ -1,4 +1,4 @@
-{
+var i18_en = {
     "defaultheader.dashboard": "Dashboard",
     "defaultheader.users": "Users",
     "defaultheader.equipment" : "Equipment ",
@@ -446,7 +446,6 @@
     "generic.aside.button.statics": "Statics Values",
     "generic.aside.button.value": "Value",
 
-
     "Element:1:1.alias": "WS_1",
     "Element:1:1.description": "WS_1",
     "Element:1:2.alias": "WS_2",
@@ -756,6 +755,27 @@
     "ElementTypeParam:33:3:103.alias": "length_03",
     "ElementTypeParam:33:3:103.description": "length_03",
 
+    "ElementTypeParam:2:1:1003.alias": "MANGO SESSION_UID",
+    "ElementTypeParam:9:2:1.alias": "Estatus",
+    "ElementTypeParam:9:3:1.alias": "fan_cmd",
+    "ElementTypeParam:9:1:1003.alias": "MANGO SESSION_UID",
+    "ElementTypeParam:1:1:1003.alias": "MANGO SESSION_UID",
+    
+    "ElementTypeParam:10:3:1.alias": "rotapanel_cmd",
+    "ElementTypeParam:10:2:2.alias": "door_open",
+    "ElementTypeParam:10:1:1.alias": "status_1",
+    "ElementTypeParam:10:1:2.alias": "status_2",
+    "ElementTypeParam:10:1:1003.alias": "MANGO SESSION_UID",
+    "ElementTypeParam:10:2:1.alias": "status",
+
+    "ElementTypeParam:8:1:1003.alias": "MANGO SESSION_UID",
+    "ElementTypeParam:8:3:1.alias": "bar_cmd",
+    "ElementTypeParam:8:2:1.alias": "status",
+    "ElementTypeParam:5:1:1003.alias": "MANGO SESSION_UID",
+    "ElementTypeParam:33:1:1003.alias": "MANGO SESSION_UID",
+
+
+
     "jasper.url": "http://192.168.88.162:8081/jasperserver/flow.html?_flowId=searchFlow&j_username=user&j_password=bitnami&userLocale=en_EN",
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",
@@ -797,6 +817,98 @@
     "AlarmConfig:22": "ALARM WS SURFACE TEMPERATURE GREATER THAN 1000",
     "AlarmConfig:23": "ALARM WS VISIBILITY GREATER THAN 1000000",
     "AlarmConfig:24": "ALARM WS WATER DEPTH GREATER THAN 65534",
-    "AlarmConfig:25": "ALARM CAMERA NO CONNECTION"
+    "AlarmConfig:25": "ALARM CAMERA NO CONNECTION",
 
-}
+
+    "plan.form.alias": "Alias",
+    "plan.form.description": "Description",
+    "plan.form.id": "Id",
+    "plan.form.state": "State",
+    "plan.form.planSubtype": "PlanSubType",
+    "plan.form.planModeType": "PlanModeType",
+    "plan.form.planOrderType": "PlanOrderType",
+    "plan.form.commandElementType": "CommandElementType",
+    "plan.form.commandElementValues": "CommandElementValues",
+    "plan.form.element": "Element",
+
+    "plan.tree.title": "Plan Tree",
+
+    "plan.button.tooltip.addOrder": "Add Order",
+    "plan.button.tooltip.play": "Executer Plan",
+    "plan.button.tooltip.stop": "Stop Plan",
+    "plan.button.tooltip.pause": "Pause Plan",
+    "plan.button.tooltip.edit": "Edit",
+    "plan.button.tooltip.save": "Save",
+    "plan.button.tooltip.add": "Add",
+    "plan.button.tooltip.remove": "Remove",
+    "plan.button.tooltip.cancel": "Cancelar",
+    "plan.execution.correct": "Execution Correct",
+    "plan.execution.error": "Execution ERROR",
+
+    "plan.form.new.title": "New Plan",
+    "plan.form.order.new.title": "New Order",
+
+    "menu.dashboard.title": "Dashboard",
+    "menu.dashboard.line": "Line",
+    "menu.dashboard.global": "Global",
+    "menu.dashboard.tunnel": "Tunnel",
+    "menu.dashboard.list": "List",
+    "menu.tables.title": "Tables",
+    "menu.tables.equipments": "Equipments",
+    "menu.tables.users": "Users",
+    "menu.tables.roles": "Roles",
+    "menu.tables.alarmsconfig": "Alarms Confing",
+    "menu.alarms.title": "Alarms",
+    "menu.plans.title": "Plans",
+    "menu.grafana": "Grafana",
+    "menu.jasper": "Jasper",
+
+
+    "alarmsconfig.d.id": "Id",
+    "alarmsconfig.d.alias": "Alias",
+    "alarmsconfig.d.description": "Description",
+    "alarmsconfig.d.type": "Type",
+    "alarmsconfig.d.level": "Level",
+    "alarmsconfig.d.element": "Element",
+    "alarmsconfig.d.elementtype": "Type Element",
+    "alarmsconfig.d.mine": "Mine",
+    "alarmsconfig.d.treatment": "Treatment",
+
+    "user.d.id": "Id",
+    "user.d.name": "User",
+    "user.d.fullname": "Fullname",
+    "user.d.email": "Email",
+    "user.d.language": "Language",
+    "user.d.timezone": "Timezone",
+    "user.d.admin": "Admin",
+    "user.d.role": "Role",
+
+    "rol.d.id": "Id",
+    "rol.d.alias": "Alias",
+    "rol.d.description": "Description",
+    "rol.d.preset": "Preset",
+
+    "alarms.d.id": "Id",
+    "alarms.d.activation": "Activation",
+    "alarms.d.recognized": "Recognized",
+    "alarms.d.deactivation": "Deactivation",
+    "alarms.d.alarmconfig": "Alarm Config",
+    "alarms.d.level": "Level",
+    "alarms.d.source": "Source",
+    "alarms.d.target": "Target",
+
+    "element.popup.id": "Id",
+    "element.popup.alias": "Alias",
+    "element.popup.description": "Description",
+    "element.popup.state": "State",
+    "element.popup.stateLabel": "stateLabel",
+    "element.popup.longitude": "Longitude",
+    "element.popup.latitude": "Latitude",
+    "element.popup.icon": "Icon",
+
+    "equipment.title": "Element Type",
+    "equipment.table.id": "Id",
+    "equipment.table.alias": "Alias",
+    "equipment.table.state": "State"
+
+};

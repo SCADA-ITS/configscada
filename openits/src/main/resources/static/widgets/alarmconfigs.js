@@ -20,15 +20,15 @@ let genericTablei18n = {
 		"autoConfig":true,
 		"select":true,
 		"columns":[
-			{ "id":"id", "header":"Id", hidden: true},
-			{ "id":"alias", "header":"Alias", width:300, sort:"text" },
-			{ "id":"description", "header":"Description", width:300,  sort:"text" },
-			{ "id":"alarmType", "header":"Type", adjust:true,  sort:"int" },
-			{ "id":"alarmLevel", "header":"Level", adjust:true,  sort:"int" },
-			{ "id":"element", "header":"Element", width:300,  sort:"text", "template": function (obj) {return obj.element ? obj.element.alias : "-"} },
-			{ "id":"elementType", "header":"Element Type", width:300, adjust:true,  sort:"text", "template": function (obj) {return obj.elementType ? obj.elementType.alias : "-"} },
-			{ "id":"mine", "header":"Mine", adjust:true,  sort:"int" },
-			{ "id":"treatment", "header":"Treatment", adjust:true,  sort:"int" },
+			{ "id":"id", "header": $.i18n("alarmsconfig.d.id"), hidden: true},
+			{ "id":"alias", "header": $.i18n("alarmsconfig.d.alias"), width:300, sort:"text" },
+			{ "id":"description", "header": $.i18n("alarmsconfig.d.description"), width:300,  sort:"text" },
+			{ "id":"alarmType", "header": $.i18n("alarmsconfig.d.type"), adjust:true,  sort:"int" },
+			{ "id":"alarmLevel", "header": $.i18n("alarmsconfig.d.level"), adjust:true,  sort:"int" },
+			{ "id":"element", "header":$.i18n("alarmsconfig.d.element"), width:300,  sort:"text", "template": function (obj) {return obj.element ? obj.element.alias : "-"} },
+			{ "id":"elementType", "header":$.i18n("alarmsconfig.d.elementtype"), width:300, adjust:true,  sort:"text", "template": function (obj) {return obj.elementType ? obj.elementType.alias : "-"} },
+			{ "id":"mine", "header":$.i18n("alarmsconfig.d.mine"), adjust:true,  sort:"int" },
+			{ "id":"treatment", "header":$.i18n("alarmsconfig.d.treatment"), adjust:true,  sort:"int" },
 		]
 	};
 

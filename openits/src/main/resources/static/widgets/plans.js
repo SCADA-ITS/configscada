@@ -24,6 +24,7 @@ var graphPlans = webix.proxy(
         planOrders{
           id
           alias
+          description
           state
           planOrderValues{
             id
@@ -100,11 +101,11 @@ function form_types(view,obj){
       rows: [
         {
         cols:[
-          { view:"text", id: obj.qid.toString() + "_alias", name: "alias", label:"Alias", value: obj.alias, labelAlign:"left", labelWidth: 125, inputWidth:300 },
-          { view:"text", id: obj.qid.toString() + "_description", name: "description", label:"Description", value: obj.description.toString(), labelAlign:"left", labelWidth: 125, inputWidth:400  }
+          { view:"text", id: obj.qid.toString() + "_alias", name: "alias", label:$.i18n("plan.form.alias"), value: obj.alias, labelAlign:"left", labelWidth: 125, inputWidth:300 },
+          { view:"text", id: obj.qid.toString() + "_description", name: "description", label:$.i18n("plan.form.description"), value: obj.description.toString(), labelAlign:"left", labelWidth: 125, inputWidth:400  }
         ]},{
         cols:[
-          { view:"text", id: obj.qid.toString() + "_qid", disabled: true, name: "qid", label:"Id", value: obj.qid.toString(), labelAlign:"left", labelWidth: 125, inputWidth:300  }
+          { view:"text", id: obj.qid.toString() + "_qid", disabled: true, name: "qid", label:$.i18n("plan.form.id"), value: obj.qid.toString(), labelAlign:"left", labelWidth: 125, inputWidth:300  }
         ]}
       ]
     }]
@@ -117,42 +118,72 @@ function open_new_tab(id){
 
   removeGrid("planParent");
   $$("toolbar_tree").show();
+  $$("b_remove").hide();
   $$("treePlan").data.each(function(obj){  
     if ( obj.id.toString() === item.id.toString() ) {
+     
       switch (obj.$level) {
         case 4:  //PLAN
-          let plan = new Plan(null,obj);
-          plan.dinamicFormViewWithOrders("planParent");
           $$("toolbar_plan").show();
+          $$("b_edit").hide();
           $$("b_save").hide();
-          $$("b_play").show();
-          $$("b_stop").show();
-          $$("b_pause").show();
-          $$("b_remove").show();
+          $$("b_play").hide();
+          $$("b_stop").hide();
+          $$("b_pause").hide();
+          $$("b_remove").hide();
+          $$("b_add_order").hide();
+
+          if (obj.qid==="new") {
+            let newplan = new Plan(null,null);
+            $$("b_save").show();
+            //console.log(obj.id.toString());
+            newplan.dinamicNewForm("planParent",obj.id.toString());
+            //newplan.init();
+          } else {
+            let plan = new Plan(null,obj);
+            //plan.init();
+            $$("b_edit").show();
+            $$("b_save").hide();
+            $$("b_play").show();
+            $$("b_stop").show();
+            $$("b_pause").show();
+              $$("b_remove").show();
+            $$("b_add_order").show();
+            plan.dinamicFormViewWithOrders("planParent",plan.data);
+          }
           break;          
         case 3:  //planSubtype
           form_types("planParent",obj);
           //obj.qid === "new" ? form_types("planParent",obj,true) : form_types("planParent",obj,false);
           $$("toolbar_plan").show();  
           $$("b_play").hide();
+          $$("b_edit").hide();
           $$("b_stop").hide();
           $$("b_pause").hide();
           $$("b_save").show(); 
-          $$("b_remove").show();
+          if (item.$count === 0)
+            $$("b_remove").show();
+          $$("b_add_order").hide();
           break;
         case 2: //planType
           //obj.qid === "new" ? form_types("planParent",obj,true) : form_types("planParent",obj,false);
           form_types("planParent",obj);
           $$("toolbar_plan").show();  
           $$("b_play").hide();
+          $$("b_edit").hide();
           $$("b_stop").hide();
           $$("b_pause").hide();
           $$("b_save").show();
-          $$("b_remove").show();
+          if (item.$count === 0)
+            $$("b_remove").show();
+          $$("b_add_order").hide();
           break;
         case 1:
           $$("toolbar_plan").hide(); 
-          $$("b_remove").hide();
+          $$("b_edit").hide();
+          if (item.$count === 0)
+            $$("b_remove").show();
+          $$("b_add_order").hide();
           break;
         default:
           //console.log("");
@@ -176,9 +207,19 @@ function addToTree(id){
   syn.addToTree();
 }
 
+function editPlan(id){
+  syn.editPlan();
+}
+
 function removeToTree(id){
   let re = syn.removeToTree();
   re ? null : removeGrid("planParent");
+}
+
+function new_order(id){
+  let selectPlan = $$("treePlan").getSelectedId();
+  let item = $$('treePlan').getItem(selectPlan);
+  $$("order_new_form_" + item.qid).show();
 }
 
 let syn = new PlanTree(graphPlans, null);
@@ -191,7 +232,7 @@ export let plans = {
       cols:[
         { 
           rows:[
-            { view:"template", type:"header", template: "<div>Plan Tree</div>" ,  align:"left" },
+            { view:"template", type:"header", template: "<div>" + $.i18n("plan.tree.title") + "</div>" ,  align:"left" },
             { body:tree1, width: 250 },
             {
               view: "toolbar",
@@ -201,10 +242,10 @@ export let plans = {
               rows: [{
                 cols:[
                   { gravity: 4},
-                  { view:"button", id: "b_add", autowidth:true, type:"icon", icon:"mdi mdi-plus",
+                  { view:"button", id: "b_add", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
                     click: addToTree                    
                   },
-                  { view:"button", id: "b_remove", autowidth:true, type:"icon", icon:"mdi mdi-minus",
+                  { view:"button", id: "b_remove", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.remove"), icon:"mdi mdi-minus",
                     click: removeToTree
                   }
                 ]
@@ -223,14 +264,20 @@ export let plans = {
               align:"right",
               rows: [{
                 cols:[
-                  { gravity: 8},
+                  { gravity: 8}, 
+                  { view:"button", id: "b_add_order", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.addOrder"), icon:"mdi mdi-plus", 
+                    click:new_order
+                  },
                   { 
-                    view:"button", id: "b_play", align:"right", autowidth:true, type:"icon", icon:"mdi mdi-play", 
+                    view:"button", id: "b_play", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.play"), icon:"mdi mdi-play", 
                     click:sendPlan
                   },
-                  { view:"button", id: "b_stop", align:"right", autowidth:true, type:"icon", icon:"mdi mdi-stop" },
-                  { view:"button", id: "b_pause", align:"right", autowidth:true, type:"icon", icon:"mdi mdi-pause" },
-                  { view:"button", id: "b_save", align:"right", autowidth:true, type:"icon", icon:"mdi mdi-content-save",
+                  { view:"button", id: "b_stop", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.stop"), icon:"mdi mdi-stop" },
+                  { view:"button", id: "b_pause", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.pause"), icon:"mdi mdi-pause" }, 
+                  { view:"button", id: "b_edit" , type:"icon", icon:"mdi mdi-grease-pencil", width:50, tooltip:$.i18n("plan.button.tooltip.edit") ,
+                    click: editPlan              
+                  },
+                  { view:"button", id: "b_save", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.save"), icon:"mdi mdi-content-save",
                     click:saveItems
                   },
                   //{ gravity: 4},

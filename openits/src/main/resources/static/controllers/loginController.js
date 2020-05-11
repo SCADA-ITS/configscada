@@ -66,14 +66,18 @@ webix.ready(function() {
                                                             var paramUser = data.json().userId;
                                                             webix.proxy("GraphQL", `query($rowId: String!){
                                                                 getUser(userId: $rowId){
+                                                                    id
                                                                     language
+                                                                    name
                                                                 }
                                                             }`).load({
                                                                 rowId: paramUser
-                                                            }).then(data => {
-                                                            	webix.storage.session.put("app_user_language", data.language);
+                                                            }).then(data2 => {
+                                                                webix.storage.session.put("app_user_language", data2.language);
+                                                                webix.storage.session.put("app_user_name", data2.name);
+                                                                window.location = "./home.html";
                                                             });
-                                                            window.location = "./home.html";
+                                                            
                                                             break;
                                                         case "WRONG_USER_PASSWORD":
                                                             webix.alert({title:"WRONG USER PASSWORD", type:"alert-success", text:"ERROR"})

@@ -9,26 +9,15 @@ export default class ElementForm {
 				alias
 				description
 				state
-				stateLabel
-				longitude
-				latitude
-				icon
-				zoomIn
-				zoomOut
-				positionX
-				positionY
 				elementType {
 			        id
 			        alias
-					description
 					commandElementTypes{
 						id
 						alias
-						description
 						commandElementTypeParams{
 						  id
 						  alias
-						  description
 						  dataType
 						}
 					}
@@ -46,9 +35,9 @@ export default class ElementForm {
 		}`;
 		this.graphql = webix.proxy("GraphQL", graphElem);
 		this.header = {
+			id: "elementHeader"+this.id,
 			view: "template",
 			type: "header",
-			id: "elementHeader"+this.id,
 			data: {
 				value: ""
 			},
@@ -57,179 +46,146 @@ export default class ElementForm {
 			},
 			css: { "text-align": "center !important" }
 		};
-		this.elementIcon = {
-			view: "template",
-			id: "template1" + this.id,
-			data: {
-				src: "",
-			},
-			template: function (obj) {
-				return '<img src="' + obj.src + '" alt="Imagen no encontrada" width="75" height="75" />';
-			},
-			height: 80
-		};
 
-		this.form = {
+		this.body = {
+			id: "elementBody" + this.id,
 			view: "form",
-			id: "elementformresult" + this.id,
-			width: 315,
+			height: 250,
+			width: 400,
+			scroll: true,
 			margin: 0,
 			elements: [
 				{ view: "text", name: "id", label: "id" },
-				{ view: "text", name: "alias", label: "alias" },
-				{ view: "text", name: "description", label: "description" },
-				{ view: "text", name: "state", label: "state" },
-				{ view: "text", name: "longitude", label: "longitude" },
-				{ view: "text", name: "latitude", label: "latitude" },
-				{ view: "text", name: "icon", label: "icon" }
+				{ view: "text", name: "description", label: "description" }
 			]
 		};
-
-		this.commands = {
-			view: "form",
-			id: "comandos" + this.id,
-			elements: [
-				{ view: "button", id: "command 1" + this.id, value: "" },
-				{ view: "button", id: "command 2" + this.id, value: "" },
-				{ view: "button", id: "command 3" + this.id, value: "" }
-			]
-		}
 		
-		this.camera= {     
-                view:"iframe",
-                borderless:true,
-                height:358,
-                width: 370,
-                src:"http://admin:R4D7Revenga@192.168.88.250/cgi-bin/mjpg/video.cgi?channel=1&subtype=1"
-            };
-		this.button={
-	            view:"button",
-	            value:"video fullscreen",
-	            click: function(){
-	              webix.fullscreen.set($$("$iframe3"));
-	            }
-			};
 	}
 
 	getComponent() {
 		this.graphql.load().then(data => {
-			let icon = "";
-			let header = "";
-			icon = "img/" + staticsIcons[data.elementType.id].state[data.state].icon;
-			header = data.elementType.alias + " " + data.alias;
-			$$("elementformresult" + this.id).setValues({
-				id: data.id,
-				alias: data.alias,
-				description: data.description,
-				state: data.state,
-				longitude: data.longitude,
-				latitude: data.latitude,
-				icon: data.icon
-			});
-			if(this.id!="Element:2:1"){
-				$$("template1" + this.id).setValues({ src: icon });
-
+			//header
+			try {
+				let header = data.elementType.alias + " " + data.alias;
+				$$("elementHeader" + this.id).setValues({ value: header });
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);
 			}
-			$$("elementHeader" + this.id).setValues({ value: header });
-//			if(this.id==="Element:2:1"){
-//				$$("elementformresultElement:2:1").addView({
-//		            view:"button",
-//		            value:"video fullScreen",
-//		            click: function(){
-//		              webix.fullscreen.set($$("$iframe3"));
-//		        }}, 0);
-//			}
-			if(data.elementType.commandElementTypes!=null && data.elementType.commandElementTypes.length>0){
-				let comandos = [];
-				for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
-					comandos.push(data.elementType.commandElementTypes[index].alias);
+			//icon
+			try {
+				//FIXME Codigo hecho a medida para camara Element:2:1, quitar else!!
+				if(this.id=="Element:2:1"){
+					let camera = $$("component"+this.id).addView({    
+						view:"iframe",
+						borderless:true,
+						height:358,
+						width: 370,
+						src:"http://admin:R4D7Revenga@192.168.88.250/cgi-bin/mjpg/video.cgi?channel=1&subtype=1"
+					}, 1);
+					let button={
+						view:"button",
+						value:"video fullscreen",
+						click: function(){
+						  webix.fullscreen.set($$(camera));
+						}
+					};
+					$$("component"+this.id).addView(button, 2);
+				}else if(data.elementType.id!="ElementType:10"){
+					$$("component"+this.id).addView({
+						view: "template",
+						data: {
+							src: "img/" + staticsIcons[data.elementType.id].state[data.state].icon,
+						},
+						template: function (obj) {
+							return '<img src="' + obj.src + '" alt="Imagen no encontrada" width="75" height="75" />';
+						},
+						height: 80
+					}, 1);
 				}
-				$$("command 1" + this.id).setValue(comandos[0]);
-				$$("command 2" + this.id).setValue(comandos[1]);
-				$$("command 3" + this.id).setValue(comandos[2]);
-				if (data.elementType.commandElementTypes.length == 2) {
-					$$("command 3" + this.id).hide();
-				} else if (data.elementType.commandElementTypes.length == 1) {
-					$$("command 2" + this.id).hide() && $$("command 3" + this.id).hide();
-				} else if (data.elementType.commandElementTypes == null) {
-					$$("comandos" + this.id).hide();
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);
+			}
+			//body
+			try {
+				$$("elementBody" + this.id).setValues({
+					id: data.id,
+					description: data.description
+				});
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);		
+			}
+				
+			//Measures
+			try {
+				if(data.elementValues) {
+					data.elementValues.forEach(item => {
+						var value = null;		
+						if(item.alerted != null && item.alerted){
+							value = "!!" + item.value + "!!";
+						}else{
+							value = item.value;
+						}	
+						$$("elementBody"+this.id).addView({ 
+							view: "text", 
+							name: item.elementTypeParam.alias, 
+							label: item.elementTypeParam.alias,
+							value: value
+						}, -1);
+						
+				  });
 				}
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);
+			}
+			
+			//Commands
+			try {
+				if(data.elementType.commandElementTypes){
+					this.commands = $$("component"+this.id).addView({
+						view: "form",
+						id: "comandos" + this.id,
+						elements:[]
+					}, -1);
 	
-				$$("command 1" + this.id).attachEvent("onItemClick", function () {
-					var sendCommand1 = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-						sendCommandElement(commands: $commands)  
-					}`;
-					var graphql = webix.proxy("GraphQL", sendCommand1);
-					graphql.save({
-						"commands": [
-							{
-								"commandElementTypeId": data.elementType.commandElementTypes[0].id,
-								"elementId": data.id
+					for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
+						$$(this.commands).addView({
+							view: "button", 
+							id: "command"+index+"_"+ this.id, 
+							value: data.elementType.commandElementTypes[index].alias,
+							click: function(){
+								var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+									sendCommandElement(commands: $commands)  
+								}`;
+								var graphql = webix.proxy("GraphQL", sendCommand);
+								graphql.save({
+									"commands": [
+										{
+											"commandElementTypeId": data.elementType.commandElementTypes[index].id,
+											"elementId": data.id
+										}
+									]
+								});
 							}
-						]
-					}).then(() => {
-//						webix.message("Done")
-					});
-				});
+						}, -1);
 	
-				$$("command 2" + this.id).attachEvent("onItemClick", function () {
-					var sendCommand2 = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-						sendCommandElement(commands: $commands)  
-					}`;
-					var graphql2 = webix.proxy("GraphQL", sendCommand2);
-					graphql2.save({
-						"commands": [
-							{
-								"commandElementTypeId": data.elementType.commandElementTypes[1].id,
-								"elementId": data.id
-							}
-						]
-					}).then(() => {
-//						webix.message("Done")
-					});
-				});
-	
-				$$("command 3" + this.id).attachEvent("onItemClick", function () {
-					var sendCommand3 = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-						sendCommandElement(commands: $commands)  
-					}`;
-					var graphql3 = webix.proxy("GraphQL", sendCommand3);
-					graphql3.save({
-						"commands": [
-							{
-								"commandElementTypeId": data.elementType.commandElementTypes[2].id,
-								"elementId": data.id
-							}
-						]
-					}).then(() => {
-	//					webix.message("Done")
-					});
-				});
-			}else{
-				$$("comandos" + this.id).hide();
-				$$("comandos 2" + this.id).hide();
-				$$("comandos 3" + this.id).hide();
+					}
+				}
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);
 			}
 		});
-		let genericForm = {
-			rows: [
-				this.header,
-				this.elementIcon,
-				this.form,
-				this.commands,
-				{}
-			]
-		};
-		let specificForm = {
+		let result = {
+				id: "component"+this.id,
 				rows: [
 					this.header,
-					this.camera,
-							this.button,
-					this.form,
-					this.commands,
-					{}
+					this.body
 				]
 			};
-		return (this.id==="Element:2:1")?specificForm:genericForm;
+		return result;
 	}
 }
