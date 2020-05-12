@@ -305,7 +305,6 @@ export default class PlansTree {
 
         if ( item.qid === "new" ) {
           let planForm = $$(item.id + "_form").getValues();
-          console.log(planForm);
           let planMutation = webix.proxy(
             "GraphQL",`mutation createPlan($plan: PlanVO!){
             createPlan(plan: $plan){
@@ -339,7 +338,6 @@ export default class PlansTree {
           });
         } else {
           let planForm = $$(item.qid + "_form").getValues();
-          console.log(planForm);
           let planMutation = webix.proxy(
             "GraphQL",`mutation updatePlan($plan: PlanVO!){
               updatePlan(plan: $plan) {

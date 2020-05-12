@@ -913,5 +913,32 @@ var i18_es = {
     "equipment.title": "Tipo de Elemento",
     "equipment.table.id": "Identificador",
     "equipment.table.alias": "Alias",
-    "equipment.table.state": "Estado"
+    "equipment.table.state": "Estado",
+
+
+
+    "user.popup.tab.details": "Detalles",
+    "user.popup.tab.permissions": "Permisos",
+    "user.popup.id": "Id",
+    "user.popup.name": "Nombre",
+    "user.popup.fullName": "FullName",
+    "user.popup.email": "Email",
+    "user.popup.password": "Password",
+    "user.popup.password_conf": "Password Conf",
+    "user.popup.allowMultipleSessions": "AllowMultipleSessions",
+    "user.popup.isAdmin": "Administrador",
+    "user.popup.language": "Idioma",
+    "user.popup.country": "Pais",
+    "user.popup.timezone": "ZonaHoraria",
+    "user.popup.role": "Role",
+
+    "user.popup.new.header": "Nuevo Usuario",
+    "user.popup.button.create": "Crear",
+    "user.popup.button.save": "Guardar",
+
+    "role.popup.id": "Identificador",
+    "role.popup.alias": "Alias",
+    "role.popup.description": "Descripción",
+    "role.popup.button.create": "Crear",
+    "role.popup.button.save": "Guardar"
 };

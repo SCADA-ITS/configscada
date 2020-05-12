@@ -909,7 +909,31 @@ var i18_sk = {
     "equipment.title": "Element Type",
     "equipment.table.id": "Id",
     "equipment.table.alias": "Alias",
-    "equipment.table.state": "State"
+    "equipment.table.state": "State",
+    "user.popup.tab.details": "Details",
+    "user.popup.tab.permissions": "Permissions",
+    "user.popup.id": "Id",
+    "user.popup.name": "Name",
+    "user.popup.fullName": "FullName",
+    "user.popup.email": "Email",
+    "user.popup.password": "Password",
+    "user.popup.password_conf": "Password Conf",
+    "user.popup.allowMultipleSessions": "AllowMultipleSessions",
+    "user.popup.isAdmin": "Administrator",
+    "user.popup.language": "Language",
+    "user.popup.country": "Country",
+    "user.popup.timezone": "Timezone",
+    "user.popup.role": "Role",
+
+    "user.popup.new.header": "New User",
+    "user.popup.button.create": "Create",
+    "user.popup.button.save": "Save",
+
+    "role.popup.id": "Id",
+    "role.popup.alias": "Alias",
+    "role.popup.description": "Description",
+    "role.popup.button.create": "Create",
+    "role.popup.button.save": "Save"
 
 
 };
