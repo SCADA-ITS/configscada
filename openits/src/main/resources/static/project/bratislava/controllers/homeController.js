@@ -1,26 +1,23 @@
-import { menu_data_multi, toolbar_data_menu } from "../data/projectData/ausolData.js";
-import { alarms } from "../widgets/alarms.js";
-import { synoptic } from "../widgets/synoptic.js";
-import { plans } from "../widgets/plans.js";
-import { metro } from "../widgets/metro.js";
-import { global } from "../widgets/global.js";
-import { users } from "../widgets/users.js";
-import { roles } from "../widgets/roles.js";
-import { alarmconfigs } from "../widgets/alarmconfigs.js";
+import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
 import { equipments } from "../widgets/equipments.js";
-import { banner } from "../widgets/banner.js";
+import { bratislava } from "../widgets/bratislava.js";
+
+import { alarms } from "../../../widgets/alarms.js";
+import { plans } from "../../../widgets/plans.js";
+import { users } from "../../../widgets/users.js";
+import { roles } from "../../../widgets/roles.js";
+import { alarmconfigs } from "../../../widgets/alarmconfigs.js";
+import { banner } from "../../../widgets/banner.js";
 
 let getAlrams = webix.proxy(  "GraphQL", `query {
-	  getGenericData(genericDataId:"GenericData:1") {
-		    id
-		    value
-			}
-		}`);
-
+		  getGenericData(genericDataId:"GenericData:1") {
+			    id
+			    value
+				}
+			}`);
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
-
 
 toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-menu").click=function(){$$("$sidebar1").toggle();};
 toolbar_data_menu.elements.find(x => x.icon === "webix_icon wxi-pencil").click=function(){changeStyle();};
@@ -49,9 +46,6 @@ let main_body = {
             id: "multiview",
             cells: [
             {
-                id: "metro",
-                rows: [metro]
-            },{
                 id: "alarms",
                 rows: [alarms]
             },
@@ -72,16 +66,12 @@ let main_body = {
                 rows: [equipments]
             },
             {
-                id: "synoptic1",
-                rows: [synoptic]
-            },
-            {
                 id: "plans",
                 rows: [plans]                            
             },
             {
-                id: "global",
-                rows: [global]
+            	id: "bratislava",
+                rows: [bratislava]
             },
             {
                 id: "grafana",

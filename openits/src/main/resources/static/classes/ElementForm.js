@@ -1,4 +1,4 @@
-import { staticsIcons } from "../icons/synopticJson.js";
+import { getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
 
 export default class ElementForm {
 	constructor(id) {
@@ -29,6 +29,7 @@ export default class ElementForm {
 		         	elementTypeParam{
 		          		id
 		          		alias
+		          		description
 		        	}
       			}
 			}
@@ -58,13 +59,12 @@ export default class ElementForm {
 				{ view: "text", name: "id", label: "id" },
 				{ view: "text", name: "description", label: "description" }
 			]
-		};
-		
+		};		
 	}
 
 	getComponent() {
 		this.graphql.load().then(data => {
-			//header
+			// HEADER
 			try {
 				let header = data.elementType.alias + " " + data.alias;
 				$$("elementHeader" + this.id).setValues({ value: header });
@@ -72,42 +72,69 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
-			//icon
+
 			try {
-				//FIXME Codigo hecho a medida para camara Element:2:1, quitar else!!
-				if(this.id=="Element:2:1"){
-					let camera = $$("component"+this.id).addView({    
-						view:"iframe",
-						borderless:true,
-						height:358,
-						width: 370,
-						src:"http://admin:R4D7Revenga@192.168.88.250/cgi-bin/mjpg/video.cgi?channel=1&subtype=1"
-					}, 1);
-					let button={
-						view:"button",
-						value:"video fullscreen",
-						click: function(){
-						  webix.fullscreen.set($$(camera));
-						}
-					};
-					$$("component"+this.id).addView(button, 2);
-				}else if(data.elementType.id!="ElementType:10"){
-					$$("component"+this.id).addView({
-						view: "template",
-						data: {
-							src: "img/" + staticsIcons[data.elementType.id].state[data.state].icon,
-						},
-						template: function (obj) {
-							return '<img src="' + obj.src + '" alt="Imagen no encontrada" width="75" height="75" />';
-						},
-						height: 80
-					}, 1);
-				}
+				// ICON
+				let iconoSvg = getElementSVG(data, 60, 60);
+				$$("component"+this.id).addView({
+					view: "template",
+					template: iconoSvg,
+					height: 80
+				}, 1);
+				getElementIcon(data);
+				/*$$("component"+this.id).addView({
+					view: "template",
+					data: {
+						src: "img/" + staticsIcons[data.elementType.id].state[data.state].icon,
+					},
+					template: function (obj) {
+						return '<img src="' + obj.src + '" alt="Imagen no encontrada" width="75" height="75" />';
+					},
+					height: 80
+				}, 1);*/
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
-			//body
+			
+			try {
+			// STREAM
+				if(data.elementType.id == "ElementType:2"){
+					
+					let stremMjpeg = null;
+					
+					if(data.elementValues !== null){
+						
+						stremMjpeg = data.elementValues.filter(elementValue => elementValue.elementTypeParam != null && elementValue.elementTypeParam.alias === "stream_mjpeg" );	
+					}	
+					if(stremMjpeg != null && stremMjpeg.length >= 1){
+						
+						let strem = stremMjpeg[0].value;						
+						let camera = $$("component"+this.id).addView({    
+							view:"iframe",
+							borderless:true,
+							height:358,
+							width: 370,
+							src:strem
+						}, 1);
+						
+						let button={
+							view:"button",
+							value:"video fullscreen",
+							click: function(){
+							  webix.fullscreen.set($$(camera));
+							}
+						};
+						
+						$$("component" + this.id).addView(button, 2);	
+					}
+				}
+			} catch (e) {
+				console.error("Error. id: "+this.id);
+				console.error(e);
+			}			
+
+			//BODY
 			try {
 				$$("elementBody" + this.id).setValues({
 					id: data.id,
@@ -118,7 +145,7 @@ export default class ElementForm {
 				console.error(e);		
 			}
 				
-			//Measures
+			//MEASURES
 			try {
 				if(data.elementValues) {
 					data.elementValues.forEach(item => {
@@ -132,7 +159,8 @@ export default class ElementForm {
 							view: "text", 
 							name: item.elementTypeParam.alias, 
 							label: item.elementTypeParam.alias,
-							value: value
+							value: value,
+							readonly: true
 						}, -1);
 						
 				  });
@@ -142,7 +170,7 @@ export default class ElementForm {
 				console.error(e);
 			}
 			
-			//Commands
+			//COMMANDS
 			try {
 				if(data.elementType.commandElementTypes){
 					this.commands = $$("component"+this.id).addView({
@@ -178,6 +206,7 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
+			return data;
 		});
 		let result = {
 				id: "component"+this.id,

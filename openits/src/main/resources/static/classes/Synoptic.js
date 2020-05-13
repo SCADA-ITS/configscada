@@ -22,6 +22,7 @@ import {
   changeDMSIcon,
   updateElementIcon,
   updateElementState,
+  getElementSVG
 } from "../lib/iconGenerator.js";
 
 export default class Synoptic {
@@ -1099,10 +1100,44 @@ export default class Synoptic {
             // Launch the query again
             document.getElementById(self.synopticDiv + "spinner").style.display = "block";
             self.data.load().then((d) => {
+              // check if it's a tunnel synoptic and changes the main bar in the synoptic
+              let element_type = d.id.split(":")[1];
+              
+              if(element_type == "7") {
+                let color = "";
+                if (d.state != 3) {
+                  color = "#ebb700";
+                } else {
+                  color = "#ff0000";
+                }
+
+                if(document.getElementById(d.id + ":Bar") != null) {
+                  document.getElementById(d.id + ":Bar").setAttribute("fill", color);
+                }
+              }
+
               d.childs.forEach((element) => {
                 updateElementState(element);
                 updateElementIcon(element);
+
+                // check if it's a tunnel synoptic and changes the main bar in the synoptic
+                let element_type = element.id.split(":")[1];
+
+                
+                if(element_type == "7") {
+                  let color = "";
+                  if (element.state != 3) {
+                    color = "#ebb700";
+                  } else {
+                    color = "#ff0000";
+                  }
+
+                  if(document.getElementById(element.id + ":Bar") != null) {
+                    document.getElementById(element.id + ":Bar").setAttribute("fill", color);
+                  }
+                }
               });
+
             }).then(() => {
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });

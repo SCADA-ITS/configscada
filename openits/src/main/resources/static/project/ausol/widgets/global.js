@@ -1,4 +1,4 @@
-import Synoptic from "../classes/Synoptic.js";
+import Synoptic from "../../../classes/Synoptic.js";
 
 // GraphQL
 //initialize a proxy

@@ -1,12 +1,23 @@
-import { menu_data_multi, toolbar_data_menu } from "../data/projectData/bratislavaData.js";
-import { alarms } from "../widgets/alarms.js";
-import { plans } from "../widgets/plans.js";
-import { users } from "../widgets/users.js";
-import { roles } from "../widgets/roles.js";
-import { alarmconfigs } from "../widgets/alarmconfigs.js";
+import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
+import { metro } from "../widgets/metro.js";
+import { global } from "../widgets/global.js";
+import { synoptic } from "../widgets/synoptic.js";
 import { equipments } from "../widgets/equipments.js";
-import { banner } from "../widgets/banner.js";
-import { bratislava } from "../widgets/bratislava.js";
+
+import { alarms } from "../../../widgets/alarms.js";
+import { plans } from "../../../widgets/plans.js";
+import { users } from "../../../widgets/users.js";
+import { roles } from "../../../widgets/roles.js";
+import { alarmconfigs } from "../../../widgets/alarmconfigs.js";
+import { banner } from "../../../widgets/banner.js";
+
+let getAlrams = webix.proxy(  "GraphQL", `query {
+	  getGenericData(genericDataId:"GenericData:1") {
+		    id
+		    value
+			}
+		}`);
+
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -39,6 +50,9 @@ let main_body = {
             id: "multiview",
             cells: [
             {
+                id: "metro",
+                rows: [metro]
+            },{
                 id: "alarms",
                 rows: [alarms]
             },
@@ -59,12 +73,16 @@ let main_body = {
                 rows: [equipments]
             },
             {
+                id: "synoptic1",
+                rows: [synoptic]
+            },
+            {
                 id: "plans",
                 rows: [plans]                            
             },
             {
-            	id: "bratislava",
-                rows: [bratislava]
+                id: "global",
+                rows: [global]
             },
             {
                 id: "grafana",
@@ -88,6 +106,17 @@ webix.ready(function() {
         ]
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
+
+    getAlrams.load().then(data => {
+    	try {
+    		console.log(data);
+    		$$("bell").data.badge=data.value;
+    		$$("bell").refresh();
+    		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas activas: "+data.value+"</div>");
+    	} catch (err) {
+    		console.log("Error: " + err.message);
+    	}
+    });
 });
 
 function changeStyle(){

@@ -1,4 +1,4 @@
-import Synoptic from "../classes/Synoptic.js";
+import Synoptic from "../../../classes/Synoptic.js";
 
 // GraphQL
 //initialize a proxy
@@ -6,17 +6,12 @@ var graphSynoptic = webix.proxy(
   "GraphQL",
   `
   query   {
-    getElement(elementId: "Element:7:1")
+    getElement(elementId: "Element:7:2")
     {
       id
-      alias
-      description
       state
-      icon
       childs{
         id    
-        positionX
-        positionY
         state
         elementType {
           id
@@ -25,7 +20,6 @@ var graphSynoptic = webix.proxy(
         elementValues{
           id
           value
-          alerted
           elementTypeParam {
             description
           }
@@ -36,15 +30,15 @@ var graphSynoptic = webix.proxy(
   `
 );
 
-let bra = new Synoptic(graphSynoptic, null, "synoptic_bratislava");
+let met = new Synoptic(graphSynoptic, null, "synoptic_metro");
 
-export let bratislava = {
+export let metro = {
   rows: [
     {
       view: "template",
-      id: "synoptic_bratislava",
+      id: "synoptic_metro",
       url: function() {
-        bra.init("bratislava");
+        met.init("metro");
       }
     }
   ]
