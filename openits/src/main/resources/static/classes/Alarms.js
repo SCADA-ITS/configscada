@@ -130,19 +130,22 @@ export default class Alarms {
 
           if (alarm.id === element.id) {  //ALARMA PREVIAMENTE CREADA
 
-            if (element.deactivation != null && element.recognized != null) { // BORRADA
+            // MODIFICACION
 
+            let data = {
+              id: element.id,
+              activation: element.activation == null ? alarm.activation : element.activation,
+              recognized: element.recognized == null ? alarm.recognized : element.recognized,
+              deactivation: element.deactivation == null ? alarm.deactivation : element.deactivation,
+              alarmConfig: alarm.alarmConfig,
+              sourceElement: alarm.sourceElement, 
+              targetElement: alarm.targetElement
+            }
+            $$('alarmsTable').updateItem(element.id, data);
+            
+            if (data.recognized != null ) { //SI LA ALARMA SE RECONOCE, PASA A LA TABLA ALARMAS RECONOCIDAS Y SE BORRA DE LA TABLA DE ALARMAS SIN RECONOCER
+              $$('alarmsTable_recon').add(data, 0);
               $$('alarmsTable').remove(element.id);
-
-            } else { // MODIFICACION
-
-              let data = {
-                id: element.id,
-                activation: element.activation == null ? alarm.activation : element.activation,
-                recognized: element.recognized == null ? alarm.recognized : element.recognized,
-                deactivation: element.deactivation == null ? alarm.deactivation : element.deactivation
-              }   
-              $$('alarmsTable').updateItem(element.id, data);
             }
             control = true;
             //  Object { id: "Alarm:1587118186077", alarmConfig: {…}, activation: 1587123750137, deactivation: 1587123760142, deactivationComments: "Desactivate for rule at 2020-04-17T11:42:40.142874Z", sourceElement: {…}, targetElement: {…} }
@@ -150,6 +153,26 @@ export default class Alarms {
             //Object { id: "Alarm:1587118186078", alarmConfig: {…}, activation: 1587123770141, sourceElement: {…}, targetElement: {…} }
           }
 
+        });
+
+        $$('alarmsTable_recon').data.each(function (alarm) { //RECORRE LAS ALARMAS RECONOCIDAS
+          if (alarm.id === element.id) {  //ALARMA PREVIAMENTE CREADA
+
+            let data = {
+              id: element.id,
+              activation: element.activation == null ? alarm.activation : element.activation,
+              recognized: element.recognized == null ? alarm.recognized : element.recognized,
+              deactivation: element.deactivation == null ? alarm.deactivation : element.deactivation,
+              alarmConfig: alarm.alarmConfig,
+              sourceElement: alarm.sourceElement, 
+              targetElement: alarm.targetElement
+            }
+            $$('alarmsTable_recon').updateItem(element.id, data);
+            if (element.deactivation != null && element.recognized != null) { // BORRADA CUANDO SE MODIFICA
+              $$('alarmsTable_recon').remove(element.id);
+            }
+            control = true;
+          }
         });
 
         if (control === false) {  //ALARMA NUEVA
@@ -190,8 +213,11 @@ export default class Alarms {
                                 alarmLevel:data1.alarmConfig , 
                                 sourceElement: data1.sourceElement, 
                                 targetElement: data1.targetElement }
-                   
-                        $$('alarmsTable').add(data,0); 
+                        if (data.recognized != null && data.deactivation != null) { //Con esto se evita que en la tabla de alarmas reconocidas, si la desactivamos se borre  
+                          $$('alarmsTable').remove(element.id);                     //de la tabla de reconocidas,pero vuelva a la tabla de alarmas no reconocidas
+                        }else{
+                          $$('alarmsTable').add(data,0); 
+                        }
                 	}            
                 });
         }
@@ -297,8 +323,13 @@ export default class Alarms {
                     alarmLevel:element.alarmConfig , 
                     sourceElement: element.sourceElement, 
                     targetElement: element.targetElement }
+                    if ( element.recognized != null ) {
+                      let id = $$('alarmsTable_recon').add(data,0);
+                    }else{
+                      let id = $$('alarmsTable').add(data,0);
+                    }
                 //$$('alarmsTable').editStop();
-                let id = $$('alarmsTable').add(data,0); 
+                 
                 //$$('alarmsTable').editRow(id);            
                 //$$("alarmsTable").add
                
