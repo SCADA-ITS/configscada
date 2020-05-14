@@ -863,9 +863,16 @@ export function getElementIcon(element) {
       //width = elem_icon.width;
       //height = elem_icon.height;
       elem_icon = elem_icon.icon;
+
+      // form
+      if (document.getElementById(element.id + ":Form") != null) {
+        document.getElementById(element.id + ":Form").setAttribute("xlink:href", "./img/" + elem_icon);
+      }
+
     } else {
       elem_icon = "";
     }
+
   }
 
   return { icon: elem_icon, width: width, height: height };

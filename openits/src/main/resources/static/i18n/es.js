@@ -938,7 +938,17 @@ var i18_es = {
 
     "role.popup.id": "Identificador",
     "role.popup.alias": "Alias",
-    "role.popup.description": "Descripción",
+    "role.popup.description": "Descripci&oacute;n",
     "role.popup.button.create": "Crear",
-    "role.popup.button.save": "Guardar"
+    "role.popup.button.save": "Guardar",
+
+    "user.button.tooltip.addUser": "A&ntilde;adir Usuario",
+    "user.button.tooltip.details": "Detalle de Usuario",
+    "user.button.tooltip.edit": "Editar Usuario",
+    "user.button.tooltip.delete": "Borrar Usuario",
+
+    "role.button.tooltip.addUser": "A&ntilde;adir Role",
+    "role.button.tooltip.details": "Detalle de Role",
+    "role.button.tooltip.edit": "Editar Role",
+    "role.button.tooltip.delete": "Borrar Role",
 };

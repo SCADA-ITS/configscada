@@ -224,9 +224,11 @@ export default class UserForm {
                             permissionsList.push({"id": item.id, "value": item.alias});
                     });
 
-                    $$("userFormRolePermissions_" + itemId ).data_setter(permissionsListTotal);
-                    $$("userFormRolePermissions_" + itemId ).setValue(rolePermissionsIdList);
                     $$("userFormUserPermissions_" + itemId ).data_setter(permissionsList);
+                    $$("userFormRolePermissions_" + itemId ).clearAll();
+                    rolePermissionsList.forEach(item => {
+                        $$("userFormRolePermissions_" + itemId ).add({ "id": item.id, "value": item.value });
+                    });
                 });
             });
         };
@@ -382,13 +384,12 @@ export default class UserForm {
                                         { template:"Role Permissions", type:"section" },
                                         { 
                                             id:"userFormRolePermissions_" + this.id,
-                                            view:"dbllist", 
-                                            value:rolePermissionsIdList.toString(),
-                                            list:{ height:150, scroll:true },
-                                            labelLeft:"Available screens",
-                                            labelRight:"Selected",
-                                            disabled: true,
-                                            data:rolePermissionsList
+                                            view: "list",
+                                            height:150, 
+                                            data: rolePermissionsList,
+                                            template:"#value#",
+                                            scroll: true,
+                                            disabled: true
                                         },
                                         { template:"User Permissions", type:"section" },
                                         { 
@@ -523,13 +524,12 @@ export default class UserForm {
                                         { template:"Role Permissions", type:"section" },
                                         { 
                                             id:"userFormRolePermissions_" + this.id,
-                                            view:"dbllist", 
-                                            value:rolePermissionsIdList.toString(),
-                                            list:{ height:150, scroll:true },
-                                            labelLeft:"Available screens",
-                                            labelRight:"Selected",
-                                            disabled: true,
-                                            data:rolePermissionsList
+                                            view: "list",
+                                            height:150,
+                                            scroll: true, 
+                                            data: rolePermissionsList,
+                                            template:"#value#",
+                                            disabled: true
                                         },
                                         { template:"User Permissions", type:"section" },
                                         { 
@@ -620,24 +620,20 @@ export default class UserForm {
                                     { template:"Role Permissions", type:"section" },
                                     { 
                                         id:"userFormRolePermissions_" + this.id,
-                                        view:"dbllist", 
-                                        //value:rolePermissionsIdList.toString(),
-                                        list:{ height:150, scroll:true },
-                                        labelLeft:"Available screens",
-                                        labelRight:"Selected",
-                                        disabled: true,
-                                        //data:rolePermissionsList
+                                        view: "list",
+                                        height:150,
+                                        scroll: true, 
+                                        //data: rolePermissionsList,
+                                        template:"#value#",
+                                        disabled: true
                                     },
                                     { template:"User Permissions", type:"section" },
                                     { 
                                         id:"userFormUserPermissions_" + this.id,
                                         view:"dbllist", 
                                         list:{ height:150, scroll:true },
-                                        //value: permissionsListUser.toString(),
-                                        labelLeft:"Available screens",
+                                        labelLeft:"Available",
                                         labelRight:"Selected",
-                                        //disabled: true,
-                                        //data:permissionsList
                                     }
                                 ]
                             }

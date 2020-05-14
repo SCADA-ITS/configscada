@@ -1,4 +1,3 @@
-//webix.proxy.GraphQL.url = "http://192.168.88.162:8082/graphql";
 webix.proxy.GraphQL.url = "http://192.168.88.231:8082/graphql";
 webix.storage.session.put("url.ws.stomp", "ws://192.168.88.231:61614");
 webix.storage.session.put("url.auth.login", "http://192.168.88.231:8190/api/v1/login");

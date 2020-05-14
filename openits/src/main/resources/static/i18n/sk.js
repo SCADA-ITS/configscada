@@ -933,7 +933,17 @@ var i18_sk = {
     "role.popup.alias": "Alias",
     "role.popup.description": "Description",
     "role.popup.button.create": "Create",
-    "role.popup.button.save": "Save"
+    "role.popup.button.save": "Save",
+
+    "user.button.tooltip.addUser": "Add User",
+    "user.button.tooltip.details": "Details",
+    "user.button.tooltip.edit": "Edit User",
+    "user.button.tooltip.delete": "Delete User",
+
+    "role.button.tooltip.addUser": "Add Role",
+    "role.button.tooltip.details": "Details",
+    "role.button.tooltip.edit": "Edit Role",
+    "role.button.tooltip.delete": "Delete Role",
 
 
 };

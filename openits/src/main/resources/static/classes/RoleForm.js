@@ -67,7 +67,7 @@ export default class RoleForm {
                 item["description"] = data.description;
                 item["preset"] = data.preset;
                 $$("rolesTable").updateItem(data.id, item);
-                $$("roles_win").destructor();
+                $$("role_win").destructor();
             });            
         }
 
