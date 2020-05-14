@@ -590,6 +590,11 @@ export function getElementIcon(element) {
 
     if (typeof elem_icon != "undefined") {
       elem_icon = elem_icon.icon;
+
+      // form
+      if (document.getElementById(element.id + ":Form") != null) {
+        document.getElementById(element.id + ":Form").setAttribute("xlink:href", "./img/" + elem_icon);
+      }
     } else {
       elem_icon = "";
     }
