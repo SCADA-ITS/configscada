@@ -69,12 +69,32 @@ webix.ready(function() {
                                                                     id
                                                                     language
                                                                     name
+                                                                    role {
+                                                                        id
+                                                                        rolePermissions{id alias}
+                                                                    }
+                                                                    userPermissions{id alias}
                                                                 }
                                                             }`).load({
                                                                 rowId: paramUser
                                                             }).then(data2 => {
                                                                 webix.storage.session.put("app_user_language", data2.language);
                                                                 webix.storage.session.put("app_user_name", data2.name);
+                                                                
+
+                                                                let permissions = [];
+                                                                if (data2.role.rolePermissions !== null)
+                                                                    data2.role.rolePermissions.forEach(item => {
+                                                                        permissions.push(item.id);
+                                                                    });
+                                                                if (data2.userPermissions !== null)
+                                                                    data2.userPermissions.forEach(item => {
+                                                                        permissions.push(item.id);
+                                                                    });
+                                                                if (permissions !== null)
+                                                                try {
+                                                                    webix.storage.session.put("app_user_permissions", permissions.toString());
+                                                                } catch {}
                                                                 window.location = "./home.html";
                                                             });
                                                             

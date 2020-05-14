@@ -1,5 +1,6 @@
 const language = webix.storage.session.get("app_user_language");
 const userPermissions = webix.storage.session.get("app_user_permissions");
+
 if (language) {
     $.i18n().locale = language;
 } else {

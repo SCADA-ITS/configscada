@@ -117,6 +117,32 @@ webix.ready(function() {
     		console.log("Error: " + err.message);
     	}
     });
+    
+    if (userPermissions !== "") {
+        let userPermissionsList = userPermissions.split(",");
+        if (userPermissionsList.includes("SystemPermission:2")) {//Edit User
+            console.log();
+        } else {
+            $$("b_new_user").disable();
+            $$("b_edit_user").disable();
+            $$("b_delete_user").disable();	
+        }
+        if (userPermissionsList.includes("SystemPermission:3")) {//Edit Role
+            console.log();
+        } else {
+            $$("b_new_role").disable();
+            $$("b_edit_role").disable();
+            $$("b_delete_role").disable();	
+        }
+    } else {
+        $$("b_new_user").disable();
+        $$("b_edit_user").disable();
+        $$("b_delete_user").disable();
+
+        $$("b_new_role").disable();
+        $$("b_edit_role").disable();
+        $$("b_delete_role").disable();
+    }
 });
 
 function changeStyle(){
