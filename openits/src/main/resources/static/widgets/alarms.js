@@ -36,7 +36,7 @@ let genericTablei18n = {
 		"autoConfig": true,
 		"select": true,
 		"multiselect": true,
-		"scroll": false,
+		"scroll": "y",
 		"columns": [
 			{ "id": "id", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
@@ -424,7 +424,7 @@ let genericTablei18n_recon = {
 		"autoConfig": true,
 		"select": true,
 		"multiselect": true,
-		"scroll": false,
+		"scroll": "y",
 		"columns": [
 			{ "id": "id_recon", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check_recon", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
