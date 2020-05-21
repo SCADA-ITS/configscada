@@ -144,8 +144,9 @@ export default class Alarms {
             $$('alarmsTable').updateItem(element.id, data);
             
             if (data.recognized != null ) { //SI LA ALARMA SE RECONOCE, PASA A LA TABLA ALARMAS RECONOCIDAS Y SE BORRA DE LA TABLA DE ALARMAS SIN RECONOCER
-              $$('alarmsTable_recon').add(data, 0);
-              $$('alarmsTable').remove(element.id);
+              //$$('alarmsTable_recon').add(data, 0);
+              //$$('alarmsTable').remove(element.id);
+              $$("alarmsTable").move(element.id, 0, $$("alarmsTable_recon"), {newId: element.id});
             }
             control = true;
             //  Object { id: "Alarm:1587118186077", alarmConfig: {…}, activation: 1587123750137, deactivation: 1587123760142, deactivationComments: "Desactivate for rule at 2020-04-17T11:42:40.142874Z", sourceElement: {…}, targetElement: {…} }
@@ -171,7 +172,7 @@ export default class Alarms {
             if (element.deactivation != null && element.recognized != null) { // BORRADA CUANDO SE MODIFICA
               $$('alarmsTable_recon').remove(element.id);
             }
-            control = true;
+            //control = true;
           }
         });
 
@@ -215,6 +216,9 @@ export default class Alarms {
                                 targetElement: data1.targetElement }
                         if (data.recognized != null && data.deactivation != null) { //Con esto se evita que en la tabla de alarmas reconocidas, si la desactivamos se borre  
                           $$('alarmsTable').remove(element.id);                     //de la tabla de reconocidas,pero vuelva a la tabla de alarmas no reconocidas
+                          //TODO:EL ERROR DE LAS ALARMAS
+                        }else if(data.recognized != null){ //Si la alarma llega reconocida se inserta en la tabla de alarmas reconocidas
+                          $$('alarmsTable_recon').add(data,0);
                         }else{
                           $$('alarmsTable').add(data,0); 
                         }
@@ -327,6 +331,10 @@ export default class Alarms {
                       let id = $$('alarmsTable_recon').add(data,0);
                     }else{
                       let id = $$('alarmsTable').add(data,0);
+                    }
+                    if (element.recognized != null && element.deactivation != null) { //Al iniciar la aplicacion hace un recorrido de las alarmas
+                      $$('alarmsTable_recon').remove(element.id);                     //y si la alarma esta reconocida y desactivada se borra
+                      $$('alarmsTable').remove(element.id);
                     }
                 //$$('alarmsTable').editStop();
                  
