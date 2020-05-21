@@ -862,7 +862,7 @@ var i18_en = {
     "menu.plans.title": "Plans",
     "menu.grafana": "Grafana",
     "menu.jasper": "Jasper",
-
+    "menu.dashboard.bratislava":"Map",
 
     "alarmsconfig.d.id": "Id",
     "alarmsconfig.d.alias": "Alias",
@@ -945,5 +945,8 @@ var i18_en = {
     "role.button.tooltip.details": "Details",
     "role.button.tooltip.edit": "Edit Role",
     "role.button.tooltip.delete": "Delete Role",
+
+    "equipment.tabbar.measures": "Measures",
+    "equipment.tabbar.parameter": "Parameter"
 
 };

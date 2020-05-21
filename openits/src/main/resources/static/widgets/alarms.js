@@ -626,24 +626,15 @@ let genericTablei18n_recon = {
 	}]
 };
 
-
-
 let table = new Alarms(graphAlarm, null);
-//console.log(table.data);
-//table.init();
 
 export let alarms = {
 	rows: [
 		{
-			//view:"pager", 
-			//id:"pagerA",
-			//},
-			//{ 
 			body: genericTablei18n
 		},
 		{
 			body: genericTablei18n_recon
 		}
-		//{}
 	]
 };
