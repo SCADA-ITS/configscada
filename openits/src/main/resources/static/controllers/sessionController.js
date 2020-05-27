@@ -1,5 +1,9 @@
 const language = webix.storage.session.get("app_user_language");
 const userPermissions = webix.storage.session.get("app_user_permissions");
+const userName = webix.storage.session.get("app_user_name");
+
+const GENERIC_DATA_ACTIVE_ALARMS = "/topic/generic_data.GenericData:1";
+const GENERIC_DATA_NO_RECOGNIZE_ALARMS = "/topic/generic_data.GenericData:2";
 
 if (language) {
     $.i18n().locale = language;
@@ -19,9 +23,6 @@ this.client = new StompJs.Client({
   connectHeaders: {
     login: "user",
     passcode: "user"
-  },
-  debug: function(str) {
-    console.log(str);
   },
   reconnectDelay: 5000,
   heartbeatIncoming: 4000,
@@ -44,7 +45,6 @@ this.client.onStompError = function(frame) {
   // Compliant brokers will terminate the connection after any error
   console.log("Broker reported error: " + frame.headers["message"]);
   console.log("Additional details: " + frame.body);
-  alert(`[error] ${error.message}`);
 };
 
 this.client.activate();
@@ -52,9 +52,20 @@ this.client.activate();
 function processStompMessageWithFallback(message) {
 	try {
 		let value = JSON.parse(JSON.parse(message.body)).basicElementsVO[0].value;
-		$$("bell").data.badge=value;
-		$$("bell").refresh();
-		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas activas: "+value+"</div>");
+		if (message.headers.destination == GENERIC_DATA_ACTIVE_ALARMS){
+			$$("bell").data.badge=value;
+			$$("bell").refresh();
+		}
+		else if (message.headers.destination == GENERIC_DATA_NO_RECOGNIZE_ALARMS){
+    		if(value == null || value == 0){
+    			$$("bannerTemp").hide();
+    		}
+    		else{
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas no reconocidas: "+value+"</div>");
+        		$$("bannerTemp").show();
+    		}
+		}
+		
 	} catch (err) {
 		console.log("Error: " + err.message);
 	}

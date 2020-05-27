@@ -193,13 +193,6 @@ let genericTablei18n = {
 				} else {
 					item.$css = "alarm_activated";
 				}
-				//				if (item.recognized != null) {
-				//					//$('.action_recognize').prop("visibility", "hidden");
-				//					item.addCss('.action_recognize', "recognize_hidden");
-				//				} else if (item.deactivation != null) {
-				//					//$('.action_deactivate').prop("visibility", "hidden");
-				//					item.addCss('.action_deactivate', "deactivate_hidden");
-				//				}
 			}
 		},
 		ready: function () {

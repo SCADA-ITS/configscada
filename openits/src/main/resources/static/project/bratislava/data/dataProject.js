@@ -17,7 +17,6 @@ export let menu_data_multi  = [
 	]},
 	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("menu.alarms.title")},
 	{ id: "plans", icon: "mdi mdi-clock", value:$.i18n("menu.plans.title")},
-	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")}	
 ];
 
@@ -28,6 +27,26 @@ export let toolbar_data_menu  = {
 	elements: [
 		{ view: "icon", icon: "mdi mdi-menu"},
 		{ view: "label", label: "Open Its"},
+		{ gravity: 20 },
+		{ id: "nameUser", view: "label", label: ""},
+		{ id:"user", view: "icon", icon: "mdi mdi-account-circle", 	popup: {
+			view: 'contextmenu',
+			data: [
+			  { id: 'logout', value: 'Logout' },
+			],
+			on: {
+			  onMenuItemClick(id) {
+				if (id === 'logout') {
+				  webix.message('Loging out...');
+				  webix.storage.session.remove("loginSession");
+				  webix.storage.session.remove("app_user_language");
+				  webix.storage.session.remove("app_user_name");
+				  webix.storage.session.remove("app_user_permissions");
+				  window.location = "./login.html";
+				}
+			  }
+			}
+		  }},
 		{ id:"bell", view: "icon", icon: "mdi mdi-bell"},
 		{ view: "icon", icon: "webix_icon wxi-pencil" }
 	]

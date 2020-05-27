@@ -21,9 +21,6 @@ export default class PlansTree {
         login: "user",
         passcode: "user"
       },
-      debug: function(str) {
-        console.log(str);
-      },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000
@@ -45,7 +42,6 @@ export default class PlansTree {
       // Compliant brokers will terminate the connection after any error
       console.log("Broker reported error: " + frame.headers["message"]);
       console.log("Additional details: " + frame.body);
-      alert(`[error] ${error.message}`);
     };
 
     this.client.activate();
@@ -580,12 +576,11 @@ export default class PlansTree {
             element.planOrders.map(order => { 
               planOrders.push(order);
             });
-          } catch { console.log("eeeee"); }
+          } catch { console.log(""); }
           //console.log(element);
           //console.log(planOrders);
           this.order.forEach(e => {
             try {
-              console.log(e);
               if (element.planSubtype.id === $$("treePlan").data.pull[e].qid ) {
                 let parentBranch = $$("treePlan").data.pull[e].id;
                 $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.state, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders },0, parentBranch );

@@ -65,7 +65,6 @@ export default class Alarms {
 	        console.log("Additional details: " + frame.body);
         };
 
-        this.client.activate();
     }
    
   /*
@@ -148,9 +147,13 @@ export default class Alarms {
 	                        targetElement: dataG.targetElement };
 	                	                
 	                if(data.recognized != null && data.deactivation == null){
+	                	
 	                  $$('alarmsTable_recon').add(data, 0);
+	                
 	                }else if(data.recognized == null){
-	                  $$('alarmsTable').add(data, 0); 
+	                
+	                	$$('alarmsTable').add(data, 0); 
+	                
 	                }
 	        	} 
 	        });
@@ -193,13 +196,17 @@ export default class Alarms {
                     targetElement: element.targetElement }
                 
                 	if(data.recognized != null && data.deactivation == null){
-                		$$('alarmsTable_recon').add(data, 0);
+                		
+                    	$$('alarmsTable_recon').add(data, 0);
+
                 	}else if(data.recognized == null){
+
                 		$$('alarmsTable').add(data, 0); 
                 	}
 
-            });
-
+            }
+          );
+          this.client.activate();
           return d;
         });
     }

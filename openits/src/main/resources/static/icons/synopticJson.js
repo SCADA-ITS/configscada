@@ -1,5 +1,5 @@
 export let staticsIcons = {
-	"ElementType:33": {
+	"33": {
 		"state": [
 			{
 				"id": 5,
@@ -30,7 +30,38 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:4": {
+	"23": {
+		"state": [
+			{
+				"id": 5,
+				"icon": "etd.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 150,
+				"height": 150
+			},
+			{
+				"id": 4,
+				"icon": "etd_purple.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 150,
+				"height": 150
+			},
+			{
+				"id": 6,
+				"icon": "etd_red.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 150,
+				"height": 150
+			}
+		]
+	},
+	"4": {
 		"state": [
 			{
 				"id": 5,
@@ -61,7 +92,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:3": {
+	"3": {
 		"state": [
 			{
 				"id": 700,
@@ -92,7 +123,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:2": {
+	"2": {
 		"state": [
 			{
 				"id": 9,
@@ -141,7 +172,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:1": {
+	"1": {
 		"state": [
 			{
 				"id": 310,
@@ -190,7 +221,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:5": {
+	"5": {
 		"state": [
 			{
 				"id": 1807,
@@ -203,7 +234,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:7": {
+	"7": {
 		"state": [
 			{
 				"icon": "icon_tunel_0.svg",
@@ -239,7 +270,7 @@ export let staticsIcons = {
 			},
 		]
 	},
-	"ElementType:8": {
+	"8": {
 		"state": [
 			{
 				"icon": "BAR_0.svg",
@@ -291,7 +322,7 @@ export let staticsIcons = {
 			},
 		]
 	},
-	"ElementType:9": {
+	"9": {
 		"state": [
 			{
 				"icon": "FAN_0.svg",
@@ -351,7 +382,7 @@ export let staticsIcons = {
 			},
 		]
 	},
-	"ElementType:10": {
+	"10": {
 		"size": {
 			"width": 200,
 			"height": 54
@@ -359,7 +390,7 @@ export let staticsIcons = {
 		"state": [
 		]
 	},
-	"ElementType:11": {
+	"11": {
 		"state": [
 			{
 				"icon": "SOS_0.svg",
@@ -395,7 +426,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:12": {
+	"12": {
 		"state": [
 			{
 				"icon": "LUX_0.svg",
@@ -431,7 +462,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:13": {
+	"13": {
 		"state": [
 			{
 				"icon": "SEM_0.svg",
@@ -467,7 +498,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:14": {
+	"14": {
 		"state": [
 			{
 				"icon": "LUM_0.svg",
@@ -503,7 +534,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:15": {
+	"15": {
 		"state": [
 			{
 				"icon": "FIRE_0.svg",
@@ -539,7 +570,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:16": {
+	"16": {
 		"state": [
 			{
 				"icon": "MEG_0.svg",
@@ -575,7 +606,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:17": {
+	"17": {
 		"state": [
 			{
 				"icon": "ANEM_EXT_0.svg",
@@ -611,7 +642,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:18": {
+	"18": {
 		"state": [
 			{
 				"icon": "ANEM_INT_0.svg",
@@ -647,7 +678,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:19": {
+	"19": {
 		"state": [
 			{
 				"icon": "CO_0.svg",
@@ -683,7 +714,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:20": {
+	"20": {
 		"state": [
 			{
 				"icon": "NO_0.svg",
@@ -719,7 +750,7 @@ export let staticsIcons = {
 			}
 		]
 	},
-	"ElementType:21": {
+	"21": {
 		"state": [
 			{
 				"icon": "OPAC_0.svg",

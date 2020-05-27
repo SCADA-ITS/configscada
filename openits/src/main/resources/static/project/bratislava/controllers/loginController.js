@@ -55,8 +55,6 @@ webix.ready(function() {
                                             var form = $$('loginForm')
                                             
                                             if (form.validate()) {
-                                                //webix.alert({title:"Login successfull", type:"alert-success", text:"Welcome User"})
-                                                //var rest = webix.proxy("rest", "server/datatable_rest.php");
                                                 const encodedString = btoa((form.elements.user.data.value + ':' + form.elements.password.data.value).toString('utf8')).toString('base64');
                                                 webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.login")).then(function(data){
                                                     

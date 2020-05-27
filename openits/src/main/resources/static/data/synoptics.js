@@ -462,8 +462,8 @@ export let synopticGlobal = {
 export let synopticBratislava = {
 	"BaseLayers": {
 		"base": "mapa_base.png",
-		"CAMERA": "20200506_CCTV_PK_f1.svg",
-		"WEATHER_STATION": "20200506_METEO_PK_f1.svg"
+		"2": "20200506_CCTV_PK_f1.svg",
+		"1": "20200506_METEO_PK_f1.svg"
 	},
   "Element:1:1": {
     "x": 1430,

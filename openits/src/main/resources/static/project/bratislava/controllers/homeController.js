@@ -1,7 +1,7 @@
 import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
-import { equipments } from "../widgets/equipments.js";
-import { bratislava } from "../widgets/bratislava.js";
 
+import { equipments } from "../../../widgets/equipments.js";
+import { bratislava } from "../../../widgets/bratislava.js";
 import { alarms } from "../../../widgets/alarms.js";
 import { plans } from "../../../widgets/plans.js";
 import { users } from "../../../widgets/users.js";
@@ -9,12 +9,19 @@ import { roles } from "../../../widgets/roles.js";
 import { alarmconfigs } from "../../../widgets/alarmconfigs.js";
 import { banner } from "../../../widgets/banner.js";
 
-let getAlrams = webix.proxy(  "GraphQL", `query {
+let getActiveAlarms = webix.proxy(  "GraphQL", `query {
 		  getGenericData(genericDataId:"GenericData:1") {
 			    id
 			    value
 				}
 			}`);
+
+	let getNoRecognizeAlarms = webix.proxy(  "GraphQL", `query {
+			  getGenericData(genericDataId:"GenericData:2") {
+				    id
+				    value
+					}
+				}`);
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -74,10 +81,6 @@ let main_body = {
                 rows: [bratislava]
             },
             {
-                id: "grafana",
-                rows: [grafana]
-            },
-            {
                 id: "jasper",
                 rows: [jasper]
             }]
@@ -96,16 +99,30 @@ webix.ready(function() {
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
 
-    getAlrams.load().then(data => {
+    getActiveAlarms.load().then(data => {
     	try {
-    		console.log(data);
     		$$("bell").data.badge=data.value;
     		$$("bell").refresh();
-    		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas activas: "+data.value+"</div>");
     	} catch (err) {
     		console.log("Error: " + err.message);
     	}
     });
+    
+    getNoRecognizeAlarms.load().then(data => {
+    	try {
+    		if(data== null ||  data.value == 0){
+    			$$("bannerTemp").hide();
+    		}
+    		else{
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas no reconocidas: "+data.value+"</div>");
+        		$$("bannerTemp").show();
+    		}
+    	} catch (err) {
+    		console.log("Error: " + err.message);
+    	}
+    });
+    
+    $$("nameUser").setValue(userName);
     
     if (userPermissions !== "") {
         let userPermissionsList = userPermissions.split(",");
@@ -132,7 +149,6 @@ webix.ready(function() {
         $$("b_edit_role").disable();
         $$("b_delete_role").disable();
     }
-
 });
 
 function changeStyle(){

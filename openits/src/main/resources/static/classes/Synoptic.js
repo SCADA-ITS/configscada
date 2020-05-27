@@ -10,7 +10,6 @@ import {
   getElementIcon,
   generateDMSIcon,
   generateETDIcon,
-  generateMeteoIcon,
   generateLuxIcon,
   generateLumIcon,
   generateCoIcon,
@@ -19,11 +18,16 @@ import {
   generateAnemIntIcon,
   generateAnemExtIcon,
   generateFanIcon,
-  changeDMSIcon,
+  generateBarIcon,
+  generateSemIcon,
   updateElementIcon,
   updateElementState,
-  getElementSVG
 } from "../lib/iconGenerator.js";
+
+import * as elementTypeMap from "../lib/elementTypeMap.js";
+//TODO 
+//import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
+import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
 
 export default class Synoptic {
   constructor(data, metadata, synopticDiv) {
@@ -58,27 +62,16 @@ export default class Synoptic {
 
       obj.basicElementsVO.forEach((element) => {
 
-        // check if it's a tunnel synoptic and changes the main bar in the synoptic
-        let element_type = element.id.split(":")[1];
-        if(element_type == "7") {
-          let color = "";
-          if (element.state != 3) {
-            color = "#ebb700";
-          } else {
-            color = "#ff0000";
-          }
-
-          document.getElementById(element.id + ":Bar").setAttribute("fill", color);
+        if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
+          throw "DMSException";
         }
 
-        // updates the state and the icon
-        updateElementState(element);
-        updateElementIcon(element);
+        getElementIcon(element);
       });
 
     } catch (err) {
       console.log("Error: " + err.message);
-      console.log("RETRY WITH GRAPHQL");
+      console.log("Retrying with GraphQL");
 
       let obj = JSON.parse(JSON.parse(message.body));
 
@@ -146,7 +139,6 @@ export default class Synoptic {
     }
 
     els.forEach((el) => {
-      console.log(el);
       el.attr("visibility", this.elementsToDraw[e]);
     });
   }
@@ -198,7 +190,7 @@ export default class Synoptic {
         // add basemap and base road to elements_to_draw
         this.elementsTypes.push("BASE_LAYER");
         this.elementsToDraw["BASE_LAYER"] = "visible";
-
+        
         // if we are in a tunnel synoptic, put the title bar
         if (this.synopticType == "tunnel") {
           let titleBackground = this.s.rect(
@@ -278,29 +270,36 @@ export default class Synoptic {
       })
       .then((d) => {
         d.childs.forEach((element) => {
+
+          console.log(element);
+
           if (element.id in this.synopticConf) {
             let synopticElement = this.synopticConf[element.id];
+            
+            let elementType = elementTypeMap.getElementType(element.id);
 
             // add the elementType to the array of elements to be drawn and the elementTypes array
             this.elements.push(element);
 
-            if (!this.elementsTypes.includes(element.elementType.alias)) {
-              this.elementsTypes.push(element.elementType.alias);
-              this.elementsToDraw[element.elementType.alias] = "visible";
+            if (!this.elementsTypes.includes(elementType)) {
+              this.elementsTypes.push(elementType);
+              this.elementsToDraw[elementType] = "visible";
             }
 
             // initializes the svg icon
             let el = null;
 
             // check for special icons: DMS and ETD
-            if (element.elementType.id === "ElementType:10") {
+            if (elementType === elementTypeMap.DMS_ELEMENT_TYPE) {
               // generate the base icon
+              
               let pmv_str = generateDMSIcon(element);
 
               // modify the position of the icon and adds it to the DOM
               let pmv_icon = Snap.parse(pmv_str);
 
               el = this.s.group().append(pmv_icon);
+
 
               let scale_x =
                 (this.synopticConf[element.id].width / 76) * this.ratioWidth;
@@ -315,17 +314,14 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ class: "svg_icon" });
                 el.attr({ name: element.id });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
               }
 
-              // update the pictograph
-              changeDMSIcon(element);
-
               // update the icon based on the state and/or the value
               getElementIcon(element);
-            } else if (element.elementType.alias === "ETD_modbus") {
+            } else if (elementType === elementTypeMap.ETD_MODBUS_ELEMENT_TYPE) {  // ETD Modbus
               // generate the base icon
               let etd_str = generateETDIcon(element);
 
@@ -344,18 +340,14 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "ETD_detector") {
+            } else if (elementType === elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE) {  // ETD Detector
               // generate the base icon
               let measures = this.synopticConf[element.id].values;
               let etd_str = generateETDIcon(element, measures);
@@ -363,7 +355,7 @@ export default class Synoptic {
               // modify the ETD position
               let etd_icon = Snap.parse(etd_str);
               el = this.s.group().append(etd_icon);
-
+              
               let scale_x =
                 (this.synopticConf[element.id].width / 28) * this.ratioWidth;
               let scale_y =
@@ -375,51 +367,17 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "METEO") {
-              // generate the base icon
-              let meteo_str = generateMeteoIcon(element);
-
-              // modify the METEO position
-              let etd_icon = Snap.parse(etd_str);
-              el = this.s.group().append(etd_icon);
-
-              let scale_x =
-                (this.synopticConf[element.id].width / 150) * this.ratioWidth;
-              let scale_y =
-                (this.synopticConf[element.id].height / 150) * this.ratioHeight;
-
-              if (el != null) {
-                el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
-
-                el.attr({ id: element.id });
-                el.attr({ name: element.id });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
-                el.attr({ state: element.state });
-
-                // update the icon based on the state and/or the value
-                getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
-              }
-            } else if (element.elementType.alias === "LUX") {
+            } else if (elementType === elementTypeMap.LUX_ELEMENT_TYPE) {  // LUX
               // generate the base icon
               let lux_str = generateLuxIcon(element);
-
-              // modify the LUX position
+              
               let lux_icon = Snap.parse(lux_str);
               el = this.s.group().append(lux_icon);
 
@@ -436,22 +394,18 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "LUM") {
+            } else if (elementType === elementTypeMap.LUM_ELEMENT_TYPE) {  // LUM
               // generate the base icon
               let lum_str = generateLumIcon(element);
 
-              // modify the LUX position
+              
               let lum_icon = Snap.parse(lum_str);
               el = this.s.group().append(lum_icon);
 
@@ -468,22 +422,18 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "CO") {
+            } else if (elementType === elementTypeMap.CO_ELEMENT_TYPE) {  // CO
               // generate the base icon
               let co_str = generateCoIcon(element);
 
-              // modify the LUX position
+              
               let co_icon = Snap.parse(co_str);
               el = this.s.group().append(co_icon);
 
@@ -500,22 +450,18 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "NO") {
+            } else if (elementType === elementTypeMap.NO_ELEMENT_TYPE) {  // NO
               // generate the base icon
               let no_str = generateNoIcon(element);
 
-              // modify the LUX position
+              
               let no_icon = Snap.parse(no_str);
               el = this.s.group().append(no_icon);
 
@@ -532,22 +478,18 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "OPAC") {
+            } else if (elementType === elementTypeMap.OPAC_ELEMENT_TYPE) {  // OPAC
               // generate the base icon
               let opac_str = generateOpacIcon(element);
 
-              // modify the LUX position
+              
               let opac_icon = Snap.parse(opac_str);
               el = this.s.group().append(opac_icon);
 
@@ -564,22 +506,18 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "ANEM_INT") {
+            } else if (elementType === elementTypeMap.ANEM_INT_ELEMENT_TYPE) {  // ANEM_INT
               // generate the base icon
               let anem_str = generateAnemIntIcon(element);
 
-              // modify the LUX position
+              
               let anem_icon = Snap.parse(anem_str);
               el = this.s.group().append(anem_icon);
 
@@ -596,22 +534,17 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "ANEM_EXT") {
+            } else if (elementType === elementTypeMap.ANEM_EXT_ELEMENT_TYPE) {  // ANEM_EXT
               // generate the base icon
               let anem_str = generateAnemExtIcon(element);
 
-              // modify the LUX position
               let anem_icon = Snap.parse(anem_str);
               el = this.s.group().append(anem_icon);
 
@@ -628,22 +561,17 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
-
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
               }
-            } else if (element.elementType.alias === "FAN") {
+            } else if (elementType === elementTypeMap.FAN_ELEMENT_TYPE) {  // FAN
               // generate the base icon
               let fan_str = generateFanIcon(element);
 
-              // modify the LUX position
               let fan_icon = Snap.parse(fan_str);
               el = this.s.group().append(fan_icon);
 
@@ -659,16 +587,64 @@ export default class Synoptic {
                 el.attr({ id: element.id });
                 el.attr({ name: element.id });
                 el.attr({ class: "svg_icon" });
-                el.attr({ type: element.elementType["id"] });
-                el.attr({ component: element.elementType.alias });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
                 el.attr({ state: element.state });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
+              }
+            } else if (elementType === elementTypeMap.BAR_ELEMENT_TYPE) {  // BAR
+              // generate the base icon
+              let bar_str = generateBarIcon(element);
 
-                //el.click(function(e) {
-                //  webix.message("HELLO2: " + element.id);
-                //});
+              let bar_icon = Snap.parse(bar_str);
+              el = this.s.group().append(bar_icon);
+
+              let scale_x =
+                (this.synopticConf[element.id].width / 30.163) * this.ratioWidth;
+              let scale_y =
+                (this.synopticConf[element.id].height / 16.13958) * this.ratioHeight;
+
+              if (el != null) {
+
+                el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+
+                el.attr({ id: element.id });
+                el.attr({ name: element.id });
+                el.attr({ class: "svg_icon" });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
+                el.attr({ state: element.state });
+
+                // update the icon based on the state and/or the value
+                getElementIcon(element);
+              }
+            } else if (elementType === elementTypeMap.SEM_ELEMENT_TYPE) {  // SEM
+              // generate the base icon
+              let sem_str = generateSemIcon(element);
+
+              let sem_icon = Snap.parse(sem_str);
+              el = this.s.group().append(sem_icon);
+
+              let scale_x =
+                (this.synopticConf[element.id].width / 8.752) * this.ratioWidth;
+              let scale_y =
+                (this.synopticConf[element.id].height / 10.247) * this.ratioHeight;
+
+              if (el != null) {
+
+                el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+
+                el.attr({ id: element.id });
+                el.attr({ name: element.id });
+                el.attr({ class: "svg_icon" });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
+                el.attr({ state: element.state });
+
+                // update the icon based on the state and/or the value
+                getElementIcon(element);
               }
             } else {
               // draw elements
@@ -687,7 +663,7 @@ export default class Synoptic {
                 )
                 .attr({
                   id: element.id,
-                  component: element.elementType.alias,
+                  component: elementType,
                   class: "capa_mapa",
                   visibility: "visible",
                   state: element.state,
@@ -695,7 +671,7 @@ export default class Synoptic {
 
               // check if the item is a tunnel
               // FIXME: ONLY FOR THE DEMO
-              if (element.elementType.id === "ElementType:7") {
+              if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {  // ZONE
                 im.click(function (e) {
                   $$("synoptic1").show();
                 });
@@ -761,7 +737,7 @@ export default class Synoptic {
                         $$("win" + element.id).show();
                       } else {
                         $$("win" + element.id).destructor();
-                        let elementForm = new ElementForm(element.id);
+                        let elementForm = new ElementForm(element.id,columnsElementFormList);
                         webix
                           .ui({
                             id: "win" + element.id,
@@ -770,11 +746,19 @@ export default class Synoptic {
                             close: true,
                             position: "right",
                             body: elementForm.getComponent(),
+                            on: {
+                              onDestruct: function(obj){
+                                elementForm.disconnect();
+                              },
+                              onHide: function(obj){
+                                elementForm.disconnect();
+                              }
+                            }                            
                           })
                           .show();
                       }
                     } else {
-                      let elementForm = new ElementForm(element.id);
+                      let elementForm = new ElementForm(element.id,columnsElementFormList);
                       webix
                         .ui({
                           id: "win" + element.id,
@@ -783,6 +767,14 @@ export default class Synoptic {
                           close: true,
                           position: "right",
                           body: elementForm.getComponent(),
+                          on: {
+                            onDestruct: function(obj){
+                              elementForm.disconnect();
+                            },
+                            onHide: function(obj){
+                              elementForm.disconnect();
+                            }
+                          }
                         })
                         .show();
                     }
@@ -801,7 +793,7 @@ export default class Synoptic {
                       $$("win" + element.id).show();
                     } else {
                       $$("win" + element.id).destructor();
-                      let elementForm = new ElementForm(element.id);
+                      let elementForm = new ElementForm(element.id,columnsElementFormList);
                       webix
                         .ui({
                           id: "win" + element.id,
@@ -810,11 +802,19 @@ export default class Synoptic {
                           close: true,
                           position: "right",
                           body: elementForm.getComponent(),
+                          on: {
+                            onDestruct: function(obj){
+                              elementForm.disconnect();
+                            },
+                            onHide: function(obj){
+                              elementForm.disconnect();
+                            }
+                          }
                         })
                         .show();
                     }
                   } else {
-                    let elementForm = new ElementForm(element.id);
+                    let elementForm = new ElementForm(element.id,columnsElementFormList);
                     webix
                       .ui({
                         id: "win" + element.id,
@@ -823,6 +823,14 @@ export default class Synoptic {
                         close: true,
                         position: "right",
                         body: elementForm.getComponent(),
+                        on: {
+                          onDestruct: function(obj){
+                            elementForm.disconnect();
+                          },
+                          onHide: function(obj){
+                            elementForm.disconnect();
+                          }
+                        }
                       })
                       .show();
                   }
@@ -858,7 +866,7 @@ export default class Synoptic {
 
         this.elementsTypes.map((n) => {
           let linkToAdd = document.createElement("a");
-          let linkText = document.createTextNode(n);
+          let linkText = document.createTextNode(elementTypeMap.getElementTypeName(n));
           linkToAdd.onclick = function () {
             self.handleLayers(n);
           };
@@ -901,7 +909,6 @@ export default class Synoptic {
           // Compliant brokers will terminate the connection after any error
           console.log("Broker reported error: " + frame.headers["message"]);
           console.log("Additional details: " + frame.body);
-          alert(`[error] ${error.message}`);
         };
 
         self.client.activate();
