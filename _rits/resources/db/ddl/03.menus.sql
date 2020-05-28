@@ -31,7 +31,7 @@
 		description varchar NULL,
 		enabled bool NULL,
 		visible bool NULL,
-		CONSTRAINT pk_menus PRIMARY KEY (menu_id)
+		CONSTRAINT pk_menus PRIMARY KEY (menu_id, project_type_id, project_id)
 	);
 	
 	CREATE INDEX idx_menus_projects ON ui.menus USING btree (project_type_id, project_id);
@@ -47,6 +47,8 @@
 --
 	CREATE TABLE ui.menu_hierarchies (
 		menu_id int8 NOT NULL,
+		project_type_id int8 not null,
+		project_id int8 not null,
 		menu_hierarchy_id int8 NOT NULL,
 		parent_menu_hierarchy_id int8 NULL,
 		menu_hierarchy_order int8 NOT NULL,
@@ -56,14 +58,14 @@
 		description varchar NULL,
 		enabled bool NULL,
 		visible bool NULL,
-		CONSTRAINT pk_menu_hierarchies PRIMARY KEY (menu_id, menu_hierarchy_id)
+		CONSTRAINT pk_menu_hierarchies PRIMARY KEY (menu_id, project_type_id, project_id, menu_hierarchy_id)
 	);
 	
 	CREATE INDEX idx_menu_hierarchies_menus ON ui.menu_hierarchies USING btree (menu_id);	
 	CREATE INDEX idx_menu_hierarchies_parent_menu_hierarchies ON ui.menu_hierarchies USING btree (parent_menu_hierarchy_id);
 
-	ALTER TABLE ui.menu_hierarchies ADD CONSTRAINT fk_menu_hierarchies_menus FOREIGN KEY (menu_id) REFERENCES ui.menus(menu_id);
-	ALTER TABLE ui.menu_hierarchies ADD CONSTRAINT fk_menu_hierarchies_parent_menu_hierarchies FOREIGN KEY (menu_id, parent_menu_hierarchy_id) REFERENCES ui.menu_hierarchies(menu_id, menu_hierarchy_id);
+	ALTER TABLE ui.menu_hierarchies ADD CONSTRAINT fk_menu_hierarchies_menus FOREIGN KEY (menu_id, project_type_id, project_id) REFERENCES ui.menus(menu_id, project_type_id, project_id);
+	ALTER TABLE ui.menu_hierarchies ADD CONSTRAINT fk_menu_hierarchies_parent_menu_hierarchies FOREIGN KEY (menu_id, project_type_id, project_id, parent_menu_hierarchy_id) REFERENCES ui.menu_hierarchies(menu_id, project_type_id, project_id, menu_hierarchy_id);
 		
 	ALTER TABLE ui.menu_hierarchies SET TABLESPACE tbl_ui;
 	
@@ -74,6 +76,8 @@
 --
 	CREATE TABLE ui.menu_elements (
 		menu_id int8 NOT NULL,
+		project_type_id int8 not null,
+		project_id int8 not null,
 		menu_hierarchy_id int8 NOT NULL,
 		menu_element_type_id int8 NULL,
 		menu_element_id int8 NOT NULL,
@@ -86,14 +90,14 @@
 		description varchar NULL,
 		enabled bool NULL,
 		visible bool NULL,
-		CONSTRAINT pk_menu_elements PRIMARY KEY (menu_id, menu_hierarchy_id, menu_element_type_id, menu_element_id)
+		CONSTRAINT pk_menu_elements PRIMARY KEY (menu_id, project_type_id, project_id, menu_hierarchy_id, menu_element_type_id, menu_element_id)
 	);
 	
-	CREATE INDEX idx_menu_elements_menu_hierarchies ON ui.menu_elements USING btree (menu_id, menu_hierarchy_id);
+	CREATE INDEX idx_menu_elements_menu_hierarchies ON ui.menu_elements USING btree (menu_id, project_type_id, project_id, menu_hierarchy_id);
 	CREATE INDEX idx_menu_elements_menu_element_types ON ui.menu_elements USING btree (menu_element_type_id);
 	CREATE INDEX idx_menu_elements_modules ON ui.menu_elements USING btree (module_type_id, module_id);
 
-	ALTER TABLE ui.menu_elements ADD CONSTRAINT fk_menu_elements_menu_hierarchies FOREIGN KEY (menu_id, menu_hierarchy_id) REFERENCES ui.menu_hierarchies(menu_id, menu_hierarchy_id);
+	ALTER TABLE ui.menu_elements ADD CONSTRAINT fk_menu_elements_menu_hierarchies FOREIGN KEY (menu_id, project_type_id, project_id, menu_hierarchy_id) REFERENCES ui.menu_hierarchies(menu_id, project_type_id, project_id, menu_hierarchy_id);
 	ALTER TABLE ui.menu_elements ADD CONSTRAINT fk_menu_elements_menu_element_types FOREIGN KEY (menu_element_type_id) REFERENCES ui.menu_element_types(menu_element_type_id);
 	ALTER TABLE ui.menu_elements ADD CONSTRAINT fk_menu_elements_modules FOREIGN KEY (module_type_id, module_id) REFERENCES ui.modules(module_type_id, module_id);
 		
