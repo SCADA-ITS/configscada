@@ -1,6 +1,6 @@
 export let optionElementType = [
-	{id:"ElementType:1", value:"WEATHER_STATION"},
-	{id:"ElementType:2", value:"CAMERA"}
+	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
+	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")}
 ]
 
 export let columnsElementList = {

@@ -31,6 +31,7 @@ let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
 
 toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-menu").click=function(){$$("$sidebar1").toggle();};
 toolbar_data_menu.elements.find(x => x.icon === "webix_icon wxi-pencil").click=function(){changeStyle();};
+toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-bell").click=function(){$$("$sidebar1").select("alarms");};
 
 var isLogin = webix.storage.session.get("loginSession");
 if (!isLogin) {
@@ -132,7 +133,7 @@ webix.ready(function() {
     			$$("bannerTemp").hide();
     		}
     		else{
-        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas no reconocidas: "+data.value+"</div>");
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+data.value+"</div>");
         		$$("bannerTemp").show();
     		}
     	} catch (err) {

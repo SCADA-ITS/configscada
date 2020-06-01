@@ -45,6 +45,9 @@ export default class ElementForm {
 			template: function (obj) {
 				return obj.value;
 			},
+			tooltip:function(obj){  
+				return $.i18n(obj.id.split("elementHeader")[1] + ".description");
+			},
 			css: { "text-align": "center !important" }
 		};
 
@@ -52,12 +55,13 @@ export default class ElementForm {
 			id:"elementBody" + this.id,	
             view:"datatable",
 			editable:true,
-			height: 250,
-			width: 420,
-			scroll:"y",
+			width: this.columnsElementFormList["ElementType:" + elementTypeMap.getElementType(this.id)]["width"],
+			scroll:this.columnsElementFormList["ElementType:" + elementTypeMap.getElementType(this.id)]["scroll"],
+			yCount:this.columnsElementFormList["ElementType:" + elementTypeMap.getElementType(this.id)]["rowCounts"],
 			margin: 0,
 			header: false,
-            autoConfig:true,
+			autoConfig:true,
+			tooltip:true,
 			columns:[
 				{ id:"iconAlerted", width:40,template:function(obj){
 					if(obj.iconAlerted === true) {
@@ -66,8 +70,14 @@ export default class ElementForm {
 							return "";
 					} 
 				},
-				{ id:"title", width:200},
-				{ id:"measure", width:160}
+				{ id:"title",   width:200, tooltip:function(obj){  
+						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
+					}
+				},
+				{ id:"measure", width:160, tooltip:function(obj){  
+						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
+					}
+				}
 			],
             data:[]
 		};	
@@ -178,7 +188,7 @@ export default class ElementForm {
 		this.graphql.load().then(data => {
 			// HEADER
 			try {
-				let header = data.elementType.alias + " " + data.alias;
+				let header = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
 				$$("elementHeader" + this.id).setValues({ value: header });
 			} catch (e) {
 				console.error("Error. id: "+this.id);
@@ -187,12 +197,7 @@ export default class ElementForm {
 
 			try {
 				// ICON
-				let iconoSvg = "";
-				if(elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.DMS_ELEMENT_TYPE) { //"ElementType:10"){
-					iconoSvg = getElementSVG(data, 260, 60, ":Form");
-				}else{
-					iconoSvg = getElementSVG(data, 60, 60, ":Form");
-				}
+				let iconoSvg = getElementSVG(data, 60, 60, ":Form");
 				$$("component"+this.id).addView({
 					view: "template",
 					template: iconoSvg,
@@ -212,20 +217,40 @@ export default class ElementForm {
 						stremMjpeg = data.elementValues.filter(elementValue => elementValue.id != null && elementTypeMap.getElementParamTypeId(elementValue.id) === elementTypeMap.CAM_STREAM_MJPEG); //"ElementTypeParam:2:1:3" );	
 					}	
 					if(stremMjpeg != null && stremMjpeg.length >= 1){
-						let strem = stremMjpeg[0].value;						
+						let stream = stremMjpeg[0].value;						
 						let camera = $$("component"+this.id).addView({    
 							view:"iframe",
 							borderless:true,
-							height:358,
-							width: 370,
-							src:strem
+							height:300,
+							width: 300,
+							src:stream
 						}, 1);
 						
+						let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 700 ; //700 por defecto
+						let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 700 ; //700 por defecto
+
 						let button={
 							view:"button",
 							value:"video fullscreen",
-							click: function(){
-							  webix.fullscreen.set($$(camera));
+							click: function(obj){
+							  //webix.fullscreen.set($$(camera));
+
+							  webix
+							  .ui({
+								view: "window",
+								move: true,
+								close: true,
+								position: "right",
+								body: {
+									view:"iframe",
+									borderless:true,
+									height:streamHeight,
+									width: streamWidth,
+									src:stream
+								}
+							  })
+							  .show();
+
 							}
 						};
 						$$("component" + this.id).addView(button, 2);	
@@ -238,8 +263,8 @@ export default class ElementForm {
 			let valuesList = {};
 			//BODY
 			try {
-				valuesList["id"] = {id: "elementBody" + this.id + "_id", iconAlerted: false, title: $.i18n("role.popup.id"), measure: data.id };
-				valuesList["alias"] = {id: "elementBody" + this.id + "_alias", iconAlerted: false, title: $.i18n("role.popup.alias"), measure: data.alias };
+				valuesList["id"] = {id: "elementBody" + this.id + "_id", iconAlerted: false, title: $.i18n("role.popup.id"), measure: data.id, tooltiplab: data.id  };
+				valuesList["alias"] = {id: "elementBody" + this.id + "_alias", iconAlerted: false, title: $.i18n("role.popup.alias"), measure: data.alias, tooltiplab: data.id  };
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);		
@@ -251,11 +276,11 @@ export default class ElementForm {
 					data.elementValues.forEach(item => {
 						let value = null;		
 						value = item.value;	
-						valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value };
+						valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
 				  });
 				}
 
-				this.columnsElementFormList[data.elementType.id].forEach(item => {
+				this.columnsElementFormList[data.elementType.id]["rows"].forEach(item => {
 					$$("elementBody" + this.id).add(valuesList[item]);
 				});
 

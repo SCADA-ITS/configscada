@@ -76,6 +76,9 @@ export function getElementTypeName(elementTypeIdString) {
     case "BASE_LAYER":
       ret = "BASE LAYER"
       break;
+    case "ROAD":
+      ret = "ROAD"
+      break;
     case WS_ELEMENT_TYPE:
       ret = "WEATHER STATION";
       break;

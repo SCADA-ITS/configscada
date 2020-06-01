@@ -109,9 +109,9 @@ let genericTablei18n = {
 		"select":true,
 		"columns":[
 			{ "id":"id", "header":$.i18n("rol.d.id"), hidden: true},
-			{ "id":"alias", "header":$.i18n("rol.d.alias"),width:300,  sort:"text" },
-			{ "id":"description", "header":$.i18n("rol.d.description"), width:300,  sort:"text" },
-			{ "id":"preset", "header":$.i18n("rol.d.preset"), width:300,  sort:"text" },
+			{ "id":"alias", "header": [$.i18n("rol.d.alias"), {content:"textFilter"}], width:300,  sort:"text" },
+			{ "id":"description", "header":[$.i18n("rol.d.description"), {content:"textFilter"}], width:300,  sort:"text" },
+			{ "id":"preset", "header": [$.i18n("rol.d.preset"), {content:"textFilter"}], width:300,  sort:"text" },
 		],
 		on:{
 			onItemClick: role_select,

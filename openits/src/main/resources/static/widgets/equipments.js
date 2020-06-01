@@ -1,6 +1,6 @@
 //TODO 
-import {optionElementType, columnsElementConfig, columnsElementList} from "../project/bratislava/data/equipments.js"
-//import {optionElementType, columnsElementConfig, columnsElementList} from "../project/ausol/data/equipments.js"
+//import {optionElementType, columnsElementConfig, columnsElementList} from "../project/bratislava/data/equipments.js"
+import {optionElementType, columnsElementConfig, columnsElementList} from "../project/ausol/data/equipments.js"
 import EquipmentTable from "../classes/EquipmentTable.js"
 
 function build_table(){

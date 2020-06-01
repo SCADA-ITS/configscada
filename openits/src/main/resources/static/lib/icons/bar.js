@@ -120,11 +120,11 @@ export function updateBarIcon(element, suffix = "") {
 
     if (typeof new_value.value != "undefined" && new_value.value != null) {
       if (new_value.value == "1") {
-    	  document
+        document
           .getElementById(element.id + suffix + "g3856")
           .setAttribute("transform", "rotate(0,0,0)");
       } else if (new_value.value == "0") {
-    	  document
+        document
           .getElementById(element.id + suffix + "g3856")
           .setAttribute("transform", "rotate(22.188461,3.5567155,291.27864)");
       }

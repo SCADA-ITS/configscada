@@ -1,9 +1,10 @@
 export let columnsElementFormList = {
-	"ElementType:1": [
-            "ElementTypeParam:1:1:2",
-            "ElementTypeParam:1:1:4",
-            "ElementTypeParam:1:1:3",
-            "ElementTypeParam:1:1:1",
+	"ElementType:1": {
+		"rows":[
+			"ElementTypeParam:1:1:2",
+			"ElementTypeParam:1:1:4",
+			"ElementTypeParam:1:1:3",
+			"ElementTypeParam:1:1:1",
 			"ElementTypeParam:1:2:19",
 			"ElementTypeParam:1:2:15",
 			"ElementTypeParam:1:2:14",
@@ -31,8 +32,14 @@ export let columnsElementFormList = {
 			"ElementTypeParam:1:2:26",
 			"ElementTypeParam:1:2:27",
 			"ElementTypeParam:1:2:28"
-	],
-	"ElementType:2": [
+		],
+		"rowCounts": 10,
+		"scroll": "y",  //y -> vertical x -> horizontal, false or true 
+		"width": 420,
+		"options": {}
+	},
+	"ElementType:2": {
+		"rows":[
 			"ElementTypeParam:2:1:1",
 			"ElementTypeParam:2:1:2",
 			"ElementTypeParam:2:1:4",
@@ -42,5 +49,13 @@ export let columnsElementFormList = {
 			"ElementTypeParam:2:2:5",
 			"ElementTypeParam:2:2:4",
 			"ElementTypeParam:2:2:3"
-	],
+		],
+		"rowCounts": 9,
+		"scroll": false, 
+		"width": 420,
+		"options": {
+			"streamHeight": 900,
+			"streamWidth": 900
+		}
+	}
 }

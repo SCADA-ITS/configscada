@@ -164,8 +164,6 @@ export default class Map {
     .then((d) => {
         let markers = [];
 
-        console.log(this.map);
-        
         d.childs.forEach((element) => {
           if (element.id in this.synopticConf) {
             let mapElement = this.synopticConf[element.id];
@@ -179,8 +177,6 @@ export default class Map {
               let tmpIcon = iconGenerator.getElementSVG(element, 150, 40);
               //let tmpIcon = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="480px" height="480px"> <g id="Element:10:1" state="2" transform="scale(6.315789473684211,20)"> <g id="layer1" transform="translate(0,-272.12915)"> <g id="g1739-1" transform="matrix(0.40956503,0,0,0.48504268,-500.12204,357.57278)"> <rect y="-174.73952" x="1222.5098" height="48.450024" width="48.450024" fill="black" id="Element:10:1:rect2250-2-89" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;" /> <rect y="-174.73952" x="1270.9597" height="48.44997" width="136.0842" id="Element:10:1:rect2085-1" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" /> <text xml:space="preserve" y="-161.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan fill="yellow" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:\'Erbos Draco Open NBP\';-inkscape-font-specification:\'Erbos Draco Open NBP\';fill-opacity:1;stroke-width:0.06259221" id="Element:10:1:linea1">aaaaaa</tspan> </tspan> </text> <text xml:space="preserve" y="-148.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea2"></tspan> </tspan> </text> <text xml:space="preserve" y="-134.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea3"></tspan> </tspan> </text> </g> </g> </g> </svg>';
 
-              console.log(tmpIcon);
-              
               //let tmpIcon = '<svg width="120" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'
               //+ '<circle cx="60" cy="60" r="60"/>'
               //+ '</svg>';
@@ -287,7 +283,7 @@ export default class Map {
           }),
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([174.93851974486, -41.0908343523548]),
+          center: ol.proj.fromLonLat([-4.936173, 36.457911]),
           zoom: 12,
         }),
       });

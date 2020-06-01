@@ -19,8 +19,6 @@ var graph =  `GraphQL->{
 }`;
 
 function user_select(id){
-	//let item = $$('usersTable').getItem(id);
-	//console.log(item);
 	$$("b_details_user").show();
 	$$("b_edit_user" ).show();
 	$$("b_delete_user").show();
@@ -115,13 +113,12 @@ let genericTablei18n = {
 		"select":true,
 		"columns":[
 			{ "id":"id", "header":$.i18n("user.d.id"), hidden: true, width:0},
-			{ "id":"name", "header":$.i18n("user.d.name"), width:300, sort:"text" },
-			{ "id":"fullName", "header":$.i18n("user.d.fullname"), width:300, sort:"text" },
-			{ "id":"email", "header":$.i18n("user.d.email"), width:300, sort:"text" },
-			{ "id":"language", "header":$.i18n("user.d.language"), width:200, sort:"text" },
-			{ "id":"timezone", "header":$.i18n("user.d.timezone"), width:150, sort:"text" },
-			{ "id":"isAdmin", "header":$.i18n("user.d.admin"), width:200, sort:"text" },
-			{ "id":"role", "header":$.i18n("user.d.role"), "template":function(obj){ return $.i18n(obj.role.alias); }, width:200, sort:"text" },
+			{ "id":"name", "header":[$.i18n("user.d.name"), {content:"textFilter"}], width:310, sort:"text" },
+			{ "id":"fullName", "header":[$.i18n("user.d.fullname"), {content:"textFilter"}], width:310, sort:"text" },
+			{ "id":"email", "header":[$.i18n("user.d.email"), {content:"textFilter"}], width:310, sort:"text" },
+			{ "id":"language", "header":[$.i18n("user.d.language"), {content:"textFilter"}], width:200, sort:"text" },
+			{ "id":"timezone", "header":[$.i18n("user.d.timezone"), {content:"textFilter"}], width:200, sort:"text" },
+			{ "id":"role", "header":[$.i18n("user.d.role"), {content:"textFilter"}], "template":function(obj){ return $.i18n(obj.role.alias); }, width:250, sort:"text" },
 		],
 		on:{
 			onItemClick: user_select,

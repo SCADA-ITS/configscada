@@ -7,16 +7,15 @@ export let genericTable = {
 
 export let menu_data_multi  = [
 { id: "structure", icon: "mdi mdi-view-column", value: $.i18n("menu.dashboard.title"), data:[
-	{ id: "bratislava", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.bratislava")}
+	{ id: "bratislava", icon:"mdi mdi-circle", value: $.i18n("defaultheader.dashboard")}
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
-		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("menu.tables.equipments")},
-		{ id: "users", icon:"mdi mdi-circle", value: $.i18n("menu.tables.users")},
+		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("defaultheader.equipment")},
+		{ id: "users", icon:"mdi mdi-circle", value: $.i18n("defaultheader.users")},
 		{ id: "roles", icon:"mdi mdi-circle", value: $.i18n("menu.tables.roles")},
-		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("menu.tables.alarmsconfig")}
+		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("defaultheader.alarmSettings")}
 	]},
-	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("menu.alarms.title")},
-	{ id: "plans", icon: "mdi mdi-clock", value:$.i18n("menu.plans.title")},
+	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("defaultheader.managementAlarms")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")}	
 ];
 

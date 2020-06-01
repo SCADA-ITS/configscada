@@ -26,8 +26,8 @@ import {
 
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 //TODO 
-//import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
-import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
+import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
+//import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
 
 export default class Synoptic {
   constructor(data, metadata, synopticDiv) {
@@ -129,18 +129,30 @@ export default class Synoptic {
   }
 
   handleLayers(e) {
-    let els = this.s.selectAll('[component="' + e + '"]');
-
-    // Hides device
-    if (this.elementsToDraw[e] == "visible") {
-      this.elementsToDraw[e] = "hidden";
+    if(e == "BASE_LAYER" || e == "ROAD") {
+      // Hides device
+      if (this.elementsToDraw[e] == "visible") {
+        this.elementsToDraw[e] = "hidden";
+      } else {
+        this.elementsToDraw[e] = "visible";
+      }  
     } else {
+      for (var k in this.elementsToDraw) {
+        if (k != e && k != "BASE_LAYER" && k != "ROAD") {
+          this.elementsToDraw[k] = "hidden";
+        }
+      }
       this.elementsToDraw[e] = "visible";
     }
 
-    els.forEach((el) => {
-      el.attr("visibility", this.elementsToDraw[e]);
-    });
+    for (var k in this.elementsToDraw) {
+      let els = this.s.selectAll('[component="' + k + '"]');
+
+      els.forEach((el) => {
+        el.attr("visibility", this.elementsToDraw[k]);
+      });
+    }
+
   }
 
   // got from Github
@@ -255,6 +267,12 @@ export default class Synoptic {
         let self = this;
         Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
           if(k != "base") { // base is already added
+
+            self.elementsToDraw[k] = "visible";
+            if(!self.elementsTypes.includes(k)) {
+              self.elementsTypes.push(k);
+            }
+
             // draws the base layer for this component
             self.s
             .image("./img/" + self.synopticConf["BaseLayers"][k], 0, 0, total_width, total_height)
@@ -263,7 +281,9 @@ export default class Synoptic {
               visibility: self.elementsToDraw[k],
               component: k,
             });
+            
           }
+
         });
 
         return d;
@@ -875,6 +895,12 @@ export default class Synoptic {
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);
         });
+
+        // FIXME: once it is loaded, if the synoptic is Bratislava
+        // starts only with the Cameras layer
+        if (d.description == "SYNOPTIC") {
+          this.handleLayers("2");
+        }
 
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 

@@ -61,7 +61,7 @@ function processStompMessageWithFallback(message) {
     			$$("bannerTemp").hide();
     		}
     		else{
-        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>Alarmas no reconocidas: "+value+"</div>");
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+value+"</div>");
         		$$("bannerTemp").show();
     		}
 		}

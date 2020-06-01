@@ -20,9 +20,11 @@ export function updateMegIcon(element, suffix = "") {
     elem_icon = "";
   }
 
-  if(typeof elementState != 'undefined') {
-	  if(document.getElementById(element.id + suffix) != null) {
-	    document.getElementById(element.id + suffix).setAttribute("href", "./img/" + elem_icon);
-	  }  
+  if (typeof elementState != "undefined") {
+    if (document.getElementById(element.id + suffix) != null) {
+      document
+        .getElementById(element.id + suffix)
+        .setAttribute("href", "./img/" + elem_icon);
+    }
   }
 }

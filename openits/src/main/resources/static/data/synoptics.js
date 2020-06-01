@@ -16,49 +16,49 @@ export let synopticTunnel = {
 	},
 	"Element:9:1": {
 		"x": 1172,
-		"y": 818,
+		"y": 798,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:2": {
 		"x": 1172,
-		"y": 708,
+		"y": 678,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:3": {
 		"x": 720,
-		"y": 818,
+		"y": 798,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:4": {
 		"x": 720,
-		"y": 708,
+		"y": 678,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:5": {
 		"x": 720,
-		"y": 420,
+		"y": 390,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:6": {
 		"x": 720,
-		"y": 302,
+		"y": 272,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:7": {
 		"x": 1172,
-		"y": 420,
+		"y": 390,
 		"width": 40,
 		"height": 40
 	},
 	"Element:9:8": {
 		"x": 1172,
-		"y": 302,
+		"y": 272,
 		"width": 40,
 		"height": 40
 	},
@@ -76,265 +76,265 @@ export let synopticTunnel = {
 	},
 	"Element:11:1": {
 		"x": 1548,
-		"y": 937,
+		"y": 907,
 		"width": 40,
 		"height": 40
 	},
 	"Element:11:2": {
 		"x": 156,
-		"y": 170,
+		"y": 140,
 		"width": 40,
 		"height": 40
 	},
 	"Element:11:3": {
 		"x": 880,
-		"y": 937,
+		"y": 907,
 		"width": 40,
 		"height": 40
 	},
 	"Element:11:4": {
 		"x": 966,
-		"y": 170,
+		"y": 140,
 		"width": 40,
 		"height": 40
 	},
 	"Element:11:5": {
 		"x": 208,
-		"y": 937,
+		"y": 907,
 		"width": 40,
 		"height": 40
 	},
 	"Element:11:6": {
 		"x": 1550,
-		"y": 170,
+		"y": 140,
 		"width": 40,
 		"height": 40
 	},
 	"Element:12:1": {
 		"x": 1374,
-		"y": 929,
+		"y": 901,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:2": {
 		"x": 324,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:3": {
 		"x": 1310,
-		"y": 929,
+		"y": 901,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:4": {
 		"x": 388,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:5": {
 		"x": 388,
-		"y": 929,
+		"y": 901,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:6": {
 		"x": 1320,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:7": {
 		"x": 324,
-		"y": 929,
+		"y": 901,
 		"width": 50,
 		"height": 50
 	},
 	"Element:12:8": {
 		"x": 1384,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:2:1": {
 		"x": 1440,
-		"y": 940,
+		"y": 910,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:2": {
 		"x": 459,
-		"y": 171,
+		"y": 141,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:3": {
 		"x": 939,
-		"y": 940,
+		"y": 910,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:4": {
 		"x": 900,
-		"y": 171,
+		"y": 141,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:5": {
 		"x": 539,
-		"y": 940,
+		"y": 910,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:6": {
 		"x": 1260,
-		"y": 171,
+		"y": 141,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:7": {
 		"x": 1578,
-		"y": 547,
+		"y": 517,
 		"width": 40,
 		"height": 40
 	},
 	"Element:2:8": {
 		"x": 77,
-		"y": 547,
+		"y": 517,
 		"width": 40,
 		"height": 40
 	},
 	"Element:13:1": {
 		"x": 1685,
-		"y": 898,
+		"y": 868,
 		"width": 40,
 		"height": 40
 	},
 	"Element:13:2": {
 		"x": 64,
-		"y": 468,
+		"y": 438,
 		"width": 40,
 		"height": 40
 	},
 	"Element:13:3": {
 		"x": 1685,
-		"y": 628,
+		"y": 598,
 		"width": 40,
 		"height": 40
 	},
 	"Element:13:4": {
 		"x": 64,
-		"y": 204,
+		"y": 174,
 		"width": 40,
 		"height": 40
 	},
 	"Element:14:1": {
 		"x": 1670,
-		"y": 533,
+		"y": 503,
 		"width": 60,
 		"height": 60
 	},
 	"Element:15:1": {
 		"x": 434,
-		"y": 624,
+		"y": 730,
 		"width": 315,
 		"height": 20
 	},
 	"Element:15:2": {
 		"x": 434,
-		"y": 492,
+		"y": 330,
 		"width": 315,
 		"height": 20
 	},
 	"Element:15:3": {
 		"x": 748,
-		"y": 624,
+		"y": 730,
 		"width": 315,
 		"height": 20
 	},
 	"Element:15:4": {
 		"x": 748,
-		"y": 492,
+		"y": 330,
 		"width": 315,
 		"height": 20
 	},
 	"Element:15:5": {
 		"x": 1063,
-		"y": 624,
+		"y": 730,
 		"width": 315,
 		"height": 20
 	},
 	"Element:15:6": {
 		"x": 1063,
-		"y": 492,
+		"y": 330,
 		"width": 315,
 		"height": 20
 	},
 	"Element:16:1": {
 		"x": 881,
-		"y": 580,
+		"y": 550,
 		"width": 40,
 		"height": 40
 	},
 	"Element:16:2": {
 		"x": 881,
-		"y": 524,
+		"y": 494,
 		"width": 40,
 		"height": 40
 	},
 	"Element:17:1": {
 		"x": 242,
-		"y": 165,
+		"y": 140,
 		"width": 50,
 		"height": 50
 	},
 	"Element:18:1": {
 		"x": 859,
-		"y": 671,
+		"y": 641,
 		"width": 50,
 		"height": 50
 	},
 	"Element:18:2": {
 		"x": 1050,
-		"y": 409,
+		"y": 379,
 		"width": 50,
 		"height": 50
 	},
 	"Element:19:1": {
 		"x": 1005,
-		"y": 929,
+		"y": 902,
 		"width": 50,
 		"height": 50
 	},
 	"Element:19:2": {
 		"x": 817,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:20:1": {
 		"x": 1154,
-		"y": 929,
+		"y": 902,
 		"width": 50,
 		"height": 50
 	},
 	"Element:20:2": {
 		"x": 669,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
 	"Element:21:1": {
 		"x": 1079,
-		"y": 929,
+		"y": 902,
 		"width": 50,
 		"height": 50
 	},
 	"Element:21:2": {
 		"x": 743,
-		"y": 160,
+		"y": 132,
 		"width": 50,
 		"height": 50
 	},
@@ -461,7 +461,8 @@ export let synopticGlobal = {
 
 export let synopticBratislava = {
 	"BaseLayers": {
-		"base": "mapa_base.png",
+    "base": "mapa_base.png",
+    "ROAD": "D4-R7_trazado.png",
 		"2": "20200506_CCTV_PK_f1.svg",
 		"1": "20200506_METEO_PK_f1.svg"
 	},
