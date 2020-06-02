@@ -6,11 +6,11 @@ var i18_en = {
     "defaultheader.components": "Components ",
     "defaultheader.managementAlarms": "Alarms",
     "defaultheader.alarmSettings": "Alarm settings",
-    "defaultheader.activealarms": "Active alarms",
+    "defaultheader.activealarms": "Unrecognized alarms",
     "defaultheader.history": "History ",
     "defaultheader.history.ETD": "ETD",
-    "defaultheader.jasper": "Jasper",
-    "defaultheader.grafana": "Grafana",
+    "defaultheader.jasper": "Reports",
+    "defaultheader.grafana": "Control Panel",
     "defaultheader.tools": "Tools ",
     "defaultheader.realtime": "Real time",
     "defaultheader.equipmentTreeAside": "Equipment Tree",
@@ -755,6 +755,16 @@ var i18_en = {
     "ElementTypeParam:2:1:4.description": "Carretera",
     "ElementTypeParam:2:1:5.alias": "Alias section",
     "ElementTypeParam:2:1:5.description": "Alias section",
+
+    "ElementTypeParam:2:1:6.alias": "Selection code keyboard",
+    "ElementTypeParam:2:1:6.description": "selection code keyboard",
+    "ElementTypeParam:2:1:7.alias": "Location",
+    "ElementTypeParam:2:1:7.description": "Location",
+    "ElementTypeParam:2:1:8.alias": "PK",
+    "ElementTypeParam:2:1:8.description": "PK",
+    "ElementTypeParam:2:1:9.alias": "Entrance tunnel distance",
+    "ElementTypeParam:2:1:9.description": "Entrance tunnel distance",
+
     "ElementTypeParam:2:2:1.alias": "status",
     "ElementTypeParam:2:2:1.description": "status",
     "ElementTypeParam:5:1:1.alias": "Brand",
@@ -798,6 +808,12 @@ var i18_en = {
     "ElementTypeParam:9:3:1.description": "fan cmd",
     "ElementTypeParam:9:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:9:1:1003.description": "MANGO SESSION_UID",
+
+    "ElementTypeParam:9:1:1.alias": "PK",
+    "ElementTypeParam:9:1:1.description": "PK",
+    "ElementTypeParam:9:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:9:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:1:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:1:1:1003.description": "MANGO SESSION_UID",
     
@@ -809,6 +825,12 @@ var i18_en = {
     "ElementTypeParam:10:1:1.description": "status 1",
     "ElementTypeParam:10:1:2.alias": "status 2",
     "ElementTypeParam:10:1:2.description": "status 2",
+
+    "ElementTypeParam:10:1:3.alias": "PK",
+    "ElementTypeParam:10:1:3.description": "PK",
+    "ElementTypeParam:10:1:4.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:10:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:10:1:1003.description": "MANGO SESSION_UID",
     "ElementTypeParam:10:2:1.alias": "status",
@@ -816,6 +838,12 @@ var i18_en = {
 
     "ElementTypeParam:8:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:8:1:1003.description": "MANGO SESSION_UID",
+
+    "ElementTypeParam:8:1:1.alias": "PK",
+    "ElementTypeParam:8:1:1.description": "PK",
+    "ElementTypeParam:8:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:8:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:8:3:1.alias": "bar cmd",
     "ElementTypeParam:8:3:1.description": "bar cmd",
     "ElementTypeParam:8:2:1.alias": "status",
@@ -845,44 +873,121 @@ var i18_en = {
     "ElementTypeParam:1:2:28.alias": "Plc status",
     "ElementTypeParam:1:2:28.description": "Plc status",
 
+    "ElementTypeParam:11:1:1.alias": "PK",
+    "ElementTypeParam:11:1:1.description": "PK",
+    "ElementTypeParam:11:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:11:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:11:2:1.alias": "Status",
     "ElementTypeParam:11:2:1.description": "Status",
+
+    "ElementTypeParam:12:1:1.alias": "PK",
+    "ElementTypeParam:12:1:1.description": "PK",
+    "ElementTypeParam:12:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:12:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:12:2:1.alias": "Luminosity",
     "ElementTypeParam:12:2:1.description": "Luminosity",
     "ElementTypeParam:12:2:2.alias": "Status",
     "ElementTypeParam:12:2:2.description": "Status",
+
+    "ElementTypeParam:13:1:1.alias": "PK",
+    "ElementTypeParam:13:1:1.description": "PK",
+    "ElementTypeParam:13:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:13:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:13:2:1.alias": "status",
     "ElementTypeParam:13:2:1.description": "status",
+
+    "ElementTypeParam:14:1:1.alias": "PK",
+    "ElementTypeParam:14:1:1.description": "PK",
+    "ElementTypeParam:14:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:14:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:14:2:1.alias": "status",
     "ElementTypeParam:14:2:1.description": "status",
     "ElementTypeParam:14:2:2.alias": "Luminosity",
     "ElementTypeParam:14:2:2.description": "Luminosity",
+
+    "ElementTypeParam:15:1:1.alias": "PK",
+    "ElementTypeParam:15:1:1.description": "PK",
+    "ElementTypeParam:15:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:15:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:15:2:1.alias": "status",
     "ElementTypeParam:15:2:1.description": "status",
+
+    "ElementTypeParam:16:1:1.alias": "PK",
+    "ElementTypeParam:16:1:1.description": "PK",
+    "ElementTypeParam:16:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:16:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:16:2:1.alias": "status",
     "ElementTypeParam:16:2:1.description": "status",
+
+    "ElementTypeParam:17:1:1.alias": "PK",
+    "ElementTypeParam:17:1:1.description": "PK",
+    "ElementTypeParam:17:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:17:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:17:2:1.alias": "wind speed",
     "ElementTypeParam:17:2:1.description": "wind speed",
     "ElementTypeParam:17:2:2.alias": "status",
     "ElementTypeParam:17:2:2.description": "status",
+
+    "ElementTypeParam:18:1:1.alias": "PK",
+    "ElementTypeParam:18:1:1.description": "PK",
+    "ElementTypeParam:18:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:18:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:18:2:1.alias": "wind speed",
     "ElementTypeParam:18:2:1.description": "wind speed",
     "ElementTypeParam:18:2:2.alias": "status",
     "ElementTypeParam:18:2:2.description": "status",
+
+    "ElementTypeParam:19:1:1.alias": "PK",
+    "ElementTypeParam:19:1:1.description": "PK",
+    "ElementTypeParam:19:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:19:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:19:2:1.alias": "co concentration",
     "ElementTypeParam:19:2:1.description": "co concentration",
     "ElementTypeParam:19:2:2.alias": "status",
     "ElementTypeParam:19:2:2.description": "status",
+
+    "ElementTypeParam:20:1:1.alias": "PK",
+    "ElementTypeParam:20:1:1.description": "PK",
+    "ElementTypeParam:20:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:20:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:20:2:1.alias": "no concentration",
     "ElementTypeParam:20:2:1.description": "no concentration",
     "ElementTypeParam:20:2:2.alias": "status",
     "ElementTypeParam:20:2:2.description": "status",
+
+    "ElementTypeParam:21:1:1.alias": "PK",
+    "ElementTypeParam:21:1:1.description": "PK",
+    "ElementTypeParam:21:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:21:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:21:2:1.alias": "opac concentration",
     "ElementTypeParam:21:2:1.description": "opac concentration",
     "ElementTypeParam:21:2:2.alias": "status",
     "ElementTypeParam:21:2:2.description": "status",
+
+    "ElementTypeParam:22:1:1.alias": "PK",
+    "ElementTypeParam:22:1:1.description": "PK",
+    "ElementTypeParam:22:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:22:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:22:2:1.alias": "status",
     "ElementTypeParam:22:2:1.description": "status",
+
+    "ElementTypeParam:23:1:1.alias": "PK",
+    "ElementTypeParam:23:1:1.description": "PK",
+    "ElementTypeParam:23:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:23:1:2.description": "Entrance Tunnel Distance",
+
     "ElementTypeParam:23:2:1.alias": "average length",
     "ElementTypeParam:23:2:1.description": "average length",
     "ElementTypeParam:23:2:2.alias": "average speed",
@@ -1056,6 +1161,7 @@ var i18_en = {
     "plan.form.new.title": "New Plan",
     "plan.form.order.new.title": "New Order",
 
+    "menu.dashboard.map": "Map",
     "menu.dashboard.title": "Dashboard",
     "menu.dashboard.line": "Line",
     "menu.dashboard.global": "Global",
@@ -1068,8 +1174,8 @@ var i18_en = {
     "menu.tables.alarmsconfig": "Alarms Confing",
     "menu.alarms.title": "Alarms",
     "menu.plans.title": "Plans",
-    "menu.grafana": "Grafana",
-    "menu.jasper": "Jasper",
+    "menu.grafana": "Control Panel",
+    "menu.jasper": "Reports",
     "menu.dashboard.bratislava":"ITS Dashboard",
 
     "alarmsconfig.d.id": "Id",

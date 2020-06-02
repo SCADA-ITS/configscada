@@ -201,7 +201,7 @@ export let synopticTunnel = {
 		"height": 40
 	},
 	"Element:2:8": {
-		"x": 77,
+		"x": 160,
 		"y": 517,
 		"width": 40,
 		"height": 40
@@ -232,6 +232,12 @@ export let synopticTunnel = {
 	},
 	"Element:14:1": {
 		"x": 1670,
+		"y": 503,
+		"width": 60,
+		"height": 60
+  },
+  "Element:14:2": {
+		"x": 77,
 		"y": 503,
 		"width": 60,
 		"height": 60

@@ -26,10 +26,10 @@ export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;
 export const POSITION_OF_PARAM_TYPE_ID = 4;
 
-// values
+//  elementTypeParamId : paramTypeId
 export const BAR_COMMAND_FOR_BARRIER = "1:3";
 export const FAN_COMMAND_FOR_FAN = "1:3";
-export const LUM_LUMINOSITY = "1:2";
+export const LUM_LUMINOSITY = "2:2";
 export const LUX_LUMINOSITY = "1:2";
 export const ANEM_INT_WIND_SPEED = "1:2";
 export const ANEM_EXT_WIND_SPEED = "1:2";

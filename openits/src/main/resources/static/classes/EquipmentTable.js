@@ -212,6 +212,15 @@ export default class EquipmentTable {
                                     }
                                     else
                                         colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = null;
+                                } else {
+                                    if(this.mode === 2 && elementTypeMap.getParamTypeId(obj.id) === 3) {
+                                        row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = obj.value === null ? "-" : obj.value;
+                                        if (obj.alerted) {
+                                            colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = {"background-color":"red" };
+                                        }
+                                        else
+                                            colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = null;
+                                    }
                                 }
                             });	
                         }

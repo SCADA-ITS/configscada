@@ -6,7 +6,7 @@ var graphSynoptic = webix.proxy(
   "GraphQL",
   `
   query   {
-    getElement(elementId: "Element:7:1")
+    getElement(elementId: "Element:7:4")
     {
       id
       alias

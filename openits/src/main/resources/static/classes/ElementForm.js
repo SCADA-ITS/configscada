@@ -116,42 +116,99 @@ export default class ElementForm {
 		this.client.deactivate();
 	}
 
-   update_table(message){
-	try {
-		let obj = JSON.parse(JSON.parse(message.body));
-		obj.basicElementsVO.forEach((element) => {
-			try {
-				let item = $$("elementBody" + element.id);
-                if(item != null) {
-					getElementIcon(element, ":Form");
-					let evalues = element.elementValues !== undefined ? element.elementValues : null;
-					if(evalues !== null) {
-						element.elementValues.forEach(evalue => {
-							try {
-								let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
-								let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
-								if (item3 !== null) {
-									let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
-									let alerted = evalue.alerted !== undefined ? evalue.alerted : -1 ;
-									item3["measure"] = value;
-									if (alerted !== -1) {
-										item3["iconAlerted"] = evalue.alerted;
+	update_table(message) {
+		try {
+			let obj = JSON.parse(JSON.parse(message.body));
+			obj.basicElementsVO.forEach((element) => {
+				try {
+					let item = $$("elementBody" + element.id);
+					if (item != null) {
+						if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
+							let obj = JSON.parse(JSON.parse(message.body));
+
+							obj.basicElementsVO.forEach((element) => {
+								//initialize the proxy
+								let elementQuery = webix.proxy(
+									"GraphQL",
+									`
+									query ($elem: String!) {
+										getElement(elementId: $elem)
+										{
+											id
+											state
+											elementType {
+												id
+												alias
+											}
+											elementValues
+											{
+												id
+												value
+												alerted
+												elementTypeParam {
+													description
+												}
+											}
+										}
 									}
+									`
+								);
+
+								// loads the data
+								elementQuery
+									.load({
+										elem: element.id,
+									})
+									.then((data) => {
+										// process the received data
+										let element = data;
+
+										getElementIcon(element, ":Form");
+									});
+
+							});
+						} else {
+							let evalues = element.elementValues !== undefined ? element.elementValues : null;
+							try {
+								if (evalues === null)
+									element["elementValues"] = [];
+								getElementIcon(element, ":Form");
+							} catch (err) {
+								console.log("Error: " + err.message);
+							}
+							if (evalues !== null) {
+								element.elementValues.forEach(evalue => {
 									try {
-										$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);    
-									} catch (err) { console.log("Error: " + err.message); }                     
-								}
-							} catch (err) { console.log("Error: " + err.message); }           
-						});
+										let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
+										let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
+										if (item3 !== null) {
+											let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
+											let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
+											item3["measure"] = value;
+											if (alerted !== -1) {
+												item3["iconAlerted"] = evalue.alerted;
+											}
+											try {
+												$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
+											} catch (err) {
+												console.log("Error: " + err.message);
+											}
+										}
+									} catch (err) {
+										console.log("Error: " + err.message);
+									}
+								});
+							}
+						}
 					}
+				} catch (err) {
+					console.log("Error: " + err.message);
 				}
-			} catch (err) { console.log("Error: " + err.message); }
-		});
-  
-	} catch (err) {
-	  console.log("Error: " + err.message);
+			});
+		} catch (err) {
+			console.log("Error: " + err.message);
+		}
 	}
-  }
 
     // got from Github
     elementReady(selector) {
@@ -197,12 +254,23 @@ export default class ElementForm {
 
 			try {
 				// ICON
-				let iconoSvg = getElementSVG(data, 60, 60, ":Form");
-				$$("component"+this.id).addView({
-					view: "template",
-					template: iconoSvg,
-					height: 80
-				}, 1);
+				let iconoSvg = "";
+				if (
+					elementTypeMap.getElementType(data.elementType.id) ===
+					elementTypeMap.DMS_ELEMENT_TYPE
+				) {
+					//"ElementType:10"){
+					iconoSvg = getElementSVG(data, 260, 60, ":Form");
+				} else {
+					iconoSvg = getElementSVG(data, 60, 60, ":Form");
+				}
+				$$("component" + this.id).addView({
+						view: "template",
+						template: iconoSvg,
+						height: 80,
+					},
+					1
+				);
 				getElementIcon(data, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);
@@ -217,17 +285,21 @@ export default class ElementForm {
 						stremMjpeg = data.elementValues.filter(elementValue => elementValue.id != null && elementTypeMap.getElementParamTypeId(elementValue.id) === elementTypeMap.CAM_STREAM_MJPEG); //"ElementTypeParam:2:1:3" );	
 					}	
 					if(stremMjpeg != null && stremMjpeg.length >= 1){
+						let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
+						let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
 						let stream = stremMjpeg[0].value;						
 						let camera = $$("component"+this.id).addView({    
-							view:"iframe",
-							borderless:true,
-							height:300,
-							width: 300,
-							src:stream
+							height:streamHeight,
+							width: streamWidth,
+							data: {title: "Image One", src: stream },
+							template: function (obj) {
+							  // obj is a data record object
+							  return '<img src="'+obj.src+'"width="' + streamWidth + '" "height="' +streamHeight + '" />'
+							}
 						}, 1);
 						
-						let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 700 ; //700 por defecto
-						let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 700 ; //700 por defecto
+						let streamFullViewHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] : 700 ; //700 por defecto
+						let streamFullViewWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] : 700 ; //700 por defecto
 
 						let button={
 							view:"button",
@@ -237,17 +309,25 @@ export default class ElementForm {
 
 							  webix
 							  .ui({
+								id: "fullviewWindowsElementForm",
 								view: "window",
 								move: true,
 								close: true,
 								position: "right",
 								body: {
-									view:"iframe",
-									borderless:true,
-									height:streamHeight,
-									width: streamWidth,
-									src:stream
-								}
+									id: "streamFullViewElementForm",
+									height:streamFullViewHeight,
+									width: streamFullViewWidth,
+									data: {title: "Image One", src: stream },
+									template: function (obj) {
+									  return '<img src="'+obj.src+'"width="' + streamFullViewWidth + '" "height="' +streamFullViewHeight + '" />'
+									}
+								},
+								on: {
+									onHide: function(obj){
+										$$( "fullviewWindowsElementForm").destructor();
+									}
+								  }
 							  })
 							  .show();
 
@@ -281,7 +361,12 @@ export default class ElementForm {
 				}
 
 				this.columnsElementFormList[data.elementType.id]["rows"].forEach(item => {
-					$$("elementBody" + this.id).add(valuesList[item]);
+					try {
+						$$("elementBody" + this.id).add(valuesList[item]);
+					} catch (e) {
+						console.error("Error. id: "+this.id+ "_ " + item);
+						console.error(e);
+					}
 				});
 
 			} catch (e) {

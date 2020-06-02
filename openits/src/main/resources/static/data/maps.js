@@ -1,4 +1,10 @@
 export let mapTG = {
+	"Element:7:1": {
+		"lon": -4.962095,
+		"lat": 36.525937,
+		"width": 40,
+		"height": 40
+	},
 	"Element:10:1": {
 		"lon": -4.933339,
 		"lat": 36.514373,

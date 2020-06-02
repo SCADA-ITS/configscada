@@ -2,6 +2,9 @@ import { mapTG } from "../data/maps.js";
 import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
+import ElementForm from "../classes/ElementForm.js";
+import { columnsElementFormList } from "../project/bratislava/data/elementForm.js";
+
 export default class Map {
   constructor(data, metadata, synopticDiv) {
     this.elements = [];
@@ -58,7 +61,7 @@ export default class Map {
         updateElementState(element);
         updateElementIcon(element);
         */
-        getElementIcon(element);
+        iconGenerator.getElementIcon(element);
       });
     } catch (err) {
       console.log("Error: " + err.message);
@@ -160,8 +163,8 @@ export default class Map {
     let self = this;
 
     this.data
-    .load()
-    .then((d) => {
+      .load()
+      .then((d) => {
         let markers = [];
 
         d.childs.forEach((element) => {
@@ -169,42 +172,88 @@ export default class Map {
             let mapElement = this.synopticConf[element.id];
 
             let workingFeature = new ol.Feature({
-              geometry: new ol.geom.Point(ol.proj.fromLonLat([mapElement.lon, mapElement.lat])),
+              geometry: new ol.geom.Point(
+                ol.proj.fromLonLat([mapElement.lon, mapElement.lat])
+              ),
               id: element.id,
             });
-           
-            if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
+
+            if (
+              elementTypeMap.getElementType(element.id) ==
+              elementTypeMap.ZONE_ELEMENT_TYPE
+            ) {
+              let tmpIcon = iconGenerator.getElementSVG(element, 40, 40);
+
+              let canvas = document.createElement("canvas");
+              // get canvas context for drawing on canvas
+              let context = canvas.getContext("2d");
+              // set canvas size
+              //canvas.width = width;
+              //canvas.height = height;
+
+              // call svgString2Image function
+              iconGenerator.drawInlineSVG(
+                canvas,
+                context,
+                tmpIcon,
+                function () {
+                  //console.log(canvas.toDataURL());
+                }
+              );
+
+              //console.log(tmpIcon);
+
+              let workingStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                  opacity: 1,
+                  src: "data:image/svg+xml;utf8," + tmpIcon,
+                  scale: 1,
+                }),
+              });
+
+              workingFeature.setStyle(workingStyle);
+              workingFeature.set("component", "Incident");
+              workingFeature.setId(element.id.toString());
+              markers.push(workingFeature);
+            } else if (
+              elementTypeMap.getElementType(element.id) ==
+              elementTypeMap.DMS_ELEMENT_TYPE
+            ) {
               let tmpIcon = iconGenerator.getElementSVG(element, 150, 40);
+
               //let tmpIcon = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="480px" height="480px"> <g id="Element:10:1" state="2" transform="scale(6.315789473684211,20)"> <g id="layer1" transform="translate(0,-272.12915)"> <g id="g1739-1" transform="matrix(0.40956503,0,0,0.48504268,-500.12204,357.57278)"> <rect y="-174.73952" x="1222.5098" height="48.450024" width="48.450024" fill="black" id="Element:10:1:rect2250-2-89" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;" /> <rect y="-174.73952" x="1270.9597" height="48.44997" width="136.0842" id="Element:10:1:rect2085-1" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" /> <text xml:space="preserve" y="-161.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan fill="yellow" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:\'Erbos Draco Open NBP\';-inkscape-font-specification:\'Erbos Draco Open NBP\';fill-opacity:1;stroke-width:0.06259221" id="Element:10:1:linea1">aaaaaa</tspan> </tspan> </text> <text xml:space="preserve" y="-148.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea2"></tspan> </tspan> </text> <text xml:space="preserve" y="-134.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea3"></tspan> </tspan> </text> </g> </g> </g> </svg>';
 
               //let tmpIcon = '<svg width="120" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'
               //+ '<circle cx="60" cy="60" r="60"/>'
               //+ '</svg>';
-              
 
-              let canvas = document.createElement('canvas');
+              let canvas = document.createElement("canvas");
               // get canvas context for drawing on canvas
-              let context = canvas.getContext('2d');
+              let context = canvas.getContext("2d");
               // set canvas size
               //canvas.width = width;
               //canvas.height = height;
-              
+
               // call svgString2Image function
-              iconGenerator.drawInlineSVG(canvas, context, tmpIcon, function() {
-                //alert("HELLO");
-                console.log(canvas.toDataURL());
-              });
-              
+              iconGenerator.drawInlineSVG(
+                canvas,
+                context,
+                tmpIcon,
+                function () {
+                  console.log(canvas.toDataURL());
+                }
+              );
+
               //console.log(tmpIcon);
-              
+
               let workingStyle = new ol.style.Style({
                 image: new ol.style.Icon({
                   opacity: 1,
                   src: "data:image/svg+xml;utf8," + tmpIcon,
-                  scale: 1
+                  scale: 1,
                 }),
               });
-  
+
               workingFeature.setStyle(workingStyle);
               workingFeature.set("component", "Incident");
               workingFeature.setId(element.id.toString());
@@ -288,9 +337,72 @@ export default class Map {
         }),
       });
 
+      // select interaction working on "click"
+      let selectClick = new ol.interaction.Select({
+        condition: ol.events.condition.click,
+      });
+
+      selectClick.on("select", function (e) {
+        /*
+        // Open the ElementForm
+        let elementForm = new ElementForm(
+          e.target.getFeatures().array_[0].id_,
+          columnsElementFormList
+        );
+        webix
+          .ui({
+            id: "win" + e.target.getFeatures().array_[0].id_,
+            view: "window",
+            move: true,
+            close: true,
+            position: "right",
+            body: elementForm.getComponent(),
+            on: {
+              onDestruct: function (obj) {
+                elementForm.disconnect();
+              },
+              onHide: function (obj) {
+                elementForm.disconnect();
+              },
+            },
+          })
+          .show();
+        */
+
+        let element_id = e.target.getFeatures().array_[0].id_;
+        if (
+          elementTypeMap.getElementType(element_id) !=
+          elementTypeMap.ZONE_ELEMENT_TYPE
+        ) {
+          let elementForm = new ElementForm(element_id, columnsElementFormList);
+          webix
+            .ui({
+              id: "win" + element_id,
+              view: "window",
+              move: true,
+              close: true,
+              position: "right",
+              body: elementForm.getComponent(),
+              on: {
+                onDestruct: function (obj) {
+                  elementForm.disconnect();
+                },
+                onHide: function (obj) {
+                  elementForm.disconnect();
+                },
+              },
+            })
+            .show();
+        } else {
+          $$("synoptic1").show();
+        }
+      });
+
+      this.map.addInteraction(selectClick);
+
       //this.elementReady("#map").then((c1) => {
-        // loads data and draws for first time
-        this.loadData();
+      // loads data and draws for first time
+      this.loadData();
       //});
     });
 
@@ -309,9 +421,12 @@ export default class Map {
 
     this.synopticType = synopticConf;
 
+    */
+
     let self = this;
     // waits for the element and starts drawing
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {
+      /*
       let spinnerDivToAdd = document.createElement("div");
       spinnerDivToAdd.setAttribute("id", this.synopticDiv + "spinner");
       spinnerDivToAdd.setAttribute("class", "spinner");
@@ -341,9 +456,70 @@ export default class Map {
         // loads data and draws for first time
         this.loadData();
       });
+      */
 
       this.initResponsive();
     });
-    */
+
+  }
+
+  /*
+   * Initializes the responsiveness
+   */
+  initResponsive() {
+    let e = document.getElementsByClassName("webix_sidebar")[0];
+
+    let self = this;
+
+    let observer = new MutationObserver(function (event) {
+      //self.doResponsive();
+      setTimeout( function() { self.map.updateSize();}, 10);
+    });
+
+    observer.observe(e, {
+      attributes: true,
+      attributeFilter: ["class"],
+      childList: false,
+      characterData: false,
+    });
+
+    // observer for the change multiview event (show or hide)
+    // it has to filter if the event is related to the synoptic instance
+    let showOrHideObserver = new MutationObserver(function (event) {
+      try {
+        let newNode =
+          event[0].addedNodes[0].children[0].children[0].attributes["view_id"]
+            .value;
+
+          if (newNode == self.synopticDiv) {
+            // Launch the query again
+            //document.getElementById(self.synopticDiv + "spinner").style.display = "block";
+            self.data.load().then((d) => {
+              
+              d.childs.forEach((element) => {
+                updateElementState(element);
+                updateElementIcon(element);
+              });
+
+            }).then(() => {
+              //document.getElementById(self.synopticDiv + "spinner").style.display = "none";
+            });
+          }
+      } catch (e) {}
+    });
+
+    // obtains the parent of the synoptic
+    let showOrHideObserverTarget = document.querySelector(
+      '[view_id="multiview"]'
+    );
+
+    showOrHideObserver.observe(showOrHideObserverTarget, {
+      attributes: false,
+      childList: true,
+      characterData: false,
+    });
+
+    // Attaching the event listener function to window's resize event
+    window.addEventListener("resize", function() { self.doResponsive(self) });
   }
 }

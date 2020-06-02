@@ -74,6 +74,11 @@ export function generateIcon(element, suffix = "") {
       linea3 +
       "</tspan></tspan></text>" +
       "</g>" +
+      '<g>' +
+      '<rect fill="white" id="rect847" width="12.787097" height="13.634683" x="4.4404564" y="274.40842" />' +
+      '<path fill="black" d="M 9.8549071,286.82406 H 8.2364542 l -0.3488429,-1.04338 -0.3488446,-1.04336 0.7110826,-1.52497 0.7110825,-1.52497 H 8.5196664 8.0784024 l 1.1572161,-1.46761 1.1572165,-1.46763 h 0.872934 0.872935 l -1.291703,2.906 -1.2917039,2.90602 v 0.39615 0.39614 h 0.9590319 0.959033 v 0.7338 0.73381 z m 1.6184549,-8.80574 h -0.56389 l -0.429574,-0.79776 -0.429572,-0.79774 0.711517,-0.81663 0.711519,-0.81664 0.711517,0.81664 0.711517,0.81663 -0.429572,0.79774 -0.429574,0.79776 z" id="path854" inkscape:connector-curvature="0" sodipodi:nodetypes="cccccccccccccccccccccccccccccccc" />' +
+      '<path fill="blue" id="path845" d="M 10.834006,295.99673 H 0.92400599 v -11.741 -11.041 h 9.91000001 9.91 v 11.741 10.741 z m 0,-7.9536 h 6.393547 v -6.81735 -6.81733 H 10.834006 4.4404568 v 6.81733 6.81735 z" />' +
+      "</g>" +
       "</g>";
   }
 
@@ -83,6 +88,7 @@ export function generateIcon(element, suffix = "") {
 export function changeDMSIcon(element, suffix="") {
   // adds the pictograph
   // currently its fixed to pic1.jpg
+  /*
   let pmv_pic = document.getElementById(element.id + suffix + ":rect2250-2-89"); // selects the pictograph rectangle
   let r = Snap(pmv_pic);
   let rpg = r.parent().group();
@@ -93,6 +99,7 @@ export function changeDMSIcon(element, suffix="") {
     r.node.getAttribute("width"),
     r.node.getAttribute("height")
   );
+  */
 }
 
 export function updateDmsIcon(element, suffix = "") {

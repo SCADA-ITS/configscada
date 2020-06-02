@@ -20,14 +20,15 @@ import {
   generateFanIcon,
   generateBarIcon,
   generateSemIcon,
+  generateZoneIcon,
   updateElementIcon,
   updateElementState,
 } from "../lib/iconGenerator.js";
 
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 //TODO 
-import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
-//import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
+//import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
+import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
 
 export default class Synoptic {
   constructor(data, metadata, synopticDiv) {
@@ -666,6 +667,32 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
+            } else if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {  // ZONE
+              // generate the base icon
+              let zone_str = generateZoneIcon(element);
+
+              let zone_icon = Snap.parse(zone_str);
+              el = this.s.group().append(zone_icon);
+
+              let scale_x =
+                (this.synopticConf[element.id].width / 4122.35) * this.ratioWidth;
+              let scale_y =
+                (this.synopticConf[element.id].height / 3382.97) * this.ratioHeight;
+
+              if (el != null) {
+
+                el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+
+                el.attr({ id: element.id });
+                el.attr({ name: element.id });
+                el.attr({ class: "svg_icon" });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
+                el.attr({ state: element.state });
+
+                // update the icon based on the state and/or the value
+                getElementIcon(element);
+              }
             } else {
               // draw elements
               let elem_icon = getElementIcon(element).icon;
@@ -692,6 +719,7 @@ export default class Synoptic {
               // check if the item is a tunnel
               // FIXME: ONLY FOR THE DEMO
               if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {  // ZONE
+                /*
                 im.click(function (e) {
                   $$("synoptic1").show();
                 });
@@ -749,6 +777,7 @@ export default class Synoptic {
                     $$("synoptic1").show();
                   });
                 }
+                */
               } else {
                 im.click(function (e) {
                   try {
@@ -806,13 +835,94 @@ export default class Synoptic {
             }
 
             if (el != null) {
-              el.click(function (e) {
-                try {
-                  if ($$("win" + element.id) != null) {
-                    if ("Element:2:1" === element.id) {
-                      $$("win" + element.id).show();
+              if(elementTypeMap.getElementType(element.id) == elementTypeMap.ZONE_ELEMENT_TYPE) {
+                el.click(function (e) {
+                  $$("synoptic1").show();
+                });
+
+                // FIXME: this is for the global synoptic, adds the title to the tunnel
+                if (this.synopticType == "global") {
+                  let c = document.querySelector(
+                    '[view_id="' + this.synopticDiv + '"]'
+                  );
+                  let total_width = c.offsetWidth;
+                  let total_height = c.offsetHeight;
+                  let titleBackground = this.s.rect(
+                    synopticElement.x * this.ratioWidth,
+                    total_height -
+                      30 * this.ratioHeight -
+                      synopticElement.y * this.ratioHeight,
+                    synopticElement.width * this.ratioWidth,
+                    synopticElement.height * this.ratioHeight
+                  );
+
+                  el.remove();
+
+                  // It's set just for the demo
+                  if (element.state != 3) {
+                    titleBackground.attr({
+                      fill: "#ebb700",
+                    });
+                  } else {
+                    titleBackground.attr({
+                      fill: "#ff0000",
+                    });
+                  }
+
+                  // FIXME: The id should be: 'id: d.id + ":Bar"' in a generic way
+                  titleBackground.attr({
+                    id: element.id + ":Bar",
+                    class: "capa_mapa",
+                  });
+
+                  // FIXME: there is no "Rio Verde" tunnel in the DB, just "Tunnel 1" so we set it manually
+                  // We should bring modify the GraphQL query (add "description" field) and bring it from the DB
+                  //let titleText = this.s.text((synopticElement.x + 105) * this.ratioWidth, total_height - 781 * this.ratioHeight, element.description);
+                  let titleText = this.s.text(
+                    (synopticElement.x + 105) * this.ratioWidth,
+                    total_height - 781 * this.ratioHeight,
+                    "RIO VERDE"
+                  );
+                  titleText.attr({
+                    "font-size": 21 * this.ratioWidth,
+                    fill: "#ffffff",
+                    class: "banner_title",
+                  });
+
+                  titleBackground.click(function (e) {
+                    $$("synoptic1").show();
+                  });
+                }
+              } else {
+                el.click(function (e) {
+                  try {
+                    if ($$("win" + element.id) != null) {
+                      if ("Element:2:1" === element.id) {
+                        $$("win" + element.id).show();
+                      } else {
+                        $$("win" + element.id).destructor();
+                        let elementForm = new ElementForm(element.id,columnsElementFormList);
+                        webix
+                          .ui({
+                            id: "win" + element.id,
+                            view: "window",
+                            move: true,
+                            close: true,
+                            position: "right",
+                            body: elementForm.getComponent(),
+                            on: {
+                              onDestruct: function(obj){
+                                elementForm.disconnect();
+                              },
+                              onHide: function(obj){
+                                elementForm.disconnect();
+                              }
+                            }
+                          })
+                          .show();
+                      }
                     } else {
-                      $$("win" + element.id).destructor();
+                     // $$("win" + element.id).destructor();
                       let elementForm = new ElementForm(element.id,columnsElementFormList);
                       webix
                         .ui({
@@ -833,31 +943,13 @@ export default class Synoptic {
                         })
                         .show();
                     }
-                  } else {
-                    let elementForm = new ElementForm(element.id,columnsElementFormList);
-                    webix
-                      .ui({
-                        id: "win" + element.id,
-                        view: "window",
-                        move: true,
-                        close: true,
-                        position: "right",
-                        body: elementForm.getComponent(),
-                        on: {
-                          onDestruct: function(obj){
-                            elementForm.disconnect();
-                          },
-                          onHide: function(obj){
-                            elementForm.disconnect();
-                          }
-                        }
-                      })
-                      .show();
+                  } catch (e) {
+                    // TODO: handle exception
                   }
-                } catch (e) {
-                  // TODO: handle exception
-                }
-              });
+                });
+
+              }
+
             }
           }
         });

@@ -13,9 +13,7 @@ export let optionElementType = [
 	{id:"ElementType:18", value:"ANEM_INT"},
 	{id:"ElementType:19", value:"CO"},
 	{id:"ElementType:20", value:"NO"},
-	{id:"ElementType:21", value:"OPAC"},
-	{id:"ElementType:22", value:"ETD_modbus"},
-	{id:"ElementType:23", value:"ETD_detector"}
+	{id:"ElementType:21", value:"OPAC"}
 ]
 
 export let columnsElementList = {
@@ -60,7 +58,11 @@ export let columnsElementList = {
 			"ElementTypeParam:2:1:2",
 			"ElementTypeParam:2:1:4",
 			"ElementTypeParam:2:1:5",
-			"ElementTypeParam:2:1:3"
+			"ElementTypeParam:2:1:3",
+			"ElementTypeParam:2:1:6",
+			"ElementTypeParam:2:1:7",
+			"ElementTypeParam:2:1:8",
+			"ElementTypeParam:2:1:9"
 		],
 		2:[
 			"alias",
@@ -72,21 +74,23 @@ export let columnsElementList = {
 	},
 	"ElementType:8": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:8:1:1",
+			"ElementTypeParam:8:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:8:2:1",
 			"ElementTypeParam:8:3:1"
 		]
 	},
 	"ElementType:9": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:9:1:1",
+			"ElementTypeParam:9:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:9:2:1",
 			"ElementTypeParam:9:3:1"
 		]
 	},
@@ -94,124 +98,138 @@ export let columnsElementList = {
 		1:[
 			"alias",
 			"ElementTypeParam:10:1:1", 
-			"ElementTypeParam:10:1:2"
+			"ElementTypeParam:10:1:2",
+			"ElementTypeParam:10:1:3",
+			"ElementTypeParam:10:1:4"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:10:2:1", 
 			"ElementTypeParam:10:2:2", 
 			"ElementTypeParam:10:3:1"
 		]
 	},
 	"ElementType:11": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:11:1:1",
+			"ElementTypeParam:11:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:11:2:1"
 		]
 	},
 	"ElementType:12": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:12:1:1",
+			"ElementTypeParam:12:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:12:2:1", 
-			"ElementTypeParam:12:2:2"
+			"ElementTypeParam:12:2:1"
 		]
 	},
 	"ElementType:13": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:13:1:1",
+			"ElementTypeParam:13:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:13:2:1"
 		]
 	},
 	"ElementType:14": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:14:1:1",
+			"ElementTypeParam:14:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:14:2:1", 
 			"ElementTypeParam:14:2:2"
 		]
 	},
 	"ElementType:15": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:15:1:1",
+			"ElementTypeParam:15:1:2"
 		],
 		2:[
-			"alias",
-			"ElementTypeParam:15:2:1"
+			"alias"
 		]
 	},
 	"ElementType:16": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:16:1:1",
+			"ElementTypeParam:16:1:2"
 		],
 		2:[
-			"alias",
-			"ElementTypeParam:16:2:1"
+			"alias"
 		]
 	},
 	"ElementType:17": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:17:1:1",
+			"ElementTypeParam:17:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:17:2:1",
-			"ElementTypeParam:17:2:2"
+			"ElementTypeParam:17:2:1"
 		]
 	},
 	"ElementType:18": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:18:1:1",
+			"ElementTypeParam:18:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:18:2:1",
-			"ElementTypeParam:18:2:2"
+			"ElementTypeParam:18:2:1"
 		]
 	},
 	"ElementType:19": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:19:1:1",
+			"ElementTypeParam:19:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:19:2:1",
-			"ElementTypeParam:19:2:2"
+			"ElementTypeParam:19:2:1"
 		]
 	},
 	"ElementType:20": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:20:1:1",
+			"ElementTypeParam:20:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:20:2:1",
-			"ElementTypeParam:20:2:2"
+			"ElementTypeParam:20:2:1"
 		]
 	},
 	"ElementType:21": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:21:1:1",
+			"ElementTypeParam:21:1:2"
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:21:2:1",
-			"ElementTypeParam:21:2:2"
+			"ElementTypeParam:21:2:1"
 		]
 	},
 	"ElementType:22": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:22:1:1",
+			"ElementTypeParam:22:1:2"
 		],
 		2:[
 			"alias",
@@ -220,7 +238,9 @@ export let columnsElementList = {
 	},
 	"ElementType:23": { 
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:23:1:1",
+			"ElementTypeParam:23:1:2"
 		],
 		2:[
 			"alias",
@@ -565,6 +585,18 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:2:1:4": { //"road"
 				"header": [ $.i18n("ElementTypeParam:2:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:6": {
+				"header": [ $.i18n("ElementTypeParam:2:1:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:7": { 
+				"header": [ $.i18n("ElementTypeParam:2:1:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:8": { //"road"
+				"header": [ $.i18n("ElementTypeParam:2:1:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:9": { //"road"
+				"header": [ $.i18n("ElementTypeParam:2:1:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -591,6 +623,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:8:1:1": {
+				"header": [ $.i18n("ElementTypeParam:8:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:8:1:2": {
+				"header": [ $.i18n("ElementTypeParam:8:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -611,6 +649,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:9:1:1": {
+				"header": [ $.i18n("ElementTypeParam:9:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:9:1:2": {
+				"header": [ $.i18n("ElementTypeParam:9:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -637,6 +681,12 @@ export let columnsElementConfig = {
 			},
 			"ElementTypeParam:10:1:2": { //"status_2
 				"header": [ $.i18n("ElementTypeParam:10:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:10:1:3": {
+				"header": [ $.i18n("ElementTypeParam:10:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:10:1:4": {
+				"header": [ $.i18n("ElementTypeParam:10:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -660,6 +710,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:11:1:1": {
+				"header": [ $.i18n("ElementTypeParam:11:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:11:1:2": {
+				"header": [ $.i18n("ElementTypeParam:11:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -677,6 +733,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:12:1:1": {
+				"header": [ $.i18n("ElementTypeParam:12:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:12:1:2": {
+				"header": [ $.i18n("ElementTypeParam:12:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -697,6 +759,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:13:1:1": {
+				"header": [ $.i18n("ElementTypeParam:13:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:13:1:2": {
+				"header": [ $.i18n("ElementTypeParam:13:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -714,6 +782,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:14:1:1": {
+				"header": [ $.i18n("ElementTypeParam:14:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:14:1:2": {
+				"header": [ $.i18n("ElementTypeParam:14:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -734,6 +808,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:15:1:1": {
+				"header": [ $.i18n("ElementTypeParam:15:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:15:1:2": {
+				"header": [ $.i18n("ElementTypeParam:15:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -751,6 +831,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:16:1:1": {
+				"header": [ $.i18n("ElementTypeParam:16:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:16:1:2": {
+				"header": [ $.i18n("ElementTypeParam:16:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -768,6 +854,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:17:1:1": {
+				"header": [ $.i18n("ElementTypeParam:17:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:17:1:2": {
+				"header": [ $.i18n("ElementTypeParam:17:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -788,6 +880,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:18:1:1": {
+				"header": [ $.i18n("ElementTypeParam:18:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:18:1:2": {
+				"header": [ $.i18n("ElementTypeParam:18:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -808,6 +906,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:19:1:1": {
+				"header": [ $.i18n("ElementTypeParam:19:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:19:1:2": {
+				"header": [ $.i18n("ElementTypeParam:19:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -828,6 +932,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:20:1:1": {
+				"header": [ $.i18n("ElementTypeParam:20:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:20:1:2": {
+				"header": [ $.i18n("ElementTypeParam:20:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -848,6 +958,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:21:1:1": {
+				"header": [ $.i18n("ElementTypeParam:21:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:21:1:2": {
+				"header": [ $.i18n("ElementTypeParam:21:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -868,6 +984,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:22:1:1": {
+				"header": [ $.i18n("ElementTypeParam:22:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:22:1:2": {
+				"header": [ $.i18n("ElementTypeParam:22:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -888,6 +1010,12 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:23:1:1": {
+				"header": [ $.i18n("ElementTypeParam:23:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:23:1:2": {
+				"header": [ $.i18n("ElementTypeParam:23:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},

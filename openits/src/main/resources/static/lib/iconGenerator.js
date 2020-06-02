@@ -86,6 +86,11 @@ export function generateSemIcon(element, suffix="") {
   return sem_str;
 }
 
+export function generateZoneIcon(element, suffix="") {
+  let zone_str = zone.generateIcon(element, suffix);
+  return zone_str;
+}
+
 
 export function getElementIcon(element, suffix="") {
 
@@ -231,7 +236,8 @@ export function getElementSVG(element, width, height, suffix="") {
       iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "7":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      //iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix) + '</g>';
       break;
     case "8":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix) + '</g>';
