@@ -786,6 +786,46 @@ export let staticsIcons = {
 			}
 		]
 	},
+	"25": {
+		"state": [
+			{
+				"id": 310,
+				"icon": "rack_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 14,
+				"width": 50,
+				"height": 50
+			},
+			{
+				"id": 995,
+				"icon": "rack_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 50,
+				"height": 50
+			},
+			{
+				"id": 996,
+				"icon": "rack_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 50,
+				"height": 50
+			},
+			{
+				"id": 996,
+				"icon": "rack_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 50,
+				"height": 50
+			}
+		]
+	},
 
 	"base_sinoptico": "mapa_base.png",
 	"trazado_sinoptico": "D4-R7_trazado.png"

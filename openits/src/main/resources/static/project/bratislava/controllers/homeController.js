@@ -2,8 +2,8 @@ import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
 
 import { equipments } from "../../../widgets/equipments.js";
 import { bratislava } from "../../../widgets/bratislava.js";
+import { cabinets } from "../../../widgets/cabinets.js";
 import { alarms } from "../../../widgets/alarms.js";
-import { plans } from "../../../widgets/plans.js";
 import { users } from "../../../widgets/users.js";
 import { roles } from "../../../widgets/roles.js";
 import { alarmconfigs } from "../../../widgets/alarmconfigs.js";
@@ -58,6 +58,10 @@ let main_body = {
                 rows: [bratislava]
             },
             {
+                id: "cabinets",
+                rows: [cabinets]
+            },
+            {
                 id: "alarms",
                 rows: [alarms]
             },
@@ -108,11 +112,10 @@ webix.ready(function() {
     getNoRecognizeAlarms.load().then(data => {
     	try {
     		if(data== null ||  data.value == 0){
-    			$$("bannerTemp").hide();
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'></div>");
     		}
     		else{
         		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+data.value+"</div>");
-        		$$("bannerTemp").show();
     		}
     	} catch (err) {
     		console.log("Error: " + err.message);

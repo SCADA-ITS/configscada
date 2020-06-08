@@ -40,7 +40,6 @@ export default class Alarms {
 	            passcode: "user"
 	        },
 	        debug: function(str) {
-	            console.log(str);
 	        },
 	        reconnectDelay: 5000,
 	        heartbeatIncoming: 4000,
@@ -51,7 +50,7 @@ export default class Alarms {
 	        // Do something, all subscribes must be done is this callback
 	        // This is needed because this will be executed after a (re)connect
 	        this.suscription = self.client.subscribe(
-	            "/topic/alarm",
+	            "/topic/alarm.>",
 	            self.processStompMessageWithFallback
 	        );
         };

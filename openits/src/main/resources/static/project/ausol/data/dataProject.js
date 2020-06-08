@@ -30,8 +30,8 @@ export let toolbar_data_menu  = {
 	elements: [
 		{ view: "icon", icon: "mdi mdi-menu"},
 		{ view: "label", label: "Open Its"},
-		{ gravity: 20 },
-		{ id: "nameUser", view: "label", label: ""},
+		{ gravity: 5 },
+		{ id: "nameUser", view: "label", label: "", align:"right", maxWidth:350},
 		{ id:"user", view: "icon", icon: "mdi mdi-account-circle", 	popup: {
 			view: 'contextmenu',
 			data: [

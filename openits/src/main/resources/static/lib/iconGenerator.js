@@ -18,6 +18,7 @@ import * as sem from "./icons/sem.js";
 import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
+import * as plc from "./icons/plc.js";
 
 import * as elementTypeMap from "./elementTypeMap.js";
 
@@ -165,6 +166,10 @@ export function getElementIcon(element, suffix="") {
     dms.updateDmsIcon(element, suffix);
   } else if (elementType === elementTypeMap.CAM_ELEMENT_TYPE) {
     cam.updateCamIcon(element, suffix);
+  } else if (elementType === elementTypeMap.PLC_ELEMENT_TYPE) {
+    plc.updatePlcIcon(element, suffix);
+  }else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ELEMENT_TYPE) {
+    plc.updatePlcIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status
@@ -289,6 +294,9 @@ export function getElementSVG(element, width, height, suffix="") {
       break;
     case "33":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element) + '</g>';
+      break;
+    case "25":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     default:
       console.log("Icon not found");

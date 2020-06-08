@@ -58,11 +58,11 @@ function processStompMessageWithFallback(message) {
 		}
 		else if (message.headers.destination == GENERIC_DATA_NO_RECOGNIZE_ALARMS){
     		if(value == null || value == 0){
-    			$$("bannerTemp").hide();
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'></div>");
+
     		}
     		else{
         		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+value+"</div>");
-        		$$("bannerTemp").show();
     		}
 		}
 		

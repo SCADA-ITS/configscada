@@ -5,7 +5,7 @@ export default class ElementForm {
 	constructor(id,columnsElementFormList) {
 		this.id = id;
 		this.columnsElementFormList = columnsElementFormList;
-
+		var idtable = this.id;
 		let self = this;
 
 		var graphElem = `query { 
@@ -31,24 +31,55 @@ export default class ElementForm {
 			        id
 			        value
 			        alerted
-      			}
+				  }
+				alarms{
+					id
+					alarmConfig {id alias alarmLevel}
+					recognized
+					recognizedComments
+					activation
+					activationComments
+					deactivation
+					deactivationComments
+					sourceElement{id alias}
+					targetElement{id alias} 
+				}
 			}
 		}`;
+
+		var sendRecognizeAlarms = `mutation  sendRecognizeAlarms ($alarmIds: [String!], $recognizedComments: String ){
+			sendRecognizeAlarms(alarmIds: $alarmIds, recognizedComments: $recognizedComments)
+		}`;
+		
+		var sendDeactivationAlarms = `mutation  sendDeactivationAlarms ($alarmIds: [String!], $deactivationComments: String ){
+			sendDeactivationAlarms(alarmIds: $alarmIds, deactivationComments: $deactivationComments)
+		}`;
+
 		this.graphql = webix.proxy("GraphQL", graphElem);
 		this.header = {
 			id: "elementHeader"+this.id,
-			view: "template",
-			type: "header",
-			data: {
-				value: ""
-			},
-			template: function (obj) {
-				return obj.value;
-			},
-			tooltip:function(obj){  
-				return $.i18n(obj.id.split("elementHeader")[1] + ".description");
-			},
-			css: { "text-align": "center !important" }
+			cols:[
+				{
+					id: "elementHeaderIcon"+this.id,
+					view: "template",
+					type: "header",
+					data: {value: ""},
+					template: function (obj) {
+						return obj.value;
+					},
+					css: { "text-align": "left !important" }
+				},
+				{
+					id: "elementHeaderTitle"+this.id,
+					view: "template",
+					type: "header",
+					data: {value: ""},
+					template: function (obj) {
+						return obj.value;
+					},
+					css: { "text-align": "center !important" }
+				}
+			]
 		};
 
 		this.body = {
@@ -66,22 +97,206 @@ export default class ElementForm {
 				{ id:"iconAlerted", width:40,template:function(obj){
 					if(obj.iconAlerted === true) {
 							return "<span style='color:red;' class='webix_icon mdi mdi-alert-circle'></span>";
-						} else
+						} else {
 							return "";
+						}
 					} 
 				},
 				{ id:"title",   width:200, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				},
-				{ id:"measure", width:160, tooltip:function(obj){  
+				{ id:"measure", width:500, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				}
 			],
             data:[]
 		};	
-		
+
+		this.alarmsHeader = { id:  this.id + "_elementAlarmsTable_HEADER" ,template:"Alarmas", type:"section" };
+		this.alarmsTable = {
+			id:  this.id + "_elementAlarmsTable",	
+			view:"datatable",
+			header: false,
+			autoheight: true,
+			columns:[
+				{ id:"title",   width:300 , template:"{common.subrow()} #title#", fillspace:true },
+				{ id: "recognize", "header": "", 
+				 "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" +
+							 "<button class='action_deactivate'><span class='mdi mdi-delete-outline'   ></span></button>", 
+				 width: 120 }
+			],
+			data:[],
+			subview:{
+				borderless:true,
+				view:"datatable",
+				header:false,
+				columns:[
+					{ id:"title",   autowidth:true, fillspace:true },
+					{ id:"measure", autowidth:true, fillspace:true }
+				],
+				scrollX:false,
+				autoheight:true,
+				autoweidth:true
+				},  
+			on:{
+				onSubViewCreate:function(view, item){
+				  view.parse(item.outlets);
+				  view.config.id = item.id + "_SUBVIEW";
+				}
+			},
+			onClick: {
+				action_recognize: function (ev, id, html) {
+					var data = $$(idtable + "_elementAlarmsTable").serialize();
+					var alarmId = id.row;
+					for (let index = 0; index < data.length; index++) {
+						if (data[index].id == alarmId) {
+							if (data[index].recognized != null) {
+								webix.alert("Alarma ya reconocida");
+							} else {
+								webix.ui({
+									view: "window",
+									id: "popup_alarm" + alarmId.split("_")[0],
+									head: alarmId + " " + data[index].title,
+									width: 330,
+									height: 300,
+									modal: true,
+									body: {
+										view: "form",
+										elements: [
+											{
+												view: "textarea",
+												id: "Comment" + alarmId.split("_")[0],
+												label: "Comment",
+												labelAlign: "right",
+												height: 150,
+												value: "type here"
+											},
+											{
+												cols: [
+													{
+														view: "button", value: "Recognize", css: "webix_primary", click: function () {
+															let comment = $$("Comment" + alarmId.split("_")[0]).getValue();
+															let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
+															graphql.save({
+																"alarmIds": [alarmId.split("_")[0]],
+																"recognizedComments": comment
+															}).then((resp) => {
+																if (resp === true) {
+																	webix.message({
+																		text: "Successful operation",
+																		type: "success",
+																		expire: 10000,
+																		id: "successful_message"
+																	});
+																	$$("popup_alarm" + alarmId.split("_")[0]).close();
+																	$("#recognize_button").prop("disabled", true);
+																} else {
+																	webix.message({
+																		text: "Error",
+																		type: "error ",
+																		expire: 10000,
+																		id: "error_message"
+																	});
+																}
+															})
+														}
+													},
+													{ view: "button", value: "Cancel", click: function () { $$("popup_alarm" + alarmId.split("_")[0]).close() } }
+												]
+											}
+										]
+									}
+								}).show();
+							}
+						}
+					}
+				},
+				action_deactivate: function (ev, id, html) {
+					var data = $$(idtable + "_elementAlarmsTable").serialize();
+					var alarmId = id.row;
+					for (let index = 0; index < data.length; index++) {
+						if (data[index].id == alarmId) {
+							if (data[index].deactivation != null) {
+								webix.alert("Alarma ya desactivada");
+							} else {
+								webix.ui({
+									view: "window",
+									id: "popup_alarm" + alarmId.split("_")[0],
+									head: "Deactivate " + alarmId.split("_")[0],
+									width: 330,
+									height: 300,
+									modal: true,
+									body: {
+										view: "form",
+										elements: [
+											{
+												view: "textarea",
+												id: "Comment" + alarmId.split("_")[0],
+												label: "Comment",
+												labelAlign: "right",
+												height: 150,
+												value: "type here"
+											},
+											{
+												cols: [
+													{
+														view: "button", value: "Accept", css: "webix_primary", click: function () {
+															let comment = $$("Comment" + alarmId.split("_")[0]).getValue();
+															let graphql = webix.proxy("GraphQL", sendDeactivationAlarms);
+															graphql.save({
+																"alarmIds": [alarmId.split("_")[0]],
+																"recognizedComments": comment
+	
+															}).then((resp) => {
+																if (resp === true) {
+																	webix.message({
+																		text: "Successful operation",
+																		type: "success",
+																		expire: 10000,
+																		id: "successful_message"
+																	});
+																	$$("popup_alarm" + alarmId.split("_")[0]).close();
+																} else {
+																	webix.message({
+																		text: "Error",
+																		type: "error ",
+																		expire: 10000,
+																		id: "error_message"
+																	});
+																}
+															})
+														}
+													},
+													{ view: "button", value: "Cancel", click: function () { $$("popup_alarm" + alarmId.split("_")[0]).close() } }
+												]
+											}
+										]
+									}
+								}).show();
+							}
+						}
+					}
+				}
+			},
+			scheme: {
+				$change: function (item) { //Item es cada fila de la tabla
+					if (item.deactivation != null) {
+						item.$css = "alarm_deactivated";
+					} else {
+						item.$css = "alarm_activated";
+					}
+				}
+			}
+		};
+
+		this.alarmsNone = {
+			template:"Ninguna",
+			id: this.id + "_elementAlarmsTable_NONE",
+			hidden: true
+		}
+
         // creates the stomp connection
         this.client = new StompJs.Client({
 			brokerURL: webix.storage.session.get("url.ws.stomp"),
@@ -116,6 +331,11 @@ export default class ElementForm {
 		this.client.deactivate();
 	}
 
+    getDate(timestamp)
+    {
+        return timestamp !== null ? new Date(timestamp).toISOString() : '-';
+    }
+
 	update_table(message) {
 		try {
 			let obj = JSON.parse(JSON.parse(message.body));
@@ -123,11 +343,13 @@ export default class ElementForm {
 				try {
 					let item = $$("elementBody" + element.id);
 					if (item != null) {
-						if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
-							let obj = JSON.parse(JSON.parse(message.body));
+						let evalues = element.elementValues !== undefined ? element.elementValues : null;
+						let ealarms = element.alarms !== undefined ? element.alarms : null;
+						try {
+							if (evalues === null)
+								element["elementValues"] = [];
 
-							obj.basicElementsVO.forEach((element) => {
-								//initialize the proxy
+							if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
 								let elementQuery = webix.proxy(
 									"GraphQL",
 									`
@@ -165,41 +387,145 @@ export default class ElementForm {
 
 										getElementIcon(element, ":Form");
 									});
-
-							});
-						} else {
-							let evalues = element.elementValues !== undefined ? element.elementValues : null;
-							try {
-								if (evalues === null)
-									element["elementValues"] = [];
+							} else {
 								getElementIcon(element, ":Form");
-							} catch (err) {
-								console.log("Error: " + err.message);
 							}
-							if (evalues !== null) {
-								element.elementValues.forEach(evalue => {
-									try {
-										let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
-										let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
-										if (item3 !== null) {
-											let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
-											let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
-											item3["measure"] = value;
-											if (alerted !== -1) {
-												item3["iconAlerted"] = evalue.alerted;
-											}
-											try {
-												$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
-											} catch (err) {
-												console.log("Error: " + err.message);
+						} catch (err) {
+							console.log("Error: " + err.message);
+						}
+						if (evalues !== null) {
+							element.elementValues.forEach(evalue => {
+								try {
+									let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
+									let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
+									if (item3 !== null) {
+										let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
+										let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
+										item3["measure"] = value;
+										if (alerted !== -1) {
+											item3["iconAlerted"] = evalue.alerted;
+										}
+										try {
+											$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
+										} catch (err) {
+											console.log("Error: " + err.message);
+										}
+									}
+								} catch (err) {
+									console.log("Error: " + err.message);
+								}
+							});
+						}
+						if (ealarms !== null)
+							//gestionAlarms(element.alarms);
+							element.alarms.forEach(item => {
+								let itemSearch = $$( element.id + "_elementAlarmsTable").getItem(item.id + "_AlarmsElementForm");
+								if (itemSearch !== undefined) {
+									
+									let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
+									let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+									
+									let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
+									let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
+									if (controlDeactivation && controlrecognized) {
+										try {
+											$$( element.id + "_elementAlarmsTable").remove(itemSearch.id);
+										} catch (err) {
+											console.log("Error: " + err.message);
+										}
+					
+										let itemSearch2 = $$( element.id + "_elementAlarmsTable");
+										let items = itemSearch2.count();
+										
+										if (items === 0) {
+											$$(element.id + "_elementAlarmsTable").hide();
+											$$(element.id + "_elementAlarmsTable_HEADER").hide();
+										}
+									} else {
+										let outlets = itemSearch["outlets"];
+										if (deactivation !== "NA") {
+											itemSearch["deactivation"] = deactivation;
+											outlets[2]["measure"] = new Date(item.deactivation).toISOString();
+											if (itemSearch.$subContent !== undefined) {
+												let subDeactivation = $$(itemSearch.$subContent).getItem(element.id + "_outlet_deactivation");
+												if (subDeactivation !== undefined) {
+													let v_subDeactivation = subDeactivation;
+													v_subDeactivation["measure"] = new Date(item.deactivation).toISOString();
+													$$(itemSearch.$subContent).updateItem(element.id + "_outlet_deactivation", v_subDeactivation);
+												}
 											}
 										}
-									} catch (err) {
-										console.log("Error: " + err.message);
+										if (recognized !== "NA") {
+											itemSearch["recognized"] = recognized;
+											outlets[3]["measure"] = new Date(item.recognized).toISOString();
+											if (itemSearch.$subContent !== undefined) {
+												let subrecognized = $$(itemSearch.$subContent).getItem(element.id + "_outlet_recognized");
+												if (subrecognized !== undefined) {
+													let v_subrecognized = subrecognized;
+													v_subrecognized["measure"] = new Date(item.recognized).toISOString();
+													$$(itemSearch.$subContent).updateItem(element.id + "_outlet_recognized", v_subrecognized);
+												}
+											}
+										}
+
+										itemSearch["outlets"] = outlets;
+										try {
+											$$( element.id + "_elementAlarmsTable").updateItem(item.id + "_AlarmsElementForm", itemSearch);
+											
+										} catch (err) {
+											console.log("Error: " + err.message);
+										}
 									}
-								});
-							}
-						}
+					
+								} else {
+									
+									let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
+									let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+
+									let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
+									let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
+
+									if (controlDeactivation && controlrecognized) {
+										//no hacemos nada
+									} else {
+										let elementQueryacf = webix.proxy(
+											"GraphQL",`query getAlarm($alarmId: String!) {
+												getAlarm(alarmId: $alarmId) {
+													id
+													alarmConfig {id alias alarmLevel}
+													sourceElement{id alias}
+												}
+											}`
+										);
+
+										elementQueryacf.load({
+											alarmId: item.id,
+										}).then(datacf => {
+											let activation = item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : null : null;
+											let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
+											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
+											let outlets = [];
+											outlets.push({id: element.id + "_outlet_activation", title: "activation", measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_alarmLevel", title: "alarmLevel", measure: datacf.alarmConfig.alarmLevel });
+											outlets.push({id: element.id + "_outlet_deactivation", title: "deactivation", measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_recognized", title: "recognized", measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_sourceElement", title: "sourceElement", measure: datacf.sourceElement.alias });
+
+											let row = { 
+														id: item.id + "_AlarmsElementForm" , 
+														title: datacf.alarmConfig.alias, 
+														recognized: recognized, 
+														activation: activation, 
+														deactivation: deactivation, 
+														outlets: outlets };
+
+											$$(element.id + "_elementAlarmsTable").add(row);
+											$$(element.id + "_elementAlarmsTable").show();
+											$$(element.id + "_elementAlarmsTable_HEADER").show();
+										});
+									}
+								}
+							});
 					}
 				} catch (err) {
 					console.log("Error: " + err.message);
@@ -245,8 +571,9 @@ export default class ElementForm {
 		this.graphql.load().then(data => {
 			// HEADER
 			try {
-				let header = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
-				$$("elementHeader" + this.id).setValues({ value: header });
+				let headerTitle = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
+				$$("elementHeaderTitle" + this.id).setValues({value: headerTitle});
+				
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
@@ -260,17 +587,13 @@ export default class ElementForm {
 					elementTypeMap.DMS_ELEMENT_TYPE
 				) {
 					//"ElementType:10"){
-					iconoSvg = getElementSVG(data, 260, 60, ":Form");
+					iconoSvg = getElementSVG(data, 200, 40, ":Form");
 				} else {
-					iconoSvg = getElementSVG(data, 60, 60, ":Form");
+					iconoSvg = getElementSVG(data, 40, 40, ":Form");
 				}
-				$$("component" + this.id).addView({
-						view: "template",
-						template: iconoSvg,
-						height: 80,
-					},
-					1
-				);
+				
+				$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
+
 				getElementIcon(data, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);
@@ -374,6 +697,29 @@ export default class ElementForm {
 				console.error(e);
 			}
 			
+			//ALARMS
+			try {
+				if(data.alarms !== null){
+					data.alarms.forEach(item => {
+						let outlets = [];
+						outlets.push({id: item.id + "_outlet_activation", title: "activation", measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_alarmLevel", title: "alarmLevel", measure: item.alarmConfig.alarmLevel });
+						outlets.push({id: item.id + "_outlet_deactivation", title: "deactivation", measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_recognized", title: "recognized", measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_sourceElement", title: "sourceElement", measure: item.sourceElement.alias });
+						let row = {id: item.id + "_AlarmsElementForm", title: item.alarmConfig.alias, recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
+						$$(this.id + "_elementAlarmsTable").add(row);
+					});
+				} else {
+					$$(this.id + "_elementAlarmsTable").hide();
+					$$(this.id + "_elementAlarmsTable_HEADER").hide();
+				} 
+
+			} catch (e) {
+				//console.error("Error. id: "+this.id);
+				console.error(e);
+			}
+
 			//COMMANDS
 			try {
 				if(data.elementType.commandElementTypes){
@@ -417,7 +763,11 @@ export default class ElementForm {
 				id: "component"+this.id,
 				rows: [
 					this.header,
-					this.body
+					this.body,
+					this.alarmsHeader,
+					this.alarmsTable,
+					//this.alarmsNone,
+					{}
 				]
 			};
 		return result;

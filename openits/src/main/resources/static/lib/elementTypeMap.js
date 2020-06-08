@@ -20,6 +20,7 @@ export const NO_ELEMENT_TYPE = "20";
 export const OPAC_ELEMENT_TYPE = "21";
 export const ETD_MODBUS_ELEMENT_TYPE = "22";
 export const ETD_DETECTOR_ELEMENT_TYPE = "23";
+export const ELECTRICAL_CABINET_ELEMENT_TYPE = "25";
 export const ETD_ELEMENT_TYPE = "33";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
@@ -148,6 +149,9 @@ export function getElementTypeName(elementTypeIdString) {
     case ETD_ELEMENT_TYPE:
       ret = "ETD";
       break;
+    case ELECTRICAL_CABINET_ELEMENT_TYPE:
+        ret = "ELECTRICAL_CABINET";
+        break;
     default:
       break;
   }

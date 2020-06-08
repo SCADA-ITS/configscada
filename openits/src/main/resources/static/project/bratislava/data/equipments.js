@@ -50,10 +50,6 @@ export let columnsElementList = {
 		],
 		2:[
 			"alias",
-			"ElementTypeParam:2:2:2",
-			"ElementTypeParam:2:2:5",
-			"ElementTypeParam:2:2:4",
-			"ElementTypeParam:2:2:3"
 		]
 	}
 }
@@ -84,16 +80,7 @@ export let columnsElementConfig = {
 		},
 		2:{
 			"alias": {
-				/*
-				"header": {
-					text: $.i18n("equipment.table.alias"),
-					//rotate: true, 
-					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
-				},
-				*/
+
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
@@ -104,21 +91,14 @@ export let columnsElementConfig = {
 					rotate: true, 
 					autoheight:true,
 					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
 				},
-			
-				//"header": [ $.i18n("ElementTypeParam:1:2:19.alias"), { autoheight:true, rotate: true }],
-				//"rotate": true
 			},
 			"ElementTypeParam:1:2:15": { //"Gust_Wind_Speed"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:15.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true 
 				},
 			},
 			"ElementTypeParam:1:2:14": { //"Average_Wind_Direction"
@@ -126,19 +106,14 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:14.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
-				},
+					autowidth:true,				},
 			},
 			"ElementTypeParam:1:2:2": { //"Sub_Surface_Temperature"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:2.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
 			"ElementTypeParam:1:2:12": { //"Snow_Fall_Intensity"
@@ -146,9 +121,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:12.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true 
 				},
 			},
 			"ElementTypeParam:1:2:20": { //"Visibility"
@@ -156,9 +129,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:20.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true 
 				},
 			},
 			"ElementTypeParam:1:2:6": { //"Concentration_NaCl"
@@ -166,9 +137,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:6.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
 			"ElementTypeParam:1:2:18": { //"Dew_Point_Temperature"
@@ -176,9 +145,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:18.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
 			"ElementTypeParam:1:2:8": { //"Concentration_CaCl"
@@ -186,9 +153,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:8.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:9": { //"Road_Condition"
@@ -196,9 +161,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:9.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true 
 				},
 			},
 			"ElementTypeParam:1:2:16": { //"Gust_Wind_Direction"
@@ -206,9 +169,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:16.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
 			"ElementTypeParam:1:2:21": { //"Black_Ice_Signal"
@@ -216,9 +177,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:21.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
 			"ElementTypeParam:1:2:3": {  //"Freeze_Point" 
@@ -226,19 +185,14 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:3.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
-				},
+					autowidth:true,				},
 			},
             "ElementTypeParam:1:2:11": { //"Precipitation_Intensity"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:11.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:13": {  //"Average_Wind_Speed"
@@ -246,9 +200,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:13.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:1": { //"Surface_Temperature"
@@ -256,9 +208,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:1.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:5": { //"Water_Depth"
@@ -266,9 +216,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:5.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:10": { //"Relative_Humidity"
@@ -276,9 +224,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:10.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:7": { //"Concentration_MgCl2"
@@ -286,9 +232,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:7.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:17": { //"Air_Temperature"
@@ -296,9 +240,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:17.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:22": { //"Prediction_Alarm_Code"
@@ -306,9 +248,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:22.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:4": { //"Air_Pressure"
@@ -316,9 +256,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:4.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:24": { //"door open"
@@ -326,9 +264,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:24.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:25": { //"power supply fail"
@@ -336,9 +272,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:25.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:26": { //"battery low"
@@ -346,9 +280,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:26.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:27": { //"overload UPS"
@@ -356,9 +288,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:27.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true
 				},
 			},
             "ElementTypeParam:1:2:28": { //plc status
@@ -366,9 +296,7 @@ export let columnsElementConfig = {
 					text: $.i18n("ElementTypeParam:1:2:28.alias"),
 					rotate: true, 
 					autoheight:true,
-					autowidth:true,
-					//height: 175,
-					//content:"textFilter" 
+					autowidth:true 
 				},
 			}
 		},
@@ -402,19 +330,7 @@ export let columnsElementConfig = {
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
-			},
-            "ElementTypeParam:2:2:2": { //"door open"
-				"header": [ $.i18n("ElementTypeParam:2:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:2:2:5": { //"plc status"
-				"header": [ $.i18n("ElementTypeParam:2:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:2:2:4": { //"battery low"
-				"header": [ $.i18n("ElementTypeParam:2:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:2:2:3": { //"power supply fail"
-				"header": [ $.i18n("ElementTypeParam:2:2:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
+			}
 		}
 	}
 }

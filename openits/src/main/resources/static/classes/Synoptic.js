@@ -4,6 +4,7 @@ import {
   synopticMetro,
   synopticGlobal,
   synopticBratislava,
+  synopticCabinets,
 } from "../data/synoptics.js";
 import ElementForm from "../classes/ElementForm.js";
 import {
@@ -922,7 +923,7 @@ export default class Synoptic {
                           .show();
                       }
                     } else {
-                     // $$("win" + element.id).destructor();
+
                       let elementForm = new ElementForm(element.id,columnsElementFormList);
                       webix
                         .ui({
@@ -993,6 +994,9 @@ export default class Synoptic {
         if (d.description == "SYNOPTIC") {
           this.handleLayers("2");
         }
+        else if( d.description == "CABINETS"){
+          this.handleLayers("25");
+        }
 
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 
@@ -1045,6 +1049,8 @@ export default class Synoptic {
       this.synopticConf = synopticGlobal;
     } else if (synopticConf == "bratislava") {
       this.synopticConf = synopticBratislava;
+    }else if (synopticConf == "cabinets") {
+      this.synopticConf = synopticCabinets;
     }
 
     this.synopticType = synopticConf;
@@ -1067,9 +1073,6 @@ export default class Synoptic {
       svg.setAttribute("width", c.offsetWidth);
       svg.setAttribute("height", c.offsetHeight);
 
-      self.baseWidth = c.offsetWidth;
-      self.baseHeight = c.offsetHeight;
-
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
       divToAdd.setAttribute("class", "dropdown");
@@ -1081,6 +1084,9 @@ export default class Synoptic {
         // loads data and draws for first time
         this.loadData();
       });
+
+      self.baseWidth = c.offsetWidth;
+      self.baseHeight = c.offsetHeight;
 
       this.initResponsive();
     });

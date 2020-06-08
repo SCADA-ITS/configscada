@@ -130,11 +130,10 @@ webix.ready(function() {
     getNoRecognizeAlarms.load().then(data => {
     	try {
     		if(data == null ||  data.value == 0){
-    			$$("bannerTemp").hide();
+        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'></div>");
     		}
     		else{
         		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+data.value+"</div>");
-        		$$("bannerTemp").show();
     		}
     	} catch (err) {
     		console.log("Error: " + err.message);

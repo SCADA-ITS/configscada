@@ -28,6 +28,7 @@ export default class EquipmentTable {
             getElementsByType(elementTypeId: "` + this.id + `"){
                 id
                 alias
+                description
                 state
                 elementValues {
                   id
@@ -45,6 +46,7 @@ export default class EquipmentTable {
             editable:true,
             yCount:20,
             autoConfig:true,
+            tooltip:true,
             columns:[],
             data:[]
         };
@@ -187,6 +189,10 @@ export default class EquipmentTable {
                                     autowidth:true,
                                     autoheigth: true,
                                     sort:"text", 
+                                    tooltip:function(item){
+                                        let dato = obj === "alias" ? item.description : $.i18n(obj + ".description");
+                                        return dato;
+                                    }
                            });
                         });
                     } catch {}
@@ -202,7 +208,7 @@ export default class EquipmentTable {
                         if (item.state === 3 )
                             colorList["alias"] = {"background-color":"LightCoral" };       
 
-                        let row = {id: item.id, alias: item.alias, state: item.state};
+                        let row = {id: item.id, alias: item.alias, description: item.description, state: item.state};
                         if(item.elementValues) {
                             item.elementValues.forEach(obj => {
                                 if (elementTypeMap.getParamTypeId(obj.id) === this.mode) {
