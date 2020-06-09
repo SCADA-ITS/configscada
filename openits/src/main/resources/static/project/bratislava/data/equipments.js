@@ -14,6 +14,7 @@ export let columnsElementList = {
 		],
 		2:[
 			"alias", 
+			"state",
 			"ElementTypeParam:1:2:19",
 			"ElementTypeParam:1:2:15",
 			"ElementTypeParam:1:2:14",
@@ -49,6 +50,7 @@ export let columnsElementList = {
 		],
 		2:[
 			"alias",
+			"state",
 		]
 	}
 }
@@ -81,6 +83,10 @@ export let columnsElementConfig = {
 			"alias": {
 
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
 			"ElementTypeParam:1:2:19": { //"Precipitation_Type"
@@ -329,7 +335,11 @@ export let columnsElementConfig = {
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
-			}
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
 		}
 	}
 }

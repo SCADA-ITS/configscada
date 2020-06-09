@@ -1,11 +1,12 @@
 webix.ready(function() {
 
     const language = webix.storage.session.get("app_user_language");
-
+    const language_default = "sk";
+    
     if (language !== null) {
         $.i18n().locale = language;
     } else {
-        $.i18n().locale = "sk";
+        $.i18n().locale = language_default;
     }
 
     $.i18n().load( {
@@ -68,7 +69,7 @@ webix.ready(function() {
                                 cols:[
                                     {
                                         view:"richselect", 
-                                        value:language, 
+                                        value:language !== null ? language : language_default, 
                                         height:40, 
                                         width:150, 
                                         options:{

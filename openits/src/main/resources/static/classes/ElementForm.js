@@ -102,11 +102,11 @@ export default class ElementForm {
 						}
 					} 
 				},
-				{ id:"title",   width:300, tooltip:function(obj){  
+				{ id:"title",   width:200, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				},
-				{ id:"measure", width:200, tooltip:function(obj){  
+				{ id:"measure", width:500, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				}
@@ -120,12 +120,15 @@ export default class ElementForm {
 			view:"datatable",
 			header: false,
 			autoheight: true,
+			scroll: false,
+			//yCount: 6,
 			columns:[
-				{ id:"title",   width:300 , template:"{common.subrow()} #title#", fillspace:true },
+				{ id:"title",   width:370 , template:"{common.subrow()} #title#", fillspace:true },
+				//{ id:"activation", width:100 },
 				{ id: "recognize", "header": "", 
-				 "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" +
-							 "<button class='action_deactivate'><span class='mdi mdi-delete-outline'   ></span></button>", 
-				 width: 120 }
+				 "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
+				 width: 50 }
+				//{ id:"recognized", width:100 }
 			],
 			data:[],
 			subview:{
@@ -324,7 +327,6 @@ export default class ElementForm {
 			console.log("Broker reported error: " + frame.headers["message"]);
 			console.log("Additional details: " + frame.body);
 		};
-		this.client.activate();
 	}
 	
 	disconnect() {
@@ -572,8 +574,7 @@ export default class ElementForm {
 			// HEADER
 			try {
 				let headerTitle = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
-				$$("elementHeaderTitle" + this.id).setValues({value: headerTitle});
-				
+				$$("elementHeaderTitle" + this.id).setValues({ value: headerTitle });
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
@@ -696,18 +697,18 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
-			
+
 			//ALARMS
 			try {
 				if(data.alarms !== null){
 					data.alarms.forEach(item => {
 						let outlets = [];
-						outlets.push({id: item.id + "_outlet_activation", title: "activation", measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_alarmLevel", title: "alarmLevel", measure: item.alarmConfig.alarmLevel });
-						outlets.push({id: item.id + "_outlet_deactivation", title: "deactivation", measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_recognized", title: "recognized", measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_sourceElement", title: "sourceElement", measure: item.sourceElement.alias });
-						let row = {id: item.id + "_AlarmsElementForm", title: item.alarmConfig.alias, recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
+						outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
+						outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
+						outlets.push({id: item.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: item.sourceElement.alias });
+						let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
 						$$(this.id + "_elementAlarmsTable").add(row);
 					});
 				} else {
@@ -756,6 +757,7 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
+
 			document.getElementById("elementBody" + this.id + "spinner").style.display = "none";
 			return data;
 		});
@@ -770,6 +772,7 @@ export default class ElementForm {
 					{}
 				]
 			};
+		this.client.activate();
 		return result;
 	}
 }

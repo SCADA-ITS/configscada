@@ -109,6 +109,11 @@ export default class EquipmentTable {
         });
     }
 
+    getState(state) {
+        let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
+        return status[state];
+    }
+
     update_table(message){
         try {
             let obj = JSON.parse(JSON.parse(message.body));
@@ -116,6 +121,7 @@ export default class EquipmentTable {
                 try {
                     let item = $$("tabla_element_measure").getItem(element.id);
                     if(item != null) {
+                        let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
                         let colorList = item["$cellCss"];
                         let state = element.state !== undefined ? element.state : null;
                         if(state !== null) {
@@ -127,7 +133,7 @@ export default class EquipmentTable {
                                 colorList["alias"] = {"background-color":"RebeccaPurple" };
                             if (state === 3 )
                                 colorList["alias"] = {"background-color":"LightCoral" };       
-                            item["state"] = state;
+                            item["state"] = $.i18n(status[state]);
                         }
                         let evalues = element.elementValues !== undefined ? element.elementValues : null;
                         if(evalues !== null) {
@@ -161,7 +167,7 @@ export default class EquipmentTable {
 				{}
 			]
         };
-
+        let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
         if (this.mode === 2) {
             // waits for the element and starts drawing
             this.elementReady('[view_id="' + "tabla_element_" + this.modeType + '"]').then((c) => {
@@ -208,7 +214,7 @@ export default class EquipmentTable {
                         if (item.state === 3 )
                             colorList["alias"] = {"background-color":"LightCoral" };       
 
-                        let row = {id: item.id, alias: item.alias, description: item.description, state: item.state};
+                        let row = {id: item.id, alias: item.alias, description: item.description, state: $.i18n(status[item.state])};
                         if(item.elementValues) {
                             item.elementValues.forEach(obj => {
                                 if (elementTypeMap.getParamTypeId(obj.id) === this.mode) {

@@ -770,7 +770,7 @@ var i18_es = {
     "ElementTypeParam:2:1:7.description": "Location",
     "ElementTypeParam:2:1:8.alias": "PK",
     "ElementTypeParam:2:1:8.description": "PK",
-    "ElementTypeParam:2:1:9.alias": "Entrance tunnel distance",
+    "ElementTypeParam:2:1:9.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:2:1:9.description": "Entrance tunnel distance",
     
 
@@ -820,7 +820,7 @@ var i18_es = {
 
     "ElementTypeParam:9:1:1.alias": "PK",
     "ElementTypeParam:9:1:1.description": "PK",
-    "ElementTypeParam:9:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:9:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:9:1:2.description": "Entrance Tunnel Distance",
 
 
@@ -838,7 +838,7 @@ var i18_es = {
 
     "ElementTypeParam:10:1:3.alias": "PK",
     "ElementTypeParam:10:1:3.description": "PK",
-    "ElementTypeParam:10:1:4.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:10:1:4.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance",
 
 
@@ -852,7 +852,7 @@ var i18_es = {
 
     "ElementTypeParam:8:1:1.alias": "PK",
     "ElementTypeParam:8:1:1.description": "PK",
-    "ElementTypeParam:8:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:8:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:8:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:8:3:1.alias": "bar cmd",
@@ -886,7 +886,7 @@ var i18_es = {
 
     "ElementTypeParam:11:1:1.alias": "PK",
     "ElementTypeParam:11:1:1.description": "PK",
-    "ElementTypeParam:11:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:11:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:11:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:11:2:1.alias": "Status",
@@ -894,7 +894,7 @@ var i18_es = {
 
     "ElementTypeParam:12:1:1.alias": "PK",
     "ElementTypeParam:12:1:1.description": "PK",
-    "ElementTypeParam:12:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:12:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:12:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:12:2:1.alias": "Luminosity",
@@ -904,7 +904,7 @@ var i18_es = {
 
     "ElementTypeParam:13:1:1.alias": "PK",
     "ElementTypeParam:13:1:1.description": "PK",
-    "ElementTypeParam:13:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:13:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:13:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:13:2:1.alias": "status",
@@ -912,7 +912,7 @@ var i18_es = {
 
     "ElementTypeParam:14:1:1.alias": "PK",
     "ElementTypeParam:14:1:1.description": "PK",
-    "ElementTypeParam:14:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:14:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:14:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:14:2:1.alias": "status",
@@ -922,7 +922,7 @@ var i18_es = {
 
     "ElementTypeParam:15:1:1.alias": "PK",
     "ElementTypeParam:15:1:1.description": "PK",
-    "ElementTypeParam:15:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:15:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:15:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:15:2:1.alias": "status",
@@ -930,7 +930,7 @@ var i18_es = {
 
     "ElementTypeParam:16:1:1.alias": "PK",
     "ElementTypeParam:16:1:1.description": "PK",
-    "ElementTypeParam:16:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:16:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:16:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:16:2:1.alias": "status",
@@ -938,7 +938,7 @@ var i18_es = {
 
     "ElementTypeParam:17:1:1.alias": "PK",
     "ElementTypeParam:17:1:1.description": "PK",
-    "ElementTypeParam:17:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:17:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:17:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:17:2:1.alias": "wind speed",
@@ -948,7 +948,7 @@ var i18_es = {
 
     "ElementTypeParam:18:1:1.alias": "PK",
     "ElementTypeParam:18:1:1.description": "PK",
-    "ElementTypeParam:18:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:18:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:18:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:18:2:1.alias": "wind speed",
@@ -958,7 +958,7 @@ var i18_es = {
 
     "ElementTypeParam:19:1:1.alias": "PK",
     "ElementTypeParam:19:1:1.description": "PK",
-    "ElementTypeParam:19:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:19:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:19:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:19:2:1.alias": "co concentration",
@@ -968,7 +968,7 @@ var i18_es = {
 
     "ElementTypeParam:20:1:1.alias": "PK",
     "ElementTypeParam:20:1:1.description": "PK",
-    "ElementTypeParam:20:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:20:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:20:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:20:2:1.alias": "no concentration",
@@ -978,7 +978,7 @@ var i18_es = {
 
     "ElementTypeParam:21:1:1.alias": "PK",
     "ElementTypeParam:21:1:1.description": "PK",
-    "ElementTypeParam:21:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:21:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:21:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:21:2:1.alias": "opac concentration",
@@ -988,7 +988,7 @@ var i18_es = {
 
     "ElementTypeParam:22:1:1.alias": "PK",
     "ElementTypeParam:22:1:1.description": "PK",
-    "ElementTypeParam:22:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:22:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:22:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:22:2:1.alias": "status",
@@ -996,7 +996,7 @@ var i18_es = {
 
     "ElementTypeParam:23:1:1.alias": "PK",
     "ElementTypeParam:23:1:1.description": "PK",
-    "ElementTypeParam:23:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:23:1:2.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:23:1:2.description": "Entrance Tunnel Distance",
 
     "ElementTypeParam:23:2:1.alias": "average length",
@@ -1124,47 +1124,8 @@ var i18_es = {
     "realtime.header.measures": "Medidas",
     "realtime.header.ws": "Meteos",
 
-    "AlarmConfig:1": "ALARMA ETD_LEN1 ENTRE 5 Y 10",
-    "AlarmConfig:2": "ALARMA EM NO CONECTA",
-    "AlarmConfig:3": "ALARMA EM PRESI&Oacute;N DE AIRE SUPERIOR A 65534",
-    "AlarmConfig:4": "ALARMA EM LA TEMPERATURA DEL AIRE NO EST&Aacute; ENTRE -1000 Y 1000",
-    "AlarmConfig:5": "ALARMA EM DIRECCI&Oacute;N MEDIA DEL VIENTO MAYOR DE 360",
-    "AlarmConfig:6": "ALARMA EM VELOCIDAD MEDIA DEL VIENTO SUPERIOR A 65534",
-    "AlarmConfig:7": "ALARMA EM SE&Ntilde;AL DE HIELO NEGRO IGUAL A 4",
-    "AlarmConfig:8": "ALARMA EM CONCENTRACI&Oacute;N CACL MAYOR DE 100",
-    "AlarmConfig:9": "ALARMA EM CONCENTRACI&Oacute;N MGCL2 SUPERIOR A 100",
-    "AlarmConfig:10": "ALARMA EM CONCENTRACI&Oacute;N NACL MAYOR DE 100",
-    "AlarmConfig:11": "ALARMA EM LA TEMPERATURA DEL PUNTO DE ROC&iacute;O NO EST&Aacute; ENTRE -1000 Y 1000",
-    "AlarmConfig:12": "ALARMA EM PUNTO DE CONGELACI&Oacute;N NO ENTRE -1000 Y 1000",
-    "AlarmConfig:13": "ALARMA EM DIRECCI&Oacute;N DE LAS R&Aacute;FAGAS DE VIENTO MAYORES DE 360",
-    "AlarmConfig:14": "ALARMA EM R&Aacute;FAGAS DE VIENTO DE M&Aacute;S DE 65534",
-    "AlarmConfig:15": "ALARMA EM INTENSIDAD DE LA PRECIPITACI&Oacute;N SUPERIOR A 65534",
-    "AlarmConfig:16": "ALARMA EM TIPO DE PRECIPITACI&Oacute;N NO ENTRE 1 Y 15",
-    "AlarmConfig:17": "ALARMA EM C&Oacute;DIGO DE ALARMA DE PREDICCI&Oacute;N IGUAL A 255",
-    "AlarmConfig:18": "ALARMA EM HUMEDAD RELATIVA SUPERIOR AL 100",
-    "AlarmConfig:19": "ALARMA EM CONDICI&Oacute;N DE LA CARRETERA IGUAL A 2",
-    "AlarmConfig:20": "ALARMA EM INTENSIDAD DE LA CA&Iacute;DA DE LA NIEVE SUPERIOR A 65534",
-    "AlarmConfig:21": "ALARMA EM TEMPERATURA SUB-SUPERFICIAL MAYOR A 1000",
-    "AlarmConfig:22": "ALARMA EM TEMPERATURA DE LA SUPERFICIE SUPERIOR A 1000",
-    "AlarmConfig:23": "ALARMA EM VISIBILIDAD SUPERIOR A 1000000",
-    "AlarmConfig:24": "ALARMA EM PROFUNDIDAD DEL AGUA SUPERIOR A 65534",
-    "AlarmConfig:25": "ALARMA CAMARA NO CONECTA",
-    "AlarmConfig:26": "ALARMA CAMARA PUERTA ABIERTA",
-    "AlarmConfig:27": "ALARMA CAMARA FALLO DE ALIMENTACION",
-    "AlarmConfig:28": "ALARMA CAMARA BATERIAS BAJAS",
-    "AlarmConfig:29": "ALARMA CAMARA ESTADO DEL PLC",
-    "AlarmConfig:30": "ALARMA EM PUERTA ABIERTA",
-    "AlarmConfig:31": "ALARMA EM FALLO DE ALIMENTACION",
-    "AlarmConfig:32": "ALARMA EM BATERIAS BAJAS",
-    "AlarmConfig:33": "ALARMA EM SOBRETENSION EN UPS",
-    "AlarmConfig:34": "ALARMA EM ESTADO DEL PLC",
-    "AlarmConfig:35": "ALARMA ARMARIO_PLC PROTECCIÓN CONTRA SOBRETENSIONES",
-    "AlarmConfig:36": "ALARMA ARMARIO_PLC PUERTA ABIERTA",
-    "AlarmConfig:37": "ALARMA ARMARIO_PLC BAJO POTENCIAL",
-    "AlarmConfig:38": "ALARMA ARMARIO_PLC PÉRDIDAS DE AISLAMIENTO-1",
-    "AlarmConfig:39": "ALARMA ARMARIO_PLC PÉRDIDAS DE AISLAMIENTO-2",
-    "AlarmConfig:40": "ALARMA ARMARIO_PLC NO CONECTA",
-                	
+
+
     "plan.tree.title": "&Aacute;rbol de Planes",
     "plan.form.alias": "Alias",
     "plan.form.description": "Descripci&oacute;n",
@@ -1291,5 +1252,78 @@ var i18_es = {
     "role.button.tooltip.delete": "Borrar Role",
 
     "equipment.tabbar.measures": "Medidas",
-    "equipment.tabbar.parameter": "Par&aacute;metros"
+    "equipment.tabbar.parameter": "Par&aacute;metros",
+
+    "elementForm.alarms.activation": "Activaci&oacute;n",
+    "elementForm.alarms.alarmLevel": "Nivel de alarma",
+    "elementForm.alarms.deactivation": "Desactivaci&oacute;n",
+    "elementForm.alarms.recognized": "Reconocida",
+    "elementForm.alarms.sourceElement": "Fuente",
+
+    "state.unknown": "Desconocido",
+    "state.connected": "Conectado",
+    "state.noconnected": "No conectado",
+    "state.alarm": "Alarmado",
+
+
+    //  BRATISLAVA  
+    "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
+    "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
+    "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
+    "AlarmConfig:5": "ALARMA METEO DIRECCI&Oacute;N MEDIA DEL VIENTO MAYOR QUE 360",
+    "AlarmConfig:6": "ALARMA METEO VELOCIDAD MEDIA DEL VIENTO MAYOR QUE 65534",
+    "AlarmConfig:7": "ALARMA METEO SEÑAL NEGRA DEL HIELO IGUAL A 4",
+    "AlarmConfig:8": "ALARMA METEO CONCENTRACI&Oacute;N CACL MAYOR QUE 100",
+    "AlarmConfig:9": "ALARMA METEO CONCENTRACI&Oacute;N MGCL2 MAYOR QUE 100",
+    "AlarmConfig:10": "ALARMA METEO CONCENTRACI&Oacute;N NACL MAYOR QUE 100",
+    "AlarmConfig:11": "ALARMA METEO TEMPERATURA DEL PUNTO DE ROC&Iacute;O NO ENTRE -1000 AND 1000",
+    "AlarmConfig:12": "ALARMA METEO PUNTO DE CONGELACI&Oacute;N NO ENTRE -1000 AND 1000",
+    "AlarmConfig:13": "ALARMA METEO DIRECCI&Oacute;N DEL VIENTO DE R&Aacute;FAGA MAYOR QUE 360",
+    "AlarmConfig:14": "ALARMA METEO R&Aacute;FAGAS DE VIENTO DE M&Aacute;S DE 6553",
+    "AlarmConfig:15": "ALARMA METEO INTENSIDAD DE LA PRECIPITACI&Oacute;N SUPERIOR A 65534",
+    "AlarmConfig:16": "ALARMA METEO TIPO DE PRECIPITACI&Oacute;N IGUAL A 2",
+    "AlarmConfig:17": "ALARMA METEO C&Oacute;DIGO DE ALARMA DE PREDICCI&Oacute;N IGUAL A 255",
+    "AlarmConfig:18": "ALARMA METEO HUMEDAD RELATIVA SUPERIOR AL 100",
+    "AlarmConfig:19": "ALARMA METEO CONDICI&Oacute;N DE LA CARRETERA IGUAL A 2",
+    "AlarmConfig:20": "ALARMA METEO INTENSIDAD DE LA CA&Iacute;DA DE LA NIEVE SUPERIOR A 65534",
+    "AlarmConfig:21": "ALARMA METEO TEMPERATURA SUB-SUPERFICIAL MAYOR A 1000",
+    "AlarmConfig:22": "ALARMA METEO TEMPERATURA DE LA SUPERFICIE SUPERIOR A 1000",
+    "AlarmConfig:23": "ALARMA METEO VISIBILIDAD SUPERIOR A 1000000",
+    "AlarmConfig:24": "ALARMA METEO PROFUNDIDAD DEL AGUA SUPERIOR A 65534",
+    "AlarmConfig:25": "ALARMA C&Aacute;MARA SIN CONEXI&Oacute;N",
+    "AlarmConfig:26": "ALARMA C&Aacute;MARA PUERTA ABIERTA",
+    "AlarmConfig:27": "ALARMA C&Aacute;MARA FALLA DE LA FUENTE DE ALIMENTACI&Oacute;N",
+    "AlarmConfig:28": "ALARMA C&Aacute;MARA BATERIA BAJA",
+    "AlarmConfig:29": "ALARMA C&Aacute;MARA PLC ESTADO",
+    "AlarmConfig:30": "ALARMA METEO PUERTA ABIERTA",
+    "AlarmConfig:31": "ALARMA METEO FALLA DE LA FUENTE DE ALIMENTACI&Oacute;N",
+    "AlarmConfig:32": "ALARMA METEO BATERIA BAJA",
+    "AlarmConfig:33": "ALARMA METEO SOBRECARGA UPS",
+    "AlarmConfig:34": "ALARMA METEO PLC ESTADO",
+    "AlarmConfig:35": "ALARMA PLC_CABINET PROTECCI&Oacute;N CONTRA PICOS DE CORRIENTE",
+    "AlarmConfig:36": "ALARMA PLC_CABINET PUERTA ABIERTA",
+    "AlarmConfig:37": "ALARMA PLC_CABINET POTENCIA BAJA",
+    "AlarmConfig:38": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-1",
+    "AlarmConfig:39": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-2",
+    "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N",
+
+/*AUSOL 
+    "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
+    "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
+    "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
+    "AlarmConfig:6": "ALARMA DE PUERTA ABIERTA",
+    "AlarmConfig:8": "ALARMA C&Aacute;MARA SIN CONEXI&Oacute;N",
+    "AlarmConfig:9": "ALARMA POSTE SOS SIN CONEXI&Oacute;N",
+    "AlarmConfig:10": "ALARMA LUX SIN CONEXI&Oacute;N",
+    "AlarmConfig:11": "ALARMA SEM SIN CONEXI&Oacute;N",
+    "AlarmConfig:12": "ALARMA LUM SIN CONEXI&Oacute;N",
+    "AlarmConfig:13": "ALARMA FIRE_DET SIN CONEXI&Oacute;N",
+    "AlarmConfig:14": "ALARMA MEG SIN CONEXI&Oacute;N",
+    "AlarmConfig:15": "ALARMA ANEM_EXT SIN CONEXI&Oacute;N",
+    "AlarmConfig:16": "ALARMA ANEM_INT SIN CONEXI&Oacute;N",
+    "AlarmConfig:17": "ALARMA CO SIN CONEXI&Oacute;N",
+    "AlarmConfig:18": "ALARMA NO SIN CONEXI&Oacute;N",
+    "AlarmConfig:19": "ALARMA OPAC SIN CONEXI&Oacute;N",
+    "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
+    "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N",*/
 };

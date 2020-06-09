@@ -802,6 +802,7 @@ export default class Synoptic {
                               },
                               onHide: function(obj){
                                 elementForm.disconnect();
+                                $$("win" + element.id).destructor();
                               }
                             }                            
                           })
@@ -823,6 +824,7 @@ export default class Synoptic {
                             },
                             onHide: function(obj){
                               elementForm.disconnect();
+                              $$("win" + element.id).destructor();
                             }
                           }
                         })
@@ -917,6 +919,7 @@ export default class Synoptic {
                               },
                               onHide: function(obj){
                                 elementForm.disconnect();
+                                $$("win" + element.id).destructor();
                               }
                             }
                           })
@@ -939,6 +942,7 @@ export default class Synoptic {
                             },
                             onHide: function(obj){
                               elementForm.disconnect();
+                              $$("win" + element.id).destructor();
                             }
                           }
                         })

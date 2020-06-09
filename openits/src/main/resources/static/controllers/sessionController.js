@@ -11,6 +11,24 @@ if (language) {
     $.i18n().locale = "es";
 }
 
+var j_language = null;
+
+switch (language) {
+  case "es":
+    j_language= "es_ES";
+    break;
+  case "en":
+    j_language= "en_EN";
+    break;
+  case "sk":
+    j_language= "sk_SK";
+    break;
+  default:
+    j_language= "es_ES";
+    break;
+}
+
+
 $.i18n().load( {
   "en": i18_en,
   "es": i18_es, 
