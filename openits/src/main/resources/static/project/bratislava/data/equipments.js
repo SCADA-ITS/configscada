@@ -45,8 +45,7 @@ export let columnsElementList = {
 			"ElementTypeParam:2:1:1",
 			"ElementTypeParam:2:1:2",
 			"ElementTypeParam:2:1:4",
-			"ElementTypeParam:2:1:5",
-			"ElementTypeParam:2:1:3"
+			"ElementTypeParam:2:1:5"
 		],
 		2:[
 			"alias",

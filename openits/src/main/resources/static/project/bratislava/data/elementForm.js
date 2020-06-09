@@ -35,7 +35,7 @@ export let columnsElementFormList = {
 		],
 		"rowCounts": 10,
 		"scroll": "y",  //y -> vertical x -> horizontal, false or true 
-		"width": 420,
+		"width": 600,
 		"options": {}
 	},
 	"ElementType:2": {
@@ -47,10 +47,10 @@ export let columnsElementFormList = {
 		],
 		"rowCounts": 4,
 		"scroll": false, 
-		"width": 420,
+		"width": 600,
 		"options": {
-			"streamHeight": 234,
-			"streamWidth": 405,
+			"streamHeight": 347,
+			"streamWidth": 600,
 			"streamFullViewHeight": 619,
 			"streamFullViewWidth": 720
 		}

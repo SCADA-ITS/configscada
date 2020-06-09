@@ -102,11 +102,11 @@ export default class ElementForm {
 						}
 					} 
 				},
-				{ id:"title",   width:200, tooltip:function(obj){  
+				{ id:"title",   width:300, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				},
-				{ id:"measure", width:500, tooltip:function(obj){  
+				{ id:"measure", width:200, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				}
