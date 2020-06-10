@@ -381,7 +381,7 @@ export default class UserForm {
                                 header: $.i18n("user.popup.tab.permissions"),
                                 body: {   
                                     rows:[
-                                        { template:"Role Permissions", type:"section" },
+                                        { template:$.i18n("user.popup.sectionRolePermissions"), type:"section" },
                                         { 
                                             id:"userFormRolePermissions_" + this.id,
                                             view: "list",
@@ -391,14 +391,14 @@ export default class UserForm {
                                             scroll: true,
                                             disabled: true
                                         },
-                                        { template:"User Permissions", type:"section" },
+                                        { template:$.i18n("user.popup.sectionUserPermissions"), type:"section" },
                                         { 
                                             id:"userFormUserPermissions_" + this.id,
                                             view:"dbllist", 
                                             list:{ height:150, scroll:true },
                                             value: permissionsListUser.toString(),
-                                            labelLeft:"Available screens",
-                                            labelRight:"Selected",
+                                            labelLeft:$.i18n("user.popuo.available"),
+                                            labelRight:$.i18n("role.popup.selected"),
                                             disabled: true,
                                             data:permissionsList
                                         }
@@ -521,7 +521,7 @@ export default class UserForm {
                                 header: $.i18n("user.popup.tab.permissions"),
                                 body: {   
                                     rows:[
-                                        { template:"Role Permissions", type:"section" },
+                                        { template:$.i18n("user.popup.sectionRolePermissions"), type:"section" },
                                         { 
                                             id:"userFormRolePermissions_" + this.id,
                                             view: "list",
@@ -531,14 +531,14 @@ export default class UserForm {
                                             template:"#value#",
                                             disabled: true
                                         },
-                                        { template:"User Permissions", type:"section" },
+                                        { template:$.i18n("user.popup.sectionUserPermissions"), type:"section" },
                                         { 
                                             id:"userFormUserPermissions_" + this.id,
                                             view:"dbllist", 
                                             list:{ height:150, scroll:true },
                                             value: permissionsListUser.toString(),
-                                            labelLeft:"Available screens",
-                                            labelRight:"Selected",
+                                            labelLeft:$.i18n("user.popuo.available"),
+                                            labelRight:$.i18n("role.popup.selected"),
                                             //disabled: true,
                                             data:permissionsList
                                         }
@@ -617,7 +617,7 @@ export default class UserForm {
                             header: $.i18n("user.popup.tab.permissions"),
                             body: {   
                                 rows:[
-                                    { template:"Role Permissions", type:"section" },
+                                    { template:$.i18n("user.popup.sectionRolePermissions"), type:"section" },
                                     { 
                                         id:"userFormRolePermissions_" + this.id,
                                         view: "list",
@@ -627,13 +627,13 @@ export default class UserForm {
                                         template:"#value#",
                                         disabled: true
                                     },
-                                    { template:"User Permissions", type:"section" },
+                                    { template:$.i18n("user.popup.sectionUserPermissions"), type:"section" },
                                     { 
                                         id:"userFormUserPermissions_" + this.id,
                                         view:"dbllist", 
                                         list:{ height:150, scroll:true },
-                                        labelLeft:"Available",
-                                        labelRight:"Selected",
+                                        labelLeft:$.i18n("user.popuo.available"),
+                                        labelRight:$.i18n("role.popup.selected"),
                                     }
                                 ]
                             }

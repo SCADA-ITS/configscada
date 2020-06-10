@@ -37,7 +37,7 @@ var comboElementType = {
   id:"combo_element_type",	
   view:"combo",
   autoConfig:true,
-  label: "Element Type",
+  label: $.i18n("equipment.combo.label"),
   labelWidth:160,
   labelAlign:"center",
   icon: "mdi mdi-arrow-down",

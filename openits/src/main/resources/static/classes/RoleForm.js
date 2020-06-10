@@ -125,14 +125,14 @@ export default class RoleForm {
                                 "alias":webix.rules.isNotEmpty,
                             }               
                         },
-                        { template:"Role Permissions", type:"section" },
+                        { template: $.i18n("role.popup.rolePermissions.header"), type:"section" },
                         { 
                             id:"roleFormRolePermissions_" + this.id,
                             view:"dbllist", 
                             //value:rolePermissionsIdList.toString(),
                             list:{ height:150, scroll:true },
-                            labelLeft:"Available",
-                            labelRight:"Selected",
+                            labelLeft:$.i18n("role.popuo.available"),
+                            labelRight:$.i18n("role.popup.selected"),
                             disabled: true,
                             //data:rolePermissionsList
                         }
@@ -262,7 +262,7 @@ export default class RoleForm {
                 break;
             case 2: //new Mode
 
-                header = "New Role";
+                header = $.i18n("role.popup.newRoleheader");
                 let graphPermissions = webix.proxy("GraphQL",`
                     query  {
                         getSystemPermissions{

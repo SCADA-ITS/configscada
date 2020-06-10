@@ -44,13 +44,13 @@ let genericTablei18n = {
 			{ "id": "recognized", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 200 },
 			{ "id": "deactivation", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 200 },
 			{ "id": "alarmConfig", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 50 },
+			{ "id": "alarmLevel", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
 			{ "id": "sourceElement", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
 			{ "id": "targetElement", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
-			{ "id": "recognize", "header": "", "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" //+ 
-			//"<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button>" + 
-			//"<button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>"
-			, width: 120 }
+			/*{ "id": "recognize", "header": "", "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" //+ 
+			"<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button>" + 
+			"<button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>"
+			, width: 120 }*/
 		],
 		onClick: {
 			action_recognize: function (ev, id, html) {
@@ -59,7 +59,7 @@ let genericTablei18n = {
 				for (let index = 0; index < data.length; index++) {
 					if (data[index].id == alarmId) {
 						if (data[index].recognized != null) {
-							webix.alert("Alarma ya reconocida");
+							webix.alert($.i18n("alarms.popup.messageAlarmRecognized"));
 						} else {
 							webix.ui({
 								view: "window",
@@ -82,7 +82,7 @@ let genericTablei18n = {
 										{
 											cols: [
 												{
-													view: "button", value: "Recognize", css: "webix_primary", click: function () {
+													view: "button", value: $.i18n("alarms.d.recognized"), css: "webix_primary", click: function () {
 														let comment = $$("Comment" + alarmId).getValue();
 														let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
 														graphql.save({
@@ -215,7 +215,7 @@ let genericTablei18n = {
 			cols: [
 				{ gravity: 4 },
 				{
-					view: "button", id: "recognize_bottom", align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: "Recognize",
+					view: "button", id: "recognize_bottom", align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: $.i18n("alarms.d.button.recognize"),
 					click: function () {
 						var alarmas = [];
 						var alarmasId = [];
@@ -228,14 +228,14 @@ let genericTablei18n = {
 						}
 
 						if (data.length == 0) {
-							webix.alert("No hay alarmas activas");
+							webix.alert($.i18n("alarms.popup.noAlamr"));
 						} else if (alarmas.length == 0) {
-							webix.alert("Seleccione alarmas");
+							webix.alert($.i18n("alarms.popup.selectAlarm"));
 						}
 
 						for (let index = 0; index < alarmas.length; index++) {
 							if (alarmas[index].recognized != null) {
-								webix.message("La alarma " + alarmas[index].id + " ya esta reconocida")
+								webix.message("" + alarmas[index].id + " " + $.i18n("alarms.popup.selectAlarm"))
 							} else if (alarmas[index].recognized == null) {
 								alarmasId.push(alarmas[index].id);
 							}
@@ -264,7 +264,7 @@ let genericTablei18n = {
 										{
 											cols: [
 												{
-													view: "button", value: "Recognize", css: "webix_primary", click: function () {
+													view: "button", value: $.i18n("alarms.d.recognized"), css: "webix_primary", click: function () {
 														let comment = $$("Comment_array_recognize").getValue();
 														let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
 														graphql.save({
@@ -323,14 +323,14 @@ let genericTablei18n = {
 						}
 
 						if (data.length == 0) {
-							webix.alert("No hay alarmas activas");
+							webix.alert($.i18n("alarms.popup.noAlamr"));
 						} else if (alarmas.length == 0) {
-							webix.alert("Seleccione alarmas");
+							webix.alert($.i18n("alarms.popup.selectAlarm"));
 						}
 
 						for (let index = 0; index < alarmas.length; index++) {
 							if (alarmas[index].deactivation != null) {
-								webix.message("La alarma " + alarmas[index].id + " ya esta desactivada")
+								webix.message("" + alarmas[index].id  + " " + $.i18n("alarms.popup.selectAlarm"))
 							}
 							else if (alarmas[index].deactivation == null) {
 								alarmasId.push(alarmas[index].id)
@@ -428,7 +428,7 @@ let genericTablei18n_recon = {
 			{ "id": "recognized_recon", "header": $.i18n("alarms.d.recognized"), "template": function (obj_recon) { return getDate(obj_recon.recognized) }, width: 200 },
 			{ "id": "deactivation_recon", "header": $.i18n("alarms.d.deactivation"), "template": function (obj_recon) { return getDate(obj_recon.deactivation) }, width: 200 },
 			{ "id": "alarmConfig_recon", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel_recon", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 50 },
+			{ "id": "alarmLevel_recon", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
 			{ "id": "sourceElement_recon", "header": $.i18n("alarms.d.source"), "template": function (obj_recon) { return obj_recon.sourceElement.alias; }, width: 100 },
 			{ "id": "targetElement_recon", "header": $.i18n("alarms.d.target"), "template": function (obj_recon) { return obj_recon.targetElement.alias; }, width: 100 },
 			//{ "id": "recognize_recon", "header": "", "template": "<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button> <button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>", width: 120 }
@@ -533,14 +533,14 @@ let genericTablei18n_recon = {
 						}
 
 						if (data.length == 0) {
-							webix.alert("No hay alarmas activas");
+							webix.alert($.i18n("alarms.popup.noAlamr"));
 						} else if (alarmas.length == 0) {
-							webix.alert("Seleccione alarmas");
+							webix.alert($.i18n("alarms.popup.selectAlarm"));
 						}
 
 						for (let index = 0; index < alarmas.length; index++) {
 							if (alarmas[index].deactivation != null) {
-								webix.message("La alarma " + alarmas[index].id + " ya esta desactivada")
+								webix.message("" + alarmas[index].id  + " " + $.i18n("alarms.popup.selectAlarm"))
 							}
 							else if (alarmas[index].deactivation == null) {
 								alarmasId.push(alarmas[index].id)

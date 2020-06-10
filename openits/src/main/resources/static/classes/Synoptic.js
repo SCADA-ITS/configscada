@@ -987,7 +987,8 @@ export default class Synoptic {
           linkToAdd.onclick = function () {
             self.handleLayers(n);
           };
-          linkToAdd.appendChild(linkText);
+          //linkToAdd.appendChild(linkText);
+          linkToAdd.innerHTML = elementTypeMap.getElementTypeName(n);
           document
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);

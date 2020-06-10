@@ -1118,9 +1118,6 @@ var i18_en = {
     "realtime.header.measures": "Measures",
     "realtime.header.ws": "WS",
 
-
-
-
     "plan.form.alias": "Alias",
     "plan.form.description": "Description",
     "plan.form.id": "Id",
@@ -1250,6 +1247,12 @@ var i18_en = {
 
     "equipment.tabbar.measures": "Measures",
     "equipment.tabbar.parameter": "Parameter",
+
+    "elementForm.alarms.activation": "Activation",
+    "elementForm.alarms.alarmLevel": "AlarmLevel",
+    "elementForm.alarms.deactivation": "Deactivation",
+    "elementForm.alarms.recognized": "Recognized",
+    "elementForm.alarms.sourceElement": "sourceElement",
 
     "state.unknown": "Unknown",
     "state.connected": "Connected",

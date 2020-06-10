@@ -184,6 +184,7 @@ export default class EquipmentTable {
                 
                 this.graphqlElements.load({ 
                 }).then(data => {
+
                     try {
                         //document.getElementById("tabla_element_" + this.modeType + "spinner").style.display = "block";
                         this.columnsElementList[this.id][this.mode].forEach(obj => {
@@ -204,6 +205,7 @@ export default class EquipmentTable {
                     } catch {}
 
                     data.forEach(item => {
+
                         let colorList = {};
                         if (item.state === 0 )
                             colorList["alias"] = {"background-color":"Gold"};
@@ -290,8 +292,7 @@ export default class EquipmentTable {
                         }
                     });	
                 }
-                console.log(this.modeType);
-                console.log("ws");
+
                 row["$cellCss"] = colorList;
                 $$("tabla_element_" + this.modeType).add(row);
                 $$("tabla_element_" + this.modeType).sort({

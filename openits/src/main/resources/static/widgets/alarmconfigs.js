@@ -20,11 +20,11 @@ let genericTablei18n = {
 		"select":true,
 		"columns":[
 			{ "id":"id", "header": $.i18n("alarmsconfig.d.id"), hidden: true},
-			{ "id":"alias", "header": [$.i18n("alarmsconfig.d.alias"), {content:"textFilter"}], width:550, sort:"text" },
+			{ "id":"alias", "header": [$.i18n("alarmsconfig.d.alias"),  {content:"textFilter"}], "template": function (obj) { return $.i18n(obj.id); }, width:550, sort:"text" },
 			{ "id":"alarmType", "header": [$.i18n("alarmsconfig.d.type"), {content:"textFilter"}], adjust:true,  sort:"int" },
 			{ "id":"alarmLevel", "header": [$.i18n("alarmsconfig.d.level"), {content:"textFilter"}], adjust:true,  sort:"int" },
 			{ "id":"element", "header": [$.i18n("alarmsconfig.d.element"), {content:"textFilter"}], width:330, sort:"text", "template": function (obj) {return obj.element ? obj.element.alias : "-"} },
-			{ "id":"elementType", "header": [$.i18n("alarmsconfig.d.elementtype"), {content:"textFilter"}], width:320, sort:"text", "template": function (obj) {return obj.elementType ? obj.elementType.alias : "-"} },
+			{ "id":"elementType", "header": [$.i18n("alarmsconfig.d.elementtype"), {content:"textFilter"}], width:320, sort:"text", "template": function (obj) {return obj.elementType ? $.i18n(obj.elementType.id + ".alias") : "-"} },
 			{ "id":"mine", "header": [$.i18n("alarmsconfig.d.mine"), {content:"textFilter"}], adjust:true,  sort:"int" },
 			{ "id":"treatment", "header": [$.i18n("alarmsconfig.d.treatment"), {content:"textFilter"}], adjust:true,  sort:"int"}
 		]

@@ -1,6 +1,7 @@
 export let optionElementType = [
 	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
-	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")}
+	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")},
+	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")}
 ]
 
 export let columnsElementList = {
@@ -42,11 +43,22 @@ export let columnsElementList = {
 	"ElementType:2": { 
 		1:[
 			"alias",
-			"ElementTypeParam:2:1:1003",
 			"ElementTypeParam:2:1:1",
 			"ElementTypeParam:2:1:2",
 			"ElementTypeParam:2:1:4",
 			"ElementTypeParam:2:1:5"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:25": { 
+		1:[
+			"alias",
+			"ElementTypeParam:25:1:1",
+			"ElementTypeParam:25:1:2",
+			"ElementTypeParam:25:1:3"
 		],
 		2:[
 			"alias",
@@ -330,6 +342,35 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("ElementTypeParam:2:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:25": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:25:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:25:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:25:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:25:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:25:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:25:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:25:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
 		},
 		2:{
 			"alias": {

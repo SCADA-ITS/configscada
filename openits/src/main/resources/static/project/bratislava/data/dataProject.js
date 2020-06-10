@@ -14,7 +14,7 @@ export let menu_data_multi  = [
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("defaultheader.equipment")},
 		{ id: "users", icon:"mdi mdi-circle", value: $.i18n("defaultheader.users")},
 		{ id: "roles", icon:"mdi mdi-circle", value: $.i18n("menu.tables.roles")},
-		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("defaultheader.alarmSettings")}
+		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("menu.tables.alarmsconfig")}
 	]},
 	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("defaultheader.managementAlarms")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")}	

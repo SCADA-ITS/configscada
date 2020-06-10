@@ -75,82 +75,36 @@ export function getElementTypeName(elementTypeIdString) {
 
   switch (elementTypeIdString.toString()) {
     case "BASE_LAYER":
-      ret = "BASE LAYER"
+      ret =  $.i18n("synoptic.layer.base");
       break;
     case "ROAD":
-      ret = "ROAD"
+      ret = $.i18n("synoptic.layer.road");
       break;
     case WS_ELEMENT_TYPE:
-      ret = "WEATHER STATION";
-      break;
     case CAM_ELEMENT_TYPE:
-      ret = "CAM";
-      break;
     case DET_ELEMENT_TYPE:
-      ret = "DET";
-      break;
     case SEC_ELEMENT_TYPE:
-      ret = "SECTION";
-      break;
     case PLC_ELEMENT_TYPE:
-      ret = "PLC";
-      break;
     case ZONE_ELEMENT_TYPE:
-      ret = "ZONE";
-      break;
     case BAR_ELEMENT_TYPE:
-      ret = "BAR";
-      break;
     case FAN_ELEMENT_TYPE:
-      ret = "FAN";
-      break;
     case DMS_ELEMENT_TYPE:
-      ret = "DMS";
-      break;
     case SOS_ELEMENT_TYPE:
-      ret = "SOS";
-      break;
     case LUX_ELEMENT_TYPE:
-      ret = "LUX";
-      break;
     case SEM_ELEMENT_TYPE:
-      ret = "SEM";
-      break;
     case LUM_ELEMENT_TYPE:
-      ret = "LUM";
-      break;
     case FIRE_ELEMENT_TYPE:
-      ret = "FIRE";
-      break;
     case MEG_ELEMENT_TYPE:
-      ret = "MEG";
-      break;
     case ANEM_EXT_ELEMENT_TYPE:
-      ret = "ANEM_EXT";
-      break;
     case ANEM_INT_ELEMENT_TYPE:
-      ret = "ANEM_INT";
-      break;
     case CO_ELEMENT_TYPE:
-      ret = "CO";
-      break;
     case NO_ELEMENT_TYPE:
-      ret = "NO";
-      break;
     case OPAC_ELEMENT_TYPE:
-      ret = "OPAC";
-      break;
     case ETD_MODBUS_ELEMENT_TYPE:
-      ret = "ETD_MODBUS";
-      break;
     case ETD_DETECTOR_ELEMENT_TYPE:
-      ret = "ETD_DETECTOR";
-      break;
     case ETD_ELEMENT_TYPE:
-      ret = "ETD";
-      break;
     case ELECTRICAL_CABINET_ELEMENT_TYPE:
-        ret = "ELECTRICAL_CABINET";
+        ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
         break;
     default:
       break;

@@ -1,4 +1,4 @@
-import { getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
+import {getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 export default class ElementForm {
@@ -63,7 +63,9 @@ export default class ElementForm {
 					id: "elementHeaderIcon"+this.id,
 					view: "template",
 					type: "header",
-					data: {value: ""},
+					data: {
+						value: ""
+					},
 					template: function (obj) {
 						return obj.value;
 					},
@@ -73,7 +75,9 @@ export default class ElementForm {
 					id: "elementHeaderTitle"+this.id,
 					view: "template",
 					type: "header",
-					data: {value: ""},
+					data: {
+						value: ""
+					},
 					template: function (obj) {
 						return obj.value;
 					},
@@ -102,7 +106,7 @@ export default class ElementForm {
 						}
 					} 
 				},
-				{ id:"title",   width:200, tooltip:function(obj){  
+				{ id:"title",   width:300, tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				},
@@ -114,7 +118,7 @@ export default class ElementForm {
             data:[]
 		};	
 
-		this.alarmsHeader = { id:  this.id + "_elementAlarmsTable_HEADER" ,template:"Alarmas", type:"section" };
+		this.alarmsHeader = { id:  this.id + "_elementAlarmsTable_HEADER" ,template: $.i18n("defaultheader.managementAlarms"), type:"section" };
 		this.alarmsTable = {
 			id:  this.id + "_elementAlarmsTable",	
 			view:"datatable",
@@ -507,15 +511,15 @@ export default class ElementForm {
 											let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
 											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
 											let outlets = [];
-											outlets.push({id: element.id + "_outlet_activation", title: "activation", measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_alarmLevel", title: "alarmLevel", measure: datacf.alarmConfig.alarmLevel });
-											outlets.push({id: element.id + "_outlet_deactivation", title: "deactivation", measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_recognized", title: "recognized", measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_sourceElement", title: "sourceElement", measure: datacf.sourceElement.alias });
+											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: datacf.alarmConfig.alarmLevel });
+											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: datacf.sourceElement.alias });
 
 											let row = { 
 														id: item.id + "_AlarmsElementForm" , 
-														title: datacf.alarmConfig.alias, 
+														title: $.i18n(datacf.alarmConfig.id), 
 														recognized: recognized, 
 														activation: activation, 
 														deactivation: deactivation, 
@@ -560,6 +564,7 @@ export default class ElementForm {
     }
 
 	getComponent() {
+		
 		// waits for the element and starts drawing
 		this.elementReady('[view_id="' + "elementBody" + this.id + '"]').then((c) => {
 			let spinnerDivToAdd = document.createElement("div");
@@ -665,6 +670,7 @@ export default class ElementForm {
 				console.error(e);
 			}			
 			let valuesList = {};
+			
 			//BODY
 			try {
 				valuesList["id"] = {id: "elementBody" + this.id + "_id", iconAlerted: false, title: $.i18n("role.popup.id"), measure: data.id, tooltiplab: data.id  };
