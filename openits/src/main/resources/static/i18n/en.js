@@ -1196,6 +1196,12 @@ var i18_en = {
     "alarms.d.source": "Source",
     "alarms.d.target": "Target",
 
+    "alarms.d.button.recognize": "Recognize",
+    "alarms.popup.selectAlarm": "SELECT ALARM",
+    "alarms.popup.Alarmrecognized": "ALARM RECOGNIZED",
+    "alarms.popup.noAlamr": "NO ALARMS",
+    "alarms.popup.messageAlarmRecognized": "Alarm recognized",
+
     "element.popup.id": "Id",
     "element.popup.alias": "Alias",
     "element.popup.description": "Description",
@@ -1247,6 +1253,7 @@ var i18_en = {
 
     "equipment.tabbar.measures": "Measures",
     "equipment.tabbar.parameter": "Parameter",
+    "equipment.combo.label": "Element Type",
 
     "elementForm.alarms.activation": "Activation",
     "elementForm.alarms.alarmLevel": "AlarmLevel",

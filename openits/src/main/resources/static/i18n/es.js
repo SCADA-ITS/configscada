@@ -760,8 +760,8 @@ var i18_es = {
     "ElementTypeParam:2:1:3.description": "stream_mjpeg",
     "ElementTypeParam:2:1:4.alias": "Carretera",
     "ElementTypeParam:2:1:4.description": "Carretera",
-    "ElementTypeParam:2:1:5.alias": "Alias section",
-    "ElementTypeParam:2:1:5.description": "Alias section",
+    "ElementTypeParam:2:1:5.alias": "Seccion",
+    "ElementTypeParam:2:1:5.description": "Seccion",
 
 
     "ElementTypeParam:2:1:6.alias": "Selection code keyboard",
@@ -1202,6 +1202,12 @@ var i18_es = {
     "alarms.d.source": "Fuente",
     "alarms.d.target": "Objetivo",
 
+    "alarms.d.button.recognize": "Reconocer",
+    "alarms.popup.selectAlarm": "SELECT ALARM",
+    "alarms.popup.Alarmrecognized": "ALARM RECOGNIZED",
+    "alarms.popup.noAlamr": "NO ALARMS",
+    "alarms.popup.messageAlarmRecognized": "Alarm recognized",
+
     "element.popup.id": "Id",
     "element.popup.alias": "Alias",
     "element.popup.description": "Descrip.",
@@ -1253,6 +1259,7 @@ var i18_es = {
 
     "equipment.tabbar.measures": "Medidas",
     "equipment.tabbar.parameter": "Par&aacute;metros",
+    "equipment.combo.label": "Tipo de Elemento",
 
     "elementForm.alarms.activation": "Activaci&oacute;n",
     "elementForm.alarms.alarmLevel": "Nivel de alarma",
