@@ -1266,7 +1266,7 @@ var i18_es = {
     "state.alarm": "Alarmado",
 
 
-    //  BRATISLAVA  
+    /*  BRATISLAVA  */
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1307,7 +1307,7 @@ var i18_es = {
     "AlarmConfig:39": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-2",
     "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N",
 
-/*AUSOL 
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",

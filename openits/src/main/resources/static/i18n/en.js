@@ -1259,7 +1259,7 @@ var i18_en = {
     "state.noconnected": "No Connected",
     "state.alarm": "Alarm",
 
-    // BRATISLAVA
+    /* BRATISLAVA */
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
     "AlarmConfig:3": "ALARM WS AIR PRESSURE GREATER THAN 65534",
     "AlarmConfig:4": "ALARM WS AIR TEMPERATURE NOT BETWEEN -1000 AND 1000",
@@ -1300,8 +1300,7 @@ var i18_en = {
     "AlarmConfig:39": "ALARM PLC_CABINET INSULATION LOSSES-2",
     "AlarmConfig:40": "ALARM PLC_CABINET NO CONNECTION",
 
-/*
-//AUSOL 
+/* AUSOL 
     "AlarmConfig:3": "ALARM DISCONNECTED",
     "AlarmConfig:4": "ALARM DISCONNECTED",
     "AlarmConfig:5":"ALARM DISCONNECTED",
