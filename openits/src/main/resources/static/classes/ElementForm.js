@@ -709,8 +709,8 @@ export default class ElementForm {
 				if(data.alarms !== null){
 					data.alarms.forEach(item => {
 
-						let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
-						let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+						let deactivation = item.deactivation !== undefined ? (item.deactivation === null ? "-" : item.deactivation ): "NA"; //NA por si no nos dan valor
+						let recognized = item.recognized !== undefined ? (item.recognized === null ? "-" : item.recognized) : "NA";
 						
 						let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
 						let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
@@ -775,6 +775,7 @@ export default class ElementForm {
 			}
 
 			document.getElementById("elementBody" + this.id + "spinner").style.display = "none";
+			this.client.activate();
 			return data;
 		});
 		let result = {
@@ -788,7 +789,6 @@ export default class ElementForm {
 					{}
 				]
 			};
-		this.client.activate();
 		return result;
 	}
 }
