@@ -708,14 +708,24 @@ export default class ElementForm {
 			try {
 				if(data.alarms !== null){
 					data.alarms.forEach(item => {
-						let outlets = [];
-						outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
-						outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
-						outlets.push({id: item.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: item.sourceElement.alias });
-						let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
-						$$(this.id + "_elementAlarmsTable").add(row);
+
+						let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
+						let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+						
+						let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
+						let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
+						if (controlDeactivation && controlrecognized) {
+							//no hacemos nada
+						} else {
+							let outlets = [];
+							outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
+							outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
+							outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
+							outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
+							outlets.push({id: item.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: item.sourceElement.alias });
+							let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
+							$$(this.id + "_elementAlarmsTable").add(row);
+						}
 					});
 				} else {
 					$$(this.id + "_elementAlarmsTable").hide();

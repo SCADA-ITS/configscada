@@ -2,353 +2,65 @@ export let synopticTunnel = {
 	"BaseLayers": {
 		"base": "tunel.svg"
 	},
-	"Element:8:1": {
-		"x": 1629,
-		"y": 817,
-		"width": 88,
-		"height": 48
-	},
-	"Element:8:2": {
-		"x": 60,
-		"y": 258,
-		"width": 88,
-		"height": 48
-	},
-	"Element:9:1": {
-		"x": 1172,
-		"y": 798,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:2": {
-		"x": 1172,
-		"y": 678,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:3": {
-		"x": 720,
-		"y": 798,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:4": {
-		"x": 720,
-		"y": 678,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:5": {
-		"x": 720,
-		"y": 390,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:6": {
-		"x": 720,
-		"y": 272,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:7": {
-		"x": 1172,
-		"y": 390,
-		"width": 40,
-		"height": 40
-	},
-	"Element:9:8": {
-		"x": 1172,
-		"y": 272,
-		"width": 40,
-		"height": 40
-	},
-	"Element:10:1": {
-		"x": 63,
-		"y": 310,
-		"width": 200,
-		"height": 54
-	},
-	"Element:10:2": {
-		"x": 1517,
-		"y": 715,
-		"width": 200,
-		"height": 54
-	},
-	"Element:11:1": {
-		"x": 1548,
-		"y": 907,
-		"width": 40,
-		"height": 40
-	},
-	"Element:11:2": {
-		"x": 156,
-		"y": 140,
-		"width": 40,
-		"height": 40
-	},
-	"Element:11:3": {
-		"x": 880,
-		"y": 907,
-		"width": 40,
-		"height": 40
-	},
-	"Element:11:4": {
-		"x": 966,
-		"y": 140,
-		"width": 40,
-		"height": 40
-	},
-	"Element:11:5": {
-		"x": 208,
-		"y": 907,
-		"width": 40,
-		"height": 40
-	},
-	"Element:11:6": {
-		"x": 1550,
-		"y": 140,
-		"width": 40,
-		"height": 40
-	},
-	"Element:12:1": {
-		"x": 1374,
-		"y": 901,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:2": {
-		"x": 324,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:3": {
-		"x": 1310,
-		"y": 901,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:4": {
-		"x": 388,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:5": {
-		"x": 388,
-		"y": 901,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:6": {
-		"x": 1320,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:7": {
-		"x": 324,
-		"y": 901,
-		"width": 50,
-		"height": 50
-	},
-	"Element:12:8": {
-		"x": 1384,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:2:1": {
-		"x": 1440,
-		"y": 910,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:2": {
-		"x": 459,
-		"y": 141,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:3": {
-		"x": 939,
-		"y": 910,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:4": {
-		"x": 900,
-		"y": 141,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:5": {
-		"x": 539,
-		"y": 910,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:6": {
-		"x": 1260,
-		"y": 141,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:7": {
-		"x": 1578,
-		"y": 517,
-		"width": 40,
-		"height": 40
-	},
-	"Element:2:8": {
-		"x": 160,
-		"y": 517,
-		"width": 40,
-		"height": 40
-	},
-	"Element:13:1": {
-		"x": 1685,
-		"y": 868,
-		"width": 40,
-		"height": 40
-	},
-	"Element:13:2": {
-		"x": 64,
-		"y": 438,
-		"width": 40,
-		"height": 40
-	},
-	"Element:13:3": {
-		"x": 1685,
-		"y": 598,
-		"width": 40,
-		"height": 40
-	},
-	"Element:13:4": {
-		"x": 64,
-		"y": 174,
-		"width": 40,
-		"height": 40
-	},
-	"Element:14:1": {
-		"x": 1670,
-		"y": 503,
-		"width": 60,
-		"height": 60
+	"Element:8:1": { "x": 1629, "y": 817, "width": 88, "height": 48 },
+	"Element:8:2": { "x": 60, "y": 258, "width": 88, "height": 48 },
+	"Element:9:1": { "x": 1172, "y": 798, "width": 40, "height": 40 },
+	"Element:9:2": { "x": 1172, "y": 678, "width": 40, "height": 40 },
+	"Element:9:3": { "x": 720, "y": 798, "width": 40, "height": 40 },
+	"Element:9:4": { "x": 720, "y": 678, "width": 40, "height": 40 },
+	"Element:9:5": { "x": 720, "y": 390, "width": 40, "height": 40 },
+	"Element:9:6": { "x": 720, "y": 272, "width": 40, "height": 40 },
+	"Element:9:7": { "x": 1172, "y": 390, "width": 40, "height": 40 },
+	"Element:9:8": { "x": 1172, "y": 272, "width": 40, "height": 40 },
+	"Element:10:1": { "x": 63, "y": 310, "width": 200, "height": 54 },
+	"Element:10:2": { "x": 1517, "y": 715, "width": 200, "height": 54 },
+	"Element:11:1": { "x": 1548, "y": 907, "width": 40, "height": 40 },
+	"Element:11:2": { "x": 156, "y": 140, "width": 40, "height": 40 },
+	"Element:11:3": { "x": 880, "y": 907, "width": 40, "height": 40 },
+	"Element:11:4": { "x": 966, "y": 140, "width": 40, "height": 40 },
+	"Element:11:5": { "x": 208, "y": 907, "width": 40, "height": 40 },
+	"Element:11:6": { "x": 1550, "y": 140, "width": 40, "height": 40 },
+	"Element:12:1": { "x": 1374, "y": 901, "width": 50, "height": 50 },
+	"Element:12:2": { "x": 324, "y": 132, "width": 50, "height": 50 },
+	"Element:12:3": { "x": 1310, "y": 901, "width": 50, "height": 50 },
+	"Element:12:4": { "x": 388, "y": 132, "width": 50, "height": 50 },
+	"Element:12:5": { "x": 388, "y": 901, "width": 50, "height": 50 },
+	"Element:12:6": { "x": 1320, "y": 132, "width": 50, "height": 50 },
+	"Element:12:7": { "x": 324, "y": 901, "width": 50, "height": 50 },
+	"Element:12:8": { "x": 1384, "y": 132, "width": 50, "height": 50 },
+	"Element:2:1": { "x": 1440, "y": 910, "width": 40, "height": 40 },
+	"Element:2:2": { "x": 459, "y": 141, "width": 40, "height": 40 },
+	"Element:2:3": { "x": 939, "y": 910, "width": 40, "height": 40 },
+	"Element:2:4": { "x": 900, "y": 141, "width": 40, "height": 40 },
+	"Element:2:5": { "x": 539, "y": 910, "width": 40, "height": 40 },
+	"Element:2:6": { "x": 1260, "y": 141, "width": 40, "height": 40 },
+	"Element:2:7": { "x": 1578, "y": 517, "width": 40, "height": 40 },
+	"Element:2:8": { "x": 160, "y": 517, "width": 40, "height": 40 },
+	"Element:13:1": { "x": 1685, "y": 868, "width": 40, "height": 40 },
+	"Element:13:2": { "x": 64, "y": 438, "width": 40, "height": 40 },
+	"Element:13:3": { "x": 1685, "y": 598, "width": 40, "height": 40 },
+	"Element:13:4": { "x": 64, "y": 174, "width": 40, "height": 40 },
+	"Element:14:1": { "x": 1670, "y": 503, "width": 60, "height": 60
   },
-  "Element:14:2": {
-		"x": 77,
-		"y": 503,
-		"width": 60,
-		"height": 60
-	},
-	"Element:15:1": {
-		"x": 434,
-		"y": 730,
-		"width": 315,
-		"height": 20
-	},
-	"Element:15:2": {
-		"x": 434,
-		"y": 330,
-		"width": 315,
-		"height": 20
-	},
-	"Element:15:3": {
-		"x": 748,
-		"y": 730,
-		"width": 315,
-		"height": 20
-	},
-	"Element:15:4": {
-		"x": 748,
-		"y": 330,
-		"width": 315,
-		"height": 20
-	},
-	"Element:15:5": {
-		"x": 1063,
-		"y": 730,
-		"width": 315,
-		"height": 20
-	},
-	"Element:15:6": {
-		"x": 1063,
-		"y": 330,
-		"width": 315,
-		"height": 20
-	},
-	"Element:16:1": {
-		"x": 881,
-		"y": 550,
-		"width": 40,
-		"height": 40
-	},
-	"Element:16:2": {
-		"x": 881,
-		"y": 494,
-		"width": 40,
-		"height": 40
-	},
-	"Element:17:1": {
-		"x": 242,
-		"y": 140,
-		"width": 50,
-		"height": 50
-	},
-	"Element:18:1": {
-		"x": 859,
-		"y": 641,
-		"width": 50,
-		"height": 50
-	},
-	"Element:18:2": {
-		"x": 1050,
-		"y": 379,
-		"width": 50,
-		"height": 50
-	},
-	"Element:19:1": {
-		"x": 1005,
-		"y": 902,
-		"width": 50,
-		"height": 50
-	},
-	"Element:19:2": {
-		"x": 817,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:20:1": {
-		"x": 1154,
-		"y": 902,
-		"width": 50,
-		"height": 50
-	},
-	"Element:20:2": {
-		"x": 669,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:21:1": {
-		"x": 1079,
-		"y": 902,
-		"width": 50,
-		"height": 50
-	},
-	"Element:21:2": {
-		"x": 743,
-		"y": 132,
-		"width": 50,
-		"height": 50
-	},
-	"Element:23:1": {
-		"x": 100,
-		"y": 711,
-		"width": 120,
-		"height": 120,
+	"Element:14:2": { "x": 77, "y": 503, "width": 60, "height": 60 },
+	"Element:15:1": { "x": 434, "y": 730, "width": 315, "height": 20 },
+	"Element:15:2": { "x": 434, "y": 330, "width": 315, "height": 20 },
+	"Element:15:3": { "x": 748, "y": 730, "width": 315, "height": 20 },
+	"Element:15:4": { "x": 748, "y": 330, "width": 315, "height": 20 },
+	"Element:15:5": { "x": 1063, "y": 730, "width": 315, "height": 20 },
+	"Element:15:6": { "x": 1063, "y": 330, "width": 315, "height": 20 },
+	"Element:16:1": { "x": 881, "y": 550, "width": 40, "height": 40 },
+	"Element:16:2": { "x": 881, "y": 494, "width": 40, "height": 40 },
+	"Element:17:1": { "x": 242, "y": 140, "width": 50, "height": 50 },
+	"Element:18:1": { "x": 859, "y": 641, "width": 50, "height": 50 },
+	"Element:18:2": { "x": 1050, "y": 379, "width": 50, "height": 50 },
+	"Element:19:1": { "x": 1005, "y": 902, "width": 50, "height": 50 },
+	"Element:19:2": { "x": 817, "y": 132, "width": 50, "height": 50 },
+	"Element:20:1": { "x": 1154, "y": 902, "width": 50, "height": 50 },
+	"Element:20:2": { "x": 669, "y": 132, "width": 50, "height": 50 },
+	"Element:21:1": { "x": 1079, "y": 902, "width": 50, "height": 50 },
+	"Element:21:2": { "x": 743, "y": 132, "width": 50, "height": 50 },
+	"Element:23:1": { "x": 100, "y": 711, "width": 120, "height": 120,
 		"values": [
 			{name: "average_length", label: "AL"},
 			{name: "average_speed", label: "AS"},
@@ -361,108 +73,28 @@ export let synopticMetro = {
 	"BaseLayers": {
 		"base": "metro.svg"
 	},
-	"Element:7:1": {
-		"x": 1091,
-		"y": 607,
-		"width": 60,
-		"height": 60
-	},
+	"Element:7:1": { "x": 1091, "y": 607, "width": 60, "height": 60 },
 };
 
 export let synopticGlobal = {
 	"BaseLayers": {
 		"base": "global.svg"
 	},
-	"Element:10:1": {
-		"x": 1511,
-		"y": 593,
-		"width": 158,
-		"height": 40
-	},
-	"Element:10:2": {
-		"x": 1645,
-		"y": 693,
-		"width": 158,
-		"height": 40
-	},
-	"Element:9:1": {
-		"x": 1606,
-		"y": 720,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:2": {
-		"x": 1606,
-		"y": 690,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:3": {
-		"x": 1565,
-		"y": 720,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:4": {
-		"x": 1565,
-		"y": 690,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:5": {
-		"x": 1680,
-		"y": 620,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:6": {
-		"x": 1680,
-		"y": 590,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:7": {
-		"x": 1722,
-		"y": 620,
-		"width": 20,
-		"height": 20
-	},
-	"Element:9:8": {
-		"x": 1722,
-		"y": 590,
-		"width": 20,
-		"height": 20
-	},
-	"Element:13:1": {
-		"x": 1825,
-		"y": 663,
-		"width": 40,
-		"height": 40
-	},
-	"Element:13:2": {
-		"x": 1462,
-		"y": 618,
-		"width": 40,
-		"height": 40
-	},
-	"Element:8:1": {
-		"x": 1820,
-		"y": 713,
-		"width": 88,
-		"height": 48
-	},
-	"Element:8:2": {
-		"x": 1411,
-		"y": 558,
-		"width": 88,
-		"height": 48
-	},
-	"Element:7:1": {
-		"x": 1505,
-		"y": 775,
-		"width": 305,
-		"height": 37
-	},
+	"Element:10:1": { "x": 1511, "y": 593, "width": 158, "height": 40 },
+	"Element:10:2": { "x": 1645, "y": 693, "width": 158, "height": 40 },
+	"Element:9:1": { "x": 1606, "y": 720, "width": 20, "height": 20 },
+	"Element:9:2": { "x": 1606, "y": 690, "width": 20, "height": 20 },
+	"Element:9:3": { "x": 1565, "y": 720, "width": 20, "height": 20 },
+	"Element:9:4": { "x": 1565, "y": 690, "width": 20, "height": 20 },
+	"Element:9:5": { "x": 1680, "y": 620, "width": 20, "height": 20 },
+	"Element:9:6": { "x": 1680, "y": 590, "width": 20, "height": 20 },
+	"Element:9:7": { "x": 1722, "y": 620, "width": 20, "height": 20 },
+	"Element:9:8": { "x": 1722, "y": 590, "width": 20, "height": 20 },
+	"Element:13:1": { "x": 1825, "y": 663, "width": 40, "height": 40 },
+	"Element:13:2": { "x": 1462, "y": 618, "width": 40, "height": 40 },
+	"Element:8:1": { "x": 1820, "y": 713, "width": 88, "height": 48 },
+	"Element:8:2": { "x": 1411, "y": 558, "width": 88, "height": 48 },
+	"Element:7:1": { "x": 1505, "y": 775, "width": 305, "height": 37 },
 };
 
 export let synopticBratislava = {
@@ -472,498 +104,88 @@ export let synopticBratislava = {
 		"2": "20200506_CCTV_PK_f1.svg",
 		"1": "20200506_METEO_PK_f1.svg"
 	},
-  "Element:1:1": {
-    "x": 1430,
-    "y": 520,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:2": {
-    "x": 1430,
-    "y": 470,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:3": {
-    "x": 1430,
-    "y": 375,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:4": {
-    "x": 1430,
-    "y": 300,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:5": {
-    "x": 1430,
-    "y": 225,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:6": {
-    "x": 1430,
-    "y": 160,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:7": {
-    "x": 1430,
-    "y": 95,
-    "width": 40,
-    "height": 40
-  },
-  "Element:1:8": {
-    "x": 1430,
-    "y": 30,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:1": {
-    "x": 30,
-    "y": 510,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:2": {
-    "x": 250,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:3": {
-    "x": 300,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:4": {
-    "x": 351,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:5": {
-    "x": 400,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:6": {
-    "x": 450,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:7": {
-    "x": 495,
-    "y": 730,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:8": {
-    "x": 1044,
-    "y": 600,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:9": {
-    "x": 1044,
-    "y": 550,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:10": {
-    "x": 1044,
-    "y": 500,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:11": {
-    "x": 1224,
-    "y": 1025,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:12": {
-    "x": 1224,
-    "y": 980,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:13": {
-    "x": 1224,
-    "y": 930,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:14": {
-    "x": 1224,
-    "y": 840,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:15": {
-    "x": 1224,
-    "y": 740,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:16": {
-    "x": 1224,
-    "y": 690,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:17": {
-    "x": 1224,
-    "y": 640,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:18": {
-    "x": 1224,
-    "y": 550,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:19": {
-    "x": 1224,
-    "y": 500,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:20": {
-    "x": 1224,
-    "y": 450,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:21": {
-    "x": 1435,
-    "y": 1030,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:22": {
-    "x": 1435,
-    "y": 930,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:23": {
-    "x": 1435,
-    "y": 885,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:24": {
-    "x": 1435,
-    "y": 835,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:25": {
-    "x": 1435,
-    "y": 785,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:26": {
-    "x": 1435,
-    "y": 735,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:27": {
-    "x": 1435,
-    "y": 690,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:28": {
-    "x": 1435,
-    "y": 650,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:29": {
-    "x": 1435,
-    "y": 605,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:30": {
-    "x": 1435,
-    "y": 550,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:31": {
-    "x": 1435,
-    "y": 505,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:32": {
-    "x": 1435,
-    "y": 460,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:33": {
-    "x": 1435,
-    "y": 410,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:34": {
-    "x": 1435,
-    "y": 360,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:35": {
-    "x": 1435,
-    "y": 310,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:36": {
-    "x": 1585,
-    "y": 1030,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:37": {
-    "x": 1585,
-    "y": 983,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:38": {
-    "x": 1585,
-    "y": 936,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:39": {
-    "x": 1585,
-    "y": 889,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:40": {
-    "x": 1585,
-    "y": 842,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:41": {
-    "x": 1585,
-    "y": 795,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:42": {
-    "x": 1585,
-    "y": 740,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:43": {
-    "x": 1585,
-    "y": 695,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:44": {
-    "x": 1585,
-    "y": 650,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:45": {
-    "x": 1585,
-    "y": 595,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:46": {
-    "x": 1585,
-    "y": 550,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:47": {
-    "x": 1585,
-    "y": 505,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:48": {
-    "x": 1585,
-    "y": 455,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:49": {
-    "x": 1585,
-    "y": 410,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:50": {
-    "x": 1585,
-    "y": 362,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:51": {
-    "x": 1585,
-    "y": 310,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:52": {
-    "x": 1585,
-    "y": 265,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:53": {
-    "x": 1585,
-    "y": 217,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:54": {
-    "x": 1585,
-    "y": 170,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:55": {
-    "x": 1585,
-    "y": 122,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:56": {
-    "x": 1791,
-    "y": 1030,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:57": {
-    "x": 1791,
-    "y": 983,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:58": {
-    "x": 1791,
-    "y": 933,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:59": {
-    "x": 1791,
-    "y": 883,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:60": {
-    "x": 1791,
-    "y": 787,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:61": {
-    "x": 1791,
-    "y": 690,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:62": {
-    "x": 1791,
-    "y": 640,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:63": {
-    "x": 1791,
-    "y": 595,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:64": {
-    "x": 1791,
-    "y": 550,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:65": {
-    "x": 1791,
-    "y": 505,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:66": {
-    "x": 1791,
-    "y": 462,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:67": {
-    "x": 1791,
-    "y": 360,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:68": {
-    "x": 1791,
-    "y": 310,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:69": {
-    "x": 1791,
-    "y": 210,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:70": {
-    "x": 1791,
-    "y": 162,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:71": {
-    "x": 1791,
-    "y": 114,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:72": {
-    "x": 1791,
-    "y": 65,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:73": {
-    "x": 1791,
-    "y": 15,
-    "width": 40,
-    "height": 40
-  },
-  "Element:2:74": {
-    "x": 1044,
-    "y": 645,
-    "width": 40,
-    "height": 40
-  },
+  "Element:1:1": { "x": 1430, "y": 520, "width": 40, "height": 40 },
+  "Element:1:2": { "x": 1430, "y": 470, "width": 40, "height": 40 },
+  "Element:1:3": { "x": 1430, "y": 375, "width": 40, "height": 40 },
+  "Element:1:4": { "x": 1430, "y": 300, "width": 40, "height": 40 },
+  "Element:1:5": { "x": 1430, "y": 225, "width": 40, "height": 40 },
+  "Element:1:6": { "x": 1430, "y": 160, "width": 40, "height": 40 },
+  "Element:1:7": { "x": 1430, "y": 95, "width": 40, "height": 40 },
+  "Element:1:8": { "x": 1430, "y": 30, "width": 40, "height": 40 },
+  "Element:2:1": { "x": 30, "y": 510, "width": 40, "height": 40 },
+  "Element:2:2": { "x": 250, "y": 730, "width": 40, "height": 40 },
+  "Element:2:3": { "x": 300, "y": 730, "width": 40, "height": 40 },
+  "Element:2:4": { "x": 351, "y": 730, "width": 40, "height": 40 },
+  "Element:2:5": { "x": 400, "y": 730, "width": 40, "height": 40 },
+  "Element:2:6": { "x": 450, "y": 730, "width": 40, "height": 40 },
+  "Element:2:7": { "x": 495, "y": 730, "width": 40, "height": 40 },
+  "Element:2:8": { "x": 1044, "y": 600, "width": 40, "height": 40 },
+  "Element:2:9": { "x": 1044, "y": 550, "width": 40, "height": 40 },
+  "Element:2:10": { "x": 1044, "y": 500, "width": 40, "height": 40 },
+  "Element:2:11": { "x": 1224, "y": 1025, "width": 40, "height": 40 },
+  "Element:2:12": { "x": 1224, "y": 980, "width": 40, "height": 40 },
+  "Element:2:13": { "x": 1224, "y": 930, "width": 40, "height": 40 },
+  "Element:2:14": { "x": 1224, "y": 840, "width": 40, "height": 40 },
+  "Element:2:15": { "x": 1224, "y": 740, "width": 40, "height": 40 },
+  "Element:2:16": { "x": 1224, "y": 690, "width": 40, "height": 40 },
+  "Element:2:17": { "x": 1224, "y": 640, "width": 40, "height": 40 },
+  "Element:2:18": { "x": 1224, "y": 550, "width": 40, "height": 40 },
+  "Element:2:19": { "x": 1224, "y": 500, "width": 40, "height": 40 },
+  "Element:2:20": { "x": 1224, "y": 450, "width": 40, "height": 40 },
+  "Element:2:21": { "x": 1435, "y": 1030, "width": 40, "height": 40 },
+  "Element:2:22": { "x": 1435, "y": 930, "width": 40, "height": 40 },
+  "Element:2:23": { "x": 1435, "y": 885, "width": 40, "height": 40 },
+  "Element:2:24": { "x": 1435, "y": 835, "width": 40, "height": 40 },
+  "Element:2:25": { "x": 1435, "y": 785, "width": 40, "height": 40 },
+  "Element:2:26": { "x": 1435, "y": 735, "width": 40, "height": 40 },
+  "Element:2:27": { "x": 1435, "y": 690, "width": 40, "height": 40 },
+  "Element:2:28": { "x": 1435, "y": 650, "width": 40, "height": 40 },
+  "Element:2:29": { "x": 1435, "y": 605, "width": 40, "height": 40 },
+  "Element:2:30": { "x": 1435, "y": 550, "width": 40, "height": 40 },
+  "Element:2:31": { "x": 1435, "y": 505, "width": 40, "height": 40 },
+  "Element:2:32": { "x": 1435, "y": 460, "width": 40, "height": 40 },
+  "Element:2:33": { "x": 1435, "y": 410, "width": 40, "height": 40 },
+  "Element:2:34": { "x": 1435, "y": 360, "width": 40, "height": 40 },
+  "Element:2:35": { "x": 1435, "y": 310, "width": 40, "height": 40 },
+  "Element:2:36": { "x": 1585, "y": 1030, "width": 40, "height": 40 },
+  "Element:2:37": { "x": 1585, "y": 983, "width": 40, "height": 40 },
+  "Element:2:38": { "x": 1585, "y": 936, "width": 40, "height": 40 },
+  "Element:2:39": { "x": 1585, "y": 889, "width": 40, "height": 40 },
+  "Element:2:40": { "x": 1585, "y": 842, "width": 40, "height": 40 },
+  "Element:2:41": { "x": 1585, "y": 795, "width": 40, "height": 40 },
+  "Element:2:42": { "x": 1585, "y": 740, "width": 40, "height": 40 },
+  "Element:2:43": { "x": 1585, "y": 695, "width": 40, "height": 40 },
+  "Element:2:44": { "x": 1585, "y": 650, "width": 40, "height": 40 },
+  "Element:2:45": { "x": 1585, "y": 595, "width": 40, "height": 40 },
+  "Element:2:46": { "x": 1585, "y": 550, "width": 40, "height": 40 },
+  "Element:2:47": { "x": 1585, "y": 505, "width": 40, "height": 40 },
+  "Element:2:48": { "x": 1585, "y": 455, "width": 40, "height": 40 },
+  "Element:2:49": { "x": 1585, "y": 410, "width": 40, "height": 40 },
+  "Element:2:50": { "x": 1585, "y": 362, "width": 40, "height": 40 },
+  "Element:2:51": { "x": 1585, "y": 310, "width": 40, "height": 40 },
+  "Element:2:52": { "x": 1585, "y": 265, "width": 40, "height": 40 },
+  "Element:2:53": { "x": 1585, "y": 217, "width": 40, "height": 40 },
+  "Element:2:54": { "x": 1585, "y": 170, "width": 40, "height": 40 },
+  "Element:2:55": { "x": 1585, "y": 122, "width": 40, "height": 40 },
+  "Element:2:56": { "x": 1791, "y": 1030, "width": 40, "height": 40 },
+  "Element:2:57": { "x": 1791, "y": 983, "width": 40, "height": 40 },
+  "Element:2:58": { "x": 1791, "y": 933, "width": 40, "height": 40 },
+  "Element:2:59": { "x": 1791, "y": 883, "width": 40, "height": 40 },
+  "Element:2:60": { "x": 1791, "y": 787, "width": 40, "height": 40 },
+  "Element:2:61": { "x": 1791, "y": 690, "width": 40, "height": 40 },
+  "Element:2:62": { "x": 1791, "y": 640, "width": 40, "height": 40 },
+  "Element:2:63": { "x": 1791, "y": 595, "width": 40, "height": 40 },
+  "Element:2:64": { "x": 1791, "y": 550, "width": 40, "height": 40 },
+  "Element:2:65": { "x": 1791, "y": 505, "width": 40, "height": 40 },
+  "Element:2:66": { "x": 1791, "y": 462, "width": 40, "height": 40 },
+  "Element:2:67": { "x": 1791, "y": 360, "width": 40, "height": 40 },
+  "Element:2:68": { "x": 1791, "y": 310, "width": 40, "height": 40 },
+  "Element:2:69": { "x": 1791, "y": 210, "width": 40, "height": 40 },
+  "Element:2:70": { "x": 1791, "y": 162, "width": 40, "height": 40 },
+  "Element:2:71": { "x": 1791, "y": 114, "width": 40, "height": 40 },
+  "Element:2:72": { "x": 1791, "y": 65, "width": 40, "height": 40 },
+  "Element:2:73": { "x": 1791, "y": 15, "width": 40, "height": 40 },
+  "Element:2:74": { "x": 1044, "y": 645, "width": 40, "height": 40 },
 }
 
 export let synopticCabinets = {
@@ -972,430 +194,75 @@ export let synopticCabinets = {
 	    "ROAD": "D4-R7_trazado.png",
 	    "25": "20200525_ELECT_PK_f1.svg"
 		},
-	  "Element:25:1": {
-	    "x": 1626,
-	    "y": 891,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:2": {
-	    "x": 1626,
-	    "y": 860,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:3": {
-	    "x": 1626,
-	    "y": 829,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:4": {
-	    "x": 1626,
-	    "y": 798,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:5": {
-	    "x": 1626,
-	    "y": 767,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:6": {
-	    "x": 1626,
-	    "y": 736,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:7": {
-	    "x": 1626,
-	    "y": 701,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:8": {
-	    "x": 1626,
-	    "y": 674,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:9": {
-	    "x": 1626,
-	    "y": 643,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:10": {
-	    "x": 1626,
-	    "y": 612,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:11": {
-	    "x": 1626,
-	    "y": 581,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:12": {
-	    "x": 1626,
-	    "y": 550,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:13": {
-	    "x": 1626,
-	    "y": 519,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:14": {
-	    "x": 1626,
-	    "y": 488,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:15": {
-	    "x": 1626,
-	    "y": 457,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:16": {
-	    "x": 1626,
-	    "y": 426,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:17": {
-	    "x": 1747,
-	    "y": 1015,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:18": {
-	    "x": 1747,
-	    "y": 984,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:19": {
-	    "x": 1747,
-	    "y": 953,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:20": {
-	    "x": 1747,
-	    "y": 922,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:21": {
-	    "x": 1747,
-	    "y": 891,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:22": {
-	    "x": 1747,
-	    "y": 860,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:23": {
-	    "x": 1747,
-	    "y": 829,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:24": {
-	    "x": 1747,
-	    "y": 798,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:25": {
-	    "x": 1747,
-	    "y": 767,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:26": {
-	    "x": 1747,
-	    "y": 736,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:27": {
-	    "x": 1747,
-	    "y": 705,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:28": {
-	    "x": 1747,
-	    "y": 674,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:29": {
-	    "x": 1747,
-	    "y": 643,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:30": {
-	    "x": 1747,
-	    "y": 612,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:31": {
-	    "x": 1747,
-	    "y": 581,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:32": {
-	    "x": 1747,
-	    "y": 550,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:33": {
-	    "x": 1747,
-	    "y": 519,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:34": {
-	    "x": 1747,
-	    "y": 488,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:35": {
-	    "x": 1747,
-	    "y": 457,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:36": {
-	    "x": 1747,
-	    "y": 426,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:37": {
-	    "x": 1867,
-	    "y": 1046,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:38": {
-	    "x": 1867,
-	    "y": 1015,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:39": {
-	    "x": 1867,
-	    "y": 984,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:40": {
-	    "x": 1867,
-	    "y": 953,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:41": {
-	    "x": 1867,
-	    "y": 922,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:42": {
-	    "x": 1867,
-	    "y": 891,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:43": {
-	    "x": 1867,
-	    "y": 860,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:44": {
-	    "x": 1867,
-	    "y": 829,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:45": {
-	    "x": 1867,
-	    "y": 800,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:46": {
-	    "x": 1867,
-	    "y": 767,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:47": {
-	    "x": 1867,
-	    "y": 736,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:48": {
-	    "x": 1867,
-	    "y": 705,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:49": {
-	    "x": 1867,
-	    "y": 674,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:50": {
-	    "x": 1867,
-	    "y": 638,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:51": {
-	    "x": 1867,
-	    "y": 607,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:52": {
-	    "x": 1867,
-	    "y": 576,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:53": {
-	    "x": 1867,
-	    "y": 545,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:54": {
-	    "x": 1867,
-	    "y": 514,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:55": {
-	    "x": 1867,
-	    "y": 483,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:56": {
-	    "x": 1867,
-	    "y": 452,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:57": {
-	    "x": 1867,
-	    "y": 421,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:58": {
-	    "x": 1867,
-	    "y": 390,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:59": {
-	    "x": 1867,
-	    "y": 359,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:60": {
-	    "x": 1867,
-	    "y": 328,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:61": {
-	    "x": 1867,
-	    "y": 299,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:62": {
-	    "x": 1867,
-	    "y": 272,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:63": {
-	    "x": 1867,
-	    "y": 241,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:64": {
-	    "x": 1867,
-	    "y": 210,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:65": {
-	    "x": 1867,
-	    "y": 179,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:66": {
-	    "x": 1867,
-	    "y": 148,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:67": {
-	    "x": 1867,
-	    "y": 117,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:68": {
-	    "x": 1867,
-	    "y": 90,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:69": {
-	    "x": 1867,
-	    "y": 59,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:70": {
-	    "x": 1867,
-	    "y": 33,
-	    "width": 40,
-	    "height": 40
-	  },
-	  "Element:25:71": {
-	    "x": 1867,
-	    "y": 7,
-	    "width": 40,
-	    "height": 40
-	  },
+	  "Element:25:1": { "x": 1626, "y": 891, "width": 40, "height": 40 },
+	  "Element:25:2": { "x": 1626, "y": 860, "width": 40, "height": 40 },
+	  "Element:25:3": { "x": 1626, "y": 829, "width": 40, "height": 40 },
+	  "Element:25:4": { "x": 1626, "y": 798, "width": 40, "height": 40 },
+	  "Element:25:5": { "x": 1626, "y": 767, "width": 40, "height": 40 },
+	  "Element:25:6": { "x": 1626, "y": 736, "width": 40, "height": 40 },
+	  "Element:25:7": { "x": 1626, "y": 701, "width": 40, "height": 40 },
+	  "Element:25:8": { "x": 1626, "y": 674, "width": 40, "height": 40 },
+	  "Element:25:9": { "x": 1626, "y": 643, "width": 40, "height": 40 },
+	  "Element:25:10": { "x": 1626, "y": 612, "width": 40, "height": 40 },
+	  "Element:25:11": { "x": 1626, "y": 581, "width": 40, "height": 40 },
+	  "Element:25:12": { "x": 1626, "y": 550, "width": 40, "height": 40 },
+	  "Element:25:13": { "x": 1626, "y": 519, "width": 40, "height": 40 },
+	  "Element:25:14": { "x": 1626, "y": 488, "width": 40, "height": 40 },
+	  "Element:25:15": { "x": 1626, "y": 457, "width": 40, "height": 40 },
+	  "Element:25:16": { "x": 1626, "y": 426, "width": 40, "height": 40 },
+	  "Element:25:17": { "x": 1747, "y": 1015, "width": 40, "height": 40 },
+	  "Element:25:18": { "x": 1747, "y": 984, "width": 40, "height": 40 },
+	  "Element:25:19": { "x": 1747, "y": 953, "width": 40, "height": 40 },
+	  "Element:25:20": { "x": 1747, "y": 922, "width": 40, "height": 40 },
+	  "Element:25:21": { "x": 1747, "y": 891, "width": 40, "height": 40 },
+	  "Element:25:22": { "x": 1747, "y": 860, "width": 40, "height": 40 },
+	  "Element:25:23": { "x": 1747, "y": 829, "width": 40, "height": 40 },
+	  "Element:25:24": { "x": 1747, "y": 798, "width": 40, "height": 40 },
+	  "Element:25:25": { "x": 1747, "y": 767, "width": 40, "height": 40 },
+	  "Element:25:26": { "x": 1747, "y": 736, "width": 40, "height": 40 },
+	  "Element:25:27": { "x": 1747, "y": 705, "width": 40, "height": 40 },
+	  "Element:25:28": { "x": 1747, "y": 674, "width": 40, "height": 40 },
+	  "Element:25:29": { "x": 1747, "y": 643, "width": 40, "height": 40 },
+	  "Element:25:30": { "x": 1747, "y": 612, "width": 40, "height": 40 },
+	  "Element:25:31": { "x": 1747, "y": 581, "width": 40, "height": 40 },
+	  "Element:25:32": { "x": 1747, "y": 550, "width": 40, "height": 40 },
+	  "Element:25:33": { "x": 1747, "y": 519, "width": 40, "height": 40 },
+	  "Element:25:34": { "x": 1747, "y": 488, "width": 40, "height": 40 },
+	  "Element:25:35": { "x": 1747, "y": 457, "width": 40, "height": 40 },
+	  "Element:25:36": { "x": 1747, "y": 426, "width": 40, "height": 40 },
+	  "Element:25:37": { "x": 1867, "y": 1046, "width": 40, "height": 40 },
+	  "Element:25:38": { "x": 1867, "y": 1015, "width": 40, "height": 40 },
+	  "Element:25:39": { "x": 1867, "y": 984, "width": 40, "height": 40 },
+	  "Element:25:40": { "x": 1867, "y": 953, "width": 40, "height": 40 },
+	  "Element:25:41": { "x": 1867, "y": 922, "width": 40, "height": 40 },
+	  "Element:25:42": { "x": 1867, "y": 891, "width": 40, "height": 40 },
+	  "Element:25:43": { "x": 1867, "y": 860, "width": 40, "height": 40 },
+	  "Element:25:44": { "x": 1867, "y": 829, "width": 40, "height": 40 },
+	  "Element:25:45": { "x": 1867, "y": 800, "width": 40, "height": 40 },
+	  "Element:25:46": { "x": 1867, "y": 767, "width": 40, "height": 40 },
+	  "Element:25:47": { "x": 1867, "y": 736, "width": 40, "height": 40 },
+	  "Element:25:48": { "x": 1867, "y": 705, "width": 40, "height": 40 },
+	  "Element:25:49": { "x": 1867, "y": 674, "width": 40, "height": 40 },
+	  "Element:25:50": { "x": 1867, "y": 638, "width": 40, "height": 40 },
+	  "Element:25:51": { "x": 1867, "y": 607, "width": 40, "height": 40 },
+	  "Element:25:52": { "x": 1867, "y": 576, "width": 40, "height": 40 },
+	  "Element:25:53": { "x": 1867, "y": 545, "width": 40, "height": 40 },
+	  "Element:25:54": { "x": 1867, "y": 514, "width": 40, "height": 40 },
+	  "Element:25:55": { "x": 1867, "y": 483, "width": 40, "height": 40 },
+	  "Element:25:56": { "x": 1867, "y": 452, "width": 40, "height": 40 },
+	  "Element:25:57": { "x": 1867, "y": 421, "width": 40, "height": 40 },
+	  "Element:25:58": { "x": 1867, "y": 390, "width": 40, "height": 40 },
+	  "Element:25:59": { "x": 1867, "y": 359, "width": 40, "height": 40 },
+	  "Element:25:60": { "x": 1867, "y": 328, "width": 40, "height": 40 },
+	  "Element:25:61": { "x": 1867, "y": 299, "width": 40, "height": 40 },
+	  "Element:25:62": { "x": 1867, "y": 272, "width": 40, "height": 40 },
+	  "Element:25:63": { "x": 1867, "y": 241, "width": 40, "height": 40 },
+	  "Element:25:64": { "x": 1867, "y": 210, "width": 40, "height": 40 },
+	  "Element:25:65": { "x": 1867, "y": 179, "width": 40, "height": 40 },
+	  "Element:25:66": { "x": 1867, "y": 148, "width": 40, "height": 40 },
+	  "Element:25:67": { "x": 1867, "y": 117, "width": 40, "height": 40 },
+	  "Element:25:68": { "x": 1867, "y": 90, "width": 40, "height": 40 },
+	  "Element:25:69": { "x": 1867, "y": 59, "width": 40, "height": 40 },
+	  "Element:25:70": { "x": 1867, "y": 33, "width": 40, "height": 40 },
+	  "Element:25:71": { "x": 1867, "y": 7, "width": 40, "height": 40 },
 	}
