@@ -331,10 +331,22 @@ export default class ElementForm {
 			console.log("Broker reported error: " + frame.headers["message"]);
 			console.log("Additional details: " + frame.body);
 		};
+
+		this.streamtimeout = null;
 	}
 	
 	disconnect() {
 		this.client.deactivate();
+		try {
+			let stream = document.getElementsByClassName('stream_' + this.id);
+			stream[0] !== undefined ? stream[0].src = "" : null;
+			stream[0] !== undefined ? clearTimeout(this.streamtimeout) : null;
+			let fullstream = document.getElementsByClassName('streamFullViewElementForm_' + this.id);
+			fullstream[0] !== undefined ? fullstream[0].src = "" : null;
+		} catch (e) {
+			console.error("Error. id: "+this.id);
+			console.error(e);
+		}
 	}
 
     getDate(timestamp)
@@ -563,6 +575,24 @@ export default class ElementForm {
         });
     }
 
+	streamTimeout(obj) {
+		
+		this.streamtimeout = setInterval(() => {
+			try {
+				let stream = document.getElementsByClassName('stream_' + obj)[0];
+				let urlstream = stream.src;
+				stream.src = "";
+				stream.src = urlstream;
+				let streamfull = document.getElementsByClassName('streamFullViewElementForm_' + obj)[0];
+				streamfull = "";
+				streamfull = urlstream;
+				} catch (e) {
+					console.error("Error. id: "+obj);
+					console.error(e);
+				}
+		}, 30000);
+	}
+
 	getComponent() {
 		
 		// waits for the element and starts drawing
@@ -617,13 +647,14 @@ export default class ElementForm {
 						let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
 						let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
 						let stream = stremMjpeg[0].value;						
-						let camera = $$("component"+this.id).addView({    
+						let camera = $$("component"+this.id).addView({  
+							id: "stream_"+ this.id,
 							height:streamHeight,
 							width: streamWidth,
 							data: {title: "Image One", src: stream },
 							template: function (obj) {
 							  // obj is a data record object
-							  return '<img src="'+obj.src+'"width="' + streamWidth + '" "height="' +streamHeight + '" />'
+							 return '<embed class="' + this.id + '" style="width: '+streamWidth+'px;height:'+streamHeight + 'px" src="'+obj.src+'" width="' + (streamWidth-1) + '" "height="' +(streamHeight-1) + '" />'
 							}
 						}, 1);
 						
@@ -638,23 +669,23 @@ export default class ElementForm {
 
 							  webix
 							  .ui({
-								id: "fullviewWindowsElementForm",
+								id:  "fullviewWindowsElementForm_" + this.id,
 								view: "window",
 								move: true,
 								close: true,
 								position: "right",
 								body: {
-									id: "streamFullViewElementForm",
+									id: "streamFullViewElementForm_" + this.id,
 									height:streamFullViewHeight,
 									width: streamFullViewWidth,
 									data: {title: "Image One", src: stream },
 									template: function (obj) {
-									  return '<img src="'+obj.src+'"width="' + streamFullViewWidth + '" "height="' +streamFullViewHeight + '" />'
+									  return '<embed class="' + this.id + '" style="width: '+streamFullViewWidth+'px;height:'+streamFullViewHeight + 'px" src="'+obj.src+'" width="' + (streamFullViewWidth-1) + '" "height="' +(streamFullViewHeight-1) + '" />'
 									}
 								},
 								on: {
 									onHide: function(obj){
-										$$( "fullviewWindowsElementForm").destructor();
+										$$( "fullviewWindowsElementForm_" + this.id).destructor();
 									}
 								  }
 							  })
@@ -662,7 +693,8 @@ export default class ElementForm {
 
 							}
 						};
-						$$("component" + this.id).addView(button, 2);	
+						$$("component" + this.id).addView(button, 2);
+						this.streamTimeout(this.id);
 					}
 				}
 			} catch (e) {
@@ -708,15 +740,15 @@ export default class ElementForm {
 			try {
 				if(data.alarms !== null){
 					data.alarms.forEach(item => {
-
-						let deactivation = item.deactivation !== undefined ? (item.deactivation === null ? "-" : item.deactivation ): "NA"; //NA por si no nos dan valor
-						let recognized = item.recognized !== undefined ? (item.recognized === null ? "-" : item.recognized) : "NA";
+						let deactivation = item.deactivation !== undefined ? ( item.deactivation === null ? "-" : item.deactivation ) : "NA"; //NA por si no nos dan valor
+						let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
 						
 						let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
 						let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
 						if (controlDeactivation && controlrecognized) {
 							//no hacemos nada
 						} else {
+
 							let outlets = [];
 							outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
 							outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
@@ -725,6 +757,7 @@ export default class ElementForm {
 							outlets.push({id: item.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: item.sourceElement.alias });
 							let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
 							$$(this.id + "_elementAlarmsTable").add(row);
+
 						}
 					});
 				} else {
@@ -789,6 +822,7 @@ export default class ElementForm {
 					{}
 				]
 			};
+
 		return result;
 	}
 }

@@ -798,7 +798,7 @@ export default class Synoptic {
                             body: elementForm.getComponent(),
                             on: {
                               onDestruct: function(obj){
-                                elementForm.disconnect();
+                                //elementForm.disconnect();
                               },
                               onHide: function(obj){
                                 elementForm.disconnect();
@@ -820,7 +820,7 @@ export default class Synoptic {
                           body: elementForm.getComponent(),
                           on: {
                             onDestruct: function(obj){
-                              elementForm.disconnect();
+                              //elementForm.disconnect();
                             },
                             onHide: function(obj){
                               elementForm.disconnect();
@@ -915,7 +915,7 @@ export default class Synoptic {
                             body: elementForm.getComponent(),
                             on: {
                               onDestruct: function(obj){
-                                elementForm.disconnect();
+                                //elementForm.disconnect();
                               },
                               onHide: function(obj){
                                 elementForm.disconnect();
@@ -938,7 +938,7 @@ export default class Synoptic {
                           body: elementForm.getComponent(),
                           on: {
                             onDestruct: function(obj){
-                              elementForm.disconnect();
+                              //elementForm.disconnect();
                             },
                             onHide: function(obj){
                               elementForm.disconnect();

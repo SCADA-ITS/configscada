@@ -49,7 +49,7 @@ export let columnsElementFormList = {
 		"scroll": false, 
 		"width": 600,
 		"options": {
-			"streamHeight": 347,
+			"streamHeight": 470,
 			"streamWidth": 600,
 			"streamFullViewHeight": 619,
 			"streamFullViewWidth": 720
