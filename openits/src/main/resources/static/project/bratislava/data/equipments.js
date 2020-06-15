@@ -46,7 +46,10 @@ export let columnsElementList = {
 			"ElementTypeParam:2:1:1",
 			"ElementTypeParam:2:1:2",
 			"ElementTypeParam:2:1:4",
-			"ElementTypeParam:2:1:5"
+			"ElementTypeParam:2:1:5",
+            "ElementTypeParam:2:1:6",
+            "ElementTypeParam:2:1:7",
+            "ElementTypeParam:2:1:8"
 		],
 		2:[
 			"alias",
@@ -329,17 +332,20 @@ export let columnsElementConfig = {
             "ElementTypeParam:2:1:2": { //"model"
 				"header": [ $.i18n("ElementTypeParam:2:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:2:1:3": { //"stream_mjpeg"
-				"header": [ $.i18n("ElementTypeParam:2:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
             "ElementTypeParam:2:1:1": { //"brand"
 				"header": [ $.i18n("ElementTypeParam:2:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:2:1:1003": { //"MANGO SESSION_UID"
-				"header": [ $.i18n("ElementTypeParam:2:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
             "ElementTypeParam:2:1:4": { //"road"
 				"header": [ $.i18n("ElementTypeParam:2:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:6": { //"code keyboard"
+				"header": [ $.i18n("ElementTypeParam:2:1:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:7": { //"location"
+				"header": [ $.i18n("ElementTypeParam:2:1:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:8": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:2:1:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},

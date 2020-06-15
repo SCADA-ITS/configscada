@@ -756,8 +756,8 @@ var i18_en = {
     "ElementTypeParam:2:1:2.description": "Model",
     "ElementTypeParam:2:1:3.alias": "stream_mjpeg",
     "ElementTypeParam:2:1:3.description": "stream_mjpeg",
-    "ElementTypeParam:2:1:4.alias": "Carretera",
-    "ElementTypeParam:2:1:4.description": "Carretera",
+    "ElementTypeParam:2:1:4.alias": "Road",
+    "ElementTypeParam:2:1:4.description": "Road",
     "ElementTypeParam:2:1:5.alias": "Alias section",
     "ElementTypeParam:2:1:5.description": "Alias section",
 
@@ -1096,8 +1096,8 @@ var i18_en = {
 
     "ElementTypeParam:25:1:1.alias": "PK",
     "ElementTypeParam:25:1:1.description": "PK",
-    "ElementTypeParam:25:1:2.alias": "Seccion",
-    "ElementTypeParam:25:1:2.description": "Seccion",
+    "ElementTypeParam:25:1:2.alias": "Section",
+    "ElementTypeParam:25:1:2.description": "Section",
     "ElementTypeParam:25:1:3.alias": "PLC_NAME",
     "ElementTypeParam:25:1:3.description": "PLC_NAME",
     
