@@ -11,7 +11,8 @@ export let columnsElementList = {
             "ElementTypeParam:1:1:2",
             "ElementTypeParam:1:1:4",
             "ElementTypeParam:1:1:3",
-            "ElementTypeParam:1:1:1"
+            "ElementTypeParam:1:1:1",
+            "ElementTypeParam:1:1:5"
 		],
 		2:[
 			"alias", 
@@ -91,6 +92,9 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:1:1:1": { //"brand"
 				"header": [ $.i18n("ElementTypeParam:1:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:1:1:5": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:1:1:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},

@@ -706,6 +706,8 @@ var i18_es = {
     "ElementTypeParam:1:1:3.description": "Carretera",
     "ElementTypeParam:1:1:4.alias": "Tramo",
     "ElementTypeParam:1:1:4.description": "Tramo", 
+    "ElementTypeParam:1:1:5.alias": "PK",
+    "ElementTypeParam:1:1:5.description": "PK", 
     "ElementTypeParam:1:2:1.alias": "Temperatura en Superficie (&#186C)",
     "ElementTypeParam:1:2:1.description": "Temperatura en Superficie (&#186C)",
     "ElementTypeParam:1:2:2.alias": "Temperatura del Subsuelo (&#186C)",
