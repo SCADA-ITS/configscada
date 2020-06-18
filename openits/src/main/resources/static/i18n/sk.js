@@ -1312,5 +1312,7 @@ var i18_sk = {
     "AlarmConfig:38": "UPOZORNEIE PLC_CABINET IZOLA&#268;N&Aacute; STRATA-1",
     "AlarmConfig:39": "UPOZORNEIE PLC_CABINET IZOLA&#268;N&Aacute; STRATA-2",
     "AlarmConfig:40": "UPOZORNEIE PLC_CABINET &#381;IADNE SPOJENIE",
+    
+    "Alarm_recon": "Alarm u&#382; bol rozpoznan&#253;",
 
 };

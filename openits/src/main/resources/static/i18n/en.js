@@ -1308,6 +1308,8 @@ var i18_en = {
     "AlarmConfig:38": "ALARM PLC_CABINET INSULATION LOSSES-1",
     "AlarmConfig:39": "ALARM PLC_CABINET INSULATION LOSSES-2",
     "AlarmConfig:40": "ALARM PLC_CABINET NO CONNECTION",
+    
+    "Alarm_recon": "Already recognized alarm",
 
 /* AUSOL 
     "AlarmConfig:3": "ALARM DISCONNECTED",

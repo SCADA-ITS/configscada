@@ -1316,6 +1316,8 @@ var i18_es = {
     "AlarmConfig:39": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-2",
     "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N",
 
+    "Alarm_recon": "Alarma ya reconocida",
+
 /*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",

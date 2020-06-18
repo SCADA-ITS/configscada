@@ -160,7 +160,7 @@ export default class ElementForm {
 					for (let index = 0; index < data.length; index++) {
 						if (data[index].id == alarmId) {
 							if (data[index].recognized != null) {
-								webix.alert("Alarma ya reconocida");
+								webix.alert($.i18n("Alarm_recon"));
 							} else {
 								webix.ui({
 									view: "window",
