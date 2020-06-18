@@ -332,7 +332,7 @@ export default class ElementForm {
 			console.log("Additional details: " + frame.body);
 		};
 
-		this.streamtimeout = null;
+		//this.streamtimeout = null;
 	}
 	
 	disconnect() {
@@ -340,7 +340,7 @@ export default class ElementForm {
 		try {
 			let stream = document.getElementsByClassName('stream_' + this.id);
 			stream[0] !== undefined ? stream[0].src = "" : null;
-			stream[0] !== undefined ? clearTimeout(this.streamtimeout) : null;
+			//stream[0] !== undefined ? clearTimeout(this.streamtimeout) : null;
 			let fullstream = document.getElementsByClassName('streamFullViewElementForm_' + this.id);
 			fullstream[0] !== undefined ? fullstream[0].src = "" : null;
 		} catch (e) {
@@ -575,7 +575,7 @@ export default class ElementForm {
         });
     }
 
-	streamTimeout(obj) {
+	/*streamTimeout(obj) {
 		
 		this.streamtimeout = setInterval(() => {
 			try {
@@ -591,7 +591,7 @@ export default class ElementForm {
 					console.error(e);
 				}
 		}, 30000);
-	}
+	}*/
 
 	getComponent() {
 		
@@ -694,7 +694,7 @@ export default class ElementForm {
 						// 	}
 						// };
 						// $$("component" + this.id).addView(button, 2);
-						this.streamTimeout(this.id);
+						//this.streamTimeout(this.id);
 					}
 				}
 			} catch (e) {
