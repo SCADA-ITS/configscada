@@ -654,46 +654,46 @@ export default class ElementForm {
 							data: {title: "Image One", src: stream },
 							template: function (obj) {
 							  // obj is a data record object
-							 return '<embed class="' + this.id + '" style="width: '+streamWidth+'px;height:'+streamHeight + 'px" src="'+obj.src+'" width="' + (streamWidth-1) + '" "height="' +(streamHeight-1) + '" />'
+							 return '<embed class="' + this.id + '" style="width:100%;height:100%;position:absolute;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
 							}
 						}, 1);
 						
 						let streamFullViewHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] : 700 ; //700 por defecto
 						let streamFullViewWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] : 700 ; //700 por defecto
 
-						let button={
-							view:"button",
-							value:"video fullscreen",
-							click: function(obj){
-							  //webix.fullscreen.set($$(camera));
+						// let button={
+						// 	view:"button",
+						// 	value:"video fullscreen",
+						// 	click: function(obj){
+						// 	  //webix.fullscreen.set($$(camera));
 
-							  webix
-							  .ui({
-								id:  "fullviewWindowsElementForm_" + this.id,
-								view: "window",
-								move: true,
-								close: true,
-								position: "right",
-								body: {
-									id: "streamFullViewElementForm_" + this.id,
-									height:streamFullViewHeight,
-									width: streamFullViewWidth,
-									data: {title: "Image One", src: stream },
-									template: function (obj) {
-									  return '<embed class="' + this.id + '" style="width: '+streamFullViewWidth+'px;height:'+streamFullViewHeight + 'px" src="'+obj.src+'" width="' + (streamFullViewWidth-1) + '" "height="' +(streamFullViewHeight-1) + '" />'
-									}
-								},
-								on: {
-									onHide: function(obj){
-										$$( "fullviewWindowsElementForm_" + this.id).destructor();
-									}
-								  }
-							  })
-							  .show();
+						// 	  webix
+						// 	  .ui({
+						// 		id:  "fullviewWindowsElementForm_" + this.id,
+						// 		view: "window",
+						// 		move: true,
+						// 		close: true,
+						// 		position: "right",
+						// 		body: {
+						// 			id: "streamFullViewElementForm_" + this.id,
+						// 			height:streamFullViewHeight,
+						// 			width: streamFullViewWidth,
+						// 			data: {title: "Image One", src: stream },
+						// 			template: function (obj) {
+						// 			  return '<embed class="' + this.id + '" style="width: '+streamFullViewWidth+'px;height:'+streamFullViewHeight + 'px" src="'+obj.src+'" width="' + (streamFullViewWidth-1) + '" "height="' +(streamFullViewHeight-1) + '" />'
+						// 			}
+						// 		},
+						// 		on: {
+						// 			onHide: function(obj){
+						// 				$$( "fullviewWindowsElementForm_" + this.id).destructor();
+						// 			}
+						// 		  }
+						// 	  })
+						// 	  .show();
 
-							}
-						};
-						$$("component" + this.id).addView(button, 2);
+						// 	}
+						// };
+						// $$("component" + this.id).addView(button, 2);
 						this.streamTimeout(this.id);
 					}
 				}
