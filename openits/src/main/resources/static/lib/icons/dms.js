@@ -2,7 +2,6 @@ import * as elementTypeMap from "../elementTypeMap.js";
 
 export function generateIcon(element, suffix = "") {
   // check for the status message we should use
-  // FIXME: this is just for the demo, it is not a real DMS
   let messageToShow = element.elementValues.find(
     (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeMap.DMS_COMAND_FOR_DMS
   );
@@ -37,6 +36,27 @@ export function generateIcon(element, suffix = "") {
     }
   }
 
+  // changes the color based on the status
+  let color = "";
+  let elementState = "";
+  if(typeof element.state != 'undefined') {
+    elementState = element.state;
+  } else {
+    elementState = state;
+  }
+  
+  if(typeof elementState != 'undefined') {
+    if (elementState == 0) {
+      color = "gold";
+    } else if (elementState == 1) {
+      color = "silver";
+    } else if (elementState == 2) {
+      color = "purple";
+    } else if (elementState == 3) {
+      color = "red";
+    }
+  }
+
   let pmv_str = "";
 
   if (typeof message1 != "undefined") {
@@ -50,11 +70,11 @@ export function generateIcon(element, suffix = "") {
       '<rect y="-174.73952" x="1222.5098" height="48.450024" width="48.450024" id="' +
       element.id +
       suffix +
-      ':rect2250-2-89" fill="black" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
+      ':rect2250-2-89" stroke="' + color + '" fill="black" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
       '<rect y="-174.73952" x="1270.9597" height="48.44997" width="136.0842" id="' +
       element.id +
       suffix +
-      ':rect2085-1" fill="black" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
+      ':rect2085-1" stroke="' + color + '" fill="black" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
       '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:8px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke:none;stroke-width:0.06259221" y="-161.73952" x="1275.9597" id="text2462-1"><tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"><tspan fill="yellow" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:\'Erbos Draco Open NBP\';-inkscape-font-specification:\'Erbos Draco Open NBP\';fill-opacity:1;stroke-width:0.06259221" id="' +
       element.id +
       suffix +
@@ -148,7 +168,6 @@ export function updateDmsIcon(element, suffix = "") {
     document.getElementById(element.id + suffix + ":linea2").innerHTML = linea2;
     document.getElementById(element.id + suffix + ":linea3").innerHTML = linea3;
   }
-
 
   // icon based on status
   if (

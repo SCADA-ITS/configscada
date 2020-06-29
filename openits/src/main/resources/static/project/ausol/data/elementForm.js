@@ -1,4 +1,4 @@
-export let columnsElementFormList = {
+export let columnsElementFormListAusol = {
 	"ElementType:1": {
 		"rows":[
 			"ElementTypeParam:1:1:2",
@@ -305,4 +305,21 @@ export let columnsElementFormList = {
 		"width": 420,
 		"options": {}
 	},
+	"ElementType:26": {
+		"rows":[ 
+			"ElementTypeParam:26:1:1",
+			"ElementTypeParam:26:1:2",
+			"ElementTypeParam:26:1:3",
+			"ElementTypeParam:26:1:4",
+			"ElementTypeParam:26:1:5",
+			"ElementTypeParam:26:1:6",
+			"ElementTypeParam:26:1:7",
+			"ElementTypeParam:26:1:8",
+			"ElementTypeParam:26:1:9"
+		],
+		"rowCounts": 5,
+		"scroll": "y", 
+		"width": 420,
+		"options": {}
+	  }
 }

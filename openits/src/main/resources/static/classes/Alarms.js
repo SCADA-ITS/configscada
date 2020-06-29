@@ -1,34 +1,28 @@
 import {genericTable} from "../data/genericTable.js";
+import {alarmsCfgBratislava} from "../project/bratislava/data/alarmsCfg.js";
+import {alarmsCfgAusol} from "../project/ausol/data/alarmsCfg.js";
+import {synopticTunnel, synopticBratislava, synopticCabinets} from "../data/synoptics.js";
+let alarmsCf = null;
+let elementList = null;
+if (project) {
+	alarmsCf = alarmsCfgBratislava;
+	elementList = Object.assign(synopticBratislava, synopticCabinets);
+} else { 
+	alarmsCf = alarmsCfgAusol;
+	elementList = synopticTunnel;
+}
 
-let getAlarm = webix.proxy(
-        "GraphQL",
-        `
-        query getAlarm($alarmId: String!) {
-          getAlarm(alarmId: $alarmId) {
-				id
-				alarmConfig {id alias alarmLevel}
-				recognized
-				recognizedComments
-				activation
-				activationComments
-				deactivation
-				deactivationComments
-				sourceElement{id alias}
-				targetElement{id alias} 
-          }
-         }`
-      );
 
 export default class Alarms {
 	constructor(data, metadata){
         this.data=data;
-        this.alarmas = [];
+		this.alarmas = [];
 		if(metadata==null){
 			this.metadata=genericTable;
 		}else{
             this.metadata=metadata;
         }
-        
+
         // for using the object inside callbacks
         let self = this;
 
@@ -73,7 +67,7 @@ export default class Alarms {
   processStompMessageWithFallback(message) {
 	  try {
 	      let obj = JSON.parse(JSON.parse(message.body));
-	      
+
 	      obj.basicElementsVO.forEach(element => {
 	    	  
 			let control = false;
@@ -131,31 +125,36 @@ export default class Alarms {
 		   }
 		 
         if (control == false) {  //ALARMA NUEVA
-	        // loads the data
-	        getAlarm.load({alarmId: element.id}).then(dataG => {
-	         	
-	        	if (dataG != null){
-
-	        		let data = {id: dataG.id, 
-	                        activation: dataG.activation, 
-	                        recognized: dataG.recognized, 
-	                        deactivation: dataG.deactivation,
-	                        alarmConfig: dataG.alarmConfig, 
-	                        alarmLevel: dataG.alarmConfig, 
-	                        sourceElement: dataG.sourceElement, 
-	                        targetElement: dataG.targetElement };
-	                	                
-	                if(data.recognized != null && data.deactivation == null){
-	                	
-	                  $$('alarmsTable_recon').add(data, 0);
-	                
-	                }else if(data.recognized == null){
-	                
-	                	$$('alarmsTable').add(data, 0); 
-	                
-	                }
-	        	} 
-	        });
+			// loads the data
+			let alarmConfig = {};
+			let sourceElement = {};
+			let targetElement = {};
+			alarmConfig["id"] = element.alarmConfig.id;
+			alarmConfig["alarmLevel"] = alarmsCf[element.alarmConfig.id].alarmLevel;
+			let deactivation = element.deactivation !== undefined ? element.deactivation === null ? null : element.deactivation : null;
+			let recognized = element.recognized !== undefined ? element.recognized === null ? null : element.recognized : null;
+			sourceElement["id"] = element.sourceElement.id;
+			sourceElement["alias"] = elementList[element.sourceElement.id].alias;
+			targetElement["id"] = element.targetElement.id;
+			targetElement["alias"] = elementList[element.targetElement.id].alias;
+			let data = {id: element.id, 
+				activation: element.activation, 
+				recognized: recognized, 
+				deactivation: deactivation,
+				alarmConfig: alarmConfig, 
+				alarmLevel: alarmConfig, 
+				sourceElement: sourceElement, 
+				targetElement: targetElement };
+							
+			if(data.recognized != null && data.deactivation == null){
+				
+			$$('alarmsTable_recon').add(data, 0);
+			
+			}else if(data.recognized == null){
+			
+				$$('alarmsTable').add(data, 0); 
+			
+			}
     	}
   	});
 	}catch (err) {

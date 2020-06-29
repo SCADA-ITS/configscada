@@ -3,7 +3,11 @@ import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 import ElementForm from "../classes/ElementForm.js";
-import { columnsElementFormList } from "../project/bratislava/data/elementForm.js";
+import { columnsElementFormListAusol } from "../project/ausol/data/elementForm.js";
+
+let map = null;
+var mapConf = "";
+var mapStates = {};
 
 export default class Map {
   constructor(data, metadata, synopticDiv) {
@@ -40,34 +44,77 @@ export default class Map {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
 
-      obj.basicElementsVO.forEach((element) => {
-        // check if it's a tunnel synoptic and changes the main bar in the synoptic
-        let element_type = element.id.split(":")[1];
-        if (element_type == "7") {
-          let color = "";
-          if (element.state != 3) {
-            color = "#ebb700";
-          } else {
-            color = "#ff0000";
-          }
+      // get feature layer
+      let retLayer = null;
+      map.getLayers().forEach(function(l) {
+        if(l.get("title") == "Elements") {
+          retLayer = l;
+        }
+      });
 
-          document
-            .getElementById(element.id + ":Bar")
-            .setAttribute("fill", color);
+      obj.basicElementsVO.forEach((element) => {
+        // if it's a DMS, ask for the full data
+        if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE ||
+          elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE ||
+          elementTypeMap.getElementType(element.id) == elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE) {
+          throw "DMSETDException";
         }
 
-        // updates the state and the icon
-        /*
-        updateElementState(element);
-        updateElementIcon(element);
-        */
-        iconGenerator.getElementIcon(element);
+        // search for the element received in the elements of the layer
+        if(retLayer != null) {
+          let elementToUpdate = retLayer.getSource().getFeatureById(element.id);
+
+          if(typeof element.state != 'undefined') {
+            mapStates[element.id] = element.state;
+          }
+
+          let mapElement = mapConf[element.id];
+
+
+          if(elementToUpdate != null) {
+            let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id]);
+
+            let canvas = document.createElement("canvas");
+            // get canvas context for drawing on canvas
+            let context = canvas.getContext("2d");
+            // set canvas size
+            //canvas.width = width;
+            //canvas.height = height;
+
+            // call svgString2Image function
+            iconGenerator.drawInlineSVG(
+              canvas,
+              context,
+              tmpIcon,
+              function () {}
+            );
+
+            let workingStyle = new ol.style.Style({
+              image: new ol.style.Icon({
+                opacity: 1,
+                src: "data:image/svg+xml;utf8," + tmpIcon,
+                scale: 1,
+              }),
+            });
+
+            elementToUpdate.setStyle(workingStyle);
+          }
+        }
+
       });
     } catch (err) {
       console.log("Error: " + err.message);
       console.log("RETRY WITH GRAPHQL");
-
+      
       let obj = JSON.parse(JSON.parse(message.body));
+
+      // get feature layer
+      let retLayer = null;
+      map.getLayers().forEach(function(l) {
+        if(l.get("title") == "Elements") {
+          retLayer = l;
+        }
+      });
 
       obj.basicElementsVO.forEach((element) => {
         //initialize the proxy
@@ -106,12 +153,74 @@ export default class Map {
             // process the received data
             let element = data;
 
-            updateElementState(element);
-            updateElementIcon(element);
+            let mapElement = mapConf[element.id];
+
+            if(retLayer != null) {
+              let elementToUpdate = retLayer.getSource().getFeatureById(element.id);
+              if(elementToUpdate != null) {
+                
+                // let's store the states
+                mapStates[element.id] = element.state;
+
+                // the values are only valid for ETDs
+                let mapElementValues = mapElement.values;
+                if(typeof mapElementValues == 'undefined') {
+                  mapElementValues = [];
+                }
+
+                let workingFeature = new ol.Feature({
+                  geometry: new ol.geom.Point(
+                    ol.proj.fromLonLat([mapElement.lon, mapElement.lat])
+                  ),
+                  id: element.id,
+                });
+
+                let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
+
+                let canvas = document.createElement("canvas");
+                // get canvas context for drawing on canvas
+                let context = canvas.getContext("2d");
+                // set canvas size
+                //canvas.width = width;
+                //canvas.height = height;
+
+                // call svgString2Image function
+                iconGenerator.drawInlineSVG(
+                  canvas,
+                  context,
+                  tmpIcon,
+                  function () {
+                    console.log(canvas.toDataURL());
+                  }
+                );
+
+                let workingStyle = new ol.style.Style({
+                  image: new ol.style.Icon({
+                    opacity: 1,
+                    src: "data:image/svg+xml;utf8," + tmpIcon,
+                    scale: 1,
+                  }),
+                });
+
+                elementToUpdate.setStyle(workingStyle);
+              }
+            }
           });
       });
     }
   }
+
+  /*
+  getMapLayer(map, layer) {
+    let retLayer = null;
+    map.getLayers().forEach(function(l) {
+      if(layer == l.id) {
+        retLayer = layer;
+      }
+    })
+    return retLayer;
+  }
+  */
 
   getComponent() {
     if (this.data.includes("http") || this.data.includes("GraphQL")) {
@@ -133,7 +242,6 @@ export default class Map {
     }
 
     els.forEach((el) => {
-      console.log(el);
       el.attr("visibility", this.elementsToDraw[e]);
     });
   }
@@ -167,9 +275,20 @@ export default class Map {
       .then((d) => {
         let markers = [];
 
+        // TODO: should we clean the created canvas?
         d.childs.forEach((element) => {
           if (element.id in this.synopticConf) {
+
+            // let's store the states
+            mapStates[element.id] = element.state;
+
             let mapElement = this.synopticConf[element.id];
+
+            // the values are only valid for ETDs
+            let mapElementValues = mapElement.values;
+            if(typeof mapElementValues == 'undefined') {
+              mapElementValues = [];
+            }
 
             let workingFeature = new ol.Feature({
               geometry: new ol.geom.Point(
@@ -178,87 +297,38 @@ export default class Map {
               id: element.id,
             });
 
-            if (
-              elementTypeMap.getElementType(element.id) ==
-              elementTypeMap.ZONE_ELEMENT_TYPE
-            ) {
-              let tmpIcon = iconGenerator.getElementSVG(element, 40, 40);
+            let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
+            
+            let canvas = document.createElement("canvas");
+            // get canvas context for drawing on canvas
+            let context = canvas.getContext("2d");
+            // set canvas size
+            //canvas.width = width;
+            //canvas.height = height;
 
-              let canvas = document.createElement("canvas");
-              // get canvas context for drawing on canvas
-              let context = canvas.getContext("2d");
-              // set canvas size
-              //canvas.width = width;
-              //canvas.height = height;
+            // call svgString2Image function
+            iconGenerator.drawInlineSVG(
+              canvas,
+              context,
+              tmpIcon,
+              function () {
+                //console.log(canvas.toDataURL());
+              }
+            );
 
-              // call svgString2Image function
-              iconGenerator.drawInlineSVG(
-                canvas,
-                context,
-                tmpIcon,
-                function () {
-                  //console.log(canvas.toDataURL());
-                }
-              );
+            let workingStyle = new ol.style.Style({
+              image: new ol.style.Icon({
+                opacity: 1,
+                src: "data:image/svg+xml;utf8," + tmpIcon,
+                scale: 1,
+              }),
+            });
 
-              //console.log(tmpIcon);
-
-              let workingStyle = new ol.style.Style({
-                image: new ol.style.Icon({
-                  opacity: 1,
-                  src: "data:image/svg+xml;utf8," + tmpIcon,
-                  scale: 1,
-                }),
-              });
-
-              workingFeature.setStyle(workingStyle);
-              workingFeature.set("component", "Incident");
-              workingFeature.setId(element.id.toString());
-              markers.push(workingFeature);
-            } else if (
-              elementTypeMap.getElementType(element.id) ==
-              elementTypeMap.DMS_ELEMENT_TYPE
-            ) {
-              let tmpIcon = iconGenerator.getElementSVG(element, 150, 40);
-
-              //let tmpIcon = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="480px" height="480px"> <g id="Element:10:1" state="2" transform="scale(6.315789473684211,20)"> <g id="layer1" transform="translate(0,-272.12915)"> <g id="g1739-1" transform="matrix(0.40956503,0,0,0.48504268,-500.12204,357.57278)"> <rect y="-174.73952" x="1222.5098" height="48.450024" width="48.450024" fill="black" id="Element:10:1:rect2250-2-89" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;" /> <rect y="-174.73952" x="1270.9597" height="48.44997" width="136.0842" id="Element:10:1:rect2085-1" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" /> <text xml:space="preserve" y="-161.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan fill="yellow" style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:\'Erbos Draco Open NBP\';-inkscape-font-specification:\'Erbos Draco Open NBP\';fill-opacity:1;stroke-width:0.06259221" id="Element:10:1:linea1">aaaaaa</tspan> </tspan> </text> <text xml:space="preserve" y="-148.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea2"></tspan> </tspan> </text> <text xml:space="preserve" y="-134.73952" x="1275.9597" id="text2462-1"> <tspan sodipodi:role="line" id="tspan2460" style="stroke-width:0.06259221"> <tspan id="Element:10:1:linea3"></tspan> </tspan> </text> </g> </g> </g> </svg>';
-
-              //let tmpIcon = '<svg width="120" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'
-              //+ '<circle cx="60" cy="60" r="60"/>'
-              //+ '</svg>';
-
-              let canvas = document.createElement("canvas");
-              // get canvas context for drawing on canvas
-              let context = canvas.getContext("2d");
-              // set canvas size
-              //canvas.width = width;
-              //canvas.height = height;
-
-              // call svgString2Image function
-              iconGenerator.drawInlineSVG(
-                canvas,
-                context,
-                tmpIcon,
-                function () {
-                  console.log(canvas.toDataURL());
-                }
-              );
-
-              //console.log(tmpIcon);
-
-              let workingStyle = new ol.style.Style({
-                image: new ol.style.Icon({
-                  opacity: 1,
-                  src: "data:image/svg+xml;utf8," + tmpIcon,
-                  scale: 1,
-                }),
-              });
-
-              workingFeature.setStyle(workingStyle);
-              workingFeature.set("component", "Incident");
-              workingFeature.setId(element.id.toString());
-              markers.push(workingFeature);
-            }
+            workingFeature.setStyle(workingStyle);
+            workingFeature.set("component", "Element");
+            workingFeature.setId(element.id.toString());
+            markers.push(workingFeature);
+            
           }
         });
 
@@ -271,11 +341,12 @@ export default class Map {
         });
 
         let incidentLayer = new ol.layer.Vector({
-          title: "Incidents",
+          title: "Elements",
           source: vectorSource,
         });
 
-        this.map.addLayer(incidentLayer);
+        //this.map.addLayer(incidentLayer);
+        map.addLayer(incidentLayer);
       })
       .then((d) => {
         // creates the stomp connection
@@ -324,7 +395,8 @@ export default class Map {
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(divToAdd);
 
-      this.map = new ol.Map({
+      //this.map = new ol.Map({
+      map = new ol.Map({
         target: "map",
         layers: [
           new ol.layer.Tile({
@@ -339,42 +411,31 @@ export default class Map {
 
       // select interaction working on "click"
       let selectClick = new ol.interaction.Select({
-        condition: ol.events.condition.click,
+        condition: ol.events.condition.singleClick,
       });
 
-      selectClick.on("select", function (e) {
-        /*
-        // Open the ElementForm
-        let elementForm = new ElementForm(
-          e.target.getFeatures().array_[0].id_,
-          columnsElementFormList
-        );
-        webix
-          .ui({
-            id: "win" + e.target.getFeatures().array_[0].id_,
-            view: "window",
-            move: true,
-            close: true,
-            position: "right",
-            body: elementForm.getComponent(),
-            on: {
-              onDestruct: function (obj) {
-                elementForm.disconnect();
-              },
-              onHide: function (obj) {
-                elementForm.disconnect();
-              },
-            },
+      
+      selectClick.on("select", function (e) { 
+        let highlightStyle = new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'rgba(255,255,255,0.7)'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#3399CC',
+            width: 3
           })
-          .show();
-        */
-
-        let element_id = e.target.getFeatures().array_[0].id_;
+        });
+       
+        let feature = e.target.getFeatures().array_[0];
+        let element_id = feature.id_;
         if (
           elementTypeMap.getElementType(element_id) !=
           elementTypeMap.ZONE_ELEMENT_TYPE
         ) {
-          let elementForm = new ElementForm(element_id, columnsElementFormList);
+          if($$("win" + element_id) != null){
+              $$("win" + element_id).destructor();
+          }
+          let elementForm = new ElementForm(element_id, columnsElementFormListAusol);
           webix
             .ui({
               id: "win" + element_id,
@@ -393,12 +454,16 @@ export default class Map {
               },
             })
             .show();
+          
+            // auto de-select
+            e.target.getFeatures().remove(feature);
         } else {
           $$("synoptic1").show();
         }
       });
 
-      this.map.addInteraction(selectClick);
+      //this.map.addInteraction(selectClick);
+      map.addInteraction(selectClick);
 
       //this.elementReady("#map").then((c1) => {
       // loads data and draws for first time
@@ -407,6 +472,7 @@ export default class Map {
     });
 
     this.synopticConf = mapTG;
+    mapConf = mapTG;
 
     /*
     if (synopticConf == "tunnel") {

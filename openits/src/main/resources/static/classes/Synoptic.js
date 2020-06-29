@@ -22,20 +22,26 @@ import {
   generateBarIcon,
   generateSemIcon,
   generateZoneIcon,
+  generateMatrixPanelIcon,
   updateElementIcon,
   updateElementState,
 } from "../lib/iconGenerator.js";
 
+import {columnsElementFormListAusol} from "../project/ausol/data/elementForm.js";
+import {columnsElementFormListBratislava} from "../project/bratislava/data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-//TODO 
-//import {columnsElementFormList} from "../project/ausol/data/elementForm.js";
-import {columnsElementFormList} from "../project/bratislava/data/elementForm.js";
-
+let columnsElementFormList = null;
+if (project) {
+  columnsElementFormList = columnsElementFormListBratislava
+} else { 
+  columnsElementFormList = columnsElementFormListAusol;
+}
 export default class Synoptic {
   constructor(data, metadata, synopticDiv) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
+    this.layersToDraw = {};
     this.baseLayer = "";
     this.ratioWidth = 1.0;
     this.ratioHeight = 1.0;
@@ -131,31 +137,71 @@ export default class Synoptic {
   }
 
   handleLayers(e) {
-    if(e == "BASE_LAYER" || e == "ROAD") {
+    // check if the layers are exclusive or not
+    if(this.synopticConf["ExclusiveLayers"] == true) {
+      if(e == "BASE_LAYER" || e == "ROAD") {
+        // Hides device
+        if (this.elementsToDraw[e] == "visible") {
+          this.elementsToDraw[e] = "hidden";
+        } else {
+          this.elementsToDraw[e] = "visible";
+        }  
+      } else {
+        for (var k in this.elementsToDraw) {
+          if (k != e && k != "BASE_LAYER" && k != "ROAD") {
+            this.elementsToDraw[k] = "hidden";
+          }
+        }
+        this.elementsToDraw[e] = "visible";
+      }
+  
+      for (var k in this.elementsToDraw) {
+        let els = this.s.selectAll('[component="' + k + '"]');
+  
+        els.forEach((el) => {
+          el.attr("visibility", this.elementsToDraw[k]);
+        });
+      }
+    } else {  // the layers are not exclusive
+
+      let els = this.s.selectAll('[component="' + e + '"]');
+
       // Hides device
       if (this.elementsToDraw[e] == "visible") {
         this.elementsToDraw[e] = "hidden";
       } else {
         this.elementsToDraw[e] = "visible";
-      }  
-    } else {
-      for (var k in this.elementsToDraw) {
-        if (k != e && k != "BASE_LAYER" && k != "ROAD") {
-          this.elementsToDraw[k] = "hidden";
-        }
       }
-      this.elementsToDraw[e] = "visible";
-    }
-
-    for (var k in this.elementsToDraw) {
-      let els = this.s.selectAll('[component="' + k + '"]');
 
       els.forEach((el) => {
-        el.attr("visibility", this.elementsToDraw[k]);
+        el.attr("visibility", this.elementsToDraw[e]);
+      });
+
+    }
+
+  }
+
+  // TODO: Layer groups
+  /*
+  handleLayers(e) {
+
+    if (this.layersToDraw[e] == "visible") {
+      this.layersToDraw[e] = "hidden";
+    } else {
+      this.layersToDraw[e] = "visible";
+    }
+
+    for (var k in this.layersToDraw) {
+      this.synopticConf["Layers"][k]["items"].forEach((item) => {
+        //el.attr("visibility", this.elementsToDraw[k]);
+        //alert(item);
+        let el = document.getElementById(item);
+        el.setAttribute("visibility", this.layersToDraw[k]);
       });
     }
 
   }
+  */
 
   // got from Github
   elementReady(selector) {
@@ -694,6 +740,36 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
+            } else if (elementType === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {  // MATRIX PANEL
+
+              // generate the base icon
+              let matrix_panel_str = generateMatrixPanelIcon(element);
+
+              let matrix_panel_icon = Snap.parse(matrix_panel_str);
+              el = this.s.group().append(matrix_panel_icon);
+
+              let scale_x =
+                (this.synopticConf[element.id].width / 24) * this.ratioWidth;
+              let scale_y =
+                (this.synopticConf[element.id].height / 24) * this.ratioHeight;
+
+              if (el != null) {
+
+                //el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+                el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+                //el.transform("translate(0,0)");
+
+                el.attr({ id: element.id });
+                el.attr({ class: "svg_icon" });
+                el.attr({ name: element.id });
+                el.attr({ type: elementType });
+                el.attr({ component: elementType });
+                el.attr({ state: element.state });
+
+                // update the icon based on the state and/or the value
+                getElementIcon(element);
+              }
+
             } else {
               // draw elements
               let elem_icon = getElementIcon(element).icon;
@@ -993,6 +1069,24 @@ export default class Synoptic {
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);
         });
+        
+        
+        // TODO: Layer groups
+        /*
+        Object.keys(this.synopticConf["Layers"]).map((n) => {
+          let linkToAdd = document.createElement("a");
+          
+          linkToAdd.onclick = function () {
+            self.handleLayers(n);
+          };
+          
+          //linkToAdd.innerHTML = elementTypeMap.getElementTypeName(n);
+          linkToAdd.innerHTML = n;
+          document
+            .getElementById(this.synopticDiv + "dropdownDivContent")
+            .appendChild(linkToAdd);
+        });
+        */
 
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer

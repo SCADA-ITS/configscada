@@ -1,10 +1,34 @@
 import {getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
+import {alarmsCfgBratislava} from "../project/bratislava/data/alarmsCfg.js";
+import {alarmsCfgAusol} from "../project/ausol/data/alarmsCfg.js";
+import {synopticTunnel, synopticBratislava, synopticCabinets} from "../data/synoptics.js";
+import {columnsElementFormListAusol} from "../project/ausol/data/elementForm.js";
+import {columnsElementFormListBratislava} from "../project/bratislava/data/elementForm.js";
+import PanelManager from "../classes/PanelManager.js";
+
+let alarmsCf = null;
+let elementList = null;
+let colMetaData = null;
+if (project) {
+	alarmsCf = alarmsCfgBratislava;
+	elementList = Object.assign(synopticBratislava, synopticCabinets);
+	colMetaData = columnsElementFormListBratislava
+} else { 
+	alarmsCf = alarmsCfgAusol;
+	elementList = synopticTunnel;
+	colMetaData = columnsElementFormListAusol;
+}
+
 
 export default class ElementForm {
 	constructor(id,columnsElementFormList) {
 		this.id = id;
-		this.columnsElementFormList = columnsElementFormList;
+		if(columnsElementFormList){
+			this.columnsElementFormList = columnsElementFormList;
+		}else{
+			this.columnsElementFormList = colMetaData;
+		}
 		var idtable = this.id;
 		let self = this;
 
@@ -41,8 +65,6 @@ export default class ElementForm {
 					activationComments
 					deactivation
 					deactivationComments
-					sourceElement{id alias}
-					targetElement{id alias} 
 				}
 			}
 		}`;
@@ -123,9 +145,8 @@ export default class ElementForm {
 			id:  this.id + "_elementAlarmsTable",	
 			view:"datatable",
 			header: false,
-			autoheight: true,
-			scroll: false,
-			//yCount: 6,
+			yCount: 5,
+			scrollX:false,
 			columns:[
 				{ id:"title",   width:370 , template:"{common.subrow()} #title#", fillspace:true },
 				//{ id:"activation", width:100 },
@@ -332,7 +353,7 @@ export default class ElementForm {
 			console.log("Additional details: " + frame.body);
 		};
 
-		//this.streamtimeout = null;
+		this.streamtimeout = null;
 	}
 	
 	disconnect() {
@@ -340,7 +361,7 @@ export default class ElementForm {
 		try {
 			let stream = document.getElementsByClassName('stream_' + this.id);
 			stream[0] !== undefined ? stream[0].src = "" : null;
-			//stream[0] !== undefined ? clearTimeout(this.streamtimeout) : null;
+			stream[0] !== undefined ? clearTimeout(this.streamtimeout) : null;
 			let fullstream = document.getElementsByClassName('streamFullViewElementForm_' + this.id);
 			fullstream[0] !== undefined ? fullstream[0].src = "" : null;
 		} catch (e) {
@@ -367,10 +388,10 @@ export default class ElementForm {
 							if (evalues === null)
 								element["elementValues"] = [];
 
-							if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
+							if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
 								let elementQuery = webix.proxy(
-									"GraphQL",
-									`
+									"GraphQL",`
 									query ($elem: String!) {
 										getElement(elementId: $elem)
 										{
@@ -511,27 +532,22 @@ export default class ElementForm {
 												getAlarm(alarmId: $alarmId) {
 													id
 													alarmConfig {id alias alarmLevel}
-													sourceElement{id alias}
 												}
 											}`
 										);
 
-										elementQueryacf.load({
-											alarmId: item.id,
-										}).then(datacf => {
 											let activation = item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : null : null;
 											let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
 											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
 											let outlets = [];
 											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: datacf.alarmConfig.alarmLevel });
+											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: alarmsCf[item.alarmConfig.id].alarmLevel });
 											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
 											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: datacf.sourceElement.alias });
 
 											let row = { 
 														id: item.id + "_AlarmsElementForm" , 
-														title: $.i18n(datacf.alarmConfig.id), 
+														title: $.i18n(item.alarmConfig.id), 
 														recognized: recognized, 
 														activation: activation, 
 														deactivation: deactivation, 
@@ -540,7 +556,6 @@ export default class ElementForm {
 											$$(element.id + "_elementAlarmsTable").add(row);
 											$$(element.id + "_elementAlarmsTable").show();
 											$$(element.id + "_elementAlarmsTable_HEADER").show();
-										});
 									}
 								}
 							});
@@ -575,24 +590,6 @@ export default class ElementForm {
         });
     }
 
-	/*streamTimeout(obj) {
-		
-		this.streamtimeout = setInterval(() => {
-			try {
-				let stream = document.getElementsByClassName('stream_' + obj)[0];
-				let urlstream = stream.src;
-				stream.src = "";
-				stream.src = urlstream;
-				let streamfull = document.getElementsByClassName('streamFullViewElementForm_' + obj)[0];
-				streamfull = "";
-				streamfull = urlstream;
-				} catch (e) {
-					console.error("Error. id: "+obj);
-					console.error(e);
-				}
-		}, 30000);
-	}*/
-
 	getComponent() {
 		
 		// waits for the element and starts drawing
@@ -618,10 +615,8 @@ export default class ElementForm {
 			try {
 				// ICON
 				let iconoSvg = "";
-				if (
-					elementTypeMap.getElementType(data.elementType.id) ===
-					elementTypeMap.DMS_ELEMENT_TYPE
-				) {
+				if (elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.DMS_ELEMENT_TYPE 
+					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
 					//"ElementType:10"){
 					iconoSvg = getElementSVG(data, 200, 40, ":Form");
 				} else {
@@ -654,7 +649,7 @@ export default class ElementForm {
 							data: {title: "Image One", src: stream },
 							template: function (obj) {
 							  // obj is a data record object
-							 return '<embed class="' + this.id + '" style="width:100%;height:100%;position:absolute;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
+							 return '<embed style="width:100%;height:100%;position:absolute;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
 							}
 						}, 1);
 						
@@ -694,7 +689,6 @@ export default class ElementForm {
 						// 	}
 						// };
 						// $$("component" + this.id).addView(button, 2);
-						//this.streamTimeout(this.id);
 					}
 				}
 			} catch (e) {
@@ -754,7 +748,6 @@ export default class ElementForm {
 							outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
 							outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
 							outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
-							outlets.push({id: item.id + "_outlet_sourceElement", title: $.i18n("elementForm.alarms.sourceElement"), measure: item.sourceElement.alias });
 							let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
 							$$(this.id + "_elementAlarmsTable").add(row);
 
@@ -780,26 +773,58 @@ export default class ElementForm {
 					}, -1);
 	
 					for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
-						$$(this.commands).addView({
-							view: "button", 
-							id: "command"+index+"_"+ this.id, 
-							value: data.elementType.commandElementTypes[index].alias,
-							click: function(){
-								var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-									sendCommandElement(commands: $commands)  
-								}`;
-								var graphql = webix.proxy("GraphQL", sendCommand);
-								graphql.save({
-									"commands": [
-										{
-											"commandElementTypeId": data.elementType.commandElementTypes[index].id,
-											"elementId": data.id
-										}
-									]
-								});
-							}
-						}, -1);
-	
+						if(data.elementType.commandElementTypes[index].id=="CommandElementType:2:26"){
+							$$(this.commands).addView({
+								view: "button", 
+								id: "command"+index+"_"+ this.id, 
+								value: data.elementType.commandElementTypes[index].alias,
+								click: function(){
+									if( $$("panelManager" + data.id)){
+										$$("panelManager" + data.id).show();
+									}else{
+										let panelMan = new PanelManager(data.id, data.elementType.commandElementTypes[index]);
+										webix.ui({
+											id:"panelManager"+data.id,
+											view:"window",	
+											move:false,
+											position:"top",
+											modal:true,
+											close: true,
+											body: panelMan.getComponent(),
+											head:"Escoja la señalización",
+											on: {
+												onShow: function(obj){
+													panelMan.doActions();
+												}
+												// , onHide: function(obj){
+												//   $$("panelManager" + data.id).destructor();
+												// }
+											  }
+										  }).show();
+									}
+								}								
+							}, -1);
+						}else{
+							$$(this.commands).addView({
+								view: "button", 
+								id: "command"+index+"_"+ this.id, 
+								value: data.elementType.commandElementTypes[index].alias,
+								click: function(){
+									var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+										sendCommandElement(commands: $commands)  
+									}`;
+									var graphql = webix.proxy("GraphQL", sendCommand);
+									graphql.save({
+										"commands": [
+											{
+												"commandElementTypeId": data.elementType.commandElementTypes[index].id,
+												"elementId": data.id
+											}
+										]
+									});
+								}
+							}, -1);
+						}
 					}
 				}
 			} catch (e) {

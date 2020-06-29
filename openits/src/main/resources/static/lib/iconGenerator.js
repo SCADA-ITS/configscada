@@ -19,76 +19,82 @@ import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
 import * as plc from "./icons/plc.js";
+import * as matrix_panel from "./icons/matrix_panel.js";
 
 import * as elementTypeMap from "./elementTypeMap.js";
 
-export function generateDMSIcon(element, suffix="") {
-  let pmv_str = dms.generateIcon(element, suffix);
+export function generateDMSIcon(element, suffix="", state="") {
+  let pmv_str = dms.generateIcon(element, suffix, state);
   return pmv_str;
 }
 
-export function generateETDIcon(element, values) {
-  let etd_str = etd.generateIcon(element, values);
+export function generateMatrixPanelIcon(element, suffix="", state="") {
+  let matrix_panel_str = matrix_panel.generateIcon(element, suffix, state);
+  return matrix_panel_str;
+}
+
+export function generateETDIcon(element, values, suffix="", state="") {
+  let etd_str = etd.generateIcon(element, values, suffix, state);
   return etd_str;
 }
 
-export function generateMeteoIcon(element, suffix="") {
-  let meteo_str = meteo.generateIcon(element, suffix);    
+export function generateMeteoIcon(element, suffix="", state="") {
+  let meteo_str = meteo.generateIcon(element, suffix, state);    
   return meteo_str;
 }
 
-export function generateLuxIcon(element, suffix="") {
-  let lux_str = lux.generateIcon(element, suffix);
+export function generateLuxIcon(element, suffix="", state="") {
+  let lux_str = lux.generateIcon(element, suffix, state);
   return lux_str;
 }
 
-export function generateLumIcon(element, suffix="") {
-  let lum_str = lum.generateIcon(element, suffix);
+export function generateLumIcon(element, suffix="", state="") {
+  let lum_str = lum.generateIcon(element, suffix, state);
   return lum_str;
 }
 
-export function generateCoIcon(element, suffix="") {
-  let co_str = co.generateIcon(element, suffix);
+export function generateCoIcon(element, suffix="", state="") {
+  let co_str = co.generateIcon(element, suffix, state);
   return co_str;
 }
 
-export function generateNoIcon(element, suffix="") {
-  let no_str = no.generateIcon(element, suffix);
+export function generateNoIcon(element, suffix="", state="") {
+  let no_str = no.generateIcon(element, suffix, state);
   return no_str;
 }
 
-export function generateOpacIcon(element, suffix="") {
-  let opac_str = opac.generateIcon(element, suffix);
+export function generateOpacIcon(element, suffix="", state="") {
+  let opac_str = opac.generateIcon(element, suffix, state);
   return opac_str;
 }
 
-export function generateAnemIntIcon(element, suffix="") {
-  let anem_int_str = anem_int.generateIcon(element, suffix);
+export function generateAnemIntIcon(element, suffix="", state="") {
+  let anem_int_str = anem_int.generateIcon(element, suffix, state);
   return anem_int_str;
 }
 
-export function generateAnemExtIcon(element, suffix="") {
-  let anem_ext_str = anem_ext.generateIcon(element, suffix);
+export function generateAnemExtIcon(element, suffix="", state="") {
+  let anem_ext_str = anem_ext.generateIcon(element, suffix, state);
   return anem_ext_str;
 }
 
-export function generateFanIcon(element, suffix="") {
-  let fan_str = fan.generateIcon(element, suffix);
+export function generateFanIcon(element, suffix="", state="") {
+  let fan_str = fan.generateIcon(element, suffix, state);
   return fan_str;
 }
 
-export function generateBarIcon(element, suffix="") {
-  let bar_str = bar.generateIcon(element, suffix);
+export function generateBarIcon(element, suffix="", state="") {
+  let bar_str = bar.generateIcon(element, suffix, state);
   return bar_str;
 }
 
-export function generateSemIcon(element, suffix="") {
-  let sem_str = sem.generateIcon(element, suffix);
+export function generateSemIcon(element, suffix="", state="") {
+  let sem_str = sem.generateIcon(element, suffix, state);
   return sem_str;
 }
 
-export function generateZoneIcon(element, suffix="") {
-  let zone_str = zone.generateIcon(element, suffix);
+export function generateZoneIcon(element, suffix="", state="") {
+  let zone_str = zone.generateIcon(element, suffix, state);
   return zone_str;
 }
 
@@ -168,8 +174,10 @@ export function getElementIcon(element, suffix="") {
     cam.updateCamIcon(element, suffix);
   } else if (elementType === elementTypeMap.PLC_ELEMENT_TYPE) {
     plc.updatePlcIcon(element, suffix);
-  }else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ELEMENT_TYPE) {
     plc.updatePlcIcon(element, suffix);
+  } else if (elementType === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
+    matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status
@@ -219,84 +227,85 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="") {
+export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
   let elementType = element.id.split(":")[1];
 
   let iconStr = "";
   switch (elementType) {
     case "1":
-      //iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateMeteoIcon(element, suffix) + '</g>';
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "2":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "3":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "4":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "5":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "7":
-      //iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix, state) + '</g>';
       break;
     case "8":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix, state) + '</g>';
       break;
     case "9":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix, state) + '</g>';
       break;
     case "10":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
     case "11":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "12":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix, state) + '</g>';
       break;
     case "13":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix, state) + '</g>';
       break;
     case "14":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix, state) + '</g>';
       break;
     case "15":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "16":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "17":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix, state) + '</g>';
       break;
     case "18":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix, state) + '</g>';
       break;
     case "19":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateCoIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateCoIcon(element, suffix, state) + '</g>';
       break;
     case "20":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateNoIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateNoIcon(element, suffix, state) + '</g>';
       break;
     case "21":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix, state) + '</g>';
       break;
     case "22":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
     case "23":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
     case "33":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
     case "25":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "26":
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     default:
       console.log("Icon not found");

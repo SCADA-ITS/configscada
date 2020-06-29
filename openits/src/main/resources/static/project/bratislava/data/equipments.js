@@ -1,10 +1,10 @@
-export let optionElementType = [
+export let optionElementTypeBratislava = [
 	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
 	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")},
 	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")}
 ]
 
-export let columnsElementList = {
+export let columnsElementListBratislava = {
 	"ElementType:1": {
 		1:[
 			"alias",
@@ -71,7 +71,7 @@ export let columnsElementList = {
 	}
 }
 
-export let columnsElementConfig = {
+export let columnsElementConfigBratislava = {
 
 	"ElementType:1": {
 		1:{
@@ -375,7 +375,7 @@ export let columnsElementConfig = {
             "ElementTypeParam:25:1:2": { //"SECCION"
 				"header": [ $.i18n("ElementTypeParam:25:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:25:1:3": { //"ROAD"
+			"ElementTypeParam:25:1:3": { //"CABINET_NAME"
 				"header": [ $.i18n("ElementTypeParam:25:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"

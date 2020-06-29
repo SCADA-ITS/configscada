@@ -1,4 +1,4 @@
-export let optionElementType = [
+export let optionElementTypeAusol = [
 	{id:"ElementType:2",  value:"CAMERA"},
 	{id:"ElementType:8",  value:"BARRIER"},
 	{id:"ElementType:9",  value:"FAN"},
@@ -16,7 +16,7 @@ export let optionElementType = [
 	{id:"ElementType:21", value:"OPAC"}
 ]
 
-export let columnsElementList = {
+export let columnsElementListAusol = {
 	"ElementType:1": {
 		1:[
 			"alias",
@@ -316,7 +316,7 @@ export let columnsElementList = {
 	}
 }
 
-export let columnsElementConfig = {
+export let columnsElementConfigAusol = {
 
 	"ElementType:1": {
 		1:{

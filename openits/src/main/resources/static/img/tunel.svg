@@ -680,14 +680,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="858.18741"
-     inkscape:cy="956.66455"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="1048.3592"
+     inkscape:cy="633.44295"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1055"
+     inkscape:window-height="1051"
      inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -1801,116 +1801,72 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.56177711px;font-family:sans-serif;-inkscape-font-specification:Normal;fill:#ffffff;stroke-width:0.81507415">MÁLAGA ⇨</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.93750006px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m -149.5722,-339.24955 1615.0888,10e-6"
+       d="m -149.5722,-337.37455 1615.0888,10e-6"
        id="path1324"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.55225921px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1328.7337,-339.37209 v -14.89878"
+       d="m 1328.7337,-337.49709 v -14.89878"
        id="path1326"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.55225915px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 857.11666,-339.36721 V -354.266"
+       d="M 857.11666,-337.49221 V -352.391"
        id="path1326-3"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path1343"
-       d="M 406.20678,-339.36721 V -354.266"
+       d="M 406.20678,-337.49221 V -352.391"
        style="fill:none;stroke:#000000;stroke-width:0.55225915px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.55225915px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M -5.7179199,-339.36721 V -354.266"
+       d="M -5.7179199,-337.49221 V -352.391"
        id="path1345"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:29.77724457px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7444312"
        x="1333.7499"
-       y="-344.78455"
+       y="-342.90955"
        id="text1349"><tspan
          sodipodi:role="line"
          id="tspan1347"
          x="1333.7499"
-         y="-344.78455"
-         style="font-size:13.89604759px;stroke-width:0.7444312">0 m</tspan></text>
+         y="-342.90955"
+         style="font-size:13.89604759px;stroke-width:0.7444312">0 m (PK 20+900)</tspan></text>
     <text
        id="text1353"
-       y="-344.78455"
+       y="-342.90955"
        x="863.92291"
        style="font-style:normal;font-weight:normal;font-size:29.77724457px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7444312"
        xml:space="preserve"><tspan
          style="font-size:13.89604759px;stroke-width:0.7444312"
-         y="-344.78455"
+         y="-342.90955"
          x="863.92291"
          id="tspan1351"
-         sodipodi:role="line">100 m</tspan></text>
+         sodipodi:role="line">100 m (PK 20+800)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:29.77724457px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7444312"
        x="414.50195"
-       y="-344.78455"
+       y="-342.90955"
        id="text1357"><tspan
          sodipodi:role="line"
          id="tspan1355"
          x="414.50195"
-         y="-344.78455"
-         style="font-size:13.89604759px;stroke-width:0.7444312">200 m</tspan></text>
+         y="-342.90955"
+         style="font-size:13.89604759px;stroke-width:0.7444312">200 m (PK 20+700)</tspan></text>
     <text
        id="text1361"
-       y="-344.78455"
+       y="-342.90955"
        x="2.5772076"
        style="font-style:normal;font-weight:normal;font-size:29.77724457px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.7444312"
        xml:space="preserve"><tspan
          style="font-size:13.89604759px;stroke-width:0.7444312"
-         y="-344.78455"
+         y="-342.90955"
          x="2.5772076"
          id="tspan1359"
-         sodipodi:role="line">290 m</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:22.55994987px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56399882"
-       x="1329.9467"
-       y="-329.67062"
-       id="text1349-3"><tspan
-         sodipodi:role="line"
-         id="tspan1347-6"
-         x="1329.9467"
-         y="-329.67062"
-         style="font-size:10.52797699px;stroke-width:0.56399882">PK 20+900</tspan></text>
-    <text
-       id="text1365"
-       y="-329.67062"
-       x="-5.0532904"
-       style="font-style:normal;font-weight:normal;font-size:22.55994987px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56399882"
-       xml:space="preserve"><tspan
-         style="font-size:10.52797699px;stroke-width:0.56399882"
-         y="-329.67062"
-         x="-5.0532904"
-         id="tspan1363"
-         sodipodi:role="line">PK 20+610</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:22.55994987px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56399882"
-       x="407.44672"
-       y="-329.67062"
-       id="text1387"><tspan
-         sodipodi:role="line"
-         id="tspan1385"
-         x="407.44672"
-         y="-329.67062"
-         style="font-size:10.52797699px;stroke-width:0.56399882">PK 20+700</tspan></text>
-    <text
-       id="text1391"
-       y="-329.67062"
-       x="859.32172"
-       style="font-style:normal;font-weight:normal;font-size:22.55994987px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.56399882"
-       xml:space="preserve"><tspan
-         style="font-size:10.52797699px;stroke-width:0.56399882"
-         y="-329.67062"
-         x="859.32172"
-         id="tspan1389"
-         sodipodi:role="line">PK 20+800</tspan></text>
+         sodipodi:role="line">290 m (PK 20+610)</tspan></text>
   </g>
 </svg>

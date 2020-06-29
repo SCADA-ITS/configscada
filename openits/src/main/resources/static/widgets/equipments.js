@@ -1,7 +1,19 @@
-//TODO 
-import {optionElementType, columnsElementConfig, columnsElementList} from "../project/bratislava/data/equipments.js"
-//import {optionElementType, columnsElementConfig, columnsElementList} from "../project/ausol/data/equipments.js"
+
 import EquipmentTable from "../classes/EquipmentTable.js"
+import {optionElementTypeAusol, columnsElementConfigAusol, columnsElementListAusol} from "../project/ausol/data/equipments.js"
+import {optionElementTypeBratislava, columnsElementConfigBratislava, columnsElementListBratislava} from "../project/bratislava/data/equipments.js"
+let optionElementType = null;
+let columnsElementConfig = null;
+let columnsElementList = null;
+if (project) {
+	optionElementType = optionElementTypeBratislava;
+	columnsElementConfig = columnsElementConfigBratislava;
+	columnsElementList = columnsElementListBratislava;
+  } else { 
+	optionElementType = optionElementTypeAusol;
+	columnsElementConfig = columnsElementConfigAusol;
+	columnsElementList = columnsElementListAusol;
+  }
 
 function build_table(){
 	
