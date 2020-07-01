@@ -32,7 +32,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 10,
 		"scroll": "y",  //y -> vertical x -> horizontal, false or true 
-		"width": 420,
+		"width": 540,
 		"options": {}  //particulary options for type
 	},
 
@@ -40,7 +40,6 @@ export let columnsElementFormListAusol = {
 		"rows":[ 
 			"ElementTypeParam:2:1:1",  
 			"ElementTypeParam:2:1:2",
-			"ElementTypeParam:2:1:3",
 			"ElementTypeParam:2:1:4",
 			"ElementTypeParam:2:1:5",
 			"ElementTypeParam:2:1:8",
@@ -48,7 +47,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 7,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {			
 			"streamHeight": 234,
 			"streamWidth": 405,
@@ -64,46 +63,40 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
 	"ElementType:8": {
 		"rows":[  
 			"ElementTypeParam:8:1:1",
-			"ElementTypeParam:8:1:2",
-			"ElementTypeParam:8:3:1" 
+			"ElementTypeParam:8:1:2"
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 
 	"ElementType:9": {
 		"rows":[ 
 			"ElementTypeParam:9:1:1",
-			"ElementTypeParam:9:1:2", 
-			"ElementTypeParam:9:3:1"
+			"ElementTypeParam:9:1:2"		
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
 	"ElementType:10": {
 		"rows":[ 
-			"ElementTypeParam:10:1:1", 
-			"ElementTypeParam:10:1:2", 
 			"ElementTypeParam:10:1:3", 
-			"ElementTypeParam:10:1:4", 
-			"ElementTypeParam:10:2:2", 
-			"ElementTypeParam:10:3:1"
+			"ElementTypeParam:10:1:4" 
 		],
-		"rowCounts": 6,
+		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -114,7 +107,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -126,7 +119,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 
@@ -137,7 +130,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -149,7 +142,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -160,7 +153,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -171,7 +164,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -183,7 +176,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 
@@ -195,7 +188,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -207,7 +200,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -219,7 +212,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -231,7 +224,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 
@@ -242,7 +235,7 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 2,
 		"scroll": false,  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 		
@@ -302,24 +295,17 @@ export let columnsElementFormListAusol = {
 		],
 		"rowCounts": 10,
 		"scroll": "y",  
-		"width": 420,
+		"width": 540,
 		"options": {}
 	},
 	"ElementType:26": {
 		"rows":[ 
-			"ElementTypeParam:26:1:1",
-			"ElementTypeParam:26:1:2",
-			"ElementTypeParam:26:1:3",
-			"ElementTypeParam:26:1:4",
 			"ElementTypeParam:26:1:5",
-			"ElementTypeParam:26:1:6",
-			"ElementTypeParam:26:1:7",
-			"ElementTypeParam:26:1:8",
-			"ElementTypeParam:26:1:9"
+			"ElementTypeParam:26:1:10"
 		],
-		"rowCounts": 5,
+		"rowCounts": 2,
 		"scroll": "y", 
-		"width": 420,
+		"width": 540,
 		"options": {}
 	  }
 }

@@ -1,5 +1,5 @@
 var availablePictos = [
-	{ visibility:"hidden",image:"0", value:"Velocidad", open:true, data:[
+	{ visibility:"hidden",image:"0", value:"Velocidad", open:false, data:[
 		{ visibility:"visible",image:"315", value:"40 km/h", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/315.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"315" } },
 		{ visibility:"visible",image:"316", value:"50 km/h", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/316.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"316" } },
 		{ visibility:"visible",image:"317", value:"60 km/h", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/317.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"317" } },
@@ -21,16 +21,16 @@ var availablePictos = [
 		{ visibility:"visible",image:"513", value:"Fin 120 km/h", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/513.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"513" } }, 
 		{ visibility:"visible",image:"514", value:"Fin 130 km/h", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/514.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"514" } }   
 		]},
-	{ visibility:"hidden",image:"0",value:"Especiales", open:true, data:[
+	{ visibility:"hidden",image:"0",value:"Especiales", open:false, data:[
     { visibility:"visible", image:"743", value:"Rigth", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/743.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"743" }},
     { visibility:"visible",image:"744", value:"Left", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/744.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"744" } },
     { visibility:"visible",image:"745", value:"Allow", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/745.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"745" } },
     { visibility:"visible",image:"746", value:"Block", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/746.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"746" } },   
     { visibility:"visible",image:"152", value:"Stop", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/152.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"152" } },    
-	{ visibility:"visible",image:"328", value:"Adelantamiento", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/84.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"84" } },
+	{ visibility:"visible",image:"328", value:"Adelantamiento", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/328.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"328" } },
 	{ visibility:"visible",image:"501", value:"Fin Prohibición", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/501.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"1501" } }    
   ]},
-  { visibility:"hidden",image:"0",value:"Peligro", open:true, data:[
+  { visibility:"hidden",image:"0",value:"Peligro", open:false, data:[
     { visibility:"visible",image:"63", value:"Estrechamiento", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/63.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"63" } },
     { visibility:"visible",image:"64", value:"Estrecha der.", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/64.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"64" } },
     { visibility:"visible",image:"65", value:"Estrecha izq", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/65.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"65" } },
@@ -78,7 +78,8 @@ export default class PanelManager {
 			  {
 				view:"tree",
 				id:"list",
-				width:200,
+				width:280,
+				height:380,
 				scroll:"auto",
 				drag:true,
 				template:"{common.icon()} <img src='./img/pictograms/#image#.png' style='float:right; margin:3px 4px 0px 1px; width:28px;visibility:#visibility#'> #value#",

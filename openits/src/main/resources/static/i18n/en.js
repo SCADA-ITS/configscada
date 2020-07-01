@@ -646,7 +646,7 @@ var i18_en = {
     "state.noconnected": "No Connected",
     "state.alarm": "Alarm",
 
-    /* BRATISLAVA */
+    /* BRATISLAVA 
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
     "AlarmConfig:3": "ALARM WS AIR PRESSURE GREATER THAN 65534",
     "AlarmConfig:4": "ALARM WS AIR TEMPERATURE NOT BETWEEN -1000 AND 1000",
@@ -689,7 +689,7 @@ var i18_en = {
     
     "Alarm_recon": "Already recognized alarm",
 
-/* AUSOL 
+/* AUSOL */
     "AlarmConfig:3": "ALARM DISCONNECTED",
     "AlarmConfig:4": "ALARM DISCONNECTED",
     "AlarmConfig:5":"ALARM DISCONNECTED",
@@ -707,5 +707,5 @@ var i18_en = {
     "AlarmConfig:18": "ALARM NO NO CONNECTION",
     "AlarmConfig:19": "ALARM OPAC NO CONNECTION",
     "AlarmConfig:20": "ALARM ETD_modbus NO CONNECTION",
-    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",*/
+    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",
 };

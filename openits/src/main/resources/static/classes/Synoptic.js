@@ -136,6 +136,7 @@ export default class Synoptic {
     return this.metadata;
   }
 
+  /*
   handleLayers(e) {
     // check if the layers are exclusive or not
     if(this.synopticConf["ExclusiveLayers"] == true) {
@@ -180,28 +181,47 @@ export default class Synoptic {
     }
 
   }
+  */
 
-  // TODO: Layer groups
-  /*
-  handleLayers(e) {
+  // Layer groups
+  handleLayers(e, initial=false) {
 
-    if (this.layersToDraw[e] == "visible") {
-      this.layersToDraw[e] = "hidden";
-    } else {
-      this.layersToDraw[e] = "visible";
+    if(!initial) {
+      if (this.layersToDraw[e] == "visible") {
+        this.layersToDraw[e] = "hidden";
+      } else {
+        this.layersToDraw[e] = "visible";
+      }
     }
 
     for (var k in this.layersToDraw) {
+      // base layer
+      if(k == "BASE_LAYER") {
+        let els = this.s.selectAll('[component="' + e + '"]');
+
+        els.forEach((el) => {
+          el.attr("visibility", this.layersToDraw[k]);
+        });
+      }
+
+      // other layers
       this.synopticConf["Layers"][k]["items"].forEach((item) => {
-        //el.attr("visibility", this.elementsToDraw[k]);
-        //alert(item);
+
         let el = document.getElementById(item);
         el.setAttribute("visibility", this.layersToDraw[k]);
+        el.style["visibility"] = this.layersToDraw[k];
+
+        // Fix for the FAN
+        if (this.layersToDraw[k] == "visible") {
+          el.style["opacity"] = 1;
+        } else {
+          el.style["opacity"] = 0;
+        }
+
       });
     }
 
   }
-  */
 
   // got from Github
   elementReady(selector) {
@@ -250,6 +270,7 @@ export default class Synoptic {
         // add basemap and base road to elements_to_draw
         this.elementsTypes.push("BASE_LAYER");
         this.elementsToDraw["BASE_LAYER"] = "visible";
+        //this.layersToDraw["BASE_LAYER"] = "visible";
         
         // if we are in a tunnel synoptic, put the title bar
         if (this.synopticType == "tunnel") {
@@ -306,7 +327,8 @@ export default class Synoptic {
           .image("./img/" + this.baseLayer, 0, 0, total_width, total_height)
           .attr({
             id: "capa_base",
-            visibility: this.elementsToDraw["BASE_LAYER"],
+            //visibility: this.elementsToDraw["BASE_LAYER"],
+            visibility: this.synopticConf["Layers"]["BASE_LAYER"]["visibility"],
             component: "BASE_LAYER",
           });
 
@@ -765,6 +787,7 @@ export default class Synoptic {
                 el.attr({ type: elementType });
                 el.attr({ component: elementType });
                 el.attr({ state: element.state });
+                el.attr({ visibility: "hidden" });
 
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
@@ -789,7 +812,7 @@ export default class Synoptic {
                   id: element.id,
                   component: elementType,
                   class: "capa_mapa",
-                  visibility: "visible",
+                  visibility: "hidden",
                   state: element.state,
                 });
 
@@ -1057,6 +1080,7 @@ export default class Synoptic {
           .getElementById(this.synopticDiv + "dropdownDiv")
           .appendChild(divToAdd);
 
+        /*
         this.elementsTypes.map((n) => {
           let linkToAdd = document.createElement("a");
           let linkText = document.createTextNode(elementTypeMap.getElementTypeName(n));
@@ -1069,10 +1093,9 @@ export default class Synoptic {
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);
         });
-        
+        */
         
         // TODO: Layer groups
-        /*
         Object.keys(this.synopticConf["Layers"]).map((n) => {
           let linkToAdd = document.createElement("a");
           
@@ -1085,8 +1108,10 @@ export default class Synoptic {
           document
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);
+
+          self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+          self.handleLayers(n, true);
         });
-        */
 
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer

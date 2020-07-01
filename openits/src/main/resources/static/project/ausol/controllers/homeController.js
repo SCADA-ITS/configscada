@@ -50,7 +50,7 @@ let main_body = {
             },
             ready: function() {
                 let firstItem = this.getFirstId();
-                this.select("map");
+                this.select("metro");
             }
         },
         {

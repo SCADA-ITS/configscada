@@ -481,14 +481,25 @@ var i18_es = {
     "ElementTypeParam:25:1:3.description": "Carretera",
     
     "ElementTypeParam:26:1:1.alias": "Marca",
+    "ElementTypeParam:26:1:1.description": "Marca",
     "ElementTypeParam:26:1:2.alias": "Modelo",
+    "ElementTypeParam:26:1:2.description": "Modelo",
     "ElementTypeParam:26:1:3.alias": "Carretera",
+    "ElementTypeParam:26:1:3.description": "Carretera",
     "ElementTypeParam:26:1:4.alias": "Seccion",
+    "ElementTypeParam:26:1:4.description": "Seccion",
     "ElementTypeParam:26:1:5.alias": "PK",
+    "ElementTypeParam:26:1:5.description": "PK",
     "ElementTypeParam:26:1:6.alias": "NumZonas",
+    "ElementTypeParam:26:1:6.description": "NumZonas",
     "ElementTypeParam:26:1:7.alias": "Tama_1_1",
+    "ElementTypeParam:26:1:7.description": "Tama_1_1",
     "ElementTypeParam:26:1:8.alias": "Tipo_1_1",
+    "ElementTypeParam:26:1:8.description": "Tipo_1_1",
     "ElementTypeParam:26:1:9.alias": "Pos_Panel",
+    "ElementTypeParam:26:1:9.description": "Pos_Panel",
+    "ElementTypeParam:26:1:10.alias": "Distancia entrada del t&uacute;nel",
+    "ElementTypeParam:26:1:10.description": "Distancia entrada del t&uacute;nel",
 
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
@@ -653,7 +664,7 @@ var i18_es = {
     "state.alarm": "Alarmado",
 
 
-    /*  BRATISLAVA  */
+    /*  BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -692,11 +703,11 @@ var i18_es = {
     "AlarmConfig:37": "ALARMA PLC_CABINET POTENCIA BAJA",
     "AlarmConfig:38": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-1",
     "AlarmConfig:39": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-2",
-    "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N",
+    "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N", */
 
     "Alarm_recon": "Alarma ya reconocida",
 
-/*AUSOL
+/*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -714,5 +725,5 @@ var i18_es = {
     "AlarmConfig:18": "ALARMA NO SIN CONEXI&Oacute;N",
     "AlarmConfig:19": "ALARMA OPAC SIN CONEXI&Oacute;N",
     "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
-    "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N",*/
+    "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N"
 };

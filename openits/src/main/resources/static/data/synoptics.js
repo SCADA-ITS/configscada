@@ -4,14 +4,91 @@ export let synopticTunnel = {
 		"base": "tunel.svg"
 	},
 	"Layers": {
-		"Paneles": {
-			"items": ["Element:10:1", "Element:10:2"],
-			"translation_key": ""
+		"BASE_LAYER": {
+			"items": [],
+			"translation_key": "",
+			"visibility": "visible"
 		},
-		"Camaras": {
+		"DMS": {
+			"items": ["Element:10:1", "Element:10:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"MATRIXPANEL": {
+			"items": ["Element:26:1"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"CAM": {
 			"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8"],
-			"translation_key": ""
-		}
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"FAN": {
+			"items": ["Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:6", "Element:9:7", "Element:9:8"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"BAR": {
+			"items": ["Element:8:1", "Element:8:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"CO": {
+			"items": ["Element:19:1", "Element:19:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"NO": {
+			"items": ["Element:20:1", "Element:20:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"OPAC": {
+			"items": ["Element:21:1", "Element:21:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"LUX": {
+			"items": ["Element:12:1", "Element:12:2", "Element:12:3", "Element:12:4", "Element:12:5", "Element:12:6"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"LUM": {
+			"items": ["Element:14:1", "Element:14:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"SEM": {
+			"items": ["Element:13:1", "Element:13:2", "Element:13:3", "Element:13:4"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"ANEM_EXT": {
+			"items": ["Element:17:1"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"ANEM_INT": {
+			"items": ["Element:18:1", "Element:18:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"SOS": {
+			"items": ["Element:11:1", "Element:11:2", "Element:11:3", "Element:11:4", "Element:11:5", "Element:11:6"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"FIRE": {
+			"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4", "Element:15:5", "Element:15:6"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"MEG": {
+			"items": ["Element:16:1", "Element:16:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
 	},
 	"Element:8:1":  { "x": 1629, "y": 817, "width": 88,  "height": 48,  "alias": "BAR_1_SC" },
 	"Element:8:2":  { "x": 60,   "y": 258, "width": 88,  "height": 48,  "alias": "BAR_1_SM" },
@@ -86,13 +163,15 @@ export let synopticMetro = {
 		"base": "metro.svg"
 	},
 	"Layers": {
-		"Paneles": {
-			"items": ["Element:10:1", "Element:10:2"],
-			"translation_key": ""
+		"BASE_LAYER": {
+			"items": [],
+			"translation_key": "",
+			"visibility": "visible"
 		},
-		"Camaras": {
-			"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8"],
-			"translation_key": ""
+		"Tunel": {
+			"items": ["Element:7:1"],
+			"translation_key": "",
+			"visibility": "visible"
 		}
 	},
 	"Element:7:1": { "x": 1091, "y": 607, "width": 60, "height": 60 },
@@ -102,6 +181,33 @@ export let synopticGlobal = {
 	"ExclusiveLayers": false,
 	"BaseLayers": {
 		"base": "global.svg"
+	},
+	"Layers": {
+		"BASE_LAYER": {
+			"items": [],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"DMS": {
+			"items": ["Element:10:1", "Element:10:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"FAN": {
+			"items": ["Element:9:1", "Element:9:2", "Element:9:3", "Element:9:4", "Element:9:5", "Element:9:6", "Element:9:7", "Element:9:8"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"BAR": {
+			"items": ["Element:8:1", "Element:8:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"SEM": {
+			"items": ["Element:13:1", "Element:13:2"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
 	},
 	"Element:10:1": { "x": 1511, "y": 593,  "width": 158, "height": 40 },
 	"Element:10:2": { "x": 1645, "y": 693,  "width": 158, "height": 40 },

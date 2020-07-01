@@ -40,13 +40,13 @@ let genericTablei18n = {
 		"columns": [
 			{ "id": "id", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
-			{ "id": "activation", "header": $.i18n("alarms.d.activation"), "template": function (obj) { return getDate(obj.activation) }, width: 200 },
-			{ "id": "recognized", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 200 },
-			{ "id": "deactivation", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 200 },
-			{ "id": "alarmConfig", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
-			{ "id": "sourceElement", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
-			{ "id": "targetElement", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
+			{ "id": "activation", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj) { return getDate(obj.activation) }, width: 200 },
+			{ "id": "recognized", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 200 },
+			{ "id": "deactivation", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 200 },
+			{ "id": "alarmConfig", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
+			{ "id": "alarmLevel", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
+			{ "id": "sourceElement", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
+			{ "id": "targetElement", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
 			/*{ "id": "recognize", "header": "", "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" //+ 
 			"<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button>" + 
 			"<button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>"
@@ -424,13 +424,13 @@ let genericTablei18n_recon = {
 		"columns": [
 			{ "id": "id_recon", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check_recon", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
-			{ "id": "activation_recon", "header": $.i18n("alarms.d.activation"), "template": function (obj_recon) { return getDate(obj_recon.activation) }, width: 200 },
-			{ "id": "recognized_recon", "header": $.i18n("alarms.d.recognized"), "template": function (obj_recon) { return getDate(obj_recon.recognized) }, width: 200 },
-			{ "id": "deactivation_recon", "header": $.i18n("alarms.d.deactivation"), "template": function (obj_recon) { return getDate(obj_recon.deactivation) }, width: 200 },
-			{ "id": "alarmConfig_recon", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel_recon", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
-			{ "id": "sourceElement_recon", "header": $.i18n("alarms.d.source"), "template": function (obj_recon) { return obj_recon.sourceElement.alias; }, width: 100 },
-			{ "id": "targetElement_recon", "header": $.i18n("alarms.d.target"), "template": function (obj_recon) { return obj_recon.targetElement.alias; }, width: 100 },
+			{ "id": "activation_recon", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj_recon) { return getDate(obj_recon.activation) }, width: 200 },
+			{ "id": "recognized_recon", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj_recon) { return getDate(obj_recon.recognized) }, width: 200 },
+			{ "id": "deactivation_recon", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj_recon) { return getDate(obj_recon.deactivation) }, width: 200 },
+			{ "id": "alarmConfig_recon", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
+			{ "id": "alarmLevel_recon", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
+			{ "id": "sourceElement_recon", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj_recon) { return obj_recon.sourceElement.alias; }, width: 100 },
+			{ "id": "targetElement_recon", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj_recon) { return obj_recon.targetElement.alias; }, width: 100 },
 			//{ "id": "recognize_recon", "header": "", "template": "<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button> <button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>", width: 120 }
 		],
 		onClick: {

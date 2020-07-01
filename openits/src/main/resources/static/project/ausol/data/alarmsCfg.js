@@ -18,7 +18,8 @@ export let alarmsCfgAusol = {
     "AlarmConfig:18": { "alarmLevel": 3 },
     "AlarmConfig:19": { "alarmLevel": 3 },
     "AlarmConfig:20": { "alarmLevel": 3 },
-    "AlarmConfig:21": { "alarmLevel": 3 }
+    "AlarmConfig:21": { "alarmLevel": 3 },
+    "AlarmConfig:22": { "alarmLevel": 3 }
 };
 
 

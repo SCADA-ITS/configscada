@@ -10,17 +10,15 @@ webix.ready(function() {
     }
 
     $.i18n().load( {
-        "en": i18_en,
         "es": i18_es, 
-        "sk": i18_sk
+        "en": i18_en
     });
 
     const userPlaceholder = "";//$.i18n("login.input.user");
 
     var options = [
-        {id:"sk", value:"Slovenský"}, 
-        {id:"en", value:"English"},
         {id:"es", value:"Español"}, 
+        {id:"en", value:"English"}
     ];
 
     webix.ui({ 

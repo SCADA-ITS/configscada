@@ -150,7 +150,9 @@ export default class ElementForm {
 			columns:[
 				{ id:"title",   width:370 , template:"{common.subrow()} #title#", fillspace:true },
 				//{ id:"activation", width:100 },
-				{ id: "recognize", "header": "", 
+				{ id: "recognize",
+				cssFormat:hidde_recognize,
+				 "header": "", 
 				 "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
 				 width: 50 }
 				//{ id:"recognized", width:100 }
@@ -437,7 +439,7 @@ export default class ElementForm {
 								try {
 									let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
 									let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
-									if (item3 !== null) {
+									if (item3 !== null && typeof item3 != 'undefined') {
 										let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
 										let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
 										item3["measure"] = value;
@@ -796,9 +798,6 @@ export default class ElementForm {
 												onShow: function(obj){
 													panelMan.doActions();
 												}
-												// , onHide: function(obj){
-												//   $$("panelManager" + data.id).destructor();
-												// }
 											  }
 										  }).show();
 									}
@@ -821,6 +820,8 @@ export default class ElementForm {
 												"elementId": data.id
 											}
 										]
+									}).then(() => {
+										webix.message({type:"success", text:"Comando ejecutado correctamente"});
 									});
 								}
 							}, -1);
@@ -849,5 +850,14 @@ export default class ElementForm {
 			};
 
 		return result;
+	}
+
+}
+
+function hidde_recognize(value, obj){
+	if(obj.recognized){
+		return {"pointer-events": "none",
+		"opacity": "0.6",
+		"cursor": "not-allowed"};
 	}
 }
