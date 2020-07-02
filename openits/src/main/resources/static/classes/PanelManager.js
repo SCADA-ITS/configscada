@@ -28,7 +28,7 @@ var availablePictos = [
     { visibility:"visible",image:"746", value:"Block", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/746.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"746" } },   
     { visibility:"visible",image:"152", value:"Stop", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/152.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"152" } },    
 	{ visibility:"visible",image:"328", value:"Adelantamiento", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/328.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"328" } },
-	{ visibility:"visible",image:"501", value:"Fin Prohibición", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/501.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"1501" } }    
+	{ visibility:"visible",image:"501", value:"Fin Prohibición", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/501.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"501" } }    
   ]},
   { visibility:"hidden",image:"0",value:"Peligro", open:false, data:[
     { visibility:"visible",image:"63", value:"Estrechamiento", dx:1, dy:1, body: { view:"template", template:" <img src='./img/pictograms/63.png' style='width: 86%;border: 3px solid black;padding: 10px;'/>", picto:"63" } },

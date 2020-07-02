@@ -29,8 +29,8 @@ export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;
 export const POSITION_OF_PARAM_TYPE_ID = 4;
 
 //  elementTypeParamId : paramTypeId
-export const BAR_COMMAND_FOR_BARRIER = "1:3";
-export const FAN_COMMAND_FOR_FAN = "1:3";
+export const BAR_COMMAND_FOR_BARRIER = "1:2";
+export const FAN_COMMAND_FOR_FAN = "1:2";
 export const LUM_LUMINOSITY = "2:2";
 export const LUX_LUMINOSITY = "1:2";
 export const ANEM_INT_WIND_SPEED = "1:2";
@@ -89,11 +89,11 @@ export const ETD_VEH_SPEED8 = "47:2";
 export const ETD_VEH_SPEED9 = "48:2";
 export const ETD_YEAR = "49:2";
 
-export const DMS_COMAND_FOR_DMS = "1:3";
+export const DMS_COMAND_FOR_DMS = "1:2";
 export const DMS_TEXT_FOR_STATUS_1 = "1:1";
 export const DMS_TEXT_FOR_STATUS_2 = "2:1";
 
-export const MATRIX_PANEL_PICTOGRAM = "4:3";
+export const MATRIX_PANEL_PICTOGRAM = "4:2";
 
 export const CAM_STREAM_MJPEG = "2:1:3";
 
