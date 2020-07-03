@@ -641,10 +641,35 @@ var i18_en = {
     "elementForm.alarms.recognized": "Recognized",
     "elementForm.alarms.sourceElement": "sourceElement",
 
+    "elementForm.señalization.panel.head": "Choose the signaling",
+
     "state.unknown": "Unknown",
     "state.connected": "Connected",
     "state.noconnected": "No Connected",
     "state.alarm": "Alarm",
+
+    "CommandElementType:1:8": "BARRIER PULL DOWN",
+    "CommandElementType:2:8": "BARRIER PULL UP",
+    "CommandElementType:1:9": "FAN STOP",
+    "CommandElementType:2:9": "FAN START",
+    "CommandElementType:3:9": "FAN START REVERSE",
+    "CommandElementType:1:10": "ROTAPANEL SHOW SIDE 1",
+    "CommandElementType:2:10": "ROTAPANEL SHOW SIDE 2",
+    "CommandElementType:3:10": "ROTAPANEL SHOW NOTHING",
+    "CommandElementType:1:24": "RESET",
+    "CommandElementType:2:24": "SEND MESSAGE",
+    "CommandElementType:3:24": "SWITCH OFF",
+    "CommandElementType:1:26": "RESET",
+    "CommandElementType:2:26": "SEND MESSAGE",
+    "CommandElementType:3:26": "SWITCH OFF",
+    "CommandElementType:1:27": "RESET",
+    "CommandElementType:2:27": "SEND MESSAGE",
+    "CommandElementType:3:27": "SWITCH OFF",
+    "CommandElementType:1:33": "CHANGE LENGHT1",
+
+    "lbl_command_sended": "Command successfully executed",
+    "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
+    "lbl_panel_signaling_error": "Select a pictogram please",
 
     /* BRATISLAVA 
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
@@ -687,6 +712,7 @@ var i18_en = {
     "AlarmConfig:39": "ALARM PLC_CABINET INSULATION LOSSES-2",
     "AlarmConfig:40": "ALARM PLC_CABINET NO CONNECTION",*/ 
     "Alarm_recon": "Already recognized alarm",
+    "Alarm_deactivated": "Already deactivated alarm",
 
 /* AUSOL */
     "AlarmConfig:3": "ALARM DISCONNECTED",

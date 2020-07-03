@@ -106,11 +106,11 @@ export default class PanelManager {
 							}
 						]
 						}).then(() => {
-							webix.message({type:"success", text:"El panel se ha señalizado correctamente"});
+							webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
 							$$("panelManager" + id).hide();
 						});
 					}else{
-						webix.message({type:"error", text:"Seleccione un pictograma por favor"});
+						webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
 					}
 				 
 				}

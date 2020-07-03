@@ -249,7 +249,7 @@ export default class ElementForm {
 					for (let index = 0; index < data.length; index++) {
 						if (data[index].id == alarmId) {
 							if (data[index].deactivation != null) {
-								webix.alert("Alarma ya desactivada");
+								webix.alert($.i18n("Alarm_deactivated"));
 							} else {
 								webix.ui({
 									view: "window",
@@ -779,7 +779,7 @@ export default class ElementForm {
 							$$(this.commands).addView({
 								view: "button", 
 								id: "command"+index+"_"+ this.id, 
-								value: data.elementType.commandElementTypes[index].alias,
+								value: $.i18n(data.elementType.commandElementTypes[index].id),
 								click: function(){
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
@@ -793,7 +793,7 @@ export default class ElementForm {
 											modal:true,
 											close: true,
 											body: panelMan.getComponent(),
-											head:"Escoja la señalización",
+											head:$.i18n("elementForm.señalization.panel.head"),
 											on: {
 												onShow: function(obj){
 													panelMan.doActions();
@@ -807,7 +807,7 @@ export default class ElementForm {
 							$$(this.commands).addView({
 								view: "button", 
 								id: "command"+index+"_"+ this.id, 
-								value: data.elementType.commandElementTypes[index].alias,
+								value: $.i18n(data.elementType.commandElementTypes[index].id),
 								click: function(){
 									var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
 										sendCommandElement(commands: $commands)  
@@ -821,7 +821,7 @@ export default class ElementForm {
 											}
 										]
 									}).then(() => {
-										webix.message({type:"success", text:"Comando ejecutado correctamente"});
+										webix.message({type:"success", text:$.i18n("lbl_command_sended")});
 									});
 								}
 							}, -1);

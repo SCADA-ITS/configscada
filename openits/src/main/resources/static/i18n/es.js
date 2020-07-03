@@ -658,11 +658,35 @@ var i18_es = {
     "elementForm.alarms.recognized": "Reconocida",
     "elementForm.alarms.sourceElement": "Fuente",
 
+    "elementForm.señalization.panel.head": "Escoja la señalización",
+
     "state.unknown": "Desconocido",
     "state.connected": "Conectado",
     "state.noconnected": "No conectado",
     "state.alarm": "Alarmado",
 
+    "CommandElementType:1:8": "BAJAR BARRERA",
+    "CommandElementType:2:8": "SUBIR BARRERA",
+    "CommandElementType:1:9": "PARAR VENTILADOR",
+    "CommandElementType:2:9": "ARRANCAR VENTILADOR",
+    "CommandElementType:3:9": "ARRANCAR VENTILADOR REVERSO",
+    "CommandElementType:1:10": "MOSTRAR LADO PANEL 1",
+    "CommandElementType:2:10": "MOSTRAR LADO PANEL 2",
+    "CommandElementType:3:10": "NO MOSTRAR NADA",
+    "CommandElementType:1:24": "REINICIAR",
+    "CommandElementType:2:24": "SEÑALIZAR",
+    "CommandElementType:3:24": "APAGAR",
+    "CommandElementType:1:26": "REINICIAR",
+    "CommandElementType:2:26": "SEÑALIZAR",
+    "CommandElementType:3:26": "APAGAR",
+    "CommandElementType:1:27": "REINICIAR",
+    "CommandElementType:2:27": "SEÑALIZAR",
+    "CommandElementType:3:27": "APAGAR",
+    "CommandElementType:1:33": "CAMBIAR LONGITUD 1",
+
+    "lbl_command_sended": "Comando ejecutado correctamente",
+    "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
+    "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
 
     /*  BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
@@ -706,6 +730,7 @@ var i18_es = {
     "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N", */
 
     "Alarm_recon": "Alarma ya reconocida",
+    "Alarm_deactivated": "Alarma ya desactivada",
 
 /*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
