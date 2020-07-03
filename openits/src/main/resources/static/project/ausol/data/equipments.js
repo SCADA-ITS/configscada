@@ -84,7 +84,7 @@ export let columnsElementListAusol = {
 		2:[
 			"alias",
 			"state",
-			"ElementTypeParam:8:3:1"
+			"ElementTypeParam:8:2:1"
 		]
 	},
 	"ElementType:9": { 
@@ -96,7 +96,7 @@ export let columnsElementListAusol = {
 		2:[
 			"alias",
 			"state",
-			"ElementTypeParam:9:3:1"
+			"ElementTypeParam:9:2:1"
 		]
 	},
 	"ElementType:10": { 
@@ -679,7 +679,7 @@ export let columnsElementConfigAusol = {
 				"header": [ $.i18n("ElementTypeParam:8:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
 			"ElementTypeParam:8:3:1": { //"comand for barrier
-				"header": [ $.i18n("ElementTypeParam:8:3:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:8:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
@@ -709,7 +709,7 @@ export let columnsElementConfigAusol = {
 				"header": [ $.i18n("ElementTypeParam:9:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
 			"ElementTypeParam:9:3:1": { //"comand for fan
-				"header": [ $.i18n("ElementTypeParam:9:3:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:9:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
