@@ -789,7 +789,7 @@ export default class ElementForm {
 											id:"panelManager"+data.id,
 											view:"window",	
 											move:false,
-											position:"top",
+											position:"center",
 											modal:true,
 											close: true,
 											body: panelMan.getComponent(),
