@@ -194,31 +194,63 @@ export default class Synoptic {
       }
     }
 
-    for (var k in this.layersToDraw) {
-      // base layer
-      if(k == "BASE_LAYER") {
-        let els = this.s.selectAll('[component="' + e + '"]');
+    // base layer
+    if(e == "BASE_LAYER") {
+      let els = this.s.selectAll('[component="' + e + '"]');
 
-        els.forEach((el) => {
-          el.attr("visibility", this.layersToDraw[k]);
-        });
-      }
-
-      // other layers
-      this.synopticConf["Layers"][k]["items"].forEach((item) => {
-
-        let el = document.getElementById(item);
-        el.setAttribute("visibility", this.layersToDraw[k]);
-        el.style["visibility"] = this.layersToDraw[k];
-
-        // Fix for the FAN
-        if (this.layersToDraw[k] == "visible") {
-          el.style["opacity"] = 1;
-        } else {
-          el.style["opacity"] = 0;
-        }
-
+      els.forEach((el) => {
+        el.attr("visibility", this.layersToDraw[e]);
       });
+    } else {
+      this.synopticConf["Layers"][e]["items"].forEach((item) => {
+  
+        if(Object.keys(synopticTunnel["Layers"]).includes(item) && (item != e)) {
+  
+          // reset the layer visibility to set the same as the group layer
+          if (this.layersToDraw[e] == "visible") {
+            this.layersToDraw[item] = "hidden";
+          } else {
+            this.layersToDraw[item] = "visible";
+          }
+  
+          this.handleLayers(item);
+        } else {
+  
+          let el = document.getElementById(item);
+          if(el != null && typeof el != 'undefined') {
+            el.setAttribute("visibility", this.layersToDraw[e]);
+            el.style["visibility"] = this.layersToDraw[e];
+    
+            // Fix for the FAN
+            if (this.layersToDraw[e] == "visible") {
+              el.style["opacity"] = 1;
+            } else {
+              el.style["opacity"] = 0;
+            }
+          }
+        }
+  
+  
+      });
+    }
+
+    let newLabel = ""
+    if(this.layersToDraw[e] == "visible") {
+      if(this.synopticConf["Layers"][e]["translation_key"] != "") {
+        newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + $.i18n(this.synopticConf["Layers"][e]["translation_key"]);
+      } else {
+        newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + e;
+      }
+    } else {
+      if(this.synopticConf["Layers"][e]["translation_key"] != "") {
+        newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + $.i18n(this.synopticConf["Layers"][e]["translation_key"]);
+      } else {
+        newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + e;
+      }
+    }
+
+    if(document.getElementById("dropDown" + e) != null && typeof document.getElementById("dropDown" + e) != 'undefined') {
+      document.getElementById("dropDown" + e).innerHTML = newLabel;
     }
 
   }
@@ -1095,7 +1127,6 @@ export default class Synoptic {
         });
         */
         
-        // TODO: Layer groups
         Object.keys(this.synopticConf["Layers"]).map((n) => {
           let linkToAdd = document.createElement("a");
           
@@ -1104,7 +1135,13 @@ export default class Synoptic {
           };
           
           //linkToAdd.innerHTML = elementTypeMap.getElementTypeName(n);
-          linkToAdd.innerHTML = n;
+          //linkToAdd.innerHTML = n;
+          if(this.synopticConf["Layers"][n]["translation_key"] != "") {
+            linkToAdd.innerHTML = $.i18n(this.synopticConf["Layers"][n]["translation_key"]);
+          } else {
+            linkToAdd.innerHTML = n;
+          }
+          linkToAdd.id = "dropDown" + n;
           document
             .getElementById(this.synopticDiv + "dropdownDivContent")
             .appendChild(linkToAdd);

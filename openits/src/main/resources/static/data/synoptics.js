@@ -14,6 +14,16 @@ export let synopticTunnel = {
 			"translation_key": "",
 			"visibility": "visible"
 		},
+		"CAMS AND DMS (TEST)": {
+			"items": ["Element:10:1", "Element:10:2", "CAM"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"CAMS AND DMS AND FANS (TEST)": {
+			"items": ["CAMS AND DMS (TEST)", "FAN"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
 		"MATRIXPANEL": {
 			"items": ["Element:26:1"],
 			"translation_key": "",
@@ -21,7 +31,7 @@ export let synopticTunnel = {
 		},
 		"CAM": {
 			"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8"],
-			"translation_key": "",
+			"translation_key": "ElementType:2.description",
 			"visibility": "visible"
 		},
 		"FAN": {
