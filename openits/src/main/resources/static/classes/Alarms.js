@@ -1,15 +1,11 @@
 import {genericTable} from "../data/genericTable.js";
 import {alarmsCfgBratislava} from "../project/bratislava/data/alarmsCfg.js";
 import {alarmsCfgAusol} from "../project/ausol/data/alarmsCfg.js";
-import {synopticTunnel, synopticBratislava, synopticCabinets} from "../data/synoptics.js";
 let alarmsCf = null;
-let elementList = null;
 if (project) {
 	alarmsCf = alarmsCfgBratislava;
-	elementList = Object.assign(synopticBratislava, synopticCabinets);
 } else { 
 	alarmsCf = alarmsCfgAusol;
-	elementList = synopticTunnel;
 }
 
 
@@ -98,9 +94,7 @@ export default class Alarms {
 		        }
 
 	        control = true;
-	        // Object { id: "Alarm:1587118186077", alarmConfig: {…}, activation: 1587123750137, deactivation: 1587123760142, deactivationComments: "Desactivate for rule at 2020-04-17T11:42:40.142874Z", sourceElement: {…}, targetElement: {…} }
-	        // Object { id: "Alarm:1587118186078", alarmConfig: {…}, activation: 1587123770141, sourceElement: {…}, targetElement: {…} }
-	   
+   
 		    }else{
 		    	item = $$('alarmsTable_recon').getItem(element.id);
 		        if (item != null) {  //ALARMA PREVIAMENTE CREADA
@@ -124,7 +118,7 @@ export default class Alarms {
 		        }
 		   }
 		 
-        if (control == false) {  //ALARMA NUEVA
+		if (control == false) {  //ALARMA NUEVA
 			// loads the data
 			let alarmConfig = {};
 			let sourceElement = {};
@@ -134,9 +128,9 @@ export default class Alarms {
 			let deactivation = element.deactivation !== undefined ? element.deactivation === null ? null : element.deactivation : null;
 			let recognized = element.recognized !== undefined ? element.recognized === null ? null : element.recognized : null;
 			sourceElement["id"] = element.sourceElement.id;
-			sourceElement["alias"] = elementList[element.sourceElement.id].alias;
+			sourceElement["alias"] = element.sourceElement.id;//Solo coge el id
 			targetElement["id"] = element.targetElement.id;
-			targetElement["alias"] = elementList[element.targetElement.id].alias;
+			targetElement["alias"] = element.targetElement.id;//Solo coge el id
 			let data = {id: element.id, 
 				activation: element.activation, 
 				recognized: recognized, 

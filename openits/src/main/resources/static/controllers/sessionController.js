@@ -54,7 +54,14 @@ this.client.onConnect = function(frame) {
     "/topic/generic_data.>",
     self.processStompMessageWithFallback
   );
+  webix.storage.session.put("system.conected", true);
+  changeConnectedIcon();
 };
+
+this.client.onWebSocketClose = function(frame){
+  webix.storage.session.put("system.conected", false);
+  changeConnectedIcon();
+}
 
 this.client.onStompError = function(frame) {
   // Will be invoked in case of error encountered at Broker

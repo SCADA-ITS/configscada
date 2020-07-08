@@ -51,7 +51,15 @@ export let toolbar_data_menu  = {
 			}
 		  }},
 		{ id:"bell", view: "icon", icon: "mdi mdi-bell"},
-		{ view: "icon", icon: "webix_icon wxi-pencil" }
+		{ view: "icon", icon: "webix_icon wxi-pencil" },
+		{ 
+			id: "connectedFlag",
+			view:"button", 
+			type: "image", 
+			image:"./img/icons/checkbox-blank-circle_grey.png", 
+			width: 28,
+			css:"webix_transparent", 
+		}
 	]
 }
 
