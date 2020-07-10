@@ -6,6 +6,7 @@ var i18_en = {
     "defaultheader.managementAlarms": "Alarms",
     "defaultheader.alarmSettings": "Alarm settings",
     "defaultheader.activealarms": "Unrecognized alarms",
+    "defaultheader.deActivealarms": "Recognized alarms",
 
     "login.Login": "Login",
     "login.LoginButton": "Login",

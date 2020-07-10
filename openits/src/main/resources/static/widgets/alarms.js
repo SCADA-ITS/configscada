@@ -626,11 +626,16 @@ let genericTablei18n_recon = {
 let table = new Alarms(graphAlarm, null);
 
 export let alarms = {
+	view:"accordion",
+	multi:"mixed",
 	rows: [
-		{
+		{	
+			header: $.i18n("defaultheader.activealarms"),
 			body: genericTablei18n
 		},
+		{ view:"resizer" },
 		{
+			header:$.i18n("defaultheader.deActivealarms"),
 			body: genericTablei18n_recon
 		}
 	]
