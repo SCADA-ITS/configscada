@@ -149,6 +149,7 @@ webix.ready(function() {
         $$("b_edit_role").disable();
         $$("b_delete_role").disable();
     }
+    changeConnectedIcon();
 });
 
 function changeStyle(){
