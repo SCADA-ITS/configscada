@@ -239,10 +239,32 @@ export let synopticGlobal = {
 export let synopticBratislava = {
 	"ExclusiveLayers": true,
 	"BaseLayers": {
-    "base": "mapa_base.png",
+    "BASE_LAYER": "mapa_base.png",
     "ROAD": "D4-R7_trazado.png",
-		"2": "20200506_CCTV_PK_f1.svg",
-		"1": "20200506_METEO_PK_f1.svg"
+		"CAM": "20200506_CCTV_PK_f1.svg",
+		"METEO": "20200506_METEO_PK_f1.svg"
+	},
+	"Layers": {
+		"BASE_LAYER": {
+			"items": [],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"METEO": {
+			"items": ["Element:1:1", "Element:1:2", "Element:1:3", "Element:1:4", "Element:1:5", "Element:1:6", "Element:1:7", "Element:1:8"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"CAM": {
+			"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8", "Element:2:9", "Element:2:10", "Element:2:11", "Element:2:12", "Element:2:13", "Element:2:14", "Element:2:15", "Element:2:16", "Element:2:17", "Element:2:18", "Element:2:19", "Element:2:20", "Element:2:21", "Element:2:22", "Element:2:23", "Element:2:24", "Element:2:25", "Element:2:26", "Element:2:27", "Element:2:28", "Element:2:29", "Element:2:30", "Element:2:31", "Element:2:32", "Element:2:33", "Element:2:34", "Element:2:35", "Element:2:36", "Element:2:37", "Element:2:38", "Element:2:39", "Element:2:40", "Element:2:41", "Element:2:42", "Element:2:43", "Element:2:44", "Element:2:45", "Element:2:46", "Element:2:47", "Element:2:48", "Element:2:49", "Element:2:50", "Element:2:51", "Element:2:52", "Element:2:53", "Element:2:54", "Element:2:55", "Element:2:56", "Element:2:57", "Element:2:58", "Element:2:59", "Element:2:60", "Element:2:61", "Element:2:62", "Element:2:63", "Element:2:64", "Element:2:65", "Element:2:66", "Element:2:67", "Element:2:68", "Element:2:69", "Element:2:70", "Element:2:71", "Element:2:72", "Element:2:73", "Element:2:74"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"PANELS": {
+			"items": ["Element:1:1"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
 	},
   "Element:1:1":  { "x": 1430, "y": 520,  "width": 40, "height": 40, "alias": "MZJS496L" },
   "Element:1:2":  { "x": 1430, "y": 470,  "width": 40, "height": 40, "alias": "MDJS404L" },
@@ -334,6 +356,18 @@ export let synopticCabinets = {
 	    "base": "mapa_base.png",
 	    "ROAD": "D4-R7_trazado.png",
 	    "25": "20200525_ELECT_PK_f1.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"CABINETS": {
+				"items": ["Element:25:1", "Element:25:2", "Element:25:3", "Element:25:4", "Element:25:5", "Element:25:6", "Element:25:7", "Element:25:8", "Element:25:9", "Element:25:10", "Element:25:11", "Element:25:12", "Element:25:13", "Element:25:14", "Element:25:15", "Element:25:16", "Element:25:17", "Element:25:18", "Element:25:19", "Element:25:20", "Element:25:21", "Element:25:22", "Element:25:23", "Element:25:24", "Element:25:25", "Element:25:26", "Element:25:27", "Element:25:28", "Element:25:29", "Element:25:30", "Element:25:31", "Element:25:32", "Element:25:33", "Element:25:34", "Element:25:35", "Element:25:36", "Element:25:37", "Element:25:38", "Element:25:39", "Element:25:40", "Element:25:41", "Element:25:42", "Element:25:43", "Element:25:44", "Element:25:45", "Element:25:46", "Element:25:47", "Element:25:48", "Element:25:49", "Element:25:50", "Element:25:51", "Element:25:52", "Element:25:53", "Element:25:54", "Element:25:55", "Element:25:56", "Element:25:57", "Element:25:58", "Element:25:59", "Element:25:60", "Element:25:61", "Element:25:62", "Element:25:63", "Element:25:64", "Element:25:65", "Element:25:66", "Element:25:67", "Element:25:68", "Element:25:69", "Element:25:70", "Element:25:71"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 		},
 	  "Element:25:1":  { "x": 1626, "y": 891,  "width": 40, "height": 40, "alias": "RNJS.1K"  },
 	  "Element:25:2":  { "x": 1626, "y": 860,  "width": 40, "height": 40, "alias": "RISRJS.5" },

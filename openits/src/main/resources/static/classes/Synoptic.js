@@ -202,9 +202,20 @@ export default class Synoptic {
         el.attr("visibility", this.layersToDraw[e]);
       });
     } else {
+
+      // check if there is a base layer and changes its visibility
+      if(Object.keys(this.synopticConf["BaseLayers"]).includes(e)) {
+        let el = document.getElementById("capa_base_" + e);
+        if(el != null && typeof el != 'undefined') {
+          el.setAttribute("visibility", this.layersToDraw[e]);
+          el.style["visibility"] = this.layersToDraw[e];
+        }
+      }
+
+      // item
       this.synopticConf["Layers"][e]["items"].forEach((item) => {
   
-        if(Object.keys(synopticTunnel["Layers"]).includes(item) && (item != e)) {
+        if(Object.keys(this.synopticConf["Layers"]).includes(item) && (item != e)) {
   
           // reset the layer visibility to set the same as the group layer
           if (this.layersToDraw[e] == "visible") {
@@ -214,6 +225,7 @@ export default class Synoptic {
           }
   
           this.handleLayers(item);
+
         } else {
   
           let el = document.getElementById(item);
@@ -375,7 +387,6 @@ export default class Synoptic {
               self.elementsTypes.push(k);
             }
 
-            // draws the base layer for this component
             self.s
             .image("./img/" + self.synopticConf["BaseLayers"][k], 0, 0, total_width, total_height)
             .attr({
@@ -1152,12 +1163,15 @@ export default class Synoptic {
 
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer
+        /*
         if (d.description == "SYNOPTIC") {
-          this.handleLayers("2");
+          this.handleLayers("CAM");
         }
         else if( d.description == "CABINETS"){
-          this.handleLayers("25");
+          this.handleLayers("CABINETS");
         }
+        */
+
 
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 
@@ -1210,7 +1224,7 @@ export default class Synoptic {
       this.synopticConf = synopticGlobal;
     } else if (synopticConf == "bratislava") {
       this.synopticConf = synopticBratislava;
-    }else if (synopticConf == "cabinets") {
+    } else if (synopticConf == "cabinets") {
       this.synopticConf = synopticCabinets;
     }
 
