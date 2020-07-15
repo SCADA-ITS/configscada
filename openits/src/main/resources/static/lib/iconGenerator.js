@@ -19,6 +19,7 @@ import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
 import * as plc from "./icons/plc.js";
+import * as scn from "./icons/scn.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 
 import * as elementTypeMap from "./elementTypeMap.js";
@@ -176,6 +177,8 @@ export function getElementIcon(element, suffix="") {
     plc.updatePlcIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ELEMENT_TYPE) {
     plc.updatePlcIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_SCN_ELEMENT_TYPE) {
+    scn.updateScnIcon(element, suffix);
   } else if (elementType === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
     matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else {
@@ -306,6 +309,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case "26":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
+      break;
+    case "34":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     default:
       console.log("Icon not found");

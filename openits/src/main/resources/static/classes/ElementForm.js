@@ -8,15 +8,12 @@ import {columnsElementFormListBratislava} from "../project/bratislava/data/eleme
 import PanelManager from "../classes/PanelManager.js";
 
 let alarmsCf = null;
-let elementList = null;
 let colMetaData = null;
 if (project) {
 	alarmsCf = alarmsCfgBratislava;
-	elementList = Object.assign(synopticBratislava, synopticCabinets);
 	colMetaData = columnsElementFormListBratislava
 } else { 
 	alarmsCf = alarmsCfgAusol;
-	elementList = synopticTunnel;
 	colMetaData = columnsElementFormListAusol;
 }
 

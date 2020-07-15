@@ -23,6 +23,7 @@ export const ETD_DETECTOR_ELEMENT_TYPE = "23";
 export const ELECTRICAL_CABINET_ELEMENT_TYPE = "25";
 export const MATRIX_PANEL_ELEMENT_TYPE = "26";
 export const ETD_ELEMENT_TYPE = "33";
+export const ELECTRICAL_CABINET_SCN_ELEMENT_TYPE = "34";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;
@@ -156,8 +157,11 @@ export function getElementTypeName(elementTypeIdString) {
     case ETD_DETECTOR_ELEMENT_TYPE:
     case ETD_ELEMENT_TYPE:
     case ELECTRICAL_CABINET_ELEMENT_TYPE:
-        ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-        break;
+      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
+      break;
+    case ELECTRICAL_CABINET_SCN_ELEMENT_TYPE:
+      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
+      break;
     default:
       break;
   }

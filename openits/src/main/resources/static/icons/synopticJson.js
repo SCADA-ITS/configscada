@@ -30,6 +30,46 @@ export let staticsIcons = {
 			}
 		]
 	},
+	"34": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "scn_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "scn_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "scn_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "scn_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
 	"23": {
 		"state": [
 			{

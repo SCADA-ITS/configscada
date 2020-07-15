@@ -194,6 +194,65 @@ export default class Synoptic {
       }
     }
 
+    if(this.synopticConf["ExclusiveLayers"] == true && e != "BASE_LAYER" && e != "ROAD") {
+      
+      for (var k in this.layersToDraw) {
+        if (k != e && k != "BASE_LAYER" && k != "ROAD") {
+          this.layersToDraw[k] = "hidden";
+
+          // check if there is a base layer and changes its visibility
+          if(Object.keys(this.synopticConf["BaseLayers"]).includes(k)) {
+            let el = document.getElementById("capa_base_" + k);
+            if(el != null && typeof el != 'undefined') {
+              el.setAttribute("visibility", this.layersToDraw[k]);
+              el.style["visibility"] = this.layersToDraw[k];
+            }
+          }
+
+          // item
+          this.synopticConf["Layers"][k]["items"].forEach((item) => {
+      
+            let el = document.getElementById(item);
+            if(el != null && typeof el != 'undefined') {
+              el.setAttribute("visibility", this.layersToDraw[k]);
+              el.style["visibility"] = this.layersToDraw[k];
+      
+              // Fix for the FAN
+              if (this.layersToDraw[e] == "visible") {
+                el.style["opacity"] = 1;
+              } else {
+                el.style["opacity"] = 0;
+              }
+            }
+      
+          });
+
+          let newLabel = ""
+          if(this.layersToDraw[k] == "visible") {
+            if(this.synopticConf["Layers"][k]["translation_key"] != "") {
+              newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + $.i18n(this.synopticConf["Layers"][k]["translation_key"]);
+            } else {
+              newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + k;
+            }
+          } else {
+            if(this.synopticConf["Layers"][k]["translation_key"] != "") {
+              newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + $.i18n(this.synopticConf["Layers"][k]["translation_key"]);
+            } else {
+              newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + k;
+            }
+          }
+
+          if(document.getElementById("dropDown" + k) != null && typeof document.getElementById("dropDown" + k) != 'undefined') {
+            document.getElementById("dropDown" + k).innerHTML = newLabel;
+          }
+        }
+      }
+
+      this.layersToDraw[e] = "visible";  
+
+    } 
+
+
     // base layer
     if(e == "BASE_LAYER") {
       let els = this.s.selectAll('[component="' + e + '"]');
@@ -241,10 +300,11 @@ export default class Synoptic {
             }
           }
         }
-  
-  
       });
+
     }
+    
+
 
     let newLabel = ""
     if(this.layersToDraw[e] == "visible") {
@@ -1163,15 +1223,12 @@ export default class Synoptic {
 
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer
-        /*
         if (d.description == "SYNOPTIC") {
           this.handleLayers("CAM");
         }
         else if( d.description == "CABINETS"){
           this.handleLayers("CABINETS");
         }
-        */
-
 
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 

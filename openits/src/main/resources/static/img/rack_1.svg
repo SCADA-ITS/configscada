@@ -24,11 +24,11 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1055"
+     inkscape:window-height="1051"
      id="namedview17"
      showgrid="false"
      inkscape:zoom="0.24762469"
-     inkscape:cx="561.33337"
+     inkscape:cx="-1364.9689"
      inkscape:cy="396.66666"
      inkscape:window-x="1920"
      inkscape:window-y="0"
@@ -48,13 +48,13 @@
          d="M 0,2001 H 14031 V 7920 H 0 V 2001" /></clipPath></defs><g
      id="g12"
      transform="matrix(0.08,0,0,-0.08,0,793.33333)"
-     style="fill:#cccccc"><g
+     style="fill:#008000"><g
        id="g14"
        clip-path="url(#clipPath18)"
-       style="fill:#cccccc"><path
+       style="fill:#008000"><path
          inkscape:connector-curvature="0"
          d="M 4253,2023 H 9777 V 7897 H 4253 V 2023"
-         style="fill:#cccccc;stroke:#000000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#008000;stroke:#000000;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          id="path20" /></g></g><g
      id="g22"
      transform="matrix(0.08,0,0,-0.08,0,793.33333)"><g
@@ -66,5 +66,7 @@
      x="0"
      y="0"
      id="tspan30">I</tspan></text>
+
+
 
 </g></g></svg>
