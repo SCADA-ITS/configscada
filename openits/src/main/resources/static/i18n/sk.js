@@ -705,7 +705,17 @@ var i18_sk = {
     "AlarmConfig:38": "UPOZORNEIE PLC_CABINET IZOLA&#268;N&Aacute; STRATA-1",
     "AlarmConfig:39": "UPOZORNEIE PLC_CABINET IZOLA&#268;N&Aacute; STRATA-2",
     "AlarmConfig:40": "UPOZORNEIE PLC_CABINET &#381;IADNE SPOJENIE",
-    
+
+    "AlarmConfig:49": "UPOZORNEIE PLC_CABINET DVERE OTVORENÉ",
+    "AlarmConfig:50": "UPOZORNEIE PLC_CABINET CHYBA ZDROJE NAPÁJANIA - AKÉKOĽVEK OTVORENÉ CB",
+    "AlarmConfig:51": "UPOZORNEIE PLC_CABINET BATÉRIA SCN NÍZKA",
+    "AlarmConfig:52": "UPOZORNEIE PLC_CABINET SCN NA BATÉRII",
+    "AlarmConfig:53": "UPOZORNEIE PLC_CABINET SCN AKÉKOĽVEK POPLACHY",
+    "AlarmConfig:54": "UPOZORNEIE PLC_CABINET SCN ON BYPASS",
+    "AlarmConfig:55": "UPOZORNEIE PLC_CABINET KLIMATIZÁCIA ZAP",
+    "AlarmConfig:56": "UPOZORNEIE PLC_CABINET UPOZORNEIE NA LETIŠTU",
+    "AlarmConfig:57": "UPOZORNEIE PLC_CABINET ŽIADNE SPOJENIE",
     "Alarm_recon": "Alarm u&#382; bol rozpoznan&#253;",
+    "Alarm_deactivated": "Already deactivated alarm",
 
 };

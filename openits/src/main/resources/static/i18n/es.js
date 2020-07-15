@@ -689,7 +689,7 @@ var i18_es = {
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
     "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
 
-    /*  BRATISLAVA 
+    /*  BRATISLAVA */
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -728,12 +728,21 @@ var i18_es = {
     "AlarmConfig:37": "ALARMA PLC_CABINET POTENCIA BAJA",
     "AlarmConfig:38": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-1",
     "AlarmConfig:39": "ALARMA PLC_CABINET P&Eacute;RDIDAS DE AISLAMIENTO-2",
-    "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N", */
+    "AlarmConfig:40": "ALARMA PLC_CABINET SIN CONEXI&Oacute;N", 
+    "AlarmConfig:49": "ALARMA PLC_CABINET DOOR OPEN",
+    "AlarmConfig:50": "ALARMA PLC_CABINET POWER SUPPLY ERROR - ANY CB OPEN",
+    "AlarmConfig:51": "ALARMA PLC_CABINET UPS BATTERY LOW",
+    "AlarmConfig:52": "ALARMA PLC_CABINET UPS ON BATTERY",
+    "AlarmConfig:53": "ALARMA PLC_CABINET UPS ANY ALARM",
+    "AlarmConfig:54": "ALARMA PLC_CABINET UPS ON BYPASS",
+    "AlarmConfig:55": "ALARMA PLC_CABINET AIRCONDITIONING ON",
+    "AlarmConfig:56": "ALARMA PLC_CABINET AIRCONDITIONING ALARM",
+    "AlarmConfig:57": "ALARMA PLC_CABINET NO CONNECTION",
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL*/
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -751,5 +760,5 @@ var i18_es = {
     "AlarmConfig:18": "ALARMA NO SIN CONEXI&Oacute;N",
     "AlarmConfig:19": "ALARMA OPAC SIN CONEXI&Oacute;N",
     "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
-    "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N"
+    "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N" */
 };

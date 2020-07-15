@@ -672,7 +672,7 @@ var i18_en = {
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
     "lbl_panel_signaling_error": "Select a pictogram please",
 
-    /* BRATISLAVA 
+    /* BRATISLAVA */
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
     "AlarmConfig:3": "ALARM WS AIR PRESSURE GREATER THAN 65534",
     "AlarmConfig:4": "ALARM WS AIR TEMPERATURE NOT BETWEEN -1000 AND 1000",
@@ -711,11 +711,20 @@ var i18_en = {
     "AlarmConfig:37": "ALARM PLC_CABINET LOW POTENCIAL",
     "AlarmConfig:38": "ALARM PLC_CABINET INSULATION LOSSES-1",
     "AlarmConfig:39": "ALARM PLC_CABINET INSULATION LOSSES-2",
-    "AlarmConfig:40": "ALARM PLC_CABINET NO CONNECTION",*/ 
+    "AlarmConfig:40": "ALARM PLC_CABINET NO CONNECTION",
+    "AlarmConfig:49": "ALARMA PLC_CABINET DOOR OPEN",
+    "AlarmConfig:50": "ALARMA PLC_CABINET POWER SUPPLY ERROR - ANY CB OPEN",
+    "AlarmConfig:51": "ALARMA PLC_CABINET UPS BATTERY LOW",
+    "AlarmConfig:52": "ALARMA PLC_CABINET UPS ON BATTERY",
+    "AlarmConfig:53": "ALARMA PLC_CABINET UPS ANY ALARM",
+    "AlarmConfig:54": "ALARMA PLC_CABINET UPS ON BYPASS",
+    "AlarmConfig:55": "ALARMA PLC_CABINET AIRCONDITIONING ON",
+    "AlarmConfig:56": "ALARMA PLC_CABINET AIRCONDITIONING ALARM",
+    "AlarmConfig:57": "ALARMA PLC_CABINET NO CONNECTION",
     "Alarm_recon": "Already recognized alarm",
     "Alarm_deactivated": "Already deactivated alarm",
 
-/* AUSOL */
+/* AUSOL 
     "AlarmConfig:3": "ALARM DISCONNECTED",
     "AlarmConfig:4": "ALARM DISCONNECTED",
     "AlarmConfig:5":"ALARM DISCONNECTED",
@@ -733,5 +742,5 @@ var i18_en = {
     "AlarmConfig:18": "ALARM NO NO CONNECTION",
     "AlarmConfig:19": "ALARM OPAC NO CONNECTION",
     "AlarmConfig:20": "ALARM ETD_modbus NO CONNECTION",
-    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",
+    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",*/
 };
