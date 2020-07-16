@@ -118,7 +118,8 @@ export default class Alarms {
 		        }
 		   }
 		 
-		if (control == false) {  //ALARMA NUEVA
+		if (control == false) {	
+			//ALARMA NUEVA
 			// loads the data
 			let alarmConfig = {};
 			let sourceElement = {};
@@ -128,9 +129,9 @@ export default class Alarms {
 			let deactivation = element.deactivation !== undefined ? element.deactivation === null ? null : element.deactivation : null;
 			let recognized = element.recognized !== undefined ? element.recognized === null ? null : element.recognized : null;
 			sourceElement["id"] = element.sourceElement.id;
-			sourceElement["alias"] = element.sourceElement.id;//Solo coge el id
+			sourceElement["alias"] = "";
 			targetElement["id"] = element.targetElement.id;
-			targetElement["alias"] = element.targetElement.id;//Solo coge el id
+			targetElement["alias"] = "";
 			let data = {id: element.id, 
 				activation: element.activation, 
 				recognized: recognized, 
@@ -138,17 +139,58 @@ export default class Alarms {
 				alarmConfig: alarmConfig, 
 				alarmLevel: alarmConfig, 
 				sourceElement: sourceElement, 
-				targetElement: targetElement };
-							
+				targetElement: targetElement };				
 			if(data.recognized != null && data.deactivation == null){
-				
-			$$('alarmsTable_recon').add(data, 0);
-			
-			}else if(data.recognized == null){
-			
+				$$('alarmsTable_recon').add(data, 0);
+			}else if(data.recognized == null){		
 				$$('alarmsTable').add(data, 0); 
-			
 			}
+
+			//Source Alias
+			var graphEquipS = `query { 
+				getElement(elementId: "` + element.sourceElement.id + `"){
+					alias
+				}
+			}`;
+			var graphqlEquipS = webix.proxy("GraphQL", graphEquipS);
+			graphqlEquipS.load().then(equipS => {
+				try {
+					if(data.recognized != null && data.deactivation == null){
+						var tmpItem = $$('alarmsTable_recon').getItem(element.id);
+						tmpItem.sourceElement.alias=equipS.alias;
+						$$('alarmsTable_recon').updateItem(element.id, tmpItem);
+					}else if(data.recognized == null){
+						var tmpItem = $$('alarmsTable').getItem(element.id);
+						tmpItem.sourceElement.alias=equipS.alias;
+						$$('alarmsTable').updateItem(element.id, tmpItem);
+					}
+				} catch (e) {
+				}
+				return data;
+			});
+
+			//Destiny Alias
+			var graphElemD = `query { 
+				getElement(elementId: "` + element.targetElement.id + `"){
+					alias
+				}
+			}`;
+			var graphqlEquipD = webix.proxy("GraphQL", graphElemD);
+			graphqlEquipD.load().then(equipD => {
+				try {
+					if(data.recognized != null && data.deactivation == null){
+						var tmpItem = $$('alarmsTable_recon').getItem(element.id);
+						tmpItem.targetElement.alias=equipD.alias;
+						$$('alarmsTable_recon').updateItem(element.id, tmpItem);
+					}else if(data.recognized == null){
+						var tmpItem = $$('alarmsTable').getItem(element.id);
+						tmpItem.targetElement.alias=equipD.alias;
+						$$('alarmsTable').updateItem(element.id, tmpItem);
+					}
+				}catch (e) {
+				}
+				return data;
+			});
     	}
   	});
 	}catch (err) {
