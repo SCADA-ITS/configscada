@@ -26,7 +26,7 @@ var sendDeactivationAlarms = `mutation  sendDeactivationAlarms ($alarmIds: [Stri
 }`;
 
 function getDate(timestamp) {
-	return timestamp !== null ? new Date(timestamp).toISOString() : '-';
+	return timestamp !== null ? webix.i18n.fullDateFormatStr(new Date(timestamp)) : '-';
 }
 
 let genericTablei18n = {
@@ -222,7 +222,7 @@ let genericTablei18n = {
 						var data = $$("alarmsTable").serialize();
 
 						for (let index = 0; index < data.length; index++) {
-							if (data[index].check) {
+							if (data[index].check == "on") {
 								alarmas.push(data[index]);
 							}
 						}
@@ -317,7 +317,7 @@ let genericTablei18n = {
 						var alarmasId = [];
 						var data = $$("alarmsTable").serialize();
 						for (let index = 0; index < data.length; index++) {
-							if (data[index].check) {
+							if (data[index].check == "on") {
 								alarmas.push(data[index])
 							}
 						}
@@ -527,7 +527,7 @@ let genericTablei18n_recon = {
 						var alarmasId = [];
 						var data = $$("alarmsTable_recon").serialize();
 						for (let index = 0; index < data.length; index++) {
-							if (data[index].check_recon) {
+							if (data[index].check_recon == "on") {
 								alarmas.push(data[index])
 							}
 						}
