@@ -22,7 +22,7 @@ export function generateIcon(element, suffix = "") {
     if (elementState == 0) {
       color = "gold";
     } else if (elementState == 1) {
-      color = "silver";
+      color = "green";
     } else if (elementState == 2) {
       color = "purple";
     } else if (elementState == 3) {
@@ -99,7 +99,7 @@ export function updateMatrixPanelIcon(element, suffix = "") {
     if (elementState == 0) {
       color = "gold";
     } else if (elementState == 1) {
-      color = "silver";
+      color = "green";
     } else if (elementState == 2) {
       color = "purple";
     } else if (elementState == 3) {
@@ -115,7 +115,7 @@ export function updateMatrixPanelIcon(element, suffix = "") {
     if (elementState == 0) {
       color = "#ffcc00";
     } else if (elementState == 1) {
-      color = "#c0c0c0";
+      color = "#008000";
     } else if (elementState == 2) {
       color = "#800080";
     } else if (elementState == 3) {

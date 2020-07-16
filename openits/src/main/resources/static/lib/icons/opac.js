@@ -6,10 +6,10 @@ export function generateIcon(element, suffix="") {
     '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
     '<rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998" id="' +
     element.id + suffix +
-    ':IconBackground" style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.07384499;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
+    ':IconBackground" fill="silver" style="fill-opacity:1;stroke:none;stroke-width:0.07384499;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
     '<rect y="387.27902" x="173.69635" height="21.42857" width="50.892853" id="' +
     element.id + suffix +
-    ':ValueBackground" style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.93749994;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
+    ':ValueBackground" fill="silver" style="fill-opacity:1;stroke:#000000;stroke-width:0.93749994;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
     '<text id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" style="font-style:normal;font-weight:normal;font-size:37.49999237px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.93749994" xml:space="preserve">' +
     '<tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198" id="' +
     element.id + suffix +
@@ -50,7 +50,7 @@ export function updateOpacIcon(element, suffix="") {
       if (elementState == 0) {
         color = "#ffcc00";
       } else if (elementState == 1) {
-        color = "#c0c0c0";
+        color = "#008000";
       } else if (elementState == 2) {
         color = "#800080";
       } else if (elementState == 3) {
@@ -58,10 +58,10 @@ export function updateOpacIcon(element, suffix="") {
       }
 
       document.getElementById(element.id + suffix + ":IconBackground").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":ValueBackground").style[
-        "fill"
+        "stroke"
       ] = color;
     }
   }

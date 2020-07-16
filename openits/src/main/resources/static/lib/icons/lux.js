@@ -20,7 +20,7 @@ export function generateIcon(element, suffix="") {
     if (elementState == 0) {
       color = "gold";
     } else if (elementState == 1) {
-      color = "silver";
+      color = "green";
     } else if (elementState == 2) {
       color = "purple";
     } else if (elementState == 3) {
@@ -33,8 +33,8 @@ export function generateIcon(element, suffix="") {
     '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
     '<rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998" id="' +
     element.id + suffix +
-    ':IconBackground" fill="' + color + '" />' +
-    '<rect fill="' + color + '" y="387.27902" x="173.69635" height="21.42857" width="50.892853" id="' +
+    ':IconBackground" fill="silver" stroke="' + color + '" />' +
+    '<rect fill="silver" stroke="' + color + '" y="387.27902" x="173.69635" height="21.42857" width="50.892853" id="' +
     element.id + suffix +
     ':ValueBackground" />' +
     '<text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve">' +
@@ -77,7 +77,7 @@ export function updateLuxIcon(element, suffix="") {
       if (elementState == 0) {
         color = "#ffcc00";
       } else if (elementState == 1) {
-        color = "#c0c0c0";
+        color = "#008000";
       } else if (elementState == 2) {
         color = "#800080";
       } else if (elementState == 3) {
@@ -85,10 +85,10 @@ export function updateLuxIcon(element, suffix="") {
       }
 
       document.getElementById(element.id + suffix + ":IconBackground").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":ValueBackground").style[
-        "fill"
+        "stroke"
       ] = color;
     }
   }

@@ -1,7 +1,7 @@
 export let synopticTunnel = {
 	"ExclusiveLayers": false,
 	"BaseLayers": {
-		"base": "tunel.svg"
+		"BASE_LAYER": "tunel.svg"
 	},
 	"Layers": {
 		"BASE_LAYER": {
@@ -170,7 +170,7 @@ export let synopticTunnel = {
 export let synopticMetro = {
 	"ExclusiveLayers": false,
 	"BaseLayers": {
-		"base": "metro.svg"
+		"BASE_LAYER": "metro.svg"
 	},
 	"Layers": {
 		"BASE_LAYER": {
@@ -190,7 +190,7 @@ export let synopticMetro = {
 export let synopticGlobal = {
 	"ExclusiveLayers": false,
 	"BaseLayers": {
-		"base": "global.svg"
+		"BASE_LAYER": "global.svg"
 	},
 	"Layers": {
 		"BASE_LAYER": {
@@ -356,7 +356,7 @@ export let synopticCabinets = {
 	    "BASE_LAYER": "mapa_base.png",
 	    "ROAD": "D4-R7_trazado.png",
 			"CABINETS": "20200525_ELECT_PK_f1.svg",
-			"ELEC": "ELECT_SCN_PK_f1-sin-traza.svg"
+			"SCN": "ELECT_SCN_PK_f1-sin-traza.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
