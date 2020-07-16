@@ -128,7 +128,7 @@ export function updateFanIcon(element, suffix = "") {
       if (elementState == 0) {
         color = "#ffcc00";
       } else if (element.state == 1) {
-        color = "#c0c0c0";
+        color = "#008000";
       } else if (element.state == 2) {
         color = "#800080";
       } else if (element.state == 3) {
@@ -136,19 +136,19 @@ export function updateFanIcon(element, suffix = "") {
       }
   
       document.getElementById(element.id + suffix + ":Icon1").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":Icon2").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":Icon3").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":Icon4").style[
-        "fill"
+        "stroke"
       ] = color;
       document.getElementById(element.id + suffix + ":Icon5").style[
-        "fill"
+        "stroke"
       ] = color;
     }
   }

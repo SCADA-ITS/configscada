@@ -60,7 +60,7 @@ export function updateSemIcon(element, suffix = "") {
       if (elementState == 0) {
         color = "#ffcc00";
       } else if (elementState == 1) {
-        color = "#c0c0c0";
+        color = "#008000";
       } else if (elementState == 2) {
         color = "#800080";
       } else if (elementState == 3) {

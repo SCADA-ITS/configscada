@@ -16,7 +16,7 @@ export function generateIcon(element, suffix = "") {
     if (elementState == 0) {
       color = "gold";
     } else if (elementState == 1) {
-      color = "silver";
+      color = "green";
     } else if (elementState == 2) {
       color = "purple";
     } else if (elementState == 3) {

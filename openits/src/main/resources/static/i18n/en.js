@@ -68,6 +68,8 @@ var i18_en = {
     "ElementType:25.description": "ELECTRICAL CABINET",
     "ElementType:26.alias": "Panel",
     "ElementType:26.description": "Panel",
+    "ElementType:34.alias": "SCN",
+    "ElementType:34.description": "SCN",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -485,6 +487,13 @@ var i18_en = {
     "ElementTypeParam:26:1:7.alias": "Tama_1_1",
     "ElementTypeParam:26:1:8.alias": "Type_1_1",
     "ElementTypeParam:26:1:9.alias": "Pos_Panel",
+
+    "ElementTypeParam:34:1:1.alias": "PK",
+    "ElementTypeParam:34:1:1.description": "PK",
+    "ElementTypeParam:34:1:2.alias": "Seccion",
+    "ElementTypeParam:34:1:2.description": "Seccion",
+    "ElementTypeParam:34:1:3.alias": "Road",
+    "ElementTypeParam:34:1:3.description": "Road",
 
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",
