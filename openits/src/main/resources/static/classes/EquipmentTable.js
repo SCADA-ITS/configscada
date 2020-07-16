@@ -47,6 +47,7 @@ export default class EquipmentTable {
             yCount:20,
             autoConfig:true,
             tooltip:true,
+            resizeColumn: { headerOnly:true },
             columns:[],
             data:[]
         };
@@ -192,7 +193,7 @@ export default class EquipmentTable {
                                 .config.columns.push({ id: obj,  
                                     header: this.columnsElementConfig[this.id][this.mode][obj]["header"],
                                     rotate: this.columnsElementConfig[this.id][this.mode][obj]["rotate"], 
-                                    adjust:true, 
+                                    adjust:"data", 
                                     autowidth:true,
                                     autoheigth: true,
                                     sort:"text", 
