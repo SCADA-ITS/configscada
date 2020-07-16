@@ -95,6 +95,10 @@ var i18_sk = {
     "ElementType:11.description": "SOS",
     "ElementType:25.alias": "Elektrick&#xE1; skrinka",
     "ElementType:25.description": "Elektrick&#xE1; skrinka",
+    "ElementType:26.alias": "Panel",
+    "ElementType:26.description": "Panel",
+    "ElementType:34.alias": "SCN",
+    "ElementType:34.description": "SCN",
     
     "ElementTypeParam:1:1:1.alias": "Zna&#269;ka",
     "ElementTypeParam:1:1:1.description": "Zna&#269;ka",
@@ -496,6 +500,14 @@ var i18_sk = {
     "ElementTypeParam:25:1:2.description": "Seccion",
     "ElementTypeParam:25:1:3.alias": "N&aacutezov PLC",
     "ElementTypeParam:25:1:3.description": "N&aacutezov PLC",
+    
+   
+    "ElementTypeParam:34:1:1.alias": "PK",
+    "ElementTypeParam:34:1:1.description": "PK",
+    "ElementTypeParam:34:1:2.alias": "Seccion",
+    "ElementTypeParam:34:1:2.description": "Seccion",
+    "ElementTypeParam:34:1:3.alias": "Road",
+    "ElementTypeParam:34:1:3.description": "Road",
     
     "synoptic.layer.base": "Podkladov&aacute; vrstva",
     "synoptic.layer.road": "Cesta",

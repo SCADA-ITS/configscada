@@ -69,6 +69,8 @@ var i18_es = {
     "ElementType:25.description": "ARMARIO_ELECTRICO",
     "ElementType:26.alias": "Panel",
     "ElementType:26.description": "Panel",
+    "ElementType:34.alias": "Armario",
+    "ElementType:34.description": "Armario",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -501,6 +503,13 @@ var i18_es = {
     "ElementTypeParam:26:1:9.description": "Pos_Panel",
     "ElementTypeParam:26:1:10.alias": "Distancia entrada del t&uacute;nel",
     "ElementTypeParam:26:1:10.description": "Distancia entrada del t&uacute;nel",
+
+    "ElementTypeParam:34:1:1.alias": "PK",
+    "ElementTypeParam:34:1:1.description": "PK",
+    "ElementTypeParam:34:1:2.alias": "Sección",
+    "ElementTypeParam:34:1:2.description": "Sección",
+    "ElementTypeParam:34:1:3.alias": "Vía",
+    "ElementTypeParam:34:1:3.description": "Vía",
 
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",

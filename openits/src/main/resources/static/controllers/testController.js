@@ -10,10 +10,10 @@
 // import { alarmconfigs } from "../widgets/alarmconfigs.js";
 // import { equipments } from "../widgets/equipments.js";
 import ElementForm from "../classes/ElementForm.js";
-let elementForm = new ElementForm("Element:8:1");
-let elementForm2 = new ElementForm("Element:9:2");
-let elementForm3 = new ElementForm("Element:10:1");
-let elementForm4 = new ElementForm("Element:2:1");
+let elementForm = new ElementForm("Element:34:1");
+// let elementForm2 = new ElementForm("Element:9:2");
+// let elementForm3 = new ElementForm("Element:10:1");
+// let elementForm4 = new ElementForm("Element:2:1");
 
 var grid = {
     view:"dashboard",
@@ -51,18 +51,18 @@ var grid = {
         template:"#value# - (#dx#x#dy#)",
         data:[
           { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
-           ,
-           { id:"elementForm2", value:"elementForm2", dx:1, dy:1, body: elementForm2.getComponent()}
-           ,
-           { id:"elementForm3", value:"elementForm3", dx:1, dy:1, body: elementForm3.getComponent()}
-           ,
-           { id:"plans", value:"plans", dx:1, dy:1, body: plans }
-          ,
-          { id:"elementForm4", value:"elementForm4", dx:1, dy:1, body: elementForm4.getComponent() }
-          ,
-          { id:"users", value:"users", dx:1, dy:1, body: users }
-           ,
-          { id:"roles", value:"roles", dx:1, dy:1, body: roles }
+          //  ,
+          //  { id:"elementForm2", value:"elementForm2", dx:1, dy:1, body: elementForm2.getComponent()}
+          //  ,
+          //  { id:"elementForm3", value:"elementForm3", dx:1, dy:1, body: elementForm3.getComponent()}
+          //  ,
+          //  { id:"plans", value:"plans", dx:1, dy:1, body: plans }
+          // ,
+          // { id:"elementForm4", value:"elementForm4", dx:1, dy:1, body: elementForm4.getComponent() }
+          // ,
+          // { id:"users", value:"users", dx:1, dy:1, body: users }
+          //  ,
+          // { id:"roles", value:"roles", dx:1, dy:1, body: roles }
           // ,
           // { id:"alarmconfigs", value:"alarmconfigs", dx:1, dy:1, body: alarmconfigs }
           // ,
