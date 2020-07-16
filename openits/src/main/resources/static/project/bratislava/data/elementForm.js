@@ -80,5 +80,26 @@ export let columnsElementFormListBratislava = {
 		"scroll": false, 
 		"width": 550,
 		"options": {}
+	},
+	"ElementType:26": {
+		"rows":[ 
+			"ElementTypeParam:26:1:5",
+			"ElementTypeParam:26:1:10"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:28": {
+		"rows":[
+			"ElementTypeParam:28:1:1",
+			"ElementTypeParam:28:1:2",
+			"ElementTypeParam:28:1:3"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
 	}
 }

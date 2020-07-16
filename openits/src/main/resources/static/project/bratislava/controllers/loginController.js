@@ -95,12 +95,14 @@ webix.ready(function() {
                                                 switch (obj){
                                                     case "sk":
                                                         webix.storage.session.put("app_user_language", "sk");
-                                                        break;
+                                                        webix.i18n.setLocale("sk-SK");
                                                     case "en":
                                                         webix.storage.session.put("app_user_language", "en");
+                                                        webix.i18n.setLocale("en-EN");
                                                         break;
                                                     case "es":
                                                         webix.storage.session.put("app_user_language", "es");
+                                                        webix.i18n.setLocale("es-ES");
                                                         break;
                                                 }
                                                 window.location = "./login.html";                                     

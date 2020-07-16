@@ -1,7 +1,8 @@
 export let optionElementTypeBratislava = [
 	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
 	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")},
-	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")}
+	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")},
+	{id:"ElementType:34", value: $.i18n("ElementType:34.alias")}
 ]
 
 export let columnsElementListBratislava = {
@@ -63,6 +64,18 @@ export let columnsElementListBratislava = {
 			"ElementTypeParam:25:1:1",
 			"ElementTypeParam:25:1:2",
 			"ElementTypeParam:25:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:34": { 
+		1:[
+			"alias",
+			"ElementTypeParam:34:1:1",
+			"ElementTypeParam:34:1:2",
+			"ElementTypeParam:34:1:3"
 		],
 		2:[
 			"alias",
@@ -380,6 +393,35 @@ export let columnsElementConfigBratislava = {
 			},
             "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"
 				"header": [ $.i18n("ElementTypeParam:25:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:34": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:25:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:34:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:25:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:34:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:25:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:34:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:34:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
             }
 		},
 		2:{

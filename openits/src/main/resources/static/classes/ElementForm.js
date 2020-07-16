@@ -48,11 +48,19 @@ export default class ElementForm {
 						}
 					}
 		      	}
-				elementValues{
-			        id
-			        value
-			        alerted
-				  }
+				elementValues {
+					id 
+					value 
+					alerted 
+					elementTypeParam {
+						id 
+						alias  
+						paramType 
+						pictograms {id alias description }
+						representation
+						graphics {id alias graphicType graphicValues {id value}}
+					}
+				}
 				alarms{
 					id
 					alarmConfig {id alias alarmLevel}
@@ -615,7 +623,8 @@ export default class ElementForm {
 				// ICON
 				let iconoSvg = "";
 				if (elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.DMS_ELEMENT_TYPE 
-					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
+					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE
+					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE_A) {
 					//"ElementType:10"){
 					iconoSvg = getElementSVG(data, 200, 40, ":Form");
 				} else {
@@ -772,7 +781,8 @@ export default class ElementForm {
 					}, -1);
 	
 					for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
-						if(data.elementType.commandElementTypes[index].id=="CommandElementType:2:26"){
+						if(data.elementType.commandElementTypes[index].id==elementTypeMap.COMMAND_TYPE_PANEL_MANAGER 
+							|| data.elementType.commandElementTypes[index].id==elementTypeMap.COMMAND_TYPE_PANEL_MANAGER_2){
 							$$(this.commands).addView({
 								view: "button", 
 								id: "command"+index+"_"+ this.id, 
@@ -781,7 +791,7 @@ export default class ElementForm {
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
 									}else{
-										let panelMan = new PanelManager(data.id, data.elementType.commandElementTypes[index]);
+										let panelMan = new PanelManager(data.id, data);//data.elementType.commandElementTypes[index]);
 										webix.ui({
 											id:"panelManager"+data.id,
 											view:"window",	
