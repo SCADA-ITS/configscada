@@ -68,8 +68,8 @@ var i18_en = {
     "ElementType:25.description": "ELECTRICAL CABINET",
     "ElementType:26.alias": "Panel",
     "ElementType:26.description": "Panel",
-    "ElementType:34.alias": "SCN",
-    "ElementType:34.description": "SCN",
+    "ElementType:34.alias": "SCN ELECTRICAL CABINET",
+    "ElementType:34.description": "SCN ELECTRICAL CABINET",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",

@@ -97,8 +97,8 @@ var i18_sk = {
     "ElementType:25.description": "Elektrick&#xE1; skrinka",
     "ElementType:26.alias": "Panel",
     "ElementType:26.description": "Panel",
-    "ElementType:34.alias": "SCN",
-    "ElementType:34.description": "SCN",
+    "ElementType:34.alias": "SCN Elektrick&#xE1; skrinka",
+    "ElementType:34.description": "SCN Elektrick&#xE1; skrinka",
     
     "ElementTypeParam:1:1:1.alias": "Zna&#269;ka",
     "ElementTypeParam:1:1:1.description": "Zna&#269;ka",

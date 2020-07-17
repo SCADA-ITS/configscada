@@ -384,16 +384,16 @@ export let columnsElementConfigBratislava = {
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:25:1:1": { //"PK"
+			"ElementTypeParam:34:1:1": { //"PK"
 				"header": [ $.i18n("ElementTypeParam:34:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:25:1:2": { //"SECCION"
+            "ElementTypeParam:34:1:2": { //"SECCION"
 				"header": [ $.i18n("ElementTypeParam:34:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:25:1:3": { //"CABINET_NAME"
+			"ElementTypeParam:34:1:3": { //"CABINET_NAME"
 				"header": [ $.i18n("ElementTypeParam:34:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"
+            "ElementTypeParam:34:1:1003": { //"MANGO SESSION_UID"
 				"header": [ $.i18n("ElementTypeParam:34:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
             }
 		},
