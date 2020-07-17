@@ -36,6 +36,10 @@ if (project) {
 } else { 
   columnsElementFormList = columnsElementFormListAusol;
 }
+
+// Size of a row in the layers dropdown
+const DROPDOWN_ROW_SIZE = 43;
+
 export default class Synoptic {
   constructor(data, metadata, synopticDiv) {
     this.elements = [];
@@ -346,6 +350,42 @@ export default class Synoptic {
         subtree: true,
       });
     });
+  }
+
+  generateLayerTree(layersList, depth=0) {
+
+    let self = this;
+
+    Object.keys(layersList).map((n) => {
+      let linkToAdd = document.createElement("a");
+      
+      linkToAdd.onclick = function () {
+        self.handleLayers(n);
+      };
+
+      if(this.synopticConf["Layers"][n]["translation_key"] != "") {
+        linkToAdd.innerHTML = $.i18n(this.synopticConf["Layers"][n]["translation_key"]);
+      } else {
+        linkToAdd.innerHTML = n;
+      }
+
+      linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
+
+      linkToAdd.id = "dropDown" + n;
+      document
+        .getElementById(this.synopticDiv + "dropdownDivContent")
+        .appendChild(linkToAdd);
+
+
+      self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+      self.handleLayers(n, true);
+
+      // check recursively
+      if(Object.keys(layersList[n]).length > 0) {
+        self.generateLayerTree(layersList[n], depth + 1);
+      }
+    });
+
   }
 
   loadData() {
@@ -1183,43 +1223,37 @@ export default class Synoptic {
           .getElementById(this.synopticDiv + "dropdownDiv")
           .appendChild(divToAdd);
 
-        /*
-        this.elementsTypes.map((n) => {
-          let linkToAdd = document.createElement("a");
-          let linkText = document.createTextNode(elementTypeMap.getElementTypeName(n));
-          linkToAdd.onclick = function () {
-            self.handleLayers(n);
-          };
-          //linkToAdd.appendChild(linkText);
-          linkToAdd.innerHTML = elementTypeMap.getElementTypeName(n);
-          document
-            .getElementById(this.synopticDiv + "dropdownDivContent")
-            .appendChild(linkToAdd);
-        });
-        */
-        
-        Object.keys(this.synopticConf["Layers"]).map((n) => {
-          let linkToAdd = document.createElement("a");
-          
-          linkToAdd.onclick = function () {
-            self.handleLayers(n);
-          };
-          
-          //linkToAdd.innerHTML = elementTypeMap.getElementTypeName(n);
-          //linkToAdd.innerHTML = n;
-          if(this.synopticConf["Layers"][n]["translation_key"] != "") {
-            linkToAdd.innerHTML = $.i18n(this.synopticConf["Layers"][n]["translation_key"]);
-          } else {
-            linkToAdd.innerHTML = n;
-          }
-          linkToAdd.id = "dropDown" + n;
-          document
-            .getElementById(this.synopticDiv + "dropdownDivContent")
-            .appendChild(linkToAdd);
+        let layersList = {};
+        let alreadyAddedLayersList = [];
 
-          self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
-          self.handleLayers(n, true);
-        });
+        // Generate the layer tree
+        for(let l in Object.keys(this.synopticConf["Layers"])) {
+          let layerName = Object.keys(this.synopticConf["Layers"])[l];
+          if(!alreadyAddedLayersList.includes(layerName)) {
+            layersList[layerName] = {};
+            alreadyAddedLayersList.push(layerName);
+
+            for(let item in this.synopticConf["Layers"][layerName]["items"]) {
+              let itemName = this.synopticConf["Layers"][layerName]["items"][item];
+              if(Object.keys(this.synopticConf["Layers"]).includes(itemName)) {
+                delete layersList[itemName];
+                layersList[layerName][itemName] = {};
+                alreadyAddedLayersList.push(itemName);
+              }
+            }
+          }
+
+        }
+
+        // Generate the tree
+        this.generateLayerTree(layersList);
+
+        // update the dropdown size
+        // if the dropdown is taller than the screen size minus 70px, then adjust it and activates overflow
+        if((parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) < (alreadyAddedLayersList.length * DROPDOWN_ROW_SIZE)) {
+          document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px";
+        }
+
 
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer
@@ -1429,6 +1463,10 @@ export default class Synoptic {
       // update the base size
       self.baseWidth = self.baseWidth * ratioWidth;
       self.baseHeight = self.baseHeight * ratioHeight;
+
+      // update the dropdown size
+      document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px"
+      
     }
   }
 
