@@ -59,6 +59,17 @@ export let columnsElementFormListBratislava = {
 			"streamFullViewWidth": 600
 		}
 	},
+	"ElementType:24": {
+		"rows":[
+			"ElementTypeParam:24:1:1",
+			"ElementTypeParam:24:1:2",
+			"ElementTypeParam:24:1:3"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
 	"ElementType:25": {
 		"rows":[
 			"ElementTypeParam:25:1:1",
@@ -70,7 +81,7 @@ export let columnsElementFormListBratislava = {
 		"width": 550,
 		"options": {}
 	},
-	"ElementType:34": {
+	"ElementType:24": {
 		"rows":[
 			"ElementTypeParam:34:1:2",
 			"ElementTypeParam:34:1:3",
@@ -96,6 +107,17 @@ export let columnsElementFormListBratislava = {
 			"ElementTypeParam:28:1:1",
 			"ElementTypeParam:28:1:2",
 			"ElementTypeParam:28:1:3"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:34": {
+		"rows":[
+			"ElementTypeParam:34:1:2",
+			"ElementTypeParam:34:1:3",
+			"ElementTypeParam:34:1:1"
 		],
 		"rowCounts": 3,
 		"scroll": false, 

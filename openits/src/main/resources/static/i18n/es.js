@@ -770,4 +770,12 @@ var i18_es = {
     "AlarmConfig:19": "ALARMA OPAC SIN CONEXI&Oacute;N",
     "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
     "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N" */
+
+    "pictograms.type.1": "Advertencia de peligro",
+    "pictograms.type.2": "Prioridad",
+    "pictograms.type.3": "Prohibición o restricción",
+    "pictograms.type.4": "Fin Prohibición o restricción",
+    "pictograms.type.5": "Especiales",
+    "pictograms.type.6": "Otras"
+
 };

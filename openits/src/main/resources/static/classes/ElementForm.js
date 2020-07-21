@@ -56,7 +56,9 @@ export default class ElementForm {
 						id 
 						alias  
 						paramType 
+						pictograms {id alias description }
 						representation
+						graphics {id alias graphicType graphicValues {id value}}
 					}
 				}
 				alarms{
