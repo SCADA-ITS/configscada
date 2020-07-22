@@ -1,4 +1,5 @@
 import Alarms from "../classes/Alarms.js";
+import ElementForm from "../classes/ElementForm.js";
 
 var graphAlarm = webix.proxy(
 	"GraphQL", `
@@ -12,8 +13,8 @@ var graphAlarm = webix.proxy(
 	  deactivation
 	  deactivationComments
       alarmConfig {id alias alarmLevel}
-      sourceElement{alias}
-      targetElement{alias} 
+      sourceElement{id alias}
+      targetElement{id alias} 
   }
 }`);
 
@@ -40,19 +41,26 @@ let genericTablei18n = {
 		"columns": [
 			{ "id": "id", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
-			{ "id": "activation", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj) { return getDate(obj.activation) }, width: 200 },
-			{ "id": "recognized", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 200 },
-			{ "id": "deactivation", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 200 },
+			{ "id": "activation", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj) { return getDate(obj.activation) }, width: 180 },
+			{ "id": "recognized", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 180 },
+			{ "id": "deactivation", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 180 },
 			{ "id": "alarmConfig", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
 			{ "id": "alarmLevel", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
-			{ "id": "sourceElement", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
-			{ "id": "targetElement", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
+			{ "id": "sourceElementId", "template": function (obj) { return obj.sourceElement.id; }, hidden:true },
+			{ "id": "sourceElementAlias", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
+			{ "id": "sourceElement", "header":"", "template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50} , 
+			{ "id": "targetElementId", "template": function (obj) { return obj.targetElement.id; }, hidden:true },
+			{ "id": "targetElementAlias", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
+			{ "id": "targetElement", "header":"","template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50},
 			/*{ "id": "recognize", "header": "", "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>" //+ 
 			"<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button>" + 
 			"<button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>"
 			, width: 120 }*/
 		],
 		onClick: {
+			open_elementForm:function (ev, id, html) {
+				openElementForm(this.getItem(id)[id.column].id)
+			},
 			action_recognize: function (ev, id, html) {
 				var data = $$("alarmsTable").serialize();
 				var alarmId = id.row;
@@ -622,6 +630,35 @@ let genericTablei18n_recon = {
 		}]
 	}]
 };
+
+function openElementForm(id){
+	try {
+		if ($$("win" + id) != null) {
+			$$("win" + id).destructor();
+		}
+		let elementForm = new ElementForm(id);
+		webix.ui({
+			id: "win" + id,
+			view: "window",
+			move: true,
+			close: true,
+			position: "right",
+			body: elementForm.getComponent(),
+			on: {
+			onDestruct: function(obj){
+				//elementForm.disconnect();
+			},
+			onHide: function(obj){
+				elementForm.disconnect();
+				$$("win" + id).destructor();
+			}
+			}
+		})
+		.show();
+	  } catch (e) {
+		// TODO: handle exception
+	  }
+}
 
 let table = new Alarms(graphAlarm, null);
 
