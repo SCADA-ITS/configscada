@@ -437,11 +437,18 @@ let genericTablei18n_recon = {
 			{ "id": "deactivation_recon", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj_recon) { return getDate(obj_recon.deactivation) }, width: 200 },
 			{ "id": "alarmConfig_recon", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
 			{ "id": "alarmLevel_recon", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
-			{ "id": "sourceElement_recon", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj_recon) { return obj_recon.sourceElement.alias; }, width: 100 },
-			{ "id": "targetElement_recon", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj_recon) { return obj_recon.targetElement.alias; }, width: 100 },
+			{ "id": "sourceElementId", "template": function (obj) { return obj_recon.sourceElement.id; }, hidden:true },
+			{ "id": "sourceElementAlias", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
+			{ "id": "sourceElement", "header":"", "template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50} , 
+			{ "id": "targetElementId", "template": function (obj) { return obj.targetElement.id; }, hidden:true },
+			{ "id": "targetElementAlias", sort:"text", "header": $.i18n("alarms.d.target"), "template": function (obj) { return obj.targetElement.alias; }, width: 100 },
+			{ "id": "targetElement", "header":"","template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50}
 			//{ "id": "recognize_recon", "header": "", "template": "<button class='action_deactivate' ><span class='mdi mdi-delete-outline'></span></button> <button class='action_activate' ><span class='mdi mdi-bell-plus-outline'></span></button>", width: 120 }
 		],
 		onClick: {
+			open_elementForm:function (ev, id, html) {
+				openElementForm(this.getItem(id)[id.column].id)
+			},
 			action_deactivate: function (ev, id, html) {
 				var data = $$("alarmsTable_recon").serialize();
 				var alarmId = id.row;

@@ -5,9 +5,13 @@
 
 
 var project = 0;
-//webix.proxy.GraphQL.url = "http://localhost:8082/graphql";
-//webix.storage.session.put("url.ws.stomp", "ws://localhost:61614");
-//webix.storage.session.put("url.auth.login", "http://localhost:8190/api/v1/login");
+try {
+    if(!j_language){
+        j_language="es_ES";
+    }    
+} catch (error) {
+    j_language="es_ES";
+}
 
 webix.proxy.GraphQL.url = "http://192.168.88.231:8082/graphql";
 webix.storage.session.put("url.ws.stomp", "ws://192.168.88.231:61614");

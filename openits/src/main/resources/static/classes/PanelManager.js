@@ -1,8 +1,8 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {availablePictos} from "../data/graphics.js";
 
-const SCALE_ZONE = 3; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
-const TOP_INIT = 50;
+const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
+const TOP_INIT = 5;
 
 function configData (data) {
 	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG )[0].value;
@@ -109,7 +109,7 @@ function configData (data) {
 	});
 	let cells_s = [];
 	let numElement = 0;
-	let v_left = 0;
+	let v_left = 2; //padding inicial 
 	let v_top = TOP_INIT;
 
 	cfgJson.Subpaneles.forEach(element => {
@@ -121,19 +121,34 @@ function configData (data) {
 			let tamLineas = parseInt(item.TamLineas);
 			let posx = parseInt(cellList[numElement].split("_")[8]) - 1;
 			let posy = parseInt(cellList[numElement].split("_")[9]) - 1;
-			
+			let v_border = 2; //Borde negro del icono
+			let v_padding = 4; // padding entre el icono y el borde negro
+			let v_template = 8; //padding del template se come 2px por cada lado
 			//Aqui dependiendo si es picto o texto lo modificaremos. 
+			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] : null;
+			let v_file = null;
+			try {
+				v_file = availablePictos[v_src].file_type;
+			} catch {}
 			let v_body = null;
 			if (panel_type === "Grafico") {
 				v_body = { 
 					view:"template", 
 					id: "panel_" + cellList[numElement].split("_")[1] + "_T", 
 					data:{
-						src:pictos_activos[cellList[numElement].split("_")[1] + "_T"], 
+						src: v_src,
+						file_type: v_file
 					},
 					template:function(obj){
+						let v_css = "";
+						if(tamZoneX === tamZoneY){
+							v_css = "width: -moz-available;";
+						} else {
+							if (tamZoneX > tamZoneY)
+								v_css = "width: " + ((tamZoneY * SCALE_ZONE) - v_border - v_padding - v_template ).toString() + "px;";
+						}
 						if (obj.src !== undefined && obj.src !== null)
-							return '<img src="./img/pictograms/'+obj.src+'.'+ obj.file_type +'" style="width: 70%; max-width:100%;border: 3px solid black;padding: 1px;"/>';
+							return '<img src="./img/pictograms/'+obj.src+'.'+ obj.file_type +'" style="' + v_css + ' max-width:100%;border: '+ v_border +'px solid black;padding: ' + v_border + 'px;"/>';
 						else
 							return tamZoneX.toString() + "x" + tamZoneY.toString();
 					} 
@@ -276,7 +291,9 @@ export default class PanelManager {
 
 	doActions() {
 		var datos = this.config;
+
 		$$("tree_zone_panelManager").addView({
+			id: "tree_zone_panelManager_button",
 			view:"button", value:"Señalizar", click:function(){
 				let v_commands_values = [];
 				let control = true;
@@ -308,7 +325,7 @@ export default class PanelManager {
 					]
 					}).then(() => {
 						webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-						$$("panelManager" + datos.elementId).hide();
+						$$("panelManager" + datos.elementId).destructor();
 					});
 				}else{
 					webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
@@ -323,7 +340,6 @@ export default class PanelManager {
 						var id = target.getAttribute("view_id");
 						var dnd = webix.DragControl.getContext();
 						var value = dnd.from.getItem(dnd.source[0]);
-						console.log(value);
 						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].includes(value.image))
 						{
 							$$(id).setValues({src:null});

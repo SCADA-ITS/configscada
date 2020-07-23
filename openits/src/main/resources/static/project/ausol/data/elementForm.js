@@ -311,8 +311,8 @@ export let columnsElementFormListAusol = {
 	},	
 	"ElementType:26": {
 		"rows":[ 
-			"ElementTypeParam:26:1:5",
-			"ElementTypeParam:26:1:10"
+			"ElementTypeParam:26:1:1",
+			"ElementTypeParam:26:1:2"
 		],
 		"rowCounts": 2,
 		"scroll": "y", 

@@ -804,6 +804,9 @@ export default class ElementForm {
 											on: {
 												onShow: function(obj){
 													panelMan.doActions();
+												},
+												onHide: function(obj){
+													$$("panelManager" + data.id).destructor();
 												}
 											  }
 										  }).show();
