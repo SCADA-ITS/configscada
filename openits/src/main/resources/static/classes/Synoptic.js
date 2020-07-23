@@ -329,7 +329,7 @@ export default class Synoptic {
       document.getElementById("dropDown" + e).innerHTML = newLabel;
     }
 
-  }
+  }  // Layer groups
 
   // got from Github
   elementReady(selector) {
@@ -352,13 +352,21 @@ export default class Synoptic {
     });
   }
 
-  generateLayerTree(layersList, depth=0) {
+  generateLayerTree(layersList, depth=0, father) {
 
     let self = this;
 
-    Object.keys(layersList).map((n) => {
-      let linkToAdd = document.createElement("a");
-      
+	 Object.keys(layersList).map((n) => {
+	
+	  let linkToAdd	= 0;
+
+	  if(Object.keys(layersList[n]).length > 0) {
+		 linkToAdd = document.createElement("span");
+	     linkToAdd.setAttribute("class", "caret");
+	  }else{ 
+		 linkToAdd = document.createElement("a");
+	  }	
+
       linkToAdd.onclick = function () {
         self.handleLayers(n);
       };
@@ -372,18 +380,27 @@ export default class Synoptic {
       linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
 
       linkToAdd.id = "dropDown" + n;
-      document
-        .getElementById(this.synopticDiv + "dropdownDivContent")
-        .appendChild(linkToAdd);
 
+	  if(Object.keys(layersList[n]).length > 0) {
+		let div = document.createElement("div"); 
+		
+		father.appendChild(div);
+		div.appendChild(linkToAdd);
+		
+	    self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+        self.handleLayers(n, true);
 
-      self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
-      self.handleLayers(n, true);
+		let nested = document.createElement("ul");
+		nested.setAttribute("class", "nested");
+        div.appendChild(nested);
 
-      // check recursively
-      if(Object.keys(layersList[n]).length > 0) {
-        self.generateLayerTree(layersList[n], depth + 1);
-      }
+        self.generateLayerTree(layersList[n], depth + 1, nested);
+	  }else{ 
+		 father.appendChild(linkToAdd);
+	
+	     self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+         self.handleLayers(n, true);
+	  }		
     });
 
   }
@@ -1246,7 +1263,16 @@ export default class Synoptic {
         }
 
         // Generate the tree
-        this.generateLayerTree(layersList);
+        this.generateLayerTree(layersList, 0, divToAdd);
+		var toggler = document.getElementsByClassName("caret");
+		var i;
+		
+		for (i = 0; i < toggler.length; i++) {
+		  toggler[i].addEventListener("click", function() {
+		    this.parentElement.querySelector(".nested").classList.toggle("active");
+		    this.classList.toggle("caret-down");
+		  });
+		}
 
         // update the dropdown size
         // if the dropdown is taller than the screen size minus 70px, then adjust it and activates overflow
@@ -1468,7 +1494,7 @@ export default class Synoptic {
       document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px"
       
     }
-  }
+  } //loadData
 
   /*
    * Initializes the responsiveness
@@ -1559,5 +1585,7 @@ export default class Synoptic {
 
     // Attaching the event listener function to window's resize event
     window.addEventListener("resize", function() { self.doResponsive(self) });
+
   }
+	
 }

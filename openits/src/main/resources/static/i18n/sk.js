@@ -729,5 +729,4 @@ var i18_sk = {
     "AlarmConfig:57": "UPOZORNEIE PLC_CABINET ŽIADNE SPOJENIE",
     "Alarm_recon": "Alarm u&#382; bol rozpoznan&#253;",
     "Alarm_deactivated": "Already deactivated alarm",
-
 };

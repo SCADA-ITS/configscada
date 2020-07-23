@@ -681,7 +681,7 @@ var i18_en = {
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
     "lbl_panel_signaling_error": "Select a pictogram please",
 
-    /* BRATISLAVA */
+    /* BRATISLAVA 
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
     "AlarmConfig:3": "ALARM WS AIR PRESSURE GREATER THAN 65534",
     "AlarmConfig:4": "ALARM WS AIR TEMPERATURE NOT BETWEEN -1000 AND 1000",
@@ -730,10 +730,10 @@ var i18_en = {
     "AlarmConfig:55": "ALARM PLC_CABINET AIRCONDITIONING ON",
     "AlarmConfig:56": "ALARM PLC_CABINET AIRCONDITIONING ALARM",
     "AlarmConfig:57": "ALARM PLC_CABINET NO CONNECTION",
-    "Alarm_recon": "Already recognized alarm",
+    "Alarm_recon": "Already recognized alarm",*/
     "Alarm_deactivated": "Already deactivated alarm",
 
-/* AUSOL 
+/* AUSOL */
     "AlarmConfig:3": "ALARM DISCONNECTED",
     "AlarmConfig:4": "ALARM DISCONNECTED",
     "AlarmConfig:5":"ALARM DISCONNECTED",
@@ -751,5 +751,5 @@ var i18_en = {
     "AlarmConfig:18": "ALARM NO NO CONNECTION",
     "AlarmConfig:19": "ALARM OPAC NO CONNECTION",
     "AlarmConfig:20": "ALARM ETD_modbus NO CONNECTION",
-    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",*/
+    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION",
 };
