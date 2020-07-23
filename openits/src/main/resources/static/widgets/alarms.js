@@ -639,34 +639,37 @@ let genericTablei18n_recon = {
 };
 
 function openElementForm(id){
-	$$("$sidebar1").unselectAll();
-	$$("synoptic1").show();
-	// try {
-	// 	if ($$("win" + id) != null) {
-	// 		$$("win" + id).destructor();
-	// 	}
-	// 	let elementForm = new ElementForm(id);
-	// 	webix.ui({
-	// 		id: "win" + id,
-	// 		view: "window",
-	// 		move: true,
-	// 		close: true,
-	// 		position: "right",
-	// 		body: elementForm.getComponent(),
-	// 		on: {
-	// 		onDestruct: function(obj){
-	// 			//elementForm.disconnect();
-	// 		},
-	// 		onHide: function(obj){
-	// 			elementForm.disconnect();
-	// 			$$("win" + id).destructor();
-	// 		}
-	// 		}
-	// 	})
-	// 	.show();
-	//   } catch (e) {
-	// 	// TODO: handle exception
-	//   }
+	try {
+		if(project==0){
+			$$("$sidebar1").unselectAll();
+			$$("synoptic1").show();
+		}else{
+			if ($$("win" + id) != null) {
+				$$("win" + id).destructor();
+			}
+			let elementForm = new ElementForm(id);
+			webix.ui({
+				id: "win" + id,
+				view: "window",
+				move: true,
+				close: true,
+				position: "right",
+				body: elementForm.getComponent(),
+				on: {
+				onDestruct: function(obj){
+					//elementForm.disconnect();
+				},
+				onHide: function(obj){
+					elementForm.disconnect();
+					$$("win" + id).destructor();
+				}
+				}
+			})
+			.show();
+		}
+	  } catch (e) {
+		console.log(e);
+	  }
 }
 
 let table = new Alarms(graphAlarm, null);
