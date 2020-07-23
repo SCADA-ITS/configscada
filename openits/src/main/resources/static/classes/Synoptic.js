@@ -358,14 +358,19 @@ export default class Synoptic {
 
 	 Object.keys(layersList).map((n) => {
 	
-	  let linkToAdd	= 0;
+	  var caret = 0;
+	  var linkToAdd = document.createElement("a");
+ 	  linkToAdd.id = "dropDown" + n;
+ 
 
 	  if(Object.keys(layersList[n]).length > 0) {
-		 linkToAdd = document.createElement("span");
-	     linkToAdd.setAttribute("class", "caret");
-	  }else{ 
-		 linkToAdd = document.createElement("a");
-	  }	
+		 caret = document.createElement("span");
+	     caret.setAttribute("class", "caret");
+		 caret.style["padding-left"] = (10 + 30 * depth) + "px";
+	  }
+      else{
+		  linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
+	  }		
 
       linkToAdd.onclick = function () {
         self.handleLayers(n);
@@ -377,16 +382,13 @@ export default class Synoptic {
         linkToAdd.innerHTML = n;
       }
 
-      linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
-
-      linkToAdd.id = "dropDown" + n;
-
 	  if(Object.keys(layersList[n]).length > 0) {
-		let div = document.createElement("div"); 
+		let div = document.createElement("li"); 
 		
 		father.appendChild(div);
-		div.appendChild(linkToAdd);
-		
+	    div.appendChild(linkToAdd);
+		div.appendChild(caret);
+	
 	    self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
         self.handleLayers(n, true);
 

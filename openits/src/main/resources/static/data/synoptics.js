@@ -4,23 +4,28 @@ export let synopticTunnel = {
 		"BASE_LAYER": "tunel.svg"
 	},
 	"Layers": {
-		"BASE_LAYER": {
-			"items": [],
-			"translation_key": "",
-			"visibility": "visible"
-		},
 		"DMS": {
 			"items": ["Element:10:1", "Element:10:2"],
 			"translation_key": "",
 			"visibility": "visible"
 		},
-		"CAMS AND DMS (TEST)": {
-			"items": ["DMS", "CAM"],
+		"VENTILACION": {
+			"items": ["FAN", "CO", "NO", "OPAC", "ANEM_EXT", "ANEM_INT"],
 			"translation_key": "",
 			"visibility": "visible"
 		},
-		"CAMS AND DMS (TEST 2)": {
-			"items": ["FAN", "BAR"],
+		"ILUMINACION": {
+			"items": ["LUX", "LUM"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"CONTROL ACCESOS": {
+			"items": ["DMS", "MATRIXPANEL", "BAR", "SEM"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"BASE_LAYER": {
+			"items": [],
 			"translation_key": "",
 			"visibility": "visible"
 		},
