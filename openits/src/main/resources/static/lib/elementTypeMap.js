@@ -20,9 +20,15 @@ export const NO_ELEMENT_TYPE = "20";
 export const OPAC_ELEMENT_TYPE = "21";
 export const ETD_MODBUS_ELEMENT_TYPE = "22";
 export const ETD_DETECTOR_ELEMENT_TYPE = "23";
+export const PMV_A_C = "24";
 export const ELECTRICAL_CABINET_ELEMENT_TYPE = "25";
-export const MATRIX_PANEL_ELEMENT_TYPE = "26";
-export const MATRIX_PANEL_ELEMENT_TYPE_A = "24";
+export const MATRIX_PANEL_64X64 = "26";
+export const PMV_A_B = "27";
+export const MATRIX_PANEL_192X64 = "28";
+export const PMV_B_D = "29";
+export const MATRIX_PANEL_128X64 = "30";
+export const MATRIX_PANEL_TEMP = "31";
+export const MATRIX_PANEL_TEMP_A = "32";
 export const ETD_ELEMENT_TYPE = "33";
 export const ELECTRICAL_CABINET_SCN_ELEMENT_TYPE = "34";
 
@@ -99,8 +105,15 @@ export const MATRIX_PANEL_PICTOGRAM = "4:2";
 
 export const CAM_STREAM_MJPEG = "2:1:3";
 
-export const COMMAND_TYPE_PANEL_MANAGER = "CommandElementType:2:26";
-export const COMMAND_TYPE_PANEL_MANAGER_2 = "CommandElementType:2:24";
+
+export const COMMAND_TYPE_PMV_A_C = "2:24";
+export const COMMAND_TYPE_MATRIX_PANEL_64X64 = "2:26";
+export const COMMAND_TYPE_PMV_A_B = "2:27";
+export const COMMAND_TYPE_MATRIX_PANEL_192X64 = "2:28";
+export const COMMAND_TYPE_PMV_B_D = "2:29";
+export const COMMAND_TYPE_MATRIX_PANEL_128X64 = "2:30";
+export const COMMAND_TYPE_MATRIX_PANEL_TEMP = "2:31";
+export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
 export const PANEL_MANAGER_CONFIG = "5:1";
 
 

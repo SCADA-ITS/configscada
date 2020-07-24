@@ -55,7 +55,7 @@ export default class Map {
       obj.basicElementsVO.forEach((element) => {
         // if it's a DMS, ask for the full data
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE ||
-          elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE ||
+          elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_64X64 ||
           elementTypeMap.getElementType(element.id) == elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE) {
           throw "DMSETDException";
         }

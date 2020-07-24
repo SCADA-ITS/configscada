@@ -395,8 +395,16 @@ export default class ElementForm {
 							if (evalues === null)
 								element["elementValues"] = [];
 
-							if (elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
+							if (
+							elementTypeMap.getElementType(element.id) === elementTypeMap.DMS_ELEMENT_TYPE
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_C
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_64X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_192X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_B_D
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
+							) {
 								let elementQuery = webix.proxy(
 									"GraphQL",`
 									query ($elem: String!) {
@@ -622,9 +630,16 @@ export default class ElementForm {
 			try {
 				// ICON
 				let iconoSvg = "";
-				if (elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.DMS_ELEMENT_TYPE 
-					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE
-					|| elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE_A) {
+				if (
+					elementTypeMap.getElementType(element.id) === elementTypeMap.DMS_ELEMENT_TYPE
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_C
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_64X64
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_192X64
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_B_D
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
+				) {
 					//"ElementType:10"){
 					iconoSvg = getElementSVG(data, 200, 40, ":Form");
 				} else {
@@ -781,8 +796,18 @@ export default class ElementForm {
 					}, -1);
 	
 					for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
-						if(data.elementType.commandElementTypes[index].id==elementTypeMap.COMMAND_TYPE_PANEL_MANAGER 
-							|| data.elementType.commandElementTypes[index].id==elementTypeMap.COMMAND_TYPE_PANEL_MANAGER_2){
+
+						if(
+							data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_C
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_64X64
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_B
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_192X64
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
+						){
+
 							$$(this.commands).addView({
 								view: "button", 
 								id: "command"+index+"_"+ this.id, 
@@ -791,6 +816,7 @@ export default class ElementForm {
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
 									}else{
+
 										let panelMan = new PanelManager(data.id, data);//data.elementType.commandElementTypes[index]);
 										webix.ui({
 											id:"panelManager"+data.id,
@@ -814,6 +840,7 @@ export default class ElementForm {
 								}								
 							}, -1);
 						}else{
+
 							$$(this.commands).addView({
 								view: "button", 
 								id: "command"+index+"_"+ this.id, 

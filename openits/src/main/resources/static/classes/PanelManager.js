@@ -5,7 +5,7 @@ const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas 
 const TOP_INIT = 5;
 
 function configData (data) {
-	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG )[0].value;
+	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG)[0].value;
 	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
 	
 	let maxRow = 0;
@@ -67,11 +67,11 @@ function configData (data) {
 		});
 		cellList = [...cellList, ...cellListSubpanel];
 	});
-
+	console.log(cellList);
 	let pictos_activos = {};
 	data.elementValues.forEach(element => {
 		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType ===2) {  //ese numero 3 será una constante
-			pictos_activos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_T"] = element.value;
+			pictos_activos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = element.value;
 		}
 	});
 
@@ -82,15 +82,21 @@ function configData (data) {
 		let v_graphs = [];
 		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType === 2) { 
 			element.elementTypeParam.graphics.forEach(item => {
-				if (item.id.split(":")[1] === "1") {//Tipo picto 
+				if (cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
 					v_graphs.push(item.id.split(":")[2]);
 					v_pictos_total.push(item.id.split(":")[2]);
-				}					
+				} else {
+					let temporal = {};
+					item.graphicValues.forEach(item3 => {
+						temporal[item3.id.split(":")[3]] = item3.value;
+					});
+					v_graphs.push(temporal);
+				}				
 			});
-			pictos_permitidos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_T"] = v_graphs;
+			pictos_permitidos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
 		}
 	});
-	
+	console.log(pictos_permitidos);
 	let unique_pictos = [...new Set(v_pictos_total)];
 	let pictos_types = [];
 	unique_pictos.forEach(element => {
@@ -125,7 +131,7 @@ function configData (data) {
 			let v_padding = 4; // padding entre el icono y el borde negro
 			let v_template = 8; //padding del template se come 2px por cada lado
 			//Aqui dependiendo si es picto o texto lo modificaremos. 
-			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_T"] : null;
+			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] : null;
 			let v_file = null;
 			try {
 				v_file = availablePictos[v_src].file_type;
@@ -134,7 +140,7 @@ function configData (data) {
 			if (panel_type === "Grafico") {
 				v_body = { 
 					view:"template", 
-					id: "panel_" + cellList[numElement].split("_")[1] + "_T", 
+					id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10], 
 					data:{
 						src: v_src,
 						file_type: v_file
@@ -153,25 +159,37 @@ function configData (data) {
 							return tamZoneX.toString() + "x" + tamZoneY.toString();
 					} 
 				}
-				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_T");
+				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]);
 			} else {
 				let v_lineas = [];
+				let v_form = null;
 				for (let i=0; i<numLineas; i++) {
 					v_lineas.push(
 						{
 							view: "text", 
-							id: "panel_" + cellList[numElement].split("_")[1] + "_L_" + i ,
-							on: { "onBlur": function() { 
+							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
+							on: { onBlur: function(obj) {
+								console.log(obj); 
+								},
+								onKeyPress: function(code, e) {
+									console.log(pictos_permitidos);
+									console.log(code);
+									console.log(e);
 								}
 							}
 						}
 					);
+					v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i);
 				}
-				v_body = v_lineas;
-				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_L_" + i);
+				v_form = v_lineas;
+				v_body = {					
+					view: "form",
+					id: "panel_" + cellList[numElement].split("_")[1] + "_FORM_",
+					elements:v_form
+				};
 			}
 
-			
+			//ZONAS
 			if (numElement !== 0) {
 				//si la zona es distinta aumentamos left)
 				//si la zona es la misma y la x es distinta aumentamos left
@@ -245,6 +263,7 @@ export default class PanelManager {
 		this.id = id;
 		this.commandElementType = commandElementType;
 		this.config = configData(this.commandElementType);
+		console.log(this.config);
 		this.values = this.config.pictos_activos;
 		this.widgets = {
 			id:"tree_zone_panelManager",
@@ -299,7 +318,7 @@ export default class PanelManager {
 				let control = true;
 				let v_values = [];
 				datos.v_id_list.forEach(element =>{
-					if (element.split("_")[2] === "T") {//Pictogramas
+					if (element.split("_")[2] === "G") {//Pictogramas
 						let valor = $$(element).data.src;
 						(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 					}
@@ -332,15 +351,15 @@ export default class PanelManager {
 				}
 			}
 		}, 2);
-
+		console.log(this.config.cod_listaCells);
 		this.config.cod_listaCells.forEach(element => {
 			if (element.split("_")[10] === "G") { 
-				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_T").$view, {
+				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10]).$view, {
 					$drop:function(source, target, event){
 						var id = target.getAttribute("view_id");
 						var dnd = webix.DragControl.getContext();
 						var value = dnd.from.getItem(dnd.source[0]);
-						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].includes(value.image))
+						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10]].includes(value.image))
 						{
 							$$(id).setValues({src:null});
 							webix.message({
@@ -353,11 +372,20 @@ export default class PanelManager {
 						}
 					}
 				});
+			} 
+		});
+		this.config.v_id_list.forEach(element => {
+			if (element.split("_")[2] === "T") { 
+				$$(element).attachEvent("onTimedKeyPress",function(obj){
+					console.log(obj);
+				});
 			}
 		});
-
 		$$("filterWid_panelManager").attachEvent("onTimedKeyPress",function(){
 			$$("list_panelManager").filter("#value#",this.getValue());
 		});
+
+
+
 	}
 }

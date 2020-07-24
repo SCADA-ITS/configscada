@@ -179,7 +179,7 @@ export function getElementIcon(element, suffix="") {
     plc.updatePlcIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_SCN_ELEMENT_TYPE) {
     scn.updateScnIcon(element, suffix);
-  } else if (elementType === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {
     matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL

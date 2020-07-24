@@ -924,7 +924,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.MATRIX_PANEL_ELEMENT_TYPE) {  // MATRIX PANEL
+            } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {  // MATRIX PANEL
 
               // generate the base icon
               let matrix_panel_str = generateMatrixPanelIcon(element);
