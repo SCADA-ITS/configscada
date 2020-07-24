@@ -33,6 +33,7 @@ export const ETD_ELEMENT_TYPE = "33";
 export const ELECTRICAL_CABINET_SCN_ELEMENT_TYPE = "34";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
+export const POSITION_OF_ELEMENT_ID = 2;
 export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;
 export const POSITION_OF_PARAM_TYPE_ID = 4;
 
@@ -122,6 +123,11 @@ export function getElementType(elementIdString) {
   return ret;
 }
 
+export function getElementId(elementIdString) {
+  let ret = elementIdString.split(":")[POSITION_OF_ELEMENT_TYPE_ID] + ":" + elementIdString.split(":")[POSITION_OF_ELEMENT_ID];
+  return ret;
+}
+
 export function getElementTypeParam(elementParamIdString) {
   let ret = elementParamIdString.split(":")[POSITION_OF_ELEMENT_TYPE_PARAM_ID] + ":" + elementParamIdString.split(":")[POSITION_OF_PARAM_TYPE_ID];
   return ret;
@@ -175,6 +181,8 @@ export function getElementTypeName(elementTypeIdString) {
     case ETD_MODBUS_ELEMENT_TYPE:
     case ETD_DETECTOR_ELEMENT_TYPE:
     case ETD_ELEMENT_TYPE:
+    case MATRIX_ELEMENT_TYPE:
+    case FULL_MATRIX_ELEMENT_TYPE:
     case ELECTRICAL_CABINET_ELEMENT_TYPE:
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;

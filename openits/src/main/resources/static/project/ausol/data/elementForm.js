@@ -339,5 +339,15 @@ export let columnsElementFormListAusol = {
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
-		}
+		},
+	"ElementType:35": {
+		"rows":[ 
+			"ElementTypeParam:35:1:1",
+			"ElementTypeParam:35:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+		},
 }

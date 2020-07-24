@@ -247,7 +247,8 @@ export let synopticBratislava = {
     "BASE_LAYER": "mapa_base.png",
     "ROAD": "D4-R7_trazado.png",
 		"CAM": "20200506_CCTV_PK_f1.svg",
-		"METEO": "20200506_METEO_PK_f1.svg"
+		"METEO": "20200506_METEO_PK_f1.svg",
+		"PANELS": "PANELS-PK-S1-F1_21-07-20.svg"
 	},
 	"Layers": {
 		"BASE_LAYER": {
@@ -267,6 +268,11 @@ export let synopticBratislava = {
 		},
 		"CAM": {
 			"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8", "Element:2:9", "Element:2:10", "Element:2:11", "Element:2:12", "Element:2:13", "Element:2:14", "Element:2:15", "Element:2:16", "Element:2:17", "Element:2:18", "Element:2:19", "Element:2:20", "Element:2:21", "Element:2:22", "Element:2:23", "Element:2:24", "Element:2:25", "Element:2:26", "Element:2:27", "Element:2:28", "Element:2:29", "Element:2:30", "Element:2:31", "Element:2:32", "Element:2:33", "Element:2:34", "Element:2:35", "Element:2:36", "Element:2:37", "Element:2:38", "Element:2:39", "Element:2:40", "Element:2:41", "Element:2:42", "Element:2:43", "Element:2:44", "Element:2:45", "Element:2:46", "Element:2:47", "Element:2:48", "Element:2:49", "Element:2:50", "Element:2:51", "Element:2:52", "Element:2:53", "Element:2:54", "Element:2:55", "Element:2:56", "Element:2:57", "Element:2:58", "Element:2:59", "Element:2:60", "Element:2:61", "Element:2:62", "Element:2:63", "Element:2:64", "Element:2:65", "Element:2:66", "Element:2:67", "Element:2:68", "Element:2:69", "Element:2:70", "Element:2:71", "Element:2:72", "Element:2:73", "Element:2:74"],
+			"translation_key": "",
+			"visibility": "visible"
+		},
+		"PANELS": {
+			"items": ["Element:24:1", "Element:28:1"],
 			"translation_key": "",
 			"visibility": "visible"
 		},
@@ -352,7 +358,9 @@ export let synopticBratislava = {
   "Element:2:71": { "x": 1791, "y": 114,  "width": 40, "height": 40, "alias": "KDDH24L"  },
   "Element:2:72": { "x": 1791, "y": 65,   "width": 40, "height": 40, "alias": "KDDH25P"  },
   "Element:2:73": { "x": 1791, "y": 15,   "width": 40, "height": 40, "alias": "KDDH26L"  },
-  "Element:2:74": { "x": 1044, "y": 645,  "width": 40, "height": 40, "alias": "KDJS39L"  },
+	"Element:2:74": { "x": 1044, "y": 645,  "width": 40, "height": 40, "alias": "KDJS39L"  },
+	"Element:24:1": { "x": 1044, "y": 645,  "width": 77, "height": 105, "alias": ""  },
+	"Element:28:1": { "x": 1344, "y": 645,  "width": 291, "height": 96, "alias": ""  },
 }
 
 export let synopticCabinets = {

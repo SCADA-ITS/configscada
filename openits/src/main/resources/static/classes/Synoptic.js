@@ -23,6 +23,7 @@ import {
   generateSemIcon,
   generateZoneIcon,
   generateMatrixPanelIcon,
+  generateFullMatrixPanelIcon,
   updateElementIcon,
   updateElementState,
 } from "../lib/iconGenerator.js";
@@ -523,7 +524,7 @@ export default class Synoptic {
       .then((d) => {
         d.childs.forEach((element) => {
 
-          console.log(element);
+          //console.log(element);
 
           if (element.id in this.synopticConf) {
             let synopticElement = this.synopticConf[element.id];
@@ -540,6 +541,8 @@ export default class Synoptic {
 
             // initializes the svg icon
             let el = null;
+
+            console.log(element.id);
 
             // check for special icons: DMS and ETD
             if (elementType === elementTypeMap.DMS_ELEMENT_TYPE) {
@@ -924,25 +927,44 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {  // MATRIX PANEL
+            } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
+              elementType === elementTypeMap.PMV_A_C ||
+              elementType === elementTypeMap.MATRIX_PANEL_64X64) {  // MATRIX PANEL
 
-              // generate the base icon
-              let matrix_panel_str = generateMatrixPanelIcon(element);
+                
+                // generate the base icon
+                let matrix_panel_str = generateFullMatrixPanelIcon(element);
+                
+                let matrix_panel_icon = Snap.parse(matrix_panel_str);
+                el = this.s.group().append(matrix_panel_icon);
 
-              let matrix_panel_icon = Snap.parse(matrix_panel_str);
-              el = this.s.group().append(matrix_panel_icon);
+              // scales the texts inside the item
+              for(let j=0; j<el.children.length; j++) {
+                if(el.children[j].tagName == "text") {
+                  alert("TEXTO");
+                  let childItem = el.children[j];
+                  //childItem.style["font-size"] = (100 * ratioWidth).toString() + "px";
+                  let scale_x =
+                    100 * this.ratioWidth;
+                  let scale_y =
+                    100 * this.ratioHeight;
 
+                  //childItem.transform("scale(" + scale_x + "," + scale_y + ")");
+                  //childItem.style["font-size"] = (100 * ratioWidth).toString() + "px";
+                  childItem.style["font-size"] = (parseInt(childItem.style["font-size"]) * ratioWidth).toString() + "px";
+                }
+              }
+
+              
               let scale_x =
-                (this.synopticConf[element.id].width / 24) * this.ratioWidth;
+              (this.synopticConf[element.id].width / 1920) * this.ratioWidth;
               let scale_y =
-                (this.synopticConf[element.id].height / 24) * this.ratioHeight;
-
+              (this.synopticConf[element.id].height / 1080) * this.ratioHeight;
+              
               if (el != null) {
-
-                //el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+                
                 el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
-                //el.transform("translate(0,0)");
-
+                
                 el.attr({ id: element.id });
                 el.attr({ class: "svg_icon" });
                 el.attr({ name: element.id });
@@ -1486,6 +1508,17 @@ export default class Synoptic {
           item.transform.baseVal[0].matrix["d"] =
             item.transform.baseVal[0].matrix["d"] * ratioHeight;
         }
+
+        // scales the texts inside the item
+        for(let j=0; j<item.children.length; j++) {
+          if(item.children[j].tagName == "text") {
+            let childItem = item.children[j];
+            //childItem.style["font-size"] = (100 * ratioWidth).toString() + "px";
+            childItem.style["font-size"] = (parseInt(childItem.style["font-size"]) * ratioWidth).toString() + "px";
+            //alert((100 * ratioWidth).toString() + "px");
+          }
+        }
+
       }
 
       // update the base size

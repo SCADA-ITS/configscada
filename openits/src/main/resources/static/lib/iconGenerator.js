@@ -21,6 +21,7 @@ import * as cam from "./icons/cam.js";
 import * as plc from "./icons/plc.js";
 import * as scn from "./icons/scn.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
+import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
 import * as elementTypeMap from "./elementTypeMap.js";
 
@@ -32,6 +33,11 @@ export function generateDMSIcon(element, suffix="", state="") {
 export function generateMatrixPanelIcon(element, suffix="", state="") {
   let matrix_panel_str = matrix_panel.generateIcon(element, suffix, state);
   return matrix_panel_str;
+}
+
+export function generateFullMatrixPanelIcon(element, suffix="", state="") {
+  let full_matrix_panel_str = full_matrix_panel.generateIcon(element, suffix, state);
+  return full_matrix_panel_str;
 }
 
 export function generateETDIcon(element, values, suffix="", state="") {
@@ -180,7 +186,11 @@ export function getElementIcon(element, suffix="") {
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_SCN_ELEMENT_TYPE) {
     scn.updateScnIcon(element, suffix);
   } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {
-    matrix_panel.updateMatrixPanelIcon(element, suffix);
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.PMV_A_C) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status
@@ -302,8 +312,8 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
     case "24":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;      
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, values, suffix, state) + '</g>';
+      break;
     case "25":
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
