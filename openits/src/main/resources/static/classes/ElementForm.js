@@ -440,7 +440,7 @@ export default class ElementForm {
 										// process the received data
 										let element = data;
 
-										getElementIcon(element, ":Form");
+										getElementIcon(data, ":Form");
 									});
 							} else {
 								getElementIcon(element, ":Form");
@@ -632,15 +632,15 @@ export default class ElementForm {
 				// ICON
 				let iconoSvg = "";
 				if (
-					elementTypeMap.getElementType(element.id) === elementTypeMap.DMS_ELEMENT_TYPE
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_C
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_64X64
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_192X64
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_B_D
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
-					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_DGT
+					elementTypeMap.getElementType(data.id) === elementTypeMap.DMS_ELEMENT_TYPE
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_A_C
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_64X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_192X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_B_D
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_128X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_TEMP
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_DGT
 				) {
 					//"ElementType:10"){
 					iconoSvg = getElementSVG(data, 200, 40, ":Form");

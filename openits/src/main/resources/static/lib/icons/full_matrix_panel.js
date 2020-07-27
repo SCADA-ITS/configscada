@@ -2,6 +2,7 @@ import * as elementTypeMap from "../elementTypeMap.js";
 import { pictograms } from "../../data/pictograms.js";
 
 export function generateIcon(element, suffix = "") {
+
   // check for the panel config
   let panelConfig = element.elementValues.find(
     (ic) =>
@@ -41,6 +42,8 @@ export function generateIcon(element, suffix = "") {
   s.clear();
   let background_rect = s.rect(0, 0, "100%", "100%");
   background_rect.attr("fill", "black");
+  //background_rect.attr("stroke", color);
+  //background_rect.attr("stroke-width", "4%");
 
   // Generate the matrix with sizes
   for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
@@ -110,11 +113,39 @@ export function generateIcon(element, suffix = "") {
         if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tipo"] == "Grafico") {
           //let im = s.image("/img/pictograms/" + content_value + ".bmp", subpanel_x.toString() + "%", subpanel_y.toString() + "%", (subpanel_width / total_width * 100).toString() + "%", (subpanel_height / panel_height * 100).toString() + "%");
           let im = s.image("data:image/png;base64," + pictograms[content_value], subpanel_x.toString() + "%", subpanel_y.toString() + "%", (subpanel_width / total_width * 100).toString() + "%", (subpanel_height / panel_height * 100).toString() + "%");
+          im.attr("id", element.id + suffix + ":" + value_to_find);
+          im.attr("subpanel_type", "graphic");
+          if(subpanel_width != subpanel_height) {
+            im.attr("preserveAspectRatio", "xMidYMax meet");
+          } else {
+            im.attr("preserveAspectRatio", "none");
+          }
         } else {
+          let all_lines = content_value.split(":$");
+          let g1 = s.group();
+          g1.attr("id", element.id + suffix + ":" + value_to_find);
+          g1.attr("subpanel_type", "text");
+          all_lines.forEach((item, i) => { 
+            let r1 = g1.text(subpanel_x.toString() + "%", (100 - (subpanel_y + subpanel_height / panel_height * 100 - 25) + (100 / all_lines.length * i)).toString() + "%", item);
+            r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+            //r1.attr("subpanel_type", "text");
+            r1.attr("fill", "white");
+            //r1.attr("font-size", "120px");
+            // FIXME
+            if(suffix == ":Form") {
+              r1.attr("font-size", "0.63em");
+            } else {
+              r1.attr("font-size", "10em");
+            }
+            r1.attr("font-weight", "bold");
+          });
+          /*
           let r1 = s.text(subpanel_x.toString() + "%", (subpanel_y + subpanel_height / panel_height * 100 - 5).toString() + "%", content_value);
+          r1.attr("id", element.id + suffix + ":" + value_to_find);
           r1.attr("fill", "white");
           r1.attr("font-size", "90px");
           r1.attr("font-weight", "bold");
+          */
         }
 
         last_subpanel_height = (subpanel_height  / panel_height) * 100;
@@ -130,7 +161,16 @@ export function generateIcon(element, suffix = "") {
     
   }
 
-  return s.innerSVG();
+  let foreground_rect = s.rect(0, 0, "100%", "100%");
+  foreground_rect.attr("fill", "transparent");
+  foreground_rect.attr("stroke", color);
+  foreground_rect.attr("stroke-width", "4%");
+
+  let retSVG = s.innerSVG()
+
+  s.clear();
+
+  return retSVG;
 }
 
 export function changeMatrixPanelIcon(element, suffix = "") {
@@ -149,78 +189,113 @@ export function changeMatrixPanelIcon(element, suffix = "") {
 }
 
 export function updateMatrixPanelIcon(element, suffix = "") {
-  /*
-  // check for the status message we should use
-  let picToShow = element.elementValues.find(
-    (ic) =>
-      elementTypeMap.getElementTypeParam(ic.id) ==
-      elementTypeMap.MATRIX_PANEL_PICTOGRAM
-  );
+  // search in the values for an id greater than 1001
 
-  // changes the color based on the status
-  let color = "";
-  let elementState = "";
-  if (typeof element.state != "undefined") {
-    elementState = element.state;
-  } else {
-    elementState = state;
-  }
+  for(let i=0; i<element.elementValues.length; i++) {
+    let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
 
-  if (typeof elementState != "undefined") {
-    if (elementState == 0) {
-      color = "gold";
-    } else if (elementState == 1) {
-      color = "green";
-    } else if (elementState == 2) {
-      color = "purple";
-    } else if (elementState == 3) {
-      color = "red";
+    if(elementTypeParam > 1000) {
+      let picToShow = element.elementValues.find(
+        (ic) =>
+          elementTypeMap.getElementTypeParam(ic.id) ==
+          elementTypeParam.toString() + ":2"
+      );
+
+      let subpanelType = "";
+      if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+        if(document.getElementById(element.id + suffix + ":" + elementTypeParam).getAttribute("subpanel_type") == "text") {
+          subpanelType = "text";
+        } else {
+          subpanelType = "graphical";
+        }
+      }
+
+      if(subpanelType == "graphical") {
+        if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+          if (typeof pictograms[picToShow.value] != "undefined") {
+            document
+              .getElementById(element.id + suffix + ":" + elementTypeParam)
+              .setAttribute(
+                "href",
+                "data:image/png;base64," + pictograms[picToShow.value]
+              );
+          } else {
+            document
+              .getElementById(element.id + suffix + ":" + elementTypeParam)
+              .setAttribute(
+                "href",
+                "data:image/png;base64," + pictograms["undefined"]
+              );
+          }
+        } 
+        else {
+            if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+              document
+              .getElementById(element.id + suffix + ":" + elementTypeParam)
+                .setAttribute(
+                  "href",
+                  "data:image/png;base64," + pictograms["undefined"]
+                );
+            }
+        }
+      } else if(subpanelType == "text") {  // text
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+          let all_lines = picToShow.value.split(":$");
+          all_lines.forEach((item, i) => { 
+            if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+            }
+          });
+          
+
+        }
+      }
     }
   }
-
-  // icon based on status
-  if (document.getElementById(element.id + suffix + ":rect2250-2-89") != null) {
-    let color = "";
-    let elementState = element.state;
-
-    if (elementState == 0) {
-      color = "#ffcc00";
-    } else if (elementState == 1) {
-      color = "#008000";
-    } else if (elementState == 2) {
-      color = "#800080";
-    } else if (elementState == 3) {
-      color = "#ff0000";
-    }
-
-    document.getElementById(element.id + suffix + ":rect2250-2-89").style[
-      "stroke"
-    ] = color;
-  }
-
-  if (typeof picToShow != "undefined") {
-    if (typeof pictograms[picToShow.value] != "undefined") {
-      document
-        .getElementById(element.id + suffix + ":pic1")
-        .setAttribute(
-          "xlink:href",
-          "data:image/png;base64," + pictograms[picToShow.value]
-        );
-    } else {
-      document
-        .getElementById(element.id + suffix + ":pic1")
-        .setAttribute(
-          "xlink:href",
-          "data:image/png;base64," + pictograms["undefined"]
-        );
-    }
-  } else {
-      document
-        .getElementById(element.id + suffix + ":pic1")
-        .setAttribute(
-          "xlink:href",
-          "data:image/png;base64," + pictograms["undefined"]
-        );
-  }
-  */
 }
+
+/*
+export function updateMatrixPanelIcon(element, suffix = "") {
+  // search in the values for an id greater than 1001
+
+  for(let i=0; i<element.elementValues.length; i++) {
+    let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
+
+    if(elementTypeParam > 1000) {
+      let picToShow = element.elementValues.find(
+        (ic) =>
+          elementTypeMap.getElementTypeParam(ic.id) ==
+          elementTypeParam.toString() + ":2"
+      );
+
+      if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+        if (typeof pictograms[picToShow.value] != "undefined") {
+          document
+            .getElementById(element.id + suffix + ":" + elementTypeParam)
+            .setAttribute(
+              "href",
+              "data:image/png;base64," + pictograms[picToShow.value]
+            );
+        } else {
+          document
+            .getElementById(element.id + suffix + ":" + elementTypeParam)
+            .setAttribute(
+              "href",
+              "data:image/png;base64," + pictograms["undefined"]
+            );
+        }
+      } 
+      else {
+          if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            document
+            .getElementById(element.id + suffix + ":" + elementTypeParam)
+              .setAttribute(
+                "href",
+                "data:image/png;base64," + pictograms["undefined"]
+              );
+          }
+      }
+    }
+  }
+}
+*/

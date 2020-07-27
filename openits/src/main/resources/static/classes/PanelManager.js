@@ -174,6 +174,7 @@ function configData (data) {
 							view: "text", 
 							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
 							value: v_text[i],
+							attributes:{ maxlength: parseInt(cellList[numElement].split("_")[12]) },
 							on: { 
 								onBlur: function(obj) {
 									console.log(obj); 
@@ -184,17 +185,17 @@ function configData (data) {
 									//console.log(numElement);
 									//console.log(code);
 									//console.log(e);
-									if (code === 8) {   //NO HACEMOS NADA ES BACKSPACE
+									if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
 										let v_input = e.target;
 										//console.log(v_input.value);
 										//console.log($$(v_input.id));
 										let tamMaxLine = parseInt(cellList[numElement - 1 ].split("_")[12]);
 										let v_suma = 0;
-										for(let i = 0; i < v_input.value.length; i++) {
+										//for(let i = 0; i < v_input.value.length; i++) {
 											//console.log(v_input.value[i].charCodeAt());
-											let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code)[1];
-											v_suma = v_suma + parseInt(ptype.split("x")[0]);
-										}
+										//	let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code)[1];
+										//	v_suma = v_suma + parseInt(ptype.split("x")[0]);
+										//}
 										//console.log(v_suma);
 	/*
 										console.log(pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]]);
@@ -207,7 +208,7 @@ function configData (data) {
 	*/
 
 											//console.log(parseInt(el[2].split("CH")[1],16)) });
-										let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code);
+										//let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code);
 										//console.log(ptype);
 									}
 								}
@@ -350,14 +351,56 @@ export default class PanelManager {
 			view:"button", value:"Señalizar", click:function(){
 				let v_commands_values = [];
 				let control = true;
+				let tamanio = true;
 				let v_values = [];
+				let v_values_texts = {};
+				let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
+				let control_text = false;
+				datos.v_id_list.forEach(element =>{
+					if (element.split("_")[2] === "T") {
+						v_id_text_panels.push("panel_" + element.split("_")[1] + "_T");
+						control_text = true;
+					}
+					if (element.split("_")[2] === "G") {//Pictogramas
+						v_id_text_panels.push("panel_" + element.split("_")[1] + "_G");
+						control_text = true;
+					}
+				});
+
+				if (control_text) {
+					let unique_id_text_panels = [...new Set(v_id_text_panels)];
+					unique_id_text_panels.forEach(element =>{
+						v_values_texts[element] = null;  //para poder unir las lineas
+					});
+				}
+				//console.log(v_values_texts);
+				//v_values_texts.map( function(key, index) {console.log(key); console.log(index); console.log(key[index]);} );
+				//let newObj = Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, v * v]));
+				//Object.fromEntries(Object.entries(v_values_texts).map(([k, v]) => {console.log(k); console.log(v); }));
+				//v_values_texts.map(([k, v]) => {console.log(k); console.log(v); });
+				
+				//Object.entries(v_values_texts).map(([k, v]) => {console.log(k); console.log(v); });
 				datos.v_id_list.forEach(element =>{
 					if (element.split("_")[2] === "G") {//Pictogramas
 						let valor = $$(element).data.src;
-						(valor === undefined || valor === null) ? control = false : v_values.push(valor);
+						(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G"] = valor; //v_values.push(valor);
+					}
+					if (element.split("_")[2] === "T") {//Pictogramas
+						let valor = $$(element).config.value;
+						if($$(element).config.value.length > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+							tamanio = false;
+						}
+
+						if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
+							v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
+						} else {
+							v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+						}
+						//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 					}
 				});
-				if (control) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
+				Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
+				if (control && tamanio) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
 					for (let i=0;i<v_values.length; i++) {
 						v_commands_values.push({
 							"commandElementTypeParamId": datos.commands[i],
@@ -381,7 +424,11 @@ export default class PanelManager {
 						$$("panelManager" + datos.elementId).destructor();
 					});
 				}else{
-					webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+					if(!tamanio) {
+						webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
+					} else {
+						webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+					}
 				}
 			}
 		}, 2);

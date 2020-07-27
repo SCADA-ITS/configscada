@@ -680,6 +680,7 @@ var i18_en = {
     "lbl_command_sended": "Command successfully executed",
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
     "lbl_panel_signaling_error": "Select a pictogram please",
+    "lbl_panel_signaling_tam_error": "Error text size",
 
     /* BRATISLAVA 
     "AlarmConfig:2": "ALARM WS NO CONNECTION",

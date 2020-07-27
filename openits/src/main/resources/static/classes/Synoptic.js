@@ -73,12 +73,13 @@ export default class Synoptic {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
 
+      
       obj.basicElementsVO.forEach((element) => {
-
+        
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
           throw "DMSException";
         }
-
+        
         getElementIcon(element);
       });
 

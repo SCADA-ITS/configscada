@@ -697,6 +697,7 @@ var i18_es = {
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
     "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
+    "lbl_panel_signaling_tam_error": "Error en el tamaño del texto",
 
     /*  BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
@@ -776,6 +777,8 @@ var i18_es = {
     "pictograms.type.3": "Prohibición o restricción",
     "pictograms.type.4": "Fin Prohibición o restricción",
     "pictograms.type.5": "Especiales",
-    "pictograms.type.6": "Otras"
+    "pictograms.type.6": "Otras",
+
+    
 
 };
