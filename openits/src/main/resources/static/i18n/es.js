@@ -71,6 +71,8 @@ var i18_es = {
     "ElementType:26.description": "Panel",
     "ElementType:34.alias": "ARMARIO_ELECTRICO_SCN",
     "ElementType:34.description": "ARMARIO_ELECTRICO_SCN",
+    "ElementType:35.alias": "Panel",
+    "ElementType:35.description": "Panel",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -795,6 +797,53 @@ var i18_es = {
     "pictograms.type.5": "Especiales",
     "pictograms.type.6": "Otras",
 
+    //Advertencia de Peligro
+    "VmsGraphic:2:63": "Estrechamiento",
+    "VmsGraphic:2:64": "Estrechamiento Derecha",
+    "VmsGraphic:2:65": "Estrechamiento Izquierda",
+    "VmsGraphic:2:66": "Obras",
+    "VmsGraphic:2:67": "Pavimento Deslizante",
+    "VmsGraphic:2:77": "Viento Izquierda",
+    "VmsGraphic:2:78": "Viento Derecha",
+    "VmsGraphic:2:80": "Congestion",
+    "VmsGraphic:2:81": "Obstruccion",
+    "VmsGraphic:2:82": "Niebla",
+    "VmsGraphic:2:84": "Nieve",
+    "VmsGraphic:2:85": "Otros Peligros",
     
+    //Prioridad
+    "VmsGraphic:2:152": "STOP",
+    
+    //Prohibición o Restricción
+    "VmsGraphic:2:315": "Velocidad 40",
+    "VmsGraphic:2:316": "Velocidad 50",
+    "VmsGraphic:2:317": "Velocidad 60",
+    "VmsGraphic:2:318": "Velocidad 70",
+    "VmsGraphic:2:319": "Velocidad 80",
+    "VmsGraphic:2:320": "Velocidad 90",
+    "VmsGraphic:2:321": "Velocidad 100",
+    "VmsGraphic:2:322": "Velocidad 110",
+    "VmsGraphic:2:323": "Velocidad 120",
+    "VmsGraphic:2:324": "Velocidad 130",
+    "VmsGraphic:2:328": "Prohibido Adelantar",
+    
+    //Fin Prohibicion
+    "VmsGraphic:2:501": "Fin Prohibiciones",
+    "VmsGraphic:2:505": "Fin Velocidad 40",
+    "VmsGraphic:2:506": "Fin Velocidad 50",
+    "VmsGraphic:2:507": "Fin Velocidad 60",
+    "VmsGraphic:2:508": "Fin Velocidad 70",
+    "VmsGraphic:2:509": "Fin Velocidad 80",
+    "VmsGraphic:2:510": "Fin Velocidad 90",
+    "VmsGraphic:2:511": "Fin Velocidad 100",
+    "VmsGraphic:2:512": "Fin Velocidad 110",
+    "VmsGraphic:2:513": "Fin Velocidad 120",
+    "VmsGraphic:2:514": "Fin Velocidad 130",
+    
+    //Especiales
+    "VmsGraphic:2:743": "Flecha Derecha",
+    "VmsGraphic:2:744": "Flecha Izquierda",
+    "VmsGraphic:2:745": "Flecha",
+    "VmsGraphic:2:746": "Aspa",
 
 };
