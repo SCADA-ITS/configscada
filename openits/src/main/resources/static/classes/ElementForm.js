@@ -404,6 +404,7 @@ export default class ElementForm {
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_DGT
 							) {
 								let elementQuery = webix.proxy(
 									"GraphQL",`
@@ -639,6 +640,7 @@ export default class ElementForm {
 					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
 					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
 					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
+					|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_DGT
 				) {
 					//"ElementType:10"){
 					iconoSvg = getElementSVG(data, 200, 40, ":Form");
@@ -806,6 +808,7 @@ export default class ElementForm {
 							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
 							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
 							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
+							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
 						){
 
 							$$(this.commands).addView({

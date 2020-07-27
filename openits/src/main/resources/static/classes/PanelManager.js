@@ -7,7 +7,7 @@ const TOP_INIT = 5;
 function configData (data) {
 	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG)[0].value;
 	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
-	
+	//console.log(cfgJson);
 	let maxRow = 0;
 	let maxCol = 0;
 	let maxTamX = 0;
@@ -67,7 +67,7 @@ function configData (data) {
 		});
 		cellList = [...cellList, ...cellListSubpanel];
 	});
-	console.log(cellList);
+	//console.log(cellList);
 	let pictos_activos = {};
 	data.elementValues.forEach(element => {
 		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType ===2) {  //ese numero 3 será una constante
@@ -81,22 +81,24 @@ function configData (data) {
 	data.elementValues.forEach(element => {
 		let v_graphs = [];
 		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType === 2) { 
-			element.elementTypeParam.graphics.forEach(item => {
-				if (cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
-					v_graphs.push(item.id.split(":")[2]);
-					v_pictos_total.push(item.id.split(":")[2]);
-				} else {
-					let temporal = {};
-					item.graphicValues.forEach(item3 => {
-						temporal[item3.id.split(":")[3]] = item3.value;
-					});
-					v_graphs.push(temporal);
-				}				
-			});
+			try {
+				element.elementTypeParam.graphics.forEach(item => {
+					if (cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
+						v_graphs.push(item.id.split(":")[2]);
+						v_pictos_total.push(item.id.split(":")[2]);
+					} else {
+						let temporal = {};
+						item.graphicValues.forEach(item3 => {
+							temporal[item3.id.split(":")[3]] = item3.value;
+						});
+						v_graphs.push(temporal);
+					}				
+				});
+			} catch {}
 			pictos_permitidos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
 		}
 	});
-	console.log(pictos_permitidos);
+	//console.log(pictos_permitidos);
 	let unique_pictos = [...new Set(v_pictos_total)];
 	let pictos_types = [];
 	unique_pictos.forEach(element => {
@@ -131,7 +133,9 @@ function configData (data) {
 			let v_padding = 4; // padding entre el icono y el borde negro
 			let v_template = 8; //padding del template se come 2px por cada lado
 			//Aqui dependiendo si es picto o texto lo modificaremos. 
+			//console.log(pictos_activos);
 			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] : null;
+			//console.log(v_src);
 			let v_file = null;
 			try {
 				v_file = availablePictos[v_src].file_type;
@@ -157,24 +161,55 @@ function configData (data) {
 							return '<img src="./img/pictograms/'+obj.src+'.'+ obj.file_type +'" style="' + v_css + ' max-width:100%;border: '+ v_border +'px solid black;padding: ' + v_border + 'px;"/>';
 						else
 							return tamZoneX.toString() + "x" + tamZoneY.toString();
-					} 
+					}
 				}
 				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]);
 			} else {
 				let v_lineas = [];
 				let v_form = null;
+				let v_text = v_src !== null ? v_src.split(":$") : "";
 				for (let i=0; i<numLineas; i++) {
 					v_lineas.push(
 						{
 							view: "text", 
 							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
-							on: { onBlur: function(obj) {
-								console.log(obj); 
+							value: v_text[i],
+							on: { 
+								onBlur: function(obj) {
+									console.log(obj); 
 								},
 								onKeyPress: function(code, e) {
-									console.log(pictos_permitidos);
-									console.log(code);
-									console.log(e);
+									//console.log(pictos_permitidos);
+									//console.log(cellList);
+									//console.log(numElement);
+									//console.log(code);
+									//console.log(e);
+									if (code === 8) {   //NO HACEMOS NADA ES BACKSPACE
+										let v_input = e.target;
+										//console.log(v_input.value);
+										//console.log($$(v_input.id));
+										let tamMaxLine = parseInt(cellList[numElement - 1 ].split("_")[12]);
+										let v_suma = 0;
+										for(let i = 0; i < v_input.value.length; i++) {
+											//console.log(v_input.value[i].charCodeAt());
+											let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code)[1];
+											v_suma = v_suma + parseInt(ptype.split("x")[0]);
+										}
+										//console.log(v_suma);
+	/*
+										console.log(pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]]);
+										pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].forEach(el => {
+											console.log(parseInt(el[2].split("CH")[1],16));
+											console.log(code);
+											if (parseInt(el[2].split("CH")[1],16) === parseInt(e))
+												console.log(el);
+										});
+	*/
+
+											//console.log(parseInt(el[2].split("CH")[1],16)) });
+										let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code);
+										//console.log(ptype);
+									}
 								}
 							}
 						}
@@ -188,7 +223,7 @@ function configData (data) {
 					elements:v_form
 				};
 			}
-
+			//PINTAR 
 			//ZONAS
 			if (numElement !== 0) {
 				//si la zona es distinta aumentamos left)
@@ -198,11 +233,11 @@ function configData (data) {
 					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
 					v_top = TOP_INIT;
 				}
-				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[2]) !== parseInt(cellList[numElement - 1].split("_")[2]) ) {
+				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) !== parseInt(cellList[numElement - 1].split("_")[6]) ) {
 					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
 				}
 
-				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[2]) === parseInt(cellList[numElement - 1].split("_")[2]) ) {
+				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) === parseInt(cellList[numElement - 1].split("_")[6]) ) {
 					v_top = v_top + 5 + parseInt(cellList[numElement - 1].split("_")[9]) * SCALE_ZONE;				
 				}
 					cells_s.push({ 
@@ -263,7 +298,7 @@ export default class PanelManager {
 		this.id = id;
 		this.commandElementType = commandElementType;
 		this.config = configData(this.commandElementType);
-		console.log(this.config);
+		//console.log(this.config);
 		this.values = this.config.pictos_activos;
 		this.widgets = {
 			id:"tree_zone_panelManager",
@@ -310,7 +345,6 @@ export default class PanelManager {
 
 	doActions() {
 		var datos = this.config;
-
 		$$("tree_zone_panelManager").addView({
 			id: "tree_zone_panelManager_button",
 			view:"button", value:"Señalizar", click:function(){
@@ -351,7 +385,7 @@ export default class PanelManager {
 				}
 			}
 		}, 2);
-		console.log(this.config.cod_listaCells);
+		//console.log(this.config.cod_listaCells);
 		this.config.cod_listaCells.forEach(element => {
 			if (element.split("_")[10] === "G") { 
 				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10]).$view, {

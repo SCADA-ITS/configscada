@@ -31,6 +31,7 @@ export const MATRIX_PANEL_TEMP = "31";
 export const MATRIX_PANEL_TEMP_A = "32";
 export const ETD_ELEMENT_TYPE = "33";
 export const ELECTRICAL_CABINET_SCN_ELEMENT_TYPE = "34";
+export const MATRIX_PANEL_DGT = "35";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -115,8 +116,8 @@ export const COMMAND_TYPE_PMV_B_D = "2:29";
 export const COMMAND_TYPE_MATRIX_PANEL_128X64 = "2:30";
 export const COMMAND_TYPE_MATRIX_PANEL_TEMP = "2:31";
 export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
+export const COMMAND_TYPE_MATRIX_PANEL_DGT = "2:35";
 export const PANEL_MANAGER_CONFIG = "5:1";
-
 
 export function getElementType(elementIdString) {
   let ret = elementIdString.split(":")[POSITION_OF_ELEMENT_TYPE_ID];
@@ -184,6 +185,7 @@ export function getElementTypeName(elementTypeIdString) {
     case MATRIX_ELEMENT_TYPE:
     case FULL_MATRIX_ELEMENT_TYPE:
     case ELECTRICAL_CABINET_ELEMENT_TYPE:
+    case MATRIX_PANEL_DGT:
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
     case ELECTRICAL_CABINET_SCN_ELEMENT_TYPE:

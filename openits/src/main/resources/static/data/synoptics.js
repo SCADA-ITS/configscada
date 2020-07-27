@@ -30,7 +30,7 @@ export let synopticTunnel = {
 			"visibility": "visible"
 		},
 		"MATRIXPANEL": {
-			"items": ["Element:26:1"],
+			"items": ["Element:26:1", "Element:35:1"],
 			"translation_key": "",
 			"visibility": "visible"
 		},
@@ -170,6 +170,7 @@ export let synopticTunnel = {
 		]
 	},
 	"Element:26:1": { "x": 1417,  "y": 715, "width": 50,  "height": 50,  "alias": "AF_1_SM" },
+	"Element:35:1": { "x": 200,  "y": 715, "width": 200,  "height": 80,  "alias": "XXXX" }
 };
 
 export let synopticMetro = {

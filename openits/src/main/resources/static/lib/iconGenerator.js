@@ -191,6 +191,8 @@ export function getElementIcon(element, suffix="") {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.PMV_A_C) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.MATRIX_PANEL_DGT) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status

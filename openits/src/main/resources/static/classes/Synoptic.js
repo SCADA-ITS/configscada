@@ -929,7 +929,8 @@ export default class Synoptic {
               }
             } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
               elementType === elementTypeMap.PMV_A_C ||
-              elementType === elementTypeMap.MATRIX_PANEL_64X64) {  // MATRIX PANEL
+              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
+              elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
 
                 
                 // generate the base icon
