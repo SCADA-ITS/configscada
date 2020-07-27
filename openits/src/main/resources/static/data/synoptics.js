@@ -170,7 +170,7 @@ export let synopticTunnel = {
 		]
 	},
 	"Element:26:1": { "x": 1417,  "y": 715, "width": 50,  "height": 50,  "alias": "AF_1_SM" },
-	"Element:35:1": { "x": 200,  "y": 715, "width": 200,  "height": 80,  "alias": "XXXX" }
+	"Element:35:1": { "x": 85,  "y": 695, "width": 290,  "height": 90,  "alias": "AF_1_SC" }
 };
 
 export let synopticMetro = {

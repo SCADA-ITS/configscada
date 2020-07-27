@@ -193,7 +193,7 @@ export default class EquipmentTable {
                                 .config.columns.push({ id: obj,  
                                     header: this.columnsElementConfig[this.id][this.mode][obj]["header"],
                                     rotate: this.columnsElementConfig[this.id][this.mode][obj]["rotate"], 
-                                    adjust:"data", 
+                                    adjust:true, 
                                     autowidth:true,
                                     autoheigth: true,
                                     sort:"text", 

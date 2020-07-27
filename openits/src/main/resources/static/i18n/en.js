@@ -495,6 +495,13 @@ var i18_en = {
     "ElementTypeParam:34:1:3.alias": "Road",
     "ElementTypeParam:34:1:3.description": "Road",
 
+     
+    "ElementTypeParam:35:1:1.alias": "Brand",
+    "ElementTypeParam:35:1:2.alias": "Model",
+    "ElementTypeParam:35:1:3.alias": "Road",
+    "ElementTypeParam:35:1:4.alias": "Seccion",
+    "ElementTypeParam:35:1:5.alias": "PK",
+
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",
     "synoptic.layer.CAMERA": "CAMERA",
@@ -676,6 +683,9 @@ var i18_en = {
     "CommandElementType:2:27": "SEND MESSAGE",
     "CommandElementType:3:27": "SWITCH OFF",
     "CommandElementType:1:33": "CHANGE LENGHT1",
+    "CommandElementType:1:35": "RESET",
+    "CommandElementType:2:35": "SEND MESSAGE",
+    "CommandElementType:3:35": "SWITCH OFF",
 
     "lbl_command_sended": "Command successfully executed",
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",

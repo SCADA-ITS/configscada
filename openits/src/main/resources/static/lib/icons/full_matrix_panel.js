@@ -135,7 +135,7 @@ export function generateIcon(element, suffix = "") {
             if(suffix == ":Form") {
               r1.attr("font-size", "0.63em");
             } else {
-              r1.attr("font-size", "10em");
+              r1.attr("font-size", "9em");
             }
             r1.attr("font-weight", "bold");
           });

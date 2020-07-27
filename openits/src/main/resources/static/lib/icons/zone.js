@@ -14,11 +14,11 @@ export function generateIcon(element, suffix = "") {
   
   if(typeof elementState != 'undefined') {
     if (elementState == 0) {
-      color = "gold";
+      color = "blue";
     } else if (elementState == 1) {
-      color = "green";
+      color = "blue";
     } else if (elementState == 2) {
-      color = "purple";
+      color = "blue";
     } else if (elementState == 3) {
       color = "red";
     }
@@ -48,13 +48,13 @@ export function updateZoneIcon(element, suffix = "") {
 
     if(typeof elementState != 'undefined') {
       if (elementState == 0) {
-        color = "#ffcc00";
+        color = "blue";
       } else if (elementState == 1) {
-        color = "#008000";
+        color = "blue";
       } else if (elementState == 2) {
-        color = "#800080";
+        color = "blue";
       } else if (elementState == 3) {
-        color = "#ff0000";
+        color = "red";
       }
 
       document.getElementById(element.id + suffix + ":IconBackground").style[
