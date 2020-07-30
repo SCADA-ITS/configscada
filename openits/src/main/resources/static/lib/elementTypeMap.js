@@ -37,6 +37,10 @@ export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
 export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;
 export const POSITION_OF_PARAM_TYPE_ID = 4;
+export const POSITION_OF_VALUE_ID = 3;
+
+export const ELEMENT_TYPE_MEASURE = 2;
+export const ELEMENT_TYPE_STATIC = 1;
 
 //  elementTypeParamId : paramTypeId
 export const BAR_COMMAND_FOR_BARRIER = "1:2";

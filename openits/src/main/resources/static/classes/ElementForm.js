@@ -643,7 +643,36 @@ export default class ElementForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_DGT
 				) {
 					//"ElementType:10"){
-					iconoSvg = getElementSVG(data, 200, 40, ":Form");
+					
+					// obtain the panel configuration
+					let panelConfig = data.elementValues.find(
+						(ic) =>
+							elementTypeMap.getElementTypeParam(ic.id) ==
+							elementTypeMap.PANEL_MANAGER_CONFIG
+					);
+
+					let total_width = 0;
+					let total_height = 0;
+
+					// calculate the width and height of the panel
+					if(typeof panelConfig != 'undefined' && panelConfig != null) {
+						panelConfig = JSON.parse(panelConfig.value);
+
+						// Generate the matrix with sizes
+						for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+							let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+							let panel_width = parseInt(n_size.split("x")[0]);
+							let panel_height = parseInt(n_size.split("x")[1]);
+							total_width += panel_width;
+							total_height = panel_height;
+						}
+
+					}
+
+					// get the panel icon
+					let scale_height = 40 / total_height;
+					let scaled_width = total_width * scale_height;
+					iconoSvg = getElementSVG(data, scaled_width, 40, ":Form");
 				} else {
 					iconoSvg = getElementSVG(data, 40, 40, ":Form");
 				}

@@ -943,7 +943,6 @@ export default class Synoptic {
               // scales the texts inside the item
               for(let j=0; j<el.children.length; j++) {
                 if(el.children[j].tagName == "text") {
-                  alert("TEXTO");
                   let childItem = el.children[j];
                   //childItem.style["font-size"] = (100 * ratioWidth).toString() + "px";
                   let scale_x =
@@ -1290,15 +1289,15 @@ export default class Synoptic {
 
         // Generate the tree
         this.generateLayerTree(layersList, 0, divToAdd);
-		var toggler = document.getElementsByClassName("caret");
-		var i;
-		
-		for (i = 0; i < toggler.length; i++) {
-		  toggler[i].addEventListener("click", function() {
-		    this.parentElement.querySelector(".nested").classList.toggle("active");
-		    this.classList.toggle("caret-down");
-		  });
-		}
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+        
+        for (i = 0; i < toggler.length; i++) {
+          toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+          });
+        }
 
         // update the dropdown size
         // if the dropdown is taller than the screen size minus 70px, then adjust it and activates overflow

@@ -121,33 +121,35 @@ export function generateIcon(element, suffix = "") {
             im.attr("preserveAspectRatio", "none");
           }
         } else {
-          let all_lines = content_value.split(":$");
-          let g1 = s.group();
-          g1.attr("id", element.id + suffix + ":" + value_to_find);
-          g1.attr("subpanel_type", "text");
-          all_lines.forEach((item, i) => { 
-            let r1 = g1.text(subpanel_x.toString() + "%", (100 - (subpanel_y + subpanel_height / panel_height * 100 - 25) + (100 / all_lines.length * i)).toString() + "%", item);
-            r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
-            //r1.attr("subpanel_type", "text");
+          if(content_value != null) {
+            let all_lines = content_value.split(":$");
+            let g1 = s.group();
+            g1.attr("id", element.id + suffix + ":" + value_to_find);
+            g1.attr("subpanel_type", "text");
+            all_lines.forEach((item, i) => { 
+              let r1 = g1.text(subpanel_x.toString() + "%", (100 - (subpanel_y + subpanel_height / panel_height * 100 - 25) + (100 / all_lines.length * i)).toString() + "%", item);
+              r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+              //r1.attr("subpanel_type", "text");
+              r1.attr("fill", "white");
+              //r1.attr("font-size", "120px");
+              // FIXME
+              if(suffix == ":Form") {
+                r1.attr("font-size", "0.63em");
+              } else {
+                r1.attr("font-size", "9em");
+              }
+              r1.attr("font-weight", "bold");
+            });
+            /*
+            let r1 = s.text(subpanel_x.toString() + "%", (subpanel_y + subpanel_height / panel_height * 100 - 5).toString() + "%", content_value);
+            r1.attr("id", element.id + suffix + ":" + value_to_find);
             r1.attr("fill", "white");
-            //r1.attr("font-size", "120px");
-            // FIXME
-            if(suffix == ":Form") {
-              r1.attr("font-size", "0.63em");
-            } else {
-              r1.attr("font-size", "9em");
-            }
+            r1.attr("font-size", "90px");
             r1.attr("font-weight", "bold");
-          });
-          /*
-          let r1 = s.text(subpanel_x.toString() + "%", (subpanel_y + subpanel_height / panel_height * 100 - 5).toString() + "%", content_value);
-          r1.attr("id", element.id + suffix + ":" + value_to_find);
-          r1.attr("fill", "white");
-          r1.attr("font-size", "90px");
-          r1.attr("font-weight", "bold");
-          */
+            */
+          }
         }
-
+        
         last_subpanel_height = (subpanel_height  / panel_height) * 100;
         subpanel_x += (subpanel_width / total_width) * 100;
 
