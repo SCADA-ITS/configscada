@@ -672,13 +672,18 @@ export default class ElementForm {
 					// get the panel icon
 					let scale_height = 40 / total_height;
 					let scaled_width = total_width * scale_height;
-					iconoSvg = getElementSVG(data, scaled_width, 40, ":Form");
+					iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
+
+					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
+
+					// scale the element to fit in the bar
+					document.getElementById(data.id + ":Form").setAttribute("transform", "scale(" + scale_height + "," + scale_height + ")");
+
 				} else {
 					iconoSvg = getElementSVG(data, 40, 40, ":Form");
+					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 				}
 				
-				$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
-
 				getElementIcon(data, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);

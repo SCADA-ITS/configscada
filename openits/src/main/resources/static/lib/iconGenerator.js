@@ -20,6 +20,12 @@ import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
 import * as plc from "./icons/plc.js";
 import * as scn from "./icons/scn.js";
+import * as atc from "./icons/atc.js";
+import * as toll from "./icons/toll.js";
+import * as nrs from "./icons/nrs.js";
+import * as nrl from "./icons/nrl.js";
+import * as tfa3d from "./icons/tfa3d.js";
+import * as tfa from "./icons/tfa.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
@@ -193,6 +199,18 @@ export function getElementIcon(element, suffix="") {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.MATRIX_PANEL_DGT) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ATC_ELEMENT_TYPE) {
+    atc.updateAtcIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE) {
+    toll.updateTollIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_NRS_ELEMENT_TYPE) {
+    nrs.updateNrsIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_NRL_ELEMENT_TYPE) {
+    nrl.updateNrlIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE) {
+    tfa3d.updateTfa3dIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TFA_ELEMENT_TYPE) {
+    tfa.updateTfaIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status
@@ -346,6 +364,24 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case "35":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
+    case "41":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "42":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "43":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "44":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "45":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
+    case "46":
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      break;
     default:
       console.log("Icon not found");
       break;
@@ -365,7 +401,7 @@ export function drawInlineSVG(canvas, ctx, rawSVG, callback) {
   img.src = image64;
 
   img.onload = function () {
-    ctx.drawImage(this, 0, 0);     
+    ctx.drawImage(this, 0, 0);
     callback(this);
   };
 

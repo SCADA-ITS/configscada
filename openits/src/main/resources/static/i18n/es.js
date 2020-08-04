@@ -1,6 +1,7 @@
 var i18_es = {
     "defaultheader.dashboard": "ITS Dashboard",// "Mapa",
     "defaultheader.cabinets": "Armarios",
+    "defaultheader.panels": "Paneles",
     "defaultheader.users": "Usuarios",
     "defaultheader.managementAlarms": "Alarmas ",
     "defaultheader.alarmSettings": "Configuracion alarmas",

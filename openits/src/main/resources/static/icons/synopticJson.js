@@ -70,6 +70,246 @@ export let staticsIcons = {
 			}
 		]
 	},
+	"41": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "atc_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "atc_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "atc_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "atc_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
+	"42": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "nrl_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "nrl_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "nrl_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "nrl_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
+	"43": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "nrs_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "nrs_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "nrs_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "nrs_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
+	"44": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "tfa3d_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "tfa3d_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "tfa3d_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "tfa3d_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
+	"45": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "tfa_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "tfa_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "tfa_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "tfa_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
+	"46": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "toll_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "toll_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "toll_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "toll_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
 	"23": {
 		"state": [
 			{

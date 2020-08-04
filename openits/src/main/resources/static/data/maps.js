@@ -5,6 +5,18 @@ export let mapTG = {
     width: 40,
     height: 40,
   },
+  "Element:26:1": {
+    lon: -4.889977,
+    lat: 36.422382,
+    width: 32,
+    height: 32,
+  },
+  "Element:35:1": {
+    lon: -4.889977,
+    lat: 36.472382,
+    width: 192,
+    height: 48,
+  },
   "Element:10:1": {
     lon: -4.933339,
     lat: 36.514373,
@@ -22,12 +34,6 @@ export let mapTG = {
     lat: 36.519382,
     width: 40,
     height: 40,
-  },
-  "Element:26:1": {
-    lon: -4.889977,
-    lat: 36.522382,
-    width: 150,
-    height: 54,
   },
   "Element:23:1": {
 		lon: -4.899977,

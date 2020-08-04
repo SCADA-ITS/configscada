@@ -1,6 +1,7 @@
 var i18_en = {
     "defaultheader.dashboard": "ITS Dashboard",//"Dashboard",
     "defaultheader.cabinets": "Cabinets",
+    "defaultheader.panels": "Panels",
     "defaultheader.users": "Users",
     "defaultheader.equipment" : "Equipment ",
     "defaultheader.managementAlarms": "Alarms",

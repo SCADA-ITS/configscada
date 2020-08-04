@@ -5,6 +5,7 @@ import {
   synopticGlobal,
   synopticBratislava,
   synopticCabinets,
+  synopticPanels,
 } from "../data/synoptics.js";
 import ElementForm from "../classes/ElementForm.js";
 import {
@@ -934,12 +935,13 @@ export default class Synoptic {
               elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
 
                 
-                // generate the base icon
-                let matrix_panel_str = generateFullMatrixPanelIcon(element);
-                
-                let matrix_panel_icon = Snap.parse(matrix_panel_str);
-                el = this.s.group().append(matrix_panel_icon);
+              // generate the base icon
+              let matrix_panel_str = generateFullMatrixPanelIcon(element);
+              
+              let matrix_panel_icon = Snap.parse(matrix_panel_str);
+              el = this.s.group().append(matrix_panel_icon);
 
+              /*
               // scales the texts inside the item
               for(let j=0; j<el.children.length; j++) {
                 if(el.children[j].tagName == "text") {
@@ -955,16 +957,48 @@ export default class Synoptic {
                   childItem.style["font-size"] = (parseInt(childItem.style["font-size"]) * ratioWidth).toString() + "px";
                 }
               }
+              */
 
+              // obtains the panel size in order to calculate the scale
+              // check for the panel config
+              let panelConfig = element.elementValues.find(
+                (ic) =>
+                  elementTypeMap.getElementTypeParam(ic.id) ==
+                  elementTypeMap.PANEL_MANAGER_CONFIG
+              );
+
+              panelConfig = JSON.parse(panelConfig.value);
+
+              let total_width = 0;
+              let total_height = 0;
+
+              // Get the sizes
+              for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+                let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+                let panel_width = parseInt(n_size.split("x")[0]);
+                let panel_height = parseInt(n_size.split("x")[1]);
+                total_width += panel_width;
+                if(panel_height > total_height) {
+                  total_height = panel_height;
+                }
+              }
+
+              let scale_x =
+              (this.synopticConf[element.id].width / total_width) * this.ratioWidth;
+              let scale_y =
+              (this.synopticConf[element.id].height / total_height) * this.ratioHeight;
               
+              /*
               let scale_x =
               (this.synopticConf[element.id].width / 1920) * this.ratioWidth;
               let scale_y =
               (this.synopticConf[element.id].height / 1080) * this.ratioHeight;
+              */
               
               if (el != null) {
                 
                 el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+                //el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(1,1)");
                 
                 el.attr({ id: element.id });
                 el.attr({ class: "svg_icon" });
@@ -1309,7 +1343,9 @@ export default class Synoptic {
         // FIXME: once it is loaded, if the synoptic is Bratislava
         // starts only with the Cameras layer
         if (d.description == "SYNOPTIC") {
-          this.handleLayers("CAM");
+          if(Object.keys(this.layersToDraw).includes("CAM")) {
+            this.handleLayers("CAM");
+          }
         }
         else if( d.description == "CABINETS"){
           this.handleLayers("CABINETS");
@@ -1368,6 +1404,8 @@ export default class Synoptic {
       this.synopticConf = synopticBratislava;
     } else if (synopticConf == "cabinets") {
       this.synopticConf = synopticCabinets;
+    } else if (synopticConf == "panels") {
+      this.synopticConf = synopticPanels;
     }
 
     this.synopticType = synopticConf;

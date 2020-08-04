@@ -72,28 +72,53 @@ export default class Map {
 
 
           if(elementToUpdate != null) {
-            let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id]);
 
-            let canvas = document.createElement("canvas");
-            // get canvas context for drawing on canvas
-            let context = canvas.getContext("2d");
-            // set canvas size
-            //canvas.width = width;
-            //canvas.height = height;
+            let elementType = elementTypeMap.getElementType(element.id);
+            let total_width = mapElement.width;
+            let total_height = mapElement.height;
 
-            // call svgString2Image function
-            iconGenerator.drawInlineSVG(
-              canvas,
-              context,
-              tmpIcon,
-              function () {}
-            );
+            
+            if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
+              elementType === elementTypeMap.PMV_A_C ||
+              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
+              elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+
+              total_width = 0;
+              total_height = 0;
+
+              // check for the panel config
+              let panelConfig = element.elementValues.find(
+                (ic) =>
+                  elementTypeMap.getElementTypeParam(ic.id) ==
+                  elementTypeMap.PANEL_MANAGER_CONFIG
+              );
+
+              if(typeof panelConfig != 'undefined') {
+                panelConfig = JSON.parse(panelConfig.value);
+    
+                // Generate the matrix with sizes
+                for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+                  let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+                  let panel_width = parseInt(n_size.split("x")[0]);
+                  let panel_height = parseInt(n_size.split("x")[1]);
+                  total_width += panel_width;
+                  if(panel_height > total_height) {
+                    total_height = panel_height;
+                  }              
+                }
+              }
+            }
+
+            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+
+            // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
+            tmpIcon = tmpIcon.replace(/#/g, "%23");
 
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
                 opacity: 1,
                 src: "data:image/svg+xml;utf8," + tmpIcon,
-                scale: 1,
+                scale: mapElement.height / total_height,
               }),
             });
 
@@ -175,7 +200,48 @@ export default class Map {
                   id: element.id,
                 });
 
-                let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
+                let elementType = elementTypeMap.getElementType(element.id);
+                let total_width = mapElement.width;
+                let total_height = mapElement.height;
+
+                
+                if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
+                  elementType === elementTypeMap.PMV_A_C ||
+                  elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
+                  elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+
+                  total_width = 0;
+                  total_height = 0;
+
+                  // check for the panel config
+                  let panelConfig = element.elementValues.find(
+                    (ic) =>
+                      elementTypeMap.getElementTypeParam(ic.id) ==
+                      elementTypeMap.PANEL_MANAGER_CONFIG
+                  );
+
+                  if(typeof panelConfig != 'undefined') {
+                    panelConfig = JSON.parse(panelConfig.value);
+        
+                    // Generate the matrix with sizes
+                    for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+                      let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+                      let panel_width = parseInt(n_size.split("x")[0]);
+                      let panel_height = parseInt(n_size.split("x")[1]);
+                      total_width += panel_width;
+                      if(panel_height > total_height) {
+                        total_height = panel_height;
+                      }              
+                    }
+                  }
+                }
+
+
+                //let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
+                let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+
+                // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
+                tmpIcon = tmpIcon.replace(/#/g, "%23");
 
                 let canvas = document.createElement("canvas");
                 // get canvas context for drawing on canvas
@@ -198,7 +264,7 @@ export default class Map {
                   image: new ol.style.Icon({
                     opacity: 1,
                     src: "data:image/svg+xml;utf8," + tmpIcon,
-                    scale: 1,
+                    scale: mapElement.height / total_height,
                   }),
                 });
 
@@ -209,18 +275,6 @@ export default class Map {
       });
     }
   }
-
-  /*
-  getMapLayer(map, layer) {
-    let retLayer = null;
-    map.getLayers().forEach(function(l) {
-      if(layer == l.id) {
-        retLayer = layer;
-      }
-    })
-    return retLayer;
-  }
-  */
 
   getComponent() {
     if (this.data.includes("http") || this.data.includes("GraphQL")) {
@@ -297,16 +351,58 @@ export default class Map {
               id: element.id,
             });
 
-            let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
             
+            let elementType = elementTypeMap.getElementType(element.id);
+            let total_width = mapElement.width;
+            let total_height = mapElement.height;
+
+            
+            if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
+              elementType === elementTypeMap.PMV_A_C ||
+              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
+              elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+
+              total_width = 0;
+              total_height = 0;
+
+              // check for the panel config
+              let panelConfig = element.elementValues.find(
+                (ic) =>
+                  elementTypeMap.getElementTypeParam(ic.id) ==
+                  elementTypeMap.PANEL_MANAGER_CONFIG
+              );
+
+              if(typeof panelConfig != 'undefined') {
+                panelConfig = JSON.parse(panelConfig.value);
+    
+                // Generate the matrix with sizes
+                for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+                  let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+                  let panel_width = parseInt(n_size.split("x")[0]);
+                  let panel_height = parseInt(n_size.split("x")[1]);
+                  total_width += panel_width;
+                  if(panel_height > total_height) {
+                    total_height = panel_height;
+                  }              
+                }
+              }
+            }
+
+
+            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+
+            // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
+            tmpIcon = tmpIcon.replace(/#/g, "%23");
+
             let canvas = document.createElement("canvas");
             // get canvas context for drawing on canvas
             let context = canvas.getContext("2d");
             // set canvas size
-            //canvas.width = width;
-            //canvas.height = height;
+            //canvas.width = mapElement.width;
+            //canvas.height = mapElement.height;
 
             // call svgString2Image function
+            /*
             iconGenerator.drawInlineSVG(
               canvas,
               context,
@@ -315,12 +411,15 @@ export default class Map {
                 //console.log(canvas.toDataURL());
               }
             );
+            */
+
+            //alert(element.id + "\tSCALE: " + mapElement.height / total_height);
 
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
                 opacity: 1,
                 src: "data:image/svg+xml;utf8," + tmpIcon,
-                scale: 1,
+                scale: mapElement.height / total_height,
               }),
             });
 

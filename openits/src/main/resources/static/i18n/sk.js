@@ -1,6 +1,7 @@
 var i18_sk = {
     "defaultheader.dashboard": "ITS Preh&#318;ad",
     "defaultheader.cabinets": "Skrine",
+    "defaultheader.panels": "Panely",
     "defaultheader.users": "U&#382;&iacute;vatelia", 
     "defaultheader.equipment" : "Zariadenie ",
     "defaultheader.elements": "Prvok",

@@ -3,6 +3,7 @@ import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
 import { equipments } from "../../../widgets/equipments.js";
 import { bratislava } from "../../../widgets/bratislava.js";
 import { cabinets } from "../../../widgets/cabinets.js";
+import { panels } from "../../../widgets/panels.js";
 import { alarms } from "../../../widgets/alarms.js";
 import { users } from "../../../widgets/users.js";
 import { roles } from "../../../widgets/roles.js";
@@ -60,6 +61,10 @@ let main_body = {
             {
                 id: "cabinets",
                 rows: [cabinets]
+            },
+            {
+                id: "panels",
+                rows: [panels]
             },
             {
                 id: "alarms",
