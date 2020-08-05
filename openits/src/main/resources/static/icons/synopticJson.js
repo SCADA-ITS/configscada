@@ -310,6 +310,46 @@ export let staticsIcons = {
 			}
 		]
 	},
+	"47": {
+		"state": [
+			{
+				"id": 9,
+				"icon": "tu_0.svg",
+				"state": 0,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 7,
+				"icon": "tu_1.svg",
+				"state": 1,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 8,
+				"icon": "tu_2.svg",
+				"state": 2,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			},
+			{
+				"id": 1719,
+				"icon": "tu_3.svg",
+				"state": 3,
+				"zoomIn": 0,
+				"zoomOut": 20,
+				"width": 40,
+				"height": 40
+			}
+		]
+	},
 	"23": {
 		"state": [
 			{

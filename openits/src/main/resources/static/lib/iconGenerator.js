@@ -26,6 +26,7 @@ import * as nrs from "./icons/nrs.js";
 import * as nrl from "./icons/nrl.js";
 import * as tfa3d from "./icons/tfa3d.js";
 import * as tfa from "./icons/tfa.js";
+import * as tu from "./icons/tu.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
@@ -191,13 +192,23 @@ export function getElementIcon(element, suffix="") {
     plc.updatePlcIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_SCN_ELEMENT_TYPE) {
     scn.updateScnIcon(element, suffix);
+  } else if (elementType === elementTypeMap.PMV_A_C) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.PMV_A_B) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.PMV_A_C) {
+  }  else if (elementType === elementTypeMap.PMV_B_D) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.MATRIX_PANEL_DGT) {
+  }  else if (elementType === elementTypeMap.MATRIX_PANEL_128X64) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  }  else if (elementType === elementTypeMap.MATRIX_PANEL_TEMP) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  }  else if (elementType === elementTypeMap.MATRIX_PANEL_TEMP_A) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  }  else if (elementType === elementTypeMap.MATRIX_PANEL_DGT) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ATC_ELEMENT_TYPE) {
     atc.updateAtcIcon(element, suffix);
@@ -211,6 +222,8 @@ export function getElementIcon(element, suffix="") {
     tfa3d.updateTfa3dIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TFA_ELEMENT_TYPE) {
     tfa.updateTfaIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TU_ELEMENT_TYPE) {
+    tu.updateTuIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
     // icon based on status

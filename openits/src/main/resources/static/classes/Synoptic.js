@@ -929,10 +929,16 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64 ||
-              elementType === elementTypeMap.PMV_A_C ||
+
+            } else if (elementType === elementTypeMap.PMV_A_C ||
               elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
-              elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+              elementType === elementTypeMap.PMV_A_B ||
+              elementType === elementTypeMap.MATRIX_PANEL_192X64
+              || elementType === elementTypeMap.PMV_B_D
+              || elementType === elementTypeMap.MATRIX_PANEL_128X64
+              || elementType === elementTypeMap.MATRIX_PANEL_TEMP
+              || elementType === elementTypeMap.MATRIX_PANEL_TEMP_A
+              || elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
 
                 
               // generate the base icon

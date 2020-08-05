@@ -399,6 +399,7 @@ export default class ElementForm {
 							elementTypeMap.getElementType(element.id) === elementTypeMap.DMS_ELEMENT_TYPE
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_C
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_64X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_B
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_192X64
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_B_D
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
@@ -635,6 +636,7 @@ export default class ElementForm {
 					elementTypeMap.getElementType(data.id) === elementTypeMap.DMS_ELEMENT_TYPE
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_A_C
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_64X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_A_B
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_192X64
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_B_D
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_128X64

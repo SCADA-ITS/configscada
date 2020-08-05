@@ -63,7 +63,9 @@ export let columnsElementFormListBratislava = {
 		"rows":[
 			"ElementTypeParam:24:1:1",
 			"ElementTypeParam:24:1:2",
-			"ElementTypeParam:24:1:3"
+			"ElementTypeParam:24:2:1",
+			"ElementTypeParam:24:2:2",
+			"ElementTypeParam:24:2:3"
 		],
 		"rowCounts": 3,
 		"scroll": false, 
@@ -81,21 +83,26 @@ export let columnsElementFormListBratislava = {
 		"width": 550,
 		"options": {}
 	},
-	"ElementType:24": {
-		"rows":[
-			"ElementTypeParam:34:1:2",
-			"ElementTypeParam:34:1:3",
-			"ElementTypeParam:34:1:1"
-		],
-		"rowCounts": 3,
-		"scroll": false, 
-		"width": 550,
-		"options": {}
-	},
 	"ElementType:26": {
 		"rows":[ 
-			"ElementTypeParam:26:1:5",
-			"ElementTypeParam:26:1:10"
+			"ElementTypeParam:26:1:1",
+			"ElementTypeParam:26:1:2",
+			"ElementTypeParam:26:2:1",
+			"ElementTypeParam:26:2:2",
+			"ElementTypeParam:26:2:3"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:27": {
+		"rows":[ 
+			"ElementTypeParam:27:1:1",
+			"ElementTypeParam:27:1:2",
+			"ElementTypeParam:27:2:1",
+			"ElementTypeParam:27:2:2",
+			"ElementTypeParam:27:2:3"
 		],
 		"rowCounts": 2,
 		"scroll": "y", 
@@ -106,11 +113,65 @@ export let columnsElementFormListBratislava = {
 		"rows":[
 			"ElementTypeParam:28:1:1",
 			"ElementTypeParam:28:1:2",
-			"ElementTypeParam:28:1:3"
+			"ElementTypeParam:28:2:1",
+			"ElementTypeParam:28:2:2",
+			"ElementTypeParam:28:2:3"
 		],
 		"rowCounts": 3,
 		"scroll": false, 
 		"width": 550,
+		"options": {}
+	},
+	"ElementType:29": {
+		"rows":[ 
+			"ElementTypeParam:29:1:1",
+			"ElementTypeParam:29:1:2",
+			"ElementTypeParam:29:2:1",
+			"ElementTypeParam:29:2:2",
+			"ElementTypeParam:29:2:3"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:30": {
+		"rows":[ 
+			"ElementTypeParam:30:1:1",
+			"ElementTypeParam:30:1:2",
+			"ElementTypeParam:30:2:1",
+			"ElementTypeParam:30:2:2",
+			"ElementTypeParam:30:2:3"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:31": {
+		"rows":[ 
+			"ElementTypeParam:31:1:1",
+			"ElementTypeParam:31:1:2",
+			"ElementTypeParam:31:2:1",
+			"ElementTypeParam:31:2:2",
+			"ElementTypeParam:31:2:3"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:32": {
+		"rows":[ 
+			"ElementTypeParam:32:1:1",
+			"ElementTypeParam:32:1:2",
+			"ElementTypeParam:32:2:1",
+			"ElementTypeParam:32:2:2",
+			"ElementTypeParam:32:2:3"
+		],
+		"rowCounts": 2,
+		"scroll": "y", 
+		"width": 540,
 		"options": {}
 	},
 	"ElementType:34": {
@@ -118,6 +179,83 @@ export let columnsElementFormListBratislava = {
 			"ElementTypeParam:34:1:2",
 			"ElementTypeParam:34:1:3",
 			"ElementTypeParam:34:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:41": {
+		"rows":[
+			"ElementTypeParam:41:1:2",
+			"ElementTypeParam:41:1:3",
+			"ElementTypeParam:41:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:42": {
+		"rows":[
+			"ElementTypeParam:42:1:2",
+			"ElementTypeParam:42:1:3",
+			"ElementTypeParam:42:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:43": {
+		"rows":[
+			"ElementTypeParam:43:1:2",
+			"ElementTypeParam:43:1:3",
+			"ElementTypeParam:43:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:44": {
+		"rows":[
+			"ElementTypeParam:44:1:2",
+			"ElementTypeParam:44:1:3",
+			"ElementTypeParam:44:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:45": {
+		"rows":[
+			"ElementTypeParam:45:1:2",
+			"ElementTypeParam:45:1:3",
+			"ElementTypeParam:45:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:46": {
+		"rows":[
+			"ElementTypeParam:46:1:2",
+			"ElementTypeParam:46:1:3",
+			"ElementTypeParam:46:1:1"
+		],
+		"rowCounts": 3,
+		"scroll": false, 
+		"width": 550,
+		"options": {}
+	},
+	"ElementType:47": {
+		"rows":[
+			"ElementTypeParam:47:1:2",
+			"ElementTypeParam:47:1:3",
+			"ElementTypeParam:47:1:1"
 		],
 		"rowCounts": 3,
 		"scroll": false, 

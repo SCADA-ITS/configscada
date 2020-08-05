@@ -410,6 +410,7 @@ export let synopticCabinets = {
 			"NRS": "Armarios-NRS-PK_F1.svg",
 			"TFA_3D": "Armarios-3DTFA-PK_F1.svg",
 			"TFA": "Armarios-TFA-PK_F1.svg",
+			"TU": "4863-1_ TU-PK_F1.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -459,6 +460,11 @@ export let synopticCabinets = {
 			},
 			"TFA": {
 				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"TU": {
+				"items": ["Element:47:1", "Element:47:2", "Element:47:3", "Element:47:4", "Element:47:5", "Element:47:6", "Element:47:7", "Element:47:8", "Element:47:9", "Element:47:10", "Element:47:11"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -591,4 +597,15 @@ export let synopticCabinets = {
 		"Element:45:14": { "x": 1726, "y": 518,    "width": 34, "height": 34, "alias": "RNRJS27L"  },
 		"Element:45:15": { "x": 1726, "y": 482,    "width": 34, "height": 34, "alias": "RNRJS28P"  },
 		"Element:45:16": { "x": 1726, "y": 445,    "width": 34, "height": 34, "alias": "RNRJS29P"  },
+		"Element:47:1": { "x": 1487, "y": 335,    "width": 34, "height": 34, "alias": "TUKD01L"  },
+		"Element:47:2": { "x": 1487, "y": 298,    "width": 34, "height": 34, "alias": "TUKD02L"  },
+		"Element:47:3": { "x": 1487, "y": 220,    "width": 34, "height": 34, "alias": "TUDH01L"  },
+		"Element:47:4": { "x": 1487, "y": 184,    "width": 34, "height": 34, "alias": "TUDH02L"  },
+		"Element:47:5": { "x": 1487, "y": 147,    "width": 34, "height": 34, "alias": "TUDH03L"  },
+		"Element:47:6": { "x": 1487, "y": 111,    "width": 34, "height": 34, "alias": "TUDH04L"  },
+		"Element:47:7": { "x": 1487, "y": 74,    "width": 34, "height": 34, "alias": "TUDH05L"  },
+		"Element:47:8": { "x": 1487, "y": 544,    "width": 34, "height": 34, "alias": "TU4JSP"  },
+		"Element:47:9": { "x": 1487, "y": 507,    "width": 34, "height": 34, "alias": "TU05JSP"  },
+		"Element:47:10": { "x": 1487, "y": 471,    "width": 34, "height": 34, "alias": "TU06JSP"  },
+		"Element:47:11": { "x": 1487, "y": 434,    "width": 34, "height": 34, "alias": "TUJS07P"  },
 	}

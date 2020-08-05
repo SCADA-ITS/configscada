@@ -38,6 +38,7 @@ export const ELECTRICAL_CABINET_NRS_ELEMENT_TYPE = "43";
 export const ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE = "44";
 export const ELECTRICAL_CABINET_TFA_ELEMENT_TYPE = "45";
 export const ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE = "46";
+export const ELECTRICAL_CABINET_TU_ELEMENT_TYPE = "47";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -214,6 +215,9 @@ export function getElementTypeName(elementTypeIdString) {
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
     case ELECTRICAL_CABINET_TFA_ELEMENT_TYPE:
+      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
+      break;
+    case ELECTRICAL_CABINET_TU_ELEMENT_TYPE:
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
     default:
