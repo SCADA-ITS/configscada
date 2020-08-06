@@ -54,17 +54,16 @@ export default class Map {
      
       obj.basicElementsVO.forEach((element) => {
         // if it's a DMS, ask for the full data
-        if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.PMV_A_C ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_64X64 ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.PMV_A_B ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_192X64 ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.PMV_B_D ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_128X64 ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_TEMP ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_TEMP_A ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.MATRIX_PANEL_DGT) {
+        if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_28_PMV_192X64 ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_29_PMV_B_D ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_30_PMV_128X64 ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_31_PMV ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_32_PMV ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_35_PMV) {
           throw "DMSETDException";
         }
 
@@ -85,15 +84,15 @@ export default class Map {
             let total_width = mapElement.width;
             let total_height = mapElement.height;
             
-            if (elementType === elementTypeMap.PMV_A_C ||
-              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
-              elementType === elementTypeMap.PMV_A_B ||
-              elementType === elementTypeMap.MATRIX_PANEL_192X64
-              || elementType === elementTypeMap.PMV_B_D
-              || elementType === elementTypeMap.MATRIX_PANEL_128X64
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP_A
-              || elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+            if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+              elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+              elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+              elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+              || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
 
               total_width = 0;
               total_height = 0;
@@ -216,15 +215,15 @@ export default class Map {
                 let total_width = mapElement.width;
                 let total_height = mapElement.height;
 
-                if (elementType === elementTypeMap.PMV_A_C ||
-                  elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
-                  elementType === elementTypeMap.PMV_A_B ||
-                  elementType === elementTypeMap.MATRIX_PANEL_192X64
-                  || elementType === elementTypeMap.PMV_B_D
-                  || elementType === elementTypeMap.MATRIX_PANEL_128X64
-                  || elementType === elementTypeMap.MATRIX_PANEL_TEMP
-                  || elementType === elementTypeMap.MATRIX_PANEL_TEMP_A
-                  || elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
+                if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+                  elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+                  elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+                  elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+                  || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+                  || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+                  || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+                  || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+                  || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
 
                   total_width = 0;
                   total_height = 0;
@@ -372,16 +371,16 @@ export default class Map {
             let total_width = mapElement.width;
             let total_height = mapElement.height;
             
-            if (elementType === elementTypeMap.PMV_A_C ||
-              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
-              elementType === elementTypeMap.PMV_A_B ||
-              elementType === elementTypeMap.MATRIX_PANEL_192X64
-              || elementType === elementTypeMap.PMV_B_D
-              || elementType === elementTypeMap.MATRIX_PANEL_128X64
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP_A
-              || elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
-
+            if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+              elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+              elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+              elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+              || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
+           
               total_width = 0;
               total_height = 0;
 

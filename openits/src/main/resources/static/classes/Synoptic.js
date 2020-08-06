@@ -930,16 +930,15 @@ export default class Synoptic {
                 getElementIcon(element);
               }
 
-            } else if (elementType === elementTypeMap.PMV_A_C ||
-              elementType === elementTypeMap.MATRIX_PANEL_64X64 ||
-              elementType === elementTypeMap.PMV_A_B ||
-              elementType === elementTypeMap.MATRIX_PANEL_192X64
-              || elementType === elementTypeMap.PMV_B_D
-              || elementType === elementTypeMap.MATRIX_PANEL_128X64
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP
-              || elementType === elementTypeMap.MATRIX_PANEL_TEMP_A
-              || elementType === elementTypeMap.MATRIX_PANEL_DGT) {  // MATRIX PANEL
-
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+              elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+              elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+              elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+              || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
                 
               // generate the base icon
               let matrix_panel_str = generateFullMatrixPanelIcon(element);
