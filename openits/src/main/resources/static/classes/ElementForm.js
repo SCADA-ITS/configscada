@@ -1,22 +1,9 @@
 import {getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-import {alarmsCfgBratislava} from "../project/bratislava/data/alarmsCfg.js";
-import {alarmsCfgAusol} from "../project/ausol/data/alarmsCfg.js";
+import {alarmsCfg} from "../data/alarmsCfg.js";
 import {synopticTunnel, synopticBratislava, synopticCabinets} from "../data/synoptics.js";
-import {columnsElementFormListAusol} from "../project/ausol/data/elementForm.js";
-import {columnsElementFormListBratislava} from "../project/bratislava/data/elementForm.js";
+import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
-
-let alarmsCf = null;
-let colMetaData = null;
-if (project) {
-	alarmsCf = alarmsCfgBratislava;
-	colMetaData = columnsElementFormListBratislava
-} else { 
-	alarmsCf = alarmsCfgAusol;
-	colMetaData = columnsElementFormListAusol;
-}
-
 
 export default class ElementForm {
 	constructor(id,columnsElementFormList) {
@@ -559,7 +546,7 @@ export default class ElementForm {
 											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
 											let outlets = [];
 											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: alarmsCf[item.alarmConfig.id].alarmLevel });
+											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: alarmsCfg[item.alarmConfig.id].alarmLevel });
 											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
 											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
 

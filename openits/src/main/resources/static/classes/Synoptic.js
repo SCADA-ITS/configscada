@@ -29,15 +29,8 @@ import {
   updateElementState,
 } from "../lib/iconGenerator.js";
 
-import {columnsElementFormListAusol} from "../project/ausol/data/elementForm.js";
-import {columnsElementFormListBratislava} from "../project/bratislava/data/elementForm.js";
+import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-let columnsElementFormList = null;
-if (project) {
-  columnsElementFormList = columnsElementFormListBratislava
-} else { 
-  columnsElementFormList = columnsElementFormListAusol;
-}
 
 // Size of a row in the layers dropdown
 const DROPDOWN_ROW_SIZE = 43;

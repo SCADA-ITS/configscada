@@ -1,13 +1,5 @@
 import {genericTable} from "../data/genericTable.js";
-import {alarmsCfgBratislava} from "../project/bratislava/data/alarmsCfg.js";
-import {alarmsCfgAusol} from "../project/ausol/data/alarmsCfg.js";
-let alarmsCf = null;
-if (project) {
-	alarmsCf = alarmsCfgBratislava;
-} else { 
-	alarmsCf = alarmsCfgAusol;
-}
-
+import {alarmsCfg} from "../data/alarmsCfg.js";
 
 export default class Alarms {
 	constructor(data, metadata){
@@ -125,7 +117,7 @@ export default class Alarms {
 			let sourceElement = {};
 			let targetElement = {};
 			alarmConfig["id"] = element.alarmConfig.id;
-			alarmConfig["alarmLevel"] = alarmsCf[element.alarmConfig.id].alarmLevel;
+			alarmConfig["alarmLevel"] = alarmsCfg[element.alarmConfig.id].alarmLevel;
 			let deactivation = element.deactivation !== undefined ? element.deactivation === null ? null : element.deactivation : null;
 			let recognized = element.recognized !== undefined ? element.recognized === null ? null : element.recognized : null;
 			sourceElement["id"] = element.sourceElement.id;

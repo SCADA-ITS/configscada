@@ -1,4 +1,4 @@
-export let alarmsCfgBratislava = {
+export let alarmsCfg = {
     "AlarmConfig:2":  { "alarmLevel": 3 },
     "AlarmConfig:3":  { "alarmLevel": 3 },
     "AlarmConfig:4":  { "alarmLevel": 3 },

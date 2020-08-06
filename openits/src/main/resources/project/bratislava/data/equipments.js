@@ -1,4 +1,4 @@
-export let optionElementTypeBratislava = [
+export let optionElementType = [
 	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
 	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")},
 	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")},
@@ -12,7 +12,7 @@ export let optionElementTypeBratislava = [
 	{id:"ElementType:47", value: $.i18n("ElementType:47.alias")}
 ]
 
-export let columnsElementListBratislava = {
+export let columnsElementList = {
 	"ElementType:1": {
 		1:[
 			"alias",
@@ -175,7 +175,7 @@ export let columnsElementListBratislava = {
 	}
 }
 
-export let columnsElementConfigBratislava = {
+export let columnsElementConfig = {
 
 	"ElementType:1": {
 		1:{

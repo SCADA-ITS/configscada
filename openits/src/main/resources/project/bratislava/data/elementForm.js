@@ -1,4 +1,4 @@
-export let columnsElementFormListBratislava = {
+export let columnsElementFormList = {
 	"ElementType:1": {
 		"rows":[
 			"ElementTypeParam:1:1:4",

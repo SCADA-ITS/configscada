@@ -4,15 +4,8 @@ import { plans } from "../widgets/plans.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 
-import {columnsElementFormListAusol} from "../project/ausol/data/elementForm.js";
-import {columnsElementFormListBratislava} from "../project/bratislava/data/elementForm.js";
+import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-let columnsElementFormList = null;
-if (project) {
-  columnsElementFormList = columnsElementFormListBratislava
-} else {
-  columnsElementFormList = columnsElementFormListAusol;
-}
 
 // import { metro } from "../widgets/metro.js";
 // import { global } from "../widgets/global.js";

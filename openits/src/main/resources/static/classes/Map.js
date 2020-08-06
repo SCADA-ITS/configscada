@@ -3,7 +3,7 @@ import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 import ElementForm from "../classes/ElementForm.js";
-import { columnsElementFormListAusol } from "../project/ausol/data/elementForm.js";
+import { columnsElementFormListAusol } from "../data/elementForm.js";
 
 let map = null;
 var mapConf = "";
