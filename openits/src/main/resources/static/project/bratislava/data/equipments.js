@@ -2,7 +2,14 @@ export let optionElementTypeBratislava = [
 	{id:"ElementType:1", value: $.i18n("ElementType:1.alias")},
 	{id:"ElementType:2", value: $.i18n("ElementType:2.alias")},
 	{id:"ElementType:25", value: $.i18n("ElementType:25.alias")},
-	{id:"ElementType:34", value: $.i18n("ElementType:34.alias")}
+	{id:"ElementType:34", value: $.i18n("ElementType:34.alias")},
+	{id:"ElementType:41", value: $.i18n("ElementType:41.alias")},
+	{id:"ElementType:42", value: $.i18n("ElementType:42.alias")},
+	{id:"ElementType:43", value: $.i18n("ElementType:43.alias")},
+	{id:"ElementType:44", value: $.i18n("ElementType:44.alias")},
+	{id:"ElementType:45", value: $.i18n("ElementType:45.alias")},
+	{id:"ElementType:46", value: $.i18n("ElementType:46.alias")},
+	{id:"ElementType:47", value: $.i18n("ElementType:47.alias")}
 ]
 
 export let columnsElementListBratislava = {
@@ -76,6 +83,90 @@ export let columnsElementListBratislava = {
 			"ElementTypeParam:34:1:1",
 			"ElementTypeParam:34:1:2",
 			"ElementTypeParam:34:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:41": { 
+		1:[
+			"alias",
+			"ElementTypeParam:41:1:1",
+			"ElementTypeParam:41:1:2",
+			"ElementTypeParam:41:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:42": { 
+		1:[
+			"alias",
+			"ElementTypeParam:42:1:1",
+			"ElementTypeParam:42:1:2",
+			"ElementTypeParam:42:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:43": { 
+		1:[
+			"alias",
+			"ElementTypeParam:43:1:1",
+			"ElementTypeParam:43:1:2",
+			"ElementTypeParam:43:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:44": { 
+		1:[
+			"alias",
+			"ElementTypeParam:44:1:1",
+			"ElementTypeParam:44:1:2",
+			"ElementTypeParam:44:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:45": { 
+		1:[
+			"alias",
+			"ElementTypeParam:45:1:1",
+			"ElementTypeParam:45:1:2",
+			"ElementTypeParam:45:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:46": { 
+		1:[
+			"alias",
+			"ElementTypeParam:46:1:1",
+			"ElementTypeParam:46:1:2",
+			"ElementTypeParam:46:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:47": { 
+		1:[
+			"alias",
+			"ElementTypeParam:47:1:1",
+			"ElementTypeParam:47:1:2",
+			"ElementTypeParam:47:1:3"
 		],
 		2:[
 			"alias",
@@ -395,6 +486,209 @@ export let columnsElementConfigBratislava = {
 			},
             "ElementTypeParam:34:1:1003": { //"MANGO SESSION_UID"
 				"header": [ $.i18n("ElementTypeParam:34:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:41": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:41:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:41:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:41:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:41:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:41:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:41:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:41:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:41:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:42": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:42:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:42:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:42:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:42:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:42:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:42:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:42:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:42:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:43": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:43:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:43:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:43:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:43:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:43:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:43:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:43:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:43:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:44": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:44:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:44:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:44:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:44:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:44:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:44:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:44:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:44:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:45": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:45:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:45:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:45:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:45:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:45:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:45:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:45:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:45:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:46": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:46:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:46:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:46:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:46:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:46:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:46:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:46:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:46:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:47": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:47:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:47:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:47:1:2": { //"SECCION"
+				"header": [ $.i18n("ElementTypeParam:47:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:47:1:3": { //"CABINET_NAME"
+				"header": [ $.i18n("ElementTypeParam:47:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:47:1:1003": { //"MANGO SESSION_UID"
+				"header": [ $.i18n("ElementTypeParam:47:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
             }
 		},
 		2:{
