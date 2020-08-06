@@ -397,16 +397,16 @@ export default class ElementForm {
 								element["elementValues"] = [];
 
 							if (
-							elementTypeMap.getElementType(element.id) === elementTypeMap.DMS_ELEMENT_TYPE
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_C
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_64X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_A_B
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_192X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.PMV_B_D
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_128X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.MATRIX_PANEL_DGT
+							elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 							) {
 								let elementQuery = webix.proxy(
 									"GraphQL",`
@@ -634,16 +634,16 @@ export default class ElementForm {
 				// ICON
 				let iconoSvg = "";
 				if (
-					elementTypeMap.getElementType(data.id) === elementTypeMap.DMS_ELEMENT_TYPE
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_A_C
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_64X64
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_A_B
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_192X64
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.PMV_B_D
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_128X64
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_TEMP
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_TEMP_A
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.MATRIX_PANEL_DGT
+					elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 				) {
 					//"ElementType:10"){
 					
@@ -695,7 +695,7 @@ export default class ElementForm {
 			
 			try {
 			// STREAM     getElementType(elementIdString)
-				if(elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.CAM_ELEMENT_TYPE) { //"ElementType:2"){
+				if(elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.ELEMENT_TYPE_2_CAM) { //"ElementType:2"){
 					let stremMjpeg = null;
 					if(data.elementValues !== null){
 						stremMjpeg = data.elementValues.filter(elementValue => elementValue.id != null && elementTypeMap.getElementParamTypeId(elementValue.id) === elementTypeMap.CAM_STREAM_MJPEG); //"ElementTypeParam:2:1:3" );	

@@ -136,7 +136,7 @@ export function getElementIcon(element, suffix="") {
       (ic) => ic.state === elementState
     );
   } else {
-    elem_icon = staticsIcons[elementTypeMap.ETD_ELEMENT_TYPE]["state"].find(
+    elem_icon = staticsIcons[elementTypeMap.ELEMENT_TYPE_33_ETD]["state"].find(
       (ic) => ic.state === elementState
     );
   }
@@ -150,79 +150,79 @@ export function getElementIcon(element, suffix="") {
   }
 
   // icon based on element value
-  if (elementType === elementTypeMap.FAN_ELEMENT_TYPE) {
+  if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN) {
     fan.updateFanIcon(element, suffix);
-  } else if (elementType === elementTypeMap.BAR_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_8_BAR) {
     bar.updateBarIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {
     zone.updateZoneIcon(element, suffix);
-  } else if(elementType === elementTypeMap.LUX_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_12_LUX) {
     lux.updateLuxIcon(element, suffix);
-  }  else if(elementType === elementTypeMap.LUM_ELEMENT_TYPE) {
+  }  else if(elementType === elementTypeMap.ELEMENT_TYPE_14_LUM) {
     lum.updateLumIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ANEM_EXT_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT) {
     anem_ext.updateAnemExtIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ANEM_INT_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT) {
     anem_int.updateAnemIntIcon(element, suffix);
-  } else if(elementType === elementTypeMap.CO_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_19_CO) {
     co.updateCoIcon(element, suffix);
-  } else if(elementType === elementTypeMap.NO_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_20_NO) {
     no.updateNoIcon(element, suffix);
-  } else if(elementType === elementTypeMap.OPAC_ELEMENT_TYPE) {
+  } else if(elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC) {
     opac.updateOpacIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
     etd.updateEtdIcon(element, suffix);
-  } else if (elementType === elementTypeMap.WS_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
-  } else if (elementType === elementTypeMap.SOS_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
     sos.updateSosIcon(element, suffix);
-  } else if (elementType === elementTypeMap.SEM_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM) {
     sem.updateSemIcon(element, suffix);
-  } else if (elementType === elementTypeMap.FIRE_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE) {
     fire.updateFireIcon(element, suffix);
-  } else if (elementType === elementTypeMap.MEG_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_16_MEG) {
     meg.updateMegIcon(element, suffix);
-  } else if (elementType === elementTypeMap.DMS_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
     dms.updateDmsIcon(element, suffix);
-  } else if (elementType === elementTypeMap.CAM_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_2_CAM) {
     cam.updateCamIcon(element, suffix);
-  } else if (elementType === elementTypeMap.PLC_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_5_PLC) {
     plc.updatePlcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_25_CABIN) {
     plc.updatePlcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_SCN_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN) {
     scn.updateScnIcon(element, suffix);
-  } else if (elementType === elementTypeMap.PMV_A_C) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.MATRIX_PANEL_64X64) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.PMV_A_B) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.MATRIX_PANEL_192X64) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  }  else if (elementType === elementTypeMap.PMV_B_D) {
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  }  else if (elementType === elementTypeMap.MATRIX_PANEL_128X64) {
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  }  else if (elementType === elementTypeMap.MATRIX_PANEL_TEMP) {
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_31_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  }  else if (elementType === elementTypeMap.MATRIX_PANEL_TEMP_A) {
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_32_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  }  else if (elementType === elementTypeMap.MATRIX_PANEL_DGT) {
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_ATC_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC) {
     atc.updateAtcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL) {
     toll.updateTollIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_NRS_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS) {
     nrs.updateNrsIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_NRL_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL) {
     nrl.updateNrlIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D) {
     tfa3d.updateTfa3dIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TFA_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA) {
     tfa.updateTfaIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELECTRICAL_CABINET_TU_ELEMENT_TYPE) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU) {
     tu.updateTuIcon(element, suffix);
   } else {
     // FIX FOR CALLBACK HELL
@@ -278,78 +278,78 @@ export function getElementSVG(element, width, height, suffix="", state="", value
 
   let iconStr = "";
   switch (elementType) {
-    case "1":
-    case "2":
-    case "3":
-    case "4":
-    case "5":
-    case "11":
-    case "15":
-    case "16":
-    case "25":
-    case "34":
-    case "41":
-    case "42":
-    case "43":
-    case "44":
-    case "45":
-    case "46":
-    case "47":
+    case elementTypeMap.ELEMENT_TYPE_1_WS:
+    case elementTypeMap.ELEMENT_TYPE_2_CAM:
+    case elementTypeMap.ELEMENT_TYPE_3_DET:
+    case elementTypeMap.ELEMENT_TYPE_4_SEC:
+    case elementTypeMap.ELEMENT_TYPE_5_PLC:
+    case elementTypeMap.ELEMENT_TYPE_11_SOS:
+    case elementTypeMap.ELEMENT_TYPE_15_FIRE:
+    case elementTypeMap.ELEMENT_TYPE_16_MEG:
+    case elementTypeMap.ELEMENT_TYPE_25_CABIN:
+    case elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN:
+    case elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC:
+    case elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL:
+    case elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS:
+    case elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D:
+    case elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA:
+    case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
+    case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
-    case "7":
+    case elementTypeMap.ELEMENT_TYPE_7_ZONE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix, state) + '</g>';
       break;
-    case "8":
+    case elementTypeMap.ELEMENT_TYPE_8_BAR:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix, state) + '</g>';
       break;
-    case "9":
+    case elementTypeMap.ELEMENT_TYPE_9_FAN:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix, state) + '</g>';
       break;
-    case "10":
+    case elementTypeMap.ELEMENT_TYPE_10_DMS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
-    case "12":
+    case elementTypeMap.ELEMENT_TYPE_12_LUX:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix, state) + '</g>';
       break;
-    case "13":
+    case elementTypeMap.ELEMENT_TYPE_13_SEM:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix, state) + '</g>';
       break;
-    case "14":
+    case elementTypeMap.ELEMENT_TYPE_14_LUM:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix, state) + '</g>';
       break;
-   case "17":
+   case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix, state) + '</g>';
       break;
-    case "18":
+    case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix, state) + '</g>';
       break;
-    case "19":
+    case elementTypeMap.ELEMENT_TYPE_19_CO:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateCoIcon(element, suffix, state) + '</g>';
       break;
-    case "20":
+    case elementTypeMap.ELEMENT_TYPE_20_NO:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateNoIcon(element, suffix, state) + '</g>';
       break;
-    case "21":
+    case elementTypeMap.ELEMENT_TYPE_21_OPAC:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix, state) + '</g>';
       break;
-    case "22":
-    case "23":
+    case elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS:
+    case elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
-    case "24":
-    case "26":
-    case "28":
-    case "35":
+    case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
+    case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
+    case elementTypeMap.ELEMENT_TYPE_28_PMV_192X64:
+    case elementTypeMap.ELEMENT_TYPE_35_PMV:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
-    case "27":
-    case "29":
-    case "30":
-    case "31":
+    case elementTypeMap.ELEMENT_TYPE_27_PMV_A_B:
+    case elementTypeMap.ELEMENT_TYPE_29_PMV_B_D:
+    case elementTypeMap.ELEMENT_TYPE_30_PMV_128X64:
+    case elementTypeMap.ELEMENT_TYPE_31_PMV:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
       break;                              
-    case "33":
+    case elementTypeMap.ELEMENT_TYPE_33_ETD:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;      
     default:

@@ -1,44 +1,44 @@
-export const WS_ELEMENT_TYPE = "1";
-export const CAM_ELEMENT_TYPE = "2";
-export const DET_ELEMENT_TYPE = "3";
-export const SEC_ELEMENT_TYPE = "4";
-export const PLC_ELEMENT_TYPE = "5";
-export const ZONE_ELEMENT_TYPE = "7";
-export const BAR_ELEMENT_TYPE = "8";
-export const FAN_ELEMENT_TYPE = "9";
-export const DMS_ELEMENT_TYPE = "10";
-export const SOS_ELEMENT_TYPE = "11";
-export const LUX_ELEMENT_TYPE = "12";
-export const SEM_ELEMENT_TYPE = "13";
-export const LUM_ELEMENT_TYPE = "14";
-export const FIRE_ELEMENT_TYPE = "15";
-export const MEG_ELEMENT_TYPE = "16";
-export const ANEM_EXT_ELEMENT_TYPE = "17";
-export const ANEM_INT_ELEMENT_TYPE = "18";
-export const CO_ELEMENT_TYPE = "19";
-export const NO_ELEMENT_TYPE = "20";
-export const OPAC_ELEMENT_TYPE = "21";
-export const ETD_MODBUS_ELEMENT_TYPE = "22";
-export const ETD_DETECTOR_ELEMENT_TYPE = "23";
-export const PMV_A_C = "24";
-export const ELECTRICAL_CABINET_ELEMENT_TYPE = "25";
-export const MATRIX_PANEL_64X64 = "26";
-export const PMV_A_B = "27";
-export const MATRIX_PANEL_192X64 = "28";
-export const PMV_B_D = "29";
-export const MATRIX_PANEL_128X64 = "30";
-export const MATRIX_PANEL_TEMP = "31";
-export const MATRIX_PANEL_TEMP_A = "32";
-export const ETD_ELEMENT_TYPE = "33";
-export const ELECTRICAL_CABINET_SCN_ELEMENT_TYPE = "34";
-export const MATRIX_PANEL_DGT = "35";
-export const ELECTRICAL_CABINET_ATC_ELEMENT_TYPE = "41";
-export const ELECTRICAL_CABINET_NRL_ELEMENT_TYPE = "42";
-export const ELECTRICAL_CABINET_NRS_ELEMENT_TYPE = "43";
-export const ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE = "44";
-export const ELECTRICAL_CABINET_TFA_ELEMENT_TYPE = "45";
-export const ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE = "46";
-export const ELECTRICAL_CABINET_TU_ELEMENT_TYPE = "47";
+export const ELEMENT_TYPE_1_WS = "1";
+export const ELEMENT_TYPE_2_CAM = "2";
+export const ELEMENT_TYPE_3_DET = "3";
+export const ELEMENT_TYPE_4_SEC = "4";
+export const ELEMENT_TYPE_5_PLC = "5";
+export const ELEMENT_TYPE_7_ZONE = "7";
+export const ELEMENT_TYPE_8_BAR = "8";
+export const ELEMENT_TYPE_9_FAN = "9";
+export const ELEMENT_TYPE_10_DMS = "10";
+export const ELEMENT_TYPE_11_SOS = "11";
+export const ELEMENT_TYPE_12_LUX = "12";
+export const ELEMENT_TYPE_13_SEM = "13";
+export const ELEMENT_TYPE_14_LUM = "14";
+export const ELEMENT_TYPE_15_FIRE = "15";
+export const ELEMENT_TYPE_16_MEG = "16";
+export const ELEMENT_TYPE_17_ANEM_EXT = "17";
+export const ELEMENT_TYPE_18_ANEM_INT = "18";
+export const ELEMENT_TYPE_19_CO = "19";
+export const ELEMENT_TYPE_20_NO = "20";
+export const ELEMENT_TYPE_21_OPAC = "21";
+export const ELEMENT_TYPE_22_ETD_MODBUS = "22";
+export const ELEMENT_TYPE_23_ETD_DETECTOR = "23";
+export const ELEMENT_TYPE_24_PMV_A_C = "24";
+export const ELEMENT_TYPE_25_CABIN = "25";
+export const ELEMENT_TYPE_26_PMV_64X64 = "26";
+export const ELEMENT_TYPE_27_PMV_A_B = "27";
+export const ELEMENT_TYPE_28_PMV_192X64 = "28";
+export const ELEMENT_TYPE_29_PMV_B_D = "29";
+export const ELEMENT_TYPE_30_PMV_128X64 = "30";
+export const ELEMENT_TYPE_31_PMV = "31";
+export const ELEMENT_TYPE_32_PMV = "32";
+export const ELEMENT_TYPE_33_ETD = "33";
+export const ELEMENT_TYPE_34_CABIN_SCN = "34";
+export const ELEMENT_TYPE_35_PMV = "35";
+export const ELEMENT_TYPE_41_CABIN_ATC = "41";
+export const ELEMENT_TYPE_42_CABIN_NRL = "42";
+export const ELEMENT_TYPE_43_CABIN_NRS = "43";
+export const ELEMENT_TYPE_44_CABIN_TFA3D = "44";
+export const ELEMENT_TYPE_45_CABIN_TFA = "45";
+export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
+export const ELEMENT_TYPE_47_CABIN_TU = "47";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -170,41 +170,41 @@ export function getElementTypeName(elementTypeIdString) {
     case "ROAD":
       ret = $.i18n("synoptic.layer.road");
       break;
-    case WS_ELEMENT_TYPE:
-    case CAM_ELEMENT_TYPE:
-    case DET_ELEMENT_TYPE:
-    case SEC_ELEMENT_TYPE:
-    case PLC_ELEMENT_TYPE:
-    case ZONE_ELEMENT_TYPE:
-    case BAR_ELEMENT_TYPE:
-    case FAN_ELEMENT_TYPE:
-    case DMS_ELEMENT_TYPE:
-    case SOS_ELEMENT_TYPE:
-    case LUX_ELEMENT_TYPE:
-    case SEM_ELEMENT_TYPE:
-    case LUM_ELEMENT_TYPE:
-    case FIRE_ELEMENT_TYPE:
-    case MEG_ELEMENT_TYPE:
-    case ANEM_EXT_ELEMENT_TYPE:
-    case ANEM_INT_ELEMENT_TYPE:
-    case CO_ELEMENT_TYPE:
-    case NO_ELEMENT_TYPE:
-    case OPAC_ELEMENT_TYPE:
-    case ETD_MODBUS_ELEMENT_TYPE:
-    case ETD_DETECTOR_ELEMENT_TYPE:
-    case ETD_ELEMENT_TYPE:
+    case ELEMENT_TYPE_1_WS:
+    case ELEMENT_TYPE_2_CAM:
+    case ELEMENT_TYPE_3_DET:
+    case ELEMENT_TYPE_4_SEC:
+    case ELEMENT_TYPE_5_PLC:
+    case ELEMENT_TYPE_7_ZONE:
+    case ELEMENT_TYPE_8_BAR:
+    case ELEMENT_TYPE_9_FAN:
+    case ELEMENT_TYPE_10_DMS:
+    case ELEMENT_TYPE_11_SOS:
+    case ELEMENT_TYPE_12_LUX:
+    case ELEMENT_TYPE_13_SEM:
+    case ELEMENT_TYPE_14_LUM:
+    case ELEMENT_TYPE_15_FIRE:
+    case ELEMENT_TYPE_16_MEG:
+    case ELEMENT_TYPE_17_ANEM_EXT:
+    case ELEMENT_TYPE_18_ANEM_INT:
+    case ELEMENT_TYPE_19_CO:
+    case ELEMENT_TYPE_20_NO:
+    case ELEMENT_TYPE_21_OPAC:
+    case ELEMENT_TYPE_22_ETD_MODBUS:
+    case ELEMENT_TYPE_23_ETD_DETECTOR:
+    case ELEMENT_TYPE_33_ETD:
     case MATRIX_ELEMENT_TYPE:
     case FULL_MATRIX_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_ELEMENT_TYPE:
-    case MATRIX_PANEL_DGT:
-    case ELECTRICAL_CABINET_SCN_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_ATC_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_NRS_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_NRL_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_TFA_ELEMENT_TYPE:
-    case ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE: 
-    case ELECTRICAL_CABINET_TU_ELEMENT_TYPE:
+    case ELEMENT_TYPE_25_CABIN:
+    case ELEMENT_TYPE_35_PMV:
+    case ELEMENT_TYPE_34_CABIN_SCN:
+    case ELEMENT_TYPE_41_CABIN_ATC:
+    case ELEMENT_TYPE_43_CABIN_NRS:
+    case ELEMENT_TYPE_42_CABIN_NRL:
+    case ELEMENT_TYPE_44_CABIN_TFA3D:
+    case ELEMENT_TYPE_45_CABIN_TFA:
+    case ELEMENT_TYPE_46_CABIN_TOLL: 
+    case ELEMENT_TYPE_47_CABIN_TU:
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
     default:
