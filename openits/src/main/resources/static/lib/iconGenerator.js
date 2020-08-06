@@ -279,18 +279,22 @@ export function getElementSVG(element, width, height, suffix="", state="", value
   let iconStr = "";
   switch (elementType) {
     case "1":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "2":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "3":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "4":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "5":
+    case "11":
+    case "15":
+    case "16":
+    case "25":
+    case "34":
+    case "41":
+    case "42":
+    case "43":
+    case "44":
+    case "45":
+    case "46":
+    case "47":
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case "7":
@@ -305,9 +309,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case "10":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
-    case "11":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "12":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix, state) + '</g>';
       break;
@@ -317,13 +318,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case "14":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix, state) + '</g>';
       break;
-    case "15":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "16":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "17":
+   case "17":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix, state) + '</g>';
       break;
     case "18":
@@ -339,62 +334,24 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix, state) + '</g>';
       break;
     case "22":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
-      break;
     case "23":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;
     case "24":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
-    case "25":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     case "26":
+    case "28":
+    case "35":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case "27":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
-    case "28":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
     case "29":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
     case "30":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
     case "31":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
       break;                              
     case "33":
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
       break;      
-    case "34":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "35":
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
-      break;
-    case "41":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "42":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "43":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "44":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "45":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
-    case "46":
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
-      break;
     default:
       console.log("Icon not found");
       break;

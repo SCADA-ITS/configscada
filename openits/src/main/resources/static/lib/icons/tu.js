@@ -24,5 +24,5 @@ export function updateTuIcon(element, suffix = "") {
     if(document.getElementById(element.id + suffix) != null) {
       document.getElementById(element.id + suffix).setAttribute("href", "./img/" + elem_icon);
     }
-  }
+  }  
 }

@@ -96,7 +96,7 @@ export default class ElementForm {
 					template: function (obj) {
 						return obj.value;
 					},
-					css: { "text-align": "left !important" }
+					css: { "text-align": "center !important" }
 				},
 				{
 					id: "elementHeaderTitle"+this.id,
@@ -105,6 +105,7 @@ export default class ElementForm {
 					data: {
 						value: ""
 					},
+					width: 400,
 					template: function (obj) {
 						return obj.value;
 					},

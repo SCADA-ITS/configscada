@@ -197,26 +197,13 @@ export function getElementTypeName(elementTypeIdString) {
     case FULL_MATRIX_ELEMENT_TYPE:
     case ELECTRICAL_CABINET_ELEMENT_TYPE:
     case MATRIX_PANEL_DGT:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_SCN_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_ATC_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_NRS_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_NRL_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_TFA3D_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
     case ELECTRICAL_CABINET_TFA_ELEMENT_TYPE:
-      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
-      break;
+    case ELECTRICAL_CABINET_TOLL_ELEMENT_TYPE: 
     case ELECTRICAL_CABINET_TU_ELEMENT_TYPE:
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
