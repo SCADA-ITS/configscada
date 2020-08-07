@@ -4,384 +4,75 @@ import {availablePictos} from "../data/graphics.js";
 const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
 const TOP_INIT = 5;
 
-function configData (data) {
-	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG)[0].value;
-	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
-	//console.log(cfgJson);
-	let maxRow = 0;
-	let maxCol = 0;
-	let maxTamX = 0;
-	let maxTamY = 0;
-	let contador_zonas = 0;
-	let contador = 1;
-	let cellList = [];
-	let v_id_list = [];
-	cfgJson.Subpaneles.forEach(element => {
-		let cellListSubpanel = [];
-		contador_zonas += 1;
-		let col = parseInt(element.NumZonas.split("x")[0]);
-		let row = parseInt(element.NumZonas.split("x")[1]);
-		let tamX = parseInt(element.Tamanio.split("x")[0]);
-		let tamY = parseInt(element.Tamanio.split("x")[1]);
-		maxCol = maxCol + col;
-		maxRow = maxRow < row ? row : maxRow;
-		maxTamX = maxTamX + tamX;
-		maxTamY = maxTamY < tamY ? tamY : maxTamY;
-		
-		let elementos_zona = col * row;
-
-		for (let i = 1; i <= elementos_zona; i++) {
-			cellListSubpanel.push(contador_zonas + "_" + contador + "_" + col + "_" + row + "_" + tamX + "_" + tamY + "_");
-			contador += 1;
-		}
-		let v_col = 1;
-		for (let j = 0; j < cellListSubpanel.length; j++) {
-			if (v_col === col) {
-				cellListSubpanel[j] = cellListSubpanel[j] + v_col + "_";
-				v_col= 1;
-			} else {
-				cellListSubpanel[j] = cellListSubpanel[j] + v_col + "_";
-				v_col +=1;
-			}
-		};
-		let v_row= 1;
-		for (let j = 0; j < cellListSubpanel.length; j++) {
-			if (v_row === row) {
-				cellListSubpanel[j] = cellListSubpanel[j] + v_row;
-				v_row= 1;
-			} else {
-				cellListSubpanel[j] = cellListSubpanel[j] + v_row;
-				v_row +=1;
-			}
-			
-		};
-		let element_control = 0;
-		element.Zonas.forEach(item => {
-			let tamZoneX = parseInt(item.Tamanio.split("x")[0]);
-			let tamZoneY = parseInt(item.Tamanio.split("x")[1]);
-			let panel_type = item.Tipo === "Grafico" ? "G" : "T";
-			let numLineas = parseInt(item.NumLineas);
-			let tamLineas = parseInt(item.TamLineas);
-			cellListSubpanel[element_control] = cellListSubpanel[element_control] + "_" + tamZoneX + "_" + tamZoneY + "_" + panel_type + "_" + numLineas.toString() + "_" + tamLineas.toString();
-			element_control += 1;
-		});
-		cellList = [...cellList, ...cellListSubpanel];
-	});
-	//console.log(cellList);
-	let pictos_activos = {};
-	data.elementValues.forEach(element => {
-		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType ===2) {  //ese numero 3 será una constante
-			pictos_activos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = element.value;
-		}
-	});
-
-	let pictos_permitidos = {};
-	let v_pictos_total = [];
-
-	data.elementValues.forEach(element => {
-		let v_graphs = [];
-		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType === 2) { 
-			try {
-				element.elementTypeParam.graphics.forEach(item => {
-					if (cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
-						v_graphs.push(item.id.split(":")[2]);
-						v_pictos_total.push(item.id.split(":")[2]);
-					} else {
-						let temporal = {};
-						item.graphicValues.forEach(item3 => {
-							temporal[item3.id.split(":")[3]] = item3.value;
-						});
-						v_graphs.push(temporal);
-					}				
-				});
-			} catch {}
-			pictos_permitidos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
-		}
-	});
-	//console.log(pictos_permitidos);
-	let unique_pictos = [...new Set(v_pictos_total)];
-	let pictos_types = [];
-	unique_pictos.forEach(element => {
-		pictos_types.push(availablePictos[element].type);
-	});
-	let unique_pictos_types = [...new Set(pictos_types)];
-	let availablePictosList = [];
-	unique_pictos_types.forEach(element => {
-		availablePictosList.push({ id: "panelManagerTree_Type_" + element, type: element, visibility:"hidden",image:"0", value:$.i18n("pictograms.type." + element), open:false, data:[]});
-	});
-	unique_pictos.forEach(element => {
-		availablePictosList.forEach(item => {
-			if (item.type ===availablePictos[element].type)
-				item.data.push({ visibility:"visible",image: element, value:$.i18n("VmsGraphic:2:" + element), type_img: availablePictos[element].file_type, picto:element });
-		});
-	});
-	let cells_s = [];
-	let numElement = 0;
-	let v_left = 2; //padding inicial 
-	let v_top = TOP_INIT;
-
-	cfgJson.Subpaneles.forEach(element => {
-		element.Zonas.forEach(item => {
-			let tamZoneX = parseInt(item.Tamanio.split("x")[0]);
-			let tamZoneY = parseInt(item.Tamanio.split("x")[1]);
-			let panel_type = item.Tipo;
-			let numLineas = parseInt(item.NumLineas);
-			let tamLineas = parseInt(item.TamLineas);
-			let posx = parseInt(cellList[numElement].split("_")[8]) - 1;
-			let posy = parseInt(cellList[numElement].split("_")[9]) - 1;
-			let v_border = 2; //Borde negro del icono
-			let v_padding = 4; // padding entre el icono y el borde negro
-			let v_template = 8; //padding del template se come 2px por cada lado
-			//Aqui dependiendo si es picto o texto lo modificaremos. 
-			//console.log(pictos_activos);
-			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] : null;
-			//console.log(v_src);
-			let v_file = null;
-			try {
-				v_file = availablePictos[v_src].file_type;
-			} catch {}
-			let v_body = null;
-			if (panel_type === "Grafico") {
-				v_body = { 
-					view:"template", 
-					id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10], 
-					data:{
-						src: v_src,
-						file_type: v_file
-					},
-					template:function(obj){
-						let v_css = "";
-						if(tamZoneX === tamZoneY){
-							v_css = "width: -moz-available;";
-						} else {
-							if (tamZoneX > tamZoneY)
-								v_css = "width: " + ((tamZoneY * SCALE_ZONE) - v_border - v_padding - v_template ).toString() + "px;";
-						}
-						if (obj.src !== undefined && obj.src !== null)
-							return '<img src="./img/pictograms/'+obj.src+'.'+ obj.file_type +'" style="' + v_css + ' max-width:100%;border: '+ v_border +'px solid black;padding: ' + v_border + 'px;"/>';
-						else
-							return tamZoneX.toString() + "x" + tamZoneY.toString();
-					}
-				}
-				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]);
-			} else {
-				let v_lineas = [];
-				let v_form = null;
-				let v_text = v_src !== null ? v_src.split(":$") : "";
-				for (let i=0; i<numLineas; i++) {
-					v_lineas.push(
-						{
-							view: "text", 
-							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
-							value: v_text[i],
-							//attributes:{ maxlength: parseInt(cellList[numElement].split("_")[12]) },
-							on: { 
-								onBlur: function(obj) {
-									//console.log(obj); 
-								},
-								onKeyPress: function(code, e) {
-									let num_Element = parseInt($$(e.target).config.id.split("_")[1]);
-									if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
-										let v_input = e.target;
-										let tamMaxLine = parseInt(cellList[num_Element - 1 ].split("_")[12]);
-										let v_suma = 0;
-										let v_input_value_no_especial = v_input.value.split(":%");
-										if (v_input_value_no_especial.length === 1) {
-											let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt());
-											if (c_permitido) {
-							
-											//Sumamos los que tenemos 
-												for(let i = 0; i < v_input.value.length; i++) {
-													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
-													v_suma = v_suma + parseInt(ptype.split("x")[0]);
-												}
-												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt())[1];
-												v_suma = v_suma + parseInt(ptype.split("x")[0]);
-											
-											//Si es un caracter permitido 
-											} else {
-												//caracter no permitido
-												webix.message({type:"error", text:"CARACTER NO PERMITIDO"});
-												//Eliminamos el caracter
-												let val = $$(e.target).getValue();
-												$$(e.target).setValueHere(val);
-												//Eliminamos el caracter
-												$$(e.target).define({
-													value:val
-												});
-												$$(e.target).refresh();
-											}
-										} else {
-											let v_control = true;
-											let v_input_array_string = [];
-											let cadena = v_input.value + e.key;
-											let v_sumar = true;
-											
-											while(v_control) {
-												let pos = 0;
-												if (cadena.search(":%")>=0) {
-													v_input_array_string.push(cadena.substring(pos,cadena.search(":%")));
-													let cadena2 = cadena.substring(cadena.search(":%") + 2);
-													if (cadena2.search(":%")>=0) {
-														pos = cadena2.search(":%") + 2;
-														//al ser cierre de cadena generamos una nueva cadena
-														let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
-														//Comprobamos que el ascii está permitido 
-														let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_code.charCodeAt());
-														if (c_permitido) {
-															//existe está permitido
-														} else {
-															webix.message({type:"error", text:"CARACTER EN ASCII NO PERMITIDO"});
-															v_control = false;
-														}
-														v_input_array_string.push(v_code);
-														cadena = cadena2.substring(pos);
-													} else {
-														//no hacemos nada, ya que aun no han cerrado la cadena especial, ni siquiera para sumar
-														v_control = false;
-														v_input_array_string.push(cadena);
-													}
-												} else {
-													v_input_array_string.push(cadena);
-													v_control = false;
-												}
-											}
-											let texto = "";
-											
-											for(let i = 0; i < v_input_array_string.length; i++) {
-												texto = texto + v_input_array_string[i];
-											}
-											//Sumamos los que tenemos 
-											for(let i = 0; i < texto.length; i++) {
-												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === texto[i].charCodeAt())[1];
-												v_suma = v_suma + parseInt(ptype.split("x")[0]);
-											}
-										
-										//Si es un ca
-										}
-										if(v_suma > tamMaxLine) {
-											webix.message({type:"error", text:"TAMAÑO MAXIMO SUPERADO"});
-											//$$(e.target).define({
-											//	css: { "background-color": "#fff6f6", "border-color": "#fea5a8"}
-											//});
-											//$$(e.target).refresh();
-										} else {
-											//$$(e.target).define({
-											//	css: { "background": "#ffffff", "border-color": "#cccccc"}
-											//});
-											//$$(e.target).refresh();
-										}
-
-	/*
-
-										console.log(pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]]);
-										pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].forEach(el => {
-											console.log(parseInt(el[2].split("CH")[1],16));
-											console.log(code);
-											if (parseInt(el[2].split("CH")[1],16) === parseInt(e))
-												console.log(el);
-										});
-	*/
-
-											//console.log(parseInt(el[2].split("CH")[1],16)) });
-										//let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code);
-										//console.log(ptype);
-									
-									}
-								}
-							}
-						}
-					);
-					v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i);
-				}
-				v_form = v_lineas;
-				v_body = {					
-					view: "form",
-					id: "panel_" + cellList[numElement].split("_")[1] + "_FORM_",
-					elements:v_form
-				};
-			}
-			//PINTAR 
-			//ZONAS
-			if (numElement !== 0) {
-				//si la zona es distinta aumentamos left)
-				//si la zona es la misma y la x es distinta aumentamos left
-				//si la zona es la misma y la x es la misma aunmentamos top 
-				if (parseInt(cellList[numElement].split("_")[0]) !== parseInt(cellList[numElement - 1].split("_")[0]) ) {
-					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
-					v_top = TOP_INIT;
-				}
-				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) !== parseInt(cellList[numElement - 1].split("_")[6]) ) {
-					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
-				}
-
-				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) === parseInt(cellList[numElement - 1].split("_")[6]) ) {
-					v_top = v_top + 5 + parseInt(cellList[numElement - 1].split("_")[9]) * SCALE_ZONE;				
-				}
-					cells_s.push({ 
-						view:"panel", 
-						css: { "text-align": "center !important" },
-						top: v_top, left:v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
-						cellValues: cellList[numElement],
-						id: "panel_" + cellList[numElement].split("_")[1], 
-						//header: tamZoneX + "x" + tamZoneY, 
-						body: v_body,
-					});
-
-			} else {
-				cells_s.push({ 
-					view:"panel", 
-					css: { "text-align": "center !important" },
-					top: v_top, left: v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
-					cellValues: cellList[numElement],
-					id: "panel_" + cellList[numElement].split("_")[1], 
-					body: v_body,
-				});
-			}
-			numElement += 1;
-		});
-	});
-
-	let v_commandtypeId = null;
-	let v_commands = [];
-	data.elementType.commandElementTypes.forEach(element => {
-		if (element.alias === "SEND MESSAGE") {
-			v_commandtypeId = element.id;
-			element.commandElementTypeParams.forEach(item => {
-				v_commands.push(item.id);
-			});
-		}
-	});
-
-	return { maxTamX: maxTamX, 
-			 maxTamY: maxTamY, 
-			 cols: maxCol, 
-			 rows: maxRow, 
-			 zonas: contador_zonas, 
-			 cod_listaCells: cellList, 
-			 listaCells: cells_s, 
-			 v_id_list: v_id_list,
-			 pictos_permitidos: pictos_permitidos, 
-			 pictos_activos:pictos_activos, 
-			 commands:v_commands.sort(), 
-			 availablePictosList: availablePictosList, 
-			 v_commandtypeId: v_commandtypeId,
-			 elementId: data.id
-			};
-}
-
-
 export default class PanelManager {
 	constructor(id, commandElementType) {
-		this.id = id;
-		this.commandElementType = commandElementType;
+		this.id=id;
+		this.graphAll = `query { 
+			getElement(elementId: "` + this.id + `"){
+				id
+				alias
+				description
+				state
+				elementType {
+			        id
+			        alias
+					commandElementTypes{
+						id
+						alias
+						commandElementTypeParams{
+						  id
+						  alias
+						  dataType
+						}
+					}
+		      	}
+				elementValues {
+					id 
+					value 
+					alerted 
+					elementTypeParam {
+						id 
+						alias  
+						paramType 
+						representation
+						graphics {id alias graphicType graphicValues {id value}}
+					}
+				}
+				alarms{
+					id
+					alarmConfig {id alias alarmLevel}
+					recognized
+					recognizedComments
+					activation
+					activationComments
+					deactivation
+					deactivationComments
+				}
+			}
+		}`;
+		this.graphqlAll = webix.proxy("GraphQL", this.graphAll);
+	}
+
+	getInitComponent(){
+		let initComponent = {
+			view:"form",
+			id:'pmvSignalForm',
+			elements:{}
+		  };
+		return initComponent;
+	}
+
+	loadComponent(){
+		this.graphqlAll.load().then(dataElement => {
+			this.doIt(dataElement);
+			webix.ui(this.getComponent(), $$('pmvSignalForm'));
+			this.doActions();
+		});
+	}
+
+	doIt(commandElementType) {
 		this.elementTypeId = "ElementType:" + elementTypeMap.getElementType(this.id);
-		this.config = configData(this.commandElementType);
-		//console.log(this.config);
-		//this.values = this.config.pictos_activos;
-		let self = this;
-
-
+		this.config = configData(commandElementType);
 		this.widgets = {
 			id:"tree_zone_panelManager",
 			rows:[
@@ -981,13 +672,370 @@ export default class PanelManager {
 		});
 
 	}
+}
 
-	loadData() {
-		(async function(){
-			var vinit = await self.init();
-			var vgetComponent = await self.getComponent();
-			var vvdoActions = await self.doActions();
-		})();
-	}
+function configData(data) {
+	let panel_config = data.elementValues.filter(element => elementTypeMap.getElementTypeParam(element.id) === elementTypeMap.PANEL_MANAGER_CONFIG)[0].value;
+	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
+	//console.log(cfgJson);
+	let maxRow = 0;
+	let maxCol = 0;
+	let maxTamX = 0;
+	let maxTamY = 0;
+	let contador_zonas = 0;
+	let contador = 1;
+	let cellList = [];
+	let v_id_list = [];
+	cfgJson.Subpaneles.forEach(element => {
+		let cellListSubpanel = [];
+		contador_zonas += 1;
+		let col = parseInt(element.NumZonas.split("x")[0]);
+		let row = parseInt(element.NumZonas.split("x")[1]);
+		let tamX = parseInt(element.Tamanio.split("x")[0]);
+		let tamY = parseInt(element.Tamanio.split("x")[1]);
+		maxCol = maxCol + col;
+		maxRow = maxRow < row ? row : maxRow;
+		maxTamX = maxTamX + tamX;
+		maxTamY = maxTamY < tamY ? tamY : maxTamY;
+		
+		let elementos_zona = col * row;
 
+		for (let i = 1; i <= elementos_zona; i++) {
+			cellListSubpanel.push(contador_zonas + "_" + contador + "_" + col + "_" + row + "_" + tamX + "_" + tamY + "_");
+			contador += 1;
+		}
+		let v_col = 1;
+		for (let j = 0; j < cellListSubpanel.length; j++) {
+			if (v_col === col) {
+				cellListSubpanel[j] = cellListSubpanel[j] + v_col + "_";
+				v_col= 1;
+			} else {
+				cellListSubpanel[j] = cellListSubpanel[j] + v_col + "_";
+				v_col +=1;
+			}
+		};
+		let v_row= 1;
+		for (let j = 0; j < cellListSubpanel.length; j++) {
+			if (v_row === row) {
+				cellListSubpanel[j] = cellListSubpanel[j] + v_row;
+				v_row= 1;
+			} else {
+				cellListSubpanel[j] = cellListSubpanel[j] + v_row;
+				v_row +=1;
+			}
+			
+		};
+		let element_control = 0;
+		element.Zonas.forEach(item => {
+			let tamZoneX = parseInt(item.Tamanio.split("x")[0]);
+			let tamZoneY = parseInt(item.Tamanio.split("x")[1]);
+			let panel_type = item.Tipo === "Grafico" ? "G" : "T";
+			let numLineas = parseInt(item.NumLineas);
+			let tamLineas = parseInt(item.TamLineas);
+			cellListSubpanel[element_control] = cellListSubpanel[element_control] + "_" + tamZoneX + "_" + tamZoneY + "_" + panel_type + "_" + numLineas.toString() + "_" + tamLineas.toString();
+			element_control += 1;
+		});
+		cellList = [...cellList, ...cellListSubpanel];
+	});
+	//console.log(cellList);
+	let pictos_activos = {};
+	data.elementValues.forEach(element => {
+		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType ===2) {  //ese numero 3 será una constante
+			pictos_activos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = element.value;
+		}
+	});
+
+	let pictos_permitidos = {};
+	let v_pictos_total = [];
+
+	data.elementValues.forEach(element => {
+		let v_graphs = [];
+		if (parseInt(element.elementTypeParam.id.split(":")[3]) > 1000 && element.elementTypeParam.paramType === 2) { 
+			try {
+				element.elementTypeParam.graphics.forEach(item => {
+					if (cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
+						v_graphs.push(item.id.split(":")[2]);
+						v_pictos_total.push(item.id.split(":")[2]);
+					} else {
+						let temporal = {};
+						item.graphicValues.forEach(item3 => {
+							temporal[item3.id.split(":")[3]] = item3.value;
+						});
+						v_graphs.push(temporal);
+					}				
+				});
+			} catch {}
+			pictos_permitidos["panel_" + (parseInt(element.elementTypeParam.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.elementTypeParam.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
+		}
+	});
+	//console.log(pictos_permitidos);
+	let unique_pictos = [...new Set(v_pictos_total)];
+	let pictos_types = [];
+	unique_pictos.forEach(element => {
+		pictos_types.push(availablePictos[element].type);
+	});
+	let unique_pictos_types = [...new Set(pictos_types)];
+	let availablePictosList = [];
+	unique_pictos_types.forEach(element => {
+		availablePictosList.push({ id: "panelManagerTree_Type_" + element, type: element, visibility:"hidden",image:"0", value:$.i18n("pictograms.type." + element), open:false, data:[]});
+	});
+	unique_pictos.forEach(element => {
+		availablePictosList.forEach(item => {
+			if (item.type ===availablePictos[element].type)
+				item.data.push({ visibility:"visible",image: element, value:$.i18n("VmsGraphic:2:" + element), type_img: availablePictos[element].file_type, picto:element });
+		});
+	});
+	let cells_s = [];
+	let numElement = 0;
+	let v_left = 2; //padding inicial 
+	let v_top = TOP_INIT;
+
+	cfgJson.Subpaneles.forEach(element => {
+		element.Zonas.forEach(item => {
+			let tamZoneX = parseInt(item.Tamanio.split("x")[0]);
+			let tamZoneY = parseInt(item.Tamanio.split("x")[1]);
+			let panel_type = item.Tipo;
+			let numLineas = parseInt(item.NumLineas);
+			let tamLineas = parseInt(item.TamLineas);
+			let posx = parseInt(cellList[numElement].split("_")[8]) - 1;
+			let posy = parseInt(cellList[numElement].split("_")[9]) - 1;
+			let v_border = 2; //Borde negro del icono
+			let v_padding = 4; // padding entre el icono y el borde negro
+			let v_template = 8; //padding del template se come 2px por cada lado
+			//Aqui dependiendo si es picto o texto lo modificaremos. 
+			//console.log(pictos_activos);
+			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] : null;
+			//console.log(v_src);
+			let v_file = null;
+			try {
+				v_file = availablePictos[v_src].file_type;
+			} catch {}
+			let v_body = null;
+			if (panel_type === "Grafico") {
+				v_body = { 
+					view:"template", 
+					id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10], 
+					data:{
+						src: v_src,
+						file_type: v_file
+					},
+					template:function(obj){
+						let v_css = "";
+						if(tamZoneX === tamZoneY){
+							v_css = "width: -moz-available;";
+						} else {
+							if (tamZoneX > tamZoneY)
+								v_css = "width: " + ((tamZoneY * SCALE_ZONE) - v_border - v_padding - v_template ).toString() + "px;";
+						}
+						if (obj.src !== undefined && obj.src !== null)
+							return '<img src="./img/pictograms/'+obj.src+'.'+ obj.file_type +'" style="' + v_css + ' max-width:100%;border: '+ v_border +'px solid black;padding: ' + v_border + 'px;"/>';
+						else
+							return tamZoneX.toString() + "x" + tamZoneY.toString();
+					}
+				}
+				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]);
+			} else {
+				let v_lineas = [];
+				let v_form = null;
+				let v_text = v_src !== null ? v_src.split(":$") : "";
+				for (let i=0; i<numLineas; i++) {
+					v_lineas.push(
+						{
+							view: "text", 
+							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
+							value: v_text[i],
+							//attributes:{ maxlength: parseInt(cellList[numElement].split("_")[12]) },
+							on: { 
+								onBlur: function(obj) {
+									//console.log(obj); 
+								},
+								onKeyPress: function(code, e) {
+									let num_Element = parseInt($$(e.target).config.id.split("_")[1]);
+									if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
+										let v_input = e.target;
+										let tamMaxLine = parseInt(cellList[num_Element - 1 ].split("_")[12]);
+										let v_suma = 0;
+										let v_input_value_no_especial = v_input.value.split(":%");
+										if (v_input_value_no_especial.length === 1) {
+											let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt());
+											if (c_permitido) {
+							
+											//Sumamos los que tenemos 
+												for(let i = 0; i < v_input.value.length; i++) {
+													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
+													v_suma = v_suma + parseInt(ptype.split("x")[0]);
+												}
+												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt())[1];
+												v_suma = v_suma + parseInt(ptype.split("x")[0]);
+											
+											//Si es un caracter permitido 
+											} else {
+												//caracter no permitido
+												webix.message({type:"error", text:"CARACTER NO PERMITIDO"});
+												//Eliminamos el caracter
+												let val = $$(e.target).getValue();
+												$$(e.target).setValueHere(val);
+												//Eliminamos el caracter
+												$$(e.target).define({
+													value:val
+												});
+												$$(e.target).refresh();
+											}
+										} else {
+											let v_control = true;
+											let v_input_array_string = [];
+											let cadena = v_input.value + e.key;
+											let v_sumar = true;
+											
+											while(v_control) {
+												let pos = 0;
+												if (cadena.search(":%")>=0) {
+													v_input_array_string.push(cadena.substring(pos,cadena.search(":%")));
+													let cadena2 = cadena.substring(cadena.search(":%") + 2);
+													if (cadena2.search(":%")>=0) {
+														pos = cadena2.search(":%") + 2;
+														//al ser cierre de cadena generamos una nueva cadena
+														let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
+														//Comprobamos que el ascii está permitido 
+														let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_code.charCodeAt());
+														if (c_permitido) {
+															//existe está permitido
+														} else {
+															webix.message({type:"error", text:"CARACTER EN ASCII NO PERMITIDO"});
+															v_control = false;
+														}
+														v_input_array_string.push(v_code);
+														cadena = cadena2.substring(pos);
+													} else {
+														//no hacemos nada, ya que aun no han cerrado la cadena especial, ni siquiera para sumar
+														v_control = false;
+														v_input_array_string.push(cadena);
+													}
+												} else {
+													v_input_array_string.push(cadena);
+													v_control = false;
+												}
+											}
+											let texto = "";
+											
+											for(let i = 0; i < v_input_array_string.length; i++) {
+												texto = texto + v_input_array_string[i];
+											}
+											//Sumamos los que tenemos 
+											for(let i = 0; i < texto.length; i++) {
+												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === texto[i].charCodeAt())[1];
+												v_suma = v_suma + parseInt(ptype.split("x")[0]);
+											}
+										
+										//Si es un ca
+										}
+										if(v_suma > tamMaxLine) {
+											webix.message({type:"error", text:"TAMAÑO MAXIMO SUPERADO"});
+											//$$(e.target).define({
+											//	css: { "background-color": "#fff6f6", "border-color": "#fea5a8"}
+											//});
+											//$$(e.target).refresh();
+										} else {
+											//$$(e.target).define({
+											//	css: { "background": "#ffffff", "border-color": "#cccccc"}
+											//});
+											//$$(e.target).refresh();
+										}
+
+	/*
+
+										console.log(pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]]);
+										pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].forEach(el => {
+											console.log(parseInt(el[2].split("CH")[1],16));
+											console.log(code);
+											if (parseInt(el[2].split("CH")[1],16) === parseInt(e))
+												console.log(el);
+										});
+	*/
+
+											//console.log(parseInt(el[2].split("CH")[1],16)) });
+										//let ptype = pictos_permitidos["panel_" + cellList[numElement - 1 ].split("_")[1] + "_" + cellList[numElement -1 ].split("_")[10]].find( x => parseInt(x[2].split("CH")[1],16) === code);
+										//console.log(ptype);
+									
+									}
+								}
+							}
+						}
+					);
+					v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i);
+				}
+				v_form = v_lineas;
+				v_body = {					
+					view: "form",
+					id: "panel_" + cellList[numElement].split("_")[1] + "_FORM_",
+					elements:v_form
+				};
+			}
+			//PINTAR 
+			//ZONAS
+			if (numElement !== 0) {
+				//si la zona es distinta aumentamos left)
+				//si la zona es la misma y la x es distinta aumentamos left
+				//si la zona es la misma y la x es la misma aunmentamos top 
+				if (parseInt(cellList[numElement].split("_")[0]) !== parseInt(cellList[numElement - 1].split("_")[0]) ) {
+					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
+					v_top = TOP_INIT;
+				}
+				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) !== parseInt(cellList[numElement - 1].split("_")[6]) ) {
+					v_left = v_left + 5 + parseInt(cellList[numElement - 1].split("_")[8]) * SCALE_ZONE;
+				}
+
+				if (parseInt(cellList[numElement].split("_")[0]) === parseInt(cellList[numElement - 1].split("_")[0]) && parseInt(cellList[numElement].split("_")[6]) === parseInt(cellList[numElement - 1].split("_")[6]) ) {
+					v_top = v_top + 5 + parseInt(cellList[numElement - 1].split("_")[9]) * SCALE_ZONE;				
+				}
+					cells_s.push({ 
+						view:"panel", 
+						css: { "text-align": "center !important" },
+						top: v_top, left:v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
+						cellValues: cellList[numElement],
+						id: "panel_" + cellList[numElement].split("_")[1], 
+						//header: tamZoneX + "x" + tamZoneY, 
+						body: v_body,
+					});
+
+			} else {
+				cells_s.push({ 
+					view:"panel", 
+					css: { "text-align": "center !important" },
+					top: v_top, left: v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
+					cellValues: cellList[numElement],
+					id: "panel_" + cellList[numElement].split("_")[1], 
+					body: v_body,
+				});
+			}
+			numElement += 1;
+		});
+	});
+
+	let v_commandtypeId = null;
+	let v_commands = [];
+	data.elementType.commandElementTypes.forEach(element => {
+		if (element.alias === "SEND MESSAGE") {
+			v_commandtypeId = element.id;
+			element.commandElementTypeParams.forEach(item => {
+				v_commands.push(item.id);
+			});
+		}
+	});
+
+	return { maxTamX: maxTamX, 
+			 maxTamY: maxTamY, 
+			 cols: maxCol, 
+			 rows: maxRow, 
+			 zonas: contador_zonas, 
+			 cod_listaCells: cellList, 
+			 listaCells: cells_s, 
+			 v_id_list: v_id_list,
+			 pictos_permitidos: pictos_permitidos, 
+			 pictos_activos:pictos_activos, 
+			 commands:v_commands.sort(), 
+			 availablePictosList: availablePictosList, 
+			 v_commandtypeId: v_commandtypeId,
+			 elementId: data.id
+			};
 }

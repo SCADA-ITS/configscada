@@ -43,9 +43,7 @@ export default class ElementForm {
 						id 
 						alias  
 						paramType 
-						pictograms {id alias description }
 						representation
-						graphics {id alias graphicType graphicValues {id value}}
 					}
 				}
 				alarms{
@@ -843,7 +841,6 @@ export default class ElementForm {
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
 									}else{
-
 										let panelMan = new PanelManager(data.id, data);//data.elementType.commandElementTypes[index]);
 										webix.ui({
 											id:"panelManager"+data.id,
@@ -852,11 +849,11 @@ export default class ElementForm {
 											position:"center",
 											modal:true,
 											close: true,
-											body: panelMan.getComponent(),
+											body: panelMan.getInitComponent(),
 											head:$.i18n("elementForm.señalization.panel.head"),
 											on: {
 												onShow: function(obj){
-													panelMan.doActions();
+													panelMan.loadComponent();
 												},
 												onHide: function(obj){
 													$$("panelManager" + data.id).destructor();
