@@ -1,16 +1,16 @@
 import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
 
-import { map } from "../../../widgets/map.js";
-import { metro } from "../../../widgets/metro.js";
-import { global } from "../../../widgets/global.js";
-import { synoptic } from "../../../widgets/synoptic.js";
-import { equipments } from "../../../widgets/equipments.js";
-import { alarms } from "../../../widgets/alarms.js";
-import { plans } from "../../../widgets/plans.js";
-import { users } from "../../../widgets/users.js";
-import { roles } from "../../../widgets/roles.js";
-import { alarmconfigs } from "../../../widgets/alarmconfigs.js";
-import { banner } from "../../../widgets/banner.js";
+import { map } from "../widgets/map.js";
+import { metro } from "../widgets/metro.js";
+import { global } from "../widgets/global.js";
+import { synoptic } from "../widgets/synoptic.js";
+import { equipments } from "../widgets/equipments.js";
+import { alarms } from "../widgets/alarms.js";
+import { plans } from "../widgets/plans.js";
+import { users } from "../widgets/users.js";
+import { roles } from "../widgets/roles.js";
+import { alarmconfigs } from "../widgets/alarmconfigs.js";
+import { banner } from "../widgets/banner.js";
 
 let getActiveAlarms = webix.proxy(  "GraphQL", `query {
 	  getGenericData(genericDataId:"GenericData:1") {
