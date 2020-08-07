@@ -53,6 +53,50 @@ export default class Map {
       });
      
       obj.basicElementsVO.forEach((element) => {
+
+        // check if the element exists
+        /*
+        if(!Object.keys(mapStates).includes(element.id)) {
+          alert("NO EXISTE EL ELEMENTO " + element.id);
+
+          let l = map.getLayers().array_[0];
+
+          let workingFeature = new ol.Feature({
+            geometry: new ol.geom.Point(
+              ol.proj.fromLonLat([-4.889977, 36.422382])
+            ),
+            id: element.id,
+          });
+
+          let workingStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+              opacity: 1,
+              src: "/img/icons/checkbox-blank-circle_green.png",
+              scale: 1,
+            }),
+          });
+
+          workingFeature.setStyle(workingStyle);
+          workingFeature.set("component", "Element");
+          workingFeature.setId(element.id.toString());
+
+          console.log(l);
+
+          let vectorSource = new ol.source.Vector({
+            wrapX: false,
+            features: [workingFeature],
+          });
+
+          let incidentLayer = new ol.layer.Vector({
+            title: "Elements",
+            source: vectorSource,
+          });
+
+          map.addLayer(incidentLayer);
+
+        }
+        */
+
         // if it's a DMS, ask for the full data
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||

@@ -73,6 +73,33 @@ export default class Synoptic {
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
           throw "DMSException";
         }
+
+        /*
+        // check if the element exists
+        if(document.getElementById(element.id) == null) {
+          //alert("El elemento " + element.id + " no existe");
+          let synoptic_svg = document.getElementsByClassName("synoptic-svg")[0];
+
+          let s = Snap("#" + synoptic_svg.id);
+
+          let im = s
+            .image(
+              "./img/cam_0.svg",
+              500,
+              500,
+              40,
+              40
+            )
+            .attr({
+              id: element.id,
+              component: "",
+              class: "capa_mapa",
+              state: "",
+            });
+
+            //alert("ELEMENTO CREADO");
+        }
+        */
         
         getElementIcon(element);
       });
@@ -352,21 +379,20 @@ export default class Synoptic {
 
     let self = this;
 
-	 Object.keys(layersList).map((n) => {
-	
-	  var caret = 0;
-	  var linkToAdd = document.createElement("a");
- 	  linkToAdd.id = "dropDown" + n;
- 
+    Object.keys(layersList).map((n) => {
+      
+      var caret = 0;
+      var linkToAdd = document.createElement("a");
+      linkToAdd.id = "dropDown" + n;
+  
 
-	  if(Object.keys(layersList[n]).length > 0) {
-		 caret = document.createElement("span");
-	     caret.setAttribute("class", "caret");
-		 caret.style["padding-left"] = (10 + 30 * depth) + "px";
-	  }
-      else{
-		  linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
-	  }		
+      if(Object.keys(layersList[n]).length > 0) {
+        caret = document.createElement("span");
+        caret.setAttribute("class", "caret");
+        caret.style["padding-left"] = (10 + 30 * depth) + "px";
+      } else {
+        linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
+      }		
 
       linkToAdd.onclick = function () {
         self.handleLayers(n);
@@ -378,27 +404,26 @@ export default class Synoptic {
         linkToAdd.innerHTML = n;
       }
 
-	  if(Object.keys(layersList[n]).length > 0) {
-		let div = document.createElement("li"); 
-		
-		father.appendChild(div);
-	    div.appendChild(linkToAdd);
-		div.appendChild(caret);
-	
-	    self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+      if(Object.keys(layersList[n]).length > 0) {
+        let div = document.createElement("li"); 
+
+        father.appendChild(div);
+        div.appendChild(linkToAdd);
+        div.appendChild(caret);
+    
+        self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
         self.handleLayers(n, true);
 
-		let nested = document.createElement("ul");
-		nested.setAttribute("class", "nested");
+        let nested = document.createElement("ul");
+        nested.setAttribute("class", "nested");
         div.appendChild(nested);
 
         self.generateLayerTree(layersList[n], depth + 1, nested);
-	  }else{ 
-		 father.appendChild(linkToAdd);
-	
-	     self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
-         self.handleLayers(n, true);
-	  }		
+      } else { 
+        father.appendChild(linkToAdd);
+        self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
+        self.handleLayers(n, true);
+      }		
     });
 
   }
@@ -1425,6 +1450,7 @@ export default class Synoptic {
       svg.setAttribute("id", this.synopticDiv + "SVG");
       svg.setAttribute("width", c.offsetWidth);
       svg.setAttribute("height", c.offsetHeight);
+      svg.setAttribute("class", "synoptic-svg");
 
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
