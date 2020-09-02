@@ -2,3 +2,11 @@
   width: 100%;
   height: 100%;
 }
+
+.treemap-button {
+  top: 65px;
+  left: .5em;
+}
+.ol-touch .treemap-button {
+  top: 80px;
+}

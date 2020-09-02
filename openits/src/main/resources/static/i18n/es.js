@@ -838,6 +838,11 @@ var i18_es = {
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
     "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
     "lbl_panel_signaling_tam_error": "Error en el tamaño del texto",
+    "lbl_order_window_element_error": "Seleccione un elemento por favor",
+    "lbl_order_window_command_error": "Seleccione un comando por favor",
+    "lbl_order_window_planordertype_error": "Seleccione un tipo de panel por favor",
+    "lbl_order_window_alias_error": "Seleccione un alias por favor",
+
 
     /*  BRATISLAVA */
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",

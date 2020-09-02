@@ -1,3 +1,6 @@
+import * as elementTypeMap from "../lib/elementTypeMap.js";
+import PanelManager from "../classes/PanelManager.js";
+import {panelData} from "../data/panelData.js";
 
  var planOrderStateType = {
 	 0: "UNKNOWN",
@@ -38,6 +41,10 @@ var upOrderGrap = webix.proxy("GraphQL",`
         element {
           id
           alias
+          elementType {
+            id
+            alias
+          }
         }
         commandElementType {
           id
@@ -71,33 +78,19 @@ var createOrderGrap = webix.proxy("GraphQL",`
       id
       alias
       description
-      state
       planOrderType {
         id
         alias
-        description
-        planOrderTypeParams {
-          id
-          alias
-          description
-          dataType
-        }
-      }
-      planOrderValues {
-        id
-        value
-        planOrderTypeParam {
-          id
-          alias
-          description
-          dataType
-        }
       }
       comandElement {
         id
         element {
           id
           alias
+          elementType {
+            id
+            alias
+          }
         }
         commandElementType {
           id
@@ -125,261 +118,9 @@ var createOrderGrap = webix.proxy("GraphQL",`
   }
 `);
 
-function orderEdit(id){
-
-  //console.log("EDIT");
-  //console.log(id.toString().split("_"));
-  $$(id.toString().split("_")[1] + "_element").enable();
-  $$(id.toString().split("_")[1] + "_planOrderType").enable();
-  $$(id.toString().split("_")[1] + "_commandElementType").enable();
-  $$(id.toString().split("_")[1] + "_alias").enable();
-  $$(id.toString().split("_")[1] + "_description").enable();
-  $$("bsave_" + id.toString().split("_")[1]).show();
-  $$("bedit_" + id.toString().split("_")[1]).hide();
-  $$("bremove_" + id.toString().split("_")[1]).hide();
-
-  $$(id.toString().split("_")[1] + "_element").getList().clearAll();
-  $$(id.toString().split("_")[1] + "_commandElementType").getList().clearAll();
-  $$(id.toString().split("_")[1] + "_planOrderType").getList().clearAll();
-  let value = $$(id.toString().split("_")[1] + "_element").data.value;
-  let texto = $$(id.toString().split("_")[1] + "_element").data.text;
-  let value_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.value;
-  let texto_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.text;
-  let value_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.value;
-  let texto_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.text;
-  //console.log($$(id.toString().split("_")[1] + "_planOrderType").data.value);
-  //console.log($$(id.toString().split("_")[1] + "_planOrderType").data.value.split("_")[1]);
-  let graphElems = webix.proxy("GraphQL",`
-  query  {
-    getElements{
-      id
-      alias
-      description
-      elementType
-      {
-        id
-        alias
-        description
-        commandElementTypes{
-          id
-          alias
-          description
-          commandElementTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
-      }
-      elementValues
-      {
-        id
-        value
-        elementTypeParam
-        {
-          id
-          alias
-          paramTypeLabel
-          paramType
-          dataTypeLabel
-          dataType
-        }
-      }
-    }
-  }`);
-
-  graphElems.load()
-  .then(data => {
-    data.forEach(element => {
-      if ($$(id.toString().split("_")[1] + "_element").data.value.split("_")[1] !== element.id) {
-        $$(id.toString().split("_")[1] + "_element").getList().add({id:id.toString().split("_")[1] + "_" + element.id, value:element.alias});
-      } else {
-        element.elementType.commandElementTypes.forEach(e => {
-          if ( $$(id.toString().split("_")[1] + "_commandElementType").data.value.split("_")[1] !== e.id) {
-            $$(id.toString().split("_")[1] + "_commandElementType").getList().add({id:id.toString().split("_")[1] + "_" + e.id, value:e.alias});
-          }
-        });
-      }
-      });
-      $$(id.toString().split("_")[1] + "_element").setValue({id: value ,value: texto });
-      $$(id.toString().split("_")[1] + "_commandElementType").setValue({id: value_commandElementType ,value: texto_commandElementType });
-    });
-    let planOrderType = webix.proxy(
-      "GraphQL",
-      `query {
-        getPlanOrderTypes{
-          id
-          alias
-          description
-          planOrderTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
-      }`
-    );
-    planOrderType.load()
-    .then(data => {
-      data.forEach(element => {  
-        if ($$(id.toString().split("_")[1] + "_planOrderType").data.value.split("_")[1] !== element.id)
-          $$(id.toString().split("_")[1] + "_planOrderType").getList().add({id:id.toString().split("_")[1] + element.id, value:element.alias});
-      });
-    });
-    $$(id.toString().split("_")[1] + "_planOrderType").setValue({id: value_planOrderType ,value: texto_planOrderType  });
-}
-
-function orderSave(id){
-  $$("bsave_" + id.toString().split("_")[1]).hide();
-  $$("bedit_" + id.toString().split("_")[1]).show();
-  $$("bremove_" + id.toString().split("_")[1]).show();
-
-  $$(id.toString().split("_")[1] + "_element").disable();
-  $$(id.toString().split("_")[1] + "_planOrderType").disable();
-  $$(id.toString().split("_")[1] + "_commandElementType").disable();
-  $$(id.toString().split("_")[1] + "_alias").disable();
-  $$(id.toString().split("_")[1] + "_description").disable();
-  let idform = $$(id.toString().split("_")[1] + "_form").getValues();
-
-  upOrderGrap.load({
-    plan: {
-      "id": idform.orderId,
-      "alias": idform.alias,
-      "description": idform.description,
-      "planOrderTypeId": idform.planOrderType.split("_")[1],
-      "planOrderValues": null,
-      "comandElement": {
-        "commandElementTypeId": idform.commandElementType.split("_")[1],
-        "elementId": idform.element.split("_")[1],
-        "commandElementValues": null //idform.commandElementValues === "" ? null : idform.commandElementValues
-      }
-    }
-  })
-  .then(data => {
-    if(data) {
-      let selectPlan = $$("treePlan").getSelectedId();
-      let item = $$('treePlan').getItem(selectPlan);
-      let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
-      itemPlanOrders.push(data);
-      item["planOrders"] = itemPlanOrders;
-      $$('treePlan').updateItem(selectPlan, item);
-      webix.message("Guardado Correctamente");
-    }
-  });
-}
-
-function orderRemove(id){
-  let idform = id.toString().split("_")[1];
-  let delOrderGrap = webix.proxy("GraphQL",`
-  mutation deletePlanOrder($planOrderId: String!){
-    deletePlanOrder(planOrderId: $planOrderId){
-       id
-     }
-   }`
-   );
-   delOrderGrap.load({
-    planOrderId: idform.toString()
-  })
-  .then(data => {
-    if(data) {
-      webix.message("Eliminado Correctamente");
-      $$(idform + "_form").hide();
-    }
-  });
-}
-
-function buildc(id){
-  let element = id.toString().split("_")[1];
-  $$(id.toString().split("_")[0] + "_commandElementType").getList().clearAll();
-  $$(id.toString().split("_")[0] + "_commandElementType").setValue({id:"" ,value: ""});
-  let graphElems = webix.proxy("GraphQL",`
-  query($rowId: String!) {
-    getElement(elementId: $rowId){
-      id
-      alias
-      description
-      elementType
-      {
-        id
-        alias
-        description
-        commandElementTypes{
-          id
-          alias
-          description
-          commandElementTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
-      }
-    }
-  }`);
-  graphElems.load({
-    rowId: element
-  })
-  .then(data => {
-    //data.forEach(ele => {
-      
-      data.elementType.commandElementTypes.forEach(e => {
-        $$(id.toString().split("_")[0] + "_commandElementType").getList().add({id:id.toString().split("_")[0] +"_" + e.id, value:e.alias});
-      });
-    //});
-  });
-}
-
-function buildc_new(id){
-  let element = id.toString().split("_")[2];
-  let idplan  = id.toString().split("_")[3];
-  //console.log(idplan);
-  //console.log(element);
-  $$("order_new_commandElementType_" + idplan).getList().clearAll();
-  $$("order_new_commandElementType_" + idplan).setValue({id:"" ,value: ""});
-  let graphElems = webix.proxy("GraphQL",`
-  query($rowId: String!) {
-    getElement(elementId: $rowId){
-      id
-      alias
-      description
-      elementType
-      {
-        id
-        alias
-        description
-        commandElementTypes{
-          id
-          alias
-          description
-          commandElementTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
-      }
-    }
-  }`);
-  graphElems.load({
-    rowId: element
-  })
-  .then(data => {
-    //data.forEach(ele => {
-      data.elementType.commandElementTypes.forEach(e => {
-        $$("order_new_commandElementType_" + idplan).getList().add({id:"order_new_" + e.id, value:e.alias});
-      });
-    //});
-  });
-}
-
 export default class Order {
-  constructor(id,data,elements,planOrderType) {
+  constructor(id,data,elements,planOrderType,planId,view) {
     this.data = data;
-    //this.id = data.id;
     this.elements = [];
     this.planOrderType = [];
     this.elementsOption = [];
@@ -387,6 +128,8 @@ export default class Order {
     this.planOrderTypeList = planOrderType;
     this.planOrderTypeOption = [];
     this.data = data;
+    this.planId = planId;
+    this.view = view;
     if (id === null)
     {
       if (data !== "new") {
@@ -410,13 +153,20 @@ export default class Order {
       this.id = id;
     }
 
+    this.elementtypegrahp = webix.proxy("GraphQL",`
+    query  {
+      getElementTypes {
+          id
+          alias
+          commandElementTypes{id alias}
+          }
+      }
+  `);
     let self = this;
-
   }
 
   orderNewShow(){
     $$("order_new_form").show();
-    
   }
 
   orderSaveNew(id){
@@ -428,11 +178,10 @@ export default class Order {
         "alias": idform.alias,
         "description": idform.description,
         "planOrderTypeId": idform.planOrderType.split("_")[2],
-        //"planOrderValues": {},
         "comandElement": {
           "commandElementTypeId": idform.commandElementType.split("_")[2],
           "elementId": idform.element.split("_")[2],
-          "commandElementValues":[]//idform.commandElementValues
+          "commandElementValues":[]
         }
       }
     })
@@ -453,13 +202,19 @@ export default class Order {
           commandElementType: { id: "", value: "" },
           commandElementValues: ""
         });
-
         webix.message("Creado Correctamente");
       }
     });
   }
 
   dinamicFormOrder(view) {
+    let datos = this.comandElement.commandElementValues ? this.comandElement.commandElementValues : "";
+    let texto = "";
+    if (datos !== ""){
+      this.comandElement.commandElementValues.forEach(item => {
+
+      });
+    }
     $$(view)
     .addView({
       view:"form", 
@@ -468,42 +223,41 @@ export default class Order {
       elements:[{ responsive:this.id + "_form", 
         rows: [
           { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
-          { responsive:this.id + "_form",
+          { 
             cols:[
-              { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
-              { view:"text", id: this.id.toString() + "_orderId", disabled: true, name: "orderId", label:$.i18n("plan.form.id"), value: this.id.toString(), labelAlign:"left", labelWidth: 120, inputWidth:0 },
-              { view:"text", id: this.id.toString() + "_state",   disabled: true, name: "state",   label:$.i18n("plan.form.state"), value: planOrderStateType[this.state],         labelAlign:"left", labelWidth: 120, inputWidth:0 }
-            ]
-          },{ responsive:this.id + "_form",
-            cols:[
-              { view:"text",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },
-              { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },
-              { gravity: 1 }
-            ]
-          },{ responsive:this.id + "_form",
-            cols:[
-              { 
-                view:"combo", 
-                id: this.id.toString() + "_element",              
-                disabled: true, 
-                name: "element", 
-                label:$.i18n("plan.form.element"), 
-                value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
-                        value: this.comandElement.element.alias, 
-                        elementType: this.comandElement.element.elementType }, 
-                options: [], 
-                labelAlign:"left", 
-                labelWidth: 120, 
-                inputWidth:0,
-                on: {
-                      onChange: buildc
-                    }
+              {
+              rows:[
+                { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
+                { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
+                { 
+                  view:"combo", 
+                  id: this.id.toString() + "_element",              
+                  disabled: true, 
+                  name: "element", 
+                  label:$.i18n("plan.form.element"), 
+                  value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
+                          value: this.comandElement.element.alias, 
+                          elementType: this.comandElement.element.elementType }, 
+                  options: [], 
+                  labelAlign:"left", 
+                  labelWidth: 120, 
+                  inputWidth:0,
+                  on: {
+                        onChange: buildc
+                      }
+                  }
+                ]
               },
-              { view:"combo", id: this.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",  label:$.i18n("plan.form.commandElementType"), value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, options: [], labelAlign:"left", labelWidth: 120, inputWidth:0 },      
-              { view:"text",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? this.id.toString() + "_" + this.comandElement.commandElementValues : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
-              //{gravity: 1},
-            ]
-          },{ responsive:this.id + "_form",
+              {
+                rows:[
+                  { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                  { view:"combo", id: this.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",  label:$.i18n("plan.form.commandElementType"), value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, options: [], labelAlign:"left", labelWidth: 120, inputWidth:0 },        
+                ]
+              }
+            ],  
+          },
+          { view:"textarea",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? JSON.stringify(this.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
+          { responsive:this.id + "_form",
             cols:[
               { gravity: 3 },
               { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
@@ -520,135 +274,9 @@ export default class Order {
         ]
       }]
     });
-/*
-		let graphElems = webix.proxy("GraphQL",`
-      query  {
-        getElements{
-          id
-          alias
-          description
-          elementType
-          {
-            id
-            alias
-            description
-            commandElementTypes{
-              id
-              alias
-              description
-              commandElementTypeParams{
-                id
-                alias
-                description
-                dataType
-              }
-            }
-          }
-          elementValues
-          {
-            id
-            value
-            elementTypeParam
-            {
-              id
-              alias
-              paramTypeLabel
-              paramType
-              dataTypeLabel
-              dataType
-            }
-          }
-        }
-      }`);
-      graphElems.load()
-      .then(data => {
-        data.forEach(element => {
-          //console.log(element);
-          if (this.comandElement.element.id !== element.id) {
-            $$(this.id.toString() + "_element").getList().add({id:this.id.toString() + "_" + element.id, value:element.alias});
-          } else {
-            element.elementType.commandElementTypes.forEach(e => {
-              if ( this.comandElement.commandElementType.id !== e.id) {
-                $$(this.id.toString() + "_commandElementType").getList().add({id:this.id.toString() + "_" + e.id, value:e.alias});
-              }
-            });
-          }
-          });
-        });
-        let planOrderType = webix.proxy(
-          "GraphQL",
-          `query {
-            getPlanOrderTypes{
-              id
-              alias
-              description
-              planOrderTypeParams{
-                id
-                alias
-                description
-                dataType
-              }
-            }
-          }`
-        );
-        planOrderType.load()
-        .then(data => {
-          data.forEach(element => {  
-            if (this.planOrderType.id !== element.id)
-              $$(this.id.toString() + "_planOrderType").getList().add({id:element.id, value:element.alias});
-          });
-        });
-      
-/*
-    new Promise((resolver, rechazar) => {
-      console.log('Inicial');
-      const elementsList2 = this.elementsList;
-      resolver();
-    })
-    .then(() => {
-        elementsList2.forEach(el => {
-          console.log("DENTRO");
-          $$(this.id.toString() + "_element").getList().add({id:el.id, value:el.alias});
-          console.log("FUERA2");
-          //this.elementsOption.push({id: element.id, value: element.alias});
-        });
-        throw new Error('Algo falló');
-            
-        console.log('Haz esto');
-    })
-    .catch(() => {
-        console.log('Haz aquello');
-    })
-    .then(() => {
-        console.log('Haz esto sin que importe lo que sucedió antes');
-    });
-/*    
-    const elementsList2 = this.elementsList;
-    console.log("FUERA");
-    console.log(elementsList2);
-    console.log(elementsList2.length);
-    console.log(this.elementsList);
-    for (let element of elementsList2) {
-      console.log("DSDSDSDSDSD");
-      console.log(element);
-    }
-    //console.log(this.elementsList.classList);
-    $$(this.id.toString() + "_element").getList().add({id:"element.id1", value:"element.alias1"});
-    $$(this.id.toString() + "_element").getList().add({id:"element.id2", value:"element.alias2"});
-    elementsList2.forEach(el => {
-      console.log("DENTRO");
-      $$(this.id.toString() + "_element").getList().add({id:el.id, value:el.alias});
-      console.log("FUERA2");
-      //this.elementsOption.push({id: element.id, value: element.alias});
-    });
-    //elementsList2.each(function(obj){ console.log(obj); });
-
-    //$$(this.id + "_element").getList().add({id:item.id, value:item.alias});
-  */  
   }
 
-
-  new_dinamicFormOrder(view,planId) {
+  new_dinamicFormOrder(view,planId){
     $$(view)
     .addView({
       view:"form", 
@@ -788,110 +416,582 @@ export default class Order {
               $$("order_new_planOrderType_" + planId).getList().add({id:"order_new_" + element.id + "_" + planId, value:element.alias});
           });
         });
-     
-
-
-
-/*
-    new Promise((resolver, rechazar) => {
-      console.log('Inicial');
-      const elementsList2 = this.elementsList;
-      resolver();
-    })
-    .then(() => {
-        elementsList2.forEach(el => {
-          console.log("DENTRO");
-          $$(this.id.toString() + "_element").getList().add({id:el.id, value:el.alias});
-          console.log("FUERA2");
-          //this.elementsOption.push({id: element.id, value: element.alias});
-        });
-        throw new Error('Algo falló');
-            
-        console.log('Haz esto');
-    })
-    .catch(() => {
-        console.log('Haz aquello');
-    })
-    .then(() => {
-        console.log('Haz esto sin que importe lo que sucedió antes');
-    });
-/*    
-    const elementsList2 = this.elementsList;
-    console.log("FUERA");
-    console.log(elementsList2);
-    console.log(elementsList2.length);
-    console.log(this.elementsList);
-    for (let element of elementsList2) {
-      console.log("DSDSDSDSDSD");
-      console.log(element);
-    }
-    //console.log(this.elementsList.classList);
-    $$(this.id.toString() + "_element").getList().add({id:"element.id1", value:"element.alias1"});
-    $$(this.id.toString() + "_element").getList().add({id:"element.id2", value:"element.alias2"});
-    elementsList2.forEach(el => {
-      console.log("DENTRO");
-      $$(this.id.toString() + "_element").getList().add({id:el.id, value:el.alias});
-      console.log("FUERA2");
-      //this.elementsOption.push({id: element.id, value: element.alias});
-    });
-    //elementsList2.each(function(obj){ console.log(obj); });
-
-    //$$(this.id + "_element").getList().add({id:item.id, value:item.alias});
-  */  
   }
 
+  getInitComponent(){
+    let initComponent = {
+			view:"form",
+			id:'newOrderForm',
+			elements:{}
+		  };
+		return initComponent;
+  }
 
-  generateCombo(){}
+  // got from Github
+  elementReady(selector) {
+    return new Promise((resolve, reject) => {
+        let el = document.querySelector(selector);
+        if (el) {
+            resolve(el);
+        }
+        new MutationObserver((mutationRecords, observer) => {
+            // Query for elements matching the specified selector
+            Array.from(document.querySelectorAll(selector)).forEach((element) => {
+                resolve(element);
+                //Once we have resolved we don't need the observer anymore.
+                observer.disconnect();
+            });
+        }).observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+        });
+    });
+  }
 
-  loadData() {
-/*
-		let graphElems = webix.proxy("GraphQL",`
-      query  {
-        getElements{
-          id
-          alias
-          description
-          elementType
-          {
+  loadComponent(){
+
+    this.elementReady('[view_id="' + "newOrderForm" + '"]').then((c) => {
+			let spinnerDivToAdd = document.createElement("div");
+			spinnerDivToAdd.setAttribute("id", "newOrderForm"  + "spinner");
+			spinnerDivToAdd.setAttribute("class", "spinner");
+			document
+			.querySelector('[view_id="' + "newOrderForm"  + '"]')
+			.prepend(spinnerDivToAdd);
+		});
+    
+
+		this.elementtypegrahp.load().then(dataElement => {
+      let planOrderType = webix.proxy(
+        "GraphQL",
+        `query {
+          getPlanOrderTypes{
             id
             alias
             description
-            commandElementTypes{
+            planOrderTypeParams{
               id
               alias
               description
-              commandElementTypeParams{
-                id
-                alias
-                description
-                dataType
-              }
-            }
-          }
-          elementValues
-          {
-            id
-            value
-            elementTypeParam
-            {
-              id
-              alias
-              paramTypeLabel
-              paramType
-              dataTypeLabel
               dataType
             }
           }
-        }
-      }`);
-      graphElems.load()
+        }`
+      );
+      let lista = [];
+      this.planOrderTypeList = [];
+      planOrderType.load()
       .then(data => {
-        data.forEach(element => {
-            this.elements.push(element);
-            this.elementsOption.push({id: element.id, value: element.alias});
-          });
+        data.forEach(item => { 
+          lista.push({id:"window_order_new_" + item.id + "_" + this.planId, value:item.alias});
         });
+      
+        let etypesList = [];
+        dataElement.forEach(etype => { 
+          if (etype.commandElementTypes !== null)
+            etypesList.push({ id: "window_order_" + this.planId + "_" + etype.id, value: etype.alias });
+        });
+        
+        this.grid = {
+          view:"form", 
+          id:"window_order_new_form_" + this.planId, 
+          hidden: true,
+          scroll:false, 
+          elements:[{
+            rows: [
+              { view:"template", id: "window_order_new_title_" + this.planId, type:"header", template: $.i18n("plan.form.order.new.title"), height:50, align:"left" },
+              {
+                cols:[
+                  {
+                    rows: [
+                      { view:"text", id: "window_order_new_alias_" + this.planId, name: "alias", label:$.i18n("plan.form.alias"), labelAlign:"left", labelWidth: 125, inputWidth:400 },
+                      { view:"combo",id: "window_order_new_planOrderType_" + this.planId, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), options:lista, labelAlign:"left", labelWidth: 125, inputWidth:400 },
+                      { 
+                        view:"combo",  
+                        id: "window_order_new_element_" + this.planId,              
+                        name: "element", 
+                        label:"ElementType",//$.i18n("plan.form.element"), 
+                        options: etypesList, 
+                        labelAlign:"left", 
+                        labelWidth: 125, 
+                        inputWidth:400,
+                        on: {
+                              onChange: build_equipment_table
+                            }
+                      },
+                    ]
+                  },
+                  {
+                    rows: [
+                    { view:"textarea", id: "window_order_new_description_" + this.planId, name: "description",   label:$.i18n("plan.form.description"),  labelAlign:"left", labelWidth: 125, inputWidth:400 },
+                    { 
+                      view:"combo", 
+                      id: "window_order_new_commandElementType_" + this.planId, 
+                      name: "commandElementType",  
+                      label:$.i18n("plan.form.commandElementType"), 
+                      options: [], 
+                      labelAlign:"left", 
+                      labelWidth: 125, 
+                      inputWidth:400,
+                      on: {
+                        onChange: build_type_table
+                      }
+                    }
+                    ]
+                  }
+                ],
+              },
+              { template:"" },
+              {},
+              {
+                cols:[
+                  { 
+                    id: "window_order_new_datatable_" + this.planId,	
+                    view:"datatable",
+                    yCount: 5,
+                    scrollX:false,
+                    columns:[
+                      { id:"ch1", header:{ content:"masterCheckbox" }, checkValue:'on', uncheckValue:'off', template:"{common.checkbox()}", width:40},
+                      { id:"title",	sort:"string", header:"Equipo",width:200},
+                    ],
+                  },
+                  {
+                    view:"dashboard",
+                    id:"window_order_new_dashboard_" + this.planId,
+                    gridColumns:1,
+                    width:800,
+                    gridRows:1,
+                    cellHeight:380,
+                    cells:[
+                      { id: "window_order_new_panel_" + this.planId, view:"panel", x:0, y:0, dx:1, dy:1, body:{
+                          template:"Commands"
+                      }},
+                    ],
 
+                  }
+                ]
+              },
+              {
+                view:"toolbar",
+                id:"window_order_new_toolbar",
+                cols:[
+                    { view:"button", id: this.planId + "_" + this.view + "_window_order_new_button_load", value:"Guardar", width:100, align:"right", 
+                    click: saveWindowOrder
+                  }]
+            }
+            ]
+          }]
+        };     
+        webix.ui(this.getComponent(), $$('newOrderForm'));
+        document.getElementById("newOrderForm" +  "spinner").style.display = "none";
+      });
+    });
+  }
+
+  getComponent() {
+    let result = {
+      type:"space", cols:[
+        { view:"scrollview", scroll:"auto", body:this.grid, 
+        width:1250,
+        height:700 },
+      ]
+    };
+    return result; 
+  }
+}
+
+function saveWindowOrder(id){
+  let container = id.split("_")[1];
+  if ($$("window_order_new_alias_" + id.split("_")[0]).data.value !== "") {
+    let v_alias = $$("window_order_new_alias_" + id.split("_")[0]).data.value;
+    let v_description = $$("window_order_new_description_" + id.split("_")[0]).data.value;
+    if ($$("window_order_new_planOrderType_" + id.split("_")[0]).data.value !== "") {
+      let v_planOrderType = $$("window_order_new_planOrderType_" + id.split("_")[0]).data.value.split("_")[3];
+      if ($$("window_order_new_commandElementType_" + id.split("_")[0]).data.value !== "") {
+        let v_commandElementType = $$("window_order_new_commandElementType_" + id.split("_")[0]).data.value.split("_")[0];
+        let elements = [];
+        $$("window_order_new_datatable_" + id.split("_")[0]).data.order.forEach(item => {
+          let v_dato = $$("window_order_new_datatable_" + id.split("_")[0]).data.pull[item];
+          if(v_dato.ch1 !== undefined && v_dato.ch1 === "on")
+            elements.push(v_dato.id.split("_")[0]);
+        });
+        let v_commands = [];
+        let v_commands_values = [];
+        if (elements.length > 0) {
+          let idtype = $$("window_order_new_element_" + id.split("_")[0]).data.value.split("_")[3];
+
+          let graphElemType = `query {
+            getElementType(elementTypeId: "` + idtype + `")
+            {
+              id
+              alias
+              description
+              commandElementTypes{  
+                id 
+                alias 
+                commandElementTypeParams { 
+                  id 
+                  alias 
+                  dataType
+                }
+              }
+            }
+          }`;
+          
+          let graphqlEType = webix.proxy("GraphQL", graphElemType);
+          graphqlEType.load().then(data => {
+            let send_command = null;
+            data.commandElementTypes.forEach(element => {
+              if (element.alias === "SEND MESSAGE") {
+                try {
+                  send_command = element.id;
+                  element.commandElementTypeParams.forEach(item => {
+                    v_commands.push(item.id);
+                  });
+                } catch (e) {
+                  console.log(e);
+                }
+              }
+            });
+
+            let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+            if (pmvTypes.includes(idtype.split(":")[1])){
+              if(v_commandElementType === send_command){ //si es SEND COMMAND MIRAMOS LOS VALORES DEL PANEL
+                let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3);
+                let panels = panelMan.configExportData();
+                let datos = [];
+                let panelHash = {};
+                let panelesList = [];
+                panels.forEach(item =>{
+                  panelesList.push(item.split("_")[1]);
+                });
+                let panelUnique = [...new Set(panelesList)];
+                panelUnique.forEach(item =>{
+                  let hashdato = {
+                    type: "",
+                    numLineas: 0
+                  }
+                  panelHash[item] = hashdato;
+                });
+                panels.forEach(item =>{
+                  if (item.split("_")[2] === "G") {
+                    panelHash[item.split("_")[1]].type = "G";
+                  } else {
+                    panelHash[item.split("_")[1]].type = "T";
+                    panelHash[item.split("_")[1]].numLineas = parseInt(item.split("_")[4]) + 1;
+                  }
+                });
+
+                Object.entries(panelHash).map(([k, v]) => {
+                  if (v.type === "G"){
+                    datos.push($$("panel_" + k + "_G").data.src);
+                  } else {
+                    let texto = "";
+                    for(let i=0;i<v.numLineas;i++) {
+                      texto = texto + $$("panel_" + k + "_T_L_" + i).data.value;
+                      if(i !== (v.numLineas - 1 )){
+                        texto = texto + "%$";
+                      }
+                    }
+                    datos.push(texto);
+                  }
+                });
+
+                if (v_commands.length > 0) {
+                  let vcommands = v_commands.sort();
+                  
+                  for (let i=0;i<vcommands.length; i++) {
+                    v_commands_values.push({
+                      "commandElementTypeParamId": vcommands[i],
+                      "value": datos[i]
+                    });
+                  }
+                }
+              }
+            }
+
+            let query_completa = ``;
+            let text_query = ``;
+            let text_query_head = `mutation createPlanOrder(`;
+            let data_query = {};
+            if(elements.length > 1) {
+              let contador1 = 1;
+              elements.forEach(item => {
+                if(contador1>1){
+                  text_query_head = text_query_head + `,$planOrder` + contador1 + `: PlanOrderVO!`;
+                }else{
+                  text_query_head = text_query_head + `$planOrder` + contador1 + `: PlanOrderVO!`;
+                }
+                text_query = text_query + ` order` + contador1 + `:createPlanOrder(planOrder: $planOrder` + contador1 + `) {
+                  id
+                  alias
+                  description
+                  planOrderType {
+                    id
+                    alias
+                  }
+                  comandElement {
+                    id
+                    element {
+                      id
+                      alias
+                      elementType {
+                        id
+                        alias
+                      }
+                    }
+                    commandElementType {
+                      id
+                      alias
+                      description
+                      commandElementTypeParams {
+                        id
+                        alias
+                        description
+                        dataType
+                      }
+                    }
+                    commandElementValues {
+                      id
+                      value
+                      commandElementTypeParam {
+                        id
+                        alias
+                        description
+                        dataType
+                      }
+                    }
+                  }
+                }
+                `;
+                data_query["planOrder"+ contador1]={
+                  "planId": id.split("_")[0],
+                  "alias": v_alias,
+                  "description": v_description,
+                  "planOrderTypeId": v_planOrderType,
+                  "comandElement": {
+                    "commandElementTypeId": v_commandElementType,
+                    "elementId": item,
+                    "commandElementValues":v_commands_values
+                  }
+                }
+                contador1 +=1;
+              });
+              query_completa = text_query_head + `) {` + text_query + `}`;
+              let createOrden = webix.proxy("GraphQL",query_completa);
+              createOrden.load(data_query).then(data => {
+                if(data) {
+                  Object.entries(data).map(([k, v]) => {
+                    createOrderDinamic(container,v);
+                  });
+                  webix.message("Creado Correctamente");
+                } else {
+                  webix.message("ERROR AL CREAR");
+                }
+              });
+            } else {
+              elements.forEach(item => {
+                createOrderGrap.load({
+                  plan: {
+                    "planId": id.split("_")[0],
+                    "alias": v_alias,
+                    "description": v_description,
+                    "planOrderTypeId": v_planOrderType,
+                    "comandElement": {
+                      "commandElementTypeId": v_commandElementType,
+                      "elementId": item,
+                      "commandElementValues":v_commands_values
+                    }
+                  }
+                })
+                .then(data => {
+                  if(data) {
+                    createOrderDinamic(container,data);
+                    webix.message("Creado Correctamente");
+                  } else {
+                    webix.message("ERROR AL CREAR");
+                  }
+                });
+              });
+            }
+          });
+        } else {
+          webix.message({type:"error", text:$.i18n("lbl_order_window_element_error")});
+        }
+      } else {
+        webix.message({type:"error", text:$.i18n("lbl_order_window_command_error")});
+      }
+    } else {
+      webix.message({type:"error", text:$.i18n("lbl_order_window_planordertype_error")});
+    }
+  } else {
+    webix.message({type:"error", text:$.i18n("lbl_order_window_alias_error")});
+  }
+}
+
+function createOrderDinamic(container,data){
+  let selectPlan = $$("treePlan").getSelectedId();
+  let item = $$('treePlan').getItem(selectPlan);
+  let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
+  itemPlanOrders.push(data);
+  item["planOrders"] = itemPlanOrders;
+  $$('treePlan').updateItem(selectPlan, item);
+
+  try {
+    let v_view = $$(data.id + "_form");
+    if (v_view !== undefined){
+      $$(data.id + "_form").show();
+      $$(data.id.toString() + "_alias").setValue(data.alias);
+      $$(data.id.toString() + "_description").setValue(data.description);
+      $$(data.id.toString() + "_planOrderType").setValue({ id:data.id.toString() + "_" + data.planOrderType.id, value:data.planOrderType.alias });
+      $$(data.id.toString() + "_element").setValue({ id: data.id.toString() + "_" + data.comandElement.element.id, value: data.comandElement.element.alias });
+      $$(data.id.toString() + "_commandElementType").setValue({ id: data.id.toString() + "_" + data.comandElement.commandElementType.id, value:data.comandElement.commandElementType.alias });
+      $$(data.id.toString() + "_commandElementValues").setValue(data.comandElement.commandElementValues ? JSON.stringify(data.comandElement.commandElementValues) : "" );
+    } else {
+      $$(container)
+      .addView({
+        view:"form", 
+        id:data.id + "_form", 
+        scroll:false, 
+        elements:[{ responsive:data.id + "_form", 
+          rows: [
+            { view:"template", type:"header", template: data.id.toString(), height:50, align:"left" },
+            { 
+              cols:[
+                {
+                rows:[
+                  { view:"text", id: data.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: data.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
+                  { view:"combo", id: data.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:data.id.toString() + "_" + data.planOrderType.id, value:data.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
+                  { 
+                    view:"combo", 
+                    id: data.id.toString() + "_element",              
+                    disabled: true, 
+                    name: "element", 
+                    label:$.i18n("plan.form.element"), 
+                    value:{ id: data.id.toString() + "_" + data.comandElement.element.id,
+                            value: data.comandElement.element.alias, 
+                            }, 
+                    options: [], 
+                    labelAlign:"left", 
+                    labelWidth: 120, 
+                    inputWidth:0,
+                    on: {
+                          onChange: buildc
+                        }
+                    }
+                  ]
+                },
+                {
+                  rows:[
+                    { view:"textarea",  id: data.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:data.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                    { view:"combo", id: data.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",  label:$.i18n("plan.form.commandElementType"), value:{id: data.id.toString() + "_" + data.comandElement.commandElementType.id, value:data.comandElement.commandElementType.alias}, options: [], labelAlign:"left", labelWidth: 120, inputWidth:0 },        
+                  ]
+                }
+              ],  
+            },
+            { view:"textarea",  id: data.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: data.comandElement.commandElementValues ? JSON.stringify(data.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
+            { responsive:data.id + "_form",
+              cols:[
+                { gravity: 3 },
+                { view:"button", id: "bedit_" + data.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                  click: orderEdit              
+                },
+                { view:"button", id: "bsave_" + data.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
+                  click: orderSave
+                },
+                { view:"button", id: "bremove_" + data.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                  click: orderRemove
+                }
+              ]
+            }
+          ]
+        }]
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function orderEdit(id){
+  console.log(id);
+
+  let idtype = "ElementType:" + elementTypeMap.getElementType(id.toString().split("_")[1]);
+  console.log(idtype);
+
+  $$(id.toString().split("_")[1] + "_element").enable();
+  $$(id.toString().split("_")[1] + "_planOrderType").enable();
+  $$(id.toString().split("_")[1] + "_commandElementType").enable();
+  $$(id.toString().split("_")[1] + "_alias").enable();
+  $$(id.toString().split("_")[1] + "_description").enable();
+  $$("bsave_" + id.toString().split("_")[1]).show();
+  $$("bedit_" + id.toString().split("_")[1]).hide();
+  $$("bremove_" + id.toString().split("_")[1]).hide();
+  $$(id.toString().split("_")[1] + "_element").getList().clearAll();
+  $$(id.toString().split("_")[1] + "_commandElementType").getList().clearAll();
+  $$(id.toString().split("_")[1] + "_planOrderType").getList().clearAll();
+  let value = $$(id.toString().split("_")[1] + "_element").data.value;
+  let texto = $$(id.toString().split("_")[1] + "_element").data.text;
+  let value_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.value;
+  let texto_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.text;
+  let value_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.value;
+  let texto_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.text;
+
+  let graphElems = webix.proxy("GraphQL",`
+  query  {
+    getElements{
+      id
+      alias
+      description
+      elementType
+      {
+        id
+        alias
+        description
+        commandElementTypes{
+          id
+          alias
+          description
+          commandElementTypeParams{
+            id
+            alias
+            description
+            dataType
+          }
+        }
+      }
+      elementValues
+      {
+        id
+        value
+        elementTypeParam
+        {
+          id
+          alias
+          paramTypeLabel
+          paramType
+          dataTypeLabel
+          dataType
+        }
+      }
+    }
+  }`);
+
+  graphElems.load()
+  .then(data => {
+    data.forEach(element => {
+      if ($$(id.toString().split("_")[1] + "_element").data.value.split("_")[1] !== element.id) {
+        $$(id.toString().split("_")[1] + "_element").getList().add({id:id.toString().split("_")[1] + "_" + element.id, value:element.alias});
+      } else {
+        element.elementType.commandElementTypes.forEach(e => {
+          if ( $$(id.toString().split("_")[1] + "_commandElementType").data.value.split("_")[1] !== e.id) {
+            $$(id.toString().split("_")[1] + "_commandElementType").getList().add({id:id.toString().split("_")[1] + "_" + e.id, value:e.alias});
+          }
+        });
+      }
+      });
+      $$(id.toString().split("_")[1] + "_element").setValue({id: value ,value: texto });
+      $$(id.toString().split("_")[1] + "_commandElementType").setValue({id: value_commandElementType ,value: texto_commandElementType });
+    });
     let planOrderType = webix.proxy(
       "GraphQL",
       `query {
@@ -910,15 +1010,243 @@ export default class Order {
     );
     planOrderType.load()
     .then(data => {
-      data.forEach(element => {
-          this.planOrderType.push(element);
-          this.planOrderTypeOption.push({id: element.id, value: element.alias});
-        });
+      data.forEach(element => {  
+        if ($$(id.toString().split("_")[1] + "_planOrderType").data.value.split("_")[1] !== element.id)
+          $$(id.toString().split("_")[1] + "_planOrderType").getList().add({id:id.toString().split("_")[1] + element.id, value:element.alias});
       });
-      */
-  }
+    });
+    $$(id.toString().split("_")[1] + "_planOrderType").setValue({id: value_planOrderType ,value: texto_planOrderType  });
 
-  init() {
-    this.loadData();
+    let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+    if (pmvTypes.includes(idtype.split(":")[1])){
+      let item = $$('treePlan').getItem(selectPlan);
+      let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
+      //"ElementType:29"
+      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()});
+      panelMan.loadComponent();
+    } else {
+      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body:{
+        template:"text" }});
+    }
+    
+}
+
+function orderSave(id){
+  $$("bsave_" + id.toString().split("_")[1]).hide();
+  $$("bedit_" + id.toString().split("_")[1]).show();
+  $$("bremove_" + id.toString().split("_")[1]).show();
+
+  $$(id.toString().split("_")[1] + "_element").disable();
+  $$(id.toString().split("_")[1] + "_planOrderType").disable();
+  $$(id.toString().split("_")[1] + "_commandElementType").disable();
+  $$(id.toString().split("_")[1] + "_alias").disable();
+  $$(id.toString().split("_")[1] + "_description").disable();
+  let idform = $$(id.toString().split("_")[1] + "_form").getValues();
+
+  upOrderGrap.load({
+    plan: {
+      "id": idform.orderId,
+      "alias": idform.alias,
+      "description": idform.description,
+      "planOrderTypeId": idform.planOrderType.split("_")[1],
+      "planOrderValues": null,
+      "comandElement": {
+        "commandElementTypeId": idform.commandElementType.split("_")[1],
+        "elementId": idform.element.split("_")[1],
+        "commandElementValues": null //idform.commandElementValues === "" ? null : idform.commandElementValues
+      }
+    }
+  })
+  .then(data => {
+    if(data) {
+      let selectPlan = $$("treePlan").getSelectedId();
+      let item = $$('treePlan').getItem(selectPlan);
+      let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
+      itemPlanOrders.push(data);
+      item["planOrders"] = itemPlanOrders;
+      $$('treePlan').updateItem(selectPlan, item);
+      webix.message("Guardado Correctamente");
+    }
+  });
+}
+
+function orderRemove(id){
+  let idform = id.toString().split("_")[1];
+  let delOrderGrap = webix.proxy("GraphQL",`
+  mutation deletePlanOrder($planOrderId: String!){
+    deletePlanOrder(planOrderId: $planOrderId){
+       id
+     }
+   }`
+   );
+   delOrderGrap.load({
+    planOrderId: idform.toString()
+  })
+  .then(data => {
+    if(data) {
+      webix.message("Eliminado Correctamente");
+      $$(idform + "_form").hide();
+    }
+  });
+}
+
+function buildc(id){
+  let element = id.toString().split("_")[1];
+  $$(id.toString().split("_")[0] + "_commandElementType").getList().clearAll();
+  $$(id.toString().split("_")[0] + "_commandElementType").setValue({id:"" ,value: ""});
+  let graphElems = webix.proxy("GraphQL",`
+  query($rowId: String!) {
+    getElement(elementId: $rowId){
+      id
+      alias
+      description
+      elementType
+      {
+        id
+        alias
+        description
+        commandElementTypes{
+          id
+          alias
+          description
+          commandElementTypeParams{
+            id
+            alias
+            description
+            dataType
+          }
+        }
+      }
+    }
+  }`);
+  graphElems.load({
+    rowId: element
+  })
+  .then(data => {
+    data.elementType.commandElementTypes.forEach(e => {
+      $$(id.toString().split("_")[0] + "_commandElementType").getList().add({id:id.toString().split("_")[0] +"_" + e.id, value:e.alias});
+    });
+  });
+}
+
+function buildc_new(id){
+  let element = id.toString().split("_")[2];
+  let idplan  = id.toString().split("_")[3];
+  //console.log(idplan);
+  //console.log(element);
+  $$("order_new_commandElementType_" + idplan).getList().clearAll();
+  $$("order_new_commandElementType_" + idplan).setValue({id:"" ,value: ""});
+  let graphElems = webix.proxy("GraphQL",`
+  query($rowId: String!) {
+    getElement(elementId: $rowId){
+      id
+      alias
+      description
+      elementType
+      {
+        id
+        alias
+        description
+        commandElementTypes{
+          id
+          alias
+          description
+          commandElementTypeParams{
+            id
+            alias
+            description
+            dataType
+          }
+        }
+      }
+    }
+  }`);
+  graphElems.load({
+    rowId: element
+  })
+  .then(data => {
+    data.elementType.commandElementTypes.forEach(e => {
+      $$("order_new_commandElementType_" + idplan).getList().add({id:"order_new_" + e.id, value:e.alias});
+    });
+  });
+}
+
+function build_equipment_table(id) {
+  let idtype = id.split("_")[3];
+  let planid = id.split("_")[2];
+  
+  $$("window_order_new_datatable_" + planid).clearAll();
+  $$("window_order_new_commandElementType_" + planid).getList().clearAll();
+  //$$("window_order_new_commandElementType_" + planid).setValue({id: "" ,value: "" });
+  $$("window_order_new_commandElementType_" + planid).$setValue("");
+  let graphType = webix.proxy("GraphQL",`
+  query($rowId: String!) {
+    getElementType(elementTypeId: $rowId)
+    {
+      id
+      alias
+      description
+      commandElementTypes{id alias}
+    }  
+  }`);
+  graphType.load({
+    rowId: idtype
+  })
+  .then(data => {
+    data.commandElementTypes.forEach(item => {
+      let row = { 
+        id: item.id + "_" + planid + "_window_order_new_combo" , 
+        value: item.alias
+      };
+      $$("window_order_new_commandElementType_" + planid).getList().add(row);
+    });
+  });
+
+  let graphElems = webix.proxy("GraphQL",`
+  query($rowId: String!) {
+    getElementsByType(elementTypeId: $rowId){
+      id
+      alias
+    }
+  }`);
+  graphElems.load({
+    rowId: idtype
+  })
+  .then(data => {
+    data.forEach(item => {
+      let row = { 
+        id: item.id + "_window_order_new_table" , 
+        title: item.alias, 
+      };
+      $$("window_order_new_datatable_" + planid).add(row);
+    });
+  });
+  var toolbar = $$("window_order_new_dashboard_" + planid).getChildViews()[0];
+  if (toolbar !== null && toolbar !== undefined) {
+    $$("window_order_new_dashboard_" + planid).removeView(toolbar.config.id);
+  }
+  $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body:{ template:"Commands" }});
+}
+
+function build_type_table(id) {
+  let planid = id.split("_")[1];
+  let message = $$("window_order_new_commandElementType_" + planid).config.text;
+  if (message !== ""){
+    let idcommand = id.split("_")[0];
+    let idtype = "ElementType:" + idcommand.split(":")[2];
+    var toolbar = $$("window_order_new_dashboard_" + planid).getChildViews()[0];
+    if (toolbar !== null && toolbar !== undefined) {
+      $$("window_order_new_dashboard_" + planid).removeView(toolbar.config.id);
+    }
+    let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+    if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
+      let scala = panelData[idtype].scala;
+      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala);
+      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()});
+      panelMan.loadComponent();
+    } else {
+      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body:{
+        template:"text" }});
+    }
   }
 }

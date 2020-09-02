@@ -831,6 +831,10 @@ var i18_en = {
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
     "lbl_panel_signaling_error": "Select a pictogram please",
     "lbl_panel_signaling_tam_error": "Error text size",
+    "lbl_order_window_element_error": "Select a element please",
+    "lbl_order_window_command_error": "Select a command please",
+    "lbl_order_window_planordertype_error": "Select a Plan type please",
+    "lbl_order_window_alias_error": "Select a alias please",
 
     /* BRATISLAVA */
     "AlarmConfig:2": "ALARM WS NO CONNECTION",

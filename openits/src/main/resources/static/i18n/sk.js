@@ -705,6 +705,12 @@ var i18_sk = {
     "state.noconnected": "Nepripojen&yacute;",
     "state.alarm": "Vydesene",
 
+    "lbl_order_window_element_error": "Select a element please",
+    "lbl_order_window_command_error": "Select a command please",
+    "lbl_order_window_planordertype_error": "Select a Plan type please",
+    "lbl_order_window_alias_error": "Select a alias please",
+
+
     "AlarmConfig:1": "ALARM ETD_LEN1 BETWEEN 5 AND 10",
     "AlarmConfig:2": "Upozornenie meteorologickej stanice &#382;iadne pripojenie",
     "AlarmConfig:3": "Upozornenie meteorologickej stanice tlak vzduchu vy&#353;&#353;&iacute; ne&#382; 65534",

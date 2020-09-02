@@ -11,6 +11,7 @@ import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import { banner } from "../widgets/banner.js";
+import { element_tree} from "../widgets/element_tree.js";
 
 let getActiveAlarms = webix.proxy(  "GraphQL", `query {
 	  getGenericData(genericDataId:"GenericData:1") {
@@ -117,6 +118,15 @@ webix.ready(function() {
         ]
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
+
+    // create the sidemenu for the equipment tree
+    webix.ui({
+        view: "sidemenu",
+        id: "menu",
+        width: 400,
+        position: "left",
+        body: element_tree
+    });
 
     getActiveAlarms.load().then(data => {
     	try {

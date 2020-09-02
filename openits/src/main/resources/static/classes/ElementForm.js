@@ -660,7 +660,8 @@ export default class ElementForm {
 					// get the panel icon
 					let scale_height = 40 / total_height;
 					let scaled_width = total_width * scale_height;
-					iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
+					//iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
+					iconoSvg = getElementSVG(data, scaled_width, total_height, ":Form");
 
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 
@@ -841,7 +842,7 @@ export default class ElementForm {
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
 									}else{
-										let panelMan = new PanelManager(data.id, data);//data.elementType.commandElementTypes[index]);
+										let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null);//data.elementType.commandElementTypes[index]);
 										webix.ui({
 											id:"panelManager"+data.id,
 											view:"window",	

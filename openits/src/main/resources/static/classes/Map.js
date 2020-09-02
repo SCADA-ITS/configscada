@@ -3,14 +3,20 @@ import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 import ElementForm from "../classes/ElementForm.js";
-import { columnsElementFormListAusol } from "../data/elementForm.js";
+import ElementCommand from "../classes/ElementCommand.js";
+import EquipmentTree from "../classes/EquipmentTree.js";
+import {columnsElementFormList} from "../data/elementForm.js";
 
 let map = null;
+let view = null;
 var mapConf = "";
 var mapStates = {};
+var mapCoordinates = {};
+
+var visibleElements = [];
 
 export default class Map {
-  constructor(data, metadata, synopticDiv) {
+  constructor(data, metadata, synopticDiv, elementId) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -26,6 +32,7 @@ export default class Map {
     this.synopticType = "";
 
     this.map = null;
+    this.elementId = elementId;
 
     /*
     if (metadata == null) {
@@ -183,8 +190,8 @@ export default class Map {
 
       });
     } catch (err) {
-      console.log("Error: " + err.message);
-      console.log("RETRY WITH GRAPHQL");
+      //console.log("Error: " + err.message);
+      //console.log("RETRY WITH GRAPHQL");
       
       let obj = JSON.parse(JSON.parse(message.body));
 
@@ -315,13 +322,18 @@ export default class Map {
                   context,
                   tmpIcon,
                   function () {
-                    console.log(canvas.toDataURL());
+                    //console.log(canvas.toDataURL());
                   }
                 );
 
+                let opacity = 0;
+                if(visibleElements.includes(element.id)) {
+                  opacity = 1;
+                }
+
                 let workingStyle = new ol.style.Style({
                   image: new ol.style.Icon({
-                    opacity: 1,
+                    opacity: opacity,
                     src: "data:image/svg+xml;utf8," + tmpIcon,
                     scale: mapElement.height / total_height,
                   }),
@@ -392,9 +404,12 @@ export default class Map {
         d.childs.forEach((element) => {
           if (element.id in this.synopticConf) {
 
+            // add to the visible elements list
+            visibleElements.push(element.id);
+
             // let's store the states
             mapStates[element.id] = element.state;
-
+            
             let mapElement = this.synopticConf[element.id];
 
             // the values are only valid for ETDs
@@ -494,6 +509,130 @@ export default class Map {
           }
         });
 
+        // replaces the element tree in the DOM
+        let elementTree = new EquipmentTree(this.elementId, null);
+        
+        webix.ui({
+          id: "elementTreeView", 
+          rows: [
+            {
+              id: "element_tree_filter",
+              view: "text",
+              label: "Filter",
+              labelPosition: "left"
+            },
+            {
+              id: "element_tree",
+              view: "tree",
+              borderless: true,
+              scroll: true,
+              select: true,
+              multiselect: true,
+              threeState: true,
+              template: function(obj, common){
+                if (obj.$level > 1) {
+                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ obj.value +"&nbsp;"+ obj.icon;
+                } else {
+                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ obj.value;
+                }
+              }
+            },
+            {
+              id: "element_tree_button",
+              view: "button",
+              disabled: true,
+              value: "Command",
+              on: {
+                "onItemClick": function(id, e) {
+                  let filteredElements = $$("element_tree").getChecked().filter(e => e.match(/Element/g));
+                  let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                  webix
+                    .ui({
+                      id: "win_command" + filteredElements[0],
+                      view: "window",
+                      move: true,
+                      close: true,
+                      position: "right",
+                      body: elementCommand.getComponent(),
+                      on: {
+                        onDestruct: function (obj) {
+                          
+                        },
+                        onHide: function (obj) {
+                          $$("win_command" + filteredElements[0]).destructor();
+                        },
+                      },
+                    })
+                    .show();
+                }
+              }
+            }
+          ],
+          url: elementTree.getComponent()
+        }, $$("elementTreeView"));
+
+        // as we are in the map, centers the item on click
+        $$("element_tree").attachEvent("onSelectChange", function(id) {
+          let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
+          view.setCenter(lonlat);
+          /*
+          // open the detail window
+          if($$("win" + id) != null) {
+            $$("win" + id).destructor();
+          }
+          let elementForm = new ElementForm(id.toString(), columnsElementFormList);
+          webix
+            .ui({
+              id: "win" + id,
+              view: "window",
+              move: true,
+              close: true,
+              position: "right",
+              body: elementForm.getComponent(),
+              on: {
+                onDestruct: function (obj) {
+                  elementForm.disconnect();
+                },
+                onHide: function (obj) {
+                  elementForm.disconnect();
+                },
+              },
+            })
+            .show();
+          */
+        });
+
+        $$("element_tree").attachEvent("onItemCheck", function(id) {
+          //alert(JSON.stringify(map.getFeatureById(id)));
+          map.getLayers().forEach(l => {
+            if(l.get('id') == "Elements") {
+              // check if the element is checked or unchecked
+              let currentStyle = l.getSource().getFeatureById(id).getStyle();
+              let opacity = 0;
+              if($$("element_tree").getChecked().includes(id)) {
+                // update the visibleElements array
+                if(!visibleElements.includes(id)) {
+                  visibleElements.push(id);
+                }
+                // set the opacity
+                opacity = 1;
+              } else {
+                // removes the element from the visibleElements array
+                // taken from stackoverflow
+                const index = visibleElements.indexOf(id);
+                if (index > -1) {
+                  visibleElements.splice(index, 1);
+                }
+              }
+              let newStyle = currentStyle;
+              // update the opacity
+              newStyle.getImage().opacity_ = opacity;
+
+              l.getSource().getFeatureById(id).setStyle(newStyle);
+            }
+          });
+        });
+
         return markers;
       })
       .then((markers) => {
@@ -503,6 +642,7 @@ export default class Map {
         });
 
         let incidentLayer = new ol.layer.Vector({
+          id: "Elements",
           title: "Elements",
           source: vectorSource,
         });
@@ -557,18 +697,49 @@ export default class Map {
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(divToAdd);
 
-      //this.map = new ol.Map({
+      view = new ol.View({ center: ol.proj.fromLonLat([-4.936173, 36.457911]), zoom: 12});
+
+      // treeMap Button
+      var TreeMapControl = /*@__PURE__*/(function (Control) {
+        function TreeMapControl(opt_options) {
+          var options = opt_options || {};
+      
+          var button = document.createElement('button');
+          button.innerHTML = '<span class="webix_icon wxi-folder-open">&nbsp;</span>';
+      
+          var element = document.createElement('div');
+          element.className = 'treemap-button ol-unselectable ol-control';
+          element.appendChild(button);
+      
+          Control.call(this, {
+            element: element,
+            target: options.target,
+          });
+      
+          button.addEventListener('click', this.handleTreeMap.bind(this), false);
+        }
+      
+        if ( Control ) TreeMapControl.__proto__ = Control;
+        TreeMapControl.prototype = Object.create( Control && Control.prototype );
+        TreeMapControl.prototype.constructor = TreeMapControl;
+      
+        TreeMapControl.prototype.handleTreeMap = function handleTreeMap () {
+          $$("menu").show();
+        };
+      
+        return TreeMapControl;
+      }(ol.control.Control));
+
+      // instantiates the map
       map = new ol.Map({
+        controls: ol.control.defaults().extend([new TreeMapControl()]),
         target: "map",
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM(),
           }),
         ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([-4.936173, 36.457911]),
-          zoom: 12,
-        }),
+        view: view,
       });
 
       // select interaction working on "click"
@@ -577,7 +748,7 @@ export default class Map {
       });
 
       
-      selectClick.on("select", function (e) { 
+      selectClick.on("select", function (e) {
         let highlightStyle = new ol.style.Style({
           fill: new ol.style.Fill({
             color: 'rgba(255,255,255,0.7)'
@@ -587,9 +758,10 @@ export default class Map {
             width: 3
           })
         });
-       
+
         let feature = e.target.getFeatures().array_[0];
         let element_id = feature.id_;
+
         if (
           elementTypeMap.getElementType(element_id) !=
           elementTypeMap.ZONE_ELEMENT_TYPE
@@ -597,7 +769,7 @@ export default class Map {
           if($$("win" + element_id) != null){
               $$("win" + element_id).destructor();
           }
-          let elementForm = new ElementForm(element_id, columnsElementFormListAusol);
+          let elementForm = new ElementForm(element_id, columnsElementFormList);
           webix
             .ui({
               id: "win" + element_id,
@@ -654,7 +826,6 @@ export default class Map {
     let self = this;
     // waits for the element and starts drawing
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {
-      /*
       let spinnerDivToAdd = document.createElement("div");
       spinnerDivToAdd.setAttribute("id", this.synopticDiv + "spinner");
       spinnerDivToAdd.setAttribute("class", "spinner");
@@ -662,6 +833,7 @@ export default class Map {
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(spinnerDivToAdd);
 
+      /*
       var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       document
         .querySelector('[view_id="' + this.synopticDiv + '"]')
@@ -721,16 +893,265 @@ export default class Map {
 
           if (newNode == self.synopticDiv) {
             // Launch the query again
-            //document.getElementById(self.synopticDiv + "spinner").style.display = "block";
+            document.getElementById(self.synopticDiv + "spinner").style.display = "block";
             self.data.load().then((d) => {
               
+              let markers = [];
+
+              // TODO: should we clean the created canvas?
               d.childs.forEach((element) => {
-                updateElementState(element);
-                updateElementIcon(element);
+                if (element.id in self.synopticConf) {
+
+                  // let's store the states
+                  mapStates[element.id] = element.state;
+                  
+                  let mapElement = self.synopticConf[element.id];
+
+                  // the values are only valid for ETDs
+                  let mapElementValues = mapElement.values;
+                  if(typeof mapElementValues == 'undefined') {
+                    mapElementValues = [];
+                  }
+
+                  let workingFeature = new ol.Feature({
+                    geometry: new ol.geom.Point(
+                      ol.proj.fromLonLat([mapElement.lon, mapElement.lat])
+                    ),
+                    id: element.id,
+                  });
+
+                  
+                  let elementType = elementTypeMap.getElementType(element.id);
+                  let total_width = mapElement.width;
+                  let total_height = mapElement.height;
+                  
+                  if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
+                    elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64 ||
+                    elementType === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B ||
+                    elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+                    || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+                    || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+                    || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+                    || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
+                    || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
+                
+                    total_width = 0;
+                    total_height = 0;
+
+                    // check for the panel config
+                    let panelConfig = element.elementValues.find(
+                      (ic) =>
+                        elementTypeMap.getElementTypeParam(ic.id) ==
+                        elementTypeMap.PANEL_MANAGER_CONFIG
+                    );
+
+                    if(typeof panelConfig != 'undefined') {
+                      panelConfig = JSON.parse(panelConfig.value);
+          
+                      // Generate the matrix with sizes
+                      for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+                        let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
+                        let panel_width = parseInt(n_size.split("x")[0]);
+                        let panel_height = parseInt(n_size.split("x")[1]);
+                        total_width += panel_width;
+                        if(panel_height > total_height) {
+                          total_height = panel_height;
+                        }              
+                      }
+                    }
+                  }
+
+
+                  let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+
+                  // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
+                  tmpIcon = tmpIcon.replace(/#/g, "%23");
+
+                  let canvas = document.createElement("canvas");
+                  // get canvas context for drawing on canvas
+                  let context = canvas.getContext("2d");
+                  // set canvas size
+                  //canvas.width = mapElement.width;
+                  //canvas.height = mapElement.height;
+
+                  // call svgString2Image function
+                  /*
+                  iconGenerator.drawInlineSVG(
+                    canvas,
+                    context,
+                    tmpIcon,
+                    function () {
+                      //console.log(canvas.toDataURL());
+                    }
+                  );
+                  */
+
+                  //alert(element.id + "\tSCALE: " + mapElement.height / total_height);
+
+                  let workingStyle = new ol.style.Style({
+                    image: new ol.style.Icon({
+                      opacity: 1,
+                      src: "data:image/svg+xml;utf8," + tmpIcon,
+                      scale: mapElement.height / total_height,
+                    }),
+                  });
+
+                  workingFeature.setStyle(workingStyle);
+                  workingFeature.set("component", "Element");
+                  workingFeature.setId(element.id.toString());
+                  markers.push(workingFeature);
+                  
+                }
               });
 
-            }).then(() => {
-              //document.getElementById(self.synopticDiv + "spinner").style.display = "none";
+            }).then((markers) => {
+              let vectorSource = new ol.source.Vector({
+                wrapX: false,
+                features: markers,
+              });
+      
+              let incidentLayer = new ol.layer.Vector({
+                id: "Elements",
+                title: "Elements",
+                source: vectorSource,
+              });
+      
+              // clean the current layers
+              const layers = [map.getLayers().getArray()];
+              layers.forEach((layer) => {
+                map.removeLayer(layer)
+              });
+
+              // add the new layer
+              map.addLayer(incidentLayer);
+            })
+            .then(() => {
+              // update the tree
+              // replaces the element tree in the DOM
+              let elementTree = new EquipmentTree(self.elementId, null);
+              
+              webix.ui({
+                id: "elementTreeView", 
+                rows: [
+                  {
+                    id: "element_tree_filter",
+                    view: "text",
+                    label: "Filter",
+                    labelPosition: "left"
+                  },
+                  {
+                    id: "element_tree",
+                    view: "tree",
+                    borderless: true,
+                    scroll: true,
+                    select: true,
+                    multiselect: true,
+                    threeState: true,
+                    template: function(obj, common){
+                      if (obj.$level > 1) {
+                        return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+  obj.value +"&nbsp;"+ obj.icon;
+                      } else {
+                        return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+  obj.value;
+                      }
+                    },
+                  },
+                  {
+                    id: "element_tree_button",
+                    view: "button",
+                    disabled: true,
+                    value: "Command",
+                    on: {
+                      "onItemClick": function(id, e) {
+                        let filteredElements = $$("element_tree").getChecked().filter(e => e.match(/Element/g));
+                        let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                        webix
+                          .ui({
+                            id: "win_command" + filteredElements[0],
+                            view: "window",
+                            move: true,
+                            close: true,
+                            position: "right",
+                            body: elementCommand.getComponent(),
+                            on: {
+                              onDestruct: function (obj) {
+                                
+                              },
+                              onHide: function (obj) {
+                                $$("win_command" + filteredElements[0]).destructor();
+                              },
+                            },
+                          })
+                          .show();
+                      }
+                    }
+                  }
+                ],
+                url: elementTree.getComponent()
+              }, $$("elementTreeView"));
+
+              // as we are in the map, centers the item on click
+              $$("element_tree").attachEvent("onSelectChange", function(id) {
+                let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
+                view.setCenter(lonlat);
+                /*
+                // open the detail window
+                if($$("win" + id) != null) {
+                  $$("win" + id).destructor();
+                }
+                let elementForm = new ElementForm(id.toString(), columnsElementFormList);
+                webix
+                  .ui({
+                    id: "win" + id,
+                    view: "window",
+                    move: true,
+                    close: true,
+                    position: "right",
+                    body: elementForm.getComponent(),
+                    on: {
+                      onDestruct: function (obj) {
+                        elementForm.disconnect();
+                      },
+                      onHide: function (obj) {
+                        elementForm.disconnect();
+                      },
+                    },
+                  })
+                  .show();
+                */
+              });
+
+              $$("element_tree").attachEvent("onItemCheck", function(id) {
+                //alert(JSON.stringify(map.getFeatureById(id)));
+                map.getLayers().forEach(l => {
+                  if(l.get('id') == "Elements") {
+                    // check if the element is checked or unchecked
+                    let currentStyle = l.getSource().getFeatureById(id).getStyle();
+                    let opacity = 0;
+                    if($$("element_tree").getChecked().includes(id)) {
+                      // update the visibleElements array
+                      if(!visibleElements.includes(id)) {
+                        visibleElements.push(id);
+                      }
+                      // set the opacity
+                      opacity = 1;
+                    } else {
+                      // removes the element from the visibleElements array
+                      // taken from stackoverflow
+                      const index = visibleElements.indexOf(id);
+                      if (index > -1) {
+                        visibleElements.splice(index, 1);
+                      }
+                    }
+                    let newStyle = currentStyle;
+                    // update the opacity
+                    newStyle.getImage().opacity_ = opacity;
+      
+                    l.getSource().getFeatureById(id).setStyle(newStyle);
+                  }
+                });
+              });
+
+              document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });
           }
       } catch (e) {}

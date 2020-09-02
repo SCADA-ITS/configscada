@@ -1,5 +1,6 @@
 import PlanTree from "../classes/PlansTree.js";
 import Plan from "../classes/Plan.js";
+import Order from "../classes/Order.js";
 
 // GraphQL
 //initialize a proxy
@@ -59,7 +60,6 @@ var graphPlans = webix.proxy(
 var tree1 = {
   view:"tree",
   id:"treePlan",
-  //filterMode:{ showSubItems:true },
   select:true,
   template:"{common.icon()} {common.folder()} <span>#alias#</span>",
   url: function() {
@@ -136,12 +136,9 @@ function open_new_tab(id){
           if (obj.qid==="new") {
             let newplan = new Plan(null,null);
             $$("b_save").show();
-            //console.log(obj.id.toString());
-            newplan.dinamicNewForm("planParent",obj.id.toString());
-            //newplan.init();
+            newplan.newForm("planParent",obj.id.toString());
           } else {
             let plan = new Plan(null,obj);
-            //plan.init();
             $$("b_edit").show();
             $$("b_save").hide();
             $$("b_play").show();
@@ -149,12 +146,11 @@ function open_new_tab(id){
             $$("b_pause").show();
               $$("b_remove").show();
             $$("b_add_order").show();
-            plan.dinamicFormViewWithOrders("planParent",plan.data);
+            plan.editForm("planParent",plan.data);
           }
           break;          
         case 3:  //planSubtype
           form_types("planParent",obj);
-          //obj.qid === "new" ? form_types("planParent",obj,true) : form_types("planParent",obj,false);
           $$("toolbar_plan").show();  
           $$("b_play").hide();
           $$("b_edit").hide();
@@ -166,7 +162,6 @@ function open_new_tab(id){
           $$("b_add_order").hide();
           break;
         case 2: //planType
-          //obj.qid === "new" ? form_types("planParent",obj,true) : form_types("planParent",obj,false);
           form_types("planParent",obj);
           $$("toolbar_plan").show();  
           $$("b_play").hide();
@@ -215,17 +210,37 @@ function removeToTree(id){
   let re = syn.removeToTree();
   re ? null : removeGrid("planParent");
 }
-
+//NUEVA ORDEN 
 function new_order(id){
   let selectPlan = $$("treePlan").getSelectedId();
   let item = $$('treePlan').getItem(selectPlan);
-  $$("order_new_form_" + item.qid).show();
+
+  if( $$("new_order_window_" + item.qid)){
+    $$("new_order_window_" + item.qid).show();
+  }else{
+    let newOrder = new Order(null,"new",null,null,item.qid,"planParent");
+    webix.ui({
+      id:"new_order_window_" + item.qid,
+      view:"window",	
+      move:false,
+      position:"center",
+      modal:true,
+      close: true,
+      body: newOrder.getInitComponent(),
+      on: {
+        onShow: function(obj){
+          newOrder.loadComponent();
+        },
+        onHide: function(obj){
+          $$("new_order_window_" + item.qid).destructor();
+        }
+        }
+      }).show();
+  }
 }
 
 let syn = new PlanTree(graphPlans, null);
-let planprueba = new Plan("Plan:2",null);
-//console.log(planprueba.id);
-//console.log(planprueba);
+
 export let plans = {
   rows:[
     {
@@ -254,7 +269,7 @@ export let plans = {
           ]
         },
         { 
-          rows:[ //{body: planprueba.getComponentWithOrders()},
+          rows:[ 
             { body:plangrid1 },
             {
               view: "toolbar",
@@ -280,14 +295,11 @@ export let plans = {
                   { view:"button", id: "b_save", align:"right", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.save"), icon:"mdi mdi-content-save",
                     click:saveItems
                   },
-                  //{ gravity: 4},
                 ]
               }]
             }
           ]
         }
-          //{ header:"Linked Grid", body:grid1 },
-          //{ header:"Linked Tree", body:tree2 }
       ]
     },
   ]

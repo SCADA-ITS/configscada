@@ -1,24 +1,25 @@
-import { plan } from "../data/plan.js";
 import Order from "./Order.js";
 
- let optionPlanModeType = [
+let optionPlanModeType = [
 	{id:1, value:"AUTO"},
 	{id:2, value:"SEMI"},
 	{id:3, value:"MANUAL"}
 ];
 
- var planStateType = {
+var planStateType = {
 	 0: "UNKNOWN",
 	 1: "STOPPED",
 	 2: "RUNNING",
 	 3: "SUCCESS",
-	 4: "FAILED"};
+   4: "FAILED"
+};
  
- var planOrderStateType = {
-	 0: "UNKNOWN",
-	 1: "RUNNING",
-	 2: "SUCCESS",
-	 3: "FAILED"};
+var planOrderStateType = {
+  0: "UNKNOWN",
+  1: "RUNNING",
+  2: "SUCCESS",
+  3: "FAILED"
+};
  
 export default class Plan {
   constructor(id, data) {
@@ -90,6 +91,10 @@ export default class Plan {
             element {
               id
               alias
+              elementType {
+                id
+                alias
+              }
             }
             commandElementType {
               id
@@ -118,20 +123,19 @@ export default class Plan {
     }
     `;
 		
-		this.graphql = webix.proxy("GraphQL", graphElem);
-		this.header = {
-			//view: "template", type: "header", id: "header", template: "wrg"
-			view: "template", //optional
-			type: "header",
-			id: "template2"+this.id,
-			data: {
-				value: ""
-			},
-			template: function (obj) {
-				return obj.value;
-			},
-			css:{"text-align":"center !important"}
-		};
+  this.graphql = webix.proxy("GraphQL", graphElem);
+  this.header = {
+    view: "template", //optional
+    type: "header",
+    id: "template2"+this.id,
+    data: {
+      value: ""
+    },
+    template: function (obj) {
+      return obj.value;
+    },
+    css:{"text-align":"center !important"}
+  };
   
   this.form = {
     view: "form",
@@ -141,217 +145,36 @@ export default class Plan {
       { view: "text", name: "id", label: $.i18n("plan.form.id"), disabled: true },
       { view: "text", name: "alias", label: $.i18n("plan.form.alias") },
       { view: "text", name: "description", label: $.i18n("plan.form.description") },
-      //{ view: "text", name: "state", label: "state" },
       { view: "text", name: "state", label: $.i18n("plan.form.state") },
       { view: "text", name: "planSubtype", label: $.i18n("plan.form.planSubtype") },
-      //{ view: "combo", id: "planformresult_"+this.id + "_planSubtype" ,name: "planSubtype", label: 'planSubtype', options:[]},
-      //{ view: "text", name: "planModeType", label: "planModeType" },
       { view: "combo", name: "planModeType", label: $.i18n("plan.form.planModeType"), options:optionPlanModeType},
     ]
   };
 }
 
-getComponent() {
-  if (this.id !== "new" ) 
-  {
-    let planSubtype = [];
-    let getPlanSubtypes = webix.proxy(
-      "GraphQL",
-      `
-      query {
-      getPlanSubtypes{
-        id
-        alias
-        description
-        planType{
-          id
-          alias
-          description
-        }
-      }}
-      `
-    );
-    getPlanSubtypes.load()
-    .then(data => {
-      data.forEach(element => {
-          this.planSubtype.push({ id: element.id, value: element.alias});
-          //let ptype = this.planType.find( x => x.id === element.planType.id );
-          //ptype ? null : this.planType.push(element.planType);
-        });
-      });
-
-    this.graphql.load().then(data => {
-      var datos = data
-      let header = "";
-      //icon = "img/" + staticsIcons[data.elementType.id].state[data.state].icon;
-      header = data.alias;
-
-      $$("planformresult_"+this.id).setValues({
-        id: datos.id,
-        alias: datos.alias,
-        description: datos.description,
-        state: planStateType[datos.state],
-        planSubtype: datos.planSubtype.alias,
-        planModeType: datos.planModeType
-      });
-      //this.planSubtype.forEach(element => {
-      //  $$("planformresult_"+this.id + "_planSubtype").add({ id: element.id, value: element.alias },0);
-      //});
-     // .getList().add({ $empty:true, value:"" },0);
-     // $$("planformresult_"+this.id + "_planSubtype").parse("options", this.planSubtype);
-      //$$("planformresult_"+this.id + "_planSubtype").refresh();
-
-
-      //console.log(typeof header);
-      $$("template2"+this.id).setValues({ value: header });
-      //$$("header").setValue({template:data.elementType.alias});
+  newForm(container,idForm){
+    $$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:idForm.toString() ,template: "<div>" + $.i18n("plan.form.new.title") + "</div>" },3);
+    $$(container)
+      .addView({
+        view:"form", 
+        id:idForm + "_form", 
+        scroll:false, 
+        elements:[{
+          rows: [{
+            cols:[
+              { view:"text", id:idForm + "_alias",  name: "alias",  label: $.i18n("plan.form.alias"), labelAlign:"left", labelWidth: 125, inputWidth:0 },                        
+            ]
+          },{
+            cols:[
+              { view:"text", id:idForm + "_description",  name: "description",  label:$.i18n("plan.form.description"),  labelAlign:"left", labelWidth: 125, inputWidth:0 },
+              { view:"combo",id:idForm + "_planModeType", name: "planModeType", label:$.i18n("plan.form.planModeType"), labelAlign:"left", options: optionPlanModeType, labelWidth: 200, inputWidth:0 }
+            ]
+          }]
+        }]
     });
   }
-  let genericForm = {
-    rows: [
-      this.header,
-      this.form, 
-      {}
-    ]
-  };
-  return genericForm;
-}
 
-dinamicNewForm(container,idForm){
-
-  $$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:idForm.toString() ,template: "<div>" + $.i18n("plan.form.new.title") + "</div>" },3);
-  $$(container)
-    .addView({
-      view:"form", 
-      id:idForm + "_form", 
-      scroll:false, 
-      elements:[{
-        rows: [{
-          cols:[
-            { view:"text", id:idForm + "_alias",  name: "alias",  label:$.i18n("plan.form.alias"), labelAlign:"left", labelWidth: 125, inputWidth:0 },                        
-            //{ view:"text", id:idForm + "_planId", name: "planId", label:"Id",    labelAlign:"left", labelWidth: 200, inputWidth:400 },
-            //{ view:"text", id:idForm + "_state",  name: "state",  label:"State", labelAlign:"left", labelWidth: 200, inputWidth:400 }
-          ]
-        },{
-          cols:[
-            { view:"text", id:idForm + "_description",  name: "description",  label:$.i18n("plan.form.description"),  labelAlign:"left", labelWidth: 125, inputWidth:0 },
-            //{ view:"text", id:idForm + "_planSubtype",  name: "planSubtype",  label:"planSubtype",  labelAlign:"left", labelWidth: 200, inputWidth:400 },
-            { view:"combo",id:idForm + "_planModeType", name: "planModeType", label:$.i18n("plan.form.planModeType"), labelAlign:"left", options: optionPlanModeType, labelWidth: 200, inputWidth:0 }
-          ]
-        }]
-      }]
-  });
-}
-
-getComponentWithOrders() {
-  let orderView = [];
-
-  let orders = {   
-    view:"scrollview", 
-    body:{
-      id: "planOrders", 
-      rows:[]
-    }
-  };
-
-  this.graphql.load().then(data => {
-    var datos = data
-    let header = "";
-    header = data.alias;
-
-    datos.planOrders.forEach(function(e){
-
-      /*
-      let orderheader = {            
-        view: "template", //optional
-        type: "header",
-        id: "template2"+obj.id,
-        data: {
-          value: obj.alias
-        },
-        template: function (obj2) {
-          return obj2.value;
-        },
-        css:{"text-align":"center !important"}
-      };
-      orderView.push(orderheader);
-      let order = {
-            view: "form",
-            id: "planformresult_"+obj.id,
-            margin: 0,
-            elements: [
-              { view: "text", name: "id", label: "id", value: obj.id },
-              { view: "text", name: "alias", label: "alias", value: obj.id },
-              { view: "text", name: "description", label: "description", value: obj.id },
-              { view: "text", name: "state", label: "state", value: obj.id },
-              { view: "text", name: "planOrderType", label: "planOrderType", value:obj.planOrderType.alias, },
-              { view: "text", name: "commandElementType", label: "commandElementType", value:obj.comandElement.commandElementType.alias },
-              { view: "text", name: "commandElementValues", label: "commandElementValues", value:obj.comandElement.commandElementValues },
-              { view: "text", name: "element", label: "element", value:obj.comandElement.element.alias },
-            ]
-         // }
-        //]
-      };
-      orderView.push(order);
-     
-*/
-
-     $$("planOrders")
-     .addView({
-       view:"form", 
-       id:e.id, 
-       scroll:false, 
-       elements:[{ responsive:e.id,
-         rows: [
-           {view:"template", type:"header", template: e.id.toString(), height:50,  align:"left"},
-           { responsive:e.id,
-             cols:[
-               { view:"text", id: e.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: e.alias,         labelAlign:"left", labelWidth: 125, inputWidth:0 },                        
-               { view:"text", id: e.id.toString() + "_orderId", disabled: true, name: "orderId", label:$.i18n("plan.form.id"),    value: e.id.toString(), labelAlign:"left", labelWidth: 200, inputWidth:0 },
-               { view:"text", id: e.id.toString() + "_state",   disabled: true, name: "state",   label:$.i18n("plan.form.state"), value: planOrderStateType[e.state],         labelAlign:"left", labelWidth: 200, inputWidth:0 }
-             ]
-           },{ responsive:e.id,
-             cols:[
-               { view:"text", id: e.id.toString() + "_planOrderType",        disabled: true, name: "planOrderType",        label:$.i18n("plan.form.planOrderType"),        value:e.planOrderType.alias,                    labelAlign:"left", labelWidth: 125, inputWidth:0 },
-               { view:"text", id: e.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",   label:$.i18n("plan.form.commandElementType"),   value:e.comandElement.commandElementType.alias, labelAlign:"left", labelWidth: 200, inputWidth:0 },
-               { view:"text", id: e.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value:e.comandElement.commandElementValues,     labelAlign:"left", labelWidth: 200, inputWidth:0 }
-             ]
-           },
-           { view:"text", id: e.id.toString() + "_element", disabled: true, name: "element", label:$.i18n("plan.form.element"), value:e.comandElement.element.alias, labelAlign:"left", labelWidth: 125, inputWidth:0 }
-         ]
-       }]
-     });
-    });
-
-    $$("planformresult_"+this.id).setValues({
-      id: datos.id,
-      alias: datos.alias,
-      description: datos.description,
-      state: planStateType[datos.state],
-      planSubtype: datos.planSubtype.alias,
-      planModeType: datos.planModeType
-    });
-
-    //console.log(typeof header);
-    $$("template2"+this.id).setValues({ value: header });
-    //$$("header").setValue({template:data.elementType.alias});
-  });
-  //console.log(genericForm);
-  //console.log("OOOOOOOOOOO");
-  let genericForm = {
-    rows: [
-      this.header,
-      this.form,
-      orders,
-      {}
-    ]
-  };
-  return genericForm;
-}
-
-  dinamicFormViewWithOrders(container,data1){
-    //console.log("DINAMIC");
-    //console.log(this);
+  editForm(container,data1){
     $$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:this.id.toString() ,template: "<div>" + this.alias + "</div>" },3);
     $$(container)
       .addView({
@@ -376,110 +199,14 @@ getComponentWithOrders() {
     });
     let orderelements = [];
     let orderplanOrderType = [];
-/*
-    
-		let graphorderElems = webix.proxy("GraphQL",`
-      query  {
-        getElements{
-          id
-          alias
-          description
-          elementType
-          {
-            id
-            alias
-            description
-            commandElementTypes{
-              id
-              alias
-              description
-              commandElementTypeParams{
-                id
-                alias
-                description
-                dataType
-              }
-            }
-          }
-          elementValues
-          {
-            id
-            value
-            elementTypeParam
-            {
-              id
-              alias
-              paramTypeLabel
-              paramType
-              dataTypeLabel
-              dataType
-            }
-          }
-        }
-      }`);
-      graphorderElems.load()
-      .then(data => {
-        data.forEach(element => {
-            orderelements.push(element);
-          });
-        });
-    
-    let planOrderType = webix.proxy(
-      "GraphQL",
-      `query {
-        getPlanOrderTypes{
-          id
-          alias
-          description
-          planOrderTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
-      }`
-    );
-    planOrderType.load()
-    .then(data => {
-      data.forEach(element => {
-          orderplanOrderType.push(element); 
-        });
-      });
-
-*/
-      let neworder = new Order(null,"new",orderelements,orderplanOrderType);
-      neworder.new_dinamicFormOrder(container,this.id.toString());
-      //console.log("qwqwqwqwqwqwqwqwqwqw");
-      //console.log(orderelements);
-
-
+    let neworder = new Order(null,"new",orderelements,orderplanOrderType,container);
+    neworder.new_dinamicFormOrder(container,this.id.toString());
     try {
       this.planOrders.forEach(e => {
-        let order = new Order(null,e,orderelements,orderplanOrderType);
+        let order = new Order(null,e,orderelements,orderplanOrderType,container);
         order.dinamicFormOrder(container);
-        //order.init();
-        /*
-        console.log(order);
-        console.log(order.planOrderType);
-        console.log(order.elements);
-        order.dinamicFormOrder(container);
-        orderelements.forEach(el => {
-          console.log("DENTRO");
-          $$(order.id.toString() + "_element").getList().add({id:el.id, value:el.alias});
-          //console.log("FUERA2");
-          //this.elementsOption.push({id: element.id, value: element.alias});
-        });
-        orderplanOrderType.forEach(el => {
-          console.log("DENTRO");
-          $$(order.id.toString() + "_planOrderType").getList().add({id:el.id, value:el.alias});
-          //console.log("FUERA2");
-          //this.elementsOption.push({id: element.id, value: element.alias});
-        });      
-        */
       });
     } catch {}
-
   };
 
   sendExecutionPlan(){
@@ -507,12 +234,9 @@ getComponentWithOrders() {
   }
 
   loadData() {
-    //console.log("LOAD DATA PLAN");
     this.graphql.load().then(d => {
-      //console.log(d);
       let datos = d;
       this.data = d;
-      //this.id = datos.id;
       this.alias = datos.alias;
       this.description = datos.description;
       this.state = planStateType[datos.state];
@@ -529,12 +253,9 @@ getComponentWithOrders() {
       webix.message(this.planModeType + " Ejecutado Correctamente");
       webix.message(this.planOrders + " Ejecutado Correctamente");
     });
-    //console.log(this);
-    //console.log(this.planSubtype);
   }
 
   init() {
-    //console.log("DENTRO PLAN INIT");
     this.loadData();
   }
 }

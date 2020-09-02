@@ -1,4 +1,7 @@
 import Map from "../classes/Map.js";
+import {columnsElementFormList} from "../data/elementForm.js";
+import ElementCommand from "../classes/ElementCommand.js";
+import { element_tree } from "./element_tree.js";
 
 // GraphQL
 //initialize a proxy
@@ -14,7 +17,8 @@ var graphSynoptic = webix.proxy(
       state
       icon
       childs{
-        id    
+        id
+        alias
         positionX
         positionY
         state
@@ -36,7 +40,7 @@ var graphSynoptic = webix.proxy(
   `
 );
 
-let syn = new Map(graphSynoptic, null, "map1");
+let syn = new Map(graphSynoptic, null, "map1", "Element:7:4");
 
 export let map = {
   rows: [
@@ -46,6 +50,6 @@ export let map = {
       url: function() {
         syn.init("map");
       }
-    }
+    },
   ]
 };

@@ -27,16 +27,19 @@ import {
   generateFullMatrixPanelIcon,
   updateElementIcon,
   updateElementState,
+  getElementSVG,
 } from "../lib/iconGenerator.js";
 
 import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
+import EquipmentTree from "./EquipmentTree.js";
+import ElementCommand from "./ElementCommand.js";
 
 // Size of a row in the layers dropdown
 const DROPDOWN_ROW_SIZE = 43;
 
 export default class Synoptic {
-  constructor(data, metadata, synopticDiv) {
+  constructor(data, metadata, synopticDiv, elementId) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -47,10 +50,13 @@ export default class Synoptic {
     this.baseWidth = 0;
     this.baseHeight = 0;
     this.data = data;
+    this.elementId = elementId;
 
     this.synopticDiv = synopticDiv;
     this.synopticConf = "";
     this.synopticType = "";
+
+    //this.elementTree = [];
 
     if (metadata == null) {
       this.metadata = synoptic;
@@ -70,7 +76,7 @@ export default class Synoptic {
       
       obj.basicElementsVO.forEach((element) => {
         
-        if(elementTypeMap.getElementType(element.id) == elementTypeMap.DMS_ELEMENT_TYPE) {
+        if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS) {
           throw "DMSException";
         }
 
@@ -162,53 +168,6 @@ export default class Synoptic {
     }
     return this.metadata;
   }
-
-  /*
-  handleLayers(e) {
-    // check if the layers are exclusive or not
-    if(this.synopticConf["ExclusiveLayers"] == true) {
-      if(e == "BASE_LAYER" || e == "ROAD") {
-        // Hides device
-        if (this.elementsToDraw[e] == "visible") {
-          this.elementsToDraw[e] = "hidden";
-        } else {
-          this.elementsToDraw[e] = "visible";
-        }  
-      } else {
-        for (var k in this.elementsToDraw) {
-          if (k != e && k != "BASE_LAYER" && k != "ROAD") {
-            this.elementsToDraw[k] = "hidden";
-          }
-        }
-        this.elementsToDraw[e] = "visible";
-      }
-  
-      for (var k in this.elementsToDraw) {
-        let els = this.s.selectAll('[component="' + k + '"]');
-  
-        els.forEach((el) => {
-          el.attr("visibility", this.elementsToDraw[k]);
-        });
-      }
-    } else {  // the layers are not exclusive
-
-      let els = this.s.selectAll('[component="' + e + '"]');
-
-      // Hides device
-      if (this.elementsToDraw[e] == "visible") {
-        this.elementsToDraw[e] = "hidden";
-      } else {
-        this.elementsToDraw[e] = "visible";
-      }
-
-      els.forEach((el) => {
-        el.attr("visibility", this.elementsToDraw[e]);
-      });
-
-    }
-
-  }
-  */
 
   // Layer groups
   handleLayers(e, initial=false) {
@@ -545,7 +504,7 @@ export default class Synoptic {
         d.childs.forEach((element) => {
 
           //console.log(element);
-
+          
           if (element.id in this.synopticConf) {
             let synopticElement = this.synopticConf[element.id];
             
@@ -565,7 +524,7 @@ export default class Synoptic {
             console.log(element.id);
 
             // check for special icons: DMS and ETD
-            if (elementType === elementTypeMap.DMS_ELEMENT_TYPE) {
+            if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
               // generate the base icon
               
               let pmv_str = generateDMSIcon(element);
@@ -596,7 +555,7 @@ export default class Synoptic {
 
               // update the icon based on the state and/or the value
               getElementIcon(element);
-            } else if (elementType === elementTypeMap.ETD_MODBUS_ELEMENT_TYPE) {  // ETD Modbus
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS) {  // ETD Modbus
               // generate the base icon
               let etd_str = generateETDIcon(element);
 
@@ -622,7 +581,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.ETD_DETECTOR_ELEMENT_TYPE) {  // ETD Detector
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {  // ETD Detector
               // generate the base icon
               let measures = this.synopticConf[element.id].values;
               let etd_str = generateETDIcon(element, measures);
@@ -649,7 +608,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.LUX_ELEMENT_TYPE) {  // LUX
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_12_LUX) {  // LUX
               // generate the base icon
               let lux_str = generateLuxIcon(element);
               
@@ -676,7 +635,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.LUM_ELEMENT_TYPE) {  // LUM
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_14_LUM) {  // LUM
               // generate the base icon
               let lum_str = generateLumIcon(element);
 
@@ -704,7 +663,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.CO_ELEMENT_TYPE) {  // CO
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_19_CO) {  // CO
               // generate the base icon
               let co_str = generateCoIcon(element);
 
@@ -732,7 +691,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.NO_ELEMENT_TYPE) {  // NO
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_20_NO) {  // NO
               // generate the base icon
               let no_str = generateNoIcon(element);
 
@@ -760,7 +719,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.OPAC_ELEMENT_TYPE) {  // OPAC
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC) {  // OPAC
               // generate the base icon
               let opac_str = generateOpacIcon(element);
 
@@ -788,7 +747,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.ANEM_INT_ELEMENT_TYPE) {  // ANEM_INT
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT) {  // ANEM_INT
               // generate the base icon
               let anem_str = generateAnemIntIcon(element);
 
@@ -816,7 +775,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.ANEM_EXT_ELEMENT_TYPE) {  // ANEM_EXT
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT) {  // ANEM_EXT
               // generate the base icon
               let anem_str = generateAnemExtIcon(element);
 
@@ -843,7 +802,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.FAN_ELEMENT_TYPE) {  // FAN
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN) {  // FAN
               // generate the base icon
               let fan_str = generateFanIcon(element);
 
@@ -869,7 +828,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.BAR_ELEMENT_TYPE) {  // BAR
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_8_BAR) {  // BAR
               // generate the base icon
               let bar_str = generateBarIcon(element);
 
@@ -895,7 +854,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.SEM_ELEMENT_TYPE) {  // SEM
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM) {  // SEM
               // generate the base icon
               let sem_str = generateSemIcon(element);
 
@@ -921,7 +880,7 @@ export default class Synoptic {
                 // update the icon based on the state and/or the value
                 getElementIcon(element);
               }
-            } else if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {  // ZONE
+            } else if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {  // ZONE
               // generate the base icon
               let zone_str = generateZoneIcon(element);
 
@@ -1060,7 +1019,7 @@ export default class Synoptic {
 
               // check if the item is a tunnel
               // FIXME: ONLY FOR THE DEMO
-              if (elementType === elementTypeMap.ZONE_ELEMENT_TYPE) {  // ZONE
+              if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {  // ZONE
                 /*
                 im.click(function (e) {
                   $$("synoptic1").show();
@@ -1179,7 +1138,7 @@ export default class Synoptic {
             }
 
             if (el != null) {
-              if(elementTypeMap.getElementType(element.id) == elementTypeMap.ZONE_ELEMENT_TYPE) {
+              if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_7_ZONE) {
                 el.click(function (e) {
                   $$("synoptic1").show();
                 });
@@ -1299,6 +1258,69 @@ export default class Synoptic {
             }
           }
         });
+
+
+        // replaces the element tree in the DOM
+        let elementTree = new EquipmentTree(this.elementId, null);
+
+        webix.ui({
+          id: "elementTreeView", 
+          rows: [
+            {
+              id: "element_tree_filter",
+              view: "text",
+              label: "Filter",
+              labelPosition: "left"
+            },
+            {
+              id: "element_tree",
+              view: "tree",
+              borderless: true,
+              scroll: true,
+              select: true,
+              multiselect: true,
+              threeState: true,
+              template: function(obj, common){
+                if (obj.$level > 1) {
+                  return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value + obj.icon;
+                } else {
+                  return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value;
+                }
+              }
+            },
+            {
+              id: "element_tree_button",
+              view: "button",
+              disabled: true,
+              value: "Command",
+              on: {
+                "onItemClick": function(id, e) {
+                  let filteredElements = $$("element_tree").getChecked().filter(e => e.match(/Element/g));
+                  let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                  webix
+                    .ui({
+                      id: "win_command" + filteredElements[0],
+                      view: "window",
+                      move: true,
+                      close: true,
+                      position: "right",
+                      body: elementCommand.getComponent(),
+                      on: {
+                        onDestruct: function (obj) {
+                          
+                        },
+                        onHide: function (obj) {
+                          $$("win_command" + filteredElements[0]).destructor();
+                        },
+                      },
+                    })
+                    .show();
+                }
+              }
+            }
+          ],
+          url: elementTree.getComponent()
+        }, $$("elementTreeView"))
 
         return d;
       })
@@ -1618,8 +1640,7 @@ export default class Synoptic {
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
         let newNode =
-          event[0].addedNodes[0].children[0].children[0].attributes["view_id"]
-            .value;
+          event[0].addedNodes[0].children[0].children[0].attributes["view_id"].value;
 
           if (newNode == self.synopticDiv) {
             // Launch the query again
@@ -1663,7 +1684,76 @@ export default class Synoptic {
                 }
               });
 
+
+              /*
+              $$("element_tree").clearAll();
+              $$("element_tree").parse(elementTree);
+              */
+
             }).then(() => {
+              // update the tree
+              // replaces the element tree in the DOM
+              let elementTree = new EquipmentTree(self.elementId, null);
+              
+              webix.ui({
+                id: "elementTreeView", 
+                rows: [
+                  {
+                    id: "element_tree_filter",
+                    view: "text",
+                    label: "Filter",
+                    labelPosition: "left"
+                  },
+                  {
+                    id: "element_tree",
+                    view: "tree",
+                    borderless: true,
+                    scroll: true,
+                    select: true,
+                    multiselect: true,
+                    threeState: true,
+                    template: function(obj, common){
+                      if (obj.$level > 1) {
+                        return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value + obj.icon;
+                      } else {
+                        return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value;
+                      }
+                    }
+                  },
+                  {
+                    id: "element_tree_button",
+                    view: "button",
+                    disabled: true,
+                    value: "Command",
+                    on: {
+                      "onItemClick": function(id, e) {
+                        let filteredElements = $$("element_tree").getChecked().filter(e => e.match(/Element/g));
+                        let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                        webix
+                          .ui({
+                            id: "win_command" + filteredElements[0],
+                            view: "window",
+                            move: true,
+                            close: true,
+                            position: "right",
+                            body: elementCommand.getComponent(),
+                            on: {
+                              onDestruct: function (obj) {
+                                
+                              },
+                              onHide: function (obj) {
+                                $$("win_command" + filteredElements[0]).destructor();
+                              },
+                            },
+                          })
+                          .show();
+                      }
+                    }
+                  }
+                ],
+                url: elementTree.getComponent()
+              }, $$("elementTreeView"));
+
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });
           }

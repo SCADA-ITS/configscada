@@ -339,9 +339,11 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      break;
     case elementTypeMap.ELEMENT_TYPE_28_PMV_192X64:
     case elementTypeMap.ELEMENT_TYPE_35_PMV:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_27_PMV_A_B:
     case elementTypeMap.ELEMENT_TYPE_29_PMV_B_D:

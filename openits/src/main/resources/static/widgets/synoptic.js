@@ -1,4 +1,6 @@
 import Synoptic from "../classes/Synoptic.js";
+import {columnsElementFormList} from "../data/elementForm.js";
+import ElementCommand from "../classes/ElementCommand.js";
 
 // GraphQL
 //initialize a proxy
@@ -13,7 +15,8 @@ var graphSynoptic = webix.proxy(
       description
       state
       childs{
-        id    
+        id
+        alias
         state
         description
         elementValues{
@@ -26,7 +29,7 @@ var graphSynoptic = webix.proxy(
   `
 );
 
-let syn = new Synoptic(graphSynoptic, null, "synoptic2");
+let syn = new Synoptic(graphSynoptic, null, "synoptic2", "Element:7:1");
 
 export let synoptic = {
   rows: [
@@ -36,6 +39,20 @@ export let synoptic = {
       url: function() {
         syn.init("tunnel");
       }
-    }
+    },
+    {
+      view: "toolbar", id:"toolbar_synoptic", elements:[
+      {
+        view: "icon", icon: "mdi mdi-menu",
+        click: function(){
+          if( $$("menu").config.hidden){
+            $$("menu").show();
+          }
+          else {
+            $$("menu").hide();
+          }
+        }
+      }]
+    },
   ]
 };

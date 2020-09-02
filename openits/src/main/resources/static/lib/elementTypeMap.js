@@ -130,6 +130,11 @@ export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT = "2:35";
 export const PANEL_MANAGER_CONFIG = "5:1";
 
+export const PANELMANAGER_TYPE_PANEL = 1;
+export const PANELMANAGER_TYPE_MULTI_PANEL = 2;
+export const PANELMANAGER_TYPE_PLAN = 3;
+
+
 export function getElementType(elementIdString) {
   let ret = elementIdString.split(":")[POSITION_OF_ELEMENT_TYPE_ID];
   return ret;
@@ -170,6 +175,7 @@ export function getElementTypeName(elementTypeIdString) {
     case "ROAD":
       ret = $.i18n("synoptic.layer.road");
       break;
+    /*
     case ELEMENT_TYPE_1_WS:
     case ELEMENT_TYPE_2_CAM:
     case ELEMENT_TYPE_3_DET:
@@ -208,6 +214,10 @@ export function getElementTypeName(elementTypeIdString) {
       ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
     default:
+      break;
+    */
+    default:
+      ret =  $.i18n("ElementType:"+elementTypeIdString+".alias");
       break;
   }
 

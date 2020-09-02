@@ -26,7 +26,7 @@ var graphSynoptic = webix.proxy(
   `
 );
 
-let met = new Synoptic(graphSynoptic, null, "synoptic_metro");
+let met = new Synoptic(graphSynoptic, null, "synoptic_metro", "Element:7:2");
 
 export let metro = {
   rows: [
