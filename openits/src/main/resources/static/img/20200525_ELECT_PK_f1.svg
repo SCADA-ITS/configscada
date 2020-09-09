@@ -628,26 +628,6 @@
      x="0 32.585934 65.171867 92.334946 119.49803 146.66112 160.24266 187.40575 214.56883 241.73192">PK 12,903 </tspan></text>
 
 <path
-   id="path318"
-   style="fill:none;stroke:#ff0000;stroke-width:12.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-   d="m 4830,4750 v -462 h 5448 v 2683 h 400"
-   inkscape:connector-curvature="0" /><text
-   id="text322"
-   style="font-variant:normal;font-weight:normal;font-size:61.08300018px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,10331,6982)"><tspan
-     id="tspan320"
-     y="0"
-     x="0 35.272926 70.545853 94.973091 127.55902 141.14056 168.30365 200.88959">RNJS.1K </tspan></text>
-
-<text
-   id="text326"
-   style="font-variant:normal;font-weight:normal;font-size:61.08300018px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,10331,6911)"><tspan
-     id="tspan324"
-     y="0"
-     x="0 32.585934 65.171867 92.334946 119.49803 146.66112 160.24266 187.40575 214.56883 241.73192">PK 13,198 </tspan></text>
-
-<path
    id="path328"
    style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
    d="m 12000,5274 h -389 V 3564 H 7234 v -817"

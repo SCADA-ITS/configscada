@@ -540,7 +540,6 @@ export let synopticCabinets = {
 		"Element:34:4":  { "x": 1751, "y": 598,  "width": 63, "height": 37, "alias": "SCNKD1"  },
 		"Element:34:5":  { "x": 1751, "y": 526,  "width": 63, "height": 37, "alias": "SCNKD2"  },
 		"Element:34:6":  { "x": 1751, "y": 454,  "width": 63, "height": 37, "alias": "SCNKD3"  },
-	  "Element:25:1":  { "x": 1626, "y": 891,  "width": 40, "height": 40, "alias": "RNJS.1K"  },
 	  "Element:25:2":  { "x": 1626, "y": 860,  "width": 40, "height": 40, "alias": "RISRJS.5" },
 	  "Element:25:3":  { "x": 1626, "y": 829,  "width": 40, "height": 40, "alias": "RNJS.3J"  },
 	  "Element:25:4":  { "x": 1626, "y": 798,  "width": 40, "height": 40, "alias": "RNJS.2J"  },
