@@ -697,7 +697,7 @@ export default class ElementForm {
 							data: {title: "Image One", src: stream },
 							template: function (obj) {
 							  // obj is a data record object
-							 return '<embed style="width:100%;height:100%;position:absolute;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
+							 return '<iframe style="width:105%;height:100%;position:relative;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
 							}
 						}, 1);
 						
@@ -842,7 +842,7 @@ export default class ElementForm {
 									if( $$("panelManager" + data.id)){
 										$$("panelManager" + data.id).show();
 									}else{
-										let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null);//data.elementType.commandElementTypes[index]);
+										let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.elementType.commandElementTypes[index]);
 										webix.ui({
 											id:"panelManager"+data.id,
 											view:"window",	

@@ -682,6 +682,7 @@ var i18_es = {
     "menu.grafana": "Control Panel",
     "menu.jasper": "Informes",
     "menu.dashboard.bratislava":"ITS Dashboard",
+    "menu.plans.schedule": "Planificador",
 
     "alarmsconfig.d.id": "Identificador",
     "alarmsconfig.d.alias": "Alias",
@@ -1645,5 +1646,25 @@ var i18_es = {
 	"VmsGraphic:2:1738":"Obra:4 a 3 Dcho",
 	"VmsGraphic:2:1739":"Obra:2 a 4 Izq",
 	"VmsGraphic:2:1740":"Obra:2 a 4 Dcho",
-	"VmsGraphic:2:1741":"Obra:2 a 4 Centro",
+    "VmsGraphic:2:1741":"Obra:2 a 4 Centro",
+    
+
+    //Planificador Planes
+    "planSchedule.popup.button.create": "Crear",
+    "planSchedule.popup.button.save": "Guardar",
+    "planSchedule.popup.id": "Identificador",
+    "planSchedule.popup.alias": "Alias",
+    "planSchedule.popup.description": "Descripción",
+    "planSchedule.popup.cronExpression": "Cron",
+    "planSchedule.popup.plan": "Plan",
+    "planSchedule.table.id": "Identificador",
+    "planSchedule.table.alias": "Alias",
+    "planSchedule.table.description": "Descripción",
+    "planSchedule.table.cronExpression": "Cron",
+    "planSchedule.table.plan": "Plan",
+    "plan.button.tooltip.add": "Añadir",
+    "planSchedule.button.tooltip.details": "Detalles",
+    "planSchedule.button.tooltip.edit": "Editar",
+    "planSchedule.button.tooltip.delete": "Borrar",
+
 };

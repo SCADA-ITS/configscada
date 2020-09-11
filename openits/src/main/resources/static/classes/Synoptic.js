@@ -1266,6 +1266,10 @@ export default class Synoptic {
         webix.ui({
           id: "elementTreeView", 
           rows: [
+            { view: "template", 
+              template: $.i18n("defaultheader.equipment"),
+              type: "header" 
+            },
             {
               id: "element_tree_filter",
               view: "text",
@@ -1276,7 +1280,7 @@ export default class Synoptic {
               id: "element_tree",
               view: "tree",
               borderless: true,
-              scroll: true,
+              scroll: "auto",
               select: true,
               multiselect: true,
               threeState: true,
@@ -1698,6 +1702,11 @@ export default class Synoptic {
               webix.ui({
                 id: "elementTreeView", 
                 rows: [
+                  { 
+                    view: "template", 
+                    template: $.i18n("defaultheader.equipment"),
+                    type: "header" 
+                  },
                   {
                     id: "element_tree_filter",
                     view: "text",
@@ -1708,7 +1717,7 @@ export default class Synoptic {
                     id: "element_tree",
                     view: "tree",
                     borderless: true,
-                    scroll: true,
+                    scroll: "auto",
                     select: true,
                     multiselect: true,
                     threeState: true,

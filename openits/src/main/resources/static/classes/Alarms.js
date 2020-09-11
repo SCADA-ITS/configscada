@@ -78,7 +78,17 @@ export default class Alarms {
 		        	$$('alarmsTable').remove(element.id);
 		        	
 		        }else{
-		        	$$('alarmsTable').updateItem(element.id, data);
+					$$('alarmsTable').updateItem(element.id, data);
+					let orden = $$("alarmsTable")._last_sorted;
+					let orden_campos = [];
+					let orden_values = [];
+					Object.entries(orden).map(([k, v]) => {
+						orden_campos.push(k);
+						orden_values.push(v);
+					});
+					if (orden_campos.length > 0){
+						$$("alarmsTable").sort(orden_values);
+					}
 		        	
 		        	if(data.recognized != null){
 		        		$$("alarmsTable").move(element.id, 0, $$("alarmsTable_recon"), {newId: element.id});
@@ -104,7 +114,17 @@ export default class Alarms {
 		            if (element.deactivation != null) { // BORRADA CUANDO SE MODIFICA
 		            	$$('alarmsTable_recon').remove(element.id);	
 		            }else{
-		                $$('alarmsTable_recon').updateItem(element.id, data);
+						$$('alarmsTable_recon').updateItem(element.id, data);
+						let orden = $$("alarmsTable_recon")._last_sorted;
+						let orden_campos = [];
+						let orden_values = [];
+						Object.entries(orden).map(([k, v]) => {
+							orden_campos.push(k);
+							orden_values.push(v);
+						});
+						if (orden_campos.length > 0){
+							$$("alarmsTable_recon").sort(orden_values);
+						}
 		            }
 		            control = true;
 		        }
@@ -134,8 +154,28 @@ export default class Alarms {
 				targetElement: targetElement };				
 			if(data.recognized != null && data.deactivation == null){
 				$$('alarmsTable_recon').add(data, 0);
-			}else if(data.recognized == null){		
+				let orden = $$("alarmsTable_recon")._last_sorted;
+				let orden_campos = [];
+				let orden_values = [];
+				Object.entries(orden).map(([k, v]) => {
+					orden_campos.push(k);
+					orden_values.push(v);
+				});
+				if (orden_campos.length > 0){
+					$$("alarmsTable_recon").sort(orden_values);
+				}
+			}else if(data.recognized == null){	
+				let orden = $$("alarmsTable")._last_sorted;
+				let orden_campos = [];
+				let orden_values = [];
+				Object.entries(orden).map(([k, v]) => {
+					orden_campos.push(k);
+					orden_values.push(v);
+				});
 				$$('alarmsTable').add(data, 0); 
+				if (orden_campos.length > 0){
+					$$("alarmsTable").sort(orden_values);
+				}
 			}
 
 			//Source Alias
@@ -228,10 +268,11 @@ export default class Alarms {
                 	}else if(data.recognized == null){
 
                 		$$('alarmsTable').add(data, 0); 
-                	}
-
-            }
-          );
+					}
+				
+			}
+		  );
+		  //$$('alarmsTable').sort("activation", "desc");
           this.client.activate();
           return d;
         });

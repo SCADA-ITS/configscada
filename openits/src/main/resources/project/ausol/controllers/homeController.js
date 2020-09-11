@@ -124,7 +124,7 @@ webix.ready(function() {
         view: "sidemenu",
         id: "menu",
         width: 400,
-        position: "left",
+        position: "right",
         body: element_tree
     });
 

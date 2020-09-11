@@ -251,7 +251,20 @@ export default class Order {
               {
                 rows:[
                   { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
-                  { view:"combo", id: this.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",  label:$.i18n("plan.form.commandElementType"), value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, options: [], labelAlign:"left", labelWidth: 120, inputWidth:0 },        
+                  { 
+                    view:"combo", 
+                    id: this.id.toString() + "_commandElementType",   
+                    disabled: true, name: "commandElementType",  
+                    label:$.i18n("plan.form.commandElementType"), 
+                    value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, 
+                    options: [], 
+                    labelAlign:"left", 
+                    labelWidth: 120, 
+                    inputWidth:0 ,
+                    on: {
+                      onChange: build_type_panel_edit
+                    }
+                  },        
                 ]
               }
             ],  
@@ -266,8 +279,11 @@ export default class Order {
               { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                 click: orderSave
               },
-              { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+              { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                 click: orderRemove
+              },
+              { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                click: orderEditCancel
               }
             ]
           }
@@ -656,8 +672,9 @@ function saveWindowOrder(id){
             let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
             if (pmvTypes.includes(idtype.split(":")[1])){
               if(v_commandElementType === send_command){ //si es SEND COMMAND MIRAMOS LOS VALORES DEL PANEL
-                let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3);
-                let panels = panelMan.configExportData();
+                let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null);
+                let dataList = panelMan.configExportData();
+                let panels = dataList[0];
                 let datos = [];
                 let panelHash = {};
                 let panelesList = [];
@@ -689,7 +706,7 @@ function saveWindowOrder(id){
                     for(let i=0;i<v.numLineas;i++) {
                       texto = texto + $$("panel_" + k + "_T_L_" + i).data.value;
                       if(i !== (v.numLineas - 1 )){
-                        texto = texto + "%$";
+                        texto = texto + ":$";
                       }
                     }
                     datos.push(texto);
@@ -783,7 +800,8 @@ function saveWindowOrder(id){
                   Object.entries(data).map(([k, v]) => {
                     createOrderDinamic(container,v);
                   });
-                  webix.message("Creado Correctamente");
+                  $$("new_order_window_" + id.split("_")[0]).hide();
+                  webix.message("Guardado Correctamente");
                 } else {
                   webix.message("ERROR AL CREAR");
                 }
@@ -806,6 +824,7 @@ function saveWindowOrder(id){
                 .then(data => {
                   if(data) {
                     createOrderDinamic(container,data);
+                    $$("new_order_window_" + id.split("_")[0]).hide();
                     webix.message("Creado Correctamente");
                   } else {
                     webix.message("ERROR AL CREAR");
@@ -829,12 +848,7 @@ function saveWindowOrder(id){
 }
 
 function createOrderDinamic(container,data){
-  let selectPlan = $$("treePlan").getSelectedId();
-  let item = $$('treePlan').getItem(selectPlan);
-  let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
-  itemPlanOrders.push(data);
-  item["planOrders"] = itemPlanOrders;
-  $$('treePlan').updateItem(selectPlan, item);
+  let result = updateOrderTree("treePlan",data,"new");
 
   try {
     let v_view = $$(data.id + "_form");
@@ -883,13 +897,30 @@ function createOrderDinamic(container,data){
                 {
                   rows:[
                     { view:"textarea",  id: data.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:data.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
-                    { view:"combo", id: data.id.toString() + "_commandElementType",   disabled: true, name: "commandElementType",  label:$.i18n("plan.form.commandElementType"), value:{id: data.id.toString() + "_" + data.comandElement.commandElementType.id, value:data.comandElement.commandElementType.alias}, options: [], labelAlign:"left", labelWidth: 120, inputWidth:0 },        
+                    { 
+                      view:"combo", 
+                      id: data.id.toString() + "_commandElementType",   
+                      disabled: true, 
+                      name: "commandElementType",  
+                      label:$.i18n("plan.form.commandElementType"), 
+                      value:{
+                        id: data.id.toString() + "_" + data.comandElement.commandElementType.id, 
+                        value:data.comandElement.commandElementType.alias
+                      }, 
+                      options: [], 
+                      labelAlign:"left", 
+                      labelWidth: 120, 
+                      inputWidth:0,
+                      on: {
+                        onChange: build_type_panel_edit
+                      }
+                    },        
                   ]
                 }
               ],  
             },
             { view:"textarea",  id: data.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: data.comandElement.commandElementValues ? JSON.stringify(data.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
-            { responsive:data.id + "_form",
+            { //responsive:data.id + "_form",
               cols:[
                 { gravity: 3 },
                 { view:"button", id: "bedit_" + data.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
@@ -898,8 +929,11 @@ function createOrderDinamic(container,data){
                 { view:"button", id: "bsave_" + data.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                   click: orderSave
                 },
-                { view:"button", id: "bremove_" + data.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                { view:"button", id: "bremove_" + data.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                   click: orderRemove
+                },
+                { view:"button", id: "becancel_" + data.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                  click: orderEditCancel
                 }
               ]
             }
@@ -912,11 +946,74 @@ function createOrderDinamic(container,data){
   }
 }
 
-function orderEdit(id){
-  console.log(id);
+function orderEditCancel(id) {
+  let idOrder = id.split("_")[1];
+  let selectPlan = $$("treePlan").getSelectedId();
+  let item = $$("treePlan").getItem(selectPlan);
+  let itemPlanOrders = item["planOrders"].find(function(value, index, arr){ return value.id === idOrder;});
+  let idform = $$(idOrder + "_form").getValues();
 
-  let idtype = "ElementType:" + elementTypeMap.getElementType(id.toString().split("_")[1]);
-  console.log(idtype);
+  if (idform.alias !== itemPlanOrders.alias) 
+    //restauramos el alias
+    $$(idOrder + "_alias").setValue(itemPlanOrders.alias);
+
+  if (idform.description !== itemPlanOrders.description)
+    $$(idOrder + "_description").setValue(itemPlanOrders.description);
+
+  if (idform.planOrderType.split("_")[1] !== itemPlanOrders.planOrderType.id)
+    $$(idOrder + "_planOrderType").setValues({ id:idOrder + "_" + itemPlanOrders.planOrderType.id, value:itemPlanOrders.planOrderType.alias });
+
+//  if (idform.element.split("_")[1] !== itemPlanOrders.comandElement.element.id)
+//    $$(idOrder + "_element").setValues({ id: idOrder + "_" + itemPlanOrders.comandElement.element.id, value: itemPlanOrders.comandElement.element.alias });
+
+//  if (idform.commandElementType.split("_")[1] !== itemPlanOrders.comandElement.commandElementType.id)
+//    $$(idOrder + "_commandElementType").setValue({ id: idOrder + "_" + itemPlanOrders.comandElement.commandElementType.id, value: itemPlanOrders.comandElement.commandElementType.alias });
+
+  $$(idOrder + "_commandElementValues").setValue(itemPlanOrders.comandElement.commandElementValues ? JSON.stringify(itemPlanOrders.comandElement.commandElementValues) : "");
+
+  $$("bsave_" + idOrder).hide();
+  $$("becancel_" + idOrder).hide();
+  $$("bedit_" + idOrder).show();
+  $$("bremove_" + idOrder).show();
+
+  $$(idOrder + "_element").disable();
+  $$(idOrder + "_planOrderType").disable();
+  $$(idOrder + "_commandElementType").disable();
+  $$(idOrder + "_alias").disable();
+  $$(idOrder + "_description").disable();
+  //remove dashboard
+  if ($$("order_edit_dashboard_" + idOrder))
+    $$(idOrder + "_form").removeView("order_edit_dashboard_" + idOrder);
+}
+
+function orderEdit(id){
+  //DESHABILITAMOS LOS OTROS POSIBLES EDIT Y ELIMMINAMOS LOS OTROS DASHBOARDS QUE TENGAMOS
+  let padre = $$(id.toString().split("_")[1] + "_form").getParentView();
+  let hijos = padre.getChildViews();
+  let count01 = 0;
+  hijos.forEach(item => {
+    if(count01 > 1){
+      if(item.config.id.split("_")[0] !== id.toString().split("_")[1]){
+        try {
+          if($$("order_edit_dashboard_" + item.config.id.split("_")[0])) {
+            $$("bsave_" + item.config.id.split("_")[0]).hide();
+            $$("becancel_" + item.config.id.split("_")[0]).hide();
+            $$("bedit_" + item.config.id.split("_")[0]).show();
+            $$("bremove_" + item.config.id.split("_")[0]).show();
+          
+            $$(item.config.id.split("_")[0] + "_element").disable();
+            $$(item.config.id.split("_")[0] + "_planOrderType").disable();
+            $$(item.config.id.split("_")[0] + "_commandElementType").disable();
+            $$(item.config.id.split("_")[0] + "_alias").disable();
+            $$(item.config.id.split("_")[0] + "_description").disable();
+            $$(item.config.id.split("_")[0] + "_form").removeView("order_edit_dashboard_" + item.config.id.split("_")[0]);
+          }
+        } 
+        catch(e) {console.log(e)}
+      }
+    }
+    count01 +=1;
+  });
 
   $$(id.toString().split("_")[1] + "_element").enable();
   $$(id.toString().split("_")[1] + "_planOrderType").enable();
@@ -924,150 +1021,323 @@ function orderEdit(id){
   $$(id.toString().split("_")[1] + "_alias").enable();
   $$(id.toString().split("_")[1] + "_description").enable();
   $$("bsave_" + id.toString().split("_")[1]).show();
+  $$("becancel_" + id.toString().split("_")[1]).show();
   $$("bedit_" + id.toString().split("_")[1]).hide();
   $$("bremove_" + id.toString().split("_")[1]).hide();
   $$(id.toString().split("_")[1] + "_element").getList().clearAll();
   $$(id.toString().split("_")[1] + "_commandElementType").getList().clearAll();
   $$(id.toString().split("_")[1] + "_planOrderType").getList().clearAll();
   let value = $$(id.toString().split("_")[1] + "_element").data.value;
+  let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
   let texto = $$(id.toString().split("_")[1] + "_element").data.text;
   let value_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.value;
   let texto_commandElementType =  $$(id.toString().split("_")[1] + "_commandElementType").data.text;
   let value_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.value;
   let texto_planOrderType = $$(id.toString().split("_")[1] + "_planOrderType").data.text;
+  let text_commands = $$(id.toString().split("_")[1] + "_commandElementValues").data.value;
 
-  let graphElems = webix.proxy("GraphQL",`
-  query  {
-    getElements{
-      id
-      alias
-      description
-      elementType
+  let graphType = webix.proxy("GraphQL",`
+    query($rowId: String!) {
+      getElementType(elementTypeId: $rowId)
       {
         id
         alias
         description
-        commandElementTypes{
-          id
-          alias
-          description
-          commandElementTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
-        }
+        commandElementTypes{id alias}
+      }  
+    }`
+  );
+  graphType.load({
+    rowId: idtype
+  })
+  .then(data => {
+    data.commandElementTypes.forEach(e => {
+      if ( $$(id.toString().split("_")[1] + "_commandElementType").data.value.split("_")[1] !== e.id) {
+        $$(id.toString().split("_")[1] + "_commandElementType").getList().add({id:id.toString().split("_")[1] + "_" + e.id, value:e.alias});
       }
-      elementValues
-      {
-        id
-        value
-        elementTypeParam
-        {
-          id
-          alias
-          paramTypeLabel
-          paramType
-          dataTypeLabel
-          dataType
-        }
-      }
-    }
-  }`);
+    });
+    $$(id.toString().split("_")[1] + "_commandElementType").setValue({id: value_commandElementType ,value: texto_commandElementType });
+  });
 
-  graphElems.load()
+  let graphElems = webix.proxy("GraphQL",`
+    query($rowId: String!) {
+      getElementsByType(elementTypeId: $rowId){
+        id
+        alias
+      }
+    }`
+  );
+  graphElems.load({
+    rowId: idtype
+  })
   .then(data => {
     data.forEach(element => {
       if ($$(id.toString().split("_")[1] + "_element").data.value.split("_")[1] !== element.id) {
         $$(id.toString().split("_")[1] + "_element").getList().add({id:id.toString().split("_")[1] + "_" + element.id, value:element.alias});
-      } else {
-        element.elementType.commandElementTypes.forEach(e => {
-          if ( $$(id.toString().split("_")[1] + "_commandElementType").data.value.split("_")[1] !== e.id) {
-            $$(id.toString().split("_")[1] + "_commandElementType").getList().add({id:id.toString().split("_")[1] + "_" + e.id, value:e.alias});
-          }
-        });
       }
-      });
-      $$(id.toString().split("_")[1] + "_element").setValue({id: value ,value: texto });
-      $$(id.toString().split("_")[1] + "_commandElementType").setValue({id: value_commandElementType ,value: texto_commandElementType });
     });
-    let planOrderType = webix.proxy(
-      "GraphQL",
-      `query {
-        getPlanOrderTypes{
+    $$(id.toString().split("_")[1] + "_element").setValue({id: value ,value: texto });
+  });
+
+  let planOrderType = webix.proxy(
+    "GraphQL",
+    `query {
+      getPlanOrderTypes{
+        id
+        alias
+        description
+        planOrderTypeParams{
           id
           alias
           description
-          planOrderTypeParams{
-            id
-            alias
-            description
-            dataType
-          }
+          dataType
         }
-      }`
-    );
-    planOrderType.load()
-    .then(data => {
-      data.forEach(element => {  
-        if ($$(id.toString().split("_")[1] + "_planOrderType").data.value.split("_")[1] !== element.id)
-          $$(id.toString().split("_")[1] + "_planOrderType").getList().add({id:id.toString().split("_")[1] + element.id, value:element.alias});
-      });
+      }
+    }`
+  );
+  planOrderType.load()
+  .then(data => {
+    data.forEach(element => {  
+      if ($$(id.toString().split("_")[1] + "_planOrderType").data.value.split("_")[1] !== element.id)
+        $$(id.toString().split("_")[1] + "_planOrderType").getList().add({id:id.toString().split("_")[1] + element.id, value:element.alias});
     });
-    $$(id.toString().split("_")[1] + "_planOrderType").setValue({id: value_planOrderType ,value: texto_planOrderType  });
-
-    let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
-    if (pmvTypes.includes(idtype.split(":")[1])){
-      let item = $$('treePlan').getItem(selectPlan);
-      let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
-      //"ElementType:29"
-      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()});
-      panelMan.loadComponent();
-    } else {
-      $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body:{
-        template:"text" }});
+  });
+  $$(id.toString().split("_")[1] + "_planOrderType").setValue({id: value_planOrderType ,value: texto_planOrderType  });
+  let datos = null;
+  let message = $$(id.toString().split("_")[1] + "_commandElementType").config.text;
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+  if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
+    let lista_ordenada = [];
+    let lista_valores = {};
+    if(text_commands !== "" && text_commands !== undefined){
+      datos = JSON.parse(text_commands.replace('\"','"'));
+      datos.forEach(item => {
+        lista_ordenada.push(parseInt(item.id.split(":")[3]));
+        lista_valores[parseInt(item.id.split(":")[3])] = { value: item.value };
+      });
+      lista_ordenada.sort();
     }
-    
+    let scala = panelData[idtype].scala_List;
+    let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores);
+    let data = panelMan.configExportData();
+    let tamx = data[1] * scala;
+    let tamy = data[2] * scala;
+    //console.log("TAMAÑO2");
+    //console.log(tamx);
+    //console.log(tamy);
+    $$(id.toString().split("_")[1] + "_form").addView(
+      {
+        view:"dashboard",
+        id:"order_edit_dashboard_" + id.toString().split("_")[1],
+        gridColumns:1,
+        //width:tamx,
+        gridRows:1,
+        cellHeight:300,
+        cells:[
+          { view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()},
+        ],
+      }
+    );
+    panelMan.loadComponent();
+  }
 }
 
 function orderSave(id){
-  $$("bsave_" + id.toString().split("_")[1]).hide();
-  $$("bedit_" + id.toString().split("_")[1]).show();
-  $$("bremove_" + id.toString().split("_")[1]).show();
-
-  $$(id.toString().split("_")[1] + "_element").disable();
-  $$(id.toString().split("_")[1] + "_planOrderType").disable();
-  $$(id.toString().split("_")[1] + "_commandElementType").disable();
-  $$(id.toString().split("_")[1] + "_alias").disable();
-  $$(id.toString().split("_")[1] + "_description").disable();
   let idform = $$(id.toString().split("_")[1] + "_form").getValues();
 
-  upOrderGrap.load({
-    plan: {
-      "id": idform.orderId,
-      "alias": idform.alias,
-      "description": idform.description,
-      "planOrderTypeId": idform.planOrderType.split("_")[1],
-      "planOrderValues": null,
-      "comandElement": {
-        "commandElementTypeId": idform.commandElementType.split("_")[1],
-        "elementId": idform.element.split("_")[1],
-        "commandElementValues": null //idform.commandElementValues === "" ? null : idform.commandElementValues
+  let value = $$(id.toString().split("_")[1] + "_element").data.value;
+  let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
+  let message = $$(id.toString().split("_")[1] + "_commandElementType").config.text;
+  let v_commands = [];
+  let v_commands_values = [];
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+  if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
+    //SI TENEMOS UN SEND MESSAGE
+    let graphElemType = `query {
+      getElementType(elementTypeId: "` + idtype + `")
+      {
+        id
+        alias
+        description
+        commandElementTypes{  
+          id 
+          alias 
+          commandElementTypeParams { 
+            id 
+            alias 
+            dataType
+          }
+        }
+        elementTypeParams{
+          id
+          alias
+          description
+          paramType
+          graphics {
+            id 
+            alias 
+            graphicType       
+            graphicValues {id value}
+          }
+        }
       }
+    }`;
+    
+    let graphqlEType = webix.proxy("GraphQL", graphElemType);
+    graphqlEType.load().then(data => {
+      let send_command = null;
+      data.commandElementTypes.forEach(element => {
+        if (element.alias === "SEND MESSAGE") {
+          try {
+            send_command = element.id;
+            element.commandElementTypeParams.forEach(item => {
+              v_commands.push(item.id);
+            });
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      });
+      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null);
+      let controlPanels = panelMan.controlPanels(data);
+      if (controlPanels !== -1) {
+        if (v_commands.length > 0) {
+          let vcommands = v_commands.sort();
+          for (let i=0;i<vcommands.length; i++) {
+            v_commands_values.push({
+              "commandElementTypeParamId": vcommands[i],
+              "value": controlPanels[i]
+            });
+          }
+        }
+        upOrderGrap.load({
+          plan: {
+            "id": id.toString().split("_")[1],
+            "alias": idform.alias,
+            "description": idform.description,
+            "planOrderTypeId": idform.planOrderType.split("_")[1],
+            "planOrderValues": null,
+            "comandElement": {
+              "commandElementTypeId": idform.commandElementType.split("_")[1],
+              "elementId": idform.element.split("_")[1],
+              "commandElementValues": v_commands_values
+            }
+          }
+        })
+        .then(data => {
+          if(data) {
+            let result = updateOrderTree("treePlan",data,"update");
+            let result_list = updateOrderList(data,"update");
+            if (result && result_list) {
+              $$("bsave_" + data.id).hide();
+              $$("becancel_" + data.id).hide();
+              $$("bedit_" + data.id).show();
+              $$("bremove_" + data.id).show();
+            
+              $$(data.id + "_element").disable();
+              $$(data.id + "_planOrderType").disable();
+              $$(data.id + "_commandElementType").disable();
+              $$(data.id + "_alias").disable();
+              $$(data.id + "_description").disable();
+              //remove dashboard
+              if ($$("order_edit_dashboard_" + data.id))
+                $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
+              webix.message("Guardado Correctamente");
+            } else {
+              webix.message("ERROR AL GUARDAR");
+            }
+          } else {
+            webix.message("ERROR AL GUARDAR");
+          }
+        });
+      } else {
+        webix.message("ERROR AL GUARDAR");
+      }
+    });
+  } else {
+    upOrderGrap.load({
+      plan: {
+        "id": id.toString().split("_")[1],
+        "alias": idform.alias,
+        "description": idform.description,
+        "planOrderTypeId": idform.planOrderType.split("_")[1],
+        "planOrderValues": null,
+        "comandElement": {
+          "commandElementTypeId": idform.commandElementType.split("_")[1],
+          "elementId": idform.element.split("_")[1],
+          "commandElementValues": null //idform.commandElementValues === "" ? null : idform.commandElementValues
+        }
+      }
+    })
+    .then(data => {
+      if(data) {
+        let result = updateOrderTree("treePlan",data,"update");
+        let result_list = updateOrderList(data,"update");
+
+        if (result && result_list) {
+          $$("bsave_" + data.id).hide();
+          $$("becancel_" + data.id).hide();
+          $$("bedit_" + data.id).show();
+          $$("bremove_" + data.id).show();
+        
+          $$(data.id + "_element").disable();
+          $$(data.id + "_planOrderType").disable();
+          $$(data.id + "_commandElementType").disable();
+          $$(data.id + "_alias").disable();
+          $$(data.id + "_description").disable();
+          //remove dashboard
+          if ($$("order_edit_dashboard_" + data.id))
+            $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
+        } else {
+          webix.message("ERROR AL GUARDAR");
+        }
+      } else {
+        webix.message("ERROR AL GUARDAR");
+      }
+    });
+  }
+}
+
+function updateOrderList(data,parameter){
+  try {
+    switch (parameter) {
+      case "remove":
+        break;
+      case "new":
+        break;
+      case "update":
+        $$(data.id.toString() + "_commandElementValues").setValue(data.comandElement.commandElementValues ? JSON.stringify(data.comandElement.commandElementValues) : "");
+        break;
     }
-  })
-  .then(data => {
-    if(data) {
-      let selectPlan = $$("treePlan").getSelectedId();
-      let item = $$('treePlan').getItem(selectPlan);
-      let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
-      itemPlanOrders.push(data);
-      item["planOrders"] = itemPlanOrders;
-      $$('treePlan').updateItem(selectPlan, item);
-      webix.message("Guardado Correctamente");
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+function updateOrderTree(view,data,parameter){
+  try {
+    let selectPlan = $$(view).getSelectedId();
+    let item = $$(view).getItem(selectPlan);
+    let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
+    switch (parameter) {
+      case "remove":
+        break;
+      case "new":
+        itemPlanOrders.push(data);
+        break;
+      case "update":
+        itemPlanOrders.push(data);
+        break;
     }
-  });
+    item["planOrders"] = itemPlanOrders;
+    $$(view).updateItem(selectPlan, item);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 function orderRemove(id){
@@ -1084,8 +1354,10 @@ function orderRemove(id){
   })
   .then(data => {
     if(data) {
+      let padre = $$(idform + "_form").getParentView();
+      $$(padre).removeView(idform + "_form");
+      let result = updateOrderTree("treePlan",data,"remove");
       webix.message("Eliminado Correctamente");
-      $$(idform + "_form").hide();
     }
   });
 }
@@ -1132,8 +1404,6 @@ function buildc(id){
 function buildc_new(id){
   let element = id.toString().split("_")[2];
   let idplan  = id.toString().split("_")[3];
-  //console.log(idplan);
-  //console.log(element);
   $$("order_new_commandElementType_" + idplan).getList().clearAll();
   $$("order_new_commandElementType_" + idplan).setValue({id:"" ,value: ""});
   let graphElems = webix.proxy("GraphQL",`
@@ -1177,7 +1447,6 @@ function build_equipment_table(id) {
   
   $$("window_order_new_datatable_" + planid).clearAll();
   $$("window_order_new_commandElementType_" + planid).getList().clearAll();
-  //$$("window_order_new_commandElementType_" + planid).setValue({id: "" ,value: "" });
   $$("window_order_new_commandElementType_" + planid).$setValue("");
   let graphType = webix.proxy("GraphQL",`
   query($rowId: String!) {
@@ -1241,12 +1510,59 @@ function build_type_table(id) {
     let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
     if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
       let scala = panelData[idtype].scala;
-      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala);
+      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,null);
       $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()});
       panelMan.loadComponent();
     } else {
       $$("window_order_new_dashboard_" + planid).addView({ view:"panel", x:0, y:0, dx:1, dy:1, body:{
         template:"text" }});
+    }
+  }
+}
+
+function build_type_panel_edit(id){
+  let value = $$(id.toString().split("_")[0] + "_element").data.value;
+  let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
+  let text_commands = $$(id.toString().split("_")[0] + "_commandElementValues").data.value;
+  let datos = null;
+  let message = $$(id.toString().split("_")[0] + "_commandElementType").config.text;
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+  if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
+    let lista_ordenada = [];
+    let lista_valores = {};
+    if(text_commands !== "" && text_commands !== undefined){
+      datos = JSON.parse(text_commands.replace('\"','"'));
+      datos.forEach(item => {
+        lista_ordenada.push(parseInt(item.id.split(":")[3]));
+        lista_valores[parseInt(item.id.split(":")[3])] = { value: item.value };
+      });
+      lista_ordenada.sort();
+    }
+    let scala = panelData[idtype].scala_List;
+    let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores);
+    let data = panelMan.configExportData();
+    let tamx = data[1];
+    let tamy = data[2];
+    console.log("TAMAÑO");
+    console.log(tamx);
+    console.log(tamy);
+    $$(id.toString().split("_")[0] + "_form").addView(
+      {
+        view:"dashboard",
+        id:"order_edit_dashboard_" + id.toString().split("_")[0],
+        gridColumns:1,
+        width:800,
+        gridRows:1,
+        cellHeight:200,
+        cells:[
+          { view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()},
+        ],
+      }
+    );
+    panelMan.loadComponent();
+  } else {
+    if($$("order_edit_dashboard_" + id.toString().split("_")[0])) {
+      $$(id.toString().split("_")[0] + "_form").removeView("order_edit_dashboard_" + id.toString().split("_")[0]);
     }
   }
 }

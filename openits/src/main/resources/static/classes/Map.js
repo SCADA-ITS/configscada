@@ -14,6 +14,8 @@ var mapStates = {};
 var mapCoordinates = {};
 
 var visibleElements = [];
+var mapElements = [];
+var mapIcons = {};
 
 export default class Map {
   constructor(data, metadata, synopticDiv, elementId) {
@@ -103,7 +105,6 @@ export default class Map {
 
         }
         */
-
         // if it's a DMS, ask for the full data
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
@@ -120,6 +121,8 @@ export default class Map {
 
         // search for the element received in the elements of the layer
         if(retLayer != null) {
+          
+
           let elementToUpdate = retLayer.getSource().getFeatureById(element.id);
 
           if(typeof element.state != 'undefined') {
@@ -176,6 +179,9 @@ export default class Map {
             // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
             tmpIcon = tmpIcon.replace(/#/g, "%23");
 
+            // update the icon cache
+            mapIcons[element.id] = tmpIcon;
+
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
                 opacity: 1,
@@ -190,18 +196,10 @@ export default class Map {
 
       });
     } catch (err) {
-      //console.log("Error: " + err.message);
-      //console.log("RETRY WITH GRAPHQL");
-      
-      let obj = JSON.parse(JSON.parse(message.body));
+      console.log("Error: " + err.message);
+      console.log("RETRY WITH GRAPHQL");
 
-      // get feature layer
-      let retLayer = null;
-      map.getLayers().forEach(function(l) {
-        if(l.get("title") == "Elements") {
-          retLayer = l;
-        }
-      });
+      let obj = JSON.parse(JSON.parse(message.body));
 
       obj.basicElementsVO.forEach((element) => {
         //initialize the proxy
@@ -237,12 +235,22 @@ export default class Map {
             elem: element.id,
           })
           .then((data) => {
+
             // process the received data
             let element = data;
 
             let mapElement = mapConf[element.id];
 
+            // get feature layer
+            let retLayer = null;
+            map.getLayers().forEach(function(l) {
+              if(l.get("title") == "Elements") {
+                retLayer = l;
+              }
+            });
+            
             if(retLayer != null) {
+              
               let elementToUpdate = retLayer.getSource().getFeatureById(element.id);
               if(elementToUpdate != null) {
                 
@@ -276,6 +284,7 @@ export default class Map {
                   || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {  // MATRIX PANEL
 
+
                   total_width = 0;
                   total_height = 0;
 
@@ -302,12 +311,14 @@ export default class Map {
                   }
                 }
 
-
                 //let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
                 let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
-
+                
                 // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
                 tmpIcon = tmpIcon.replace(/#/g, "%23");
+
+                // update the icon cache
+                mapIcons[element.id] = tmpIcon;
 
                 let canvas = document.createElement("canvas");
                 // get canvas context for drawing on canvas
@@ -392,6 +403,42 @@ export default class Map {
     });
   }
 
+  checkElement() {
+    let newVisibleElements = [];
+
+    map.getLayers().forEach(l => {
+      if(l.get('id') == "Elements") {
+
+        for (let i=0; i<mapElements.length; i++) {
+          let id = mapElements[i];
+
+          if(l.getSource().getFeatureById(id) != null) {
+            // check if the element is checked or unchecked
+            let currentStyle = l.getSource().getFeatureById(id).getStyle();
+            let opacity = 0;
+            
+            if($$("element_tree").getChecked().includes(id)) {
+              // set the opacity
+              opacity = 1;
+              newVisibleElements.push(id);
+            }
+            
+            let newStyle = currentStyle;
+            // update the opacity
+            newStyle.getImage().opacity_ = opacity;
+  
+            l.getSource().getFeatureById(id).setStyle(newStyle);
+          }
+
+        }
+
+      }
+    });
+
+    visibleElements = newVisibleElements;
+    
+  }
+
   loadData() {
     let self = this;
 
@@ -405,7 +452,7 @@ export default class Map {
           if (element.id in this.synopticConf) {
 
             // add to the visible elements list
-            visibleElements.push(element.id);
+            mapElements.push(element.id);
 
             // let's store the states
             mapStates[element.id] = element.state;
@@ -466,11 +513,13 @@ export default class Map {
               }
             }
 
-
             let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
 
             // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
             tmpIcon = tmpIcon.replace(/#/g, "%23");
+
+            // update the icon cache
+            mapIcons[element.id] = tmpIcon;
 
             let canvas = document.createElement("canvas");
             // get canvas context for drawing on canvas
@@ -515,6 +564,11 @@ export default class Map {
         webix.ui({
           id: "elementTreeView", 
           rows: [
+            { 
+              view: "template", 
+              template: $.i18n("defaultheader.equipment"),
+              type: "header" 
+            },
             {
               id: "element_tree_filter",
               view: "text",
@@ -525,7 +579,7 @@ export default class Map {
               id: "element_tree",
               view: "tree",
               borderless: true,
-              scroll: true,
+              scroll: "auto",
               select: true,
               multiselect: true,
               threeState: true,
@@ -602,37 +656,8 @@ export default class Map {
           */
         });
 
-        $$("element_tree").attachEvent("onItemCheck", function(id) {
-          //alert(JSON.stringify(map.getFeatureById(id)));
-          map.getLayers().forEach(l => {
-            if(l.get('id') == "Elements") {
-              // check if the element is checked or unchecked
-              let currentStyle = l.getSource().getFeatureById(id).getStyle();
-              let opacity = 0;
-              if($$("element_tree").getChecked().includes(id)) {
-                // update the visibleElements array
-                if(!visibleElements.includes(id)) {
-                  visibleElements.push(id);
-                }
-                // set the opacity
-                opacity = 1;
-              } else {
-                // removes the element from the visibleElements array
-                // taken from stackoverflow
-                const index = visibleElements.indexOf(id);
-                if (index > -1) {
-                  visibleElements.splice(index, 1);
-                }
-              }
-              let newStyle = currentStyle;
-              // update the opacity
-              newStyle.getImage().opacity_ = opacity;
-
-              l.getSource().getFeatureById(id).setStyle(newStyle);
-            }
-          });
-        });
-
+        $$("element_tree").attachEvent("onItemCheck", self.checkElement);
+        
         return markers;
       })
       .then((markers) => {
@@ -743,8 +768,21 @@ export default class Map {
       });
 
       // select interaction working on "click"
+      let zTopStyle = new ol.style.Style({
+        //zIndex: -1000,
+        fill: new ol.style.Fill({
+          color: 'rgba(255,255,255,0.7)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: '#3399CC',
+          width: 3
+        }),
+        opacity: 0
+      });
+
       let selectClick = new ol.interaction.Select({
         condition: ol.events.condition.singleClick,
+        //style: zTopStyle
       });
 
       
@@ -759,8 +797,21 @@ export default class Map {
           })
         });
 
+        
+        
         let feature = e.target.getFeatures().array_[0];
         let element_id = feature.id_;
+        
+        // bring the feature to the front
+        let zTopStyle = new ol.style.Style({
+          image: new ol.style.Icon({
+            opacity: 1,
+            src: "data:image/svg+xml;utf8," + mapIcons[element_id],
+          }),
+          zIndex: 100,
+        });
+
+        feature.setStyle(zTopStyle);
 
         if (
           elementTypeMap.getElementType(element_id) !=
@@ -790,7 +841,7 @@ export default class Map {
             .show();
           
             // auto de-select
-            e.target.getFeatures().remove(feature);
+            //e.target.getFeatures().remove(feature);
         } else {
           $$("synoptic1").show();
         }
@@ -967,6 +1018,9 @@ export default class Map {
                   // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
                   tmpIcon = tmpIcon.replace(/#/g, "%23");
 
+                  // update the icon cache
+                  mapIcons[element.id] = tmpIcon;
+
                   let canvas = document.createElement("canvas");
                   // get canvas context for drawing on canvas
                   let context = canvas.getContext("2d");
@@ -1004,6 +1058,8 @@ export default class Map {
                 }
               });
 
+              return markers;
+
             }).then((markers) => {
               let vectorSource = new ol.source.Vector({
                 wrapX: false,
@@ -1017,9 +1073,10 @@ export default class Map {
               });
       
               // clean the current layers
-              const layers = [map.getLayers().getArray()];
-              layers.forEach((layer) => {
-                map.removeLayer(layer)
+              map.getLayers().forEach(layer => {
+                if (layer && layer.get('id') === 'Elements') {
+                  map.removeLayer(layer);
+                }
               });
 
               // add the new layer
@@ -1033,6 +1090,11 @@ export default class Map {
               webix.ui({
                 id: "elementTreeView", 
                 rows: [
+                  { 
+                    view: "template", 
+                    template: $.i18n("defaultheader.equipment"),
+                    type: "header" 
+                  },
                   {
                     id: "element_tree_filter",
                     view: "text",
@@ -1043,7 +1105,7 @@ export default class Map {
                     id: "element_tree",
                     view: "tree",
                     borderless: true,
-                    scroll: true,
+                    scroll: "auto",
                     select: true,
                     multiselect: true,
                     threeState: true,
@@ -1120,36 +1182,7 @@ export default class Map {
                 */
               });
 
-              $$("element_tree").attachEvent("onItemCheck", function(id) {
-                //alert(JSON.stringify(map.getFeatureById(id)));
-                map.getLayers().forEach(l => {
-                  if(l.get('id') == "Elements") {
-                    // check if the element is checked or unchecked
-                    let currentStyle = l.getSource().getFeatureById(id).getStyle();
-                    let opacity = 0;
-                    if($$("element_tree").getChecked().includes(id)) {
-                      // update the visibleElements array
-                      if(!visibleElements.includes(id)) {
-                        visibleElements.push(id);
-                      }
-                      // set the opacity
-                      opacity = 1;
-                    } else {
-                      // removes the element from the visibleElements array
-                      // taken from stackoverflow
-                      const index = visibleElements.indexOf(id);
-                      if (index > -1) {
-                        visibleElements.splice(index, 1);
-                      }
-                    }
-                    let newStyle = currentStyle;
-                    // update the opacity
-                    newStyle.getImage().opacity_ = opacity;
-      
-                    l.getSource().getFeatureById(id).setStyle(newStyle);
-                  }
-                });
-              });
+              $$("element_tree").attachEvent("onItemCheck", self.checkElement);
 
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });

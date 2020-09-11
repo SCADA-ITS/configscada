@@ -161,19 +161,16 @@ export default class PlansTree {
   addToTree(){
     let selectPlan = $$("treePlan").getSelectedId();
     let item = $$('treePlan').getItem(selectPlan);
-    //let newItemTree = addToTree('treePlan',item.id,item.$count + 1);
     let pos = $$("treePlan").getBranchIndex(item.id);
     let counte = item.$count * 20;
     if (item.$level < 4 ) {
       $$('treePlan').add({id: item.id + "." + counte.toString() ,alias:"New item", description: "", qid: "new" }, pos, item.id);
-    //$$('treePlan').select(item.id + "." + (item.$count).toString());
     }
   }
 
   editPlan(){
     let selectPlan = $$("treePlan").getSelectedId();
     let item = $$('treePlan').getItem(selectPlan);
-    //let newItemTree = addToTree('treePlan',item.id,item.$count + 1);
     let pos = $$("treePlan").getBranchIndex(item.id);
 
     console.log($$(item.qid + "_alias"));
@@ -214,7 +211,6 @@ export default class PlansTree {
                 if (data.id === item.qid) {
                   $$('treePlan').remove(item.id);
                   return true;
-                  //removeGrid("planParent");
                 } else {
                   webix.message("ERROR, Al Eliminar");
                   return false;
@@ -223,7 +219,6 @@ export default class PlansTree {
           } else {
             $$('treePlan').remove(item.id);
             return true;
-            //removeGrid("planParent");
           }
           break;
         case 3: //SubType
@@ -244,7 +239,6 @@ export default class PlansTree {
               if (data.id === item.qid) {
                 $$('treePlan').remove(item.id);
                 return true;
-                //removeGrid("planParent");
               } else {
                 webix.message("ERROR, Al Eliminar");
                 return false;
@@ -253,7 +247,6 @@ export default class PlansTree {
           } else {
             $$('treePlan').remove(item.id);
             return true;
-            //removeGrid("planParent");
           }
           break; 
         case 2: //Type
@@ -274,7 +267,6 @@ export default class PlansTree {
                 if (data.id === item.qid) {
                   $$('treePlan').remove(item.id);
                   return true;
-                  //removeGrid("planParent");
                 } else {
                   webix.message("ERROR, Al Eliminar");
                   return false;
@@ -283,7 +275,6 @@ export default class PlansTree {
           } else {
             $$('treePlan').remove(item.id);
             return true;
-            //removeGrid("planParent");
           }     
           break;
       }
@@ -533,8 +524,6 @@ export default class PlansTree {
     .then(data => {
       data.forEach(element => {
         this.planSubtype.push(element);
-          //let ptype = this.planType.find( x => x.id === element.planType.id );
-          //ptype ? null : this.planType.push(element.planType);
       });
     });
 
@@ -544,8 +533,6 @@ export default class PlansTree {
         d.forEach(element => {
           this.planes.push(element);
         });
-        //console.log("PEOR");
-        //console.log(this.planes);
         $$("treePlan").add({ alias:"\\", id: "1", open:true, qid: "0" }, 0);
         let count = 1;
         this.order.push("1");
@@ -567,8 +554,6 @@ export default class PlansTree {
           
         });
 
-        //console.log(this.order);
-        //console.log(this.planes);
         let counter = 1;
         this.planes.map(element => {
           let planOrders = [];
@@ -577,8 +562,7 @@ export default class PlansTree {
               planOrders.push(order);
             });
           } catch { console.log(""); }
-          //console.log(element);
-          //console.log(planOrders);
+
           this.order.forEach(e => {
             try {
               if (element.planSubtype.id === $$("treePlan").data.pull[e].qid ) {

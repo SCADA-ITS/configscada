@@ -6,7 +6,7 @@ import {panelData} from "../data/panelData.js";
 const TOP_INIT = 5;
 
 export default class PanelManager {
-	constructor(id, idType, gestPlan,scale) {
+	constructor(id, idType, gestPlan,scale,values) {
 		this.id=id;
 		if (scale !== null && scale !== undefined) {
 			this.scale = scale;
@@ -15,6 +15,7 @@ export default class PanelManager {
 		}
 		this.elementTypeId = idType;
 		this.panelManagerType = gestPlan;
+		this.values = values;
 		this.graphAll = `query { 
 			getElement(elementId: "` + this.id + `"){
 				id
@@ -170,6 +171,29 @@ export default class PanelManager {
 					document.getElementById("pmvSignalForm" +  "spinner").style.display = "none";
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN:
+					if(this.values !== null){
+						let contador2 = 0;
+						Object.entries(this.values).map(([k, item]) => {
+							let code = this.config.cod_listaCells[contador2];
+							if (code !== undefined) {
+								if (code.split("_")[10] === "G") {
+									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G").setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+								} else {
+									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+										try {
+											let value_text = null;
+											value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
+											if (value_text !== null)
+												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1)).setValue(item.value.split(":$")[i - 1]);
+										} catch (e) {
+											console.log(e);
+										}
+									}
+								}
+							}
+							contador2 += 1;
+						});
+					}
 					document.getElementById("pmvSignalForm" +  "spinner").style.display = "none";
 					break;
 			}
@@ -226,7 +250,7 @@ export default class PanelManager {
 	doActions() {
 		var datos = this.config;
 		var datosId = this.id;
-
+		let controlCPermitido  = true;
 
 		//SI ES UN PANEL DEL ELEMENTFORM PONEMOS EL BOTON SEÑALIZAR
 		if(this.panelManagerType === elementTypeMap.PANELMANAGER_TYPE_PANEL) {
@@ -277,65 +301,48 @@ export default class PanelManager {
 							}
 							//SUSTITUIMOS LOS :%xxx:% por su caracter
 
-							let v_input_value_no_especial = valor.split(":%");
-							if (v_input_value_no_especial.length > 1) {
-								let v_control = true;
-								let v_input_array_string = [];
-								let cadena = valor;
-								let v_sumar = true;
-								
-								while(v_control) {
-									let pos = 0;
-									if (cadena.search(":%")>=0) {
-										v_input_array_string.push(cadena.substring(pos,cadena.search(":%")));
-										let cadena2 = cadena.substring(cadena.search(":%") + 2);
-										if (cadena2.search(":%")>=0) {
-											pos = cadena2.search(":%") + 2;
-											//al ser cierre de cadena generamos una nueva cadena
-											let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
-											v_input_array_string.push(v_code);
-											cadena = cadena2.substring(pos);
-										} else {
-											//no hacemos nada, ya que aun no han cerrado la cadena especial, ni siquiera para sumar
-											v_control = false;
-											v_input_array_string.push(cadena);
-										}
-									} else {
-										v_input_array_string.push(cadena);
-										v_control = false;
-									}
+							valor = replaceSpecial(valor);
+
+							for(let i = 0; i < valor.length; i++) {
+								let ptype = null;
+								try {
+									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+								} catch (e){
+									//console.log(e);
 								}
-								let texto = "";
-								
-								for(let i = 0; i < v_input_array_string.length; i++) {
-									texto = texto + v_input_array_string[i];
+								if (ptype !== undefined && ptype !== null) {
+									//console.log(ptype);
+								} else {
+									webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
+									controlCPermitido = false;
 								}
-								//CON ESTO YA HEMOS FORMATEADO EL TEXTO A ENVIAR
-								valor = texto;
-							}
+							}							
+
 							let v_suma = 0;
 							//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
 							//Sumamos los que tenemos 
+							if(controlCPermitido){
+								for(let i = 0; i < valor.length; i++) {
+									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+									v_suma = v_suma + parseInt(ptype.split("x")[0]);
+								}
 				
-							for(let i = 0; i < valor.length; i++) {
-								let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
-								v_suma = v_suma + parseInt(ptype.split("x")[0]);
-							}
-			
-							if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
-								tamanio = false;
-							}
+								if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+									tamanio = false;
+								}
 
-							if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
-								v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
-							} else {
-								v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+								if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
+									v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
+								} else {
+									v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+								}
+								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 							}
-							//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 						}
 					});
+
 					Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
-					if (control && tamanio) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
+					if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
 						for (let i=0;i<v_values.length; i++) {
 							v_commands_values.push({
 								"commandElementTypeParamId": datos.commands[i],
@@ -362,7 +369,9 @@ export default class PanelManager {
 						if(!tamanio) {
 							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
 						} else {
-							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+							if(!control) {
+								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+							}
 						}
 					}
 				}
@@ -415,65 +424,51 @@ export default class PanelManager {
 							}
 							//SUSTITUIMOS LOS :%xxx:% por su caracter
 
-							let v_input_value_no_especial = valor.split(":%");
-							if (v_input_value_no_especial.length > 1) {
-								let v_control = true;
-								let v_input_array_string = [];
-								let cadena = valor;
-								let v_sumar = true;
-								
-								while(v_control) {
-									let pos = 0;
-									if (cadena.search(":%")>=0) {
-										v_input_array_string.push(cadena.substring(pos,cadena.search(":%")));
-										let cadena2 = cadena.substring(cadena.search(":%") + 2);
-										if (cadena2.search(":%")>=0) {
-											pos = cadena2.search(":%") + 2;
-											//al ser cierre de cadena generamos una nueva cadena
-											let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
-											v_input_array_string.push(v_code);
-											cadena = cadena2.substring(pos);
-										} else {
-											//no hacemos nada, ya que aun no han cerrado la cadena especial, ni siquiera para sumar
-											v_control = false;
-											v_input_array_string.push(cadena);
-										}
-									} else {
-										v_input_array_string.push(cadena);
-										v_control = false;
-									}
+							valor = replaceSpecial(valor);
+
+							for(let i = 0; i < valor.length; i++) {
+								console.log("COMPROBAMOS LA CADENA SI TIENE CARACTERES NO PERMITIDOS");
+								console.log(valor[i].charCodeAt());
+								console.log(datos.pictos_permitidos);
+								console.log(datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"]);
+								let ptype = null;
+								try {
+									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+								} catch (e){
+									console.log(e);
 								}
-								let texto = "";
-								
-								for(let i = 0; i < v_input_array_string.length; i++) {
-									texto = texto + v_input_array_string[i];
+								if (ptype !== undefined && ptype !== null) {
+									console.log(ptype);
+								} else {
+									webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
+									controlCPermitido = false;
 								}
-								//CON ESTO YA HEMOS FORMATEADO EL TEXTO A ENVIAR
-								valor = texto;
-							}
+							}	
+
 							let v_suma = 0;
 							//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
 							//Sumamos los que tenemos 
+							if(controlCPermitido){
+								for(let i = 0; i < valor.length; i++) {
+									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+									v_suma = v_suma + parseInt(ptype.split("x")[0]);
+								}
 				
-							for(let i = 0; i < valor.length; i++) {
-								let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
-								v_suma = v_suma + parseInt(ptype.split("x")[0]);
-							}
-			
-							if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
-								tamanio = false;
-							}
+								if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+									tamanio = false;
+								}
 
-							if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
-								v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
-							} else {
-								v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+								if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
+									v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
+								} else {
+									v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+								}
+								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 							}
-							//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 						}
 					});
 					Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
-					if (control && tamanio) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
+					if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
 						for (let idt= 0; idt < datosId.length; idt++) {
 							for (let i=0;i<v_values.length; i++) {
 								v_commands_values.push({
@@ -503,7 +498,9 @@ export default class PanelManager {
 						if(!tamanio) {
 							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
 						} else {
-							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+							if(!control) {
+								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+							}
 						}
 					}
 				}
@@ -554,6 +551,8 @@ export default class PanelManager {
 		let cfgJson = JSON.parse(panel_config.replace('\"','"'));	
 		let cdata = generateCodeList(cfgJson);
 		let cellList = cdata[0];
+		let tamX = cdata[1];
+		let tamY = cdata[2];
 		let idsList = [];
 		cellList.forEach(item => {
 			if (item.split("_")[10] === "G"){
@@ -566,7 +565,7 @@ export default class PanelManager {
 				}
 			}
 		});
-		return idsList;
+		return [idsList,tamX,tamY]
 	}
 
 	exportCommands(){
@@ -607,6 +606,129 @@ export default class PanelManager {
 		
 	}
 
+	controlPanels(data){
+		let panel_config = panelData[data.id].panel;
+		let cfgJson = JSON.parse(panel_config.replace('\"','"'));
+		let cdata = generateCodeList(cfgJson);
+		let cellList = cdata[0];
+		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList);
+		let allowedList = pictosPermitidos[0];
+		let controlCPermitido = true;
+		let dataList = this.configExportData();
+		let panels = dataList[0];
+		let datos = [];
+		let panelHash = {};
+		let panelesList = [];
+		panels.forEach(item =>{
+		  panelesList.push(item.split("_")[1]);
+		});
+		let panelUnique = [...new Set(panelesList)];
+		panelUnique.forEach(item =>{
+			let hashdato = {
+			type: "",
+			numLineas: 0
+		  }
+		  panelHash[item] = hashdato;
+		});
+		panels.forEach(item =>{
+		  if (item.split("_")[2] === "G") {
+			panelHash[item.split("_")[1]].type = "G";
+		  } else {
+			panelHash[item.split("_")[1]].type = "T";
+			panelHash[item.split("_")[1]].numLineas = parseInt(item.split("_")[4]) + 1;
+		  }
+		});
+  
+		Object.entries(panelHash).map(([k, v]) => {
+		  if (v.type === "G"){
+			datos.push($$("panel_" + k + "_G").data.src);
+		  } else {
+			let texto = "";
+			for(let i=0;i<v.numLineas;i++) {
+				//quitamos los :% si hubiera
+				let tdata = $$("panel_" + k + "_T_L_" + i).data.value;
+				let datoFormateado = this.replaceSpecial(tdata);
+				console.log(allowedList);
+				//Comprobamos que no tiene ningun caracter no permitido
+				for(let i = 0; i < datoFormateado.length; i++) {
+					let ptype = null;
+					try {
+						ptype = allowedList["panel_" + k + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
+					} catch (e){
+						console.log(e);
+					}
+					if (ptype !== undefined && ptype !== null) {
+						console.log(ptype);
+					} else {
+						webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
+						controlCPermitido = false;
+					}
+				}
+				texto = texto + datoFormateado;
+				
+				if(i !== (v.numLineas - 1 )){
+					texto = texto + ":$";
+				}
+			}
+			datos.push(texto);
+		  }
+		});
+
+		if(controlCPermitido){
+			return datos;
+		} else {
+			return -1;
+		}
+	}
+
+	replaceSpecial(valor){
+		return replaceSpecial(valor)
+	}
+
+	pictosPermitidos(data,cellList){
+		return pictosPermitidos(data,cellList);
+	}
+
+}
+
+function replaceSpecial(valor) {
+	let v_input_value_no_especial = valor.split(":%");
+	if (v_input_value_no_especial.length > 1) {
+		let v_control = true;
+		let v_input_array_string = [];
+		let cadena = valor;
+		let v_sumar = true;
+		
+		while(v_control) {
+			let pos = 0;
+			if (cadena.search(":%")>=0) {
+				v_input_array_string.push(cadena.substring(pos,cadena.search(":%")));
+				let cadena2 = cadena.substring(cadena.search(":%") + 2);
+				if (cadena2.search(":%")>=0) {
+					pos = cadena2.search(":%") + 2;
+					//al ser cierre de cadena generamos una nueva cadena
+					let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
+					v_input_array_string.push(v_code);
+					cadena = cadena2.substring(pos);
+				} else {
+					//no hacemos nada, ya que aun no han cerrado la cadena especial, ni siquiera para sumar
+					v_control = false;
+					v_input_array_string.push(cadena);
+				}
+			} else {
+				v_input_array_string.push(cadena);
+				v_control = false;
+			}
+		}
+		let texto = "";
+		
+		for(let i = 0; i < v_input_array_string.length; i++) {
+			texto = texto + v_input_array_string[i];
+		}
+		//CON ESTO YA HEMOS FORMATEADO EL TEXTO A ENVIAR
+		valor = texto;
+	}
+	return valor;
 }
 
 function generateCodeList(data){
@@ -661,26 +783,29 @@ function generateCodeList(data){
 	return [cellList,maxTamX,maxTamY];
 
 }
-
-function configData(data,scale) {
-	let panel_config = panelData[data.id].panel;
-	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
-	let v_id_list = [];
-	let v_left = 2; //padding inicial 
-	let v_top = TOP_INIT;
-	let v_zone = v_left;
-	const SCALE_ZONE = scale;
-
-	let cdata = generateCodeList(cfgJson);
-	let cellList = cdata[0];
-	let maxTamX = cdata[1];
-	let maxTamY = cdata[2];
-
-	let pictos_activos = {};
+/*
+function allowedCharacters(allowedList,characterInput){
+	let result = false;
+	console.log(characterInput);
+	console.log(allowedList);
+	//allowedList.forEach(item => {
+	//	console.log(parseInt(item[2].split("CH")[1],16));
+	//	console.log(String.fromCharCode(parseInt(item[2].split("CH")[1],16).toString())); 
+	//});
+	let c_permitido = allowedList.find(x => parseInt(x[2].split("CH")[1],16) === characterInput.key.charCodeAt());
+	if (c_permitido !== undefined)
+	{
+		result = true;
+	} else {
+		//console.log("NO ENCONTRADO");
+	}
+	return result;
+}
+*/
+function pictosPermitidos(data,cellList) {
 	let pictos_permitidos = {};
 	let v_pictos_total = [];
-	//Pictos permitidos por panel
-	data.elementTypeParams.forEach(element => {
+	data.forEach(element => {
 		let v_graphs = [];
 		if (parseInt(element.id.split(":")[3]) > 1000 && element.paramType === 2) { 
 			try {
@@ -700,6 +825,27 @@ function configData(data,scale) {
 			pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
 		}
 	});
+	return [pictos_permitidos,v_pictos_total];
+}
+
+function configData(data,scale) {
+	let panel_config = panelData[data.id].panel;
+	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
+	let v_id_list = [];
+	let v_left = 2; //padding inicial 
+	let v_top = TOP_INIT;
+	let v_zone = v_left;
+	const SCALE_ZONE = scale;
+
+	let cdata = generateCodeList(cfgJson);
+	let cellList = cdata[0];
+	let maxTamX = cdata[1];
+	let maxTamY = cdata[2];
+
+	let pictos_activos = {};
+	let pictos_permitidos_A = pictosPermitidos(data.elementTypeParams,cellList);
+	let pictos_permitidos = pictos_permitidos_A[0];
+	let v_pictos_total = pictos_permitidos_A[1];
 	
 	let unique_pictos = [...new Set(v_pictos_total)];
 	let pictos_types = [];
@@ -790,7 +936,6 @@ function configData(data,scale) {
 										if (v_input_value_no_especial.length === 1) {
 											let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt());
 											if (c_permitido) {
-							
 											//Sumamos los que tenemos 
 												for(let i = 0; i < v_input.value.length; i++) {
 													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
@@ -804,13 +949,13 @@ function configData(data,scale) {
 												//caracter no permitido
 												webix.message({type:"error", text:"CARACTER NO PERMITIDO"});
 												//Eliminamos el caracter
-												let val = $$(e.target).getValue();
-												$$(e.target).setValueHere(val);
+												//let val = $$(e.target).getValue();
+												//$$(e.target).setValueHere(val);
 												//Eliminamos el caracter
-												$$(e.target).define({
-													value:val
-												});
-												$$(e.target).refresh();
+												//$$(e.target).define({
+												//	value:val
+												//});
+												//$$(e.target).refresh();
 											}
 										} else {
 											let v_control = true;

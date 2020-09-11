@@ -73,6 +73,55 @@ export default class EquipmentTree {
     this.client.activate();
   }
 
+  getIconWidth(elementType, height) {
+    let ratio = 1;
+    let width = height;
+
+    switch(elementType) {
+      case "10":
+        ratio = height / 24;
+        width = 76 * ratio;
+        break;
+      case "24":
+        ratio = height / 64;
+        width = 48 * ratio;
+        break;
+      case "26":
+        ratio = height / 64;
+        width = 64 * ratio;
+        break;
+      case "28":
+        ratio = height / 64;
+        width = 32 * ratio;
+        break;
+      case "29":
+        ratio = height / 64;
+        width = 48 * ratio;
+        break;
+      case "30":
+        ratio = height / 64;
+        width = 128 * ratio;
+        break;
+      case "31":
+        ratio = height / 48;
+        width = 64 * ratio;
+        break;
+      case "32":
+        ratio = height / 96;
+        width = 64 * ratio;
+        break;
+      case "35":
+        ratio = height / 48;
+        width = 200 * ratio;
+        break;
+      default:
+        width = 32;
+        break;
+    }
+
+    return width;
+  }
+
   addToElementTree(element) {
     let thisElementType = elementTypeMap.getElementType(element.id);
 
@@ -91,20 +140,66 @@ export default class EquipmentTree {
     let elementTypeKeyIndex = this.elementTree.findIndex(
       (e) => e.id === thisElementType
     );
+
+    // set the width and height based on the elementType
+    let height = 32;
+    let width = this.getIconWidth(thisElementType, height);
+
     if (typeof this.elementTree[elementTypeKeyIndex]["data"] == "undefined") {
       this.elementTree[elementTypeKeyIndex]["data"] = [];
     }
     this.elementTree[elementTypeKeyIndex]["data"].push({
       id: element.id,
-      value: element.alias,
-      icon: getElementSVG(element, 32, 32, ":Tree"),
+      value: "<div style=\"display: inline;vertical-align: text-top;\">" + element.alias + "</div>",
+      icon: "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>",
     });
+
+    // add the icon callback
+    /*
+    let treeElement = document.getElementById(element.id + ":Tree");
+    if(treeElement != null) {
+      treeElement.setAttribute("onclick", alert("CLICK!"));
+      treeElement.style["z-index"] = 1000;
+      treeElement.addEventListener('click', function(evt) { 
+        alert("HELLO");
+
+        let id =  evt.target.parentElement.id;
+  
+        // open the detail window
+        if($$("win" + id) != null) {
+          $$("win" + id).destructor();
+        }
+
+        
+  
+        let elementForm = new ElementForm(id.toString(), columnsElementFormList);
+        webix
+          .ui({
+            id: "win" + id,
+            view: "window",
+            move: true,
+            close: true,
+            position: "right",
+            body: elementForm.getComponent(),
+            on: {
+              onDestruct: function (obj) {
+                elementForm.disconnect();
+              },
+              onHide: function (obj) {
+                elementForm.disconnect();
+              },
+            },
+          })
+          .show();
+        });
+    }
+    */
   }
 
   checkSelected(id) {
     // check if there are objects selected
     let shouldEnableButton = false;
-  
+
     if($$("element_tree").getChecked().length > 0) {
       //let first_item = elementTypeMap.getElementType($$("element_tree").getChecked()[0]);
       let first_item = elementTypeMap.getElementType($$("element_tree").getChecked().find(e => e.match(/Element/g)));
@@ -186,17 +281,31 @@ export default class EquipmentTree {
                 .then((data) => {
                   // process the received data
                   let element = data;
+                  let thisElementType = elementTypeMap.getElementType(element.id);
 
                   getElementIcon(data, ":Tree");
+
+                  // set the width and height based on the elementType
+                  let height = 32;
+                  let width = getIconWidth(thisElementType, height);
+
+                  $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
                 });
             } else {
+              let thisElementType = elementTypeMap.getElementType(element.id);
+
+              // set the width and height based on the elementType
+              let height = 32;
+              let width = getIconWidth(thisElementType, height);
+
               getElementIcon(element, ":Tree");
+              $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
             }
-        } catch {
+        } catch (err) {
           console.log("Error: " + err.message);
         }
       });
-    } catch {
+    } catch (err) {
       console.log("Error: " + err.message);
     }
   }
@@ -223,6 +332,7 @@ export default class EquipmentTree {
           $$("element_tree").filter("#value#", this.getValue());
         });
 
+        /*
         $$("element_tree").attachEvent("onSelectChange", function(id) {
           // open the detail window
           if($$("win" + id) != null) {
@@ -248,6 +358,10 @@ export default class EquipmentTree {
             })
             .show();
         });
+        */
+
+        // all the elements are checked initially
+        $$("element_tree").checkAll();
       });
   }
 }

@@ -231,7 +231,7 @@ export default class ElementCommand {
                       $$("panelManager" + data.id).show();
                     } else {
                       //let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL,null);//data.elementType.commandElementTypes[index]);
-                      let panelMan = new PanelManager(idtable, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL,null);
+                      let panelMan = new PanelManager(idtable, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL,null,null);
                       webix
                         .ui({
                           id: "panelManager" + data.id,

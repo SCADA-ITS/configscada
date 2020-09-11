@@ -199,8 +199,8 @@ export default class Plan {
     });
     let orderelements = [];
     let orderplanOrderType = [];
-    let neworder = new Order(null,"new",orderelements,orderplanOrderType,container);
-    neworder.new_dinamicFormOrder(container,this.id.toString());
+    //let neworder = new Order(null,"new",orderelements,orderplanOrderType,container);
+    //neworder.new_dinamicFormOrder(container,this.id.toString());
     try {
       this.planOrders.forEach(e => {
         let order = new Order(null,e,orderelements,orderplanOrderType,container);
