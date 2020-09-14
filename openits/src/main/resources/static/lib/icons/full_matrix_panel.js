@@ -275,10 +275,10 @@ export function updateMatrixPanelIcon(element, suffix = "") {
                 document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
               }
             });
-          } else if(typeof picToShow.value == 'undefined'){
+          } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
             // clean the panel if no data is received
-            for(let i=0; i<document.querySelectorAll('[id^="' + element.id + ':' + elementTypeParam + ':Line"]').length; i++) {
-              document.querySelectorAll('[id^="Element:29:1:1002:Line"]')[i].textContent = "";
+            for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
+              document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
             }
           }
         
