@@ -81,6 +81,7 @@ export default class ElementForm {
 					template: function (obj) {
 						return obj.value;
 					},
+					width: 200,
 					css: { "text-align": "center !important" }
 				},
 				{
@@ -619,8 +620,7 @@ export default class ElementForm {
 				// ICON
 				let iconoSvg = "";
 				if (
-					elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
+					elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
@@ -668,7 +668,10 @@ export default class ElementForm {
 					// scale the element to fit in the bar
 					document.getElementById(data.id + ":Form").setAttribute("transform", "scale(" + scale_height + "," + scale_height + ")");
 
-				} else {
+				} else if(elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_DMS) {
+					iconoSvg = getElementSVG(data, 180, 40, ":Form");
+					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
+			 	} else {
 					iconoSvg = getElementSVG(data, 40, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 				}
@@ -697,7 +700,7 @@ export default class ElementForm {
 							data: {title: "Image One", src: stream },
 							template: function (obj) {
 							  // obj is a data record object
-							 return '<iframe style="width:105%;height:100%;position:relative;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
+							  return '<iframe style="width:105%;height:100%;position:relative;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
 							}
 						}, 1);
 						

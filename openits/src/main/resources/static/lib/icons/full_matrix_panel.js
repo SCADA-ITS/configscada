@@ -1,5 +1,26 @@
 import * as elementTypeMap from "../elementTypeMap.js";
+import { panelData } from "../../data/panelData.js";
 import { pictograms } from "../../data/pictograms.js";
+
+export function getLinesOfText(panelType, zone, subPanel) {
+  let panelConfig = JSON.parse(panelData[panelType]["panel"]);
+  let nLines = 0;
+  for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+    let n_zones = panelConfig["Subpaneles"][nsubpanel]["NumZonas"];
+    let zone_cols = parseInt(n_zones.split("x")[0]);
+    let zone_rows = parseInt(n_zones.split("x")[1]);
+    for(let r=0; r<zone_rows; r++) {
+      for(let c=0; c<zone_cols; c++) {
+        if((zone == r) && (subPanel == c) && (panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tipo"] == "Texto")) {
+          nLines = panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["NumLineas"];
+        }
+      }
+    }
+  }
+  
+  return parseInt(nLines);
+}
+
 
 export function generateIcon(element, suffix = "") {
 
@@ -126,15 +147,34 @@ export function generateIcon(element, suffix = "") {
             g1.attr("id", element.id + suffix + ":" + value_to_find);
             g1.attr("subpanel_type", "text");
             all_lines.forEach((item, i) => { 
-              let r1 = g1.text(subpanel_x.toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+              let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
               r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
               r1.attr("fill", "white");
               r1.attr("font-family", "'VT323', monospace")
               r1.attr("font-size", "10px");
             });
+          } else {
+            // if there is no text, we create the placeholder based on the panel configuration
+            let nLines = getLinesOfText("ElementType:" + elementTypeMap.getElementType(element.id), r, c);
+            let all_lines = [];
+            for(let iLine=0; iLine<nLines; iLine++) {
+              all_lines.push([]);
+            }
+
+            let g1 = s.group();
+            g1.attr("id", element.id + suffix + ":" + value_to_find);
+            g1.attr("subpanel_type", "text");
+            all_lines.forEach((item, i) => { 
+              let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+              r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+              r1.attr("fill", "white");
+              r1.attr("font-family", "'VT323', monospace")
+              r1.attr("font-size", "10px");
+            });
+
           }
         }
-        
+
         last_subpanel_height = subpanel_height;
         subpanel_x += subpanel_width;
 
@@ -144,16 +184,15 @@ export function generateIcon(element, suffix = "") {
       subpanel_y += last_subpanel_height;
     }
 
+    
     cummulative_width += panel_width;
     
   }
-
   
   let foreground_rect = s.rect(0, 0, total_width, total_height);
   foreground_rect.attr("fill", "transparent");
   foreground_rect.attr("stroke", color);
   foreground_rect.attr("stroke-width", "3px");
-  
 
   let retSVG = s.innerSVG();
 
@@ -228,15 +267,21 @@ export function updateMatrixPanelIcon(element, suffix = "") {
             }
         }
       } else if(subpanelType == "text") {  // text
-          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-          let all_lines = picToShow.value.split(":$");
-          all_lines.forEach((item, i) => { 
-            if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
-              document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+        if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+          if(picToShow.value != null) {
+            let all_lines = picToShow.value.split(":$");
+            all_lines.forEach((item, i) => { 
+              if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+                document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+              }
+            });
+          } else if(typeof picToShow.value == 'undefined'){
+            // clean the panel if no data is received
+            for(let i=0; i<document.querySelectorAll('[id^="' + element.id + ':' + elementTypeParam + ':Line"]').length; i++) {
+              document.querySelectorAll('[id^="Element:29:1:1002:Line"]')[i].textContent = "";
             }
-          });
-          
-
+          }
+        
         }
       }
     }
