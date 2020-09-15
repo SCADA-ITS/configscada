@@ -18,7 +18,9 @@ export let menu_data_multi  = [
 		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("menu.tables.alarmsconfig")}
 	]},
 	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("menu.alarms.title")},
-	{ id: "plans", icon: "mdi mdi-clock", value:$.i18n("menu.plans.title")},
+	{ id: "plans1", icon: "mdi mdi-clock", value:"Plans", data:[
+		{ id: "plans", icon:"mdi mdi-circle", value: $.i18n("menu.plans.title")},
+		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
 	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")}	
 ];

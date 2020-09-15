@@ -27,9 +27,14 @@ var sendDeactivationAlarms = `mutation  sendDeactivationAlarms ($alarmIds: [Stri
 }`;
 
 function getDate(timestamp) {
+	//console.log(timestamp);
+	//console.log(new Date(timestamp));
+	//console.log(webix.i18n.fullDateFormatStr(new Date(timestamp)));
 	return timestamp !== null ? webix.i18n.fullDateFormatStr(new Date(timestamp)) : '-';
+	//return timestamp !== null ? new Date(timestamp) : '-';
 }
-
+webix.i18n.fullDateFormat = "%Y-%m-%d %H:%i";
+webix.i18n.setLocale("es");
 let genericTablei18n = {
 	rows: [{
 		"id": "alarmsTable",
@@ -41,9 +46,38 @@ let genericTablei18n = {
 		"columns": [
 			{ "id": "id", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
 			{ "id": "check", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
-			{ "id": "activation", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj) { return getDate(obj.activation) }, width: 180 },
-			{ "id": "recognized", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj) { return getDate(obj.recognized) }, width: 180 },
-			{ "id": "deactivation", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj) { return getDate(obj.deactivation) }, width: 180 },
+			{ "id": "activation", sort:"date", "header": $.i18n("alarms.d.activation"), 
+			//"template": function (obj) { return getDate(obj.activation) }, 
+			"template": function (obj) { 
+				if(obj.activation !== null){
+					return webix.i18n.fullDateFormatStr(obj.activation);
+				}else{
+					return "-";
+				}
+			},
+			//format: webix.i18n.dateFormatStr,
+			//map:"(date)#activation#",
+			width: 180 },
+			{ "id": "recognized", sort:"date", "header": $.i18n("alarms.d.recognized"),
+			// "template": function (obj) { return getDate(obj.recognized) }, 
+			 "template": function (obj) { 
+				if(obj.recognized !== null){
+					return webix.i18n.fullDateFormatStr(obj.recognized);
+				}else{
+					return "-";
+				}
+			},			 
+			 width: 180 },
+			{ "id": "deactivation", sort:"date", "header": $.i18n("alarms.d.deactivation"), 
+			// "template": function (obj) { return getDate(obj.deactivation) }, 
+			 "template": function (obj) { 
+				if(obj.deactivation !== null){
+					return webix.i18n.fullDateFormatStr(obj.deactivation);
+				}else{
+					return "-";
+				}
+			},
+			width: 180 },
 			{ "id": "alarmConfig", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
 			{ "id": "alarmLevel", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
 			{ "id": "sourceElementId", "template": function (obj) { return obj.sourceElement.id; }, hidden:true },
@@ -430,14 +464,43 @@ let genericTablei18n_recon = {
 		"multiselect": true,
 		"scroll": "y",
 		"columns": [
-			{ "id": "id_recon", "header": $.i18n("alarms.d.id"), hidden: true, width: 200 },
+			{ "id": "id", "header": $.i18n("alarms.d.id"), hidden: true, "template": function (obj_recon) { return obj_recon.id }, width: 200 },
 			{ "id": "check_recon", "header": { content: "masterCheckbox" }, checkValue: 'on', uncheckValue: 'off', "template": "{common.checkbox()}", width: 40 },
-			{ "id": "activation_recon", sort:"date", "header": $.i18n("alarms.d.activation"), "template": function (obj_recon) { return getDate(obj_recon.activation) }, width: 200 },
-			{ "id": "recognized_recon", sort:"date", "header": $.i18n("alarms.d.recognized"), "template": function (obj_recon) { return getDate(obj_recon.recognized) }, width: 200 },
-			{ "id": "deactivation_recon", sort:"date", "header": $.i18n("alarms.d.deactivation"), "template": function (obj_recon) { return getDate(obj_recon.deactivation) }, width: 200 },
+			{ "id": "activation_recon", sort:"date", "header": $.i18n("alarms.d.activation"), 
+			"template": function (obj_recon) { 
+				if(obj_recon.activation_recon !== null){
+					return webix.i18n.fullDateFormatStr(obj_recon.activation_recon);
+				}else{
+					return "-";
+				}
+			},
+			//format:webix.i18n.fullDateFormatStr,
+			width: 200 },
+			{ "id": "recognized_recon", sort:"date", "header": $.i18n("alarms.d.recognized"),
+			 //"template": function (obj_recon) { return getDate(obj_recon.recognized) },
+			//format:webix.i18n.fullDateFormatStr,
+			"template": function (obj_recon) { 
+				if(obj_recon.recognized_recon !== null){
+					return webix.i18n.fullDateFormatStr(obj_recon.recognized_recon);
+				}else{
+					return "-";
+				}
+			},
+			width: 200 },
+			{ "id": "deactivation_recon", sort:"date", "header": $.i18n("alarms.d.deactivation"), 
+			//"template": function (obj_recon) { return getDate(obj_recon.deactivation) }, 
+			//format:webix.i18n.fullDateFormatStr,
+			"template": function (obj_recon) { 
+				if(obj_recon.deactivation_recon !== null){
+					return webix.i18n.fullDateFormatStr(obj_recon.deactivation_recon);
+				}else{
+					return "-";
+				}
+			},
+			width: 200 },
 			{ "id": "alarmConfig_recon", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
 			{ "id": "alarmLevel_recon", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
-			{ "id": "sourceElementId", "template": function (obj) { return obj_recon.sourceElement.id; }, hidden:true },
+			{ "id": "sourceElementId", "template": function (obj) { return obj.sourceElement.id; }, hidden:true },
 			{ "id": "sourceElementAlias", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
 			{ "id": "sourceElement", "header":"", "template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50} , 
 			{ "id": "targetElementId", "template": function (obj) { return obj.targetElement.id; }, hidden:true },

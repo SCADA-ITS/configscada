@@ -7,11 +7,15 @@ import { synoptic } from "../widgets/synoptic.js";
 import { equipments } from "../widgets/equipments.js";
 import { alarms } from "../widgets/alarms.js";
 import { plans } from "../widgets/plans.js";
+import {planschedules} from "../widgets/planschedule.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import { banner } from "../widgets/banner.js";
 import { element_tree} from "../widgets/element_tree.js";
+
+
+
 
 let getActiveAlarms = webix.proxy(  "GraphQL", `query {
 	  getGenericData(genericDataId:"GenericData:1") {
@@ -91,6 +95,10 @@ let main_body = {
             {
                 id: "plans",
                 rows: [plans]                            
+            },
+            {
+                id: "planschedule",
+                rows: [planschedules]                            
             },
             {
                 id: "global",

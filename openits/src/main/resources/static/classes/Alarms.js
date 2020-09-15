@@ -60,8 +60,8 @@ export default class Alarms {
 	    	  
 			let control = false;
 			let item = $$('alarmsTable').getItem(element.id);
-
-		    if (item != null) {
+			
+		    if (item != null && item != undefined) {
 		    	  
 		        let data = {
 		          id: element.id,
@@ -98,22 +98,22 @@ export default class Alarms {
 	        control = true;
    
 		    }else{
-		    	item = $$('alarmsTable_recon').getItem(element.id);
-		        if (item != null) {  //ALARMA PREVIAMENTE CREADA
+				item = $$('alarmsTable_recon').getItem(element.id);
+				
+		        if (item != null && item != undefined) {  //ALARMA PREVIAMENTE CREADA
 		
-		            let data = {
-		              id: element.id,
-		              activation: element.activation == null ? item.activation : element.activation,
-		              recognized: element.recognized == null ? item.recognized : element.recognized,
-		              deactivation: element.deactivation == null ? item.deactivation : element.deactivation,
-		              alarmConfig: item.alarmConfig,
-		              sourceElement: item.sourceElement, 
-		              targetElement: item.targetElement
-		            }
-		            
 		            if (element.deactivation != null) { // BORRADA CUANDO SE MODIFICA
 		            	$$('alarmsTable_recon').remove(element.id);	
 		            }else{
+						let data = {
+							id_recon: element.id,
+							activation_recon: element.activation === null ? item.activation_recon : element.activation,
+							recognized_recon: element.recognized === null ? item.recognized_recon : element.recognized,
+							deactivation_recon: element.deactivation === null ? item.deactivation_recon : element.deactivation,
+							alarmConfig: item.alarmConfig,
+							sourceElement: item.sourceElement, 
+							targetElement: item.targetElement
+						  }
 						$$('alarmsTable_recon').updateItem(element.id, data);
 						let orden = $$("alarmsTable_recon")._last_sorted;
 						let orden_campos = [];
@@ -129,8 +129,9 @@ export default class Alarms {
 		            control = true;
 		        }
 		   }
-		 
+
 		if (control == false) {	
+			//console.log(element.alarmConfig.id);
 			//ALARMA NUEVA
 			// loads the data
 			let alarmConfig = {};
@@ -144,16 +145,35 @@ export default class Alarms {
 			sourceElement["alias"] = "";
 			targetElement["id"] = element.targetElement.id;
 			targetElement["alias"] = "";
+
 			let data = {id: element.id, 
-				activation: element.activation, 
+				activation: element.activation !== null ? new Date(element.activation) : null,
 				recognized: recognized, 
-				deactivation: deactivation,
-				alarmConfig: alarmConfig, 
-				alarmLevel: alarmConfig, 
-				sourceElement: sourceElement, 
-				targetElement: targetElement };				
+				deactivation: deactivation, 
+				alarmConfig: alarmConfig , 
+				alarmLevel: alarmConfig , 
+				sourceElement: element.sourceElement, 
+				targetElement: element.targetElement }			
 			if(data.recognized != null && data.deactivation == null){
-				$$('alarmsTable_recon').add(data, 0);
+
+				let data_recon = {
+					id: element.id,
+					//check_recon: "off",
+					activation_recon: element.activation !== null ? new Date(element.activation) : null, 
+					recognized_recon: recognized !== null ? new Date(recognized) : null, 
+					deactivation_recon: deactivation !== null ? new Date(deactivation) : null, 
+					alarmConfig: alarmConfig , 
+					alarmLevel: alarmConfig , 
+					sourceElement: element.sourceElement, 
+					targetElement: element.targetElement,
+					//sourceElementId: "",
+					//sourceElementAlias: "",
+					//targetElementId: "",
+					//targetElementAlias: ""
+				}
+
+				$$('alarmsTable_recon').add(data_recon, 0);
+				$$('alarmsTable_recon').refresh();
 				let orden = $$("alarmsTable_recon")._last_sorted;
 				let orden_campos = [];
 				let orden_values = [];
@@ -165,6 +185,7 @@ export default class Alarms {
 					$$("alarmsTable_recon").sort(orden_values);
 				}
 			}else if(data.recognized == null){	
+
 				let orden = $$("alarmsTable")._last_sorted;
 				let orden_campos = [];
 				let orden_values = [];
@@ -250,28 +271,70 @@ export default class Alarms {
         this.data
         .load()
         .then(d => {
+			
+			let datos = [];
+			let datos_recon = [];
             d.forEach(element => {
                
                 let data = {id: element.id, 
-                    activation: element.activation, 
-                    recognized: element.recognized, 
-                    deactivation: element.deactivation ,
+                    activation: element.activation !== null ? new Date(element.activation) : null,
+                    recognized: element.recognized !== null ? new Date(element.recognized) : null, 
+                    deactivation: element.deactivation !== null ? new Date(element.deactivation) : null, 
                     alarmConfig: element.alarmConfig , 
                     alarmLevel:element.alarmConfig , 
                     sourceElement: element.sourceElement, 
                     targetElement: element.targetElement }
                 
                 	if(data.recognized != null && data.deactivation == null){
-                		
-                    	$$('alarmsTable_recon').add(data, 0);
-
+						
+						let data_recon = {
+							id: element.id,
+							//check_recon: "off",
+							activation_recon: element.activation !== null ? new Date(element.activation) : null, 
+							recognized_recon: element.recognized !== null ? new Date(element.recognized) : null, 
+							deactivation_recon: element.deactivation !== null ? new Date(element.deactivation) : null, 
+							alarmConfig: element.alarmConfig , 
+							alarmLevel:element.alarmConfig , 
+							sourceElement: element.sourceElement, 
+							targetElement: element.targetElement,
+							//sourceElementId: "",
+							//sourceElementAlias: "",
+							//targetElementId: "",
+							//targetElementAlias: ""
+						}
+						datos_recon.push(data_recon);
+						//$$('alarmsTable_recon').add(data, 0);
+					
                 	}else if(data.recognized == null){
-
-                		$$('alarmsTable').add(data, 0); 
+						datos.push(data);
+                		//$$('alarmsTable').add(data, 0); 
 					}
 				
 			}
+			
 		  );
+		  //$$('alarmsTable_recon').load({ "data": datos_recon, pos: 0, "total_count": datos_recon.length }, function(text, data, http_request){
+			// do something with data.json()
+			//console.log(text);
+			//console.log(data);
+			//console.log(http_request);
+			//});
+		  //$$('alarmsTable_recon').load({ "data": datos_recon, pos: $$('alarmsTable_recon').count(), "total_count": datos_recon.length + $$('alarmsTable_recon').count() });
+		  //console.log($$('alarmsTable_recon'));
+		  //console.log(datos_recon);
+		 
+			$$('alarmsTable_recon').parse({
+				"data": datos_recon,
+				"pos": $$('alarmsTable_recon').count(),
+			});
+			$$("alarmsTable_recon").refresh();
+			$$('alarmsTable').parse({
+				"data": datos,
+				"pos": $$('alarmsTable').count(),
+			});
+			$$("alarmsTable").refresh();
+			//console.log($$('alarmsTable_recon'));
+		  //$$('alarmsTable').load({ "data": datos, pos: 0, "total_count": datos.length });
 		  //$$('alarmsTable').sort("activation", "desc");
           this.client.activate();
           return d;
