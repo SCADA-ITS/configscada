@@ -1,3 +1,5 @@
+import CronUi from "../classes/CronUi.js";
+
 export default class PlanScheduleForm {
 	constructor(id,data,mode) {
         this.id = id;
@@ -145,7 +147,39 @@ export default class PlanScheduleForm {
                 { view: "text",  id: "planScheduleForm_" + this.id + "_id", name: "id", label: $.i18n("planSchedule.popup.id") , labelWidth: 200, disabled: true } ,
                 { view: "text",  id: "planScheduleForm_" + this.id + "_alias",name: "alias", label: $.i18n("planSchedule.popup.alias") , labelWidth: 200, disabled: true },
                 { view: "text",  id: "planScheduleForm_" + this.id + "_description",name: "description", label: $.i18n("planSchedule.popup.description") ,labelWidth: 200, disabled: true },
-                { view: "text",  id: "planScheduleForm_" + this.id + "_cronExpression",name: "cronExpression", label: $.i18n("planSchedule.popup.cronExpression") ,labelWidth: 200, disabled: true },
+                { 
+                    view: "text",  
+                    id: "planScheduleForm_" + this.id + "_cronExpression",
+                    name: "cronExpression", label: $.i18n("planSchedule.popup.cronExpression") ,
+                    labelWidth: 200, 
+                    disabled: true,
+                    on: {
+                        "onFocus": function(id){
+                            let popupid = "cronUiPopup";
+                            let cron = new CronUi(id,popupid);
+                            webix.ui({
+                                id:popupid,
+                                view:"popup",	
+                                //move:false,
+                                position:"center",
+                                //modal:true,
+                                close: true,
+                                //autoheight:true,
+                                width: 800,
+                                body: cron.getComponent(),
+                                //head:$.i18n("elementForm.señalization.panel.head"),
+                                //on: {
+                                //    onShow: function(obj){
+                                //        panelMan.loadComponent();
+                                //    },
+                                //    onHide: function(obj){
+                                //        $$("panelManager" + data.id).destructor();
+                                //    }
+                                //  }
+                              }).show();
+                        }
+                    } 
+                },
                 { view: "combo", id: "planScheduleForm_" + this.id + "_plan",name: "plan", label: $.i18n("planSchedule.popup.plan") ,labelWidth: 200, disabled: true, options: [],},
             ],
             rules:{
@@ -250,6 +284,7 @@ export default class PlanScheduleForm {
                         { margin:5, cols:[
                             { view:"button", value:"Confirmar", css:"webix_primary", id: this.id,
                                 click: function deletePlanSchedule(obj){
+                                    
                                     let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan)}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
@@ -264,7 +299,7 @@ export default class PlanScheduleForm {
                                         ]
                                     }).then(data => {
                                         try {
-
+                                            
                                             if(data){
                                                 let graphPlanScheduleQuery = `query  {
                                                     getPlanSchedule(planScheduleId: "` + obj + `" ){
@@ -275,9 +310,11 @@ export default class PlanScheduleForm {
                                                         description
                                                     }
                                                     }`;
-                                                graphPlanScheduleQuery.load({}).then(dataPlan => {
-                                                    if(dataPlan){
-                                                        $$("planSchedulesTable").remove(dataPlan.id);
+                                                let graphPlanScheduleQuery2 = webix.proxy("GraphQL", graphPlanScheduleQuery);
+                                                graphPlanScheduleQuery2.load({}).then(dataPlan => {
+                                                    
+                                                    if(dataPlan === null){
+                                                        $$("planSchedulesTable").remove(obj);
                                                         $$("planSchedule_win").destructor();
                                                         $$("b_details_planSchedule").hide();
                                                         $$("b_edit_planSchedule" ).hide();

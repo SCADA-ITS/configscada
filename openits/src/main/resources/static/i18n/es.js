@@ -1667,4 +1667,11 @@ var i18_es = {
     "planSchedule.button.tooltip.edit": "Editar",
     "planSchedule.button.tooltip.delete": "Borrar",
 
+    "cronUi.popup.tab.seconds": "Segundo",
+    "cronUi.popup.tab.minutes": "Minuto",
+    "cronUi.popup.tab.hours": "Hora",
+    "cronUi.popup.tab.days": "Dia",
+    "cronUi.popup.tab.months": "Mes",
+    "cronUi.popup.tab.years": "Año"
+
 };

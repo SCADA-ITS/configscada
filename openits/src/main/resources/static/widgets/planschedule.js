@@ -61,7 +61,7 @@ export let planschedules= {
 							type:"icon", 
 							tooltip:$.i18n("planSchedule.button.tooltip.details"), 
 							icon:"mdi mdi-format-align-justify", 
-							click:detail_planSchedule
+							click: detail_planSchedule
 						},
 						{ 
 							view:"button", 
@@ -82,7 +82,7 @@ export let planschedules= {
 							type:"icon", 
 							tooltip:$.i18n("planSchedule.button.tooltip.delete"), 
 							icon:"wxi-trash",
-							click:delete_planSchedule
+							click: delete_planSchedule
 						},
                     ]
                 }
