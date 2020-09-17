@@ -29,7 +29,7 @@ export default class PlanScheduleForm {
         
         this.graphqlSendPlanQuery = `query  {
             mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {
-                sendPlanScheduleActions(planSchedules: $plan) 
+                sendPlanScheduleActions(planSchedules: $plan) { id }
             }`; 
         this.graphqlSendPlan = webix.proxy("GraphQL", this.graphqlSendPlanQuery);
 
@@ -60,7 +60,7 @@ export default class PlanScheduleForm {
             let itemId = id.toString().split("_")[2];
             let updateplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
             $$("planScheduleForm_" + itemId).validate();
-            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan)}`; 
+            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
             let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
             graphqlSendPlan2.load({
                 plan: [
@@ -102,7 +102,7 @@ export default class PlanScheduleForm {
             let itemId = id.toString().split("_")[2];
             let createplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
             $$("planScheduleForm_" + itemId).validate();
-            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan) }`; 
+            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan) { id } }`; 
             let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
             let graphPlanSchedulesQuery = `query  {
                 getPlanSchedules{
@@ -291,7 +291,7 @@ export default class PlanScheduleForm {
                             { view:"button", value:"Confirmar", css:"webix_primary", id: this.id,
                                 click: function deletePlanSchedule(obj){
                                     
-                                    let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan)}`; 
+                                    let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
                                         plan: [
