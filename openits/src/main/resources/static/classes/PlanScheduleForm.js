@@ -1,5 +1,11 @@
 import CronUi from "../classes/CronUi.js";
 
+const PLAN_ACTION_START = 'START';
+const PLAN_ACTION_STOP = 'STOP';
+const PLAN_ACTION_PAUSE = 'PAUSE';
+const PLAN_ACTION_PLAY = 'PLAY';
+const PLAN_ACTION_RESET = 'RESET';
+
 export default class PlanScheduleForm {
 	constructor(id,data,mode) {
         this.id = id;
@@ -62,7 +68,7 @@ export default class PlanScheduleForm {
                     id: updateplanScheduleForm.id,
                     alias: updateplanScheduleForm.alias,
                     description: updateplanScheduleForm.description,
-                    action: true,
+                    action: PLAN_ACTION_RESET,
                     planId: updateplanScheduleForm.plan.split("_")[2],
                     cronExpression: updateplanScheduleForm.cronExpression    
                     }
@@ -113,7 +119,7 @@ export default class PlanScheduleForm {
                     {
                     alias: createplanScheduleForm.alias,
                     description: createplanScheduleForm.description,
-                    action: true,
+                    action: PLAN_ACTION_START,
                     planId: createplanScheduleForm.plan.split("_")[2],
                     cronExpression: createplanScheduleForm.cronExpression
                     }
@@ -291,7 +297,7 @@ export default class PlanScheduleForm {
                                         plan: [
                                             {
                                                 id: obj,
-                                                action: false,
+                                                action: PLAN_ACTION_STOP,
                                                 description: "null",
                                                 planId: "null",
                                                 cronExpression: "0 0 * ? * *"
