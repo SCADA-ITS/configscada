@@ -241,10 +241,12 @@ let genericTablei18n = {
 			}
 		},
 		ready: function () {
-			if (item.recognized != null) {
-				$('.action_recognize').prop("visibility", "hidden");
-			} else if (item.deactivation != null) {
-				$('.action_deactivate').prop("visibility", "hidden");
+			if(typeof item!=='undefined'){
+				if (item.recognized != null) {
+					$('.action_recognize').prop("visibility", "hidden");
+				} else if (item.deactivation != null) {
+					$('.action_deactivate').prop("visibility", "hidden");
+				}
 			}
 		}
 	},

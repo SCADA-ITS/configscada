@@ -43,7 +43,7 @@ export default class PlanScheduleForm {
           }`;
         this.graphqlPlans = webix.proxy("GraphQL", this.graphqlPlansQuery);
 
-		this.header = {
+		this.formHeader = {
 			view: "template",
 			type: "header",
 			id: "planScheduleFormHeader_"+this.id,
@@ -182,6 +182,12 @@ export default class PlanScheduleForm {
                                 //        $$("panelManager" + data.id).destructor();
                                 //    }
                                 //  }
+                                on: {
+                                    onHide: function(obj){
+                                        $$(popupid).getChildViews()[0].destructor();
+                                        $$(popupid).destructor();
+                                    } 
+                                }
                               }).show();
                         }
                     } 
@@ -212,8 +218,10 @@ export default class PlanScheduleForm {
         let header = "";
 
 		let genericForm = {
+            id:"scheduleDetailForm",
+            width:"500",
 			rows: [
-                //this.header,
+                this.formHeader,
                 this.form,
                 this.buttons,
 				{}
@@ -233,6 +241,7 @@ export default class PlanScheduleForm {
                                 cronExpression: data.cronExpression
                             });
                             $$("planScheduleForm_" + this.id + "_plan").setValue({ id: "planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
+                            $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                         } catch {}
                     } 
                 });
@@ -264,7 +273,7 @@ export default class PlanScheduleForm {
                                 }
                             });
                             $$("planScheduleForm_" + this.id + "_plan").setValue({ id: "planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
-                            
+                            $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                         } catch {}
                     } 
                 });
@@ -282,10 +291,12 @@ export default class PlanScheduleForm {
                             $$("planScheduleForm_" + this.id + "_plan").getList().add({ id: "planScheduleForm_" + this.id + "_" + item.id, value: item.alias });
                         });
                     }
+                    $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                 });
                 break;
             case 3: // delete Mode
-                genericForm = {
+                genericForm = 
+                {
                     rows: [
                         { margin:5, cols:[
                             { view:"button", value:"Confirmar", css:"webix_primary", id: this.id,

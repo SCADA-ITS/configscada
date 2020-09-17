@@ -16,14 +16,13 @@ let genericTablei18n = {
 		"view":"datatable",
 		"autoConfig":true,
 		"select":true,
+		resizeColumn:true,
 		"columns":[
 			{ "id":"id", "header": $.i18n("planSchedule.table.id"), hidden: true},
-			{ "id":"alias", "header": [$.i18n("planSchedule.table.alias"),  {content:"textFilter"}], 
-				width:550, 
-				sort:"text" },
-            { "id":"description", "header": [$.i18n("planSchedule.table.description"),  {content:"textFilter"}], width:550, sort:"text" },
-			{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}], adjust:true,  sort:"text" },
-			{ "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text", adjust:true, "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}  },
+			{ "id":"alias", "header": [$.i18n("planSchedule.table.alias"),  {content:"textFilter"}], sort:"text", fillspace:1 },
+            { "id":"description", "header": [$.i18n("planSchedule.table.description"),  {content:"textFilter"}],  sort:"text", fillspace:2 },
+			{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1 },
+			{ "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}, fillspace:1 },
 		],
 		on:{
 			onItemClick: planSchedule_select,
@@ -31,65 +30,71 @@ let genericTablei18n = {
 	};
 
 let table = new Table(graph, genericTablei18n ).getComponent();
-//table.scrollY=true;
+let toolbar = {
+	view: "toolbar",
+	id: "toolbar_planSchedule",
+	heigth: 50,
+	rows: [
+		{
+			cols:[
+				{ gravity: 8},
+				{ 
+					view:"button", 
+					id: "planSchedule_add_button", 
+					autowidth:true, 
+					type:"icon", 
+					tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
+					click: addToTable                    
+				},				
+				{ 
+					view:"button", 
+					id: "b_details_planSchedule", 
+					align:"right", 
+					hidden:true, 
+					autowidth:true, 
+					type:"icon", 
+					tooltip:$.i18n("planSchedule.button.tooltip.details"), 
+					icon:"mdi mdi-format-align-justify", 
+					click: detail_planSchedule
+				},
+				{ 
+					view:"button", 
+					id: "b_edit_planSchedule" , 
+					type:"icon", 
+					hidden:true, 
+					icon:"mdi mdi-grease-pencil", 
+					width:50, 
+					tooltip:$.i18n("planSchedule.button.tooltip.edit") ,
+					click: edit_planSchedule             
+				},
+				{ 
+					view:"button", 
+					id: "b_delete_planSchedule", 
+					align:"right", 
+					hidden:true, 
+					autowidth:true, 
+					type:"icon", 
+					tooltip:$.i18n("planSchedule.button.tooltip.delete"), 
+					icon:"wxi-trash",
+					click: delete_planSchedule
+				},
+			]
+		}
+	]
+};
 
 export let planschedules= {
-	rows:[
-        table,
-        {
-            view: "toolbar",
-            id: "toolbar_planSchedule",
-            heigth: 50,
-            rows: [
-                {
-                    cols:[
-                        { gravity: 8},
-                        { 
-                            view:"button", 
-                            id: "planSchedule_add_button", 
-                            autowidth:true, 
-                            type:"icon", 
-                            tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
-                            click: addToTable                    
-						},				
-						{ 
-							view:"button", 
-							id: "b_details_planSchedule", 
-							align:"right", 
-							hidden:true, 
-							autowidth:true, 
-							type:"icon", 
-							tooltip:$.i18n("planSchedule.button.tooltip.details"), 
-							icon:"mdi mdi-format-align-justify", 
-							click: detail_planSchedule
-						},
-						{ 
-							view:"button", 
-							id: "b_edit_planSchedule" , 
-							type:"icon", 
-							hidden:true, 
-							icon:"mdi mdi-grease-pencil", 
-							width:50, 
-							tooltip:$.i18n("planSchedule.button.tooltip.edit") ,
-							click: edit_planSchedule             
-						},
-						{ 
-							view:"button", 
-							id: "b_delete_planSchedule", 
-							align:"right", 
-							hidden:true, 
-							autowidth:true, 
-							type:"icon", 
-							tooltip:$.i18n("planSchedule.button.tooltip.delete"), 
-							icon:"wxi-trash",
-							click: delete_planSchedule
-						},
-                    ]
-                }
-            ]
-        }
-    ]
+	id:"schelduleContainer",
+	cols:
+	[
+		{rows:[
+			{ type:"header", template:$.i18n("menu.plans.schedule") },
+			table,
+			toolbar
+		]}
+	]
 };
+
 
 function planSchedule_select(id){
 	$$("b_details_planSchedule").show();
@@ -97,54 +102,32 @@ function planSchedule_select(id){
 	$$("b_delete_planSchedule").show();
 }
 
-function addToTable(id){
-	try {
-		if($$("planSchedule_win")) 
-			$$("planSchedule_win").destructor();
-	} catch  {}
-	let planScheduleForm = new PlanScheduleForm(null,null,2);
-	webix
-	  .ui({ 
-		id: "planSchedule_win",
-		view: "window",
-		width: 400,
-		move: true,
-		close: true,
-		position: "right",
-		body: planScheduleForm.getComponent(),
-		on: {
-			onHide: function(obj){
-				$$("planSchedule_win").destructor();
-			},
-		}
-	  })
-	  .show();
+function addToTable(){
+	loadDetailForm(null, 2); 
 }
 
-function detail_planSchedule(id){
+function detail_planSchedule(){
 	let selectPlan = $$("planSchedulesTable").getSelectedId();
 	let item = $$('planSchedulesTable').getItem(selectPlan);
-	try {
-		$$("planSchedule_win").destructor();
-	} catch  {}
+	loadDetailForm(item.id, 0); 
+}
 
-	let planScheduleForm = new PlanScheduleForm(item.id,null,0);
-	webix
-	  .ui({ 
-		id: "planSchedule_win",
-		view: "window",
-		width: 400,
-		move: true,
-		close: true,
-		position: "right",
-		body: planScheduleForm.getComponent(),
-		on: {
-			onHide: function(obj){
-				$$("planSchedule_win").destructor();
-			}
-		}
-	  })
-	  .show();
+function edit_planSchedule(id){
+	let selectPlan = $$("planSchedulesTable").getSelectedId();
+	let item = $$('planSchedulesTable').getItem(selectPlan);
+	loadDetailForm(item.id, 1)
+}
+
+function loadDetailForm(id, num){
+	let auxPlanSchedule = new PlanScheduleForm(id,null,num);
+	if(!$$("scheduleDetailForm")){
+		$$("schelduleContainer").addView({ view:"resizer" });
+		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
+	}else{
+		webix.ui(
+			auxPlanSchedule.getComponent()
+		  , $$('scheduleDetailForm'));
+	}
 }
 
 function delete_planSchedule(id){
@@ -171,30 +154,4 @@ function delete_planSchedule(id){
 		}
 	  })
 	  .show();	
-}
-
-function edit_planSchedule(id){
-	let selectPlan = $$("planSchedulesTable").getSelectedId();
-	let item = $$('planSchedulesTable').getItem(selectPlan);
-	try {
-		$$("planSchedule_win").destructor();
-	} catch  {}
-
-	let userForm = new PlanScheduleForm(item.id,null,1);
-	webix
-	  .ui({ 
-		id: "planSchedule_win",
-		view: "window",
-		width: 400,
-		move: true,
-		close: true,
-		position: "right",
-		body: userForm.getComponent(),
-		on: {
-			onHide: function(obj){
-				$$("planSchedule_win").destructor();
-			}
-		}
-	  })
-	  .show();
 }

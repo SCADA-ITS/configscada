@@ -1,4 +1,30 @@
 
+var v_week = { 
+    "cronUi.popup.week.1":"1", 
+    "cronUi.popup.week.2":"2", 
+    "cronUi.popup.week.3":"3", 
+    "cronUi.popup.week.4":"4", 
+    "cronUi.popup.week.5":"5", 
+    "cronUi.popup.week.6":"6", 
+    "cronUi.popup.week.7":"7" 
+};
+
+var v_month = {
+    "1":"JAN", 
+    "2":"FEB", 
+    "3":"MAR",
+    "4":"APR",
+    "5":"MAY",
+    "6":"JUN",
+    "7":"JUL",
+    "8":"AUG",
+    "9":"SEP",
+    "10":"OCT",
+    "11":"NOV",
+    "12":"DEC"
+};
+
+
 export default class CronUi {
 	constructor(input_id,popupId) {
         var input = input_id;
@@ -11,13 +37,13 @@ export default class CronUi {
             elements: [ 
                 {
                     cols:[
-                        { view: "text", id: "inputsHeaderSeconds", name: "seconds", value: "*"},
-                        { view: "text", id: "inputsHeaderMinutes", name: "minutes", value: "*"},
-                        { view: "text", id: "inputsHeaderHours",   name: "hours", value: "*"},
-                        { view: "text", id: "inputsHeaderDays",    name: "days", value: "*"},
-                        { view: "text", id: "inputsHeaderMonths",  name: "months", value: "*"},
+                        { view: "text", id: "inputsHeaderSeconds", name: "seconds", value: "*", disabled:true},
+                        { view: "text", id: "inputsHeaderMinutes", name: "minutes", value: "*", disabled:true},
+                        { view: "text", id: "inputsHeaderHours",   name: "hours", value: "*", disabled:true},
+                        { view: "text", id: "inputsHeaderDays",    name: "days", value: "*", disabled:true},
+                        { view: "text", id: "inputsHeaderMonths",  name: "months", value: "*", disabled:true},
                         //{ view: "text", id: "inputsHeaderWeeks",   name: "weeks"},
-                        { view: "text", id: "inputsHeaderYears",   name: "years", value: "*"},
+                        { view: "text", id: "inputsHeaderYears",   name: "years", value: "*", disabled:true},
                     ],
                 }
             ]
@@ -50,7 +76,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"secondsOpt01", 
-                                    labelRight:"Every second", 
+                                    labelRight:$.i18n("cronUi.popup.secondsOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("secondsOpt01").data.value === 1){
@@ -67,7 +93,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"secondsOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight:$.i18n("cronUi.popup.secondsOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -75,7 +101,7 @@ export default class CronUi {
                                                 let counter02 = $$("secondsOpt02_counter02").getValue();
 
                                                 if($$("secondsOpt02").data.value === 1){
-                                                    $$("inputsHeaderSeconds").setValue(counter01 + "/" + counter02);
+                                                    $$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
                                                     //$$("secondsOpt01").setValue(0);
                                                     $$("secondsOpt01").setValue(0);
                                                     $$("secondsOpt03").setValue(0);
@@ -89,16 +115,16 @@ export default class CronUi {
                                             name: "", 
                                             value: 1, 
                                             min: 1, 
-                                            max: 59,
+                                            max: 60,
                                             click: function(id,event){
                                                 let counter01 = $$("secondsOpt02_counter01").getValue();
                                                 let counter02 = $$("secondsOpt02_counter02").getValue();
-                                                $$("inputsHeaderSeconds").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
                                             }
                                         },
                                         { 
                                             view:"label", 
-                                            label: "second(s) starting at second", 
+                                            label: $.i18n("cronUi.popup.secondsOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -107,16 +133,16 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("secondsOpt02_counter01").getValue();
                                                 let counter02 = $$("secondsOpt02_counter02").getValue();
-                                                $$("inputsHeaderSeconds").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 0, min: 0, max: 59},
                                         { gravity:1}
                                     ]
                                 },
                                 {
                                     view:"checkbox", 
                                     id:"secondsOpt03", 
-                                    labelRight:"Specific second (choose one or many)", 
+                                    labelRight:$.i18n("cronUi.popup.secondsOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("secondsOpt03").data.value === 1){
@@ -133,8 +159,8 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "secondsOpt03_combo", name: "secondsOpt03_combo", value: "00", placeholder:"Tags",
-                                            options:["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"], //newValues: true
+                                        { view:"multicombo", id: "secondsOpt03_combo", name: "secondsOpt03_combo", value: "0", //placeholder:"Tags",
+                                            options:["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"], //newValues: true
                                             on: {
                                                 'onChange': function(obj){ 
                                                     if($$("secondsOpt03").data.value === 1){
@@ -149,11 +175,11 @@ export default class CronUi {
                                 },
                                 {
                                     cols:[
-                                        
                                         {
                                             view:"checkbox", 
                                             id:"secondsOpt04", 
-                                            labelRight:"Every second",
+                                            //labelwidth: 200,
+                                            labelRight: $.i18n("cronUi.popup.secondsOpt04.01"),
                                             //labelWidth: 0, 
                                             value:0,
                                             click: function(id,event){
@@ -168,34 +194,40 @@ export default class CronUi {
                                                 }
                                             }
                                         },
+                                        
                                         { 
                                             view:"label", 
-                                            label: " between second", 
+                                            label: $.i18n("cronUi.popup.secondsOpt04.02"),
                                             //inputWidth:100, 
                                             align:"left"
                                         },
+                                        
                                         { view: "counter", name: "", id: "secondsOpt04_counter01", 
-                                            value: 1, 
+                                            value: 0, 
                                             click: function(id,event){
                                                 let counter01 = $$("secondsOpt04_counter01").getValue();
                                                 let counter02 = $$("secondsOpt04_counter02").getValue();
                                                 $$("inputsHeaderSeconds").setValue(counter01 + "-" + counter02);
                                             },
-                                            min: 1, max: 59},
+                                            min: 0, max: 59
+                                        },
+                                        /*
                                         { 
                                             view:"label", 
-                                            label: "and second", 
+                                            label: $.i18n("cronUi.popup.secondsOpt04.03"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
+                                        */
                                         { view: "counter", name: "", id: "secondsOpt04_counter02", 
-                                            value: 1, 
+                                            value: 0, 
                                             click: function(id,event){
                                                 let counter01 = $$("secondsOpt04_counter01").getValue();
                                                 let counter02 = $$("secondsOpt04_counter02").getValue();
                                                 $$("inputsHeaderSeconds").setValue(counter01 + "-" + counter02);
                                             },
-                                            min: 1, max: 59},
+                                            min: 0, max: 59
+                                        },
                                         //{ gravity:1}
                                     ]
                                 }
@@ -214,7 +246,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"minsOpt01", 
-                                    labelRight:"Every minute", 
+                                    labelRight: $.i18n("cronUi.popup.minsOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("minsOpt01").data.value === 1){
@@ -231,7 +263,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"minsOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight: $.i18n("cronUi.popup.minsOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -239,7 +271,7 @@ export default class CronUi {
                                                 let counter02 = $$("minsOpt02_counter02").getValue();
 
                                                 if($$("minsOpt02").data.value === 1){
-                                                    $$("inputsHeaderMinutes").setValue(counter01 + "/" + counter02);
+                                                    $$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
                                                     //$$("secondsOpt01").setValue(0);
                                                     $$("minsOpt01").setValue(0);
                                                     $$("minsOpt03").setValue(0);
@@ -247,24 +279,24 @@ export default class CronUi {
                                                 }
                                             }
                                         },
-                                        { view: "counter", name: "",id: "minsOpt02_counter01", value: 1, min: 1, max: 59,
+                                        { view: "counter", name: "",id: "minsOpt02_counter01", value: 1, min: 1, max: 60,
                                             click: function(id,event){
                                                 let counter01 = $$("minsOpt02_counter01").getValue();
                                                 let counter02 = $$("minsOpt02_counter02").getValue();
-                                                $$("inputsHeaderMinutes").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
                                             }
                                         },
                                         { 
                                             view:"label", 
-                                            label: "minute(s) starting at minute", 
+                                            label: $.i18n("cronUi.popup.minsOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
-                                        { view: "counter", name: "", id: "minsOpt02_counter02", value: 1, min: 1, max: 59,
+                                        { view: "counter", name: "", id: "minsOpt02_counter02", value: 0, min: 0, max: 59,
                                             click: function(id,event){
                                                 let counter01 = $$("minsOpt02_counter01").getValue();
                                                 let counter02 = $$("minsOpt02_counter02").getValue();
-                                                $$("inputsHeaderMinutes").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
                                             }
                                         },
                                         { gravity:1}
@@ -273,7 +305,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"minsOpt03", 
-                                    labelRight:"Specific minute (choose one or many)", 
+                                    labelRight: $.i18n("cronUi.popup.minsOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("minsOpt03").data.value === 1){
@@ -290,8 +322,8 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "minsOpt03_combo", name: "minsOpt03_combo", value: "00", placeholder:"Tags",
-                                            options:["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"], //newValues: true
+                                        { view:"multicombo", id: "minsOpt03_combo", name: "minsOpt03_combo", value: "0", //placeholder:"Tags",
+                                            options:["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"], //newValues: true
                                             on: {
                                                 'onChange': function(obj){ 
                                                     if($$("minsOpt03").data.value === 1){
@@ -310,7 +342,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"minsOpt04", 
-                                            labelRight:"Every minute",
+                                            labelRight: $.i18n("cronUi.popup.minsOpt04.01"),
                                             //labelWidth: 0, 
                                             value:0,
                                             click: function(id,event){
@@ -327,20 +359,20 @@ export default class CronUi {
                                         },
                                         { 
                                             view:"label", 
-                                            label: " between minute", 
+                                            label: $.i18n("cronUi.popup.minsOpt04.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
-                                        { view: "counter", id: "minsOpt04_counter01", name: "", value: 1, 
+                                        { view: "counter", id: "minsOpt04_counter01", name: "", value: 0, 
                                             click: function(id,event){
                                                 let counter01 = $$("minsOpt04_counter01").getValue();
                                                 let counter02 = $$("minsOpt04_counter02").getValue();
                                                 $$("inputsHeaderMinutes").setValue(counter01 + "-" + counter02);
                                             },
-                                            min: 1, max: 59},
+                                            min: 0, max: 59},
                                         { 
                                             view:"label", 
-                                            label: "and minute", 
+                                            label: $.i18n("cronUi.popup.minsOpt04.03"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -350,7 +382,7 @@ export default class CronUi {
                                                 let counter02 = $$("minsOpt04_counter02").getValue();
                                                 $$("inputsHeaderMinutes").setValue(counter01 + "-" + counter02);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 0, min: 0, max: 59},
                                         //{ gravity:1}
                                     ]
                                 }
@@ -369,7 +401,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"hoursOpt01", 
-                                    labelRight:"Every hour", 
+                                    labelRight: $.i18n("cronUi.popup.hoursOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("hoursOpt01").data.value === 1){
@@ -386,7 +418,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"hoursOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight: $.i18n("cronUi.popup.hoursOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -394,8 +426,7 @@ export default class CronUi {
                                                 let counter02 = $$("hoursOpt02_counter02").getValue();
 
                                                 if($$("hoursOpt02").data.value === 1){
-                                                    $$("inputsHeaderHours").setValue(counter01 + "/" + counter02);
-                                                    //$$("secondsOpt01").setValue(0);
+                                                    $$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
                                                     $$("hoursOpt01").setValue(0);
                                                     $$("hoursOpt03").setValue(0);
                                                     $$("hoursOpt04").setValue(0);
@@ -406,12 +437,12 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("hoursOpt02_counter01").getValue();
                                                 let counter02 = $$("hoursOpt02_counter02").getValue();
-                                                $$("inputsHeaderHours").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 1, min: 1, max: 24},
                                         { 
                                             view:"label", 
-                                            label: "hour(s) starting at hour", 
+                                            label: $.i18n("cronUi.popup.hoursOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -419,16 +450,16 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("hoursOpt02_counter01").getValue();
                                                 let counter02 = $$("hoursOpt02_counter02").getValue();
-                                                $$("inputsHeaderHours").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 1, min: 0, max: 23},
                                         { gravity:1}
                                     ]
                                 },
                                 {
                                     view:"checkbox", 
                                     id:"hoursOpt03", 
-                                    labelRight:"Specific hour (choose one or many)", 
+                                    labelRight: $.i18n("cronUi.popup.hoursOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("hoursOpt03").data.value === 1){
@@ -445,8 +476,8 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "hoursOpt03_combo", name: "hoursOpt03_combo", value: "00", placeholder:"Tags",
-                                            options:["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"], //newValues: true
+                                        { view:"multicombo", id: "hoursOpt03_combo", name: "hoursOpt03_combo", value: "0", placeholder:"Tags",
+                                            options:["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"], //newValues: true
                                             on: {
                                                 'onChange': function(obj){ 
                                                     if($$("hoursOpt03").data.value === 1){
@@ -465,7 +496,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"hoursOpt04", 
-                                            labelRight:"Every hour",
+                                            labelRight: $.i18n("cronUi.popup.hoursOpt04.01"),
                                             //labelWidth: 0, 
                                             value:0,
                                             click: function(id,event){
@@ -482,7 +513,7 @@ export default class CronUi {
                                         },
                                         { 
                                             view:"label", 
-                                            label: " between hour", 
+                                            label: $.i18n("cronUi.popup.hoursOpt04.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -492,10 +523,10 @@ export default class CronUi {
                                                 let counter02 = $$("hoursOpt04_counter02").getValue();
                                                 $$("inputsHeaderHours").setValue(counter01 + "-" + counter02);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 0, min: 0, max: 23},
                                         { 
                                             view:"label", 
-                                            label: "and hour", 
+                                            label: $.i18n("cronUi.popup.hoursOpt04.03"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -505,7 +536,7 @@ export default class CronUi {
                                                 let counter02 = $$("hoursOpt04_counter02").getValue();
                                                 $$("inputsHeaderHours").setValue(counter01 + "-" + counter02);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 0, min: 0, max: 23},
                                         //{ gravity:1}
                                     ]
                                 }
@@ -524,15 +555,14 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"daysOpt01", 
-                                    labelRight:"Every day", 
+                                    labelRight: $.i18n("cronUi.popup.daysOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("daysOpt01").data.value === 1){
                                             $$("inputsHeaderDays").setValue("*");
-                                            //$$("secondsOpt01").setValue(0);
                                             $$("daysOpt02").setValue(0);
                                             $$("daysOpt03").setValue(0);
-                                            $$("daysOpt04").setValue(0);
+                                            //$$("daysOpt04").setValue(0);
                                             $$("daysOpt05").setValue(0);
                                         }
                                     }
@@ -542,7 +572,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"daysOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight: $.i18n("cronUi.popup.daysOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -550,11 +580,11 @@ export default class CronUi {
                                                 let counter02 = $$("daysOpt02_counter02").getValue();
 
                                                 if($$("daysOpt02").data.value === 1){
-                                                    $$("inputsHeaderDays").setValue(counter01 + "/" + counter02);
+                                                    $$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
                                                     //$$("secondsOpt01").setValue(0);
                                                     $$("daysOpt01").setValue(0);
                                                     $$("daysOpt03").setValue(0);
-                                                    $$("daysOpt04").setValue(0);
+                                                    //$$("daysOpt04").setValue(0);
                                                     $$("daysOpt05").setValue(0);
                                                 }
                                             }
@@ -563,12 +593,12 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("daysOpt02_counter01").getValue();
                                                 let counter02 = $$("daysOpt02_counter02").getValue();
-                                                $$("inputsHeaderDays").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
                                             },
-                                            value: 1, min: 1, max: 59},
+                                            value: 1, min: 1, max: 31},
                                         { 
                                             view:"label", 
-                                            label: "day(s) starting on", 
+                                            label: $.i18n("cronUi.popup.daysOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -576,16 +606,22 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("daysOpt02_counter01").getValue();
                                                 let counter02 = $$("daysOpt02_counter02").getValue();
-                                                $$("inputsHeaderDays").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
                                             },
-                                            value: 1, min: 1, max: 59},
-                                        { gravity:1}
+                                            value: 1, min: 1, max: 31},
+                                        { 
+                                            view:"label", 
+                                            label: $.i18n("cronUi.popup.daysOpt02.03"), 
+                                            //inputWidth:100, 
+                                            align:"left"
+                                        },
+                                        //{ gravity:1}
                                     ]
                                 },
                                 {
                                     view:"checkbox", 
                                     id:"daysOpt03", 
-                                    labelRight:"Specific day of month (choose one or many)", 
+                                    labelRight: $.i18n("cronUi.popup.daysOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("daysOpt03").data.value === 1){
@@ -595,7 +631,7 @@ export default class CronUi {
                                             //$$("secondsOpt01").setValue(0);
                                             $$("daysOpt01").setValue(0);
                                             $$("daysOpt02").setValue(0);
-                                            $$("daysOpt04").setValue(0);
+                                            //$$("daysOpt04").setValue(0);
                                             $$("daysOpt05").setValue(0);
                                         }
                                     }
@@ -603,8 +639,8 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "daysOpt03_combo", name: "daysOpt03_combo", value: "00", placeholder:"Tags",
-                                            options:["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"], //newValues: true
+                                        { view:"multicombo", id: "daysOpt03_combo", name: "daysOpt03_combo", value: "1", //placeholder:"Tags",
+                                            options:["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"], //newValues: true
                                             on: {
                                                 'onChange': function(obj){ 
                                                     if($$("daysOpt03").data.value === 1){
@@ -617,6 +653,8 @@ export default class CronUi {
                                         {gravity:2}
                                     ]
                                 },
+
+                                /*
                                 {
                                     cols:[
                                         {
@@ -667,11 +705,13 @@ export default class CronUi {
                                         //{ gravity:1}
                                     ]
                                 },
+*/
+
                                 {
                                     view:"checkbox", 
                                     id:"daysOpt05", 
-                                    labelRight:"Unspecified", 
-                                    value:1,
+                                    labelRight:$.i18n("cronUi.popup.daysOpt05"), 
+                                    value:0,
                                     click: function(id,event){
                                         if($$("daysOpt05").data.value === 1){                                          
                                             $$("inputsHeaderDays").setValue("?");
@@ -679,7 +719,7 @@ export default class CronUi {
                                             $$("daysOpt01").setValue(0);
                                             $$("daysOpt02").setValue(0);
                                             $$("daysOpt03").setValue(0);
-                                            $$("daysOpt04").setValue(0);
+                                            //$$("daysOpt04").setValue(0);
                                         }
                                     }
                                 }
@@ -698,7 +738,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"monthsOpt01", 
-                                    labelRight:"Every month", 
+                                    labelRight:$.i18n("cronUi.popup.monthsOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("monthsOpt01").data.value === 1){
@@ -715,7 +755,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"monthsOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight:$.i18n("cronUi.popup.monthsOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -723,7 +763,7 @@ export default class CronUi {
                                                 let counter02 = $$("monthsOpt02_counter02").getValue();
 
                                                 if($$("monthsOpt02").data.value === 1){
-                                                    $$("inputsHeaderMonths").setValue(counter01 + "/" + counter02);
+                                                    $$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
                                                     //$$("secondsOpt01").setValue(0);
                                                     $$("monthsOpt01").setValue(0);
                                                     $$("monthsOpt03").setValue(0);
@@ -735,26 +775,40 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("monthsOpt02_counter01").getValue();
                                                 let counter02 = $$("monthsOpt02_counter02").getValue();
-                                                $$("inputsHeaderMonths").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
                                             },
                                             value: 1, min: 1, max: 12},
                                         { 
                                             view:"label", 
-                                            label: "month(s) starting in", 
+                                            label: $.i18n("cronUi.popup.monthsOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
                                         {
                                             view:"combo", 
-                                            label: 'Combo',
-                                            value:"January", 
+                                            value:{id: "1",value: $.i18n("cronUi.popup.month.1")}, 
                                             id: "monthsOpt02_counter02", 
-                                            options:["January", "February", "March","April","May","June","July","August","September","October","November","December"],
-                                            click: function(id,event){
-                                                let counter01 = $$("monthsOpt02_counter01").getValue();
-                                                let counter02 = $$("monthsOpt02_counter02").getValue();
-                                                $$("inputsHeaderMonths").setValue(counter01 + "/" + counter02);
-                                            },
+                                            options:[
+                                                {id: "1",value: $.i18n("cronUi.popup.month.1")}, 
+                                                {id: "2",value: $.i18n("cronUi.popup.month.2")},
+                                                {id: "3",value: $.i18n("cronUi.popup.month.3")},
+                                                {id: "4",value: $.i18n("cronUi.popup.month.4")},
+                                                {id: "5",value: $.i18n("cronUi.popup.month.5")},
+                                                {id: "6",value: $.i18n("cronUi.popup.month.6")},
+                                                {id: "7",value: $.i18n("cronUi.popup.month.7")},
+                                                {id: "8",value: $.i18n("cronUi.popup.month.8")},
+                                                {id: "9",value: $.i18n("cronUi.popup.month.9")},
+                                                {id: "10",value: $.i18n("cronUi.popup.month.10")},
+                                                {id: "11",value: $.i18n("cronUi.popup.month.11")},
+                                                {id: "12",value: $.i18n("cronUi.popup.month.12")},
+                                            ],
+                                            on: {
+                                                onChange: function(newv, oldv){
+                                                    let counter01 = $$("monthsOpt02_counter01").getValue();
+                                                    let counter02 = newv;//$$("monthsOpt02_counter02").getValue();
+                                                    $$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
+                                                }
+                                            }
                                         },
                                         { gravity:1}
                                     ]
@@ -762,12 +816,23 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"monthsOpt03", 
-                                    labelRight:"Specific month (choose one or many)", 
+                                    labelRight:$.i18n("cronUi.popup.monthsOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("monthsOpt03").data.value === 1){
-                                            let multi = $$("monthsOpt03_combo").getValue();
-                                            $$("inputsHeaderMonths").setValue(multi);
+                                            let multi = $$("monthsOpt03_combo").getValue().split(",");
+                                            let v_multi = "";
+                                            let contador = 1;
+                                            multi.forEach(ele => {
+                                                if (contador ===multi.length){
+                                                    v_multi = v_multi + v_month[ele];
+                                                } else {
+                                                    v_multi = v_multi + v_month[ele] + ",";
+                                                }
+                                                contador += 1;
+                                            });
+                                                                                        
+                                            $$("inputsHeaderMonths").setValue(v_multi);
                                             
                                             //$$("secondsOpt01").setValue(0);
                                             $$("monthsOpt01").setValue(0);
@@ -779,13 +844,37 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "monthsOpt03_combo", name: "monthsOpt03_combo", value: "00", placeholder:"Tags",
-                                            options:["January", "February", "March","April","May","June","July","August","September","October","November","December"],
+                                        { view:"multicombo", id: "monthsOpt03_combo", name: "monthsOpt03_combo", value: "1", //placeholder:"Tags",
+                                            options:[
+                                                {id: "1",value: $.i18n("cronUi.popup.month.1")}, 
+                                                {id: "2",value: $.i18n("cronUi.popup.month.2")},
+                                                {id: "3",value: $.i18n("cronUi.popup.month.3")},
+                                                {id: "4",value: $.i18n("cronUi.popup.month.4")},
+                                                {id: "5",value: $.i18n("cronUi.popup.month.5")},
+                                                {id: "6",value: $.i18n("cronUi.popup.month.6")},
+                                                {id: "7",value: $.i18n("cronUi.popup.month.7")},
+                                                {id: "8",value: $.i18n("cronUi.popup.month.8")},
+                                                {id: "9",value: $.i18n("cronUi.popup.month.9")},
+                                                {id: "10",value: $.i18n("cronUi.popup.month.10")},
+                                                {id: "11",value: $.i18n("cronUi.popup.month.11")},
+                                                {id: "12",value: $.i18n("cronUi.popup.month.12")},
+                                            ],
                                             on: {
                                                 'onChange': function(obj){ 
                                                     if($$("monthsOpt03").data.value === 1){
-                                                        let multi = $$("monthsOpt03_combo").getValue();
-                                                        $$("inputsHeaderMonths").setValue(multi);
+                                                        let multi = $$("monthsOpt03_combo").getValue().split(",");
+                                                        let v_multi = "";
+                                                        let contador = 1;
+                                                        multi.forEach(ele => {
+                                                            if (contador === multi.length){
+                                                                v_multi = v_multi + v_month[ele];
+                                                            } else {
+                                                                v_multi = v_multi + v_month[ele] + ",";
+                                                            }
+                                                            contador += 1;
+                                                        });
+                                                                                                    
+                                                        $$("inputsHeaderMonths").setValue(v_multi);         
                                                     }
                                                 }
                                             }
@@ -798,7 +887,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"monthsOpt04", 
-                                            labelRight:"Every month between ",
+                                            labelRight:$.i18n("cronUi.popup.monthsOpt04.01"),
                                             //labelWidth: 0, 
                                             value:0,
                                             click: function(id,event){
@@ -806,7 +895,6 @@ export default class CronUi {
                                                     let counter01 = $$("monthsOpt04_counter01").getValue();
                                                     let counter02 = $$("monthsOpt04_counter02").getValue();                                            
                                                     $$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
-                                                    //$$("secondsOpt01").setValue(0);
                                                     $$("monthsOpt01").setValue(0);
                                                     $$("monthsOpt02").setValue(0);
                                                     $$("monthsOpt03").setValue(0);
@@ -815,33 +903,64 @@ export default class CronUi {
                                         },
                                         {
                                             view:"combo", 
-                                            label: 'Combo',
                                             id: "monthsOpt04_counter01",
-                                            value:"January", 
-                                            click: function(id,event){
-                                                let counter01 = $$("monthsOpt04_counter01").getValue();
-                                                let counter02 = $$("monthsOpt04_counter02").getValue();
-                                                $$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
+                                            value:"1", 
+                                            on: {
+                                                'onChange': function(obj){
+                                                    let counter01 = $$("monthsOpt04_counter01").getValue();
+                                                    let counter02 = $$("monthsOpt04_counter02").getValue();
+                                                    $$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
+                                                }
                                             },
-                                            options:["January", "February", "March","April","May","June","July","August","September","October","November","December"]
+                                            options:[
+                                                {id: "1",value: $.i18n("cronUi.popup.month.1")}, 
+                                                {id: "2",value: $.i18n("cronUi.popup.month.2")},
+                                                {id: "3",value: $.i18n("cronUi.popup.month.3")},
+                                                {id: "4",value: $.i18n("cronUi.popup.month.4")},
+                                                {id: "5",value: $.i18n("cronUi.popup.month.5")},
+                                                {id: "6",value: $.i18n("cronUi.popup.month.6")},
+                                                {id: "7",value: $.i18n("cronUi.popup.month.7")},
+                                                {id: "8",value: $.i18n("cronUi.popup.month.8")},
+                                                {id: "9",value: $.i18n("cronUi.popup.month.9")},
+                                                {id: "10",value: $.i18n("cronUi.popup.month.10")},
+                                                {id: "11",value: $.i18n("cronUi.popup.month.11")},
+                                                {id: "12",value: $.i18n("cronUi.popup.month.12")},
+                                            ],
                                         },
+                                        /*
                                         { 
                                             view:"label", 
-                                            label: " and ", 
+                                            label: $.i18n("cronUi.popup.monthsOpt04.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
+                                        */
                                         {
                                             view:"combo", 
-                                            label: 'Combo',
                                             id: "monthsOpt04_counter02",
-                                            value:"January", 
-                                            click: function(id,event){
-                                                let counter01 = $$("monthsOpt04_counter01").getValue();
-                                                let counter02 = $$("monthsOpt04_counter02").getValue();
-                                                $$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
+                                            labelRight: $.i18n("cronUi.popup.monthsOpt04.02"),
+                                            value:"1", 
+                                            on: {
+                                                'onChange': function(obj){
+                                                    let counter01 = $$("monthsOpt04_counter01").getValue();
+                                                    let counter02 = $$("monthsOpt04_counter02").getValue();
+                                                    $$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
+                                                }
                                             },
-                                            options:["January", "February", "March","April","May","June","July","August","September","October","November","December"]
+                                            options:[
+                                                {id: "1",value: $.i18n("cronUi.popup.month.1")}, 
+                                                {id: "2",value: $.i18n("cronUi.popup.month.2")},
+                                                {id: "3",value: $.i18n("cronUi.popup.month.3")},
+                                                {id: "4",value: $.i18n("cronUi.popup.month.4")},
+                                                {id: "5",value: $.i18n("cronUi.popup.month.5")},
+                                                {id: "6",value: $.i18n("cronUi.popup.month.6")},
+                                                {id: "7",value: $.i18n("cronUi.popup.month.7")},
+                                                {id: "8",value: $.i18n("cronUi.popup.month.8")},
+                                                {id: "9",value: $.i18n("cronUi.popup.month.9")},
+                                                {id: "10",value: $.i18n("cronUi.popup.month.10")},
+                                                {id: "11",value: $.i18n("cronUi.popup.month.11")},
+                                                {id: "12",value: $.i18n("cronUi.popup.month.12")},
+                                            ],
                                         },
                                         //{ view: "counter", name: "", value: 1, min: 1, max: 59},
                                         //{ gravity:1}
@@ -862,7 +981,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"yearsOpt01", 
-                                    labelRight:"Any year", 
+                                    labelRight:$.i18n("cronUi.popup.yearsOpt01"), 
                                     value:1,
                                     click: function(id,event){
                                         if($$("yearsOpt01").data.value === 1){
@@ -879,7 +998,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"yearsOpt02", 
-                                            labelRight:"Every", 
+                                            labelRight:$.i18n("cronUi.popup.yearsOpt02.01"), 
                                             //labelWidth: 80,
                                             value:0,
                                             click: function(id,event){
@@ -887,7 +1006,7 @@ export default class CronUi {
                                                 let counter02 = $$("yearsOpt02_counter02").getValue();
 
                                                 if($$("yearsOpt02").data.value === 1){
-                                                    $$("inputsHeaderYears").setValue(counter01 + "/" + counter02);
+                                                    $$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
                                                     //$$("secondsOpt01").setValue(0);
                                                     $$("yearsOpt01").setValue(0);
                                                     $$("yearsOpt03").setValue(0);
@@ -899,12 +1018,12 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("yearsOpt02_counter01").getValue();
                                                 let counter02 = $$("yearsOpt02_counter02").getValue();
-                                                $$("inputsHeaderYears").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
                                             },
                                             value: 1, min: 1, max: 100},
                                         { 
                                             view:"label", 
-                                            label: "years(s) starting in ", 
+                                            label: $.i18n("cronUi.popup.yearsOpt02.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
@@ -912,7 +1031,7 @@ export default class CronUi {
                                             click: function(id,event){
                                                 let counter01 = $$("yearsOpt02_counter01").getValue();
                                                 let counter02 = $$("yearsOpt02_counter02").getValue();
-                                                $$("inputsHeaderYears").setValue(counter01 + "/" + counter02);
+                                                $$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
                                             },
                                             value: 2020, min: 2020, max: 2100},
                                         { gravity:1}
@@ -921,7 +1040,7 @@ export default class CronUi {
                                 {
                                     view:"checkbox", 
                                     id:"yearsOpt03", 
-                                    labelRight:"Specific year (choose one or many)", 
+                                    labelRight:$.i18n("cronUi.popup.yearsOpt03"), 
                                     value:0,
                                     click: function(id,event){
                                         if($$("yearsOpt03").data.value === 1){
@@ -938,7 +1057,7 @@ export default class CronUi {
                                 {
                                     cols:[
                                         {},
-                                        { view:"multicombo", id: "yearsOpt03_combo", name: "yearsOpt03_combo", value: "00", placeholder:"Tags",
+                                        { view:"multicombo", id: "yearsOpt03_combo", name: "yearsOpt03_combo", value: "2020", //placeholder:"Tags",
                                             options:["2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040","2041","2042","2043","2044","2045","2046","2047","2048","2049","2050","2051","2052","2053","2054","2055","2056","2057","2058","2059","2060","2061","2062","2063","2064","2065","2066","2067","2068","2069","2070"],
                                             on: {
                                                 'onChange': function(obj){ 
@@ -957,7 +1076,7 @@ export default class CronUi {
                                         {
                                             view:"checkbox", 
                                             id:"yearsOpt04", 
-                                            labelRight:"Every year between ",
+                                            labelRight:$.i18n("cronUi.popup.yearsOpt04.01"),
                                             //labelWidth: 0, 
                                             value:0,
                                             click: function(id,event){
@@ -978,13 +1097,16 @@ export default class CronUi {
                                                 let counter02 = $$("yearsOpt04_counter02").getValue();
                                                 $$("inputsHeaderYears").setValue(counter01 + "-" + counter02);
                                             },
-                                            value: 2020, min: 2020, max: 2100},
+                                            value: 2020, min: 2020, max: 2100
+                                        },
+                                        /*
                                         { 
                                             view:"label", 
-                                            label: " and ", 
+                                            label: $.i18n("cronUi.popup.yearsOpt04.02"), 
                                             //inputWidth:100, 
                                             align:"left"
                                         },
+                                        */
                                         { view: "counter", name: "", id: "yearsOpt04_counter02",
                                             click: function(id,event){
                                                 let counter01 = $$("yearsOpt04_counter01").getValue();
@@ -1016,7 +1138,7 @@ export default class CronUi {
                         //{ view: "text", id: "inputsHeaderWeeks",   name: "weeks"},
                         let year = $$("inputsHeaderYears").getValue();
                         $$(input).setValue(sec + " " + min + " " + hour + " " + day + " " + month + " ? " + year);
-                        $$(popupId).destructor();
+                        $$(popupId).hide();
                     }
                 }
 			]
