@@ -429,6 +429,7 @@ export let synopticPanels = {
 				"Element:24:45",
 				"Element:24:48",
 				"Element:29:25",
+				"Element:24:49",
 
 				"Element:24:52",
 				"Element:29:27",
