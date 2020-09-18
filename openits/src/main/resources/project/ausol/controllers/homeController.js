@@ -128,6 +128,7 @@ webix.ready(function() {
     webix.extend($$("mainBody"), webix.ProgressBar);
 
     // create the sidemenu for the equipment tree
+    /*
     webix.ui({
         view: "sidemenu",
         id: "menu",
@@ -135,6 +136,7 @@ webix.ready(function() {
         position: "right",
         body: element_tree
     });
+    */
 
     getActiveAlarms.load().then(data => {
     	try {

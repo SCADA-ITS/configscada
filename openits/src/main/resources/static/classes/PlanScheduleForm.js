@@ -126,20 +126,17 @@ export default class PlanScheduleForm {
                 ]
             }).then(data => {
                 if(data){
-                    //Como no tenemos el id del plan creado pedimos todos y volvemos a rellenar la tabla
-                    $$("planSchedulesTable").clearAll();
-                    graphPlanSchedules.load({}).then(dataPlan => {
-                        dataPlan.forEach(item =>{
-                            $$("planSchedulesTable").add({
-                                id:item.id,
-                                alias:item.alias,
-                                description: item.description,
-                                plan: { id: "planScheduleForm_" + item.id + "_" + item.plan.id, value: item.plan.alias },
-                                cronExpression:item.cronExpression
-                              });
-                        });
-                        $$("planSchedule_win").destructor();
-                    });
+                   //Como no tenemos el id del plan creado pedimos todos y volvemos a rellenar la tabla
+                   $$("planSchedulesTable").clearAll();
+                   $$("planSchedulesTable").load(`GraphQL->{ 
+                       getPlanSchedules{
+                         id
+                         plan{id alias description}
+                         cronExpression
+                         alias
+                         description
+                       }
+                     }`);
                 }
             });
         }
@@ -166,27 +163,20 @@ export default class PlanScheduleForm {
                             webix.ui({
                                 id:popupid,
                                 view:"popup",	
-                                //move:false,
                                 position:"center",
-                                //modal:true,
                                 close: true,
-                                //autoheight:true,
                                 width: 800,
                                 body: cron.getComponent(),
-                                //head:$.i18n("elementForm.señalization.panel.head"),
-                                //on: {
-                                //    onShow: function(obj){
-                                //        panelMan.loadComponent();
-                                //    },
-                                //    onHide: function(obj){
-                                //        $$("panelManager" + data.id).destructor();
-                                //    }
-                                //  }
                                 on: {
                                     onHide: function(obj){
                                         $$(popupid).getChildViews()[0].destructor();
                                         $$(popupid).destructor();
-                                    } 
+                                        $$(id).enable();
+                                    },
+                                    onShow: function(obj){
+                                        cron.loadData();
+                                        $$(id).disable();
+                                    }
                                 }
                               }).show();
                         }

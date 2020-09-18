@@ -1,14 +1,3 @@
-
-var v_week = { 
-    "cronUi.popup.week.1":"1", 
-    "cronUi.popup.week.2":"2", 
-    "cronUi.popup.week.3":"3", 
-    "cronUi.popup.week.4":"4", 
-    "cronUi.popup.week.5":"5", 
-    "cronUi.popup.week.6":"6", 
-    "cronUi.popup.week.7":"7" 
-};
-
 var v_month = {
     "1":"JAN", 
     "2":"FEB", 
@@ -24,11 +13,42 @@ var v_month = {
     "12":"DEC"
 };
 
+var v_month2 = {
+    "JAN":{id:  "1",value: $.i18n("cronUi.popup.month.1" )}, 
+    "FEB":{id:  "2",value: $.i18n("cronUi.popup.month.2" )}, 
+    "MAR":{id:  "3",value: $.i18n("cronUi.popup.month.3" )},
+    "APR":{id:  "4",value: $.i18n("cronUi.popup.month.4" )},
+    "MAY":{id:  "5",value: $.i18n("cronUi.popup.month.5" )},
+    "JUN":{id:  "6",value: $.i18n("cronUi.popup.month.6" )},
+    "JUL":{id:  "7",value: $.i18n("cronUi.popup.month.7" )},
+    "AUG":{id:  "8",value: $.i18n("cronUi.popup.month.8" )},
+    "SEP":{id:  "9",value: $.i18n("cronUi.popup.month.9" )},
+    "OCT":{id: "10",value: $.i18n("cronUi.popup.month.10")},
+    "NOV":{id: "11",value: $.i18n("cronUi.popup.month.11")},
+    "DEC":{id: "12",value: $.i18n("cronUi.popup.month.12")}
+};
+
+var v_month3 = {
+    "JAN":"1", 
+    "FEB":"2", 
+    "MAR":"3",
+    "APR":"4",
+    "MAY":"5",
+    "JUN":"6",
+    "JUL":"7",
+    "AUG":"8",
+    "SEP":"9",
+    "OCT":"10",
+    "NOV":"11",
+    "DEC":"12"
+};
 
 export default class CronUi {
 	constructor(input_id,popupId) {
         var input = input_id;
+        this.input = input;
         var popupId = popupId;
+
         this.inputsHeader = {
             view: "form",
             id: "inputsHeader",
@@ -786,7 +806,7 @@ export default class CronUi {
                                         },
                                         {
                                             view:"combo", 
-                                            value:{id: "1",value: $.i18n("cronUi.popup.month.1")}, 
+                                            value:"1",//{id: "1",value: $.i18n("cronUi.popup.month.1")}, 
                                             id: "monthsOpt02_counter02", 
                                             options:[
                                                 {id: "1",value: $.i18n("cronUi.popup.month.1")}, 
@@ -1046,8 +1066,6 @@ export default class CronUi {
                                         if($$("yearsOpt03").data.value === 1){
                                             let multi = $$("yearsOpt03_combo").getValue();
                                             $$("inputsHeaderYears").setValue(multi);
-                                            
-                                            //$$("secondsOpt01").setValue(0);
                                             $$("yearsOpt01").setValue(0);
                                             $$("yearsOpt02").setValue(0);
                                             $$("yearsOpt04").setValue(0);
@@ -1146,7 +1164,6 @@ export default class CronUi {
     }
 
     getComponent() {
-        let header = "";
 
         let genericForm = {
             rows: [
@@ -1156,517 +1173,663 @@ export default class CronUi {
                 {}
             ]
         };
-
         return genericForm;
     }
 
+    loadData(){
+        let valor = $$(this.input).getValue();
+        let valorList = valor.split(" ");
+        let controlSecond = "";
+        let controlMinute = "";
+        let controlHour = "";
+        let controlDay = "";
+        let controlMonth = "";
+        let controlYear = "";
 
+        let controlTotal = true;
 
-}
-                                /*
+        if(valorList.length!==7){
+            //ERROR
+            console.log("ERROR DE TAMAÑO DE FORMATO");
+        } else {
+            if(valorList[0] === "*"){
+                //EVERY YEAR
+                controlSecond = "secondsOpt01";
+            }else{
+                if (valorList[0].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[0].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false;
+                    }
 
-
-/*
-var v_week = { 
-    "Sunday":1, 
-    "Monday":2, 
-    "Tuesday":3, 
-    "Wednesday":4, 
-    "Thursday":5, 
-    "Friday":6, 
-    "Saturday":7 
-};
-
-//var v_month = {};
-//"Sunday", "Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday"
-
-
-                               // {
-                                   // cols: [
-                                        { view:"radio", name:"persecond", options:[
-                                            { value:"Branch2", id:1 },
-                                            { value:"Branch1", id:2 },
-                                            //{ value:"Branch3", id:3 },
-                                            //{ value:"Branch4", id:4 },
-
-/* 
-, elements: [
-                                                { view: "counter", name: "", value: 1, min: 1, max: 59},
-                                                { view: "counter", name: "", value: 1, min: 1, max: 59},  
-                                                { view: "counter", name: "", value: 1, min: 1, max: 59},
-                                                { view: "counter", name: "", value: 1, min: 1, max: 59}
-                                            ],
-*/
-
-/*
-                                            
-                                        ],  align:"center", width:180 },
-                                        { view:"radio", name:"gr2x", options:[
-                                            { value:"Master", id:1 },
-                                            { value:"Branch", id:2 },
-                                            { value:"Branc3", id:3 },
-                                           // { value:"Branc4", id:4 },
-                                          ], width:180, align:"center"},
-                                        //{ gravity:8}
-                                        
-                                    ] 
-                                },
-
-                                /*
-                                {
-                                    cols: [
-                                        { view:"radio", name:"from", options:[""], align:"center", width:180 },
-                                        { view: "counter", name: "", value: 1, min: 1, max: 59},
-                                        { view: "counter", name: "", value: 1, min: 1, max: 59},
-                                    ] 
-                                },
-                                {
-                                    cols: [
-                                        { view:"radio", name:"from", options:[""], align:"center", width:180 },
-                                        { view: "counter", id: "cronUi_seconds_counter01", name: "", value: 1, min: 1, max: 59},
-                                        { view: "counter", id: "cronUi_seconds_counter02", name: "", value: 1, min: 1, max: 59, 
-                                            on:{
-                                                click: function(){
-                                                    let counter01 = $$();
-                                                }
-                                            }
-                                        },
-                                    ] 
-                                }
-                                */
-                        //    ]
-                       // }
-
-                        /*
-                        { view: "text", id: "userForm_" + this.id + "_id", name: "id", label: $.i18n("user.popup.id") , labelWidth: 200, disabled: true } ,
-                        { view: "text", id: "userForm_" + this.id + "_name",name: "name", label: $.i18n("user.popup.name") , labelWidth: 200, disabled: true },
-                        { view: "text", id: "userForm_" + this.id + "_fullName",name: "fullName", label: $.i18n("user.popup.fullName") ,labelWidth: 200, disabled: true },
-                        { view: "text", type: "email", id: "userForm_" + this.id + "_email",name: "email", label: $.i18n("user.popup.email") ,labelWidth: 200, disabled: true },
-                        { view: "text", type: "password", id: "userForm_" + this.id + "_password",name: "password", label: $.i18n("user.popup.password") ,labelWidth: 200, disabled: true },
-                        { view: "text", type: "password", id: "userForm_" + this.id + "_password_conf",name: "password_conf", label: $.i18n("user.popup.password_conf") ,labelWidth: 200, disabled: true },
-                        { view: "checkbox", id: "userForm_" + this.id + "_allowMultipleSessions",name: "allowMultipleSessions", label: $.i18n("user.popup.allowMultipleSessions") ,labelWidth: 200, disabled: true },
-                        { view: "checkbox", id: "userForm_" + this.id + "_isAdmin",name: "isAdmin", label: $.i18n("user.popup.isAdmin") ,labelWidth: 200, disabled: true },
-                        { view: "text", id: "userForm_" + this.id + "_language",name: "language", label: $.i18n("user.popup.language") ,labelWidth: 200, disabled: true },
-                        { view: "combo", id: "userForm_" + this.id + "_country",name: "country", label: $.i18n("user.popup.country") ,labelWidth: 200, disabled: true, options: [],
-                            on: {
-                                onChange: setTimezone
-                            } 
-                        },
-                        { view: "combo", id: "userForm_" + this.id + "_timezone",name: "timezone", label: $.i18n("user.popup.timezone") ,labelWidth: 200, disabled: true, options: [] },
-                        { view: "combo", id: "userForm_" + this.id + "_role",name: "role", require: true, label: $.i18n("user.popup.role") ,labelWidth: 200, disabled: true, options: [],
-                            on: {
-                                onChange: setPermissions
-                            }                     
+                    if(control){
+                        controlSecond = "secondsOpt02";
+                        $$("secondsOpt02_counter01").setValue(valor2);
+                        $$("secondsOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        //console.log("ERROR FALLO / SEC 02");
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                    }
+                } else {
+                    if (valorList[0].search("-")>0) {
+                        let control = true;
+                        let valores = valorList[0].split("-");
+                        let valor1 = null;
+                        let valor2 = null;
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false;
                         }
 
+                        if(control){
+                            controlSecond = "secondsOpt04";
+                            $$("secondsOpt04_counter01").setValue(valor2);
+                            $$("secondsOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                            //console.log("ERROR FALLO - SEC 04");
+                        }
+                    } else {
+                        if (valorList[0].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[0].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1 = parseInt(item);
+                                });
+                            } catch (e) {
+                                control = false;
+                            }
+    
+                            if(control){
+                                controlSecond = "secondsOpt03";
+                                $$("secondsOpt03_combo").setValue(valorList[0]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                                //console.log("ERROR FALLO , SEC 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(valorList[0]);
+                            } catch (e) {
+                                console.log(e);
+                                control = false;
+                            }
+    
+                            if(control){
+                                controlSecond = "secondsOpt03";
+                                $$("secondsOpt03_combo").setValue(valorList[0]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                                //console.log("ERROR FALLO , SEC 03_2");
+                            }
+                        }    
+                    }
+                }
+            }
 
-                                        /*
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds00", 
-                                            labelRight:"0", 
-                                            //width: 50,
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds01", 
-                                            labelRight:"1", 
-                                            //labelPosition:"left",
-                                            width: 0,
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds02", 
-                                            labelRight:"2",
-                                            //labelPosition:"left", 
-                                            width: 60,
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds03", 
-                                            labelRight:"03", 
-                                            //labelPosition:"left",
-                                            width: 80,
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds04", 
-                                            label:"04", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds05", 
-                                            label:"05", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds06", 
-                                            label:"06", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds07", 
-                                            label:"07", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds08", 
-                                            label:"08", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds09", 
-                                            label:"09", 
-                                            labelPosition:"left",
-                                            value:0
-                                        },
-                                        {}
-                                    ]
-                                },
-                                {
-                                    cols:[
-                                        {},
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds10", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds11", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds12", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds13", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds14", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds15", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds16", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds17", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds18", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds19", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {}
-                                    ]
-                                },
-                                {
-                                    cols:[
-                                        {},
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds20", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds21", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds22", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds23", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds24", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds25", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds26", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds27", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds28", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds29", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {}
-                                    ]
-                                },
-                                {
-                                    cols:[
-                                        {},
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds30", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds31", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds32", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds33", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds34", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds35", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds36", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds37", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds38", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds39", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {}
-                                    ]
-                                },
-                                {
-                                    cols:[
-                                        {},
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds40", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds41", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds42", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds43", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds44", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds45", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds46", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds47", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds48", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds49", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {}
-                                    ]
-                                },
-                                {
-                                    cols:[
-                                        {},
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds50", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds51", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds52", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds53", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds54", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds55", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds56", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds57", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds58", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        {
-                                            view:"checkbox", 
-                                            id:"seconds59", 
-                                            label:"Seconds", 
-                                            value:1
-                                        },
-                                        */
+            if(valorList[1] === "*"){
+                //EVERY minute
+                controlMinute = "minsOpt01";
+            }else{
+                if (valorList[1].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[1].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false
+                    }
 
+                    if(control){
+                        controlMinute = "minsOpt02";
+                        $$("minsOpt02_counter01").setValue(valor2);
+                        $$("minsOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.minute")});
+                        //console.log("ERROR FALLO / MIN 02");
+                    }
+                } else {
+                    if (valorList[1].search("-")>0) {
+                        let control = true;
+                        let valores = valorList[1].split("-");
+                        let valor1 = null;
+                        let valor2 = null;
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false
+                        }
 
+                        if(control){
+                            controlMinute = "minsOpt04";
+                            $$("minsOpt04_counter01").setValue(valor2);
+                            $$("minsOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.minute")});
+                            //console.log("ERROR FALLO - MIN 03");
+                        }
+                    } else {
+                        if (valorList[1].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[1].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1 = parseInt(item);
+                                });
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlMinute = "minsOpt03";
+                                $$("minsOpt03_combo").setValue(valorList[1]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.minute")});
+                                //console.log("ERROR FALLO , MIN 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(valorList[1]);
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlMinute = "minsOpt03";
+                                $$("minsOpt03_combo").setValue(valorList[1]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.minute")});
+                                //console.log("ERROR FALLO , MIN 03_2");
+                            }
+                        }    
+                    }
+                }
+            }
 
+            if(valorList[2] === "*"){
+                //EVERY minute
+                controlHour = "hoursOpt01";
+            }else{
+                if (valorList[2].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[2].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false
+                    }
 
+                    if(control){
+                        controlHour = "hoursOpt02";
+                        $$("hoursOpt02_counter01").setValue(valor2);
+                        $$("hoursOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.hour")});
+                        //console.log("ERROR FALLO / HOUR 02");
+                    }
+                } else {
+                    if (valorList[2].search("-")>0) {
+                        let control = true;
+                        let valores = valorList[2].split("-");
+                        let valor1 = null;
+                        let valor2 = null;
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false
+                        }
 
+                        if(control){
+                            controlHour = "hoursOpt04";
+                            $$("hoursOpt04_counter01").setValue(valor2);
+                            $$("hoursOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.hour")});
+                            //console.log("ERROR FALLO - HOUR 04");
+                        }
+                    } else {
+                        if (valorList[2].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[2].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1 = parseInt(item);
+                                });
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlHour = "hoursOpt03";
+                                $$("hoursOpt03_combo").setValue(valorList[2]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.hour")});
+                                //console.log("ERROR FALLO , HOUR 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(valorList[2]);
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlHour = "hoursOpt03";
+                                $$("hoursOpt03_combo").setValue(valorList[2]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.hour")});
+                                //console.log("ERROR FALLO , HOUR 03");
+                            }
+                        }    
+                    }
+                }
+            }            
+
+            if(valorList[3] === "*"){
+                //EVERY minute
+                controlDay = "daysOpt01";
+            }else{
+                if (valorList[3].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[3].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false
+                    }
+
+                    if(control){
+                        controlDay = "daysOpt02";
+                        $$("daysOpt02_counter01").setValue(valor2);
+                        $$("daysOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        //console.log("ERROR FALLO / DAY 02");
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.day")});
+                    }
+                } else {
+                    if (valorList[3].search("?")>0) {
+                        let control = true;
+                        //let valores = valorList[3];
+
+                        /*
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false
+                        }
+                        */
+
+                        if(control){
+                            controlDay = "daysOpt05";
+                            //$$("daysOpt04_counter01").setValue(valor2);
+                            //$$("daysOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.day")});
+                            //console.log("ERROR FALLO ? DAY 02");
+                        }
+                    } else {
+                        if (valorList[3].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[3].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1 = parseInt(item);
+                                });
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlDay = "daysOpt03";
+                                $$("daysOpt03_combo").setValue(valorList[3]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.day")});
+                                //console.log("ERROR FALLO , DAY 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(valorList[3]);
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlDay = "daysOpt03";
+                                $$("daysOpt03_combo").setValue(valorList[3]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.day")});
+                                //console.log("ERROR FALLO , DAY 03_01");
+                            }
+                        }    
+                    }
+                }
+            }  
+
+            if(valorList[4] === "*"){
+                //EVERY minute
+                controlMonth = "monthsOpt01";
+            }else{
+                if (valorList[4].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[4].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false
+                    }
+
+                    if(control){
+                        controlMonth = "monthsOpt02";
+                        $$("monthsOpt02_counter01").setValue(valor2);
+                        $$("monthsOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.month")});
+                        //console.log("ERROR FALLO / MON 02");
+                    }
+                } else {
+                    if (valorList[4].search("-")>0) {
+                        let control = true;
+                        let valores = valorList[4].split("-");
+                        let valor1 = null;
+                        let valor2 = null;
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false
+                        }
+
+                        if(control){
+                            controlMonth = "monthsOpt04";
+                            $$("monthsOpt04_counter01").setValue(valor2);
+                            $$("monthsOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.month")});
+                            //console.log("ERROR FALLO - MON 04");
+                        }
+                    } else {
+                        if (valorList[4].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[4].split(",");
+                            let valor1 = [];
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1.push(parseInt(v_month3[item]).toString());
+                                });
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlMonth = "monthsOpt03";
+                                $$("monthsOpt03_combo").setValue(valor1.toString());
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.month")});
+                                //console.log("ERROR FALLO , MON 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(v_month3[valorList[4]]);
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlMonth = "monthsOpt03";
+                                $$("monthsOpt03_combo").setValue(valor1.toString());
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.month")});
+                                //console.log("ERROR FALLO , MON 03_02");
+                            }
+                        }    
+                    }
+                }
+            }  
+
+            if(valorList[6] === "*"){
+                //EVERY YEAR
+                controlYear = "yearsOpt01";
+            }else{
+                if (valorList[6].search("/")>0) {
+                    let control = true;
+                    let valores = valorList[6].split("/");
+                    let valor1 = null;
+                    let valor2 = null;
+                    try {
+                        valor1 = parseInt(valores[0]);
+                        valor2 = parseInt(valores[1]);
+                    } catch (e) {
+                        control = false
+                    }
+
+                    if(control){
+                        controlYear = "yearsOpt02";
+                        $$("yearsOpt02_counter01").setValue(valor2);
+                        $$("yearsOpt02_counter02").setValue(valor1);
+                    } else {
+                        //ERROR 
+                        controlTotal = false;
+                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.year")});
+                        //console.log("ERROR FALLO / YEA 02");
+                    }
+                } else {
+                    if (valorList[6].search("-")>0) {
+                        let control = true;
+                        let valores = valorList[6].split("-");
+                        let valor1 = null;
+                        let valor2 = null;
+                        try {
+                            valor1 = parseInt(valores[0]);
+                            valor2 = parseInt(valores[1]);
+                        } catch (e) {
+                            control = false
+                        }
+
+                        if(control){
+                            controlYear = "yearsOpt04";
+                            $$("yearsOpt04_counter01").setValue(valor2);
+                            $$("yearsOpt04_counter02").setValue(valor1);
+                        } else {
+                            //ERROR 
+                            controlTotal = false;
+                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.year")});
+                            //console.log("ERROR FALLO - YEA 04");
+                        }
+                    } else {
+                        if (valorList[6].search(",")>0) {
+                            let control = true;
+                            let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valores.forEach(item =>{
+                                    valor1 = parseInt(item);
+                                });
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlYear = "yearsOpt03";
+                                $$("yearsOpt03_combo").setValue(valorList[6]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.year")});
+                                //console.log("ERROR FALLO , YEA 03");
+                            }
+                        } else {
+                            //un año individual
+                            let control = true;
+                            //let valores = valorList[6].split(",");
+                            let valor1 = null;
+                            let valor2 = null;
+                            try {
+                                valor1 = parseInt(valorList[6]);
+                            } catch (e) {
+                                control = false
+                            }
+    
+                            if(control){
+                                controlYear = "yearsOpt03";
+                                $$("yearsOpt03_combo").setValue(valorList[6]);
+                            } else {
+                                //ERROR 
+                                controlTotal = false;
+                                webix.message({type:"error", text:$.i18n("cronUi.popup.error.year")});
+                                //console.log("ERROR FALLO , YEA 03_01");
+                            }
+                        }    
+                    }
+                }
+            }
+
+            if(controlTotal){
+                $$("secondsOpt01").setValue(0);
+                $$("secondsOpt02").setValue(0);
+                $$("secondsOpt03").setValue(0);
+                $$("secondsOpt04").setValue(0);
+                
+                $$("minsOpt01").setValue(0);
+                $$("minsOpt02").setValue(0);
+                $$("minsOpt03").setValue(0);
+                $$("minsOpt04").setValue(0);
+                
+                $$("hoursOpt01").setValue(0);
+                $$("hoursOpt02").setValue(0);
+                $$("hoursOpt03").setValue(0);
+                $$("hoursOpt04").setValue(0);
+
+                $$("daysOpt01").setValue(0);
+                $$("daysOpt02").setValue(0);
+                $$("daysOpt03").setValue(0);
+                //$$("daysOpt04").setValue(0);
+                $$("daysOpt05").setValue(0);
+
+                $$("monthsOpt01").setValue(0);
+                $$("monthsOpt02").setValue(0);
+                $$("monthsOpt03").setValue(0);
+                $$("monthsOpt04").setValue(0);
+
+                $$("yearsOpt01").setValue(0);
+                $$("yearsOpt02").setValue(0);
+                $$("yearsOpt03").setValue(0);
+                $$("yearsOpt04").setValue(0);
+
+                $$(controlSecond).setValue(1);
+                $$(controlMinute).setValue(1);
+                $$(controlHour).setValue(1);
+                $$(controlDay).setValue(1);
+                $$(controlMonth).setValue(1);
+                $$(controlYear).setValue(1);
+
+                $$("inputsHeaderSeconds").setValue(valorList[0]);
+                $$("inputsHeaderMinutes").setValue(valorList[1]);
+                $$("inputsHeaderHours").setValue(valorList[2]);
+                $$("inputsHeaderDays").setValue(valorList[3]);
+                $$("inputsHeaderMonths").setValue(valorList[4]);
+                $$("inputsHeaderYears").setValue(valorList[6]);
+            } else {
+                webix.message({type:"error", text:$.i18n("cronUi.popup.error.total")});
+            }
+        }
+    }
+}

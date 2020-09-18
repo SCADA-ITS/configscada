@@ -563,6 +563,7 @@ export default class Order {
                   { 
                     id: "window_order_new_datatable_" + this.planId,	
                     view:"datatable",
+                    width:240,
                     yCount: 5,
                     scrollX:false,
                     columns:[
@@ -574,7 +575,7 @@ export default class Order {
                     view:"dashboard",
                     id:"window_order_new_dashboard_" + this.planId,
                     gridColumns:1,
-                    width:800,
+                    width:950,
                     gridRows:1,
                     cellHeight:380,
                     cells:[

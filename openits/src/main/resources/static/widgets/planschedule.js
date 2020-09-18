@@ -22,6 +22,7 @@ let genericTablei18n = {
 			{ "id":"alias", "header": [$.i18n("planSchedule.table.alias"),  {content:"textFilter"}], sort:"text", fillspace:1 },
             { "id":"description", "header": [$.i18n("planSchedule.table.description"),  {content:"textFilter"}],  sort:"text", fillspace:2 },
 			{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1 },
+			{ "id":"cronDate", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1, "template": function (obj) {return prettyCron.toString(obj.cronExpression, true);} },
 			{ "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}, fillspace:1 },
 		],
 		on:{

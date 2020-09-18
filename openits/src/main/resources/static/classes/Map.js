@@ -6,6 +6,7 @@ import ElementForm from "../classes/ElementForm.js";
 import ElementCommand from "../classes/ElementCommand.js";
 import EquipmentTree from "../classes/EquipmentTree.js";
 import {columnsElementFormList} from "../data/elementForm.js";
+import { element_tree } from "../widgets/element_tree.js";
 
 let map = null;
 let view = null;
@@ -560,7 +561,16 @@ export default class Map {
 
         // replaces the element tree in the DOM
         let elementTree = new EquipmentTree(this.elementId, null);
-        
+
+        // create the sidemenu for the equipment tree
+        webix.ui({
+          view: "sidemenu",
+          id: "menu",
+          width: 400,
+          position: "right",
+          body: element_tree
+        });
+
         webix.ui({
           id: "elementTreeView", 
           rows: [
