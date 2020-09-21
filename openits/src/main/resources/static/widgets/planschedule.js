@@ -20,13 +20,17 @@ let genericTablei18n = {
 		"columns":[
 			{ "id":"id", "header": $.i18n("planSchedule.table.id"), hidden: true},
 			{ "id":"alias", "header": [$.i18n("planSchedule.table.alias"),  {content:"textFilter"}], sort:"text", fillspace:1 },
-            { "id":"description", "header": [$.i18n("planSchedule.table.description"),  {content:"textFilter"}],  sort:"text", fillspace:2 },
+			{ "id":"description", "header": [$.i18n("planSchedule.table.description"),  {content:"textFilter"}],  sort:"text", fillspace:2 },
+			{ "id":"cronDate", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:2, "template": function (obj) {return prettyCron.toString(obj.cronExpression, true);} },
 			{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1 },
-			{ "id":"cronDate", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1, "template": function (obj) {return prettyCron.toString(obj.cronExpression, true);} },
 			{ "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}, fillspace:1 },
 		],
 		on:{
 			onItemClick: planSchedule_select,
+			// onBlur: function(){
+			// 	$$("planSchedulesTable").unselect()
+			// },
+			onKeyPress: onKeyPressTable
 		}
 	};
 
@@ -98,12 +102,12 @@ export let planschedules= {
 
 
 function planSchedule_select(id){
-	$$("b_details_planSchedule").show();
-	$$("b_edit_planSchedule" ).show();
 	$$("b_delete_planSchedule").show();
+	edit_planSchedule()
 }
 
 function addToTable(){
+	unLoadDetailForm();
 	loadDetailForm(null, 2); 
 }
 
@@ -122,12 +126,27 @@ function edit_planSchedule(id){
 function loadDetailForm(id, num){
 	let auxPlanSchedule = new PlanScheduleForm(id,null,num);
 	if(!$$("scheduleDetailForm")){
-		$$("schelduleContainer").addView({ view:"resizer" });
+		$$("schelduleContainer").addView({ id:"scheduleResizer", view:"resizer" });
 		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
 	}else{
 		webix.ui(
 			auxPlanSchedule.getComponent()
 		  , $$('scheduleDetailForm'));
+	}
+}
+
+function onKeyPressTable(code, e){
+	if(code==27){
+		unLoadDetailForm();
+	}
+}
+
+function unLoadDetailForm(){
+	$$("planSchedulesTable").unselect();
+	$$("b_delete_planSchedule").hide();
+	if($$("scheduleDetailForm")){
+		$$("schelduleContainer").removeView("scheduleResizer");
+		$$("schelduleContainer").removeView("scheduleDetailForm");
 	}
 }
 
@@ -151,6 +170,7 @@ function delete_planSchedule(id){
 		on: {
 			onHide: function(obj){
 				$$("planSchedule_win").destructor();
+				unLoadDetailForm();
 			}
 		}
 	  })

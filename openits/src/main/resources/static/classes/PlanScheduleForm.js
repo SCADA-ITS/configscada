@@ -92,7 +92,13 @@ export default class PlanScheduleForm {
                         item["cronExpression"] = dataPlan.cronExpression;
                         item["plan"] = dataPlan.plan;
                         $$("planSchedulesTable").updateItem(dataPlan.id, item);
-                        $$("planSchedule_win").destructor();
+
+                        $$("planSchedulesTable").unselect();
+                        $$("b_delete_planSchedule").hide();
+                        if($$("scheduleDetailForm")){
+                            $$("schelduleContainer").removeView("scheduleResizer");
+                            $$("schelduleContainer").removeView("scheduleDetailForm");
+                        }
                     });
                 }
             });
@@ -137,6 +143,13 @@ export default class PlanScheduleForm {
                          description
                        }
                      }`);
+
+                    $$("planSchedulesTable").unselect();
+                    $$("b_delete_planSchedule").hide();
+                    if($$("scheduleDetailForm")){
+                        $$("schelduleContainer").removeView("scheduleResizer");
+                        $$("schelduleContainer").removeView("scheduleDetailForm");
+                    }
                 }
             });
         }
@@ -291,7 +304,6 @@ export default class PlanScheduleForm {
                         { margin:5, cols:[
                             { view:"button", value:"Confirmar", css:"webix_primary", id: this.id,
                                 click: function deletePlanSchedule(obj){
-                                    
                                     let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
@@ -306,7 +318,6 @@ export default class PlanScheduleForm {
                                         ]
                                     }).then(data => {
                                         try {
-                                            
                                             if(data){
                                                 let graphPlanScheduleQuery = `query  {
                                                     getPlanSchedule(planScheduleId: "` + obj + `" ){
@@ -319,7 +330,6 @@ export default class PlanScheduleForm {
                                                     }`;
                                                 let graphPlanScheduleQuery2 = webix.proxy("GraphQL", graphPlanScheduleQuery);
                                                 graphPlanScheduleQuery2.load({}).then(dataPlan => {
-                                                    
                                                     if(dataPlan === null){
                                                         $$("planSchedulesTable").remove(obj);
                                                         $$("planSchedule_win").destructor();
@@ -347,5 +357,9 @@ export default class PlanScheduleForm {
                 break;
         }
 		return genericForm;
-	}
+    }
+    onAction(){
+        alert("aaa")
+       
+    }
 }
