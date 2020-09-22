@@ -1,12 +1,4 @@
 import { synoptic } from "../data/synoptic.js";
-import {
-  synopticTunnel,
-  synopticMetro,
-  synopticGlobal,
-  synopticBratislava,
-  synopticCabinets,
-  synopticPanels,
-} from "../data/synoptics.js";
 import ElementForm from "../classes/ElementForm.js";
 import {
   getElementIcon,
@@ -38,8 +30,31 @@ import ElementCommand from "./ElementCommand.js";
 // Size of a row in the layers dropdown
 const DROPDOWN_ROW_SIZE = 43;
 
+let graphSynoptic = webix.proxy(
+  "GraphQL",
+  `query($elem: String!) {
+    getElement(elementId: $elem)
+    {
+      id
+      alias
+      description
+      state
+      childs{
+        id    
+        state
+        description
+        elementValues{
+          id
+          value
+        }
+      }
+    }
+  }
+  `
+);
+
 export default class Synoptic {
-  constructor(data, metadata, synopticDiv, elementId) {
+  constructor(synopticConf) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -49,21 +64,22 @@ export default class Synoptic {
     this.ratioHeight = 1.0;
     this.baseWidth = 0;
     this.baseHeight = 0;
-    this.data = data;
-    this.elementId = elementId;
-
-    this.synopticDiv = synopticDiv;
-    this.synopticConf = "";
-    this.synopticType = "";
-
-    //this.elementTree = [];
-
-    if (metadata == null) {
-      this.metadata = synoptic;
-    } else {
-      this.metadata = metadata;
-    }
+    this.elementId = synopticConf.parentId;
+    this.synopticDiv = synopticConf.id;
+    this.synopticConf = synopticConf;
+    this.synopticType = synopticConf.id;
+    this.metadata = synoptic;
   }
+
+  getComponent() {
+    if (graphSynoptic.includes("http") || graphSynoptic.includes("GraphQL")) {
+      this.metadata.url = graphSynoptic;
+    } else {
+      this.metadata.data = graphSynoptic;
+    }
+    return this.metadata;
+  }
+
 
   /*
    *	Tries to get the data from Stomp, but if it doesn't find the needed data,
@@ -79,34 +95,6 @@ export default class Synoptic {
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS) {
           throw "DMSException";
         }
-
-        /*
-        // check if the element exists
-        if(document.getElementById(element.id) == null) {
-          //alert("El elemento " + element.id + " no existe");
-          let synoptic_svg = document.getElementsByClassName("synoptic-svg")[0];
-
-          let s = Snap("#" + synoptic_svg.id);
-
-          let im = s
-            .image(
-              "./img/cam_0.svg",
-              500,
-              500,
-              40,
-              40
-            )
-            .attr({
-              id: element.id,
-              component: "",
-              class: "capa_mapa",
-              state: "",
-            });
-
-            //alert("ELEMENTO CREADO");
-        }
-        */
-        
         getElementIcon(element);
       });
 
@@ -158,15 +146,6 @@ export default class Synoptic {
           });
       });
     }
-  }
-
-  getComponent() {
-    if (this.data.includes("http") || this.data.includes("GraphQL")) {
-      this.metadata.url = this.data;
-    } else {
-      this.metadata.data = this.data;
-    }
-    return this.metadata;
   }
 
   // Layer groups
@@ -390,9 +369,10 @@ export default class Synoptic {
   loadData() {
     let self = this;
 
-    this.data
-      .load()
-      .then((d) => {
+    graphSynoptic
+      .load({
+        elem: this.elementId,
+      }).then((d) => {
         // creates the base layer
         //this.baseLayer = d.icon;
         this.baseLayer = this.synopticConf["BaseLayers"]["base"];
@@ -416,7 +396,7 @@ export default class Synoptic {
         //this.layersToDraw["BASE_LAYER"] = "visible";
         
         // if we are in a tunnel synoptic, put the title bar
-        if (this.synopticType == "tunnel") {
+        if (this.synopticType == "synopticTunnel") {
           let titleBackground = this.s.rect(
             36 * this.ratioWidth,
             total_height - 48 * this.ratioHeight - 1004 * this.ratioHeight,
@@ -502,49 +482,32 @@ export default class Synoptic {
       })
       .then((d) => {
         d.childs.forEach((element) => {
-
-          //console.log(element);
-          
           if (element.id in this.synopticConf) {
             let synopticElement = this.synopticConf[element.id];
-            
             let elementType = elementTypeMap.getElementType(element.id);
-
             // add the elementType to the array of elements to be drawn and the elementTypes array
             this.elements.push(element);
-
             if (!this.elementsTypes.includes(elementType)) {
               this.elementsTypes.push(elementType);
               this.elementsToDraw[elementType] = "visible";
             }
-
             // initializes the svg icon
             let el = null;
-
             console.log(element.id);
-
             // check for special icons: DMS and ETD
             if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
               // generate the base icon
-              
               let pmv_str = generateDMSIcon(element);
-
               // modify the position of the icon and adds it to the DOM
               let pmv_icon = Snap.parse(pmv_str);
-
               el = this.s.group().append(pmv_icon);
-
-
-              let scale_x =
-                (this.synopticConf[element.id].width / 76) * this.ratioWidth;
-              let scale_y =
-                (this.synopticConf[element.id].height / 24) * this.ratioHeight;
+              let scale_x = (this.synopticConf[element.id].width / 76) * this.ratioWidth;
+              let scale_y = (this.synopticConf[element.id].height / 24) * this.ratioHeight;
 
               if (el != null) {
                 //el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
                 el.transform("translate(" + (synopticElement.x * this.ratioWidth) + "," + ((1080 - synopticElement.y - this.synopticConf[element.id].height) * this.ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
                 //el.transform("translate(0,0)");
-
                 el.attr({ id: element.id });
                 el.attr({ class: "svg_icon" });
                 el.attr({ name: element.id });
@@ -1020,65 +983,7 @@ export default class Synoptic {
               // check if the item is a tunnel
               // FIXME: ONLY FOR THE DEMO
               if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {  // ZONE
-                /*
-                im.click(function (e) {
-                  $$("synoptic1").show();
-                });
-
-                // FIXME: this is for the global synoptic, adds the title to the tunnel
-                if (this.synopticType == "global") {
-                  let c = document.querySelector(
-                    '[view_id="' + this.synopticDiv + '"]'
-                  );
-                  let total_width = c.offsetWidth;
-                  let total_height = c.offsetHeight;
-                  let titleBackground = this.s.rect(
-                    synopticElement.x * this.ratioWidth,
-                    total_height -
-                      30 * this.ratioHeight -
-                      synopticElement.y * this.ratioHeight,
-                    synopticElement.width * this.ratioWidth,
-                    synopticElement.height * this.ratioHeight
-                  );
-
-                  im.remove();
-
-                  // It's set just for the demo
-                  if (element.state != 3) {
-                    titleBackground.attr({
-                      fill: "#ebb700",
-                    });
-                  } else {
-                    titleBackground.attr({
-                      fill: "#ff0000",
-                    });
-                  }
-
-                  // FIXME: The id should be: 'id: d.id + ":Bar"' in a generic way
-                  titleBackground.attr({
-                    id: element.id + ":Bar",
-                    class: "capa_mapa",
-                  });
-
-                  // FIXME: there is no "Rio Verde" tunnel in the DB, just "Tunnel 1" so we set it manually
-                  // We should bring modify the GraphQL query (add "description" field) and bring it from the DB
-                  //let titleText = this.s.text((synopticElement.x + 105) * this.ratioWidth, total_height - 781 * this.ratioHeight, element.description);
-                  let titleText = this.s.text(
-                    (synopticElement.x + 105) * this.ratioWidth,
-                    total_height - 781 * this.ratioHeight,
-                    "RIO VERDE"
-                  );
-                  titleText.attr({
-                    "font-size": 21 * this.ratioWidth,
-                    fill: "#ffffff",
-                    class: "banner_title",
-                  });
-
-                  titleBackground.click(function (e) {
-                    $$("synoptic1").show();
-                  });
-                }
-                */
+               
               } else {
                 im.click(function (e) {
                   try {
@@ -1140,11 +1045,11 @@ export default class Synoptic {
             if (el != null) {
               if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_7_ZONE) {
                 el.click(function (e) {
-                  $$("synoptic1").show();
+                  $$("syn0").show();
                 });
 
                 // FIXME: this is for the global synoptic, adds the title to the tunnel
-                if (this.synopticType == "global") {
+                if (this.synopticType == "synopticGlobal") {
                   let c = document.querySelector(
                     '[view_id="' + this.synopticDiv + '"]'
                   );
@@ -1193,7 +1098,7 @@ export default class Synoptic {
                   });
 
                   titleBackground.click(function (e) {
-                    $$("synoptic1").show();
+                    $$("syn0").show();
                   });
                 }
               } else {
@@ -1375,23 +1280,7 @@ export default class Synoptic {
   /*
    *	Initializes everything
    */
-  init(synopticConf) {
-    if (synopticConf == "tunnel") {
-      this.synopticConf = synopticTunnel;
-    } else if (synopticConf == "metro") {
-      this.synopticConf = synopticMetro;
-    } else if (synopticConf == "global") {
-      this.synopticConf = synopticGlobal;
-    } else if (synopticConf == "bratislava") {
-      this.synopticConf = synopticBratislava;
-    } else if (synopticConf == "cabinets") {
-      this.synopticConf = synopticCabinets;
-    } else if (synopticConf == "panels") {
-      this.synopticConf = synopticPanels;
-    }
-
-    this.synopticType = synopticConf;
-
+  init() {
     let self = this;
     // waits for the element and starts drawing
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {

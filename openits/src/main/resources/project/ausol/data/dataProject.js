@@ -7,8 +7,8 @@ export let genericTable = {
 
 export let menu_data_multi  = [
 { id: "structure", icon: "mdi mdi-view-column", value: $.i18n("menu.dashboard.title"), data:[
-		{ id: "metro", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.line")},
-		{ id: "global", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.global")},
+		{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.line")},
+		{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.global")},
 		{ id: "map", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.map")}
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[

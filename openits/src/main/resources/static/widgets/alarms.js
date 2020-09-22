@@ -707,7 +707,7 @@ function openElementForm(id){
 	try {
 		if(project==0){
 			$$("$sidebar1").unselectAll();
-			$$("synoptic1").show();
+			$$("syn0").show();
 		}else{
 			if ($$("win" + id) != null) {
 				$$("win" + id).destructor();

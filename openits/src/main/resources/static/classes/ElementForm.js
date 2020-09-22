@@ -1,7 +1,6 @@
 import {getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
-import {synopticTunnel, synopticBratislava, synopticCabinets} from "../data/synoptics.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
 

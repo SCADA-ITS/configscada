@@ -1,9 +1,7 @@
 import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
+import {synopticData} from "../data/synoptics.js";
 
 import { map } from "../widgets/map.js";
-import { metro } from "../widgets/metro.js";
-import { global } from "../widgets/global.js";
-import { synoptic } from "../widgets/synoptic.js";
 import { equipments } from "../widgets/equipments.js";
 import { alarms } from "../widgets/alarms.js";
 import { plans } from "../widgets/plans.js";
@@ -13,6 +11,7 @@ import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import { banner } from "../widgets/banner.js";
 import { element_tree} from "../widgets/element_tree.js";
+import Synoptic from "../classes/Synoptic.js";
 
 
 
@@ -43,6 +42,62 @@ if (!isLogin) {
     window.location = "./login.html";
 }
 
+let viewCells = [
+    {
+        id: "alarms",
+        rows: [alarms]
+    },
+    {
+        id: "users",
+        rows: [users]
+    },
+    {
+        id: "roles",
+        rows: [roles]
+    },
+    {
+        id: "alarmconfigs",
+        rows: [alarmconfigs]
+    },
+    {
+        id: "equipments",
+        rows: [equipments]
+    },
+    {
+        id: "map",
+        rows: [map]
+    },
+    {
+        id: "plans",
+        rows: [plans]                            
+    },
+    {
+        id: "planschedule",
+        rows: [planschedules]                            
+    },
+    {
+        id: "grafana",
+        rows: [grafana]
+    },
+    {
+        id: "jasper",
+        rows: [jasper]
+    }];
+
+    synopticData.forEach((item, index) => {
+        let syn = new Synoptic(item);
+        viewCells.push({
+            id: "syn"+index,
+            rows: [{
+                view: "template",
+                id: item.id,
+                url: function() {
+                  syn.init();
+                }
+              }]
+        });
+    });
+
 let main_body = {
     cols: [{
             view: "sidebar",
@@ -55,63 +110,12 @@ let main_body = {
             },
             ready: function() {
                 let firstItem = this.getFirstId();
-                this.select("metro");
+                this.select("syn1");
             }
         },
         {
             id: "multiview",
-            cells: [
-            {
-                id: "metro",
-                rows: [metro]
-            },{
-                id: "alarms",
-                rows: [alarms]
-            },
-            {
-                id: "users",
-                rows: [users]
-            },
-            {
-                id: "roles",
-                rows: [roles]
-            },
-            {
-                id: "alarmconfigs",
-                rows: [alarmconfigs]
-            },
-            {
-                id: "equipments",
-                rows: [equipments]
-            },
-            {
-                id: "synoptic1",
-                rows: [synoptic]
-            },
-            {
-            	id: "map",
-                rows: [map]
-            },
-            {
-                id: "plans",
-                rows: [plans]                            
-            },
-            {
-                id: "planschedule",
-                rows: [planschedules]                            
-            },
-            {
-                id: "global",
-                rows: [global]
-            },
-            {
-                id: "grafana",
-                rows: [grafana]
-            },
-            {
-                id: "jasper",
-                rows: [jasper]
-            }]
+            cells: viewCells
         }
     ]
 };

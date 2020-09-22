@@ -1514,7 +1514,7 @@ export default class CronUi {
                         webix.message({type:"error", text:$.i18n("cronUi.popup.error.day")});
                     }
                 } else {
-                    if (valorList[3].search("?")>0) {
+                    if (valorList[3].search(" ? ")>0) {
                         let control = true;
                         //let valores = valorList[3];
 

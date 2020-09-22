@@ -1,9 +1,7 @@
 import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
+import {synopticData} from "../data/synoptics.js";
 
 import { equipments } from "../widgets/equipments.js";
-import { bratislava } from "../widgets/bratislava.js";
-import { cabinets } from "../widgets/cabinets.js";
-import { panels } from "../widgets/panels.js";
 import { alarms } from "../widgets/alarms.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
@@ -11,6 +9,7 @@ import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import { banner } from "../widgets/banner.js";
 import { plans } from "../widgets/plans.js";
 import {planschedules} from "../widgets/planschedule.js";
+import Synoptic from "../classes/Synoptic.js";
 
 let getActiveAlarms = webix.proxy(  "GraphQL", `query {
 		  getGenericData(genericDataId:"GenericData:1") {
@@ -38,6 +37,54 @@ if (!isLogin) {
     window.location = "./login.html";
 }
 
+let viewCells = [
+    {
+        id: "alarms",
+        rows: [alarms]
+    },
+    {
+        id: "plans",
+        rows: [plans]                            
+    },
+    {
+        id: "planschedule",
+        rows: [planschedules]                            
+    },
+    {
+        id: "users",
+        rows: [users]
+    },
+    {
+        id: "roles",
+        rows: [roles]
+    },
+    {
+        id: "alarmconfigs",
+        rows: [alarmconfigs]
+    },
+    {
+        id: "equipments",
+        rows: [equipments]
+    },
+    {
+        id: "jasper",
+        rows: [jasper]
+    }];
+
+synopticData.forEach((item, index) => {
+    let syn = new Synoptic(item);
+    viewCells.push({
+        id: "syn"+index,
+        rows: [{
+            view: "template",
+            id: item.id,
+            url: function() {
+                syn.init();
+            }
+        }]
+    });
+});
+
 let main_body = {
     cols: [{
             view: "sidebar",
@@ -50,56 +97,12 @@ let main_body = {
             },
             ready: function() {
                 let firstItem = this.getFirstId();
-                this.select(firstItem);
+                this.select("syn0");
             }
         },
         {
             id: "multiview",
-            cells: [
-            {
-                id: "bratislava",
-                rows: [bratislava]
-            },
-            {
-                id: "cabinets",
-                rows: [cabinets]
-            },
-            {
-                id: "panels",
-                rows: [panels]
-            },
-            {
-                id: "alarms",
-                rows: [alarms]
-            },
-            {
-                id: "plans",
-                rows: [plans]                            
-            },
-            {
-                id: "planschedule",
-                rows: [planschedules]                            
-            },
-            {
-                id: "users",
-                rows: [users]
-            },
-            {
-                id: "roles",
-                rows: [roles]
-            },
-            {
-                id: "alarmconfigs",
-                rows: [alarmconfigs]
-            },
-            {
-                id: "equipments",
-                rows: [equipments]
-            },
-            {
-                id: "jasper",
-                rows: [jasper]
-            }]
+            cells: viewCells
         }
     ]
 };

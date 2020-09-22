@@ -1651,6 +1651,8 @@ var i18_en = {
     "planSchedule.table.id": "Id",
     "planSchedule.table.alias": "Alias",
     "planSchedule.table.description": "Description",
+    "planSchedule.table.cronDescription": "Cron Description",
+    "planSchedule.table.cronNextDate": "Next Date",
     "planSchedule.table.cronExpression": "Crontab",
     "planSchedule.table.plan": "Plan",
     "plan.button.tooltip.add": "Add",

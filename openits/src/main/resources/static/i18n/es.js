@@ -1660,6 +1660,8 @@ var i18_es = {
     "planSchedule.table.id": "Identificador",
     "planSchedule.table.alias": "Alias",
     "planSchedule.table.description": "Descripción",
+    "planSchedule.table.cronDescription": "Cron Descripción",
+    "planSchedule.table.cronNextDate": "Próxima ejecución",
     "planSchedule.table.cronExpression": "Cron",
     "planSchedule.table.plan": "Plan",
     "plan.button.tooltip.add": "Añadir",

@@ -37,13 +37,6 @@ export default class Map {
     this.map = null;
     this.elementId = elementId;
 
-    /*
-    if (metadata == null) {
-      this.metadata = synoptic;
-    } else {
-      this.metadata = metadata;
-    }
-    */
   }
 
   /*
@@ -64,48 +57,6 @@ export default class Map {
      
       obj.basicElementsVO.forEach((element) => {
 
-        // check if the element exists
-        /*
-        if(!Object.keys(mapStates).includes(element.id)) {
-          alert("NO EXISTE EL ELEMENTO " + element.id);
-
-          let l = map.getLayers().array_[0];
-
-          let workingFeature = new ol.Feature({
-            geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([-4.889977, 36.422382])
-            ),
-            id: element.id,
-          });
-
-          let workingStyle = new ol.style.Style({
-            image: new ol.style.Icon({
-              opacity: 1,
-              src: "/img/icons/checkbox-blank-circle_green.png",
-              scale: 1,
-            }),
-          });
-
-          workingFeature.setStyle(workingStyle);
-          workingFeature.set("component", "Element");
-          workingFeature.setId(element.id.toString());
-
-          console.log(l);
-
-          let vectorSource = new ol.source.Vector({
-            wrapX: false,
-            features: [workingFeature],
-          });
-
-          let incidentLayer = new ol.layer.Vector({
-            title: "Elements",
-            source: vectorSource,
-          });
-
-          map.addLayer(incidentLayer);
-
-        }
-        */
         // if it's a DMS, ask for the full data
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_24_PMV_A_C ||
@@ -525,23 +476,6 @@ export default class Map {
             let canvas = document.createElement("canvas");
             // get canvas context for drawing on canvas
             let context = canvas.getContext("2d");
-            // set canvas size
-            //canvas.width = mapElement.width;
-            //canvas.height = mapElement.height;
-
-            // call svgString2Image function
-            /*
-            iconGenerator.drawInlineSVG(
-              canvas,
-              context,
-              tmpIcon,
-              function () {
-                //console.log(canvas.toDataURL());
-              }
-            );
-            */
-
-            //alert(element.id + "\tSCALE: " + mapElement.height / total_height);
 
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
@@ -639,31 +573,7 @@ export default class Map {
         $$("element_tree").attachEvent("onSelectChange", function(id) {
           let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
           view.setCenter(lonlat);
-          /*
-          // open the detail window
-          if($$("win" + id) != null) {
-            $$("win" + id).destructor();
-          }
-          let elementForm = new ElementForm(id.toString(), columnsElementFormList);
-          webix
-            .ui({
-              id: "win" + id,
-              view: "window",
-              move: true,
-              close: true,
-              position: "right",
-              body: elementForm.getComponent(),
-              on: {
-                onDestruct: function (obj) {
-                  elementForm.disconnect();
-                },
-                onHide: function (obj) {
-                  elementForm.disconnect();
-                },
-              },
-            })
-            .show();
-          */
+          
         });
 
         $$("element_tree").attachEvent("onItemCheck", self.checkElement);
@@ -825,7 +735,7 @@ export default class Map {
 
         if (
           elementTypeMap.getElementType(element_id) !=
-          elementTypeMap.ZONE_ELEMENT_TYPE
+          elementTypeMap.ELEMENT_TYPE_7_ZONE
         ) {
           if($$("win" + element_id) != null){
               $$("win" + element_id).destructor();
@@ -853,36 +763,19 @@ export default class Map {
             // auto de-select
             //e.target.getFeatures().remove(feature);
         } else {
-          $$("synoptic1").show();
+          $$("syn0").show();
         }
       });
 
       //this.map.addInteraction(selectClick);
       map.addInteraction(selectClick);
 
-      //this.elementReady("#map").then((c1) => {
       // loads data and draws for first time
       this.loadData();
-      //});
     });
 
     this.synopticConf = mapTG;
     mapConf = mapTG;
-
-    /*
-    if (synopticConf == "tunnel") {
-      this.synopticConf = synopticTunnel;
-    } else if (synopticConf == "metro") {
-      this.synopticConf = synopticMetro;
-    } else if (synopticConf == "global") {
-      this.synopticConf = synopticGlobal;
-    } else if (synopticConf == "bratislava") {
-      this.synopticConf = synopticBratislava;
-    }
-
-    this.synopticType = synopticConf;
-
-    */
 
     let self = this;
     // waits for the element and starts drawing
@@ -893,31 +786,6 @@ export default class Map {
       document
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(spinnerDivToAdd);
-
-      /*
-      var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      document
-        .querySelector('[view_id="' + this.synopticDiv + '"]')
-        .prepend(svg);
-      svg.setAttribute("id", this.synopticDiv + "SVG");
-      svg.setAttribute("width", c.offsetWidth);
-      svg.setAttribute("height", c.offsetHeight);
-
-      self.baseWidth = c.offsetWidth;
-      self.baseHeight = c.offsetHeight;
-
-      let divToAdd = document.createElement("div");
-      divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
-      divToAdd.setAttribute("class", "dropdown");
-      document
-        .querySelector('[view_id="' + this.synopticDiv + '"]')
-        .prepend(divToAdd);
-
-      this.elementReady("#" + this.synopticDiv + "SVG").then((c1) => {
-        // loads data and draws for first time
-        this.loadData();
-      });
-      */
 
       this.initResponsive();
     });
@@ -1034,24 +902,7 @@ export default class Map {
                   let canvas = document.createElement("canvas");
                   // get canvas context for drawing on canvas
                   let context = canvas.getContext("2d");
-                  // set canvas size
-                  //canvas.width = mapElement.width;
-                  //canvas.height = mapElement.height;
-
-                  // call svgString2Image function
-                  /*
-                  iconGenerator.drawInlineSVG(
-                    canvas,
-                    context,
-                    tmpIcon,
-                    function () {
-                      //console.log(canvas.toDataURL());
-                    }
-                  );
-                  */
-
-                  //alert(element.id + "\tSCALE: " + mapElement.height / total_height);
-
+                
                   let workingStyle = new ol.style.Style({
                     image: new ol.style.Icon({
                       opacity: 1,
@@ -1165,31 +1016,6 @@ export default class Map {
               $$("element_tree").attachEvent("onSelectChange", function(id) {
                 let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
                 view.setCenter(lonlat);
-                /*
-                // open the detail window
-                if($$("win" + id) != null) {
-                  $$("win" + id).destructor();
-                }
-                let elementForm = new ElementForm(id.toString(), columnsElementFormList);
-                webix
-                  .ui({
-                    id: "win" + id,
-                    view: "window",
-                    move: true,
-                    close: true,
-                    position: "right",
-                    body: elementForm.getComponent(),
-                    on: {
-                      onDestruct: function (obj) {
-                        elementForm.disconnect();
-                      },
-                      onHide: function (obj) {
-                        elementForm.disconnect();
-                      },
-                    },
-                  })
-                  .show();
-                */
               });
 
               $$("element_tree").attachEvent("onItemCheck", self.checkElement);

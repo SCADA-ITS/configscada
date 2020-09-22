@@ -1501,6 +1501,8 @@ var i18_sk = {
     "planSchedule.popup.id": "Id",
     "planSchedule.popup.alias": "Alias",
     "planSchedule.popup.description": "Description",
+    "planSchedule.table.cronDescription": "Cron Description",
+    "planSchedule.table.cronNextDate": "Next Date",
     "planSchedule.popup.cronExpression": "Crontab",
     "planSchedule.popup.plan": "Plan",
     "planSchedule.table.id": "Id",
