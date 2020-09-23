@@ -1012,7 +1012,8 @@ var i18_es = {
 	"pictograms.type.9":"Carriles",
 	"pictograms.type.10":"Especiales",
 	"pictograms.type.11":"De servicio",
-	"pictograms.type.12":"Otras",
+    "pictograms.type.12":"Otras",
+    "pictograms.type.13":"Caracteres",
 
 	//Advertencia de peligro
 	"VmsGraphic:2:1":"Prioridad",
@@ -1437,7 +1438,11 @@ var i18_es = {
 	"VmsGraphic:2:824":"Area Descanso",
 	"VmsGraphic:2:825":"Estacionamiento Ferrocarril",
 	"VmsGraphic:2:826":"Estacionamiento Metro",
-	"VmsGraphic:2:827":"Estacionamiento Autobus",
+    "VmsGraphic:2:827":"Estacionamiento Autobus",
+    
+    //Otras
+
+    //Caracteres
 	
 	//Advertencia de peligro
 	"VmsGraphic:2:1001":"Obras: Prioridad",
@@ -1604,7 +1609,9 @@ var i18_es = {
 	"VmsGraphic:2:1513":"Obras:Fin Velocidad 120",
 	"VmsGraphic:2:1514":"Obras:Fin Velocidad 130",
 	"VmsGraphic:2:1515":"Obras:Fin Adelantamiento",
-	"VmsGraphic:2:1516":"Obras:Fin Camiones",
+    "VmsGraphic:2:1516":"Obras:Fin Camiones",
+    
+    //Indicaciones generales
 	
 	//Carriles
 	"VmsGraphic:2:1652":"Obras:Fin Carril Dcho Mismo",
@@ -1647,6 +1654,12 @@ var i18_es = {
 	"VmsGraphic:2:1739":"Obra:2 a 4 Izq",
 	"VmsGraphic:2:1740":"Obra:2 a 4 Dcho",
     "VmsGraphic:2:1741":"Obra:2 a 4 Centro",
+
+    //De servicio
+
+    //Otras
+
+    //Caracteres
     
 
     //Planificador Planes
