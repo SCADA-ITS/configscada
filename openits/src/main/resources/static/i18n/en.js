@@ -1659,6 +1659,8 @@ var i18_en = {
     "planSchedule.button.tooltip.details": "Details",
     "planSchedule.button.tooltip.edit": "Edit",
     "planSchedule.button.tooltip.delete": "Delete",
+    "planSchedule.form.errorMessage":"Fill required fields",
+    "planSchedule.form.apply":"Apply",
 
     "cronUi.popup.tab.seconds": "Second",
     "cronUi.popup.tab.minutes": "Minute",

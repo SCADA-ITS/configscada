@@ -1146,7 +1146,7 @@ export default class CronUi {
             id: "CronUiFormButtons",
 			view: "form",
 			elements: [
-                { view: "button", id: "CronUiFormButtons_apply", label: $.i18n("planSchedule.popup.button.create"), value: "",
+                { view: "button", id: "CronUiFormButtons_apply", label: $.i18n("planSchedule.form.apply"), value: "",
                     click: function(){
                         let sec = $$("inputsHeaderSeconds").getValue();
                         let min = $$("inputsHeaderMinutes").getValue();

@@ -1514,6 +1514,8 @@ var i18_sk = {
     "planSchedule.button.tooltip.details": "Details",
     "planSchedule.button.tooltip.edit": "Edit",
     "planSchedule.button.tooltip.delete": "Delete",
+    "planSchedule.form.errorMessage":"Fill required fields",
+    "planSchedule.form.apply":"Apply",
 
 
 

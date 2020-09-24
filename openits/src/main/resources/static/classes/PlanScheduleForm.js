@@ -59,39 +59,93 @@ export default class PlanScheduleForm {
         function saveEditPlanSchedule(id) {
             let itemId = id.toString().split("_")[2];
             let updateplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
-            $$("planScheduleForm_" + itemId).validate();
-            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
-            let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
-            graphqlSendPlan2.load({
-                plan: [
-                    {
-                    id: updateplanScheduleForm.id,
-                    alias: updateplanScheduleForm.alias,
-                    description: updateplanScheduleForm.description,
-                    action: PLAN_ACTION_RESET,
-                    planId: updateplanScheduleForm.plan.split("_")[2],
-                    cronExpression: updateplanScheduleForm.cronExpression    
+            if($$("planScheduleForm_" + itemId).validate()){
+                let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
+                let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
+                graphqlSendPlan2.load({
+                    plan: [
+                        {
+                        id: updateplanScheduleForm.id,
+                        alias: updateplanScheduleForm.alias,
+                        description: updateplanScheduleForm.description,
+                        action: PLAN_ACTION_RESET,
+                        planId: updateplanScheduleForm.plan.split("_")[2],
+                        cronExpression: updateplanScheduleForm.cronExpression    
+                        }
+                    ]
+                }).then(data => {
+                    if(data){
+                        let graphPlanScheduleQuery = `query  {
+                            getPlanSchedule(planScheduleId: "` + updateplanScheduleForm.id + `" ){
+                                id
+                                plan{id alias description}
+                                cronExpression
+                                alias
+                                description
+                            }
+                            }`;
+                        let graphqlSendPlanU = webix.proxy("GraphQL", graphPlanScheduleQuery);
+                        graphqlSendPlanU.load({}).then(dataPlan => {
+                            let item = $$("planSchedulesTable").getItem(dataPlan.id);
+                            item["alias"] = dataPlan.alias;
+                            item["description"] = dataPlan.description;
+                            item["cronExpression"] = dataPlan.cronExpression;
+                            item["plan"] = dataPlan.plan;
+                            $$("planSchedulesTable").updateItem(dataPlan.id, item);
+    
+                            $$("planSchedulesTable").unselect();
+                            $$("b_delete_planSchedule").hide();
+                            if($$("scheduleDetailForm")){
+                                $$("schelduleContainer").removeView("scheduleResizer");
+                                $$("schelduleContainer").removeView("scheduleDetailForm");
+                            }
+                        });
                     }
-                ]
-            }).then(data => {
-                if(data){
-                    let graphPlanScheduleQuery = `query  {
-                        getPlanSchedule(planScheduleId: "` + updateplanScheduleForm.id + `" ){
+                });
+            }else{
+                webix.message({ type:"error", text:$.i18n("planSchedule.form.errorMessage")});
+            }  
+        }
+
+        function createNewPlanSchedule(id) {
+            let itemId = id.toString().split("_")[2];
+            let createplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
+            if($$("planScheduleForm_" + itemId).validate()){
+                let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan) { id } }`; 
+                let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
+                let graphPlanSchedulesQuery = `query  {
+                    getPlanSchedules{
+                        id
+                        plan{id alias description}
+                        cronExpression
+                        alias
+                        description
+                    }
+                    }`;
+                let graphPlanSchedules = webix.proxy("GraphQL", graphPlanSchedulesQuery);
+                graphqlSendPlan2.load({
+                    plan: [
+                        {
+                        alias: createplanScheduleForm.alias,
+                        description: createplanScheduleForm.description,
+                        action: PLAN_ACTION_START,
+                        planId: createplanScheduleForm.plan.split("_")[2],
+                        cronExpression: createplanScheduleForm.cronExpression
+                        }
+                    ]
+                }).then(data => {
+                    if(data){
+                    //Como no tenemos el id del plan creado pedimos todos y volvemos a rellenar la tabla
+                    $$("planSchedulesTable").clearAll();
+                    $$("planSchedulesTable").load(`GraphQL->{ 
+                        getPlanSchedules{
                             id
                             plan{id alias description}
                             cronExpression
                             alias
                             description
                         }
-                        }`;
-                    let graphqlSendPlanU = webix.proxy("GraphQL", graphPlanScheduleQuery);
-                    graphqlSendPlanU.load({}).then(dataPlan => {
-                        let item = $$("planSchedulesTable").getItem(dataPlan.id);
-                        item["alias"] = dataPlan.alias;
-                        item["description"] = dataPlan.description;
-                        item["cronExpression"] = dataPlan.cronExpression;
-                        item["plan"] = dataPlan.plan;
-                        $$("planSchedulesTable").updateItem(dataPlan.id, item);
+                        }`);
 
                         $$("planSchedulesTable").unselect();
                         $$("b_delete_planSchedule").hide();
@@ -99,59 +153,11 @@ export default class PlanScheduleForm {
                             $$("schelduleContainer").removeView("scheduleResizer");
                             $$("schelduleContainer").removeView("scheduleDetailForm");
                         }
-                    });
-                }
-            });
-        }
-
-        function createNewPlanSchedule(id) {
-            let itemId = id.toString().split("_")[2];
-            let createplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
-            $$("planScheduleForm_" + itemId).validate();
-            let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan) { id } }`; 
-            let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
-            let graphPlanSchedulesQuery = `query  {
-                getPlanSchedules{
-                    id
-                    plan{id alias description}
-                    cronExpression
-                    alias
-                    description
-                }
-                }`;
-            let graphPlanSchedules = webix.proxy("GraphQL", graphPlanSchedulesQuery);
-            graphqlSendPlan2.load({
-                plan: [
-                    {
-                    alias: createplanScheduleForm.alias,
-                    description: createplanScheduleForm.description,
-                    action: PLAN_ACTION_START,
-                    planId: createplanScheduleForm.plan.split("_")[2],
-                    cronExpression: createplanScheduleForm.cronExpression
                     }
-                ]
-            }).then(data => {
-                if(data){
-                   //Como no tenemos el id del plan creado pedimos todos y volvemos a rellenar la tabla
-                   $$("planSchedulesTable").clearAll();
-                   $$("planSchedulesTable").load(`GraphQL->{ 
-                       getPlanSchedules{
-                         id
-                         plan{id alias description}
-                         cronExpression
-                         alias
-                         description
-                       }
-                     }`);
-
-                    $$("planSchedulesTable").unselect();
-                    $$("b_delete_planSchedule").hide();
-                    if($$("scheduleDetailForm")){
-                        $$("schelduleContainer").removeView("scheduleResizer");
-                        $$("schelduleContainer").removeView("scheduleDetailForm");
-                    }
-                }
-            });
+                });
+            }else{
+                webix.message({ type:"error", text:$.i18n("planSchedule.form.errorMessage")});
+            }
         }
 
         this.form = {   
@@ -198,7 +204,6 @@ export default class PlanScheduleForm {
                 { view: "combo", id: "planScheduleForm_" + this.id + "_plan",name: "plan", label: $.i18n("planSchedule.popup.plan") ,labelWidth: 200, disabled: true, options: [],},
             ],
             rules:{
-                "alias":webix.rules.isNotEmpty,
                 "cronExpression":webix.rules.isNotEmpty,
                 "plan":webix.rules.isNotEmpty
             }               
