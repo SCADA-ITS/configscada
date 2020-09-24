@@ -6,24 +6,10 @@ import { alarms } from "../widgets/alarms.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
-import { banner } from "../widgets/banner.js";
 import { plans } from "../widgets/plans.js";
 import {planschedules} from "../widgets/planschedule.js";
 import Synoptic from "../classes/Synoptic.js";
-
-let getActiveAlarms = webix.proxy(  "GraphQL", `query {
-		  getGenericData(genericDataId:"GenericData:1") {
-			    id
-			    value
-				}
-			}`);
-
-	let getNoRecognizeAlarms = webix.proxy(  "GraphQL", `query {
-			  getGenericData(genericDataId:"GenericData:2") {
-				    id
-				    value
-					}
-				}`);
+import AlarmNotification from "../classes/AlarmNotification.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -106,40 +92,18 @@ let main_body = {
         }
     ]
 };
-
+let anotification = new AlarmNotification(); //componente Banner y refresco de campana.
 webix.ready(function() {
     webix.ui({
     	id:"mainBody",
         rows: [
             toolbar_data_menu,
             main_body,
-            banner
+            anotification.getComponent()
         ]
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
-
-    getActiveAlarms.load().then(data => {
-    	try {
-    		$$("bell").data.badge=data.value;
-    		$$("bell").refresh();
-    	} catch (err) {
-    		console.log("Error: " + err.message);
-    	}
-    });
-    
-    getNoRecognizeAlarms.load().then(data => {
-    	try {
-    		if(data== null ||  data.value == 0){
-        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'></div>");
-    		}
-    		else{
-        		$$("bannerTemp").setHTML("<div class='move-me move-me-3'>" + $.i18n("defaultheader.activealarms") + ": "+data.value+"</div>");
-    		}
-    	} catch (err) {
-    		console.log("Error: " + err.message);
-    	}
-    });
-    
+    anotification.loadData();
     $$("nameUser").setValue(userName);
     
     if (userPermissions !== "") {

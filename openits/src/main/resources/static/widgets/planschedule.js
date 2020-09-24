@@ -34,9 +34,6 @@ let genericTablei18n = {
 		],
 		on:{
 			onItemClick: planSchedule_select,
-			// onBlur: function(){
-			// 	$$("planSchedulesTable").unselect()
-			// },
 			onKeyPress: onKeyPressTable
 		}
 	};
@@ -106,7 +103,6 @@ export let planschedules= {
 		]}
 	]
 };
-
 
 function planSchedule_select(id){
 	$$("b_delete_planSchedule").show();
