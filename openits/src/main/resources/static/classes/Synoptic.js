@@ -1465,16 +1465,28 @@ export default class Synoptic {
     // it has to filter if the event is related to the synoptic instance
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
-        let newNode =
-          event[0].addedNodes[0].children[0].children[0].attributes["view_id"].value;
-
+        let newNode = null;
+        if(event[0].addedNodes.length > 0) {
+          Array.from(event[0].addedNodes[0].children).forEach(e => {
+            if(typeof e.attributes["view_id"] != 'undefined') {
+              if(e.attributes["view_id"].value == self.synopticDiv) {
+                newNode = e.attributes["view_id"].value;
+              }
+            }
+          });
+          
+        }
+        
           if (newNode == self.synopticDiv) {
             // Launch the query again
             document.getElementById(self.synopticDiv + "spinner").style.display = "block";
-            self.data.load().then((d) => {
+            
+            graphSynoptic.load({
+              elem: self.elementId,
+            }).then((d) => {
               // check if it's a tunnel synoptic and changes the main bar in the synoptic
               let element_type = d.id.split(":")[1];
-              
+
               if(element_type == "7") {
                 let color = "";
                 if (d.state != 3) {

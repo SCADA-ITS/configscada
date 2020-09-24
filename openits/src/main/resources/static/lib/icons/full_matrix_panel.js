@@ -1,6 +1,6 @@
 import * as elementTypeMap from "../elementTypeMap.js";
 import { panelData } from "../../data/panelData.js";
-import { pictograms } from "../../data/pictograms.js";
+import { availablePictos } from "../../data/pmvpicto.js";
 
 export function getLinesOfText(panelType, zone, subPanel) {
   let panelConfig = JSON.parse(panelData[panelType]["panel"]);
@@ -132,7 +132,13 @@ export function generateIcon(element, suffix = "") {
         let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
         
         if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tipo"] == "Grafico") {
-          let im = s.image("data:image/png;base64," + pictograms[content_value], subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
+          let auxBase64;
+          if(availablePictos[content_value]){
+            auxBase64=availablePictos[content_value].base64;
+          }else{
+            auxBase64=availablePictos["0"].base64
+          }
+          let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
           im.attr("id", element.id + suffix + ":" + value_to_find);
           im.attr("subpanel_type", "graphic");
           if(subpanel_width != subpanel_height) {
@@ -240,19 +246,19 @@ export function updateMatrixPanelIcon(element, suffix = "") {
 
       if(subpanelType == "graphical") {
         if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-          if (typeof pictograms[picToShow.value] != "undefined") {
+          if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
             document
               .getElementById(element.id + suffix + ":" + elementTypeParam)
               .setAttribute(
                 "href",
-                "data:image/png;base64," + pictograms[picToShow.value]
+                "data:image/png;base64," + availablePictos[picToShow.value].base64
               );
           } else {
             document
               .getElementById(element.id + suffix + ":" + elementTypeParam)
               .setAttribute(
                 "href",
-                "data:image/png;base64," + pictograms["undefined"]
+                "data:image/png;base64," + availablePictos["undefined"].base64
               );
           }
         } 
@@ -262,7 +268,7 @@ export function updateMatrixPanelIcon(element, suffix = "") {
               .getElementById(element.id + suffix + ":" + elementTypeParam)
                 .setAttribute(
                   "href",
-                  "data:image/png;base64," + pictograms["undefined"]
+                  "data:image/png;base64," + availablePictos["undefined"].base64
                 );
             }
         }

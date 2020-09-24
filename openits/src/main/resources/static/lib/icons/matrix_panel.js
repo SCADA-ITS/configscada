@@ -1,5 +1,5 @@
 import * as elementTypeMap from "../elementTypeMap.js";
-import { pictograms } from "../../data/pictograms.js";
+import { availablePictos } from "../../data/pmvpicto.js";
 
 export function generateIcon(element, suffix = "") {
   // check for the status message we should use
@@ -42,13 +42,13 @@ export function generateIcon(element, suffix = "") {
     color +
     '" fill="black" style="fill-opacity:1;stroke-width:2.8125;stroke-miterlimit:4.32999992;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />';
 
-  if (typeof pictograms[picToShow.value] != "undefined") {
+  if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
     pmv_str +=
       '<image id="' +
       element.id +
       suffix +
       ':pic1" xlink:href="data:image/png;base64,' +
-      pictograms[picToShow.value] +
+      availablePictos[picToShow.value].base64 +
       '" y="-174.73952" x="1222.5098" height="48.450024" width="48.450024"/>';
   } else {
     pmv_str +=
@@ -128,19 +128,19 @@ export function updateMatrixPanelIcon(element, suffix = "") {
   }
 
   if (typeof picToShow != "undefined") {
-    if (typeof pictograms[picToShow.value] != "undefined") {
+    if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
       document
         .getElementById(element.id + suffix + ":pic1")
         .setAttribute(
           "xlink:href",
-          "data:image/png;base64," + pictograms[picToShow.value]
+          "data:image/png;base64," + availablePictos[picToShow.value].base64
         );
     } else {
       document
         .getElementById(element.id + suffix + ":pic1")
         .setAttribute(
           "xlink:href",
-          "data:image/png;base64," + pictograms["undefined"]
+          "data:image/png;base64," + availablePictos["undefined"].base64
         );
     }
   } else {
@@ -148,7 +148,7 @@ export function updateMatrixPanelIcon(element, suffix = "") {
         .getElementById(element.id + suffix + ":pic1")
         .setAttribute(
           "xlink:href",
-          "data:image/png;base64," + pictograms["undefined"]
+          "data:image/png;base64," + availablePictos["undefined"].base64
         );
   }
 }
