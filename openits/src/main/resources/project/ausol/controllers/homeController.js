@@ -9,7 +9,6 @@ import { planschedules } from "../widgets/planschedule.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
-import { element_tree} from "../widgets/element_tree.js";
 import Synoptic from "../classes/Synoptic.js";
 import AlarmNotification from "../classes/AlarmNotification.js";
 
@@ -114,16 +113,7 @@ webix.ready(function() {
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
     anotification.loadData();
-    // create the sidemenu for the equipment tree
-    /*
-    webix.ui({
-        view: "sidemenu",
-        id: "menu",
-        width: 400,
-        position: "right",
-        body: element_tree
-    });
-    */
+
     $$("nameUser").setValue(userName);
     
     if (userPermissions !== "") {

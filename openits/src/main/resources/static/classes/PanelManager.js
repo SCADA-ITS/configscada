@@ -921,10 +921,16 @@ function configData(data,scale) {
 							view: "text", 
 							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
 							value: v_text[i],
-							//attributes:{ maxlength: parseInt(cellList[numElement].split("_")[12]) },
-							on: { 
-								onBlur: function(obj) {
-									//console.log(obj); 
+							// css:"use-keyboard-input",
+							on: {
+								onItemClick: function(id, event){
+									try {
+										Keyboard.open($$(id).getValue(), currentValue => {
+											$$(id).setValue(currentValue);
+										});
+									} catch (error) {
+										console.error(error);
+									}
 								},
 								onKeyPress: function(code, e) {
 									let num_Element = parseInt($$(e.target).config.id.split("_")[1]);

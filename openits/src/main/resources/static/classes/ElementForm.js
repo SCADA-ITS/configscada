@@ -859,9 +859,12 @@ export default class ElementForm {
 													panelMan.loadComponent();
 												},
 												onHide: function(obj){
+													if(Keyboard){
+														Keyboard.close();
+													}
 													$$("panelManager" + data.id).destructor();
 												}
-											  }
+											}
 										  }).show();
 									}
 								}								

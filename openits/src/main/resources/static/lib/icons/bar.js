@@ -118,15 +118,17 @@ export function updateBarIcon(element, suffix = "") {
         elementTypeMap.BAR_COMMAND_FOR_BARRIER
     );
 
-    if (typeof new_value.value != "undefined" && new_value.value != null) {
-      if (new_value.value == "1") {
-        document
-          .getElementById(element.id + suffix + "g3856")
-          .setAttribute("transform", "rotate(0,0,0)");
-      } else if (new_value.value == "0") {
-        document
-          .getElementById(element.id + suffix + "g3856")
-          .setAttribute("transform", "rotate(22.188461,3.5567155,291.27864)");
+    if(typeof new_value != 'undefined') {
+      if (typeof new_value.value != "undefined" && new_value.value != null) {
+        if (new_value.value == "1") {
+          document
+            .getElementById(element.id + suffix + "g3856")
+            .setAttribute("transform", "rotate(0,0,0)");
+        } else if (new_value.value == "0") {
+          document
+            .getElementById(element.id + suffix + "g3856")
+            .setAttribute("transform", "rotate(22.188461,3.5567155,291.27864)");
+        }
       }
     }
 

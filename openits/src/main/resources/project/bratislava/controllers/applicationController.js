@@ -8,6 +8,12 @@ try {
 } catch (error) {
     j_language="en_EN";
 }
+
+// webix.proxy.GraphQL.url = "http://192.168.88.166:8082/graphql";
+// webix.storage.session.put("url.ws.stomp", "ws://192.168.88.166:61614");
+// webix.storage.session.put("url.auth.login", "http://192.168.88.166:8190/api/v1/login");
+
+
 webix.proxy.GraphQL.url = "http://192.168.88.163:8082/graphql";
 webix.storage.session.put("url.ws.stomp", "ws://192.168.88.163:61614");
 webix.storage.session.put("url.auth.login", "http://192.168.88.163:8190/api/v1/login");

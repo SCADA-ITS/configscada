@@ -498,20 +498,51 @@ export default class Map {
 
         // create the sidemenu for the equipment tree
         webix.ui({
-          view: "sidemenu",
+          view: "sidemenu-win",
           id: "menu",
           width: 400,
-          position: "right",
+          position: function(position) {
+            var toolbarHeight = $$("mainToolbar").$height;
+            position.top = toolbarHeight;
+            position.left = $$("mainBody").$width - 400;
+            var mainHeight = $$("mainBody").$height;
+            position.height = mainHeight;
+            position.width = 400;
+          },
           body: element_tree
         });
 
         webix.ui({
           id: "elementTreeView", 
           rows: [
+            /*
             { 
               view: "template", 
               template: $.i18n("defaultheader.equipment"),
-              type: "header" 
+              type: "header"
+            },
+            */
+            {
+              view:"toolbar", 
+              cols:[
+                { 
+                  view: "label", 
+                  label: $.i18n("defaultheader.equipment")
+                },
+                { 
+                  view: "button", 
+                  value: "Close", 
+                  width: 38, 
+                  type:"icon", 
+                  icon:"wxi-close",
+                  click: function() {
+                    // hide the panel
+                    $$("menu").hide();
+                    // hide the children
+                    $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+                  }
+                }
+              ]
             },
             {
               id: "element_tree_filter",
@@ -669,7 +700,19 @@ export default class Map {
         TreeMapControl.prototype.constructor = TreeMapControl;
       
         TreeMapControl.prototype.handleTreeMap = function handleTreeMap () {
-          $$("menu").show();
+          //$$("menu").show();
+          if (!$$("menu").isVisible()){
+            // show the panel
+            $$("menu").show();
+            // show the children
+            $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.show() });
+          }
+          else {
+            // hide the panel
+            $$("menu").hide();
+            // hide the children
+            $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+          }
         };
       
         return TreeMapControl;
@@ -816,6 +859,13 @@ export default class Map {
     // it has to filter if the event is related to the synoptic instance
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
+        if ($$("menu").isVisible()){
+          // show the panel
+          $$("menu").hide();
+          // show the children
+          $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+        }
+
         let newNode =
           event[0].addedNodes[0].children[0].children[0].attributes["view_id"]
             .value;
@@ -944,81 +994,7 @@ export default class Map {
               map.addLayer(incidentLayer);
             })
             .then(() => {
-              // update the tree
-              // replaces the element tree in the DOM
-              let elementTree = new EquipmentTree(self.elementId, null);
               
-              webix.ui({
-                id: "elementTreeView", 
-                rows: [
-                  { 
-                    view: "template", 
-                    template: $.i18n("defaultheader.equipment"),
-                    type: "header" 
-                  },
-                  {
-                    id: "element_tree_filter",
-                    view: "text",
-                    label: "Filter",
-                    labelPosition: "left"
-                  },
-                  {
-                    id: "element_tree",
-                    view: "tree",
-                    borderless: true,
-                    scroll: "auto",
-                    select: true,
-                    multiselect: true,
-                    threeState: true,
-                    template: function(obj, common){
-                      if (obj.$level > 1) {
-                        return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+  obj.value +"&nbsp;"+ obj.icon;
-                      } else {
-                        return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+  obj.value;
-                      }
-                    },
-                  },
-                  {
-                    id: "element_tree_button",
-                    view: "button",
-                    disabled: true,
-                    value: "Command",
-                    on: {
-                      "onItemClick": function(id, e) {
-                        let filteredElements = $$("element_tree").getChecked().filter(e => e.match(/Element/g));
-                        let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
-                        webix
-                          .ui({
-                            id: "win_command" + filteredElements[0],
-                            view: "window",
-                            move: true,
-                            close: true,
-                            position: "right",
-                            body: elementCommand.getComponent(),
-                            on: {
-                              onDestruct: function (obj) {
-                                
-                              },
-                              onHide: function (obj) {
-                                $$("win_command" + filteredElements[0]).destructor();
-                              },
-                            },
-                          })
-                          .show();
-                      }
-                    }
-                  }
-                ],
-                url: elementTree.getComponent()
-              }, $$("elementTreeView"));
-
-              // as we are in the map, centers the item on click
-              $$("element_tree").attachEvent("onSelectChange", function(id) {
-                let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
-                view.setCenter(lonlat);
-              });
-
-              $$("element_tree").attachEvent("onItemCheck", self.checkElement);
 
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });
