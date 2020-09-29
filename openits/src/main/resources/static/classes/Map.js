@@ -602,8 +602,10 @@ export default class Map {
 
         // as we are in the map, centers the item on click
         $$("element_tree").attachEvent("onSelectChange", function(id) {
-          let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
-          view.setCenter(lonlat);
+          if(typeof self.synopticConf[id] != 'undefined') {
+            let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
+            view.setCenter(lonlat);
+          }
           
         });
 
