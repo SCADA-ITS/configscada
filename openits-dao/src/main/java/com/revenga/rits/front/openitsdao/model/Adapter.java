@@ -1,0 +1,125 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the adapters database table.
+ * 
+ */
+@Entity
+@Table(name="adapters")
+@NamedQuery(name="Adapter.findAll", query="SELECT a FROM Adapter a")
+public class Adapter implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String description;
+
+	private Boolean enabled;
+
+	private String name;
+
+	private Boolean visible;
+
+	//bi-directional many-to-one association to AdapterParam
+	@OneToMany(mappedBy="adapter")
+	private List<AdapterParam> adapterParams;
+
+	//uni-directional many-to-one association to AdapterType
+	@ManyToOne
+	@JoinColumn(name="adapter_type_id")
+	private AdapterType adapterType;
+
+	//uni-directional many-to-one association to DataSource
+	@ManyToOne
+	@JoinColumn(name="data_source_id")
+	private DataSource dataSource;
+
+	public Adapter() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public List<AdapterParam> getAdapterParams() {
+		return this.adapterParams;
+	}
+
+	public void setAdapterParams(List<AdapterParam> adapterParams) {
+		this.adapterParams = adapterParams;
+	}
+
+	public AdapterParam addAdapterParam(AdapterParam adapterParam) {
+		getAdapterParams().add(adapterParam);
+		adapterParam.setAdapter(this);
+
+		return adapterParam;
+	}
+
+	public AdapterParam removeAdapterParam(AdapterParam adapterParam) {
+		getAdapterParams().remove(adapterParam);
+		adapterParam.setAdapter(null);
+
+		return adapterParam;
+	}
+
+	public AdapterType getAdapterType() {
+		return this.adapterType;
+	}
+
+	public void setAdapterType(AdapterType adapterType) {
+		this.adapterType = adapterType;
+	}
+
+	public DataSource getDataSource() {
+		return this.dataSource;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+}

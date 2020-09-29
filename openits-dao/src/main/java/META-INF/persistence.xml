@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="openits-dao">
+		<class>com.revenga.rits.front.openitsdao.model.Icon</class>
+		<class>com.revenga.rits.front.openitsdao.model.MenuGroup</class>
+		<class>com.revenga.rits.front.openitsdao.model.MenuItem</class>
+		<class>com.revenga.rits.front.openitsdao.model.ModuleParam</class>
+		<class>com.revenga.rits.front.openitsdao.model.ModuleType</class>
+		<class>com.revenga.rits.front.openitsdao.model.ModuleValue</class>
+		<class>com.revenga.rits.front.openitsdao.model.Module</class>
+	</persistence-unit>
+</persistence>

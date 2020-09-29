@@ -1,0 +1,190 @@
+function getViewEquipments(module, instance, args) {
+
+	let moduleInstance = "module-" + module.id + "-" + instance;
+
+	let dataEquipmentTypes = webix.ajax().sync().get(appConfig.restUrl + "element_type/list");
+
+	if (dataEquipmentTypes != null && dataEquipmentTypes.responseText != null) {
+
+		let jsonEquipmentTypes = JSON.parse(dataEquipmentTypes.responseText);
+		let jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypes.filter(elementType => elementType.visible === true && elementType.grid != undefined && elementType.grid !== "");
+
+		let view = {
+			//layout: moduleInstance,
+			css: "custom_window",
+			cols: [
+				{ width: 8 },
+				{
+					css: "equipment-list",
+					rows: [
+						{
+							view: "toolbar",
+							elements: [
+								{ width: 4 },
+								{
+									view: "search",
+									id: "txtSearchEquipmentType-" + moduleInstance,
+									placeholder: i18n.t("LBL_EQUIPMENT_TYPE_SEARCH")
+								},
+								{ width: 4 }
+							]
+						},
+						drawEquipmentTypeList(moduleInstance, jsonEquipmentTypesWithGridAssigned),
+						{ height: 16 }
+					]
+				},
+				{ view: "resizer" },
+				{
+					id: moduleInstance,
+					css: "equipment-table",
+					//rows: app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + dataGridParams, metadata, data)
+					//rows: app.datatable.draw(moduleInstance, metadata, data)
+					//rows: drawNoEquipmentData()
+					rows: [drawNoEquipmentTypeData(), { height: 20 }]
+				},
+				{ width: 12 }
+			]
+		}
+		
+		return view;
+	}
+}
+
+function drawEquipmentTypeList(moduleInstance, jsonEquipmentTypesWithGridAssigned) {
+
+	let equipmentTypeList;
+	
+	if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
+		equipmentTypeList = {
+			view: "list",
+			id: "listEquipmentType-" + moduleInstance,
+			width: 350,
+			minWidth: 250,
+			select: true,
+			type: {
+				/*template:obj => `<image class="list-photo" src="img/{obj.elementTypePhoto}.png" />
+					<div class="text">
+				  		<span class="list-first-line">${obj.alias} </span>
+				  		<span class="list-second-line">$${obj.description}</span>
+					</div>`,*/
+	
+				template: function(obj) {
+	
+					let elementTypePhoto = obj.elementTypePhoto;
+	
+					if (elementTypePhoto == undefined) {
+						elementTypePhoto = "not_found_50.png";
+					}
+					return `<image class="list-photo" src="img/${elementTypePhoto}" />
+							<div class="text">
+						  		<span class="list-first-line">${i18n.t(obj.labelAlias)} </span>
+						  		<span class="list-second-line">${i18n.t(obj.labelDescription)} </span>
+							</div>`
+				},
+				height: 66
+			},
+			data: jsonEquipmentTypesWithGridAssigned
+		};	
+	}
+	else {
+		equipmentTypeList = drawNoEquipmentTypeData();
+	}
+	
+	return equipmentTypeList;
+}
+
+function assingEquipmentCallbacks(module, instance) {
+
+	let moduleInstance = "module-" + module.id + "-" + instance;
+
+	//app.datatable.callbacks(module, instance);
+
+	let listEquipmentTypes = $$("listEquipmentType-" + moduleInstance);
+	let txtSearchEquipmentTypes = $$("txtSearchEquipmentType-" + moduleInstance);
+
+	if (!webix.isUndefined(listEquipmentTypes) && !webix.isUndefined(txtSearchEquipmentTypes)) {
+		
+		txtSearchEquipmentTypes.attachEvent("onTimedKeyPress", function() {
+			let value = this.getValue().toLowerCase(); // input data is derived
+			listEquipmentTypes.filter(function(obj) {  // here it filters all titles from the list
+
+				return (obj.alias.toLowerCase().indexOf(value) !== -1);
+			});
+		});
+
+		listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
+
+			callbackSelectedElemenType(this, id, module, instance);
+		});
+		
+		listEquipmentTypes.select(listEquipmentTypes.getFirstId());
+	}
+}
+
+function callbackSelectedElemenType(list, id, module, instance) {
+
+	let moduleInstance = "module-" + module.id + "-" + instance;
+	let item = list.getItem(id);
+	let dataGridId = item.grid;
+	let dataGridParams = id;
+	let equipmentTable = $$(moduleInstance);
+
+	let viewsToRemove = [];
+	equipmentTable.getChildViews().forEach(view => {
+
+		viewsToRemove.push(view.config.id);
+	});
+
+	viewsToRemove.forEach(viewId => {
+
+		if (viewId.indexOf("dt-") !== -1) {
+			let ctx = viewId.replace("dt-", "ctx_menu-");
+			
+			if (!webix.isUndefined($$(ctx))) {
+				
+				$$(ctx).destructor();	
+			}
+		}
+
+		equipmentTable.removeView(viewId);
+	});
+
+	if (dataGridId != undefined && dataGridParams != undefined) {
+
+		let dataEquipments = webix.ajax().sync().get(appConfig.restUrl + "grid/" + dataGridId + "/" + dataGridParams);
+
+		if (dataEquipments != null && dataEquipments.responseText != null) {
+
+			let json = JSON.parse(dataEquipments.responseText);
+			let metadata = json.metadata;
+			let data = json.data;
+
+			//let newTable = app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + id, metadata, data);
+			let newTable = app.datatable.draw(dataGridId, dataGridParams, moduleInstance, metadata, data);
+
+			newTable.forEach(newView => {
+
+				equipmentTable.addView(newView);
+			});
+
+			app.datatable.callbacks(module, instance);
+		}
+	}
+	else {
+		equipmentTable.addView(drawNoEquipmentTypeData());
+		equipmentTable.addView({ height: 20 });
+	}
+}
+
+function drawNoEquipmentTypeData() {
+
+	return {
+		view: "template",
+		template: function(data) {
+			let icon = "<img src='img/not_found_150.png' align='center'>";
+
+			return "<div class='empty-app-inner'>" + icon + "</div>"
+
+		}
+	}
+}

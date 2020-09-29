@@ -1,0 +1,193 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the modules database table.
+ * 
+ */
+@Entity
+@Table(name="modules")
+@NamedQuery(name="Module.findAll", query="SELECT m FROM Module m")
+public class Module implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="data_query")
+	private String dataQuery;
+
+	private String description;
+
+	private Boolean enabled;
+
+	@Column(name="js_file")
+	private String jsFile;
+
+	@Column(name="js_method_callbacks")
+	private String jsMethodCallbacks;
+
+	@Column(name="js_method_draw")
+	private String jsMethodDraw;
+
+	private String name;
+
+	private Boolean visible;
+
+	@Column(name="wss_topic")
+	private String wssTopic;
+
+	//bi-directional many-to-one association to ModuleValue
+	@OneToMany(mappedBy="module")
+	private List<ModuleValue> moduleValues;
+
+	//uni-directional many-to-one association to ModuleType
+	@ManyToOne
+	@JoinColumn(name="module_type_id")
+	private ModuleType moduleType;
+
+	//bi-directional many-to-one association to WindowValue
+	@OneToMany(mappedBy="module")
+	private List<WindowValue> windowValues;
+
+	public Module() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDataQuery() {
+		return this.dataQuery;
+	}
+
+	public void setDataQuery(String dataQuery) {
+		this.dataQuery = dataQuery;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getJsFile() {
+		return this.jsFile;
+	}
+
+	public void setJsFile(String jsFile) {
+		this.jsFile = jsFile;
+	}
+
+	public String getJsMethodCallbacks() {
+		return this.jsMethodCallbacks;
+	}
+
+	public void setJsMethodCallbacks(String jsMethodCallbacks) {
+		this.jsMethodCallbacks = jsMethodCallbacks;
+	}
+
+	public String getJsMethodDraw() {
+		return this.jsMethodDraw;
+	}
+
+	public void setJsMethodDraw(String jsMethodDraw) {
+		this.jsMethodDraw = jsMethodDraw;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public String getWssTopic() {
+		return this.wssTopic;
+	}
+
+	public void setWssTopic(String wssTopic) {
+		this.wssTopic = wssTopic;
+	}
+
+	public List<ModuleValue> getModuleValues() {
+		return this.moduleValues;
+	}
+
+	public void setModuleValues(List<ModuleValue> moduleValues) {
+		this.moduleValues = moduleValues;
+	}
+
+	public ModuleValue addModuleValue(ModuleValue moduleValue) {
+		getModuleValues().add(moduleValue);
+		moduleValue.setModule(this);
+
+		return moduleValue;
+	}
+
+	public ModuleValue removeModuleValue(ModuleValue moduleValue) {
+		getModuleValues().remove(moduleValue);
+		moduleValue.setModule(null);
+
+		return moduleValue;
+	}
+
+	public ModuleType getModuleType() {
+		return this.moduleType;
+	}
+
+	public void setModuleType(ModuleType moduleType) {
+		this.moduleType = moduleType;
+	}
+
+	public List<WindowValue> getWindowValues() {
+		return this.windowValues;
+	}
+
+	public void setWindowValues(List<WindowValue> windowValues) {
+		this.windowValues = windowValues;
+	}
+
+	public WindowValue addWindowValue(WindowValue windowValue) {
+		getWindowValues().add(windowValue);
+		windowValue.setModule(this);
+
+		return windowValue;
+	}
+
+	public WindowValue removeWindowValue(WindowValue windowValue) {
+		getWindowValues().remove(windowValue);
+		windowValue.setModule(null);
+
+		return windowValue;
+	}
+
+}

@@ -1,0 +1,10 @@
+--INSERT INTO ui.icons (id, "name", description, icon) VALUES
+--(2, 'menu_2', 'menu_2', 'img/menu/menu_default.png'),
+--(3, 'menu_3', 'menu_3', 'img/menu/menu_default.png'),
+--(1, 'menu_1', 'menu_1', 'img/menu/menu_default.png'),
+--(4, 'module_1', 'module_1', 'img/module/module_default.png'),
+--(5, 'module_2', 'module_2', 'img/module/module_default.png'),
+--(6, 'module_3', 'module_3', 'img/module/module_default.png'),
+--(7, 'module_4', 'module_4', 'img/module/module_default.png'),
+--(8, 'module_5', 'module_5', 'img/module/module_default.png'),
+--(9, 'module_6', 'module_6', 'img/module/module_default.png');

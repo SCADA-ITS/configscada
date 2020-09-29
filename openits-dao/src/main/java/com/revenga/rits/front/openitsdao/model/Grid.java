@@ -1,0 +1,177 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the grids database table.
+ * 
+ */
+@Entity
+@Table(name="grids")
+@NamedQuery(name="Grid.findAll", query="SELECT g FROM Grid g")
+public class Grid implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private Boolean enabled;
+
+	private Boolean filter;
+
+	private String label;
+
+	private Boolean multiselect;
+
+	private Boolean pagination;
+
+	private Boolean search;
+
+	private Boolean sort;
+
+	private Boolean visible;
+
+	//bi-directional many-to-one association to GridCommand
+	@OneToMany(mappedBy="grid")
+	private List<GridCommand> gridCommands;
+
+	//bi-directional many-to-one association to GridField
+	@OneToMany(mappedBy="grid")
+	private List<GridField> gridFields;
+
+	//uni-directional many-to-one association to Adapter
+	@ManyToOne
+	private Adapter adapter;
+
+	public Grid() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Boolean getFilter() {
+		return this.filter;
+	}
+
+	public void setFilter(Boolean filter) {
+		this.filter = filter;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Boolean getMultiselect() {
+		return this.multiselect;
+	}
+
+	public void setMultiselect(Boolean multiselect) {
+		this.multiselect = multiselect;
+	}
+
+	public Boolean getPagination() {
+		return this.pagination;
+	}
+
+	public void setPagination(Boolean pagination) {
+		this.pagination = pagination;
+	}
+
+	public Boolean getSearch() {
+		return this.search;
+	}
+
+	public void setSearch(Boolean search) {
+		this.search = search;
+	}
+
+	public Boolean getSort() {
+		return this.sort;
+	}
+
+	public void setSort(Boolean sort) {
+		this.sort = sort;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public List<GridCommand> getGridCommands() {
+		return this.gridCommands;
+	}
+
+	public void setGridCommands(List<GridCommand> gridCommands) {
+		this.gridCommands = gridCommands;
+	}
+
+	public GridCommand addGridCommand(GridCommand gridCommand) {
+		getGridCommands().add(gridCommand);
+		gridCommand.setGrid(this);
+
+		return gridCommand;
+	}
+
+	public GridCommand removeGridCommand(GridCommand gridCommand) {
+		getGridCommands().remove(gridCommand);
+		gridCommand.setGrid(null);
+
+		return gridCommand;
+	}
+
+	public List<GridField> getGridFields() {
+		return this.gridFields;
+	}
+
+	public void setGridFields(List<GridField> gridFields) {
+		this.gridFields = gridFields;
+	}
+
+	public GridField addGridField(GridField gridField) {
+		getGridFields().add(gridField);
+		gridField.setGrid(this);
+
+		return gridField;
+	}
+
+	public GridField removeGridField(GridField gridField) {
+		getGridFields().remove(gridField);
+		gridField.setGrid(null);
+
+		return gridField;
+	}
+
+	public Adapter getAdapter() {
+		return this.adapter;
+	}
+
+	public void setAdapter(Adapter adapter) {
+		this.adapter = adapter;
+	}
+
+}

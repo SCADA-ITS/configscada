@@ -1,0 +1,100 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the grid_commands database table.
+ * 
+ */
+@Entity
+@Table(name="grid_commands")
+@NamedQuery(name="GridCommand.findAll", query="SELECT g FROM GridCommand g")
+public class GridCommand implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="default")
+	private Boolean default_;
+
+	private String label;
+
+	private Boolean multiselect;
+
+	private Long position;
+
+	//bi-directional many-to-one association to Grid
+	@JsonIgnore
+	@ManyToOne
+	private Grid grid;
+
+	//uni-directional many-to-one association to Module
+	@ManyToOne
+	private Module module;
+
+	public GridCommand() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getDefault_() {
+		return this.default_;
+	}
+
+	public void setDefault_(Boolean default_) {
+		this.default_ = default_;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Boolean getMultiselect() {
+		return this.multiselect;
+	}
+
+	public void setMultiselect(Boolean multiselect) {
+		this.multiselect = multiselect;
+	}
+
+	public Long getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Long position) {
+		this.position = position;
+	}
+
+	public Grid getGrid() {
+		return this.grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
+	public Module getModule() {
+		return this.module;
+	}
+
+	public void setModule(Module module) {
+		this.module = module;
+	}
+
+}

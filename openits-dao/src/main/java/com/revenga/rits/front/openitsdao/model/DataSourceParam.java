@@ -1,0 +1,83 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the data_source_params database table.
+ * 
+ */
+@Entity
+@Table(name="data_source_params")
+@NamedQuery(name="DataSourceParam.findAll", query="SELECT d FROM DataSourceParam d")
+public class DataSourceParam implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="data_source_type_id")
+	private Long dataSourceTypeId;
+
+	private String description;
+
+	private Boolean enabled;
+
+	private String name;
+
+	private Boolean visible;
+
+	public DataSourceParam() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Long getDataSourceTypeId() {
+		return this.dataSourceTypeId;
+	}
+
+	public void setDataSourceTypeId(Long dataSourceTypeId) {
+		this.dataSourceTypeId = dataSourceTypeId;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+}

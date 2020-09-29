@@ -1,0 +1,19 @@
+---------------------------------------------------------
+--
+-- TABLES FOR UI
+--
+---------------------------------------------------------
+	
+-- 
+-- Table: ui.icons
+-- Description: Main category for icons
+-- Scope: ui
+--
+--	CREATE TABLE ui.icons (
+--		id serial primary key,
+--		name varchar NOT NULL,
+--		description varchar NULL,
+--		icon varchar NOT NULL
+--	);
+--
+--	ALTER TABLE ui.icons SET TABLESPACE tbl_ui;
