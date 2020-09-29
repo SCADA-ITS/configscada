@@ -11,6 +11,7 @@ import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import Synoptic from "../classes/Synoptic.js";
 import AlarmNotification from "../classes/AlarmNotification.js";
+import Alarms from "../classes/Alarms.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -23,6 +24,8 @@ var isLogin = webix.storage.session.get("loginSession");
 if (!isLogin) {
     window.location = "./login.html";
 }
+
+var selectView = "";
 
 let viewCells = [
     {
@@ -88,6 +91,14 @@ let main_body = {
             on: {
                 onAfterSelect: function(id) {
                     $$("multiview").setValue(id);
+
+                    if(selectView === "alarms" && id !=="alarms"){
+                        //Como el anterior era alarms lo destruimos.
+                        let table = new Alarms(null, null);
+                        table.disconnect();
+                    }else{
+                        selectView = id;
+                    }
                 }
             },
             ready: function() {
@@ -101,18 +112,18 @@ let main_body = {
         }
     ]
 };
-let anotification = new AlarmNotification();
+let alarm_notification = new AlarmNotification();
 webix.ready(function() {
     webix.ui({
     	id:"mainBody",
         rows: [
             toolbar_data_menu,
             main_body,
-            anotification.getComponent()
+            alarm_notification.getComponent()
         ]
     });
     webix.extend($$("mainBody"), webix.ProgressBar);
-    anotification.loadData();
+    alarm_notification.loadData();
 
     $$("nameUser").setValue(userName);
     

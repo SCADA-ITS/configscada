@@ -228,9 +228,6 @@ let genericTablei18n = {
 				}
 			}
 		},
-		url: function () {
-			table.init();
-		},
 		scheme: {
 			$change: function (item) { //Item es cada fila de la tabla
 				if (item.deactivation != null) {
@@ -737,11 +734,11 @@ function openElementForm(id){
 	  }
 }
 
-let table = new Alarms(graphAlarm, null);
+//let table = new Alarms(graphAlarm, null);
 
 export let alarms = {
-	view:"accordion",
-	multi:"mixed",
+	//view:"accordion",
+	//multi:"mixed",
 	rows: [
 		{	
 			header: $.i18n("defaultheader.activealarms"),
@@ -752,5 +749,11 @@ export let alarms = {
 			header:$.i18n("defaultheader.deActivealarms"),
 			body: genericTablei18n_recon
 		}
-	]
+	],
+	on:{
+		onViewShow: function(){
+			let table = new Alarms(graphAlarm, null);
+			table.init();
+		}
+	}
 };

@@ -265,7 +265,13 @@ export default class Alarms {
     {
         return timestamp !== null ? new Date(timestamp).toISOString() : '-';
     }
-    
+	
+	disconnect(){
+		this.client.deactivate();
+		$$("alarmsTable").clearAll();
+		$$("alarmsTable_recon").clearAll();
+	}
+
     loadData() {
 
         this.data

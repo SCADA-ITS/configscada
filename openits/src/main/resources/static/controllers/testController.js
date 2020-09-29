@@ -14,7 +14,7 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 // import { alarmconfigs } from "../widgets/alarmconfigs.js";
 // import { equipments } from "../widgets/equipments.js";
 import ElementForm from "../classes/ElementForm.js";
-let elementForm = new ElementForm("Element:46:1");
+let elementForm = new ElementForm("Element:46:1", null);
 //let elementForm2 = new ElementForm("Element:9:2");
 //let elementForm3 = new ElementForm("Element:10:1");
 //let elementForm4 = new ElementForm("Element:2:1");
@@ -57,8 +57,9 @@ var grid = {
         data:[
           { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
            ,
-           //{ id:"elementForm2", value:"elementForm2", dx:1, dy:1, body: elementForm2.getComponent()}
-           //,
+           { id:"elementForm2", value:"elementForm2", dx:1, dy:1, body: {
+            view:"usermanager", url:"https://docs.webix.com/usermanager-backend/"
+        }},
            //{ id:"elementForm3", value:"elementForm3", dx:1, dy:1, body: elementForm3.getComponent()}
            //,
            { id:"plans", value:"plans", dx:1, dy:1, body: plans }
