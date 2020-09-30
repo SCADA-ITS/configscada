@@ -58,7 +58,8 @@ export let columnsElementList = {
 			"ElementTypeParam:2:1:5",
             "ElementTypeParam:2:1:6",
             "ElementTypeParam:2:1:7",
-            "ElementTypeParam:2:1:8"
+            "ElementTypeParam:2:1:8",
+            "ElementTypeParam:2:1:10"
 		],
 		2:[
 			"alias",
@@ -427,6 +428,9 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:2:1:8": { //"PK"
 				"header": [ $.i18n("ElementTypeParam:2:1:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:2:1:10": { //"Associate Cabinet"
+				"header": [ $.i18n("ElementTypeParam:2:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},

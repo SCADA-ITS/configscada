@@ -47,9 +47,10 @@ export let columnsElementFormList = {
 			"ElementTypeParam:2:1:5",
 			"ElementTypeParam:2:1:6",
 			"ElementTypeParam:2:1:7",
-			"ElementTypeParam:2:1:8"
+			"ElementTypeParam:2:1:8",
+			"ElementTypeParam:2:1:10"
 		],
-		"rowCounts": 7,
+		"rowCounts": 8,
 		"scroll": false, 
 		"width": 600,
 		"options": {

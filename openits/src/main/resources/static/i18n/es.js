@@ -178,8 +178,9 @@ var i18_es = {
     "ElementTypeParam:2:1:8.alias": "PK",
     "ElementTypeParam:2:1:8.description": "PK",
     "ElementTypeParam:2:1:9.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:2:1:9.description": "Entrance tunnel distance",
-    
+    "ElementTypeParam:2:1:9.description": "Distancia entrada del t&uacute;nel",
+    "ElementTypeParam:2:1:10.alias": "Armario asociado",
+    "ElementTypeParam:2:1:10.description": "Armario asociado",
 
     "ElementTypeParam:2:2:1.alias": "status",
     "ElementTypeParam:2:2:1.description": "status",

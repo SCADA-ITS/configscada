@@ -177,6 +177,8 @@ var i18_en = {
     "ElementTypeParam:2:1:8.description": "PK",
     "ElementTypeParam:2:1:9.alias": "Entrance tunnel distance",
     "ElementTypeParam:2:1:9.description": "Entrance tunnel distance",
+    "ElementTypeParam:2:1:10.alias": "Associate cabinet",
+    "ElementTypeParam:2:1:10.description": "Associate cabinet",
 
     "ElementTypeParam:2:2:1.alias": "status",
     "ElementTypeParam:2:2:1.description": "status",
