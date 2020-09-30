@@ -6,7 +6,7 @@ export let synopticData= [
 		"BaseLayers": {
 		"BASE_LAYER": "mapa_base.png",
 		"ROAD": "D4-R7_trazado.png",
-			"CAM": "20200506_CCTV_PK_f1.svg",
+			"CAM": "25092020_CCTV_PK_f1-2_v0.1.svg",
 			"METEO": "20200506_METEO_PK_f1.svg",
 		},
 		"Layers": {
@@ -25,27 +25,44 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "hidden"
 			},
+			/*
+			"METEO": {
+				"items": ["Element:1:1"],
+				"translation_key": "",
+				"visibility": "hidden"
+			},
+			*/
 			"CAM": {
-				"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8", "Element:2:9", "Element:2:10", "Element:2:11", "Element:2:12", "Element:2:13", "Element:2:14", "Element:2:15", "Element:2:16", "Element:2:17", "Element:2:18", "Element:2:19", "Element:2:20", "Element:2:21", "Element:2:22", "Element:2:23", "Element:2:24", "Element:2:25", "Element:2:26", "Element:2:27", "Element:2:28", "Element:2:29", "Element:2:30", "Element:2:31", "Element:2:32", "Element:2:33", "Element:2:34", "Element:2:35", "Element:2:36", "Element:2:37", "Element:2:38", "Element:2:39", "Element:2:40", "Element:2:41", "Element:2:42", "Element:2:43", "Element:2:44", "Element:2:45", "Element:2:46", "Element:2:47", "Element:2:48", "Element:2:49", "Element:2:50", "Element:2:51", "Element:2:52", "Element:2:53", "Element:2:54", "Element:2:55", "Element:2:56", "Element:2:57", "Element:2:58", "Element:2:59", "Element:2:60", "Element:2:61", "Element:2:62", "Element:2:63", "Element:2:64", "Element:2:65", "Element:2:66", "Element:2:67", "Element:2:68", "Element:2:69", "Element:2:70", "Element:2:71", "Element:2:72", "Element:2:73", "Element:2:74"],
+				"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8", "Element:2:9", "Element:2:10", "Element:2:11", "Element:2:12", "Element:2:13", "Element:2:14", "Element:2:15", "Element:2:16", "Element:2:17", "Element:2:18", "Element:2:19", "Element:2:20", "Element:2:21", "Element:2:22", "Element:2:23", "Element:2:24", "Element:2:25", "Element:2:26", "Element:2:27", "Element:2:28", "Element:2:29", "Element:2:30", "Element:2:31", "Element:2:32", "Element:2:33", "Element:2:34", "Element:2:35", "Element:2:36", "Element:2:37", "Element:2:38", "Element:2:39", "Element:2:40", "Element:2:41", "Element:2:42", "Element:2:43", "Element:2:44", "Element:2:45", "Element:2:46", "Element:2:47", "Element:2:48", "Element:2:49", "Element:2:50", "Element:2:51", "Element:2:52", "Element:2:53", "Element:2:54", "Element:2:55", "Element:2:56", "Element:2:57", "Element:2:58", "Element:2:59", "Element:2:60", "Element:2:61", "Element:2:62", "Element:2:63", "Element:2:64", "Element:2:65", "Element:2:66", "Element:2:67", "Element:2:68", "Element:2:69", "Element:2:70", "Element:2:71", "Element:2:72", "Element:2:73", "Element:2:74", "Element:2:75", "Element:2:76", "Element:2:77", "Element:2:78", "Element:2:79", "Element:2:80", "Element:2:81", "Element:2:82", "Element:2:83", "Element:2:84", "Element:2:85", "Element:2:86", "Element:2:87", "Element:2:88", "Element:2:89", "Element:2:90", "Element:2:91", "Element:2:92", "Element:2:93", "Element:2:94", "Element:2:95", "Element:2:96", "Element:2:97", "Element:2:98", "Element:2:99", "Element:2:100"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
 		},
-	  "Element:1:1":  { "x": 1430, "y": 520,  "width": 40, "height": 40, "alias": "MZJS496L" },
+		/*
+		"Element:1:1": { "x": 1430, "y": 520,  "width": 100, "height": 140, "alias": "MZJS496L",
+			"values": [
+				{name: "meteo_model", label: "M"},
+				{name: "meteo_brand", label: "B"},
+				{name: "meteo_Average_Wind_Direction", label: "AWD"}
+			]
+		},
+		*/
+		"Element:1:1":  { "x": 1430, "y": 520,  "width": 40, "height": 40, "alias": "MZJS496L" },
 	  "Element:1:2":  { "x": 1430, "y": 470,  "width": 40, "height": 40, "alias": "MDJS404L" },
 	  "Element:1:3":  { "x": 1430, "y": 375,  "width": 40, "height": 40, "alias": "MDKD01L"  },
 	  "Element:1:4":  { "x": 1430, "y": 300,  "width": 40, "height": 40, "alias": "MZKD02L"  },
 	  "Element:1:5":  { "x": 1430, "y": 225,  "width": 40, "height": 40, "alias": "MDKD03L"  },
 	  "Element:1:6":  { "x": 1430, "y": 160,  "width": 40, "height": 40, "alias": "MZDH01L"  },
 	  "Element:1:7":  { "x": 1430, "y": 95,   "width": 40, "height": 40, "alias": "MZDH02L"  },
-	  "Element:1:8":  { "x": 1430, "y": 30,   "width": 40, "height": 40, "alias": "MZDH03L"  },
-	  "Element:2:1":  { "x": 30,   "y": 510,  "width": 40, "height": 40, "alias": "KDJS24P"  },
+		"Element:1:8":  { "x": 1430, "y": 30,   "width": 40, "height": 40, "alias": "MZDH03L"  },
+
+		"Element:2:1":  { "x": 30,   "y": 510,  "width": 40, "height": 40, "alias": "KDJS24P"  },
 	  "Element:2:2":  { "x": 250,  "y": 730,  "width": 40, "height": 40, "alias": "KDKD01L"  },
 	  "Element:2:3":  { "x": 300,  "y": 730,  "width": 40, "height": 40, "alias": "KDKD02P"  },
 	  "Element:2:4":  { "x": 351,  "y": 730,  "width": 40, "height": 40, "alias": "KDKD03L"  },
-	  "Element:2:5":  { "x": 400,  "y": 730,  "width": 40, "height": 40, "alias": "KDJS40P"  },
-	  "Element:2:6":  { "x": 450,  "y": 730,  "width": 40, "height": 40, "alias": "KDJS41L"  },
-	  "Element:2:7":  { "x": 495,  "y": 730,  "width": 40, "height": 40, "alias": "KDJS42P"  },
+		"Element:2:5":  { "x": 1044, "y": 690,  "width": 40, "height": 40, "alias": "KDJS40P"  },
+		"Element:2:6":  { "x": 1044,  "y": 740,  "width": 40, "height": 40, "alias": "KDJS41L"  },
+		"Element:2:7":  { "x": 1044,  "y": 785,  "width": 40, "height": 40, "alias": "KDJS42P"  },
 	  "Element:2:8":  { "x": 1044, "y": 600,  "width": 40, "height": 40, "alias": "KDJS38P"  },
 	  "Element:2:9":  { "x": 1044, "y": 550,  "width": 40, "height": 40, "alias": "KDJS37L"  },
 	  "Element:2:10": { "x": 1044, "y": 500,  "width": 40, "height": 40, "alias": "KDJS36L"  },
@@ -113,6 +130,32 @@ export let synopticData= [
 	  "Element:2:72": { "x": 1791, "y": 65,   "width": 40, "height": 40, "alias": "KDDH25P"  },
 	  "Element:2:73": { "x": 1791, "y": 15,   "width": 40, "height": 40, "alias": "KDDH26L"  },
 		"Element:2:74": { "x": 1044, "y": 645,  "width": 40, "height": 40, "alias": "KDJS39L"  },
+		"Element:2:75": { "x": 1044, "y": 835,  "width": 40, "height": 40, "alias": "KDJS43P"  },
+		"Element:2:76": { "x": 1044, "y": 880,  "width": 40, "height": 40, "alias": "KDJS44P"  },
+		"Element:2:77": { "x": 1044, "y": 930,  "width": 40, "height": 40, "alias": "KDJS45P"  },
+		"Element:2:78": { "x": 1044, "y": 980,  "width": 40, "height": 40, "alias": "KDJS46P"  },
+		"Element:2:79": { "x": 1044, "y": 1030,  "width": 40, "height": 40, "alias": "KDJS47P"  },
+		"Element:2:80": { "x": 894, "y": 505,  "width": 40, "height": 40, "alias": "KDJS48P"  },
+		"Element:2:81": { "x": 894, "y": 550,  "width": 40, "height": 40, "alias": "KDJS49P"  },
+		"Element:2:82": { "x": 894, "y": 600,  "width": 40, "height": 40, "alias": "KDJS50P"  },
+		"Element:2:83": { "x": 894, "y": 645,  "width": 40, "height": 40, "alias": "KDJS50.1P"  },
+		"Element:2:84": { "x": 894, "y": 695,  "width": 40, "height": 40, "alias": "KDJS51P"  },
+		"Element:2:85": { "x": 894, "y": 740,  "width": 40, "height": 40, "alias": "KDJS52P"  },
+		"Element:2:86": { "x": 894, "y": 785,  "width": 40, "height": 40, "alias": "KDJS53P"  },
+		"Element:2:87": { "x": 894, "y": 835,  "width": 40, "height": 40, "alias": "KDJS54P"  },
+		"Element:2:88": { "x": 894, "y": 880,  "width": 40, "height": 40, "alias": "KDJS55P"  },
+		"Element:2:89": { "x": 894, "y": 930,  "width": 40, "height": 40, "alias": "KDJS56P"  },
+		"Element:2:90": { "x": 894, "y": 980,  "width": 40, "height": 40, "alias": "KDJS56.1P"  },
+		"Element:2:91": { "x": 894, "y": 1030,  "width": 40, "height": 40, "alias": "KDJS57P"  },
+		"Element:2:92": { "x": 744, "y": 505,  "width": 40, "height": 40, "alias": "KDJS58P"  },
+		"Element:2:93": { "x": 744, "y": 550,  "width": 40, "height": 40, "alias": "KDJS59P"  },
+		"Element:2:94": { "x": 744, "y": 605,  "width": 40, "height": 40, "alias": "KDJS60P"  },
+		"Element:2:95": { "x": 744, "y": 650,  "width": 40, "height": 40, "alias": "KDJS61L"  },
+		"Element:2:96": { "x": 744, "y": 695,  "width": 40, "height": 40, "alias": "KDJS62P"  },
+		"Element:2:97": { "x": 744, "y": 740,  "width": 40, "height": 40, "alias": "KDJS63P"  },
+		"Element:2:98": { "x": 744, "y": 785,  "width": 40, "height": 40, "alias": "KDJS64P"  },
+		"Element:2:99": { "x": 744, "y": 835,  "width": 40, "height": 40, "alias": "KDJS65L"  },
+		"Element:2:100": { "x": 744, "y": 885,  "width": 40, "height": 40, "alias": "KDJS66P"  },
 	},
 	{
 		"id":"synopticPanels",

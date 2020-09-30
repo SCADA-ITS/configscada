@@ -35,9 +35,9 @@ var element_tree_view = {
       threeState: true,
       template: function(obj, common){
         if (obj.$level > 1) {
-          return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value + obj.icon;
+          return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + "<span class='elementTreeLeaf'>" + obj.value + "</span>" + obj.icon;
         } else {
-          return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + obj.value;
+          return common.icon(obj,common) + common.checkbox(obj, common) + common.folder(obj,common) + "<span class='elementTreeLeaf'>" + obj.value + "</span>";
         }
       }
     },

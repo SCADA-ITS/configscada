@@ -560,9 +560,9 @@ export default class Map {
               threeState: true,
               template: function(obj, common){
                 if (obj.$level > 1) {
-                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ obj.value +"&nbsp;"+ obj.icon;
+                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
                 } else {
-                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ obj.value;
+                  return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>";
                 }
               }
             },
