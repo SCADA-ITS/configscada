@@ -176,6 +176,11 @@ const Keyboard = {
         this.elements.main.classList.remove("keyboard--hidden");
     },
 
+    reValue(initialValue) {
+        console.log(initialValue);
+        this.properties.value = initialValue || "";
+    },
+
     close() {
         this.properties.value = "";
         this.eventHandlers.oninput = oninput;

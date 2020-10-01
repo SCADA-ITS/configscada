@@ -944,6 +944,13 @@ function configData(data,scale,orderId) {
 										console.error(error);
 									}
 								},
+								onChange: function(newv, oldv){
+									try {
+										Keyboard.reValue(newv);
+									} catch (error) {
+										console.error(error);
+									}
+								},
 								onKeyPress: function(code, e) {
 									let num_Element = parseInt($$(e.target).config.id.split("_")[1]);
 									if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
