@@ -7,7 +7,7 @@ export let synopticData= [
 		"BASE_LAYER": "mapa_base.png",
 		"ROAD": "D4-R7_trazado.png",
 			"CAM": "25092020_CCTV_PK_f1-2_v0.1.svg",
-			"METEO": "20200506_METEO_PK_f1.svg",
+			"METEO": "METEO_f1-2-PK_v0.3.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -21,7 +21,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"METEO": {
-				"items": ["Element:1:1", "Element:1:2", "Element:1:3", "Element:1:4", "Element:1:5", "Element:1:6", "Element:1:7", "Element:1:8"],
+				"items": ["Element:1:1", "Element:1:2", "Element:1:3", "Element:1:4", "Element:1:5", "Element:1:6", "Element:1:7", "Element:1:8", "Element:1:9", "Element:1:10", "Element:1:11", "Element:1:12", "Element:1:13", "Element:1:14"],
 				"translation_key": "",
 				"visibility": "hidden"
 			},
@@ -47,14 +47,20 @@ export let synopticData= [
 			]
 		},
 		*/
-		"Element:1:1":  { "x": 1430, "y": 520,  "width": 40, "height": 40, "alias": "MZJS496L" },
-	  "Element:1:2":  { "x": 1430, "y": 470,  "width": 40, "height": 40, "alias": "MDJS404L" },
-	  "Element:1:3":  { "x": 1430, "y": 375,  "width": 40, "height": 40, "alias": "MDKD01L"  },
-	  "Element:1:4":  { "x": 1430, "y": 300,  "width": 40, "height": 40, "alias": "MZKD02L"  },
-	  "Element:1:5":  { "x": 1430, "y": 225,  "width": 40, "height": 40, "alias": "MDKD03L"  },
-	  "Element:1:6":  { "x": 1430, "y": 160,  "width": 40, "height": 40, "alias": "MZDH01L"  },
-	  "Element:1:7":  { "x": 1430, "y": 95,   "width": 40, "height": 40, "alias": "MZDH02L"  },
+		"Element:1:1":  { "x": 1430, "y": 870,  "width": 40, "height": 40, "alias": "MZJS496L" },
+	  "Element:1:2":  { "x": 1430, "y": 945,  "width": 40, "height": 40, "alias": "MDJS404L" },
+	  "Element:1:3":  { "x": 1430, "y": 380,  "width": 40, "height": 40, "alias": "MDKD01L"  },
+	  "Element:1:4":  { "x": 1430, "y": 310,  "width": 40, "height": 40, "alias": "MZKD02L"  },
+	  "Element:1:5":  { "x": 1430, "y": 240,  "width": 40, "height": 40, "alias": "MDKD03L"  },
+	  "Element:1:6":  { "x": 1430, "y": 170,  "width": 40, "height": 40, "alias": "MZDH01L"  },
+	  "Element:1:7":  { "x": 1430, "y": 100,   "width": 40, "height": 40, "alias": "MZDH02L"  },
 		"Element:1:8":  { "x": 1430, "y": 30,   "width": 40, "height": 40, "alias": "MZDH03L"  },
+		"Element:1:9":  { "x": 1430, "y": 800,   "width": 40, "height": 40, "alias": "MDJS405P"  },
+		"Element:1:10":  { "x": 1430, "y": 730,   "width": 40, "height": 40, "alias": "MDJS406P"  },
+		"Element:1:11":  { "x": 1430, "y": 660,   "width": 40, "height": 40, "alias": "MZJS402P"  },
+		"Element:1:12":  { "x": 1430, "y": 590,   "width": 40, "height": 40, "alias": "MDJS407P"  },
+		"Element:1:13":  { "x": 1430, "y": 520,   "width": 40, "height": 40, "alias": "MZJS496P"  },
+		"Element:1:14":  { "x": 1430, "y": 450,   "width": 40, "height": 40, "alias": "MDJS408P"  },
 
 		"Element:2:1":  { "x": 30,   "y": 510,  "width": 40, "height": 40, "alias": "KDJS24P"  },
 	  "Element:2:2":  { "x": 250,  "y": 730,  "width": 40, "height": 40, "alias": "KDKD01L"  },
