@@ -543,10 +543,10 @@ export default class ElementForm {
 											let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
 											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
 											let outlets = [];
-											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? moment(new Date(item.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
 											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: alarmsCfg[item.alarmConfig.id].alarmLevel });
-											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? moment(new Date(item.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
+											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? moment(new Date(item.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
 
 											let row = { 
 														id: item.id + "_AlarmsElementForm" , 
@@ -794,10 +794,10 @@ export default class ElementForm {
 						} else {
 
 							let outlets = [];
-							outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ? new Date(item.activation).toISOString() : '-' });
+							outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ?  moment(new Date(item.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' });
 							outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
-							outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? new Date(item.deactivation).toISOString() : '-' });
-							outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? new Date(item.recognized).toISOString() : '-' });
+							outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? moment(new Date(item.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' });
+							outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? moment(new Date(item.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' });
 							let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
 							$$(this.id + "_elementAlarmsTable").add(row);
 
@@ -841,12 +841,15 @@ export default class ElementForm {
 								id: "command"+index+"_"+ this.id, 
 								value: $.i18n(data.elementType.commandElementTypes[index].id),
 								click: function(){
-									if( $$("panelManager" + data.id)){
-										$$("panelManager" + data.id).show();
+									let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
+									//if( $$("panelManager" + data.id)){
+									//	$$("panelManager" + data.id).show();
+									if($$("panelManager" + idtype)){
+										$$("panelManager" + idtype).show();
 									}else{
 										let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.elementType.commandElementTypes[index]);
 										webix.ui({
-											id:"panelManager"+data.id,
+											id:"panelManager"+idtype,
 											view:"window",	
 											move:false,
 											position:"center",
@@ -862,7 +865,7 @@ export default class ElementForm {
 													if(Keyboard){
 														Keyboard.close();
 													}
-													$$("panelManager" + data.id).destructor();
+													$$("panelManager" + idtype).destructor();
 												}
 											}
 										  }).show();

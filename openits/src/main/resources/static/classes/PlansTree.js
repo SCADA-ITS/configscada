@@ -322,6 +322,38 @@ export default class PlansTree {
             item["data"] = [];
             item["planOrders"] = [];
             $$('treePlan').updateItem(selectPlan, item);
+            let item2 = $$('treePlan').getItem(item.id);
+            removeGrid("planParent");
+            
+            $$("toolbar_tree").show();
+            $$("b_remove").hide();
+            $$("treePlan").data.each(function(obj){  
+              if ( obj.id.toString() === item2.id.toString() ) {
+               
+                switch (obj.$level) {
+                  case 4:  //PLAN
+                    $$("toolbar_plan").show();
+                    $$("b_edit").hide();
+                    $$("b_save").hide();
+                    $$("b_play").hide();
+                    $$("b_stop").hide();
+                    $$("b_pause").hide();
+                    $$("b_remove").hide();
+                    $$("b_add_order").hide();
+          
+                    let plan = new Plan(null,obj);
+                    $$("b_edit").show();
+                    $$("b_save").hide();
+                    $$("b_play").show();
+                    $$("b_stop").show();
+                    $$("b_pause").show();
+                    $$("b_remove").show();
+                    $$("b_add_order").show();
+                    plan.editForm("planParent",plan.data);
+                  break;
+                }
+              }
+            });
           });
         } else {
           let planForm = $$(item.qid + "_form").getValues();
@@ -585,5 +617,12 @@ export default class PlansTree {
    */
   init() {
       this.loadData();
+  }
+}
+
+function removeGrid(view){
+  const hijos = $$(view).getChildViews();
+  for(let i = hijos.length - 1; i>=0; i--){ 
+    $$(view).removeView(hijos[i].config.id.toString());    
   }
 }

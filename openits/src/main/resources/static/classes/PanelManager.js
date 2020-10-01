@@ -6,7 +6,7 @@ import {panelData} from "../data/panelData.js";
 const TOP_INIT = 5;
 
 export default class PanelManager {
-	constructor(id, idType, gestPlan,scale,values) {
+	constructor(id, idType, gestPlan,scale,values,orderId) {
 		this.id=id;
 		if (scale !== null && scale !== undefined) {
 			this.scale = scale;
@@ -16,6 +16,8 @@ export default class PanelManager {
 		this.elementTypeId = idType;
 		this.panelManagerType = gestPlan;
 		this.values = values;
+		this.orderId = orderId;
+		var v_orderId = this.orderId;
 		this.graphAll = `query { 
 			getElement(elementId: "` + this.id + `"){
 				id
@@ -98,7 +100,7 @@ export default class PanelManager {
 	getInitComponent(){
 		let initComponent = {
 			view:"form",
-			id:'pmvSignalForm',
+			id:'pmvSignalForm' + this.orderId,
 			elements:{}
 		  };
 		return initComponent;
@@ -126,18 +128,21 @@ export default class PanelManager {
     }
 
 	loadComponent(){
-		this.elementReady('[view_id="' + "pmvSignalForm" + '"]').then((c) => {
+		console.log("INICIO LOADCOMPONENT");
+		console.log(this.orderId);
+		this.elementReady('[view_id="' + "pmvSignalForm" + this.orderId + '"]').then((c) => {
 			let spinnerDivToAdd = document.createElement("div");
-			spinnerDivToAdd.setAttribute("id", "pmvSignalForm"  + "spinner");
+			spinnerDivToAdd.setAttribute("id", "pmvSignalForm"  + this.orderId + "spinner");
 			spinnerDivToAdd.setAttribute("class", "spinner");
 			document
-			.querySelector('[view_id="' + "pmvSignalForm"  + '"]')
+			.querySelector('[view_id="' + "pmvSignalForm"  + this.orderId + '"]')
 			.prepend(spinnerDivToAdd);
 		});
 		
 		this.graphqlEType.load().then(dataElement => {
+			console.log("ANTES DOIT");
 			this.doIt(dataElement);
-			webix.ui(this.getComponent(), $$('pmvSignalForm'));
+			webix.ui(this.getComponent(), $$('pmvSignalForm' + this.orderId));
 			this.doActions();
 			//DATOS
 			switch (this.panelManagerType) {
@@ -148,14 +153,14 @@ export default class PanelManager {
 								let code = this.config.cod_listaCells[parseInt(evalues.id.split(":")[3]) - 1001];
 								if (code !== undefined) {
 									if (code.split("_")[10] === "G") {
-										evalues.value !== null ? evalues.value !== "" ? $$("panel_" + code.split("_")[1] + "_G").setValues({src: evalues.value, file_type: availablePictos[evalues.value].file_type }) : null : null;
+										evalues.value !== null ? evalues.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: evalues.value, file_type: availablePictos[evalues.value].file_type }) : null : null;
 									} else {
 										for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
 											try {
 												let value_text = null;
 												value_text = evalues.value !== null ? evalues.value !== "" ? evalues.value.split(":$")[i - 1] !== undefined ? evalues.value.split(":$")[i - 1] : null : null : null;
 												if (value_text !== null)
-													$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1)).setValue(evalues.value.split(":$")[i - 1]);
+													$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(evalues.value.split(":$")[i - 1]);
 											} catch (e) {
 												console.log(e);
 											}
@@ -164,11 +169,11 @@ export default class PanelManager {
 								}
 							}
 						});
-						document.getElementById("pmvSignalForm" +  "spinner").style.display = "none";
+						document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					});
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL:
-					document.getElementById("pmvSignalForm" +  "spinner").style.display = "none";
+					document.getElementById("pmvSignalForm" + this.orderId + "spinner").style.display = "none";
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN:
 					if(this.values !== null){
@@ -177,14 +182,14 @@ export default class PanelManager {
 							let code = this.config.cod_listaCells[contador2];
 							if (code !== undefined) {
 								if (code.split("_")[10] === "G") {
-									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G").setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
 								} else {
 									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
 										try {
 											let value_text = null;
 											value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
 											if (value_text !== null)
-												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1)).setValue(item.value.split(":$")[i - 1]);
+												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
 										} catch (e) {
 											console.log(e);
 										}
@@ -194,7 +199,7 @@ export default class PanelManager {
 							contador2 += 1;
 						});
 					}
-					document.getElementById("pmvSignalForm" +  "spinner").style.display = "none";
+					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					break;
 			}
 		});
@@ -202,19 +207,20 @@ export default class PanelManager {
 	}
 
 	doIt(commandElementType) {
-		this.config = configData(commandElementType,this.scale);
-		//console.log(this.config);
+		console.log("dentro del doit");
+		this.config = configData(commandElementType,this.scale,this.orderId);
+		console.log(this.config);
 		this.widgets = {
-			id:"tree_zone_panelManager",
+			id:"tree_zone_panelManager_" + this.orderId,
 			rows:[
 			  {
-				id:"filterWid_panelManager",
+				id:"filterWid_panelManager_" + this.orderId,
 				view:"text",
 				labelPosition:"top"
 			  },
 			  {
 				view:"tree",
-				id:"list_panelManager",
+				id:"list_panelManager_" + this.orderId,
 				width:280,
 				height:380,
 				scroll:"auto",
@@ -227,7 +233,7 @@ export default class PanelManager {
 
 		  this.grid = {
 			view:"abslayout",
-			id:"grid_panelManager",
+			id:"grid_panelManager_" + this.orderId,
 			type:"space",
 			drag:true,
 			cols: this.config.listaCells,
@@ -250,12 +256,13 @@ export default class PanelManager {
 	doActions() {
 		var datos = this.config;
 		var datosId = this.id;
+		var orderId = this.orderId;
 		let controlCPermitido  = true;
 
 		//SI ES UN PANEL DEL ELEMENTFORM PONEMOS EL BOTON SEÑALIZAR
 		if(this.panelManagerType === elementTypeMap.PANELMANAGER_TYPE_PANEL) {
-			$$("tree_zone_panelManager").addView({
-				id: "tree_zone_panelManager_button",
+			$$("tree_zone_panelManager_" + this.orderId).addView({
+				id: "tree_zone_panelManager_button_" + this.orderId,
 				view:"button", value:"Señalizar", click:function(){
 					let v_commands_values = [];
 					let control = true;
@@ -266,11 +273,11 @@ export default class PanelManager {
 					let control_text = false;
 					datos.v_id_list.forEach(element =>{
 						if (element.split("_")[2] === "T") {
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T");
+							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
 							control_text = true;
 						}
 						if (element.split("_")[2] === "G") {//Pictogramas
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G");
+							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
 							control_text = true;
 						}
 					});
@@ -285,7 +292,7 @@ export default class PanelManager {
 					datos.v_id_list.forEach(element =>{
 						if (element.split("_")[2] === "G") {//Pictogramas
 							let valor = $$(element).data.src;
-							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G"] = valor; //v_values.push(valor);
+							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
 						}
 						if (element.split("_")[2] === "T") {//Text
 							let valor = $$(element).config.value;
@@ -306,7 +313,7 @@ export default class PanelManager {
 							for(let i = 0; i < valor.length; i++) {
 								let ptype = null;
 								try {
-									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
 								} catch (e){
 									//console.log(e);
 								}
@@ -323,7 +330,7 @@ export default class PanelManager {
 							//Sumamos los que tenemos 
 							if(controlCPermitido){
 								for(let i = 0; i < valor.length; i++) {
-									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
 									v_suma = v_suma + parseInt(ptype.split("x")[0]);
 								}
 				
@@ -331,10 +338,10 @@ export default class PanelManager {
 									tamanio = false;
 								}
 
-								if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
-									v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
+								if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
+									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
 								} else {
-									v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
 								}
 								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 							}
@@ -362,8 +369,8 @@ export default class PanelManager {
 							}
 						]
 						}).then(() => {
+							$$("panelManager" + datos.elementId).hide();
 							webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-							$$("panelManager" + datos.elementId).destructor();
 						});
 					}else{
 						if(!tamanio) {
@@ -377,8 +384,8 @@ export default class PanelManager {
 				}
 			}, 2);
 		} else if(this.panelManagerType === elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL) {
-			$$("tree_zone_panelManager").addView({
-				id: "tree_zone_panelManager_button",
+			$$("tree_zone_panelManager_" + this.orderId).addView({
+				id: "tree_zone_panelManager_button_" + this.orderId,
 				view:"button", value:"Señalizar", click:function(){
 					let v_commands_values = [];
 					let control = true;
@@ -389,11 +396,11 @@ export default class PanelManager {
 					let control_text = false;
 					datos.v_id_list.forEach(element => {
 						if (element.split("_")[2] === "T") {
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T");
+							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
 							control_text = true;
 						}
 						if (element.split("_")[2] === "G") {//Pictogramas
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G");
+							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
 							control_text = true;
 						}
 					});
@@ -408,7 +415,7 @@ export default class PanelManager {
 					datos.v_id_list.forEach(element => {
 						if (element.split("_")[2] === "G") {//Pictogramas
 							let valor = $$(element).data.src;
-							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G"] = valor; //v_values.push(valor);
+							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
 						}
 						if (element.split("_")[2] === "T") {//Text
 							let valor = $$(element).config.value;
@@ -430,10 +437,10 @@ export default class PanelManager {
 								console.log("COMPROBAMOS LA CADENA SI TIENE CARACTERES NO PERMITIDOS");
 								console.log(valor[i].charCodeAt());
 								console.log(datos.pictos_permitidos);
-								console.log(datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"]);
+								console.log(datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId]);
 								let ptype = null;
 								try {
-									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
 								} catch (e){
 									console.log(e);
 								}
@@ -450,7 +457,7 @@ export default class PanelManager {
 							//Sumamos los que tenemos 
 							if(controlCPermitido){
 								for(let i = 0; i < valor.length; i++) {
-									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
 									v_suma = v_suma + parseInt(ptype.split("x")[0]);
 								}
 				
@@ -458,10 +465,10 @@ export default class PanelManager {
 									tamanio = false;
 								}
 
-								if (v_values_texts["panel_" + element.split("_")[1] + "_T"] === null) {//es el primero 
-									v_values_texts["panel_" + element.split("_")[1] + "_T"] = valor;
+								if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
+									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
 								} else {
-									v_values_texts["panel_" + element.split("_")[1] + "_T"] = v_values_texts["panel_" + element.split("_")[1] + "_T"] + ":$" + valor;
+									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
 								}
 								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 							}
@@ -510,14 +517,14 @@ export default class PanelManager {
 		//console.log(this.config.cod_listaCells);
 		this.config.cod_listaCells.forEach(element => {
 			if (element.split("_")[10] === "G") { 
-				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10]).$view, {
+				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + this.orderId).$view, {
 					$drop:function(source, target, event){
 						var id = target.getAttribute("view_id");
 
 						var dnd = webix.DragControl.getContext();
 						var value = dnd.from.getItem(dnd.source[0]);
 
-						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10]].includes(value.image))
+						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + orderId].includes(value.image))
 						{
 							$$(id).setValues({src:null});
 							webix.message({
@@ -539,8 +546,8 @@ export default class PanelManager {
 				});
 			}
 		});
-		$$("filterWid_panelManager").attachEvent("onTimedKeyPress",function(){
-			$$("list_panelManager").filter("#value#",this.getValue());
+		$$("filterWid_panelManager_" + this.orderId).attachEvent("onTimedKeyPress",function(){
+			$$("list_panelManager_" + this.orderId).filter("#value#",this.getValue());
 		});
 
 	}
@@ -556,11 +563,11 @@ export default class PanelManager {
 		let idsList = [];
 		cellList.forEach(item => {
 			if (item.split("_")[10] === "G"){
-				idsList.push("panel_" + item.split("_")[1] + "_G");
+				idsList.push("panel_" + item.split("_")[1] + "_G_" + this.orderId);
 			} else {
 				let contador = 0;
 				for(let i=1;i<=parseInt(item.split("_")[11]);i++){
-					idsList.push("panel_" + item.split("_")[1] + "_T_L_" + contador);
+					idsList.push("panel_" + item.split("_")[1] + "_T_L_" + contador + "_" + this.orderId);
 					contador += 1;
 				}
 			}
@@ -611,7 +618,7 @@ export default class PanelManager {
 		let cfgJson = JSON.parse(panel_config.replace('\"','"'));
 		let cdata = generateCodeList(cfgJson);
 		let cellList = cdata[0];
-		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList);
+		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList,this.orderId);
 		let allowedList = pictosPermitidos[0];
 		let controlCPermitido = true;
 		let dataList = this.configExportData();
@@ -641,19 +648,19 @@ export default class PanelManager {
   
 		Object.entries(panelHash).map(([k, v]) => {
 		  if (v.type === "G"){
-			datos.push($$("panel_" + k + "_G").data.src);
+			datos.push($$("panel_" + k + "_G_" + this.orderId).data.src);
 		  } else {
 			let texto = "";
 			for(let i=0;i<v.numLineas;i++) {
 				//quitamos los :% si hubiera
-				let tdata = $$("panel_" + k + "_T_L_" + i).data.value;
+				let tdata = $$("panel_" + k + "_T_L_" + i + "_" + this.orderId).data.value;
 				let datoFormateado = this.replaceSpecial(tdata);
 				console.log(allowedList);
 				//Comprobamos que no tiene ningun caracter no permitido
 				for(let i = 0; i < datoFormateado.length; i++) {
 					let ptype = null;
 					try {
-						ptype = allowedList["panel_" + k + "_T"].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
+						ptype = allowedList["panel_" + k + "_T_" + this.orderId].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
 					} catch (e){
 						console.log(e);
 					}
@@ -685,8 +692,8 @@ export default class PanelManager {
 		return replaceSpecial(valor)
 	}
 
-	pictosPermitidos(data,cellList){
-		return pictosPermitidos(data,cellList);
+	pictosPermitidos(data,cellList,orderId){
+		return pictosPermitidos(data,cellList,orderId);
 	}
 
 }
@@ -802,7 +809,7 @@ function allowedCharacters(allowedList,characterInput){
 	return result;
 }
 */
-function pictosPermitidos(data,cellList) {
+function pictosPermitidos(data,cellList,orderId) {
 	let pictos_permitidos = {};
 	let v_pictos_total = [];
 	data.forEach(element => {
@@ -822,13 +829,16 @@ function pictosPermitidos(data,cellList) {
 					}				
 				});
 			} catch {}
-			pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10]] = v_graphs;
+			console.log("control6");
+			console.log(orderId);
+
+			pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] + "_" + orderId] = v_graphs;
 		}
 	});
 	return [pictos_permitidos,v_pictos_total];
 }
 
-function configData(data,scale) {
+function configData(data,scale,orderId) {
 	let panel_config = panelData[data.id].panel;
 	let cfgJson = JSON.parse(panel_config.replace('\"','"'));
 	let v_id_list = [];
@@ -841,9 +851,9 @@ function configData(data,scale) {
 	let cellList = cdata[0];
 	let maxTamX = cdata[1];
 	let maxTamY = cdata[2];
-
+	console.log("control2");
 	let pictos_activos = {};
-	let pictos_permitidos_A = pictosPermitidos(data.elementTypeParams,cellList);
+	let pictos_permitidos_A = pictosPermitidos(data.elementTypeParams,cellList,orderId);
 	let pictos_permitidos = pictos_permitidos_A[0];
 	let v_pictos_total = pictos_permitidos_A[1];
 	
@@ -865,7 +875,8 @@ function configData(data,scale) {
 	});
 	let cells_s = [];
 	let numElement = 0;
-
+	console.log("ANTES PINTAR");
+	console.log(cfgJson);
 	//PINTAMOS
 	cfgJson.Subpaneles.forEach(element => {
 		element.Zonas.forEach(item => {
@@ -881,7 +892,8 @@ function configData(data,scale) {
 			let v_template = 8; //padding del template se come 2px por cada lado
 			//Aqui dependiendo si es picto o texto lo modificaremos. 
 			//console.log(pictos_activos);
-			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]] : null;
+			console.log("PINTAMOS");
+			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] : null;
 			//console.log(v_src);
 			let v_file = null;
 			try {
@@ -891,7 +903,7 @@ function configData(data,scale) {
 			if (panel_type === "Grafico") {
 				v_body = { 
 					view:"template", 
-					id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10], 
+					id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId, 
 					data:{
 						src: v_src,
 						file_type: v_file
@@ -910,7 +922,7 @@ function configData(data,scale) {
 							return tamZoneX.toString() + "x" + tamZoneY.toString();
 					}
 				}
-				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10]);
+				v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId);
 			} else {
 				let v_lineas = [];
 				let v_form = null;
@@ -919,7 +931,7 @@ function configData(data,scale) {
 					v_lineas.push(
 						{
 							view: "text", 
-							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i ,
+							id: "panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i + "_" + orderId,
 							value: v_text[i],
 							// css:"use-keyboard-input",
 							on: {
@@ -940,14 +952,14 @@ function configData(data,scale) {
 										let v_suma = 0;
 										let v_input_value_no_especial = v_input.value.split(":%");
 										if (v_input_value_no_especial.length === 1) {
-											let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt());
+											let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt());
 											if (c_permitido) {
 											//Sumamos los que tenemos 
 												for(let i = 0; i < v_input.value.length; i++) {
-													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
+													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
 													v_suma = v_suma + parseInt(ptype.split("x")[0]);
 												}
-												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt())[1];
+												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt())[1];
 												v_suma = v_suma + parseInt(ptype.split("x")[0]);
 											
 											//Si es un caracter permitido 
@@ -979,7 +991,7 @@ function configData(data,scale) {
 														//al ser cierre de cadena generamos una nueva cadena
 														let v_code = String.fromCharCode(parseInt(cadena2.substring(0,cadena2.search(":%"))));
 														//Comprobamos que el ascii está permitido 
-														let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === v_code.charCodeAt());
+														let c_permitido = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === v_code.charCodeAt());
 														if (c_permitido) {
 															//existe está permitido
 														} else {
@@ -1005,7 +1017,7 @@ function configData(data,scale) {
 											}
 											//Sumamos los que tenemos 
 											for(let i = 0; i < texto.length; i++) {
-												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10]].find(x => parseInt(x[2].split("CH")[1],16) === texto[i].charCodeAt())[1];
+												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === texto[i].charCodeAt())[1];
 												v_suma = v_suma + parseInt(ptype.split("x")[0]);
 											}
 										
@@ -1028,12 +1040,12 @@ function configData(data,scale) {
 							}
 						}
 					);
-					v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i);
+					v_id_list.push("panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_L_" + i + "_" + orderId);
 				}
 				v_form = v_lineas;
 				v_body = {					
 					view: "form",
-					id: "panel_" + cellList[numElement].split("_")[1] + "_FORM_",
+					id: "panel_" + cellList[numElement].split("_")[1] + "_FORM_" + orderId,
 					elements:v_form
 				};
 			}
@@ -1061,7 +1073,7 @@ function configData(data,scale) {
 						css: { "text-align": "center !important" },
 						top: v_top, left:v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
 						cellValues: cellList[numElement],
-						id: "panel_" + cellList[numElement].split("_")[1], 
+						id: "panel_" + cellList[numElement].split("_")[1] + "_" + orderId, 
 						//header: tamZoneX + "x" + tamZoneY, 
 						body: v_body,
 					});
@@ -1072,7 +1084,7 @@ function configData(data,scale) {
 					css: { "text-align": "center !important" },
 					top: v_top, left: v_left, width:SCALE_ZONE * tamZoneX, height: SCALE_ZONE * tamZoneY,
 					cellValues: cellList[numElement],
-					id: "panel_" + cellList[numElement].split("_")[1], 
+					id: "panel_" + cellList[numElement].split("_")[1] + "_" + orderId, 
 					body: v_body,
 				});
 			}

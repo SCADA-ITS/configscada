@@ -208,6 +208,7 @@ export default class Order {
   }
 
   dinamicFormOrder(view) {
+    /*
     let datos = this.comandElement.commandElementValues ? this.comandElement.commandElementValues : "";
     let texto = "";
     if (datos !== ""){
@@ -215,81 +216,286 @@ export default class Order {
 
       });
     }
-    $$(view)
-    .addView({
-      view:"form", 
-      id:this.id + "_form", 
-      scroll:false, 
-      elements:[{ responsive:this.id + "_form", 
-        rows: [
-          { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
-          { 
-            cols:[
-              {
-              rows:[
-                { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
-                { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
-                { 
-                  view:"combo", 
-                  id: this.id.toString() + "_element",              
-                  disabled: true, 
-                  name: "element", 
-                  label:$.i18n("plan.form.element"), 
-                  value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
-                          value: this.comandElement.element.alias, 
-                          elementType: this.comandElement.element.elementType }, 
-                  options: [], 
-                  labelAlign:"left", 
-                  labelWidth: 120, 
-                  inputWidth:0,
-                  on: {
-                        onChange: buildc
-                      }
-                  }
-                ]
-              },
-              {
+*/
+    if (this.comandElement.commandElementValues === null){
+      $$(view)
+      .addView({
+        view:"form", 
+        id:this.id + "_form", 
+        scroll:false, 
+        elements:[{ responsive:this.id + "_form", 
+          rows: [
+            { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+            { 
+              cols:[
+                {
                 rows:[
-                  { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                  { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
+                  { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
                   { 
                     view:"combo", 
-                    id: this.id.toString() + "_commandElementType",   
-                    disabled: true, name: "commandElementType",  
-                    label:$.i18n("plan.form.commandElementType"), 
-                    value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, 
+                    id: this.id.toString() + "_element",              
+                    disabled: true, 
+                    name: "element", 
+                    label:$.i18n("plan.form.element"), 
+                    value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
+                            value: this.comandElement.element.alias, 
+                            elementType: this.comandElement.element.elementType }, 
                     options: [], 
                     labelAlign:"left", 
                     labelWidth: 120, 
-                    inputWidth:0 ,
+                    inputWidth:0,
                     on: {
-                      onChange: build_type_panel_edit
+                          onChange: buildc
+                        }
                     }
-                  },        
+                  ]
+                },
+                {
+                  rows:[
+                    { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                    { 
+                      view:"combo", 
+                      id: this.id.toString() + "_commandElementType",   
+                      disabled: true, name: "commandElementType",  
+                      label:$.i18n("plan.form.commandElementType"), 
+                      value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, 
+                      options: [], 
+                      labelAlign:"left", 
+                      labelWidth: 120, 
+                      inputWidth:0 ,
+                      on: {
+                        onChange: build_type_panel_edit
+                      }
+                    },        
+                  ]
+                }
+              ],  
+            },
+            { view:"textarea",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? JSON.stringify(this.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0, hidden: true },
+            { responsive:this.id + "_form",
+              cols:[
+                { gravity: 3 },
+                { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                  click: orderEdit              
+                },
+                { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
+                  click: orderSave
+                },
+                { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                  click: orderRemove
+                },
+                { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                  click: orderEditCancel
+                }
+              ]
+            }
+          ]
+        }]
+      });
+    }else{
+      let message = this.comandElement.commandElementType.alias;
+      let idtype = "ElementType:" + this.comandElement.element.id.split(":")[1];
+      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
+      if (pmvTypes.includes(this.comandElement.element.id.split(":")[1]) && message === "SEND MESSAGE"){ 
+        let text_commands = this.comandElement.commandElementValues;
+        $$(view)
+        .addView({
+          view:"form", 
+          id:this.id + "_form", 
+          scroll:false, 
+          elements:[{ responsive:this.id + "_form", 
+            rows: [
+              { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+              { 
+                cols:[
+                  {
+                  rows:[
+                    { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
+                    { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
+                    { 
+                      view:"combo", 
+                      id: this.id.toString() + "_element",              
+                      disabled: true, 
+                      name: "element", 
+                      label:$.i18n("plan.form.element"), 
+                      value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
+                              value: this.comandElement.element.alias, 
+                              elementType: this.comandElement.element.elementType }, 
+                      options: [], 
+                      labelAlign:"left", 
+                      labelWidth: 120, 
+                      inputWidth:0,
+                      on: {
+                            onChange: buildc
+                          }
+                      }
+                    ]
+                  },
+                  {
+                    rows:[
+                      { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                      { 
+                        view:"combo", 
+                        id: this.id.toString() + "_commandElementType",   
+                        disabled: true, name: "commandElementType",  
+                        label:$.i18n("plan.form.commandElementType"), 
+                        value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, 
+                        options: [], 
+                        labelAlign:"left", 
+                        labelWidth: 120, 
+                        inputWidth:0 ,
+                        on: {
+                          onChange: build_type_panel_edit
+                        }
+                      },        
+                    ]
+                  }
+                ],  
+              },
+              { view:"textarea",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? JSON.stringify(this.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0, hidden: true },
+              { responsive:this.id + "_form",
+                cols:[
+                  { gravity: 3 },
+                  { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                    click: orderEdit              
+                  },
+                  { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
+                    click: orderSave
+                  },
+                  { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                    click: orderRemove
+                  },
+                  { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                    click: orderEditCancel
+                  }
                 ]
               }
-            ],  
-          },
-          { view:"textarea",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? JSON.stringify(this.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
-          { responsive:this.id + "_form",
-            cols:[
-              { gravity: 3 },
-              { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
-                click: orderEdit              
+            ]
+          }]
+        });   
+        
+        console.log("Zona");
+        let datos = null;
+        let lista_ordenada = [];
+        let lista_valores = {};
+        if(text_commands !== "" && text_commands !== undefined && text_commands !== null){
+          console.log(text_commands);
+          datos = text_commands;//JSON.parse(text_commands.replace('\"','"'));
+          datos.forEach(item => {
+            lista_ordenada.push(parseInt(item.id.split(":")[3]));
+            lista_valores[parseInt(item.id.split(":")[3])] = { value: item.value };
+          });
+          lista_ordenada.sort();
+        }
+        console.log("Zone2");
+        let scala = panelData[idtype].scala_List;
+        console.log("zone3");
+        let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores,this.id);
+        let data = panelMan.configExportData();
+        console.log("zone4");
+        let tamx = data[1] * scala;
+        let tamy = data[2] * scala;
+        //console.log("TAMAÑO2");
+        //console.log(tamx);
+        //console.log(tamy);
+        $$(this.id + "_form").addView(
+          {
+            view:"dashboard",
+            id:"order_edit_dashboard_" + this.id,
+            gridColumns:1,
+            //width:tamx,
+            gridRows:1,
+            disable: true,
+            cellHeight:300,
+            cells:[
+              { view:"panel", x:0, y:0, dx:1, dy:1, body: panelMan.getInitComponent()},
+            ],
+          }
+        );
+        console.log("zone5");
+        panelMan.loadComponent();
+        console.log("zone6");
+
+        
+      }else{
+        $$(view)
+        .addView({
+          view:"form", 
+          id:this.id + "_form", 
+          scroll:false, 
+          elements:[{ responsive:this.id + "_form", 
+            rows: [
+              { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+              { 
+                cols:[
+                  {
+                  rows:[
+                    { view:"text", id: this.id.toString() + "_alias",   disabled: true, name: "alias",   label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 120, inputWidth:0 },                        
+                    { view:"combo", id: this.id.toString() + "_planOrderType", disabled: true, name: "planOrderType", label:$.i18n("plan.form.planOrderType"), value: { id:this.id.toString() + "_" + this.planOrderType.id, value:this.planOrderType.alias },   options:[] , labelAlign:"left", labelWidth: 120, inputWidth:0 },                
+                    { 
+                      view:"combo", 
+                      id: this.id.toString() + "_element",              
+                      disabled: true, 
+                      name: "element", 
+                      label:$.i18n("plan.form.element"), 
+                      value:{ id: this.id.toString() + "_" + this.comandElement.element.id,
+                              value: this.comandElement.element.alias, 
+                              elementType: this.comandElement.element.elementType }, 
+                      options: [], 
+                      labelAlign:"left", 
+                      labelWidth: 120, 
+                      inputWidth:0,
+                      on: {
+                            onChange: buildc
+                          }
+                      }
+                    ]
+                  },
+                  {
+                    rows:[
+                      { view:"textarea",  id: this.id.toString() + "_description",   disabled: true, name: "description",   label:$.i18n("plan.form.description"),   value:this.description, labelAlign:"left", labelWidth: 120, inputWidth:0 },  
+                      { 
+                        view:"combo", 
+                        id: this.id.toString() + "_commandElementType",   
+                        disabled: true, name: "commandElementType",  
+                        label:$.i18n("plan.form.commandElementType"), 
+                        value:{id: this.id.toString() + "_" + this.comandElement.commandElementType.id, value:this.comandElement.commandElementType.alias}, 
+                        options: [], 
+                        labelAlign:"left", 
+                        labelWidth: 120, 
+                        inputWidth:0 ,
+                        on: {
+                          onChange: build_type_panel_edit
+                        }
+                      },        
+                    ]
+                  }
+                ],  
               },
-              { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
-                click: orderSave
-              },
-              { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
-                click: orderRemove
-              },
-              { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
-                click: orderEditCancel
+              { view:"textarea",  id: this.id.toString() + "_commandElementValues", disabled: true, name: "commandElementValues", label:$.i18n("plan.form.commandElementValues"), value: this.comandElement.commandElementValues ? JSON.stringify(this.comandElement.commandElementValues) : "" , labelAlign:"left", labelWidth: 120, inputWidth:0 },
+              { responsive:this.id + "_form",
+                cols:[
+                  { gravity: 3 },
+                  { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                    click: orderEdit              
+                  },
+                  { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
+                    click: orderSave
+                  },
+                  { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                    click: orderRemove
+                  },
+                  { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
+                    click: orderEditCancel
+                  }
+                ]
               }
             ]
-          }
-        ]
-      }]
-    });
+          }]
+        });  
+      }
+    }
   }
 
   new_dinamicFormOrder(view,planId){
@@ -1007,7 +1213,7 @@ function orderEdit(id){
             $$(item.config.id.split("_")[0] + "_commandElementType").disable();
             $$(item.config.id.split("_")[0] + "_alias").disable();
             $$(item.config.id.split("_")[0] + "_description").disable();
-            $$(item.config.id.split("_")[0] + "_form").removeView("order_edit_dashboard_" + item.config.id.split("_")[0]);
+            //$$(item.config.id.split("_")[0] + "_form").removeView("order_edit_dashboard_" + item.config.id.split("_")[0]);
           }
         } 
         catch(e) {console.log(e)}
@@ -1104,6 +1310,8 @@ function orderEdit(id){
     });
   });
   $$(id.toString().split("_")[1] + "_planOrderType").setValue({id: value_planOrderType ,value: texto_planOrderType  });
+
+  /*
   let datos = null;
   let message = $$(id.toString().split("_")[1] + "_commandElementType").config.text;
   let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV];
@@ -1141,6 +1349,7 @@ function orderEdit(id){
     );
     panelMan.loadComponent();
   }
+  */
 }
 
 function orderSave(id){
@@ -1199,7 +1408,7 @@ function orderSave(id){
           }
         }
       });
-      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null);
+      let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null,id.toString().split("_")[1]);
       let controlPanels = panelMan.controlPanels(data);
       if (controlPanels !== -1) {
         if (v_commands.length > 0) {
@@ -1241,8 +1450,8 @@ function orderSave(id){
               $$(data.id + "_alias").disable();
               $$(data.id + "_description").disable();
               //remove dashboard
-              if ($$("order_edit_dashboard_" + data.id))
-                $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
+              //if ($$("order_edit_dashboard_" + data.id))
+              //  $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
               webix.message("Guardado Correctamente");
             } else {
               webix.message("ERROR AL GUARDAR");
@@ -1287,8 +1496,8 @@ function orderSave(id){
           $$(data.id + "_alias").disable();
           $$(data.id + "_description").disable();
           //remove dashboard
-          if ($$("order_edit_dashboard_" + data.id))
-            $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
+          //if ($$("order_edit_dashboard_" + data.id))
+          //  $$(data.id + "_form").removeView("order_edit_dashboard_" + data.id);
         } else {
           webix.message("ERROR AL GUARDAR");
         }
@@ -1540,7 +1749,7 @@ function build_type_panel_edit(id){
       lista_ordenada.sort();
     }
     let scala = panelData[idtype].scala_List;
-    let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores);
+    let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores,id.toString().split("_")[0]);
     let data = panelMan.configExportData();
     let tamx = data[1];
     let tamy = data[2];
