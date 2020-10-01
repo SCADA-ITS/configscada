@@ -516,6 +516,8 @@ var i18_en = {
     "ElementTypeParam:25:1:2.description": "Seccion",
     "ElementTypeParam:25:1:3.alias": "Road",
     "ElementTypeParam:25:1:3.description": "Road",
+    "ElementTypeParam:25:1:4.alias": "Associated Cabinet",
+    "ElementTypeParam:25:1:4.description": "Associated Cabinet",
     
     "ElementTypeParam:26:1:1.alias": "PK",
     "ElementTypeParam:26:1:2.alias": "Entrance Tunnel Distance",

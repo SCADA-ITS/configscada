@@ -531,6 +531,8 @@ var i18_sk = {
     "ElementTypeParam:25:1:2.description": "Seccion",
     "ElementTypeParam:25:1:3.alias": "N&aacutezov PLC",
     "ElementTypeParam:25:1:3.description": "N&aacutezov PLC",
+    "ElementTypeParam:25:1:4.alias": "Združený Cabinet",
+    "ElementTypeParam:25:1:4.description": "Združený Cabinet",
     
    
     "ElementTypeParam:34:1:1.alias": "PK",

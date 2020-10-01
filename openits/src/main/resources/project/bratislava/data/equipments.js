@@ -71,7 +71,8 @@ export let columnsElementList = {
 			"alias",
 			"ElementTypeParam:25:1:1",
 			"ElementTypeParam:25:1:2",
-			"ElementTypeParam:25:1:3"
+			"ElementTypeParam:25:1:3",
+			"ElementTypeParam:25:1:4"
 		],
 		2:[
 			"alias",
@@ -458,6 +459,9 @@ export let columnsElementConfig = {
 			},
 			"ElementTypeParam:25:1:3": { //"CABINET_NAME"
 				"header": [ $.i18n("ElementTypeParam:25:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:25:1:4": { //"ASSOCIATED CABINET"
+				"header": [ $.i18n("ElementTypeParam:25:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:25:1:1003": { //"MANGO SESSION_UID"
 				"header": [ $.i18n("ElementTypeParam:25:1:1003.alias"), { content:"textFilter", autoheight:true, autowidth:true }],

@@ -520,6 +520,8 @@ var i18_es = {
     "ElementTypeParam:25:1:2.description": "Seccion",
     "ElementTypeParam:25:1:3.alias": "Carretera",
     "ElementTypeParam:25:1:3.description": "Carretera",
+    "ElementTypeParam:25:1:4.alias": "Armario Asociado",
+    "ElementTypeParam:25:1:4.description": "Armario Asociado",
     
     "ElementTypeParam:26:1:1.alias": "PK",
     "ElementTypeParam:26:1:2.alias": "Entrance Tunnel Distance",
