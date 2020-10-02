@@ -168,8 +168,8 @@ export let synopticData= [
 		"parentId":"Element:7:1",
 		"ExclusiveLayers": true,
 		"BaseLayers": {
-		"BASE_LAYER": "mapa_base.png",
-		    "S1F1_(6-11) L": "PANELS-S1F1__6-11_-pk-L_v0.4.svg",
+			"BASE_LAYER": "mapa_base.png",
+			"S1F1_(6-11) L": "PANELS-S1F1__6-11_-pk-L_v0.4.svg",
 			"S1F1_(6-11) P": "PANELS-S1F1__6-11_-pk-P_v0.4.svg",
 			"S1F2_(11-24) L": "PANELS-S1F2-_11-24_-pk-L-_v0.2_1.svg",
 			"S1F2_(11-24) P": "PANELS-S1F2-_11-24_-pk-P-_v0.2_1.svg",
@@ -515,14 +515,14 @@ export let synopticData= [
 		"BaseLayers": {
 			"BASE_LAYER": "mapa_base.png",
 			"ROAD": "D4-R7_trazado.png",
-				"CABINETS": "20200525_ELECT_PK_f1.svg",
+				"CABINETS": "ARM_ELECT_PK_f1-2_v0.4_1.svg",
 				"SCN": "ELECT_SCN_PK_f1-sin-traza.svg",
 				"ATC": "Armarios-ATC-PK_F1.svg",
 				"TOLL": "Armarios-TOLL-PK_F1.svg",
 				"NRL": "Armarios-NRL-PK_F1.svg",
 				"NRS": "Armarios-NRS-PK_F1.svg",
 				"TFA_3D": "Armarios-3DTFA-PK_F1.svg",
-				"TFA": "Armarios-TFA-PK_F1.svg",
+				"TFA": "Armarios-TFA-PK_v0.2.svg",
 				"TU": "4863-1_ TU-PK_F1.svg"
 		},
 		"Layers": {
@@ -537,7 +537,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"CABINETS": {
-				"items": ["Element:25:1", "Element:25:2", "Element:25:3", "Element:25:4", "Element:25:5", "Element:25:6", "Element:25:7", "Element:25:8", "Element:25:9", "Element:25:10", "Element:25:11", "Element:25:12", "Element:25:13", "Element:25:14", "Element:25:15", "Element:25:16", "Element:25:17", "Element:25:18", "Element:25:19", "Element:25:20", "Element:25:21", "Element:25:22", "Element:25:23", "Element:25:24", "Element:25:25", "Element:25:26", "Element:25:27", "Element:25:28", "Element:25:29", "Element:25:30", "Element:25:31", "Element:25:32", "Element:25:33", "Element:25:34", "Element:25:35", "Element:25:36", "Element:25:37", "Element:25:38", "Element:25:39", "Element:25:40", "Element:25:41", "Element:25:42", "Element:25:43", "Element:25:44", "Element:25:45", "Element:25:46", "Element:25:47", "Element:25:48", "Element:25:49", "Element:25:50", "Element:25:51", "Element:25:52", "Element:25:53", "Element:25:54", "Element:25:55", "Element:25:56", "Element:25:57", "Element:25:58", "Element:25:59", "Element:25:60", "Element:25:61", "Element:25:62", "Element:25:63", "Element:25:64", "Element:25:65", "Element:25:66", "Element:25:67", "Element:25:68", "Element:25:69", "Element:25:70", "Element:25:71"],
+				"items": ["Element:25:1", "Element:25:2", "Element:25:3", "Element:25:4", "Element:25:5", "Element:25:6", "Element:25:7", "Element:25:8", "Element:25:9", "Element:25:10", "Element:25:11", "Element:25:12", "Element:25:13", "Element:25:14", "Element:25:15", "Element:25:16", "Element:25:17", "Element:25:18", "Element:25:19", "Element:25:20", "Element:25:21", "Element:25:22", "Element:25:23", "Element:25:24", "Element:25:25", "Element:25:26", "Element:25:27", "Element:25:28", "Element:25:29", "Element:25:30", "Element:25:31", "Element:25:32", "Element:25:33", "Element:25:34", "Element:25:35", "Element:25:36", "Element:25:37", "Element:25:38", "Element:25:39", "Element:25:40", "Element:25:41", "Element:25:42", "Element:25:43", "Element:25:44", "Element:25:45", "Element:25:46", "Element:25:47", "Element:25:48", "Element:25:49", "Element:25:50", "Element:25:51", "Element:25:52", "Element:25:53", "Element:25:54", "Element:25:55", "Element:25:56", "Element:25:57", "Element:25:58", "Element:25:59", "Element:25:60", "Element:25:61", "Element:25:62", "Element:25:63", "Element:25:64", "Element:25:65", "Element:25:66", "Element:25:67", "Element:25:68", "Element:25:69", "Element:25:70", "Element:25:71", "Element:25:89", "Element:25:76", "Element:25:75", "Element:25:88", "Element:25:74", "Element:25:73", "Element:25:72", "Element:25:85", "Element:25:94", "Element:25:93", "Element:25:84", "Element:25:92", "Element:25:83","Element:25:82", "Element:25:91", "Element:25:81", "Element:25:90", "Element:25:80", "Element:25:79", "Element:25:78", "Element:25:100", "Element:25:77", "Element:25:96", "Element:25:95", "Element:25:87", "Element:25:86", "Element:25:98", "Element:25:97", "Element:25:99", "Element:25:101"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -572,7 +572,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"TFA": {
-				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16"],
+				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -658,6 +658,41 @@ export let synopticData= [
 		"Element:25:69": { "x": 1867, "y": 59,   "width": 40, "height": 40, "alias": "RNDH.5K"  },
 		"Element:25:70": { "x": 1867, "y": 33,   "width": 40, "height": 40, "alias": "RNDH.6K"  },
 		"Element:25:71": { "x": 1867, "y": 7,    "width": 40, "height": 40, "alias": "RNDH.7K"  },
+
+		"Element:25:89": { "x": 1474, "y": 677,  "width": 40, "height": 40, "alias": "RNJS.2L"  },
+		"Element:25:76": { "x": 1474, "y": 640,  "width": 40, "height": 40, "alias": "RNJS.1L" },
+		"Element:25:75": { "x": 1474, "y": 603,  "width": 40, "height": 40, "alias": "RNJS.6K"  },
+		"Element:25:88": { "x": 1474, "y": 566,  "width": 40, "height": 40, "alias": "RNJS.5K"  },
+		"Element:25:74": { "x": 1474, "y": 529,  "width": 40, "height": 40, "alias": "RNJS.4K"  },
+		"Element:25:73": { "x": 1474, "y": 492,  "width": 40, "height": 40, "alias": "RNJS.3K"  },
+		"Element:25:72": { "x": 1474, "y": 455,  "width": 40, "height": 40, "alias": "RNJS.2K" },
+
+		"Element:25:85": { "x": 1353, "y": 973,  "width": 40, "height": 40, "alias": "RNJS.6N"  },
+		"Element:25:94": { "x": 1353, "y": 936,  "width": 40, "height": 40, "alias": "RNJS.5N"  },
+		"Element:25:93": { "x": 1353, "y": 899,  "width": 40, "height": 40, "alias": "RNJS.4N"  },
+		"Element:25:84": { "x": 1353, "y": 862,  "width": 40, "height": 40, "alias": "RNJS.3N"  },
+		"Element:25:92": { "x": 1353, "y": 825,  "width": 40, "height": 40, "alias": "RNJS.2N"  },
+		"Element:25:83": { "x": 1353, "y": 788,  "width": 40, "height": 40, "alias": "RNJS.1N" },
+		"Element:25:82": { "x": 1353, "y": 751,  "width": 40, "height": 40, "alias": "RNJS.8M"  },
+		"Element:25:91": { "x": 1353, "y": 714,  "width": 40, "height": 40, "alias": "RNJS.7M" },
+		"Element:25:81": { "x": 1353, "y": 677,  "width": 40, "height": 40, "alias": "RNJS.6M"  },
+		"Element:25:90": { "x": 1353, "y": 640,  "width": 40, "height": 40, "alias": "RNJS.5M"  },
+		"Element:25:80": { "x": 1353, "y": 603,  "width": 40, "height": 40, "alias": "RNJS.4M"  },
+		"Element:25:79": { "x": 1353, "y": 566,  "width": 40, "height": 40, "alias": "RNJS.3M"  },
+		"Element:25:78": { "x": 1353, "y": 529, "width": 40, "height": 40, "alias": "RNJS.2M"  },
+		"Element:25:100": { "x": 1353, "y": 492,  "width": 40, "height": 40, "alias": "RISDJS.6"  },
+		"Element:25:77": { "x": 1353, "y": 455, "width": 40, "height": 40, "alias": "RNJS.3L"  },
+
+		"Element:25:96": { "x": 1232, "y": 640,  "width": 40, "height": 40, "alias": "RNJS.4P"  },
+		"Element:25:95": { "x": 1232, "y": 603,  "width": 40, "height": 40, "alias": "RNJS.3.1P"  },
+		"Element:25:87": { "x": 1232, "y": 566,  "width": 40, "height": 40, "alias": "RNJS.3P"  },
+		"Element:25:86": { "x": 1232, "y": 529,  "width": 40, "height": 40, "alias": "RNJS.2P"  },
+		"Element:25:101": { "x": 1232, "y": 492,  "width": 40, "height": 40, "alias": "RISDJS.7"  },
+
+		"Element:25:98": { "x": 1111, "y": 603,  "width": 40, "height": 40, "alias": "RNSR.1R"  },
+		"Element:25:97": { "x": 1111, "y": 566,  "width": 40, "height": 40, "alias": "RNJS.5P"  },
+		"Element:25:99": { "x": 1111, "y": 529,  "width": 40, "height": 40, "alias": "RNSR2.R"  },
+
 		"Element:41:1": { "x": 1351, "y": 390,    "width": 34, "height": 34, "alias": "RASDKD01P"  },
 		"Element:41:2": { "x": 1351, "y": 342,    "width": 34, "height": 34, "alias": "RASDDH01P"  },
 		"Element:41:3": { "x": 1351, "y": 305,    "width": 34, "height": 34, "alias": "RASDDH02P"  },
@@ -709,6 +744,34 @@ export let synopticData= [
 		"Element:45:14": { "x": 1726, "y": 518,    "width": 34, "height": 34, "alias": "RNRJS27L"  },
 		"Element:45:15": { "x": 1726, "y": 482,    "width": 34, "height": 34, "alias": "RNRJS28P"  },
 		"Element:45:16": { "x": 1726, "y": 445,    "width": 34, "height": 34, "alias": "RNRJS29P"  },
+
+		"Element:45:27": { "x": 1506, "y": 848,    "width": 34, "height": 34, "alias": "RNRJS40P"  },
+		"Element:45:28": { "x": 1506, "y": 811,    "width": 34, "height": 34, "alias": "RNRJS41P"  },
+		"Element:45:29": { "x": 1506, "y": 774,    "width": 34, "height": 34, "alias": "RNRJS42P"  },
+		"Element:45:30": { "x": 1506, "y": 737,    "width": 34, "height": 34, "alias": "RNRJS43P"  },
+		"Element:45:31": { "x": 1506, "y": 701,    "width": 34, "height": 34, "alias": "RNRJS44P"  },
+		"Element:45:32": { "x": 1506, "y": 664,    "width": 34, "height": 34, "alias": "RNRJS45P"  },
+		"Element:45:33": { "x": 1506, "y": 628,    "width": 34, "height": 34, "alias": "RNRJS46P"  },
+		"Element:45:34": { "x": 1506, "y": 591,    "width": 34, "height": 34, "alias": "RNRJS47P"  },
+		"Element:45:35": { "x": 1506, "y": 555,    "width": 34, "height": 34, "alias": "RNRJS48P"  },
+		"Element:45:36": { "x": 1506, "y": 518,    "width": 34, "height": 34, "alias": "RNRJS49P"  },
+
+		"Element:45:17": { "x": 1276, "y": 848,    "width": 34, "height": 34, "alias": "RNRJS30P"  },
+		"Element:45:18": { "x": 1276, "y": 811,    "width": 34, "height": 34, "alias": "RNRJS31P"  },
+		"Element:45:19": { "x": 1276, "y": 774,    "width": 34, "height": 34, "alias": "RNRJS32P"  },
+		"Element:45:20": { "x": 1276, "y": 737,    "width": 34, "height": 34, "alias": "RNRJS33P"  },
+		"Element:45:21": { "x": 1276, "y": 701,    "width": 34, "height": 34, "alias": "RNRJS34P"  },
+		"Element:45:22": { "x": 1276, "y": 664,    "width": 34, "height": 34, "alias": "RNRJS35P"  },
+		"Element:45:23": { "x": 1276, "y": 628,    "width": 34, "height": 34, "alias": "RNRJS36P"  },
+		"Element:45:24": { "x": 1276, "y": 591,    "width": 34, "height": 34, "alias": "RNRJS37P"  },
+		"Element:45:25": { "x": 1276, "y": 555,    "width": 34, "height": 34, "alias": "RNRJS38P"  },
+		"Element:45:26": { "x": 1276, "y": 518,    "width": 34, "height": 34, "alias": "RNRJS39P"  },
+
+		"Element:45:39": { "x": 1076, "y": 664,    "width": 34, "height": 34, "alias": "SCJS08P"  },
+		"Element:45:38": { "x": 1076, "y": 591,    "width": 34, "height": 34, "alias": "SCJS07L"  },
+		"Element:45:37": { "x": 1076, "y": 628,    "width": 34, "height": 34, "alias": "SCJS06P"  },
+		
+		
 		"Element:47:1": { "x": 1487, "y": 335,    "width": 34, "height": 34, "alias": "TUKD01L"  },
 		"Element:47:2": { "x": 1487, "y": 298,    "width": 34, "height": 34, "alias": "TUKD02L"  },
 		"Element:47:3": { "x": 1487, "y": 220,    "width": 34, "height": 34, "alias": "TUDH01L"  },
