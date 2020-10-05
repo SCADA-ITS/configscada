@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,10 @@ public class VODataSourceAdapter {
 	private Environment env;
 	
 	public static final String DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = "data.source.get_elements_by_element_type";
+	public static final String DATA_SOURCE_GET_ELEMENTS = "data.source.get_elements";
+	public static final String DATA_SOURCE_GET_ELEMENT = "data.source.get_element";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPES = "data.source.get_element_types";
+	public static final String DATA_SOURCE_GET_ELEMENT_TYPE_BY_ID = "data.source.get_element_type_by_id";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL = "data.source.type.graphql";
 	public static final String DATA_SOURCE_GRAPHQL_URL = "data.source.graphql.url";
 	public static final String DATA_SOURCE_GRAPHQL_METHOD = "data.source.graphql.method";
@@ -42,7 +46,13 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetElementsByElementType;
 	@Getter
+	private Integer dataSourceGetElements;
+	@Getter
+	private Integer dataSourceGetElement;
+	@Getter
 	private Integer dataSourceGetElementTypes;
+	@Getter
+	private Integer dataSourceGetElementTypeById;
 	@Getter
 	private Integer dataSourceTypeGraphql;
 	@Getter
@@ -58,7 +68,10 @@ public class VODataSourceAdapter {
 	private void initialize() {
 	
 		this.dataSourceGetElementsByElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE));
+		this.dataSourceGetElements = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS));
+		this.dataSourceGetElement = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT));
 		this.dataSourceGetElementTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPES));
+		this.dataSourceGetElementTypeById = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPE_BY_ID));
 		this.dataSourceTypeGraphql = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL));
 		this.dataSourceGraphqlUrl = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_URL));
 		this.dataSourceGraphqlMethod = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_METHOD));
@@ -72,12 +85,30 @@ public class VODataSourceAdapter {
 		List<Map<String, Object>> list = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 		
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceGetElementsByElementType)) {
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphql)) {
 				
 			list = getListFromGraphql(dataSource, params);
 		}
 		
 		return list;
+	}
+	
+	public Map<String, Object> get(Integer dataSourceId, Object[] params) {
+		
+		Map<String, Object> object = null;
+		DataSource dataSource = dataSourceService.getById(dataSourceId);
+		
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphql)) {
+				
+			List<?> list = getListFromGraphql(dataSource, params);
+			
+			if (!CollectionUtils.isEmpty(list)) {
+				
+				object = (Map<String, Object>) list.get(0);
+			}
+		}
+		
+		return object;
 	}
 	
 	private List<Map<String, Object>> getListFromGraphql(DataSource dataSource, Object[] objParamValues) {

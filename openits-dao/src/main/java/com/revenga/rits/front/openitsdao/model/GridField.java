@@ -21,6 +21,8 @@ public class GridField implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
+	private String align;
 
 	private Boolean enabled;
 
@@ -34,7 +36,8 @@ public class GridField implements Serializable {
 	private Boolean ispk;
 
 	private String label;
-	
+
+	@Column(name="label_tooltip")
 	private String labelTooltip;
 
 	@Column(name="needs_translation")
@@ -42,7 +45,7 @@ public class GridField implements Serializable {
 
 	private Boolean parameterized;
 
-	private Long position;
+	private Integer position;
 
 	private Boolean required;
 
@@ -52,7 +55,7 @@ public class GridField implements Serializable {
 	private Boolean visible;
 
 	@Column(name="width_px")
-	private Long widthPx;
+	private Integer widthPx;
 
 	//bi-directional many-to-one association to GridFieldIcon
 	@OneToMany(mappedBy="gridField")
@@ -86,6 +89,14 @@ public class GridField implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getAlign() {
+		return this.align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
 	}
 
 	public Boolean getEnabled() {
@@ -135,7 +146,7 @@ public class GridField implements Serializable {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
+
 	public String getLabelTooltip() {
 		return this.labelTooltip;
 	}
@@ -160,11 +171,11 @@ public class GridField implements Serializable {
 		this.parameterized = parameterized;
 	}
 
-	public Long getPosition() {
+	public Integer getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(Long position) {
+	public void setPosition(Integer position) {
 		this.position = position;
 	}
 
@@ -192,11 +203,11 @@ public class GridField implements Serializable {
 		this.visible = visible;
 	}
 
-	public Long getWidthPx() {
+	public Integer getWidthPx() {
 		return this.widthPx;
 	}
 
-	public void setWidthPx(Long widthPx) {
+	public void setWidthPx(Integer widthPx) {
 		this.widthPx = widthPx;
 	}
 

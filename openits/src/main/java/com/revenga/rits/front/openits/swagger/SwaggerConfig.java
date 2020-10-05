@@ -30,7 +30,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		
-		final ApiInfo defaultApiInfo = new ApiInfo("Open-ITS v2 ==> Scada ITS Front-End", "", "1.0.0",
+		final ApiInfo defaultApiInfo = new ApiInfo("Open-ITS REST v1 API", "", "1.0.0",
 				"urn:tos", DEFAULT_CONTACT, "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0",
 				new ArrayList<>());
 		

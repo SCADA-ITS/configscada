@@ -1,5 +1,5 @@
 if(window.app)
-	app.modules = {
+	app.module = {
 		
 		getParamValue(module, param) {
 			
@@ -10,7 +10,7 @@ if(window.app)
 				}
 			}
 		},
-		
+
 		getWindowParamValue(module, param) {
 			
 			for (var i = 0; i < module.windowValues.length; i++) {

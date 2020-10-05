@@ -24,7 +24,7 @@ public class AdapterParam implements Serializable {
 
 	private String param;
 
-	private Long pos;
+	private Integer pos;
 
 	private Boolean visible;
 
@@ -60,11 +60,11 @@ public class AdapterParam implements Serializable {
 		this.param = param;
 	}
 
-	public Long getPos() {
+	public Integer getPos() {
 		return this.pos;
 	}
 
-	public void setPos(Long pos) {
+	public void setPos(Integer pos) {
 		this.pos = pos;
 	}
 

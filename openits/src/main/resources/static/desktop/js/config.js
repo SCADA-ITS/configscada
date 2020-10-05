@@ -1,10 +1,13 @@
 const appConfig = {
 
-	restUrl: '../api/v2/',
+	restUrl: '../api/v1/',
 	stompUrl: 'ws://192.168.244.12:61614',
 }
 
 const SESSION_STORAGE_USER_DATA = "user.data";
+const STOMP_DATA_SOURCE_TYPE = 2;
+
+const MODULE_TYPE_SERVICE = 6;
 
 const admin_usr = {
 	user: "admin",

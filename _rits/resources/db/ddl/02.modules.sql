@@ -10,11 +10,12 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.module_types (
-		id serial primary key,
+		id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_module_types PRIMARY KEY (id)
 	);
 		
 	ALTER TABLE ui.module_types SET TABLESPACE tbl_ui;
@@ -26,7 +27,7 @@
 --
 	CREATE TABLE ui.modules (
 	    id serial primary key,
-		module_type_id int8 NOT NULL,
+		module_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		js_file varchar NULL,
@@ -50,12 +51,13 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.module_params (
-	    id serial primary key,
-		module_type_id int8 NOT NULL,
+	    id int not null,
+		module_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_module_params PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_module_params_module_types ON ui.module_params USING btree (module_type_id);
@@ -71,8 +73,8 @@
 --
 	CREATE TABLE ui.module_values (
 	    id serial primary key,
-		module_id int8 NOT NULL,
-		module_param_id int8 NOT NULL,
+		module_id int NOT NULL,
+		module_param_id int NOT NULL,
 		value varchar NULL,
 		UNIQUE (module_id, module_param_id)
 	);
@@ -91,12 +93,13 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.window_params (
-	    id serial primary key,
-		module_type_id int8 NOT NULL,
+	    id int not null,
+		module_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_window_params PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_window_params_module_types ON ui.window_params USING btree (module_type_id);
@@ -112,8 +115,8 @@
 --
 	CREATE TABLE ui.window_values (
 	    id serial primary key,
-		module_id int8 NOT NULL,
-		window_param_id int8 NOT NULL,
+		module_id int NOT NULL,
+		window_param_id int NOT NULL,
 		value varchar NULL,
 		UNIQUE (module_id, window_param_id)
 	);

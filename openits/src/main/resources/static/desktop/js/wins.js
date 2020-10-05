@@ -85,16 +85,16 @@ if (window.app)
 
 			var window_params = webix.copy(window_params_default);
 
-			var hasMinButton = app.modules.getWindowParamValue(module, moduleType.window.params.hasMinButton);
-			var hasMaxButton = app.modules.getWindowParamValue(module, moduleType.window.params.hasMaxButton);
-			var isMaximized = app.modules.getWindowParamValue(module, moduleType.window.params.isMaximized);
-			var heigth = app.modules.getWindowParamValue(module, moduleType.window.params.height);
-			var width = app.modules.getWindowParamValue(module, moduleType.window.params.width);
-			var allowMultipleInstances = app.modules.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
-			var icon = app.modules.getWindowParamValue(module, moduleType.window.params.icon);
-			var image = app.modules.getWindowParamValue(module, moduleType.window.params.image);
-			var color = app.modules.getWindowParamValue(module, moduleType.window.params.color);
-			var label = i18n.t(app.modules.getWindowParamValue(module, moduleType.window.params.label));
+			var hasMinButton = app.module.getWindowParamValue(module, moduleType.window.params.hasMinButton);
+			var hasMaxButton = app.module.getWindowParamValue(module, moduleType.window.params.hasMaxButton);
+			var isMaximized = app.module.getWindowParamValue(module, moduleType.window.params.isMaximized);
+			var heigth = app.module.getWindowParamValue(module, moduleType.window.params.height);
+			var width = app.module.getWindowParamValue(module, moduleType.window.params.width);
+			var allowMultipleInstances = app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
+			var icon = app.module.getWindowParamValue(module, moduleType.window.params.icon);
+			var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
+			var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
+			var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
 
 			if (!webix.isUndefined(hasMinButton)) window_params.hasMinButton = hasMinButton;
 			if (!webix.isUndefined(hasMaxButton)) window_params.hasMaxButton = hasMaxButton;
@@ -145,15 +145,20 @@ if (window.app)
 				var moduleView = {
 					id: "splash-" + winId,
 					css: "empty-app",
-					template: function() {
-						if (window_params.image) {
-							icon = "<img src='" + window_params.image + "' align='center'>";
+					rows: [
+						{
+							template: function() {
+								if (window_params.image) {
+									icon = "<img src='" + window_params.image + "' align='center'>";
+								}
+								else if (icon) {
+									icon = "<span class='webix_icon mdi mdi-" + icon + "'></span>";
+								}
+								return "<div class='empty-app-inner' style='background-color:" + window_params.color + ";'>" + icon + "</div>"
+							}
+
 						}
-						else if (icon) {
-							icon = "<span class='webix_icon mdi mdi-" + icon + "'></span>";
-						}
-						return "<div class='empty-app-inner' style='background-color:" + window_params.color + ";'>" + icon + "</div>"
-					},
+					]
 				};
 
 				webix.ui({
@@ -232,34 +237,60 @@ if (window.app)
 				});
 
 				$$(winId).show();
-				
+
 				app.wins.setActiveStyle(winId);
 
-				app.modules.loadScript(jsFile, function(path, result) {
-					
+				app.module.loadScript(jsFile, function(path, result) {
+
 					if (result === "ok") {
-						webix.delay(function(){
-						
+						webix.delay(function() {
+
 							webix.extend($$(winId), webix.ProgressBar);
 
 							$$(winId).showProgress({
-								type:"bottom",
+								type: "bottom",
 								hide: true
 							});
-							
+
 							if (typeof window[jsMethodDraw] === "function") {
-								moduleView = window[jsMethodDraw](module, currentInstance, '');
-								webix.ui(moduleView, $$("splash-" + winId));
-								
-								if (typeof window[jsMethodCallbacks] === "function") {
-									window[jsMethodCallbacks](module, currentInstance);
+								moduleView = window[jsMethodDraw](module, currentInstance, null);
+
+								if (!webix.isUndefined(moduleView)) {
+									webix.ui(moduleView, $$("splash-" + winId));
+
+									if (typeof window[jsMethodCallbacks] === "function") {
+										window[jsMethodCallbacks](module, currentInstance, null);
+									}
+								}
+								else {
+
+									let viewUnavailable = {
+
+										id: "splash-info-" + winId,
+										css: "empty-app",
+										rows: [
+											{
+												template: function() {
+													if (window_params.image) {
+														icon = "<img src='" + window_params.image + "' align='center'>";
+													}
+													else if (icon) {
+														icon = "<span class='webix_icon mdi mdi-" + icon + "'></span>";
+													}
+													return "<div class='empty-app-inner' style='background-color:" + window_params.color + ";'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_UNAVAILABLE") + "</span></div>";
+												}
+											}
+										]
+									}
+
+									webix.ui(viewUnavailable, $$(winId).getBody());
 								}
 							}
-							
+
 							$$(winId).hideProgress();
 						}, null, null, 1);
 					}
-				});	
+				});
 			}
 
 			$$("winmenu").hide();

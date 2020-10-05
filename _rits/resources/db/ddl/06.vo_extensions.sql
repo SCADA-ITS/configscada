@@ -10,11 +10,12 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.vo_entity_types (
-		id varchar primary key,
+		id varchar not null,
 		alias varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_vo_entity_types PRIMARY KEY (id)
 	);
 	
 	ALTER TABLE ui.vo_entity_types SET TABLESPACE tbl_ui;
@@ -25,14 +26,15 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.vo_entity_fields (
-		id int8 primary key,
+		id int not null,
 		vo_entity_type_id varchar NOT NULL,
 		field varchar NOT NULL,
 		description varchar NULL,
 		label_field varchar NULL,
 		label_description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_vo_entity_fields PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_vo_entity_fields_vo_entity_types ON ui.vo_entity_fields USING btree (vo_entity_type_id);
@@ -47,10 +49,11 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.vo_entities (
-		id varchar primary key,
+		id varchar not null,
 		vo_entity_type_id varchar NOT NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_vo_entities PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_vo_entities_vo_entity_types ON ui.vo_entities USING btree (vo_entity_type_id);
@@ -67,7 +70,7 @@
 	CREATE TABLE ui.vo_entity_values (
 	    id serial primary key,
 		vo_entity_id varchar NOT NULL,
-		vo_entity_field_id int8 NOT NULL,
+		vo_entity_field_id int NOT NULL,
 		value varchar NULL,
 		UNIQUE (vo_entity_id, vo_entity_field_id)
 	);

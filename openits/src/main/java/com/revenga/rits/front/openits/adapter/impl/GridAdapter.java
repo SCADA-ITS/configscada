@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.Grid;
 import com.revenga.rits.front.openits.model.GridUI;
 
@@ -24,6 +25,7 @@ import lombok.extern.log4j.Log4j2;
 public class GridAdapter {
 	
 	private final static String GRID_ADAPTER_ELEMENT = "grid.adapter.element";
+	private final static String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
@@ -38,11 +40,13 @@ public class GridAdapter {
 	Environment env;
 	
 	private Integer gridAdapterElement;
+	private Integer dataSourceTypeGraphql;
 	
 	@PostConstruct
 	private void initialize() {
 		
 		this.gridAdapterElement = Integer.parseInt(env.getProperty(GRID_ADAPTER_ELEMENT));
+		this.dataSourceTypeGraphql = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL));
 	}
 	
 	
@@ -78,14 +82,19 @@ public class GridAdapter {
 					List<Object> paramsObj = Arrays.asList(paramsArray).stream().map(e -> (Object) e)
 							.collect(Collectors.toList());
 					
-					List<Map<String, Object>> elements = voDataSourceAdapter
-							.getList(grid.getAdapter().getDataSource().getId(), paramsObj.toArray(Object[]::new));
+					DataSource dataSourceGraphQL =  grid.getAdapter().getDataSources().stream()
+							.filter(e -> e.getDataSourceType().getId().equals((dataSourceTypeGraphql))).findFirst()
+							.orElse(null);
 					
-					if (!CollectionUtils.isEmpty(elements)) {
-										
-//						elementsUI = basicElementsUI.stream().map(beUI -> (ElementUI) beUI).collect(Collectors.toList());
+					if (dataSourceGraphQL != null) {
+					
+						List<Map<String, Object>> elements = voDataSourceAdapter
+								.getList(dataSourceGraphQL.getId(), paramsObj.toArray(Object[]::new));
 						
-						gridUI.setData(elementAdapter.toGridData(elements));
+						if (!CollectionUtils.isEmpty(elements)) {
+							
+							gridUI.setData(elementAdapter.toGridData(elements));
+						}
 					}
 				}
 			}

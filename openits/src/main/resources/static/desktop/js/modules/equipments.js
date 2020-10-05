@@ -2,9 +2,9 @@ function getViewEquipments(module, instance, args) {
 
 	let moduleInstance = "module-" + module.id + "-" + instance;
 
-	let dataEquipmentTypes = webix.ajax().sync().get(appConfig.restUrl + "element_type/list");
+	let dataEquipmentTypes = webix.ajax().sync().get(appConfig.restUrl + "element_types");
 
-	if (dataEquipmentTypes != null && dataEquipmentTypes.responseText != null) {
+	if (dataEquipmentTypes != null && dataEquipmentTypes.responseText != null && dataEquipmentTypes.responseText !== "") {
 
 		let jsonEquipmentTypes = JSON.parse(dataEquipmentTypes.responseText);
 		let jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypes.filter(elementType => elementType.visible === true && elementType.grid != undefined && elementType.grid !== "");
@@ -13,10 +13,10 @@ function getViewEquipments(module, instance, args) {
 			//layout: moduleInstance,
 			css: "custom_window",
 			cols: [
-				{ width: 8 },
+				{ width: 6 },
 				{
-					css: "equipment-list",
 					rows: [
+						{ height: 6 },
 						{
 							view: "toolbar",
 							elements: [
@@ -30,19 +30,30 @@ function getViewEquipments(module, instance, args) {
 							]
 						},
 						drawEquipmentTypeList(moduleInstance, jsonEquipmentTypesWithGridAssigned),
-						{ height: 16 }
+						{ height: 6 }
 					]
 				},
 				{ view: "resizer" },
 				{
-					id: moduleInstance,
-					css: "equipment-table",
-					//rows: app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + dataGridParams, metadata, data)
-					//rows: app.datatable.draw(moduleInstance, metadata, data)
-					//rows: drawNoEquipmentData()
-					rows: [drawNoEquipmentTypeData(), { height: 20 }]
-				},
-				{ width: 12 }
+					rows: [
+						{ height: 6 },
+						{
+							cols: [
+								{ width: 6 },
+								{
+									id: moduleInstance,
+									//css: "equipment-table",
+									//rows: app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + dataGridParams, metadata, data)
+									//rows: app.datatable.draw(moduleInstance, metadata, data)
+									//rows: drawNoEquipmentData()
+									rows: [drawNoEquipmentTypeData()]
+								},
+								{ width: 6 }
+							]	
+						},
+						{ height: 6 }
+					]
+				}
 			]
 		}
 		
@@ -93,7 +104,7 @@ function drawEquipmentTypeList(moduleInstance, jsonEquipmentTypesWithGridAssigne
 	return equipmentTypeList;
 }
 
-function assingEquipmentCallbacks(module, instance) {
+function assingEquipmentCallbacks(module, instance, args) {
 
 	let moduleInstance = "module-" + module.id + "-" + instance;
 
@@ -114,7 +125,20 @@ function assingEquipmentCallbacks(module, instance) {
 
 		listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
 
-			callbackSelectedElemenType(this, id, module, instance);
+			var list = this;
+			webix.delay(function(){
+						
+				webix.extend($$(moduleInstance), webix.ProgressBar);
+
+				$$(moduleInstance).showProgress({
+					type:"bottom",
+					hide: true
+				});
+				
+				callbackSelectedElemenType(list, id, module, instance);
+				
+				$$(moduleInstance).hideProgress();
+			}, null, null, 1);
 		});
 		
 		listEquipmentTypes.select(listEquipmentTypes.getFirstId());
@@ -150,8 +174,8 @@ function callbackSelectedElemenType(list, id, module, instance) {
 	});
 
 	if (dataGridId != undefined && dataGridParams != undefined) {
-
-		let dataEquipments = webix.ajax().sync().get(appConfig.restUrl + "grid/" + dataGridId + "/" + dataGridParams);
+		
+		let dataEquipments = webix.ajax().sync().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams);
 
 		if (dataEquipments != null && dataEquipments.responseText != null) {
 

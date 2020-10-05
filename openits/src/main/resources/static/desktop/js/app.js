@@ -6,8 +6,8 @@ app = {
 		this.load();
 		this.createLayout();
 		this.createToolbar();
-		this.startTime();
 		this.createMenu();
+		app.service.load();
 		
 		if (!webix.storage.session.get(SESSION_STORAGE_USER_DATA)) {
 			app.signOut();
@@ -28,7 +28,7 @@ app = {
 	},
 	load: function() {
 
-		var response = webix.ajax().sync().get(appConfig.restUrl + "menu/list");
+		var response = webix.ajax().sync().get(appConfig.restUrl + "menus");
 		
 		if (response != null && response.responseText != null) {
 			this.menuData = JSON.parse(response.responseText);
@@ -229,21 +229,6 @@ app = {
 			app.attachEventsMenu();
 		});
 	},
-	updateTime: function() {
-		var tm = new Date();
-		var h = tm.getHours();
-		var m = webix.Date.toFixed(tm.getMinutes());
-		var s = webix.Date.toFixed(tm.getSeconds());
-		var day = tm.getDate();
-		var month = tm.getMonth() + 1;
-		var year = tm.getFullYear();
-		var time = +h + ":" + m + ":" + s;
-		var date = month + "/" + day + "/" + year;
-		$$("time").setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
-	},
-	startTime: function() {
-		setInterval(this.updateTime, 100);
-	},
 	deleteActiveBg: function() {
 		var views = $$("toolbar").getChildViews();
 		for (var i = 0; i < views.length; i++) {
@@ -261,11 +246,11 @@ app = {
 	},
 	// show toolbar button for a window
 	beforeWinShow: function(module, winId) {
-		var allowMultipleInstances = app.modules.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
-		var icon = app.modules.getWindowParamValue(module, moduleType.window.params.icon);
-		var image = app.modules.getWindowParamValue(module, moduleType.window.params.image);
-		var color = app.modules.getWindowParamValue(module, moduleType.window.params.color);
-		var label = i18n.t(app.modules.getWindowParamValue(module, moduleType.window.params.label));
+		var allowMultipleInstances = app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
+		var icon = app.module.getWindowParamValue(module, moduleType.window.params.icon);
+		var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
+		var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
+		var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
 			
 		var btnId = winId.replace("_win", "_button"); 
 		

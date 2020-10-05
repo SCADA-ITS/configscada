@@ -25,14 +25,16 @@ public class ElementBO {
 
 	public List<Map<String, Object>> getElements() {
 		
-		return null;
-	}
-	
-	public List<Map<String, Object>> getElementsByElementType(String elementTypeId) {
-		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { elementTypeId });
+				.getList(voDataSourceAdapter.getDataSourceGetElements(), null);
 		
 		return vo2uiAdapter.convert(elements);
+	}
+	
+	public Map<String, Object> getElement(String id) {
+		
+		Map<String, Object> element = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElement(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(element);
 	}
 }

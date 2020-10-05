@@ -10,11 +10,12 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.data_source_types (
-		id serial primary key,
+		id int not null,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_data_source_types PRIMARY KEY (id)
 	);
 	
 	ALTER TABLE ui.data_source_types SET TABLESPACE tbl_ui;
@@ -25,12 +26,13 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.data_source_params (
-		id serial primary key,
-		data_source_type_id int8 NOT NULL,
+		id int not null,
+		data_source_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_data_source_params PRIMARY KEY (id)
 	);
 	
 	ALTER TABLE ui.data_source_params SET TABLESPACE tbl_ui;
@@ -42,7 +44,7 @@
 --
 	CREATE TABLE ui.data_sources (
 		id serial primary key,
-		data_source_type_id int8 NOT NULL,
+		data_source_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		entity_vo varchar NOT NULL,
@@ -63,8 +65,8 @@
 --
 	CREATE TABLE ui.data_source_values (
 	    id serial primary key,
-		data_source_id int8 NOT NULL,
-		data_source_param_id int8 NOT NULL,
+		data_source_id int NOT NULL,
+		data_source_param_id int NOT NULL,
 		value varchar NULL,
 		UNIQUE (data_source_id, data_source_param_id)
 	);
