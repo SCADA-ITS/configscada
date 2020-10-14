@@ -26,14 +26,16 @@ public class ElementTypeBO {
 		
 		List<Map<String, Object>> elementTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetElementTypes(), null);
 		
-		return vo2uiAdapter.convert(elementTypes);
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElementTypes()).getFieldId(), elementTypes);
 	}
 	
 	public Map<String, Object> getElementType(String id) {
 		
-		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementTypeById(), new Object[] { id });
+		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementType(), new Object[] { id });
 		
-		return vo2uiAdapter.convert(elementType);
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElementType()).getFieldId(), elementType);
 	}
 	
 	public List<Map<String, Object>> getElementsByElementType(String elementTypeId) {
@@ -41,6 +43,7 @@ public class ElementTypeBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { elementTypeId });
 		
-		return vo2uiAdapter.convert(elements);
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElementsByElementType()).getFieldId(), elements);
 	}
 }

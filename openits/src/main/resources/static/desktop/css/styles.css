@@ -400,7 +400,6 @@ body{
 	vertical-align: middle;
 }
 
-
 .sing-in-form{
 	background: rgba(0,0,0,0.2);
 }
@@ -438,6 +437,33 @@ body{
 	font-size: 14px;
 	color: #fff;
 	text-align: right !important;
+}
+
+.sing-in-form-result{
+    background: none;
+    border: none;
+    color: #FFFFFF;
+}
+
+.sing-in-form-result .webix_template img{
+	float: left;
+	margin-right: 10px;
+}
+.sing-in-form-result .webix_template div{
+	line-height: 50px;
+	font-size: 17px;
+}
+
+.sing-in-form .authorized {
+	color: #8ae234;
+	font-size: 16px !important;
+	margin-top: -17px;
+}
+
+.sing-in-form .unauthorized {
+	color: #ef2929;
+	font-size: 16px !important;
+	margin-top: -17px;
 }
 
 .dhx_cal_light{

@@ -4,7 +4,12 @@ const appConfig = {
 	stompUrl: 'ws://192.168.244.12:61614',
 }
 
+const I18N_MODULE = 1;
+
+const SESSION_STORAGE_SESSION_DATA = "session.data";
+const SESSION_STORAGE_SESSION_LOCKED = "session.locked";
 const SESSION_STORAGE_USER_DATA = "user.data";
+
 const STOMP_DATA_SOURCE_TYPE = 2;
 
 const MODULE_TYPE_SERVICE = 6;

@@ -48,6 +48,7 @@
 		name varchar NOT NULL,
 		description varchar NULL,
 		entity_vo varchar NOT NULL,
+		field_id varchar NOT NULL,
 		enabled bool NULL,
 		visible bool NULL
 	);

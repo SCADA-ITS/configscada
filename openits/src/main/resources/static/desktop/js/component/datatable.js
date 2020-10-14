@@ -511,7 +511,7 @@ if (window.app)
 
 					$$("tb_ws_status-" + moduleInstance).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
 
-					gridInstance.stomp.client = app.util.stomp.connect(module, instance, url, topic + params, on_message);
+					gridInstance.stomp.client = app.util.stomp.connect(url, topic + params, on_message);
 
 					$$("tb_ws_status-" + moduleInstance).setHTML(`<div><span class="status_ws_connected">${i18n.t("LBL_CONNECTED")}</span></div>`);
 

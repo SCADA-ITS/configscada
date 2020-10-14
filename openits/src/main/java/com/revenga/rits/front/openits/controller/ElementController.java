@@ -1,9 +1,8 @@
 package com.revenga.rits.front.openits.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,14 +28,14 @@ public class ElementController {
 	
 	@GetMapping
 	@ApiOperation(value = "Get all elements", notes = "Get all elements")
-	public List<Map<String, Object>> getElements() {
+	public ResponseEntity<Object> getElements() {
 		
-		return elementBO.getElements();
+		return new ResponseEntity<>(elementBO.getElements(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get element by id", notes = "Get element by id")
-	public Map<String, Object> getElementById(
+	public ResponseEntity<Object> getElementById(
 			@ApiParam(
 			name = "id",
 			type = "String",
@@ -44,6 +43,6 @@ public class ElementController {
 			example = "Element:33:1",
 			required = true) @PathVariable String id) {
 		
-		return elementBO.getElement(id);
+		return new ResponseEntity<>(elementBO.getElement(id), HttpStatus.OK);
 	}
 }

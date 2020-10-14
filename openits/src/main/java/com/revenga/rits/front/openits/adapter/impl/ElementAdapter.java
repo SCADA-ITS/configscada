@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.revenga.rits.front.openits.adapter.GridDataAdapter;
 
+import lombok.extern.log4j.Log4j2;
+
 @Component
+@Log4j2
 public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 
 	private static final Integer DATA_TYPE_INTEGER = 1;
@@ -31,7 +35,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 	VO2UIAdapter vo2uiAdapter;
 	
 	@Override
-	public List<Map<String, Object>> toGridData(List<Map<String, Object>> entities) throws IllegalAccessException {
+	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) throws IllegalAccessException {
 		
 		List<Map<String, Object>> data = new ArrayList<>();
 		
@@ -47,13 +51,13 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 					
 					flattenElementValues(dataRow);
 					
-					data.add(vo2uiAdapter.convert(dataRow));
+					data.add(vo2uiAdapter.convert(fieldId, dataRow));
 				}
 			}
 			
-		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
 
 		return data;

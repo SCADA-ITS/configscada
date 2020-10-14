@@ -5,7 +5,7 @@ if(window.app)
 			
 			var view = {
 				id: "sign-in",
-				css: "sign-in",
+				//css: "sign-in",
 				rows: [
 					{
 					},
@@ -21,22 +21,61 @@ if(window.app)
 									{
 										data:{
 									        userImage: "img/user_logo.png", 
-									        userAlias: "",
 											locked: false
 									    },
 										template: function(data) {
+			
+											var userData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+											var userName;
+											var userTemplate;
 											
-											var userTemplate = "<img class='user-logo' src='" + data.userImage + "'/><br/>" + data.userAlias;
+											if (userData) {
+												
+												userName = userData.userName;
+											}
+											
+											var userTemplate = "<img class='user-logo' src='" + data.userImage + "'/><br/>";
+											
+											if (userName != undefined) {
+												
+												userTemplate += userName;	
+											}
 											
 											if (data.locked) {
+												
 												userTemplate += "<div class='locked'>" + i18n.t("LBL_LOCK_SCREEN") + "</div>";
 											} 
 											
 											return userTemplate;
 										},  
 										id: "login-template",
-										height: 130, 
+										height: 120, 
 										borderless: true
+									},
+									{
+										view: "template",
+										css: "sing-in-form-result",
+										height: 40,
+									    id: "login-result",
+									    data:{
+									        msg: null,
+											allow: false
+									    },
+									    template:function(obj){
+										
+											if (!obj.msg) {
+												return "<div><span></span></div>"	
+											}
+											else {
+												if (obj.allow) {
+													return "<div class='authorized'><span>" + obj.msg + "</span></div>"	
+												}
+												else {
+													return "<div class='unauthorized'><span>" + obj.msg + "</span></div>"
+												}
+													
+											}
+									    }
 									},
 									{
 										view: "form",
@@ -105,7 +144,7 @@ if(window.app)
 		},
 		init: function() {
 			
-			var userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			var userData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 			
 			if (userData != null) {
 
@@ -122,27 +161,72 @@ if(window.app)
 				$$("login-user").show();
 				$$("login-template").setValues({userAlias: "", locked: false}, true);
 			}
+			
+			//$$("login-result").hide();
 		},
 		signIn : function(user, password) {
 
+			var sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
 			var userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 
-			if (!userData) {
-				// TODO: Make request with user information and storage in session
-				if (user === admin_usr.user && password === admin_usr.password) {
-					userData = webix.storage.session.put(SESSION_STORAGE_USER_DATA, {
-						user: user,
-						password: password,
-						userSession: "UserSession:69103CE63359D3B1BB16C1DB1B794C1B"
-					});
-					app.signIn();	
+			if (sessionData) {
+				
+				user = sessionData.userName;
+			}
+			
+			const encodedString = btoa((user + ':' + password).toString('utf8')).toString('base64');
+			let response = webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).sync().post(appConfig.restUrl + "auth/login");
+
+			if (response != undefined) {
+				
+				let login = JSON.parse(response.responseText);
+				
+				$$("login-result").define("height", 30);
+				$$("login-result").resize();	
+				$$("login-result").show();
+				
+				if (login.access === "ALLOWED") {
+					
+					webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
+					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, login);
+					
+					if (userData == undefined) {
+					
+						let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${login.userId}`);
+						
+						if (userDataResponse != undefined) {
+							
+							userData = JSON.parse(userDataResponse.responseText);
+							
+							webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+						}	
+					}
+					
+					$$("login-result").setValues({msg: login.access, allow: true});
+					
+					webix.delay(function(){
+					
+						app.signIn();
+						$$("login-result").setValues({msg: null, allow: true});	
+					}, null, null, 1000);
+				}
+				else {
+					
+					$$("login-result").setValues({msg: login.access, allow: false});
+					
+					webix.delay(function(){
+					
+//						$$("login-result").define("height", 0);
+//						$$("login-result").resize();	
+//						$$("login-result").hide();
+
+						$$("login-result").setValues({msg: null, allow: false});
+					}, null, null, 5000);
+				
+					
 				}
 			}
-			else {
-				if (password === userData.password) {
-					app.signIn();	
-				}
-			}
+			
 			return true;
 		} 
 	}

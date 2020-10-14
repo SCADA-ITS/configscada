@@ -93,7 +93,7 @@ public class GridAdapter {
 						
 						if (!CollectionUtils.isEmpty(elements)) {
 							
-							gridUI.setData(elementAdapter.toGridData(elements));
+							gridUI.setData(elementAdapter.toGridData(dataSourceGraphQL.getFieldId(), elements));
 						}
 					}
 				}

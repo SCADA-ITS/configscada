@@ -5,12 +5,102 @@ app = {
 		webix.env.codebase = "./";
 		this.load();
 		this.createLayout();
-		this.createToolbar();
-		this.createMenu();
-		app.service.load();
-		
-		if (!webix.storage.session.get(SESSION_STORAGE_USER_DATA)) {
+
+		if (!webix.storage.session.get(SESSION_STORAGE_SESSION_DATA) || webix.storage.session.get(SESSION_STORAGE_SESSION_LOCKED)) {
 			app.signOut();
+		}
+		else {
+			this.signIn();
+		}
+	},
+	load: function() {
+
+		app.em.load();
+
+		//		var response = webix.ajax().sync().get(appConfig.restUrl + "menus");
+		//		
+		//		if (response != null && response.responseText != null) {
+		//			this.menuData = JSON.parse(response.responseText);
+		//		}
+	},
+	createLayout: function() {
+		webix.ui({
+			id: "screens",
+			animate: false,
+			cells: [
+				{
+					view: "layout",
+					id: "main",
+					css: "desktop-layout",
+					type: "clean",
+					cols: [
+						//						{
+						//							view: "list",
+						//							id: "desktop",
+						//							width: 105,
+						//							css: "desktop-items",
+						//
+						//							type: {
+						//								height: 110,
+						//								template: "<div class='desktop-item-inner'><img src='#image#'><div class='desktop-icons'> #title#</div></div>",
+						//								css: "desktop-item"
+						//							},
+						//							select: "multiselect",
+						//							drag: true,
+						//							data: webix.copy(desktop_icons),
+						//							on: {
+						//								onItemDblClick: app.wins.showApp
+						//							}
+						//						},
+						{}
+					]
+				},
+				app.login.getView(),
+			]
+		});
+	},
+	signIn: function() {
+		webix.$$('main').show();
+
+		if ($$("toolbar") == webix.undefined) {
+
+			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+
+			if (userData != undefined) {
+
+				i18n.load(`${userData.language}_${userData.country}`);
+
+				this.createToolbar();
+
+				if (!app.service.isLoaded) {
+
+					app.service.load();
+				}
+			}
+			else {
+
+				webix.alert({
+					type: "alert-error",
+					title: "Error",
+					text: "User data not defined"
+				});
+			}
+
+
+		}
+		else {
+			webix.$$('toolbar').show();
+		}
+
+		if ($$("winmenu") == webix.undefined) {
+
+
+
+
+			this.createMenu();
+		}
+		else {
+			app.wins.restoreAllWindows();
 		}
 
 		webix.attachEvent("onFocusChange", function(view) {
@@ -26,64 +116,53 @@ app = {
 			}
 		});
 	},
-	load: function() {
-
-		var response = webix.ajax().sync().get(appConfig.restUrl + "menus");
-		
-		if (response != null && response.responseText != null) {
-			this.menuData = JSON.parse(response.responseText);
-		}
-	},
-	createLayout: function() {
-		webix.ui({
-			id: "screens",
-			animate: false,
-			cells: [
-				{
-					view: "layout",
-					id: "main",
-					css: "desktop-layout",
-					type: "clean",
-					cols: [
-//						{
-//							view: "list",
-//							id: "desktop",
-//							width: 105,
-//							css: "desktop-items",
-//
-//							type: {
-//								height: 110,
-//								template: "<div class='desktop-item-inner'><img src='#image#'><div class='desktop-icons'> #title#</div></div>",
-//								css: "desktop-item"
-//							},
-//							select: "multiselect",
-//							drag: true,
-//							data: webix.copy(desktop_icons),
-//							on: {
-//								onItemDblClick: app.wins.showApp
-//							}
-//						},
-						{}
-					]
-				},
-				app.login.getView(),
-			]
-		});
-	},
-	signIn: function() {
-		webix.$$('main').show();
-		webix.$$('toolbar').show();
-		app.wins.restoreAllWindows();
-	},
 	signOut: function() {
-		app.wins.closeAllWindows();
-		webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
-		webix.$$("toolbar").hide();
-		app.login.init();
-		webix.$$("sign-in").show();
-		webix.UIManager.setFocus("login-user"); //to set focus
+
+		if ($$("toolbar") != webix.undefined) {
+
+			webix.modalbox({
+				title: i18n.t("LBL_CLOSE_SESSION"),
+				buttons: [i18n.t("LBL_YES"), i18n.t("LBL_NO")],
+				width: 400,
+				text: i18n.t("LBL_CONFIR_CLOSE_SESSION"),
+				callback: function(result) {
+
+					if (result === "0") {
+
+						let response = webix.ajax().sync().post(appConfig.restUrl + "auth/logout");
+
+						if (response != undefined) {
+
+							let login = JSON.parse(response.responseText);
+
+							if (login.access === "LOGOUT") {
+
+								app.wins.closeAllWindows();
+								webix.$$("toolbar").hide();
+								webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
+								webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
+								app.login.init();
+								webix.$$("sign-in").show();
+								webix.UIManager.setFocus("login-user"); //to set focus
+							}
+						}
+					}
+				}
+			});
+		}
+		else {
+
+			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
+			webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
+			app.login.init();
+			webix.$$("sign-in").show();
+			webix.UIManager.setFocus("login-user"); //to set focus	
+		}
+
 	},
+
 	lockScreen: function() {
+		webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, true);
 		app.wins.hideAllWindows();
 		webix.$$("toolbar").hide();
 		app.login.init();
@@ -151,82 +230,95 @@ app = {
 		webix.require("./js/views/winmenu.css");
 		webix.require("./js/views/winmenu.js", function() {
 
-			var customMenu = app.drawMenu();
-			webix.ui({
-				view: "popup",
-				id: "winmenu",
-				hidden: true,
-				css: "winmenu",
-				body: {
-					view: "layout",
-					height: 547,
-					width: (customMenu.length * 250 / 2) + 50,
-					id: "lay",
-					rows: [
-						{
-							view: "template",
-							css: "content-user-logo",
-							height: 60,
-							template: function(data) {
-								var userData = userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
-								
-								if (userData && userData.user) {
-									return "<div><img class='user-logo' src='img/user_logo.png'/> <span>" + userData.user + "</span></div>"	
-								}
-								
-							} 
-						},
-						{ height: 17 },
-						{
+			let response = webix.ajax().sync().get(appConfig.restUrl + "menus");
+
+			if (response != null && response.responseText != null) {
+
+				app.menuData = JSON.parse(response.responseText);
+
+				if (app.menuData != undefined && Array.isArray(app.menuData)) {
+
+					let customMenu = app.drawMenu();
+					webix.ui({
+						view: "popup",
+						id: "winmenu",
+						hidden: true,
+						css: "winmenu",
+						body: {
 							view: "layout",
-							cols: customMenu
+							height: 547,
+							width: (customMenu.length * 250 / 2) + 50,
+							id: "lay",
+							rows: [
+								{
+									view: "template",
+									css: "content-user-logo",
+									height: 60,
+									template: function(data) {
+										var userData = userData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+
+										if (userData && userData.userName) {
+											return "<div><img class='user-logo' src='img/user_logo.png'/> <span>" + userData.userName + "</span></div>"
+										}
+
+									}
+								},
+								{ height: 17 },
+								{
+									view: "layout",
+									cols: customMenu
+								},
+								{ height: 17 },
+								{
+									view: "list",
+									width: 400,
+									layout: "x", // responsible for horizontal arrangement
+									id: "winmenu-options-list",
+									css: "start-menu-list icon",
+									template: function(obj) {
+										var icon = "image",
+											value = "value";
+										if (obj.state) {
+											icon += obj.state;
+											value += obj.state;
+										}
+										return "<div class='menu-sys-icon' style='background-image:url(" + obj[icon] + ")'></div>" + obj[value];
+									},
+									type: {
+										height: 36
+									},
+									select: false,
+									data: [
+										{ id: "lock-screen", value: i18n.t("LBL_LOCK_SCREEN"), image: "img/lock.png" },
+										{ id: "sign-out", value: i18n.t("LBL_SIGN_OUT"), image: "img/signout.png" }
+									],
+									on: {
+										onItemClick: function(id) {
+											$$("winmenu").hide();
+											if (id == "sign-out") {
+												app.signOut();
+											}
+											else if (id == "lock-screen") {
+												app.lockScreen();
+											}
+										}
+									}
+								}
+							]
 						},
-						{ height: 17 },
-						{
-							view: "list",
-							width: 400,		
-							layout:"x", // responsible for horizontal arrangement
-							id: "winmenu-options-list",
-							css: "start-menu-list icon",
-							template: function(obj) {
-								var icon = "image",
-									value = "value";
-								if (obj.state) {
-									icon += obj.state;
-									value += obj.state;
-								}
-								return "<div class='menu-sys-icon' style='background-image:url(" + obj[icon] + ")'></div>" + obj[value];
-							},
-							type: {
-								height: 36
-							},
-							select: false,
-							data: [
-								{ id: "lock-screen", value: i18n.t("LBL_LOCK_SCREEN"), image: "img/lock.png" },
-								{ id: "sign-out", value: i18n.t("LBL_SIGN_OUT"), image: "img/signout.png" }
-							],
-							on: {
-								onItemClick: function(id) {
-									$$("winmenu").hide();
-									if (id == "sign-out") {
-										app.signOut();	
-									}
-									else if (id == "lock-screen") {
-										app.lockScreen();
-									}
-								}
-							}
+						position: function(state) {
+							state.left = 0;
+							state.top = document.documentElement.clientHeight - 588;
+
 						}
-					]
-				},
-				position: function(state) {
-					state.left = 0;
-					state.top = document.documentElement.clientHeight - 588;
+					});
+
+					app.attachEventsMenu();
 
 				}
-			});
+			}
 
-			app.attachEventsMenu();
+
 		});
 	},
 	deleteActiveBg: function() {
@@ -251,15 +343,15 @@ app = {
 		var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
 		var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
 		var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
-			
-		var btnId = winId.replace("_win", "_button"); 
-		
+
+		var btnId = winId.replace("_win", "_button");
+
 		var btn = $$(btnId);
 		if (btn == webix.undefined) {
 			var template = "";
-			
+
 			template = "<div class='" + module.$css + "'><img class='" + module.$css + "' src='" + image + "'></div>";
-			
+
 			webix.ui({
 				view: "button",
 				id: btnId,
@@ -291,7 +383,7 @@ app = {
 
 	attachEventsMenu: function() {
 
-		var data = this.menuData;
+		var data = app.menuData;
 
 		for (var listIdx = 0; listIdx < data.length; listIdx++) {
 			var menuList = $$("menu-list" + listIdx);
@@ -307,7 +399,7 @@ app = {
 
 	getModule: function(id) {
 
-		var data = this.menuData;
+		var data = app.menuData;
 
 		for (var pos = 0; pos < data.length; pos++) {
 			for (var posMenuItm = 0; posMenuItm < data[pos].menuItems.length; posMenuItm++) {
@@ -318,9 +410,9 @@ app = {
 			}
 		}
 	},
-	
+
 	openModule: function(module) {
-		
+
 		if (module != null && module.moduleType != null) {
 			if (module.moduleType.id == moduleType.window.id) {
 				var local = this;
@@ -328,10 +420,10 @@ app = {
 			}
 			else {
 				webix.message({
-				    text:"Unknown module type = " + module.moduleType ,
-				    type:"error", 
-				    expire: 5000
-				});	
+					text: "Unknown module type = " + module.moduleType,
+					type: "error",
+					expire: 5000
+				});
 			}
 		}
 	},
@@ -339,29 +431,29 @@ app = {
 	drawMenu: function() {
 
 		var menus = [];
-		
-		if (this.menuData) {
-		
-			var data = this.menuData;	
-			
+
+		if (app.menuData) {
+
+			var data = app.menuData;
+
 			for (var pos = 0; pos < data.length; pos++) {
 				var menuMargin = { width: 17 };
-	
+
 				menus.push(menuMargin);
-	
+
 				var menu = {
 					view: "layout",
 					rows: []
 				};
-	
+
 				menu.id = "menu-" + pos;
-	
+
 				var menuTitle = {
 					view: "label",
 					css: "start-image-menu-title"
 				};
 				menuTitle.label = i18n.t(data[pos].label);
-	
+
 				var menuList = {
 					view: "list",
 					height: 335,
@@ -376,32 +468,32 @@ app = {
 				};
 				menuList.id = "menu-list" + pos;
 				menuList.label = i18n.t(data[pos].label);
-	
+
 				menu.rows.push(menuTitle);
 				menu.rows.push({ height: 17 });
 				menu.rows.push(menuList);
-	
+
 				var menuListData = [];
-	
+
 				for (var posMenuItm = 0; posMenuItm < data[pos].menuItems.length; posMenuItm++) {
-	
+
 					var menuItemData = data[pos].menuItems[posMenuItm];
 					var menuItem = {};
-	
+
 					menuItem.title = i18n.t(menuItemData.label);
 					menuItem.id = menuItemData.id;
 					menuItem.image = menuItemData.icon;
 					menuItem.color = "#107c10";
 					menuItem.win = "menu-" + pos + "-" + menuItemData.id;
-	
+
 					menuListData.push(menuItem);
 				}
-	
+
 				menuList.data = menuListData;
-	
+
 				menus.push(menu);
 			}
-			
+
 			return menus;
 		}
 	}

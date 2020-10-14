@@ -1,7 +1,7 @@
 INSERT INTO ui.data_source_types (id, "name", description, enabled, visible) VALUES
-(1, 'graphql', 'graphql data source', true, true),
-(2, 'stomp_ws', 'Stomp Over WebSocket data source', true, true);
-
+(1, 'graphql_query', 'graphql query data source', true, true),
+(2, 'stomp_ws', 'Stomp Over WebSocket data source', true, true),
+(3, 'graphql_mutation', 'graphql mutation data source', true, true);
 
 INSERT INTO ui.data_source_params(id, data_source_type_id, "name", description, enabled, visible) VALUES
 (1, 1, 'url', 'url graphql', true, true),
@@ -10,16 +10,31 @@ INSERT INTO ui.data_source_params(id, data_source_type_id, "name", description, 
 (4, 1, 'content', 'graphql content', true, true),
 (5, 2, 'url', 'url graphql', true, true),
 (6, 2, 'topic', 'graphql method', true, true),
-(7, 2, 'params', 'graphql params', true, true);
+(7, 2, 'params', 'graphql params', true, true),
+(8, 3, 'url', 'url graphql', true, true),
+(9, 3, 'method', 'graphql method', true, true),
+(10, 3, 'params', 'graphql params', true, true),
+(11, 3, 'paramTypes', 'graphql params types', true, true),
+(12, 3, 'content', 'graphql content', true, true);
 
-INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity_vo, enabled, visible) VALUES
-(1, 1, 'getElementsByType', 'getElementsByType', 'ElementVO', true, true),
-(2, 1, 'getElementTypes', 'getElementTypes', 'ElementTypeVO', true, true),
-(3, 2, 'topicElementByType', 'topicElementByType', 'ElementVO', true, true),
-(4, 1, 'getElementTypeById', 'getElementType', 'ElementTypeVO', true, true),
-(5, 1, 'getElements', 'getElements', 'ElementVO', true, true),
-(6, 1, 'getElement', 'getElement', 'ElementVO', true, true);
-
+INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity_vo, field_id, enabled, visible) VALUES
+(1, 1, 'getElementsByType', 'getElementsByType', 'ElementVO', 'id', true, true),
+(2, 1, 'getElementTypes', 'getElementTypes', 'ElementTypeVO', 'id', true, true),
+(3, 2, 'topicElementByType', 'topicElementByType', 'ElementVO', 'id', true, true),
+(4, 1, 'getElementType', 'getElementType', 'ElementTypeVO', 'id', true, true),
+(5, 1, 'getElements', 'getElements', 'ElementVO', 'id', true, true),
+(6, 1, 'getElement', 'getElement', 'ElementVO', 'id', true, true),
+(7, 1, 'getGenericDatas', 'getGenericDatas', 'GenericDataVO', 'id', true, true),
+(8, 1, 'getGenericData', 'getGenericData', 'GenericDataVO', 'id', true, true),
+(9, 1, 'getUsers', 'getUsers', 'UserVO', 'id', true, true),
+(10, 1, 'getUser', 'getUser', 'UserVO', 'id', true, true),
+(11, 3, 'updateUser', 'updateUser', 'UserVO', 'id', true, true),
+(12, 1, 'getLocations', 'getLocations', 'I18nLocationVO', 'code', true, true),
+(13, 1, 'getLocation', 'getLocation', 'I18nLocationVO', 'code', true, true),
+(14, 1, 'getTranslationsByLocale', 'getTranslationsByLocale', 'I18nTranslationVO', 'id', true, true),
+(15, 1, 'getTranslationsByLocaleAndModule', 'getTranslationsByLocaleAndModule', 'I18nTranslationVO', 'id', true, true),
+(16, 1, 'getLabelTranslated', 'getLabelTranslated', 'I18nLabelVO', 'id', true, true),
+(17, 1, 'getLabelTranslatedUsingFields', 'getLabelTranslatedUsingFields', 'I18nLabelVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(id, data_source_id, data_source_param_id, value) VALUES
 (1, 1, 1, 'http://localhost:8082/graphql'),
@@ -29,14 +44,14 @@ INSERT INTO ui.data_source_values(id, data_source_id, data_source_param_id, valu
 (5, 2, 1, 'http://localhost:8082/graphql'),
 (6, 2, 2, 'getElementTypes'),
 (7, 2, 3, ''),
-(8, 2, 4, '{id alias description labelAlias labelDescription}'),
+(8, 2, 4, '{ id alias description labelAlias labelDescription elementGroup { id alias description labelAlias labelDescription } elementTypeParams { id labelAlias labelDescription labelUnit graphics { id alias description graphicType graphicTypeLabel graphicValues { id value } } } commandElementTypes { id alias description labelAlias labelDescription commandElementTypeParams { id alias description dataType labelAlias labelDescription } } elementTypeStates { id alias description labelAlias labelDescription } }'),
 (9, 3, 1, 'ws://192.168.244.12:61614'),
 (10, 3, 2, '/topic/element'),
 (11, 3, 3, null),
 (12, 4, 1, 'http://localhost:8082/graphql'),
 (13, 4, 2, 'getElementType'),
 (14, 4, 3, 'elementTypeId'),
-(15, 4, 4, '{id alias description labelAlias labelDescription}'),
+(15, 4, 4, '{ id alias description labelAlias labelDescription elementGroup { id alias description labelAlias labelDescription } elementTypeParams { id labelAlias labelDescription labelUnit graphics { id alias description graphicType graphicTypeLabel graphicValues { id value } } } commandElementTypes { id alias description labelAlias labelDescription commandElementTypeParams { id alias description dataType labelAlias labelDescription } } elementTypeStates { id alias description labelAlias labelDescription } }'),
 (16, 5, 1, 'http://localhost:8082/graphql'),
 (17, 5, 2, 'getElements'),
 (18, 5, 3, ''),
@@ -44,4 +59,55 @@ INSERT INTO ui.data_source_values(id, data_source_id, data_source_param_id, valu
 (20, 6, 1, 'http://localhost:8082/graphql'),
 (21, 6, 2, 'getElement'),
 (22, 6, 3, 'elementId'),
-(23, 6, 4, '{id alias description state stateLabel elementValues{id value state elementTypeParam{id alias paramType dataType}}}');
+(23, 6, 4, '{id alias description state stateLabel elementValues{id value state elementTypeParam{id alias paramType dataType}}}'),
+(24, 7, 1, 'http://localhost:8082/graphql'),
+(25, 7, 2, 'getGenericDatas'),
+(26, 7, 3, ''),
+(27, 7, 4, '{id value}'),
+(28, 8, 1, 'http://localhost:8082/graphql'),
+(29, 8, 2, 'getGenericData'),
+(30, 8, 3, 'genericDataId'),
+(31, 8, 4, '{id value}'),
+(32, 9, 1, 'http://localhost:8082/graphql'),
+(33, 9, 2, 'getUsers'),
+(34, 9, 3, ''),
+(35, 9, 4, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+(36, 10, 1, 'http://localhost:8082/graphql'),
+(37, 10, 2, 'getUser'),
+(38, 10, 3, 'userId'),
+(39, 10, 4, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+(40, 11, 1, 'http://localhost:8082/graphql'),
+(41, 11, 2, 'updateUser'),
+(42, 11, 3, 'user'),
+(43, 11, 4, 'UserVO!'),
+(44, 11, 5, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+
+(45, 12, 1, 'http://localhost:8082/graphql'),
+(46, 12, 2, 'getLocales'),
+(47, 12, 3, ''),
+(48, 12, 4, '{code name}'),
+
+(49, 13, 1, 'http://localhost:8082/graphql'),
+(50, 13, 2, 'getLocale'),
+(51, 13, 3, 'localeId'),
+(52, 13, 4, '{code name}'),
+
+(53, 14, 1, 'http://localhost:8082/graphql'),
+(54, 14, 2, 'getTranslations'),
+(55, 14, 3, 'localeId'),
+(56, 14, 4, '{id label translation}'),
+
+(57, 15, 1, 'http://localhost:8082/graphql'),
+(58, 15, 2, 'getTranslations'),
+(59, 15, 3, 'localeId,moduleId'),
+(60, 15, 4, '{id label translation}'),
+
+(61, 16, 1, 'http://localhost:8082/graphql'),
+(62, 16, 2, 'getTranslation'),
+(63, 16, 3, 'localeId,moduleId,label'),
+(64, 16, 4, '{id label translation}'),
+
+(65, 17, 1, 'http://localhost:8082/graphql'),
+(66, 17, 2, 'getTranslation'),
+(67, 17, 3, 'localeId,moduleId,label,fields'),
+(68, 17, 4, '{id label translation}');

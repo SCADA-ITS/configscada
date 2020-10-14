@@ -7,7 +7,8 @@ INSERT INTO ui.module_types(id, "name", description, enabled, visible) VALUES
 (6, 'Service', 'Service', true, true);
 
 INSERT INTO ui.module_params(id, module_type_id, name, description, enabled, visible) VALUES
-(1, 6, 'load_priority', 'load_priority', true, true);
+(1, 6, 'load_priority', 'load_priority', true, true),
+(2, 6, 'config', 'config', true, true);
 
 INSERT INTO ui.modules(id, module_type_id, "name", description, js_file, js_method_draw, js_method_callbacks, data_query, wss_topic, enabled, visible) VALUES
 (5, 1, 'Equipments', 'Equipments module', './js/modules/equipments.js', 'getViewEquipments', 'assingEquipmentCallbacks', NULL, NULL, true, true),
@@ -21,7 +22,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, js_file, js_meth
 
 INSERT INTO ui.module_values(id, module_id, module_param_id, value) VALUES
 (1, 11, 1, '2'),
-(2, 12, 1, '1');
+(2, 12, 1, '1'),
+(3, 12, 2, '{"stats":{"rest":{"active_alarms":"generic_datas/GenericData:1","no_recognize_alarms":"generic_datas/GenericData:2","muted_alarms":"generic_datas/GenericData:3"},"ws":{"active_alarms":"/topic/generic_data.GenericData:1","no_recognize_alarms":"/topic/generic_data.GenericData:2","muted_alarms":"/topic/generic_data.GenericData:3"}},"levels_notif":[3,4,5,6],"level_acustic":[6],"default_sound":"alarm.wav"}');
 
 INSERT INTO ui.window_params(id, module_type_id, "name", description, enabled, visible) VALUES
 (1, 1, 'hasMinButton', 'hasMinButton', true, true),
@@ -49,4 +51,4 @@ INSERT INTO ui.window_values(id, module_id, window_param_id, value) VALUES
 (10, 5, 9, 'img/module/module_default.png'),
 (11, 5, 10, 'img/module/module_default.png'),
 (12, 5, 11, '#464646'),
-(13, 5, 12, 'LBL_MODULE_DEFAULT');
+(13, 5, 12, 'LBL_EQUIPMENTS');

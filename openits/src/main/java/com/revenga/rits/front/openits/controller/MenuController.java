@@ -3,6 +3,8 @@ package com.revenga.rits.front.openits.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,17 +31,15 @@ public class MenuController {
 
 	@GetMapping
 	@ApiOperation(value = "List all menu groups", notes = "Get list of all menu groups")
-	public List<MenuGroup> getAll() {
+	public ResponseEntity<List<MenuGroup>> getAll() {
 
-		List<MenuGroup> menuGroups = menuGroupService.getAll();
-		
-		return menuGroups;
+		return new ResponseEntity<>(menuGroupService.getAll(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Find menu item by id", notes = "Find menu item by id")
-	public MenuGroup getById(@ApiParam(value = "identifier", example = "642") @PathVariable Integer id) {
-
-		return menuGroupService.getById(id);
+	public ResponseEntity<MenuGroup> getById(@ApiParam(value = "identifier", example = "642") @PathVariable Integer id) {
+		
+		return new ResponseEntity<>(menuGroupService.getById(id), HttpStatus.OK);
 	}
 }

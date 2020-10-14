@@ -44,6 +44,10 @@ if (window.app)
 				}
 			});
 		},
+		
+		unload() {
+			
+		},
 
 		compareByPriority(a, b) {
 

@@ -1,5 +1,7 @@
 package com.revenga.rits.front.openits.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,8 @@ public class ServerController {
 
 	@GetMapping(value = "/time")
 	@ApiOperation(value = "Get epoch milliseconds", notes = "Returns the number of milliseconds since the epoch of 1970-01-01T00:00:00Z")
-	public ServerTimeUI getEpochMilliseconds() {
-
-		return (new ServerTimeUI());
+	public ResponseEntity<ServerTimeUI> getEpochMilliseconds() {
+		
+		return new ResponseEntity<>(new ServerTimeUI(), HttpStatus.OK);
 	}
 }

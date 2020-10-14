@@ -3,7 +3,7 @@ if(window.app)
 		
 		stomp: {
 		
-			connect(module, instance, url, topic, onMessage) {
+			connect(url, topic, onMessage) {
 			
 				var client = Stomp.client(url);
 				

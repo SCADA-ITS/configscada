@@ -3,6 +3,8 @@ package com.revenga.rits.front.openits.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,14 +31,14 @@ public class ModuleController {
 	
 	@GetMapping
 	@ApiOperation(value = "Get all modules", notes = "Get all modules")
-	public List<Module> getModules() {
+	public ResponseEntity<List<Module>> getModules() {
 		
-		return moduleService.getAll();
+		return new ResponseEntity<>(moduleService.getAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get modules by id", notes = "Get modules by id")
-	public Module getModuleById(
+	public ResponseEntity<Module> getModuleById(
 			@ApiParam(
 					name = "id",
 					type = "Integer",
@@ -44,6 +46,6 @@ public class ModuleController {
 					example = "1",
 					required = true) @PathVariable Integer id) {
 		
-		return moduleService.getById(id);
+		return new ResponseEntity<>(moduleService.getById(id), HttpStatus.OK);
 	}
 }

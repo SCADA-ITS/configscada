@@ -1,6 +1,3 @@
-var timeElapsed = -1;
-var lastUTCSeconds = 0;
-
 function getDrawServiceTime(module, args) {
 
 	let view = "view-svc-" + module.id;
@@ -22,6 +19,9 @@ function updateServiceTime(module) {
 	let view = $$("view-svc-" + module.id);
 	
 	if (!webix.isUndefined(view)) {
+		
+		let timeElapsed = -1;
+		let lastUTCSeconds = 0;
 		
 		setInterval(function(){
 			

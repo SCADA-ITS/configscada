@@ -6,16 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class ElementBO {
-	
-	@Autowired
-	GraphqlAdapter graphqlAdapter;
-	
+		
 	@Autowired 
 	VO2UIAdapter vo2uiAdapter;
 	
@@ -28,13 +24,15 @@ public class ElementBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(voDataSourceAdapter.getDataSourceGetElements(), null);
 		
-		return vo2uiAdapter.convert(elements);
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElements()).getFieldId(), elements);
 	}
 	
 	public Map<String, Object> getElement(String id) {
 		
 		Map<String, Object> element = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElement(), new Object[] { id });
 		
-		return vo2uiAdapter.convert(element);
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElement()).getFieldId(), element);
 	}
 }

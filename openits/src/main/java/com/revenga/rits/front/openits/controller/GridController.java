@@ -1,6 +1,8 @@
 package com.revenga.rits.front.openits.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class GridController {
 	
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get grid by id", notes = "Get grid by id")
-	public GridUI getGrid(
+	public ResponseEntity<GridUI> getGrid(
 			@ApiParam(
 					name = "id",
 					type = "Integer",
@@ -35,12 +37,13 @@ public class GridController {
 					example = "2",
 					required = true) @PathVariable Integer id) {
 
-		return gridBO.getGridUI(id, null);
+		
+		return new ResponseEntity<>(gridBO.getGridUI(id, null), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}/{params}")
 	@ApiOperation(value = "Get grid by id and params", notes = "Get grid by id and params")
-	public GridUI getGridParams(
+	public ResponseEntity<GridUI> getGridParams(
 			@ApiParam(
 				    name = "id",
 				    type = "Integer",
@@ -53,7 +56,7 @@ public class GridController {
 				    value = "Grid params",
 				    example = "ElementType:3",
 				    required = true) @PathVariable String params) {
-
-		return gridBO.getGridUI(id, params);
+		
+		return new ResponseEntity<>(gridBO.getGridUI(id, params), HttpStatus.OK);
 	}
 }
