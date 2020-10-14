@@ -1,3 +1,6 @@
+const REGEX_PATTERN_INIT=":{";
+const REGEX_PATTERN_END="}";
+
 function changeConnectedIcon() {
   try {
     if(webix.storage.session.get("system.conected")){
@@ -10,4 +13,9 @@ function changeConnectedIcon() {
   } catch (error) {
     
   }
+}
+
+function prepareStr(str, data) {
+  var regex = new RegExp(REGEX_PATTERN_INIT+'(' + Object.keys(data).join('|') + ')'+REGEX_PATTERN_END, 'g');
+  return str.replace(regex, (m, $1) => data[$1] || m);
 }

@@ -1,6 +1,7 @@
 import * as elementTypeMap from "../elementTypeMap.js";
 import { panelData } from "../../data/panelData.js";
 import { availablePictos } from "../../data/pmvpicto.js";
+import {ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
 
 export function getLinesOfText(panelType, zone, subPanel) {
   let panelConfig = JSON.parse(panelData[panelType]["panel"]);
@@ -42,16 +43,8 @@ export function generateIcon(element, suffix = "") {
     elementState = state;
   }
 
-  if (typeof elementState != "undefined") {
-    if (elementState == 0) {
-      color = "gold";
-    } else if (elementState == 1) {
-      color = "green";
-    } else if (elementState == 2) {
-      color = "purple";
-    } else if (elementState == 3) {
-      color = "red";
-    }
+  if(typeof elementState != 'undefined') {
+    color = ICON_COLOR[elementState];
   }
 
   

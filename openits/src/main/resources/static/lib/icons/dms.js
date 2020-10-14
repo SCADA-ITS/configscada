@@ -1,4 +1,5 @@
 import * as elementTypeMap from "../elementTypeMap.js";
+import {ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
 
 export function generateIcon(element, suffix = "") {
   // check for the status message we should use
@@ -46,15 +47,7 @@ export function generateIcon(element, suffix = "") {
   }
   
   if(typeof elementState != 'undefined') {
-    if (elementState == 0) {
-      color = "gold";
-    } else if (elementState == 1) {
-      color = "green";
-    } else if (elementState == 2) {
-      color = "purple";
-    } else if (elementState == 3) {
-      color = "red";
-    }
+    color = ICON_COLOR[elementState];
   }
 
   let pmv_str = "";

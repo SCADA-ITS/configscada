@@ -219,187 +219,215 @@ export let columnsElementConfig = {
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:19.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:15": { //"Gust_Wind_Speed"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:15.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:14": { //"Average_Wind_Direction"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:14.alias"),
 					tooltip: true, 
-					autoheight:true				},
+					autoheight:true,
+					rotate:true			},
 			},
 			"ElementTypeParam:1:2:2": { //"Sub_Surface_Temperature"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:2.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:12": { //"Snow_Fall_Intensity"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:12.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:20": { //"Visibility"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:20.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:6": { //"Concentration_NaCl"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:6.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:18": { //"Dew_Point_Temperature"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:18.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:8": { //"Concentration_CaCl"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:8.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:9": { //"Road_Condition"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:9.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:16": { //"Gust_Wind_Direction"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:16.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:21": { //"Black_Ice_Signal"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:21.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
 			"ElementTypeParam:1:2:3": {  //"Freeze_Point" 
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:3.alias"),
 					tooltip: true, 
-					autoheight:true				},
+					autoheight:true,
+					rotate:true		
+				},
 			},
             "ElementTypeParam:1:2:11": { //"Precipitation_Intensity"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:11.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:13": {  //"Average_Wind_Speed"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:13.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:1": { //"Surface_Temperature"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:1.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:5": { //"Water_Depth"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:5.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:10": { //"Relative_Humidity"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:10.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:7": { //"Concentration_MgCl2"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:7.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:17": { //"Air_Temperature"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:17.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:22": { //"Prediction_Alarm_Code"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:22.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:4": { //"Air_Pressure"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:4.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:24": { //"door open"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:24.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:25": { //"power supply fail"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:25.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:26": { //"battery low"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:26.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:27": { //"overload UPS"
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:27.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			},
             "ElementTypeParam:1:2:28": { //plc status
 				"header": {
 					text: $.i18n("ElementTypeParam:1:2:28.alias"),
 					tooltip: true, 
-					autoheight:true
+					autoheight:true,
+					rotate:true
 				},
 			}
 		},

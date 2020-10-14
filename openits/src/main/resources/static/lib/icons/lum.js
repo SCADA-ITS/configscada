@@ -1,4 +1,5 @@
 import * as elementTypeMap from "../elementTypeMap.js";
+import {ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
 
 export function generateIcon(element, suffix="") {
 
@@ -17,15 +18,7 @@ export function generateIcon(element, suffix="") {
   }
   
   if(typeof elementState != 'undefined') {
-    if (elementState == 0) {
-      color = "gold";
-    } else if (elementState == 1) {
-      color = "green";
-    } else if (elementState == 2) {
-      color = "purple";
-    } else if (elementState == 3) {
-      color = "red";
-    }
+    color = ICON_COLOR[elementState];
   }
 
   let lux_str =
@@ -69,27 +62,9 @@ export function updateLumIcon(element, suffix="") {
       document.getElementById(element.id + suffix + ":Value").innerHTML = new_value.value;
     }
 
-    // changes the color based on the state
-    let color = "";
-    let elementState = element.state;
-
-    if(typeof elementState != 'undefined') {
-      if (elementState == 0) {
-        color = "#ffcc00";
-      } else if (elementState == 1) {
-        color = "#008000";
-      } else if (elementState == 2) {
-        color = "#800080";
-      } else if (elementState == 3) {
-        color = "#ff0000";
-      }
-
-      document.getElementById(element.id + suffix + ":IconBackground").style[
-        "stroke"
-      ] = color;
-      document.getElementById(element.id + suffix + ":ValueBackground").style[
-        "stroke"
-      ] = color;
-    }
+    // changes the color based on the status
+    let color = ICON_COLOR[element.state];
+    document.getElementById(element.id + suffix + ":IconBackground").style["stroke"] = color;
+    document.getElementById(element.id + suffix + ":ValueBackground").style["stroke"] = color;
   }
 }

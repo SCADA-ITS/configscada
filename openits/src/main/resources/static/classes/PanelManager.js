@@ -128,8 +128,6 @@ export default class PanelManager {
     }
 
 	loadComponent(){
-		console.log("INICIO LOADCOMPONENT");
-		console.log(this.orderId);
 		this.elementReady('[view_id="' + "pmvSignalForm" + this.orderId + '"]').then((c) => {
 			let spinnerDivToAdd = document.createElement("div");
 			spinnerDivToAdd.setAttribute("id", "pmvSignalForm"  + this.orderId + "spinner");
@@ -140,7 +138,6 @@ export default class PanelManager {
 		});
 		
 		this.graphqlEType.load().then(dataElement => {
-			console.log("ANTES DOIT");
 			this.doIt(dataElement);
 			webix.ui(this.getComponent(), $$('pmvSignalForm' + this.orderId));
 			this.doActions();
@@ -201,37 +198,65 @@ export default class PanelManager {
 					}
 					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					break;
+				case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
+					if(this.values !== null){
+						let contador2 = 0;
+						Object.entries(this.values).map(([k, item]) => {
+							let code = this.config.cod_listaCells[contador2];
+							if (code !== undefined) {
+								if (code.split("_")[10] === "G") {
+									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+								} else {
+									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+										try {
+											let value_text = null;
+											value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
+											if (value_text !== null)
+												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
+										} catch (e) {
+											console.log(e);
+										}
+									}
+								}
+							}
+							contador2 += 1;
+						});
+					}
+					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
+					break;	
 			}
 		});
 
 	}
 
 	doIt(commandElementType) {
-		console.log("dentro del doit");
 		this.config = configData(commandElementType,this.scale,this.orderId);
-		console.log(this.config);
-		this.widgets = {
-			id:"tree_zone_panelManager_" + this.orderId,
-			rows:[
-			  {
-				id:"filterWid_panelManager_" + this.orderId,
-				view:"text",
-				labelPosition:"top"
-			  },
-			  {
-				view:"tree",
-				id:"list_panelManager_" + this.orderId,
-				width:280,
-				height:380,
-				scroll:"auto",
-				drag:true,
-				template:"{common.icon()} <img src='./img/pictograms/#image#.#type_img#' style='float:right; margin:3px 4px 0px 1px; width:28px;visibility:#visibility#'> #value#",
-				data: this.config.availablePictosList,
-			  }
-			]
-		  };
 
-		  this.grid = {
+		if(this.panelManagerType !== elementTypeMap.PANELMANAGER_TYPE_PLAN) {
+			this.widgets = {
+				id:"tree_zone_panelManager_" + this.orderId,
+				rows:[
+				{
+					id:"filterWid_panelManager_" + this.orderId,
+					view:"text",
+					labelPosition:"top"
+				},
+				{
+					view:"tree",
+					id:"list_panelManager_" + this.orderId,
+					width:280,
+					height:380,
+					scroll:"auto",
+					drag:true,
+					template:"{common.icon()} <img src='./img/pictograms/#image#.#type_img#' style='float:right; margin:3px 4px 0px 1px; width:28px;visibility:#visibility#'> #value#",
+					data: this.config.availablePictosList,
+				}
+				]
+			};
+		} else {
+			this.widgets = {}	
+		}
+		this.grid = {
 			view:"abslayout",
 			id:"grid_panelManager_" + this.orderId,
 			type:"space",
@@ -260,223 +285,97 @@ export default class PanelManager {
 		let controlCPermitido  = true;
 
 		//SI ES UN PANEL DEL ELEMENTFORM PONEMOS EL BOTON SEÑALIZAR
-		if(this.panelManagerType === elementTypeMap.PANELMANAGER_TYPE_PANEL) {
-			$$("tree_zone_panelManager_" + this.orderId).addView({
-				id: "tree_zone_panelManager_button_" + this.orderId,
-				view:"button", value:"Señalizar", click:function(){
-					let v_commands_values = [];
-					let control = true;
-					let tamanio = true;
-					let v_values = [];
-					let v_values_texts = {};
-					let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
-					let control_text = false;
-					datos.v_id_list.forEach(element =>{
-						if (element.split("_")[2] === "T") {
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
-							control_text = true;
-						}
-						if (element.split("_")[2] === "G") {//Pictogramas
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
-							control_text = true;
-						}
-					});
-
-					if (control_text) {
-						let unique_id_text_panels = [...new Set(v_id_text_panels)];
-						unique_id_text_panels.forEach(element =>{
-							v_values_texts[element] = null;  //para poder unir las lineas
+		switch (this.panelManagerType) {
+			case elementTypeMap.PANELMANAGER_TYPE_PANEL:
+				$$("tree_zone_panelManager_" + this.orderId).addView({
+					id: "tree_zone_panelManager_button_" + this.orderId,
+					view:"button", value:"Señalizar", click:function(){
+						let v_commands_values = [];
+						let control = true;
+						let tamanio = true;
+						let v_values = [];
+						let v_values_texts = {};
+						let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
+						let control_text = false;
+						datos.v_id_list.forEach(element =>{
+							if (element.split("_")[2] === "T") {
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
+								control_text = true;
+							}
+							if (element.split("_")[2] === "G") {//Pictogramas
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
+								control_text = true;
+							}
 						});
-					}
-
-					datos.v_id_list.forEach(element =>{
-						if (element.split("_")[2] === "G") {//Pictogramas
-							let valor = $$(element).data.src;
-							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
-						}
-						if (element.split("_")[2] === "T") {//Text
-							let valor = $$(element).config.value;
-
-							//QUITAMOS LOS :$ por si hubiera
-							if (valor.search(":$")>0) {
-								let v_array = valor.split(":$");
-								let cadena = "";
-								for (let i = 0;i<v_array.length; i++ ){
-									cadena = cadena + v_array[i];
-								}
-								valor = cadena;
-							}
-							//SUSTITUIMOS LOS :%xxx:% por su caracter
-
-							valor = replaceSpecial(valor);
-
-							for(let i = 0; i < valor.length; i++) {
-								let ptype = null;
-								try {
-									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
-								} catch (e){
-									//console.log(e);
-								}
-								if (ptype !== undefined && ptype !== null) {
-									//console.log(ptype);
-								} else {
-									webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
-									controlCPermitido = false;
-								}
-							}							
-
-							let v_suma = 0;
-							//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
-							//Sumamos los que tenemos 
-							if(controlCPermitido){
-								for(let i = 0; i < valor.length; i++) {
-									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
-									v_suma = v_suma + parseInt(ptype.split("x")[0]);
-								}
-				
-								if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
-									tamanio = false;
-								}
-
-								if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
-									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
-								} else {
-									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
-								}
-								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
-							}
-						}
-					});
-
-					Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
-					if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
-						for (let i=0;i<v_values.length; i++) {
-							v_commands_values.push({
-								"commandElementTypeParamId": datos.commands[i],
-								"value": v_values[i]
+	
+						if (control_text) {
+							let unique_id_text_panels = [...new Set(v_id_text_panels)];
+							unique_id_text_panels.forEach(element =>{
+								v_values_texts[element] = null;  //para poder unir las lineas
 							});
 						}
-						var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-							sendCommandElement(commands: $commands)  
-							}`;
-						var graphql = webix.proxy("GraphQL", sendCommand);
-						graphql.save({
-						"commands": [
-							{
-							"commandElementTypeId":datos.v_commandtypeId,
-							"elementId": datosId,
-							"commandElementValues": v_commands_values
+	
+						datos.v_id_list.forEach(element =>{
+							if (element.split("_")[2] === "G") {//Pictogramas
+								let valor = $$(element).data.src;
+								(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
 							}
-						]
-						}).then(() => {
-							$$("panelManager" + datos.elementId).hide();
-							webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-						});
-					}else{
-						if(!tamanio) {
-							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
-						} else {
-							if(!control) {
-								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
-							}
-						}
-					}
-				}
-			}, 2);
-		} else if(this.panelManagerType === elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL) {
-			$$("tree_zone_panelManager_" + this.orderId).addView({
-				id: "tree_zone_panelManager_button_" + this.orderId,
-				view:"button", value:"Señalizar", click:function(){
-					let v_commands_values = [];
-					let control = true;
-					let tamanio = true;
-					let v_values = [];
-					let v_values_texts = {};
-					let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
-					let control_text = false;
-					datos.v_id_list.forEach(element => {
-						if (element.split("_")[2] === "T") {
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
-							control_text = true;
-						}
-						if (element.split("_")[2] === "G") {//Pictogramas
-							v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
-							control_text = true;
-						}
-					});
-
-					if (control_text) {
-						let unique_id_text_panels = [...new Set(v_id_text_panels)];
-						unique_id_text_panels.forEach(element =>{
-							v_values_texts[element] = null;  //para poder unir las lineas
-						});
-					}
-
-					datos.v_id_list.forEach(element => {
-						if (element.split("_")[2] === "G") {//Pictogramas
-							let valor = $$(element).data.src;
-							(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
-						}
-						if (element.split("_")[2] === "T") {//Text
-							let valor = $$(element).config.value;
-
-							//QUITAMOS LOS :$ por si hubiera
-							if (valor.search(":$")>0) {
-								let v_array = valor.split(":$");
-								let cadena = "";
-								for (let i = 0;i<v_array.length; i++ ){
-									cadena = cadena + v_array[i];
+							if (element.split("_")[2] === "T") {//Text
+								let valor = $$(element).config.value;
+	
+								//QUITAMOS LOS :$ por si hubiera
+								if (valor.search(":$")>0) {
+									let v_array = valor.split(":$");
+									let cadena = "";
+									for (let i = 0;i<v_array.length; i++ ){
+										cadena = cadena + v_array[i];
+									}
+									valor = cadena;
 								}
-								valor = cadena;
-							}
-							//SUSTITUIMOS LOS :%xxx:% por su caracter
-
-							valor = replaceSpecial(valor);
-
-							for(let i = 0; i < valor.length; i++) {
-								console.log("COMPROBAMOS LA CADENA SI TIENE CARACTERES NO PERMITIDOS");
-								console.log(valor[i].charCodeAt());
-								console.log(datos.pictos_permitidos);
-								console.log(datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId]);
-								let ptype = null;
-								try {
-									ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
-								} catch (e){
-									console.log(e);
-								}
-								if (ptype !== undefined && ptype !== null) {
-									console.log(ptype);
-								} else {
-									webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
-									controlCPermitido = false;
-								}
-							}	
-
-							let v_suma = 0;
-							//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
-							//Sumamos los que tenemos 
-							if(controlCPermitido){
+								//SUSTITUIMOS LOS :%xxx:% por su caracter
+	
+								valor = replaceSpecial(valor);
+	
 								for(let i = 0; i < valor.length; i++) {
-									let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
-									v_suma = v_suma + parseInt(ptype.split("x")[0]);
+									let ptype = null;
+									try {
+										ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+									} catch (e){
+										//console.log(e);
+									}
+									if (ptype !== undefined && ptype !== null) {
+										//console.log(ptype);
+									} else {
+										webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
+										controlCPermitido = false;
+									}
+								}							
+	
+								let v_suma = 0;
+								//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
+								//Sumamos los que tenemos 
+								if(controlCPermitido){
+									for(let i = 0; i < valor.length; i++) {
+										let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+										v_suma = v_suma + parseInt(ptype.split("x")[0]);
+									}
+					
+									if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+										tamanio = false;
+									}
+	
+									if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
+									} else {
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
+									}
+									//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 								}
-				
-								if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
-									tamanio = false;
-								}
-
-								if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
-									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
-								} else {
-									v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
-								}
-								//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
 							}
-						}
-					});
-					Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
-					if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
-						for (let idt= 0; idt < datosId.length; idt++) {
+						});
+	
+						Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
+						if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
 							for (let i=0;i<v_values.length; i++) {
 								v_commands_values.push({
 									"commandElementTypeParamId": datos.commands[i],
@@ -491,65 +390,387 @@ export default class PanelManager {
 							"commands": [
 								{
 								"commandElementTypeId":datos.v_commandtypeId,
-								"elementId": datosId[idt],
+								"elementId": datosId,
 								"commandElementValues": v_commands_values
 								}
 							]
 							}).then(() => {
+								$$("panelManager" + datos.elementId).hide();
 								webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-								$$("panelManager" + datos.elementId).destructor();
 							});
-						}
-						
-					}else{
-						if(!tamanio) {
-							webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
-						} else {
-							if(!control) {
-								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+						}else{
+							if(!tamanio) {
+								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
+							} else {
+								if(!control) {
+									webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+								}
 							}
 						}
 					}
-				}
-			}, 2);
-		}
+				}, 2);
 
-		//console.log(this.config.cod_listaCells);
-		this.config.cod_listaCells.forEach(element => {
-			if (element.split("_")[10] === "G") { 
-				webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + this.orderId).$view, {
-					$drop:function(source, target, event){
-						var id = target.getAttribute("view_id");
-
-						var dnd = webix.DragControl.getContext();
-						var value = dnd.from.getItem(dnd.source[0]);
-
-						if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + orderId].includes(value.image))
-						{
-							$$(id).setValues({src:null});
-							webix.message({
-								text: "PICTOGRAMA ERRONEO",
-								type: "error",
-								expire: 10000,
-							});
-						} else {
-							$$(id).setValues({src:value.image, file_type: value.type_img });
-						}
+				this.config.cod_listaCells.forEach(element => {
+					if (element.split("_")[10] === "G") { 
+						webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + this.orderId).$view, {
+							$drop:function(source, target, event){
+								var id = target.getAttribute("view_id");
+		
+								var dnd = webix.DragControl.getContext();
+								var value = dnd.from.getItem(dnd.source[0]);
+		
+								if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + orderId].includes(value.image))
+								{
+									$$(id).setValues({src:null});
+									webix.message({
+										text: "PICTOGRAMA ERRONEO",
+										type: "error",
+										expire: 10000,
+									});
+								} else {
+									$$(id).setValues({src:value.image, file_type: value.type_img });
+								}
+							}
+						});
+					} 
+				});
+				this.config.v_id_list.forEach(element => {
+					if (element.split("_")[2] === "T") { 
+						$$(element).attachEvent("onTimedKeyPress",function(obj){
+							//console.log(obj);
+						});
 					}
 				});
-			} 
-		});
-		this.config.v_id_list.forEach(element => {
-			if (element.split("_")[2] === "T") { 
-				$$(element).attachEvent("onTimedKeyPress",function(obj){
-					//console.log(obj);
+				$$("filterWid_panelManager_" + this.orderId).attachEvent("onTimedKeyPress",function(){
+					$$("list_panelManager_" + this.orderId).filter("#value#",this.getValue());
 				});
-			}
-		});
-		$$("filterWid_panelManager_" + this.orderId).attachEvent("onTimedKeyPress",function(){
-			$$("list_panelManager_" + this.orderId).filter("#value#",this.getValue());
-		});
 
+			break;
+			case elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL:
+				$$("tree_zone_panelManager_" + this.orderId).addView({
+					id: "tree_zone_panelManager_button_" + this.orderId,
+					view:"button", value:"Señalizar", click:function(){
+						let v_commands_values = [];
+						let control = true;
+						let tamanio = true;
+						let v_values = [];
+						let v_values_texts = {};
+						let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
+						let control_text = false;
+						datos.v_id_list.forEach(element => {
+							if (element.split("_")[2] === "T") {
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
+								control_text = true;
+							}
+							if (element.split("_")[2] === "G") {//Pictogramas
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
+								control_text = true;
+							}
+						});
+	
+						if (control_text) {
+							let unique_id_text_panels = [...new Set(v_id_text_panels)];
+							unique_id_text_panels.forEach(element =>{
+								v_values_texts[element] = null;  //para poder unir las lineas
+							});
+						}
+	
+						datos.v_id_list.forEach(element => {
+							if (element.split("_")[2] === "G") {//Pictogramas
+								let valor = $$(element).data.src;
+								(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
+							}
+							if (element.split("_")[2] === "T") {//Text
+								let valor = $$(element).config.value;
+	
+								//QUITAMOS LOS :$ por si hubiera
+								if (valor.search(":$")>0) {
+									let v_array = valor.split(":$");
+									let cadena = "";
+									for (let i = 0;i<v_array.length; i++ ){
+										cadena = cadena + v_array[i];
+									}
+									valor = cadena;
+								}
+								//SUSTITUIMOS LOS :%xxx:% por su caracter
+	
+								valor = replaceSpecial(valor);
+	
+								for(let i = 0; i < valor.length; i++) {
+									let ptype = null;
+									try {
+										ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+									} catch (e){
+										console.log(e);
+									}
+									if (ptype !== undefined && ptype !== null) {
+										//console.log(ptype);
+									} else {
+										webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
+										controlCPermitido = false;
+									}
+								}	
+	
+								let v_suma = 0;
+								//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
+								//Sumamos los que tenemos 
+								if(controlCPermitido){
+									for(let i = 0; i < valor.length; i++) {
+										let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+										v_suma = v_suma + parseInt(ptype.split("x")[0]);
+									}
+					
+									if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+										tamanio = false;
+									}
+	
+									if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
+									} else {
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
+									}
+									//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
+								}
+							}
+						});
+						Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
+						if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
+							for (let idt= 0; idt < datosId.length; idt++) {
+								for (let i=0;i<v_values.length; i++) {
+									v_commands_values.push({
+										"commandElementTypeParamId": datos.commands[i],
+										"value": v_values[i]
+									});
+								}
+								var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+									sendCommandElement(commands: $commands)  
+									}`;
+								var graphql = webix.proxy("GraphQL", sendCommand);
+								graphql.save({
+								"commands": [
+									{
+									"commandElementTypeId":datos.v_commandtypeId,
+									"elementId": datosId[idt],
+									"commandElementValues": v_commands_values
+									}
+								]
+								}).then(() => {
+									webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+									$$("panelManager" + datos.elementId).destructor();
+								});
+							}
+							
+						}else{
+							if(!tamanio) {
+								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
+							} else {
+								if(!control) {
+									webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+								}
+							}
+						}
+					}
+				}, 2);
+
+				this.config.cod_listaCells.forEach(element => {
+					if (element.split("_")[10] === "G") { 
+						webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + this.orderId).$view, {
+							$drop:function(source, target, event){
+								var id = target.getAttribute("view_id");
+		
+								var dnd = webix.DragControl.getContext();
+								var value = dnd.from.getItem(dnd.source[0]);
+		
+								if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + orderId].includes(value.image))
+								{
+									$$(id).setValues({src:null});
+									webix.message({
+										text: "PICTOGRAMA ERRONEO",
+										type: "error",
+										expire: 10000,
+									});
+								} else {
+									$$(id).setValues({src:value.image, file_type: value.type_img });
+								}
+							}
+						});
+					} 
+				});
+				this.config.v_id_list.forEach(element => {
+					if (element.split("_")[2] === "T") { 
+						$$(element).attachEvent("onTimedKeyPress",function(obj){
+							//console.log(obj);
+						});
+					}
+				});
+				$$("filterWid_panelManager_" + this.orderId).attachEvent("onTimedKeyPress",function(){
+					$$("list_panelManager_" + this.orderId).filter("#value#",this.getValue());
+				});
+
+			break;
+			case elementTypeMap.PANELMANAGER_TYPE_PLAN:
+
+			break;
+			case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
+				$$("tree_zone_panelManager_" + this.orderId).addView({
+					id: "tree_zone_panelManager_button_" + this.orderId,
+					view:"button", value:"Señalizar", click:function(){
+						let v_commands_values = [];
+						let control = true;
+						let tamanio = true;
+						let v_values = [];
+						let v_values_texts = {};
+						let v_id_text_panels = []; // por si tenemos distintas zonas con texto como ocurre en el 28 
+						let control_text = false;
+						datos.v_id_list.forEach(element =>{
+							if (element.split("_")[2] === "T") {
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_T_" + orderId);
+								control_text = true;
+							}
+							if (element.split("_")[2] === "G") {//Pictogramas
+								v_id_text_panels.push("panel_" + element.split("_")[1] + "_G_" + orderId);
+								control_text = true;
+							}
+						});
+	
+						if (control_text) {
+							let unique_id_text_panels = [...new Set(v_id_text_panels)];
+							unique_id_text_panels.forEach(element =>{
+								v_values_texts[element] = null;  //para poder unir las lineas
+							});
+						}
+	
+						datos.v_id_list.forEach(element =>{
+							if (element.split("_")[2] === "G") {//Pictogramas
+								let valor = $$(element).data.src;
+								(valor === undefined || valor === null) ? control = false : v_values_texts["panel_" + element.split("_")[1] + "_G_" + orderId] = valor; //v_values.push(valor);
+							}
+							if (element.split("_")[2] === "T") {//Text
+								let valor = $$(element).config.value;
+	
+								//QUITAMOS LOS :$ por si hubiera
+								if (valor.search(":$")>0) {
+									let v_array = valor.split(":$");
+									let cadena = "";
+									for (let i = 0;i<v_array.length; i++ ){
+										cadena = cadena + v_array[i];
+									}
+									valor = cadena;
+								}
+								//SUSTITUIMOS LOS :%xxx:% por su caracter
+	
+								valor = replaceSpecial(valor);
+	
+								for(let i = 0; i < valor.length; i++) {
+									let ptype = null;
+									try {
+										ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[2];
+									} catch (e){
+										//console.log(e);
+									}
+									if (ptype !== undefined && ptype !== null) {
+										//console.log(ptype);
+									} else {
+										webix.message({type:"error", text:"CARACTER NO PERMITIDO " + valor[i]});
+										controlCPermitido = false;
+									}
+								}							
+	
+								let v_suma = 0;
+								//COMPROBAMOS EL TAMAÑO DE LA CADENA RESULTANTE
+								//Sumamos los que tenemos 
+								if(controlCPermitido){
+									for(let i = 0; i < valor.length; i++) {
+										let ptype = datos.pictos_permitidos["panel_" + element.split("_")[1] + "_T_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === valor[i].charCodeAt())[1];
+										v_suma = v_suma + parseInt(ptype.split("x")[0]);
+									}
+					
+									if(v_suma > parseInt(datos.cod_listaCells[parseInt(element.split("_")[1]) - 1].split("_")[12])) {
+										tamanio = false;
+									}
+	
+									if (v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] === null) {//es el primero 
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = valor;
+									} else {
+										v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] = v_values_texts["panel_" + element.split("_")[1] + "_T_" + orderId] + ":$" + valor;
+									}
+									//(valor === undefined || valor === null) ? control = false : v_values.push(valor);
+								}
+							}
+						});
+	
+						Object.entries(v_values_texts).map(([k, v]) => { v_values.push(v); });
+						if (control && tamanio && controlCPermitido) { //Si están todos los pics rellenos , esto es igual para pictos que para lineas
+							for (let i=0;i<v_values.length; i++) {
+								v_commands_values.push({
+									"commandElementTypeParamId": datos.commands[i],
+									"value": v_values[i]
+								});
+							}
+							var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+								sendCommandElement(commands: $commands)  
+								}`;
+							var graphql = webix.proxy("GraphQL", sendCommand);
+							graphql.save({
+							"commands": [
+								{
+								"commandElementTypeId":datos.v_commandtypeId,
+								"elementId": datosId,
+								"commandElementValues": v_commands_values
+								}
+							]
+							}).then(() => {
+								$$("panelManager" + datos.elementId).hide();
+								webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+							});
+						}else{
+							if(!tamanio) {
+								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
+							} else {
+								if(!control) {
+									webix.message({type:"error", text:$.i18n("lbl_panel_signaling_error")});
+								}
+							}
+						}
+					}
+				}, 2);
+
+				this.config.cod_listaCells.forEach(element => {
+					if (element.split("_")[10] === "G") { 
+						webix.DragControl.addDrop($$("panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + this.orderId).$view, {
+							$drop:function(source, target, event){
+								var id = target.getAttribute("view_id");
+		
+								var dnd = webix.DragControl.getContext();
+								var value = dnd.from.getItem(dnd.source[0]);
+		
+								if (!datos.pictos_permitidos["panel_" + element.split("_")[1] + "_" + element.split("_")[10] + "_" + orderId].includes(value.image))
+								{
+									$$(id).setValues({src:null});
+									webix.message({
+										text: "PICTOGRAMA ERRONEO",
+										type: "error",
+										expire: 10000,
+									});
+								} else {
+									$$(id).setValues({src:value.image, file_type: value.type_img });
+								}
+							}
+						});
+					} 
+				});
+				this.config.v_id_list.forEach(element => {
+					if (element.split("_")[2] === "T") { 
+						$$(element).attachEvent("onTimedKeyPress",function(obj){
+							//console.log(obj);
+						});
+					}
+				});
+				$$("filterWid_panelManager_" + this.orderId).attachEvent("onTimedKeyPress",function(){
+					$$("list_panelManager_" + this.orderId).filter("#value#",this.getValue());
+				});
+			break;
+		}
 	}
 
 	configExportData() {
@@ -617,8 +838,10 @@ export default class PanelManager {
 		let panel_config = panelData[data.id].panel;
 		let cfgJson = JSON.parse(panel_config.replace('\"','"'));
 		let cdata = generateCodeList(cfgJson);
+
 		let cellList = cdata[0];
 		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList,this.orderId);
+
 		let allowedList = pictosPermitidos[0];
 		let controlCPermitido = true;
 		let dataList = this.configExportData();
@@ -645,7 +868,7 @@ export default class PanelManager {
 			panelHash[item.split("_")[1]].numLineas = parseInt(item.split("_")[4]) + 1;
 		  }
 		});
-  
+
 		Object.entries(panelHash).map(([k, v]) => {
 		  if (v.type === "G"){
 			datos.push($$("panel_" + k + "_G_" + this.orderId).data.src);
@@ -655,7 +878,6 @@ export default class PanelManager {
 				//quitamos los :% si hubiera
 				let tdata = $$("panel_" + k + "_T_L_" + i + "_" + this.orderId).data.value;
 				let datoFormateado = this.replaceSpecial(tdata);
-				console.log(allowedList);
 				//Comprobamos que no tiene ningun caracter no permitido
 				for(let i = 0; i < datoFormateado.length; i++) {
 					let ptype = null;
@@ -665,7 +887,7 @@ export default class PanelManager {
 						console.log(e);
 					}
 					if (ptype !== undefined && ptype !== null) {
-						console.log(ptype);
+						//console.log(ptype);
 					} else {
 						webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
 						controlCPermitido = false;
@@ -680,7 +902,6 @@ export default class PanelManager {
 			datos.push(texto);
 		  }
 		});
-
 		if(controlCPermitido){
 			return datos;
 		} else {
@@ -829,8 +1050,6 @@ function pictosPermitidos(data,cellList,orderId) {
 					}				
 				});
 			} catch {}
-			console.log("control6");
-			console.log(orderId);
 
 			pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] + "_" + orderId] = v_graphs;
 		}
@@ -851,7 +1070,6 @@ function configData(data,scale,orderId) {
 	let cellList = cdata[0];
 	let maxTamX = cdata[1];
 	let maxTamY = cdata[2];
-	console.log("control2");
 	let pictos_activos = {};
 	let pictos_permitidos_A = pictosPermitidos(data.elementTypeParams,cellList,orderId);
 	let pictos_permitidos = pictos_permitidos_A[0];
@@ -875,8 +1093,6 @@ function configData(data,scale,orderId) {
 	});
 	let cells_s = [];
 	let numElement = 0;
-	console.log("ANTES PINTAR");
-	console.log(cfgJson);
 	//PINTAMOS
 	cfgJson.Subpaneles.forEach(element => {
 		element.Zonas.forEach(item => {
@@ -892,7 +1108,7 @@ function configData(data,scale,orderId) {
 			let v_template = 8; //padding del template se come 2px por cada lado
 			//Aqui dependiendo si es picto o texto lo modificaremos. 
 			//console.log(pictos_activos);
-			console.log("PINTAMOS");
+
 			let v_src = pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] !== undefined && pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] !== null ? pictos_activos["panel_" + cellList[numElement].split("_")[1] + "_" + cellList[numElement].split("_")[10] + "_" + orderId] : null;
 			//console.log(v_src);
 			let v_file = null;

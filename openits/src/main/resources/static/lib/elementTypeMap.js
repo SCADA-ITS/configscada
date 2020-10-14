@@ -133,7 +133,7 @@ export const PANEL_MANAGER_CONFIG = "5:1";
 export const PANELMANAGER_TYPE_PANEL = 1;
 export const PANELMANAGER_TYPE_MULTI_PANEL = 2;
 export const PANELMANAGER_TYPE_PLAN = 3;
-
+export const PANELMANAGER_TYPE_PLAN_EDIT = 4;
 
 export function getElementType(elementIdString) {
   let ret = elementIdString.split(":")[POSITION_OF_ELEMENT_TYPE_ID];

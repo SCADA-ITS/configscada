@@ -4,17 +4,13 @@ import * as dms from "./icons/dms.js";
 import * as bar from "./icons/bar.js";
 import * as etd from "./icons/etd.js";
 import * as meteo from "./icons/meteo.js";
-import * as lux from "./icons/lux.js";
 import * as lum from "./icons/lum.js";
 import * as co from "./icons/co.js";
-import * as no from "./icons/no.js";
 import * as opac from "./icons/opac.js";
 import * as anem_int from "./icons/anem_int.js";
-import * as anem_ext from "./icons/anem_ext.js";
 import * as fan from "./icons/fan.js";
 import * as zone from "./icons/zone.js";
 import * as sos from "./icons/sos.js";
-import * as sem from "./icons/sem.js";
 import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
@@ -31,6 +27,50 @@ import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
 import * as elementTypeMap from "./elementTypeMap.js";
+import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
+
+
+export function generateIcon(element, suffix="", state="", values) {
+  if (element.elementType.id === ELEMENT_TYPE.ID_10_DMS) {
+    return generateDMSIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_24_PMV_A_C
+      || element.elementType.id === ELEMENT_TYPE.ID_26_PMV_64X64
+      || element.elementType.id === ELEMENT_TYPE.ID_27_PMV_A_B
+      || element.elementType.id === ELEMENT_TYPE.ID_28_PMV_192X64
+      || element.elementType.id === ELEMENT_TYPE.ID_29_PMV_B_D
+      || element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
+      || element.elementType.id === ELEMENT_TYPE.ID_31_PMV
+      || element.elementType.id === ELEMENT_TYPE.ID_35_PMV) {
+    return generateFullMatrixPanelIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
+      || element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR) {
+    return generateETDIcon(element, suffix, state, values);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX) {
+    return generateLuxIcon(element, suffix);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_14_LUM) {
+    return generateLumIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_19_CO) {
+    return generateCoIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_20_NO) {
+    return generateNoIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_21_OPAC) {
+    return generateOpacIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_18_ANEM_INT) {
+    return generateAnemIntIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_17_ANEM_EXT) {
+    return generateAnemExtIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_9_FAN) {
+    return generateFanIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_8_BAR) {
+    return generateBarIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_13_SEM) {
+    return generateSemIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
+    return generateZoneIcon(element, suffix, state);
+  } else{
+    return null;
+  }
+}
 
 export function generateDMSIcon(element, suffix="", state="") {
   let pmv_str = dms.generateIcon(element, suffix, state);
@@ -47,19 +87,13 @@ export function generateFullMatrixPanelIcon(element, suffix="", state="") {
   return full_matrix_panel_str;
 }
 
-export function generateETDIcon(element, values, suffix="", state="") {
+export function generateETDIcon(element, suffix="", state="",values) {
   let etd_str = etd.generateIcon(element, values, suffix, state);
   return etd_str;
 }
 
-export function generateMeteoIcon(element, suffix="", state="") {
-  let meteo_str = meteo.generateIcon(element, suffix, state);    
-  return meteo_str;
-}
-
-export function generateLuxIcon(element, suffix="", state="") {
-  let lux_str = lux.generateIcon(element, suffix, state);
-  return lux_str;
+export function generateLuxIcon(element, suffix="") {
+  return createIcon(element, suffix);
 }
 
 export function generateLumIcon(element, suffix="", state="") {
@@ -72,9 +106,8 @@ export function generateCoIcon(element, suffix="", state="") {
   return co_str;
 }
 
-export function generateNoIcon(element, suffix="", state="") {
-  let no_str = no.generateIcon(element, suffix, state);
-  return no_str;
+export function generateNoIcon(element, suffix="") {
+  return createIcon(element, suffix);
 }
 
 export function generateOpacIcon(element, suffix="", state="") {
@@ -88,8 +121,7 @@ export function generateAnemIntIcon(element, suffix="", state="") {
 }
 
 export function generateAnemExtIcon(element, suffix="", state="") {
-  let anem_ext_str = anem_ext.generateIcon(element, suffix, state);
-  return anem_ext_str;
+  return createIcon(element, suffix);
 }
 
 export function generateFanIcon(element, suffix="", state="") {
@@ -102,9 +134,8 @@ export function generateBarIcon(element, suffix="", state="") {
   return bar_str;
 }
 
-export function generateSemIcon(element, suffix="", state="") {
-  let sem_str = sem.generateIcon(element, suffix, state);
-  return sem_str;
+export function generateSemIcon(element, suffix="") {
+  return createIcon(element, suffix);
 }
 
 export function generateZoneIcon(element, suffix="", state="") {
@@ -157,17 +188,17 @@ export function getElementIcon(element, suffix="") {
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {
     zone.updateZoneIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_12_LUX) {
-    lux.updateLuxIcon(element, suffix);
+    updateIcon(element, suffix);
   }  else if(elementType === elementTypeMap.ELEMENT_TYPE_14_LUM) {
     lum.updateLumIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT) {
-    anem_ext.updateAnemExtIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT) {
     anem_int.updateAnemIntIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_19_CO) {
     co.updateCoIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_20_NO) {
-    no.updateNoIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC) {
     opac.updateOpacIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
@@ -177,7 +208,7 @@ export function getElementIcon(element, suffix="") {
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
     sos.updateSosIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM) {
-    sem.updateSemIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE) {
     fire.updateFireIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_16_MEG) {
@@ -310,7 +341,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_12_LUX:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_13_SEM:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix, state) + '</g>';
@@ -335,7 +366,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS:
     case elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
@@ -356,7 +387,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
       break;                              
     case elementTypeMap.ELEMENT_TYPE_33_ETD:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, values, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
       break;      
     default:
       console.log("Icon not found");
@@ -385,4 +416,84 @@ export function drawInlineSVG(canvas, ctx, rawSVG, callback) {
     console.log("ERROR: ")
     console.log(e);
   }  
+}
+
+function createIcon(element, suffix="") {
+  let elementId= element.id+suffix;
+  let color = ICON_COLOR[element.state];
+  //svg icon String
+  let iconStr = ELEMENT_TYPE.values[element.elementType.id].svgRaw;
+  let params={
+    "elementId": elementId,
+    "color": color
+  };
+  //param values
+  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
+    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
+      // if(typeof element.elementValues != 'undefined' && element.elementValues){
+        let key = Object.keys(item)[0];
+        // try {
+          let tempValue = element.elementValues.find(
+            (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+          );
+          if(tempValue){
+            params[key]=tempValue.value;
+          }
+        // } catch (error) {
+        //   console.error(error);
+        //   alert(element.elementType.id);
+        // }
+      // }
+    });
+  }
+  return prepareStr(iconStr, params);
+}
+
+function updateIcon(element, suffix="") {
+  // changes the color based on the status
+  if (typeof element.state != 'undefined' && element.state) {
+    let color = ICON_COLOR[element.state];
+    if(document.getElementById(element.id + suffix + ":IconBackground") != null){
+      document.getElementById(element.id + suffix + ":IconBackground").style["stroke"] = color;
+    }
+    if(document.getElementById(element.id + suffix + ":ValueBackground") != null){
+      document.getElementById(element.id + suffix + ":ValueBackground").style["stroke"] = color;
+    }
+  }
+  // change params
+  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
+    let params={};
+    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
+      let key = Object.keys(item)[0];
+      let tempValue = element.elementValues.find(
+        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+      );
+      if(typeof tempValue != 'undefined' && tempValue && document.getElementById(element.id + suffix + ":Value") != null){
+        params[key]=tempValue.value;
+        document.getElementById(element.id + suffix + ":Value").innerHTML = tempValue.value;
+      }
+    });
+  }
+  // specific case
+  if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM){
+    if (typeof params != 'undefined' && params) {
+      if (params[SEM_STATUS].value == "0") {
+        document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
+      } else if (params[SEM_STATUS].value == "1") {
+        document.getElementById(element.id + suffix + "green").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
+      } else if (params[SEM_STATUS].value == "2") {
+        document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "yellow").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
+      } else if (params[SEM_STATUS].value == "3") {
+        document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "red").style["visibility"] = "visible";
+      }
+    }
+  }
 }
