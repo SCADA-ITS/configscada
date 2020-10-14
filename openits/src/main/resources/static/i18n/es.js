@@ -984,7 +984,7 @@ var i18_es = {
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL*/
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1004,7 +1004,7 @@ var i18_es = {
     "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
     "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N",
     "AlarmConfig:22": "ALARMA VMS SIN CONEXI&Oacute;N",
-    "AlarmConfig:23": "ALARMA VMS SIN CONEXI&Oacute;N",
+    "AlarmConfig:23": "ALARMA VMS SIN CONEXI&Oacute;N",*/
 
 	"pictograms.type.1":"Advertencia de peligro",
 	"pictograms.type.2":"Prioridad",
