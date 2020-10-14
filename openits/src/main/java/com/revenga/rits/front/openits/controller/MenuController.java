@@ -20,14 +20,14 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
-@RequestMapping(value = "/api/v2/menu", produces = { "application/json", "application/xml" })
-@Api(value = "Menu", tags = { "MENU" })
+@RequestMapping(value = "/api/v1/menus", produces = { "application/json", "application/xml" })
+@Api(value = "Menus", tags = { "MENUS" })
 public class MenuController {
 
 	@Autowired
 	MenuGroupService menuGroupService;
 
-	@GetMapping(value = "/list")
+	@GetMapping
 	@ApiOperation(value = "List all menu groups", notes = "Get list of all menu groups")
 	public List<MenuGroup> getAll() {
 

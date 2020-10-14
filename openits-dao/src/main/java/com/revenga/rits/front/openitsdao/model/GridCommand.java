@@ -27,7 +27,7 @@ public class GridCommand implements Serializable {
 
 	private Boolean multiselect;
 
-	private Long position;
+	private Integer position;
 
 	//bi-directional many-to-one association to Grid
 	@JsonIgnore
@@ -73,11 +73,11 @@ public class GridCommand implements Serializable {
 		this.multiselect = multiselect;
 	}
 
-	public Long getPosition() {
+	public Integer getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(Long position) {
+	public void setPosition(Integer position) {
 		this.position = position;
 	}
 

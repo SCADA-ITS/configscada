@@ -28,4 +28,19 @@ public class ElementTypeBO {
 		
 		return vo2uiAdapter.convert(elementTypes);
 	}
+	
+	public Map<String, Object> getElementType(String id) {
+		
+		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementTypeById(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(elementType);
+	}
+	
+	public List<Map<String, Object>> getElementsByElementType(String elementTypeId) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { elementTypeId });
+		
+		return vo2uiAdapter.convert(elements);
+	}
 }

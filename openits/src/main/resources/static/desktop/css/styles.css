@@ -204,6 +204,20 @@ body{
 .time-template .webix_template{
     padding-top: 4px;
 }
+.alarm-template{
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    font-size: 13px;
+}
+.alarm-template .webix_template{
+    padding-top: 4px;
+}
+
+.alarm-template .webix_badge{
+	background-color: #ef2929;
+	right: 10px;
+}
 
 .user-logo{
     /*border-radius: 50px;*/
@@ -321,8 +335,15 @@ body{
 .empty-app-inner{
 	width:100%;
 	height:100%;
-
 	text-align: center;
+}
+
+.empty-app-inner-text{
+	position: relative;
+    top: 46%;
+    font-size: 30px;
+    color: white;
+    padding-left: 16px;
 }
 .empty-app-inner .webix_icon, .empty-app-inner img{
 	position: relative;
@@ -474,15 +495,15 @@ body{
 	padding-left: 10px;
 }
 
-.equipment-table {
+/*.equipment-table {
 	padding-left: 6px;
 	padding-top: 6px;
-}
+}*/
 
-.equipment-list {
+/*.equipment-list {
 	padding-right: 6px;
 	padding-top: 6px;
-}
+}*/
 .webix_segment_0, .webix_segment_1, .webix_segment_N{
 	
 	background: transparent;
@@ -517,4 +538,28 @@ body{
 .table-field-icons {
 	
 	vertical-align: -3px;
+}
+
+.status_ws_connected {
+	font-size: 11px;
+	font-weight: 400;
+	color: #4caf50;
+	padding: 4px 4px;
+	border-radius: 10px;
+	background: transparent;
+	border-color: #4caf50;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.status_ws_disconnected {
+	font-size: 11px;
+	font-weight: 400;
+	color: #ef2929;
+	padding: 4px 4px;
+	border-radius: 10px;
+	background: transparent;
+	border-color: #ef2929;
+	border-style: solid;
+	border-width: 1px;
 }

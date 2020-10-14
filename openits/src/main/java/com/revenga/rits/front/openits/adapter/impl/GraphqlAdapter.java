@@ -5,6 +5,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -85,7 +88,18 @@ private final static String GRAPHQL_URL = "graphql.url";
 			root = mapper.readTree(response);
 			JsonNode data = root.path("data").path(method);
 			
-			list = mapper.readValue(data.toString(), mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
+			if (data.isArray()) {
+			
+				list = mapper.readValue(data.toString(), mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
+			}
+			else {
+				
+				list = new ArrayList<>();
+				
+				list.add(mapper.readValue(data.toString(), new TypeReference<HashMap<String, Object>>() {}));
+			}
+			
+			
 			
 		} catch (IOException e) {
 			log.error(e.getMessage());

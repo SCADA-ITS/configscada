@@ -28,9 +28,9 @@
 --
 	CREATE TABLE ui.menu_items (
 		id serial primary key,
-		menu_group_id int8 NOT NULL,
-		position int8 NOT NULL,
-		module_id int8 NULL,
+		menu_group_id int NOT NULL,
+		position int NOT NULL,
+		module_id int NULL,
 		label varchar NOT NULL,
 		icon varchar NULL,
 		name varchar NOT NULL,

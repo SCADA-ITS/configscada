@@ -10,9 +10,10 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.grid_field_group_operations (
-		id serial primary key,
+		id int not null,
 		name varchar NOT NULL,
-		description varchar NULL
+		description varchar NULL,
+		CONSTRAINT pk_grid_field_group_operations PRIMARY KEY (id)
 	);
 	
 	ALTER TABLE ui.grid_field_group_operations SET TABLESPACE tbl_ui;
@@ -23,10 +24,11 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.grid_field_data_types (
-		id serial primary key,
+		id int not null,
 		name varchar NOT NULL,
 		format varchar NULL,
-		description varchar NULL
+		description varchar NULL,
+		CONSTRAINT pk_grid_field_data_types PRIMARY KEY (id)
 	);
 	
 	ALTER TABLE ui.grid_field_data_types SET TABLESPACE tbl_ui;
@@ -38,7 +40,7 @@
 --
 	CREATE TABLE ui.grids (
 		id serial primary key,
-		adapter_id int8 NULL,
+		adapter_id int NULL,
 		label varchar NOT NULL,
 		multiselect bool NOT NULL,
 		sort bool NOT NULL,
@@ -62,11 +64,11 @@
 --
 	CREATE TABLE ui.grid_commands (
 		id serial primary key,
-		grid_id int8 NOT NULL,
-		position int8 NOT NULL,
+		grid_id int NOT NULL,
+		position int NOT NULL,
 		label varchar NOT NULL,
 		"default" bool NOT NULL,
-		module_id int8 NOT NULL,
+		module_id int NOT NULL,
 		multiselect bool NOT NULL
 	);
 	
@@ -85,9 +87,9 @@
 --
 	CREATE TABLE ui.grid_fields (
 		id serial primary key,	
-		grid_id int8 NOT NULL,
-		grid_field_data_type_id int8 NOT NULL,
-		position int8 NOT NULL,
+		grid_id int NOT NULL,
+		grid_field_data_type_id int NOT NULL,
+		position int NOT NULL,
 		required bool NOT NULL,
 		parameterized bool NOT NULL,
 		extended bool NOT NULL,
@@ -96,10 +98,11 @@
 		label_tooltip varchar NULL,
 		source_field varchar NOT NULL,
 		isPk bool NOT NULL,
+		align varchar NULL,
 		needs_translation bool NOT NULL,
 		grouping_summary bool NOT NULL,
-		width_px int8 NOT NULL,
-		grid_field_group_operation_id int8 NULL,
+		width_px int NOT NULL,
+		grid_field_group_operation_id int NULL,
 		enabled bool NULL,
 		visible bool NULL
 	);
@@ -121,7 +124,7 @@
 --
 	CREATE TABLE ui.grid_field_icons (
 		id serial primary key,
-		grid_field_id int8 NOT NULL,
+		grid_field_id int NOT NULL,
 		icon varchar NOT NULL,
 		value varchar NOT NULL,
 		enabled bool
@@ -140,7 +143,7 @@
 --
 	CREATE TABLE ui.grid_field_replacements (
 		id serial primary key,
-		grid_field_id int8 NOT NULL,
+		grid_field_id int NOT NULL,
 		label varchar NOT NULL,
 		value varchar NOT NULL,
 		enabled bool

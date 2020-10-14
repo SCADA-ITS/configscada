@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
-@RequestMapping(value = "/api/v2/grid", produces = { "application/json", "application/xml" })
+@RequestMapping(value = "/api/v1/grids", produces = { "application/json", "application/xml" })
 @Api(value = "Grids", tags = { "GRIDS" })
 public class GridController {
 

@@ -36,10 +36,18 @@ public class Adapter implements Serializable {
 	@JoinColumn(name="adapter_type_id")
 	private AdapterType adapterType;
 
-	//uni-directional many-to-one association to DataSource
-	@ManyToOne
-	@JoinColumn(name="data_source_id")
-	private DataSource dataSource;
+	//uni-directional many-to-many association to DataSource
+	@ManyToMany
+	@JoinTable(
+		name="adapter_data_sources"
+		, joinColumns={
+			@JoinColumn(name="adapter_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="data_source_id")
+			}
+		)
+	private List<DataSource> dataSources;
 
 	public Adapter() {
 	}
@@ -114,12 +122,12 @@ public class Adapter implements Serializable {
 		this.adapterType = adapterType;
 	}
 
-	public DataSource getDataSource() {
-		return this.dataSource;
+	public List<DataSource> getDataSources() {
+		return this.dataSources;
 	}
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+	public void setDataSources(List<DataSource> dataSources) {
+		this.dataSources = dataSources;
 	}
 
 }

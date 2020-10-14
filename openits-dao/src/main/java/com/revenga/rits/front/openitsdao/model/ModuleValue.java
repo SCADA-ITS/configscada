@@ -3,6 +3,8 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the module_values database table.
@@ -26,6 +28,7 @@ public class ModuleValue implements Serializable {
 	private ModuleParam moduleParam;
 
 	//bi-directional many-to-one association to Module
+	@JsonIgnore
 	@ManyToOne
 	private Module module;
 

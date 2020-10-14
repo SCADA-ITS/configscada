@@ -30,7 +30,7 @@ public class MenuItem implements Serializable {
 
 	private String name;
 
-	private Long position;
+	private Integer position;
 
 	private Boolean visible;
 
@@ -95,11 +95,11 @@ public class MenuItem implements Serializable {
 		this.name = name;
 	}
 
-	public Long getPosition() {
+	public Integer getPosition() {
 		return this.position;
 	}
 
-	public void setPosition(Long position) {
+	public void setPosition(Integer position) {
 		this.position = position;
 	}
 

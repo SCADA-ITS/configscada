@@ -19,7 +19,7 @@ public class DataSourceParam implements Serializable {
 	private Integer id;
 
 	@Column(name="data_source_type_id")
-	private Long dataSourceTypeId;
+	private Integer dataSourceTypeId;
 
 	private String description;
 
@@ -40,11 +40,11 @@ public class DataSourceParam implements Serializable {
 		this.id = id;
 	}
 
-	public Long getDataSourceTypeId() {
+	public Integer getDataSourceTypeId() {
 		return this.dataSourceTypeId;
 	}
 
-	public void setDataSourceTypeId(Long dataSourceTypeId) {
+	public void setDataSourceTypeId(Integer dataSourceTypeId) {
 		this.dataSourceTypeId = dataSourceTypeId;
 	}
 
