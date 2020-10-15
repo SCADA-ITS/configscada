@@ -24,8 +24,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class GridAdapter {
 	
-	private final static String GRID_ADAPTER_ELEMENT = "grid.adapter.element";
-	private final static String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
+	private static final String GRID_ADAPTER_ELEMENT = "grid.adapter.element";
+	private static final String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;

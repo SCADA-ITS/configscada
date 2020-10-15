@@ -114,6 +114,21 @@ if (window.app)
 											//return `<img src="${gridFieldIcon[0].icon}" />`;	
 										}
 									}
+									else if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
+
+										
+										let gridFieldReference = field.gridFieldReferences[0];
+										
+										let refField = metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
+
+							
+										if (refField != undefined) {
+
+											value = app.em.getByField(em_types[gridFieldReference.emId].id , gridFieldReference.emField, data[refField[0].sourceField]);
+											
+											value = value[0][gridFieldReference.emFieldReturned];
+										}
+									}
 									else {
 
 										value = data[field.sourceField];
@@ -133,7 +148,8 @@ if (window.app)
 
 									if (state != undefined) {
 
-										let iconElementState = "ElementValueState_" + state + ".png";
+										//let iconElementState = "ElementValueState_" + state + ".png";
+										let iconElementState = state.replace(":", "_") + ".png";
 
 										return `<div style="width: ${field.widthPx}">
   													<span>${value}</span>		

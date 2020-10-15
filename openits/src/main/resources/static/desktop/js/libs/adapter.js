@@ -30,9 +30,14 @@ if (window.app)
 
 							dataItem.id = element.id;
 							
-							if (element.state != undefined) {
+//							if (element.state != undefined) {
+//							
+//								dataItem.state = element.state;
+//							}
+
+							if (element.elementTypeState != undefined) {
 							
-								dataItem.state = element.state;
+								dataItem.state = element.elementTypeState.id;
 							}
 
 							if (element.elementValues != undefined && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
@@ -43,8 +48,20 @@ if (window.app)
 
 									dataItem[elementTypeParamId] = {};
 
-									dataItem[elementTypeParamId].state = elementValue.state;
-									dataItem[elementTypeParamId].value = elementValue.value;
+									if (elementValue.elementValueState != undefined) {
+										
+										dataItem[elementTypeParamId].state = elementValue.elementValueState.id;	
+									}
+									
+									if (elementValue.value != undefined) {
+									
+										dataItem[elementTypeParamId].value = elementValue.value;	
+									}
+									else {
+									
+										dataItem[elementTypeParamId].value = ""; 	
+									}
+									
 								});
 							}
 							

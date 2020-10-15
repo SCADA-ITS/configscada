@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(value = "/api/v1/element_types", produces = { "application/json", "application/xml" })
 @Api(value = "ElementTypes", tags = { "ELEMENT TYPES" })
 public class ElementTypeController {
-
+	
 	@Autowired
 	ElementTypeBO elementTypeBO;
 	
@@ -57,5 +57,18 @@ public class ElementTypeController {
 					required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(elementTypeBO.getElementsByElementType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{id}/elementTypeStates")
+	@ApiOperation(value = "Get element type states by elementTypeId", notes = "Get element type states by elementTypeId")
+	public ResponseEntity<Object> getElementTypeStatesByElementTypeId(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Element type identifier",
+					example = "ElementType:3",
+					required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(elementTypeBO.getElementTypeStatesByElementType(id), HttpStatus.OK);
 	}
 }

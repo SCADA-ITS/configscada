@@ -21,7 +21,7 @@ public class GridField implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
+
 	private String align;
 
 	private Boolean enabled;
@@ -61,6 +61,10 @@ public class GridField implements Serializable {
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldIcon> gridFieldIcons;
 
+	//bi-directional many-to-one association to GridFieldReference
+	@OneToMany(mappedBy="gridField")
+	private List<GridFieldReference> gridFieldReferences;
+
 	//bi-directional many-to-one association to GridFieldReplacement
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldReplacement> gridFieldReplacements;
@@ -90,7 +94,7 @@ public class GridField implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getAlign() {
 		return this.align;
 	}
@@ -231,6 +235,28 @@ public class GridField implements Serializable {
 		gridFieldIcon.setGridField(null);
 
 		return gridFieldIcon;
+	}
+
+	public List<GridFieldReference> getGridFieldReferences() {
+		return this.gridFieldReferences;
+	}
+
+	public void setGridFieldReferences(List<GridFieldReference> gridFieldReferences) {
+		this.gridFieldReferences = gridFieldReferences;
+	}
+
+	public GridFieldReference addGridFieldReference(GridFieldReference gridFieldReference) {
+		getGridFieldReferences().add(gridFieldReference);
+		gridFieldReference.setGridField(this);
+
+		return gridFieldReference;
+	}
+
+	public GridFieldReference removeGridFieldReference(GridFieldReference gridFieldReference) {
+		getGridFieldReferences().remove(gridFieldReference);
+		gridFieldReference.setGridField(null);
+
+		return gridFieldReference;
 	}
 
 	public List<GridFieldReplacement> getGridFieldReplacements() {

@@ -27,9 +27,14 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 	private static final String FIELD_ELEMENT_VALUES = "elementValues";
 	private static final String FIELD_ELEMENT_TYPE_PARAM = "elementTypeParam";
 	private static final String FIELD_ID = "id";
+	private static final String FIELD_LABEL_ALIAS = "labelAlias";
 	private static final String FIELD_DATA_TYPE = "dataType";
+	private static final String FIELD_ELEMENT_VALUE_STATE = "elementValueState";
 	private static final String FIELD_STATE = "state";
 	private static final String FIELD_VALUE = "value";
+	private static final String FIELD_ELEMENT_TYPE_STATE = "elementTypeState";
+	private static final String FIELD_ELEMENT_TYPE_STATE_STATE = "state";
+	private static final String FIELD_ELEMENT_TYPE_STATE_STATE_LABEL = "stateLabel";
 	
 	@Autowired
 	VO2UIAdapter vo2uiAdapter;
@@ -49,6 +54,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 
 					dataRow.putAll(entity);
 					
+					flattenElementTypeState(dataRow);
 					flattenElementValues(dataRow);
 					
 					data.add(vo2uiAdapter.convert(fieldId, dataRow));
@@ -61,6 +67,25 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 		}
 
 		return data;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void flattenElementTypeState(Map<String, Object> dataRow) {
+		
+		if (dataRow.containsKey(FIELD_ELEMENT_TYPE_STATE)) {
+			
+			Object objElementTypeState = dataRow.get(FIELD_ELEMENT_TYPE_STATE);
+			
+			if (objElementTypeState instanceof Map) {
+				
+				Map<String, Object> elementTypeState = (Map<String, Object>) objElementTypeState; 
+				
+				dataRow.put(FIELD_ELEMENT_TYPE_STATE_STATE, elementTypeState.get(FIELD_ID));
+				dataRow.put(FIELD_ELEMENT_TYPE_STATE_STATE_LABEL, elementTypeState.get(FIELD_LABEL_ALIAS));
+			}
+			
+			dataRow.remove(FIELD_ELEMENT_TYPE_STATE);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -94,7 +119,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 										
 										String fieldParamId = (String) elementTypeParam.get(FIELD_ID);
 										Integer dataType = (Integer) elementTypeParam.get(FIELD_DATA_TYPE);
-										Integer state = (Integer) elementValue.get(FIELD_STATE);
+										Object elementValueStateObj = elementValue.get(FIELD_ELEMENT_VALUE_STATE);
 
 										String valueStr = (String) elementValue.get(FIELD_VALUE);
 										
@@ -121,9 +146,11 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 											value = Boolean.parseBoolean(valueStr);
 										}
 										
-										if (state != null) {
+										if (elementValueStateObj instanceof Map) {
 											
 											Object newValue = value;
+											
+											Map<String, Object> elementValueState = (Map<String, Object>) elementValueStateObj;
 										
 											dataRow.put(fieldParamId, new HashMap<>() {
 												/**
@@ -133,7 +160,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 
 												{
 													put(FIELD_VALUE, newValue);
-													put(FIELD_STATE, state);
+													put(FIELD_STATE, elementValueState.get(FIELD_ID));
 												}
 											});
 										}

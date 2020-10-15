@@ -13,6 +13,8 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 @Service
 public class ElementTypeBO {
 	
+	public static final String FIELD_ELEMENT_TYPE_STATES = "elementTypeStates";
+	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
@@ -38,12 +40,23 @@ public class ElementTypeBO {
 				.getById(voDataSourceAdapter.getDataSourceGetElementType()).getFieldId(), elementType);
 	}
 	
-	public List<Map<String, Object>> getElementsByElementType(String elementTypeId) {
+	public List<Map<String, Object>> getElementsByElementType(String id) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { elementTypeId });
+				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetElementsByElementType()).getFieldId(), elements);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> getElementTypeStatesByElementType(String id) {
+		
+		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementType(), new Object[] { id });
+		
+		Map<String, Object> elementTypeConverted = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElementType()).getFieldId(), elementType);
+		
+		return (List<Map<String, Object>>) elementTypeConverted.get(FIELD_ELEMENT_TYPE_STATES);	
 	}
 }

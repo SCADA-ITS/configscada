@@ -154,3 +154,24 @@
 	ALTER TABLE ui.grid_field_replacements ADD CONSTRAINT fk_grid_field_replacements_grid_fields FOREIGN KEY (grid_field_id) REFERENCES ui.grid_fields(id);
 	
 	ALTER TABLE ui.grid_field_replacements SET TABLESPACE tbl_ui;
+
+-- 
+-- Table: ui.grid_field_references
+-- Description: Grid field value calculated from another field and function
+-- Scope: ui
+--
+	CREATE TABLE ui.grid_field_references (
+		id serial primary key,
+		grid_field_id int NOT NULL,
+		ref_field_id int NOT NULL,
+		em_id varchar NOT NULL,
+		em_field varchar NOT NULL,
+		em_field_returned varchar NOT NULL,
+		enabled bool
+	);
+	
+	CREATE INDEX idx_grid_field_references_grid_fields ON ui.grid_field_references USING btree (grid_field_id);
+	
+	ALTER TABLE ui.grid_field_references ADD CONSTRAINT fk_grid_field_references_grid_fields FOREIGN KEY (grid_field_id) REFERENCES ui.grid_fields(id);
+	
+	ALTER TABLE ui.grid_field_references SET TABLESPACE tbl_ui;

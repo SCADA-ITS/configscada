@@ -10,6 +10,7 @@ function getViewEquipments(module, instance, args) {
 	//let jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypes.filter(elementType => elementType.visible === true && elementType.grid != undefined && elementType.grid !== "");
 
 	let jsonEquipmentTypesWithGridAssigned = app.em.getAll(em_types.elementType.id);
+	//app.em.getElementTypeState("ElementTypeState:43:2");
 	jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
 
 	let view = {
