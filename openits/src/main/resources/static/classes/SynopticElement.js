@@ -116,6 +116,7 @@ export default class synopticElement {
           || this.element.elementType.id === ELEMENT_TYPE.ID_29_PMV_B_D
           || this.element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
           || this.element.elementType.id === ELEMENT_TYPE.ID_31_PMV
+          || this.element.elementType.id === ELEMENT_TYPE.ID_32_PMV
           || this.element.elementType.id === ELEMENT_TYPE.ID_35_PMV) {  // MATRIX PANEL
           
             if(typeof this.element.elementValues === 'undefined' || !this.element.elementValues){

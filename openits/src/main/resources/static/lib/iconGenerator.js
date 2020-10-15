@@ -40,6 +40,7 @@ export function generateIcon(element, suffix="", state="", values) {
       || element.elementType.id === ELEMENT_TYPE.ID_29_PMV_B_D
       || element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
       || element.elementType.id === ELEMENT_TYPE.ID_31_PMV
+      || element.elementType.id === ELEMENT_TYPE.ID_32_PMV
       || element.elementType.id === ELEMENT_TYPE.ID_35_PMV) {
     return generateFullMatrixPanelIcon(element, suffix, state);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
@@ -370,6 +371,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
+    case elementTypeMap.ELEMENT_TYPE_32_PMV:  
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_28_PMV_192X64:
