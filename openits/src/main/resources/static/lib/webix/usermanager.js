@@ -4764,10 +4764,19 @@ Usage without proper license is prohibited.
             var item = this.$$("table").getItem(id);
             var column = id.column;
             if (column != "name") {
-                item[column] = !item[column];
-                item.selected = !item.selected;
-                this.$$("table").updateItem(id, item);
-                this.Save(id);
+                if(item[column] !== true){
+                    let va = ["name","$index","id"];
+                    Object.entries(item).map(([k, v]) => {
+                        if(!va.includes(k))
+                            if(k !== column){
+                                item[k] = false;
+                            }else{
+                                item[k] = true;
+                            }
+                    });
+                    this.$$("table").updateItem(id, item);
+                    this.Save(id);
+                }
             }
         };
         MatrixView.prototype.GetRoleColumns = function () {
@@ -4886,7 +4895,7 @@ Usage without proper license is prohibited.
                         header: "",
                         width: 45,
                         cssFormat: function (_, obj) { return (obj.selected ? "webix_um_row_select" : ""); },
-                        template: function (obj) {
+                        template: function (obj) { 
                             return obj.selected ? checkedIcon : notCheckedIcon;
                         },
                     },
@@ -4977,8 +4986,17 @@ Usage without proper license is prohibited.
             if (!this.ShowAll)
                 return;
             var item = this.$$("roles").getItem(id);
-            this.$$("roles").updateItem(id, { selected: !item.selected });
-            this.Save();
+            //this.$$("roles").updateItem(id, { selected: !item.selected });
+            if(item.selected === false){
+                Object.entries(this.$$("roles").data.pull).map(([k, v]) => {
+                    if(v.id.toString() !== id.toString() ){
+                        this.$$("roles").updateItem(v.id.toString(), { selected: false });
+                    }else{
+                        this.$$("roles").updateItem(v.id.toString(), { selected: true });
+                    }
+                });
+                this.Save();
+            }
         };
         RolesView.prototype.Filter = function () {
             this.$$("roles").filterByAll();

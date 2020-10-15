@@ -8,6 +8,7 @@ var i18_es = {
     "defaultheader.activealarms": "Alarmas no reconocidas",
     "defaultheader.equipment" : "Equipamiento ",
     "defaultheader.deActivealarms": "Alarmas reconocidas",
+    "defaultheader.users.manager": "User Manager",
 
     "login.Login": "Login",
 
@@ -1003,8 +1004,6 @@ var i18_es = {
     "AlarmConfig:19": "ALARMA OPAC SIN CONEXI&Oacute;N",
     "AlarmConfig:20": "ALARMA ETD_modbus SIN CONEXI&Oacute;N",
     "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N",
-    "AlarmConfig:22": "ALARMA VMS SIN CONEXI&Oacute;N",
-    "AlarmConfig:23": "ALARMA VMS SIN CONEXI&Oacute;N",
 
 	"pictograms.type.1":"Advertencia de peligro",
 	"pictograms.type.2":"Prioridad",

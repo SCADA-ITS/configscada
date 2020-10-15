@@ -178,7 +178,7 @@ export default class synopticElement {
               id: this.element.id,
               component: ELEMENT_TYPE.values[this.element.elementType.id].value,
               class: "capa_mapa",
-              visibility: "hidden",
+              //visibility: "hidden",
               state: this.element.state,
             });
   

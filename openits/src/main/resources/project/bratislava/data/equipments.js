@@ -389,46 +389,6 @@ export let columnsElementConfig = {
 					autoheight:true,
 					rotate:true
 				},
-			},
-            "ElementTypeParam:1:2:24": { //"door open"
-				"header": {
-					text: $.i18n("ElementTypeParam:1:2:24.alias"),
-					tooltip: true, 
-					autoheight:true,
-					rotate:true
-				},
-			},
-            "ElementTypeParam:1:2:25": { //"power supply fail"
-				"header": {
-					text: $.i18n("ElementTypeParam:1:2:25.alias"),
-					tooltip: true, 
-					autoheight:true,
-					rotate:true
-				},
-			},
-            "ElementTypeParam:1:2:26": { //"battery low"
-				"header": {
-					text: $.i18n("ElementTypeParam:1:2:26.alias"),
-					tooltip: true, 
-					autoheight:true,
-					rotate:true
-				},
-			},
-            "ElementTypeParam:1:2:27": { //"overload UPS"
-				"header": {
-					text: $.i18n("ElementTypeParam:1:2:27.alias"),
-					tooltip: true, 
-					autoheight:true,
-					rotate:true
-				},
-			},
-            "ElementTypeParam:1:2:28": { //plc status
-				"header": {
-					text: $.i18n("ElementTypeParam:1:2:28.alias"),
-					tooltip: true, 
-					autoheight:true,
-					rotate:true
-				},
 			}
 		},
 	},

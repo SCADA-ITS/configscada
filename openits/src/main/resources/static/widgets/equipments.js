@@ -18,7 +18,16 @@ function build_table(){
 				id:"equipmentMeasures",
 				header: $.i18n("equipment.tabbar.measures"), 
 				width:100,
-				body:measure.getComponent(),
+				body: {
+					view:"scrollview", body:{
+					  //padding:10,
+					  scroll:false, 
+					  //type:"clean", 
+					  rows:[
+						measure.getComponent(),
+					  ]
+					}
+				}
 			},
 			{
 				id:"equipmentParameter",

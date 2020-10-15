@@ -44,10 +44,14 @@ export default class EquipmentTable {
             id:"tabla_element_" + this.modeType,	
             view:"datatable",
             editable:true,
+            //scroll: true,
+            //maxWidth: 430,
+            //autowidth:true,
             yCount:20,
+            leftSplit:1,
             autoConfig:true,
             tooltip:true,
-            resizeColumn: { headerOnly:true },
+            //resizeColumn: { headerOnly:true },
             columns:[],
             data:[]
         };
@@ -168,6 +172,7 @@ export default class EquipmentTable {
 				{}
 			]
         };
+        console.log("tabla_element_" + this.modeType);
         let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
         if (this.mode === 2) {
             // waits for the element and starts drawing

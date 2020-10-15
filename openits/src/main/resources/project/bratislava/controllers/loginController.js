@@ -9,7 +9,7 @@ webix.ready(function() {
         $.i18n().locale = language_default;
     }
 
-    $.i18n().load( {
+    $.i18n().load({
         "en": i18_en,
         "es": i18_es, 
         "sk": i18_sk
@@ -34,7 +34,7 @@ webix.ready(function() {
                             bottomPadding: 18,
                             labelWidth: 150
                         },
-                        elements:[  
+                        elements:[
                             { "template": "<span class='webix_icon fa-user-circle-o'></span>Login", type: "header" },
                             {
                                 view: "text", 
@@ -116,11 +116,13 @@ webix.ready(function() {
                                             
                                             if (form.validate()) {
                                                 const encodedString = btoa((form.elements.user.data.value + ':' + form.elements.password.data.value).toString('utf8')).toString('base64');
-                                                webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.login")).then(function(data){
+                                                webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "login").then(function(data){
                                                     
+
                                                     switch (data.json().access) {
                                                         case "ALLOWED":
                                                             webix.storage.session.put("loginSession", data.json().id);
+                                                            webix.storage.session.put("userId", data.json().userId);
                                                             var paramUser = data.json().userId;
                                                             webix.proxy("GraphQL", `query($rowId: String!){
                                                                 getUser(userId: $rowId){
@@ -176,6 +178,7 @@ webix.ready(function() {
                                                             webix.alert({title:"ERROR", type:"alert-success", text:"ERROR"})
                                                             break;
                                                     }
+                                                    
                                                 });
                                             }
                                         }

@@ -12,6 +12,7 @@ import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import Synoptic from "../classes/Synoptic.js";
 import AlarmNotification from "../classes/AlarmNotification.js";
 import Alarms from "../classes/Alarms.js";
+import {usersmanager} from "../widgets/usersmanager.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -67,6 +68,10 @@ let viewCells = [
     {
         id: "jasper",
         rows: [jasper]
+    },
+    {
+        id: "usersmanager",
+        rows: [usersmanager]
     }];
 
     synopticData.forEach((item, index) => {

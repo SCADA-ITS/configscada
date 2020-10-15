@@ -8,8 +8,8 @@ export let genericTable = {
 export let menu_data_multi  = [
 { id: "structure", icon: "mdi mdi-view-column", value: $.i18n("menu.dashboard.title"), data:[
 	{ id: "syn0", icon:"mdi mdi-circle", value: $.i18n("defaultheader.dashboard")},
-	{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("defaultheader.cabinets")}
-	// { id: "syn1", icon:"mdi mdi-circle", value: $.i18n("defaultheader.panels")}
+	{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("defaultheader.cabinets")},
+	{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("defaultheader.panels")}
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("defaultheader.equipment")},
@@ -17,9 +17,9 @@ export let menu_data_multi  = [
 		{ id: "roles", icon:"mdi mdi-circle", value: $.i18n("menu.tables.roles")},
 		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("menu.tables.alarmsconfig")}
 	]},
-	// { id: "plans1", icon: "mdi mdi-clock", value:"Plans", data:[
-	// 	{ id: "plans", icon:"mdi mdi-circle", value: $.i18n("menu.plans.title")},
-	// 	{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
+	{ id: "plans1", icon: "mdi mdi-clock", value:"Plans", data:[
+		{ id: "plans", icon:"mdi mdi-circle", value: $.i18n("menu.plans.title")},
+		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
 	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("defaultheader.managementAlarms")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")}	
 ];
@@ -41,12 +41,30 @@ export let toolbar_data_menu  = {
 			on: {
 			  onMenuItemClick(id) {
 				if (id === 'logout') {
-				  webix.message('Loging out...');
-				  webix.storage.session.remove("loginSession");
-				  webix.storage.session.remove("app_user_language");
-				  webix.storage.session.remove("app_user_name");
-				  webix.storage.session.remove("app_user_permissions");
-				  window.location = "./login.html";
+					webix.message('Loging out...');
+
+					webix.storage.session.get("url.auth.path");
+					var paramUser = webix.storage.session.get("userId");
+					webix.proxy("GraphQL", `query($rowId: String!){
+						getUser(userId: $rowId){
+							id
+							name
+							password
+						}
+					}`).load({
+						rowId: paramUser
+					}).then(data2 => {
+						const encodedString = btoa((data2.name + ':' + data2.password).toString('utf8')).toString('base64');
+						console.log(data2.name);
+						console.log(data2.password);
+						webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "logout").then(function(data){
+							webix.storage.session.remove("loginSession");
+							webix.storage.session.remove("app_user_language");
+							webix.storage.session.remove("app_user_name");
+							webix.storage.session.remove("app_user_permissions");
+							window.location = "./login.html";
+						});
+					});
 				}
 			  }
 			}

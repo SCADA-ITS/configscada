@@ -1127,7 +1127,8 @@ function configData(data,scale,orderId) {
 					template:function(obj){
 						let v_css = "";
 						if(tamZoneX === tamZoneY){
-							v_css = "width: -moz-available;";
+							//v_css = "width: -moz-available;";
+							v_css = "width: 95%;";
 						} else {
 							if (tamZoneX > tamZoneY)
 								v_css = "width: " + ((tamZoneY * SCALE_ZONE) - v_border - v_padding - v_template ).toString() + "px;";
