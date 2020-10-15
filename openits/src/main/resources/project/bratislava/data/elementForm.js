@@ -27,12 +27,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:1:2:4",
 			"ElementTypeParam:1:2:19",
 			"ElementTypeParam:1:2:22",
-			"ElementTypeParam:1:2:20",
-			"ElementTypeParam:1:2:24",
-			"ElementTypeParam:1:2:25",
-			"ElementTypeParam:1:2:26",
-			"ElementTypeParam:1:2:27",
-			"ElementTypeParam:1:2:28"
+			"ElementTypeParam:1:2:20"
 		],
 		"rowCounts": 10,
 		"scroll": "y",  //y -> vertical x -> horizontal, false or true 
