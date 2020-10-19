@@ -864,7 +864,7 @@ export default class ElementForm {
 													panelMan.loadComponent();
 												},
 												onHide: function(obj){
-													if(Keyboard){
+													if(typeof keyLayout != 'undefined' && Keyboard){
 														Keyboard.close();
 													}
 													$$("panelManager" + idtype).destructor();

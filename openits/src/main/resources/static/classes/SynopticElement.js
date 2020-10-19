@@ -62,7 +62,8 @@ export default class synopticElement {
             || this.element.elementType.id === ELEMENT_TYPE.ID_9_FAN
             || this.element.elementType.id === ELEMENT_TYPE.ID_8_BAR
             || this.element.elementType.id === ELEMENT_TYPE.ID_13_SEM
-            || this.element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
+            || this.element.elementType.id === ELEMENT_TYPE.ID_7_ZONE
+            || this.element.elementType.id === ELEMENT_TYPE.ID_53_SEM) {
           
           // TODO a la espera de subir el resto del flujo a generico
           if((this.element.elementType.id === ELEMENT_TYPE.ID_10_DMS 
@@ -76,6 +77,7 @@ export default class synopticElement {
             || this.element.elementType.id === ELEMENT_TYPE.ID_19_CO
             || this.element.elementType.id === ELEMENT_TYPE.ID_20_NO
             || this.element.elementType.id === ELEMENT_TYPE.ID_21_OPAC
+            || this.element.elementType.id === ELEMENT_TYPE.ID_53_SEM
             ) && (typeof this.element.elementValues === 'undefined' || !this.element.elementValues) ){
             elementQuery.load({
               elem: this.element.id,
