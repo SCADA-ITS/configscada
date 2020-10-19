@@ -42,7 +42,8 @@ export function generateIcon(element, suffix="", state="", values) {
       || element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
       || element.elementType.id === ELEMENT_TYPE.ID_31_PMV
       || element.elementType.id === ELEMENT_TYPE.ID_32_PMV
-      || element.elementType.id === ELEMENT_TYPE.ID_35_PMV) {
+      || element.elementType.id === ELEMENT_TYPE.ID_35_PMV
+      || element.elementType.id === ELEMENT_TYPE.ID_36_PMV) {
     return generateFullMatrixPanelIcon(element, suffix, state);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
       || element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR) {
@@ -245,6 +246,8 @@ export function getElementIcon(element, suffix="") {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_36_PMV) {
+    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC) {
     atc.updateAtcIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL) {
@@ -381,6 +384,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_35_PMV:
+    case elementTypeMap.ELEMENT_TYPE_36_PMV:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_27_PMV_A_B:

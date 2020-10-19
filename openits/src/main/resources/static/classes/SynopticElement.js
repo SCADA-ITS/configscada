@@ -117,7 +117,8 @@ export default class synopticElement {
           || this.element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
           || this.element.elementType.id === ELEMENT_TYPE.ID_31_PMV
           || this.element.elementType.id === ELEMENT_TYPE.ID_32_PMV
-          || this.element.elementType.id === ELEMENT_TYPE.ID_35_PMV) {  // MATRIX PANEL
+          || this.element.elementType.id === ELEMENT_TYPE.ID_35_PMV
+          || this.element.elementType.id === ELEMENT_TYPE.ID_36_PMV) {  // MATRIX PANEL
           
             if(typeof this.element.elementValues === 'undefined' || !this.element.elementValues){
             elementQuery.load({

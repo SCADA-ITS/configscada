@@ -32,6 +32,7 @@ export const ELEMENT_TYPE_32_PMV = "32";
 export const ELEMENT_TYPE_33_ETD = "33";
 export const ELEMENT_TYPE_34_CABIN_SCN = "34";
 export const ELEMENT_TYPE_35_PMV = "35";
+export const ELEMENT_TYPE_36_PMV = "36";
 export const ELEMENT_TYPE_41_CABIN_ATC = "41";
 export const ELEMENT_TYPE_42_CABIN_NRL = "42";
 export const ELEMENT_TYPE_43_CABIN_NRS = "43";
