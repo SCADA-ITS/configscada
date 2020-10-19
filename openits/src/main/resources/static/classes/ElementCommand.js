@@ -210,16 +210,11 @@ export default class ElementCommand {
                 "CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D ||
               data.elementType.commandElementTypes[index].id ===
                 "CommandElementType:" +
-                  elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64 ||
-              data.elementType.commandElementTypes[index].id ===
-                "CommandElementType:" +
-                  elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP ||
-              data.elementType.commandElementTypes[index].id ===
-                "CommandElementType:" +
-                  elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A ||
-              data.elementType.commandElementTypes[index].id ===
-                "CommandElementType:" +
-                  elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
+                  elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64 
+                || data.elementType.commandElementTypes[index].id === "CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP 
+                || data.elementType.commandElementTypes[index].id === "CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A 
+                || data.elementType.commandElementTypes[index].id === "CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
+                || data.elementType.commandElementTypes[index].id === "CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
             ) {
               $$(this.commands).addView(
                 {
