@@ -89,6 +89,8 @@ var i18_es = {
     "ElementType:34.description": "ARMARIO_ELECTRICO_SCN",
     "ElementType:35.alias": "Panel",
     "ElementType:35.description": "Panel",
+    "ElementType:36.alias": "Panel Grafico-Texto",
+    "ElementType:36.description": "Panel Grafico-Texto",
     "ElementType:41.alias": "ARMARIO_ELECTRICO_ATC",
     "ElementType:41.description": "ARMARIO_ELECTRICO_ATC",
     "ElementType:42.alias": "ARMARIO_ELECTRICO_NRL",
@@ -103,6 +105,8 @@ var i18_es = {
     "ElementType:46.description": "ARMARIO_ELECTRICO_TOLL",
     "ElementType:47.alias": "ARMARIO_ELECTRICO_TU",
     "ElementType:47.description": "ARMARIO_ELECTRICO_TU",
+    "ElementType:53.alias": "SEM_AMBAR_AMBAR",
+    "ElementType:53.description": "SEM_AMBAR_AMBAR",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -220,10 +224,18 @@ var i18_es = {
 
     "ElementTypeParam:2:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:2:1:1003.description": "MANGO SESSION_UID",
-    "ElementTypeParam:9:2:1.alias": "Status",
-    "ElementTypeParam:9:2:1.description": "Status",
-    "ElementTypeParam:9:3:1.alias": "fan cmd",
-    "ElementTypeParam:9:3:1.description": "fan cmd",
+    "ElementTypeParam:9:2:1.alias": "Estado de la marcha",
+    "ElementTypeParam:9:2:1.description": "Estado de la marcha",
+    "ElementTypeParam:9:2:2.alias": "Nivel de Vibracion del Ventilador",
+    "ElementTypeParam:9:2:2.description": "Nivel de Vibracion del Ventilador",
+    "ElementTypeParam:9:2:3.alias": "Temperatura Rodamientos del Motor",
+    "ElementTypeParam:9:2:3.description": "Temperatura Rodamientos del Motor",
+    "ElementTypeParam:9:2:4.alias": "Temperatura Devanado del Motor",
+    "ElementTypeParam:9:2:4.description": "Temperatura Devanado del Motor",
+    "ElementTypeParam:9:2:5.alias": "Estado Modo Local",
+    "ElementTypeParam:9:2:5.description": "Estado Modo Local",
+    "ElementTypeParam:9:2:6.alias": "Estado Interruptor Ventilador",
+    "ElementTypeParam:9:2:6.description": "Estado Interruptor Ventilador",
     "ElementTypeParam:9:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:9:1:1003.description": "MANGO SESSION_UID",
 
@@ -578,6 +590,12 @@ var i18_es = {
     "ElementTypeParam:35:1:3.alias": "Road",
     "ElementTypeParam:35:1:4.alias": "Seccion",
     "ElementTypeParam:35:1:5.alias": "PK",
+    
+    "ElementTypeParam:36:1:1.alias": "Brand",
+    "ElementTypeParam:36:1:2.alias": "Model",
+    "ElementTypeParam:36:1:3.alias": "Road",
+    "ElementTypeParam:36:1:4.alias": "Seccion",
+    "ElementTypeParam:36:1:5.alias": "PK",
 
     "ElementTypeParam:41:1:1.alias": "PK",
     "ElementTypeParam:41:1:1.description": "PK",
@@ -838,6 +856,10 @@ var i18_es = {
     "CommandElementType:1:35": "REINICIAR",
     "CommandElementType:2:35": "SEÑALIZAR",
     "CommandElementType:3:35": "APAGAR",
+    
+    "CommandElementType:1:36": "REINICIAR",
+    "CommandElementType:2:36": "SEÑALIZAR",
+    "CommandElementType:3:36": "APAGAR",
 
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
@@ -849,7 +871,7 @@ var i18_es = {
     "lbl_order_window_alias_error": "Seleccione un alias por favor",
 
 
-    /*  BRATISLAVA */
+    /*  BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -983,7 +1005,7 @@ var i18_es = {
     "AlarmConfig:132": "ALARMA ARMARIO_EL&Eacute;CTRICO NO CONECTADO",
 
     "Alarm_recon": "Alarma ya reconocida",
-    "Alarm_deactivated": "Alarma ya desactivada",
+    "Alarm_deactivated": "Alarma ya desactivada",*/
 
 /*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",

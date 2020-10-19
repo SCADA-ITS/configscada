@@ -100,7 +100,7 @@ export const ELEMENT_TYPE = {
     "ElementType:33" :{ id: "ElementType:33", value: 33, scale_x: 28, scale_y: 28},
     "ElementType:34" :{ id: "ElementType:34", value: 34, scale_x: 28, scale_y: 28},
     "ElementType:35" :{ id: "ElementType:35", value: 35, scale_x: 28, scale_y: 28},
-    "ElementType:36" :{ id: "ElementType:36", value: 35, scale_x: 28, scale_y: 28},
+    "ElementType:36" :{ id: "ElementType:36", value: 36, scale_x: 28, scale_y: 28},
     "ElementType:41" :{ id: "ElementType:41", value: 41, scale_x: 28, scale_y: 28},
     "ElementType:42" :{ id: "ElementType:42", value: 42, scale_x: 28, scale_y: 28},
     "ElementType:43" :{ id: "ElementType:43", value: 43, scale_x: 28, scale_y: 28},
@@ -108,7 +108,7 @@ export const ELEMENT_TYPE = {
     "ElementType:45" :{ id: "ElementType:45", value: 45, scale_x: 28, scale_y: 28},
     "ElementType:46" :{ id: "ElementType:46", value: 46, scale_x: 28, scale_y: 28},
     "ElementType:47" :{ id: "ElementType:47", value: 47, scale_x: 28, scale_y: 28},
-    "ElementType:53" :{ id: "ElementType:53", value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM }
+    "ElementType:53" :{ id: "ElementType:53", value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM }
   }
 };
 

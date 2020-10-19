@@ -392,6 +392,7 @@ export default class ElementForm {
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
+							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
 							) {
 								let elementQuery = webix.proxy(
 									"GraphQL",`
@@ -628,6 +629,7 @@ export default class ElementForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
 				) {
 					//"ElementType:10"){
 					

@@ -319,6 +319,7 @@ export default class EquipmentTree {
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
+            || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
             ) {
               let elementQuery = webix.proxy(
                 "GraphQL",`
