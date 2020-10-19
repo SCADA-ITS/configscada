@@ -96,7 +96,12 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
-			"ElementTypeParam:9:2:1"
+			"ElementTypeParam:9:2:1",
+			"ElementTypeParam:9:2:2",
+			"ElementTypeParam:9:2:3",
+			"ElementTypeParam:9:2:4",
+			"ElementTypeParam:9:2:5",
+			"ElementTypeParam:9:2:6"
 		]
 	},
 	"ElementType:10": { 
@@ -321,7 +326,18 @@ export let columnsElementList = {
 				"alias",
 				"state"
 			]
-	}
+	},
+	"ElementType:53": { 
+		1:[
+			"alias",
+			"ElementTypeParam:53:1:1",
+			"ElementTypeParam:53:1:2"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
 }
 
 export let columnsElementConfig = {
@@ -705,11 +721,23 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
-            "ElementTypeParam:9:2:1": { //"status for Mango
+            "ElementTypeParam:9:2:1": { //"Gear Status
 				"header": [ $.i18n("ElementTypeParam:9:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:9:3:1": { //"comand for fan
-				"header": [ $.i18n("ElementTypeParam:9:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			"ElementTypeParam:9:2:2": { //"Fan Vibration Level
+				"header": [ $.i18n("ElementTypeParam:9:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:9:2:3": { //"Motor Bearing Temperature
+				"header": [ $.i18n("ElementTypeParam:9:2:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:9:2:4": { //"Motor Windings Temperature
+				"header": [ $.i18n("ElementTypeParam:9:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:9:2:5": { //"Mode State
+				"header": [ $.i18n("ElementTypeParam:9:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:9:2:6": { //"Fan Switch
+				"header": [ $.i18n("ElementTypeParam:9:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
@@ -1280,6 +1308,33 @@ export let columnsElementConfig = {
 				"rotate": false
 			}
 		}
-	}
+	},
+	"ElementType:53": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:53:1:1": {
+				"header": [ $.i18n("ElementTypeParam:13:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:53:1:2": {
+				"header": [ $.i18n("ElementTypeParam:13:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+             
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+            "ElementTypeParam:53:2:1": { //"status
+				"header": [ $.i18n("ElementTypeParam:53:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		}
+	},
 }
 
