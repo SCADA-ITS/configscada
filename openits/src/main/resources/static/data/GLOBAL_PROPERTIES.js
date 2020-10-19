@@ -1,4 +1,4 @@
-import {SVG_12_LUX, SVG_13_SEM, SVG_17_ANEM_EXT, SVG_20_NO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_12_LUX, SVG_13_SEM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_20_NO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -72,7 +72,11 @@ export const ELEMENT_TYPE = {
           {ANEM_EXT_WIND_SPEED: "1:2"}
         ]
       },
-    "ElementType:18" :{ id: "ElementType:18", value: 18, scale_x: 14.628, scale_y: 15.698},
+    "ElementType:18" :{ id: "ElementType:18", value: 18, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_18_ANEM_INT,
+    elementTypeParams:[
+      {ANEM_INT_WIND_SPEED: "1:2"}
+    ]
+  },
     "ElementType:19" :{ id: "ElementType:19", value: 19, scale_x: 14.628, scale_y: 15.698},
     "ElementType:20" :{ id: "ElementType:20", value: 20, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_20_NO,
         elementTypeParams:[

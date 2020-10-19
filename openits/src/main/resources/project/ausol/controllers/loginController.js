@@ -96,9 +96,11 @@ webix.ready(function() {
                                                         break;
                                                     case "en":
                                                         webix.storage.session.put("app_user_language", "en");
+                                                        webix.i18n.setLocale("en-EN");
                                                         break;
                                                     case "es":
                                                         webix.storage.session.put("app_user_language", "es");
+                                                        webix.i18n.setLocale("es-ES");
                                                         break;
                                                 }
                                                 window.location = "./login.html";                                     
@@ -112,11 +114,12 @@ webix.ready(function() {
                                             
                                             if (form.validate()) {
                                                 const encodedString = btoa((form.elements.user.data.value + ':' + form.elements.password.data.value).toString('utf8')).toString('base64');
-                                                webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.login")).then(function(data){
+                                                webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "login").then(function(data){
                                                     
                                                     switch (data.json().access) {
                                                         case "ALLOWED":
                                                             webix.storage.session.put("loginSession", data.json().id);
+                                                            webix.storage.session.put("userId", data.json().userId);
                                                             var paramUser = data.json().userId;
                                                             webix.proxy("GraphQL", `query($rowId: String!){
                                                                 getUser(userId: $rowId){
@@ -172,6 +175,7 @@ webix.ready(function() {
                                                             webix.alert({title:"ERROR", type:"alert-success", text:"ERROR"})
                                                             break;
                                                     }
+                                                    
                                                 });
                                             }
                                         }

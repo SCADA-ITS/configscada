@@ -3,6 +3,76 @@ import { getElementSVG, getElementIcon } from "../lib/iconGenerator.js";
 import ElementForm from "../classes/ElementForm.js";
 import { columnsElementFormList } from "../data/elementForm.js";
 
+
+webix.protoUI({
+  name: "sidemenu-win",
+  defaults: {
+    head:false,
+  },
+  $init: function(){
+    this.$ready.push(function() {
+      this.attachEvent("onShow", function() {
+        var base = this.$view.className.split("animated")[0];
+        this.$view.className = base + " animated slideInRight";  
+      })
+      this.attachEvent("onHide", function() {
+        this.$view.style.display = "block";
+        this.$view.className += " animated slideOutRight";  
+      })
+    });
+  }
+}, webix.ui.window);
+
+
+function getIconWidth(elementType, height) {
+  let ratio = 1;
+  let width = height;
+
+  switch(elementType) {
+    case "10":
+      ratio = height / 24;
+      width = 76 * ratio;
+      break;
+    case "24":
+      ratio = height / 64;
+      width = 48 * ratio;
+      break;
+    case "26":
+      ratio = height / 64;
+      width = 64 * ratio;
+      break;
+    case "28":
+      ratio = height / 64;
+      width = 32 * ratio;
+      break;
+    case "29":
+      ratio = height / 64;
+      width = 48 * ratio;
+      break;
+    case "30":
+      ratio = height / 64;
+      width = 128 * ratio;
+      break;
+    case "31":
+      ratio = height / 48;
+      width = 64 * ratio;
+      break;
+    case "32":
+      ratio = height / 96;
+      width = 64 * ratio;
+      break;
+    case "35":
+      ratio = height / 48;
+      width = 200 * ratio;
+      break;
+    default:
+      width = 32;
+      break;
+  }
+
+  return width;
+}
+
 export default class EquipmentTree {
   elementTree = [];
 
@@ -197,6 +267,7 @@ export default class EquipmentTree {
   }
 
   checkSelected(id) {
+    /*
     // check if there are objects selected
     let shouldEnableButton = false;
 
@@ -228,6 +299,7 @@ export default class EquipmentTree {
     } else {
       $$("element_tree_button").disable();
     }
+    */
 
   }
 
@@ -289,7 +361,9 @@ export default class EquipmentTree {
                   let height = 32;
                   let width = getIconWidth(thisElementType, height);
 
-                  $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+                  if(typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                    $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+                  }
                 });
             } else {
               let thisElementType = elementTypeMap.getElementType(element.id);
@@ -299,7 +373,10 @@ export default class EquipmentTree {
               let width = getIconWidth(thisElementType, height);
 
               getElementIcon(element, ":Tree");
-              $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+              // check if the tree exists
+              if(typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+              }
             }
         } catch (err) {
           console.log("Error: " + err.message);
@@ -310,26 +387,63 @@ export default class EquipmentTree {
     }
   }
 
-  getComponent() {
+  // got from Github
+  elementReady(selector) {
+    return new Promise((resolve, reject) => {
+      let el = document.querySelector(selector);
+      if (el) {
+        resolve(el);
+      }
+      new MutationObserver((mutationRecords, observer) => {
+        // Query for elements matching the specified selector
+        Array.from(document.querySelectorAll(selector)).forEach((element) => {
+          resolve(element);
+          //Once we have resolved we don't need the observer anymore.
+          observer.disconnect();
+        });
+      }).observe(document.documentElement, {
+        childList: true,
+        subtree: true,
+      });
+    });
+  }
+
+  getComponent(componentId="") {
     let self = this;
+
+    // waits for the element and starts drawing
+    this.elementReady('[view_id="' + "element_tree" + componentId + '"]').then(
+      (c) => {
+        let spinnerDivToAdd = document.createElement("div");
+        spinnerDivToAdd.setAttribute("id", "element_tree" + componentId + "spinner");
+        spinnerDivToAdd.setAttribute("class", "spinner");
+        document
+          .querySelector('[view_id="' + "element_tree" + componentId + '"]')
+          .prepend(spinnerDivToAdd);
+      }
+    );
 
     this.graphqlElements
       .load()
       .then((data) => {
-        data.childs.forEach((element) => {
-          self.addToElementTree(element);
-        });
+        // if componentId is not given, 
+        // the default tree will be grouped by elementTypes
+        if(componentId == "") {
+          data.childs.forEach((element) => {
+            self.addToElementTree(element);
+          });
+        }
       })
       .then(() => {
-        $$("element_tree").clearAll();
-        $$("element_tree").parse(self.elementTree);
+        $$("element_tree" + componentId).clearAll();
+        $$("element_tree" + componentId).parse(self.elementTree);
         // adds the callback for the element selected
-        $$("element_tree").attachEvent("onItemCheck", function(id) {
+        $$("element_tree" + componentId).attachEvent("onItemCheck", function(id) {
           self.checkSelected(id);
         });
 
-        $$("element_tree_filter").attachEvent("onTimedKeyPress", function () {
-          $$("element_tree").filter("#value#", this.getValue());
+        $$("element_tree_filter" + componentId).attachEvent("onTimedKeyPress", function () {
+          $$("element_tree" + componentId).filter("#value#", this.getValue());
         });
 
         /*
@@ -361,7 +475,10 @@ export default class EquipmentTree {
         */
 
         // all the elements are checked initially
-        $$("element_tree").checkAll();
+        $$("element_tree" + componentId).checkAll();
+
+        document.getElementById("element_tree" + componentId + "spinner").style.display = "none";
+
       });
   }
 }

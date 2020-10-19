@@ -10,6 +10,7 @@ import { element_tree } from "../widgets/element_tree.js";
 
 let map = null;
 let view = null;
+let selectClick = null;
 var mapConf = "";
 var mapStates = {};
 var mapCoordinates = {};
@@ -388,6 +389,36 @@ export default class Map {
     });
 
     visibleElements = newVisibleElements;
+
+    // check if there are objects selected
+    let shouldEnableButton = false;
+
+    if($$("element_tree").getChecked().length > 0) {
+      let first_item = $$("element_tree").getChecked().find(e => e.match(/Element/g));
+      
+      if(typeof first_item != 'undefined') {
+        for(let i=0; i<$$("element_tree").getChecked().length; i++) {
+          let checkedElement = $$("element_tree").getChecked()[i];
+          let checkedElementLevel = $$("element_tree").getItem(checkedElement).$level;
+  
+          if(checkedElementLevel != 1) {
+            if(elementTypeMap.getElementType(checkedElement) == elementTypeMap.getElementType(first_item)) {
+              shouldEnableButton = true
+            } else {
+              shouldEnableButton = false;
+              break;
+            }
+          }
+        }
+      }
+
+    }
+
+    if(shouldEnableButton == true) {
+      $$("element_tree_button").enable();
+    } else {
+      $$("element_tree_button").disable();
+    }
     
   }
 
@@ -505,7 +536,7 @@ export default class Map {
             var toolbarHeight = $$("mainToolbar").$height;
             position.top = toolbarHeight;
             position.left = $$("mainBody").$width - 400;
-            var mainHeight = $$("mainBody").$height;
+            var mainHeight = $$("mainBody").$height - toolbarHeight;
             position.height = mainHeight;
             position.width = 400;
           },
@@ -605,6 +636,27 @@ export default class Map {
           if(typeof self.synopticConf[id] != 'undefined') {
             let lonlat = ol.proj.fromLonLat([self.synopticConf[id].lon, self.synopticConf[id].lat]);
             view.setCenter(lonlat);
+
+            //selectInteraction.getFeatures().clear();
+            selectClick.getFeatures().clear();
+
+            // get feature layer
+            let retLayer = null;
+            map.getLayers().forEach(function(l) {
+              if(l.get("title") == "Elements") {
+                retLayer = l;
+              }
+            });
+
+            let elementToUpdate = retLayer.getSource().getFeatureById(id);
+            selectClick.getFeatures().push(elementToUpdate);
+
+            selectClick.dispatchEvent({
+              type: 'select',
+              selected: [elementToUpdate],
+              deselected: []
+           });
+
           }
           
         });
@@ -745,7 +797,7 @@ export default class Map {
         opacity: 0
       });
 
-      let selectClick = new ol.interaction.Select({
+      selectClick = new ol.interaction.Select({
         condition: ol.events.condition.singleClick,
         //style: zTopStyle
       });
@@ -767,17 +819,17 @@ export default class Map {
         let feature = e.target.getFeatures().array_[0];
         let element_id = feature.id_;
         
-        // bring the feature to the front
         let zTopStyle = new ol.style.Style({
           image: new ol.style.Icon({
             opacity: 1,
+            scale: 1.25,
             src: "data:image/svg+xml;utf8," + mapIcons[element_id],
           }),
           zIndex: 100,
         });
-
+        
         feature.setStyle(zTopStyle);
-
+        
         if (
           elementTypeMap.getElementType(element_id) !=
           elementTypeMap.ELEMENT_TYPE_7_ZONE

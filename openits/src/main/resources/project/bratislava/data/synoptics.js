@@ -217,7 +217,7 @@ export let synopticData= [
 					"Element:24:27",
 				],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"S1F2_(11-24) L": {
 				"items": [
@@ -259,7 +259,7 @@ export let synopticData= [
 					"Element:24:70",
 				],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"S1F2_(11-24) P": {
 				"items": [
@@ -295,7 +295,7 @@ export let synopticData= [
 					"Element:24:67",
 				],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"S4-S5 L": {
 				"items": [
@@ -318,14 +318,14 @@ export let synopticData= [
 					"Element:24:11",
 				],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"S4-S5 P": {
 				"items": [
 					
 				],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			}
 		},
 		// S1F1_(6-11) L
@@ -515,15 +515,15 @@ export let synopticData= [
 		"BaseLayers": {
 			"BASE_LAYER": "mapa_base.png",
 			"ROAD": "D4-R7_trazado.png",
-				"CABINETS": "ARM_ELECT_PK_f1-2_v0.4_1.svg",
-				"SCN": "ARM_ELECT_SCN_PK_f1-2_v0.2_1.svg",
-				"ATC": "Armarios-ATC-PK_v0.2.svg",
-				"TOLL": "Armarios TOLL-PK_v0.2.svg",
-				"NRL": "Armarios-NRL-PK_F1.svg",
-				"NRS": "Armarios-NRS-PK_F1.svg",
-				"TFA_3D": "Armarios-3DTFA-PK_v0.2.svg",
-				"TFA": "Armarios-TFA-PK_v0.2.svg",
-				"TU": "Armarios TU-PK_v0.2.svg"
+			"CABINETS": "ARM_ELECT_PK_f1-2_v0.4_1.svg",
+			"SCN": "ARM_ELECT_SCN_PK_f1-2_v0.2_1.svg",
+			"ATC": "Armarios-ATC-PK_v0.2.svg",
+			"TOLL": "Armarios TOLL-PK_v0.2.svg",
+			"NRL": "Armarios-NRL-PK_F1.svg",
+			"NRS": "Armarios-NRS-PK_F1.svg",
+			"TFA_3D": "Armarios-3DTFA-PK_v0.2.svg",
+			"TFA": "Armarios-TFA-PK_v0.2.svg",
+			"TU": "Armarios TU-PK_v0.2.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -544,42 +544,42 @@ export let synopticData= [
 			"SCN": {
 				"items": ["Element:34:1", "Element:34:2", "Element:34:3", "Element:34:4", "Element:34:5", "Element:34:6", "Element:34:7", "Element:34:8"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"ATC": {
 				"items": ["Element:41:1", "Element:41:2", "Element:41:3", "Element:41:4", "Element:41:5", "Element:41:6", "Element:41:7", "Element:41:8"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"TOLL": {
 				"items": ["Element:46:1", "Element:46:2", "Element:46:3", "Element:46:4", "Element:46:5", "Element:46:6", "Element:46:7", "Element:46:8"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"NRL": {
 				"items": ["Element:42:1", "Element:42:2", "Element:42:3", "Element:42:4", "Element:42:5", "Element:42:6", "Element:42:7", "Element:42:8", "Element:42:9", "Element:42:10", "Element:42:11", "Element:42:12", "Element:42:13", "Element:42:14", "Element:42:15", "Element:42:16"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"NRS": {
 				"items": ["Element:43:1", "Element:43:2", "Element:43:3", "Element:43:4"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"TFA_3D": {
 				"items": ["Element:44:1", "Element:44:2", "Element:44:3", "Element:44:4", "Element:44:5", "Element:44:6", "Element:44:7", "Element:44:8"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"TFA": {
 				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 			"TU": {
 				"items": ["Element:47:1", "Element:47:2", "Element:47:3", "Element:47:4", "Element:47:5", "Element:47:6", "Element:47:7", "Element:47:8", "Element:47:9", "Element:47:10", "Element:47:11", "Element:47:12", "Element:47:13"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			},
 		},
 		"Element:34:1":  { "x": 1527, "y": 598,  "width": 63, "height": 37, "alias": "SCNJS5" },

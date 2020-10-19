@@ -77,3 +77,9 @@ var element_tree_view = {
 export let element_tree = {
   rows: [element_tree_view]
 }
+
+/*
+export let element_tree = {
+  rows: []
+}
+*/

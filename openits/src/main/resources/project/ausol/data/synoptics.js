@@ -7,11 +7,12 @@ export let synopticData= [
 			"BASE_LAYER": "tunel.svg"
 		},
 		"Layers": {
-			"DMS": {
-				"items": ["Element:10:1", "Element:10:2"],
+			"BASE_LAYER": {
+				"items": [],
 				"translation_key": "",
 				"visibility": "visible"
 			},
+
 			"VENTILACION": {
 				"items": ["FAN", "CO", "NO", "OPAC", "ANEM_EXT", "ANEM_INT"],
 				"translation_key": "",
@@ -27,8 +28,8 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"BASE_LAYER": {
-				"items": [],
+			"DMS": {
+				"items": ["Element:10:1", "Element:10:2"],
 				"translation_key": "",
 				"visibility": "visible"
 			},

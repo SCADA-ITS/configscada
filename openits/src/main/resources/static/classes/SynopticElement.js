@@ -163,7 +163,7 @@ export default class synopticElement {
                el.attr({ type: ELEMENT_TYPE.values[this.element.elementType.id].value });
                el.attr({ component: ELEMENT_TYPE.values[this.element.elementType.id].value });
                el.attr({ state: this.element.state });
-               el.attr({ visibility: "hidden" });
+              //  el.attr({ visibility: "hidden" });
                // update the icon based on the state and/or the value
                getElementIcon(this.element);
              }

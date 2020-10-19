@@ -1,13 +1,18 @@
 import ElementForm from "../classes/ElementForm.js";
+import ElementCommand from "../classes/ElementCommand.js";
 import {
   getElementIcon,
   updateElementIcon,
-  updateElementState
+  updateElementState,
+  getElementSVG
 } from "../lib/iconGenerator.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
+import EquipmentTree from "./EquipmentTree.js";
 import SynopticElement from "../classes/SynopticElement.js";
 import {ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
+
+import { element_tree } from "../widgets/element_tree.js";
 
 // Size of a row in the layers dropdown
 const DROPDOWN_ROW_SIZE = 43;
@@ -28,14 +33,35 @@ let graphSynoptic = webix.proxy(
         elementType{
           id
         }
+        elementValues{
+          id
+          value
+        }
       }
     }
   }
   `
 );
 
+function findById(data, id) {
+  for(var i = 0; i < data.length; i++) {
+   if (data[i].id === id) {
+     return data[i];
+   }
+   
+   if (data[i].data.length > 0) {
+     let s = findById(data[i].data, id);
+     if(s) return s;
+   }
+ }
+}
+
+// in case of exclusive layers, manages the onItemCheck event
+var shouldICheck = true;
+
 export default class Synoptic {
   constructor(synopticConf) {
+    this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
     this.layersToDraw = {};
@@ -48,6 +74,10 @@ export default class Synoptic {
     this.synopticDiv = synopticConf.id;
     this.synopticConf = synopticConf;
     this.synopticType = synopticConf.id;
+    
+    this.elementTree = null;
+
+    this.layerTree = {};
     this.metadata = {
       "id":"synoptic",
       "view":"view",
@@ -134,6 +164,8 @@ export default class Synoptic {
   }
 
   // Layer groups
+  // TODO: this method is only called by the exclusive-layers synoptics
+  // Work in progress
   handleLayers(e, initial=false) {
 
     if(!initial) {
@@ -143,6 +175,8 @@ export default class Synoptic {
         this.layersToDraw[e] = "visible";
       }
     }
+
+    this.layersToDraw[e] = this.synopticConf["Layers"][e]["visibility"];
 
     if(this.synopticConf["ExclusiveLayers"] == true && e != "BASE_LAYER" && e != "ROAD") {
       
@@ -164,8 +198,8 @@ export default class Synoptic {
       
             let el = document.getElementById(item);
             if(el != null && typeof el != 'undefined') {
-              el.setAttribute("visibility", this.layersToDraw[k]);
-              el.style["visibility"] = this.layersToDraw[k];
+              //el.setAttribute("visibility", this.layersToDraw[k]);
+              //el.style["visibility"] = this.layersToDraw[k];
       
               // Fix for the FAN
               if (this.layersToDraw[e] == "visible") {
@@ -177,30 +211,12 @@ export default class Synoptic {
       
           });
 
-          let newLabel = ""
-          if(this.layersToDraw[k] == "visible") {
-            if(this.synopticConf["Layers"][k]["translation_key"] != "") {
-              newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + $.i18n(this.synopticConf["Layers"][k]["translation_key"]);
-            } else {
-              newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + k;
-            }
-          } else {
-            if(this.synopticConf["Layers"][k]["translation_key"] != "") {
-              newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + $.i18n(this.synopticConf["Layers"][k]["translation_key"]);
-            } else {
-              newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + k;
-            }
-          }
-
-          if(document.getElementById("dropDown" + k) != null && typeof document.getElementById("dropDown" + k) != 'undefined') {
-            document.getElementById("dropDown" + k).innerHTML = newLabel;
-          }
         }
       }
 
       this.layersToDraw[e] = "visible";  
 
-    } 
+    }
 
 
     // base layer
@@ -239,11 +255,14 @@ export default class Synoptic {
   
           let el = document.getElementById(item);
           if(el != null && typeof el != 'undefined') {
-            el.setAttribute("visibility", this.layersToDraw[e]);
-            el.style["visibility"] = this.layersToDraw[e];
+            //el.setAttribute("visibility", this.layersToDraw[e]);
+            //el.style["visibility"] = this.layersToDraw[e];
+
+            //alert(e + " --> " + this.synopticConf["Layers"][e]["visibility"]);
     
             // Fix for the FAN
-            if (this.layersToDraw[e] == "visible") {
+            //if (this.layersToDraw[e] == "visible") {
+            if (this.synopticConf["Layers"][e]["visibility"] == "visible") {
               el.style["opacity"] = 1;
             } else {
               el.style["opacity"] = 0;
@@ -251,28 +270,6 @@ export default class Synoptic {
           }
         }
       });
-
-    }
-    
-
-
-    let newLabel = ""
-    if(this.layersToDraw[e] == "visible") {
-      if(this.synopticConf["Layers"][e]["translation_key"] != "") {
-        newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + $.i18n(this.synopticConf["Layers"][e]["translation_key"]);
-      } else {
-        newLabel = "<span class='webix_icon wxi-checkbox-marked'></span>" + e;
-      }
-    } else {
-      if(this.synopticConf["Layers"][e]["translation_key"] != "") {
-        newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + $.i18n(this.synopticConf["Layers"][e]["translation_key"]);
-      } else {
-        newLabel = "<span class='webix_icon wxi-checkbox-blank'></span>" + e;
-      }
-    }
-
-    if(document.getElementById("dropDown" + e) != null && typeof document.getElementById("dropDown" + e) != 'undefined') {
-      document.getElementById("dropDown" + e).innerHTML = newLabel;
     }
 
   }  // Layer groups
@@ -298,6 +295,306 @@ export default class Synoptic {
     });
   }
 
+  clickElement(id) {
+    // clean the current selection
+    Array.prototype.forEach.call(document.querySelectorAll(".synoptic-highlight"), (e) => { e.classList.remove("synoptic-highlight") });
+    // highlights the selected item
+    document.getElementById(id).classList.add("synoptic-highlight");
+  }
+
+  checkElement(id) {
+    // we can't pass the synoptic name to the callback
+    // so we have to find it in the DOM
+    
+    // find the id of the synoptic, replacing the SVG added by Snap.svg in the ID
+    let synopticId = $$("element_tree" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+    let synopticButtonId = $$("element_tree_button" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+
+    // all the elements of the tree
+    //let checkedElements = synopticId.getChecked();
+
+    // all the elements of the tree
+    let checkedElements = synopticId.getChecked();
+
+    // loop all the tree items to find what items should be shown
+    synopticId.data.each(function(obj) { 
+      let checkedElement = document.getElementById(obj.id);
+
+      if(checkedElement != null) {
+        if(checkedElements.includes(obj.id)) {
+          checkedElement.style.opacity = 1;
+        } else {
+          checkedElement.style.opacity = 0;
+        }
+      }
+    });
+
+
+    // check if there are objects selected
+    let shouldEnableButton = false;
+
+    if(synopticId.getChecked().length > 0) {
+      let first_item = synopticId.getChecked().find(e => e.match(/Element/g));
+      
+      if(typeof first_item != 'undefined') {
+        for(let i=0; i<synopticId.getChecked().length; i++) {
+          let checkedElement = synopticId.getChecked()[i];
+          let checkedElementLevel = synopticId.getItem(checkedElement).$level;
+  
+          if(checkedElementLevel != 1) {
+            if(elementTypeMap.getElementType(checkedElement) == elementTypeMap.getElementType(first_item)) {
+              shouldEnableButton = true
+            } else {
+              shouldEnableButton = false;
+              break;
+            }
+          }
+  
+        }
+
+      }
+    }
+
+    if(shouldEnableButton == true) {
+      synopticButtonId.enable();
+    } else {
+      synopticButtonId.disable();
+    }
+
+  }
+
+  clickElementExclusiveLayers(id) {
+    // we can't pass the synoptic name to the callback
+    // so we have to find it in the DOM
+    
+    // find the id of the synoptic, replacing the SVG added by Snap.svg in the ID
+    let synopticId = $$("element_tree" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+    let synopticButtonId = $$("element_tree_button" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+
+    // all the elements of the tree
+    //let checkedElements = synopticId.getChecked();
+
+    if(!id.match("Element")) {
+      // checks if the base layer is selected and mantains its selection
+      let baseLayerChecked = false;
+      if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
+        baseLayerChecked = true;
+      }
+
+      shouldICheck = false;
+
+      // unselect all
+      synopticId.uncheckAll();
+
+      
+      // (un)select the base layer
+      if(baseLayerChecked) {
+        synopticId.checkAll("BASE_LAYER");
+        
+        // check if the ROAD layer exists and (un)checks
+        if(synopticId.data.exists("ROAD")) {
+          synopticId.checkAll("ROAD");
+        }
+      }
+      
+      // select only the element/branch
+      synopticId.checkAll(id);
+      
+      shouldICheck = true;
+
+      // all the elements of the tree
+      let checkedElements = synopticId.getChecked();
+
+      // loop all the tree items to find what items should be shown
+      synopticId.data.each(function(obj) { 
+        let checkedElement = document.getElementById(obj.id);
+
+        if(checkedElement != null) {
+          if(checkedElements.includes(obj.id)) {
+            checkedElement.style.opacity = 1;
+          } else {
+            checkedElement.style.opacity = 0;
+          }
+        }
+              
+      });
+    } else {
+      // clean the current selection
+      Array.prototype.forEach.call(document.querySelectorAll(".synoptic-highlight"), (e) => { e.classList.remove("synoptic-highlight") });
+      // highlights the selected item
+      document.getElementById(id).classList.add("synoptic-highlight");
+    }
+
+  }
+
+  // Check element event for a synoptic with exclusive layers
+  checkElementExclusiveLayers(id) {
+    
+    if(shouldICheck == true) {
+      // find the id of the synoptic, replacing the SVG added by Snap.svg in the ID
+      let synopticId = $$("element_tree" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+      let synopticButtonId = $$("element_tree_button" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+
+      if(!id.match("Element")) {
+        // checks if the base layer is selected and mantains its selection
+        let baseLayerChecked = false;
+        if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
+          baseLayerChecked = true;
+        }
+  
+        shouldICheck = false;
+  
+        // unselect all
+        synopticId.uncheckAll();
+  
+        
+        // (un)select the base layer
+        if(baseLayerChecked) {
+          synopticId.checkAll("BASE_LAYER");
+          
+          // check if the ROAD layer exists and (un)checks
+          if(synopticId.data.exists("ROAD")) {
+            synopticId.checkAll("ROAD");
+          }
+        }
+        
+        // select only the element/branch
+        synopticId.checkAll(id);
+        
+        shouldICheck = true;
+  
+        // all the elements of the tree
+        let checkedElements = synopticId.getChecked();
+  
+        // loop all the tree items to find what items should be shown
+        synopticId.data.each(function(obj) { 
+          let checkedElement = document.getElementById(obj.id);
+  
+          if(checkedElement != null) {
+            if(checkedElements.includes(obj.id)) {
+              checkedElement.style.opacity = 1;
+            } else {
+              checkedElement.style.opacity = 0;
+            }
+          }
+                
+        });
+      }
+
+
+
+      // check if there are objects selected
+      let shouldEnableButton = false;
+
+      if(synopticId.getChecked().length > 0) {
+        let first_item = synopticId.getChecked().find(e => e.match(/Element/g));
+        
+        if(typeof first_item != 'undefined') {
+          for(let i=0; i<synopticId.getChecked().length; i++) {
+            let checkedElement = synopticId.getChecked()[i];
+            let checkedElementLevel = synopticId.getItem(checkedElement).$level;
+    
+            if(checkedElementLevel != 1) {
+              if(elementTypeMap.getElementType(checkedElement) == elementTypeMap.getElementType(first_item)) {
+                shouldEnableButton = true
+              } else {
+                shouldEnableButton = false;
+                break;
+              }
+            }
+    
+          }
+  
+        }
+      }
+
+      if(shouldEnableButton == true) {
+        synopticButtonId.enable();
+      } else {
+        synopticButtonId.disable();
+      }
+
+    }
+  }
+
+  generateLayerTree2(layersList) {
+
+    let self = this;
+
+    Object.keys(layersList).map((n) => {
+
+      this.layerTree[n] = [];
+
+      this.elementTree.elementTree.push({
+        id: n,
+        value: n,
+        data: [],
+      });
+
+      for (let e in this.synopticConf["Layers"][n]["items"]) {
+
+        if(Object.keys(this.synopticConf["Layers"]).includes(this.synopticConf["Layers"][n]["items"][e])) {
+
+          let elementTypeKeyIndex = self.elementTree.elementTree.findIndex(
+            (e) => e.id === n
+          );
+
+          this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
+            id: this.synopticConf["Layers"][n]["items"][e],
+            value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
+            icon: "",
+            data: [],
+          });
+
+        } else {
+          //this.layerTree[n].push(this.synopticConf["Layers"][n]["items"][e]);
+          // search for the elementType key
+
+          let elementTypeKeyIndex = self.elementTree.elementTree.findIndex(
+            (e) => e.id === n
+          );
+  
+          // set the width and height based on the elementType
+          let height = 32;
+          //let width = this.getIconWidth(thisElementType, height);
+          let width = 32;
+
+          
+          if (typeof this.elementTree.elementTree[elementTypeKeyIndex]["data"] == "undefined") {
+            this.elementTree.elementTree[elementTypeKeyIndex]["data"] = [];
+          }
+          
+          // search for the elementType key
+          let element = self.elements.findIndex(
+            (el) => el.id === this.synopticConf["Layers"][n]["items"][e]
+          );
+
+          if(element != -1) {
+            this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
+              id: this.elements[element].id,
+              value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.elements[element].description + "</div>",
+              icon: "<div style=\"float: right\">" + getElementSVG(this.elements[element], width, height, ":Tree") + "</div>",
+              data: [],
+            });
+          } else {
+            this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
+              id: this.synopticConf["Layers"][n]["items"][e],
+              value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
+              icon: "",
+              data: [],
+            });
+          }
+        }
+
+      };
+
+      //this.layersToDraw[n] = this.synopticConf["Layers"][n]["visibility"];
+      //this.handleLayers(n, true);
+
+    });
+
+  }
+
   generateLayerTree(layersList, depth=0, father) {
 
     let self = this;
@@ -316,24 +613,24 @@ export default class Synoptic {
       } else {
         linkToAdd.style["padding-left"] = (10 + 30 * depth) + "px";
       }		
-
+      
       linkToAdd.onclick = function () {
         self.handleLayers(n);
       };
-
+      
       if(this.synopticConf["Layers"][n]["translation_key"] != "") {
         linkToAdd.innerHTML = $.i18n(this.synopticConf["Layers"][n]["translation_key"]);
       } else {
         linkToAdd.innerHTML = n;
       }
-
+      
       if(Object.keys(layersList[n]).length > 0) {
         let div = document.createElement("li"); 
-
+        
         father.appendChild(div);
         div.appendChild(linkToAdd);
         div.appendChild(caret);
-    
+        
         self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
         self.handleLayers(n, true);
 
@@ -378,7 +675,6 @@ export default class Synoptic {
         // add basemap and base road to elements_to_draw
         this.elementsTypes.push("BASE_LAYER");
         this.elementsToDraw["BASE_LAYER"] = "visible";
-        //this.layersToDraw["BASE_LAYER"] = "visible";
         
         // if we are in a tunnel synoptic, put the title bar
         if (this.synopticType == "synopticTunnel") {
@@ -454,7 +750,8 @@ export default class Synoptic {
             self.s
             .image("./img/" + self.synopticConf["BaseLayers"][k], 0, 0, total_width, total_height)
             .attr({
-              id: "capa_base_" + k,
+              //id: "capa_base_" + k,
+              id: k,
               visibility: self.elementsToDraw[k],
               component: k,
             });
@@ -466,10 +763,124 @@ export default class Synoptic {
         return d;
       })
       .then((d) => {
+
         d.childs.forEach((element) => {
+          this.elements.push(element);
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
         });
+
+        
+        // replaces the element tree in the DOM
+        this.elementTree = new EquipmentTree(this.elementId, null);
+
+        // create the sidemenu for the equipment tree
+        webix.ui({
+          view: "sidemenu-win",
+          id: "menu" + this.synopticDiv,
+          width: 400,
+          position: function(position) {
+            var toolbarHeight = $$("mainToolbar").$height;
+            position.top = toolbarHeight;
+            position.left = $$("mainBody").$width - 400;
+            var mainHeight = $$("mainBody").$height - toolbarHeight;
+            position.height = mainHeight;
+            position.width = 400;
+          },
+          body: {
+            id: "elementTreeView" + this.synopticDiv, 
+            rows: [
+              {
+                view:"toolbar", 
+                cols:[
+                  { 
+                    view: "label", 
+                    label: $.i18n("defaultheader.equipment")
+                  },
+                  { 
+                    view: "button", 
+                    value: "Close", 
+                    width: 38, 
+                    type:"icon", 
+                    icon:"wxi-close",
+                    click: function() {
+                      // hide the panel
+                      $$("menu" + self.synopticDiv).hide();
+                      // hide the children
+                      $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+                    }
+                  }
+                ]
+              },
+              {
+                id: "element_tree_filter" + self.synopticDiv,
+                view: "text",
+                label: "Filter",
+                labelPosition: "left"
+              },
+              {
+                id: "element_tree" + self.synopticDiv,
+                view: "tree",
+                borderless: true,
+                scroll: "auto",
+                select: true,
+                multiselect: true,
+                threeState: true,
+                template: function(obj, common){
+                  if (obj.$level > 1) {
+                    return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
+                  } else {
+                    return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>";
+                  }
+                }
+              },
+              {
+                id: "element_tree_button" + self.synopticDiv,
+                view: "button",
+                disabled: true,
+                value: "Command",
+                on: {
+                  "onItemClick": function(id, e) {
+                    let filteredElements = $$("element_tree" + self.synopticDiv).getChecked().filter(e => e.match(/Element/g));
+                    let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                    webix
+                      .ui({
+                        id: "win_command" + filteredElements[0],
+                        view: "window",
+                        move: true,
+                        close: true,
+                        position: "right",
+                        body: elementCommand.getComponent(),
+                        on: {
+                          onDestruct: function (obj) {
+                            
+                          },
+                          onHide: function (obj) {
+                            $$("win_command" + filteredElements[0]).destructor();
+                          },
+                        },
+                      })
+                      .show();
+                  }
+                }
+              }
+            ],
+            url: this.elementTree.getComponent(this.synopticDiv)
+          }
+
+        });
+
+        if(document.getElementsByClassName("synoptic-svg")[0].attributes["exclusive"].value == "false") {
+          // general case
+          $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElement);
+          $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElement);
+        } else {
+          // for exclusive layers
+          //$$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.checkElement);
+          $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElementExclusiveLayers);
+          $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElementExclusiveLayers);
+        }
+        //$$("element_tree" + self.synopticDiv).attachEvent("onSelectChange", self.checkElement);
 
         return d;
       })
@@ -479,7 +890,7 @@ export default class Synoptic {
 
         // adds the dropdown button
         let buttonToAdd = document.createElement("button");
-        buttonToAdd.innerHTML = "<span class='webix_icon wxi-drag'></span>";
+        buttonToAdd.innerHTML = "<span class='webix_icon wxi-folder-open'></span>";
         buttonToAdd.setAttribute("class", "dropbtn");
         document
           .getElementById(this.synopticDiv + "dropdownDiv")
@@ -501,14 +912,14 @@ export default class Synoptic {
           let layerName = Object.keys(this.synopticConf["Layers"])[l];
           if(!alreadyAddedLayersList.includes(layerName)) {
             layersList[layerName] = {};
-            alreadyAddedLayersList.push(layerName);
+            //alreadyAddedLayersList.push(layerName);
 
             for(let item in this.synopticConf["Layers"][layerName]["items"]) {
               let itemName = this.synopticConf["Layers"][layerName]["items"][item];
               if(Object.keys(this.synopticConf["Layers"]).includes(itemName)) {
                 delete layersList[itemName];
                 layersList[layerName][itemName] = {};
-                alreadyAddedLayersList.push(itemName);
+                //alreadyAddedLayersList.push(itemName);
               }
             }
           }
@@ -516,33 +927,25 @@ export default class Synoptic {
         }
 
         // Generate the tree
-        this.generateLayerTree(layersList, 0, divToAdd);
-        var toggler = document.getElementsByClassName("caret");
-        var i;
-        
-        for (i = 0; i < toggler.length; i++) {
-          toggler[i].addEventListener("click", function() {
-            this.parentElement.querySelector(".nested").classList.toggle("active");
-            this.classList.toggle("caret-down");
-          });
-        }
+        this.generateLayerTree2(layersList, 0);
 
-        // update the dropdown size
-        // if the dropdown is taller than the screen size minus 70px, then adjust it and activates overflow
-        if((parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) < (alreadyAddedLayersList.length * DROPDOWN_ROW_SIZE)) {
-          document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px";
-        }
+        // For Bratislava, clean all layers and show only the ones marked as visible
+        if(this.synopticConf["ExclusiveLayers"] == true) {
+          for(let layerName in this.synopticConf["Layers"]) {
+            let isVisible = this.synopticConf["Layers"][layerName]["visibility"];
 
+            // updates the base layer visibility
+            if(document.getElementById(layerName) != null && isVisible == "hidden") {
+              document.getElementById(layerName).style.opacity = 0;
+            }
 
-        // FIXME: once it is loaded, if the synoptic is Bratislava
-        // starts only with the Cameras layer
-        if (d.description == "SYNOPTIC") {
-          if(Object.keys(this.layersToDraw).includes("CAM")) {
-            this.handleLayers("CAM");
+            for(let item in this.synopticConf["Layers"][layerName]["items"]) {
+              let itemName = this.synopticConf["Layers"][layerName]["items"][item];
+              if(document.getElementById(itemName) != null && isVisible == "hidden") {
+                document.getElementById(itemName).style.opacity = 0;
+              }
+            }
           }
-        }
-        else if( d.description == "CABINETS"){
-          this.handleLayers("CABINETS");
         }
 
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
@@ -606,10 +1009,11 @@ export default class Synoptic {
       svg.setAttribute("width", c.offsetWidth);
       svg.setAttribute("height", c.offsetHeight);
       svg.setAttribute("class", "synoptic-svg");
+      svg.setAttribute("exclusive", this.synopticConf["ExclusiveLayers"]);
 
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
-      divToAdd.setAttribute("class", "dropdown");
+      divToAdd.setAttribute("class", "treemap-button ol-unselectable ol-control");
       document
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(divToAdd);
@@ -617,6 +1021,21 @@ export default class Synoptic {
       this.elementReady("#" + this.synopticDiv + "SVG").then((c1) => {
         // loads data and draws for first time
         this.loadData();
+      });
+
+      $("#" + this.synopticDiv + "dropdownDiv").click(function() {
+        if ($$("menu" + self.synopticDiv).isVisible()){
+          // show the panel
+          $$("menu" + self.synopticDiv).hide();
+          // show the children
+          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+        } else {
+          // show the panel
+          $$("menu" + self.synopticDiv).show();
+          // show the children
+          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.show() });
+        }
+        
       });
 
       self.baseWidth = c.offsetWidth;
@@ -647,13 +1066,15 @@ export default class Synoptic {
 
       // scales the base layer
       let base = document.querySelector('[component="BASE_LAYER"]');
-      base.setAttribute("width", self.baseWidth * ratioWidth);
-      base.setAttribute("height", self.baseHeight * ratioHeight);
+      if(base != null) {
+        base.setAttribute("width", self.baseWidth * ratioWidth);
+        base.setAttribute("height", self.baseHeight * ratioHeight);
+      }
 
       // scales the other base layers
       Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
         if(k != "base") { // base is already added
-          let base = document.getElementById('capa_base_' + k);
+          let base = document.getElementById(k);
           base.setAttribute("width", self.baseWidth * ratioWidth);
           base.setAttribute("height", self.baseHeight * ratioHeight);
         }
@@ -772,6 +1193,13 @@ export default class Synoptic {
     // it has to filter if the event is related to the synoptic instance
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
+        if ($$("menu" + self.synopticDiv).isVisible()){
+          // show the panel
+          $$("menu" + self.synopticDiv).hide();
+          // show the children
+          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+        }
+        
         let newNode = null;
         if(event[0].addedNodes.length > 0) {
           Array.from(event[0].addedNodes[0].children).forEach(e => {
@@ -833,7 +1261,9 @@ export default class Synoptic {
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });
           }
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     });
 
     // obtains the parent of the synoptic

@@ -11,6 +11,7 @@ import * as anem_int from "./icons/anem_int.js";
 import * as fan from "./icons/fan.js";
 import * as zone from "./icons/zone.js";
 import * as sos from "./icons/sos.js";
+
 import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
@@ -93,6 +94,8 @@ export function generateETDIcon(element, suffix="", state="",values) {
   return etd_str;
 }
 
+
+
 export function generateLuxIcon(element, suffix="") {
   return createIcon(element, suffix);
 }
@@ -117,8 +120,8 @@ export function generateOpacIcon(element, suffix="", state="") {
 }
 
 export function generateAnemIntIcon(element, suffix="", state="") {
-  let anem_int_str = anem_int.generateIcon(element, suffix, state);
-  return anem_int_str;
+  return createIcon(element, suffix);
+
 }
 
 export function generateAnemExtIcon(element, suffix="", state="") {
@@ -432,20 +435,13 @@ function createIcon(element, suffix="") {
   //param values
   if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
     ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
-      // if(typeof element.elementValues != 'undefined' && element.elementValues){
-        let key = Object.keys(item)[0];
-        // try {
-          let tempValue = element.elementValues.find(
-            (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-          );
-          if(tempValue){
-            params[key]=tempValue.value;
-          }
-        // } catch (error) {
-        //   console.error(error);
-        //   alert(element.elementType.id);
-        // }
-      // }
+      let key = Object.keys(item)[0];
+      let tempValue = element.elementValues.find(
+        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+      );
+      if(tempValue){
+        params[key]=tempValue.value;
+      }
     });
   }
   return prepareStr(iconStr, params);

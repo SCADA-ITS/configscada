@@ -23,7 +23,7 @@ export let menu_data_multi  = [
 		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
 	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")},
-	{ id: "usersmanager", icon: "mdi mdi-account", value:$.i18n("defaultheader.users.manager")}
+	// { id: "usersmanager", icon: "mdi mdi-account", value:$.i18n("defaultheader.users.manager")}
 		
 ];
 
@@ -44,12 +44,30 @@ export let toolbar_data_menu  = {
 			on: {
 			  onMenuItemClick(id) {
 				if (id === 'logout') {
-				  webix.message('Loging out...');
-				  webix.storage.session.remove("loginSession");
-				  webix.storage.session.remove("app_user_language");
-				  webix.storage.session.remove("app_user_name");
-				  webix.storage.session.remove("app_user_permissions");
-				  window.location = "./login.html";
+					webix.message('Loging out...');
+
+					webix.storage.session.get("url.auth.path");
+					var paramUser = webix.storage.session.get("userId");
+					webix.proxy("GraphQL", `query($rowId: String!){
+						getUser(userId: $rowId){
+							id
+							name
+							password
+						}
+					}`).load({
+						rowId: paramUser
+					}).then(data2 => {
+						const encodedString = btoa((data2.name + ':' + data2.password).toString('utf8')).toString('base64');
+						console.log(data2.name);
+						console.log(data2.password);
+						webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "logout").then(function(data){
+							webix.storage.session.remove("loginSession");
+							webix.storage.session.remove("app_user_language");
+							webix.storage.session.remove("app_user_name");
+							webix.storage.session.remove("app_user_permissions");
+							window.location = "./login.html";
+						});
+					});
 				}
 			  }
 			}
