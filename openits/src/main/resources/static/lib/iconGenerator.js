@@ -66,7 +66,8 @@ export function generateIcon(element, suffix="", state="", values) {
     return generateFanIcon(element, suffix, state);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_8_BAR) {
     return generateBarIcon(element, suffix, state);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_13_SEM) {
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_13_SEM
+    || element.elementType.id === ELEMENT_TYPE.ID_53_SEM) {
     return generateSemIcon(element, suffix, state);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
     return generateZoneIcon(element, suffix, state);
@@ -212,7 +213,8 @@ export function getElementIcon(element, suffix="") {
     meteo.updateMeteoIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
     sos.updateSosIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE) {
     fire.updateFireIcon(element, suffix);
@@ -351,7 +353,8 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_13_SEM:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix, state) + '</g>';
+    case elementTypeMap.ELEMENT_TYPE_53_SEM:
+          iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_14_LUM:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix, state) + '</g>';

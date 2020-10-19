@@ -1,4 +1,4 @@
-import {SVG_12_LUX, SVG_13_SEM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_20_NO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_12_LUX, SVG_13_SEM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_20_NO, SVG_53_SEM} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -43,6 +43,7 @@ export const ELEMENT_TYPE = {
   ID_45_CABIN_TFA : "ElementType:45",
   ID_46_CABIN_TOLL : "ElementType:46",
   ID_47_CABIN_TU : "ElementType:47",
+  ID_53_SEM : "ElementType:53",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", value: 1, scale_x: 28, scale_y: 28},
@@ -106,7 +107,8 @@ export const ELEMENT_TYPE = {
     "ElementType:44" :{ id: "ElementType:44", value: 44, scale_x: 28, scale_y: 28},
     "ElementType:45" :{ id: "ElementType:45", value: 45, scale_x: 28, scale_y: 28},
     "ElementType:46" :{ id: "ElementType:46", value: 46, scale_x: 28, scale_y: 28},
-    "ElementType:47" :{ id: "ElementType:47", value: 47, scale_x: 28, scale_y: 28}
+    "ElementType:47" :{ id: "ElementType:47", value: 47, scale_x: 28, scale_y: 28},
+    "ElementType:53" :{ id: "ElementType:53", value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM }
   }
 };
 

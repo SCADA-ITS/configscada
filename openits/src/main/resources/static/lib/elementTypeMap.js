@@ -40,6 +40,7 @@ export const ELEMENT_TYPE_44_CABIN_TFA3D = "44";
 export const ELEMENT_TYPE_45_CABIN_TFA = "45";
 export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
 export const ELEMENT_TYPE_47_CABIN_TU = "47";
+export const ELEMENT_TYPE_53_SEM = "53";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
