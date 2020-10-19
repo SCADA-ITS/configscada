@@ -645,6 +645,11 @@ var i18_es = {
     "ElementTypeParam:47:1:2.description": "Seccion",
     "ElementTypeParam:47:1:3.alias": "Road",
     "ElementTypeParam:47:1:3.description": "Road",
+    
+    "ElementTypeParam:53:1:1.alias": "PK",
+    "ElementTypeParam:53:1:1.description": "PK",
+    "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel",
+    "ElementTypeParam:53:1:2.description": "Entrance Tunnel Distance",
 
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",

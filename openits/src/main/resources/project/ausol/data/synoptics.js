@@ -24,12 +24,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"CONTROL ACCESOS": {
-				"items": ["DMS", "MATRIXPANEL", "BAR", "SEM"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"DMS": {
-				"items": ["Element:10:1", "Element:10:2"],
+				"items": ["MATRIXPANEL", "BAR", "SEM"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -69,7 +64,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"LUX": {
-				"items": ["Element:12:1", "Element:12:2", "Element:12:3", "Element:12:4", "Element:12:5", "Element:12:6"],
+				"items": ["Element:12:9", "Element:12:10", "Element:12:11", "Element:12:12", "Element:12:13", "Element:12:14", "Element:12:15", "Element:12:16"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -79,7 +74,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"SEM": {
-				"items": ["Element:13:1", "Element:13:2", "Element:13:3", "Element:13:4", "Element:13:5", "Element:13:6","Element:13:7", "Element:13:8", "Element:13:9", "Element:13:10"],
+				"items": ["Element:13:5", "Element:13:6"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -128,8 +123,6 @@ export let synopticData= [
 		"Element:9:16":  { "x": 1172, "y": 395, "width": 40,  "height": 40,  "alias": "RV-VENT-4MA" },
 		"Element:9:17":  { "x": 1172, "y": 332, "width": 40,  "height": 40,  "alias": "RV-VENT-5MA" },
 		"Element:9:18":  { "x": 1172, "y": 270, "width": 40,  "height": 40,  "alias": "RV-VENT-6MA" },
-	//	"Element:10:1": { "x": 63,   "y": 310, "width": 200, "height": 54,  "alias": "DMS_1_Tunnel_1" },
-	//	"Element:10:2": { "x": 1517, "y": 715, "width": 200, "height": 54,  "alias": "DMS_2_Tunnel_1" },
 		"Element:11:11": { "x": 670,  "y": 907, "width": 40,  "height": 40,  "alias": "RV-SOSI-1CA" },
 		"Element:11:12": { "x": 640, "y": 140, "width": 40,  "height": 40,  "alias": "RV-SOSI-1MA" },
 		"Element:12:9": { "x": 1440, "y": 901, "width": 50,  "height": 50,  "alias": "RV-LUX-1CA" },
@@ -144,7 +137,7 @@ export let synopticData= [
 		"Element:2:10":  { "x": 1150,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-2CA" },
 		"Element:2:11":  { "x": 800,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-3CA" },
 		"Element:2:12":  { "x": 400,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-4CA" },
-		"Element:2:13":  { "x": 1600,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
+		"Element:2:13":  { "x": 1710,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
 		"Element:2:14":  { "x": 270,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-1MA" },
 		"Element:2:15":  { "x": 580, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-2MA" },
 		"Element:2:16":  { "x": 900, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-3MA" },
@@ -155,8 +148,9 @@ export let synopticData= [
 		"Element:13:3": { "x": 1665, "y": 628, "width": 40,  "height": 40,  "alias": "RV-SRAV-1CA" },
 		"Element:53:3": { "x": 104,  "y": 225, "width": 40,  "height": 40,  "alias": "RV-SAA-1MA" },
 		"Element:53:4": { "x": 64,  "y": 225, "width": 40,  "height": 40,  	"alias": "RV-SAA-2MA" },
-		"Element:13:4": { "x": 84,   "y": 420, "width": 40,  "height": 40,  "alias": "RV-SRAV-1MA" },
-		"Element:14:3": { "x": 1670, "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1CA" },
+		"Element:13:5": { "x": 84,   "y": 420, "width": 40,  "height": 40,  "alias": "RV-SRAV-1MA" },
+		"Element:13:6": { "x": 1684,   "y": 630, "width": 40,  "height": 40,  "alias": "RV-SRAV-1CA" },
+		"Element:14:3": { "x": 1640, "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1CA" },
 		"Element:14:4": { "x": 77,   "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1MA" },
 		"Element:15:1": { "x": 434,  "y": 870, "width": 315, "height": 20,  "alias": "FIRE_1_SC" },
 		"Element:15:2": { "x": 434,  "y": 195, "width": 315, "height": 20,  "alias": "FIRE_1_SM" },
@@ -186,8 +180,6 @@ export let synopticData= [
 				{name: "total_intensity", label: "TI"}
 			]
 		},
-		"Element:26:1": { "x": 1417,  "y": 715, "width": 50,  "height": 50,  "alias": "AF_1_SM" },
-		"Element:35:1": { "x": 85,  "y": 695, "width": 290,  "height": 90,  "alias": "AF_1_SC" }
 	},
 	{
 		"id":"synopticMetro",
@@ -239,10 +231,15 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"SEM": {
-				"items": ["Element:13:5", "Element:13:6", "Element:13:7", "Element:13:8", "Element:13:9", "Element:13:10"],
+				"items": ["Element:13:5", "Element:13:6"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"SEM_AMBAR_AMBAR": {
+				"items": ["Element:53:1", "Element:53:2", "Element:53:3", "Element:53:4"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
 		},
 		"Element:36:1": { "x": 1511, "y": 593,  "width": 108, "height": 25 },
 		"Element:36:2": { "x": 1700, "y": 693,  "width": 108, "height": 25 },
@@ -257,13 +254,14 @@ export let synopticData= [
 		"Element:9:16":  { "x": 1722, "y": 628,  "width": 15,  "height": 15 },
 		"Element:9:17":  { "x": 1722, "y": 608,  "width": 15,  "height": 15 },
 		"Element:9:18":  { "x": 1722, "y": 588,  "width": 15,  "height": 15 },
+	
+		"Element:13:5": { "x": 1820, "y": 660,  "width": 20,  "height": 20 },
+		"Element:13:6": { "x": 1410, "y": 640,  "width": 20,  "height": 20 },
 		
-		"Element:13:8": { "x": 1412, "y": 643,  "width": 20,  "height": 20 },
-		"Element:13:9": { "x": 1442, "y": 643,  "width": 20,  "height": 20 },
-		"Element:13:10": { "x": 1472, "y": 643,  "width": 20,  "height": 20 },
-		"Element:13:5": { "x": 1825, "y": 663,  "width": 20,  "height": 20 },
-		"Element:13:6": { "x": 1855, "y": 663,  "width": 20,  "height": 20 },
-		"Element:13:7": { "x": 1885, "y": 663,  "width": 20,  "height": 20 },
+		"Element:53:1": { "x": 1850, "y": 660,  "width": 20,  "height": 20 },
+		"Element:53:2": { "x": 1880, "y": 660,  "width": 20,  "height": 20 },
+		"Element:53:3": { "x": 1440, "y": 640,  "width": 20,  "height": 20 },
+		"Element:53:4": { "x": 1470, "y": 640,  "width": 20,  "height": 20 },
 		
 		"Element:8:3":  { "x": 1820, "y": 730,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1820, "y": 690,  "width": 88,  "height": 48 },

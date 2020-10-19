@@ -38,14 +38,10 @@ export let columnsElementFormList = {
 
 	"ElementType:2": {
 		"rows":[ 
-			"ElementTypeParam:2:1:1",  
-			"ElementTypeParam:2:1:2",
-			"ElementTypeParam:2:1:4",
-			"ElementTypeParam:2:1:5",
 			"ElementTypeParam:2:1:8",
 			"ElementTypeParam:2:1:9"
 		],
-		"rowCounts": 7,
+		"rowCounts": 2,
 		"scroll": false,  
 		"width": 540,
 		"options": {			
@@ -82,14 +78,13 @@ export let columnsElementFormList = {
 		"rows":[ 
 			"ElementTypeParam:9:1:1",
 			"ElementTypeParam:9:1:2",		
-			"ElementTypeParam:9:2:1",		
 			"ElementTypeParam:9:2:2",	
 			"ElementTypeParam:9:2:3",	
 			"ElementTypeParam:9:2:4",	
 			"ElementTypeParam:9:2:5",
 			"ElementTypeParam:9:2:6"		
 		],
-		"rowCounts": 8,
+		"rowCounts": 7,
 		"scroll": false,  
 		"width": 540,
 		"options": {}

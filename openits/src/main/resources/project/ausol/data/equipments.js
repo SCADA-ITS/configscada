@@ -96,7 +96,6 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
-			"ElementTypeParam:9:2:1",
 			"ElementTypeParam:9:2:2",
 			"ElementTypeParam:9:2:3",
 			"ElementTypeParam:9:2:4",
