@@ -31,12 +31,26 @@ let genericTablei18n = {
 			},
 			{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text", fillspace:1 },
 			{ "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}, fillspace:1 },
+			{
+				id: "status",
+				//header: _("Status"),
+				"header": [$.i18n("planSchedule.table.cronExpression"), {content:"textFilter"}],   sort:"text",
+				width: 150,
+				template: function (data, type, value) { return statusBadge(value); },
+			},
 		],
 		on:{
 			onItemClick: planSchedule_select,
 			onKeyPress: onKeyPressTable
 		}
 	};
+
+function statusBadge(value) {
+	var status = value ? "Active" : "Not active";
+	var cssStatusName = value ? "active" : "not_active";
+	var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge webix_um_" + cssStatusName + "\">" + status + "</span>\n\t\t</div>";
+	return html;
+}
 
 let table = new Table(graph, genericTablei18n ).getComponent();
 let toolbar = {

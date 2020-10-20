@@ -25,7 +25,7 @@ export default class PlanScheduleForm {
                 alias
                 description
             }
-            }`;
+        }`;
         
         this.graphqlSendPlanQuery = `query  {
             mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {
@@ -202,20 +202,50 @@ export default class PlanScheduleForm {
                     } 
                 },
                 { view: "combo", id: "planScheduleForm_" + this.id + "_plan",name: "plan", label: $.i18n("planSchedule.popup.plan") ,labelWidth: 200, disabled: true, options: [],},
+                {
+                    view: "switch",
+                    name: "status",
+                    id: "planScheduleForm_status",
+                    label: "Status",
+                    css: "webix_um_status_switch",
+                    
+                    on: {
+                        onChange: function (value) { 
+                            return UpdateBadge(value); 
+                        },
+                    },
+                    
+                },
             ],
             rules:{
                 "cronExpression":webix.rules.isNotEmpty,
                 "plan":webix.rules.isNotEmpty
             }               
         };
+
+        function UpdateBadge(value){
+            var control = $$("planScheduleForm_status");
+            var html = statusBadge(value);
+            control.config.labelRight = html;
+            control.refresh();
+        }
+        function statusBadge(value) {
+            var status = value ? "Active" : "Not active";
+            var cssStatusName = value ? "active" : "not_active";
+            var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge webix_um_" + cssStatusName + "\">" + status + "</span>\n\t\t</div>";
+            return html;
+        }
+
 		this.buttons = {
             id: "planScheduleFormButtons_" + this.id,
 			view: "form",
 			elements: [
-                { view: "button", hidden: true, id: "planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
+                { 
+                    view: "button", hidden: true, id: "planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
                     click: createNewPlanSchedule
                 },
-                { view: "button", hidden: true, id: "planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
+                { 
+                    view: "button", hidden: true, id: "planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
                     click: saveEditPlanSchedule
                 }
 			]
