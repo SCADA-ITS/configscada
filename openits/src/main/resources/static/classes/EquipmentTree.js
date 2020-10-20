@@ -30,6 +30,7 @@ function getIconWidth(elementType, height) {
 
   switch(elementType) {
     case "10":
+    case "36":
       ratio = height / 24;
       width = 76 * ratio;
       break;
@@ -149,6 +150,7 @@ export default class EquipmentTree {
 
     switch(elementType) {
       case "10":
+      case "36":
         ratio = height / 24;
         width = 76 * ratio;
         break;

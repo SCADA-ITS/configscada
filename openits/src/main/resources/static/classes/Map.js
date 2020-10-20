@@ -151,6 +151,7 @@ export default class Map {
 
       });
     } catch (err) {
+      console.error(e);
       console.log("Error: " + err.message);
       console.log("RETRY WITH GRAPHQL");
 
@@ -1058,7 +1059,9 @@ export default class Map {
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });
           }
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     });
 
     // obtains the parent of the synoptic
