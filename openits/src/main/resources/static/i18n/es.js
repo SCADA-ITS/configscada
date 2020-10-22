@@ -182,8 +182,8 @@ var i18_es = {
     "ElementTypeParam:2:1:7.description": "Localizacion",
     "ElementTypeParam:2:1:8.alias": "PK",
     "ElementTypeParam:2:1:8.description": "PK",
-    "ElementTypeParam:2:1:9.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:2:1:9.description": "Distancia entrada del t&uacute;nel",
+    "ElementTypeParam:2:1:9.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:2:1:9.description": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:2:1:10.alias": "Armario asociado",
     "ElementTypeParam:2:1:10.description": "Armario asociado",
 
@@ -241,8 +241,8 @@ var i18_es = {
 
     "ElementTypeParam:9:1:1.alias": "PK",
     "ElementTypeParam:9:1:1.description": "PK",
-    "ElementTypeParam:9:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:9:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:9:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:9:1:2.description": "Entrance Tunnel Distance (m)",
 
 
     "ElementTypeParam:1:1:1003.alias": "MANGO SESSION_UID",
@@ -259,8 +259,8 @@ var i18_es = {
 
     "ElementTypeParam:10:1:3.alias": "PK",
     "ElementTypeParam:10:1:3.description": "PK",
-    "ElementTypeParam:10:1:4.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:10:1:4.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance (m)",
 
 
     "ElementTypeParam:10:1:1003.alias": "MANGO SESSION_UID",
@@ -273,8 +273,8 @@ var i18_es = {
 
     "ElementTypeParam:8:1:1.alias": "PK",
     "ElementTypeParam:8:1:1.description": "PK",
-    "ElementTypeParam:8:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:8:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:8:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:8:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:8:3:1.alias": "bar cmd",
     "ElementTypeParam:8:3:1.description": "bar cmd",
@@ -307,16 +307,16 @@ var i18_es = {
 
     "ElementTypeParam:11:1:1.alias": "PK",
     "ElementTypeParam:11:1:1.description": "PK",
-    "ElementTypeParam:11:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:11:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:11:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:11:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:11:2:1.alias": "Status",
     "ElementTypeParam:11:2:1.description": "Status",
 
     "ElementTypeParam:12:1:1.alias": "PK",
     "ElementTypeParam:12:1:1.description": "PK",
-    "ElementTypeParam:12:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:12:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:12:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:12:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:12:2:1.alias": "Luminosity",
     "ElementTypeParam:12:2:1.description": "Luminosity",
@@ -325,16 +325,16 @@ var i18_es = {
 
     "ElementTypeParam:13:1:1.alias": "PK",
     "ElementTypeParam:13:1:1.description": "PK",
-    "ElementTypeParam:13:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:13:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:13:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:13:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:13:2:1.alias": "status",
     "ElementTypeParam:13:2:1.description": "status",
 
     "ElementTypeParam:14:1:1.alias": "PK",
     "ElementTypeParam:14:1:1.description": "PK",
-    "ElementTypeParam:14:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:14:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:14:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:14:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:14:2:1.alias": "status",
     "ElementTypeParam:14:2:1.description": "status",
@@ -343,24 +343,24 @@ var i18_es = {
 
     "ElementTypeParam:15:1:1.alias": "PK",
     "ElementTypeParam:15:1:1.description": "PK",
-    "ElementTypeParam:15:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:15:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:15:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:15:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:15:2:1.alias": "status",
     "ElementTypeParam:15:2:1.description": "status",
 
     "ElementTypeParam:16:1:1.alias": "PK",
     "ElementTypeParam:16:1:1.description": "PK",
-    "ElementTypeParam:16:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:16:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:16:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:16:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:16:2:1.alias": "status",
     "ElementTypeParam:16:2:1.description": "status",
 
     "ElementTypeParam:17:1:1.alias": "PK",
     "ElementTypeParam:17:1:1.description": "PK",
-    "ElementTypeParam:17:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:17:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:17:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:17:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:17:2:1.alias": "wind speed",
     "ElementTypeParam:17:2:1.description": "wind speed",
@@ -369,8 +369,8 @@ var i18_es = {
 
     "ElementTypeParam:18:1:1.alias": "PK",
     "ElementTypeParam:18:1:1.description": "PK",
-    "ElementTypeParam:18:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:18:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:18:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:18:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:18:2:1.alias": "wind speed",
     "ElementTypeParam:18:2:1.description": "wind speed",
@@ -379,8 +379,8 @@ var i18_es = {
 
     "ElementTypeParam:19:1:1.alias": "PK",
     "ElementTypeParam:19:1:1.description": "PK",
-    "ElementTypeParam:19:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:19:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:19:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:19:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:19:2:1.alias": "co concentration",
     "ElementTypeParam:19:2:1.description": "co concentration",
@@ -389,8 +389,8 @@ var i18_es = {
 
     "ElementTypeParam:20:1:1.alias": "PK",
     "ElementTypeParam:20:1:1.description": "PK",
-    "ElementTypeParam:20:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:20:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:20:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:20:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:20:2:1.alias": "no concentration",
     "ElementTypeParam:20:2:1.description": "no concentration",
@@ -399,8 +399,8 @@ var i18_es = {
 
     "ElementTypeParam:21:1:1.alias": "PK",
     "ElementTypeParam:21:1:1.description": "PK",
-    "ElementTypeParam:21:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:21:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:21:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:21:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:21:2:1.alias": "opac concentration",
     "ElementTypeParam:21:2:1.description": "opac concentration",
@@ -409,16 +409,16 @@ var i18_es = {
 
     "ElementTypeParam:22:1:1.alias": "PK",
     "ElementTypeParam:22:1:1.description": "PK",
-    "ElementTypeParam:22:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:22:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:22:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:22:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:22:2:1.alias": "status",
     "ElementTypeParam:22:2:1.description": "status",
 
     "ElementTypeParam:23:1:1.alias": "PK",
     "ElementTypeParam:23:1:1.description": "PK",
-    "ElementTypeParam:23:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:23:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:23:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:23:1:2.description": "Entrance Tunnel Distance (m)",
 
     "ElementTypeParam:23:2:1.alias": "average length",
     "ElementTypeParam:23:2:1.description": "average length",
@@ -522,7 +522,7 @@ var i18_es = {
     "ElementTypeParam:23:2:50.description": "status",
 
     "ElementTypeParam:24:1:1.alias": "PK",
-    "ElementTypeParam:24:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:24:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:24:2:1.alias": "Brightness",
     "ElementTypeParam:24:2:2.alias": "Brightness Contol",
     "ElementTypeParam:24:2:3.alias": "Temperature",
@@ -537,43 +537,43 @@ var i18_es = {
     "ElementTypeParam:25:1:4.description": "Armario Asociado",
     
     "ElementTypeParam:26:1:1.alias": "PK",
-    "ElementTypeParam:26:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:26:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:26:2:1.alias": "Brightness",
     "ElementTypeParam:26:2:2.alias": "Brightness Contol",
     "ElementTypeParam:26:2:3.alias": "Temperature",
 
     "ElementTypeParam:27:1:1.alias": "PK",
-    "ElementTypeParam:27:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:27:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:27:2:1.alias": "Brightness",
     "ElementTypeParam:27:2:2.alias": "Brightness Contol",
     "ElementTypeParam:27:2:3.alias": "Temperature",
 
     "ElementTypeParam:28:1:1.alias": "PK",
-    "ElementTypeParam:28:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:28:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:28:2:1.alias": "Brightness",
     "ElementTypeParam:28:2:2.alias": "Brightness Contol",
     "ElementTypeParam:28:2:3.alias": "Temperature",
 
     "ElementTypeParam:29:1:1.alias": "PK",
-    "ElementTypeParam:29:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:29:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:29:2:1.alias": "Brightness",
     "ElementTypeParam:29:2:2.alias": "Brightness Contol",
     "ElementTypeParam:29:2:3.alias": "Temperature",
 
     "ElementTypeParam:30:1:1.alias": "PK",
-    "ElementTypeParam:30:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:30:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:30:2:1.alias": "Brightness",
     "ElementTypeParam:30:2:2.alias": "Brightness Contol",
     "ElementTypeParam:30:2:3.alias": "Temperature",
 
     "ElementTypeParam:31:1:1.alias": "PK",
-    "ElementTypeParam:31:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:31:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:31:2:1.alias": "Brightness",
     "ElementTypeParam:31:2:2.alias": "Brightness Contol",
     "ElementTypeParam:31:2:3.alias": "Temperature",
 
     "ElementTypeParam:32:1:1.alias": "PK",
-    "ElementTypeParam:32:1:2.alias": "Entrance Tunnel Distance",
+    "ElementTypeParam:32:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:32:2:1.alias": "Brightness",
     "ElementTypeParam:32:2:2.alias": "Brightness Contol",
     "ElementTypeParam:32:2:3.alias": "Temperature",
@@ -585,17 +585,17 @@ var i18_es = {
     "ElementTypeParam:34:1:3.alias": "Vía",
     "ElementTypeParam:34:1:3.description": "Vía",
      
-    "ElementTypeParam:35:1:1.alias": "Brand",
-    "ElementTypeParam:35:1:2.alias": "Model",
-    "ElementTypeParam:35:1:3.alias": "Road",
-    "ElementTypeParam:35:1:4.alias": "Seccion",
-    "ElementTypeParam:35:1:5.alias": "PK",
+    "ElementTypeParam:35:1:1.alias": "PK",
+    "ElementTypeParam:35:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:35:1:3.alias": "DirLogica",
+    "ElementTypeParam:35:1:4.alias": "Protocolo",
+    "ElementTypeParam:35:1:5.alias": "Disposici&oacute;n",
     
-    "ElementTypeParam:36:1:1.alias": "Brand",
-    "ElementTypeParam:36:1:2.alias": "Model",
-    "ElementTypeParam:36:1:3.alias": "Road",
-    "ElementTypeParam:36:1:4.alias": "Seccion",
-    "ElementTypeParam:36:1:5.alias": "PK",
+    "ElementTypeParam:36:1:1.alias": "PK",
+    "ElementTypeParam:36:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:36:1:3.alias": "DirLogica",
+    "ElementTypeParam:36:1:4.alias": "Protocolo",
+    "ElementTypeParam:36:1:5.alias": "Disposici&oacute;n",
 
     "ElementTypeParam:41:1:1.alias": "PK",
     "ElementTypeParam:41:1:1.description": "PK",
@@ -648,8 +648,8 @@ var i18_es = {
     
     "ElementTypeParam:53:1:1.alias": "PK",
     "ElementTypeParam:53:1:1.description": "PK",
-    "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel",
-    "ElementTypeParam:53:1:2.description": "Entrance Tunnel Distance",
+    "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:53:1:2.description": "Entrance Tunnel Distance (m)",
 
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
