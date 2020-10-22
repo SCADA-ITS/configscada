@@ -585,7 +585,7 @@ var i18_en = {
     "ElementTypeParam:35:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:35:1:3.alias": "LogicDir",
     "ElementTypeParam:35:1:4.alias": "Protocol",
-    "ElementTypeParam:35:1:5.alias": "Disposicion",
+    "ElementTypeParam:35:1:5.alias": "Disposition",
 
     "ElementTypeParam:36:1:1.alias": "PK",
     "ElementTypeParam:36:1:2.alias": "Entrance Tunnel Distance (m)",
