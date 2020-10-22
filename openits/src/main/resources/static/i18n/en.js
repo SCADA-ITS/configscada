@@ -984,6 +984,7 @@ var i18_en = {
     "AlarmConfig:130": "ALARM PLC_CABINET BATTERY LOW",
     "AlarmConfig:131": "ALARM PLC_CABINET OVERLOAD UPS",
     "AlarmConfig:132": "ALARM PLC_CABINET NO CONNECTION",
+    "AlarmConfig:133": "ALARM PLC_CABINET TRANSFORMER OPEN DOOR",
     
     "Alarm_recon": "Already recognized alarm",
     "Alarm_deactivated": "Already deactivated alarm",

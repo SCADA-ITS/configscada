@@ -849,6 +849,8 @@ var i18_sk = {
     "AlarmConfig:130": "UPOZORNEIE PLC_CABINET BATÉRIA SCN NÍZKA",
     "AlarmConfig:131": "UPOZORNEIE PLC_CABINET PREH&#313;AD UPS",
     "AlarmConfig:132": "UPOZORNEIE PLC_CABINET ŽIADNE SPOJENIE",
+    "AlarmConfig:133": "UPOZORNEIE PLC_CABINET OVTONRENÉ DVERE TRANSFORMÁTORA",
+    
     "Alarm_recon": "Alarm u&#382; bol rozpoznan&#253;",
     "Alarm_deactivated": "Already deactivated alarm",
     
