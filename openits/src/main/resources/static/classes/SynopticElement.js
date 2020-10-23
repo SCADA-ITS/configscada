@@ -8,7 +8,7 @@ import {
 } from "../lib/iconGenerator.js";
 
 import {columnsElementFormList} from "../data/elementForm.js";
-import {ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
+import {ELEMENT_TYPE, WIDTH_RESOLUTION, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 
@@ -100,7 +100,7 @@ export default class synopticElement {
             let scale_x = (synopticConf[this.element.id].width / ELEMENT_TYPE.values[this.element.elementType.id].scale_x) * ratioWidth;
             let scale_y = (synopticConf[this.element.id].height / ELEMENT_TYPE.values[this.element.elementType.id].scale_y) * ratioHeight;
             if (el != null) {
-              el.transform("translate(" + (synopticConfElement.x * ratioWidth) + "," + ((1080 - synopticConfElement.y - synopticConf[this.element.id].height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+              el.transform("translate(" + (synopticConfElement.x * ratioWidth) + "," + ((HEIGHT_RESOLUTION - synopticConfElement.y - synopticConf[this.element.id].height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
               el.attr({ id: this.element.id });
               el.attr({ class: "svg_icon" });
               el.attr({ name: this.element.id });
@@ -159,7 +159,7 @@ export default class synopticElement {
              let scale_x = (synopticConf[this.element.id].width / total_width) * ratioWidth;
              let scale_y = (synopticConf[this.element.id].height / total_height) * ratioHeight;
              if (el != null) {
-               el.transform("translate(" + (synopticConfElement.x * ratioWidth) + "," + ((1080 - synopticConfElement.y - synopticConf[this.element.id].height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+               el.transform("translate(" + (synopticConfElement.x * ratioWidth) + "," + ((HEIGHT_RESOLUTION - synopticConfElement.y - synopticConf[this.element.id].height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
                el.attr({ id: this.element.id });
                el.attr({ class: "svg_icon" });
                el.attr({ name: this.element.id });
@@ -177,7 +177,7 @@ export default class synopticElement {
           let elem_icon_width = synopticConf[this.element.id].width;
           let elem_icon_height = synopticConf[this.element.id].height;
           let im = snapDiv
-            .image("./img/" + elem_icon,synopticConfElement.x * ratioWidth, (1080 - elem_icon_height - synopticConfElement.y) * ratioHeight, elem_icon_width * ratioWidth, elem_icon_height * ratioHeight )
+            .image("./img/" + elem_icon,synopticConfElement.x * ratioWidth, (HEIGHT_RESOLUTION - elem_icon_height - synopticConfElement.y) * ratioHeight, elem_icon_width * ratioWidth, elem_icon_height * ratioHeight )
             .attr({
               id: this.element.id,
               component: ELEMENT_TYPE.values[this.element.elementType.id].value,
@@ -285,13 +285,10 @@ export default class synopticElement {
                 id: this.element.id + ":Bar",
                 class: "capa_mapa",
               });
-              // FIXME: there is no "Rio Verde" tunnel in the DB, just "Tunnel 1" so we set it manually
-              // We should bring modify the GraphQL query (add "description" field) and bring it from the DB
-              //let titleText = snapDiv.text((synopticElement.x + 105) * ratioWidth, total_height - 781 * ratioHeight, element.description);
               let titleText = snapDiv.text(
                 (synopticConfElement.x + 105) * ratioWidth,
                 total_height - 781 * ratioHeight,
-                "RIO VERDE"
+                synopticConfElement.tittle
               );
               titleText.attr({
                 "font-size": 21 * ratioWidth,

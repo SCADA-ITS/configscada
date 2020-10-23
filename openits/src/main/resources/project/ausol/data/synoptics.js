@@ -3,6 +3,7 @@ export let synopticData= [
 		"id":"synopticTunnel",
 		"parentId":"Element:7:1",
 		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
 		"BaseLayers": {
 			"BASE_LAYER": "tunel.svg"
 		},
@@ -185,6 +186,7 @@ export let synopticData= [
 		"id":"synopticMetro",
 		"parentId":"Element:7:2",
 		"ExclusiveLayers": false,
+		"tittle": "",
 		"BaseLayers": {
 			"BASE_LAYER": "metro.svg"
 		},
@@ -197,7 +199,8 @@ export let synopticData= [
 			"Tunel": {
 				"items": ["Element:7:1"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "visible",
+				"tittle": "RIO VERDE"
 			}
 		},
 		"Element:7:1": { "x": 1091, "y": 607, "width": 60, "height": 60 },
@@ -206,6 +209,7 @@ export let synopticData= [
 		"id":"synopticGlobal",
 		"parentId":"Element:7:3",
 		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
 		"BaseLayers": {
 			"BASE_LAYER": "global_v0.1.svg"
 		},

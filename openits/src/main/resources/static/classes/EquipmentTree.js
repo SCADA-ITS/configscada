@@ -80,12 +80,9 @@ export default class EquipmentTree {
   constructor(id, data) {
     this.id = id;
     this.data = data;
-
     let self = this;
-
     var graphElements =
-      `
-        query   {
+      `query   {
           getElement(elementId: "` + this.id + `")
           {
             id
@@ -97,6 +94,9 @@ export default class EquipmentTree {
               alias
               state
               description
+              elementType {
+                id
+              }
               elementValues {
                 id
                 value
@@ -114,9 +114,6 @@ export default class EquipmentTree {
         login: "user",
         passcode: "user",
       },
-      //debug: function(str) {
-      //console.log(str);
-      //},
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
@@ -132,10 +129,6 @@ export default class EquipmentTree {
     };
 
     this.client.onStompError = function (frame) {
-      // Will be invoked in case of error encountered at Broker
-      // Bad login/passcode typically will cause an error
-      // Complaint brokers will set `message` header with a brief message. Body may contain details.
-      // Compliant brokers will terminate the connection after any error
       console.log("Broker reported error: " + frame.headers["message"]);
       console.log("Additional details: " + frame.body);
       alert(`[error] ${error.message}`);
@@ -226,46 +219,6 @@ export default class EquipmentTree {
       icon: "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>",
     });
 
-    // add the icon callback
-    /*
-    let treeElement = document.getElementById(element.id + ":Tree");
-    if(treeElement != null) {
-      treeElement.setAttribute("onclick", alert("CLICK!"));
-      treeElement.style["z-index"] = 1000;
-      treeElement.addEventListener('click', function(evt) { 
-        alert("HELLO");
-
-        let id =  evt.target.parentElement.id;
-  
-        // open the detail window
-        if($$("win" + id) != null) {
-          $$("win" + id).destructor();
-        }
-
-        
-  
-        let elementForm = new ElementForm(id.toString(), columnsElementFormList);
-        webix
-          .ui({
-            id: "win" + id,
-            view: "window",
-            move: true,
-            close: true,
-            position: "right",
-            body: elementForm.getComponent(),
-            on: {
-              onDestruct: function (obj) {
-                elementForm.disconnect();
-              },
-              onHide: function (obj) {
-                elementForm.disconnect();
-              },
-            },
-          })
-          .show();
-        });
-    }
-    */
   }
 
   checkSelected(id) {
@@ -310,6 +263,30 @@ export default class EquipmentTree {
 			let obj = JSON.parse(JSON.parse(message.body));
 			obj.basicElementsVO.forEach((element) => {
 				try {
+          let elementQuery = webix.proxy(
+            "GraphQL",`
+            query ($elem: String!) {
+              getElement(elementId: $elem)
+              {
+                id
+                state
+                elementType {
+                  id
+                  alias
+                }
+                elementValues
+                {
+                  id
+                  value
+                  alerted
+                  elementTypeParam {
+                    description
+                  }
+                }
+              }
+            }
+            `
+          );
           if (
             elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
@@ -323,37 +300,10 @@ export default class EquipmentTree {
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
             || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
             ) {
-              let elementQuery = webix.proxy(
-                "GraphQL",`
-                query ($elem: String!) {
-                  getElement(elementId: $elem)
-                  {
-                    id
-                    state
-                    elementType {
-                      id
-                      alias
-                    }
-                    elementValues
-                    {
-                      id
-                      value
-                      alerted
-                      elementTypeParam {
-                        description
-                      }
-                    }
-                  }
-                }
-                `
-              );
-
               // loads the data
-              elementQuery
-                .load({
+              elementQuery.load({
                   elem: element.id,
-                })
-                .then((data) => {
+                }).then((data) => {
                   // process the received data
                   let element = data;
                   let thisElementType = elementTypeMap.getElementType(element.id);
@@ -364,29 +314,33 @@ export default class EquipmentTree {
                   let height = 32;
                   let width = getIconWidth(thisElementType, height);
 
-                  if(typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                  if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
                     $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
                   }
                 });
             } else {
-              let thisElementType = elementTypeMap.getElementType(element.id);
+              elementQuery.load({
+                elem: element.id,
+              }).then((data) => {
+                let thisElementType = elementTypeMap.getElementType(element.id);
 
-              // set the width and height based on the elementType
-              let height = 32;
-              let width = getIconWidth(thisElementType, height);
-
-              getElementIcon(element, ":Tree");
-              // check if the tree exists
-              if(typeof $$("element_tree").getItem(element.id) != 'undefined') {
-                $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
-              }
+                // set the width and height based on the elementType
+                let height = 32;
+                let width = getIconWidth(thisElementType, height);
+    
+                getElementIcon(data, ":Tree");
+                // check if the tree exists
+                if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                  $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(data, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+                }
+              }); 
             }
         } catch (err) {
-          console.log("Error: " + err.message);
+          console.error(err);
         }
       });
     } catch (err) {
-      console.log("Error: " + err.message);
+      console.error(err);
     }
   }
 
@@ -426,9 +380,7 @@ export default class EquipmentTree {
       }
     );
 
-    this.graphqlElements
-      .load()
-      .then((data) => {
+    this.graphqlElements.load().then((data) => {
         // if componentId is not given, 
         // the default tree will be grouped by elementTypes
         if(componentId == "") {
@@ -436,8 +388,7 @@ export default class EquipmentTree {
             self.addToElementTree(element);
           });
         }
-      })
-      .then(() => {
+      }).then(() => {
         $$("element_tree" + componentId).clearAll();
         $$("element_tree" + componentId).parse(self.elementTree);
         // adds the callback for the element selected

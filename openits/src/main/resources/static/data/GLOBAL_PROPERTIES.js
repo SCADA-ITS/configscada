@@ -120,3 +120,6 @@ export const ICON_COLOR = {
   2: "#800080",
   3: "#ff0000"
 }
+
+export const WIDTH_RESOLUTION= 1920;
+export const HEIGHT_RESOLUTION= 1080;

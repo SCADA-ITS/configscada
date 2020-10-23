@@ -47,7 +47,13 @@ export default class ElementForm {
 				}
 				alarms{
 					id
-					alarmConfig {id alias alarmLevel}
+					alarmConfig {
+						id 
+						alias 
+						alarmLevel {
+							labelAlias
+					  	}
+					}
 					recognized
 					recognizedComments
 					activation
@@ -535,7 +541,13 @@ export default class ElementForm {
 											"GraphQL",`query getAlarm($alarmId: String!) {
 												getAlarm(alarmId: $alarmId) {
 													id
-													alarmConfig {id alias alarmLevel}
+													alarmConfig {
+														id 
+														alias 
+														alarmLevel {
+															labelAlias
+														}
+													}
 												}
 											}`
 										);

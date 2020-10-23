@@ -1,5 +1,6 @@
 import Alarms from "../classes/Alarms.js";
 import ElementForm from "../classes/ElementForm.js";
+import {alarmsCfg} from "../data/alarmsCfg.js";
 
 var graphAlarm = webix.proxy(
 	"GraphQL", `
@@ -12,9 +13,15 @@ var graphAlarm = webix.proxy(
 	  activationComments
 	  deactivation
 	  deactivationComments
-      alarmConfig {id alias alarmLevel}
-      sourceElement{id alias}
-      targetElement{id alias} 
+      alarmConfig {
+		id 
+		alias 
+		alarmLevel {
+			labelAlias
+		}
+	}
+	sourceElement{id alias}
+	targetElement{id alias} 
   }
 }`);
 
@@ -79,7 +86,7 @@ let genericTablei18n = {
 			},
 			width: 180 },
 			{ "id": "alarmConfig", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj) { return $.i18n(obj.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj) { return obj.alarmConfig.alarmLevel; }, width: 70 },
+			{ "id": "alarmLevel", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj) { return alarmsCfg[obj.alarmConfig.id].alarmLevel; }, width: 70 },
 			{ "id": "sourceElementId", "template": function (obj) { return obj.sourceElement.id; }, hidden:true },
 			{ "id": "sourceElementAlias", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
 			{ "id": "sourceElement", "header":"", "template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50} , 
@@ -498,7 +505,7 @@ let genericTablei18n_recon = {
 			},
 			width: 200 },
 			{ "id": "alarmConfig_recon", sort:"text", "header": $.i18n("alarms.d.alarmconfig"), "template": function (obj_recon) { return $.i18n(obj_recon.alarmConfig.id); }, width: 270, fillspace:true },
-			{ "id": "alarmLevel_recon", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return obj_recon.alarmConfig.alarmLevel; }, width: 70 },
+			{ "id": "alarmLevel_recon", sort:"int", "header": $.i18n("alarms.d.level"), "template": function (obj_recon) { return alarmsCfg[obj_recon.alarmConfig.id].alarmLevel; }, width: 70 },
 			{ "id": "sourceElementId", "template": function (obj) { return obj.sourceElement.id; }, hidden:true },
 			{ "id": "sourceElementAlias", sort:"text", "header": $.i18n("alarms.d.source"), "template": function (obj) { return obj.sourceElement.alias; }, width: 100 },
 			{ "id": "sourceElement", "header":"", "template": "<button class='open_elementForm' ><span class='webix_icon wxi-search'></span></button>", width: 50} , 

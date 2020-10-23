@@ -1,4 +1,3 @@
-import ElementForm from "../classes/ElementForm.js";
 import ElementCommand from "../classes/ElementCommand.js";
 import {
   getElementIcon,
@@ -10,12 +9,7 @@ import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import EquipmentTree from "./EquipmentTree.js";
 import SynopticElement from "../classes/SynopticElement.js";
-import {ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
-
-import { element_tree } from "../widgets/element_tree.js";
-
-// Size of a row in the layers dropdown
-const DROPDOWN_ROW_SIZE = 43;
+import {ELEMENT_TYPE, WIDTH_RESOLUTION, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
 let graphSynoptic = webix.proxy(
   "GraphQL",
@@ -43,19 +37,6 @@ let graphSynoptic = webix.proxy(
   `
 );
 
-function findById(data, id) {
-  for(var i = 0; i < data.length; i++) {
-   if (data[i].id === id) {
-     return data[i];
-   }
-   
-   if (data[i].data.length > 0) {
-     let s = findById(data[i].data, id);
-     if(s) return s;
-   }
- }
-}
-
 // in case of exclusive layers, manages the onItemCheck event
 var shouldICheck = true;
 
@@ -74,9 +55,7 @@ export default class Synoptic {
     this.synopticDiv = synopticConf.id;
     this.synopticConf = synopticConf;
     this.synopticType = synopticConf.id;
-    
     this.elementTree = null;
-
     this.layerTree = {};
     this.metadata = {
       "id":"synoptic",
@@ -103,28 +82,21 @@ export default class Synoptic {
   processStompMessageWithFallback(message) {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
-
-      
       obj.basicElementsVO.forEach((element) => {
-        
         if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS) {
           throw "DMSException";
         }
         getElementIcon(element);
       });
-
     } catch (err) {
       console.log("Error: " + err.message);
       console.log("Retrying with GraphQL");
-
       let obj = JSON.parse(JSON.parse(message.body));
-
       obj.basicElementsVO.forEach((element) => {
         //initialize the proxy
         let elementQuery = webix.proxy(
           "GraphQL",
-          `
-					query ($elem: String!) {
+          `query ($elem: String!) {
 						getElement(elementId: $elem)
 						{
 							id
@@ -143,19 +115,15 @@ export default class Synoptic {
 								}
 							}
 						}
-					}
-					`
+					}`
         );
 
         // loads the data
-        elementQuery
-          .load({
+        elementQuery.load({
             elem: element.id,
-          })
-          .then((data) => {
+          }).then((data) => {
             // process the received data
             let element = data;
-
             updateElementState(element);
             updateElementIcon(element);
           });
@@ -167,7 +135,6 @@ export default class Synoptic {
   // TODO: this method is only called by the exclusive-layers synoptics
   // Work in progress
   handleLayers(e, initial=false) {
-
     if(!initial) {
       if (this.layersToDraw[e] == "visible") {
         this.layersToDraw[e] = "hidden";
@@ -177,9 +144,7 @@ export default class Synoptic {
     }
 
     this.layersToDraw[e] = this.synopticConf["Layers"][e]["visibility"];
-
     if(this.synopticConf["ExclusiveLayers"] == true && e != "BASE_LAYER" && e != "ROAD") {
-      
       for (var k in this.layersToDraw) {
         if (k != e && k != "BASE_LAYER" && k != "ROAD") {
           this.layersToDraw[k] = "hidden";
@@ -195,12 +160,8 @@ export default class Synoptic {
 
           // item
           this.synopticConf["Layers"][k]["items"].forEach((item) => {
-      
             let el = document.getElementById(item);
             if(el != null && typeof el != 'undefined') {
-              //el.setAttribute("visibility", this.layersToDraw[k]);
-              //el.style["visibility"] = this.layersToDraw[k];
-      
               // Fix for the FAN
               if (this.layersToDraw[e] == "visible") {
                 el.style["opacity"] = 1;
@@ -208,26 +169,19 @@ export default class Synoptic {
                 el.style["opacity"] = 0;
               }
             }
-      
           });
-
         }
       }
-
       this.layersToDraw[e] = "visible";  
-
     }
-
 
     // base layer
     if(e == "BASE_LAYER") {
       let els = this.s.selectAll('[component="' + e + '"]');
-
       els.forEach((el) => {
         el.attr("visibility", this.layersToDraw[e]);
       });
     } else {
-
       // check if there is a base layer and changes its visibility
       if(Object.keys(this.synopticConf["BaseLayers"]).includes(e)) {
         let el = document.getElementById("capa_base_" + e);
@@ -239,29 +193,18 @@ export default class Synoptic {
 
       // item
       this.synopticConf["Layers"][e]["items"].forEach((item) => {
-  
         if(Object.keys(this.synopticConf["Layers"]).includes(item) && (item != e)) {
-  
           // reset the layer visibility to set the same as the group layer
           if (this.layersToDraw[e] == "visible") {
             this.layersToDraw[item] = "hidden";
           } else {
             this.layersToDraw[item] = "visible";
           }
-  
           this.handleLayers(item);
-
         } else {
-  
           let el = document.getElementById(item);
           if(el != null && typeof el != 'undefined') {
-            //el.setAttribute("visibility", this.layersToDraw[e]);
-            //el.style["visibility"] = this.layersToDraw[e];
-
-            //alert(e + " --> " + this.synopticConf["Layers"][e]["visibility"]);
-    
             // Fix for the FAN
-            //if (this.layersToDraw[e] == "visible") {
             if (this.synopticConf["Layers"][e]["visibility"] == "visible") {
               el.style["opacity"] = 1;
             } else {
@@ -271,7 +214,6 @@ export default class Synoptic {
         }
       });
     }
-
   }  // Layer groups
 
   // got from Github
@@ -319,7 +261,6 @@ export default class Synoptic {
     // loop all the tree items to find what items should be shown
     synopticId.data.each(function(obj) { 
       let checkedElement = document.getElementById(obj.id);
-
       if(checkedElement != null) {
         if(checkedElements.includes(obj.id)) {
           checkedElement.style.opacity = 1;
@@ -329,18 +270,14 @@ export default class Synoptic {
       }
     });
 
-
     // check if there are objects selected
     let shouldEnableButton = false;
-
     if(synopticId.getChecked().length > 0) {
       let first_item = synopticId.getChecked().find(e => e.match(/Element/g));
-      
       if(typeof first_item != 'undefined') {
         for(let i=0; i<synopticId.getChecked().length; i++) {
           let checkedElement = synopticId.getChecked()[i];
           let checkedElementLevel = synopticId.getItem(checkedElement).$level;
-  
           if(checkedElementLevel != 1) {
             if(elementTypeMap.getElementType(checkedElement) == elementTypeMap.getElementType(first_item)) {
               shouldEnableButton = true
@@ -349,9 +286,7 @@ export default class Synoptic {
               break;
             }
           }
-  
         }
-
       }
     }
 
@@ -360,7 +295,6 @@ export default class Synoptic {
     } else {
       synopticButtonId.disable();
     }
-
   }
 
   clickElementExclusiveLayers(id) {
@@ -373,24 +307,18 @@ export default class Synoptic {
 
     // all the elements of the tree
     //let checkedElements = synopticId.getChecked();
-
     if(!id.match("Element")) {
       // checks if the base layer is selected and mantains its selection
       let baseLayerChecked = false;
       if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
         baseLayerChecked = true;
       }
-
       shouldICheck = false;
-
       // unselect all
       synopticId.uncheckAll();
-
-      
       // (un)select the base layer
       if(baseLayerChecked) {
         synopticId.checkAll("BASE_LAYER");
-        
         // check if the ROAD layer exists and (un)checks
         if(synopticId.data.exists("ROAD")) {
           synopticId.checkAll("ROAD");
@@ -399,7 +327,6 @@ export default class Synoptic {
       
       // select only the element/branch
       synopticId.checkAll(id);
-      
       shouldICheck = true;
 
       // all the elements of the tree
@@ -408,7 +335,6 @@ export default class Synoptic {
       // loop all the tree items to find what items should be shown
       synopticId.data.each(function(obj) { 
         let checkedElement = document.getElementById(obj.id);
-
         if(checkedElement != null) {
           if(checkedElements.includes(obj.id)) {
             checkedElement.style.opacity = 1;
@@ -416,7 +342,6 @@ export default class Synoptic {
             checkedElement.style.opacity = 0;
           }
         }
-              
       });
     } else {
       // clean the current selection
@@ -429,29 +354,23 @@ export default class Synoptic {
 
   // Check element event for a synoptic with exclusive layers
   checkElementExclusiveLayers(id) {
-    
     if(shouldICheck == true) {
       // find the id of the synoptic, replacing the SVG added by Snap.svg in the ID
       let synopticId = $$("element_tree" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
       let synopticButtonId = $$("element_tree_button" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
-
       if(!id.match("Element")) {
         // checks if the base layer is selected and mantains its selection
         let baseLayerChecked = false;
         if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
           baseLayerChecked = true;
         }
-  
         shouldICheck = false;
-  
         // unselect all
         synopticId.uncheckAll();
-  
         
         // (un)select the base layer
         if(baseLayerChecked) {
           synopticId.checkAll("BASE_LAYER");
-          
           // check if the ROAD layer exists and (un)checks
           if(synopticId.data.exists("ROAD")) {
             synopticId.checkAll("ROAD");
@@ -460,7 +379,6 @@ export default class Synoptic {
         
         // select only the element/branch
         synopticId.checkAll(id);
-        
         shouldICheck = true;
   
         // all the elements of the tree
@@ -469,7 +387,6 @@ export default class Synoptic {
         // loop all the tree items to find what items should be shown
         synopticId.data.each(function(obj) { 
           let checkedElement = document.getElementById(obj.id);
-  
           if(checkedElement != null) {
             if(checkedElements.includes(obj.id)) {
               checkedElement.style.opacity = 1;
@@ -477,23 +394,17 @@ export default class Synoptic {
               checkedElement.style.opacity = 0;
             }
           }
-                
         });
       }
 
-
-
       // check if there are objects selected
       let shouldEnableButton = false;
-
       if(synopticId.getChecked().length > 0) {
         let first_item = synopticId.getChecked().find(e => e.match(/Element/g));
-        
         if(typeof first_item != 'undefined') {
           for(let i=0; i<synopticId.getChecked().length; i++) {
             let checkedElement = synopticId.getChecked()[i];
             let checkedElementLevel = synopticId.getItem(checkedElement).$level;
-    
             if(checkedElementLevel != 1) {
               if(elementTypeMap.getElementType(checkedElement) == elementTypeMap.getElementType(first_item)) {
                 shouldEnableButton = true
@@ -502,9 +413,7 @@ export default class Synoptic {
                 break;
               }
             }
-    
           }
-  
         }
       }
 
@@ -513,18 +422,13 @@ export default class Synoptic {
       } else {
         synopticButtonId.disable();
       }
-
     }
   }
 
   generateLayerTree2(layersList) {
-
     let self = this;
-
     Object.keys(layersList).map((n) => {
-
       this.layerTree[n] = [];
-
       this.elementTree.elementTree.push({
         id: n,
         value: n,
@@ -532,33 +436,27 @@ export default class Synoptic {
       });
 
       for (let e in this.synopticConf["Layers"][n]["items"]) {
-
         if(Object.keys(this.synopticConf["Layers"]).includes(this.synopticConf["Layers"][n]["items"][e])) {
-
           let elementTypeKeyIndex = self.elementTree.elementTree.findIndex(
             (e) => e.id === n
           );
-
           this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
             id: this.synopticConf["Layers"][n]["items"][e],
             value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
             icon: "",
             data: [],
           });
-
         } else {
-          //this.layerTree[n].push(this.synopticConf["Layers"][n]["items"][e]);
           // search for the elementType key
-
           let elementTypeKeyIndex = self.elementTree.elementTree.findIndex(
             (e) => e.id === n
           );
   
           // set the width and height based on the elementType
           let height = 32;
-          //let width = this.getIconWidth(thisElementType, height);
+          //TODO get de icon
+          // let width = this.getIconWidth(thisElementType, height);
           let width = 32;
-
           
           if (typeof this.elementTree.elementTree[elementTypeKeyIndex]["data"] == "undefined") {
             this.elementTree.elementTree[elementTypeKeyIndex]["data"] = [];
@@ -585,27 +483,16 @@ export default class Synoptic {
             });
           }
         }
-
       };
-
-      //this.layersToDraw[n] = this.synopticConf["Layers"][n]["visibility"];
-      //this.handleLayers(n, true);
-
     });
-
   }
 
   generateLayerTree(layersList, depth=0, father) {
-
     let self = this;
-
     Object.keys(layersList).map((n) => {
-      
       var caret = 0;
       var linkToAdd = document.createElement("a");
       linkToAdd.id = "dropDown" + n;
-  
-
       if(Object.keys(layersList[n]).length > 0) {
         caret = document.createElement("span");
         caret.setAttribute("class", "caret");
@@ -626,18 +513,14 @@ export default class Synoptic {
       
       if(Object.keys(layersList[n]).length > 0) {
         let div = document.createElement("li"); 
-        
         father.appendChild(div);
         div.appendChild(linkToAdd);
         div.appendChild(caret);
-        
         self.layersToDraw[n] = self.synopticConf["Layers"][n]["visibility"];
         self.handleLayers(n, true);
-
         let nested = document.createElement("ul");
         nested.setAttribute("class", "nested");
         div.appendChild(nested);
-
         self.generateLayerTree(layersList[n], depth + 1, nested);
       } else { 
         father.appendChild(linkToAdd);
@@ -650,13 +533,10 @@ export default class Synoptic {
 
   loadData() {
     let self = this;
-
-    graphSynoptic
-      .load({
+    graphSynoptic.load({
         elem: this.elementId,
       }).then((d) => {
         // creates the base layer
-        //this.baseLayer = d.icon;
         this.baseLayer = this.synopticConf["BaseLayers"]["base"];
 
         // get the container size
@@ -666,8 +546,8 @@ export default class Synoptic {
         let total_height = c.offsetHeight;
 
         // set the aspect ratios
-        this.ratioWidth = total_width / 1920;
-        this.ratioHeight = total_height / 1080;
+        this.ratioWidth = total_width / WIDTH_RESOLUTION;
+        this.ratioHeight = total_height / HEIGHT_RESOLUTION;
 
         // set width and height
         this.s.attr({ width: total_width, height: total_height });
@@ -702,12 +582,10 @@ export default class Synoptic {
             class: "capa_mapa",
           });
 
-          // FIXME: there is no "Rio Verde" tunnel in the DB, just "Tunnel 1" so we set it manually
-          // We should bring modify the GraphQL query (add "description" field) and bring it from the DB
           let titleText = this.s.text(
             806 * this.ratioWidth,
             total_height - 15 * this.ratioHeight - 1011 * this.ratioHeight,
-            "RIO VERDE"
+            this.synopticConf.tittle
           );
           let subTitleText = this.s.text(
             855 * this.ratioWidth,
@@ -727,49 +605,35 @@ export default class Synoptic {
         }
 
         // draws the base layer
-        this.s
-          .image("./img/" + this.baseLayer, 0, 0, total_width, total_height)
-          .attr({
-            id: "capa_base",
-            //visibility: this.elementsToDraw["BASE_LAYER"],
-            visibility: this.synopticConf["Layers"]["BASE_LAYER"]["visibility"],
-            component: "BASE_LAYER",
-          });
-
+        this.s.image("./img/" + this.baseLayer, 0, 0, total_width, total_height).attr({
+          id: "capa_base",
+          visibility: this.synopticConf["Layers"]["BASE_LAYER"]["visibility"],
+          component: "BASE_LAYER",
+        });
 
         // adds the other base layers
         let self = this;
         Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
           if(k != "base") { // base is already added
-
             self.elementsToDraw[k] = "visible";
             if(!self.elementsTypes.includes(k)) {
               self.elementsTypes.push(k);
             }
-
-            self.s
-            .image("./img/" + self.synopticConf["BaseLayers"][k], 0, 0, total_width, total_height)
-            .attr({
+            self.s.image("./img/" + self.synopticConf["BaseLayers"][k], 0, 0, total_width, total_height).attr({
               //id: "capa_base_" + k,
               id: k,
               visibility: self.elementsToDraw[k],
               component: k,
             });
-            
           }
-
         });
-
         return d;
-      })
-      .then((d) => {
-
+      }).then((d) => {
         d.childs.forEach((element) => {
           this.elements.push(element);
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
         });
-
         
         // replaces the element tree in the DOM
         this.elementTree = new EquipmentTree(this.elementId, null);
@@ -843,8 +707,7 @@ export default class Synoptic {
                   "onItemClick": function(id, e) {
                     let filteredElements = $$("element_tree" + self.synopticDiv).getChecked().filter(e => e.match(/Element/g));
                     let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
-                    webix
-                      .ui({
+                    webix.ui({
                         id: "win_command" + filteredElements[0],
                         view: "window",
                         move: true,
@@ -867,7 +730,6 @@ export default class Synoptic {
             ],
             url: this.elementTree.getComponent(this.synopticDiv)
           }
-
         });
 
         if(document.getElementsByClassName("synoptic-svg")[0].attributes["exclusive"].value == "false") {
@@ -876,12 +738,9 @@ export default class Synoptic {
           $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElement);
         } else {
           // for exclusive layers
-          //$$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.checkElement);
           $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElementExclusiveLayers);
           $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElementExclusiveLayers);
         }
-        //$$("element_tree" + self.synopticDiv).attachEvent("onSelectChange", self.checkElement);
-
         return d;
       })
       .then((d) => {
@@ -892,17 +751,13 @@ export default class Synoptic {
         let buttonToAdd = document.createElement("button");
         buttonToAdd.innerHTML = "<span class='webix_icon wxi-folder-open'></span>";
         buttonToAdd.setAttribute("class", "dropbtn");
-        document
-          .getElementById(this.synopticDiv + "dropdownDiv")
-          .appendChild(buttonToAdd);
+        document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(buttonToAdd);
 
         // adds the dropdown div
         let divToAdd = document.createElement("div");
         divToAdd.setAttribute("id", this.synopticDiv + "dropdownDivContent");
         divToAdd.setAttribute("class", "dropdown-content");
-        document
-          .getElementById(this.synopticDiv + "dropdownDiv")
-          .appendChild(divToAdd);
+        document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(divToAdd);
 
         let layersList = {};
         let alreadyAddedLayersList = [];
@@ -912,18 +767,14 @@ export default class Synoptic {
           let layerName = Object.keys(this.synopticConf["Layers"])[l];
           if(!alreadyAddedLayersList.includes(layerName)) {
             layersList[layerName] = {};
-            //alreadyAddedLayersList.push(layerName);
-
             for(let item in this.synopticConf["Layers"][layerName]["items"]) {
               let itemName = this.synopticConf["Layers"][layerName]["items"][item];
               if(Object.keys(this.synopticConf["Layers"]).includes(itemName)) {
                 delete layersList[itemName];
                 layersList[layerName][itemName] = {};
-                //alreadyAddedLayersList.push(itemName);
               }
             }
           }
-
         }
 
         // Generate the tree
@@ -947,7 +798,6 @@ export default class Synoptic {
             }
           }
         }
-
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 
         return d;
@@ -997,14 +847,10 @@ export default class Synoptic {
       let spinnerDivToAdd = document.createElement("div");
       spinnerDivToAdd.setAttribute("id", this.synopticDiv + "spinner");
       spinnerDivToAdd.setAttribute("class", "spinner");
-      document
-        .querySelector('[view_id="' + this.synopticDiv + '"]')
-        .prepend(spinnerDivToAdd);
+      document.querySelector('[view_id="' + this.synopticDiv + '"]').prepend(spinnerDivToAdd);
 
       var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      document
-        .querySelector('[view_id="' + this.synopticDiv + '"]')
-        .prepend(svg);
+      document.querySelector('[view_id="' + this.synopticDiv + '"]').prepend(svg);
       svg.setAttribute("id", this.synopticDiv + "SVG");
       svg.setAttribute("width", c.offsetWidth);
       svg.setAttribute("height", c.offsetHeight);
@@ -1014,9 +860,7 @@ export default class Synoptic {
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
       divToAdd.setAttribute("class", "treemap-button ol-unselectable ol-control");
-      document
-        .querySelector('[view_id="' + this.synopticDiv + '"]')
-        .prepend(divToAdd);
+      document.querySelector('[view_id="' + this.synopticDiv + '"]').prepend(divToAdd);
 
       this.elementReady("#" + this.synopticDiv + "SVG").then((c1) => {
         // loads data and draws for first time
@@ -1103,13 +947,6 @@ export default class Synoptic {
           item.transform.baseVal[0].matrix["f"] =
             item.transform.baseVal[0].matrix["f"] * ratioHeight;
         }
-
-        // check if the element is a text and contains a font-size style attribute
-        /*
-          if(item.style["font-size"] != null) {
-            item.style["font-size"] = item.style["font-size"] * ratioWidth;
-          }
-          */
       }
 
       // scales the text of the tunnel banner
@@ -1138,26 +975,19 @@ export default class Synoptic {
         let item = document.getElementsByClassName("svg_icon")[i];
 
         if (item.getAttribute("transform") != null) {
-          item.transform.baseVal[0].matrix["e"] =
-            item.transform.baseVal[0].matrix["e"] * ratioWidth;
-          item.transform.baseVal[0].matrix["f"] =
-            item.transform.baseVal[0].matrix["f"] * ratioHeight;
-          item.transform.baseVal[0].matrix["a"] =
-            item.transform.baseVal[0].matrix["a"] * ratioWidth;
-          item.transform.baseVal[0].matrix["d"] =
-            item.transform.baseVal[0].matrix["d"] * ratioHeight;
+          item.transform.baseVal[0].matrix["e"] = item.transform.baseVal[0].matrix["e"] * ratioWidth;
+          item.transform.baseVal[0].matrix["f"] = item.transform.baseVal[0].matrix["f"] * ratioHeight;
+          item.transform.baseVal[0].matrix["a"] = item.transform.baseVal[0].matrix["a"] * ratioWidth;
+          item.transform.baseVal[0].matrix["d"] = item.transform.baseVal[0].matrix["d"] * ratioHeight;
         }
 
         // scales the texts inside the item
         for(let j=0; j<item.children.length; j++) {
           if(item.children[j].tagName == "text") {
             let childItem = item.children[j];
-            //childItem.style["font-size"] = (100 * ratioWidth).toString() + "px";
             childItem.style["font-size"] = (parseInt(childItem.style["font-size"]) * ratioWidth).toString() + "px";
-            //alert((100 * ratioWidth).toString() + "px");
           }
         }
-
       }
 
       // update the base size
@@ -1166,18 +996,15 @@ export default class Synoptic {
 
       // update the dropdown size
       document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px"
-      
     }
-  } //loadData
+  } 
 
   /*
    * Initializes the responsiveness
    */
   initResponsive() {
     let e = document.getElementsByClassName("webix_sidebar")[0];
-
     let self = this;
-
     let observer = new MutationObserver(function (event) {
       self.doResponsive();
     });
@@ -1208,20 +1035,16 @@ export default class Synoptic {
                 newNode = e.attributes["view_id"].value;
               }
             }
-          });
-          
+          });          
         }
-        
           if (newNode == self.synopticDiv) {
             // Launch the query again
             document.getElementById(self.synopticDiv + "spinner").style.display = "block";
-            
             graphSynoptic.load({
               elem: self.elementId,
             }).then((d) => {
               // check if it's a tunnel synoptic and changes the main bar in the synoptic
               let element_type = d.id.split(":")[1];
-
               if(element_type == "7") {
                 let color = "";
                 if (d.state != 3) {
@@ -1229,7 +1052,6 @@ export default class Synoptic {
                 } else {
                   color = "#ff0000";
                 }
-
                 if(document.getElementById(d.id + ":Bar") != null) {
                   document.getElementById(d.id + ":Bar").setAttribute("fill", color);
                 }
@@ -1241,8 +1063,6 @@ export default class Synoptic {
 
                 // check if it's a tunnel synoptic and changes the main bar in the synoptic
                 let element_type = element.id.split(":")[1];
-
-                
                 if(element_type == "7") {
                   let color = "";
                   if (element.state != 3) {
@@ -1279,7 +1099,6 @@ export default class Synoptic {
 
     // Attaching the event listener function to window's resize event
     window.addEventListener("resize", function() { self.doResponsive(self) });
-
   }
 	
 }

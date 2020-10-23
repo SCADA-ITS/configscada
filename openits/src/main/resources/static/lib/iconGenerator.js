@@ -299,9 +299,7 @@ export function updateElementIcon(element) {
     let elem_icon = getElementIcon(element).icon;
 
     // replace the icon
-    document
-      .getElementById(element.id)
-      .setAttribute("href", "./img/" + elem_icon);
+    document.getElementById(element.id).setAttribute("href", "./img/" + elem_icon);
   }
 }
 
@@ -335,7 +333,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA:
     case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
     case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix, state).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix, state) + '</g>';
