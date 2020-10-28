@@ -1711,6 +1711,8 @@ var i18_es = {
     "planSchedule.table.cronNextDate": "Próxima ejecución",
     "planSchedule.table.cronExpression": "Cron",
     "planSchedule.table.plan": "Plan",
+    "planSchedule.table.planState": "Plan Estado",
+    "planSchedule.table.state": "Estado",
     "plan.button.tooltip.add": "Añadir",
     "planSchedule.button.tooltip.details": "Detalles",
     "planSchedule.button.tooltip.edit": "Editar",

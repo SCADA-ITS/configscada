@@ -11,6 +11,7 @@ import {planschedules} from "../widgets/planschedule.js";
 import Synoptic from "../classes/Synoptic.js";
 import AlarmNotification from "../classes/AlarmNotification.js";
 import Alarms from "../classes/Alarms.js";
+import PlanSchedule from "../classes/PlanSchedule.js";
 import {usersmanager} from "../widgets/usersmanager.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
@@ -93,7 +94,12 @@ let main_body = {
                         let table = new Alarms(null, null);
                         table.disconnect();
                     }else{
-                        selectView = id;
+                        if(selectView === "planschedule" && id !=="planschedule"){
+                            let table = new PlanSchedule();
+                            table.disconnect();
+                        }else{
+                            selectView = id;
+                        }
                     }
                 }
             },

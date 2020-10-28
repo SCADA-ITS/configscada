@@ -1,17 +1,7 @@
 import { staticsIcons } from "../icons/synopticJson.js";
 
-import * as dms from "./icons/dms.js";
-import * as bar from "./icons/bar.js";
-import * as etd from "./icons/etd.js";
 import * as meteo from "./icons/meteo.js";
-import * as lum from "./icons/lum.js";
-import * as co from "./icons/co.js";
-import * as opac from "./icons/opac.js";
-import * as anem_int from "./icons/anem_int.js";
-import * as fan from "./icons/fan.js";
-import * as zone from "./icons/zone.js";
 import * as sos from "./icons/sos.js";
-
 import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
@@ -24,6 +14,9 @@ import * as nrl from "./icons/nrl.js";
 import * as tfa3d from "./icons/tfa3d.js";
 import * as tfa from "./icons/tfa.js";
 import * as tu from "./icons/tu.js";
+
+import * as dms from "./icons/dms.js";
+import * as etd from "./icons/etd.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
@@ -49,28 +42,28 @@ export function generateIcon(element, suffix="", state="", values) {
       || element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR) {
     return generateETDIcon(element, suffix, state, values);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX) {
-    return generateLuxIcon(element, suffix);
+    return createIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_14_LUM) {
-    return generateLumIcon(element, suffix, state);
+    return createIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_19_CO) {
-    return generateCoIcon(element, suffix, state);
+    return createIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_20_NO) {
-    return generateNoIcon(element, suffix, state);
+    return createIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_21_OPAC) {
-    return generateOpacIcon(element, suffix, state);
+    return generateOpacIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_18_ANEM_INT) {
-    return generateAnemIntIcon(element, suffix, state);
+    return generateAnemIntIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_17_ANEM_EXT) {
-    return generateAnemExtIcon(element, suffix, state);
+    return generateAnemExtIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_9_FAN) {
-    return generateFanIcon(element, suffix, state);
+    return generateFanIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_8_BAR) {
-    return generateBarIcon(element, suffix, state);
+    return generateBarIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_13_SEM
     || element.elementType.id === ELEMENT_TYPE.ID_53_SEM) {
-    return generateSemIcon(element, suffix, state);
+    return generateSemIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
-    return generateZoneIcon(element, suffix, state);
+    return generateZoneIcon(element, suffix);
   } else{
     return null;
   }
@@ -96,57 +89,34 @@ export function generateETDIcon(element, suffix="", state="",values) {
   return etd_str;
 }
 
-
-
-export function generateLuxIcon(element, suffix="") {
+export function generateOpacIcon(element, suffix="") {
   return createIcon(element, suffix);
 }
 
-export function generateLumIcon(element, suffix="", state="") {
-  let lum_str = lum.generateIcon(element, suffix, state);
-  return lum_str;
-}
-
-export function generateCoIcon(element, suffix="", state="") {
-  let co_str = co.generateIcon(element, suffix, state);
-  return co_str;
-}
-
-export function generateNoIcon(element, suffix="") {
-  return createIcon(element, suffix);
-}
-
-export function generateOpacIcon(element, suffix="", state="") {
-  let opac_str = opac.generateIcon(element, suffix, state);
-  return opac_str;
-}
-
-export function generateAnemIntIcon(element, suffix="", state="") {
+export function generateAnemIntIcon(element, suffix="") {
   return createIcon(element, suffix);
 
 }
 
-export function generateAnemExtIcon(element, suffix="", state="") {
+export function generateAnemExtIcon(element, suffix="") {
   return createIcon(element, suffix);
 }
 
-export function generateFanIcon(element, suffix="", state="") {
-  let fan_str = fan.generateIcon(element, suffix, state);
-  return fan_str;
+export function generateFanIcon(element, suffix="") {
+  return createIcon(element, suffix);
+
 }
 
-export function generateBarIcon(element, suffix="", state="") {
-  let bar_str = bar.generateIcon(element, suffix, state);
-  return bar_str;
+export function generateBarIcon(element, suffix="")  {
+  return createIcon(element, suffix);
 }
 
 export function generateSemIcon(element, suffix="") {
   return createIcon(element, suffix);
 }
 
-export function generateZoneIcon(element, suffix="", state="") {
-  let zone_str = zone.generateIcon(element, suffix, state);
-  return zone_str;
+export function generateZoneIcon(element, suffix="") {
+  return createIcon(element, suffix);
 }
 
 
@@ -188,25 +158,25 @@ export function getElementIcon(element, suffix="") {
 
   // icon based on element value
   if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN) {
-    fan.updateFanIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_8_BAR) {
-    bar.updateBarIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {
-    zone.updateZoneIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_12_LUX) {
     updateIcon(element, suffix);
   }  else if(elementType === elementTypeMap.ELEMENT_TYPE_14_LUM) {
-    lum.updateLumIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT) {
     updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT) {
-    anem_int.updateAnemIntIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_19_CO) {
-    co.updateCoIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_20_NO) {
     updateIcon(element, suffix);
   } else if(elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC) {
-    opac.updateOpacIcon(element, suffix);
+    updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
     etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
@@ -339,38 +309,38 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_9_FAN:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_12_LUX:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLuxIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_13_SEM:
     case elementTypeMap.ELEMENT_TYPE_53_SEM:
           iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_14_LUM:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateLumIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
       break;
    case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_19_CO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateCoIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_20_NO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateNoIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_21_OPAC:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS:
     case elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR:
@@ -431,6 +401,10 @@ export function drawInlineSVG(canvas, ctx, rawSVG, callback) {
 function createIcon(element, suffix="") {
   let elementId= element.id+suffix;
   let color = ICON_COLOR[element.state];
+  // override generic color with ElementType color if exist
+  if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
+    color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];
+  }
   //svg icon String
   let iconStr = ELEMENT_TYPE.values[element.elementType.id].svgRaw;
   let params={
@@ -456,43 +430,91 @@ function updateIcon(element, suffix="") {
   // changes the color based on the status
   if (typeof element.state != 'undefined' && element.state) {
     let color = ICON_COLOR[element.state];
+    // override generic color with ElementType color if exist
+    if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
+      color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];
+    }
     if(document.getElementById(element.id + suffix + ":IconBackground") != null){
       document.getElementById(element.id + suffix + ":IconBackground").style["stroke"] = color;
     }
     if(document.getElementById(element.id + suffix + ":ValueBackground") != null){
       document.getElementById(element.id + suffix + ":ValueBackground").style["stroke"] = color;
     }
+    for (let index = 0; index < 10; index++) {
+      if(document.getElementById(element.id + suffix + ":fill"+index) != null){
+        document.getElementById(element.id + suffix + ":fill"+index).style["fill"] = color;    
+      }
+    }
+    for (let index = 0; index < 5; index++) {
+      if(document.getElementById(element.id + suffix + ":stroke"+index) != null){
+        document.getElementById(element.id + suffix + ":stroke"+index).style["stroke"] = color;    
+      }
+    }
   }
+
   // change params
+  let params;
   if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
-    let params={};
+    params={};
     ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
       let key = Object.keys(item)[0];
       let tempValue = element.elementValues.find(
         (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
       );
-      if(typeof tempValue != 'undefined' && tempValue && document.getElementById(element.id + suffix + ":Value") != null){
+      if(typeof tempValue != 'undefined' && tempValue){
         params[key]=tempValue.value;
-        document.getElementById(element.id + suffix + ":Value").innerHTML = tempValue.value;
+        if(document.getElementById(element.id + suffix + ":Value") != null){
+          document.getElementById(element.id + suffix + ":Value").innerHTML = tempValue.value;
+        }
       }
     });
   }
+
   // specific case
-  if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM){
-    if (typeof params != 'undefined' && params) {
-      if (params[SEM_STATUS].value == "0") {
+  if(element.elementType.id === ELEMENT_TYPE.ID_8_BAR){
+    if (typeof params != 'undefined' && params && params["BAR_COMMAND_FOR_BARRIER"]
+      && document.getElementById(element.id + suffix + "g3856")!=null) {
+      if (params["BAR_COMMAND_FOR_BARRIER"] == "1") {
+        document.getElementById(element.id + suffix + "g3856").setAttribute("transform", "rotate(0,0,0)");
+      } else if (params["BAR_COMMAND_FOR_BARRIER"] == "0") {
+        document.getElementById(element.id + suffix + "g3856").setAttribute("transform", "rotate(22.188461,3.5567155,291.27864)");
+      }
+    }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_9_FAN){
+    if (typeof params != 'undefined' && params && params["FAN_COMMAND_FOR_FAN"]) {
+      if (params["FAN_COMMAND_FOR_FAN"] == 0) {
+        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
+        document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
+      } else if (params["FAN_COMMAND_FOR_FAN"] == 1) {
+        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "6s");
+        document.getElementById(element.id + suffix + ":IconArrowMD").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + ":IconArrowMI").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
+      } else if (params["FAN_COMMAND_FOR_FAN"] == 2) {
+        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "6s");
+        document.getElementById(element.id + suffix + ":IconArrowMD").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":IconArrowMI").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "visible";
+      }
+    }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM){
+    if (typeof params != 'undefined' && params && params["SEM_STATUS"]) {
+      if (params["SEM_STATUS"] == "0") {
         document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
-      } else if (params[SEM_STATUS].value == "1") {
+      } else if (params["SEM_STATUS"] == "1") {
         document.getElementById(element.id + suffix + "green").style["visibility"] = "visible";
         document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
-      } else if (params[SEM_STATUS].value == "2") {
+      } else if (params["SEM_STATUS"] == "2") {
         document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "yellow").style["visibility"] = "visible";
         document.getElementById(element.id + suffix + "red").style["visibility"] = "hidden";
-      } else if (params[SEM_STATUS].value == "3") {
+      } else if (params["SEM_STATUS"] == "3") {
         document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "yellow").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + "red").style["visibility"] = "visible";

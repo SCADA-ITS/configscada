@@ -361,6 +361,31 @@ ul.webix_um_infolist {
   color: #555;
 }
 
+.webix_um_status_badge.planschedule_state_success {
+  background-color: #c2c2c2;
+  color: #494b4a;
+}
+
+.webix_um_status_badge.planschedule_state_unknown {
+  background-color: #c2c2c2;
+  color: #494b4a;
+}
+
+.webix_um_status_badge.planschedule_state_pause {
+  background-color: #edead4;
+  color: #ecd449;
+}
+
+.webix_um_status_badge.planschedule_state_running {
+  background-color: #d4ede5;
+  color: #55cd97;
+}
+
+.webix_um_status_badge.planschedule_state_failed {
+  background-color: #d4ede5;
+  color: #fa3d3d;
+}
+
 .webix_um_infolist_details {
   padding-left: 30px;
   line-height: 25px;

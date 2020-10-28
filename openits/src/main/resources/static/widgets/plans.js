@@ -85,8 +85,16 @@ var plangrid1 = {
 
 function removeGrid(view){
   const hijos = $$(view).getChildViews();
-  for(let i = hijos.length - 1; i>=0; i--){ 
-    $$(view).removeView(hijos[i].config.id.toString());    
+  if(hijos[0] !== undefined){
+    console.log(hijos[0].config.id);
+    if (hijos[0].config.id.toString().split("_")[0] === "planHeader") {
+      console.log("SOMOS UN PLAN");
+      let plan = new Plan(hijos[0].config.id.toString().split("_")[1],null);
+      plan.disconnect();
+    }
+    for(let i = hijos.length - 1; i>=0; i--){ 
+      $$(view).removeView(hijos[i].config.id.toString());    
+    }
   }
 }
 
@@ -120,6 +128,7 @@ function open_new_tab(id){
   $$("toolbar_tree").show();
   $$("b_remove").hide();
   $$("treePlan").data.each(function(obj){  
+    
     if ( obj.id.toString() === item.id.toString() ) {
      
       switch (obj.$level) {
@@ -147,6 +156,7 @@ function open_new_tab(id){
               $$("b_remove").show();
             $$("b_add_order").show();
             plan.editForm("planParent",plan.data);
+            plan.activate();
           }
           break;          
         case 3:  //planSubtype

@@ -102,3 +102,23 @@
 .keyboard__key--dark {
   background: rgba(0, 0, 0, 0.25);
 }
+
+.planschedule_state_unknown {
+  background-color: #c2c2c2;
+  color: #494b4a;
+}
+
+.planschedule_state_pause {
+  background-color: #edead4;
+  color: #ecd449;
+}
+
+.planschedule_state_running {
+  background-color: #d4ede5;
+  color: #55cd97;
+}
+
+.planschedule_state_failed {
+  background-color: #d4ede5;
+  color: #fa3d3d;
+}

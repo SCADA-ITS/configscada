@@ -1,4 +1,4 @@
-import {SVG_12_LUX, SVG_13_SEM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_20_NO, SVG_53_SEM} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_53_SEM} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -51,41 +51,78 @@ export const ELEMENT_TYPE = {
     "ElementType:3" :{ id: "ElementType:3", value: 3, scale_x: 28, scale_y: 28},
     "ElementType:4" :{ id: "ElementType:4", value: 4, scale_x: 28, scale_y: 28},
     "ElementType:5" :{ id: "ElementType:5", value: 5, scale_x: 28, scale_y: 28},
-    "ElementType:7" :{ id: "ElementType:7", value: 7, scale_x: 4122.35, scale_y: 3382.97},
-    "ElementType:8" :{ id: "ElementType:8", value: 8, scale_x: 30.163, scale_y: 16.13958},
-    "ElementType:9" :{ id: "ElementType:9", value: 9, scale_x: 392, scale_y: 528},
+    "ElementType:7" :{ id: "ElementType:7", value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
+    color: {
+      undefined:"gray",
+      null:"gray",
+      0: "blue",
+      1: "blue",
+      2: "blue",
+      3: "red"
+    }
+  },
+    "ElementType:8" :{ id: "ElementType:8", value: 8, scale_x: 30.163, scale_y: 16.13958, svgRaw:SVG_8_BAR, 
+      elementTypeParams:[
+        {BAR_COMMAND_FOR_BARRIER : "1:2"}
+      ], 
+      color: {
+        undefined:"gray",
+        null:"gray",
+        0: "#ffcc00",
+        1: "#c0c0c0",
+        2: "#800080",
+        3: "#ff0000"
+      }
+    },
+    "ElementType:9" :{ id: "ElementType:9", value: 9, scale_x: 392, scale_y: 528, svgRaw:SVG_9_FAN, 
+      elementTypeParams:[
+        {FAN_COMMAND_FOR_FAN: "1:2"}
+      ]
+    },
     "ElementType:10" :{ id: "ElementType:10", value: 10, scale_x: 76, scale_y: 24},
     "ElementType:11" :{ id: "ElementType:11", value: 11, scale_x: 28, scale_y: 28},
     "ElementType:12" :{ id: "ElementType:12", value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
-        elementTypeParams:[
-          {LUX_LUMINOSITY: "1:2"}
-        ]
-      },
+      elementTypeParams:[
+        {LUX_LUMINOSITY: "1:2"}
+      ]
+    },
     "ElementType:13" :{ id: "ElementType:13", value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM, 
       elementTypeParams:[
         {SEM_STATUS: "1:2"}
       ] 
     },
-    "ElementType:14" :{ id: "ElementType:14", value: 14, scale_x: 14.628, scale_y: 15.698},
+    "ElementType:14" :{ id: "ElementType:14", value: 14, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_14_LUM, 
+      elementTypeParams:[
+        {LUM_LUMINOSITY: "2:2"}
+      ]
+    },
     "ElementType:15" :{ id: "ElementType:15", value: 15, scale_x: 28, scale_y: 28},
     "ElementType:16" :{ id: "ElementType:16", value: 16, scale_x: 28, scale_y: 28},
     "ElementType:17" :{ id: "ElementType:17", value: 17, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_17_ANEM_EXT,
-        elementTypeParams:[
-          {ANEM_EXT_WIND_SPEED: "1:2"}
-        ]
-      },
+      elementTypeParams:[
+        {ANEM_EXT_WIND_SPEED: "1:2"}
+      ]
+    },
     "ElementType:18" :{ id: "ElementType:18", value: 18, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_18_ANEM_INT,
-    elementTypeParams:[
-      {ANEM_INT_WIND_SPEED: "1:2"}
-    ]
-  },
-    "ElementType:19" :{ id: "ElementType:19", value: 19, scale_x: 14.628, scale_y: 15.698},
+      elementTypeParams:[
+        {ANEM_INT_WIND_SPEED: "1:2"}
+      ]
+    },
+      "ElementType:19" :{ id: "ElementType:19", value: 19, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_19_CO,
+      elementTypeParams:[
+        {CO_CONCENTRATION: "1:2"}
+      ]
+    },
     "ElementType:20" :{ id: "ElementType:20", value: 20, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_20_NO,
-        elementTypeParams:[
-          {NO_CONCENTRATION: "1:2"}
-        ]
-      },
-    "ElementType:21" :{ id: "ElementType:21", value: 21, scale_x: 14.628, scale_y: 15.698},
+      elementTypeParams:[
+        {NO_CONCENTRATION: "1:2"}
+      ]
+    },
+    "ElementType:21" :{ id: "ElementType:21", value: 21, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_21_OPAC,
+      elementTypeParams:[
+        {OPAC_CONCENTRATION: "1:2"}
+      ]
+    },
     "ElementType:22" :{ id: "ElementType:22", value: 22, scale_x: 28, scale_y: 28},
     "ElementType:23" :{ id: "ElementType:23", value: 23, scale_x: 28, scale_y: 28},
     "ElementType:24" :{ id: "ElementType:24", value: 24, scale_x: 28, scale_y: 28},

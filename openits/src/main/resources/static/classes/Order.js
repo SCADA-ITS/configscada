@@ -209,7 +209,6 @@ export default class Order {
 
   dinamicFormOrder(view) {
 
-
     if (this.comandElement.commandElementValues === null){
       $$(view)
       .addView({
@@ -218,7 +217,37 @@ export default class Order {
         scroll:false, 
         elements:[{ responsive:this.id + "_form", 
           rows: [
-            { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+            //{ view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+            {
+              id: "orderHeader"+this.id,
+              cols:[
+                {
+                  id: "orderHeaderTitle"+this.id,
+                  view: "template",
+                  type: "header",
+                  data: {
+                    value: ""
+                  },
+                  template: "<div>" + this.alias + "</div>",
+                  heigth: 150,
+                  //css: { "text-align": "center !important" }
+                  gravity:5
+                },
+                {
+                  id: "orderHeaderState"+this.id,
+                  view: "template",
+                  type: "header",
+                  data: {
+                    value: this.data.state
+                  },
+                  heigth: 150,
+                  template: function (obj) {
+                    return statusBadge(obj.value);
+                  },
+                  //css: { "text-align": "center !important" }
+                }
+              ]
+            },
             { 
               cols:[
                 {
@@ -299,7 +328,37 @@ export default class Order {
           scroll:false, 
           elements:[{ responsive:this.id + "_form", 
             rows: [
-              { view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+              //{ view:"template", type:"header", template: this.id.toString(), height:50, align:"left" },
+              {
+                id: "elementHeader"+this.id,
+                cols:[
+                  {
+                    id: "orderHeaderTitle"+this.id,
+                    view: "template",
+                    type: "header",
+                    data: {
+                      value: ""
+                    },
+                    template: "<div>" + this.alias + "</div>",
+                    heigth: 150,
+                    //css: { "text-align": "center !important" }
+                    gravity:5
+                  },
+                  {
+                    id: "orderHeaderState"+this.id,
+                    view: "template",
+                    type: "header",
+                    data: {
+                      value: this.data.state
+                    },
+                    heigth: 150,
+                    template: function (obj) {
+                      return statusBadge(obj.value);
+                    },
+                    //css: { "text-align": "center !important" }
+                  }
+                ]
+              },
               { 
                 cols:[
                   {
@@ -1837,4 +1896,14 @@ function build_type_panel_edit(id){
       $$(id["id"].toString().split("_")[0] + "_form").removeView("order_edit_dashboard_" + id["id"].toString().split("_")[0]);
     }
   }
+}
+
+
+function statusBadge(value) {
+  var cssStatusName = planOrderStateType[value].toLowerCase();
+  //var html = "<div style='background-color: #ffdedb; color: #ff6455; display: flex; align-items: center; height: 100%; overflow: hidden; height: 17px; line-height: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>"  + PLAN_STATE_TYPE[value] + "</div>";
+  var html = "<div class=\"webix_um_badge_container\"><span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + planOrderStateType[value] + "</span></div>";
+  //var html = "<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + PLAN_STATE_TYPE[value] + "</span>";
+  //var html = "<div class=\"webix_um_badge_container webix_um_status_badge planschedule_state_" + cssStatusName  + "\">" + PLAN_STATE_TYPE[value] + "</div>";
+  return html;
 }
