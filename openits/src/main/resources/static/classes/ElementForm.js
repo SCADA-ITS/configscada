@@ -4,6 +4,7 @@ import {alarmsCfg} from "../data/alarmsCfg.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
 import * as revenga from "../lib/revenga.js";
+import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 export default class ElementForm {
 	constructor(id,columnsElementFormList) {
@@ -34,7 +35,12 @@ export default class ElementForm {
 						  dataType
 						}
 					}
-		      	}
+				}
+				childs {
+					id
+					alias
+					state
+				}  
 				elementValues {
 					id 
 					value 
@@ -151,7 +157,7 @@ export default class ElementForm {
 				{ id: "recognize",
 				cssFormat:hidde_recognize,
 				 "header": "", 
-				 "template": !checkUserPermission('alarm_recognize') ?"":  "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
+				 "template": !checkUserPermission(RULE.ALARM_RECOGNIZE) ?"":  "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
 				 width: 50 }
 				//{ id:"recognized", width:100 }
 			],
@@ -620,6 +626,7 @@ export default class ElementForm {
 		});
 
 		this.graphql.load().then(data => {
+			this.data = data;
 			// HEADER
 			try {
 				let headerTitle = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
@@ -830,7 +837,7 @@ export default class ElementForm {
 
 			//COMMANDS
 			try {
-				if (checkUserPermission('command_action')){
+				if (checkUserPermission(RULE.COMMAND_ACTION)){
 					if(data.elementType.commandElementTypes){
 						this.commands = $$("component"+this.id).addView({
 							view: "form",
@@ -927,18 +934,23 @@ export default class ElementForm {
 			this.client.activate();
 			return data;
 		});
+		var client = this.client;
 		let result = {
-				id: "component"+this.id,
-				rows: [
-					this.header,
-					this.body,
-					this.alarmsHeader,
-					this.alarmsTable,
-					//this.alarmsNone,
-					{}
-				]
-			};
-
+			id: "component"+this.id,
+			rows: [
+				this.header,
+				this.body,
+				this.alarmsHeader,
+				this.alarmsTable,
+				//this.alarmsNone,
+				{}		
+			],
+			on:{
+				onDestruct: function(obj){
+					client.deactivate();
+				}
+			}
+		};
 		return result;
 	}
 

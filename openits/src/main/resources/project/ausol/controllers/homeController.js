@@ -14,6 +14,8 @@ import AlarmNotification from "../classes/AlarmNotification.js";
 import Alarms from "../classes/Alarms.js";
 import PlanSchedule from "../classes/PlanSchedule.js";
 import {usersmanager} from "../widgets/usersmanager.js";
+import * as revenga from "../lib/revenga.js";
+import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -139,15 +141,14 @@ webix.ready(function() {
     $$("nameUser").setValue(userName);
     
     if (userPermissions !== "") {
-        let userPermissionsList = userPermissions.split(",");
-        if (userPermissionsList.includes("SystemPermission:2")) {//Edit User
+        if (checkUserPermission(RULE.EDIT_USER)) {//Edit User
             console.log();
         } else {
             $$("b_new_user").disable();
             $$("b_edit_user").disable();
             $$("b_delete_user").disable();	
         }
-        if (userPermissionsList.includes("SystemPermission:3")) {//Edit Role
+        if (checkUserPermission(RULE.EDIT_ROLE)) {//Edit Role
             console.log();
         } else {
             $$("b_new_role").disable();

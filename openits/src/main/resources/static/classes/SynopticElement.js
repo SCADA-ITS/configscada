@@ -1,4 +1,5 @@
 import ElementForm from "../classes/ElementForm.js";
+import ElementChildsList from "../classes/ElementChildsList.js";
 import {
   generateIcon,
   getElementIcon,
@@ -215,6 +216,10 @@ export default class synopticElement {
                           onHide: function(obj){
                             elementForm.disconnect();
                             $$("win" + elementId).destructor();
+                          },
+                          onShow: function(obj){
+                            let hijos = new ElementChildsList(elementForm.id);
+                            hijos.getComponent();
                           }
                         }                            
                       })
@@ -237,6 +242,10 @@ export default class synopticElement {
                         onHide: function(obj){
                           elementForm.disconnect();
                           $$("win" + elementId).destructor();
+                        },
+                        onShow: function(obj){
+                          let hijos = new ElementChildsList(elementForm.id);
+                          hijos.getComponent();
                         }
                       }
                     })
@@ -324,6 +333,10 @@ export default class synopticElement {
                           onHide: function(obj){
                             elementForm.disconnect();
                             $$("win" + elementId).destructor();
+                          },
+                          onShow: function(obj){
+                            let hijos = new ElementChildsList(elementForm.id);
+                            hijos.getComponent();
                           }
                         }
                       })
@@ -345,6 +358,11 @@ export default class synopticElement {
                         onHide: function(obj){
                           elementForm.disconnect();
                           $$("win" + elementId).destructor();
+                        },
+                        onShow: function(obj){
+                          let hijos = new ElementChildsList(elementForm.id);
+                          hijos.getComponent();
+
                         }
                       }
                     }).show();

@@ -1,3 +1,5 @@
+
+
 const REGEX_PATTERN_INIT=":{";
 const REGEX_PATTERN_END="}";
 
@@ -20,26 +22,21 @@ function prepareStr(str, data) {
   return str.replace(regex, (m, $1) => data[$1] || m);
 }
 
-let permissions = {
-  "1":  "command_action",
-  "2":  "plan_admin",
-  "3":  "plan_action",
-  "4":  "alarm_recognize",
-}
-
 
 function checkUserPermission(alias) {
-  let userPermissions = webix.storage.session.get("app_user_permissions");
-  //let ret = permissionString.split(":")[1];
-  let permissionList = userPermissions.split(",");
-  let outputList = [];
-  var i;
-  for (i = 0 ; i < permissionList.length; i++){
-      outputList.push(
-          permissions[permissionList[i].split(":")[1]]
-      )
-  }
+  try{
+    let userPermissions = webix.storage.session.get("app_user_permissions");
+    let permissionList = []  
+    for (i = 0 ; i < userPermissions.length; i++){
+      permissionList.push(userPermissions[i].alias)
+      
+    }
+    return permissionList.includes(alias);
 
-  return outputList.includes(alias);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+  
 }
 

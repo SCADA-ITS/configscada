@@ -14,11 +14,15 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 // import { alarmconfigs } from "../widgets/alarmconfigs.js";
 // import { equipments } from "../widgets/equipments.js";
 import ElementForm from "../classes/ElementForm.js";
-let elementForm = new ElementForm("Element:46:1", null);
+import UserManagerInt from "../classes/UserManagerInterface.js";
+import ElementChildsList from "../classes/ElementChildsList.js";
+//let elementForm = new ElementForm("Element:46:1", null);
 //let elementForm2 = new ElementForm("Element:9:2");
 //let elementForm3 = new ElementForm("Element:10:1");
 //let elementForm4 = new ElementForm("Element:2:1");
-let elementForm5 = new ElementForm("Element:47:1",columnsElementFormList);
+let elementForm5 = new ElementForm("Element:51:1",columnsElementFormList);
+
+
 
 var grid = {
     view:"dashboard",
@@ -55,11 +59,8 @@ var grid = {
         drag:true,
         template:"#value# - (#dx#x#dy#)",
         data:[
-          { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
-           ,
-           { id:"elementForm2", value:"elementForm2", dx:1, dy:1, body: {
-            view:"usermanager", url:"https://docs.webix.com/usermanager-backend/"
-        }},
+         // { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
+          // ,
            //{ id:"elementForm3", value:"elementForm3", dx:1, dy:1, body: elementForm3.getComponent()}
            //,
            { id:"plans", value:"plans", dx:1, dy:1, body: plans }
@@ -69,7 +70,51 @@ var grid = {
           { id:"users", value:"users", dx:1, dy:1, body: users }
            ,
           { id:"roles", value:"roles", dx:1, dy:1, body: roles },
-          { id:"aaa", value:"asas", dx:1, dy:1, body: elementForm5.getComponent() },
+          { id:"aaa", value:"asas", dx:1, dy:1, body: { 
+            view: "form",     
+            id:"log_form",
+            width:300,
+            elements:[
+                { view:"text", label:"Email", name:"email"},
+                { view:"text", type:"password", label:"Password", name:"password"},
+                { margin:5, cols:[
+                    { view:"button", value:"Login" , 
+                    click:function(id,event){
+                        webix
+                        .ui({
+                          id: "win" + elementForm5.id,
+                          view: "window",
+                          move: true,
+                          close: true,
+                          position: "right",
+                          body: {id: "cuerpo"+elementForm5.id,
+                          cols:[
+                            elementForm5.getComponent()
+                          ]},
+                          on: {
+                            onDestruct: function(obj){
+                              //elementForm.disconnect();
+                            },
+                            onHide: function(obj){
+                              elementForm5.disconnect();
+                              $$("win" + elementForm5.id).destructor();
+                            },
+                            onShow: function(obj){
+                              let hijos = new ElementChildsList(elementForm5.id);
+                              hijos.getComponent();
+                            }
+                          }                            
+                        })
+                        .show();
+                      
+                    },
+                    css:"webix_primary"},
+                    { view:"button", value:"Cancel"}
+                ]}
+            ] 
+          }//elementForm5.getComponent(),
+
+          },
           // ,
           // { id:"alarmconfigs", value:"alarmconfigs", dx:1, dy:1, body: alarmconfigs }
           // ,

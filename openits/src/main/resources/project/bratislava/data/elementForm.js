@@ -258,5 +258,45 @@ export let columnsElementFormList = {
 		"scroll": false, 
 		"width": 550,
 		"options": {}
+	},	
+	"ElementType:51": {
+		"rows":[
+			"ElementTypeParam:51:1:1", 
+			"ElementTypeParam:51:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},	
+	"ElementType:3": {
+		"rows":[
+			"ElementTypeParam:3:1:1", 
+			"ElementTypeParam:3:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},	
+	"ElementType:4": {
+		"rows":[
+			"ElementTypeParam:4:1:1", 
+			"ElementTypeParam:4:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},	
+	"ElementType:5": {
+		"rows":[
+			"ElementTypeParam:5:1:1", 
+			"ElementTypeParam:5:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
 	}
 }

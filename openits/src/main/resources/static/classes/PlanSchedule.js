@@ -1,6 +1,7 @@
 import Table from "../classes/Table.js";
 import PlanScheduleForm from "../classes/PlanScheduleForm.js";
 import * as revenga from "../lib/revenga.js";
+import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 const LBL_PLAN_SCHEDULE_STATE = {
     0: 'UNKNOWN',
@@ -115,7 +116,8 @@ export default class PlanSchedule {
                             view:"button", 
                             id: "planSchedule_add_button", 
                             autowidth:true,
-                            hidden: checkUserPermission('plan_admin') ? false : true, 
+                            hidden: false,
+                            disabled: !checkUserPermission(RULE.PLAN_ADMIN), 
                             type:"icon", 
                             tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
                             click: addToTable                    

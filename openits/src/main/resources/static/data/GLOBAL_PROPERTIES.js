@@ -160,3 +160,12 @@ export const ICON_COLOR = {
 
 export const WIDTH_RESOLUTION= 1920;
 export const HEIGHT_RESOLUTION= 1080;
+
+export const RULE = {
+  PLAN_ADMIN:"plan_admin",
+  PLAN_ACTION:"plan_action",
+  COMMAND_ACTION: "command_action",
+  ALARM_RECOGNIZE: "alarm_recognize",
+  EDIT_USER: "edit_user",
+  EDIT_ROLE: "edit_role"
+}

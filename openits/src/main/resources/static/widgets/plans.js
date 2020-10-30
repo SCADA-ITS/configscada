@@ -1,7 +1,7 @@
 import PlanTree from "../classes/PlansTree.js";
 import Plan from "../classes/Plan.js";
 import Order from "../classes/Order.js";
-
+import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 // GraphQL
 //initialize a proxy
 var graphPlans = webix.proxy(
@@ -148,20 +148,50 @@ function open_new_tab(id){
             newplan.newForm("planParent",obj.id.toString());
           } else {
             let plan = new Plan(null,obj);
-            if (checkUserPermission('plan_admin')){
+            if (checkUserPermission(RULE.PLAN_ADMIN)){
               $$("b_edit").show();
+              $$("b_edit").enable();
+            }else{
+              $$("b_edit").show();
+              $$("b_edit").disable();
             }
+
             $$("b_save").hide();
-            if (checkUserPermission('plan_action')){
+            if (checkUserPermission(RULE.PLAN_ACTION)){
               $$("b_play").show();
               $$("b_stop").show();
+              $$("b_pause").show();
+
+              $$("b_play").enable();
+              $$("b_stop").enable();
+              $$("b_pause").enable();
+            }else{
+              $$("b_play").show();
+              $$("b_stop").show();
+              $$("b_pause").show();
+
+              $$("b_play").disable();
+              $$("b_stop").disable();
+              $$("b_pause").disable();
+
             }
-            $$("b_pause").show();
-              $$("b_remove").show();
+
             
-            if (checkUserPermission('plan_admin')){
-                $$("b_add_order").show();
+            if (checkUserPermission(RULE.PLAN_ADMIN)){
+              $$("b_add_order").show();
+              $$("b_remove").show();
+
+              $$("b_add_order").enable();
+              $$("b_remove").enable();
+            }else{
+              $$("b_add_order").show();
+              $$("b_remove").show();
+
+              $$("b_add_order").disable();
+              $$("b_remove").disable();
+
             }
+
             plan.editForm("planParent",plan.data);
             plan.activate();
           }
@@ -274,10 +304,10 @@ export let plans = {
               rows: [{
                 cols:[
                   { gravity: 4},
-                  { view:"button", id: "b_add", autowidth:true, type:"icon", hidden: !checkUserPermission('plan_admin') ,tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
+                  { view:"button", id: "b_add", autowidth:true, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN) ,tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
                     click: addToTree                    
                   },
-                  { view:"button", id: "b_remove", autowidth:true, type:"icon", hidden: !checkUserPermission('plan_admin') ,tooltip:$.i18n("plan.button.tooltip.remove"), icon:"mdi mdi-minus",
+                  { view:"button", id: "b_remove", autowidth:true, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN) ,tooltip:$.i18n("plan.button.tooltip.remove"), icon:"mdi mdi-minus",
                     click: removeToTree
                   }
                 ]
