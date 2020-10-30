@@ -1,6 +1,7 @@
 import Alarms from "../classes/Alarms.js";
 import ElementForm from "../classes/ElementForm.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
+import * as revenga from "../lib/revenga.js";
 
 var graphAlarm = webix.proxy(
 	"GraphQL", `
@@ -263,7 +264,7 @@ let genericTablei18n = {
 			cols: [
 				{ gravity: 4 },
 				{
-					view: "button", id: "recognize_bottom", align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: $.i18n("alarms.d.button.recognize"),
+					view: "button", id: "recognize_bottom", hidden: !checkUserPermission('alarm_recognize')  ,align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: $.i18n("alarms.d.button.recognize"),
 					click: function () {
 						var alarmas = [];
 						var alarmasId = [];

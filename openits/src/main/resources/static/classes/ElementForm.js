@@ -3,6 +3,7 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
+import * as revenga from "../lib/revenga.js";
 
 export default class ElementForm {
 	constructor(id,columnsElementFormList) {
@@ -150,7 +151,7 @@ export default class ElementForm {
 				{ id: "recognize",
 				cssFormat:hidde_recognize,
 				 "header": "", 
-				 "template": "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
+				 "template": !checkUserPermission('alarm_recognize') ?"":  "<button class='action_recognize' ><span class='mdi mdi-eye-check-outline'></span></button>", 
 				 width: 50 }
 				//{ id:"recognized", width:100 }
 			],
@@ -829,90 +830,94 @@ export default class ElementForm {
 
 			//COMMANDS
 			try {
-				if(data.elementType.commandElementTypes){
-					this.commands = $$("component"+this.id).addView({
-						view: "form",
-						id: "comandos" + this.id,
-						elements:[]
-					}, -1);
+				if (checkUserPermission('command_action')){
+					if(data.elementType.commandElementTypes){
+						this.commands = $$("component"+this.id).addView({
+							view: "form",
+							id: "comandos" + this.id,
+							elements:[]
+						}, -1);
+		
+						for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
 	
-					for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
-
-						if(
-							data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_C
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_64X64
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_B
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_192X64
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
-							|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
-						){
-
-							$$(this.commands).addView({
-								view: "button", 
-								id: "command"+index+"_"+ this.id, 
-								value: $.i18n(data.elementType.commandElementTypes[index].id),
-								click: function(){
-									let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
-									//if( $$("panelManager" + data.id)){
-									//	$$("panelManager" + data.id).show();
-									if($$("panelManager" + idtype)){
-										$$("panelManager" + idtype).show();
-									}else{
-										let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.elementType.commandElementTypes[index]);
-										webix.ui({
-											id:"panelManager"+idtype,
-											view:"window",	
-											move:false,
-											position:"center",
-											modal:true,
-											close: true,
-											body: panelMan.getInitComponent(),
-											head:$.i18n("elementForm.señalization.panel.head"),
-											on: {
-												onShow: function(obj){
-													panelMan.loadComponent();
-												},
-												onHide: function(obj){
-													if(typeof keyLayout != 'undefined' && Keyboard){
-														Keyboard.close();
+							if(
+								data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_C
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_64X64
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_B
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_192X64
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
+							){
+	
+								$$(this.commands).addView({
+									view: "button", 
+									id: "command"+index+"_"+ this.id, 
+									value: $.i18n(data.elementType.commandElementTypes[index].id),
+									click: function(){
+										let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
+										//if( $$("panelManager" + data.id)){
+										//	$$("panelManager" + data.id).show();
+										if($$("panelManager" + idtype)){
+											$$("panelManager" + idtype).show();
+										}else{
+											let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.elementType.commandElementTypes[index]);
+											webix.ui({
+												id:"panelManager"+idtype,
+												view:"window",	
+												move:false,
+												position:"center",
+												modal:true,
+												close: true,
+												body: panelMan.getInitComponent(),
+												head:$.i18n("elementForm.señalization.panel.head"),
+												on: {
+													onShow: function(obj){
+														panelMan.loadComponent();
+													},
+													onHide: function(obj){
+														if(typeof keyLayout != 'undefined' && Keyboard){
+															Keyboard.close();
+														}
+														$$("panelManager" + idtype).destructor();
 													}
-													$$("panelManager" + idtype).destructor();
 												}
-											}
-										  }).show();
+											  }).show();
+										}
+									}								
+								}, -1);
+							}else{
+	
+								$$(this.commands).addView({
+									view: "button", 
+									id: "command"+index+"_"+ this.id, 
+									value: $.i18n(data.elementType.commandElementTypes[index].id),
+									click: function(){
+										var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+											sendCommandElement(commands: $commands)  
+										}`;
+										var graphql = webix.proxy("GraphQL", sendCommand);
+										graphql.save({
+											"commands": [
+												{
+													"commandElementTypeId": data.elementType.commandElementTypes[index].id,
+													"elementId": data.id
+												}
+											]
+										}).then(() => {
+											webix.message({type:"success", text:$.i18n("lbl_command_sended")});
+										});
 									}
-								}								
-							}, -1);
-						}else{
-
-							$$(this.commands).addView({
-								view: "button", 
-								id: "command"+index+"_"+ this.id, 
-								value: $.i18n(data.elementType.commandElementTypes[index].id),
-								click: function(){
-									var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
-										sendCommandElement(commands: $commands)  
-									}`;
-									var graphql = webix.proxy("GraphQL", sendCommand);
-									graphql.save({
-										"commands": [
-											{
-												"commandElementTypeId": data.elementType.commandElementTypes[index].id,
-												"elementId": data.id
-											}
-										]
-									}).then(() => {
-										webix.message({type:"success", text:$.i18n("lbl_command_sended")});
-									});
-								}
-							}, -1);
+								}, -1);
+							}
 						}
 					}
+
 				}
+				
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);

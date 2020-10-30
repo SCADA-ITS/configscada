@@ -148,13 +148,20 @@ function open_new_tab(id){
             newplan.newForm("planParent",obj.id.toString());
           } else {
             let plan = new Plan(null,obj);
-            $$("b_edit").show();
+            if (checkUserPermission('plan_admin')){
+              $$("b_edit").show();
+            }
             $$("b_save").hide();
-            $$("b_play").show();
-            $$("b_stop").show();
+            if (checkUserPermission('plan_action')){
+              $$("b_play").show();
+              $$("b_stop").show();
+            }
             $$("b_pause").show();
               $$("b_remove").show();
-            $$("b_add_order").show();
+            
+            if (checkUserPermission('plan_admin')){
+                $$("b_add_order").show();
+            }
             plan.editForm("planParent",plan.data);
             plan.activate();
           }
@@ -267,10 +274,10 @@ export let plans = {
               rows: [{
                 cols:[
                   { gravity: 4},
-                  { view:"button", id: "b_add", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
+                  { view:"button", id: "b_add", autowidth:true, type:"icon", hidden: !checkUserPermission('plan_admin') ,tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
                     click: addToTree                    
                   },
-                  { view:"button", id: "b_remove", autowidth:true, type:"icon", tooltip:$.i18n("plan.button.tooltip.remove"), icon:"mdi mdi-minus",
+                  { view:"button", id: "b_remove", autowidth:true, type:"icon", hidden: !checkUserPermission('plan_admin') ,tooltip:$.i18n("plan.button.tooltip.remove"), icon:"mdi mdi-minus",
                     click: removeToTree
                   }
                 ]

@@ -1,6 +1,7 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import PanelManager from "../classes/PanelManager.js";
 import {panelData} from "../data/panelData.js";
+import * as revenga from "../lib/revenga.js";
 
  var planOrderStateType = {
 	 0: "UNKNOWN",
@@ -298,13 +299,13 @@ export default class Order {
             { responsive:this.id + "_form",
               cols:[
                 { gravity: 3 },
-                { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                { view:"button", id: "bedit_" + this.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
                   click: orderEdit              
                 },
                 { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                   click: orderSave
                 },
-                { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                { view:"button", id: "bremove_" + this.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                   click: orderRemove
                 },
                 { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
@@ -409,13 +410,13 @@ export default class Order {
               { responsive:this.id + "_form",
                 cols:[
                   { gravity: 3 },
-                  { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                  { view:"button", id: "bedit_" + this.id, type:"icon", hidden: !checkUserPermission('plan_admin') ,icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
                     click: orderEdit              
                   },
                   { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                     click: orderSave
                   },
-                  { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                  { view:"button", id: "bremove_" + this.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                     click: orderRemove
                   },
                   { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
@@ -513,13 +514,13 @@ export default class Order {
               { responsive:this.id + "_form",
                 cols:[
                   { gravity: 3 },
-                  { view:"button", id: "bedit_" + this.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                  { view:"button", id: "bedit_" + this.id, type:"icon",  hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
                     click: orderEdit              
                   },
                   { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                     click: orderSave
                   },
-                  { view:"button", id: "bremove_" + this.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                  { view:"button", id: "bremove_" + this.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                     click: orderRemove
                   },
                   { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
@@ -1164,13 +1165,13 @@ function createOrderDinamic(container,data){
             { //responsive:data.id + "_form",
               cols:[
                 { gravity: 3 },
-                { view:"button", id: "bedit_" + data.id, type:"icon", icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
+                { view:"button", id: "bedit_" + data.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-grease-pencil", width:50, placeHolder: $.i18n("plan.button.tooltip.edit"),
                   click: orderEdit              
                 },
                 { view:"button", id: "bsave_" + data.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
                   click: orderSave
                 },
-                { view:"button", id: "bremove_" + data.id, type:"icon", icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
+                { view:"button", id: "bremove_" + data.id, type:"icon", hidden: !checkUserPermission('plan_admin'), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
                   click: orderRemove
                 },
                 { view:"button", id: "becancel_" + data.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),

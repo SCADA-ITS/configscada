@@ -89,6 +89,9 @@ export default class EquipmentTree {
             alias
             description
             state
+            elementType {
+              id
+            }
             childs {
               id
               alias

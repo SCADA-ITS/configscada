@@ -1,5 +1,6 @@
 import { plan } from "../data/plan.js";
 import Plan from "../classes/Plan.js";
+import * as revenga from "../lib/revenga.js";
 
 export default class PlansTree {
   constructor(data, metadata) {
@@ -204,7 +205,7 @@ export default class PlansTree {
                     $$("b_pause").hide();
                     $$("b_remove").hide();
                     $$("b_add_order").hide();
-          
+                    
                     let plan = new Plan(null,obj);
                     $$("b_edit").show();
                     $$("b_save").hide();

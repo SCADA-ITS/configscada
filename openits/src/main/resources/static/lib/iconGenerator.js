@@ -41,29 +41,19 @@ export function generateIcon(element, suffix="", state="", values) {
   } else if (element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
       || element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR) {
     return generateETDIcon(element, suffix, state, values);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX) {
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX
+    || element.elementType.id === ELEMENT_TYPE.ID_14_LUM
+    || element.elementType.id === ELEMENT_TYPE.ID_19_CO
+    || element.elementType.id === ELEMENT_TYPE.ID_20_NO
+    || element.elementType.id === ELEMENT_TYPE.ID_21_OPAC
+    || element.elementType.id === ELEMENT_TYPE.ID_18_ANEM_INT
+    || element.elementType.id === ELEMENT_TYPE.ID_17_ANEM_EXT
+    || element.elementType.id === ELEMENT_TYPE.ID_9_FAN
+    || element.elementType.id === ELEMENT_TYPE.ID_8_BAR
+    || element.elementType.id === ELEMENT_TYPE.ID_13_SEM
+    || element.elementType.id === ELEMENT_TYPE.ID_53_SEM
+    || element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
     return createIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_14_LUM) {
-    return createIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_19_CO) {
-    return createIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_20_NO) {
-    return createIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_21_OPAC) {
-    return generateOpacIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_18_ANEM_INT) {
-    return generateAnemIntIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_17_ANEM_EXT) {
-    return generateAnemExtIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_9_FAN) {
-    return generateFanIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_8_BAR) {
-    return generateBarIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_13_SEM
-    || element.elementType.id === ELEMENT_TYPE.ID_53_SEM) {
-    return generateSemIcon(element, suffix);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
-    return generateZoneIcon(element, suffix);
   } else{
     return null;
   }
@@ -88,37 +78,6 @@ export function generateETDIcon(element, suffix="", state="",values) {
   let etd_str = etd.generateIcon(element, values, suffix, state);
   return etd_str;
 }
-
-export function generateOpacIcon(element, suffix="") {
-  return createIcon(element, suffix);
-}
-
-export function generateAnemIntIcon(element, suffix="") {
-  return createIcon(element, suffix);
-
-}
-
-export function generateAnemExtIcon(element, suffix="") {
-  return createIcon(element, suffix);
-}
-
-export function generateFanIcon(element, suffix="") {
-  return createIcon(element, suffix);
-
-}
-
-export function generateBarIcon(element, suffix="")  {
-  return createIcon(element, suffix);
-}
-
-export function generateSemIcon(element, suffix="") {
-  return createIcon(element, suffix);
-}
-
-export function generateZoneIcon(element, suffix="") {
-  return createIcon(element, suffix);
-}
-
 
 export function getElementIcon(element, suffix="") {
 
@@ -157,25 +116,18 @@ export function getElementIcon(element, suffix="") {
   }
 
   // icon based on element value
-  if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN) {
-    updateIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_8_BAR) {
-    updateIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_12_LUX) {
-    updateIcon(element, suffix);
-  }  else if(elementType === elementTypeMap.ELEMENT_TYPE_14_LUM) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_19_CO) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_20_NO) {
-    updateIcon(element, suffix);
-  } else if(elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC) {
+  if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN
+    || elementType === elementTypeMap.ELEMENT_TYPE_8_BAR
+    || elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE
+    || elementType === elementTypeMap.ELEMENT_TYPE_12_LUX
+    || elementType === elementTypeMap.ELEMENT_TYPE_14_LUM
+    || elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT
+    || elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT
+    || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
+    || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
+    || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
+    || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
     etd.updateEtdIcon(element, suffix);
@@ -183,9 +135,6 @@ export function getElementIcon(element, suffix="") {
     meteo.updateMeteoIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
     sos.updateSosIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
-    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM) {
-    updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE) {
     fire.updateFireIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_16_MEG) {
@@ -283,7 +232,6 @@ export function updateElementState(element) {
 
 export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
   let elementType = element.id.split(":")[1];
-
   let iconStr = "";
   switch (elementType) {
     case elementTypeMap.ELEMENT_TYPE_1_WS:
@@ -305,42 +253,24 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
-    case elementTypeMap.ELEMENT_TYPE_7_ZONE:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 4122.35) + ',' + (height / 3382.97) + ')">' + generateZoneIcon(element, suffix, state) + '</g>';
-      break;
+    case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 30.163) + ',' + (height / 16.13958) + ')">' + generateBarIcon(element, suffix) + '</g>';
+    case elementTypeMap.ELEMENT_TYPE_12_LUX:
+    case elementTypeMap.ELEMENT_TYPE_13_SEM:
+    case elementTypeMap.ELEMENT_TYPE_53_SEM:
+    case elementTypeMap.ELEMENT_TYPE_14_LUM:
+    case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
+    case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
+    case elementTypeMap.ELEMENT_TYPE_19_CO:
+    case elementTypeMap.ELEMENT_TYPE_20_NO:
+    case elementTypeMap.ELEMENT_TYPE_21_OPAC:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_9_FAN:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + generateFanIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_12_LUX:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_13_SEM:
-    case elementTypeMap.ELEMENT_TYPE_53_SEM:
-          iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 8.752) + ',' + (height / 10.247) + ')">' + generateSemIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_14_LUM:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
-      break;
-   case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemExtIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 19.063) + ')">' + generateAnemIntIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_19_CO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_20_NO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + createIcon(element, suffix) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_21_OPAC:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 14.628) + ',' + (height / 15.698) + ')">' + generateOpacIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS:
     case elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR:

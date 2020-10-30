@@ -209,7 +209,7 @@ export let SVG_19_CO =
     '<tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198" id="' 
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
     ':Value" sodipodi:role="line">' 
-    + REGEX_PATTERN_INIT+'NO_CONCENTRATION'+REGEX_PATTERN_END +
+    + REGEX_PATTERN_INIT+'CO_CONCENTRATION'+REGEX_PATTERN_END +
     "</tspan>" +
     "</text>" +
     '<text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.26793715" xml:space="preserve">' +

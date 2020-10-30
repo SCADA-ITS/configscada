@@ -1,4 +1,5 @@
 // import { alarms } from "../widgets/alarms.js";
+// import { synoptic } from "../widgets/synoptic.js";
 import { plans } from "../widgets/plans.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";

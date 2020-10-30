@@ -18,9 +18,7 @@ export default class ElementCommand {
 
     var graphElem =
       `query { 
-			getElement(elementId: "` +
-      this.id +
-      `"){
+			getElement(elementId: "` +this.id +`"){
 				id
 				alias
 				description
