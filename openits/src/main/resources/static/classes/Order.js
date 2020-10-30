@@ -16,7 +16,6 @@ var upOrderGrap = webix.proxy("GraphQL",`
       id
       alias
       description
-      state
       planOrderType {
         id
         alias
@@ -25,7 +24,6 @@ var upOrderGrap = webix.proxy("GraphQL",`
           id
           alias
           description
-          dataType
         }
       }
       planOrderValues {
@@ -35,7 +33,6 @@ var upOrderGrap = webix.proxy("GraphQL",`
           id
           alias
           description
-          dataType
         }
       }
       comandElement {
@@ -56,7 +53,6 @@ var upOrderGrap = webix.proxy("GraphQL",`
             id
             alias
             description
-            dataType
           }
         }
         commandElementValues {
@@ -66,7 +62,6 @@ var upOrderGrap = webix.proxy("GraphQL",`
             id
             alias
             description
-            dataType
           }
         }
       }
@@ -102,7 +97,6 @@ var createOrderGrap = webix.proxy("GraphQL",`
             id
             alias
             description
-            dataType
           }
         }
         commandElementValues {
@@ -112,7 +106,6 @@ var createOrderGrap = webix.proxy("GraphQL",`
             id
             alias
             description
-            dataType
           }
         }
       }
@@ -234,19 +227,6 @@ export default class Order {
                   heigth: 150,
                   //css: { "text-align": "center !important" }
                   gravity:5
-                },
-                {
-                  id: "orderHeaderState"+this.id,
-                  view: "template",
-                  type: "header",
-                  data: {
-                    value: this.data.state
-                  },
-                  heigth: 150,
-                  template: function (obj) {
-                    return statusBadge(obj.value);
-                  },
-                  //css: { "text-align": "center !important" }
                 }
               ]
             },
@@ -345,19 +325,6 @@ export default class Order {
                     heigth: 150,
                     //css: { "text-align": "center !important" }
                     gravity:5
-                  },
-                  {
-                    id: "orderHeaderState"+this.id,
-                    view: "template",
-                    type: "header",
-                    data: {
-                      value: this.data.state
-                    },
-                    heigth: 150,
-                    template: function (obj) {
-                      return statusBadge(obj.value);
-                    },
-                    //css: { "text-align": "center !important" }
                   }
                 ]
               },
@@ -625,7 +592,6 @@ export default class Order {
                 id
                 alias
                 description
-                dataType
               }
             }
           }
@@ -637,10 +603,6 @@ export default class Order {
             {
               id
               alias
-              paramTypeLabel
-              paramType
-              dataTypeLabel
-              dataType
             }
           }
         }
@@ -664,7 +626,6 @@ export default class Order {
                 id
                 alias
                 description
-                dataType
               }
             }
           }`
@@ -731,7 +692,6 @@ export default class Order {
               id
               alias
               description
-              dataType
             }
           }
         }`
@@ -891,7 +851,6 @@ function saveWindowOrder(id){
                 commandElementTypeParams { 
                   id 
                   alias 
-                  dataType
                 }
               }
             }
@@ -1006,7 +965,6 @@ function saveWindowOrder(id){
                         id
                         alias
                         description
-                        dataType
                       }
                     }
                     commandElementValues {
@@ -1016,7 +974,6 @@ function saveWindowOrder(id){
                         id
                         alias
                         description
-                        dataType
                       }
                     }
                   }
@@ -1387,7 +1344,6 @@ function orderEdit(id){
             id
             alias
             description
-            dataType
           }
         }
       }
@@ -1467,14 +1423,12 @@ function orderSave(id){
           commandElementTypeParams { 
             id 
             alias 
-            dataType
           }
         }
         elementTypeParams{
           id
           alias
           description
-          paramType
           graphics {
             id 
             alias 
@@ -1716,7 +1670,6 @@ function buildc(id){
             id
             alias
             description
-            dataType
           }
         }
       }
@@ -1761,7 +1714,6 @@ function buildc_new(id){
             id
             alias
             description
-            dataType
           }
         }
       }

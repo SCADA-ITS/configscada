@@ -32,7 +32,6 @@ export default class ElementCommand {
 						commandElementTypeParams{
 						  id
 						  alias
-						  dataType
 						}
 					}
 				}

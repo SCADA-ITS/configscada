@@ -464,7 +464,7 @@ export default class PlansTree {
             try {
               if (element.planSubtype.id === $$("treePlan").data.pull[e].qid ) {
                 let parentBranch = $$("treePlan").data.pull[e].id;
-                $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.state, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders },0, parentBranch );
+                $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.state, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders, planStateType: element.planStateType },0, parentBranch );
                 this.order.push(parentBranch + "." + counter.toString());
               }
             } catch {

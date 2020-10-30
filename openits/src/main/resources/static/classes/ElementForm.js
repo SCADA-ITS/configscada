@@ -32,7 +32,6 @@ export default class ElementForm {
 						commandElementTypeParams{
 						  id
 						  alias
-						  dataType
 						}
 					}
 				}
@@ -48,7 +47,6 @@ export default class ElementForm {
 					elementTypeParam {
 						id 
 						alias  
-						paramType 
 						representation
 					}
 				}

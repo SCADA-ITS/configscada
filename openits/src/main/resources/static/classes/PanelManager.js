@@ -33,7 +33,6 @@ export default class PanelManager {
 						commandElementTypeParams{
 						  id
 						  alias
-						  dataType
 						}
 					}
 		      	}
@@ -44,7 +43,6 @@ export default class PanelManager {
 					elementTypeParam {
 						id 
 						alias  
-						paramType 
 						representation
 						graphics {id alias graphicType graphicValues {id value}}
 					}
@@ -75,14 +73,12 @@ export default class PanelManager {
 					commandElementTypeParams { 
 						id 
 						alias 
-						dataType
 					}
 				}
 				elementTypeParams{
 				  	id
 				  	alias
 				  	description
-					paramType
 					graphics {
 						id 
 						alias 
@@ -810,7 +806,6 @@ export default class PanelManager {
 					commandElementTypeParams { 
 						id 
 						alias 
-						dataType
 					}
 				}
 			}
@@ -1011,32 +1006,15 @@ function generateCodeList(data){
 	return [cellList,maxTamX,maxTamY];
 
 }
-/*
-function allowedCharacters(allowedList,characterInput){
-	let result = false;
-	console.log(characterInput);
-	console.log(allowedList);
-	//allowedList.forEach(item => {
-	//	console.log(parseInt(item[2].split("CH")[1],16));
-	//	console.log(String.fromCharCode(parseInt(item[2].split("CH")[1],16).toString())); 
-	//});
-	let c_permitido = allowedList.find(x => parseInt(x[2].split("CH")[1],16) === characterInput.key.charCodeAt());
-	if (c_permitido !== undefined)
-	{
-		result = true;
-	} else {
-		//console.log("NO ENCONTRADO");
-	}
-	return result;
-}
-*/
+
 function pictosPermitidos(data,cellList,orderId) {
 	let pictos_permitidos = {};
 	let v_pictos_total = [];
 	data.forEach(element => {
 		let v_graphs = [];
-		if (parseInt(element.id.split(":")[3]) > 1000 && element.paramType === 2) { 
-			try {
+		// if (parseInt(element.id.split(":")[3]) > 1000 && element.paramType === 2) { 
+		if (parseInt(element.id.split(":")[3]) > 1000) { 
+				try {
 				element.graphics.forEach(item => {
 					if (cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
 						v_graphs.push(item.id.split(":")[2]);

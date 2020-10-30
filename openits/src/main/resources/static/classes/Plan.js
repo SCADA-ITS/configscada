@@ -34,6 +34,7 @@ export default class Plan {
         this.planSubtype = data.planSubtype;
         this.planModeType = data.planModeType;
         this.planOrders = data.planOrders;
+        this.planStateType = data.planStateType;
       }
     } else {
       this.id = id;
@@ -43,6 +44,7 @@ export default class Plan {
       this.planSubtype = null;
       this.planModeType = null;
       this.planOrders = null;
+      this.planStateType = null;
     }
 
     // for using the object inside callbacks
@@ -92,7 +94,13 @@ export default class Plan {
         id
         alias
         description
-        state
+        planStateType{
+          id
+          alias
+          description
+          labelAlias
+          labelDescription
+        }
         planSubtype {
           id
           alias
@@ -106,7 +114,6 @@ export default class Plan {
           id
           alias
           description
-          state
           planOrderValues {
             id
             value
@@ -114,7 +121,6 @@ export default class Plan {
               id
               alias
               description
-              dataType
             }
           }
           planOrderType {
@@ -125,7 +131,6 @@ export default class Plan {
               id
               alias
               description
-              dataType
             }
           }
           comandElement {
@@ -146,7 +151,6 @@ export default class Plan {
                 id
                 alias
                 description
-                dataType
               }
             }
             commandElementValues {
@@ -156,14 +160,12 @@ export default class Plan {
                 id
                 alias
                 description
-                dataType
               }
             }
           }
         }
       }
-    }
-    `;
+    }`;
 		
     this.graphql = webix.proxy("GraphQL", graphElem);
     this.header = {
@@ -196,20 +198,22 @@ export default class Plan {
 
   update_table(message) {
 		try {
-			let obj = JSON.parse(JSON.parse(message.body));
-            obj.basicElementsVO.forEach((element) => {
-              console.log(element);
-              if(element.state !== undefined)
-                $$("planHeaderState" + element.id ).setValues({ value: element.state });
-              
-              if (element.planOrders !== undefined)
-                element.planOrders.forEach(e => {
-                  $$("orderHeaderState" + e.planId).setValues({ value: e.state });
-                });
+      let obj = JSON.parse(JSON.parse(message.body));
+        //console.log(obj);
+        obj.basicElementsVO.forEach((element) => {
+          if(element.planStateType !== undefined)
+            $$("planHeaderState" + element.id ).setValues({ value: element.planStateType.alias });
+          
+          /*
+          if (element.planOrders !== undefined)
+            element.planOrders.forEach(e => {
+              $$("orderHeaderState" + e.planId).setValues({ value: e.state });
             });
-        } catch (err) {
-			console.log("Error: " + err.message);
-		}
+          */
+        });
+    } catch (err) {
+      console.log("Error: " + err.message);
+    }
 	}
 
   disconnect(){
@@ -264,7 +268,7 @@ export default class Plan {
         view: "template",
         type: "header",
         data: {
-          value: this.data.state
+          value: this.data.planStateType.alias
         },
         heigth: 150,
         template: function (obj) {
@@ -287,7 +291,7 @@ export default class Plan {
             cols:[
               { view:"text", id: this.id.toString() + "_alias",  disabled: true, name: "alias",  label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 125, inputWidth:0 },                        
               { view:"text", id: this.id.toString() + "_planId", disabled: true, name: "planId", label:$.i18n("plan.form.id"),    value: this.id.toString(), labelAlign:"left", labelWidth: 200, inputWidth:0 },
-              { view:"text", id: this.id.toString() + "_state",  disabled: true, name: "state",  label:$.i18n("plan.form.state"), value: PLAN_STATE_TYPE[this.state],         labelAlign:"left", labelWidth: 200, inputWidth:0 }
+              { view:"text", id: this.id.toString() + "_state",  disabled: true, name: "state",  label:$.i18n("plan.form.state"), value: this.planStateType.alias,         labelAlign:"left", labelWidth: 200, inputWidth:0 }
             ]
           },{ responsive:this.id.toString() + "_form", 
             cols:[
@@ -363,9 +367,9 @@ export default class Plan {
 }
 
 function statusBadge(value) {
-  var cssStatusName = PLAN_STATE_TYPE[value].toLowerCase();
+  //var cssStatusName = PLAN_STATE_TYPE[value].toLowerCase();
   //var html = "<div style='background-color: #ffdedb; color: #ff6455; display: flex; align-items: center; height: 100%; overflow: hidden; height: 17px; line-height: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>"  + PLAN_STATE_TYPE[value] + "</div>";
-  var html = "<div class=\"webix_um_badge_container\"><span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + PLAN_STATE_TYPE[value] + "</span></div>";
+  var html = "<div class=\"webix_um_badge_container\"><span class=\"webix_um_status_badge planschedule_state_" + value.toLowerCase() + "\">" + value + "</span></div>";
   //var html = "<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + PLAN_STATE_TYPE[value] + "</span>";
   //var html = "<div class=\"webix_um_badge_container webix_um_status_badge planschedule_state_" + cssStatusName  + "\">" + PLAN_STATE_TYPE[value] + "</div>";
   return html;

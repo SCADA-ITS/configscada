@@ -12,7 +12,13 @@ var graphPlans = webix.proxy(
         id
         alias
         description
-        state
+        planStateType{
+          id
+          alias
+          description
+          labelAlias
+          labelDescription
+        }
         planSubtype{
           id
           alias
@@ -32,8 +38,7 @@ var graphPlans = webix.proxy(
             value
             planOrderTypeParam{
               id
-              alias
-              dataType
+              alias              
             }
           }
           planOrderType{
@@ -48,7 +53,7 @@ var graphPlans = webix.proxy(
             commandElementValues{
               id
               value
-              commandElementTypeParam{id alias dataType}
+              commandElementTypeParam{id alias }
             }
           }
         }
