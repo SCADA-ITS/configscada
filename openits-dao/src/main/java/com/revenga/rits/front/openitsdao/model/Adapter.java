@@ -22,6 +22,8 @@ public class Adapter implements Serializable {
 	private String description;
 
 	private Boolean enabled;
+	
+	private String file;
 
 	private String name;
 
@@ -74,6 +76,14 @@ public class Adapter implements Serializable {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public String getFile() {
+		return this.file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
 	}
 
 	public String getName() {

@@ -3,8 +3,6 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 /**
  * The persistent class for the window_params database table.
@@ -27,12 +25,6 @@ public class WindowParam implements Serializable {
 	private String name;
 
 	private Boolean visible;
-
-	//bi-directional many-to-one association to ModuleType
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="module_type_id")
-	private ModuleType moduleType;
 
 	public WindowParam() {
 	}
@@ -75,14 +67,6 @@ public class WindowParam implements Serializable {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
-	}
-
-	public ModuleType getModuleType() {
-		return this.moduleType;
-	}
-
-	public void setModuleType(ModuleType moduleType) {
-		this.moduleType = moduleType;
 	}
 
 }

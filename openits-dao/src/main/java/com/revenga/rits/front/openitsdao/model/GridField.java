@@ -33,7 +33,11 @@ public class GridField implements Serializable {
 	@Column(name="grouping_summary")
 	private Boolean groupingSummary;
 
-	private Boolean ispk;
+	@Column(name="is_epoch_milli")
+	private Boolean isEpochMilli;
+
+	@Column(name="is_pk")
+	private Boolean isPk;
 
 	private String label;
 
@@ -135,12 +139,20 @@ public class GridField implements Serializable {
 		this.groupingSummary = groupingSummary;
 	}
 
-	public Boolean getIspk() {
-		return this.ispk;
+	public Boolean getIsEpochMilli() {
+		return this.isEpochMilli;
 	}
 
-	public void setIspk(Boolean ispk) {
-		this.ispk = ispk;
+	public void setIsEpochMilli(Boolean isEpochMilli) {
+		this.isEpochMilli = isEpochMilli;
+	}
+
+	public Boolean getIsPk() {
+		return this.isPk;
+	}
+
+	public void setIsPk(Boolean isPk) {
+		this.isPk = isPk;
 	}
 
 	public String getLabel() {

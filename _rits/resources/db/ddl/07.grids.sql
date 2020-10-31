@@ -42,6 +42,7 @@
 		id serial primary key,
 		adapter_id int NULL,
 		label varchar NOT NULL,
+		icon varchar NULL,
 		multiselect bool NOT NULL,
 		sort bool NOT NULL,
 		search bool NOT NULL,
@@ -67,6 +68,7 @@
 		grid_id int NOT NULL,
 		position int NOT NULL,
 		label varchar NOT NULL,
+		icon varchar NULL,
 		"default" bool NOT NULL,
 		module_id int NOT NULL,
 		multiselect bool NOT NULL
@@ -97,7 +99,8 @@
 		label varchar NOT NULL,
 		label_tooltip varchar NULL,
 		source_field varchar NOT NULL,
-		isPk bool NOT NULL,
+		is_pk bool NOT NULL,
+		is_epoch_milli bool NOT NULL,
 		align varchar NULL,
 		needs_translation bool NOT NULL,
 		grouping_summary bool NOT NULL,
@@ -127,6 +130,7 @@
 		grid_field_id int NOT NULL,
 		icon varchar NOT NULL,
 		value varchar NOT NULL,
+		show_value boolean NOT NULL,
 		enabled bool
 	);
 	

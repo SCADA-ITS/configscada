@@ -94,17 +94,12 @@
 --
 	CREATE TABLE ui.window_params (
 	    id int not null,
-		module_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		CONSTRAINT pk_window_params PRIMARY KEY (id)
 	);
-	
-	CREATE INDEX idx_window_params_module_types ON ui.window_params USING btree (module_type_id);
-
-	ALTER TABLE ui.window_params ADD CONSTRAINT fk_window_params_module_types FOREIGN KEY (module_type_id) REFERENCES ui.module_types(id);
 		
 	ALTER TABLE ui.window_params SET TABLESPACE tbl_ui;
 

@@ -85,32 +85,71 @@ if (window.app)
 
 			var window_params = webix.copy(window_params_default);
 
-			var hasMinButton = app.module.getWindowParamValue(module, moduleType.window.params.hasMinButton);
-			var hasMaxButton = app.module.getWindowParamValue(module, moduleType.window.params.hasMaxButton);
-			var isMaximized = app.module.getWindowParamValue(module, moduleType.window.params.isMaximized);
-			var heigth = app.module.getWindowParamValue(module, moduleType.window.params.height);
+			var hasMinButton = (app.module.getWindowParamValue(module, moduleType.window.params.hasMinButton) === 'true');
+			var hasMaxButton = (app.module.getWindowParamValue(module, moduleType.window.params.hasMaxButton) === 'true');
+			var isMaximized = (app.module.getWindowParamValue(module, moduleType.window.params.isMaximized) === 'true');
+			var height = app.module.getWindowParamValue(module, moduleType.window.params.height);
 			var width = app.module.getWindowParamValue(module, moduleType.window.params.width);
-			var allowMultipleInstances = app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
+			var allowMultipleInstances = (app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances) === 'true')
 			var icon = app.module.getWindowParamValue(module, moduleType.window.params.icon);
 			var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
 			var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
 			var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
+			var resizable = (app.module.getWindowParamValue(module, moduleType.window.params.resizable) === 'true');
+			var externalizable = (app.module.getWindowParamValue(module, moduleType.window.params.externalizable) === 'true');
 
 			if (!webix.isUndefined(hasMinButton)) window_params.hasMinButton = hasMinButton;
 			if (!webix.isUndefined(hasMaxButton)) window_params.hasMaxButton = hasMaxButton;
 			if (!webix.isUndefined(isMaximized)) window_params.isMaximized = isMaximized;
-			if (!webix.isUndefined(heigth)) window_params.heigth = heigth; else window_params.heigth = 500;
-			if (!webix.isUndefined(width)) window_params.width = width; else window_params.width = 800;
+			if (!webix.isUndefined(height)) window_params.height = height;
+			if (!webix.isUndefined(width)) window_params.width = width;
 			if (!webix.isUndefined(allowMultipleInstances)) window_params.allowMultipleInstances = allowMultipleInstances;
 			if (!webix.isUndefined(icon)) window_params.icon = icon;
 			if (!webix.isUndefined(image)) window_params.image = image;
 			if (!webix.isUndefined(color)) window_params.color = color;
 			if (!webix.isUndefined(label)) window_params.label = label;
+			if (!webix.isUndefined(resizable)) window_params.resizable = resizable;
+			if (!webix.isUndefined(externalizable)) window_params.externalizable = externalizable;
 
 			return window_params;
 		},
+		
+		setWindowTitle: function(module, instance, title) {
+			
+			let winId = instance + "_" + module.id + "_win";
+			
+			if ($$(winId)) {
+				
+				let head = $$(winId).getHead();
+				
+				if (head) {
+				
+					let titleView = head.queryView({ view:"label" });
+					
+					if (titleView) {
+						
+						let label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
+						
+						titleView.setHTML("<img src='img/window-icon.png' class='header-window-icon'/> " + label + " - " + title);
+						
+						var toolbarButtons = $$("toolbar").getChildViews();
+						
+						let buttonToolbar = toolbarButtons.find(e => { return e.data.id === winId.replace("_win", "_button") });
+						
+						if (buttonToolbar) {
+							
+							// changes the label of the button
+							buttonToolbar.define("tooltip", label + " - " + title);
+							
+							buttonToolbar.refresh();
+						}
+					}	
+				}
+				
+			}
+		},
 
-		showWindow: function(module) {
+		showWindow: function(module, args) {
 
 			var window_params = this.getWindowParams(module);
 			var winId = "";
@@ -138,10 +177,11 @@ if (window.app)
 			if (!$$(winId)) {
 				var c = app.wins.getVisibleWinCount();
 				var lastLeft = document.documentElement.clientWidth / 2 - window_params.width / 2 + 15 * c;
-				var lastTop = document.documentElement.clientHeight / 2 - window_params.heigth / 2 - 40 + 25 * c;
-				var lastHeight = window_params.heigth;
+				var lastTop = document.documentElement.clientHeight / 2 - window_params.height / 2 - 40 + 25 * c;
+				var lastHeight = window_params.height;
 				var lastWidth = window_params.width;
 				var fullScreen = false;
+				var resizable = window_params.resizable;
 				var moduleView = {
 					id: "splash-" + winId,
 					css: "empty-app",
@@ -169,27 +209,29 @@ if (window.app)
 					left: lastLeft,
 					top: lastTop,
 					move: true,
-					resize: true,
+					resize: resizable,
 					toFront: true,
 					height: lastHeight,
 					width: lastWidth,
 					head: app.wins.ui.toolbar(
-						window_params.label,
-						// onNewWindow
+						window_params,
+						// onExternalizeWindow
 						function() {
-							webix.message({
-								text: "Not implemented",
-								type: "error",
-								expire: 2000,
-								id: "msg_not_implementes"
+							webix.alert({
+								title: i18n.t("LBL_NO_IMPLEMENTED_EXTERNALIZE_WINDOW"),
+								text: i18n.t("LBL_NO_IMPLEMENTED_EXTERNALIZE_WINDOW_DESC"),
+								type: "alert-error",
+								width: 500
 							});
 						},
 						// onMin
 						function() {
 							$$(winId).hide();
 							webix.html.removeCss($$(obj.id + "_button").$view, "active");
-							// onMax
-						}, function() {
+						
+						},
+						// onMax 
+						function() {
 							fullScreen = !fullScreen;
 
 							if (fullScreen) {
@@ -205,8 +247,10 @@ if (window.app)
 								$$(winId).config.width = lastWidth;
 							}
 							$$(winId).resize();
-							// onClose
-						}, function() {
+							
+						}, 
+						// onClose
+						function() {
 							$$("toolbar").removeView(winId.replace("_win", "_button"));
 							$$(winId).close();
 							app.buttonCount--;
@@ -253,13 +297,13 @@ if (window.app)
 							});
 
 							if (typeof window[jsMethodDraw] === "function") {
-								moduleView = window[jsMethodDraw](module, currentInstance, null);
+								moduleView = window[jsMethodDraw](module, currentInstance, args);
 
 								if (!webix.isUndefined(moduleView)) {
 									webix.ui(moduleView, $$("splash-" + winId));
 
 									if (typeof window[jsMethodCallbacks] === "function") {
-										window[jsMethodCallbacks](module, currentInstance, null);
+										window[jsMethodCallbacks](module, currentInstance, args);
 									}
 								}
 								else {
@@ -412,187 +456,84 @@ if (window.app)
 			app.wins.setActiveStyle(winId);
 		},
 		ui: {
-			toolbar: function(title, onNewWindow, onHide, onMinMax, onClose) {
-				return {
+			toolbar: function(window_params, onNewWindow, onHide, onMinMax, onClose) {
+
+				let toolbarView = {};
+				
+				toolbarView = {
 					view: "toolbar",
 					height: 28,
 					css: "window-toolbar",
 					margin: 0,
 					padding: 0,
-					cols: [
-						{
-							view: "label",
-							label: "<img src='img/window-icon.png' class='header-window-icon'/> " + title
-						},
-						{
-							view: "button",
-							type: "image",
-							image: "img/new_window_button.png",
-							width: 36,
-							height: 20,
-							css: "new_window_button webix_transparent",
-							on: {
-								onItemClick: onNewWindow
-							}
-						},
-						{
-							view: "button",
-							type: "image",
-							image: "img/hide_button.png",
-							width: 36,
-							height: 20,
-							css: "hide-button webix_transparent",
-							on: {
-								onItemClick: onHide
-							}
-						},
-						{
-							view: "button",
-							type: "image",
-							image: "img/resize_button.png",
-							width: 36,
-							height: 20,
-							css: "resize-button webix_transparent",
-							on: {
-								onItemClick: onMinMax
-							}
-						},
-						{
-							view: "button",
-							type: "image",
-							image: "img/close_button.png",
-							width: 36,
-							height: 20,
-							css: "close-button webix_transparent",
-							on: {
-								onItemClick: onClose
-							}
-						}
-					]
+					cols: []
 				};
-			},
-			scheduler: {
-				css: "no_border",
-				toolbar: function() {
-					return [
-						"DHTMlX Scheduler",
-						function() {
-							$$('scheduler_win').hide();
-							webix.html.removeCss($$("scheduler_button").$view, "active");
-						}, function() {
-							$$("scheduler_win").config.fullscreen = !$$("scheduler_win").config.fullscreen;
-							$$("scheduler_win").resize();
-
-							$$("scheduler").config.fullscreen = !$$("scheduler").config.fullscreen;
-							$$("scheduler").resize();
-							$$("scheduler").getScheduler().updateView();
-						}, function() {
-							$$("toolbar").removeView("scheduler_button");
-							$$('scheduler_win').hide();
-							app.buttonCount--;
+				
+				toolbarView.cols.push({
+					view: "label",
+					label: "<img src='" + window_params.icon + "' class='header-window-icon'/> " + window_params.label
+				});
+				
+				// Externalize window button
+				if (window_params.externalizable) {
+					toolbarView.cols.push({
+						view: "button",
+						type: "image",
+						image: "img/externalize_button.png",
+						width: 36,
+						height: 20,
+						css: "webix_transparent",
+						on: {
+							onItemClick: onNewWindow
 						}
-					]
-				},
-				body: function() {
-					return {
-						view: "dhx-scheduler",
-						id: "scheduler",
-						date: new Date(2015, 7, 5),
-						mode: "month",
-						init: function() {
-							this.getScheduler().config.xml_date = "%Y-%m-%d %H:%i";
-							this.getScheduler().config.first_hour = 6;
-							this.getScheduler().config.multi_day = false;
-						},
-						ready: function() {
-							this.getScheduler().parse(test_data_set_2015);
-						}
-					}
-				},
-				events: {
-					onBeforeShow: function() {
-						app.beforeWinShow("scheduler");
-					}
+					});
 				}
-			},
-			gantt: {
-				toolbar: function() {
-					return [
-						"DHTMlX Gantt",
-						function() {
-							$$('gantt_win').hide();
-							webix.html.removeCss($$("gantt_button").$view, "active");
-						},
-						function() {
-							$$("gantt_win").config.fullscreen = !$$("gantt_win").config.fullscreen;
-							$$("gantt_win").resize();
-
-							$$("gantt").config.fullscreen = !$$("scheduler").config.fullscreen;
-							$$("gantt").resize();
-							gantt.render();
-						}, function() {
-							$$("toolbar").removeView("gantt_button");
-							$$('gantt_win').hide();
-							app.buttonCount--;
+				
+				// Minimize window button
+				if (window_params.hasMinButton) {
+					
+					toolbarView.cols.push({
+						view: "button",
+						type: "image",
+						image: "img/hide_button.png",
+						width: 36,
+						height: 20,
+						css: "webix_transparent",
+						on: {
+							onItemClick: onHide
 						}
-					]
-				},
-				body: function() {
-					return {
-						view: "dhx-gantt",
-						id: "gantt",
-						init: function() {
-							//do nothing
-						},
-						ready: function() {
-							gantt.parse(tasks);
-						}
-					}
-				},
-				events: {
-					onBeforeShow: function() {
-						app.beforeWinShow("gantt");
-					}
+					});	
 				}
-			},
-			filemanager: {
-				css: "no_border ",
-				toolbar: function() {
-					return [
-						"Filemanager",
-						function() {
-							$$('filemanager_win').hide();
-							webix.html.removeCss($$("filemanager_button").$view, "active");
-						},
-						function() {
-							$$("filemanager_win").config.fullscreen = !$$("filemanager_win").config.fullscreen;
-							$$("filemanager_win").resize();
-
-						}, function() {
-							$$("toolbar").removeView("filemanager_button");
-							$$('filemanager_win').hide();
-							app.buttonCount--;
+				
+				// Restore / Maximize window button
+				if (window_params.hasMaxButton) {
+					toolbarView.cols.push({
+						view: "button",
+						type: "image",
+						image: "img/resize_button.png",
+						width: 36,
+						height: 20,
+						css: "webix_transparent",
+						on: {
+							onItemClick: onMinMax
 						}
-					]
-				},
-				body: function() {
-					return {
-						view: "filemanager",
-						id: "filemanager",
-						disabledHistory: true,
-						data: filemanagerData
-					}
-				},
-				events: {
-					onBeforeShow: function() {
-						app.beforeWinShow("filemanager");
-					},
-					onShow: function() {
-
-						if (!$$("filemanager").$$("tree").getSelectedId())
-							$$("filemanager").$$("tree").select($$("filemanager").getFirstChildId(0));
-					}
+					});
 				}
+				
+				// Close window button
+				toolbarView.cols.push({
+					view: "button",
+					type: "image",
+					image: "img/close_button.png",
+					width: 36,
+					height: 20,
+					css: "close-button webix_transparent",
+					on: {
+						onItemClick: onClose
+					}
+				});
+				
+				return toolbarView;
 			}
 		}
 	};

@@ -23,6 +23,8 @@ public class GridCommand implements Serializable {
 	@Column(name="default")
 	private Boolean default_;
 
+	private String icon;
+
 	private String label;
 
 	private Boolean multiselect;
@@ -55,6 +57,14 @@ public class GridCommand implements Serializable {
 
 	public void setDefault_(Boolean default_) {
 		this.default_ = default_;
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public String getLabel() {

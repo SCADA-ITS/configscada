@@ -8,7 +8,7 @@ if (window.app)
 
 		isLoaded: false,
 
-		load() {
+		load: function() {
 
 			webix.ajax(appConfig.restUrl + "module_types/" + MODULE_TYPE_SERVICE + "/modules").then(function(data) {
 
@@ -18,6 +18,8 @@ if (window.app)
 					console.log(svcs);
 
 					svcs.sort(app.service.compareByPriority);
+
+					let position = 10;
 
 					svcs.forEach(svc => {
 
@@ -30,7 +32,7 @@ if (window.app)
 								if (typeof window[svc.jsMethodDraw] === "function") {
 
 									let priority = app.module.getParamValue(svc, MODULE_TYPE_PARAM_PRIORITY);
-									let svcView = window[svc.jsMethodDraw](svc, null);
+									let svcView = window[svc.jsMethodDraw](svc, null, ++position);
 
 									if (typeof window[svc.jsMethodCallbacks] === "function") {
 										window[svc.jsMethodCallbacks](svc, null);
@@ -45,11 +47,11 @@ if (window.app)
 			});
 		},
 		
-		unload() {
+		unload: function() {
 			
 		},
 
-		compareByPriority(a, b) {
+		compareByPriority: function(a, b) {
 
 			var priority_a = app.module.getParamValue(a, MODULE_TYPE_PARAM_PRIORITY);
 			var priority_b = app.module.getParamValue(b, MODULE_TYPE_PARAM_PRIORITY);

@@ -79,6 +79,8 @@ public class AuthController {
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
 				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
 		
-		return new ResponseEntity<>(sessionBO.keepAlive(headers, httpSession), HttpStatus.OK);
+		UserSessionUI userSession = sessionBO.keepAlive(headers, httpSession);
+		
+		return new ResponseEntity<>(userSession, userSession != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}
 }

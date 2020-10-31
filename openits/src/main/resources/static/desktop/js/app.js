@@ -5,12 +5,42 @@ app = {
 		webix.env.codebase = "./";
 		this.load();
 		this.createLayout();
+		this.auth();
+	},
+	auth: function() {
+		
+		let sessionData = app.keepAlive();
+		let userData;
+		
+		//if (!webix.storage.session.get(SESSION_STORAGE_SESSION_DATA) || webix.storage.session.get(SESSION_STORAGE_SESSION_LOCKED))
+		if (!sessionData) {
 
-		if (!webix.storage.session.get(SESSION_STORAGE_SESSION_DATA) || webix.storage.session.get(SESSION_STORAGE_SESSION_LOCKED)) {
 			app.signOut();
 		}
 		else {
-			this.signIn();
+			
+			webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+			
+			if (sessionData.userId) {
+				
+				let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${sessionData.userId}`);
+						
+				if (userDataResponse != undefined) {
+					
+					if (userDataResponse.responseText) {
+						
+						userData = JSON.parse(userDataResponse.responseText);
+						webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+						
+						this.signIn();	
+					}
+				}
+			}
+			
+			if (!userData) {
+				
+				app.signOut();
+			}
 		}
 	},
 	load: function() {
@@ -115,6 +145,17 @@ app = {
 				}
 			}
 		});
+	},
+	keepAlive: function() {
+		
+		let response = webix.ajax().sync().post(appConfig.restUrl + "auth/keep_alive");
+		
+		if (response != undefined) {
+			
+			return JSON.parse(response.responseText)
+		}
+		
+		return undefined;
 	},
 	signOut: function() {
 
@@ -350,7 +391,7 @@ app = {
 		if (btn == webix.undefined) {
 			var template = "";
 
-			template = "<div class='" + module.$css + "'><img class='" + module.$css + "' src='" + image + "'></div>";
+			template = "<div class='" + module.$css + "'><img class='" + module.$css + "' src='" + icon + "'></div>";
 
 			webix.ui({
 				view: "button",
@@ -411,20 +452,11 @@ app = {
 		}
 	},
 
-	openModule: function(module) {
+	openModule: function(module, args) {
 
-		if (module != null && module.moduleType != null) {
-			if (module.moduleType.id == moduleType.window.id) {
-				var local = this;
-				app.wins.showWindow(module);
-			}
-			else {
-				webix.message({
-					text: "Unknown module type = " + module.moduleType,
-					type: "error",
-					expire: 5000
-				});
-			}
+		if (module != null && module.moduleType != null && module.windowValues != null ) {
+			
+			app.wins.showWindow(module, args);
 		}
 	},
 
@@ -449,10 +481,11 @@ app = {
 				menu.id = "menu-" + pos;
 
 				var menuTitle = {
-					view: "label",
-					css: "start-image-menu-title"
+					view: "template",
+					css: "menu-group",
+					height: 35,
+					template: "<div class='desktop-icons start-menu-item'><div class='start-menu-item-image-bg'><img class='start-menu-item-image' src='" + data[pos].icon + "' ></div><div class='start-menu-item-image-title'>" + i18n.t(data[pos].label) + "</div></div>"
 				};
-				menuTitle.label = i18n.t(data[pos].label);
 
 				var menuList = {
 					view: "list",

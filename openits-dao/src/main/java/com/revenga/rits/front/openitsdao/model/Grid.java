@@ -23,6 +23,8 @@ public class Grid implements Serializable {
 
 	private Boolean filter;
 
+	private String icon;
+
 	private String label;
 
 	private Boolean multiselect;
@@ -72,6 +74,14 @@ public class Grid implements Serializable {
 
 	public void setFilter(Boolean filter) {
 		this.filter = filter;
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public String getLabel() {

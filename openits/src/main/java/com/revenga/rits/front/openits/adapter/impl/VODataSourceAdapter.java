@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -44,23 +45,37 @@ public class VODataSourceAdapter {
 	@Autowired
 	private Environment env;
 	
+	public static final String DATA_SOURCE_GET_ALARM_TYPES = "data.source.get_alarm_types";
+	public static final String DATA_SOURCE_GET_ALARM_TYPE = "data.source.get_alarm_type";
+	public static final String DATA_SOURCE_GET_ALARM_LEVELS = "data.source.get_alarm_levels";
+	public static final String DATA_SOURCE_GET_ALARM_LEVEL = "data.source.get_alarm_level";
+	public static final String DATA_SOURCE_GET_ALARM_CONFIGS = "data.source.get_alarm_configs";
+	public static final String DATA_SOURCE_GET_ALARM_CONFIG = "data.source.get_alarm_config";
 	public static final String DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = "data.source.get_elements_by_element_type";
 	public static final String DATA_SOURCE_GET_ELEMENTS = "data.source.get_elements";
+	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY = "data.source.get_elements_array";
+	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC = "data.source.get_elements_array_states_synoptic";
+	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC = "data.source.get_elements_array_states_measures_alarms_synoptic";
+	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP = "data.source.get_elements_array_states_map";
+	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP = "data.source.get_elements_array_states_measures_alarms_map";
 	public static final String DATA_SOURCE_GET_ELEMENT = "data.source.get_element";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPES = "data.source.get_element_types";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPE = "data.source.get_element_type";
 	public static final String DATA_SOURCE_GET_GENERIC_DATAS = "data.source.get_generic_datas";
 	public static final String DATA_SOURCE_GET_GENERIC_DATA = "data.source.get_generic_data";
-	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
-	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
-	public static final String DATA_SOURCE_GET_LOCALES = "data.source.get_locales";
-	public static final String DATA_SOURCE_GET_LOCALE = "data.source.get_locale";
-	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
-	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED = "data.source.get_label_translated";
 	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED_USING_FIELDS = "data.source.get_label_translated_using_fields";
-	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
+	public static final String DATA_SOURCE_GET_LOCALES = "data.source.get_locales";
+	public static final String DATA_SOURCE_GET_LOCALE = "data.source.get_locale";
+	public static final String DATA_SOURCE_GET_LOCATIONS = "data.source.get_locations";
+	public static final String DATA_SOURCE_GET_LOCATION = "data.source.get_location";
+	public static final String DATA_SOURCE_GET_PLANS = "data.source.get_plans";
+	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
+	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
+	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
+	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
 	
+	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
 	public static final String DATA_SOURCE_GRAPHQL_QUERY_URL = "data.source.graphql_query.url";
@@ -74,9 +89,31 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GRAPHQL_MUTATION_CONTENT = "data.source.graphql_mutation.content";
 	
 	@Getter
+	private Integer dataSourceGetAlarmTypes;
+	@Getter
+	private Integer dataSourceGetAlarmType;
+	@Getter
+	private Integer dataSourceGetAlarmLevels;
+	@Getter
+	private Integer dataSourceGetAlarmLevel;
+	@Getter
+	private Integer dataSourceGetAlarmConfigs;
+	@Getter
+	private Integer dataSourceGetAlarmConfig;
+	@Getter
 	private Integer dataSourceGetElementsByElementType;
 	@Getter
 	private Integer dataSourceGetElements;
+	@Getter
+	private Integer dataSourceGetElementsArray;
+	@Getter
+	private Integer dataSourceGetElementsArrayStatesSynoptic;
+	@Getter
+	private Integer dataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic;
+	@Getter
+	private Integer dataSourceGetElementsArrayStatesMap;
+	@Getter
+	private Integer dataSourceGetElementsArrayStatesMeasuresAlarmsMap;
 	@Getter
 	private Integer dataSourceGetElement;
 	@Getter
@@ -88,21 +125,27 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetGenericData;
 	@Getter
-	private Integer dataSourceGetUsers;
+	private Integer dataSourceGetLabelTranslated;
 	@Getter
-	private Integer dataSourceGetUser;
+	private Integer dataSourceGetLabelTranslatedUsingFields;
 	@Getter
 	private Integer dataSourceGetLocales;
 	@Getter
 	private Integer dataSourceGetLocale;
 	@Getter
+	private Integer dataSourceGetLocations;
+	@Getter
+	private Integer dataSourceGetLocation;
+	@Getter
+	private Integer dataSourceGetPlans;
+	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocaleAndModule;
 	@Getter
-	private Integer dataSourceGetLabelTranslated;
+	private Integer dataSourceGetUsers;
 	@Getter
-	private Integer dataSourceGetLabelTranslatedUsingFields;
+	private Integer dataSourceGetUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
 	@Getter
@@ -128,25 +171,39 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGraphqlMutationContent;
 	
-	
 	@PostConstruct
 	private void initialize() {
 	
+		this.dataSourceGetAlarmTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPES));
+		this.dataSourceGetAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPE));
+		this.dataSourceGetAlarmLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVELS));
+		this.dataSourceGetAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVEL));
+		this.dataSourceGetAlarmConfigs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS));
+		this.dataSourceGetAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIG));
 		this.dataSourceGetElementsByElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE));
 		this.dataSourceGetElements = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS));
+		this.dataSourceGetElementsArray = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY));
+		this.dataSourceGetElementsArrayStatesSynoptic = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC));
+		this.dataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC));
+		this.dataSourceGetElementsArrayStatesMap = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP));
+		this.dataSourceGetElementsArrayStatesMeasuresAlarmsMap = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP));
 		this.dataSourceGetElement = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT));
 		this.dataSourceGetElementTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPES));
 		this.dataSourceGetElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPE));
 		this.dataSourceGetGenericDatas = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATAS));
 		this.dataSourceGetGenericData = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATA));
-		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
-		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
-		this.dataSourceGetLocales = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALES));
-		this.dataSourceGetLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALE));
-		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
-		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetLabelTranslated = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED));
 		this.dataSourceGetLabelTranslatedUsingFields = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED_USING_FIELDS));
+		this.dataSourceGetLocales = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALES));
+		this.dataSourceGetLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALE));
+		this.dataSourceGetLocations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATIONS));
+		this.dataSourceGetLocation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATION));
+		this.dataSourceGetPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLANS));
+		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
+		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
+		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
+		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
+
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
@@ -213,6 +270,7 @@ public class VODataSourceAdapter {
 	private List<Map<String, Object>> putGraphql(DataSource dataSource, String input) {
 		
 		List<Map<String, Object>> list = null;
+		String mutationUrl = null;
 		String method = null;
 		String params = null;
 		String paramTypes = null;
@@ -223,7 +281,8 @@ public class VODataSourceAdapter {
 		
 		try {
 			
-		
+			DataSourceValue dataSourceValMutationUrl = dataSource.getDataSourceValues().stream()
+					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationUrl)).findFirst().orElse(null);
 			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
 					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationMethod)).findFirst().orElse(null);
 			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
@@ -233,6 +292,7 @@ public class VODataSourceAdapter {
 			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
 					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationContent)).findFirst().orElse(null);
 			
+			if (dataSourceValMutationUrl != null) mutationUrl = dataSourceValMutationUrl.getValue();
 			if (dataSourceValMethod != null) method = dataSourceValMethod.getValue();
 			if (dataSourceValParams != null) params = dataSourceValParams.getValue();
 			if (dataSourceValParamTypes != null) paramTypes = dataSourceValParamTypes.getValue();
@@ -253,7 +313,7 @@ public class VODataSourceAdapter {
 				
 				if (!StringUtils.isAllEmpty(paramsGraphQL, paramTypesGraphQL, variablesGraphQL)) {
 				
-					list = graphqlAdapter.mutation(method, content, paramsGraphQL, paramTypesGraphQL, variablesGraphQL);
+					list = graphqlAdapter.mutation(mutationUrl, method, content, paramsGraphQL, paramTypesGraphQL, variablesGraphQL);
 				}
 			}
 			
@@ -272,6 +332,7 @@ public class VODataSourceAdapter {
 	private List<Map<String, Object>> getListFromGraphql(DataSource dataSource, Object[] objParamValues) {
 		
 		List<Map<String, Object>> list = null;
+		String queryUrl = null;
 		String method = null;
 		String params = null;
 		String content = null;
@@ -279,6 +340,8 @@ public class VODataSourceAdapter {
 		
 		try {
 			
+			DataSourceValue dataSourceValQueryUrl = dataSource.getDataSourceValues().stream()
+					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryUrl)).findFirst().orElse(null);
 			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
 					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryMethod)).findFirst().orElse(null);
 			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
@@ -286,6 +349,7 @@ public class VODataSourceAdapter {
 			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
 					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryContent)).findFirst().orElse(null);
 			
+			if (dataSourceValQueryUrl != null) queryUrl = dataSourceValQueryUrl.getValue();
 			if (dataSourceValMethod != null) method = dataSourceValMethod.getValue();
 			if (dataSourceValParams != null) params = dataSourceValParams.getValue();
 			if (dataSourceValContent != null) content = dataSourceValContent.getValue();
@@ -297,7 +361,7 @@ public class VODataSourceAdapter {
 			
 			if (!StringUtils.isAllEmpty(method, content)) {
 				
-				list = graphqlAdapter.query(method, paramsGraphQL, content);
+				list = graphqlAdapter.query(queryUrl, method, paramsGraphQL, content);
 			}		
 			
 		} catch (IOException e) {
@@ -312,6 +376,7 @@ public class VODataSourceAdapter {
 		return list; 
 	}
 	
+	@SuppressWarnings("unchecked")
 	private String getParamsGraphqQLQuery(String params, Object[] objParamValues) {
 		
 		String paramsGraphQL = null;
@@ -329,6 +394,30 @@ public class VODataSourceAdapter {
 				if (objValue instanceof String) {
 					
 					paramTypeGraphQL = String.format("%s:\"%s\"", paramTypeArray[paramTypePos], (String) objValue);
+				}
+				else if (objValue instanceof List<?>) {
+					
+					List<?> strList = (List<?>) objValue;
+					
+					if (!CollectionUtils.isEmpty(strList)) {
+					
+						String strParam;
+						
+						if (((List<?>)objValue).get(0) instanceof String) {
+							
+							strParam = String.join(",", (List<String>) strList);
+							strParam = String.format("\"%s\"", strParam.replace(",", "\",\""));
+						}
+						else {
+							
+							List<String> otherList = strList.stream().map(Object::toString).collect(Collectors.toList());
+							strParam = String.join(",", otherList);
+						}
+						
+						strParam = String.format("[%s]", strParam);
+						
+						paramTypeGraphQL = String.format("%s:%s", paramTypeArray[paramTypePos], strParam);
+					}
 				}
 				else {
 					

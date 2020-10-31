@@ -2,7 +2,7 @@ const MODULE_PARAM_CONFIG = 2;
 
 app.alarms = {};
 
-function getDrawServiceAlarm(module, args) {
+function getDrawServiceAlarm(module, args, position) {
 
 	let view = "view-svc-" + module.id;
 	let toolbar = $$("toolbar");

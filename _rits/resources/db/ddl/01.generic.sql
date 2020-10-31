@@ -3,17 +3,16 @@
 -- TABLES FOR UI
 --
 ---------------------------------------------------------
-	
+
 -- 
--- Table: ui.icons
--- Description: Main category for icons
+-- Table: ui.custom_graphic_equipments
+-- Description: Representation of customized graphics for equipments in synoptics, maps, etc
 -- Scope: ui
 --
---	CREATE TABLE ui.icons (
---		id serial primary key,
---		name varchar NOT NULL,
---		description varchar NULL,
---		icon varchar NOT NULL
---	);
---
---	ALTER TABLE ui.icons SET TABLESPACE tbl_ui;
+	CREATE TABLE ui.custom_graphic_equipments (
+		id serial primary key,
+		name varchar NOT NULL,
+		description varchar NULL
+	);
+
+	ALTER TABLE ui.custom_graphic_equipments SET TABLESPACE tbl_ui;

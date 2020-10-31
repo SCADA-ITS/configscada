@@ -1,5 +1,7 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,13 @@ public class GridController {
 
 	@Autowired
 	GridBO gridBO;
+	
+	@GetMapping
+	@ApiOperation(value = "Get all grids", notes = "Get all grids")
+	public ResponseEntity<List<GridUI>> getGrids() {
+		
+		return new ResponseEntity<>(gridBO.getGridUIs(), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get grid by id", notes = "Get grid by id")

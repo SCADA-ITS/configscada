@@ -11,8 +11,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,12 +22,12 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class GraphqlAdapter {
 
-private static final String GRAPHQL_URL = "graphql.url";
+//private static final String GRAPHQL_URL = "graphql.url";
 	
-	@Autowired
-	private Environment env;
+//	@Autowired
+//	private Environment env;
 	
-	public List<Map<String, Object>> query(String method, String params, String content) throws IOException, InterruptedException {
+	public List<Map<String, Object>> query(String graphqlUrl, String method, String params, String content) throws IOException, InterruptedException {
 		
 		HttpResponse<String> response = null;
 		
@@ -57,7 +55,7 @@ private static final String GRAPHQL_URL = "graphql.url";
 				String body = sb.toString();
 				//String body1 = "{\"query\":\"query  {getElementsByType(elementTypeId:\\\"ElementType:2\\\"){id alias description state}}\"}";
 				
-				String graphqlUrl = env.getProperty(GRAPHQL_URL); 
+				//String graphqlUrl = env.getProperty(GRAPHQL_URL); 
 				
 				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
 						.header("content-type", "application/json")
@@ -75,7 +73,7 @@ private static final String GRAPHQL_URL = "graphql.url";
 		return response != null ? response2VO(response.body(), method) : null;
 	}
 	
-	public List<Map<String, Object>> mutation(String method, String content, String paramsGraphQL, String paramTypesGraphQL, String variablesGraphQL) throws IOException, InterruptedException {
+	public List<Map<String, Object>> mutation(String graphqlUrl, String method, String content, String paramsGraphQL, String paramTypesGraphQL, String variablesGraphQL) throws IOException, InterruptedException {
 		
 		HttpResponse<String> response = null;
 		
@@ -97,7 +95,7 @@ private static final String GRAPHQL_URL = "graphql.url";
 				String body = sb.toString();
 				//String body1 = "{\"query\":\"mutation  updateUser($arg_1: UserVO!){ updateUser(user: $arg_1)   {id name password passwordExpiredAt sessionExpireTimeS passwordExpiredAt lockedUntil preset fullName language email role{id alias rolePermissions{id alias}} userPermissions{id alias}}}\",\"variables\":{\"arg_1\":{\"id\":\"User:2\",\"name\":\"oper\",\"password\":\"oper\",\"preset\":false,\"allowMultipleSessions\":true,\"isAdmin\":false,\"language\":\"bo\",\"country\":\"Nepal\",\"timezone\":\"Asia/Nepal\",\"roleId\":\"Role:1\"}},\"operationName\":\"updateUser\"}";
 				
-				String graphqlUrl = env.getProperty(GRAPHQL_URL); 
+				//String graphqlUrl = env.getProperty(GRAPHQL_URL); 
 				
 				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(graphqlUrl))
 						.header("content-type", "application/json")

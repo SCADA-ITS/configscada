@@ -1,46 +1,41 @@
-package com.revenga.rits.front.openits.adapter.impl;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.revenga.rits.front.openits.adapter.GridDataAdapter;
+class AdapterGridElement {
 
-import lombok.extern.log4j.Log4j2;
-
-@Component
-@Log4j2
-public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
-
-	private static final Integer DATA_TYPE_INTEGER = 1;
-	private static final Integer DATA_TYPE_ALPHANUMERIC = 2;
-	private static final Integer DATA_TYPE_DECIMAL = 3;
-	private static final Integer DATA_TYPE_TIMESTAMP = 4;
-	private static final Integer DATA_TYPE_BOOLEAN = 5;
+	static final Integer DATA_TYPE_INTEGER = 1;
+	static final Integer DATA_TYPE_ALPHANUMERIC = 2;
+	static final Integer DATA_TYPE_DECIMAL = 3;
+	static final Integer DATA_TYPE_TIMESTAMP = 4;
+	static final Integer DATA_TYPE_BOOLEAN = 5;
 	
-	private static final String FIELD_ELEMENT_VALUES = "elementValues";
-	private static final String FIELD_ELEMENT_TYPE_PARAM = "elementTypeParam";
-	private static final String FIELD_ID = "id";
-	private static final String FIELD_LABEL_ALIAS = "labelAlias";
-	private static final String FIELD_DATA_TYPE = "dataType";
-	private static final String FIELD_ELEMENT_VALUE_STATE = "elementValueState";
-	private static final String FIELD_STATE = "state";
-	private static final String FIELD_VALUE = "value";
-	private static final String FIELD_ELEMENT_TYPE_STATE = "elementTypeState";
-	private static final String FIELD_ELEMENT_TYPE_STATE_STATE = "state";
-	private static final String FIELD_ELEMENT_TYPE_STATE_STATE_LABEL = "stateLabel";
+	static final String FIELD_ELEMENT_VALUES = "elementValues";
+	static final String FIELD_ELEMENT_TYPE_PARAM = "elementTypeParam";
+	static final String FIELD_ID = "id";
+	static final String FIELD_LABEL_ALIAS = "labelAlias";
+	static final String FIELD_DATA_TYPE = "dataType";
+	static final String FIELD_ELEMENT_VALUE_STATE = "elementValueState";
+	static final String FIELD_STATE = "state";
+	static final String FIELD_VALUE = "value";
+	static final String FIELD_ELEMENT_TYPE_STATE = "elementTypeState";
+	static final String FIELD_ELEMENT_TYPE_STATE_STATE = "state";
+	static final String FIELD_ELEMENT_TYPE_STATE_STATE_LABEL = "stateLabel";
 	
-	@Autowired
-	VO2UIAdapter vo2uiAdapter;
+	org.apache.logging.log4j.Logger log;
 	
-	@Override
-	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) throws IllegalAccessException {
+	public AdapterGridElement(org.apache.logging.log4j.Logger log) {
+		
+		this.log = log;
+	}
+	
+	List<Map<String, Object>> toGridData(VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
 		
 		List<Map<String, Object>> data = new ArrayList<>();
 		
@@ -51,7 +46,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 				for (Map<String, Object> entity : entities) {
 					
 					Map<String, Object> dataRow = new HashMap<>();
-
+					
 					dataRow.putAll(entity);
 					
 					flattenElementTypeState(dataRow);
@@ -69,8 +64,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 		return data;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void flattenElementTypeState(Map<String, Object> dataRow) {
+	void flattenElementTypeState(Map<String, Object> dataRow) {
 		
 		if (dataRow.containsKey(FIELD_ELEMENT_TYPE_STATE)) {
 			
@@ -88,8 +82,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void flattenElementValues(Map<String, Object> dataRow) {
+	void flattenElementValues(Map<String, Object> dataRow) {
 		
 		if (dataRow.containsKey(FIELD_ELEMENT_VALUES)) {
 			
@@ -152,12 +145,7 @@ public class ElementAdapter implements GridDataAdapter<Map<String, Object>> {
 											
 											Map<String, Object> elementValueState = (Map<String, Object>) elementValueStateObj;
 										
-											dataRow.put(fieldParamId, new HashMap<>() {
-												/**
-												 * 
-												 */
-												private static final long serialVersionUID = 3628195862041865878L;
-
+											dataRow.put(fieldParamId, new HashMap<String, Object>() {
 												{
 													put(FIELD_VALUE, newValue);
 													put(FIELD_STATE, elementValueState.get(FIELD_ID));

@@ -1,0 +1,141 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
+
+
+/**
+ * The persistent class for the map_layer_elements database table.
+ * 
+ */
+@Entity
+@Table(name="map_layer_elements")
+@NamedQuery(name="MapLayerElement.findAll", query="SELECT m FROM MapLayerElement m")
+public class MapLayerElement implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="element_id")
+	private String elementId;
+
+	private Integer height;
+
+	@Column(name="horizontal_flip")
+	private Boolean horizontalFlip;
+
+	private String label;
+
+	private Integer width;
+
+	//bi-directional many-to-one association to MapLayerElementZoom
+	@OneToMany(mappedBy="mapLayerElement")
+	private List<MapLayerElementZoom> mapLayerElementZooms;
+
+	//uni-directional many-to-one association to CustomGraphicEquipment
+	@ManyToOne
+	@JoinColumn(name="custom_graphic_equipment_id")
+	private CustomGraphicEquipment customGraphicEquipment;
+
+	//bi-directional many-to-one association to MapLayer
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="layer_id")
+	private MapLayer mapLayer;
+
+	public MapLayerElement() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getElementId() {
+		return this.elementId;
+	}
+
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
+	}
+
+	public Integer getHeight() {
+		return this.height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Boolean getHorizontalFlip() {
+		return this.horizontalFlip;
+	}
+
+	public void setHorizontalFlip(Boolean horizontalFlip) {
+		this.horizontalFlip = horizontalFlip;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Integer getWidth() {
+		return this.width;
+	}
+
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
+
+	public List<MapLayerElementZoom> getMapLayerElementZooms() {
+		return this.mapLayerElementZooms;
+	}
+
+	public void setMapLayerElementZooms(List<MapLayerElementZoom> mapLayerElementZooms) {
+		this.mapLayerElementZooms = mapLayerElementZooms;
+	}
+
+	public MapLayerElementZoom addMapLayerElementZoom(MapLayerElementZoom mapLayerElementZoom) {
+		getMapLayerElementZooms().add(mapLayerElementZoom);
+		mapLayerElementZoom.setMapLayerElement(this);
+
+		return mapLayerElementZoom;
+	}
+
+	public MapLayerElementZoom removeMapLayerElementZoom(MapLayerElementZoom mapLayerElementZoom) {
+		getMapLayerElementZooms().remove(mapLayerElementZoom);
+		mapLayerElementZoom.setMapLayerElement(null);
+
+		return mapLayerElementZoom;
+	}
+
+	public CustomGraphicEquipment getCustomGraphicEquipment() {
+		return this.customGraphicEquipment;
+	}
+
+	public void setCustomGraphicEquipment(CustomGraphicEquipment customGraphicEquipment) {
+		this.customGraphicEquipment = customGraphicEquipment;
+	}
+
+	public MapLayer getMapLayer() {
+		return this.mapLayer;
+	}
+
+	public void setMapLayer(MapLayer mapLayer) {
+		this.mapLayer = mapLayer;
+	}
+
+}

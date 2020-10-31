@@ -30,7 +30,6 @@ if(window.app)
 		    scr.onreadystatechange = handleReadyStateChange;
 		    scr.onerror = handleError;
 		    scr.src = path;
-		    document.body.appendChild(scr);
 		
 		    function handleLoad() {
 		        if (!done) {
@@ -55,5 +54,7 @@ if(window.app)
 		            callback(path, "error");
 		        }
 		    }
+
+			document.body.appendChild(scr);
 		}
 	};

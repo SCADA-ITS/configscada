@@ -12,6 +12,8 @@ const SESSION_STORAGE_USER_DATA = "user.data";
 
 const STOMP_DATA_SOURCE_TYPE = 2;
 
+const MODULE_TYPE_CUSTOM_WINDOW = 1;
+const MODULE_TYPE_GENERIC_GRID_WINDOW = 2;
 const MODULE_TYPE_SERVICE = 6;
 
 const admin_usr = {
@@ -35,7 +37,9 @@ const moduleType = {
 			image: 9,
 			icon: 10,
 			color: 11,
-			label: 12
+			label: 12,
+			resizable: 13,
+			externalizable: 14
 		}
 	}
 }
@@ -44,11 +48,13 @@ const window_params_default = {
 	hasMinButton: true,
 	hasMaxButton: true,
 	isMaximized: false,
-	height: 400,
-	width: 800,
+	height: 720,
+	width: 1400,
 	allowMultipleInstances: false,
 	image: 'img/module/module_default.png',
 	icon: 'img/module/module_efault.png',
 	color: '#e81123',
-	label: 'LBL_MODULE_DEFAULT'
+	label: 'LBL_MODULE_DEFAULT',
+	resizable: true,
+	externalizable: true
 }

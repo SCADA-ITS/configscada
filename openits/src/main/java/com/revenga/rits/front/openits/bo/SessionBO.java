@@ -37,8 +37,6 @@ public class SessionBO {
 	private static final String USER_FIELD_USER = "name";
 	private static final String USER_FIELD_PASSWORD = "password";
 	private static final String USER_FIELD_LOCKED_UNTIL = "lockedUntil";
-	private static final String USER_FIELD_ROLE = "role";
-	private static final String USER_FIELD_ROLE_ID = "roleId";
 	private static final String USER_FIELD_PASSWORD_EXPIRED_AT = "passwordExpiredAt";
 	private static final String USER_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
 	private static final String USER_FIELD_SESSION_EXPIRE_TIME_S = "sessionExpireTimeS";

@@ -83,3 +83,24 @@
 		
 	ALTER TABLE ui.vo_entity_values SET TABLESPACE tbl_ui;
 	
+
+	
+-- 
+-- Table: ui.lvo_entity_hierarchies
+-- Description: Relations between vo elements
+-- Scope: ui
+--
+	CREATE TABLE ui.vo_entity_hierarchies (
+		id serial primary key,	
+		parent_id varchar NOT NULL,
+		child_id varchar NOT NULL,
+		position int NOT NULL
+	);
+	
+	CREATE INDEX idx_vo_entity_hierarchies_parent ON ui.vo_entity_hierarchies USING btree (parent_id);
+	CREATE INDEX idx_vo_entity_hierarchies_child ON ui.vo_entity_hierarchies USING btree (child_id);
+	
+	ALTER TABLE ui.vo_entity_hierarchies ADD CONSTRAINT fk_vo_entity_hierarchies_parent FOREIGN KEY (parent_id) REFERENCES ui.vo_entities(id);
+	ALTER TABLE ui.vo_entity_hierarchies ADD CONSTRAINT fk_vo_entity_hierarchies_child FOREIGN KEY (child_id) REFERENCES ui.vo_entities(id);
+	
+	ALTER TABLE ui.vo_entity_hierarchies SET TABLESPACE tbl_ui;

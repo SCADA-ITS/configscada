@@ -26,10 +26,11 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.adapters (
-		id int8 not null,
+		id int not null,
 		adapter_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
+		file varchar NULL,
 		enabled bool NULL,
 		visible bool NULL,
 		CONSTRAINT pk_adapters PRIMARY KEY (id)

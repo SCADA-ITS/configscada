@@ -24,6 +24,9 @@ public class GridFieldIcon implements Serializable {
 
 	private String icon;
 
+	@Column(name="show_value")
+	private Boolean showValue;
+
 	private String value;
 
 	//bi-directional many-to-one association to GridField
@@ -57,6 +60,14 @@ public class GridFieldIcon implements Serializable {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public Boolean getShowValue() {
+		return this.showValue;
+	}
+
+	public void setShowValue(Boolean showValue) {
+		this.showValue = showValue;
 	}
 
 	public String getValue() {

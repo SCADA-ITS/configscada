@@ -1,4 +1,4 @@
-function getDrawServiceTime(module, args) {
+function getDrawServiceTime(module, args, position) {
 
 	let view = "view-svc-" + module.id;
 	let toolbar = $$("toolbar");
@@ -45,7 +45,8 @@ function updateServiceTime(module) {
 						let month = tm.getMonth() + 1;
 						let year = tm.getFullYear();
 						let time = +h + ":" + m + ":" + s;
-						let date = month + "/" + day + "/" + year;
+						//let date = month + "/" + day + "/" + year;
+						let date = app.util.toLocalTime(utcSeconds);
 						view.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");	
 					}
 				});
@@ -54,7 +55,8 @@ function updateServiceTime(module) {
 				
 				var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch
 				
-				tm.setUTCSeconds(lastUTCSeconds + (timeElapsed / 1000));
+				let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
+				tm.setUTCSeconds(utcSeconds);
 				
 				let h = tm.getHours();
 				let m = webix.Date.toFixed(tm.getMinutes());
@@ -63,7 +65,8 @@ function updateServiceTime(module) {
 				let month = tm.getMonth() + 1;
 				let year = tm.getFullYear();
 				let time = +h + ":" + m + ":" + s;
-				let date = month + "/" + day + "/" + year;
+				//let date = month + "/" + day + "/" + year;
+				let date = app.util.toLocalTime(utcSeconds);
 				view.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
 			}
 			

@@ -182,7 +182,7 @@ function callbackSelectedElemenType(list, id, module, instance) {
 							$$(ctx).destructor();
 						}
 					}
-			
+					
 					equipmentTable.removeView(viewId);
 				});
 

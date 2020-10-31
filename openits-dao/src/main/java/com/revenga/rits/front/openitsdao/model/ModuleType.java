@@ -31,10 +31,6 @@ public class ModuleType implements Serializable {
 	@OneToMany(mappedBy="moduleType")
 	private List<ModuleParam> moduleParams;
 
-	//bi-directional many-to-one association to WindowParam
-	@OneToMany(mappedBy="moduleType")
-	private List<WindowParam> windowParams;
-
 	public ModuleType() {
 	}
 
@@ -98,28 +94,6 @@ public class ModuleType implements Serializable {
 		moduleParam.setModuleType(null);
 
 		return moduleParam;
-	}
-
-	public List<WindowParam> getWindowParams() {
-		return this.windowParams;
-	}
-
-	public void setWindowParams(List<WindowParam> windowParams) {
-		this.windowParams = windowParams;
-	}
-
-	public WindowParam addWindowParam(WindowParam windowParam) {
-		getWindowParams().add(windowParam);
-		windowParam.setModuleType(this);
-
-		return windowParam;
-	}
-
-	public WindowParam removeWindowParam(WindowParam windowParam) {
-		getWindowParams().remove(windowParam);
-		windowParam.setModuleType(null);
-
-		return windowParam;
 	}
 
 }

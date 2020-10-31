@@ -1,6 +1,10 @@
 const em_types = { 
 	elementType: { id: 1, endpoint: appConfig.restUrl + "element_types" },
-	elementTypeState: { id: 2, endpoint: appConfig.restUrl + "element_type_states" }
+	elementTypeState: { id: 2, endpoint: appConfig.restUrl + "element_type_states" },
+	alarmType: { id: 3, endpoint: appConfig.restUrl + "alarms/alarm_types" },
+	alarmLevel: { id: 4, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
+	alarmConfig: { id: 5, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
+	module: {id: 6, endpoint: appConfig.restUrl + "modules" }
 }
 
 if (window.app)
@@ -39,7 +43,7 @@ if (window.app)
 			
 			if (app.em.entities[entity] != undefined) {
 				
-				return app.em.entities[entity].filter(e => e[field] === value);
+				return app.em.entities[entity].find(e => { return e[field] === value });
 			}
 		}
 	}
