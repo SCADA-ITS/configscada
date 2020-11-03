@@ -1013,8 +1013,9 @@ function pictosPermitidos(data,cellList,orderId) {
 	data.forEach(element => {
 		let v_graphs = [];
 		// if (parseInt(element.id.split(":")[3]) > 1000 && element.paramType === 2) { 
-		if (parseInt(element.id.split(":")[3]) > 1000) { 
-				try {
+		//if (parseInt(element.id.split(":")[3]) > 1000) { 
+		if(element.graphics !== null) {
+			try {
 				element.graphics.forEach(item => {
 					if (cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] === "G") {//Tipo picto 
 						v_graphs.push(item.id.split(":")[2]);
@@ -1027,9 +1028,8 @@ function pictosPermitidos(data,cellList,orderId) {
 						v_graphs.push(temporal);
 					}				
 				});
-			} catch {}
-
-			pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] + "_" + orderId] = v_graphs;
+				pictos_permitidos["panel_" + (parseInt(element.id.split(":")[3]) - 1000).toString() + "_" + cellList[parseInt(element.id.split(":")[3]) - 1000 -1].split("_")[10] + "_" + orderId] = v_graphs;
+			} catch (e)  {console.log(e)}
 		}
 	});
 	return [pictos_permitidos,v_pictos_total];
@@ -1043,7 +1043,6 @@ function configData(data,scale,orderId) {
 	let v_top = TOP_INIT;
 	let v_zone = v_left;
 	const SCALE_ZONE = scale;
-
 	let cdata = generateCodeList(cfgJson);
 	let cellList = cdata[0];
 	let maxTamX = cdata[1];
@@ -1052,7 +1051,6 @@ function configData(data,scale,orderId) {
 	let pictos_permitidos_A = pictosPermitidos(data.elementTypeParams,cellList,orderId);
 	let pictos_permitidos = pictos_permitidos_A[0];
 	let v_pictos_total = pictos_permitidos_A[1];
-	
 	let unique_pictos = [...new Set(v_pictos_total)];
 	let pictos_types = [];
 	unique_pictos.forEach(element => {

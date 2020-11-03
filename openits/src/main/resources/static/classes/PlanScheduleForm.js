@@ -16,6 +16,7 @@ const LBL_PLAN_SCHEDULE_STATE = {
 export default class PlanScheduleForm {
 	constructor(id,data,mode) {
         this.id = id;
+        console.log(data);
         this.mode = mode;
         if (this.id === null && data !== null) {
             this.alias = data.alias;
@@ -55,11 +56,11 @@ export default class PlanScheduleForm {
 		var graphPlanSchedule = `query  {
             getPlanSchedule(planScheduleId: "` + this.id + `" ){
                 id
-                plan{id alias description}
+                plan{id alias description planStateType{id alias description}}
                 cronExpression
                 alias
-                state
                 description
+                planScheduleStateType{id alias}
             }
         }`;
         
@@ -152,10 +153,11 @@ export default class PlanScheduleForm {
                 let graphPlanSchedulesQuery = `query  {
                     getPlanSchedules{
                         id
-                        plan{id alias description}
+                        plan{id alias description planStateType{id alias description}}
                         cronExpression
                         alias
                         description
+                        planScheduleStateType{id alias}
                     }
                     }`;
                 let graphPlanSchedules = webix.proxy("GraphQL", graphPlanSchedulesQuery);
@@ -176,10 +178,11 @@ export default class PlanScheduleForm {
                     $$("planSchedulesTable").load(`GraphQL->{ 
                         getPlanSchedules{
                             id
-                            plan{id alias description}
+                            plan{id alias description planStateType{id alias description}}
                             cronExpression
                             alias
                             description
+                            planScheduleStateType{id alias}
                         }
                         }`);
 
@@ -255,11 +258,7 @@ export default class PlanScheduleForm {
                         },
                         */
                         onItemClick: function(value) {
-                            console.log("onClick");
-                            console.log(id);
-                            console.log(value);
                             let dato = parseInt($$(value).getValue());
-                            console.log(dato);
                             if(dato === 0) {
                                 //Mandamos la pausa al server
                                 let planScheduleForm = $$("planScheduleForm_" + id).getValues();
@@ -277,14 +276,11 @@ export default class PlanScheduleForm {
                                         }
                                     ]
                                 }).then(data => {
-                                    console.log(data);
                                     if(data[0] !== null){
                                         //actualizamos el panel
                                         let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                        console.log(control);
                                         let html = statusBadge(data[0].state);
                                         control.config.labelRight = html;
-                                        console.log(html);
                                         control.refresh();
                                         //mandamos mensaje de planSchedule PAUSE
                                         webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
@@ -310,14 +306,11 @@ export default class PlanScheduleForm {
                                         }
                                     ]
                                 }).then(data => {
-                                    console.log(data);
                                     if(data[0] !== null){
                                         //actualizamos el panel
                                         let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                        console.log(control);
                                         let html = statusBadge(data[0].state);
                                         control.config.labelRight = html;
-                                        console.log(html);
                                         control.refresh();
                                         //mandamos mensaje de planSchedule RUNNING
                                         webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
@@ -413,12 +406,11 @@ export default class PlanScheduleForm {
                                 id: data.id,
                                 alias: data.alias,
                                 description: data.description,
-                                cronExpression: data.cronExpression,
-                                //state: data.state
+                                cronExpression: data.cronExpression
                             });
-                            $$("planScheduleForm_" + this.id + "_state").setValue(data.state === 2 ? 1 : 0);
+                            $$("planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
                             let control = $$("planScheduleForm_" + this.id + "_state");
-                            let html = statusBadge(data.state);
+                            let html = statusBadge(data.planScheduleStateType.alias);
                             control.config.labelRight = html;
                             control.refresh();
                             $$("planScheduleForm_" + this.id + "_plan").setValue({ id: "planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
@@ -445,11 +437,11 @@ export default class PlanScheduleForm {
                                 cronExpression: data.cronExpression,
                                 //state: data.state
                             });
-                            $$("planScheduleForm_" + this.id + "_state").setValue(data.state === 2 ? 1 : 0);
+                            $$("planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
                             //let state = data.state === 2 ? 1 : 0;
                             //$$("planScheduleForm_" + this.id + "_state").setValue(state);
                             let control = $$("planScheduleForm_" + this.id + "_state");
-                            let html = statusBadge(data.state);
+                            let html = statusBadge(data.planScheduleStateType.alias);
                             control.config.labelRight = html;
                             control.refresh();
                             this.graphqlPlans.load().then(data2 => {
@@ -552,7 +544,7 @@ export default class PlanScheduleForm {
 }
 
 function statusBadge(value) {
-    var cssStatusName = LBL_PLAN_SCHEDULE_STATE[value].toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + LBL_PLAN_SCHEDULE_STATE[value] + "</span>\n\t\t</div>";
+    var cssStatusName = value.toLowerCase();
+    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + value + "</span>\n\t\t</div>";
     return html;
 }

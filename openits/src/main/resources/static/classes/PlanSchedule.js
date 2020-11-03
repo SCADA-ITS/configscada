@@ -57,11 +57,11 @@ export default class PlanSchedule {
         this.graph = `query {
             getPlanSchedules{
               id
-              plan{id alias description state}
+              plan{id alias description planStateType{id alias description}}
               cronExpression
               alias
               description
-              state
+              planScheduleStateType{id alias}
             }
         }`;
 
@@ -80,23 +80,88 @@ export default class PlanSchedule {
                         return prettyCron.toString(obj.cronExpression, true);
                     } 
                 },
-                { "id":"cronNextDate", "header": [$.i18n("planSchedule.table.cronNextDate"), {content:"textFilter"}
-                    ],   sort:"text", fillspace:2, 
-                    "template": function (obj) {return moment(prettyCron.getNextDate(obj.cronExpression, true)).format("YYYY-MM-DD HH:mm:ss");} 
+                { 
+                    "id":"cronNextDate", 
+                    "header": [
+                        $.i18n("planSchedule.table.cronNextDate"), 
+                        {
+                            content:"dateRangeFilter",
+                            compare:function(item, value, data){  
+                                let fecha = moment(prettyCron.getNextDate(data.cronExpression, true));
+                                if (fecha >= value.start && fecha <= value.end)
+                                    return true;
+                                return false;
+                            }
+                        }
+                    ],   
+                    sort:"text", 
+                    fillspace:2, 
+                    "template": function (obj) {return moment(prettyCron.getNextDate(obj.cronExpression, true)).format("MM/DD/YYYY HH:mm:ss");} 
                 },
-                //{ "id":"cronExpression", "header": [$.i18n("planSchedule.table.cronExpression"), //{content:"textFilter"}
-                //    ],   sort:"text", fillspace:1 },
                 {
-                    id: "state",
-                    //header: _("Status"),
-                    "header": [$.i18n("planSchedule.table.state"), {content:"textFilter"}
+                    id: "planScheduleStateType",
+                    "header": [
+                        $.i18n("planSchedule.table.state"), 
+                        {
+                            content:"richSelectFilter", 
+                            suggest:{
+                                body:{
+                                    template:function(obj){
+                                        if (obj.id == "$webix_empty")
+                                            return "";
+                                        else { return obj.value.alias; }
+                                    }
+                                },
+                            },
+                        }
                     ],   
                     sort:"text",
                     width: 150,
-                    template: function (data, type, value) { return statusBadge(value); },
+                    template: function (data, type, value) { return statusBadge(data.planScheduleStateType.alias); },
                 },
-                { "id":"plan", "header": [$.i18n("planSchedule.table.plan"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? obj.plan.alias : "-"}, fillspace:1 },
-                { "id":"planState", "header": [$.i18n("planSchedule.table.planState"), {content:"textFilter"}], sort:"text",  "template": function (obj) {return obj.plan ? planStatusBadge(obj.plan.state) : "-"}, fillspace:1 },
+                { 
+                    "id":"plan", 
+                    "header": [
+                        $.i18n("planSchedule.table.plan"), 
+                        {
+                            content:"richSelectFilter", 
+                            suggest:{
+                                body:{
+                                    template:function(obj){
+                                        if (obj.id == "$webix_empty")
+                                            return "";
+                                        else { return obj.value.alias; }
+                                    }
+                                },
+                            },
+                        }
+                    ], 
+                    sort:"text",  
+                    "template": function (obj) {return obj.plan.alias}, 
+                    fillspace:1 
+                },
+                { 
+                    "id":"planState", 
+                    "header": [
+                        $.i18n("planSchedule.table.planState"), 
+                        {
+                            content:"richSelectFilter",
+                            suggest:{
+                                body:{
+                                    template:function(data, type, value){
+                                        if (obj.id == "$webix_empty")
+                                            return "";
+                                        else { return data.value.alias; }
+                                    }
+                                },
+                            },
+                        }
+                    ], 
+                    sort:"text",  
+                    "template": function (data, type, value) {                                         
+                        return planStatusBadge(data.plan.planStateType.alias)}, 
+                    fillspace:1 
+                },
             ],
             on:{
                 onItemClick: planSchedule_select,
@@ -117,7 +182,7 @@ export default class PlanSchedule {
                             id: "planSchedule_add_button", 
                             autowidth:true,
                             hidden: false,
-                            disabled: !checkUserPermission(RULE.PLAN_ADMIN), 
+                            //disabled: !checkUserPermission(RULE.PLAN_ADMIN), 
                             type:"icon", 
                             tooltip:$.i18n("plan.button.tooltip.add"), icon:"mdi mdi-plus",
                             click: addToTable                    
@@ -214,7 +279,9 @@ export default class PlanSchedule {
                     cronExpression: element.cronExpression,
                     alias: element.alias,
                     description: element.description,
-                    state: element.state
+                    planState: element.plan.planStateType,
+                    //state: element.state,
+                    planScheduleStateType: element.planScheduleStateType
                 };
                 datos.push(data);
             });
@@ -234,14 +301,14 @@ export default class PlanSchedule {
 }
 
 function statusBadge(value) {
-    var cssStatusName = LBL_PLAN_SCHEDULE_STATE[value].toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + LBL_PLAN_SCHEDULE_STATE[value] + "</span>\n\t\t</div>";
+    //var cssStatusName = LBL_PLAN_SCHEDULE_STATE[value].toLowerCase();
+    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + value.toLowerCase() + "\">" + value + "</span>\n\t\t</div>";
     return html;
 }
 
 function planStatusBadge(value) {
-    var cssStatusName = PLAN_STATE_TYPE[value].toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + PLAN_STATE_TYPE[value] + "</span>\n\t\t</div>";
+    //var cssStatusName = PLAN_STATE_TYPE[value].toLowerCase();
+    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + value.toLowerCase() + "\">" + value + "</span>\n\t\t</div>";
     return html;
 }
 
