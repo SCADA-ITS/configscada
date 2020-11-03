@@ -797,5 +797,27 @@ export let synopticData= [
 		"Element:47:11": { "x": 1487, "y": 434,    "width": 34, "height": 34, "alias": "TUJS07P"  },
 		"Element:47:12": { "x": 1487, "y": 710,    "width": 34, "height": 34, "alias": "TUJS08P"  },
 		"Element:47:13": { "x": 1487, "y": 672,    "width": 34, "height": 34, "alias": "TUJS09P"  }
+	},
+	{
+		"id":"etdSyn",
+		"parentId":"Element:7:1",
+		"ExclusiveLayers": true,
+		"BaseLayers": {
+			"BASE_LAYER": "mapa_base.png",
+			"ETD": "D4-R7_trazado.png"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"ETD": {
+				"items": ["Element:2:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+		},
+		"Element:2:1":  { "x": 1430, "y": 870,  "width": 40, "height": 40, "alias": "MZJS496L" },
 	}
 ];

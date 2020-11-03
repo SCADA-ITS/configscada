@@ -9,7 +9,8 @@ export let menu_data_multi  = [
 { id: "structure", icon: "mdi mdi-view-column", value: $.i18n("menu.dashboard.title"), data:[
 	{ id: "syn0", icon:"mdi mdi-circle", value: $.i18n("defaultheader.dashboard")},
 	{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("defaultheader.cabinets")},
-	{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("defaultheader.panels")}
+	{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("defaultheader.panels")},
+	{ id: "syn3", icon:"mdi mdi-circle", value: "cambiameLabel"}
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("defaultheader.equipment")},
