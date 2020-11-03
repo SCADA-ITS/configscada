@@ -410,7 +410,7 @@ export default class Order {
         let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores,this.id);
         $$(this.id + "_form").addView(
           {
-            view:"dashboard",
+            view:"gridlayout",
             id:"order_edit_dashboard_" + this.id,
             gridColumns:1,
             //width:tamx,
@@ -1140,7 +1140,7 @@ function createOrderDinamic(container,data){
           ]
         }]
       });
-
+      
       let message = data.comandElement.commandElementType.alias;
       let idtype = "ElementType:" + data.comandElement.element.id.split(":")[1];
       let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV];
@@ -1162,7 +1162,7 @@ function createOrderDinamic(container,data){
         let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores,data.id);
         $$(data.id + "_form").addView(
           {
-            view:"dashboard",
+            view:"gridlayout",
             id:"order_edit_dashboard_" + data.id,
             gridColumns:1,
             //width:tamx,
@@ -1243,7 +1243,7 @@ function orderEditCancel(id) {
     let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala,lista_valores,idOrder);   
     $$(idOrder + "_form").addView(
       {
-        view:"dashboard",
+        view:"gridlayout",
         id:"order_edit_dashboard_" + idOrder,
         gridColumns:1,
         //width:tamx,
@@ -1386,7 +1386,7 @@ function orderEdit(id){
     }     
     $$(id.toString().split("_")[1] + "_form").addView(
       {
-        view:"dashboard",
+        view:"gridlayout",
         id:"order_edit_dashboard_" + id.toString().split("_")[1],
         gridColumns:1,
         //width:tamx,
@@ -1511,7 +1511,7 @@ function orderSave(id){
               let panelMan2 = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala2,lista_valores,id.toString().split("_")[1]);
               $$(id.toString().split("_")[1] + "_form").addView(
                 {
-                  view:"dashboard",
+                  view:"gridlayout",
                   id:"order_edit_dashboard_" + id.toString().split("_")[1],
                   gridColumns:1,
                   //width:tamx,
