@@ -38,8 +38,7 @@ export function generateIcon(element, suffix="", state="", values) {
       || element.elementType.id === ELEMENT_TYPE.ID_35_PMV
       || element.elementType.id === ELEMENT_TYPE.ID_36_PMV) {
     return generateFullMatrixPanelIcon(element, suffix, state);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
-      || element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR) {
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_4_SEC) {
     return generateETDIcon(element, suffix, state, values);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX
     || element.elementType.id === ELEMENT_TYPE.ID_14_LUM
@@ -237,7 +236,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_1_WS:
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
     case elementTypeMap.ELEMENT_TYPE_3_DET:
-    case elementTypeMap.ELEMENT_TYPE_4_SEC:
     case elementTypeMap.ELEMENT_TYPE_5_PLC:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
     case elementTypeMap.ELEMENT_TYPE_15_FIRE:
@@ -272,8 +270,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
       break;
-    case elementTypeMap.ELEMENT_TYPE_22_ETD_MODBUS:
-    case elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR:
+    case elementTypeMap.ELEMENT_TYPE_4_SEC:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:

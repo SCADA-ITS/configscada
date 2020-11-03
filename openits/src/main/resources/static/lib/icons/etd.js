@@ -41,7 +41,7 @@ export function generateIcon(element, values, suffix, state) {
       (274.66467 + 6 * i) +
       '" ry="0" />' +
       '<text xml:space="preserve" fill="black" style="font-style:normal;font-weight:normal;font-size:10.51547241px;line-height:5.27088261px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26288685" x="2.465615" y="277.72061" id="text4070-1-2-2" transform="scale(0.99833799,1.0016648)">' +
-      '<tspan sodipodi:role="line" x="5.465615" y="' +
+      '<tspan sodipodi:role="line" x="8.465615" y="' +
       (277.66467 + 6 * i) +
       '" fill="black" style="font-size:3.85567474px;line-height:2.62886882px;text-align:center;text-anchor:middle;stroke-width:0.26288685" id="tspan4072-0-0-8">' +
       values[i].label +
@@ -51,7 +51,7 @@ export function generateIcon(element, values, suffix, state) {
       '" y="' +
       (277.66467 + 0 * i) +
       '" id="galleta_texto' + i + '" transform="scale(0.99833799,1.0016648)"><tspan sodipodi:role="line" x="' +
-      15.086432 +
+      22.086432 +
       '" y="' +
       (277.66467 + 6 * i) +
       '" fill="black" style="font-size:3.85567474px;line-height:2.62886858px;text-align:center;text-anchor:middle;stroke-width:0.26288685" id="' +

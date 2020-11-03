@@ -2,6 +2,7 @@ var i18_es = {
     "defaultheader.dashboard": "ITS Dashboard",// "Mapa",
     "defaultheader.cabinets": "Armarios",
     "defaultheader.panels": "Paneles",
+    "defaultheader.etds": "ETDs",
     "defaultheader.users": "Usuarios",
     "defaultheader.managementAlarms": "Alarmas ",
     "defaultheader.alarmSettings": "Configuracion alarmas",
@@ -189,6 +190,12 @@ var i18_es = {
 
     "ElementTypeParam:2:2:1.alias": "status",
     "ElementTypeParam:2:2:1.description": "status",
+    
+    "ElementTypeParam:4:1:1.alias": "direction",
+    "ElementTypeParam:4:1:1.description": "direction",
+    "ElementTypeParam:4:1:2.alias": "virtual",
+    "ElementTypeParam:4:1:2.description": "virtual",
+    
     "ElementTypeParam:5:1:1.alias": "Marca",
     "ElementTypeParam:5:1:1.description": "Marca",
     "ElementTypeParam:5:1:2.alias": "Modelo",

@@ -34,16 +34,5 @@ export let mapTG = {
     lat: 36.519382,
     width: 40,
     height: 40,
-  },
-  "Element:23:1": {
-		lon: -4.899977,
-		lat: 36.518382,
-    width: 120,
-    height: 120,
-    values: [
-      { name: "average_length", label: "AL" },
-      { name: "average_speed", label: "AS" },
-      { name: "total_intensity", label: "TI" },
-    ],
-  },
+  }
 };

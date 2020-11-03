@@ -2,6 +2,7 @@ var i18_en = {
     "defaultheader.dashboard": "ITS Dashboard",//"Dashboard",
     "defaultheader.cabinets": "Cabinets",
     "defaultheader.panels": "Panels",
+    "defaultheader.etds": "ETDs",
     "defaultheader.users": "Users",
     "defaultheader.equipment" : "Equipment ",
     "defaultheader.managementAlarms": "Alarms",
@@ -163,6 +164,7 @@ var i18_en = {
     "ElementTypeParam:1:2:22.description": "Prediction Alarm Code",
     "ElementTypeParam:1:2:23.alias": "status",
     "ElementTypeParam:1:2:23.description": "status",
+    
     "ElementTypeParam:2:1:1.alias": "Brand",
     "ElementTypeParam:2:1:1.description": "Brand",
     "ElementTypeParam:2:1:2.alias": "Model",
@@ -187,6 +189,12 @@ var i18_en = {
 
     "ElementTypeParam:2:2:1.alias": "status",
     "ElementTypeParam:2:2:1.description": "status",
+     
+    "ElementTypeParam:4:1:1.alias": "direction",
+    "ElementTypeParam:4:1:1.description": "direction",
+    "ElementTypeParam:4:1:2.alias": "virtual",
+    "ElementTypeParam:4:1:2.description": "virtual",
+    
     "ElementTypeParam:5:1:1.alias": "Brand",
     "ElementTypeParam:5:1:1.description": "Brand",
     "ElementTypeParam:5:1:2.alias": "Model",

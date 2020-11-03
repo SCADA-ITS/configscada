@@ -51,8 +51,7 @@ export default class synopticElement {
         console.log(this.element.id);
         // check for special icons: DMS and ETD
         if (this.element.elementType.id === ELEMENT_TYPE.ID_10_DMS
-            || this.element.elementType.id === ELEMENT_TYPE.ID_22_ETD_MODBUS
-            || this.element.elementType.id === ELEMENT_TYPE.ID_23_ETD_DETECTOR
+            || this.element.elementType.id === ELEMENT_TYPE.ID_4_SEC
             || this.element.elementType.id === ELEMENT_TYPE.ID_12_LUX
             || this.element.elementType.id === ELEMENT_TYPE.ID_14_LUM
             || this.element.elementType.id === ELEMENT_TYPE.ID_19_CO

@@ -21,8 +21,6 @@ export const ELEMENT_TYPE = {
   ID_19_CO : "ElementType:19",
   ID_20_NO : "ElementType:20",
   ID_21_OPAC : "ElementType:21",
-  ID_22_ETD_MODBUS : "ElementType:22",
-  ID_23_ETD_DETECTOR : "ElementType:23",
   ID_24_PMV_A_C : "ElementType:24",
   ID_25_CABIN : "ElementType:25",
   ID_26_PMV_64X64 : "ElementType:26",
@@ -123,8 +121,6 @@ export const ELEMENT_TYPE = {
         {OPAC_CONCENTRATION: "1:2"}
       ]
     },
-    "ElementType:22" :{ id: "ElementType:22", value: 22, scale_x: 28, scale_y: 28},
-    "ElementType:23" :{ id: "ElementType:23", value: 23, scale_x: 28, scale_y: 28},
     "ElementType:24" :{ id: "ElementType:24", value: 24, scale_x: 28, scale_y: 28},
     "ElementType:25" :{ id: "ElementType:25", value: 25, scale_x: 28, scale_y: 28},
     "ElementType:26" :{ id: "ElementType:26", value: 26, scale_x: 28, scale_y: 28},

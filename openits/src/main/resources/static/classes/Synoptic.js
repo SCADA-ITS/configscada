@@ -350,6 +350,7 @@ export default class Synoptic {
       // clean the current selection
       Array.prototype.forEach.call(document.querySelectorAll(".synoptic-highlight"), (e) => { e.classList.remove("synoptic-highlight") });
       // highlights the selected item
+      console.log("Jony itemid: " + id);
       document.getElementById(id).classList.add("synoptic-highlight");
     }
 
