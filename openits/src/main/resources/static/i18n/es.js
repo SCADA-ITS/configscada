@@ -858,6 +858,7 @@ var i18_es = {
     "CommandElementType:1:31": "REINICIAR",
     "CommandElementType:2:31": "SEÑALIZAR",
     "CommandElementType:3:31": "APAGAR",
+    "CommandElementType:4:31": "ENCENDER",
     
     "CommandElementType:1:32": "REINICIAR",
     "CommandElementType:2:32": "SEÑALIZAR",

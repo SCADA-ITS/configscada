@@ -52,7 +52,7 @@ export function generateIcon(element, suffix = "") {
   let total_width = 0;
   let total_height = 0;
   let cummulative_width = 0;  // used when there are several subpanels
-  
+  let index= 0;
   let s = Snap("#svgDiv");
   s.clear();
   
@@ -74,11 +74,12 @@ export function generateIcon(element, suffix = "") {
     for(let r=0; r<zone_rows; r++) {
       subpanel_matrix.push([]);
       for(let c=0; c<zone_cols; c++) {
-        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tamanio"];
+        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][index]["Tamanio"];
         let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
 
         subpanel_matrix[r].push({width: subpanel_width, height: subpanel_height})
+        index++;
       }
     }
   }
@@ -101,22 +102,27 @@ export function generateIcon(element, suffix = "") {
     let subpanel_y = 0;
     let last_subpanel_height = 0;
     
+    index = 0;
+    let subindex = 0;
     for(let r=0; r<zone_rows; r++) {
       // calculate the row covered size
       let row_covered_size = 0;
       for(let c=0; c<zone_cols; c++) {
-        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tamanio"];
+        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][index]["Tamanio"];
         let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
 
         row_covered_size += subpanel_width;
+        index++;
+        
       }
-
+    
       // sets the initial position based on the covered area
       subpanel_x = cummulative_width;
-
+      
+      
       for(let c=0; c<zone_cols; c++) {
-        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tamanio"];
+        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tamanio"];
         let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
 
@@ -124,7 +130,7 @@ export function generateIcon(element, suffix = "") {
         let value_to_find = 1001 + n_elements;
         let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
         
-        if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tipo"] == "Grafico") {
+        if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico") {
           let auxBase64;
           if(availablePictos[content_value]){
             auxBase64=availablePictos[content_value].base64;
@@ -178,9 +184,11 @@ export function generateIcon(element, suffix = "") {
         subpanel_x += subpanel_width;
 
         n_elements++;
+        subindex++;
       }
 
       subpanel_y += last_subpanel_height;
+      
     }
 
     

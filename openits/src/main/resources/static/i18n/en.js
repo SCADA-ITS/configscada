@@ -848,6 +848,7 @@ var i18_en = {
     "CommandElementType:1:31": "RESET",
     "CommandElementType:2:31": "SEND MESSAGE",
     "CommandElementType:3:31": "SWITCH OFF",
+    "CommandElementType:4:31": "SWITCH ON",
 
     "CommandElementType:1:32": "RESET",
     "CommandElementType:2:32": "SEND MESSAGE",
