@@ -12,7 +12,10 @@ if(window.app)
 				function onConnect() {
 				
 					var subscription = client.subscribe(topic, onMessage);
-					onConnected();
+					
+					if (onConnected) {
+						onConnected();	
+					}
 				}
 				
 				function onError(error) {

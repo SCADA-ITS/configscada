@@ -48,18 +48,21 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (28, 1, 'getLocations', 'getLocations', 'LocationVO', 'id', true, true),
 (29, 1, 'getLocation', 'getLocation', 'LocationVO', 'id', true, true),
 (30, 1, 'getElementsArrayStates_map', 'getElementsArrayStates (for maps)', 'ElementVO', 'id', true, true),
-(31, 1, 'getElementsArrayStateMeasuresAlarms_map', 'getElementsArrayStatesMeasuresAlarms (for maps)', 'ElementVO', 'id', true, true);
+(31, 1, 'getElementsArrayStateMeasuresAlarms_map', 'getElementsArrayStatesMeasuresAlarms (for maps)', 'ElementVO', 'id', true, true),
+(32, 1, 'getAlarms', 'getAlarms', 'AlarmVO', 'id', true, true),
+(33, 1, 'getAlarmsByAlarmType', 'getAlarmsByAlarmType', 'AlarmVO', 'id', true, true),
+(34, 1, 'getAlarm', 'getAlarm', 'AlarmVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
 (1, 2, 'getElementsByType'),
 (1, 3, 'elementTypeId'),
-(1, 4, '{id alias description elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType dataType}}}'),
+(1, 4, '{id alias description elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType{id} dataType{id}}}}'),
 
 (2, 1, 'http://localhost:8082/graphql'),
 (2, 2, 'getElementTypes'),
 (2, 3, ''),
-(2, 4, '{id alias description labelAlias labelDescription elementGroup{id alias description labelAlias labelDescription} elementTypeParams {id labelAlias labelDescription labelUnit graphics {id alias description graphicType graphicTypeLabel graphicValues{id value}}} commandElementTypes {id alias description labelAlias labelDescription commandElementTypeParams {id alias description dataType labelAlias labelDescription}} elementTypeStates{id alias description labelAlias labelDescription}}'),
+(2, 4, '{id alias description labelAlias labelDescription elementGroup{id alias description labelAlias labelDescription} elementTypeParams {id labelAlias labelDescription labelUnit graphics {id alias description graphicType graphicTypeLabel graphicValues{id value}}} commandElementTypes {id alias description labelAlias labelDescription commandElementTypeParams {id alias description labelAlias labelDescription}} elementTypeStates{id alias description labelAlias labelDescription}}'),
 
 (3, 1, 'ws://192.168.244.12:61614'),
 (3, 2, '/topic/element'),
@@ -68,17 +71,17 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (4, 1, 'http://localhost:8082/graphql'),
 (4, 2, 'getElementType'),
 (4, 3, 'elementTypeId'),
-(4, 4, '{id alias description labelAlias labelDescription elementGroup{id alias description labelAlias labelDescription} elementTypeParams{id labelAlias labelDescription labelUnit graphics{id alias description graphicType graphicTypeLabel graphicValues{id value}}} commandElementTypes{id alias description labelAlias labelDescription commandElementTypeParams{id alias description dataType labelAlias labelDescription}} elementTypeStates{id alias description labelAlias labelDescription}}'),
+(4, 4, '{id alias description labelAlias labelDescription elementGroup{id alias description labelAlias labelDescription} elementTypeParams{id labelAlias labelDescription labelUnit graphics{id alias description graphicType graphicTypeLabel graphicValues{id value}}} commandElementTypes{id alias description labelAlias labelDescription commandElementTypeParams{id alias description labelAlias labelDescription}} elementTypeStates{id alias description labelAlias labelDescription}}'),
 
 (5, 1, 'http://localhost:8082/graphql'),
 (5, 2, 'getElements'),
 (5, 3, ''),
-(5, 4, '{id alias description elementType{id} elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType dataType}}}'),
+(5, 4, '{id alias description elementType{id} elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType{id} dataType{id}}}}'),
 
 (6, 1, 'http://localhost:8082/graphql'),
 (6, 2, 'getElement'),
 (6, 3, 'elementId'),
-(6, 4, '{id alias description location{id locationType} elementType{id} elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType dataType}}}'),
+(6, 4, '{id alias description elementType{id} elementTypeState{id labelAlias} elementValues{id value elementValueState{id labelAlias} elementTypeParam{id alias paramType{id} dataType{id}}}}'),
 
 (7, 1, 'http://localhost:8082/graphql'),
 (7, 2, 'getGenericDatas'),
@@ -204,4 +207,19 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (31, 1, 'http://localhost:8082/graphql'),
 (31, 2, 'getElements'),
 (31, 3, 'elementIds'),
-(31, 4, '{id alias description location{id locationType} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation}}');
+(31, 4, '{id alias description location{id locationType} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation}}'),
+
+(32, 1, 'http://localhost:8082/graphql'),
+(32, 2, 'getAlarms'),
+(32, 3, ''),
+(32, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
+
+(33, 1, 'http://localhost:8082/graphql'),
+(33, 2, 'getAlarms'),
+(33, 3, 'alarmType'),
+(33, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
+
+(34, 1, 'http://localhost:8082/graphql'),
+(34, 2, 'getAlarm'),
+(34, 3, 'alarmId'),
+(34, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}');

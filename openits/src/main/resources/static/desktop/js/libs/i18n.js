@@ -20,9 +20,9 @@ i18n = {
 			
 			if (translations != undefined && Array.isArray(translations)) {
 				
-				translations.forEach(e => {
+				translations.forEach(label => {
 					
-					i18n.labels[e] = e.translation;
+					i18n.labels[label] = label.translation;
 				});
 			}
 		}
@@ -50,6 +50,8 @@ i18n = {
 					if (translationJson != undefined) {
 						
 						translation = translationJson.translation;
+						
+						i18n.labels[label] = translation;
 					}
 				};
 			}

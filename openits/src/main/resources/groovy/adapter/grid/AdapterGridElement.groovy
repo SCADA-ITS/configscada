@@ -10,11 +10,11 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 class AdapterGridElement {
 
-	static final Integer DATA_TYPE_INTEGER = 1;
-	static final Integer DATA_TYPE_ALPHANUMERIC = 2;
-	static final Integer DATA_TYPE_DECIMAL = 3;
-	static final Integer DATA_TYPE_TIMESTAMP = 4;
-	static final Integer DATA_TYPE_BOOLEAN = 5;
+	static final String DATA_TYPE_INTEGER = "DataType:1";
+	static final String DATA_TYPE_ALPHANUMERIC = "DataType:2";
+	static final String DATA_TYPE_DECIMAL = "DataType:3";
+	static final String DATA_TYPE_TIMESTAMP = "DataType:4";
+	static final String DATA_TYPE_BOOLEAN = "DataType:5";
 	
 	static final String FIELD_ELEMENT_VALUES = "elementValues";
 	static final String FIELD_ELEMENT_TYPE_PARAM = "elementTypeParam";
@@ -111,50 +111,59 @@ class AdapterGridElement {
 										Map<String, Object> elementTypeParam = (Map<String, Object>) objElementTypeParam;
 										
 										String fieldParamId = (String) elementTypeParam.get(FIELD_ID);
-										Integer dataType = (Integer) elementTypeParam.get(FIELD_DATA_TYPE);
-										Object elementValueStateObj = elementValue.get(FIELD_ELEMENT_VALUE_STATE);
+										
+										Object objDataType = elementTypeParam.get(FIELD_DATA_TYPE);
+									
+										if (objDataType instanceof Map) {
+										
+											Map<String, Object> dataType = (Map<String, Object>) objDataType;
+										
+											String dataTypeId = (String) dataType.get(FIELD_ID);
+											
+											Object elementValueStateObj = elementValue.get(FIELD_ELEMENT_VALUE_STATE);
 
-										String valueStr = (String) elementValue.get(FIELD_VALUE);
-										
-										Object value = null;
-										
-										if (dataType.equals(DATA_TYPE_INTEGER)) {
+											String valueStr = (String) elementValue.get(FIELD_VALUE);
 											
-											value = Integer.parseInt(valueStr);
-										}
-										else if (dataType.equals(DATA_TYPE_ALPHANUMERIC)) {
+											Object value = null;
 											
-											value = valueStr;
-										}
-										else if (dataType.equals(DATA_TYPE_DECIMAL)) {
+											if (dataTypeId.equals(DATA_TYPE_INTEGER)) {
+												
+												value = Integer.parseInt(valueStr);
+											}
+											else if (dataTypeId.equals(DATA_TYPE_ALPHANUMERIC)) {
+												
+												value = valueStr;
+											}
+											else if (dataTypeId.equals(DATA_TYPE_DECIMAL)) {
+												
+												value = Float.parseFloat(valueStr);
+											}
+											else if (dataTypeId.equals(DATA_TYPE_TIMESTAMP)) {
+												
+												value = Long.parseLong(valueStr);
+											}
+											else if (dataTypeId.equals(DATA_TYPE_BOOLEAN)) {
+												
+												value = Boolean.parseBoolean(valueStr);
+											}
 											
-											value = Float.parseFloat(valueStr);
-										}
-										else if (dataType.equals(DATA_TYPE_TIMESTAMP)) {
+											if (elementValueStateObj instanceof Map) {
+												
+												Object newValue = value;
+												
+												Map<String, Object> elementValueState = (Map<String, Object>) elementValueStateObj;
 											
-											value = Long.parseLong(valueStr);
-										}
-										else if (dataType.equals(DATA_TYPE_BOOLEAN)) {
-											
-											value = Boolean.parseBoolean(valueStr);
-										}
-										
-										if (elementValueStateObj instanceof Map) {
-											
-											Object newValue = value;
-											
-											Map<String, Object> elementValueState = (Map<String, Object>) elementValueStateObj;
-										
-											dataRow.put(fieldParamId, new HashMap<String, Object>() {
-												{
-													put(FIELD_VALUE, newValue);
-													put(FIELD_STATE, elementValueState.get(FIELD_ID));
-												}
-											});
-										}
-										else {
-											
-											dataRow.put(fieldParamId, value);
+												dataRow.put(fieldParamId, new HashMap<String, Object>() {
+													{
+														put(FIELD_VALUE, newValue);
+														put(FIELD_STATE, elementValueState.get(FIELD_ID));
+													}
+												});
+											}
+											else {
+												
+												dataRow.put(fieldParamId, value);
+											}
 										}
 									}
 								}

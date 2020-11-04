@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revenga.rits.front.openits.bo.AlarmBO;
 import com.revenga.rits.front.openits.bo.AlarmConfigBO;
 import com.revenga.rits.front.openits.bo.AlarmLevelBO;
 import com.revenga.rits.front.openits.bo.AlarmTypeBO;
@@ -26,6 +27,9 @@ import io.swagger.annotations.ApiParam;
 public class AlarmController {
 	
 	@Autowired
+	AlarmBO alarmBO;
+	
+	@Autowired
 	AlarmConfigBO alarmConfigBO;
 	
 	@Autowired
@@ -33,6 +37,26 @@ public class AlarmController {
 	
 	@Autowired
 	AlarmLevelBO alarmLevelBO;
+	
+	@GetMapping
+	@ApiOperation(value = "Get all alarms", notes = "Get all alarms")
+	public ResponseEntity<Object> getAlarms() {
+		
+		return new ResponseEntity<>(alarmBO.getAlarms(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{id}")
+	@ApiOperation(value = "Get alarm by id", notes = "Get alarm by id")
+	public ResponseEntity<Object> getAlarm(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Alarm id",
+			example = "Alarm:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmBO.getAlarm(id), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/alarm_configs")
 	@ApiOperation(value = "Get all alarm configs", notes = "Get all alarm configs")
@@ -72,6 +96,19 @@ public class AlarmController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(alarmTypeBO.getAlarmType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_types/{id}/alarms")
+	@ApiOperation(value = "Get alarms by alarm type id", notes = "Get alarms by alarm type id")
+	public ResponseEntity<Object> getAlarmsByAlarmType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmType by id",
+			example = "AlarmType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmTypeBO.getAlarmsByAlarmType(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_levels")

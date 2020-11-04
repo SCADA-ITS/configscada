@@ -37,4 +37,12 @@ public class AlarmTypeBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmType()).getFieldId(), alarmType);
 	}
+	
+	public Map<String, Object> getAlarmsByAlarmType(String id) {
+		
+		Map<String, Object> alarms = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType()).getFieldId(), alarms);
+	}
 }

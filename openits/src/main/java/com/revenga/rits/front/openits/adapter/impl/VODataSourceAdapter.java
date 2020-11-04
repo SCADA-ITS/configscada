@@ -45,6 +45,9 @@ public class VODataSourceAdapter {
 	@Autowired
 	private Environment env;
 	
+	public static final String DATA_SOURCE_GET_ALARMS = "data.source.get_alarms";
+	public static final String DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = "data.source.get_alarms_by_alarm_type";
+	public static final String DATA_SOURCE_GET_ALARM = "data.source.get_alarm";
 	public static final String DATA_SOURCE_GET_ALARM_TYPES = "data.source.get_alarm_types";
 	public static final String DATA_SOURCE_GET_ALARM_TYPE = "data.source.get_alarm_type";
 	public static final String DATA_SOURCE_GET_ALARM_LEVELS = "data.source.get_alarm_levels";
@@ -88,6 +91,12 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES = "data.source.graphql_mutation.param_types";
 	public static final String DATA_SOURCE_GRAPHQL_MUTATION_CONTENT = "data.source.graphql_mutation.content";
 	
+	@Getter
+	private Integer dataSourceGetAlarms;
+	@Getter
+	private Integer dataSourceGetAlarmsByAlarmType;
+	@Getter
+	private Integer dataSourceGetAlarm;
 	@Getter
 	private Integer dataSourceGetAlarmTypes;
 	@Getter
@@ -174,6 +183,9 @@ public class VODataSourceAdapter {
 	@PostConstruct
 	private void initialize() {
 	
+		this.dataSourceGetAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS));
+		this.dataSourceGetAlarmsByAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE));
+		this.dataSourceGetAlarm = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM));
 		this.dataSourceGetAlarmTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPES));
 		this.dataSourceGetAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPE));
 		this.dataSourceGetAlarmLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVELS));

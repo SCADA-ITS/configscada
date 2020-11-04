@@ -24,13 +24,17 @@ public class AlarmBO {
 	
 	public List<Map<String, Object>> getAlarms() {
 		
-		// TODO: Implement getAlarms
-		return null;
+		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarms(), null);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetAlarms()).getFieldId(), alarms);
 	}
 				
 	public Map<String, Object> getAlarm(String id) {
 		
-		// TODO: Implement getAlarm
-		return null;
+		Map<String, Object> alarm = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarm(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetAlarm()).getFieldId(), alarm);
 	}
 }

@@ -125,19 +125,26 @@ public class GraphqlAdapter {
 			root = ConversionUtil.stringToJson(response);
 			JsonNode data = root.path("data").path(method);
 			
-			if (data.isArray()) {
-			
-				//list = mapper.readValue(data.toString(), mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
+			if (!data.isMissingNode()) {
 				
-				list = ConversionUtil.stringToListMap(data.toString());
+				if (data.isArray()) {
+					
+					//list = mapper.readValue(data.toString(), mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
+					
+					list = ConversionUtil.stringToListMap(data.toString());
+				}
+				else {
+					
+					list = new ArrayList<>();
+					
+					//list.add(mapper.readValue(data.toString(), new TypeReference<HashMap<String, Object>>() {}));
+					
+					list.add(ConversionUtil.stringToMap(data.toString()));
+				}	
 			}
 			else {
 				
-				list = new ArrayList<>();
-				
-				//list.add(mapper.readValue(data.toString(), new TypeReference<HashMap<String, Object>>() {}));
-				
-				list.add(ConversionUtil.stringToMap(data.toString()));
+				throw new IOException(method + " => " + response);
 			}
 			
 		} catch (IOException e) {

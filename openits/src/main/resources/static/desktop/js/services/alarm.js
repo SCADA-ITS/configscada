@@ -50,7 +50,7 @@ function updateActiveAlarms() {
 			$$("service-alarm").data.badge = app.alarms.stats.active_alarms;
 			$$("service-alarm").refresh();
 				
-			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.active_alarms, on_message);
+			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.active_alarms, null, on_message);
 
 			function on_message(message) {
 		
@@ -74,7 +74,7 @@ function updateNoRecognizedAlarms() {
 		if (data.json() != undefined) {
 			
 			app.alarms.stats.no_recognize_alarms = data.json().value;
-			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.no_recognize_alarms, on_message);
+			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.no_recognize_alarms, null, on_message);
 
 			function on_message(message) {
 		
@@ -97,7 +97,7 @@ function updateMutedAlarms() {
 		if (data.json() != undefined) {
 			
 			app.alarms.stats.muted_alarms = data.json().value;
-			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.muted_alarms, on_message);
+			app.util.stomp.connect(appConfig.stompUrl, app.alarms.config.stats.ws.muted_alarms, null, on_message);
 
 			function on_message(message) {
 		
