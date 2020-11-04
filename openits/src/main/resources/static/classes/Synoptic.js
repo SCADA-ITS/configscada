@@ -45,6 +45,7 @@ var shouldICheck = true;
 
 export default class Synoptic {
   constructor(synopticConf) {
+    this.elementsMap = new Map();
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -637,6 +638,8 @@ export default class Synoptic {
           this.elements.push(element);
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
+          this.elementsMap.set(synopticElement.element.id, synopticElement.element);
+          // alert(JSON.stringify(this.elementsMap));
         });
         
         // replaces the element tree in the DOM

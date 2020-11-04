@@ -5,14 +5,14 @@ import { map } from "../widgets/map.js";
 import { equipments } from "../widgets/equipments.js";
 import { alarms } from "../widgets/alarms.js";
 import { plans } from "../widgets/plans.js";
-import { planschedules } from "../widgets/planschedule.js";
 import { users } from "../widgets/users.js";
 import { roles } from "../widgets/roles.js";
 import { alarmconfigs } from "../widgets/alarmconfigs.js";
 import Synoptic from "../classes/Synoptic.js";
 import AlarmNotification from "../classes/AlarmNotification.js";
 import Alarms from "../classes/Alarms.js";
-import PlanSchedule from "../classes/PlanSchedule.js";
+
+import { planschedules } from "../widgets/planschedule.js";
 import {usersmanager} from "../widgets/usersmanager.js";
 import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
@@ -62,7 +62,7 @@ let viewCells = [
     },
     {
         id: "planschedule",
-        rows: [planschedules]                            
+        rows: [planschedules]                      
     },
     {
         id: "grafana",
@@ -105,12 +105,7 @@ let main_body = {
                         let table = new Alarms(null, null);
                         table.disconnect();
                     }else{
-                        if(selectView === "planschedule" && id !=="planschedule"){
-                            let table = new PlanSchedule();
-                            table.disconnect();
-                        }else{
-                            selectView = id;
-                        }
+                        selectView = id;
                     }
                 }
             },

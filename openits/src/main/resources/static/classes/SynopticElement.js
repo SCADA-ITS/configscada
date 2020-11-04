@@ -207,7 +207,8 @@ export default class synopticElement {
                         move: true,
                         close: true,
                         position: "right",
-                        body: elementForm.getComponent(),
+                        body: {id: "cuerpo"+elementForm.id,
+                        cols:[ elementForm.getComponent()]},
                         on: {
                           onDestruct: function(obj){
                             //elementForm.disconnect();
@@ -233,7 +234,8 @@ export default class synopticElement {
                       move: true,
                       close: true,
                       position: "right",
-                      body: elementForm.getComponent(),
+                      body: {id: "cuerpo"+elementForm.id,
+                      cols:[ elementForm.getComponent()]},
                       on: {
                         onDestruct: function(obj){
                           //elementForm.disconnect();
@@ -324,7 +326,8 @@ export default class synopticElement {
                         move: true,
                         close: true,
                         position: "right",
-                        body: elementForm.getComponent(),
+                        body: {id: "cuerpo"+elementForm.id,
+                        cols:[ elementForm.getComponent()]},
                         on: {
                           onDestruct: function(obj){
                             //elementForm.disconnect();
@@ -349,7 +352,8 @@ export default class synopticElement {
                       move: true,
                       close: true,
                       position: "right",
-                      body: elementForm.getComponent(),
+                      body: {id: "cuerpo"+elementForm.id,
+                      cols:[ elementForm.getComponent()]},
                       on: {
                         onDestruct: function(obj){
                           //elementForm.disconnect();
@@ -380,14 +384,32 @@ export default class synopticElement {
       // loads the data
       elementQuery.load({
         elem: this.element.id,
-      })
-      .then((data) => {
+      }).then((data) => {
         // process the received data
         let element = data;
         updateElementState(element);
         updateElementIcon(element);
       });
     }
+  }
+
+  updateElement(element){
+    if(this.element){
+      if(element){
+        for (let i in element) {
+          if(i==="elementValues"){
+            for (let j in element[i]) {
+              this.element[i][j]=element[i][j];
+            }
+          }else{
+            this.element[i]=element[i];
+          }
+        }        
+      }
+    }else{
+      this.element=element;
+    }
+
   }
 
 }
