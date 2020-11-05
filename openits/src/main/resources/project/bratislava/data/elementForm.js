@@ -57,10 +57,16 @@ export let columnsElementFormList = {
 	},
 	"ElementType:3": {
 		"rows":[ 
-			"ElementTypeParam:3:1:1",
 			"ElementTypeParam:3:1:2",
+			"ElementTypeParam:3:2:3",
+			"ElementTypeParam:3:2:4",
+			"ElementTypeParam:3:2:6",
+			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:10",
+			"ElementTypeParam:3:2:11",
+			"ElementTypeParam:3:2:19",
 		],
-		"rowCounts": 2,
+		"rowCounts": 8,
 		"scroll": "y",  
 		"width": 540,
 		"options": {}
@@ -78,12 +84,12 @@ export let columnsElementFormList = {
 	"ElementType:24": {
 		"rows":[
 			"ElementTypeParam:24:1:1",
-			"ElementTypeParam:24:1:2",
-			"ElementTypeParam:24:2:1",
-			"ElementTypeParam:24:2:2",
+			"ElementTypeParam:24:1:6",
+			"ElementTypeParam:24:1:7",
+			"ElementTypeParam:24:1:8",
 			"ElementTypeParam:24:2:3"
 		],
-		"rowCounts": 3,
+		"rowCounts": 5,
 		"scroll": false, 
 		"width": 550,
 		"options": {}
@@ -103,12 +109,12 @@ export let columnsElementFormList = {
 	"ElementType:26": {
 		"rows":[ 
 			"ElementTypeParam:26:1:1",
-			"ElementTypeParam:26:1:2",
-			"ElementTypeParam:26:2:1",
-			"ElementTypeParam:26:2:2",
+			"ElementTypeParam:26:1:6",
+			"ElementTypeParam:26:1:7",
+			"ElementTypeParam:26:1:8",
 			"ElementTypeParam:26:2:3"
 		],
-		"rowCounts": 2,
+		"rowCounts": 5,
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
@@ -142,12 +148,12 @@ export let columnsElementFormList = {
 	"ElementType:29": {
 		"rows":[ 
 			"ElementTypeParam:29:1:1",
-			"ElementTypeParam:29:1:2",
-			"ElementTypeParam:29:2:1",
-			"ElementTypeParam:29:2:2",
+			"ElementTypeParam:29:1:6",
+			"ElementTypeParam:29:1:7",
+			"ElementTypeParam:29:1:8",
 			"ElementTypeParam:29:2:3"
 		],
-		"rowCounts": 2,
+		"rowCounts": 5,
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
@@ -168,12 +174,12 @@ export let columnsElementFormList = {
 	"ElementType:31": {
 		"rows":[ 
 			"ElementTypeParam:31:1:1",
-			"ElementTypeParam:31:1:2",
-			"ElementTypeParam:31:2:1",
-			"ElementTypeParam:31:2:2",
+			"ElementTypeParam:31:1:6",
+			"ElementTypeParam:31:1:7",
+			"ElementTypeParam:31:1:8",
 			"ElementTypeParam:31:2:3"
 		],
-		"rowCounts": 2,
+		"rowCounts": 5,
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
