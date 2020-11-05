@@ -1,5 +1,5 @@
 if(window.app)
-	app.module = {
+	window.app.module = {
 		
 		getParamValue(module, param) {
 			

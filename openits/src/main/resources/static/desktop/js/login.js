@@ -1,5 +1,5 @@
 if(window.app)
-	app.login = {
+	window.app.login = {
 		
 		getView : function() {
 			
@@ -120,7 +120,7 @@ if(window.app)
 															var form = $$('loginForm');
 															
 															if (form.validate()) {
-																if (app.login.signIn(form.elements.user.data.value, form.elements.password.data.value)) {
+																if (window.app.login.signIn(form.elements.user.data.value, form.elements.password.data.value)) {
 																													
 																}
 															}
@@ -206,7 +206,7 @@ if(window.app)
 					
 					webix.delay(function(){
 					
-						app.signIn();
+						window.app.signIn();
 						$$("login-result").setValues({msg: null, allow: true});	
 					}, null, null, 1000);
 				}

@@ -1,4 +1,4 @@
-app = {
+window.app = {
 	buttonCount: 1,
 	menuData: [],
 	init: function() {
@@ -9,13 +9,13 @@ app = {
 	},
 	auth: function() {
 		
-		let sessionData = app.keepAlive();
+		let sessionData = window.app.keepAlive();
 		let userData;
 		
 		//if (!webix.storage.session.get(SESSION_STORAGE_SESSION_DATA) || webix.storage.session.get(SESSION_STORAGE_SESSION_LOCKED))
 		if (!sessionData) {
 
-			app.signOut();
+			window.app.signOut();
 		}
 		else {
 			
@@ -39,13 +39,13 @@ app = {
 			
 			if (!userData) {
 				
-				app.signOut();
+				window.app.signOut();
 			}
 		}
 	},
 	load: function() {
 
-		app.em.load();
+		window.app.em.load();
 
 		//		var response = webix.ajax().sync().get(appConfig.restUrl + "menus");
 		//		
@@ -79,13 +79,13 @@ app = {
 						//							drag: true,
 						//							data: webix.copy(desktop_icons),
 						//							on: {
-						//								onItemDblClick: app.wins.showApp
+						//								onItemDblClick: window.app.wins.showApp
 						//							}
 						//						},
 						{}
 					]
 				},
-				app.login.getView(),
+				window.app.login.getView(),
 			]
 		});
 	},
@@ -102,9 +102,9 @@ app = {
 
 				this.createToolbar();
 
-				if (!app.service.isLoaded) {
+				if (!window.app.service.isLoaded) {
 
-					app.service.load();
+					window.app.service.load();
 				}
 			}
 			else {
@@ -130,7 +130,7 @@ app = {
 			this.createMenu();
 		}
 		else {
-			app.wins.restoreAllWindows();
+			window.app.wins.restoreAllWindows();
 		}
 
 		webix.attachEvent("onFocusChange", function(view) {
@@ -141,7 +141,7 @@ app = {
 					win = win.getParentView().getTopParentView();
 				var id = win.config.id;
 				if (id.indexOf("_win") != -1) {
-					app.setActiveWindow(id);
+					window.app.setActiveWindow(id);
 				}
 			}
 		});
@@ -178,11 +178,11 @@ app = {
 
 							if (login.access === "LOGOUT") {
 
-								app.wins.closeAllWindows();
+								window.app.wins.closeAllWindows();
 								webix.$$("toolbar").hide();
 								webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
 								webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
-								app.login.init();
+								window.app.login.init();
 								webix.$$("sign-in").show();
 								webix.UIManager.setFocus("login-user"); //to set focus
 							}
@@ -195,7 +195,7 @@ app = {
 
 			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
 			webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
-			app.login.init();
+			window.app.login.init();
 			webix.$$("sign-in").show();
 			webix.UIManager.setFocus("login-user"); //to set focus	
 		}
@@ -204,9 +204,9 @@ app = {
 
 	lockScreen: function() {
 		webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, true);
-		app.wins.hideAllWindows();
+		window.app.wins.hideAllWindows();
 		webix.$$("toolbar").hide();
-		app.login.init();
+		window.app.login.init();
 		webix.$$("sign-in").show();
 		webix.UIManager.setFocus("login-password"); //to set focus
 	},
@@ -275,11 +275,11 @@ app = {
 
 			if (response != null && response.responseText != null) {
 
-				app.menuData = JSON.parse(response.responseText);
+				window.app.menuData = JSON.parse(response.responseText);
 
-				if (app.menuData != undefined && Array.isArray(app.menuData)) {
+				if (window.app.menuData != undefined && Array.isArray(window.app.menuData)) {
 
-					let customMenu = app.drawMenu();
+					let customMenu = window.app.drawMenu();
 					webix.ui({
 						view: "popup",
 						id: "winmenu",
@@ -337,10 +337,10 @@ app = {
 										onItemClick: function(id) {
 											$$("winmenu").hide();
 											if (id == "sign-out") {
-												app.signOut();
+												window.app.signOut();
 											}
 											else if (id == "lock-screen") {
-												app.lockScreen();
+												window.app.lockScreen();
 											}
 										}
 									}
@@ -354,7 +354,7 @@ app = {
 						}
 					});
 
-					app.attachEventsMenu();
+					window.app.attachEventsMenu();
 
 				}
 			}
@@ -370,20 +370,20 @@ app = {
 		}
 	},
 	setActiveWindow: function(id) {
-		app.wins.setActiveStyle(id);
+		window.app.wins.setActiveStyle(id);
 		var btn = $$(id.replace("win", "button"));
 		if (btn) {
-			app.deleteActiveBg();
+			window.app.deleteActiveBg();
 			webix.html.addCss(btn.$view, "active");
 		}
 	},
 	// show toolbar button for a window
 	beforeWinShow: function(module, winId) {
-		var allowMultipleInstances = app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
-		var icon = app.module.getWindowParamValue(module, moduleType.window.params.icon);
-		var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
-		var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
-		var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
+		var allowMultipleInstances = window.app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances);
+		var icon = window.app.module.getWindowParamValue(module, moduleType.window.params.icon);
+		var image = window.app.module.getWindowParamValue(module, moduleType.window.params.image);
+		var color = window.app.module.getWindowParamValue(module, moduleType.window.params.color);
+		var label = i18n.t(window.app.module.getWindowParamValue(module, moduleType.window.params.label));
 
 		var btnId = winId.replace("_win", "_button");
 
@@ -405,33 +405,33 @@ app = {
 					onItemClick: function() {
 						$$(winId).show();
 
-						app.deleteActiveBg();
+						window.app.deleteActiveBg();
 						webix.html.addCss(btn.$view, "active");
 					}
 				}
 			});
 			btn = $$(btnId);
 			$$("toolbar").addView(btn, this.buttonCount);
-			app.deleteActiveBg();
+			window.app.deleteActiveBg();
 			webix.html.addCss(btn.$view, "active");
 			this.buttonCount++;
 		}
 		else {
-			app.deleteActiveBg();
+			window.app.deleteActiveBg();
 			webix.html.addCss(btn.$view, "active");
 		}
 	},
 
 	attachEventsMenu: function() {
 
-		var data = app.menuData;
+		var data = window.app.menuData;
 
 		for (var listIdx = 0; listIdx < data.length; listIdx++) {
 			var menuList = $$("menu-list" + listIdx);
 			menuList.attachEvent("onItemClick", function(id) {
-				var module = app.getModule(id);
+				var module = window.app.getModule(id);
 				if (module) {
-					app.openModule(module);
+					window.app.openModule(module);
 					$$("winmenu").hide();
 				}
 			});
@@ -440,7 +440,7 @@ app = {
 
 	getModule: function(id) {
 
-		var data = app.menuData;
+		var data = window.app.menuData;
 
 		for (var pos = 0; pos < data.length; pos++) {
 			for (var posMenuItm = 0; posMenuItm < data[pos].menuItems.length; posMenuItm++) {
@@ -456,7 +456,7 @@ app = {
 
 		if (module != null && module.moduleType != null && module.windowValues != null ) {
 			
-			app.wins.showWindow(module, args);
+			window.app.wins.showWindow(module, args);
 		}
 	},
 
@@ -464,9 +464,9 @@ app = {
 
 		var menus = [];
 
-		if (app.menuData) {
+		if (window.app.menuData) {
 
-			var data = app.menuData;
+			var data = window.app.menuData;
 
 			for (var pos = 0; pos < data.length; pos++) {
 				var menuMargin = { width: 17 };

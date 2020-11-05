@@ -1,5 +1,5 @@
 if (window.app)
-	app.datatable = {
+	window.app.datatable = {
 
 		dataType: {
 			string: { value: 1, filter: "textFilter" },
@@ -127,7 +127,7 @@ if (window.app)
 
 										if (refField != undefined) {
 
-											value = app.em.getByField(em_types[gridFieldReference.emId].id, gridFieldReference.emField, data[refField[0].sourceField]);
+											value = window.app.em.getByField(em_types[gridFieldReference.emId].id, gridFieldReference.emField, data[refField[0].sourceField]);
 
 											value = value[gridFieldReference.emFieldReturned];
 										}
@@ -163,7 +163,7 @@ if (window.app)
 									
 									if (field.isEpochMilli) {
 										
-										value = app.util.toLocalTime(value);
+										value = window.app.util.toLocalTime(value);
 									}
 
 									if (state != undefined) {
@@ -230,7 +230,7 @@ if (window.app)
 											return e.id === this.getItem(id).id
 										});
 
-										app.datatable.open_module(gridCommand, moduleInstance);
+										window.app.datatable.open_module(gridCommand, moduleInstance);
 									}
 								}
 							}).attachTo(this);
@@ -393,7 +393,7 @@ if (window.app)
 
 				grid.attachEvent("onDestruct", function() {
 
-					app.datatable.disconnect_ws(module, instance);
+					window.app.datatable.disconnect_ws(module, instance);
 					delete gridInstances[moduleInstance];
 				});
 			}
@@ -458,9 +458,9 @@ if (window.app)
 
 			if (gridCommand) {
 
-				let module = app.em.getByField(em_types.module.id, "id", gridCommand.module.id);
+				let module = window.app.em.getByField(em_types.module.id, "id", gridCommand.module.id);
 
-				let selectedPks = app.datatable.getSelectedIds(moduleInstance);
+				let selectedPks = window.app.datatable.getSelectedIds(moduleInstance);
 
 				if (selectedPks.length > 0) {
 
@@ -475,7 +475,7 @@ if (window.app)
 					}
 					else {
 
-						app.openModule(module, selectedPks);
+						window.app.openModule(module, selectedPks);
 					}
 				}
 				else {
@@ -505,7 +505,7 @@ if (window.app)
 						return gridCommand.default_ === true
 					});
 
-					app.datatable.open_module(defaultCommand, moduleInstance);
+					window.app.datatable.open_module(defaultCommand, moduleInstance);
 				});
 			}
 		},
@@ -522,10 +522,10 @@ if (window.app)
 					//webix.message("Value changed from: "+oldv+" to: "+newv);
 
 					if (newv === "seg-basic-" + moduleInstance) {
-						app.datatable.change_view(module, instance, "hide");
+						window.app.datatable.change_view(module, instance, "hide");
 					}
 					else if (newv === "seg-details-" + moduleInstance) {
-						app.datatable.change_view(module, instance, "show");
+						window.app.datatable.change_view(module, instance, "show");
 					}
 				});
 			}
@@ -676,7 +676,7 @@ if (window.app)
 									return gridCommand.id === cmd.id
 								});
 
-								app.datatable.open_module(gridCommand, moduleInstance);
+								window.app.datatable.open_module(gridCommand, moduleInstance);
 							});
 						}
 					});	
@@ -702,7 +702,7 @@ if (window.app)
 
 					$$("tb_ws_status-" + moduleInstance).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
 
-					gridInstance.stomp.client = app.util.stomp.connect(url, topic + params, on_connected, on_message);
+					gridInstance.stomp.client = window.app.util.stomp.connect(url, topic + params, on_connected, on_message);
 
 					function on_message(message) {
 
@@ -711,9 +711,9 @@ if (window.app)
 						console.log("S T O M P   O V E R   W E B S O C K E T   M E S S A G E");
 						console.log(data);
 
-						var dataGrid = app.adapter.ws.element.getList(data);
+						var dataGrid = window.app.adapter.ws.element.getList(data);
 
-						app.datatable.update(module, instance, dataGrid.data);
+						window.app.datatable.update(module, instance, dataGrid.data);
 					}
 
 					function on_connected() {
@@ -733,7 +733,7 @@ if (window.app)
 
 			if (gridInstance != undefined && gridInstance.stomp != undefined && gridInstance.stomp.client != undefined && gridInstance.stomp.client.connected) {
 
-				app.util.stomp.disconnect(gridInstance.stomp.client);
+				window.app.util.stomp.disconnect(gridInstance.stomp.client);
 				gridInstance.stomp = {};
 			}
 		},

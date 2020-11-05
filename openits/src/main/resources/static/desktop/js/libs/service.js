@@ -2,7 +2,7 @@ const MODULE_TYPE_PARAM_PRIORITY = 1;
 
 if (window.app)
 
-	app.service = {
+	window.app.service = {
 
 		services: [],
 
@@ -17,21 +17,21 @@ if (window.app)
 				if (Array.isArray(svcs) && svcs.length > 0) {
 					console.log(svcs);
 
-					svcs.sort(app.service.compareByPriority);
+					svcs.sort(window.app.service.compareByPriority);
 
 					let position = 10;
 
 					svcs.forEach(svc => {
 
-						app.service.services.push(svc);
+						window.app.service.services.push(svc);
 
-						app.module.loadScript(svc.jsFile, function(path, result) {
+						window.app.module.loadScript(svc.jsFile, function(path, result) {
 
 							if (result === "ok") {
 
 								if (typeof window[svc.jsMethodDraw] === "function") {
 
-									let priority = app.module.getParamValue(svc, MODULE_TYPE_PARAM_PRIORITY);
+									let priority = window.app.module.getParamValue(svc, MODULE_TYPE_PARAM_PRIORITY);
 									let svcView = window[svc.jsMethodDraw](svc, null, ++position);
 
 									if (typeof window[svc.jsMethodCallbacks] === "function") {
@@ -41,7 +41,7 @@ if (window.app)
 							}
 						});
 
-						app.service.services.isLoaded = true;
+						window.app.service.services.isLoaded = true;
 					});
 				}
 			});
@@ -53,8 +53,8 @@ if (window.app)
 
 		compareByPriority: function(a, b) {
 
-			var priority_a = app.module.getParamValue(a, MODULE_TYPE_PARAM_PRIORITY);
-			var priority_b = app.module.getParamValue(b, MODULE_TYPE_PARAM_PRIORITY);
+			var priority_a = window.app.module.getParamValue(a, MODULE_TYPE_PARAM_PRIORITY);
+			var priority_b = window.app.module.getParamValue(b, MODULE_TYPE_PARAM_PRIORITY);
 
 			if (priority_a < priority_b) {
 				return -1;

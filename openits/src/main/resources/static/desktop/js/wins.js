@@ -1,13 +1,13 @@
 if (window.app)
-	app.wins = {
+	window.app.wins = {
 		winInstances: new Map(),
 		active: null,
 		hiddenWindows: [],
 		setActiveStyle: function(winId) {
-			if (app.wins.active && $$(app.wins.active))
-				webix.html.removeCss($$(app.wins.active).$view, "active_win");
+			if (window.app.wins.active && $$(window.app.wins.active))
+				webix.html.removeCss($$(window.app.wins.active).$view, "active_win");
 			webix.html.addCss($$(winId).$view, "active_win", true);
-			app.wins.active = winId;
+			window.app.wins.active = winId;
 		},
 		forEachWindow: function(func) {
 			var views = $$("toolbar").getChildViews();
@@ -23,18 +23,18 @@ if (window.app)
 			this.forEachWindow(function(id) {
 				if ($$(id).isVisible()) {
 					$$(id).hide();
-					app.wins.hiddenWindows.push(id);
+					window.app.wins.hiddenWindows.push(id);
 					webix.html.removeCss($$(id.replace("_win", "_button")).$view, "active");
 				}
 			});
 		},
 		restoreAllWindows: function() {
 
-			for (var i = 0; i < app.wins.hiddenWindows.length; i++) {
-				$$(app.wins.hiddenWindows[i]).show();
+			for (var i = 0; i < window.app.wins.hiddenWindows.length; i++) {
+				$$(window.app.wins.hiddenWindows[i]).show();
 			}
 
-			app.wins.hiddenWindows = [];
+			window.app.wins.hiddenWindows = [];
 		},
 		closeAllWindows: function() {
 			this.forEachWindow(function(id) {
@@ -85,18 +85,18 @@ if (window.app)
 
 			var window_params = webix.copy(window_params_default);
 
-			var hasMinButton = (app.module.getWindowParamValue(module, moduleType.window.params.hasMinButton) === 'true');
-			var hasMaxButton = (app.module.getWindowParamValue(module, moduleType.window.params.hasMaxButton) === 'true');
-			var isMaximized = (app.module.getWindowParamValue(module, moduleType.window.params.isMaximized) === 'true');
-			var height = app.module.getWindowParamValue(module, moduleType.window.params.height);
-			var width = app.module.getWindowParamValue(module, moduleType.window.params.width);
-			var allowMultipleInstances = (app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances) === 'true')
-			var icon = app.module.getWindowParamValue(module, moduleType.window.params.icon);
-			var image = app.module.getWindowParamValue(module, moduleType.window.params.image);
-			var color = app.module.getWindowParamValue(module, moduleType.window.params.color);
-			var label = i18n.t(app.module.getWindowParamValue(module, moduleType.window.params.label));
-			var resizable = (app.module.getWindowParamValue(module, moduleType.window.params.resizable) === 'true');
-			var externalizable = (app.module.getWindowParamValue(module, moduleType.window.params.externalizable) === 'true');
+			var hasMinButton = (window.app.module.getWindowParamValue(module, moduleType.window.params.hasMinButton) === 'true');
+			var hasMaxButton = (window.app.module.getWindowParamValue(module, moduleType.window.params.hasMaxButton) === 'true');
+			var isMaximized = (window.app.module.getWindowParamValue(module, moduleType.window.params.isMaximized) === 'true');
+			var height = window.app.module.getWindowParamValue(module, moduleType.window.params.height);
+			var width = window.app.module.getWindowParamValue(module, moduleType.window.params.width);
+			var allowMultipleInstances = (window.app.module.getWindowParamValue(module, moduleType.window.params.allowMultipleInstances) === 'true')
+			var icon = window.app.module.getWindowParamValue(module, moduleType.window.params.icon);
+			var image = window.app.module.getWindowParamValue(module, moduleType.window.params.image);
+			var color = window.app.module.getWindowParamValue(module, moduleType.window.params.color);
+			var label = i18n.t(window.app.module.getWindowParamValue(module, moduleType.window.params.label));
+			var resizable = (window.app.module.getWindowParamValue(module, moduleType.window.params.resizable) === 'true');
+			var externalizable = (window.app.module.getWindowParamValue(module, moduleType.window.params.externalizable) === 'true');
 
 			if (!webix.isUndefined(hasMinButton)) window_params.hasMinButton = hasMinButton;
 			if (!webix.isUndefined(hasMaxButton)) window_params.hasMaxButton = hasMaxButton;
@@ -175,13 +175,14 @@ if (window.app)
 			}
 
 			if (!$$(winId)) {
-				var c = app.wins.getVisibleWinCount();
+				var c = window.app.wins.getVisibleWinCount();
 				var lastLeft = document.documentElement.clientWidth / 2 - window_params.width / 2 + 15 * c;
 				var lastTop = document.documentElement.clientHeight / 2 - window_params.height / 2 - 40 + 25 * c;
 				var lastHeight = window_params.height;
 				var lastWidth = window_params.width;
 				var fullScreen = false;
 				var resizable = window_params.resizable;
+				var icon;
 				var moduleView = {
 					id: "splash-" + winId,
 					css: "empty-app",
@@ -205,7 +206,7 @@ if (window.app)
 					view: "window",
 					id: winId,
 					css: "popup-window-custom ",
-					position: app.wins.getPosition,
+					position: window.app.wins.getPosition,
 					left: lastLeft,
 					top: lastTop,
 					move: true,
@@ -213,7 +214,7 @@ if (window.app)
 					toFront: true,
 					height: lastHeight,
 					width: lastWidth,
-					head: app.wins.ui.toolbar(
+					head: window.app.wins.ui.toolbar(
 						window_params,
 						// onExternalizeWindow
 						function() {
@@ -253,13 +254,13 @@ if (window.app)
 						function() {
 							$$("toolbar").removeView(winId.replace("_win", "_button"));
 							$$(winId).close();
-							app.buttonCount--;
+							window.app.buttonCount--;
 						}
 					),
 					body: moduleView,
 					on: {
 						onBeforeShow: function() {
-							app.beforeWinShow(module, winId);
+							window.app.beforeWinShow(module, winId);
 							if ($$("module-" + module.id) !== undefined) {
 								$$("splash-" + winId).hide();
 								$$("module-" + module.id).show();
@@ -282,9 +283,9 @@ if (window.app)
 
 				$$(winId).show();
 
-				app.wins.setActiveStyle(winId);
+				window.app.wins.setActiveStyle(winId);
 
-				app.module.loadScript(jsFile, function(path, result) {
+				window.app.module.loadScript(jsFile, function(path, result) {
 
 					if (result === "ok") {
 						webix.delay(function() {
@@ -343,7 +344,7 @@ if (window.app)
 			var winId = obj.id + "_win";
 
 			if (!$$(winId)) {
-				var c = app.wins.getVisibleWinCount();
+				var c = window.app.wins.getVisibleWinCount();
 				var lastLeft = document.documentElement.clientWidth / 2 - 400 + 15 * c;
 				var lastTop = document.documentElement.clientHeight / 2 - 225 - 40 + 25 * c;
 				var lastHeight = 450;
@@ -353,7 +354,7 @@ if (window.app)
 					view: "window",
 					id: winId,
 					css: "popup-window-custom",
-					position: app.wins.getPosition,
+					position: window.app.wins.getPosition,
 					left: lastLeft,
 					top: lastTop,
 					move: true,
@@ -385,7 +386,7 @@ if (window.app)
 						}, function() {
 							$$("toolbar").removeView(obj.id + "_button");
 							$$(winId).close();
-							app.buttonCount--;
+							window.app.buttonCount--;
 						}
 					),
 					body: {
@@ -404,7 +405,7 @@ if (window.app)
 					},
 					on: {
 						onBeforeShow: function() {
-							app.beforeWinShow(obj);
+							window.app.beforeWinShow(obj);
 						},
 						onViewMoveEnd: function() {
 							if (!fullScreen) {
@@ -423,18 +424,18 @@ if (window.app)
 			}
 			$$(winId).show();
 			$$("winmenu").hide();
-			app.wins.setActiveStyle(winId);
+			window.app.wins.setActiveStyle(winId);
 		},
 		showApp: function(name) {
 			var winId = name + "_win";
-			var c = app.wins.getVisibleWinCount();
+			var c = window.app.wins.getVisibleWinCount();
 			if (!$$(winId)) {
-				var config = app.wins.ui[name];
+				var config = window.app.wins.ui[name];
 				webix.ui({
 					view: "window",
 					id: winId,
 					css: "popup-window-custom app " + config.css || "",
-					position: app.wins.getPosition,
+					position: window.app.wins.getPosition,
 					resize: true,
 					left: document.documentElement.clientWidth / 2 - 400 + 15 * c,
 					top: document.documentElement.clientHeight / 2 - 225 - 40 + 25 * c,
@@ -442,7 +443,7 @@ if (window.app)
 					toFront: true,
 					height: 450,
 					width: 800,
-					head: app.wins.ui.toolbar.apply(this, config.toolbar()),
+					head: window.app.wins.ui.toolbar.apply(this, config.toolbar()),
 					body: config.body(),
 					on: config.events
 				});
@@ -453,7 +454,7 @@ if (window.app)
 				$$("scheduler").getScheduler().updateView();
 			else if (name == "gantt" && window.gantt)
 				gantt.render();
-			app.wins.setActiveStyle(winId);
+			window.app.wins.setActiveStyle(winId);
 		},
 		ui: {
 			toolbar: function(window_params, onNewWindow, onHide, onMinMax, onClose) {

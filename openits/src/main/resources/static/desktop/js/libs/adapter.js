@@ -1,5 +1,5 @@
 if (window.app)
-	app.adapter = {
+	window.app.adapter = {
 
 		getElementTypeParamId(elementValueId) {
 
@@ -44,7 +44,7 @@ if (window.app)
 
 								element.elementValues.forEach(elementValue => {
 
-									let elementTypeParamId = app.adapter.getElementTypeParamId(elementValue.id);
+									let elementTypeParamId = window.app.adapter.getElementTypeParamId(elementValue.id);
 
 									dataItem[elementTypeParamId] = {};
 

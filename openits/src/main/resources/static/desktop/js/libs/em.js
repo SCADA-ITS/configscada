@@ -9,7 +9,7 @@ const em_types = {
 
 if (window.app)
 	
-	app.em = {
+	window.app.em = {
 		
 		entities: {},
 	
@@ -17,9 +17,9 @@ if (window.app)
 	
 			for(var em_type in em_types) {
 				
-				if (app.em.entities[em_type] == undefined) {
+				if (window.app.em.entities[em_type] == undefined) {
 				
-					app.em.assign(em_type);
+					window.app.em.assign(em_type);
 				}   
 			}
 			
@@ -29,21 +29,21 @@ if (window.app)
 			
 			webix.ajax().get(em_types[em_type].endpoint).then(function(data){
 			
-				app.em.entities[em_types[em_type].id] = data.json();	
+				window.app.em.entities[em_types[em_type].id] = data.json();	
 			});
 		    
 		},
 		
 		getAll: function(entity) {
 				
-			return app.em.entities[entity];
+			return window.app.em.entities[entity];
 		},
 		
 		getByField: function(entity, field, value) {
 			
-			if (app.em.entities[entity] != undefined) {
+			if (window.app.em.entities[entity] != undefined) {
 				
-				return app.em.entities[entity].find(e => { return e[field] === value });
+				return window.app.em.entities[entity].find(e => { return e[field] === value });
 			}
 		}
 	}

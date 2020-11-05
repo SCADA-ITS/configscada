@@ -1,5 +1,5 @@
 if(window.app)
-	app.util = {
+	window.app.util = {
 		
 		stomp: {
 		
