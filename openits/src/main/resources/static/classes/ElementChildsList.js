@@ -11,6 +11,7 @@ export default class ElementChildsList {
               getElement(elementId: $elem)
               {
                 id
+                alias
                 childs{id alias state}
               }
             }`
@@ -22,6 +23,7 @@ export default class ElementChildsList {
         this.graphQuery.load({ elem: this.parentId }).then(data => {
             if(data.childs !== null && data.childs !== undefined){
                 $$("cuerpo" + this.parentId).addView({
+                    id: "childList" + this.parentId,
                     view: "list", 
                     width: 150,
                     data:data.childs,
@@ -43,6 +45,7 @@ export default class ElementChildsList {
                         $$("cuerpo" + parentId).addView(elementForm14.getComponent(),1);
                     }
                 },0);
+                $$("childList" + this.parentId).add({id: data.id, alias: data.alias},0);
             }
         });
     }

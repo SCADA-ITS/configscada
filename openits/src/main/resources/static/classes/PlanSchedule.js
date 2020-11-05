@@ -40,7 +40,8 @@ export default class PlanSchedule {
 	        // Do something, all subscribes must be done is this callback
 	        // This is needed because this will be executed after a (re)connect
 	        this.suscription = self.client.subscribe(
-	            "/topic/planSchedules.>",
+                //"/topic/planSchedules.>",
+                "/topic/planSchedules.>",
 	            self.processStompMessageWithFallback
 	        );
         };
@@ -86,6 +87,7 @@ export default class PlanSchedule {
                         $.i18n("planSchedule.table.cronNextDate"), 
                         {
                             content:"dateRangeFilter",
+                            inputConfig:{format:"%d/%m/%Y %H:%i:%s"}, 
                             compare:function(item, value, data){  
                                 let fecha = moment(prettyCron.getNextDate(data.cronExpression, true));
                                 if (fecha >= value.start && fecha <= value.end)
@@ -96,7 +98,7 @@ export default class PlanSchedule {
                     ],   
                     sort:"text", 
                     fillspace:2, 
-                    "template": function (obj) {return moment(prettyCron.getNextDate(obj.cronExpression, true)).format("MM/DD/YYYY HH:mm:ss");} 
+                    "template": function (obj) {return moment(prettyCron.getNextDate(obj.cronExpression, true)).format("DD/MM/YYYY HH:mm:ss");} 
                 },
                 {
                     id: "planScheduleStateType",
@@ -104,15 +106,12 @@ export default class PlanSchedule {
                         $.i18n("planSchedule.table.state"), 
                         {
                             content:"richSelectFilter", 
-                            suggest:{
-                                body:{
-                                    template:function(obj){
-                                        if (obj.id == "$webix_empty")
-                                            return "";
-                                        else { return obj.value.alias; }
-                                    }
-                                },
-                            },
+                            options: [],
+                            compare:function(item, value, data){  
+                                if (item.alias === value.split("$_$")[1])
+                                    return true;
+                                return false;
+                            }
                         }
                     ],   
                     sort:"text",
@@ -125,15 +124,12 @@ export default class PlanSchedule {
                         $.i18n("planSchedule.table.plan"), 
                         {
                             content:"richSelectFilter", 
-                            suggest:{
-                                body:{
-                                    template:function(obj){
-                                        if (obj.id == "$webix_empty")
-                                            return "";
-                                        else { return obj.value.alias; }
-                                    }
-                                },
-                            },
+                            options: [],
+                            compare:function(item, value, data){  
+                                if (item.alias === value.split("$_$")[1])
+                                    return true;
+                                return false;
+                            }
                         }
                     ], 
                     sort:"text",  
@@ -146,15 +142,12 @@ export default class PlanSchedule {
                         $.i18n("planSchedule.table.planState"), 
                         {
                             content:"richSelectFilter",
-                            suggest:{
-                                body:{
-                                    template:function(data, type, value){
-                                        if (obj.id == "$webix_empty")
-                                            return "";
-                                        else { return data.value.alias; }
-                                    }
-                                },
-                            },
+                            options: [],
+                            compare:function(item, value, data){  
+                                if (item.alias === value.split("$_$")[1])
+                                    return true;
+                                return false;
+                            }
                         }
                     ], 
                     sort:"text",  
@@ -271,7 +264,10 @@ export default class PlanSchedule {
         this.graphql
         .load()
         .then(d => {
-			let datos = [];
+            let datos = [];
+            let planAlias = [];
+            let planScheduleStates = [];
+            let planState = [];
             d.forEach(element => {
                 let data = {
                     id: element.id,
@@ -284,12 +280,49 @@ export default class PlanSchedule {
                     planScheduleStateType: element.planScheduleStateType
                 };
                 datos.push(data);
+                planAlias.push(element.plan.alias);
+                planScheduleStates.push(element.planScheduleStateType.alias);
+                planState.push(element.plan.planStateType.alias);
             });
+            
+            const v_planAlias = Array.from(new Set(planAlias));
+            const v_planScheduleStates = Array.from(new Set(planScheduleStates));
+            const v_planState = Array.from(new Set(planState));
             $$('planSchedulesTable').parse({
 				"data": datos,
 				"pos": $$('planSchedulesTable').count(),
-			});
-			$$("planSchedulesTable").refresh();
+            });
+            $$("planSchedulesTable").config.columns.forEach(element => {
+                if(element.id === "plan"){
+                    let counter = 0;
+                    v_planAlias.forEach(e => {
+                        try {
+                            element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
+                            counter += 1;
+                        } catch (e) { console.log(e); }
+                    });
+                }
+                if(element.id === "planScheduleStateType"){
+                    let counter = 0;
+                    v_planScheduleStates.forEach(e => {
+                        try {
+                            element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
+                            counter += 1;
+                        } catch (e) { console.log(e); }
+                    });
+                }
+                if(element.id === "planState"){
+                    let counter = 0;
+                    v_planState.forEach(e => {
+                        try {
+                            element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
+                            counter += 1;
+                        } catch (e) { console.log(e); }
+                    });
+                }
+            });
+            $$("planSchedulesTable").refresh();
+            
             this.client.activate();
             return d;
         });

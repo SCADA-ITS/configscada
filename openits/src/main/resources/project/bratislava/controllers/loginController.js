@@ -131,7 +131,10 @@ webix.ready(function() {
                                                                     name
                                                                     role {
                                                                         id
-                                                                        rolePermissions{id alias}
+                                                                        rolePermissions{
+                                                                            id 
+                                                                            alias
+                                                                        }
                                                                     }
                                                                     userPermissions{id alias}
                                                                 }
@@ -145,7 +148,10 @@ webix.ready(function() {
                                                                 let permissions = [];
                                                                 if (data2.role.rolePermissions !== null)
                                                                     data2.role.rolePermissions.forEach(item => {
-                                                                        permissions.push(item.id);
+                                                                        permissions.push({
+                                                                            'id': item.id.split(":")[1],
+                                                                            'alias': item.alias
+                                                                        });
                                                                     });
                                                                 if (data2.userPermissions !== null)
                                                                     data2.userPermissions.forEach(item => {
@@ -153,7 +159,7 @@ webix.ready(function() {
                                                                     });
                                                                 if (permissions !== null)
                                                                 try {
-                                                                    webix.storage.session.put("app_user_permissions", permissions.toString());
+                                                                    webix.storage.session.put("app_user_permissions", permissions);
                                                                 } catch {}
                                                                 window.location = "./home.html";
                                                             });
