@@ -55,16 +55,16 @@ export let toolbar_data_menu  = {
 					}`).load({
 						rowId: paramUser
 					}).then(data2 => {
-						const encodedString = btoa((data2.name + ':' + data2.password).toString('utf8')).toString('base64');
-						console.log(data2.name);
-						console.log(data2.password);
-						webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "logout").then(function(data){
+						// const encodedString = btoa((data2.name + ':' + data2.password).toString('utf8')).toString('base64');
+						// console.log(data2.name);
+						// console.log(data2.password);
+						// webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "logout").then(function(data){
 							webix.storage.session.remove("loginSession");
 							webix.storage.session.remove("app_user_language");
 							webix.storage.session.remove("app_user_name");
 							webix.storage.session.remove("app_user_permissions");
 							window.location = "./login.html";
-						});
+						// });
 					});
 				}
 			  }
