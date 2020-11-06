@@ -3,6 +3,11 @@
 const REGEX_PATTERN_INIT=":{";
 const REGEX_PATTERN_END="}";
 
+const UI_ELEMENT_TYPE_DEFAULT="default";
+const UI_ELEMENT_TYPE_GENERIC="generic";
+const UI_ELEMENT_TYPE_MATRIX="matrix";
+
+
 function changeConnectedIcon() {
   try {
     if(webix.storage.session.get("system.conected")){

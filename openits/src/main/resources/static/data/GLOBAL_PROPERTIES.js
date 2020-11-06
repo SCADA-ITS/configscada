@@ -45,12 +45,12 @@ export const ELEMENT_TYPE = {
   ID_55_CT : "ElementType:55",
 
   values: {
-    "ElementType:1":{ id: "ElementType:1", value: 1, scale_x: 28, scale_y: 28},
-    "ElementType:2" :{ id: "ElementType:2", value: 2, scale_x: 28, scale_y: 28},
-    "ElementType:3" :{ id: "ElementType:3", value: 3, scale_x: 28, scale_y: 28},
-    "ElementType:4" :{ id: "ElementType:4", value: 4, scale_x: 28, scale_y: 28},
-    "ElementType:5" :{ id: "ElementType:5", value: 5, scale_x: 28, scale_y: 28},
-    "ElementType:7" :{ id: "ElementType:7", value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
+    "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 1, scale_x: 28, scale_y: 28},
+    "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 2, scale_x: 28, scale_y: 28},
+    "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 3, scale_x: 28, scale_y: 28},
+    "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28},
+    "ElementType:5" :{ id: "ElementType:5", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 5, scale_x: 28, scale_y: 28},
+    "ElementType:7" :{ id: "ElementType:7", uiType: UI_ELEMENT_TYPE_GENERIC, value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
     color: {
       undefined:"gray",
       null:"gray",
@@ -60,7 +60,7 @@ export const ELEMENT_TYPE = {
       3: "red"
     }
   },
-    "ElementType:8" :{ id: "ElementType:8", value: 8, scale_x: 30.163, scale_y: 16.13958, svgRaw:SVG_8_BAR, 
+    "ElementType:8" :{ id: "ElementType:8", uiType: UI_ELEMENT_TYPE_GENERIC, value: 8, scale_x: 30.163, scale_y: 16.13958, svgRaw:SVG_8_BAR, 
       elementTypeParams:[
         {BAR_COMMAND_FOR_BARRIER : "1:2"}
       ], 
@@ -73,77 +73,77 @@ export const ELEMENT_TYPE = {
         3: "#ff0000"
       }
     },
-    "ElementType:9" :{ id: "ElementType:9", value: 9, scale_x: 392, scale_y: 528, svgRaw:SVG_9_FAN, 
+    "ElementType:9" :{ id: "ElementType:9", uiType: UI_ELEMENT_TYPE_GENERIC, value: 9, scale_x: 392, scale_y: 528, svgRaw:SVG_9_FAN, 
       elementTypeParams:[
         {FAN_COMMAND_FOR_FAN: "1:2"}
       ]
     },
-    "ElementType:10" :{ id: "ElementType:10", value: 10, scale_x: 76, scale_y: 24},
-    "ElementType:11" :{ id: "ElementType:11", value: 11, scale_x: 28, scale_y: 28},
-    "ElementType:12" :{ id: "ElementType:12", value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
+    "ElementType:10" :{ id: "ElementType:10", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 10, scale_x: 76, scale_y: 24},
+    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 11, scale_x: 28, scale_y: 28},
+    "ElementType:12" :{ id: "ElementType:12", uiType: UI_ELEMENT_TYPE_GENERIC, value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
       elementTypeParams:[
         {LUX_LUMINOSITY: "1:2"}
       ]
     },
-    "ElementType:13" :{ id: "ElementType:13", value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM, 
+    "ElementType:13" :{ id: "ElementType:13", uiType: UI_ELEMENT_TYPE_GENERIC, value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM, 
       elementTypeParams:[
         {SEM_STATUS: "1:2"}
       ] 
     },
-    "ElementType:14" :{ id: "ElementType:14", value: 14, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_14_LUM, 
+    "ElementType:14" :{ id: "ElementType:14", uiType: UI_ELEMENT_TYPE_GENERIC, value: 14, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_14_LUM, 
       elementTypeParams:[
         {LUM_LUMINOSITY: "2:2"}
       ]
     },
-    "ElementType:15" :{ id: "ElementType:15", value: 15, scale_x: 28, scale_y: 28},
-    "ElementType:16" :{ id: "ElementType:16", value: 16, scale_x: 28, scale_y: 28},
-    "ElementType:17" :{ id: "ElementType:17", value: 17, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_17_ANEM_EXT,
+    "ElementType:15" :{ id: "ElementType:15", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 15, scale_x: 28, scale_y: 28},
+    "ElementType:16" :{ id: "ElementType:16", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 16, scale_x: 28, scale_y: 28},
+    "ElementType:17" :{ id: "ElementType:17", uiType: UI_ELEMENT_TYPE_GENERIC, value: 17, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_17_ANEM_EXT,
       elementTypeParams:[
         {ANEM_EXT_WIND_SPEED: "1:2"}
       ]
     },
-    "ElementType:18" :{ id: "ElementType:18", value: 18, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_18_ANEM_INT,
+    "ElementType:18" :{ id: "ElementType:18", uiType: UI_ELEMENT_TYPE_GENERIC, value: 18, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_18_ANEM_INT,
       elementTypeParams:[
         {ANEM_INT_WIND_SPEED: "1:2"}
       ]
     },
-      "ElementType:19" :{ id: "ElementType:19", value: 19, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_19_CO,
+      "ElementType:19" :{ id: "ElementType:19", uiType: UI_ELEMENT_TYPE_GENERIC, value: 19, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_19_CO,
       elementTypeParams:[
         {CO_CONCENTRATION: "1:2"}
       ]
     },
-    "ElementType:20" :{ id: "ElementType:20", value: 20, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_20_NO,
+    "ElementType:20" :{ id: "ElementType:20", uiType: UI_ELEMENT_TYPE_GENERIC, value: 20, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_20_NO,
       elementTypeParams:[
         {NO_CONCENTRATION: "1:2"}
       ]
     },
-    "ElementType:21" :{ id: "ElementType:21", value: 21, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_21_OPAC,
+    "ElementType:21" :{ id: "ElementType:21", uiType: UI_ELEMENT_TYPE_GENERIC, value: 21, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_21_OPAC,
       elementTypeParams:[
         {OPAC_CONCENTRATION: "1:2"}
       ]
     },
-    "ElementType:24" :{ id: "ElementType:24", value: 24, scale_x: 28, scale_y: 28},
-    "ElementType:25" :{ id: "ElementType:25", value: 25, scale_x: 28, scale_y: 28},
-    "ElementType:26" :{ id: "ElementType:26", value: 26, scale_x: 28, scale_y: 28},
-    "ElementType:27" :{ id: "ElementType:27", value: 27, scale_x: 28, scale_y: 28},
-    "ElementType:28" :{ id: "ElementType:28", value: 28, scale_x: 28, scale_y: 28},
-    "ElementType:29" :{ id: "ElementType:29", value: 29, scale_x: 28, scale_y: 28},
-    "ElementType:30" :{ id: "ElementType:30", value: 30, scale_x: 28, scale_y: 28},
-    "ElementType:31" :{ id: "ElementType:31", value: 31, scale_x: 28, scale_y: 28},
-    "ElementType:32" :{ id: "ElementType:32", value: 32, scale_x: 28, scale_y: 28},
-    "ElementType:33" :{ id: "ElementType:33", value: 33, scale_x: 28, scale_y: 28},
-    "ElementType:34" :{ id: "ElementType:34", value: 34, scale_x: 28, scale_y: 28},
-    "ElementType:35" :{ id: "ElementType:35", value: 35, scale_x: 28, scale_y: 28},
-    "ElementType:36" :{ id: "ElementType:36", value: 36, scale_x: 28, scale_y: 28},
-    "ElementType:41" :{ id: "ElementType:41", value: 41, scale_x: 28, scale_y: 28},
-    "ElementType:42" :{ id: "ElementType:42", value: 42, scale_x: 28, scale_y: 28},
-    "ElementType:43" :{ id: "ElementType:43", value: 43, scale_x: 28, scale_y: 28},
-    "ElementType:44" :{ id: "ElementType:44", value: 44, scale_x: 28, scale_y: 28},
-    "ElementType:45" :{ id: "ElementType:45", value: 45, scale_x: 28, scale_y: 28},
-    "ElementType:46" :{ id: "ElementType:46", value: 46, scale_x: 28, scale_y: 28},
-    "ElementType:47" :{ id: "ElementType:47", value: 47, scale_x: 28, scale_y: 28},
-    "ElementType:53" :{ id: "ElementType:53", value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
-    "ElementType:55" :{ id: "ElementType:55", value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT }
+    "ElementType:24" :{ id: "ElementType:24", uiType: UI_ELEMENT_TYPE_MATRIX, value: 24, scale_x: 28, scale_y: 28},
+    "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 25, scale_x: 28, scale_y: 28},
+    "ElementType:26" :{ id: "ElementType:26", uiType: UI_ELEMENT_TYPE_MATRIX, value: 26, scale_x: 28, scale_y: 28},
+    "ElementType:27" :{ id: "ElementType:27", uiType: UI_ELEMENT_TYPE_MATRIX, value: 27, scale_x: 28, scale_y: 28},
+    "ElementType:28" :{ id: "ElementType:28", uiType: UI_ELEMENT_TYPE_MATRIX, value: 28, scale_x: 28, scale_y: 28},
+    "ElementType:29" :{ id: "ElementType:29", uiType: UI_ELEMENT_TYPE_MATRIX, value: 29, scale_x: 28, scale_y: 28},
+    "ElementType:30" :{ id: "ElementType:30", uiType: UI_ELEMENT_TYPE_MATRIX, value: 30, scale_x: 28, scale_y: 28},
+    "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 28, scale_y: 28},
+    "ElementType:32" :{ id: "ElementType:32", uiType: UI_ELEMENT_TYPE_MATRIX, value: 32, scale_x: 28, scale_y: 28},
+    "ElementType:33" :{ id: "ElementType:33", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 33, scale_x: 28, scale_y: 28},
+    "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_MATRIX, value: 34, scale_x: 28, scale_y: 28},
+    "ElementType:35" :{ id: "ElementType:35", uiType: UI_ELEMENT_TYPE_MATRIX, value: 35, scale_x: 28, scale_y: 28},
+    "ElementType:36" :{ id: "ElementType:36", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 36, scale_x: 28, scale_y: 28},
+    "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 41, scale_x: 28, scale_y: 28},
+    "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 42, scale_x: 28, scale_y: 28},
+    "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 43, scale_x: 28, scale_y: 28},
+    "ElementType:44" :{ id: "ElementType:44", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 44, scale_x: 28, scale_y: 28},
+    "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 45, scale_x: 28, scale_y: 28},
+    "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 46, scale_x: 28, scale_y: 28},
+    "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 47, scale_x: 28, scale_y: 28},
+    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
+    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT }
   }
 };
 

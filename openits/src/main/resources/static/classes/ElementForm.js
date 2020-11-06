@@ -788,7 +788,8 @@ export default class ElementForm {
 
 				this.columnsElementFormList[data.elementType.id]["rows"].forEach(item => {
 					try {
-						$$("elementBody" + this.id).add(valuesList[item]);
+						if(valuesList[item] !== undefined) 
+							$$("elementBody" + this.id).add(valuesList[item]);
 					} catch (e) {
 						console.error("Error. id: "+this.id+ "_ " + item);
 						console.error(e);

@@ -48,13 +48,14 @@ export class CustomAddRoleAndUser extends userManager.views["addmenu"]{
     editPermissions(){
         let ui = super.config();
         let items = this.$$('addMenuItems');
-        if(!checkUserPermission(RULE.EDIT_USER)){
-            items.hideItem("user");
-        }
-        if(!checkUserPermission(RULE.EDIT_ROLE)){
-            items.hideItem("role");
-        }
-        
+        if(items){
+            if(!checkUserPermission(RULE.EDIT_USER)){
+                items.hideItem("user");
+            }
+            if(!checkUserPermission(RULE.EDIT_ROLE)){
+                items.hideItem("role");
+            }
+        }        
         return ui
     }
 }

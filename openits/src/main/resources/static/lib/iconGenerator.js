@@ -27,32 +27,11 @@ import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
 export function generateIcon(element, suffix="", state="", values) {
   if (element.elementType.id === ELEMENT_TYPE.ID_10_DMS) {
     return generateDMSIcon(element, suffix, state);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_24_PMV_A_C
-      || element.elementType.id === ELEMENT_TYPE.ID_26_PMV_64X64
-      || element.elementType.id === ELEMENT_TYPE.ID_27_PMV_A_B
-      || element.elementType.id === ELEMENT_TYPE.ID_28_PMV_192X64
-      || element.elementType.id === ELEMENT_TYPE.ID_29_PMV_B_D
-      || element.elementType.id === ELEMENT_TYPE.ID_30_PMV_128X64
-      || element.elementType.id === ELEMENT_TYPE.ID_31_PMV
-      || element.elementType.id === ELEMENT_TYPE.ID_32_PMV
-      || element.elementType.id === ELEMENT_TYPE.ID_35_PMV
-      || element.elementType.id === ELEMENT_TYPE.ID_36_PMV) {
+  } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) {
     return generateFullMatrixPanelIcon(element, suffix, state);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_4_SEC) {
     return generateETDIcon(element, suffix, state, values);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_12_LUX
-    || element.elementType.id === ELEMENT_TYPE.ID_14_LUM
-    || element.elementType.id === ELEMENT_TYPE.ID_19_CO
-    || element.elementType.id === ELEMENT_TYPE.ID_20_NO
-    || element.elementType.id === ELEMENT_TYPE.ID_21_OPAC
-    || element.elementType.id === ELEMENT_TYPE.ID_18_ANEM_INT
-    || element.elementType.id === ELEMENT_TYPE.ID_17_ANEM_EXT
-    || element.elementType.id === ELEMENT_TYPE.ID_9_FAN
-    || element.elementType.id === ELEMENT_TYPE.ID_8_BAR
-    || element.elementType.id === ELEMENT_TYPE.ID_13_SEM
-    || element.elementType.id === ELEMENT_TYPE.ID_53_SEM
-    || element.elementType.id === ELEMENT_TYPE.ID_7_ZONE
-    || element.elementType.id === ELEMENT_TYPE.ID_55_CT) {
+  } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_GENERIC) {
     return createIcon(element, suffix);
   } else{
     return null;
