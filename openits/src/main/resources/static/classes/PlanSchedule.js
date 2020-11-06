@@ -338,6 +338,7 @@ export default class PlanSchedule {
             $$("planSchedulesTable").config.columns.forEach(element => {
                 if(element.id === "plan"){
                     let counter = 0;
+                    element.header[1].options.clearAll();
                     v_planAlias.forEach(e => {
                         try {
                             element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
@@ -347,6 +348,7 @@ export default class PlanSchedule {
                 }
                 if(element.id === "planScheduleStateType"){
                     let counter = 0;
+                    element.header[1].options.clearAll();
                     v_planScheduleStates.forEach(e => {
                         try {
                             element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
@@ -356,6 +358,7 @@ export default class PlanSchedule {
                 }
                 if(element.id === "planState"){
                     let counter = 0;
+                    element.header[1].options.clearAll();
                     v_planState.forEach(e => {
                         try {
                             element.header[1].options.add({ id: counter.toString() + "$_$" + e, value: e});
