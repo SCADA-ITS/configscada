@@ -25,12 +25,15 @@ import com.revenga.rits.front.openits.controller.AuthController;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 
 @Aspect
 @Configuration
+@Log4j2
 public class SessionAspect {
 
 	private static final String AUTH_REQUIRED = "auth.required";
+	private static final String REST_DEBUG = "rest.debug";
 	
 	@Autowired
 	SessionBO sessionBO;
@@ -39,7 +42,9 @@ public class SessionAspect {
 	private Environment env;
 	
 	@Getter
-	private Boolean authRequired;
+	private boolean authRequired;
+	@Getter
+	private boolean restDebug;
 	
 
 	public class SessionThrowable extends Throwable {
@@ -55,12 +60,13 @@ public class SessionAspect {
 	private void initialize() {
 		
 		this.authRequired = Boolean.parseBoolean(env.getProperty(AUTH_REQUIRED));
+		this.restDebug = Boolean.parseBoolean(env.getProperty(REST_DEBUG));
 	}
 
 	@Before("execution(* com.revenga.rits.front.openits.controller.*.*(..))")
 	public void before(JoinPoint jp) throws SessionThrowable {
 
-		if (this.authRequired.booleanValue() && !jp.getTarget().getClass().equals(AuthController.class)) {
+		if (this.authRequired && !jp.getTarget().getClass().equals(AuthController.class)) {
 
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 			HttpSession httpSession = attr.getRequest().getSession(true);
@@ -79,7 +85,7 @@ public class SessionAspect {
 	@Around("execution(* com.revenga.rits.front.openits.controller.*.*(..))")
 	public Object around(ProceedingJoinPoint pjp) {
 
-		Object response = null;
+		ResponseEntity<?> response = null;
 		UserSessionUI userSession = null;
 
 		try {
@@ -92,7 +98,9 @@ public class SessionAspect {
 			userSession.setSessionId(httpSession.getId());
 			userSession.setAccess(UserSessionUI.UNAUTHORIZED);
 			
-			response = pjp.proceed();
+			response = (ResponseEntity<?>) pjp.proceed();
+			
+			traceREST(attr.getRequest().getRequestURI(), response);
 
 		} catch (Throwable t) {
 
@@ -106,4 +114,17 @@ public class SessionAspect {
 
 	}
 
+	private void traceREST(String request, ResponseEntity<?> response) {
+		
+		if (restDebug && request != null && response != null) {
+
+			log.debug("---------------------------------- REST DEBUG ----------------------------------");
+			log.debug("");
+			log.debug("  REQUEST  >> " + request);
+			log.debug("");
+			log.debug("  RESPONSE << " + response.getStatusCode());
+			log.debug("  CONTENT  << " + response.getBody());
+			log.debug("-----------------------------------------------------------------------------------");
+		}
+	}
 }

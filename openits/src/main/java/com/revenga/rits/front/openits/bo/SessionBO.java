@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.UserSessionUI;
@@ -267,7 +268,7 @@ public class SessionBO {
 					}
 					else {
 						
-						if (sessionRetries + 1 < this.retries) {
+						if (sessionRetries < this.retries) {
 							
 							sessionLoginRetries.put(httpSessionId, sessionRetries + 1);
 						}
@@ -275,15 +276,15 @@ public class SessionBO {
 							
 							long dateLocked = Date.from(Instant.parse("2099-12-31T23:59:59.999Z")).getTime();
 							
-							if (lockedUntil == null || lockedUntil< dateLocked) {
+							if (lockedUntil == null || lockedUntil < dateLocked) {
 							
 								user.put(USER_FIELD_LOCKED_UNTIL, dateLocked);
 								
-								voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateUser(),
-										ConversionUtil.mapToString(user));
+								Map<String, Object> input = new HashMap<>();
+								input.put(GraphqlTypeAdapter.USER_DATA, user);
 								
+								voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateUser(), input);
 								sessionLoginRetries.remove(httpSessionId);
-
 							}
 							
 							allowed = false;

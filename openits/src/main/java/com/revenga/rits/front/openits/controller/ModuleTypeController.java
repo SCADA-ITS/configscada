@@ -56,7 +56,7 @@ public class ModuleTypeController {
 	
 	@GetMapping(value = "/{id}/modules")
 	@ApiOperation(value = "Get modules by module type identifier", notes = "Get modules by module type identifier")
-	public List<Module> getModulesByModuleTypeId(
+	public ResponseEntity<List<Module>> getModulesByModuleTypeId(
 			@ApiParam(
 					name = "id",
 					type = "Integer",
@@ -64,6 +64,6 @@ public class ModuleTypeController {
 					example = "1",
 					required = true) @PathVariable Integer id) {
 		
-		return moduleService.getByModuleTypeId(id);
+		return new ResponseEntity<>(moduleService.getByModuleTypeId(id), HttpStatus.OK);
 	}
 }

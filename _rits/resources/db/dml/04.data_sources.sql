@@ -51,7 +51,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (31, 1, 'getElementsArrayStateMeasuresAlarms_map', 'getElementsArrayStatesMeasuresAlarms (for maps)', 'ElementVO', 'id', true, true),
 (32, 1, 'getAlarms', 'getAlarms', 'AlarmVO', 'id', true, true),
 (33, 1, 'getAlarmsByAlarmType', 'getAlarmsByAlarmType', 'AlarmVO', 'id', true, true),
-(34, 1, 'getAlarm', 'getAlarm', 'AlarmVO', 'id', true, true);
+(34, 1, 'getAlarm', 'getAlarm', 'AlarmVO', 'id', true, true),
+(35, 3, 'deleteUser', 'deleteUser', 'UserVO', 'id', true, true),
+(36, 3, 'createUser', 'createUser', 'UserVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -64,9 +66,9 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (2, 3, ''),
 (2, 4, '{id alias description labelAlias labelDescription elementGroup{id alias description labelAlias labelDescription} elementTypeParams {id labelAlias labelDescription labelUnit graphics {id alias description graphicType graphicTypeLabel graphicValues{id value}}} commandElementTypes {id alias description labelAlias labelDescription commandElementTypeParams {id alias description labelAlias labelDescription}} elementTypeStates{id alias description labelAlias labelDescription}}'),
 
-(3, 1, 'ws://192.168.244.12:61614'),
-(3, 2, '/topic/element'),
-(3, 3, null),
+(3, 5, 'ws://192.168.244.12:61614'),
+(3, 6, '/topic/element'),
+(3, 7, null),
 
 (4, 1, 'http://localhost:8082/graphql'),
 (4, 2, 'getElementType'),
@@ -103,11 +105,11 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (10, 3, 'userId'),
 (10, 4, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
 
-(11, 1, 'http://localhost:8082/graphql'),
-(11, 2, 'updateUser'),
-(11, 3, 'user'),
-(11, 4, 'UserVO!'),
-(11, 5, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+(11, 8, 'http://localhost:8082/graphql'),
+(11, 9, 'updateUser'),
+(11, 10, 'user'),
+(11, 11, 'UserVO!'),
+(11, 12, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
 
 (12, 1, 'http://localhost:8082/graphql'),
 (12, 2, 'getLocales'),
@@ -216,10 +218,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 
 (33, 1, 'http://localhost:8082/graphql'),
 (33, 2, 'getAlarms'),
-(33, 3, 'alarmType'),
+(33, 3, 'alarmTypeId'),
 (33, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
 
 (34, 1, 'http://localhost:8082/graphql'),
 (34, 2, 'getAlarm'),
 (34, 3, 'alarmId'),
-(34, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}');
+(34, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
+
+(35, 8, 'http://localhost:8082/graphql'),
+(35, 9, 'deleteUser'),
+(35, 10, 'userId'),
+(35, 11, 'String!'),
+(35, 12, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+
+(36, 8, 'http://localhost:8082/graphql'),
+(36, 9, 'createUser'),
+(36, 10, 'user'),
+(36, 11, 'UserVO!'),
+(36, 12, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}');

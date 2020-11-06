@@ -209,6 +209,8 @@ if(window.app)
 						window.app.signIn();
 						$$("login-result").setValues({msg: null, allow: true});	
 					}, null, null, 1000);
+					
+					window.app.em.load();
 				}
 				else {
 					

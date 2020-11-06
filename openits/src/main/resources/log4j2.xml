@@ -51,5 +51,13 @@
             <AppenderRef ref="FileDebugAppender" level="debug"/>
             <AppenderRef ref="FileInfoAppender" level="info"/>
         </Logger>
+        <!-- Log everything in hibernate -->
+    	<Logger name="org.hibernate" level="info" additivity="false">
+      		<AppenderRef ref="FileInfoAppender" />
+    	</Logger>
+    	<!-- Log SQL statements -->
+    	<Logger name="org.hibernate.SQL" level="debug" additivity="false">
+      		<AppenderRef ref="FileDebugAppender" />
+    	</Logger>
 	</Loggers>
 </Configuration>

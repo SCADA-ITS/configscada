@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,10 +51,36 @@ public class UserController {
 		return new ResponseEntity<>(userBO.getUser(id), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/update")
+	@PostMapping(value = "/create")
+	@ApiOperation(value = "Create user", notes = "Create user")
+	public ResponseEntity<Object> createUser(@RequestBody Object user) {
+		
+		return new ResponseEntity<>(userBO.createUser(user), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/update")
 	@ApiOperation(value = "Update user", notes = "Update user")
-	public ResponseEntity<Object> updateUser(@RequestParam String user) {
+	public ResponseEntity<Object> updateUser(@RequestBody Object user) {
 		
 		return new ResponseEntity<>(userBO.updateUser(user), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/delete/{id}")
+	@ApiOperation(value = "Delete user", notes = "Delete user")
+	public ResponseEntity<Object> deleteUser(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "User id",
+			example = "User:3",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(userBO.deleteUser(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_kill_users")
+	@ApiOperation(value = "Kill users", notes = "Kill users")
+	public ResponseEntity<Object> sendKillUsers(@RequestBody Object input) {
+		
+		return new ResponseEntity<>(userBO.sendKillUsers(input), HttpStatus.OK);
 	}
 }

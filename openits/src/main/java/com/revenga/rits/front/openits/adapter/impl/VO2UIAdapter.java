@@ -112,13 +112,13 @@ public class VO2UIAdapter {
 							entry.setValue(listNew);
 						}
 					
-						log.debug(String.format("%s instance of %s", key, value.getClass().getSimpleName()));
+//						log.debug(String.format("%s instance of %s", key, value.getClass().getSimpleName()));
 					}
 					else if (value != null && value.getClass().getSimpleName().contains(Map.class.getSimpleName())) {
 						
 						entry.setValue(convert(fieldId, (Map<String, Object>) value));
 						
-						log.debug(String.format("%s instance of %s", key, value.getClass().getSimpleName()));
+//						log.debug(String.format("%s instance of %s", key, value.getClass().getSimpleName()));
 					}
 				}
 				

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,6 +16,13 @@ public class ConversionUtil {
 	private ConversionUtil() {
 		
 		throw new IllegalStateException(this.getClass().getSimpleName());
+	}
+	
+	public static Map<String, Object> clone(Map<String, Object> original) throws JsonMappingException, JsonProcessingException {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		return objectMapper.readValue(objectMapper.writeValueAsString(original), new TypeReference<Map<String, Object>>() {});
 	}
 
 	public static JsonNode mapToJson(Map<String, Object> map) {
@@ -58,5 +66,21 @@ public class ConversionUtil {
 		((ObjectNode) root).set(name, mapToJson(map));
 		
 		return root;
+	}
+	
+	public static boolean isValidJSON(final String json) {
+	    
+		boolean valid = true;
+	    
+	    try {
+	    	
+	        (new ObjectMapper()).readTree(json);
+	        
+	    } catch(JsonProcessingException e){
+	    	
+	        valid = false;
+	    }
+	    
+	    return valid;
 	}
 }
