@@ -109,12 +109,16 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"SECTIONS": {
+				"items": ["Element:4:1", "Element:4:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 			"CT": {
 				"items": ["Element:55:1"],
 				"translation_key": "",
 				"visibility": "visible"
-			},
-
+			}
 		},
 
 		"Element:8:1":  { "x": 1529, "y": 817, "width": 88,  "height": 48,  "alias": "RV-BAR-1CA" },
@@ -201,15 +205,24 @@ export let synopticData= [
 		"Element:36:1": { "x": 63,   "y": 310, "width": 200, "height": 54,  "alias": "GT_1" },
 		"Element:36:2": { "x": 1517, "y": 715, "width": 200, "height": 54,  "alias": "GT_2" },
 
-		"Element:23:1": { "x": 100,  "y": 711, "width": 120, "height": 120, "alias": "DETECTOR_1",
+		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" },
+
+		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1",
 			"values": [
-				{name: "average_length", label: "AL"},
-				{name: "average_speed", label: "AS"},
-				{name: "total_intensity", label: "TI"}
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
 			]
 		},
-
-		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" },
+		"Element:4:2": { "x": 1600,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
+			]
+		},
 	},
 	{
 		"id":"synopticMetro",
@@ -302,5 +315,28 @@ export let synopticData= [
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
 
 		"Element:7:1":  { "x": 1505, "y": 775,  "width": 305, "height": 37 },
+	},
+	{
+		"id":"synopticCTs",
+		"parentId":"Element:7:1",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "tunel.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"CT": {
+					"items": ["Element:55:1"],
+					"translation_key": "",
+					"visibility": "visible"
+			}
+		},
+
+		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" }
 	}
 ];

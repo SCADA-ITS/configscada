@@ -51,7 +51,36 @@ export let columnsElementFormList = {
 			"streamFullViewWidth": 720
 		}
 	},
-
+	"ElementType:3": {
+		"rows":[ 
+			"ElementTypeParam:3:1:2",
+			"ElementTypeParam:3:2:1",
+			"ElementTypeParam:3:2:4",
+			"ElementTypeParam:3:2:6",
+			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:10",
+			"ElementTypeParam:3:2:19",
+			"ElementTypeParam:3:2:20",
+			"ElementTypeParam:3:2:21",
+			"ElementTypeParam:3:2:40",
+			"ElementTypeParam:3:2:41",
+			"ElementTypeParam:3:2:42"
+		],
+		"rowCounts": 11,
+		"scroll": "y",  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:4": {
+		"rows":[ 
+			"ElementTypeParam:4:1:1",
+			"ElementTypeParam:4:1:2",
+		],
+		"rowCounts": 2,
+		"scroll": "y",  
+		"width": 540,
+		"options": {}
+	},
 	"ElementType:7": {
 		"rows":[ 
 			"id",
