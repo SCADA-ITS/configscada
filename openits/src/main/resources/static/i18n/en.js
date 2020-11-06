@@ -107,6 +107,8 @@ var i18_en = {
     "ElementType:47.description": "TU ELECTRICAL CABINET",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
+    "ElementType:55.alias": "CT",
+    "ElementType:55.description": "CT",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -701,6 +703,11 @@ var i18_en = {
     "ElementTypeParam:47:1:3.alias": "Road",
     "ElementTypeParam:47:1:3.description": "Road",
 
+    "ElementTypeParam:55:1:1.alias": "PK",
+    "ElementTypeParam:55:1:1.description": "PK",
+    "ElementTypeParam:55:1:2.alias": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:55:1:2.description": "Entrance Tunnel Distance (m)",
+
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",
     "synoptic.layer.CAMERA": "CAMERA",
@@ -1078,7 +1085,11 @@ var i18_en = {
     "AlarmConfig:18": "ALARM NO NO CONNECTION",
     "AlarmConfig:19": "ALARM OPAC NO CONNECTION",
     "AlarmConfig:20": "ALARM ETD_modbus NO CONNECTION",
-    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION", */
+    "AlarmConfig:21": "ALARM ETD_detector NO CONNECTION", 
+    "AlarmConfig:24": "ALARMA CT NO CONNECTION",
+	"AlarmConfig:25": "ALARMA CT AIR CONDITIONER",
+	"AlarmConfig:26": "ALARMA CT DOOR OPEN",
+	"AlarmConfig:27": "ALARMA CT FIRE",*/
     
     	"pictograms.type.1":"Advertencia de peligro",
 	"pictograms.type.2":"Prioridad",

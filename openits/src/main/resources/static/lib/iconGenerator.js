@@ -51,7 +51,8 @@ export function generateIcon(element, suffix="", state="", values) {
     || element.elementType.id === ELEMENT_TYPE.ID_8_BAR
     || element.elementType.id === ELEMENT_TYPE.ID_13_SEM
     || element.elementType.id === ELEMENT_TYPE.ID_53_SEM
-    || element.elementType.id === ELEMENT_TYPE.ID_7_ZONE) {
+    || element.elementType.id === ELEMENT_TYPE.ID_7_ZONE
+    || element.elementType.id === ELEMENT_TYPE.ID_55_CT) {
     return createIcon(element, suffix);
   } else{
     return null;
@@ -126,7 +127,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
     || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
-    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_55_CT) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
     etd.updateEtdIcon(element, suffix);
@@ -296,6 +298,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;                              
     case elementTypeMap.ELEMENT_TYPE_33_ETD:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_55_CT:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;      
     default:
       console.log("Icon not found");

@@ -14,7 +14,8 @@ export let optionElementType = [
 	{id:"ElementType:19", value:"CO"},
 	{id:"ElementType:20", value:"NO"},
 	{id:"ElementType:21", value:"OPAC"},
-	{id:"ElementType:26", value:"PANEL"}
+	{id:"ElementType:26", value:"PANEL"},
+	{id:"ElementType:55", value:"CT"},
 ]
 
 export let columnsElementList = {
@@ -327,6 +328,17 @@ export let columnsElementList = {
 			]
 	},
 	"ElementType:53": { 
+		1:[
+			"alias",
+			"ElementTypeParam:53:1:1",
+			"ElementTypeParam:53:1:2"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:55": { 
 		1:[
 			"alias",
 			"ElementTypeParam:53:1:1",
@@ -1332,6 +1344,33 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:53:2:1": { //"status
 				"header": [ $.i18n("ElementTypeParam:53:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		}
+	},
+	"ElementType:55": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:55:1:1": {
+				"header": [ $.i18n("ElementTypeParam:55:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:55:1:2": {
+				"header": [ $.i18n("ElementTypeParam55:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+             
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+            "ElementTypeParam:55:2:1": { //"status
+				"header": [ $.i18n("ElementTypeParam:55:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},

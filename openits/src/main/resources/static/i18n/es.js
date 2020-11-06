@@ -108,6 +108,8 @@ var i18_es = {
     "ElementType:47.description": "ARMARIO_ELECTRICO_TU",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
+	"ElementType:55.alias": "CT",
+    "ElementType:55.description": "CT",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -709,6 +711,11 @@ var i18_es = {
     "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:53:1:2.description": "Entrance Tunnel Distance (m)",
 
+	"ElementTypeParam:55:1:1.alias": "PK",
+    "ElementTypeParam:55:1:1.description": "PK",
+    "ElementTypeParam:55:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:55:1:2.description": "Entrance Tunnel Distance (m)",
+
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
     "synoptic.layer.CAMARA": "C&aacute;maras",
@@ -1093,6 +1100,10 @@ var i18_es = {
     "AlarmConfig:21": "ALARMA ETD_detector SIN CONEXI&Oacute;N",
     "AlarmConfig:22": "ALARMA VMS SIN CONEXI&Oacute;N",
     "AlarmConfig:23": "ALARMA VMS SIN CONEXI&Oacute;N",
+	"AlarmConfig:24": "ALARMA CT SIN CONEXI&Oacute;N",
+	"AlarmConfig:25": "ALARMA CT AIRE ACONDICIONADO",
+	"AlarmConfig:26": "ALARMA CT PUERTA ABIERTA",
+	"AlarmConfig:27": "ALARMA CT INCENDIO",
 
 	"pictograms.type.1":"Advertencia de peligro",
 	"pictograms.type.2":"Prioridad",

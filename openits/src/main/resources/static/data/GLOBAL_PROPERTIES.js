@@ -1,4 +1,4 @@
-import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_53_SEM} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_53_SEM, SVG_55_CT} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -42,6 +42,7 @@ export const ELEMENT_TYPE = {
   ID_46_CABIN_TOLL : "ElementType:46",
   ID_47_CABIN_TU : "ElementType:47",
   ID_53_SEM : "ElementType:53",
+  ID_55_CT : "ElementType:55",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", value: 1, scale_x: 28, scale_y: 28},
@@ -141,7 +142,8 @@ export const ELEMENT_TYPE = {
     "ElementType:45" :{ id: "ElementType:45", value: 45, scale_x: 28, scale_y: 28},
     "ElementType:46" :{ id: "ElementType:46", value: 46, scale_x: 28, scale_y: 28},
     "ElementType:47" :{ id: "ElementType:47", value: 47, scale_x: 28, scale_y: 28},
-    "ElementType:53" :{ id: "ElementType:53", value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM }
+    "ElementType:53" :{ id: "ElementType:53", value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
+    "ElementType:55" :{ id: "ElementType:55", value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT }
   }
 };
 

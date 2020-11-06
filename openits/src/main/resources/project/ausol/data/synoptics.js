@@ -109,6 +109,11 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"CT": {
+				"items": ["Element:55:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 
 		},
 
@@ -203,6 +208,8 @@ export let synopticData= [
 				{name: "total_intensity", label: "TI"}
 			]
 		},
+
+		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" },
 	},
 	{
 		"id":"synopticMetro",
