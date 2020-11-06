@@ -127,7 +127,7 @@ if (window.app)
 
 										if (refField != undefined) {
 
-											value = window.app.em.getByField(em_types[gridFieldReference.emId].id, gridFieldReference.emField, data[refField[0].sourceField]);
+											value = window.app.em.getByField(window.app.em.em_types[gridFieldReference.emId].id, gridFieldReference.emField, data[refField[0].sourceField]);
 
 											value = value[gridFieldReference.emFieldReturned];
 										}
@@ -458,7 +458,7 @@ if (window.app)
 
 			if (gridCommand) {
 
-				let module = window.app.em.getByField(em_types.module.id, "id", gridCommand.module.id);
+				let module = window.app.em.getByField(window.app.em.em_types.module.id, "id", gridCommand.module.id);
 
 				let selectedPks = window.app.datatable.getSelectedIds(moduleInstance);
 

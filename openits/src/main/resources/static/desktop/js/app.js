@@ -3,7 +3,7 @@ window.app = {
 	menuData: [],
 	init: function() {
 		webix.env.codebase = "./";
-		this.load();
+		//this.load();
 		this.createLayout();
 		this.auth();
 	},

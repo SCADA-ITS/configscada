@@ -17,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
@@ -78,7 +75,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
 	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
 	
+	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
+	public static final String DATA_SOURCE_DELETE_USER = "data.source.delete_user";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
 	public static final String DATA_SOURCE_GRAPHQL_QUERY_URL = "data.source.graphql_query.url";
@@ -156,7 +155,11 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetUser;
 	@Getter
+	private Integer dataSourceCreateUser;
+	@Getter
 	private Integer dataSourceUpdateUser;
+	@Getter
+	private Integer dataSourceDeleteUser;
 	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
@@ -216,7 +219,9 @@ public class VODataSourceAdapter {
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
 		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
 
+		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
+		this.dataSourceDeleteUser = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_USER));
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
 		this.dataSourceGraphqlQueryUrl = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_QUERY_URL));
@@ -261,7 +266,7 @@ public class VODataSourceAdapter {
 		return output;
 	}
 	
-	public Map<String, Object> put(Integer dataSourceId, String input) {
+	public Map<String, Object> put(Integer dataSourceId, Map<String, Object> input) {
 		
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
@@ -279,7 +284,7 @@ public class VODataSourceAdapter {
 		return output;
 	}
 	
-	private List<Map<String, Object>> putGraphql(DataSource dataSource, String input) {
+	private List<Map<String, Object>> putGraphql(DataSource dataSource, Map<String, Object> input) {
 		
 		List<Map<String, Object>> list = null;
 		String mutationUrl = null;
@@ -312,20 +317,21 @@ public class VODataSourceAdapter {
 			
 			if (!StringUtils.isEmpty(method) && !StringUtils.isEmpty(params) && !StringUtils.isEmpty(paramTypes)
 					&& !StringUtils.isEmpty(content)) {
-			
-				paramsGraphQL = getParamsGraphqQLMutation(params);
-				paramTypesGraphQL = getParamTypesGraphqQLMutation(paramTypes);
 				
-				String inputForMutation = getInputForMutation(dataSource, input);
+				Map<String, Object> inputForMutation = getInputForMutation(dataSource, input);
 				
-				if (!StringUtils.isEmpty(inputForMutation)) {
+				if (!MapUtils.isEmpty(inputForMutation)) {
 					
-					variablesGraphQL = getVariablesGraphqQL(inputForMutation);
-				}
-				
-				if (!StringUtils.isAllEmpty(paramsGraphQL, paramTypesGraphQL, variablesGraphQL)) {
-				
-					list = graphqlAdapter.mutation(mutationUrl, method, content, paramsGraphQL, paramTypesGraphQL, variablesGraphQL);
+					paramsGraphQL = getParamsGraphqQLMutation(params);
+					paramTypesGraphQL = getParamTypesGraphqQLMutation(params, paramTypes);
+					variablesGraphQL = ConversionUtil.mapToString(inputForMutation);
+					
+					if (!StringUtils.isEmpty(paramsGraphQL) && !StringUtils.isEmpty(paramTypesGraphQL)
+							&& !StringUtils.isEmpty(variablesGraphQL)) {
+
+						list = graphqlAdapter.mutation(mutationUrl, method, content, paramsGraphQL, paramTypesGraphQL,
+								variablesGraphQL);
+					}
 				}
 			}
 			
@@ -446,19 +452,19 @@ public class VODataSourceAdapter {
 	
 	private String getParamsGraphqQLMutation(String params) {
 		
-		String[] paramArray = params.split(",");
+		String[] paramsArray = params.split(",");
 		String paramsGraphQL = null;
 		
-		if (paramArray.length > 0) {
+		if (paramsArray.length > 0) {
 			
 			List<String> paramList = new ArrayList<>();
 			
-			for (int i = 0; i < paramArray.length; i++) {
+			for (int i = 0; i < paramsArray.length; i++) {
 				
 				StringBuilder paramGraphQL = new StringBuilder();
 				
-				String param = paramArray[i].trim();
-				String paramName = "$arg_" + (i + 1);
+				String param = paramsArray[i].trim();
+				String paramName = "$" + param;
 				
 				paramGraphQL.append(param);
 				paramGraphQL.append(": ");
@@ -473,21 +479,23 @@ public class VODataSourceAdapter {
 		return paramsGraphQL;
 	}
 	
-	private String getParamTypesGraphqQLMutation(String paramTypes) {
+	private String getParamTypesGraphqQLMutation(String params, String paramTypes) {
 		
-		String[] paramArray = paramTypes.split(",");
+		String[] paramsArray = params.split(",");
+		String[] paramTypesArray = paramTypes.split(",");
+		
 		String paramsGraphQL = null;
 		
-		if (paramArray.length > 0) {
+		if (paramsArray.length > 0 && paramsArray.length == paramTypesArray.length) {
 			
 			List<String> paramList = new ArrayList<>();
 			
-			for (int i = 0; i < paramArray.length; i++) {
+			for (int i = 0; i < paramsArray.length; i++) {
 				
 				StringBuilder paramGraphQL = new StringBuilder();
 				
-				String paramName = "$arg_" + (i + 1);
-				String paramType = paramArray[i].trim();
+				String paramName = "$" + paramsArray[i];
+				String paramType = paramTypesArray[i].trim();
 				
 				
 				paramGraphQL.append(paramName);
@@ -503,50 +511,9 @@ public class VODataSourceAdapter {
 		return paramsGraphQL;
 	}
 	
-	private String getVariablesGraphqQL(String input) {
+	private Map<String, Object> getInputForMutation(DataSource dataSource, Map<String, Object> input) {
 		
-		String output = "";
-		
-//		ObjectMapper objectMapper = new ObjectMapper();
-
-		try {
-									
-//			Map<String, Object> inputMap = objectMapper.readValue(input, new TypeReference<HashMap<String, Object>>() {});
-			
-			Map<String, Object> inputMap = ConversionUtil.stringToMap(input);
-			JsonNode root = ConversionUtil.mapToJson("user", inputMap);
-			inputMap = ConversionUtil.jsonToMap(root);
-			
-			if (!MapUtils.isEmpty(inputMap)) {
-				
-				int field = 1;
-				JsonNode json =  ConversionUtil.stringToJson("{}");
-				
-				for (Map.Entry<String, Object> entry: inputMap.entrySet()) {
-					
-					String key = entry.getKey();
-					
-					JsonNode value = root.get(key);
-					
-					String fieldName = "arg_" + (field++);
-					
-					((ObjectNode) json).set(fieldName, value);
-				}
-				
-				output = json.toString();
-			}
-			
-		} catch (JsonProcessingException e) {
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		}
-		
-		return output;
-	}
-	
-	private String getInputForMutation(DataSource dataSource, String input) {
-		
-		String inputForMutation = input;
+		Map<String, Object> inputForMutation = input;
 		
 		if (dataSource.getId().equals(this.dataSourceUpdateUser)) {
 			

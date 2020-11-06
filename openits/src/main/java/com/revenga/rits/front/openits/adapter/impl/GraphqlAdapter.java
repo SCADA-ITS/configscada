@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,10 +26,18 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class GraphqlAdapter {
 
-//private static final String GRAPHQL_URL = "graphql.url";
+	private static final String GRAPHQL_DEBUG = "graphql.debug";
 	
-//	@Autowired
-//	private Environment env;
+	@Autowired
+	private Environment env;
+	
+	boolean graphqlDebug;
+	
+	@PostConstruct
+	private void initialize() {
+		
+		this.graphqlDebug = Boolean.parseBoolean(env.getProperty(GRAPHQL_DEBUG));
+	}
 	
 	public List<Map<String, Object>> query(String graphqlUrl, String method, String params, String content) throws IOException, InterruptedException {
 		
@@ -62,6 +74,8 @@ public class GraphqlAdapter {
 						.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
 				
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+				
+				traceGraphQL(body, response);
 			}
 			
 		} catch (IOException | InterruptedException e) {
@@ -102,6 +116,8 @@ public class GraphqlAdapter {
 						.method("POST", HttpRequest.BodyPublishers.ofString(body)).build();
 				
 				response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+				
+				traceGraphQL(body, response);
 			}
 			
 		} catch (IOException | InterruptedException e) {
@@ -125,11 +141,14 @@ public class GraphqlAdapter {
 			root = ConversionUtil.stringToJson(response);
 			JsonNode data = root.path("data").path(method);
 			
-			if (!data.isMissingNode()) {
+			if (data.isMissingNode()) {
 				
+				throw new IOException(method + " => " + response);
+			}
+			
+			if (!data.isNull()) {
+
 				if (data.isArray()) {
-					
-					//list = mapper.readValue(data.toString(), mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
 					
 					list = ConversionUtil.stringToListMap(data.toString());
 				}
@@ -137,14 +156,8 @@ public class GraphqlAdapter {
 					
 					list = new ArrayList<>();
 					
-					//list.add(mapper.readValue(data.toString(), new TypeReference<HashMap<String, Object>>() {}));
-					
 					list.add(ConversionUtil.stringToMap(data.toString()));
 				}	
-			}
-			else {
-				
-				throw new IOException(method + " => " + response);
 			}
 			
 		} catch (IOException e) {
@@ -154,5 +167,20 @@ public class GraphqlAdapter {
 		}
 		
 		return list;
+	}
+	
+	private void traceGraphQL(String request, HttpResponse<String> response) {
+		
+		if (graphqlDebug && response != null) {
+
+			log.debug("---------------------------------- GRAPHQL DEBUG ----------------------------------");
+			log.debug("");
+			log.debug("  REQUEST  >> " + request);
+			log.debug("");
+			log.debug("  RESPONSE << " + response);
+			log.debug("  CONTENT  << " + response.body());
+			log.debug("");
+			log.debug("-----------------------------------------------------------------------------------");
+		}
 	}
 }
