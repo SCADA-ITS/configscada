@@ -54,7 +54,7 @@ export default class PlanSchedule {
 	        console.log("Broker reported error: " + frame.headers["message"]);
 	        console.log("Additional details: " + frame.body);
         };
-
+        
         this.graph = `query {
             getPlanSchedules{
               id
@@ -116,7 +116,7 @@ export default class PlanSchedule {
                     ],   
                     sort:"text",
                     width: 150,
-                    template: function (data, type, value) { return statusBadge(data.planScheduleStateType.alias); },
+                    template: function (data, type, value) { return statusBadge(data.planScheduleStateType !== undefined ? data.planScheduleStateType.alias : ""); },
                 },
                 { 
                     "id":"plan", 
@@ -152,7 +152,7 @@ export default class PlanSchedule {
                     ], 
                     sort:"text",  
                     "template": function (data, type, value) {                                         
-                        return planStatusBadge(data.plan.planStateType.alias)}, 
+                        return planStatusBadge(data.plan.planStateType !== undefined ? data.plan.planStateType.alias : "UNKNOWN")}, 
                     fillspace:1 
                 },
             ],
@@ -222,13 +222,56 @@ export default class PlanSchedule {
         try {
             let obj = JSON.parse(JSON.parse(message.body));
             obj.basicElementsVO.forEach(element => {
-                console.log(element);
-                //Modificar
+                try {
+                    let item = $$("planSchedulesTable").getItem(element.id);
+                    if(item != null) {
+                        let planScheduleStateType = element.planScheduleStateType !== undefined ? element.planScheduleStateType : null;
+                        if(planScheduleStateType !== null){
+                            item['planScheduleStateType'] = {id: planScheduleStateType.id, alias: LBL_PLAN_SCHEDULE_STATE[planScheduleStateType.id.split(":")[1]]};
+                            $$("planSchedulesTable").updateItem(element.id, item); 
+                        } else {
+                            let v_alias = element.alias !== undefined ? element.alias : null;
+                            if (v_alias !== null){
+                                if(element.plan.id !== item.plan.id) {
+                                    let graphElem = `query { getPlan(planId: "` + element.plan.id + `") {
+                                        id
+                                        alias
+                                        planStateType{
+                                            id
+                                            alias
+                                        }
+                                    }}`;
+                                    let graphql = webix.proxy("GraphQL", graphElem);
+                                    graphql.load().then(data => {
+                                        if (v_alias !== item.alias)
+                                            item['alias'] = v_alias;
+    
+                                        if(element.description !== item.description)
+                                            item['description'] = element.description;
+    
+                                        if(element.cronExpression !== item.cronExpression)
+                                            item['cronExpression'] = element.cronExpression;
+                                        
+                                        item['plan'] = {id: element.plan.id, alias: data.alias, planStateType: data.planStateType};
+                                        item['planState'] = {id: data.planStateType.id, alias: data.planStateType.alias};
+                                        $$("planSchedulesTable").updateItem(element.id, item); 
+                                    });
+                                }else{
+                                    if (v_alias !== null && v_alias !== item.alias)
+                                    item['alias'] = v_alias;
 
-                //crear
+                                    if(element.description !== item.description)
+                                        item['description'] = element.description;
 
-                //Eliminar
+                                    if(element.cronExpression !== item.cronExpression)
+                                        item['cronExpression'] = element.cronExpression;
 
+                                    $$("planSchedulesTable").updateItem(element.id, item);
+                                }
+                            }
+                        }
+                    }
+                } catch (err) { console.log("Error: " + err.message); }
             });
         }catch (err) {
             console.log("Error: " + err.message);
@@ -322,7 +365,6 @@ export default class PlanSchedule {
                 }
             });
             $$("planSchedulesTable").refresh();
-            
             this.client.activate();
             return d;
         });
@@ -373,9 +415,13 @@ function loadDetailForm(id, num){
 		$$("schelduleContainer").addView({ id:"scheduleResizer", view:"resizer" });
 		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
 	}else{
-		webix.ui(
-			auxPlanSchedule.getComponent()
-		  , $$('scheduleDetailForm'));
+		//webix.ui(
+		//	auxPlanSchedule.getComponent()
+        //  , $$('scheduleDetailForm'));
+        $$("schelduleContainer").removeView("scheduleResizer");
+        $$("schelduleContainer").removeView("scheduleDetailForm");
+        $$("schelduleContainer").addView({ id:"scheduleResizer", view:"resizer" });
+		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
 	}
 }
 

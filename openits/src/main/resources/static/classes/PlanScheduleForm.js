@@ -16,7 +16,7 @@ const LBL_PLAN_SCHEDULE_STATE = {
 export default class PlanScheduleForm {
 	constructor(id,data,mode) {
         this.id = id;
-        console.log(data);
+        let self = this;
         this.mode = mode;
         if (this.id === null && data !== null) {
             this.alias = data.alias;
@@ -40,7 +40,7 @@ export default class PlanScheduleForm {
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000
         });
-		this.topic = "/topic/planSchedules." + this.id;
+        this.topic = "/topic/planSchedules." + this.id;
 		this.client.onConnect = function(frame) {
 			this.suscription = self.client.subscribe(self.topic, self.update_table);
 		};
@@ -249,75 +249,72 @@ export default class PlanScheduleForm {
                     //css: "webix_um_status_switch",
                     hidden: (this.id === "new" ? true : false),
                     on: {
-                        /*
-                        onChange: function (value) {
-                            console.log("onChange");
-                            console.log(id);
-                            console.log(value);
-                            UpdateBadge(parseInt(value) - 1); 
-                        },
-                        */
                         onItemClick: function(value) {
                             let dato = parseInt($$(value).getValue());
+                            
                             if(dato === 0) {
                                 //Mandamos la pausa al server
-                                let planScheduleForm = $$("planScheduleForm_" + id).getValues();
-                                let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id state }}`; 
-                                let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
-                                graphqlSendPlan2.load({
-                                    plan: [
-                                        {
-                                        id: planScheduleForm.id,
-                                        alias: planScheduleForm.alias,
-                                        description: planScheduleForm.description,
-                                        action: PLAN_ACTION_PAUSE,
-                                        planId: planScheduleForm.plan.split("_")[2],
-                                        cronExpression: planScheduleForm.cronExpression    
+                                try {
+                                    let planScheduleForm = $$("planScheduleForm_" + id).getValues();
+                                    let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id planScheduleStateType{id alias} }}`; 
+                                    let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
+                                    graphqlSendPlan2.load({
+                                        plan: [
+                                            {
+                                            id: planScheduleForm.id,
+                                            alias: planScheduleForm.alias,
+                                            description: planScheduleForm.description,
+                                            action: PLAN_ACTION_PAUSE,
+                                            planId: planScheduleForm.plan.split("_")[2],
+                                            cronExpression: planScheduleForm.cronExpression    
+                                            }
+                                        ]
+                                    }).then(data => {
+                                        if(data[0] !== null){
+                                            //actualizamos el panel
+                                            let control = $$("planScheduleForm_" + data[0].id + "_state");
+                                            let html = statusBadge(data[0].planScheduleStateType.alias);
+                                            control.config.labelRight = html;
+                                            control.refresh();
+                                            //mandamos mensaje de planSchedule PAUSE
+                                            webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+                                        }else{
+                                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
                                         }
-                                    ]
-                                }).then(data => {
-                                    if(data[0] !== null){
-                                        //actualizamos el panel
-                                        let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                        let html = statusBadge(data[0].state);
-                                        control.config.labelRight = html;
-                                        control.refresh();
-                                        //mandamos mensaje de planSchedule PAUSE
-                                        webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-                                    }else{
-                                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
-                                    }
-                                });
+                                    });
+                                } catch (e) {console.log(e);}
                             }
                             if(dato === 1) {
                                 //mandamos el running al server
-                                let planScheduleForm = $$("planScheduleForm_" + id).getValues();
-                                let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id state }}`; 
-                                let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
-                                graphqlSendPlan2.load({
-                                    plan: [
-                                        {
-                                        id: planScheduleForm.id,
-                                        alias: planScheduleForm.alias,
-                                        description: planScheduleForm.description,
-                                        action: PLAN_ACTION_PLAY,
-                                        planId: planScheduleForm.plan.split("_")[2],
-                                        cronExpression: planScheduleForm.cronExpression    
-                                        }
-                                    ]
-                                }).then(data => {
-                                    if(data[0] !== null){
-                                        //actualizamos el panel
-                                        let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                        let html = statusBadge(data[0].state);
-                                        control.config.labelRight = html;
-                                        control.refresh();
-                                        //mandamos mensaje de planSchedule RUNNING
-                                        webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-                                    }else{
-                                        webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
-                                    }                                
-                                });
+                                try {
+                                    let planScheduleForm = $$("planScheduleForm_" + id).getValues();
+                                    let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id planScheduleStateType{id alias} }}`; 
+                                    let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
+                                    graphqlSendPlan2.load({
+                                        plan: [
+                                            {
+                                            id: planScheduleForm.id,
+                                            alias: planScheduleForm.alias,
+                                            description: planScheduleForm.description,
+                                            action: PLAN_ACTION_PLAY,
+                                            planId: planScheduleForm.plan.split("_")[2],
+                                            cronExpression: planScheduleForm.cronExpression    
+                                            }
+                                        ]
+                                    }).then(data => {
+                                        if(data[0] !== null){
+                                            //actualizamos el panel
+                                            let control = $$("planScheduleForm_" + data[0].id + "_state");
+                                            let html = statusBadge(data[0].data[0].planScheduleStateType.alias);
+                                            control.config.labelRight = html;
+                                            control.refresh();
+                                            //mandamos mensaje de planSchedule RUNNING
+                                            webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+                                        }else{
+                                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                                        }                                
+                                    });
+                                } catch (e) {console.log(e);}
                             }
                         }
                     },
@@ -335,16 +332,7 @@ export default class PlanScheduleForm {
             control.config.labelRight = html;
             control.refresh();
         }
-
-
-/*
-        function statusBadge(value) {
-            var status = value ? "Active" : "Not active";
-            var cssStatusName = value ? "active" : "not_active";
-            var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge webix_um_" + cssStatusName + "\">" + status + "</span>\n\t\t</div>";
-            return html;
-        }
-*/
+        
 		this.buttons = {
             id: "planScheduleFormButtons_" + this.id,
 			view: "form",
@@ -365,13 +353,12 @@ export default class PlanScheduleForm {
 		try {
 			let obj = JSON.parse(JSON.parse(message.body));
             obj.basicElementsVO.forEach((element) => {
-                console.log(element);
-                //Modificar
-
-                //crear
-
-                //Eliminar
-
+                if (element.planScheduleStateType !== undefined) {
+                    let control = $$("planScheduleForm_" + element.id + "_state");
+                    let html = statusBadge(LBL_PLAN_SCHEDULE_STATE[element.planScheduleStateType.id.split(":")[1]]);
+                    control.config.labelRight = html;
+                    control.refresh();
+                }
             });
         } catch (err) {
 			console.log("Error: " + err.message);
@@ -383,6 +370,7 @@ export default class PlanScheduleForm {
     }
 
 	getComponent() {
+        var client = this.client;
         let header = "";
 
 		let genericForm = {
@@ -393,7 +381,12 @@ export default class PlanScheduleForm {
                 this.form,
                 this.buttons,
 				{}
-			]
+            ],
+            on: {
+                onDestruct: function(obj){
+                    client.deactivate();
+                }
+            }
 		};
         
         switch (this.mode) {
