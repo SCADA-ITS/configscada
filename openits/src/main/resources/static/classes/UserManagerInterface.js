@@ -191,18 +191,41 @@ export default class UserManagerInterface extends userManager.services.Backend {
     }
 
     deleteUser(data) {
-        let graphDeleteUser = webix.proxy("GraphQL",
-            `mutation  deleteUser($userId: String!){
-                deleteUser(userId: $userId){
-                    id
-                }
-            }`);
-        return Promise.resolve(graphDeleteUser.load({
+        let getUser = webix.proxy("GraphQL",
+        `query  getUser($userId: String!){
+            getUser(userId: $userId) {
+              id
+              name
+              preset
+            }
+        }`);
+        
+        getUser.load({
             "userId": "User:"+data.toString()
             
         }).then(dataReturn => {
-            return { 'id': data }
-        }));
+            console.log("TESTeeee", dataReturn.preset)
+            if (dataReturn.preset){
+                //return Promise.resolve([]);
+            }else{
+                let graphDeleteUser = webix.proxy("GraphQL",
+                `mutation  deleteUser($userId: String!){
+                    deleteUser(userId: $userId){
+                        id
+                    }
+                }`);
+                return Promise.resolve(graphDeleteUser.load({
+                    "userId": "User:"+data.toString()
+                
+                }).then(dataReturn => {
+                    return { 'id': data }
+                }));
+
+            }
+         
+        })
+
+        
     }
 
     addRole(data){
@@ -242,7 +265,6 @@ export default class UserManagerInterface extends userManager.services.Backend {
     }
 
     updateRole(id, data){
-
         let graph = `mutation  updateRole($role: RoleVO!){
             updateRole(role: $role){
                 id
@@ -292,13 +314,12 @@ export default class UserManagerInterface extends userManager.services.Backend {
     avatar(id){}
 
     credentials(id){
+        console.log("AQUI ESTOY")
         console.log(id);
         return Promise.resolve([]);
     }
 
     addCredentials(id, data){
-        console.log(id);
-        console.log(data);
         return Promise.resolve({ "id": id});
     }
 
@@ -376,8 +397,6 @@ export default class UserManagerInterface extends userManager.services.Backend {
     }
 
     deleteCredentials(id, credId){
-        console.log(id);
-        console.log(credId);
         return Promise.resolve({ "id": id});
     }
 
