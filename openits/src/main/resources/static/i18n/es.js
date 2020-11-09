@@ -899,6 +899,7 @@ var i18_es = {
     "user.button.tooltip.details": "Detalle de Usuario",
     "user.button.tooltip.edit": "Editar Usuario",
     "user.button.tooltip.delete": "Borrar Usuario",
+    "usermanager.user.edit.delete.message": "Usuario no puede ser borrado",
 
     "role.button.tooltip.addUser": "A&ntilde;adir Role",
     "role.button.tooltip.details": "Detalle de Role",

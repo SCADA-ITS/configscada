@@ -68,9 +68,7 @@ export function getElementIcon(element, suffix="") {
   let elementState = "";
   
   if (document.getElementById(element.id) != null) {
-    elementState = parseInt(
-      document.getElementById(element.id).getAttribute("state")
-    );
+    elementState = parseInt(document.getElementById(element.id).getAttribute("state"));
   } else {
     elementState = element.state;
   }
@@ -164,31 +162,21 @@ export function getElementIcon(element, suffix="") {
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU) {
     tu.updateTuIcon(element, suffix);
   } else {
-    // FIX FOR CALLBACK HELL
-    // icon based on status
     if (typeof staticsIcons[elementType] != "undefined") {
       elem_icon = staticsIcons[elementType]["state"].find(
-        //(ic) => ic.state === element.state
         (ic) => ic.state === elementState
       );
     } else {
       elem_icon = staticsIcons["ElementType:33"]["state"].find(
-        //(ic) => ic.state === element.state
         (ic) => ic.state === elementState
       );
     }
-
     if (typeof elem_icon != "undefined") {
-      //width = elem_icon.width;
-      //height = elem_icon.height;
       elem_icon = elem_icon.icon;
-
     } else {
       elem_icon = "";
     }
-
   }
-
   return { icon: elem_icon, width: width, height: height };
 }
 

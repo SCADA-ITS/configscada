@@ -762,6 +762,7 @@ var i18_sk = {
     "user.button.tooltip.details": "Details",
     "user.button.tooltip.edit": "Edit User",
     "user.button.tooltip.delete": "Delete User",
+    "usermanager.user.edit.delete.message": "User cannot be deleted",
 
     "equipment.tabbar.measures": "Opatrenia",
     "equipment.tabbar.parameter": "Rozmedzie",

@@ -204,7 +204,6 @@ export default class UserManagerInterface extends userManager.services.Backend {
             "userId": "User:"+data.toString()
             
         }).then(dataReturn => {
-            console.log("TESTeeee", dataReturn.preset)
             if (dataReturn.preset){
                 //return Promise.resolve([]);
             }else{
@@ -314,8 +313,6 @@ export default class UserManagerInterface extends userManager.services.Backend {
     avatar(id){}
 
     credentials(id){
-        console.log("AQUI ESTOY")
-        console.log(id);
         return Promise.resolve([]);
     }
 
@@ -345,7 +342,6 @@ export default class UserManagerInterface extends userManager.services.Backend {
         graphquery.load({
             userId: "User:" + id
         }).then(a=>{
-            console.log(a);
             if(data.record !== undefined && data.recoed !== null){
                 let graphUpdateUser = webix.proxy("GraphQL",
                 `mutation  updateUser($user: UserVO!){

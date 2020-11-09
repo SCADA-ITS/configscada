@@ -6,6 +6,7 @@ const REGEX_PATTERN_END="}";
 const UI_ELEMENT_TYPE_DEFAULT="default";
 const UI_ELEMENT_TYPE_GENERIC="generic";
 const UI_ELEMENT_TYPE_MATRIX="matrix";
+const UI_ELEMENT_TYPE_STATIC="static";
 
 
 function changeConnectedIcon() {

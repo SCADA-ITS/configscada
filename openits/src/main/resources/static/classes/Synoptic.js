@@ -1,8 +1,5 @@
 import ElementCommand from "../classes/ElementCommand.js";
 import {
-  getElementIcon,
-  updateElementIcon,
-  updateElementState,
   getElementSVG
 } from "../lib/iconGenerator.js";
 import {columnsElementFormList} from "../data/elementForm.js";
@@ -42,10 +39,11 @@ let graphSynoptic = webix.proxy(
 
 // in case of exclusive layers, manages the onItemCheck event
 var shouldICheck = true;
+let elementsMap = new Map();
 
 export default class Synoptic {
   constructor(synopticConf) {
-    this.elementsMap = new Map();
+    
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -86,52 +84,29 @@ export default class Synoptic {
   processStompMessageWithFallback(message) {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
+      console.warn(elementsMap);
       obj.basicElementsVO.forEach((element) => {
-        if(elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_DMS) {
-          throw "DMSException";
+        // console.warn("Entra: " + element.id);
+        if(elementsMap && elementsMap.get(element.id)){
+          elementsMap.get(element.id).updateElement(element);
+          elementsMap.get(element.id).updatePaint();
+          // console.warn("Se cocina");
+        }else{
+          let synopticElement = new SynopticElement(element);
+          synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
+          elementsMap.set(synopticElement.element.id, synopticElement);
         }
-        getElementIcon(element);
       });
     } catch (err) {
-      console.log("Error: " + err.message);
-      console.log("Retrying with GraphQL");
-      let obj = JSON.parse(JSON.parse(message.body));
-      obj.basicElementsVO.forEach((element) => {
-        //initialize the proxy
-        let elementQuery = webix.proxy(
-          "GraphQL",
-          `query ($elem: String!) {
-						getElement(elementId: $elem)
-						{
-							id
-              state
-              elementType {
-                id
-                alias
-              }
-							elementValues
-							{
-								id
-								value
-								alerted
-								elementTypeParam {
-									description
-								}
-							}
-						}
-					}`
-        );
-
-        // loads the data
-        elementQuery.load({
-            elem: element.id,
-          }).then((data) => {
-            // process the received data
-            let element = data;
-            updateElementState(element);
-            updateElementIcon(element);
-          });
-      });
+      console.error(err);
+      console.warn("Retrying with GraphQL");
+      if(elementsMap && elementsMap.get(element.id)){
+        elementsMap.get(element.id).errorPaint();
+      }else{
+        let synopticElement = new SynopticElement(element);
+        synopticElement.errorPaint();
+        elementsMap.set(element.id, synopticElement);
+      }
     }
   }
 
@@ -638,8 +613,8 @@ export default class Synoptic {
           this.elements.push(element);
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
-          this.elementsMap.set(synopticElement.element.id, synopticElement.element);
-          // alert(JSON.stringify(this.elementsMap));
+          elementsMap.set(synopticElement.element.id, synopticElement);
+          // alert(JSON.stringify(elementsMap));
         });
         
         // replaces the element tree in the DOM
@@ -1027,7 +1002,7 @@ export default class Synoptic {
     // it has to filter if the event is related to the synoptic instance
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
-        if ($$("menu" + self.synopticDiv).isVisible()){
+        if (typeof $$("menu" + self.synopticDiv) != 'undefined' && $$("menu" + self.synopticDiv).isVisible()){
           // show the panel
           $$("menu" + self.synopticDiv).hide();
           // show the children
@@ -1063,27 +1038,17 @@ export default class Synoptic {
                   document.getElementById(d.id + ":Bar").setAttribute("fill", color);
                 }
               }
-
               d.childs.forEach((element) => {
-                updateElementState(element);
-                updateElementIcon(element);
-
-                // check if it's a tunnel synoptic and changes the main bar in the synoptic
-                let element_type = element.id.split(":")[1];
-                if(element_type == "7") {
-                  let color = "";
-                  if (element.state != 3) {
-                    color = "#ebb700";
-                  } else {
-                    color = "#ff0000";
-                  }
-
-                  if(document.getElementById(element.id + ":Bar") != null) {
-                    document.getElementById(element.id + ":Bar").setAttribute("fill", color);
-                  }
+                if(elementsMap && elementsMap.get(element.id)){
+                  // console.warn("existe: "+element.id);
+                  elementsMap.get(element.id).errorPaint();
+                }else{
+                  // console.warn("NO existe: "+element.id);
+                  let synopticElement = new SynopticElement(element);
+                  synopticElement.errorPaint();
+                  elementsMap.set(element.id, synopticElement);
                 }
               });
-
             }).then(() => {
               document.getElementById(self.synopticDiv + "spinner").style.display = "none";
             });

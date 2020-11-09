@@ -1,5 +1,5 @@
 import UserManagerInt from "../classes/UserManagerInterface.js";
-import {CustomRoleManager, CustomUserDetails, CustomAddRoleAndUser} from "../classes/UserManagerForm.js";
+import {CustomRoleManager, CustomUserDetails, CustomAddRoleAndUser, CustomUsersForm} from "../classes/UserManagerForm.js";
 
 export let usersmanager= {
 	id:"usersmanagerContainer",
@@ -9,7 +9,8 @@ export let usersmanager= {
         override: new Map([[userManager.services.Backend, UserManagerInt],
             [userManager.views["users/roles"], CustomRoleManager],
             [userManager.views["users/details"], CustomUserDetails],
-            [userManager.views["addmenu"], CustomAddRoleAndUser]
+            [userManager.views["addmenu"], CustomAddRoleAndUser],
+            [userManager.views["users/form"], CustomUsersForm]
 
         ]),
 
