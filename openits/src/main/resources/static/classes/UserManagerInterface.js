@@ -44,7 +44,8 @@ export default class UserManagerInterface extends userManager.services.Backend {
               "registered": "2020-05-21T10:02:06Z",
               "avatar": "",
               "status": 1,
-              "preset": element.preset
+              "preset": element.preset,
+              "multisession": +element.allowMultipleSessions
             });
           }); return vdata;}));
     }
@@ -149,7 +150,7 @@ export default class UserManagerInterface extends userManager.services.Backend {
                 "name": data.name,
                 "password": "1234",
                 "preset": false,
-                "allowMultipleSessions": false,
+                "allowMultipleSessions": !!parseInt(data.multisession),
                 "isAdmin": false,
                 "language": "es",
                 "country": "Spain",
@@ -184,6 +185,7 @@ export default class UserManagerInterface extends userManager.services.Backend {
                     "country": "Spain",
                     "timezone": "Asia/Nepal",
                     "roleId": "Role:"+data.roles[0].toString(),
+                    "allowMultipleSessions": !!parseInt(data.multisession)
                 }
             }).then(dataReturn => {
                 return { 'id': data.id}

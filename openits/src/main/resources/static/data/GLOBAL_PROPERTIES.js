@@ -46,20 +46,30 @@ export const ELEMENT_TYPE = {
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 1, scale_x: 28, scale_y: 28},
-    "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_STATIC, value: 2, scale_x: 28, scale_y: 28},
+    "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_STATIC, value: 2, scale_x: 28, scale_y: 28, 
+      tabs:[
+        {ELEMENT_FORM_TAB_FORM: {}},
+        {ELEMENT_FORM_TAB_VIDEO: {
+          urlParamVideo:"ElementTypeParam:2:1"}
+        },
+        {ELEMENT_FORM_TAB_SYN: {
+          idSynoptic:"metroTunnel"}
+        },
+      ] 
+    },
     "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 3, scale_x: 28, scale_y: 28},
     "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28},
     "ElementType:5" :{ id: "ElementType:5", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 5, scale_x: 28, scale_y: 28},
     "ElementType:7" :{ id: "ElementType:7", uiType: UI_ELEMENT_TYPE_GENERIC, value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
-    color: {
-      undefined:"gray",
-      null:"gray",
-      0: "blue",
-      1: "blue",
-      2: "blue",
-      3: "red"
-    }
-  },
+      color: {
+        undefined:"gray",
+        null:"gray",
+        0: "blue",
+        1: "blue",
+        2: "blue",
+        3: "red"
+      }
+    },
     "ElementType:8" :{ id: "ElementType:8", uiType: UI_ELEMENT_TYPE_GENERIC, value: 8, scale_x: 30.163, scale_y: 16.13958, svgRaw:SVG_8_BAR, 
       elementTypeParams:[
         {BAR_COMMAND_FOR_BARRIER : "1:2"}

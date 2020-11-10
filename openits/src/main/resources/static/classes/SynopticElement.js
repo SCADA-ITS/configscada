@@ -5,6 +5,7 @@ import {
   getElementIcon,
   updateElementIcon,
   updateElementState,
+  getElementSVG
 } from "../lib/iconGenerator.js";
 
 import {columnsElementFormList} from "../data/elementForm.js";
@@ -52,7 +53,7 @@ export default class synopticElement {
             || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_GENERIC
             || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) {
           // If complex icon need measures
-          if((ELEMENT_TYPE.values[this.element.elementType.id].elementTypeParams || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) 
+          if((ELEMENT_TYPE.values[this.element.elementType.id].elementTypeParams || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX || this.element.elementType.id === ELEMENT_TYPE.ID_4_SEC) 
               && (typeof this.element.elementValues === 'undefined' || !this.element.elementValues) ){
             elementQuery.load({
               elem: this.element.id,
@@ -208,6 +209,10 @@ export default class synopticElement {
       console.error(err);
       this.errorPaint();
     }
+  }
+
+  getElementSVG(width, height, suffix=""){
+    return getElementSVG(this.element, width, height, suffix) 
   }
 
   updatePaint(suffix){
