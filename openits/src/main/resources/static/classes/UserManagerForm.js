@@ -61,6 +61,51 @@ export class CustomAddRoleAndUser extends userManager.views["addmenu"]{
 }
 
 export class CustomUsersForm extends userManager.views["users/form"]{
+    init() {
+        // default logic
+        super.init();
+        // custom logic below
+        this.addMultisessionButton();
+    }
+   
+    statusBadge(value, _) {
+        var status = value ? "Active" : "Not active";
+        var cssStatusName = value ? "active" : "not_active";
+        var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge webix_um_" + cssStatusName + "\">" + _(status) + "</span>\n\t\t</div>";
+        return html;
+    }
+    
+    updateMultisession(value){
+        let multisesion = this.$$('multisession');
+        var _ = this.app.getService("locale")._;
+        var html = this.statusBadge(value, _);
+        multisesion.config.labelRight = html;
+        multisesion.refresh();
+
+    }
+    addMultisessionButton(){
+        let ui = super.config();
+        let form = this.$$('form');
+        const multisesion = {
+            view: "switch",
+            name: "multisession",
+            localId: "multisession",
+            label: "Multisession",
+            labelAlign: "right",
+            labelWidth: 130,
+            css: "webix_um_status_switch",
+            on: {
+                onChange:  (value) => { this.updateMultisession(value);},   
+            
+            },
+        }
+        form.addView(multisesion,4);
+        this.$$('multisession').adjust()
+        return ui;
+    
+    }
+
+
     Delete() {
         let getUser = webix.proxy("GraphQL",
         `query  getUser($userId: String!){

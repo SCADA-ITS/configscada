@@ -219,7 +219,7 @@ export default class EquipmentTree {
     this.elementTree[elementTypeKeyIndex]["data"].push({
       id: element.id,
       value: "<div style=\"display: inline;vertical-align: text-top;\">" + element.alias + "</div>",
-      icon: "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>",
+      // icon: "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>",
     });
 
   }
@@ -317,9 +317,9 @@ export default class EquipmentTree {
                   let height = 32;
                   let width = getIconWidth(thisElementType, height);
 
-                  if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
-                    $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
-                  }
+                  // if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                  //   $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(element, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+                  // }
                 });
             } else {
               elementQuery.load({
@@ -333,9 +333,9 @@ export default class EquipmentTree {
     
                 getElementIcon(data, ":Tree");
                 // check if the tree exists
-                if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
-                  $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(data, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
-                }
+                // if(typeof $$("element_tree") != 'undefined' && typeof $$("element_tree").getItem(element.id) != 'undefined') {
+                //   $$("element_tree").getItem(element.id).icon = "<div style=\"float: right\">" + getElementSVG(data, width, height, ":Tree") + "</div>"; //getElementSVG(element, 32, 32, ":Tree");
+                // }
               }); 
             }
         } catch (err) {

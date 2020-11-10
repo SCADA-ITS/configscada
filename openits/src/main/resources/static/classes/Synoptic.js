@@ -1,7 +1,4 @@
 import ElementCommand from "../classes/ElementCommand.js";
-import {
-  getElementSVG
-} from "../lib/iconGenerator.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import EquipmentTree from "./EquipmentTree.js";
@@ -27,10 +24,6 @@ let graphSynoptic = webix.proxy(
         elementType{
           id
         }
-        elementValues{
-          id
-          value
-        }
       }
     }
   }
@@ -43,8 +36,6 @@ let elementsMap = new Map();
 
 export default class Synoptic {
   constructor(synopticConf) {
-    
-    this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
     this.layersToDraw = {};
@@ -84,7 +75,7 @@ export default class Synoptic {
   processStompMessageWithFallback(message) {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
-      console.warn(elementsMap);
+      // console.warn(elementsMap);
       obj.basicElementsVO.forEach((element) => {
         // console.warn("Entra: " + element.id);
         if(elementsMap && elementsMap.get(element.id)){
@@ -326,7 +317,6 @@ export default class Synoptic {
       // clean the current selection
       Array.prototype.forEach.call(document.querySelectorAll(".synoptic-highlight"), (e) => { e.classList.remove("synoptic-highlight") });
       // highlights the selected item
-      console.log("Jony itemid: " + id);
       document.getElementById(id).classList.add("synoptic-highlight");
     }
 
@@ -423,7 +413,7 @@ export default class Synoptic {
           this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
             id: this.synopticConf["Layers"][n]["items"][e],
             value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
-            icon: "",
+            // icon: "",
             data: [],
           });
         } else {
@@ -443,22 +433,19 @@ export default class Synoptic {
           }
           
           // search for the elementType key
-          let element = self.elements.findIndex(
-            (el) => el.id === this.synopticConf["Layers"][n]["items"][e]
-          );
-
-          if(element != -1) {
+          let elementId = this.synopticConf["Layers"][n]["items"][e];
+          if(elementsMap && elementsMap.get(elementId)){
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
-              id: this.elements[element].id,
-              value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.elements[element].description + "</div>",
-              icon: "<div style=\"float: right\">" + getElementSVG(this.elements[element], width, height, ":Tree") + "</div>",
+              id: elementId,
+              value: "<div style=\"display: inline;vertical-align: text-top;\">" + elementsMap.get(elementId).element.description + "</div>",
+              // icon: "<div style=\"float: right\">" + getElementSVG(elementsMap.get(elementId).element, width, height, ":Tree") + "</div>",
               data: [],
             });
           } else {
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
               id: this.synopticConf["Layers"][n]["items"][e],
               value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
-              icon: "",
+              // icon: "",
               data: [],
             });
           }
@@ -610,7 +597,6 @@ export default class Synoptic {
         return d;
       }).then((d) => {
         d.childs.forEach((element) => {
-          this.elements.push(element);
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
           elementsMap.set(synopticElement.element.id, synopticElement);
@@ -624,14 +610,14 @@ export default class Synoptic {
         webix.ui({
           view: "sidemenu-win",
           id: "menu" + this.synopticDiv,
-          width: 400,
+          width: 200,
           position: function(position) {
             var toolbarHeight = $$("mainToolbar").$height;
             position.top = toolbarHeight;
-            position.left = $$("mainBody").$width - 400;
+            position.left = $$("mainBody").$width - 200;
             var mainHeight = $$("mainBody").$height - toolbarHeight;
             position.height = mainHeight;
-            position.width = 400;
+            position.width = 200;
           },
           body: {
             id: "elementTreeView" + this.synopticDiv, 
@@ -673,11 +659,11 @@ export default class Synoptic {
                 multiselect: true,
                 threeState: true,
                 template: function(obj, common){
-                  if (obj.$level > 1) {
-                    return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
-                  } else {
+                  // if (obj.$level > 1) {
+                  //   return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
+                  // } else {
                     return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>";
-                  }
+                  // }
                 }
               },
               {
