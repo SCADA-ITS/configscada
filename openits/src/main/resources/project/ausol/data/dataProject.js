@@ -10,7 +10,9 @@ export let menu_data_multi  = [
 		{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.line")},
 		{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.global")},
 		{ id: "map", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.map")},
-		{ id: "syn3", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.cts")}
+		{ id: "syn3", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.cts")},
+		{ id: "syn4", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csa")},
+		{ id: "syn5", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csb")}
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("menu.tables.equipments")},

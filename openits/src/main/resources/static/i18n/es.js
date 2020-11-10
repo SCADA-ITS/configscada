@@ -110,6 +110,8 @@ var i18_es = {
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
     "ElementType:55.alias": "CT",
     "ElementType:55.description": "CT",
+    "ElementType:56.alias": "UNIFILAR CSA",
+    "ElementType:56.description": "UNIFILAR CSA",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -757,6 +759,11 @@ var i18_es = {
     "ElementTypeParam:55:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:55:1:2.description": "Entrance Tunnel Distance (m)",
 
+	"ElementTypeParam:56:1:1.alias": "PK",
+    "ElementTypeParam:56:1:1.description": "PK",
+    "ElementTypeParam:56:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:56:1:2.description": "Entrance Tunnel Distance (m)",
+
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
     "synoptic.layer.CAMARA": "C&aacute;maras",
@@ -805,6 +812,8 @@ var i18_es = {
     "menu.dashboard.global": "Global",
     "menu.dashboard.tunnel": "T&uacute;nel",
     "menu.dashboard.cts": "CT ITS",
+    "menu.dashboard.unifilar_csa" : "UNIFILAR CSA",
+    "menu.dashboard.unifilar_csb" : "UNIFILAR CSB",
     "menu.dashboard.list": "Listado",
     "menu.tables.title": "Tablas",
     "menu.tables.equipments": "Equipos",

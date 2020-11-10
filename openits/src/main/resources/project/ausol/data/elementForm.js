@@ -410,4 +410,14 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
+	"ElementType:56": {
+		"rows":[
+			"ElementTypeParam:56:1:1", 
+			"ElementTypeParam:56:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
 }

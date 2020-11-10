@@ -374,3 +374,105 @@ export let SVG_55_CT = '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id
 '<path d="m 569.588,131.28 c 0,0 -232.057,-106.978 -232.082,-106.978 -1.236,-0.563 -2.607,-0.881 -4.064,-0.881 -1.15,0 -2.227,0.208 -3.256,0.563 -0.023,0 -323.637,116.524 -323.637,116.524 -3.868,1.396 -6.462,5.067 -6.462,9.192 L 0,191.794 c 0,3.011 1.383,5.851 3.746,7.711 1.75,1.371 3.868,2.093 6.034,2.093 0.796,0 1.579,-0.098 2.362,-0.281 l 6.903,-1.726 -0.122,230.419 c 0,4.101 2.546,7.772 6.401,9.18 l 304.763,112.045 c 1.053,0.392 2.18,0.612 3.367,0.612 1.48,0 2.863,-0.343 4.137,-0.931 L 552.722,449.691 c 3.414,-1.628 5.617,-5.067 5.617,-8.861 V 193.19 l 4.186,1.322 c 0.955,0.306 1.959,0.465 2.963,0.465 2.057,0 4.064,-0.649 5.766,-1.885 2.533,-1.836 4.014,-4.786 4.014,-7.907 v -45.031 c 0.011,-3.806 -2.215,-7.283 -5.68,-8.874 z M 323.662,528.04 163.943,469.3 V 301.71 c 0,-1.763 -1.396,-3.207 -3.158,-3.269 l -48.042,-1.518 c -0.881,-0.024 -1.738,0.294 -2.375,0.918 -0.636,0.612 -0.991,1.457 -0.991,2.338 V 449.226 L 38.495,423.166 38.629,194.731 323.662,123.996 Z M 445.854,396.729 c 0,1.493 -1.027,2.804 -2.459,3.171 l -52.217,13.341 c -0.27,0.074 -0.551,0.11 -0.807,0.11 -0.723,0 -1.408,-0.244 -2.008,-0.697 -0.783,-0.612 -1.236,-1.567 -1.236,-2.57 V 304.88 c 0,-1.75 1.383,-3.183 3.133,-3.256 l 52.217,-2.13 c 0.881,-0.012 1.75,0.294 2.387,0.906 0.623,0.611 1.004,1.469 1.004,2.35 v 93.979 z m 0,-125.289 c 0,0.881 -0.354,1.738 -1.002,2.338 -0.602,0.6 -1.434,0.918 -2.277,0.918 -0.025,0 -0.074,0 -0.098,0 L 390.26,273.08 c -1.773,-0.062 -3.158,-1.506 -3.158,-3.268 v -105.19 c 0,-1.003 0.453,-1.946 1.236,-2.57 0.797,-0.612 1.824,-0.832 2.803,-0.6 l 52.217,12.852 c 1.457,0.355 2.484,1.665 2.484,3.17 v 93.967 h 0.012 z m 87.113,103.024 c 0,1.494 -1.004,2.804 -2.436,3.171 l -32.705,8.359 c -0.258,0.073 -0.527,0.099 -0.809,0.099 -0.723,0 -1.408,-0.233 -1.982,-0.686 -0.809,-0.625 -1.273,-1.567 -1.273,-2.57 V 300.56 c 0,-1.751 1.383,-3.195 3.133,-3.269 l 32.682,-1.322 c 0.906,-0.012 1.75,0.294 2.387,0.906 0.648,0.624 1.004,1.469 1.004,2.35 v 75.239 z m 0,-101.053 c 0,0.881 -0.355,1.738 -0.98,2.337 -0.623,0.588 -1.432,0.918 -2.275,0.918 -0.049,0 -0.074,0 -0.123,0 l -32.68,-1.09 c -1.775,-0.061 -3.158,-1.505 -3.158,-3.268 v -81.457 c 0,-1.003 0.453,-1.946 1.248,-2.57 0.795,-0.612 1.811,-0.833 2.803,-0.6 l 32.682,8.042 c 1.455,0.355 2.484,1.665 2.484,3.17 v 74.518 z"' +
 'id="path12" />' +
 '</g></g></g></g></g>';
+
+export let SVG_56_UNIFILAR = `<svg
+xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:cc="http://creativecommons.org/ns#"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:svg="http://www.w3.org/2000/svg"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+width="210mm"
+height="297mm"
+viewBox="0 0 210 297"
+version="1.1"
+id="svg8"
+inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+sodipodi:docname="unifilar.svg">
+<defs
+  id="defs2">
+ <linearGradient
+    inkscape:collect="always"
+    id="linearGradient871"
+    osb:paint="gradient">
+   <stop
+      style="stop-color:#000000;stop-opacity:1;"
+      offset="0"
+      id="stop867" />
+   <stop
+      style="stop-color:#000000;stop-opacity:0;"
+      offset="1"
+      id="stop869" />
+ </linearGradient>
+ <linearGradient
+    id="linearGradient863"
+    osb:paint="solid">
+   <stop
+      style="stop-color:#000000;stop-opacity:1;"
+      offset="0"
+      id="stop861" />
+ </linearGradient>
+ <linearGradient
+    id="linearGradient855"
+    osb:paint="solid">
+   <stop
+      style="stop-color:#000000;stop-opacity:1;"
+      offset="0"
+      id="stop853" />
+ </linearGradient>
+ <linearGradient
+    id="linearGradient839"
+    osb:paint="solid">
+   <stop
+      style="stop-color:#000000;stop-opacity:1;"
+      offset="0"
+      id="stop837" />
+ </linearGradient>
+</defs>
+<sodipodi:namedview
+  id="base"
+  pagecolor="#ffffff"
+  bordercolor="#666666"
+  borderopacity="1.0"
+  inkscape:pageopacity="0.0"
+  inkscape:pageshadow="2"
+  inkscape:zoom="0.35"
+  inkscape:cx="-150"
+  inkscape:cy="560"
+  inkscape:document-units="mm"
+  inkscape:current-layer="layer1"
+  inkscape:document-rotation="0"
+  showgrid="false"
+  inkscape:window-width="1920"
+  inkscape:window-height="1017"
+  inkscape:window-x="1912"
+  inkscape:window-y="-8"
+  inkscape:window-maximized="1" />
+<metadata
+  id="metadata5">
+ <rdf:RDF>
+   <cc:Work
+      rdf:about="">
+     <dc:format>image/svg+xml</dc:format>
+     <dc:type
+        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+     <dc:title></dc:title>
+   </cc:Work>
+ </rdf:RDF>
+</metadata>
+<g
+  inkscape:label="Capa 1"
+  inkscape:groupmode="layer"
+  id="layer1">
+ <rect
+    style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:1.965;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+    id="rect879"
+    width="111.125"
+    height="21.922617"
+    x="6.8035712"
+    y="24.190477" />
+</g>
+</svg>
+`;

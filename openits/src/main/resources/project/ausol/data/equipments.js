@@ -1374,5 +1374,32 @@ export let columnsElementConfig = {
 			}
 		}
 	},
+	"ElementType:56": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:56:1:1": {
+				"header": [ $.i18n("ElementTypeParam:56:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:56:1:2": {
+				"header": [ $.i18n("ElementTypeParam56:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+             
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+            "ElementTypeParam:56:2:1": { //"status
+				"header": [ $.i18n("ElementTypeParam:56:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		}
+	},
 }
 

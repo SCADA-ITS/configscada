@@ -334,9 +334,58 @@ export let synopticData= [
 					"items": ["Element:55:1"],
 					"translation_key": "",
 					"visibility": "visible"
+			},
+			"UNIFILAR" : {
+				"items": ["Element:56:1"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 
-		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" }
+		"Element:56:1": { "x": 1510,   "y": 65, "width": 200, "height": 200,  "alias": "RV-CSA" }
+	},
+	{
+		"id":"synopticUnifilarCsa",
+		"parentId":"Element:7:1",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "UNIFlLAR-RIO-VERDE-2-CABLE.svg",
+			"UNIFILAR_CSA_ICONO": "UNIFlLAR-RIO-VERDE-2-ICONO.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"UNIFILAR_CSA_ICONO": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+		},
+	},
+	{
+		"id":"synopticUnifilarCsb",
+		"parentId":"Element:7:1",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "UNIFlLAR-RIO-VERDE-1-1-CABLE.svg",
+			"UNIFILAR_CSB_ICONO": "UNIFlLAR-RIO-VERDE-1-1-ICONO.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"UNIFILAR_CSB_ICONO": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+		},
 	}
 ];
