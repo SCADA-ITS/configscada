@@ -804,6 +804,7 @@ var i18_es = {
     "menu.dashboard.line": "Lineal",
     "menu.dashboard.global": "Global",
     "menu.dashboard.tunnel": "T&uacute;nel",
+    "menu.dashboard.cts": "CT ITS",
     "menu.dashboard.list": "Listado",
     "menu.tables.title": "Tablas",
     "menu.tables.equipments": "Equipos",

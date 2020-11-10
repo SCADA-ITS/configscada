@@ -322,7 +322,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "tunel.svg"
+			"BASE_LAYER": "CT-RIO-VERDE-PLANTA 1.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
