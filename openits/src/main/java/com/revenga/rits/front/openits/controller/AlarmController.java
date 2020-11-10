@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revenga.rits.front.openits.bo.AlarmBO;
 import com.revenga.rits.front.openits.bo.AlarmConfigBO;
 import com.revenga.rits.front.openits.bo.AlarmLevelBO;
+import com.revenga.rits.front.openits.bo.AlarmThresoldOperationBO;
 import com.revenga.rits.front.openits.bo.AlarmTypeBO;
 
 import io.swagger.annotations.Api;
@@ -37,6 +38,9 @@ public class AlarmController {
 	
 	@Autowired
 	AlarmLevelBO alarmLevelBO;
+	
+	@Autowired
+	AlarmThresoldOperationBO alarmThresoldOperationBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all alarms", notes = "Get all alarms")
@@ -129,5 +133,25 @@ public class AlarmController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(alarmLevelBO.getAlarmLevel(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_threshold_operations")
+	@ApiOperation(value = "Get all alarm threshold operations", notes = "Get all alarm threshold operations")
+	public ResponseEntity<Object> getAlarmThresholdOperations() {
+		
+		return new ResponseEntity<>(alarmThresoldOperationBO.getAlarmThresholdOperations(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_threshold_operation/{id}")
+	@ApiOperation(value = "Get alarm threshold operation by id", notes = "Get alarm threshold operation by id")
+	public ResponseEntity<Object> getAlarmThresholdOperation(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmThresholdOperation by id",
+			example = "AlarmThresholdOperation:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmThresoldOperationBO.getAlarmThresholdOperation(id), HttpStatus.OK);
 	}
 }

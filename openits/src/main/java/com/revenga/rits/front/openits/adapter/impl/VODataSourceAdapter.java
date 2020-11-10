@@ -51,6 +51,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ALARM_LEVEL = "data.source.get_alarm_level";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIGS = "data.source.get_alarm_configs";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIG = "data.source.get_alarm_config";
+	public static final String DATA_SOURCE_GET_ALARM_THRESOLD_OPERATIONS = "data.source.get_alarm_threshold_operations";
+	public static final String DATA_SOURCE_GET_ALARM_THRESOLD_OPERATION = "data.source.get_alarm_threshold_operation";
 	public static final String DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = "data.source.get_elements_by_element_type";
 	public static final String DATA_SOURCE_GET_ELEMENTS = "data.source.get_elements";
 	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY = "data.source.get_elements_array";
@@ -108,6 +110,10 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetAlarmConfigs;
 	@Getter
 	private Integer dataSourceGetAlarmConfig;
+	@Getter
+	private Integer dataSourceGetAlarmThresholdOperations;
+	@Getter
+	private Integer dataSourceGetAlarmThresholdOperation;
 	@Getter
 	private Integer dataSourceGetElementsByElementType;
 	@Getter
@@ -195,6 +201,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVEL));
 		this.dataSourceGetAlarmConfigs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS));
 		this.dataSourceGetAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIG));
+		this.dataSourceGetAlarmThresholdOperations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_THRESOLD_OPERATIONS));
+		this.dataSourceGetAlarmThresholdOperation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_THRESOLD_OPERATION));
 		this.dataSourceGetElementsByElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE));
 		this.dataSourceGetElements = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS));
 		this.dataSourceGetElementsArray = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY));
