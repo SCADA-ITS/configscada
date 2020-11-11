@@ -700,7 +700,7 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
-			
+			/*
 			try {
 			// STREAM     getElementType(elementIdString)
 				if(elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.ELEMENT_TYPE_2_CAM) { //"ElementType:2"){
@@ -764,7 +764,9 @@ export default class ElementForm {
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
-			}			
+			}	
+			
+			*/
 			let valuesList = {};
 			
 			//BODY
