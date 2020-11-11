@@ -140,7 +140,7 @@ export const ELEMENT_TYPE = {
     "ElementType:28" :{ id: "ElementType:28", uiType: UI_ELEMENT_TYPE_MATRIX, value: 28, scale_x: 28, scale_y: 28},
     "ElementType:29" :{ id: "ElementType:29", uiType: UI_ELEMENT_TYPE_MATRIX, value: 29, scale_x: 28, scale_y: 28},
     "ElementType:30" :{ id: "ElementType:30", uiType: UI_ELEMENT_TYPE_MATRIX, value: 30, scale_x: 28, scale_y: 28},
-    "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 28, scale_y: 28},
+    "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 45, scale_y: 45},
     "ElementType:32" :{ id: "ElementType:32", uiType: UI_ELEMENT_TYPE_MATRIX, value: 32, scale_x: 28, scale_y: 28},
     "ElementType:33" :{ id: "ElementType:33", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 33, scale_x: 28, scale_y: 28},
     "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_STATIC, value: 34, scale_x: 28, scale_y: 28},

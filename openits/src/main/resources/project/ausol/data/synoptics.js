@@ -342,7 +342,7 @@ export let synopticData= [
 			}
 		},
 
-		"Element:56:1": { "x": 1510,   "y": 65, "width": 200, "height": 200,  "alias": "RV-CSA" }
+		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" }
 	},
 	{
 		"id":"synopticUnifilarCsa",
@@ -366,7 +366,7 @@ export let synopticData= [
 			},
 		},
 	},
-	{
+	/*{
 		"id":"synopticUnifilarCsb",
 		"parentId":"Element:7:1",
 		"ExclusiveLayers": false,
@@ -387,5 +387,5 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 		},
-	}
+	}*/
 ];

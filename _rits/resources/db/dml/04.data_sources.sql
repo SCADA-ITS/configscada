@@ -66,7 +66,15 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (46, 1, 'getSystemPermissions', 'getSystemPermissions', 'SystemPermissionVO', 'id', true, true),
 (47, 1, 'getSystemPermission', 'getSystemPermission', 'SystemPermissionVO', 'id', true, true),
 (48, 1, 'getRoads', 'getRoads', 'RoadVO', 'id', true, true),
-(49, 1, 'getRoad', 'getRoad', 'RoadVO', 'id', true, true);
+(49, 1, 'getRoad', 'getRoad', 'RoadVO', 'id', true, true),
+(50, 1, 'getStretchs', 'getStretchs', 'StretchVO', 'id', true, true),
+(51, 1, 'getStretch', 'getStretch', 'StretchVO', 'id', true, true),
+(52, 1, 'getStretchByRoad', 'getStretchByRoad', 'StretchVO', 'id', true, true),
+(53, 1, 'getIncidents', 'getIncidents', 'ImsIncidentVO', 'id', true, true),
+(54, 1, 'getIncident', 'getIncident', 'ImsIncidentVO', 'id', true, true),
+(55, 1, 'getIncidentByType', 'getIncidentByType', 'ImsIncidentVO', 'id', true, true),
+(56, 1, 'getIncidentTypes', 'getIncidentTypes', 'ImsIncidentTypeVO', 'id', true, true),
+(57, 1, 'getIncidentType', 'getIncidentType', 'ImsIncidentTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -314,4 +322,44 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (49, 1, 'http://localhost:8082/graphql'),
 (49, 2, 'getRoad'),
 (49, 3, 'roadId'),
-(49, 4, '{id alias description roadType{id}}');
+(49, 4, '{id alias description roadType{id}}'),
+
+(50, 1, 'http://localhost:8082/graphql'),
+(50, 2, 'getStretchs'),
+(50, 3, ''),
+(50, 4, '{id alias description pkIni pkEnd lanes stretchType{id} road{id roadType{id}}}'),
+
+(51, 1, 'http://localhost:8082/graphql'),
+(51, 2, 'getStretch'),
+(51, 3, 'stretchId'),
+(51, 4, '{id alias description pkIni pkEnd lanes stretchType{id} road{id roadType{id}}}'),
+
+(52, 1, 'http://localhost:8082/graphql'),
+(52, 2, 'getStretchByRoad'),
+(52, 3, 'roadId'),
+(52, 4, '{id alias description pkIni pkEnd lanes stretchType{id} road{id roadType{id}}}'),
+
+(53, 1, 'http://localhost:8082/graphql'),
+(53, 2, 'getIncidents'),
+(53, 3, ''),
+(53, 4, '{id alias description userDefined{id} incidentType{id} roadImpact{id} location{id} alarms{id} incidentLogs{id} initDate incidentSource{id} severity incidentTypeState{id} incidentValues{id} incidentDocuments{id}}'),
+
+(54, 1, 'http://localhost:8082/graphql'),
+(54, 2, 'getIncident'),
+(54, 3, 'incidentId'),
+(54, 4, '{id alias description userDefined{id} incidentType{id} roadImpact{id} location{id} alarms{id} incidentLogs{id} initDate incidentSource{id} severity incidentTypeState{id} incidentValues{id} incidentDocuments{id}}'),
+
+(55, 1, 'http://localhost:8082/graphql'),
+(55, 2, 'getIncidentByType'),
+(55, 3, 'incidentTypeId'),
+(55, 4, '{id alias description userDefined{id} incidentType{id} roadImpact{id} location{id} alarms{id} incidentLogs{id} initDate incidentSource{id} severity incidentTypeState{id} incidentValues{id} incidentDocuments{id}}'),
+	
+(56, 1, 'http://localhost:8082/graphql'),
+(56, 2, 'getIncidentTypes'),
+(56, 3, ''),
+(56, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}'),
+
+(57, 1, 'http://localhost:8082/graphql'),
+(57, 2, 'getIncidentType'),
+(57, 3, 'incidentTypeId'),
+(57, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}');

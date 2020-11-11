@@ -49,14 +49,4 @@ public class ElementBO {
 				.getById(voDataSourceAdapter.getDataSourceGetElement()).getFieldId(), element));
 	}
 	
-	public List<Map<String, Object>> getElementValueStates() {
-		
-		List<Map<String, Object>> elementValueStates = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementValueStates(), null);
-		
-		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementValueStates()).getFieldId(), elementValueStates));
-	}
-	
-	
 }

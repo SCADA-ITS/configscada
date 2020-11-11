@@ -78,6 +78,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_LOCATION = "data.source.get_location";
 	public static final String DATA_SOURCE_GET_ROADS = "data.source.get_roads";
 	public static final String DATA_SOURCE_GET_ROAD = "data.source.get_road";
+	public static final String DATA_SOURCE_GET_STRETCHS = "data.source.get_stretchs";
+	public static final String DATA_SOURCE_GET_STRETCH = "data.source.get_stretch";
+	public static final String DATA_SOURCE_GET_STRETCH_BY_ROAD = "data.source.get_stretch_by_road";
 	public static final String DATA_SOURCE_GET_PLANS = "data.source.get_plans";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
@@ -87,6 +90,12 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ROLE = "data.source.get_role";
 	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSIONS = "data.source.get_system_permissions";
 	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSION = "data.source.get_system_permission";
+	public static final String DATA_SOURCE_GET_INCIDENTS = "data.source.get_incidents";
+	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
+	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPES = "data.source.get_incident_types";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPE = "data.source.get_incident_type";
+	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
@@ -176,6 +185,12 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetRoad;
 	@Getter
+	private Integer dataSourceGetStretchs;
+	@Getter
+	private Integer dataSourceGetStretch;
+	@Getter
+	private Integer dataSourceGetStretchByRoad;
+	@Getter
 	private Integer dataSourceGetPlans;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
@@ -193,6 +208,16 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetSystemPermissions;
 	@Getter
 	private Integer dataSourceGetSystemPermission;
+	@Getter
+	private Integer dataSourceGetIncidents;
+	@Getter
+	private Integer dataSourceGetIncident;
+	@Getter
+	private Integer dataSourceGetIncidentByType;
+	@Getter
+	private Integer dataSourceGetIncidentTypes;
+	@Getter
+	private Integer dataSourceGetIncidentType;
 	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
@@ -261,6 +286,9 @@ public class VODataSourceAdapter {
 		this.dataSourceGetLocation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATION));
 		this.dataSourceGetRoads = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROADS));
 		this.dataSourceGetRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD));
+		this.dataSourceGetStretchs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCHS));
+		this.dataSourceGetStretch = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH));
+		this.dataSourceGetStretchByRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH_BY_ROAD));
 		this.dataSourceGetPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLANS));
 		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
@@ -270,6 +298,11 @@ public class VODataSourceAdapter {
 		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
 		this.dataSourceGetSystemPermissions = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSIONS));
 		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
+		this.dataSourceGetIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS));
+		this.dataSourceGetIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT));
+		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
+		this.dataSourceGetIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPES));
+		this.dataSourceGetIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));

@@ -436,13 +436,13 @@ export let synopticData= [
 		"Element:24:10": { "x": 1209, "y": 363,  "width": 68, "height": 99, "alias": "NRLKD11L-1"  },
 		"Element:29:6": { "x": 1278, "y": 363,  "width": 68, "height": 99, "alias": "NRLKD11L-2"  },
 		"Element:24:11": { "x": 1346, "y": 363,  "width": 68, "height": 99, "alias": "NRLKD11L-3"  },	*/	
-		"Element:31:3": { "x": 1209, "y": 254,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
-		"Element:31:5": { "x": 1618, "y": 42,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
+		"Element:31:3": { "x": 1215, "y": 274,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
+		"Element:31:5": { "x": 1623, "y": 52,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
 		
 		// S4-S5 P
-		"Element:31:1": { "x": 114, "y": 971,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
-		"Element:31:2": { "x": 114, "y": 712,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
-		"Element:31:4": { "x": 114, "y": 480,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
+		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
+		"Element:31:2": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
+		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
 		
 		
 		

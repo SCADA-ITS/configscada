@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revenga.rits.front.openits.bo.RoleBO;
+import com.revenga.rits.front.openits.bo.SystemPermissionBO;
 import com.revenga.rits.front.openits.bo.UserBO;
 
 import io.swagger.annotations.Api;
@@ -29,6 +31,12 @@ public class UserController {
 
 	@Autowired
 	UserBO userBO;
+	
+	@Autowired
+	RoleBO roleBO;
+	
+	@Autowired
+	SystemPermissionBO systemPermissionBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all users", notes = "Get all users")
@@ -87,7 +95,7 @@ public class UserController {
 	@ApiOperation(value = "Get roles", notes = "Get roles")
 	public ResponseEntity<Object> getRoles() {
 		
-		return new ResponseEntity<>(userBO.getRoles(), HttpStatus.OK);
+		return new ResponseEntity<>(roleBO.getRoles(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/role/{id}")
@@ -100,14 +108,14 @@ public class UserController {
 			example = "Role:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(userBO.getRole(id), HttpStatus.OK);
+		return new ResponseEntity<>(roleBO.getRole(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/systemPermissions")
 	@ApiOperation(value = "Get system permissions", notes = "Get system permissions")
 	public ResponseEntity<Object> getSystemPermissions() {
 		
-		return new ResponseEntity<>(userBO.getSystemPermissions(), HttpStatus.OK);
+		return new ResponseEntity<>(systemPermissionBO.getSystemPermissions(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/systemPermission/{id}")
@@ -120,6 +128,6 @@ public class UserController {
 			example = "SystemPermission:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(userBO.getSystemPermission(id), HttpStatus.OK);
+		return new ResponseEntity<>(systemPermissionBO.getSystemPermission(id), HttpStatus.OK);
 	}
 }
