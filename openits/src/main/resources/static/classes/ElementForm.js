@@ -781,10 +781,16 @@ export default class ElementForm {
 			//MEASURES
 			try {
 				if(data.elementValues) {
+					// console.warn("values: ")
+					// console.warn(data.elementValues)
 					data.elementValues.forEach(item => {
-						let value = null;		
-						value = item.value;	
-						valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
+						// console.warn("item: ")
+						// console.warn(item)
+						if(item){
+							let value = null;		
+							value = item.value;	
+							valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
+						}
 				  });
 				}
 

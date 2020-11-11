@@ -7,6 +7,7 @@ const UI_ELEMENT_TYPE_DEFAULT="default";
 const UI_ELEMENT_TYPE_GENERIC="generic";
 const UI_ELEMENT_TYPE_MATRIX="matrix";
 const UI_ELEMENT_TYPE_STATIC="static";
+const UI_ELEMENT_TYPE_TABLE="table";
 
 const ELEMENT_FORM_TAB_FORM="form";
 const ELEMENT_FORM_TAB_VIDEO="video";

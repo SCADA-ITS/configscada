@@ -760,12 +760,12 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"ETD": {
-				"items": ["Element:4:1"],
+				"items": ["Element:4:3"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
 		},
-		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "DETECTOR_1",
+		"Element:4:3": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "DETECTOR_1",
 			"values": [
 				{name: "etd_total_intensity", label: "I (V/h)"},
 				{name: "etd_average_speed", label: "V (K/h)"},
