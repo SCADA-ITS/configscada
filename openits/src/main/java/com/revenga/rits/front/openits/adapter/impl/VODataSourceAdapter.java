@@ -90,6 +90,10 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ROLE = "data.source.get_role";
 	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSIONS = "data.source.get_system_permissions";
 	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSION = "data.source.get_system_permission";
+	public static final String DATA_SOURCE_GET_INCIDENTS = "data.source.get_incidents";
+	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
+	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
+	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
@@ -203,6 +207,12 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetSystemPermission;
 	@Getter
+	private Integer dataSourceGetIncidents;
+	@Getter
+	private Integer dataSourceGetIncident;
+	@Getter
+	private Integer dataSourceGetIncidentByType;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -282,6 +292,9 @@ public class VODataSourceAdapter {
 		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
 		this.dataSourceGetSystemPermissions = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSIONS));
 		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
+		this.dataSourceGetIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS));
+		this.dataSourceGetIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT));
+		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
