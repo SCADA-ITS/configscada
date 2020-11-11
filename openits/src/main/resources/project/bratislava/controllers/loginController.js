@@ -161,7 +161,15 @@ webix.ready(function() {
                                                                 try {
                                                                     webix.storage.session.put("app_user_permissions", permissions);
                                                                 } catch {}
-                                                                window.location = "./home.html";
+                                                                 if (checkUserPermission(RULE.LOGIN_ROLE)){
+                                                                    window.location = "./home.html";
+                                                                }else{
+                                                                    webix.alert({title:"USER_LOGIN_DENY", type:"alert-success", text:"ERROR"})
+                                                                    webix.storage.session.put("loginSession", "");
+                                                                    webix.storage.session.put("userId", "");
+                                                                    webix.storage.session.put("app_user_name", "");
+                                                                    webix.storage.session.put("app_user_permissions", "");
+                                                                }
                                                             });
                                                             
                                                             break;

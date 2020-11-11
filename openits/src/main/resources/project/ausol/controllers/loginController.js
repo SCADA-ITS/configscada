@@ -1,3 +1,6 @@
+
+import {RULE} from "../data/GLOBAL_PROPERTIES.js"
+
 webix.ready(function() {
 
     const language = webix.storage.session.get("app_user_language");
@@ -115,7 +118,8 @@ webix.ready(function() {
                                             if (form.validate()) {
                                                 const encodedString = btoa((form.elements.user.data.value + ':' + form.elements.password.data.value).toString('utf8')).toString('base64');
                                                 webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "login").then(function(data){
-                                                    
+                                                
+
                                                     switch (data.json().access) {
                                                         case "ALLOWED":
                                                             webix.storage.session.put("loginSession", data.json().id);
@@ -158,7 +162,16 @@ webix.ready(function() {
                                                                 try {
                                                                     webix.storage.session.put("app_user_permissions", permissions);
                                                                 } catch {}
-                                                                window.location = "./home.html";
+
+                                                                if (checkUserPermission(RULE.LOGIN_ROLE)){
+                                                                    window.location = "./home.html";
+                                                                }else{
+                                                                    webix.alert({title:"USER_LOGIN_DENY", type:"alert-success", text:"ERROR"})
+                                                                    webix.storage.session.put("loginSession", "");
+                                                                    webix.storage.session.put("userId", "");
+                                                                    webix.storage.session.put("app_user_name", "");
+                                                                    webix.storage.session.put("app_user_permissions", "");
+                                                                }
                                                             });
                                                             
                                                             break;

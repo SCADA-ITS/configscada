@@ -75,29 +75,32 @@ export default class Synoptic {
   processStompMessageWithFallback(message) {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
-      // console.warn(elementsMap);
       obj.basicElementsVO.forEach((element) => {
-        // console.warn("Entra: " + element.id);
-        if(elementsMap && elementsMap.get(element.id)){
-          elementsMap.get(element.id).updateElement(element);
-          elementsMap.get(element.id).updatePaint();
-          // console.warn("Se cocina");
-        }else{
-          let synopticElement = new SynopticElement(element);
-          synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
-          elementsMap.set(synopticElement.element.id, synopticElement);
+        try {
+          // console.warn(element);
+          // console.warn(elementsMap);
+            if(elementsMap && elementsMap.get(element.id)){
+              elementsMap.get(element.id).updateElement(element);
+              elementsMap.get(element.id).updatePaint();
+            }else{
+              let synopticElement = new SynopticElement(element);
+              synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
+              elementsMap.set(synopticElement.element.id, synopticElement);
+            }
+        } catch (error) {
+          console.log(error);
+          console.log("Retrying with GraphQL");
+          if(typeof element != 'undefined' && elementsMap && elementsMap.get(element.id)){
+            elementsMap.get(element.id).errorPaint();
+          }else{
+            let synopticElement = new SynopticElement(element);
+            synopticElement.errorPaint();
+            elementsMap.set(element.id, synopticElement);
+          }
         }
       });
     } catch (err) {
       console.error(err);
-      console.warn("Retrying with GraphQL");
-      if(typeof element != 'undefined' && elementsMap && elementsMap.get(element.id)){
-        elementsMap.get(element.id).errorPaint();
-      }else{
-        let synopticElement = new SynopticElement(element);
-        synopticElement.errorPaint();
-        elementsMap.set(element.id, synopticElement);
-      }
     }
   }
 

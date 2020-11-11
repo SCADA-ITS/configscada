@@ -177,5 +177,6 @@ export const RULE = {
   COMMAND_ACTION: "command_action",
   ALARM_RECOGNIZE: "alarm_recognize",
   EDIT_USER: "edit_user",
-  EDIT_ROLE: "edit_role"
+  EDIT_ROLE: "edit_role",
+  LOGIN_ROLE: "login"
 }

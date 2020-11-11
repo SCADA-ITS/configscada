@@ -186,17 +186,12 @@ export function generateIcon(element, suffix = "") {
         n_elements++;
         subindex++;
       }
-
       subpanel_y += last_subpanel_height;
-      
     }
-
-    
     cummulative_width += panel_width;
-    
   }
   
-  let foreground_rect = s.rect(0, 0, total_width, total_height);
+  let foreground_rect = s.rect(0, 0, total_width, total_height).attr({id: element.id + suffix + ":stroke0"});
   foreground_rect.attr("fill", "transparent");
   foreground_rect.attr("stroke", color);
   foreground_rect.attr("stroke-width", "3px");
@@ -225,15 +220,12 @@ export function changeMatrixPanelIcon(element, suffix = "") {
 
 export function updateMatrixPanelIcon(element, suffix = "") {
   // search in the values for an id greater than 1001
-
   for(let i=0; i<element.elementValues.length; i++) {
     let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
 
     if(elementTypeParam > 1000) {
       let picToShow = element.elementValues.find(
-        (ic) =>
-          elementTypeMap.getElementTypeParam(ic.id) ==
-          elementTypeParam.toString() + ":2"
+        (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"
       );
 
       let subpanelType = "";
@@ -248,29 +240,14 @@ export function updateMatrixPanelIcon(element, suffix = "") {
       if(subpanelType == "graphical") {
         if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
           if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
-            document
-              .getElementById(element.id + suffix + ":" + elementTypeParam)
-              .setAttribute(
-                "href",
-                "data:image/png;base64," + availablePictos[picToShow.value].base64
-              );
+            document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
           } else {
-            document
-              .getElementById(element.id + suffix + ":" + elementTypeParam)
-              .setAttribute(
-                "href",
-                "data:image/png;base64," + availablePictos["undefined"].base64
-              );
+            document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
           }
         } 
         else {
             if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-              document
-              .getElementById(element.id + suffix + ":" + elementTypeParam)
-                .setAttribute(
-                  "href",
-                  "data:image/png;base64," + availablePictos["undefined"].base64
-                );
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
             }
         }
       } else if(subpanelType == "text") {  // text
@@ -292,5 +269,19 @@ export function updateMatrixPanelIcon(element, suffix = "") {
         }
       }
     }
+  }
+
+   // changes the color based on the status
+   let elementState;
+   if (typeof element != "undefined") {
+     elementState = element.state;
+   } else {
+     elementState = null;
+   }
+  let color = ICON_COLOR[elementState];
+  if(Snap.select("#"+element.id + suffix +":stroke0") && Snap.select("#"+element.id + suffix +":stroke0").node && Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke){
+    console.warn("#"+element.id + suffix +":stroke0");
+    console.warn(color);
+    Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke.value=color;
   }
 }
