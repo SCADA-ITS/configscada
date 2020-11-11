@@ -168,7 +168,7 @@ export function getElementIcon(element, suffix="") {
         (ic) => ic.state === elementState
       );
     } else {
-      elem_icon = staticsIcons["ElementType:33"]["state"].find(
+      elem_icon = staticsIcons["33"]["state"].find(
         (ic) => ic.state === elementState
       );
     }
@@ -362,9 +362,12 @@ function updateIcon(element, suffix="") {
     params={};
     ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
       let key = Object.keys(item)[0];
-      let tempValue = element.elementValues.find(
-        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-      );
+      let tempValue;
+      if(element.elementValues){
+        tempValue = element.elementValues.find(
+          (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+        );
+      }
       if(typeof tempValue != 'undefined' && tempValue){
         params[key]=tempValue.value;
         if(document.getElementById(element.id + suffix + ":Value") != null){

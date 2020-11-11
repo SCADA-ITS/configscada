@@ -1,5 +1,4 @@
-import ElementForm from "../classes/ElementForm.js";
-import ElementChildsList from "../classes/ElementChildsList.js";
+import ElementWindow from "../classes/ElementWindow.js";
 import {
   generateIcon,
   getElementIcon,
@@ -146,57 +145,17 @@ export default class synopticElement {
             }
           } else {
             let elementId = this.element.id;
+            let elementType = this.element.elementType.id;
             el.click(function (e) {
               try {
+                let elementWindow = new ElementWindow(elementId,elementType);
                 if ($$("win" + elementId) != null) {
                   $$("win" + elementId).destructor();
-                  let elementForm = new ElementForm(elementId, columnsElementFormList);
-                  webix.ui({
-                      id: "win" + elementId,
-                      view: "window",
-                      move: true,
-                      close: true,
-                      position: "right",
-                      body: {id: "cuerpo"+elementForm.id,
-                      cols:[ elementForm.getComponent()]},
-                      on: {
-                        onDestruct: function(obj){
-                          //elementForm.disconnect();
-                        },
-                        onHide: function(obj){
-                          elementForm.disconnect();
-                          $$("win" + elementId).destructor();
-                        },
-                        onShow: function(obj){
-                          let hijos = new ElementChildsList(elementForm.id);
-                          hijos.getComponent();
-                        }
-                      }
-                    }).show();
+                  
+                  webix.ui(elementWindow.getComponent()).show();
                 } else {
-                  let elementForm = new ElementForm(elementId, columnsElementFormList);
-                  webix.ui({
-                      id: "win" + elementId,
-                      view: "window",
-                      move: true,
-                      close: true,
-                      position: "right",
-                      body: {id: "cuerpo"+elementForm.id,
-                      cols:[ elementForm.getComponent()]},
-                      on: {
-                        onDestruct: function(obj){
-                          //elementForm.disconnect();
-                        },
-                        onHide: function(obj){
-                          elementForm.disconnect();
-                          $$("win" + elementId).destructor();
-                        },
-                        onShow: function(obj){
-                          let hijos = new ElementChildsList(elementForm.id);
-                          hijos.getComponent();
-                        }
-                      }
-                    }).show();
+                  
+                  webix.ui(elementWindow.getComponent()).show();
                 }
               } catch (e) {
                 console.error(e);
@@ -238,6 +197,9 @@ export default class synopticElement {
       if(element){
         for (let i in element) {
           if(i==="elementValues"){
+            if(typeof this.element[i] === 'undefined'){
+              this.element.elementValues=[];
+            }
             for (let j in element[i]) {
               this.element[i][j]=element[i][j];
             }

@@ -1667,4 +1667,8 @@ var i18_sk = {
     "cronUi.popup.yearsOpt04.01": "Every year between ",
     "cronUi.popup.yearsOpt04.02": " and ",
 
+    "element.window.tab.form": "Form",
+    "element.window.tab.video": "Video",
+    "element.window.tab.syn": "Synoptic"
+
 };

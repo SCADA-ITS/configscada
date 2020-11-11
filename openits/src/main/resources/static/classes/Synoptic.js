@@ -91,7 +91,7 @@ export default class Synoptic {
     } catch (err) {
       console.error(err);
       console.warn("Retrying with GraphQL");
-      if(elementsMap && elementsMap.get(element.id)){
+      if(typeof element != 'undefined' && elementsMap && elementsMap.get(element.id)){
         elementsMap.get(element.id).errorPaint();
       }else{
         let synopticElement = new SynopticElement(element);
@@ -234,8 +234,10 @@ export default class Synoptic {
       if(checkedElement != null) {
         if(checkedElements.includes(obj.id)) {
           checkedElement.style.opacity = 1;
+          checkedElement.setAttribute("visibility", "visible");
         } else {
           checkedElement.style.opacity = 0;
+          checkedElement.setAttribute("visibility", "hidden");
         }
       }
     });
@@ -280,19 +282,27 @@ export default class Synoptic {
     if(!id.match("Element")) {
       // checks if the base layer is selected and mantains its selection
       let baseLayerChecked = false;
-      if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
+      let roadLayerChecked = false;
+
+      if(synopticId.getChecked().includes("BASE_LAYER")) {
         baseLayerChecked = true;
       }
+
+      if(synopticId.getChecked().includes("ROAD")) {
+        roadLayerChecked = true;
+      }
+
       shouldICheck = false;
       // unselect all
       synopticId.uncheckAll();
       // (un)select the base layer
       if(baseLayerChecked) {
         synopticId.checkAll("BASE_LAYER");
-        // check if the ROAD layer exists and (un)checks
-        if(synopticId.data.exists("ROAD")) {
-          synopticId.checkAll("ROAD");
-        }
+      }
+
+      // check if the ROAD layer exists and (un)checks
+      if(synopticId.data.exists("ROAD") && roadLayerChecked) {
+        synopticId.checkAll("ROAD");
       }
       
       // select only the element/branch
@@ -308,8 +318,10 @@ export default class Synoptic {
         if(checkedElement != null) {
           if(checkedElements.includes(obj.id)) {
             checkedElement.style.opacity = 1;
+            checkedElement.setAttribute("visibility", "visible");
           } else {
             checkedElement.style.opacity = 0;
+            checkedElement.setAttribute("visibility", "hidden");
           }
         }
       });
@@ -328,43 +340,109 @@ export default class Synoptic {
       // find the id of the synoptic, replacing the SVG added by Snap.svg in the ID
       let synopticId = $$("element_tree" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
       let synopticButtonId = $$("element_tree_button" + document.getElementsByClassName("synoptic-svg")[0].id.replace("SVG", ''));
+
       if(!id.match("Element")) {
-        // checks if the base layer is selected and mantains its selection
-        let baseLayerChecked = false;
-        if(synopticId.getChecked().includes("BASE_LAYER") || synopticId.getChecked().includes("BASE_LAYER")) {
-          baseLayerChecked = true;
-        }
-        shouldICheck = false;
-        // unselect all
-        synopticId.uncheckAll();
-        
-        // (un)select the base layer
-        if(baseLayerChecked) {
-          synopticId.checkAll("BASE_LAYER");
-          // check if the ROAD layer exists and (un)checks
-          if(synopticId.data.exists("ROAD")) {
-            synopticId.checkAll("ROAD");
+        if(id == "BASE_LAYER" || id == "ROAD") {
+          // checks if the base layer is selected and mantains its selection
+          shouldICheck = false;
+
+          let baseLayerChecked = false;
+          let roadLayerChecked = false;
+
+          if(synopticId.getChecked().includes("BASE_LAYER")) {
+            baseLayerChecked = true;
           }
-        }
-        
-        // select only the element/branch
-        synopticId.checkAll(id);
-        shouldICheck = true;
   
-        // all the elements of the tree
-        let checkedElements = synopticId.getChecked();
-  
-        // loop all the tree items to find what items should be shown
-        synopticId.data.each(function(obj) { 
-          let checkedElement = document.getElementById(obj.id);
-          if(checkedElement != null) {
-            if(checkedElements.includes(obj.id)) {
-              checkedElement.style.opacity = 1;
+          if(synopticId.getChecked().includes("ROAD")) {
+            roadLayerChecked = true;
+          }
+
+          if(id == "BASE_LAYER") {
+            if(baseLayerChecked) {
+              synopticId.checkAll(id);
             } else {
-              checkedElement.style.opacity = 0;
+              synopticId.uncheckAll(id);
             }
           }
-        });
+  
+          if(id == "ROAD") {
+            if(roadLayerChecked) {
+              synopticId.checkAll(id);
+            } else {
+              synopticId.uncheckAll(id);
+            }
+          }
+
+          shouldICheck = true;
+
+          // all the elements of the tree
+          let checkedElements = synopticId.getChecked();
+    
+          // loop all the tree items to find what items should be shown
+          synopticId.data.each(function(obj) { 
+            let checkedElement = document.getElementById(obj.id);
+            if(checkedElement != null) {
+              if(checkedElements.includes(obj.id)) {
+                checkedElement.style.opacity = 1;
+                checkedElement.setAttribute("visibility", "visible");
+              } else {
+                checkedElement.style.opacity = 0;
+                checkedElement.setAttribute("visibility", "hidden");
+              }
+            }
+          });
+
+        } else {
+          shouldICheck = false;
+  
+          let baseLayerChecked = false;
+          let roadLayerChecked = false;
+
+          if(synopticId.getChecked().includes("BASE_LAYER")) {
+            baseLayerChecked = true;
+          }
+  
+          if(synopticId.getChecked().includes("ROAD")) {
+            roadLayerChecked = true;
+          }
+
+          // unselect all
+          synopticId.uncheckAll();
+          
+          // (un)select the base layer
+          if(baseLayerChecked) {
+            synopticId.checkAll("BASE_LAYER");
+          }
+
+          // check if the ROAD layer exists and (un)checks
+          if(roadLayerChecked) {
+            synopticId.checkAll("ROAD");
+          }
+          
+          
+          // select only the element/branch
+          synopticId.checkAll(id);
+          
+          shouldICheck = true;
+    
+          // all the elements of the tree
+          let checkedElements = synopticId.getChecked();
+    
+          // loop all the tree items to find what items should be shown
+          synopticId.data.each(function(obj) { 
+            let checkedElement = document.getElementById(obj.id);
+            if(checkedElement != null) {
+              if(checkedElements.includes(obj.id)) {
+                checkedElement.style.opacity = 1;
+                checkedElement.setAttribute("visibility", "visible");
+              } else {
+                checkedElement.style.opacity = 0;
+                checkedElement.setAttribute("visibility", "hidden");
+              }
+            }
+          });
+
+        }
       }
 
       // check if there are objects selected

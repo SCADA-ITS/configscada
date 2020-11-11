@@ -46,12 +46,12 @@ export const ELEMENT_TYPE = {
   ID_56_UNIFILAR : "ElementType:56",
 
   values: {
-    "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 1, scale_x: 28, scale_y: 28},
+    "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
     "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_STATIC, value: 2, scale_x: 28, scale_y: 28, 
       tabs:[
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
-          urlParamVideo:"ElementTypeParam:2:1"}
+          urlParamVideo:"ElementTypeParam:2:1:3"}
         },
         {ELEMENT_FORM_TAB_SYN: {
           idSynoptic:"metroTunnel"}
@@ -134,7 +134,7 @@ export const ELEMENT_TYPE = {
       ]
     },
     "ElementType:24" :{ id: "ElementType:24", uiType: UI_ELEMENT_TYPE_MATRIX, value: 24, scale_x: 28, scale_y: 28},
-    "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 25, scale_x: 28, scale_y: 28},
+    "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_STATIC, value: 25, scale_x: 28, scale_y: 28},
     "ElementType:26" :{ id: "ElementType:26", uiType: UI_ELEMENT_TYPE_MATRIX, value: 26, scale_x: 28, scale_y: 28},
     "ElementType:27" :{ id: "ElementType:27", uiType: UI_ELEMENT_TYPE_MATRIX, value: 27, scale_x: 28, scale_y: 28},
     "ElementType:28" :{ id: "ElementType:28", uiType: UI_ELEMENT_TYPE_MATRIX, value: 28, scale_x: 28, scale_y: 28},
@@ -143,16 +143,16 @@ export const ELEMENT_TYPE = {
     "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 28, scale_y: 28},
     "ElementType:32" :{ id: "ElementType:32", uiType: UI_ELEMENT_TYPE_MATRIX, value: 32, scale_x: 28, scale_y: 28},
     "ElementType:33" :{ id: "ElementType:33", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 33, scale_x: 28, scale_y: 28},
-    "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 34, scale_x: 28, scale_y: 28},
+    "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_STATIC, value: 34, scale_x: 28, scale_y: 28},
     "ElementType:35" :{ id: "ElementType:35", uiType: UI_ELEMENT_TYPE_MATRIX, value: 35, scale_x: 28, scale_y: 28},
     "ElementType:36" :{ id: "ElementType:36", uiType: UI_ELEMENT_TYPE_MATRIX, value: 36, scale_x: 220, scale_y: 52},
-    "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 41, scale_x: 28, scale_y: 28},
-    "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 42, scale_x: 28, scale_y: 28},
-    "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 43, scale_x: 28, scale_y: 28},
-    "ElementType:44" :{ id: "ElementType:44", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 44, scale_x: 28, scale_y: 28},
-    "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 45, scale_x: 28, scale_y: 28},
-    "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 46, scale_x: 28, scale_y: 28},
-    "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 47, scale_x: 28, scale_y: 28},
+    "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_STATIC, value: 41, scale_x: 28, scale_y: 28},
+    "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_STATIC, value: 42, scale_x: 28, scale_y: 28},
+    "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_STATIC, value: 43, scale_x: 28, scale_y: 28},
+    "ElementType:44" :{ id: "ElementType:44", uiType: UI_ELEMENT_TYPE_STATIC, value: 44, scale_x: 28, scale_y: 28},
+    "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_STATIC, value: 45, scale_x: 28, scale_y: 28},
+    "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_STATIC, value: 46, scale_x: 28, scale_y: 28},
+    "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_STATIC, value: 47, scale_x: 28, scale_y: 28},
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
     "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT },
     "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR },
