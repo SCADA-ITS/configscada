@@ -55,7 +55,11 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (35, 3, 'deleteUser', 'deleteUser', 'UserVO', 'id', true, true),
 (36, 3, 'createUser', 'createUser', 'UserVO', 'id', true, true),
 (37, 1, 'getAlarmThresholdOperations', 'getAlarmThresholdOperations', 'AlarmThresholdOperationVO', 'id', true, true),
-(38, 1, 'getAlarmThresholdOperation', 'getAlarmThresholdOperation', 'AlarmThresholdOperationVO', 'id', true, true);
+(38, 1, 'getAlarmThresholdOperation', 'getAlarmThresholdOperation', 'AlarmThresholdOperationVO', 'id', true, true),
+(39, 1, 'getAlarmMuteds', 'getAlarmMuteds', 'AlarmMutedVO', 'id', true, true),
+(40, 1, 'getAlarmMuted', 'getAlarmMuted', 'AlarmMutedVO', 'id', true, true),
+(41, 1, 'getAlarmMutedsByAlarmConfig', 'getAlarmMutedsByAlarmConfig', 'AlarmMutedVO', 'id', true, true),
+(42, 1, 'getAlarmMutedsByElement', 'getAlarmMutedsByElement', 'AlarmMutedVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -248,4 +252,24 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (38, 1, 'http://localhost:8082/graphql'),
 (38, 2, 'getAlarmThresholdOperation'),
 (38, 3, 'alarmThresholdOperationId'),
-(38, 4, '{id alias description labelAlias labelDescription}');
+(38, 4, '{id alias description labelAlias labelDescription}'),
+
+(39, 1, 'http://localhost:8082/graphql'),
+(39, 2, 'getAlarmMuteds'),
+(39, 3, ''),
+(39, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}'),
+
+(40, 1, 'http://localhost:8082/graphql'),
+(40, 2, 'getAlarmMuted'),
+(40, 3, 'alarmMutedId'),
+(40, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}'),
+
+(41, 1, 'http://localhost:8082/graphql'),
+(41, 2, 'getAlarmMutedsByAlarmConfig'),
+(41, 3, 'alarmConfigId'),
+(41, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}'),
+
+(42, 1, 'http://localhost:8082/graphql'),
+(42, 2, 'getAlarmMutedsByElement'),
+(42, 3, 'elementId'),
+(42, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}');
