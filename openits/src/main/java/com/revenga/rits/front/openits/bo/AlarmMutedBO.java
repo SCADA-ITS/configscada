@@ -38,17 +38,17 @@ public class AlarmMutedBO {
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMuted()).getFieldId(), alarmMuted);
 	}
 	
-	public Map<String, Object> getAlarmMutedsByAlarmConfig(String id) {
+	public List<Map<String, Object>> getAlarmMutedsByAlarmConfig(String id) {
 		
-		Map<String, Object> alarmMuteds = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmMutedsByAlarmConfig(), new Object[] { id });
+		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMutedsByAlarmConfig(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByAlarmConfig()).getFieldId(), alarmMuteds);
 	}
 	
-	public Map<String, Object> getAlarmMutedsByElement(String id) {
+	public List<Map<String, Object>> getAlarmMutedsByElement(String id) {
 		
-		Map<String, Object> alarmMuteds = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement(), new Object[] { id });
+		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement()).getFieldId(), alarmMuteds);

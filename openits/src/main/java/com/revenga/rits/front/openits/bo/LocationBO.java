@@ -61,39 +61,6 @@ public class LocationBO {
 				.getById(voDataSourceAdapter.getDataSourceGetLocation()).getFieldId(), location));
 	}
 	
-	public List<Map<String, Object>> getRoads() {
-		
-		List<Map<String, Object>> roads = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoads(), null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoads()).getFieldId(), roads);
-	}
-				
-	public Map<String, Object> getRoad(String id) {
-		
-		Map<String, Object> road = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRoad(), new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoad()).getFieldId(), road);
-	}
-	
-	public List<Map<String, Object>> getStretchs() {
-		
-		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetStretchs(), null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetStretchs()).getFieldId(), stretchs);
-	}
-				
-	public Map<String, Object> getStretch(String id) {
-		
-		Map<String, Object> stretch = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetStretch(), new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetStretch()).getFieldId(), stretch);
-	}
-	
-	
 	public List<Map<String, Object>> replaceLocations(List<Map<String, Object>> elements) {
 		
 		List<Map<String, Object>> elementsRes = new ArrayList<>();

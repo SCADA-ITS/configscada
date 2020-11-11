@@ -41,38 +41,6 @@ public class UserBO {
 				.getById(voDataSourceAdapter.getDataSourceGetUser()).getFieldId(), user);
 	}
 	
-	public List<Map<String, Object>> getRoles() {
-		
-		List<Map<String, Object>> roles = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoles(), null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoles()).getFieldId(), roles);
-	}
-				
-	public Map<String, Object> getRole(String id) {
-		
-		Map<String, Object> role = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRole(), new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRole()).getFieldId(), role);
-	}
-	
-	public List<Map<String, Object>> getSystemPermissions() {
-		
-		List<Map<String, Object>> systemPermissions = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetSystemPermissions(), null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetSystemPermissions()).getFieldId(), systemPermissions);
-	}
-				
-	public Map<String, Object> getSystemPermission(String id) {
-		
-		Map<String, Object> systemPermission = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetSystemPermission(), new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetSystemPermission()).getFieldId(), systemPermission);
-	}
-	
 	public Map<String, Object> createUser(Object input) {
 		
 		Map<String, Object> createdUser = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateUser(), (Map<String, Object>) input);

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.LocationBO;
+import com.revenga.rits.front.openits.bo.RoadBO;
+import com.revenga.rits.front.openits.bo.StretchBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +27,12 @@ public class LocationController {
 	
 	@Autowired
 	LocationBO locationBO;
+	
+	@Autowired
+	StretchBO stretchBO;
+	
+	@Autowired
+	RoadBO roadBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all locations", notes = "Get all locations")
@@ -50,7 +58,7 @@ public class LocationController {
 	@ApiOperation(value = "Get roads", notes = "Get roads")
 	public ResponseEntity<Object> getRoads() {
 		
-		return new ResponseEntity<>(locationBO.getRoads(), HttpStatus.OK);
+		return new ResponseEntity<>(roadBO.getRoads(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/road/{id}")
@@ -63,14 +71,14 @@ public class LocationController {
 			example = "Road:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(locationBO.getRoad(id), HttpStatus.OK);
+		return new ResponseEntity<>(roadBO.getRoad(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/stretchs")
 	@ApiOperation(value = "Get stretchs", notes = "Get stretchs")
 	public ResponseEntity<Object> getStretchs() {
 		
-		return new ResponseEntity<>(locationBO.getStretchs(), HttpStatus.OK);
+		return new ResponseEntity<>(stretchBO.getStretchs(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/stretch/{id}")
@@ -83,6 +91,19 @@ public class LocationController {
 			example = "Stretch:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(locationBO.getStretch(id), HttpStatus.OK);
+		return new ResponseEntity<>(stretchBO.getStretch(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/stretch/road/{id}")
+	@ApiOperation(value = "Get stretch by road id", notes = "Get stretch by road id")
+	public ResponseEntity<Object> getStretchByRoad(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Stretch by road id",
+			example = "Road:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(stretchBO.getStretchByRoad(id), HttpStatus.OK);
 	}
 }

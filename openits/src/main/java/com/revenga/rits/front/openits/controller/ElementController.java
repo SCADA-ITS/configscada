@@ -57,11 +57,4 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getElement(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/element_values_states")
-	@ApiOperation(value = "Get all element values states", notes = "Get all element values states")
-	public ResponseEntity<Object> getElementValueStates() {
-		
-		return new ResponseEntity<>(elementBO.getElementValueStates(), HttpStatus.OK);
-	}
-	
 }

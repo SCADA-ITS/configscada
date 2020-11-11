@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ElementTypeStateBO;
+import com.revenga.rits.front.openits.bo.ElementValueStateBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,9 @@ public class ElementTypeStateController {
 	
 	@Autowired
 	ElementTypeStateBO elementTypeStateBO;
+	
+	@Autowired
+	ElementValueStateBO elementValueStateBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all element types states", notes = "Get all element type states")
@@ -44,5 +48,12 @@ public class ElementTypeStateController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(elementTypeStateBO.getElementTypeState(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/element_values_states")
+	@ApiOperation(value = "Get all element values states", notes = "Get all element values states")
+	public ResponseEntity<Object> getElementValueStates() {
+		
+		return new ResponseEntity<>(elementValueStateBO.getElementValueStates(), HttpStatus.OK);
 	}
 }
