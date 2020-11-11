@@ -62,7 +62,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (42, 1, 'getAlarmMutedsByElement', 'getAlarmMutedsByElement', 'AlarmMutedVO', 'id', true, true),
 (43, 1, 'getElementValueStates', 'getElementValueStates', 'ElementValueStateVO', 'id', true, true),
 (44, 1, 'getRoles', 'getRoles', 'RoleVO', 'id', true, true),
-(45, 1, 'getRole', 'getRole', 'RoleVO', 'id', true, true);
+(45, 1, 'getRole', 'getRole', 'RoleVO', 'id', true, true),
+(46, 1, 'getSystemPermissions', 'getSystemPermissions', 'SystemPermissionVO', 'id', true, true),
+(47, 1, 'getSystemPermission', 'getSystemPermission', 'SystemPermissionVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -290,4 +292,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (45, 1, 'http://localhost:8082/graphql'),
 (45, 2, 'getRole'),
 (45, 3, 'roleId'),
-(45, 4, '{id alias description preset rolePermissions{id}}');
+(45, 4, '{id alias description preset rolePermissions{id}}'),
+
+(46, 1, 'http://localhost:8082/graphql'),
+(46, 2, 'getSystemPermissions'),
+(46, 3, ''),
+(46, 4, '{id alias description labelAlias labelDescription}'),
+
+(47, 1, 'http://localhost:8082/graphql'),
+(47, 2, 'getSystemPermission'),
+(47, 3, 'systemPermissionId'),
+(47, 4, '{id alias description labelAlias labelDescription}');

@@ -102,4 +102,24 @@ public class UserController {
 		
 		return new ResponseEntity<>(userBO.getRole(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/systemPermissions")
+	@ApiOperation(value = "Get system permissions", notes = "Get system permissions")
+	public ResponseEntity<Object> getSystemPermissions() {
+		
+		return new ResponseEntity<>(userBO.getSystemPermissions(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/systemPermission/{id}")
+	@ApiOperation(value = "Get system permission by id", notes = "Get system permission by id")
+	public ResponseEntity<Object> getSystemPermission(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "System permission by id",
+			example = "SystemPermission:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(userBO.getSystemPermission(id), HttpStatus.OK);
+	}
 }
