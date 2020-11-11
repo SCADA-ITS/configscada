@@ -96,8 +96,9 @@ export default class TabVideo {
                 if(stremMjpeg != null && stremMjpeg.length >= 1){
                     let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
                     let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
-                    let stream = stremMjpeg[0].value;
                     
+                    let stream = stremMjpeg;
+                   
                     let camera = $$("vvtabVideo"+this.parentId).addView({  
                         id: "stream_"+ this.parentId,
                         height:streamHeight,
@@ -105,7 +106,7 @@ export default class TabVideo {
                         data: {title: "Image One", src: stream },
                         template: function (obj) {
                         // obj is a data record object
-                        return '<iframe style="width:105%;height:100%;position:relative;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
+                        return '<iframe style="width:105%;height:100%;border:none;overflow:hidden;" src="'+obj.src+'" />'
                         }
                     }, 1);
                     
