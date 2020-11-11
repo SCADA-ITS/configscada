@@ -65,4 +65,24 @@ public class LocationController {
 		
 		return new ResponseEntity<>(locationBO.getRoad(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/stretchs")
+	@ApiOperation(value = "Get stretchs", notes = "Get stretchs")
+	public ResponseEntity<Object> getStretchs() {
+		
+		return new ResponseEntity<>(locationBO.getStretchs(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/stretch/{id}")
+	@ApiOperation(value = "Get stretch by id", notes = "Get stretch by id")
+	public ResponseEntity<Object> getStretch(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Stretch by id",
+			example = "Stretch:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(locationBO.getStretch(id), HttpStatus.OK);
+	}
 }

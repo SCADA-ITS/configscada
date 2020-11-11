@@ -77,6 +77,22 @@ public class LocationBO {
 				.getById(voDataSourceAdapter.getDataSourceGetRoad()).getFieldId(), road);
 	}
 	
+	public List<Map<String, Object>> getStretchs() {
+		
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetStretchs(), null);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetStretchs()).getFieldId(), stretchs);
+	}
+				
+	public Map<String, Object> getStretch(String id) {
+		
+		Map<String, Object> stretch = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetStretch(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetStretch()).getFieldId(), stretch);
+	}
+	
 	
 	public List<Map<String, Object>> replaceLocations(List<Map<String, Object>> elements) {
 		

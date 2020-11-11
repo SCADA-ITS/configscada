@@ -66,7 +66,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (46, 1, 'getSystemPermissions', 'getSystemPermissions', 'SystemPermissionVO', 'id', true, true),
 (47, 1, 'getSystemPermission', 'getSystemPermission', 'SystemPermissionVO', 'id', true, true),
 (48, 1, 'getRoads', 'getRoads', 'RoadVO', 'id', true, true),
-(49, 1, 'getRoad', 'getRoad', 'RoadVO', 'id', true, true);
+(49, 1, 'getRoad', 'getRoad', 'RoadVO', 'id', true, true),
+(50, 1, 'getStretchs', 'getStretchs', 'StretchVO', 'id', true, true),
+(51, 1, 'getStretch', 'getStretch', 'StretchVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -314,4 +316,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (49, 1, 'http://localhost:8082/graphql'),
 (49, 2, 'getRoad'),
 (49, 3, 'roadId'),
-(49, 4, '{id alias description roadType{id}}');
+(49, 4, '{id alias description roadType{id}}'),
+
+(50, 1, 'http://localhost:8082/graphql'),
+(50, 2, 'getStretchs'),
+(50, 3, ''),
+(50, 4, '{id alias description pkIni pkEnd lanes stretchType{id} road{id roadType{id}}}'),
+
+(51, 1, 'http://localhost:8082/graphql'),
+(51, 2, 'getStretch'),
+(51, 3, 'stretchId'),
+(51, 4, '{id alias description pkIni pkEnd lanes stretchType{id} road{id roadType{id}}}');
