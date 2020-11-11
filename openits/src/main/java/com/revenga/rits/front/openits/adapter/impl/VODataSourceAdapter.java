@@ -81,6 +81,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
 	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
+	public static final String DATA_SOURCE_GET_ROLES = "data.source.get_roles";
+	public static final String DATA_SOURCE_GET_ROLE = "data.source.get_role";
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
@@ -176,6 +178,10 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetUser;
 	@Getter
+	private Integer dataSourceGetRoles;
+	@Getter
+	private Integer dataSourceGetRole;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -246,6 +252,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
 		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
+		this.dataSourceGetRoles = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLES));
+		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));

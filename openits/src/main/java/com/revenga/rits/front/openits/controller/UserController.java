@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.UserBO;
@@ -82,5 +81,25 @@ public class UserController {
 	public ResponseEntity<Object> sendKillUsers(@RequestBody Object input) {
 		
 		return new ResponseEntity<>(userBO.sendKillUsers(input), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/roles")
+	@ApiOperation(value = "Get roles", notes = "Get roles")
+	public ResponseEntity<Object> getRoles() {
+		
+		return new ResponseEntity<>(userBO.getRoles(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/role/{id}")
+	@ApiOperation(value = "Get role by id", notes = "Get role by id")
+	public ResponseEntity<Object> getRole(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Role by id",
+			example = "Role:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(userBO.getRole(id), HttpStatus.OK);
 	}
 }
