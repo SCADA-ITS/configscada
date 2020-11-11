@@ -67,6 +67,7 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ELEMENT = "data.source.get_element";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPES = "data.source.get_element_types";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPE = "data.source.get_element_type";
+	public static final String DATA_SOURCE_GET_ELEMENT_VALUES_STATES = "data.source.get_element_values_states";
 	public static final String DATA_SOURCE_GET_GENERIC_DATAS = "data.source.get_generic_datas";
 	public static final String DATA_SOURCE_GET_GENERIC_DATA = "data.source.get_generic_data";
 	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED = "data.source.get_label_translated";
@@ -75,11 +76,17 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_LOCALE = "data.source.get_locale";
 	public static final String DATA_SOURCE_GET_LOCATIONS = "data.source.get_locations";
 	public static final String DATA_SOURCE_GET_LOCATION = "data.source.get_location";
+	public static final String DATA_SOURCE_GET_ROADS = "data.source.get_roads";
+	public static final String DATA_SOURCE_GET_ROAD = "data.source.get_road";
 	public static final String DATA_SOURCE_GET_PLANS = "data.source.get_plans";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
 	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
+	public static final String DATA_SOURCE_GET_ROLES = "data.source.get_roles";
+	public static final String DATA_SOURCE_GET_ROLE = "data.source.get_role";
+	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSIONS = "data.source.get_system_permissions";
+	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSION = "data.source.get_system_permission";
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
@@ -147,6 +154,8 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetElementType;
 	@Getter
+	private Integer dataSourceGetElementValueStates;
+	@Getter
 	private Integer dataSourceGetGenericDatas;
 	@Getter
 	private Integer dataSourceGetGenericData;
@@ -163,6 +172,10 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetLocation;
 	@Getter
+	private Integer dataSourceGetRoads;
+	@Getter
+	private Integer dataSourceGetRoad;
+	@Getter
 	private Integer dataSourceGetPlans;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
@@ -172,6 +185,14 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetUsers;
 	@Getter
 	private Integer dataSourceGetUser;
+	@Getter
+	private Integer dataSourceGetRoles;
+	@Getter
+	private Integer dataSourceGetRole;
+	@Getter
+	private Integer dataSourceGetSystemPermissions;
+	@Getter
+	private Integer dataSourceGetSystemPermission;
 	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
@@ -229,6 +250,7 @@ public class VODataSourceAdapter {
 		this.dataSourceGetElement = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT));
 		this.dataSourceGetElementTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPES));
 		this.dataSourceGetElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPE));
+		this.dataSourceGetElementValueStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_VALUES_STATES));
 		this.dataSourceGetGenericDatas = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATAS));
 		this.dataSourceGetGenericData = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATA));
 		this.dataSourceGetLabelTranslated = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED));
@@ -237,11 +259,17 @@ public class VODataSourceAdapter {
 		this.dataSourceGetLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALE));
 		this.dataSourceGetLocations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATIONS));
 		this.dataSourceGetLocation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATION));
+		this.dataSourceGetRoads = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROADS));
+		this.dataSourceGetRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD));
 		this.dataSourceGetPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLANS));
 		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
 		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
+		this.dataSourceGetRoles = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLES));
+		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
+		this.dataSourceGetSystemPermissions = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSIONS));
+		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
