@@ -1,17 +1,13 @@
 package com.revenga.rits.front.openits.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.LocationBO;
@@ -48,5 +44,25 @@ public class LocationController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(locationBO.getLocation(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/roads")
+	@ApiOperation(value = "Get roads", notes = "Get roads")
+	public ResponseEntity<Object> getRoads() {
+		
+		return new ResponseEntity<>(locationBO.getRoads(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/road/{id}")
+	@ApiOperation(value = "Get road by id", notes = "Get road by id")
+	public ResponseEntity<Object> getRoad(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Road by id",
+			example = "Road:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(locationBO.getRoad(id), HttpStatus.OK);
 	}
 }
