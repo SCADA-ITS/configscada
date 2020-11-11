@@ -473,6 +473,17 @@ sodipodi:docname="unifilar.svg">
     height="21.922617"
     x="6.8035712"
     y="24.190477" />
+ <text
+    xml:space="preserve"
+    style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+    x="23.786987"
+    y="39.28862"
+    id="text19"><tspan
+      sodipodi:role="line"
+      id="tspan17"
+      x="23.786987"
+      y="39.28862"
+      style="stroke-width:0.264583">UF-Iluminacion</tspan></text>
 </g>
 </svg>
 `;
