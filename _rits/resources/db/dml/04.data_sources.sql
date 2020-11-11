@@ -72,7 +72,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (52, 1, 'getStretchByRoad', 'getStretchByRoad', 'StretchVO', 'id', true, true),
 (53, 1, 'getIncidents', 'getIncidents', 'ImsIncidentVO', 'id', true, true),
 (54, 1, 'getIncident', 'getIncident', 'ImsIncidentVO', 'id', true, true),
-(55, 1, 'getIncidentByType', 'getIncidentByType', 'ImsIncidentVO', 'id', true, true);
+(55, 1, 'getIncidentByType', 'getIncidentByType', 'ImsIncidentVO', 'id', true, true),
+(56, 1, 'getIncidentTypes', 'getIncidentTypes', 'ImsIncidentTypeVO', 'id', true, true),
+(57, 1, 'getIncidentType', 'getIncidentType', 'ImsIncidentTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -350,5 +352,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (55, 1, 'http://localhost:8082/graphql'),
 (55, 2, 'getIncidentByType'),
 (55, 3, 'incidentTypeId'),
-(55, 4, '{id alias description userDefined{id} incidentType{id} roadImpact{id} location{id} alarms{id} incidentLogs{id} initDate incidentSource{id} severity incidentTypeState{id} incidentValues{id} incidentDocuments{id}}');
+(55, 4, '{id alias description userDefined{id} incidentType{id} roadImpact{id} location{id} alarms{id} incidentLogs{id} initDate incidentSource{id} severity incidentTypeState{id} incidentValues{id} incidentDocuments{id}}'),
+	
+(56, 1, 'http://localhost:8082/graphql'),
+(56, 2, 'getIncidentTypes'),
+(56, 3, ''),
+(56, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}'),
 
+(57, 1, 'http://localhost:8082/graphql'),
+(57, 2, 'getIncidentType'),
+(57, 3, 'incidentTypeId'),
+(57, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}');

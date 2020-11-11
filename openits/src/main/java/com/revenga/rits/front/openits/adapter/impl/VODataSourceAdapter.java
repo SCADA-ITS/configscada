@@ -93,6 +93,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_INCIDENTS = "data.source.get_incidents";
 	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
 	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPES = "data.source.get_incident_types";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPE = "data.source.get_incident_type";
 	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
@@ -213,6 +215,10 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetIncidentByType;
 	@Getter
+	private Integer dataSourceGetIncidentTypes;
+	@Getter
+	private Integer dataSourceGetIncidentType;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -295,6 +301,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS));
 		this.dataSourceGetIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT));
 		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
+		this.dataSourceGetIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPES));
+		this.dataSourceGetIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
