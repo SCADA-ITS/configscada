@@ -67,6 +67,7 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ELEMENT = "data.source.get_element";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPES = "data.source.get_element_types";
 	public static final String DATA_SOURCE_GET_ELEMENT_TYPE = "data.source.get_element_type";
+	public static final String DATA_SOURCE_GET_ELEMENT_VALUES_STATES = "data.source.get_element_values_states";
 	public static final String DATA_SOURCE_GET_GENERIC_DATAS = "data.source.get_generic_datas";
 	public static final String DATA_SOURCE_GET_GENERIC_DATA = "data.source.get_generic_data";
 	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED = "data.source.get_label_translated";
@@ -146,6 +147,8 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetElementTypes;
 	@Getter
 	private Integer dataSourceGetElementType;
+	@Getter
+	private Integer dataSourceGetElementValueStates;
 	@Getter
 	private Integer dataSourceGetGenericDatas;
 	@Getter
@@ -229,6 +232,7 @@ public class VODataSourceAdapter {
 		this.dataSourceGetElement = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT));
 		this.dataSourceGetElementTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPES));
 		this.dataSourceGetElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPE));
+		this.dataSourceGetElementValueStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_VALUES_STATES));
 		this.dataSourceGetGenericDatas = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATAS));
 		this.dataSourceGetGenericData = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATA));
 		this.dataSourceGetLabelTranslated = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED));

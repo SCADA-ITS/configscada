@@ -59,7 +59,8 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (39, 1, 'getAlarmMuteds', 'getAlarmMuteds', 'AlarmMutedVO', 'id', true, true),
 (40, 1, 'getAlarmMuted', 'getAlarmMuted', 'AlarmMutedVO', 'id', true, true),
 (41, 1, 'getAlarmMutedsByAlarmConfig', 'getAlarmMutedsByAlarmConfig', 'AlarmMutedVO', 'id', true, true),
-(42, 1, 'getAlarmMutedsByElement', 'getAlarmMutedsByElement', 'AlarmMutedVO', 'id', true, true);
+(42, 1, 'getAlarmMutedsByElement', 'getAlarmMutedsByElement', 'AlarmMutedVO', 'id', true, true),
+(43, 1, 'getElementValueStates', 'getElementValueStates', 'ElementValueStateVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -272,4 +273,9 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (42, 1, 'http://localhost:8082/graphql'),
 (42, 2, 'getAlarmMutedsByElement'),
 (42, 3, 'elementId'),
-(42, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}');
+(42, 4, '{id alarmConfig{id alias alarmType{id}} mutedUntil element{id}}'),
+
+(43, 1, 'http://localhost:8082/graphql'),
+(43, 2, 'getElementValueStates'),
+(43, 3, ''),
+(43, 4, '{id alias description labelAlias labelDescription}');
