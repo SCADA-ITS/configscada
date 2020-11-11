@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revenga.rits.front.openits.bo.AlarmBO;
 import com.revenga.rits.front.openits.bo.AlarmConfigBO;
 import com.revenga.rits.front.openits.bo.AlarmLevelBO;
+import com.revenga.rits.front.openits.bo.AlarmMutedBO;
 import com.revenga.rits.front.openits.bo.AlarmThresoldOperationBO;
 import com.revenga.rits.front.openits.bo.AlarmTypeBO;
 
@@ -41,6 +42,9 @@ public class AlarmController {
 	
 	@Autowired
 	AlarmThresoldOperationBO alarmThresoldOperationBO;
+	
+	@Autowired
+	AlarmMutedBO alarmMutedBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all alarms", notes = "Get all alarms")
@@ -153,5 +157,51 @@ public class AlarmController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(alarmThresoldOperationBO.getAlarmThresholdOperation(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_muteds")
+	@ApiOperation(value = "Get all alarm muteds", notes = "Get all alarm muteds")
+	public ResponseEntity<Object> getAlarmMuteds() {
+		
+		return new ResponseEntity<>(alarmMutedBO.getAlarmMuteds(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_muted/{id}")
+	@ApiOperation(value = "Get alarm muted by id", notes = "Get alarm muted by id")
+	public ResponseEntity<Object> getAlarmMuted(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmMuted by id",
+			example = "AlarmMuted:2:1:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmMutedBO.getAlarmMuted(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_muted/alarm_configs/{id}")
+	@ApiOperation(value = "Get alarm muted by alarm config id", notes = "Get alarm muted by alarm config id")
+	public ResponseEntity<Object> getAlarmMutedsByAlarmConfig(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmMuted by alarm config id",
+			example = "AlarmConfig:2",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmMutedBO.getAlarmMutedsByAlarmConfig(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_muted/element/{id}")
+	@ApiOperation(value = "Get alarm muted by element id", notes = "Get alarm muted by element id")
+	public ResponseEntity<Object> getAlarmMutedsByElement(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmMuted by element id",
+			example = "Element:1:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmMutedBO.getAlarmMutedsByElement(id), HttpStatus.OK);
 	}
 }
