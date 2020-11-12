@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ImsIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,9 @@ public class ImsIncidentController {
 	
 	@Autowired
 	ImsIncidentTypeBO imsIncidentTypeBO;
+	
+	@Autowired
+	ImsIncidentTypeStateBO imsIncidentTypeStateBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
@@ -81,6 +85,26 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsIncidentTypeBO.getIncidentType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentTypeStates")
+	@ApiOperation(value = "Get incidentTypeStates", notes = "Get incidentTypeStates")
+	public ResponseEntity<Object> getIncidentTypeStates() {
+		
+		return new ResponseEntity<>(imsIncidentTypeStateBO.getIncidentTypeStates(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentNextState/{id}")
+	@ApiOperation(value = "Get nextState by incident id", notes = "Get nextState by incident id")
+	public ResponseEntity<Object> getNextState(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Next state by incident id",
+			example = "ImsIncident:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeStateBO.getNextState(id), HttpStatus.OK);
 	}
 
 }
