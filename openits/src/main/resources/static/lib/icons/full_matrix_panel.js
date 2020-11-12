@@ -280,8 +280,6 @@ export function updateMatrixPanelIcon(element, suffix = "") {
    }
   let color = ICON_COLOR[elementState];
   if(Snap.select("#"+element.id + suffix +":stroke0") && Snap.select("#"+element.id + suffix +":stroke0").node && Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke){
-    console.warn("#"+element.id + suffix +":stroke0");
-    console.warn(color);
     Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke.value=color;
   }
 }

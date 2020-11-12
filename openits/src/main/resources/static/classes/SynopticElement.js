@@ -258,3 +258,53 @@ export default class synopticElement {
   }
 
 }
+
+function getIconWidth(elementType, height) {
+  let ratio = 1;
+  let width = height;
+
+  switch(elementType) {
+    case "10":
+    case "36":
+      ratio = height / 24;
+      width = 76 * ratio;
+      break;
+    case "24":
+      ratio = height / 64;
+      width = 48 * ratio;
+      break;
+    case "26":
+      ratio = height / 64;
+      width = 64 * ratio;
+      break;
+    case "28":
+      ratio = height / 64;
+      width = 32 * ratio;
+      break;
+    case "29":
+      ratio = height / 64;
+      width = 48 * ratio;
+      break;
+    case "30":
+      ratio = height / 64;
+      width = 128 * ratio;
+      break;
+    case "31":
+      ratio = height / 48;
+      width = 64 * ratio;
+      break;
+    case "32":
+      ratio = height / 96;
+      width = 64 * ratio;
+      break;
+    case "35":
+      ratio = height / 48;
+      width = 200 * ratio;
+      break;
+    default:
+      width = 32;
+      break;
+  }
+
+  return width;
+}

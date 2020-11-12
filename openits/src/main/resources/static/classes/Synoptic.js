@@ -519,14 +519,12 @@ export default class Synoptic {
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
               id: elementId,
               value: "<div style=\"display: inline;vertical-align: text-top;\">" + elementsMap.get(elementId).element.description + "</div>",
-              // icon: "<div style=\"float: right\">" + getElementSVG(elementsMap.get(elementId).element, width, height, ":Tree") + "</div>",
               data: [],
             });
           } else {
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
               id: this.synopticConf["Layers"][n]["items"][e],
               value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.synopticConf["Layers"][n]["items"][e] + "</div>",
-              // icon: "",
               data: [],
             });
           }
