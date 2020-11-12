@@ -109,6 +109,10 @@ var i18_en = {
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
     "ElementType:55.alias": "CT",
     "ElementType:55.description": "CT",
+    "ElementType:56.alias": "UNIFILAR CSA",
+    "ElementType:56.description": "UNIFILAR CSA",
+    "ElementType:57.alias": "MAGNETOTHERMIC",
+    "ElementType:57.description": "MAGNETOTHERMIC",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -707,6 +711,25 @@ var i18_en = {
     "ElementTypeParam:55:1:1.description": "PK",
     "ElementTypeParam:55:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:55:1:2.description": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:55:2:1.alias" : "Temperature",
+    "ElementTypeParam:55:2:1.description" : "Temperature",
+
+    "ElementTypeParam:56:1:1.alias": "PK",
+    "ElementTypeParam:56:1:1.description": "PK",
+    "ElementTypeParam:56:1:2.alias": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:56:1:2.description": "Entrance Tunnel Distance (m)",
+
+    "ElementTypeParam:57:1:1.alias": "PK",
+    "ElementTypeParam:57:1:1.description": "PK",
+    "ElementTypeParam:57:1:2.alias": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:57:1:2.description": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:57:1:3.alias": "Road",
+    "ElementTypeParam:57:1:3.description": "Road",
+    "ElementTypeParam:57:1:4.alias": "Section",
+    "ElementTypeParam:57:1:4.description": "Section",
+
+	"ElementTypeParam:57:2:1.alias": "State",
+	"ElementTypeParam:57:2:1.description": "State",
 
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",

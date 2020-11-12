@@ -1,4 +1,4 @@
-import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM, SVG_55_CT, SVG_56_UNIFILAR} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -45,6 +45,7 @@ export const ELEMENT_TYPE = {
   ID_53_SEM : "ElementType:53",
   ID_55_CT : "ElementType:55",
   ID_56_UNIFILAR : "ElementType:56",
+  ID_57_MAGNETOTERMICO : "ElementType:57",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
@@ -158,6 +159,11 @@ export const ELEMENT_TYPE = {
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
     "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT },
     "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 56, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR },
+    "ElementType:57" :{ id: "ElementType:57", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 57, scale_x: 120, scale_y: 120, svgRaw:SVG_57_MAGNETOTERMICO,
+      elementTypeParams:[
+        {MAGNETOTERMICO_STATE: "1:2"}
+      ] 
+    },
   }
 };
 

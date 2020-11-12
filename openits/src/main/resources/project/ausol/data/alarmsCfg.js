@@ -23,7 +23,8 @@ export let alarmsCfg = {
     "AlarmConfig:28": { "alarmLevel": 3 },
     "AlarmConfig:29": { "alarmLevel": 3 },
     "AlarmConfig:30": { "alarmLevel": 3 },
-    "AlarmConfig:31": { "alarmLevel": 3 }
+    "AlarmConfig:31": { "alarmLevel": 3 },
+    "AlarmConfig:32": { "alarmLevel": 3 }
 };
 
 

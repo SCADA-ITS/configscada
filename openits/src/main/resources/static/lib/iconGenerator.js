@@ -107,7 +107,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
-    || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR
+    || elementType === elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -276,6 +277,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break; 
     case elementTypeMap.ELEMENT_TYPE_56_UNIFILAR:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 290) + ',' + (height / 290) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
       break;      
     default:
       console.log("Icon not found");

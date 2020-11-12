@@ -380,8 +380,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "UNIFlLAR-RIO-VERDE-2-CABLE.svg",
-			"UNIFILAR_CSA_ICONO": "UNIFlLAR-RIO-VERDE-2-ICONO.svg"
+			"BASE_LAYER": "UNIFlLAR-RIO-VERDE-CABLE-CSA_v3.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -389,12 +388,32 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"UNIFILAR_CSA_ICONO": {
-				"items": [],
+			"MAGNETOTERMICO" : {
+				"items": ["Element:57:8", "Element:57:9", "Element:57:10", "Element:57:11", "Element:57:12", "Element:57:13", "Element:57:14", "Element:57:15", "Element:57:19", "Element:57:25", "Element:57:24", "Element:57:26", "Element:57:27", "Element:57:28", "Element:57:29", "Element:57:30", "Element:57:31"],
 				"translation_key": "",
 				"visibility": "visible"
-			},
+			}
 		},
+		"Element:57:8": { "x": 985,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A3" },
+		"Element:57:9": { "x": 793,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A4" },
+		"Element:57:10": { "x": 1081,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A5" },
+		"Element:57:11": { "x": 889,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A6" },
+		"Element:57:12": { "x": 602,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A10" },
+		"Element:57:13": { "x": 410,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A11" },
+		"Element:57:14": { "x": 698,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A12" },
+		"Element:57:15": { "x": 505,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A13" },
+		"Element:57:16": { "x": 1178,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A15" },
+		"Element:57:17": { "x": 1369,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
+		"Element:57:18": { "x": 1273,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A16" },
+		"Element:57:19": { "x": 1464,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
+		"Element:57:24": { "x": 890,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA1" },
+		"Element:57:25": { "x": 795,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA2" },
+		"Element:57:26": { "x": 698,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA8" },
+		"Element:57:27": { "x": 602,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA9" },
+		"Element:57:28": { "x": 985,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE7" },
+		"Element:57:29": { "x": 1081,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE14" },
+		"Element:57:30": { "x": 1178,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE15" },
+		"Element:57:31": { "x": 1273,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE16" },
 	},
 	/*{
 		"id":"synopticUnifilarCsb",

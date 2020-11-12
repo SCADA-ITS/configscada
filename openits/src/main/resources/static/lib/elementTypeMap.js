@@ -44,6 +44,7 @@ export const ELEMENT_TYPE_51_ETD = "51";
 export const ELEMENT_TYPE_53_SEM = "53";
 export const ELEMENT_TYPE_55_CT = "55";
 export const ELEMENT_TYPE_56_UNIFILAR = "56";
+export const ELEMENT_TYPE_57_MAGNETOTERMICO = "57";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -174,6 +175,7 @@ export const MATRIX_PANEL_PICTOGRAM = "4:2";
 
 export const CAM_STREAM_MJPEG = "2:1:3";
 
+export const MAGNETOTERMICO_STATE = "1:2";
 
 export const COMMAND_TYPE_PMV_A_C = "2:24";
 export const COMMAND_TYPE_MATRIX_PANEL_64X64 = "2:26";

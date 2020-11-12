@@ -16,7 +16,10 @@ export let optionElementType = [
 	{id:"ElementType:21", value:"OPAC"},
 	{id:"ElementType:26", value:"PANEL"},
 	{id:"ElementType:51", value:"ETD"},
+	{id:"ElementType:53", value:"SEM_AMBAR_AMBAR"},
 	{id:"ElementType:55", value:"CT"},
+	{id:"ElementType:56", value:"UNIFILAR"},
+	{id:"ElementType:57", value:"MAGNETOTERMICO"},
 ]
 
 export let columnsElementList = {
@@ -353,12 +356,38 @@ export let columnsElementList = {
 	"ElementType:55": { 
 		1:[
 			"alias",
-			"ElementTypeParam:53:1:1",
-			"ElementTypeParam:53:1:2"
+			"ElementTypeParam:55:1:1",
+			"ElementTypeParam:55:1:2"
 		],
 		2:[
 			"alias",
 			"state",
+			"ElementTypeParam:55:2:1"
+		]
+	},
+	"ElementType:56": { 
+		1:[
+			"alias",
+			"ElementTypeParam:56:1:1",
+			"ElementTypeParam:56:1:2"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:57": { 
+		1:[
+			"alias",
+			"ElementTypeParam:57:1:1",
+			"ElementTypeParam:57:1:2",
+			"ElementTypeParam:57:1:3",
+			"ElementTypeParam:57:1:4",
+		],
+		2:[
+			"alias",
+			"state",
+			"ElementTypeParam:57:2:1"
 		]
 	},
 }
@@ -1131,7 +1160,7 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("ElementTypeParam:22:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:21:2:2": { //"status
-				"header": [ $.i18n("ElementTypeParam:20:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:22:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
@@ -1318,6 +1347,30 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:26:1:10": {
 				"header": [ $.i18n("ElementTypeParam:26:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}  
+			
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			}
+		}
+	},
+	"ElementType:51": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:51:1:1": {
+				"header": [ $.i18n("ElementTypeParam:51:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:51:1:2": {
+				"header": [ $.i18n("ElementTypeParam:51:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -1338,10 +1391,10 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:53:1:1": {
-				"header": [ $.i18n("ElementTypeParam:13:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:53:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:53:1:2": {
-				"header": [ $.i18n("ElementTypeParam:13:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:53:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -1368,7 +1421,7 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("ElementTypeParam:55:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:55:1:2": {
-				"header": [ $.i18n("ElementTypeParam55:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:55:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -1381,7 +1434,7 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
-            "ElementTypeParam:55:2:1": { //"status
+            "ElementTypeParam:55:2:1": { //"temperature
 				"header": [ $.i18n("ElementTypeParam:55:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
@@ -1395,7 +1448,7 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("ElementTypeParam:56:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:56:1:2": {
-				"header": [ $.i18n("ElementTypeParam56:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:56:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -1407,9 +1460,32 @@ export let columnsElementConfig = {
 			"state": {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
+			}
+		}
+	},
+	"ElementType:57": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:56:2:1": { //"status
-				"header": [ $.i18n("ElementTypeParam:56:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            "ElementTypeParam:57:1:1": {
+				"header": [ $.i18n("ElementTypeParam:57:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:57:1:2": {
+				"header": [ $.i18n("ElementTypeParam:57:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+            "ElementTypeParam:57:2:1": { //"state
+				"header": [ $.i18n("ElementTypeParam:57:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},

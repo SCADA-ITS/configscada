@@ -114,6 +114,8 @@ var i18_es = {
     "ElementType:55.description": "CT",
     "ElementType:56.alias": "UNIFILAR CSA",
     "ElementType:56.description": "UNIFILAR CSA",
+    "ElementType:57.alias": "MAGNETOT&Eacute;RMICO",
+    "ElementType:57.description": "MAGNETOT&Eacute;RMICO",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -763,11 +765,25 @@ var i18_es = {
     "ElementTypeParam:55:1:1.description": "PK",
     "ElementTypeParam:55:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:55:1:2.description": "Entrance Tunnel Distance (m)",
+	"ElementTypeParam:55:2:1.alias" : "Temperature",
+	"ElementTypeParam:55:2:1.description" : "Temperature",
 
 	"ElementTypeParam:56:1:1.alias": "PK",
     "ElementTypeParam:56:1:1.description": "PK",
     "ElementTypeParam:56:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:56:1:2.description": "Entrance Tunnel Distance (m)",
+
+	"ElementTypeParam:57:1:1.alias": "PK",
+    "ElementTypeParam:57:1:1.description": "PK",
+    "ElementTypeParam:57:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:57:1:2.description": "Entrance Tunnel Distance (m)",
+	"ElementTypeParam:57:1:3.alias": "Carretera",
+    "ElementTypeParam:57:1:3.description": "Carretera",
+    "ElementTypeParam:57:1:4.alias": "Tramo",
+    "ElementTypeParam:57:1:4.description": "Tramo",
+
+	"ElementTypeParam:57:2:1.alias": "State",
+	"ElementTypeParam:57:2:1.description": "State",
 
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
@@ -1165,6 +1181,7 @@ var i18_es = {
     "AlarmConfig:29": "ALARMA ETD BATERIAS BAJAS",
     "AlarmConfig:30": "ALARMA ETD FALLO DE ALIMENTACION",
     "AlarmConfig:31": "ALARMA ETD PUERTA ABIERTA",
+    "AlarmConfig:32": "ALARMA MAGNETOT&Eacute;RMICO SIN CONEXI&Oacute;N",
 
     "pictograms.type.1":"Advertencia de peligro",
     "pictograms.type.2":"Prioridad",
