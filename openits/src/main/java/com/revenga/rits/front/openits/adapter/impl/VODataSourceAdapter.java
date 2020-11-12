@@ -105,6 +105,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_INCIDENT_SOURCE = "data.source.get_incident_source";
 	public static final String DATA_SOURCE_GET_EXT_INCIDENTS = "data.source.get_ext_incidents";
 	public static final String DATA_SOURCE_GET_EXT_INCIDENT = "data.source.get_ext_incident";
+	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPES = "data.source.get_ext_incident_types";
+	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPE = "data.source.get_ext_incident_type";
 	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
@@ -249,6 +251,10 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetExtIncident;
 	@Getter
+	private Integer dataSourceGetExtIncidentTypes;
+	@Getter
+	private Integer dataSourceGetExtIncidentType;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -343,6 +349,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetIncidentSource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_SOURCE));
 		this.dataSourceGetExtIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENTS));
 		this.dataSourceGetExtIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT));
+		this.dataSourceGetExtIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPES));
+		this.dataSourceGetExtIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
+import com.revenga.rits.front.openits.bo.ImsExtIncidentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentSourceBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
@@ -45,6 +46,9 @@ public class ImsIncidentController {
 	
 	@Autowired
 	ImsExtIncidentBO imsExtIncidentBO;
+	
+	@Autowired
+	ImsExtIncidentTypeBO imsExtIncidentTypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
@@ -203,6 +207,26 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsExtIncidentBO.getExtIncident(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/extIncidentTypes")
+	@ApiOperation(value = "Get ext incident types", notes = "Get ext incident types")
+	public ResponseEntity<Object> getExtIncidentTypes() {
+		
+		return new ResponseEntity<>(imsExtIncidentTypeBO.getExtIncidentTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/extIncidentType/{id}")
+	@ApiOperation(value = "Get ext incident type by id", notes = "Get ext incident type by id")
+	public ResponseEntity<Object> getExtIncidentType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "ExtIncidentType by id",
+			example = "ImsExtIncidentType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsExtIncidentTypeBO.getExtIncidentType(id), HttpStatus.OK);
 	}
 
 }

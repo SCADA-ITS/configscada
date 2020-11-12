@@ -84,7 +84,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (64, 1, 'getIncidentsSource', 'getIncidentsSource', 'ImsIncidentSourceVO', 'id', true, true),
 (65, 1, 'getIncidentSource', 'getIncidentSource', 'ImsIncidentSourceVO', 'id', true, true),
 (66, 1, 'getExtIncidents', 'getExtIncidents', 'ImsExtIncidentVO', 'id', true, true),
-(67, 1, 'getExtIncident', 'getExtIncident', 'ImsExtIncidentVO', 'id', true, true);
+(67, 1, 'getExtIncident', 'getExtIncident', 'ImsExtIncidentVO', 'id', true, true),
+(68, 1, 'getExtIncidentTypes', 'getExtIncidentTypes', 'ImsExtIncidentTypeVO', 'id', true, true),
+(69, 1, 'getExtIncidentType', 'getExtIncidentType', 'ImsExtIncidentTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -422,4 +424,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (67, 1, 'http://localhost:8082/graphql'),
 (67, 2, 'getExtIncident'),
 (67, 3, 'extIncidentId'),
-(67, 4, '{id alias description extIncidentType{id} location{id} incidentInitDate extIncidentValues{id}}');
+(67, 4, '{id alias description extIncidentType{id} location{id} incidentInitDate extIncidentValues{id}}'),
+
+(68, 1, 'http://localhost:8082/graphql'),
+(68, 2, 'getExtIncidentTypes'),
+(68, 3, ''),
+(68, 4, '{id alias description incidentType{id} confirmationIsNeeded extIncidentGroup{id} extIncidentTypeParams{id}}'),
+
+(69, 1, 'http://localhost:8082/graphql'),
+(69, 2, 'getExtIncidentType'),
+(69, 3, 'extIncidentTypeId'),
+(69, 4, '{id alias description incidentType{id} confirmationIsNeeded extIncidentGroup{id} extIncidentTypeParams{id}}');
