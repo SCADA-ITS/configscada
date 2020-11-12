@@ -689,20 +689,7 @@ export default class Synoptic {
         webix.ui({
           view: "sidemenu-win",
           id: "menu" + this.synopticDiv,
-          width: 200,
-          position: function(position) {
-            var toolbarHeight = $$("mainToolbar").$height;
-            position.top = toolbarHeight;
-            position.left = $$("mainBody").$width - 200;
-            var mainHeight = $$("mainBody").$height - toolbarHeight;
-            position.height = mainHeight;
-            position.width = 200;
-          },
-          body: {
-            id: "elementTreeView" + this.synopticDiv, 
-            rows: [
-              {
-                view:"toolbar", 
+          head:{
                 cols:[
                   { 
                     view: "label", 
@@ -715,14 +702,23 @@ export default class Synoptic {
                     type:"icon", 
                     icon:"wxi-close",
                     click: function() {
-                      // hide the panel
                       $$("menu" + self.synopticDiv).hide();
-                      // hide the children
-                      $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
                     }
                   }
-                ]
-              },
+                ]},
+          move:true, 
+          width: 200,
+          position: function(position) {
+            var toolbarHeight = $$("mainToolbar").$height;
+            position.top = toolbarHeight;
+            position.left = $$("mainBody").$width - 200;
+            var mainHeight = $$("mainBody").$height - toolbarHeight;
+            position.height = mainHeight;
+            position.width = 200;
+          },
+          body: {
+            id: "elementTreeView" + this.synopticDiv, 
+            rows: [
               {
                 id: "element_tree_filter" + self.synopticDiv,
                 view: "text",
@@ -916,15 +912,15 @@ export default class Synoptic {
 
       $("#" + this.synopticDiv + "dropdownDiv").click(function() {
         if ($$("menu" + self.synopticDiv).isVisible()){
-          // show the panel
+          // hide the panel
           $$("menu" + self.synopticDiv).hide();
-          // show the children
-          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+          // hide the children
+          // $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
         } else {
           // show the panel
           $$("menu" + self.synopticDiv).show();
           // show the children
-          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.show() });
+          // $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.show() });
         }
         
       });
@@ -1068,10 +1064,10 @@ export default class Synoptic {
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
         if (typeof $$("menu" + self.synopticDiv) != 'undefined' && $$("menu" + self.synopticDiv).isVisible()){
-          // show the panel
+          // hide the panel
           $$("menu" + self.synopticDiv).hide();
-          // show the children
-          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+          // hide the children
+          // $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
         }
         
         let newNode = null;

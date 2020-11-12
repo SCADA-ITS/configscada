@@ -11,10 +11,10 @@ webix.protoUI({
         var base = this.$view.className.split("animated")[0];
         this.$view.className = base + " animated slideInRight";  
       })
-      this.attachEvent("onHide", function() {
-        this.$view.style.display = "block";
-        this.$view.className += " animated slideOutRight";  
-      })
+      // this.attachEvent("onHide", function() {
+      //   this.$view.style.display = "block";
+      //   this.$view.className += " animated slideOutRight";  
+      // })
     });
   }
 }, webix.ui.window);
@@ -26,7 +26,6 @@ export default class EquipmentTree {
   constructor(id, data) {
     this.id = id;
     this.data = data;
-    let self = this;
     var graphElements =
       `query   {
           getElement(elementId: "` + this.id + `")

@@ -32,9 +32,7 @@ export function generateIcon(element, values, suffix, state) {
     "</tspan></text>";
 
   for (let i = 0; i < values.length; i++) {
-    let valueToShow = element.elementValues.find(
-      (ic) => elementTypeMap.getElementTypeParam(ic.id) == eval("elementTypeMap." + values[i].name.toUpperCase())
-    );
+
     
     etd_str +=
       '<rect stroke="black" style="stroke-width:0.2" fill="lightgray" id="rect4066-6-5-93-0" width="28.228191" height="5.6456451" x="0.041112646" y="' +
@@ -59,7 +57,6 @@ export function generateIcon(element, values, suffix, state) {
       ":" +
       values[i].name +
       '">' +
-      valueToShow.value +
       "</tspan></text>";
   }
 
