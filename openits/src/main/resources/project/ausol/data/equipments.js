@@ -1159,7 +1159,7 @@ export let columnsElementConfig = {
             "ElementTypeParam:22:2:1": { //"opac_concentration
 				"header": [ $.i18n("ElementTypeParam:22:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:21:2:2": { //"status
+            "ElementTypeParam:22:2:2": { //"status
 				"header": [ $.i18n("ElementTypeParam:22:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
@@ -1348,7 +1348,7 @@ export let columnsElementConfig = {
             "ElementTypeParam:26:1:10": {
 				"header": [ $.i18n("ElementTypeParam:26:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}  
-			
+
 		},
 		2:{
 			"alias": {
