@@ -74,7 +74,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (54, 1, 'getIncident', 'getIncident', 'ImsIncidentVO', 'id', true, true),
 (55, 1, 'getIncidentByType', 'getIncidentByType', 'ImsIncidentVO', 'id', true, true),
 (56, 1, 'getIncidentTypes', 'getIncidentTypes', 'ImsIncidentTypeVO', 'id', true, true),
-(57, 1, 'getIncidentType', 'getIncidentType', 'ImsIncidentTypeVO', 'id', true, true);
+(57, 1, 'getIncidentType', 'getIncidentType', 'ImsIncidentTypeVO', 'id', true, true),
+(58, 1, 'getIncidentTypeStates', 'getIncidentTypeStates', 'ImsIncidentTypeStateVO', 'id', true, true),
+(59, 1, 'getNextState', 'getNextState', 'ImsIncidentTypeStateVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -362,4 +364,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (57, 1, 'http://localhost:8082/graphql'),
 (57, 2, 'getIncidentType'),
 (57, 3, 'incidentTypeId'),
-(57, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}');
+(57, 4, '{id incidentGroup{id} alias description severity initialState{id} incidentTypeParams{id}}'),
+
+(58, 1, 'http://localhost:8082/graphql'),
+(58, 2, 'getIncidentTypeStates'),
+(58, 3, ''),
+(58, 4, '{id alias description labelAlias labelDescription}'),
+
+(59, 1, 'http://localhost:8082/graphql'),
+(59, 2, 'getNextState'),
+(59, 3, 'incidentId'),
+(59, 4, '{id alias description labelAlias labelDescription}');
