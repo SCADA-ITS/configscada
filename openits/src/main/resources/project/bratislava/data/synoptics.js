@@ -767,10 +767,10 @@ export let synopticData= [
 		},
 		"Element:4:3": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "DETECTOR_1",
 			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_long1_percent", label: "C (%L)"}
+				{name: "etd_intensity", label: "I (V/h)"},
+				{name: "etd_speed", label: "V (K/h)"},
+				{name: "etd_occupancy", label: "O (%)"},
+				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		}
 	}

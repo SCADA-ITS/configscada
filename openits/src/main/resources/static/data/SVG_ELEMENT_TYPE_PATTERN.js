@@ -264,9 +264,8 @@ export let SVG_21_OPAC=
 export let SVG_51_ETD = 
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-287.2104)"><path id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':IconBackground" style="fill:'
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-    ';stroke:#ff0000;stroke-width:0.43681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
+    ':stroke0" style="fill:#008000;stroke:'
+    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.43681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
        'd="M 0.22152031,296.77848 H 16.383 v -9.4649 H 0.22152031 v 9.4649" inkscape:connector-curvature="0" />' +
     '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:5.94396px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;' +
 	   'fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1486"' +

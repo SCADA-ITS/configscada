@@ -109,6 +109,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR) {
     updateIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
+    etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
@@ -336,7 +338,6 @@ function updateIcon(element, suffix="") {
   // changes the color based on the status
   if (typeof element.state != 'undefined' && element.state) {
     let color = ICON_COLOR[element.state];
-    console.log("Jony color = " + element.id + " -> " + color);
     // override generic color with ElementType color if exist
     if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
       color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];
