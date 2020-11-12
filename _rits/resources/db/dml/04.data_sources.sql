@@ -80,7 +80,11 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (60, 1, 'getRoadImpacts', 'getRoadImpacts', 'RoadImpactVO', 'id', true, true),
 (61, 1, 'getRoadImpact', 'getRoadImpact', 'RoadImpactVO', 'id', true, true),
 (62, 1, 'getInitRoadImpacts', 'getInitRoadImpacts', 'RoadImpactVO', 'id', true, true),
-(63, 1, 'getRoadImpactsByIncident', 'getRoadImpactsByIncident', 'RoadImpactVO', 'id', true, true);
+(63, 1, 'getRoadImpactsByIncident', 'getRoadImpactsByIncident', 'RoadImpactVO', 'id', true, true),
+(64, 1, 'getIncidentsSource', 'getIncidentsSource', 'ImsIncidentSourceVO', 'id', true, true),
+(65, 1, 'getIncidentSource', 'getIncidentSource', 'ImsIncidentSourceVO', 'id', true, true),
+(66, 1, 'getExtIncidents', 'getExtIncidents', 'ImsExtIncidentVO', 'id', true, true),
+(67, 1, 'getExtIncident', 'getExtIncident', 'ImsExtIncidentVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -398,4 +402,24 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (63, 1, 'http://localhost:8082/graphql'),
 (63, 2, 'getRoadImpactsByIncident'),
 (63, 3, 'incidentId'),
-(63, 4, '{id alias description labelAlias labelDescription}');
+(63, 4, '{id alias description labelAlias labelDescription}'),
+
+(64, 1, 'http://localhost:8082/graphql'),
+(64, 2, 'getIncidentsSource'),
+(64, 3, ''),
+(64, 4, '{id alias description labelAlias labelDescription}'),
+
+(65, 1, 'http://localhost:8082/graphql'),
+(65, 2, 'getIncidentSource'),
+(65, 3, 'incidentSourceId'),
+(65, 4, '{id alias description labelAlias labelDescription}'),
+
+(66, 1, 'http://localhost:8082/graphql'),
+(66, 2, 'getExtIncidents'),
+(66, 3, ''),
+(66, 4, '{id alias description extIncidentType{id} location{id} incidentInitDate extIncidentValues{id}}'),
+
+(67, 1, 'http://localhost:8082/graphql'),
+(67, 2, 'getExtIncident'),
+(67, 3, 'extIncidentId'),
+(67, 4, '{id alias description extIncidentType{id} location{id} incidentInitDate extIncidentValues{id}}');

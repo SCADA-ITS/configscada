@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentSourceBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateBO;
 import com.revenga.rits.front.openits.bo.RoadImpactBO;
@@ -37,6 +39,12 @@ public class ImsIncidentController {
 	
 	@Autowired
 	RoadImpactBO roadImpactBO;
+	
+	@Autowired
+	ImsIncidentSourceBO imsIncidentSourceBO;
+	
+	@Autowired
+	ImsExtIncidentBO imsExtIncidentBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
@@ -155,6 +163,46 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(roadImpactBO.getRoadImpactsByIncident(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentsSource")
+	@ApiOperation(value = "Get incidents source", notes = "Get incidents source")
+	public ResponseEntity<Object> getIncidentsSource() {
+		
+		return new ResponseEntity<>(imsIncidentSourceBO.getIncidentsSource(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentSource/{id}")
+	@ApiOperation(value = "Get incident source by id", notes = "Get incident source by id")
+	public ResponseEntity<Object> getIncidentSource(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "IncidentSource by id",
+			example = "ImsIncidentSource:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentSourceBO.getIncidentSource(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/extIncidents")
+	@ApiOperation(value = "Get ext incidents", notes = "Get ext incidents")
+	public ResponseEntity<Object> getExtIncidents() {
+		
+		return new ResponseEntity<>(imsExtIncidentBO.getExtIncidents(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/extIncident/{id}")
+	@ApiOperation(value = "Get ext incident by id", notes = "Get ext incident by id")
+	public ResponseEntity<Object> getExtIncident(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "ExtIncident by id",
+			example = "ImsExtIncident:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsExtIncidentBO.getExtIncident(id), HttpStatus.OK);
 	}
 
 }

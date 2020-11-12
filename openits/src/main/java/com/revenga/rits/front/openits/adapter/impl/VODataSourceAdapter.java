@@ -101,6 +101,10 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ROAD_IMPACT = "data.source.get_road_impact";
 	public static final String DATA_SOURCE_GET_INIT_ROAD_IMPACTS = "data.source.get_init_road_impacts";
 	public static final String DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT = "data.source.get_road_impacts_by_incident";
+	public static final String DATA_SOURCE_GET_INCIDENTS_SOURCE = "data.source.get_incidents_source";
+	public static final String DATA_SOURCE_GET_INCIDENT_SOURCE = "data.source.get_incident_source";
+	public static final String DATA_SOURCE_GET_EXT_INCIDENTS = "data.source.get_ext_incidents";
+	public static final String DATA_SOURCE_GET_EXT_INCIDENT = "data.source.get_ext_incident";
 	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
@@ -237,6 +241,14 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetRoadImpactsByIncident;
 	@Getter
+	private Integer dataSourceGetIncidentsSource;
+	@Getter
+	private Integer dataSourceGetIncidentSource;
+	@Getter
+	private Integer dataSourceGetExtIncidents;
+	@Getter
+	private Integer dataSourceGetExtIncident;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -327,6 +339,10 @@ public class VODataSourceAdapter {
 		this.dataSourceGetRoadImpact = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD_IMPACT));
 		this.dataSourceGetInitRoadImpacts = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INIT_ROAD_IMPACTS));
 		this.dataSourceGetRoadImpactsByIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT));
+		this.dataSourceGetIncidentsSource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS_SOURCE));
+		this.dataSourceGetIncidentSource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_SOURCE));
+		this.dataSourceGetExtIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENTS));
+		this.dataSourceGetExtIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
