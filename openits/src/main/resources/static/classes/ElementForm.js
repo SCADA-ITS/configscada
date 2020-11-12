@@ -423,6 +423,7 @@ export default class ElementForm {
 												alerted
 												elementTypeParam {
 													description
+													alias
 												}
 											}
 										}

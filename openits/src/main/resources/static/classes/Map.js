@@ -177,7 +177,8 @@ export default class Map {
 								value
 								alerted
 								elementTypeParam {
-									description
+                  description
+                  alias
 								}
 							}
 						}

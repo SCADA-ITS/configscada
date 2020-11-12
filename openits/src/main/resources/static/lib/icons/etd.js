@@ -71,15 +71,13 @@ export function generateIcon(element, values, suffix, state) {
 export function updateEtdIcon(element, suffix = "") {
   for (let i = 0; i < element.elementValues.length; i++) {
     let ev = element.elementValues[i];
-    /*
     if (
       document.getElementById(
-        element.id + suffix + ":" + ev.elementTypeParam.description
+        element.id + suffix + ":etd_" + ev.elementTypeParam.alias
       ) != null
     ) {
-      let domObj = element.id + suffix + ":" + ev.elementTypeParam.description;
+      let domObj = element.id + suffix + ":etd_" + ev.elementTypeParam.alias;
       document.getElementById(domObj).innerHTML = ev.value;
     }
-    */
   }
 }

@@ -18,6 +18,7 @@ let elementQuery = webix.proxy(
     {
       id
       state
+      description
       elementType {
         id
         alias
@@ -29,6 +30,7 @@ let elementQuery = webix.proxy(
         alerted
         elementTypeParam {
           description
+          alias
         }
       }
     }

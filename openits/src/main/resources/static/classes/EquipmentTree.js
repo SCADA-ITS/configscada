@@ -284,6 +284,7 @@ export default class EquipmentTree {
                   alerted
                   elementTypeParam {
                     description
+                    alias
                   }
                 }
               }

@@ -31,6 +31,7 @@ var graphSynoptic = webix.proxy(
           alerted
           elementTypeParam {
             description
+            alias
           }
         }
       }
