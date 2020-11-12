@@ -40,6 +40,7 @@ export const ELEMENT_TYPE_44_CABIN_TFA3D = "44";
 export const ELEMENT_TYPE_45_CABIN_TFA = "45";
 export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
 export const ELEMENT_TYPE_47_CABIN_TU = "47";
+export const ELEMENT_TYPE_51_ETD = "51";
 export const ELEMENT_TYPE_53_SEM = "53";
 export const ELEMENT_TYPE_55_CT = "55";
 export const ELEMENT_TYPE_56_UNIFILAR = "56";
@@ -234,9 +235,6 @@ export function getElementTypeName(elementTypeIdString) {
     case ELEMENT_TYPE_19_CO:
     case ELEMENT_TYPE_20_NO:
     case ELEMENT_TYPE_21_OPAC:
-    case ELEMENT_TYPE_22_ETD_MODBUS:
-    case ELEMENT_TYPE_23_ETD_DETECTOR:
-    case ELEMENT_TYPE_33_ETD:
     case MATRIX_ELEMENT_TYPE:
     case FULL_MATRIX_ELEMENT_TYPE:
     case ELEMENT_TYPE_25_CABIN:

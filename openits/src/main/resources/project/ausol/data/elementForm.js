@@ -389,7 +389,17 @@ export let columnsElementFormList = {
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
-		},
+		},	
+	"ElementType:51": {
+		"rows":[
+			"ElementTypeParam:51:1:1", 
+			"ElementTypeParam:51:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
 	"ElementType:53": {
 		"rows":[
 			"ElementTypeParam:53:1:1", 

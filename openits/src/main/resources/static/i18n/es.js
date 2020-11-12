@@ -106,6 +106,8 @@ var i18_es = {
     "ElementType:46.description": "ARMARIO_ELECTRICO_TOLL",
     "ElementType:47.alias": "ARMARIO_ELECTRICO_TU",
     "ElementType:47.description": "ARMARIO_ELECTRICO_TU",
+    "ElementType:51.alias": "ETD",
+    "ElementType:51.description": "ETD",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
     "ElementType:55.alias": "CT",
@@ -296,7 +298,6 @@ var i18_es = {
     "ElementTypeParam:9:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:9:1:2.description": "Entrance Tunnel Distance (m)",
 
-
     "ElementTypeParam:1:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:1:1:1003.description": "MANGO SESSION_UID",
     
@@ -313,7 +314,6 @@ var i18_es = {
     "ElementTypeParam:10:1:3.description": "PK",
     "ElementTypeParam:10:1:4.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance (m)",
-
 
     "ElementTypeParam:10:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:10:1:1003.description": "MANGO SESSION_UID",
@@ -749,6 +749,11 @@ var i18_es = {
     "ElementTypeParam:47:1:3.alias": "Road",
     "ElementTypeParam:47:1:3.description": "Road",
     
+    "ElementTypeParam:51:1:1.alias": "Marca",
+    "ElementTypeParam:51:1:1.description": "Marca",
+    "ElementTypeParam:51:1:2.alias": "Modelo",
+    "ElementTypeParam:51:1:2.description": "Modelo",
+    
     "ElementTypeParam:53:1:1.alias": "PK",
     "ElementTypeParam:53:1:1.description": "PK",
     "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
@@ -1156,6 +1161,10 @@ var i18_es = {
     "AlarmConfig:25": "ALARMA CT AIRE ACONDICIONADO",
     "AlarmConfig:26": "ALARMA CT PUERTA ABIERTA",
     "AlarmConfig:27": "ALARMA CT INCENDIO",
+    "AlarmConfig:28": "ALARMA ETD SIN CONEXI&Oacute;N",
+    "AlarmConfig:29": "ALARMA ETD BATERIAS BAJAS",
+    "AlarmConfig:30": "ALARMA ETD FALLO DE ALIMENTACION",
+    "AlarmConfig:31": "ALARMA ETD PUERTA ABIERTA",
 
     "pictograms.type.1":"Advertencia de peligro",
     "pictograms.type.2":"Prioridad",

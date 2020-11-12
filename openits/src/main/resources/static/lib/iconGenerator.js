@@ -104,12 +104,11 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
     || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR) {
     updateIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_23_ETD_DETECTOR) {
-    etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
@@ -267,6 +266,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_33_ETD:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
       break;
+    case elementTypeMap.ELEMENT_TYPE_51_ETD:      
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 18) + ',' + (height / 18) + ')">' + createIcon(element, suffix) + '</g>';
+      break; 
     case elementTypeMap.ELEMENT_TYPE_55_CT:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
@@ -334,6 +336,7 @@ function updateIcon(element, suffix="") {
   // changes the color based on the status
   if (typeof element.state != 'undefined' && element.state) {
     let color = ICON_COLOR[element.state];
+    console.log("Jony color = " + element.id + " -> " + color);
     // override generic color with ElementType color if exist
     if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
       color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];

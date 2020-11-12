@@ -29,14 +29,19 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"MATRIXPANEL": {
-				"items": ["Element:36:1", "Element:36:2"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
 			"CAM": {
 				"items": ["Element:2:1", "Element:2:2", "Element:2:3", "Element:2:4", "Element:2:5", "Element:2:6", "Element:2:7", "Element:2:8", "Element:2:9", "Element:2:10"],
 				"translation_key": "ElementType:2.description",
+				"visibility": "visible"
+			},
+			"SECTIONS": {
+				"items": ["Element:4:1", "Element:4:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"BAR": {
+				"items": ["Element:8:1", "Element:8:2", "Element:8:3", "Element:8:4"],
+				"translation_key": "",
 				"visibility": "visible"
 			},
 			"FAN": {
@@ -44,8 +49,43 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"BAR": {
-				"items": ["Element:8:1", "Element:8:2", "Element:8:3", "Element:8:4"],
+			"SOS": {
+				"items": ["Element:11:1", "Element:11:2", , "Element:11:3", , "Element:11:4", , "Element:11:5", , "Element:11:6"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"LUX": {
+				"items": ["Element:12:1", "Element:12:2", "Element:12:3", "Element:12:4", "Element:12:5", "Element:12:6", "Element:12:7", "Element:12:8"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SEM": {
+				"items": ["Element:13:1", "Element:13:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"LUM": {
+				"items": ["Element:14:1", "Element:14:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"FIRE": {
+				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4", "Element:15:5", "Element:15:6"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"MEG": {
+				"items": ["Element:16:1", "Element:16:2", "Element:16:3", "Element:16:4", "Element:16:5", "Element:16:6"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"ANEM_EXT": {
+				"items": ["Element:17:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"ANEM_INT": {
+				"items": ["Element:18:1", "Element:18:2"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -64,53 +104,18 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"LUX": {
-				"items": ["Element:12:1", "Element:12:2", "Element:12:3", "Element:12:4", "Element:12:5", "Element:12:6", "Element:12:7", "Element:12:8"],
+			"MATRIXPANEL": {
+				"items": ["Element:36:1", "Element:36:2"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"LUM": {
-				"items": ["Element:14:1", "Element:14:2"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"SEM": {
-				"items": ["Element:13:1", "Element:13:2"],
+			"ETD": {
+				"items": ["Element:51:1"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
 			"SEM_AMBAR_AMBAR": {
 				"items": ["Element:53:1", "Element:53:2", "Element:53:3", "Element:53:4"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"ANEM_EXT": {
-				"items": ["Element:17:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"ANEM_INT": {
-				"items": ["Element:18:1", "Element:18:2"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"SOS": {
-				"items": ["Element:11:1", "Element:11:2", , "Element:11:3", , "Element:11:4", , "Element:11:5", , "Element:11:6"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"FIRE": {
-				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4", "Element:15:5", "Element:15:6"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"MEG": {
-				"items": ["Element:16:1", "Element:16:2", "Element:16:3", "Element:16:4", "Element:16:5", "Element:16:6"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"SECTIONS": {
-				"items": ["Element:4:1", "Element:4:2"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -120,7 +125,35 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
+		
+		"Element:2:1":  { "x": 1400, "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-1CA" },
+		"Element:2:2":  { "x": 1150,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-2CA" },
+		"Element:2:3":  { "x": 800,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-3CA" },
+		"Element:2:4":  { "x": 400,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-4CA" },
+		"Element:2:5":  { "x": 1710,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
+		"Element:2:6":  { "x": 270,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-1MA" },
+		"Element:2:7":  { "x": 580, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-2MA" },
+		"Element:2:8":  { "x": 900, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-3MA" },
+		"Element:2:9":  { "x": 1500,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-4MA" },
+		"Element:2:10":  { "x": 35,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1MA" },
 
+		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
+			]
+		},
+		"Element:4:2": { "x": 1600,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
+			]
+		},
+		
 		"Element:8:1":  { "x": 1529, "y": 817, "width": 88,  "height": 48,  "alias": "RV-BAR-1CA" },
 		"Element:8:2":  { "x": 1529, "y": 658, "width": 88,  "height": 48,  "alias": "RV-BAR-2CA" },
 		"Element:8:3":  { "x": 150,   "y": 258, "width": 88,  "height": 48,  "alias": "RV-BAR-1MA" },
@@ -152,24 +185,9 @@ export let synopticData= [
 		"Element:12:6": { "x": 500, "y": 132, "width": 50,  "height": 50,  "alias": "RV-LUX-2MA" },
 		"Element:12:7": { "x": 1200,  "y": 132, "width": 50,  "height": 50,  "alias": "RV-LUX-3MA" },
 		"Element:12:8": { "x": 1400, "y": 132, "width": 50,  "height": 50,  "alias": "RV-LUX-4MA" },
-		
-		"Element:2:1":  { "x": 1400, "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-1CA" },
-		"Element:2:2":  { "x": 1150,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-2CA" },
-		"Element:2:3":  { "x": 800,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-3CA" },
-		"Element:2:4":  { "x": 400,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-4CA" },
-		"Element:2:5":  { "x": 1710,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
-		"Element:2:6":  { "x": 270,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-1MA" },
-		"Element:2:7":  { "x": 580, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-2MA" },
-		"Element:2:8":  { "x": 900, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-3MA" },
-		"Element:2:9":  { "x": 1500,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-4MA" },
-		"Element:2:10":  { "x": 35,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1MA" },
 	
 		"Element:13:1": { "x": 1665, "y": 628, "width": 40,  "height": 40,  "alias": "RV-SRAV-1CA" },
 		"Element:13:2": { "x": 84,   "y": 420, "width": 40,  "height": 40,  "alias": "RV-SRAV-1MA" },
-		"Element:53:1": { "x": 1685, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-1CA" },
-		"Element:53:2": { "x": 1645, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-2CA" },
-		"Element:53:3": { "x": 104,  "y": 225, "width": 40,  "height": 40,  "alias": "RV-SAA-1MA" },
-		"Element:53:4": { "x": 64,  "y": 225, "width": 40,  "height": 40,  	"alias": "RV-SAA-2MA" },
 
 		"Element:14:1": { "x": 1640, "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1CA" },
 		"Element:14:2": { "x": 77,   "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1MA" },
@@ -204,25 +222,15 @@ export let synopticData= [
 
 		"Element:36:1": { "x": 63,   "y": 310, "width": 200, "height": 54,  "alias": "GT_1" },
 		"Element:36:2": { "x": 1517, "y": 715, "width": 200, "height": 54,  "alias": "GT_2" },
+		
+		"Element:51:1": { "x": 210,   "y": 360, "width": 184, "height": 204,  "alias": "RV-ETD-1MA" },
+		
+		"Element:53:1": { "x": 1685, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-1CA" },
+		"Element:53:2": { "x": 1645, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-2CA" },
+		"Element:53:3": { "x": 104,  "y": 225, "width": 40,  "height": 40,  "alias": "RV-SAA-1MA" },
+		"Element:53:4": { "x": 64,  "y": 225, "width": 40,  "height": 40,  	"alias": "RV-SAA-2MA" },
 
 		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" },
-
-		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1",
-			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_long1_percent", label: "C (%L)"}
-			]
-		},
-		"Element:4:2": { "x": 1600,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2",
-			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_long1_percent", label: "C (%L)"}
-			]
-		},
 	},
 	{
 		"id":"synopticMetro",
@@ -285,6 +293,11 @@ export let synopticData= [
 				"items": ["Element:53:1", "Element:53:2", "Element:53:3", "Element:53:4"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"SECTIONS": {
+				"items": ["Element:4:1", "Element:4:2"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 		"Element:36:1": { "x": 1511, "y": 593,  "width": 108, "height": 25 },
@@ -313,6 +326,23 @@ export let synopticData= [
 		"Element:8:2":  { "x": 1820, "y": 690,  "width": 88,  "height": 48 },
 		"Element:8:3":  { "x": 1411, "y": 590,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
+		
+		"Element:4:1":  { "x": 1408, "y": 675,  "width": 90,  "height": 90, "alias": "DETECTOR_1",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
+			]
+		},
+		"Element:4:2":  { "x": 1823, "y": 560,  "width": 90,  "height": 90, "alias": "DETECTOR_2",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_long1_percent", label: "C (%L)"}
+			]
+		},
 
 		"Element:7:1":  { "x": 1505, "y": 775,  "width": 305, "height": 37 },
 	},

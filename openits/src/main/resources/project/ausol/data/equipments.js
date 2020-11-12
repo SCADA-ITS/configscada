@@ -15,6 +15,7 @@ export let optionElementType = [
 	{id:"ElementType:20", value:"NO"},
 	{id:"ElementType:21", value:"OPAC"},
 	{id:"ElementType:26", value:"PANEL"},
+	{id:"ElementType:51", value:"ETD"},
 	{id:"ElementType:55", value:"CT"},
 ]
 
@@ -332,6 +333,17 @@ export let columnsElementList = {
 			"alias",
 			"ElementTypeParam:53:1:1",
 			"ElementTypeParam:53:1:2"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:51": { 
+		1:[
+			"alias",
+			"ElementTypeParam:51:1:1",
+			"ElementTypeParam:51:1:2"
 		],
 		2:[
 			"alias",
