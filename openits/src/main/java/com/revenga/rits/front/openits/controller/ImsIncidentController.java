@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revenga.rits.front.openits.bo.ImsIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateBO;
+import com.revenga.rits.front.openits.bo.RoadImpactBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,9 @@ public class ImsIncidentController {
 	
 	@Autowired
 	ImsIncidentTypeStateBO imsIncidentTypeStateBO;
+	
+	@Autowired
+	RoadImpactBO roadImpactBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
@@ -94,7 +98,7 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentTypeStateBO.getIncidentTypeStates(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentNextState/{id}")
+	@GetMapping(value = "/incidentNextState/incident/{id}")
 	@ApiOperation(value = "Get nextState by incident id", notes = "Get nextState by incident id")
 	public ResponseEntity<Object> getNextState(
 			@ApiParam(
@@ -105,6 +109,52 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsIncidentTypeStateBO.getNextState(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/roadImpacts")
+	@ApiOperation(value = "Get road impacts", notes = "Get road impacts")
+	public ResponseEntity<Object> getRoadImpacts() {
+		
+		return new ResponseEntity<>(roadImpactBO.getRoadImpacts(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/roadImpact/{id}")
+	@ApiOperation(value = "Get road impact by id", notes = "Get road impact by id")
+	public ResponseEntity<Object> getRoadImpact(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "RoadImpact by id",
+			example = "RoadImpact:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(roadImpactBO.getRoadImpact(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/initRoadImpacts/incidentType/{id}")
+	@ApiOperation(value = "Get init road impact by incidentType id", notes = "Get init road impact by incidentType id")
+	public ResponseEntity<Object> getInitRoadImpacts(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Init RoadImpact by incidentType id",
+			example = "ImsIncidentType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(roadImpactBO.getInitRoadImpacts(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/roadImpact/incident/{id}")
+	@ApiOperation(value = "Get road impact by incident id", notes = "Get road impact by incident id")
+	public ResponseEntity<Object> getRoadImpactsByIncident(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "RoadImpact by incident id",
+			example = "ImsIncident:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(roadImpactBO.getRoadImpactsByIncident(id), HttpStatus.OK);
 	}
 
 }
