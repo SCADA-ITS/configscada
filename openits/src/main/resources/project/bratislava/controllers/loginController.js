@@ -1,3 +1,5 @@
+import {RULE} from "../data/GLOBAL_PROPERTIES.js"
+
 webix.ready(function() {
 
     const language = webix.storage.session.get("app_user_language");
