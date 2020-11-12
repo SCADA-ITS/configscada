@@ -1,4 +1,4 @@
-import ElementForm from "../classes/ElementForm.js";
+import TabForm from "../classes/ElementForm.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 
 export default class ElementChildsList {
@@ -29,7 +29,7 @@ export default class ElementChildsList {
                     data:data.childs,
                     select: true,
                     //template:"#id#. #alias#, #state#",
-                    template: "#alias#.",
+                    template: "#alias#",
                     click: function(obj) {
                         if($$("component"+parentId) !== undefined) {
                             $$("cuerpo" + parentId).removeView($$("component"+parentId));
@@ -41,8 +41,9 @@ export default class ElementChildsList {
                                 }
                             });
                         }
-                        let elementForm14 = new ElementForm(obj,columnsElementFormList);
+                        let elementForm14 = new TabForm(obj,columnsElementFormList);
                         $$("cuerpo" + parentId).addView(elementForm14.getComponent(),1);
+                        elementForm14.loadData();
                     }
                 },0);
                 $$("childList" + this.parentId).add({id: data.id, alias: data.alias},0);

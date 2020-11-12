@@ -6,7 +6,7 @@ import PanelManager from "../classes/PanelManager.js";
 import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
-export default class ElementForm {
+export default class TabForm {
 	constructor(id,columnsElementFormList) {
 		this.id = id;
 		if(columnsElementFormList){
@@ -423,7 +423,6 @@ export default class ElementForm {
 												alerted
 												elementTypeParam {
 													description
-													alias
 												}
 											}
 										}
@@ -613,6 +612,27 @@ export default class ElementForm {
     }
 
 	getComponent() {
+		var client = this.client;
+		let result = {
+			id: "component"+this.id,
+			rows: [
+				this.header,
+				this.body,
+				this.alarmsHeader,
+				this.alarmsTable,
+				//this.alarmsNone,
+				{}		
+			],
+			on:{
+				onDestruct: function(obj){
+					client.deactivate();
+				}
+			}
+		};
+		return result;
+	}
+
+	loadData() {
 		
 		// waits for the element and starts drawing
 		this.elementReady('[view_id="' + "elementBody" + this.id + '"]').then((c) => {
@@ -701,73 +721,7 @@ export default class ElementForm {
 				console.error("Error. id: "+this.id);
 				console.error(e);
 			}
-			/*
-			try {
-			// STREAM     getElementType(elementIdString)
-				if(elementTypeMap.getElementType(data.elementType.id) === elementTypeMap.ELEMENT_TYPE_2_CAM) { //"ElementType:2"){
-					let stremMjpeg = null;
-					if(data.elementValues !== null){
-						stremMjpeg = data.elementValues.filter(elementValue => elementValue.id != null && elementTypeMap.getElementParamTypeId(elementValue.id) === elementTypeMap.CAM_STREAM_MJPEG); //"ElementTypeParam:2:1:3" );	
-					}	
-					if(stremMjpeg != null && stremMjpeg.length >= 1){
-						let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
-						let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
-						let stream = stremMjpeg[0].value;						
-						let camera = $$("component"+this.id).addView({  
-							id: "stream_"+ this.id,
-							height:streamHeight,
-							width: streamWidth,
-							data: {title: "Image One", src: stream },
-							template: function (obj) {
-							  // obj is a data record object
-							  return '<iframe style="width:105%;height:100%;position:relative;margin-top:-13px;margin-left:-9px;" src="'+obj.src+'" />'
-							}
-						}, 1);
-						
-						let streamFullViewHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewHeight"] : 700 ; //700 por defecto
-						let streamFullViewWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamFullViewWidth"] : 700 ; //700 por defecto
 
-						// let button={
-						// 	view:"button",
-						// 	value:"video fullscreen",
-						// 	click: function(obj){
-						// 	  //webix.fullscreen.set($$(camera));
-
-						// 	  webix
-						// 	  .ui({
-						// 		id:  "fullviewWindowsElementForm_" + this.id,
-						// 		view: "window",
-						// 		move: true,
-						// 		close: true,
-						// 		position: "right",
-						// 		body: {
-						// 			id: "streamFullViewElementForm_" + this.id,
-						// 			height:streamFullViewHeight,
-						// 			width: streamFullViewWidth,
-						// 			data: {title: "Image One", src: stream },
-						// 			template: function (obj) {
-						// 			  return '<embed class="' + this.id + '" style="width: '+streamFullViewWidth+'px;height:'+streamFullViewHeight + 'px" src="'+obj.src+'" width="' + (streamFullViewWidth-1) + '" "height="' +(streamFullViewHeight-1) + '" />'
-						// 			}
-						// 		},
-						// 		on: {
-						// 			onHide: function(obj){
-						// 				$$( "fullviewWindowsElementForm_" + this.id).destructor();
-						// 			}
-						// 		  }
-						// 	  })
-						// 	  .show();
-
-						// 	}
-						// };
-						// $$("component" + this.id).addView(button, 2);
-					}
-				}
-			} catch (e) {
-				console.error("Error. id: "+this.id);
-				console.error(e);
-			}	
-			
-			*/
 			let valuesList = {};
 			
 			//BODY
@@ -942,6 +896,9 @@ export default class ElementForm {
 			this.client.activate();
 			return data;
 		});
+
+
+		/*
 		var client = this.client;
 		let result = {
 			id: "component"+this.id,
@@ -960,6 +917,7 @@ export default class ElementForm {
 			}
 		};
 		return result;
+		*/
 	}
 
 }

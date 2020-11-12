@@ -1,5 +1,5 @@
 import Alarms from "../classes/Alarms.js";
-import ElementForm from "../classes/ElementForm.js";
+import ElementWindow from "../classes/ElementWindow.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
 import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
@@ -715,26 +715,30 @@ function openElementForm(id){
 			$$("$sidebar1").unselectAll();
 			$$("syn0").show();
 		}else{
-			if ($$("win" + id) != null) {
-				$$("win" + id).destructor();
+			if ($$("winAlarmss" + id) != null) {
+				$$("winAlarmss" + id).destructor();
 			}
-			let elementForm = new ElementForm(id);
-			webix.ui({
-				id: "win" + id,
-				view: "window",
-				move: true,
-				close: true,
-				position: "right",
-				body: elementForm.getComponent(),
-				on: {
+			let elementWindow = new ElementWindow(id,"ElementType:" + id.split(":")[1]);
+			webix
+			.ui({
+			  id: "winAlarmss" + id,
+			  view: "window",
+			  move: true,
+			  close: true,
+			  position: "right",
+			  body: elementWindow.getComponent(),
+			  on: {
 				onDestruct: function(obj){
-					//elementForm.disconnect();
+				  //elementForm.disconnect();
 				},
 				onHide: function(obj){
-					elementForm.disconnect();
-					$$("win" + id).destructor();
+				  //elementForm.disconnect();
+				  //$$("win" + elementId).destructor();
+				},
+				onShow: function(obj){
+				  elementWindow.loadData();
 				}
-				}
+			  }                            
 			})
 			.show();
 		}

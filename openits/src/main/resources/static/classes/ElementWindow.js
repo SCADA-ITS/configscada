@@ -1,4 +1,4 @@
-import ElementForm from "../classes/ElementForm.js";
+import TabForm from "../classes/ElementForm.js";
 import ElementChildsList from "../classes/ElementChildsList.js";
 import TabVideo from "../classes/TabVideo.js";
 import {columnsElementFormList} from "../data/elementForm.js";
@@ -13,19 +13,19 @@ export default class ElementWindow {
     getComponent(){
         let result = {};
         var parentId = this.parentId;
-        let elementForm = new ElementForm(parentId,columnsElementFormList);
+        this.elementForm = new TabForm(parentId,columnsElementFormList);
         let tabs = null;
         try {
-            tabs = ELEMENT_TYPE.values[this.parentType] !== undefined && ELEMENT_TYPE.values[this.parentType].tabs.length > 1 ? ELEMENT_TYPE.values[this.parentType].tabs : null;
+            tabs = ELEMENT_TYPE.values[this.parentType] !== undefined && ELEMENT_TYPE.values[this.parentType].tabs !== undefined && ELEMENT_TYPE.values[this.parentType].tabs.length > 1 ? ELEMENT_TYPE.values[this.parentType].tabs : null;
         } catch (e) {
             console.log(e);
         }
-
+        this.tabVideo = null;
         if (tabs !== null) {
             let tabsArray = [];
             let tabsCells = [];
             let urlparam = null;
-            let tabVideo = null;
+            
             tabs.forEach(element => {
                 if(element["ELEMENT_FORM_TAB_FORM"] !== undefined) {
                     tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_FORM" , value: $.i18n("element.window.tab.form"), width: 100 });
@@ -59,9 +59,8 @@ export default class ElementWindow {
                         }
                     });
                     */
-                    console.log(element["ELEMENT_FORM_TAB_VIDEO"].urlParamVideo);
-                    console.log("sss");
-                    tabVideo = new TabVideo(parentId,element["ELEMENT_FORM_TAB_VIDEO"].urlParamVideo);
+
+                    this.tabVideo = new TabVideo(parentId,element["ELEMENT_FORM_TAB_VIDEO"].urlParamVideo);
                 }
                 if(element["ELEMENT_FORM_TAB_SYN"] !== undefined) {
                     tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_SYN", value: $.i18n("element.window.tab.syn"), width: 100 });
@@ -85,18 +84,18 @@ export default class ElementWindow {
 */
 
             result = {
-                id: "win" + parentId,
-                view: "window",
-                move: true,
-                head: parentId,
-                close: true,
-                position: "right",
+                id: "window" + this.parentId,
+                
+                
+                /*
                 on: {
                     onShow: function(obj, obj2){
-                        tabVideo.loadData()
+                        tabvideo.loadData();
+                        tabElement.loadData();
                     }
                 },
-                body: {
+                */
+                //body: {
                     //rows: [
                     //    {
                             view: "tabview",
@@ -106,14 +105,14 @@ export default class ElementWindow {
                                     id: this.parentId + "_" + this.parentType + "_TAB_FORM",
                                     header: $.i18n("element.window.tab.form"),
                                     body: {             
-                                        id: "cuerpo"+elementForm.id,
-                                        cols:[ elementForm.getComponent()],
+                                        id: "cuerpo"+this.elementForm.id,
+                                        cols:[ this.elementForm.getComponent()],
                                         on: {
                                             onDestruct: function(obj){
                                                 //elementForm.disconnect();
                                             },
                                             onHide: function(obj){
-                                                elementForm.disconnect();
+                                                this.elementForm.disconnect();
                                             }
                                         }
                                     }
@@ -121,38 +120,33 @@ export default class ElementWindow {
                                 {
                                     id: this.parentId + "_" + this.parentType + "_TAB_VIDEO",
                                     header: $.i18n("element.window.tab.video"),
-                                    body: tabVideo.getComponent(),    
+                                    body: this.tabVideo.getComponent(),    
                                 }
                             ],
                     //    },
 
                     //],
-                },
+                //},
 
             };
 
         } else {
             result = {
-                id: "win" + parentId,
-                view: "window",
-                move: true,
-                header: parentId,
-                close: true,
-                position: "right",
-                body: {
-                    id: "cuerpo"+elementForm.id,
-                    cols:[ elementForm.getComponent()]
-                },
+                //id: "window" + parentId,
+                //body: {
+                id: "cuerpo"+this.elementForm.id,
+                cols:[ this.elementForm.getComponent()],
+                //},
                 on: {
                     onDestruct: function(obj){
                         //elementForm.disconnect();
                     },
                     onHide: function(obj){
-                        elementForm.disconnect();
+                        this.elementForm.disconnect();
                         $$("win" + parentId).destructor();
                     },
                     onShow: function(obj){
-                        let hijos = new ElementChildsList(elementForm.id);
+                        let hijos = new ElementChildsList(this.elementForm.id);
                         hijos.getComponent();
                     }
                 }
@@ -161,5 +155,12 @@ export default class ElementWindow {
 
         return result;
 
+    }
+    loadData(){
+        if( this.tabVideo !== null)
+            this.tabVideo.loadData();
+        this.elementForm.loadData();
+        let hijos = new ElementChildsList(this.elementForm.id);
+        hijos.getComponent();
     }
 }

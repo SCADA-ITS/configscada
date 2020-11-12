@@ -2,7 +2,7 @@ import { mapTG } from "../data/maps.js";
 import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
-import ElementForm from "../classes/ElementForm.js";
+import ElementWindow from "../classes/ElementWindow.js";
 import ElementCommand from "../classes/ElementCommand.js";
 import EquipmentTree from "../classes/EquipmentTree.js";
 import {columnsElementFormList} from "../data/elementForm.js";
@@ -840,28 +840,32 @@ export default class Map {
           elementTypeMap.getElementType(element_id) !=
           elementTypeMap.ELEMENT_TYPE_7_ZONE
         ) {
-          if($$("win" + element_id) != null){
-              $$("win" + element_id).destructor();
+          if($$("winMap" + element_id) != null){
+              $$("winMap" + element_id).destructor();
           }
-          let elementForm = new ElementForm(element_id, columnsElementFormList);
+          let elementWindow = new ElementWindow(element_id,"ElementType:" + element_id.split(":")[1]);
           webix
-            .ui({
-              id: "win" + element_id,
-              view: "window",
-              move: true,
-              close: true,
-              position: "right",
-              body: elementForm.getComponent(),
-              on: {
-                onDestruct: function (obj) {
-                  elementForm.disconnect();
-                },
-                onHide: function (obj) {
-                  elementForm.disconnect();
-                },
-              },
-            })
-            .show();
+          .ui({
+            id: "winMap" + element_id,
+            view: "window",
+            move: true,
+            close: true,
+            position: "right",
+            body: elementWindow.getComponent(),
+            on: {
+            onDestruct: function(obj){
+              //elementForm.disconnect();
+            },
+            onHide: function(obj){
+              //elementForm.disconnect();
+              //$$("win" + elementId).destructor();
+            },
+            onShow: function(obj){
+              elementWindow.loadData();
+            }
+            }                            
+          })
+          .show();
           
             // auto de-select
             //e.target.getFeatures().remove(feature);

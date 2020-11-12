@@ -1930,7 +1930,7 @@ var i18_es = {
     "cronUi.popup.yearsOpt04.01": "Cada año entre ",
     "cronUi.popup.yearsOpt04.02": " y ",
 
-    "element.window.tab.form": "Form",
+    "element.window.tab.form": "Detalle",
     "element.window.tab.video": "Video",
     "element.window.tab.syn": "Synoptic"
 
