@@ -751,7 +751,9 @@ export let synopticData= [
 		"ExclusiveLayers": true,
 		"BaseLayers": {
 			"BASE_LAYER": "mapa_base.png",
-			"ETD": "D4-R7_trazado.png"
+			"ROAD": "D4-R7_trazado.png",
+			"SECTIONS": "atc galletas pk-14942_1.svg",
+			"KINEO": "atc pk-14942_1.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -759,18 +761,37 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"ETD": {
-				"items": ["Element:4:3"],
+			"ROAD": {
+				"items": [],
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"SECTIONS": {
+				"items": ["Element:4:1", "Element:4:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"ATC": {
+				"items": ["Element:54:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
 		},
-		"Element:4:3": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "DETECTOR_1",
+		"Element:54:1": { "x": 570,  "y": 100, "width": 180, "height": 180, "alias": "ASDDH01"  },
+		"Element:4:1": { "x": 550,  "y": 230, "width": 80, "height": 80, "alias": "ASDDH01P",
 			"values": [
-				{name: "etd_intensity", label: "I (V/h)"},
-				{name: "etd_speed", label: "V (K/h)"},
-				{name: "etd_occupancy", label: "O (%)"},
-				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_pa1_percent", label: "C (%L)"}
+			]
+		},
+		"Element:4:2": { "x": 870,  "y": 300, "width": 80, "height": 80, "alias": "ASDDH01L",
+			"values": [
+				{name: "etd_total_intensity", label: "I (V/h)"},
+				{name: "etd_average_speed", label: "V (K/h)"},
+				{name: "etd_occupation", label: "O (%)"},
+				{name: "etd_veh_pa1_percent", label: "C (%L)"}
 			]
 		}
 	}

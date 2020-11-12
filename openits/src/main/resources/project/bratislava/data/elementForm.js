@@ -58,13 +58,24 @@ export let columnsElementFormList = {
 	"ElementType:3": {
 		"rows":[ 
 			"ElementTypeParam:3:1:2",
-			"ElementTypeParam:3:2:3",
+			"ElementTypeParam:3:2:1",
 			"ElementTypeParam:3:2:4",
 			"ElementTypeParam:3:2:6",
 			"ElementTypeParam:3:2:9",
 			"ElementTypeParam:3:2:10",
-			"ElementTypeParam:3:2:11",
-			"ElementTypeParam:3:2:19",
+			"ElementTypeParam:3:2:100",
+			"ElementTypeParam:3:2:101",
+			"ElementTypeParam:3:2:102",
+			"ElementTypeParam:3:2:103",
+			"ElementTypeParam:3:2:104",
+			"ElementTypeParam:3:2:105",
+			"ElementTypeParam:3:2:106",
+			"ElementTypeParam:3:2:107",
+			"ElementTypeParam:3:2:108",
+			"ElementTypeParam:3:2:109",
+			"ElementTypeParam:3:2:110",
+			"ElementTypeParam:3:2:111",
+			"ElementTypeParam:3:2:112"
 		],
 		"rowCounts": 8,
 		"scroll": "y",  
@@ -86,8 +97,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:24:1:1",
 			"ElementTypeParam:24:1:6",
 			"ElementTypeParam:24:1:7",
-			"ElementTypeParam:24:1:8",
-			"ElementTypeParam:24:2:3"
+			"ElementTypeParam:24:1:8"
 		],
 		"rowCounts": 5,
 		"scroll": false, 
@@ -111,8 +121,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:26:1:1",
 			"ElementTypeParam:26:1:6",
 			"ElementTypeParam:26:1:7",
-			"ElementTypeParam:26:1:8",
-			"ElementTypeParam:26:2:3"
+			"ElementTypeParam:26:1:8"
 		],
 		"rowCounts": 5,
 		"scroll": "y", 
@@ -124,8 +133,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:27:1:1",
 			"ElementTypeParam:27:1:2",
 			"ElementTypeParam:27:2:1",
-			"ElementTypeParam:27:2:2",
-			"ElementTypeParam:27:2:3"
+			"ElementTypeParam:27:2:2"
 		],
 		"rowCounts": 2,
 		"scroll": "y", 
@@ -137,8 +145,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:28:1:1",
 			"ElementTypeParam:28:1:2",
 			"ElementTypeParam:28:2:1",
-			"ElementTypeParam:28:2:2",
-			"ElementTypeParam:28:2:3"
+			"ElementTypeParam:28:2:2"
 		],
 		"rowCounts": 3,
 		"scroll": false, 
@@ -150,8 +157,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:29:1:1",
 			"ElementTypeParam:29:1:6",
 			"ElementTypeParam:29:1:7",
-			"ElementTypeParam:29:1:8",
-			"ElementTypeParam:29:2:3"
+			"ElementTypeParam:29:1:8"
 		],
 		"rowCounts": 5,
 		"scroll": "y", 
@@ -163,8 +169,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:30:1:1",
 			"ElementTypeParam:30:1:2",
 			"ElementTypeParam:30:2:1",
-			"ElementTypeParam:30:2:2",
-			"ElementTypeParam:30:2:3"
+			"ElementTypeParam:30:2:2"
 		],
 		"rowCounts": 2,
 		"scroll": "y", 
@@ -176,10 +181,9 @@ export let columnsElementFormList = {
 			"ElementTypeParam:31:1:1",
 			"ElementTypeParam:31:1:6",
 			"ElementTypeParam:31:1:7",
-			"ElementTypeParam:31:1:8",
-			"ElementTypeParam:31:2:3"
+			"ElementTypeParam:31:1:8"
 		],
-		"rowCounts": 5,
+		"rowCounts": 4,
 		"scroll": "y", 
 		"width": 540,
 		"options": {}
@@ -189,8 +193,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:32:1:1",
 			"ElementTypeParam:32:1:2",
 			"ElementTypeParam:32:2:1",
-			"ElementTypeParam:32:2:2",
-			"ElementTypeParam:32:2:3"
+			"ElementTypeParam:32:2:2"
 		],
 		"rowCounts": 2,
 		"scroll": "y", 
@@ -284,11 +287,11 @@ export let columnsElementFormList = {
 		"scroll": false, 
 		"width": 550,
 		"options": {}
-	},	
-	"ElementType:51": {
+	},
+	"ElementType:54": {
 		"rows":[
-			"ElementTypeParam:51:1:1", 
-			"ElementTypeParam:51:1:2"
+			"ElementTypeParam:54:1:1", 
+			"ElementTypeParam:54:1:2"
 		],
 		"rowCounts": 2,
 		"scroll": false,  

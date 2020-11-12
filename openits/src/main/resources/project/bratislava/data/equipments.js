@@ -9,7 +9,8 @@ export let optionElementType = [
 	{id:"ElementType:44", value: $.i18n("ElementType:44.alias")},
 	{id:"ElementType:45", value: $.i18n("ElementType:45.alias")},
 	{id:"ElementType:46", value: $.i18n("ElementType:46.alias")},
-	{id:"ElementType:47", value: $.i18n("ElementType:47.alias")}
+	{id:"ElementType:47", value: $.i18n("ElementType:47.alias")},
+	{id:"ElementType:54", value: $.i18n("ElementType:54.alias")}
 ]
 
 export let columnsElementList = {
@@ -193,6 +194,17 @@ export let columnsElementList = {
 			"ElementTypeParam:47:1:1",
 			"ElementTypeParam:47:1:2",
 			"ElementTypeParam:47:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:54": { 
+		1:[
+			"alias",
+			"ElementTypeParam:54:1:1",
+			"ElementTypeParam:54:1:2"
 		],
 		2:[
 			"alias",

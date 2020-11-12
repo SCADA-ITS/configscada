@@ -27,7 +27,7 @@ export let panelData = {
     "ElementType:31": {
         "scala": 5,
         "scala_List": 4,
-        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"3x2\",\"Tamanio\":\"64x48\",\"Zonas\":[{\"Tamanio\":\"18x24\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"30x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"30\"},{\"Tamanio\":\"16x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"16\"},{\"Tamanio\":\"18x24\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"30x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"30\"},{\"Tamanio\":\"16x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"16\"}]}]}",
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"3x2\",\"Tamanio\":\"48x48\",\"Zonas\":[{\"Tamanio\":\"18x24\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"5x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"5\"},{\"Tamanio\":\"5x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"5\"},{\"Tamanio\":\"18x24\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"5x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"5\"},{\"Tamanio\":\"5x24\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"5\"}]}]}",
     },
     "ElementType:32": {
         "scala": 5,
