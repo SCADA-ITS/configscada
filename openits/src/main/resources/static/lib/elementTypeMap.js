@@ -148,6 +148,24 @@ export const ETD_VEH_SPEED14_PERCENT = "133:2";
 export const ETD_VEH_SPEED15_PERCENT = "134:2";
 export const ETD_VEH_SPEED16_PERCENT = "135:2";
 
+export const ETD_VEH_PA1_PERCENT = "160:2";
+export const ETD_VEH_PA2_PERCENT = "161:2";
+export const ETD_VEH_PAD3_PERCENT = "162:2";
+export const ETD_VEH_PA4_PERCENT = "163:2";
+export const ETD_VEH_PA5_PERCENT = "164:2";
+export const ETD_VEH_PA6_PERCENT = "165:2";
+export const ETD_VEH_PA7_PERCENT = "166:2";
+export const ETD_VEH_PA8_PERCENT = "167:2";
+export const ETD_VEH_PA9_PERCENT = "168:2";
+export const ETD_VEH_PA10_PERCENT = "129:2";
+export const ETD_VEH_PA11_PERCENT = "170:2";
+export const ETD_VEH_PA12_PERCENT = "171:2";
+export const ETD_VEH_PA13_PERCENT = "172:2";
+export const ETD_VEH_PA14_PERCENT = "173:2";
+export const ETD_VEH_PA15_PERCENT = "174:2";
+export const ETD_VEH_PA16_PERCENT = "175:2";
+
+
 export const DMS_COMAND_FOR_DMS = "1:2";
 export const DMS_TEXT_FOR_STATUS_1 = "1:1";
 export const DMS_TEXT_FOR_STATUS_2 = "2:1";

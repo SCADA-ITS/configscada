@@ -770,7 +770,7 @@ export let synopticData= [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
-				{name: "etd_veh_length_1_percent", label: "C (%L)"}
+				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		}
 	}
