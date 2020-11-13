@@ -139,18 +139,18 @@ export let synopticData= [
 
 		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1",
 			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_long1_percent", label: "C (%L)"}
+				{name: "etd_intensity", label: "I (V/h)"},
+				{name: "etd_speed", label: "V (K/h)"},
+				{name: "etd_occupancy", label: "O (%)"},
+				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
 		"Element:4:2": { "x": 1600,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2",
 			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_long1_percent", label: "C (%L)"}
+				{name: "etd_intensity", label: "I (V/h)"},
+				{name: "etd_speed", label: "V (K/h)"},
+				{name: "etd_occupancy", label: "O (%)"},
+				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
 		
@@ -327,7 +327,7 @@ export let synopticData= [
 		"Element:8:3":  { "x": 1411, "y": 590,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
 		
-		"Element:4:1": { "x": 100,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1",
+		"Element:4:1": { "x": 1410,  "y": 680, "width": 80, "height": 80, "alias": "SEC_1",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -335,7 +335,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:2": { "x": 1600,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2",
+		"Element:4:2": { "x": 1825,  "y": 570, "width": 80, "height": 80, "alias": "SEC_2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},

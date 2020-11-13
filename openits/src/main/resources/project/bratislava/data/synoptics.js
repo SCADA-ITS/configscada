@@ -443,9 +443,6 @@ export let synopticData= [
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:2": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
-		
-		
-		
 	},
 	{
 		"id":"synopticCabinets",
@@ -753,7 +750,7 @@ export let synopticData= [
 			"BASE_LAYER": "mapa_base.png",
 			"ROAD": "D4-R7_trazado.png",
 			"SECTIONS": "atc galletas pk-14942_1.svg",
-			"KINEO": "atc pk-14942_1.svg"
+			"ATC": "atc pk-14942_1.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -777,21 +774,21 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
-		"Element:54:1": { "x": 570,  "y": 100, "width": 180, "height": 180, "alias": "ASDDH01"  },
-		"Element:4:1": { "x": 550,  "y": 230, "width": 80, "height": 80, "alias": "ASDDH01P",
+		"Element:54:1": { "x": 570,  "y": 60, "width": 180, "height": 180, "alias": "ASDDH01"  },
+		"Element:4:1": { "x": 550,  "y": 190, "width": 80, "height": 80, "alias": "ASDDH01P",
 			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_pa1_percent", label: "C (%L)"}
+				{name: "etd_intensity", label: "I (V/h)"},
+				{name: "etd_speed", label: "V (K/h)"},
+				{name: "etd_occupancy", label: "O (%)"},
+				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:2": { "x": 870,  "y": 300, "width": 80, "height": 80, "alias": "ASDDH01L",
+		"Element:4:2": { "x": 870,  "y": 260, "width": 80, "height": 80, "alias": "ASDDH01L",
 			"values": [
-				{name: "etd_total_intensity", label: "I (V/h)"},
-				{name: "etd_average_speed", label: "V (K/h)"},
-				{name: "etd_occupation", label: "O (%)"},
-				{name: "etd_veh_pa1_percent", label: "C (%L)"}
+				{name: "etd_intensity", label: "I (V/h)"},
+				{name: "etd_speed", label: "V (K/h)"},
+				{name: "etd_occupancy", label: "O (%)"},
+				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		}
 	}
