@@ -54,8 +54,8 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (34, 1, 'getAlarm', 'getAlarm', 'AlarmVO', 'id', true, true),
 (35, 3, 'deleteUser', 'deleteUser', 'UserVO', 'id', true, true),
 (36, 3, 'createUser', 'createUser', 'UserVO', 'id', true, true),
-(37, 1, 'getAlarmThresholdOperations', 'getAlarmThresholdOperations', 'AlarmThresholdOperationVO', 'id', true, true),
-(38, 1, 'getAlarmThresholdOperation', 'getAlarmThresholdOperation', 'AlarmThresholdOperationVO', 'id', true, true),
+(37, 1, 'getThresholdOperations', 'getThresholdOperations', 'ThresholdOperationVO', 'id', true, true),
+(38, 1, 'getThresholdOperation', 'getThresholdOperation', 'ThresholdOperationVO', 'id', true, true),
 (39, 1, 'getAlarmMuteds', 'getAlarmMuteds', 'AlarmMutedVO', 'id', true, true),
 (40, 1, 'getAlarmMuted', 'getAlarmMuted', 'AlarmMutedVO', 'id', true, true),
 (41, 1, 'getAlarmMutedsByAlarmConfig', 'getAlarmMutedsByAlarmConfig', 'AlarmMutedVO', 'id', true, true),
@@ -278,13 +278,13 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (36, 12, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
 
 (37, 1, 'http://localhost:8082/graphql'),
-(37, 2, 'getAlarmThresholdOperations'),
+(37, 2, 'getThresholdOperations'),
 (37, 3, ''),
 (37, 4, '{id alias description labelAlias labelDescription}'),
 
 (38, 1, 'http://localhost:8082/graphql'),
-(38, 2, 'getAlarmThresholdOperation'),
-(38, 3, 'alarmThresholdOperationId'),
+(38, 2, 'getThresholdOperation'),
+(38, 3, 'thresholdOperationId'),
 (38, 4, '{id alias description labelAlias labelDescription}'),
 
 (39, 1, 'http://localhost:8082/graphql'),

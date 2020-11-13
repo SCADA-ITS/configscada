@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class AlarmThresoldOperationBO {
+public class ThresoldOperationBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,20 +22,20 @@ public class AlarmThresoldOperationBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getAlarmThresholdOperations() {
+	public List<Map<String, Object>> getThresholdOperations() {
 		
-		List<Map<String, Object>> alarmThresholdOperations = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmThresholdOperations(), null);
+		List<Map<String, Object>> thresholdOperations = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetThresholdOperations(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmThresholdOperations()).getFieldId(), alarmThresholdOperations);
+				.getById(voDataSourceAdapter.getDataSourceGetThresholdOperations()).getFieldId(), thresholdOperations);
 	}
 				
-	public Map<String, Object> getAlarmThresholdOperation(String id) {
+	public Map<String, Object> getThresholdOperation(String id) {
 		
-		Map<String, Object> alarmThresholdOperation = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmThresholdOperation(), new Object[] { id });
+		Map<String, Object> thresholdOperation = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetThresholdOperation(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmThresholdOperation()).getFieldId(), alarmThresholdOperation);
+				.getById(voDataSourceAdapter.getDataSourceGetThresholdOperation()).getFieldId(), thresholdOperation);
 	}
 
 }

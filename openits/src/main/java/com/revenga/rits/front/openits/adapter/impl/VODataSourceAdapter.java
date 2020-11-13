@@ -51,8 +51,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ALARM_LEVEL = "data.source.get_alarm_level";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIGS = "data.source.get_alarm_configs";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIG = "data.source.get_alarm_config";
-	public static final String DATA_SOURCE_GET_ALARM_THRESOLD_OPERATIONS = "data.source.get_alarm_threshold_operations";
-	public static final String DATA_SOURCE_GET_ALARM_THRESOLD_OPERATION = "data.source.get_alarm_threshold_operation";
+	public static final String DATA_SOURCE_GET_THRESOLD_OPERATIONS = "data.source.get_threshold_operations";
+	public static final String DATA_SOURCE_GET_THRESOLD_OPERATION = "data.source.get_threshold_operation";
 	public static final String DATA_SOURCE_GET_ALARM_MUTEDS = "data.source.get_alarm_muteds";
 	public static final String DATA_SOURCE_GET_ALARM_MUTED = "data.source.get_alarm_muted";
 	public static final String DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG = "data.source.get_alarm_muteds_by_alarm_config";
@@ -149,9 +149,9 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetAlarmConfig;
 	@Getter
-	private Integer dataSourceGetAlarmThresholdOperations;
+	private Integer dataSourceGetThresholdOperations;
 	@Getter
-	private Integer dataSourceGetAlarmThresholdOperation;
+	private Integer dataSourceGetThresholdOperation;
 	@Getter
 	private Integer dataSourceGetAlarmMuteds;
 	@Getter
@@ -313,8 +313,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVEL));
 		this.dataSourceGetAlarmConfigs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS));
 		this.dataSourceGetAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIG));
-		this.dataSourceGetAlarmThresholdOperations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_THRESOLD_OPERATIONS));
-		this.dataSourceGetAlarmThresholdOperation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_THRESOLD_OPERATION));
+		this.dataSourceGetThresholdOperations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATIONS));
+		this.dataSourceGetThresholdOperation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATION));
 		this.dataSourceGetAlarmMuteds = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTEDS));
 		this.dataSourceGetAlarmMuted = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTED));
 		this.dataSourceGetAlarmMutedsByAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG));
