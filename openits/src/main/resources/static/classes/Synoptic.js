@@ -700,7 +700,7 @@ export default class Synoptic {
                     value: "Close", 
                     width: 38, 
                     type:"icon", 
-                    icon:"wxi-close",
+                    icon:"wxi-angle-double-up",
                     click: function() {
                       $$("menu" + self.synopticDiv).hide();
                     }
@@ -792,16 +792,10 @@ export default class Synoptic {
 
         // adds the dropdown button
         let buttonToAdd = document.createElement("button");
-        buttonToAdd.innerHTML = "<span class='webix_icon wxi-folder-open'></span>";
-        buttonToAdd.setAttribute("class", "dropbtn");
+        buttonToAdd.innerHTML = "<span class='webix_icon wxi-angle-double-down'></span>";
+        buttonToAdd.setAttribute("class", "addButton");
         document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(buttonToAdd);
-
-        // adds the dropdown div
-        let divToAdd = document.createElement("div");
-        divToAdd.setAttribute("id", this.synopticDiv + "dropdownDivContent");
-        divToAdd.setAttribute("class", "dropdown-content");
-        document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(divToAdd);
-
+        
         let layersList = {};
         let alreadyAddedLayersList = [];
 
@@ -902,7 +896,7 @@ export default class Synoptic {
 
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
-      divToAdd.setAttribute("class", "treemap-button ol-unselectable ol-control");
+      divToAdd.setAttribute("class", "addButton ol-unselectable ol-control");
       document.querySelector('[view_id="' + this.synopticDiv + '"]').prepend(divToAdd);
 
       this.elementReady("#" + this.synopticDiv + "SVG").then((c1) => {

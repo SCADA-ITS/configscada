@@ -571,7 +571,7 @@ export default class Map {
                   value: "Close", 
                   width: 38, 
                   type:"icon", 
-                  icon:"wxi-close",
+                  icon:"wxi-angle-double-up",
                   click: function() {
                     // hide the panel
                     $$("menu").hide();
@@ -741,10 +741,10 @@ export default class Map {
           var options = opt_options || {};
       
           var button = document.createElement('button');
-          button.innerHTML = '<span class="webix_icon wxi-folder-open">&nbsp;</span>';
+          button.innerHTML = '<span class="webix_icon wxi-angle-double-down">&nbsp;</span>';
       
           var element = document.createElement('div');
-          element.className = 'treemap-button ol-unselectable ol-control';
+          element.className = 'addButton ol-unselectable ol-control';
           element.appendChild(button);
       
           Control.call(this, {
