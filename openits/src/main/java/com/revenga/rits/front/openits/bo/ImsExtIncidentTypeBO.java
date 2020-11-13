@@ -24,18 +24,18 @@ public class ImsExtIncidentTypeBO {
 	
 	public List<Map<String, Object>> getExtIncidentTypes() {
 		
-		List<Map<String, Object>> extIncidents = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetExtIncidentTypes(), null);
+		List<Map<String, Object>> extIncidentTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetExtIncidentTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetExtIncidentTypes()).getFieldId(), extIncidents);
+				.getById(voDataSourceAdapter.getDataSourceGetExtIncidentTypes()).getFieldId(), extIncidentTypes);
 	}
 				
 	public Map<String, Object> getExtIncidentType(String id) {
 		
-		Map<String, Object> extIncident = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetExtIncidentType(), new Object[] { id });
+		Map<String, Object> extIncidentType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetExtIncidentType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetExtIncidentType()).getFieldId(), extIncident);
+				.getById(voDataSourceAdapter.getDataSourceGetExtIncidentType()).getFieldId(), extIncidentType);
 	}
 
 }

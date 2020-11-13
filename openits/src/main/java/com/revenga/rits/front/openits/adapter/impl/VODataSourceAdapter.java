@@ -107,6 +107,12 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_EXT_INCIDENT = "data.source.get_ext_incident";
 	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPES = "data.source.get_ext_incident_types";
 	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPE = "data.source.get_ext_incident_type";
+	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENTS = "data.source.get_incident_documents";
+	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT = "data.source.get_incident_document";
+	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPES = "data.source.get_incident_document_types";
+	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE = "data.source.get_incident_document_type";
+	public static final String DATA_SOURCE_GET_LOG_TYPES = "data.source.get_log_types";
+	public static final String DATA_SOURCE_GET_LOG_TYPE = "data.source.get_log_type";
 	
 	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
@@ -255,6 +261,18 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetExtIncidentType;
 	@Getter
+	private Integer dataSourceGetIncidentDocuments;
+	@Getter
+	private Integer dataSourceGetIncidentDocument;
+	@Getter
+	private Integer dataSourceGetIncidentDocumentTypes;
+	@Getter
+	private Integer dataSourceGetIncidentDocumentType;
+	@Getter
+	private Integer dataSourceGetLogTypes;
+	@Getter
+	private Integer dataSourceGetLogType;
+	@Getter
 	private Integer dataSourceCreateUser;
 	@Getter
 	private Integer dataSourceUpdateUser;
@@ -351,6 +369,12 @@ public class VODataSourceAdapter {
 		this.dataSourceGetExtIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT));
 		this.dataSourceGetExtIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPES));
 		this.dataSourceGetExtIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPE));
+		this.dataSourceGetIncidentDocuments = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENTS));
+		this.dataSourceGetIncidentDocument = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT));
+		this.dataSourceGetIncidentDocumentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPES));
+		this.dataSourceGetIncidentDocumentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE));
+		this.dataSourceGetLogTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPES));
+		this.dataSourceGetLogType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPE));
 
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));

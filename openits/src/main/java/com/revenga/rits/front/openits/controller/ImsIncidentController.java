@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsExtIncidentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentDocumentBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentDocumentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentSourceBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateBO;
@@ -49,6 +51,12 @@ public class ImsIncidentController {
 	
 	@Autowired
 	ImsExtIncidentTypeBO imsExtIncidentTypeBO;
+	
+	@Autowired
+	ImsIncidentDocumentBO imsIncidentDocumentBO;
+	
+	@Autowired
+	ImsIncidentDocumentTypeBO imsIncidentDocumentTypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
@@ -227,6 +235,46 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsExtIncidentTypeBO.getExtIncidentType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentDocuments")
+	@ApiOperation(value = "Get incident documents", notes = "Get incident documents")
+	public ResponseEntity<Object> getIncidenDocuments() {
+		
+		return new ResponseEntity<>(imsIncidentDocumentBO.getIncidentDocuments(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentDocument/{id}")
+	@ApiOperation(value = "Get incident document by id", notes = "Get incident document by id")
+	public ResponseEntity<Object> getIncidenDocument(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "ImsIncidentDocument by id",
+			example = "ImsIncidentDocument:1:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentDocumentBO.getIncidentDocument(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentDocumentTypes")
+	@ApiOperation(value = "Get incident document types", notes = "Get incident document types")
+	public ResponseEntity<Object> getIncidenDocumentTypes() {
+		
+		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getIncidentDocumentTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentDocumentType/{id}")
+	@ApiOperation(value = "Get incident document type by id", notes = "Get incident type document by id")
+	public ResponseEntity<Object> getIncidenDocumentType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "ImsIncidentDocumentType by id",
+			example = "ImsIncidentDocumentType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getIncidentDocumentType(id), HttpStatus.OK);
 	}
 
 }

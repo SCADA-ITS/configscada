@@ -86,7 +86,13 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (66, 1, 'getExtIncidents', 'getExtIncidents', 'ImsExtIncidentVO', 'id', true, true),
 (67, 1, 'getExtIncident', 'getExtIncident', 'ImsExtIncidentVO', 'id', true, true),
 (68, 1, 'getExtIncidentTypes', 'getExtIncidentTypes', 'ImsExtIncidentTypeVO', 'id', true, true),
-(69, 1, 'getExtIncidentType', 'getExtIncidentType', 'ImsExtIncidentTypeVO', 'id', true, true);
+(69, 1, 'getExtIncidentType', 'getExtIncidentType', 'ImsExtIncidentTypeVO', 'id', true, true),
+(70, 1, 'getIncidentDocuments', 'getIncidentDocuments', 'ImsIncidentDocumentVO', 'id', true, true),
+(71, 1, 'getIncidentDocument', 'getIncidentDocument', 'ImsIncidentDocumentVO', 'id', true, true),
+(72, 1, 'getIncidentDocumentTypes', 'getIncidentDocumentTypes', 'ImsIncidentDocumentTypeVO', 'id', true, true),
+(73, 1, 'getIncidentDocumentType', 'getIncidentDocumentType', 'ImsIncidentDocumentTypeVO', 'id', true, true),
+(74, 1, 'getLogTypes', 'getLogTypes', 'LogTypeVO', 'id', true, true),
+(75, 1, 'getLogType', 'getLogType', 'LogTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -434,4 +440,34 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (69, 1, 'http://localhost:8082/graphql'),
 (69, 2, 'getExtIncidentType'),
 (69, 3, 'extIncidentTypeId'),
-(69, 4, '{id alias description incidentType{id} confirmationIsNeeded extIncidentGroup{id} extIncidentTypeParams{id}}');
+(69, 4, '{id alias description incidentType{id} confirmationIsNeeded extIncidentGroup{id} extIncidentTypeParams{id}}'),
+
+(70, 1, 'http://localhost:8082/graphql'),
+(70, 2, 'getIncidentDocuments'),
+(70, 3, ''),
+(70, 4, '{id alias description filename incidentDocumentType{id}}'),
+
+(71, 1, 'http://localhost:8082/graphql'),
+(71, 2, 'getIncidentDocument'),
+(71, 3, 'incidentDocumentId'),
+(71, 4, '{id alias description filename incidentDocumentType{id}}'),
+
+(72, 1, 'http://localhost:8082/graphql'),
+(72, 2, 'getIncidentDocumentTypes'),
+(72, 3, ''),
+(72, 4, '{id alias description labelAlias labelDescription extension path}'),
+
+(73, 1, 'http://localhost:8082/graphql'),
+(73, 2, 'getIncidentDocumentType'),
+(73, 3, 'incidentDocumentTypeId'),
+(73, 4, '{id alias description labelAlias labelDescription extension path}'),
+
+(74, 1, 'http://localhost:8082/graphql'),
+(74, 2, 'getLogTypes'),
+(74, 3, ''),
+(74, 4, '{id alias description labelAlias labelDescription logTypeParams{id}}'),
+
+(75, 1, 'http://localhost:8082/graphql'),
+(75, 2, 'getLogType'),
+(75, 3, 'logTypeId'),
+(75, 4, '{id alias description labelAlias labelDescription logTypeParams{id}}');
