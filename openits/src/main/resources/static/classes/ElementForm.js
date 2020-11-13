@@ -48,6 +48,9 @@ export default class TabForm {
 						id 
 						alias  
 						representation
+						dataType{
+							id
+						}
 					}
 				}
 				alarms{
@@ -743,8 +746,17 @@ export default class TabForm {
 						// console.warn(item)
 						if(item){
 							let value = null;		
-							value = item.value;	
-							valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
+							value = item.value;
+							//Tipado server date metido a fuego
+							try {
+								if(item.elementTypeParam && item.elementTypeParam.dataType && item.elementTypeParam.dataType.id && item.elementTypeParam.dataType.id == "DataType:4" && item.value){
+									valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : webix.i18n.fullDateFormatStr(new Date(parseInt(item.value))), tooltiplab: item.id  };
+								}else{
+									valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
+								}	
+							} catch (error) {
+								valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
+							}
 						}
 				  });
 				}

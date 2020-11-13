@@ -62,7 +62,10 @@ export const ELEMENT_TYPE = {
       ] 
     },
     "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 3, scale_x: 28, scale_y: 28},
-    "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28},
+    "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28, 
+      elementTypeParams:[
+        {SERVICE_LEVEL : "12:2"}
+      ]},
     "ElementType:5" :{ id: "ElementType:5", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 5, scale_x: 28, scale_y: 28},
     "ElementType:7" :{ id: "ElementType:7", uiType: UI_ELEMENT_TYPE_GENERIC, value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
       color: {

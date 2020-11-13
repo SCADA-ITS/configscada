@@ -1,4 +1,5 @@
 import * as elementTypeMap from "../elementTypeMap.js";
+import {ELEMENT_TYPE, ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
 
 export function generateIcon(element, values, suffix, state) {
   // changes the color based on the status
@@ -11,29 +12,42 @@ export function generateIcon(element, values, suffix, state) {
     elementState = state;
   }
   
-  if(typeof elementState != 'undefined') {
-    if (elementState == 0) {
-      color = "gold";
-    } else if (elementState == 1) {
-      color = "green";
-    } else if (elementState == 2) {
+  let params={};
+  //param values
+  // console.warn(element);
+  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
+    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
+      let key = Object.keys(item)[0];
+      let tempValue = element.elementValues.find(
+        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+      );
+      if(tempValue){
+        params[key]=tempValue.value;
+      }
+    });
+  }
+
+  if(typeof elementState != 'undefined' && elementState == 2) {
       color = "purple";
-    } else if (elementState == 3) {
-      color = "red";
-    }
+  } else if (params["SERVICE_LEVEL"] == 1) {
+    color = "white";
+  } else if (params["SERVICE_LEVEL"] == 2) {
+    color = "green";    
+  } else if (params["SERVICE_LEVEL"] == 3) {
+    color = "gold";
+  } else if (params["SERVICE_LEVEL"] == 4) {
+    color = "red";
   }
 
   let etd_str =
     '<g inkscape:label ="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-268.68957)"> ' +
-    '<rect stroke="black" style="stroke-width:0.2" fill="' + color + '" id="rect4066-6-5-93" width="28.228191" height="5.6456451" x="0.041112646" y="268.73068" ry="0" />' +
+    '<rect id="'+element.id +':fill0" stroke="black" style="stroke-width:0.2" fill="' + color + '" width="28.228191" height="5.6456451" x="0.041112646" y="268.73068" ry="0" />' +
     '<text fill="black" xml:space="preserve" x="13.904327" y="272.36899" id="titulo" transform="scale(0.99833799,1.0016648)">' +
-    '<tspan fill="white" x="13.904327" y="272.36899" style="font-size:3.15464282px;line-height:2.62886882px;text-align:center;text-anchor:middle" id="tspan1693-0">' +
+    '<tspan fill="black" x="13.904327" y="272.36899" style="font-size:3.15464282px;line-height:2.62886882px;text-align:center;text-anchor:middle" id="tspan1693-0">' +
     element.description +
     "</tspan></text>";
 
   for (let i = 0; i < values.length; i++) {
-
-    
     etd_str +=
       '<rect stroke="black" style="stroke-width:0.2" fill="lightgray" id="rect4066-6-5-93-0" width="28.228191" height="5.6456451" x="0.041112646" y="' +
       (274.66467 + 6 * i) +
@@ -66,6 +80,45 @@ export function generateIcon(element, values, suffix, state) {
 }
 
 export function updateEtdIcon(element, suffix = "") {
+  let color = "";
+  //let elementState = element.state;
+  let elementState = "";
+  if(typeof element.state != 'undefined') {
+    elementState = element.state;
+  } else {
+    elementState = state;
+  }
+  
+  let params={};
+  //param values
+  // console.warn(element);
+  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
+    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
+      let key = Object.keys(item)[0];
+      let tempValue = element.elementValues.find(
+        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+      );
+      if(tempValue){
+        params[key]=tempValue.value;
+      }
+    });
+  }
+
+  if(typeof elementState != 'undefined' && elementState == 2) {
+      color = "purple";
+  } else if (params["SERVICE_LEVEL"] == 1) {
+    color = "white";
+  } else if (params["SERVICE_LEVEL"] == 2) {
+    color = "green";    
+  } else if (params["SERVICE_LEVEL"] == 3) {
+    color = "gold";
+  } else if (params["SERVICE_LEVEL"] == 4) {
+    color = "red";
+  }
+  if(Snap.select("#"+element.id + ":fill0") && Snap.select("#"+element.id + ":fill0").node && Snap.select("#"+element.id +":fill0").node.attributes.fill){
+    Snap.select("#"+element.id + ":fill0").node.attributes.fill.value=color;
+  }
+
   for (let i = 0; i < element.elementValues.length; i++) {
     let ev = element.elementValues[i];
     if (
