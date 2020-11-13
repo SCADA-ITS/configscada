@@ -389,7 +389,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"MAGNETOTERMICO" : {
-				"items": ["Element:57:8", "Element:57:9", "Element:57:10", "Element:57:11", "Element:57:12", "Element:57:13", "Element:57:14", "Element:57:15", "Element:57:19", "Element:57:25", "Element:57:24", "Element:57:26", "Element:57:27", "Element:57:28", "Element:57:29", "Element:57:30", "Element:57:31"],
+				"items": ["Element:57:8", "Element:57:9", "Element:57:10", "Element:57:11", "Element:57:12", "Element:57:13", "Element:57:14", "Element:57:15", "Element:57:16", "Element:57:17", "Element:57:18", "Element:57:19", "Element:57:25", "Element:57:24", "Element:57:26", "Element:57:27", "Element:57:28", "Element:57:29", "Element:57:30", "Element:57:31"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
