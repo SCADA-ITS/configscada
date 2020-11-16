@@ -117,6 +117,18 @@ var i18_en = {
     "ElementType:56.description": "UNIFILAR CSA",
     "ElementType:57.alias": "MAGNETOTHERMIC",
     "ElementType:57.description": "MAGNETOTHERMIC",
+    "ElementType:58.alias": "PULSADOR",
+    "ElementType:58.description": "PULSADOR",
+    "ElementType:59.alias": "DETECTOR DE HUMO",
+    "ElementType:59.description": "DETECTOR DE HUMO",
+    "ElementType:60.alias": "SIRENA",
+    "ElementType:60.description": "SIRENA",
+    "ElementType:61.alias": "DETECTOR DE INCENDIOS",
+    "ElementType:61.description": "DETECTOR DE INCENDIOS",
+    "ElementType:62.alias": "SONDA DE TEMPERATURA",
+    "ElementType:62.description": "SONDA DE TEMPERATURA",
+    "ElementType:63.alias": "AIRE ACONDICIONADO",
+    "ElementType:63.description": "AIRE ACONDICIONADO",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -1222,8 +1234,6 @@ var i18_en = {
     "AlarmConfig:135": "ALARM ATC NO CONNECTION",
     "AlarmConfig:139": "ALARM DETECTOR FAIL",
     "AlarmConfig:140": "ALARM DETECTOR NO CONNECTION",
-
-
     
     "Alarm_recon": "Already recognized alarm",
     "Alarm_deactivated": "Already deactivated alarm",

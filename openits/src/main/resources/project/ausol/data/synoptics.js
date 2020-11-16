@@ -360,19 +360,57 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"CT": {
-					"items": ["Element:55:1"],
-					"translation_key": "",
-					"visibility": "visible"
-			},
+
 			"UNIFILAR" : {
 				"items": ["Element:56:1"],
 				"translation_key": "",
 				"visibility": "visible"
-			}
+			},
+			"PULSADOR" : {
+				"items": ["Element:58:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SMOKE_DETECTOR" : {
+				"items": ["Element:59:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SIRENA" : {
+				"items": ["Element:60:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"FIRE_DET_CT" : {
+				"items": ["Element:61:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"TEMP_PROBE" : {
+				"items": ["Element:62:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"AIR_CONDITIONER" : {
+				"items": ["Element:63:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 		},
 
-		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" }
+		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" },
+
+		"Element:58:1": { "x": 1520,   "y": 680, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
+
+		"Element:59:1": { "x": -30,   "y": 680, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-HUM-1" },
+
+		"Element:60:1": { "x": 900,   "y": 100, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
+
+		"Element:61:1": { "x": 180,   "y": 190, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
+
+		"Element:62:1": { "x": 310,   "y": 870, "width": 50, "height": 50,  "alias": "RV-CT-SONDA-1" },
+
+		"Element:63:1": { "x": 260,   "y": 880, "width": 50, "height": 50,  "alias": "RV-CT-AIRE-1" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

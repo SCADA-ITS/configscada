@@ -1,4 +1,4 @@
-import {SVG_7_ZONE,SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM, SVG_54_ATC, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_3_DET, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM, SVG_54_ATC, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -47,6 +47,12 @@ export const ELEMENT_TYPE = {
   ID_55_CT : "ElementType:55",
   ID_56_UNIFILAR : "ElementType:56",
   ID_57_MAGNETOTERMICO : "ElementType:57",
+  ID_58_PULSADOR : "ElementType:58",
+  ID_59_SMOKE_DETECTOR : "ElementType:59",
+  ID_60_SIRENA : "ElementType:60",
+  ID_61_FIRE_DET_CT : "ElementType:61",
+  ID_62_TEMP_PROBE : "ElementType:62",
+  ID_63_AIR_CONDITIONER : "ElementType:63",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
@@ -61,7 +67,7 @@ export const ELEMENT_TYPE = {
         },
       ] 
     },
-    "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 3, scale_x: 28, scale_y: 28},
+    "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_GENERIC, value: 3, scale_x: 28, scale_y: 28, svgRaw:SVG_3_DET},
     "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28, 
       elementTypeParams:[
         {SERVICE_LEVEL : "12:2"}
@@ -169,6 +175,12 @@ export const ELEMENT_TYPE = {
         {MAGNETOTERMICO_STATE: "1:2"}
       ] 
     },
+    "ElementType:58" :{ id: "ElementType:58", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 58, scale_x: 100, scale_y: 100, svgRaw:SVG_58_PULSADOR },
+    "ElementType:59" :{ id: "ElementType:59", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 59, scale_x: 100, scale_y: 100, svgRaw:SVG_59_SMOKE_DETECTOR },
+    "ElementType:60" :{ id: "ElementType:60", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 60, scale_x: 100, scale_y: 100, svgRaw:SVG_60_SIRENA },
+    "ElementType:61" :{ id: "ElementType:61", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 61, scale_x: 100, scale_y: 100, svgRaw:SVG_61_FIRE_DET_CT },
+    "ElementType:62" :{ id: "ElementType:62", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 62, scale_x: 100, scale_y: 100, svgRaw:SVG_62_TEMP_PROBE },
+    "ElementType:63" :{ id: "ElementType:63", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 63, scale_x: 100, scale_y: 100, svgRaw:SVG_63_AIR_CONDITIONER },
   }
 };
 

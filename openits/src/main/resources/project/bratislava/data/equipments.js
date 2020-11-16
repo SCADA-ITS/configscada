@@ -113,19 +113,6 @@ export let columnsElementList = {
 			"ElementTypeParam:4:2:7",
 			"ElementTypeParam:4:2:9",
 			"ElementTypeParam:4:2:10",
-			"ElementTypeParam:4:2:140",	
-			"ElementTypeParam:4:2:141",	
-			"ElementTypeParam:4:2:142",	
-			"ElementTypeParam:4:2:143",	
-			"ElementTypeParam:4:2:144",	
-			"ElementTypeParam:4:2:145",	
-			"ElementTypeParam:4:2:146",	
-			"ElementTypeParam:4:2:147",	
-			"ElementTypeParam:4:2:148",	
-			"ElementTypeParam:4:2:149",	
-			"ElementTypeParam:4:2:150",	
-			"ElementTypeParam:4:2:151",	
-			"ElementTypeParam:4:2:152",	
 			"ElementTypeParam:4:2:160",	
 			"ElementTypeParam:4:2:161"	
 		]
@@ -634,45 +621,6 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:4:2:10": { //"gap"
 				"header": [ $.i18n("ElementTypeParam:4:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:140": { //"veh_pa_1"
-				"header": [ $.i18n("ElementTypeParam:4:2:140.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:141": { //"veh_pa_2"
-				"header": [ $.i18n("ElementTypeParam:4:2:141.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:142": { //"veh_pa_3"
-				"header": [ $.i18n("ElementTypeParam:4:2:142.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:143": { //"veh_pa_4"
-				"header": [ $.i18n("ElementTypeParam:4:2:143.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:144": { //"veh_pa_5"
-				"header": [ $.i18n("ElementTypeParam:4:2:144.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:145": { //"veh_pa_6"
-				"header": [ $.i18n("ElementTypeParam:4:2:145.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:146": { //"veh_pa_7"
-				"header": [ $.i18n("ElementTypeParam:4:2:146.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:147": { //"veh_pa_8"
-				"header": [ $.i18n("ElementTypeParam:4:2:147.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:148": { //"veh_pa_9"
-				"header": [ $.i18n("ElementTypeParam:4:2:148.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:149": { //"veh_pa_10"
-				"header": [ $.i18n("ElementTypeParam:4:2:149.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:150": { //"veh_pa_11"
-				"header": [ $.i18n("ElementTypeParam:4:2:150.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:151": { //"veh_pa_12"
-				"header": [ $.i18n("ElementTypeParam:4:2:151.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:152": { //"veh_pa_13"
-				"header": [ $.i18n("ElementTypeParam:4:2:152.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:4:2:160": { //"veh_pa_1_percent"
 				"header": [ $.i18n("ElementTypeParam:4:2:160.alias"), { content:"textFilter", autoheight:true, autowidth:true }],

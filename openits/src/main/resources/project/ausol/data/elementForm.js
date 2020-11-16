@@ -442,4 +442,65 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
+	"ElementType:58": {
+		"rows":[
+			"ElementTypeParam:58:1:1", 
+			"ElementTypeParam:58:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:59": {
+		"rows":[
+			"ElementTypeParam:59:1:1", 
+			"ElementTypeParam:59:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:60": {
+		"rows":[
+			"ElementTypeParam:60:1:1", 
+			"ElementTypeParam:60:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:61": {
+		"rows":[
+			"ElementTypeParam:61:1:1", 
+			"ElementTypeParam:61:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:62": {
+		"rows":[
+			"ElementTypeParam:62:1:1", 
+			"ElementTypeParam:62:1:2",
+			"ElementTypeParam:62:2:1"
+		],
+		"rowCounts": 3,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
+	"ElementType:63": {
+		"rows":[
+			"ElementTypeParam:63:1:1", 
+			"ElementTypeParam:63:1:2"
+		],
+		"rowCounts": 2,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
 }
