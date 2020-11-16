@@ -296,6 +296,8 @@ var i18_es = {
 	"ElementTypeParam:4:2:9.description":"Velocidad media (km/h)",
 	"ElementTypeParam:4:2:10.alias": "Gap medio (m)", 
 	"ElementTypeParam:4:2:10.description": "Gap medio (m)", 
+	"ElementTypeParam:4:2:18.alias": "Longitud media (dm)", 
+	"ElementTypeParam:4:2:18.description": "Longitud media (dm)", 
     "ElementTypeParam:4:2:140.alias": "EUR 1",
     "ElementTypeParam:4:2:140.description": "EUR 1",
 	"ElementTypeParam:4:2:141.alias": "EUR 2",

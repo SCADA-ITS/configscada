@@ -317,6 +317,8 @@ var i18_sk = {
 	"ElementTypeParam:4:2:9.description":"Priemerná rýchlosť (Km/h)",
 	"ElementTypeParam:4:2:10.alias": "Priemerná medzera (m)", 
 	"ElementTypeParam:4:2:10.description": "Priemerná medzera (m)", 
+	"ElementTypeParam:4:2:18.alias": "Longitud media (dm)", 
+	"ElementTypeParam:4:2:18.description": "Longitud media (dm)", 
     "ElementTypeParam:4:2:140.alias": "EUR 1", 
     "ElementTypeParam:4:2:140.description": "EUR 1",
 	"ElementTypeParam:4:2:141.alias": "EUR 2",
@@ -1160,7 +1162,7 @@ var i18_sk = {
     "AlarmConfig:132": "UPOZORNEIE PLC_CABINET ŽIADNE SPOJENIE",
     "AlarmConfig:133": "UPOZORNEIE PLC_CABINET OVTONRENÉ DVERE TRANSFORMÁTORA",
     "AlarmConfig:135": "UPOZORNEIE ATC ŽIADNE SPOJENIE",
-    "AlarmConfig:139": "UPOZORNEIE PORUCHA DETEKTORA"
+    "AlarmConfig:139": "UPOZORNEIE PORUCHA DETEKTORA",
     "AlarmConfig:140": "UPOZORNEIE DETEKTORA ŽIADNE SPOJENIE",
     
     "Alarm_recon": "Alarm u&#382; bol rozpoznan&#253;",
