@@ -1222,7 +1222,10 @@ var i18_es = {
     "AlarmConfig:130": "ALARMA ARMARIO_EL&Eacute;CTRICO BATERIAS BAJAS",
     "AlarmConfig:131": "ALARMA ARMARIO_EL&Eacute;CTRICO SOBRETENSI&Oacute;N EN UPS",
     "AlarmConfig:132": "ALARMA ARMARIO_EL&Eacute;CTRICO SIN CONEXI&Oacute;N",
-    "AlarmConfig:133": "ALARMA ARMARIO_EL&Eacute;CTRICO PUERTA ABIERTA TRANSFORMADOR",
+    "AlarmConfig:133": "ALARMA ARMARIO_EL&Eacute;CTRICO PUERTA ABIERTA TRANSFORMADOR",   
+    "AlarmConfig:135": "ALARMA ATC NO CONECTADO",
+    "AlarmConfig:139": "ALARMA FALLO DETECTOR"
+    "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",*/

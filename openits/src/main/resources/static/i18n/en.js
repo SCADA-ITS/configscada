@@ -1218,6 +1218,11 @@ var i18_en = {
     "AlarmConfig:131": "ALARM PLC_CABINET OVERLOAD UPS",
     "AlarmConfig:132": "ALARM PLC_CABINET NO CONNECTION",
     "AlarmConfig:133": "ALARM PLC_CABINET TRANSFORMER OPEN DOOR",
+    "AlarmConfig:135": "ALARM ATC NO CONNECTION",
+    "AlarmConfig:139": "ALARM DETECTOR FAIL",
+    "AlarmConfig:140": "ALARM DETECTOR NO CONNECTION",
+
+
     
     "Alarm_recon": "Already recognized alarm",
     "Alarm_deactivated": "Already deactivated alarm",
