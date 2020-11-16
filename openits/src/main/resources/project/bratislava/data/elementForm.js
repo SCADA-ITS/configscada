@@ -57,8 +57,8 @@ export let columnsElementFormList = {
 	},
 	"ElementType:3": {
 		"rows":[ 
-			"ElementTypeParam:3:1:2",
 			"ElementTypeParam:3:2:1",
+			"ElementTypeParam:3:1:2",
 			"ElementTypeParam:3:2:4",
 			"ElementTypeParam:3:2:6",
 			"ElementTypeParam:3:2:9",

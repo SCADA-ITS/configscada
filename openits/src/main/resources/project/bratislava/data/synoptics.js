@@ -769,12 +769,13 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"ATC": {
-				"items": ["Element:54:1"],
+				"items": ["Element:54:1", "Element:3:1"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
 		},
 		"Element:54:1": { "x": 570,  "y": 60, "width": 180, "height": 180, "alias": "ASDDH01"  },
+		"Element:3:1": { "x": 270,  "y": 60, "width": 180, "height": 180, "alias": "ASDDH01"  },
 		"Element:4:1": { "x": 550,  "y": 190, "width": 80, "height": 80, "alias": "ASDDH01P",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
