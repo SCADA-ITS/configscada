@@ -3,8 +3,7 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
-import * as revenga from "../lib/revenga.js";
-import {RULE} from "../data/GLOBAL_PROPERTIES.js";
+import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 
 export default class TabForm {
 	constructor(id,columnsElementFormList) {
@@ -458,6 +457,15 @@ export default class TabForm {
 									if (item3 !== null && typeof item3 != 'undefined') {
 										let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
 										let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
+										try {
+											if(typeof ELEMENT_TYPE_PARAM.values[eparam] != 'undefined' && typeof ELEMENT_TYPE_PARAM.values[eparam].dataTypeId != 'undefined'){
+												let itemParamTypeId = ELEMENT_TYPE_PARAM.values[eparam].dataTypeId;
+												value = parseUIParam(value, itemParamTypeId);
+											}
+										} catch (error) {
+											console.warn("Eparam: "+ eparam + ", evalue.id: "+evalue.id);
+											console.warn(error);
+										}
 										item3["measure"] = value;
 										if (alerted !== -1) {
 											item3["iconAlerted"] = evalue.alerted;
@@ -739,21 +747,16 @@ export default class TabForm {
 			//MEASURES
 			try {
 				if(data.elementValues) {
-					// console.warn("values: ")
-					// console.warn(data.elementValues)
 					data.elementValues.forEach(item => {
-						// console.warn("item: ")
-						// console.warn(item)
 						if(item){
-							let value = null;		
-							value = item.value;
-							//Tipado server date metido a fuego
+							let itemValue = item.value;		
 							try {
-								if(item.elementTypeParam && item.elementTypeParam.dataType && item.elementTypeParam.dataType.id && item.elementTypeParam.dataType.id == "DataType:4" && item.value){
-									valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : parseUIParam(item.value, item.elementTypeParam.dataType.id), tooltiplab: item.id  };
-								}else{
-									valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
-								}	
+								itemValue = parseUIParam(itemValue, item.elementTypeParam.dataType.id);
+							} catch (error) {
+								console.warn(error);
+							}
+							try {
+								valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : itemValue, tooltiplab: item.id  };
 							} catch (error) {
 								valuesList[elementTypeMap.getElementParamTypeIdi18(item.id)] = {id: "elementBody" + this.id + "_" + elementTypeMap.getElementParamTypeIdi18(item.id), iconAlerted: item.alerted, title: $.i18n(elementTypeMap.getElementParamTypeIdi18(item.id) + ".alias" ), measure: item.value === null ? "" : item.value, tooltiplab: item.id  };
 							}

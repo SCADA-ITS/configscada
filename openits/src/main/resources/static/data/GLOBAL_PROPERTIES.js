@@ -205,3 +205,12 @@ export const RULE = {
   EDIT_ROLE: "edit_role",
   LOGIN_ROLE: "login"
 }
+
+export const ELEMENT_TYPE_PARAM = {
+  ID_3_2_1: "ElementTypeParam:3:2:1",
+  ID_4_2_1: "ElementTypeParam:4:2:1",
+  values: {
+    "ElementTypeParam:3:2:1":{ dataTypeId: DATA_TYPE_4},
+    "ElementTypeParam:4:2:1":{ dataTypeId: DATA_TYPE_4}
+  }
+};

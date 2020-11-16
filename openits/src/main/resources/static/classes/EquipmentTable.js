@@ -1,4 +1,5 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
+import {ELEMENT_TYPE_PARAM} from  "../data/GLOBAL_PROPERTIES.js";
 
 export default class EquipmentTable {
     constructor(id,mode,columns,data,columnsElementConfig,columnsElementList) {
@@ -145,7 +146,16 @@ export default class EquipmentTable {
                             element.elementValues.forEach(evalue => {
                                 try {
                                     let eparam =  elementTypeMap.getElementParamTypeIdi18(evalue.id);
-                                    item[eparam] = evalue.value !== undefined ? evalue.value === null ? "-" : evalue.value : "-";
+                                    let itemValue = evalue.value;
+                                    try {
+                                        if(typeof ELEMENT_TYPE_PARAM.values[eparam] != 'undefined'){
+                                            let itemParamTypeId = ELEMENT_TYPE_PARAM.values[eparam].dataTypeId;
+                                            itemValue = parseUIParam(itemValue, itemParamTypeId);
+                                        }  
+                                    } catch (error) {
+                                        console.warn(error);
+                                    }
+                                    item[eparam] = itemValue !== undefined ? itemValue === null ? "-" : itemValue : "-";
 
                                     if (evalue.alerted !== undefined) {
                                         colorList[eparam] = evalue.alerted ? {"background-color":"red" } : null;
@@ -226,6 +236,15 @@ export default class EquipmentTable {
                         if(item.elementValues) {
                             item.elementValues.forEach(obj => {
                                 let itemValue = obj.value;
+                                try {
+                                    if(typeof ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)] != 'undefined' && typeof ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)].dataTypeId != 'undefined'){
+                                        let itemParamTypeId = ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)].dataTypeId;
+                                        itemValue = parseUIParam(itemValue, itemParamTypeId);
+                                    }
+                                } catch (error) {
+                                    console.warn("Eparam: "+ elementTypeMap.getElementParamTypeIdi18(obj.id) + ", evalue.id: "+obj.id);
+                                    console.warn(error);
+                                }
                                 if (elementTypeMap.getParamTypeId(obj.id) === this.mode) {
                                     row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = itemValue === null ? "-" : itemValue;
                                     if (obj.alerted) {
@@ -288,6 +307,15 @@ export default class EquipmentTable {
                 if(item.elementValues) {
                     item.elementValues.forEach(obj => {
                         let itemValue = obj.value;
+                        try {
+                            if(typeof ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)] != 'undefined' && typeof ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)].dataTypeId != 'undefined' ){
+                                let itemParamTypeId = ELEMENT_TYPE_PARAM.values[elementTypeMap.getElementParamTypeIdi18(obj.id)].dataTypeId;
+                                itemValue = parseUIParam(itemValue, itemParamTypeId);
+                            }
+                        } catch (error) {
+                            console.warn("Eparam: "+ elementTypeMap.getElementParamTypeIdi18(obj.id) + ", evalue.id: "+obj.id);
+                            console.warn(error);
+                        }
                         if (obj.elementTypeParam.paramType === this.mode) {
                             row[obj.elementTypeParam.id] = itemValue === null ? "-" : itemValue;
                             if (obj.alerted) {
