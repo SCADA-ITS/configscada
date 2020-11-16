@@ -225,12 +225,12 @@ export let synopticData= [
 		
 		"Element:51:1": { "x": 210,   "y": 360, "width": 184, "height": 204,  "alias": "RV-ETD-1MA" },
 		
-		"Element:53:1": { "x": 1685, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-1CA" },
-		"Element:53:2": { "x": 1645, "y": 818, "width": 40,  "height": 40,  "alias": "RV-SAA-2CA" },
-		"Element:53:3": { "x": 104,  "y": 225, "width": 40,  "height": 40,  "alias": "RV-SAA-1MA" },
-		"Element:53:4": { "x": 64,  "y": 225, "width": 40,  "height": 40,  	"alias": "RV-SAA-2MA" },
+		"Element:53:1": { "x": 1690, "y": 818, "width": 30,  "height": 35,  "alias": "RV-SAA-1CA" },
+		"Element:53:2": { "x": 1645, "y": 818, "width": 30,  "height": 35,  "alias": "RV-SAA-2CA" },
+		"Element:53:3": { "x": 95,  "y": 240, "width": 30,  "height": 35,  "alias": "RV-SAA-1MA" },
+		"Element:53:4": { "x": 50,  "y": 240, "width": 30,  "height": 35,  	"alias": "RV-SAA-2MA" },
 
-		"Element:55:1": { "x": 1510,   "y": 345, "width": 184, "height": 204,  "alias": "RV-CT-ITS-1" },
+		"Element:55:1": { "x": 1510,   "y": 415, "width": 160, "height": 160,  "alias": "RV-CT-ITS-1" },
 	},
 	{
 		"id":"synopticMetro",

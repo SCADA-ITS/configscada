@@ -73,7 +73,10 @@ export let columnsElementList = {
 	"ElementType:3": { 
 		1:[
 			"alias",
-			"ElementTypeParam:3:1:2"
+			"ElementTypeParam:3:1:2",
+			"ElementTypeParam:3:1:10",
+			"ElementTypeParam:3:1:11",
+			"ElementTypeParam:3:1:12",
 		],
 		2:[
 			"alias",
@@ -100,7 +103,10 @@ export let columnsElementList = {
 	},
 	"ElementType:4": {
 		1:[
-			"alias"
+			"alias",
+			"ElementTypeParam:4:1:10",
+			"ElementTypeParam:4:1:11",
+			"ElementTypeParam:4:1:12",
 		],
 		2:[
 			"alias",
@@ -141,6 +147,8 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
+			"ElementTypeParam:31:2:1002",
+			"ElementTypeParam:31:2:1005"
 		]
 	},
 	"ElementType:34": { 
@@ -243,7 +251,8 @@ export let columnsElementList = {
 		1:[
 			"alias",
 			"ElementTypeParam:54:1:1",
-			"ElementTypeParam:54:1:2"
+			"ElementTypeParam:54:1:2",
+			"ElementTypeParam:54:1:3"
 		],
 		2:[
 			"alias",
@@ -517,6 +526,15 @@ export let columnsElementConfig = {
 			"ElementTypeParam:3:1:2": { //"date"
 				"header": [ $.i18n("ElementTypeParam:3:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
+			"ElementTypeParam:3:1:10": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:3:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:11": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:3:1:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:12": { //"Section"
+				"header": [ $.i18n("ElementTypeParam:3:1:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
 		},
 		2:{
 			"alias": {
@@ -587,6 +605,15 @@ export let columnsElementConfig = {
 		1:{
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:10": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:4:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:11": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:4:1:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:12": { //"Section"
+				"header": [ $.i18n("ElementTypeParam:4:1:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		},
 		2:{
@@ -660,6 +687,41 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
+		}
+	},
+	"ElementType:31": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:31:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:31:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            },
+            "ElementTypeParam:31:1:6": { //"Section"
+				"header": [ $.i18n("ElementTypeParam:31:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            },
+            "ElementTypeParam:31:1:7": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:31:1:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            },
+            "ElementTypeParam:31:1:8": { //"Asociated Cabinet"
+				"header": [ $.i18n("ElementTypeParam:31:1:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+            "ElementTypeParam:31:2:1002": { //"Air Temperature"
+				"header": [ $.i18n("ElementTypeParam:31:2:1002.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            },
+            "ElementTypeParam:31:2:1005": { //"Surface Temperature"
+				"header": [ $.i18n("ElementTypeParam:31:2:1005.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            }
 		}
 	},
 	"ElementType:34": {
@@ -899,11 +961,14 @@ export let columnsElementConfig = {
 			"alias": {
 				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-			"ElementTypeParam:54:1:1": { //"Brand"
+			"ElementTypeParam:54:1:1": { //"PK"
 				"header": [ $.i18n("ElementTypeParam:54:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:54:1:2": { //"Model"
+            "ElementTypeParam:54:1:2": { //"Section"
 				"header": [ $.i18n("ElementTypeParam:54:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:54:1:3": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:54:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		},
 		2:{

@@ -2,7 +2,7 @@ var i18_es = {
     "defaultheader.dashboard": "ITS Dashboard",// "Mapa",
     "defaultheader.cabinets": "Armarios",
     "defaultheader.panels": "Paneles",
-    "defaultheader.etds": "ETDs",
+    "defaultheader.etds": "ATCs",
     "defaultheader.users": "Usuarios",
     "defaultheader.managementAlarms": "Alarmas ",
     "defaultheader.alarmSettings": "Configuracion alarmas",
@@ -27,13 +27,8 @@ var i18_es = {
     "ElementType:2.description": "CAMARA",
     "ElementType:3.alias": "DETECTOR",
     "ElementType:3.description": "Detector type of equipment",
-    "ElementType:4.alias": "SECTION",
-    "ElementType:4.description": "Section type",
-    "ElementType:5.alias": "PLC_LOGO",
-    "ElementType:5.description": "PLC_LOGO",
-    "ElementType:33.alias": "ETD",
-    "ElementType:33.description": "Data adquisition station type of equipment",
-    
+    "ElementType:4.alias": "SECCION",
+    "ElementType:4.description": "SECCION",
     "ElementType:21.alias": "OPAC",
     "ElementType:21.description": "OPAC",
     "ElementType:12.alias": "LUX",
@@ -54,10 +49,6 @@ var i18_es = {
     "ElementType:20.description": "NO",
     "ElementType:17.alias": "ANEM_EXT",
     "ElementType:17.description": "ANEM_EXT",
-    "ElementType:23.alias": "ETD_detector",
-    "ElementType:23.description": "ETD_detector",
-    "ElementType:22.alias": "ETD_modbus",
-    "ElementType:22.description": "ETD_modbus",
     "ElementType:10.alias": "ROTAPANEL",
     "ElementType:10.description": "Rotapanel",
     "ElementType:13.alias": "SEM",
@@ -110,8 +101,8 @@ var i18_es = {
     "ElementType:51.description": "ETD",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
-    "ElementType:54.alias": "ETD KINEO",
-    "ElementType:54.description": "ETD KINEO",
+    "ElementType:54.alias": "ATC",
+    "ElementType:54.description": "ATC",
     "ElementType:55.alias": "CT",
     "ElementType:55.description": "CT",
     "ElementType:56.alias": "UNIFILAR CSA",
@@ -215,6 +206,12 @@ var i18_es = {
     
     "ElementTypeParam:3:1:2.alias": "Id Detector",
     "ElementTypeParam:3:1:2.description": "Id Detector",
+    "ElementTypeParam:3:1:10.alias": "PK",
+    "ElementTypeParam:3:1:10.description": "PK",
+    "ElementTypeParam:3:1:11.alias": "Carretera",
+    "ElementTypeParam:3:1:11.description": "Carretera",
+    "ElementTypeParam:3:1:12.alias": "Seccion",
+    "ElementTypeParam:3:1:12.description": "Seccion",
     "ElementTypeParam:3:2:1.alias": "Fecha",
     "ElementTypeParam:3:2:1.description": "Fecha",
     "ElementTypeParam:3:2:2.alias": "Periodo de Integracion (min)",
@@ -280,6 +277,12 @@ var i18_es = {
 	"ElementTypeParam:3:2:112.alias": "EUR 13",
 	"ElementTypeParam:3:2:112.description": "EUR 13",
 	
+    "ElementTypeParam:4:1:10.alias": "PK",
+    "ElementTypeParam:4:1:10.description": "PK",
+    "ElementTypeParam:4:1:11.alias": "Carretera",
+    "ElementTypeParam:4:1:11.description": "Carretera",
+    "ElementTypeParam:4:1:12.alias": "Seccion",
+    "ElementTypeParam:4:1:12.description": "Seccion",
 	"ElementTypeParam:4:2:1.alias": "Fecha",
     "ElementTypeParam:4:2:1.description": "Fecha",
 	"ElementTypeParam:4:2:2.alias": "Periodo (min)",
@@ -760,6 +763,10 @@ var i18_es = {
     "ElementTypeParam:31:2:2.description": "Control de Brillo",
     "ElementTypeParam:31:2:3.alias": "Temperatura",
     "ElementTypeParam:31:2:3.description": "Temperatura",
+    "ElementTypeParam:31:2:1002.alias": "Temperatura Aire (ºC)",
+    "ElementTypeParam:31:2:1002.description": "Temperatura Aire (ºC)",
+    "ElementTypeParam:31:2:1005.alias": "Temperatura Carretera (ºC)",
+    "ElementTypeParam:31:2:1005.description": "Temperatura Carretera (ºC)",
 
     "ElementTypeParam:32:1:1.alias": "PK",
     "ElementTypeParam:32:1:2.alias": "Entrance Tunnel Distance (m)",
@@ -845,10 +852,12 @@ var i18_es = {
     "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:53:1:2.description": "Distancia entrada del t&uacute;nel (m)",
     
-    "ElementTypeParam:54:1:1.alias": "Marca",
-    "ElementTypeParam:54:1:1.description": "Marca",
-    "ElementTypeParam:54:1:2.alias": "Modelo",
-    "ElementTypeParam:54:1:2.description": "Modelo",
+    "ElementTypeParam:54:1:1.alias": "PK",
+    "ElementTypeParam:54:1:1.description": "PK",
+    "ElementTypeParam:54:1:2.alias": "Seccion",
+    "ElementTypeParam:54:1:2.description": "Seccion",
+    "ElementTypeParam:54:1:3.alias": "Carretera",
+    "ElementTypeParam:54:1:3.description": "Carretera",
 
     "ElementTypeParam:55:1:1.alias": "PK",
     "ElementTypeParam:55:1:1.description": "PK",
@@ -1161,7 +1170,7 @@ var i18_es = {
     "lbl_order_window_alias_error": "Seleccione un alias por favor",
 
 
-    /*  BRATISLAVA 
+    /*  BRATISLAVA */
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1295,13 +1304,13 @@ var i18_es = {
     "AlarmConfig:132": "ALARMA ARMARIO_EL&Eacute;CTRICO SIN CONEXI&Oacute;N",
     "AlarmConfig:133": "ALARMA ARMARIO_EL&Eacute;CTRICO PUERTA ABIERTA TRANSFORMADOR",   
     "AlarmConfig:135": "ALARMA ATC NO CONECTADO",
-    "AlarmConfig:139": "ALARMA FALLO DETECTOR"
+    "AlarmConfig:139": "ALARMA FALLO DETECTOR",
     "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
 
     "Alarm_recon": "Alarma ya reconocida",
-    "Alarm_deactivated": "Alarma ya desactivada",*/
+    "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL*/
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1341,8 +1350,14 @@ var i18_es = {
     "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",
     "AlarmConfig:41": "ALARMA SONDA DE TEMPERATURA SIN CONEXI&Oacute;N",
     "AlarmConfig:42": "ALARMA AIRE ACONDICIONADO SIN CONEXI&Oacute;N",
-    "AlarmConfig:43": "ALARMA AIRE ACONDICIONADO FALLO",
-
+    "AlarmConfig:43": "ALARMA AIRE ACONDICIONADO FALLO",*/
+    
+    "AlarmType:1": "Alarma",
+    "AlarmType:2": "Alerta",
+    "AlarmType:3": "Notificacion",
+    
+    "AlarmLevel:3": 3,
+    
     "pictograms.type.1":"Advertencia de peligro",
     "pictograms.type.2":"Prioridad",
     "pictograms.type.3":"Prioridad de entrada",
