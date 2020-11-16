@@ -4,6 +4,9 @@ import {alarmsCfg} from "../data/alarmsCfg.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
 import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
+import SynopticElement from "../classes/SynopticElement.js";
+
+let synopticElement;
 
 export default class TabForm {
 	constructor(id,columnsElementFormList) {
@@ -15,6 +18,7 @@ export default class TabForm {
 		}
 		var idtable = this.id;
 		let self = this;
+		
 
 		var graphElem = `query { 
 			getElement(elementId: "` + this.id + `"){
@@ -394,8 +398,7 @@ export default class TabForm {
 							if (evalues === null)
 								element["elementValues"] = [];
 
-							if (
-							elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
+							if (elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
 							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
@@ -433,18 +436,17 @@ export default class TabForm {
 								);
 
 								// loads the data
-								elementQuery
-									.load({
+								elementQuery.load({
 										elem: element.id,
-									})
-									.then((data) => {
+									}).then((data) => {
 										// process the received data
 										let element = data;
 
 										getElementIcon(data, ":Form");
 									});
 							} else {
-								getElementIcon(element, ":Form");
+								synopticElement.updateElement(element);
+								getElementIcon(synopticElement.element, ":Form");
 							}
 						} catch (err) {
 							console.log("Error: " + err.message);
@@ -657,6 +659,7 @@ export default class TabForm {
 
 		this.graphql.load().then(data => {
 			this.data = data;
+			synopticElement = new SynopticElement(data);
 			// HEADER
 			try {
 				let headerTitle = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
@@ -726,8 +729,8 @@ export default class TabForm {
 					iconoSvg = getElementSVG(data, 40, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 				}
-				
-				getElementIcon(data, ":Form");
+				synopticElement.updateElement(data);
+				getElementIcon(synopticElement.element, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
