@@ -143,4 +143,112 @@ export class CustomUsersForm extends userManager.views["users/form"]{
         })
         
     }
+
+    AddCredentials() {
+        var _this = this;
+        var _ = this.app.getService("locale")._;
+        /*
+        if (!this.CheckEmail())
+            return webix.alert({
+                type: "alert-error",
+                title: _("Error: no email"),
+                text: _("Please submit an email first!"),
+            });
+        */    
+        var data = { user_id: this.ID, source: 1, record: "test" };
+        var p = this.app.getService("backend").addCredentials(this.ID, data);
+        p.then(function (response) {
+            if (response.id) {
+                _this.credID = response.id;
+                _this.$$("credentials").showBatch("credentials");
+            }
+        });
+    };
+
 }
+
+export class CustomCredentialsView extends userManager.views["users/credentials"]{
+    config() {
+        var _this = this;
+        var _ = this.app.getService("locale")._;
+        return {
+            view: "window",
+            modal: true,
+            move: true,
+            width: 300,
+            height: 300,
+            head: {
+                view: "toolbar",
+                padding: { left: 20, right: 9 },
+                borderless: true,
+                elements: [
+                    { view: "label", label: _("New password") },
+                    {
+                        view: "icon",
+                        icon: "wxi-close",
+                        hotkey: "esc",
+                        click: function () { return _this.getRoot().close(); },
+                    },
+                ],
+            },
+            position: "center",
+            body: {
+                view: "form",
+                localId: "form",
+                padding: { top: 20, left: 20, right: 20, bottom: 20 },
+                margin: 2,
+                elements: [
+                    /*
+                    {
+                        view: "button",
+                        label: _("Generate password"),
+                        click: function () { return _this.GeneratePassword(); },
+                    },
+                    
+                    {
+                        borderless: true,
+                        height: 20,
+                        cols: [
+                            {},
+                            {
+                                template: "<div class='webix_um_divider_line'/>",
+                                css: "webix_um_divider",
+                                borderless: true,
+                                width: 40,
+                            },
+                            {},
+                        ],
+                    },
+                    */
+                    {
+                        margin: 10,
+                        rows: [
+                            {
+                                labelPosition: "top",
+                                css: "webix_um_passw_label",
+                                label: _("Enter password"),
+                                view: "text",
+                                name: "password",
+                                validate: "isNotEmpty",
+                                type: "password",
+                            },
+                            {
+                                view: "button",
+                                css: "webix_primary",
+                                label: _("Reset password"),
+                                click: function () { return _this.ResetPassword(); },
+                            },
+                        ],
+                    },
+                ],
+            },
+            on: {
+                onShow: function () {
+                    var input = this.getBody().elements.password.getInputNode();
+                    input.focus();
+                },
+            },
+        };
+    };
+}
+

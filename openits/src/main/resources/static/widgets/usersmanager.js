@@ -1,5 +1,5 @@
 import UserManagerInt from "../classes/UserManagerInterface.js";
-import {CustomRoleManager, CustomUserDetails, CustomAddRoleAndUser, CustomUsersForm} from "../classes/UserManagerForm.js";
+import {CustomRoleManager, CustomUserDetails, CustomAddRoleAndUser, CustomUsersForm, CustomCredentialsView} from "../classes/UserManagerForm.js";
 
 export let usersmanager= {
 	id:"usersmanagerContainer",
@@ -10,8 +10,8 @@ export let usersmanager= {
             [userManager.views["users/roles"], CustomRoleManager],
             [userManager.views["users/details"], CustomUserDetails],
             [userManager.views["addmenu"], CustomAddRoleAndUser],
-            [userManager.views["users/form"], CustomUsersForm]
-
+            [userManager.views["users/form"], CustomUsersForm],
+            [userManager.views["users/credentials"], CustomCredentialsView]
         ]),
 
     }

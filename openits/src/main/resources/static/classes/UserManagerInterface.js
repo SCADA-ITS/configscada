@@ -164,22 +164,21 @@ export default class UserManagerInterface extends userManager.services.Backend {
     }
 
     updateUser(id, data) {
+
         let graphUpdateUser = webix.proxy("GraphQL",
-            `mutation  updateUser($user: UserVO!){
-                updateUser(user: $user)   {
-                  id
-                }
-              }`);
-              
+        `mutation  updateUser($user: UserVO!){
+            updateUser(user: $user)   {
+                id
+            }
+            }`);
+            
         if(data.roles[0] !== undefined && data.roles[0] !==null)
             return Promise.resolve(graphUpdateUser.load({
 
                 user: {
                     "id": "User:"+ data.id,
                     "name": data.name,
-                    "password": "1234",
                     "preset": data.preset,
-                    "allowMultipleSessions": false,
                     "isAdmin": false,
                     "language": "es",
                     "country": "Spain",

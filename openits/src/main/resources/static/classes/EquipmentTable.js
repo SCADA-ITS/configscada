@@ -225,20 +225,19 @@ export default class EquipmentTable {
                         let row = {id: item.id, alias: item.alias, description: item.description, state: $.i18n(status[item.state])};
                         if(item.elementValues) {
                             item.elementValues.forEach(obj => {
+                                let itemValue = obj.value;
                                 if (elementTypeMap.getParamTypeId(obj.id) === this.mode) {
-                                    row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = obj.value === null ? "-" : obj.value;
+                                    row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = itemValue === null ? "-" : itemValue;
                                     if (obj.alerted) {
                                         colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = {"background-color":"red" };
-                                    }
-                                    else
+                                    } else
                                         colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = null;
                                 } else {
                                     if(this.mode === 2 && elementTypeMap.getParamTypeId(obj.id) === 3) {
-                                        row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = obj.value === null ? "-" : obj.value;
+                                        row[elementTypeMap.getElementParamTypeIdi18(obj.id)] = itemValue === null ? "-" : itemValue;
                                         if (obj.alerted) {
                                             colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = {"background-color":"red" };
-                                        }
-                                        else
+                                        } else
                                             colorList[elementTypeMap.getElementParamTypeIdi18(obj.id)] = null;
                                     }
                                 }
@@ -288,8 +287,9 @@ export default class EquipmentTable {
                 let row = {id: item.id, alias: item.alias, state: item.state};
                 if(item.elementValues) {
                     item.elementValues.forEach(obj => {
+                        let itemValue = obj.value;
                         if (obj.elementTypeParam.paramType === this.mode) {
-                            row[obj.elementTypeParam.id] = obj.value === null ? "-" : obj.value;
+                            row[obj.elementTypeParam.id] = itemValue === null ? "-" : itemValue;
                             if (obj.alerted) {
                                 colorList[obj.elementTypeParam.id] = {"background-color":"red" };
                             }

@@ -890,6 +890,7 @@ var i18_sk = {
     "menu.tables.roles": "&Uacute;loha",
     "menu.tables.alarmsconfig": "Konfigur&aacute;cia alarmu",
     "menu.alarms.title": "Alarms",
+    "menu.cctv.title": "CCTV",
     "menu.plans.title": "Plans",
     "menu.grafana": "Control Panel",
     "menu.jasper": "Spr&aacute;vy",

@@ -917,6 +917,7 @@ var i18_es = {
     "menu.tables.roles": "Roles",
     "menu.tables.alarmsconfig": "Alarmas Conf.",
     "menu.alarms.title": "Alarmas",
+    "menu.cctv.title": "CCTV",
     "menu.plans.title": "Gestor de Planes",
     "menu.grafana": "Control Panel",
     "menu.jasper": "Informes",

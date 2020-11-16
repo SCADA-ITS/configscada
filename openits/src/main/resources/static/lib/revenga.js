@@ -13,6 +13,8 @@ const ELEMENT_FORM_TAB_FORM="form";
 const ELEMENT_FORM_TAB_VIDEO="video";
 const ELEMENT_FORM_TAB_SYN="synoptic";
 
+const DATA_TYPE_4="DataType:4";
+
 function changeConnectedIcon() {
   try {
     if(webix.storage.session.get("system.conected")){
@@ -42,11 +44,23 @@ function checkUserPermission(alias) {
       
     }
     return permissionList.includes(alias);
-
   } catch (error) {
     console.error(error);
     return false;
   }
-  
 }
 
+function parseUIParam(value, dataTypeId) {
+  let result = value;
+  try {
+    if(typeof dataTypeId != 'undefined' && dataTypeId && typeof value != 'undefined' && value){
+      if(dataTypeId == DATA_TYPE_4){
+        result = webix.i18n.fullDateFormatStr(new Date(parseInt(value)));
+      }
+    }	
+  } catch (error) {
+    console.warn(error);
+    result=value;
+  }
+  return result;
+}
