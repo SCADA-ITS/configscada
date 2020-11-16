@@ -94,6 +94,7 @@ export function getElementIcon(element, suffix="") {
 
   // icon based on element value
   if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN
+    || elementType === elementTypeMap.ELEMENT_TYPE_3_DET
     || elementType === elementTypeMap.ELEMENT_TYPE_8_BAR
     || elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE
     || elementType === elementTypeMap.ELEMENT_TYPE_12_LUX
@@ -108,7 +109,13 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR
-    || elementType === elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO
+    || elementType === elementTypeMap.ELEMENT_TYPE_58_PULSADOR
+    || elementType === elementTypeMap.ELEMENT_TYPE_59_SMOKE_DETECTOR
+    || elementType === elementTypeMap.ELEMENT_TYPE_60_SIRENA
+    || elementType === elementTypeMap.ELEMENT_TYPE_61_FIRE_DET_CT
+    || elementType === elementTypeMap.ELEMENT_TYPE_62_TEMP_PROBE
+    || elementType === elementTypeMap.ELEMENT_TYPE_63_AIR_CONDITIONER) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -207,7 +214,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
   switch (elementType) {
     case elementTypeMap.ELEMENT_TYPE_1_WS:
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
-    case elementTypeMap.ELEMENT_TYPE_3_DET:
     case elementTypeMap.ELEMENT_TYPE_5_PLC:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
     case elementTypeMap.ELEMENT_TYPE_15_FIRE:
@@ -266,10 +272,11 @@ export function getElementSVG(element, width, height, suffix="", state="", value
    
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixPanelIcon(element, suffix, state) + '</g>';
       break;                              
-    case elementTypeMap.ELEMENT_TYPE_33_ETD:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
-      break;
-    case elementTypeMap.ELEMENT_TYPE_51_ETD:      
+    case elementTypeMap.ELEMENT_TYPE_3_DET:      
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
+      break; 
+    case elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO:    
+    case elementTypeMap.ELEMENT_TYPE_51_ETD:     
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 18) + ',' + (height / 18) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
     case elementTypeMap.ELEMENT_TYPE_55_CT:

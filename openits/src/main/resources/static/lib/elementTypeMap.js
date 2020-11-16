@@ -42,9 +42,16 @@ export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
 export const ELEMENT_TYPE_47_CABIN_TU = "47";
 export const ELEMENT_TYPE_51_ETD = "51";
 export const ELEMENT_TYPE_53_SEM = "53";
+export const ELEMENT_TYPE_54_ETD_KINEO = "54";
 export const ELEMENT_TYPE_55_CT = "55";
 export const ELEMENT_TYPE_56_UNIFILAR = "56";
 export const ELEMENT_TYPE_57_MAGNETOTERMICO = "57";
+export const ELEMENT_TYPE_58_PULSADOR = "58";
+export const ELEMENT_TYPE_59_SMOKE_DETECTOR = "59";
+export const ELEMENT_TYPE_60_SIRENA = "60";
+export const ELEMENT_TYPE_61_FIRE_DET_CT = "61";
+export const ELEMENT_TYPE_62_TEMP_PROBE = "62";
+export const ELEMENT_TYPE_63_AIR_CONDITIONER = "63";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -176,6 +183,7 @@ export const MATRIX_PANEL_PICTOGRAM = "4:2";
 export const CAM_STREAM_MJPEG = "2:1:3";
 
 export const MAGNETOTERMICO_STATE = "1:2";
+export const CT_TEMP = "1:2";
 
 export const COMMAND_TYPE_PMV_A_C = "2:24";
 export const COMMAND_TYPE_MATRIX_PANEL_64X64 = "2:26";
