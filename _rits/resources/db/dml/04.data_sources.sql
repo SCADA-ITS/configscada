@@ -99,7 +99,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (79, 1, 'getPlanSubtypes', 'getPlanSubtypes', 'PlanSubtypeVO', 'id', true, true),
 (80, 1, 'getPlanSubtype', 'getPlanSubtype', 'PlanSubtypeVO', 'id', true, true),
 (81, 1, 'getPlanOrderTypes', 'getPlanOrderTypes', 'PlanOrderTypeVO', 'id', true, true),
-(82, 1, 'getPlanOrderType', 'getPlanOrderType', 'PlanOrderTypeVO', 'id', true, true);
+(82, 1, 'getPlanOrderType', 'getPlanOrderType', 'PlanOrderTypeVO', 'id', true, true),
+(83, 1, 'getPlanStateTypes', 'getPlanStateTypes', 'PlanStateTypeVO', 'id', true, true),
+(84, 1, 'getPlanOrderStateTypes', 'getPlanOrderStateTypes', 'PlanOrderStateTypeVO', 'id', true, true),
+(85, 1, 'getPlanScheduleStateTypes', 'getPlanScheduleStateTypes', 'PlanScheduleStateTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -512,4 +515,19 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (82, 1, 'http://localhost:8082/graphql'),
 (82, 2, 'getPlanOrderType'),
 (82, 3, 'planOrderTypeId'),
-(82, 4, '{id alias description labelAlias labelDescription planOrderTypeLabel planOrderTypeParams{id}}');
+(82, 4, '{id alias description labelAlias labelDescription planOrderTypeLabel planOrderTypeParams{id}}'),
+
+(83, 1, 'http://localhost:8082/graphql'),
+(83, 2, 'getPlanStateTypes'),
+(83, 3, ''),
+(83, 4, '{id alias description labelAlias labelDescription}'),
+
+(84, 1, 'http://localhost:8082/graphql'),
+(84, 2, 'getPlanOrderStateTypes'),
+(84, 3, ''),
+(84, 4, '{id alias description labelAlias labelDescription}'),
+
+(85, 1, 'http://localhost:8082/graphql'),
+(85, 2, 'getPlanScheduleStateTypes'),
+(85, 3, ''),
+(85, 4, '{id alias description labelAlias labelDescription}');

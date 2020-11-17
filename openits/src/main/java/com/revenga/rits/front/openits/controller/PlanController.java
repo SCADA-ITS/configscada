@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.PlanBO;
 import com.revenga.rits.front.openits.bo.PlanOrderTypeBO;
+import com.revenga.rits.front.openits.bo.PlanStateTypeBO;
 import com.revenga.rits.front.openits.bo.PlanSubtypeBO;
 import com.revenga.rits.front.openits.bo.PlanTypeBO;
 
@@ -37,6 +38,9 @@ public class PlanController {
 	
 	@Autowired
 	PlanOrderTypeBO planOrderTypeBO;
+	
+	@Autowired
+	PlanStateTypeBO planStateTypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
@@ -116,6 +120,27 @@ public class PlanController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(planOrderTypeBO.getPlanOrderType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_state_types")
+	@ApiOperation(value = "Get all plan state types", notes = "Get all plan state types")
+	public ResponseEntity<Object> getPlanStateTypes() {
+		
+		return new ResponseEntity<>(planStateTypeBO.getPlanStateTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_order_state_types")
+	@ApiOperation(value = "Get all plan order state types", notes = "Get all plan order state types")
+	public ResponseEntity<Object> getPlanOrderStateTypes() {
+		
+		return new ResponseEntity<>(planStateTypeBO.getPlanOrderStateTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_schedule_state_types")
+	@ApiOperation(value = "Get all plan_schedule state types", notes = "Get all plan_schedule state types")
+	public ResponseEntity<Object> getPlanScheduleStateTypes() {
+		
+		return new ResponseEntity<>(planStateTypeBO.getPlanScheduleStateTypes(), HttpStatus.OK);
 	}
 
 }
