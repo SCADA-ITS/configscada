@@ -244,6 +244,8 @@ var i18_es = {
     "ElementTypeParam:3:2:20.description": "C1 Long",
     "ElementTypeParam:3:2:21.alias": "C2 Long",
     "ElementTypeParam:3:2:21.description": "C2 Long",
+    "ElementTypeParam:3:2:22.alias": "C3 Long",
+    "ElementTypeParam:3:2:22.description": "C3 Long",
     "ElementTypeParam:3:2:40.alias": "C1 Vel",
     "ElementTypeParam:3:2:40.description": "C1 Vel",
     "ElementTypeParam:3:2:41.alias": "C2 Vel",
@@ -301,6 +303,18 @@ var i18_es = {
 	"ElementTypeParam:4:2:10.description": "Gap medio (m)", 
 	"ElementTypeParam:4:2:18.alias": "Longitud media (dm)", 
 	"ElementTypeParam:4:2:18.description": "Longitud media (dm)", 
+    "ElementTypeParam:4:2:60.alias": "C1 Long",
+    "ElementTypeParam:4:2:60.description": "C1 Long",
+    "ElementTypeParam:4:2:61.alias": "C2 Long",
+    "ElementTypeParam:4:2:61.description": "C2 Long",
+    "ElementTypeParam:4:2:62.alias": "C3 Long",
+    "ElementTypeParam:4:2:62.description": "C3 Long",
+    "ElementTypeParam:4:2:80.alias": "C1 Vel",
+    "ElementTypeParam:4:2:80.description": "C1 Vel",
+    "ElementTypeParam:4:2:81.alias": "C2 Vel",
+    "ElementTypeParam:4:2:81.description": "C2 Vel",
+    "ElementTypeParam:4:2:82.alias": "C3 Vel",
+    "ElementTypeParam:4:2:82.description": "C3 Vel",
     "ElementTypeParam:4:2:140.alias": "EUR 1",
     "ElementTypeParam:4:2:140.description": "EUR 1",
 	"ElementTypeParam:4:2:141.alias": "EUR 2",
@@ -1170,7 +1184,7 @@ var i18_es = {
     "lbl_order_window_alias_error": "Seleccione un alias por favor",
 
 
-    /*  BRATISLAVA */
+    /*  BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1305,12 +1319,12 @@ var i18_es = {
     "AlarmConfig:133": "ALARMA ARMARIO_EL&Eacute;CTRICO PUERTA ABIERTA TRANSFORMADOR",   
     "AlarmConfig:135": "ALARMA ATC NO CONECTADO",
     "AlarmConfig:139": "ALARMA FALLO DETECTOR",
-    "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
+    "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",*/
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL
+/*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1350,7 +1364,7 @@ var i18_es = {
     "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",
     "AlarmConfig:41": "ALARMA SONDA DE TEMPERATURA SIN CONEXI&Oacute;N",
     "AlarmConfig:42": "ALARMA AIRE ACONDICIONADO SIN CONEXI&Oacute;N",
-    "AlarmConfig:43": "ALARMA AIRE ACONDICIONADO FALLO",*/
+    "AlarmConfig:43": "ALARMA AIRE ACONDICIONADO FALLO",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
