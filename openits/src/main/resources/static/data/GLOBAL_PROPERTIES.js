@@ -63,7 +63,7 @@ export const ELEMENT_TYPE = {
           urlParamVideo:"ElementTypeParam:2:1:3"}
         },
         {ELEMENT_FORM_TAB_SYN: {
-          idSynoptic:"metroTunnel"}
+          idSynoptic:"synopticUnifilarCsa"}
         },
       ] 
     },

@@ -151,56 +151,32 @@ export default class synopticElement {
             el.click(function (e) {
               try {
                 let elementWindow = new ElementWindow(elementId,elementType);
-                if ($$("win" + elementId) != null) {
+                if ($$("win" + elementId) != null) 
                   $$("win" + elementId).destructor();
-                  webix
-                  .ui({
-                    id: "win" + elementId,
-                    view: "window",
-                    move: true,
-                    close: true,
-                    position: "right",
-                    body: elementWindow.getComponent(),
-                    on: {
-                      onDestruct: function(obj){
-                        //elementForm.disconnect();
-                      },
-                      onHide: function(obj){
-                        //elementForm.disconnect();
-                        //$$("win" + elementId).destructor();
-                      },
-                      onShow: function(obj){
-                        elementWindow.loadData();
-                      }
-                    }                            
-                  })
-                  .show();
+
+                webix
+                .ui({
+                  id: "win" + elementId,
+                  view: "window",
+                  move: true,
+                  close: true,
+                  position: "right",
+                  body: elementWindow.getComponent(),
+                  on: {
+                    onDestruct: function(obj){
+                      //elementForm.disconnect();
+                    },
+                    onHide: function(obj){
+                      //elementForm.disconnect();
+                      //$$("win" + elementId).destructor();
+                    },
+                    onShow: function(obj){
+                      elementWindow.loadData();
+                    }
+                  }                            
+                })
+                .show();
                   //webix.ui(elementWindow.getComponent()).show();
-                } else {
-                  webix
-                  .ui({
-                    id: "win" + elementId,
-                    view: "window",
-                    move: true,
-                    close: true,
-                    position: "right",
-                    body: elementWindow.getComponent(),
-                    on: {
-                      onDestruct: function(obj){
-                        //elementForm.disconnect();
-                      },
-                      onHide: function(obj){
-                        //elementForm.disconnect();
-                        //$$("win" + elementId).destructor();
-                      },
-                      onShow: function(obj){
-                        elementWindow.loadData();
-                      }
-                    }                            
-                  })
-                  .show();
-                  //webix.ui(elementWindow.getComponent()).show();
-                }
               } catch (e) {
                 console.error(e);
               }

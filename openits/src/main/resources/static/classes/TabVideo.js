@@ -39,7 +39,15 @@ export default class TabVideo {
 
         let result = {
             id: "vvtabVideo"+this.parentId,
-            cols:[]
+            cols:[],
+            on: {
+              onShow: function(obj){
+                  console.log("VIDEOwerwerwerwerwerwerwerwerwerwerwerwerwerwerwerwer");
+              },
+              onHide: function(obj){
+                  console.log("VIDEOzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+              }
+          }
         };
        
         return result;
