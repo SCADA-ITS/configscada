@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -179,5 +183,31 @@ public class AlarmController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(alarmMutedBO.getAlarmMutedsByElement(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/createAlarmConfig")
+	@ApiOperation(value = "Create Alarm config", notes = "Create Alarm config")
+	public ResponseEntity<Object> createAlarmConfig(@RequestBody Object alarmConfig) {
+		
+		return new ResponseEntity<>(alarmConfigBO.createAlarmConfig(alarmConfig), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updateAlarmConfig")
+	@ApiOperation(value = "Update Alarm config", notes = "Update Alarm config")
+	public ResponseEntity<Object> updateAlarmConfig(@RequestBody Object alarmConfig) {
+		
+		return new ResponseEntity<>(alarmConfigBO.updateAlarmConfig(alarmConfig), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteAlarmConfig/{id}")
+	@ApiOperation(value = "Delete Alarm config", notes = "Delete Alarm config")
+	public ResponseEntity<Object> deleteAlarmConfig(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Alarm config id",
+			example = "AlarmConfig:3",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmConfigBO.deleteAlarmConfig(id), HttpStatus.OK);
 	}
 }

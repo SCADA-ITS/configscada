@@ -107,7 +107,11 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (87, 1, 'getPlanSchedule', 'getPlanSchedule', 'PlanSchedulesVO', 'id', true, true),
 (88, 1, 'getPlanScheduleByPlan', 'getPlanScheduleByPlan', 'PlanSchedulesVO', 'id', true, true),
 (89, 1, 'getPlanOrders', 'getPlanOrders', 'PlanOrderVO', 'id', true, true),
-(90, 1, 'getPlanOrder', 'getPlanOrder', 'PlanOrderVO', 'id', true, true);
+(90, 1, 'getPlanOrder', 'getPlanOrder', 'PlanOrderVO', 'id', true, true),
+(91, 3, 'createAlarmConfig', 'createAlarmConfig', 'AlarmConfigVO', 'id', true, true),
+(92, 3, 'updateAlarmConfig', 'updateAlarmConfig', 'AlarmConfigVO', 'id', true, true),
+(93, 3, 'deleteAlarmConfig', 'deleteAlarmConfig', 'AlarmConfigVO', 'id', true, true);
+
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -560,6 +564,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (90, 1, 'http://localhost:8082/graphql'),
 (90, 2, 'getPlanOrder'),
 (90, 3, 'planOrderId'),
-(90, 4, '{id alias description nTimes planOrderStateType{id} planOrderValues{id} comandElement{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id}}');
+(90, 4, '{id alias description nTimes planOrderStateType{id} planOrderValues{id} comandElement{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id}}'),
 
+(91, 8, 'http://localhost:8082/graphql'),
+(91, 9, 'createAlarmConfig'),
+(91, 10, 'alarmConfig'),
+(91, 11, 'AlarmConfigVO!'),
+(91, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
 
+(92, 8, 'http://localhost:8082/graphql'),
+(92, 9, 'updateAlarmConfig'),
+(92, 10, 'alarmConfig'),
+(92, 11, 'AlarmConfigVO!'),
+(92, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+
+(93, 8, 'http://localhost:8082/graphql'),
+(93, 9, 'deleteAlarmConfig'),
+(93, 10, 'alarmConfigId'),
+(93, 11, 'String!'),
+(93, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}');

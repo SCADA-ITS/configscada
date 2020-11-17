@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +37,33 @@ public class AlarmConfigBO {
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmConfig()).getFieldId(), alarmConfig);
+	}
+	
+	public Map<String, Object> createAlarmConfig(Object input) {
+		
+		Map<String, Object> createdAlarmConfig = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateAlarmConfig(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCreateAlarmConfig()).getFieldId(), createdAlarmConfig);
+	}
+	
+	public Map<String, Object> updateAlarmConfig(Object input) {
+			
+		Map<String, Object> updatedAlarmConfig = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateAlarmConfig(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceUpdateAlarmConfig()).getFieldId(), updatedAlarmConfig);
+	}
+	
+	public Map<String, Object> deleteAlarmConfig(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+		
+		input.put("alarmConfigId", id);
+		
+		Map<String, Object> deletedAlarmConfig = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeleteAlarmConfig(), input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceDeleteAlarmConfig()).getFieldId(), deletedAlarmConfig);
 	}
 }
