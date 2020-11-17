@@ -82,6 +82,7 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_STRETCH = "data.source.get_stretch";
 	public static final String DATA_SOURCE_GET_STRETCH_BY_ROAD = "data.source.get_stretch_by_road";
 	public static final String DATA_SOURCE_GET_PLANS = "data.source.get_plans";
+	public static final String DATA_SOURCE_GET_PLAN = "data.source.get_plan";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
@@ -210,6 +211,8 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetStretchByRoad;
 	@Getter
 	private Integer dataSourceGetPlans;
+	@Getter
+	private Integer dataSourceGetPlan;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
 	@Getter
@@ -344,6 +347,7 @@ public class VODataSourceAdapter {
 		this.dataSourceGetStretch = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH));
 		this.dataSourceGetStretchByRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH_BY_ROAD));
 		this.dataSourceGetPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLANS));
+		this.dataSourceGetPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN));
 		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
