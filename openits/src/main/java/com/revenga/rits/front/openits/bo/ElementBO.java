@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,7 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class ElementBO {
-		
-	
-	
+			
 	@Autowired
 	LocationBO locationBO;
 	
@@ -47,6 +46,46 @@ public class ElementBO {
 		
 		return locationBO.replaceLocation(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetElement()).getFieldId(), element));
+	}
+	
+	public Map<String, Object> createElement(Object input) {
+		
+		Map<String, Object> createdElement = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateElement(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCreateElement()).getFieldId(), createdElement);
+	}
+	
+	public Map<String, Object> updateElement(Object input) {
+			
+		Map<String, Object> updatedElement = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateElement(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceUpdateElement()).getFieldId(), updatedElement);
+	}
+	
+	public Map<String, Object> cloneElement(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+		
+		input.put("elementId", id);
+		
+		Map<String, Object> clonedElement = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCloneElement(), input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCloneElement()).getFieldId(), clonedElement);
+	}
+	
+	public Map<String, Object> deleteElement(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+		
+		input.put("elementId", id);
+		
+		Map<String, Object> deletedElement = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeleteElement(), input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceDeleteElement()).getFieldId(), deletedElement);
 	}
 	
 }

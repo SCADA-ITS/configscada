@@ -110,7 +110,11 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (90, 1, 'getPlanOrder', 'getPlanOrder', 'PlanOrderVO', 'id', true, true),
 (91, 3, 'createAlarmConfig', 'createAlarmConfig', 'AlarmConfigVO', 'id', true, true),
 (92, 3, 'updateAlarmConfig', 'updateAlarmConfig', 'AlarmConfigVO', 'id', true, true),
-(93, 3, 'deleteAlarmConfig', 'deleteAlarmConfig', 'AlarmConfigVO', 'id', true, true);
+(93, 3, 'deleteAlarmConfig', 'deleteAlarmConfig', 'AlarmConfigVO', 'id', true, true),
+(94, 3, 'createElement', 'createElement', 'ElementVO', 'id', true, true),
+(95, 3, 'updateElement', 'updateElement', 'ElementVO', 'id', true, true),
+(96, 3, 'cloneElement', 'cloneElement', 'ElementVO', 'id', true, true),
+(97, 3, 'deleteElement', 'deleteElement', 'ElementVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -582,4 +586,28 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (93, 9, 'deleteAlarmConfig'),
 (93, 10, 'alarmConfigId'),
 (93, 11, 'String!'),
-(93, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}');
+(93, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+
+(94, 8, 'http://localhost:8082/graphql'),
+(94, 9, 'createElement'),
+(94, 10, 'element'),
+(94, 11, 'ElementVO!'),
+(94, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}'),
+
+(95, 8, 'http://localhost:8082/graphql'),
+(95, 9, 'updateElement'),
+(95, 10, 'element'),
+(95, 11, 'ElementVO!'),
+(95, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}'),
+
+(96, 8, 'http://localhost:8082/graphql'),
+(96, 9, 'cloneElement'),
+(96, 10, 'elementId'),
+(96, 11, 'String!'),
+(96, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}'),
+
+(97, 8, 'http://localhost:8082/graphql'),
+(97, 9, 'deleteElement'),
+(97, 10, 'elementId'),
+(97, 11, 'String!'),
+(97, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}');

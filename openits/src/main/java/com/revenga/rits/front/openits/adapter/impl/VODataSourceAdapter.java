@@ -136,6 +136,10 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_ALARM_CONFIG = "data.source.create_alarm_config";
 	public static final String DATA_SOURCE_UPDATE_ALARM_CONFIG = "data.source.update_alarm_config";
 	public static final String DATA_SOURCE_DELETE_ALARM_CONFIG = "data.source.delete_alarm_config";
+	public static final String DATA_SOURCE_CREATE_ELEMENT = "data.source.create_element";
+	public static final String DATA_SOURCE_UPDATE_ELEMENT = "data.source.update_element";
+	public static final String DATA_SOURCE_CLONE_ELEMENT = "data.source.clone_element";
+	public static final String DATA_SOURCE_DELETE_ELEMENT = "data.source.delete_element";
 	
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -328,6 +332,14 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeleteUser;
 	@Getter
+	private Integer dataSourceCreateElement;
+	@Getter
+	private Integer dataSourceUpdateElement;
+	@Getter
+	private Integer dataSourceCloneElement;
+	@Getter
+	private Integer dataSourceDeleteElement;
+	@Getter
 	private Integer dataSourceCreateAlarmConfig;
 	@Getter
 	private Integer dataSourceUpdateAlarmConfig;
@@ -452,6 +464,10 @@ public class VODataSourceAdapter {
 		this.dataSourceCreateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ALARM_CONFIG));
 		this.dataSourceUpdateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ALARM_CONFIG));
 		this.dataSourceDeleteAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ALARM_CONFIG));
+		this.dataSourceCreateElement = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ELEMENT));
+		this.dataSourceUpdateElement = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ELEMENT));
+		this.dataSourceCloneElement = Integer.parseInt(env.getProperty(DATA_SOURCE_CLONE_ELEMENT));
+		this.dataSourceDeleteElement = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ELEMENT));
 		
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
