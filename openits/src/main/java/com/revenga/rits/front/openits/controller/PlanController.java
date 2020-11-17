@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.PlanBO;
+import com.revenga.rits.front.openits.bo.PlanOrderBO;
 import com.revenga.rits.front.openits.bo.PlanOrderTypeBO;
 import com.revenga.rits.front.openits.bo.PlanScheduleBO;
 import com.revenga.rits.front.openits.bo.PlanStateTypeBO;
@@ -45,6 +46,9 @@ public class PlanController {
 	
 	@Autowired
 	PlanScheduleBO planScheduleBO;
+	
+	@Autowired
+	PlanOrderBO planOrderBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
@@ -178,6 +182,26 @@ public class PlanController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(planScheduleBO.getPlanScheduleByPlan(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_orders")
+	@ApiOperation(value = "Get all plan orders", notes = "Get all plan orders")
+	public ResponseEntity<Object> getPlanOrders() {
+		
+		return new ResponseEntity<>(planOrderBO.getPlanOrders(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_orders/{id}")
+	@ApiOperation(value = "Get plan order by id", notes = "Get plan order by id")
+	public ResponseEntity<Object> getPlanOrder(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanOrder by id",
+			example = "PlanOrder:1:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planOrderBO.getPlanOrder(id), HttpStatus.OK);
 	}
 
 }

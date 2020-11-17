@@ -105,7 +105,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (85, 1, 'getPlanScheduleStateTypes', 'getPlanScheduleStateTypes', 'PlanScheduleStateTypeVO', 'id', true, true),
 (86, 1, 'getPlanSchedules', 'getPlanSchedules', 'PlanSchedulesVO', 'id', true, true),
 (87, 1, 'getPlanSchedule', 'getPlanSchedule', 'PlanSchedulesVO', 'id', true, true),
-(88, 1, 'getPlanScheduleByPlan', 'getPlanScheduleByPlan', 'PlanSchedulesVO', 'id', true, true);
+(88, 1, 'getPlanScheduleByPlan', 'getPlanScheduleByPlan', 'PlanSchedulesVO', 'id', true, true),
+(89, 1, 'getPlanOrders', 'getPlanOrders', 'PlanOrderVO', 'id', true, true),
+(90, 1, 'getPlanOrder', 'getPlanOrder', 'PlanOrderVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -548,6 +550,16 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (88, 1, 'http://localhost:8082/graphql'),
 (88, 2, 'getPlanScheduleByPlan'),
 (88, 3, 'planId'),
-(88, 4, '{id plan{id} cronExpression alias description planScheduleStateType{id}}');
+(88, 4, '{id plan{id} cronExpression alias description planScheduleStateType{id}}'),
+
+(89, 1, 'http://localhost:8082/graphql'),
+(89, 2, 'getPlanOrders'),
+(89, 3, ''),
+(89, 4, '{id alias description nTimes planOrderStateType{id} planOrderValues{id} comandElement{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id}}'),
+
+(90, 1, 'http://localhost:8082/graphql'),
+(90, 2, 'getPlanOrder'),
+(90, 3, 'planOrderId'),
+(90, 4, '{id alias description nTimes planOrderStateType{id} planOrderValues{id} comandElement{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id}}');
 
 
