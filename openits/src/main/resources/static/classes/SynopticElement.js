@@ -133,7 +133,7 @@ export default class synopticElement {
               let titleText = snapDiv.text(
                 (synopticConfElement.x + 105) * ratioWidth,
                 total_height - 781 * ratioHeight,
-                synopticConfElement.tittle
+                synopticConf.tittle
               );
               titleText.attr({
                 "font-size": 21 * ratioWidth,

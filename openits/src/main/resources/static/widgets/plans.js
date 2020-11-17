@@ -32,7 +32,6 @@ var graphPlans = webix.proxy(
           id
           alias
           description
-          state
           planOrderValues{
             id
             value
