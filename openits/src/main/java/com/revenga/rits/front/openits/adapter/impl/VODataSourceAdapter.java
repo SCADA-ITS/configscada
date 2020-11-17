@@ -85,6 +85,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_PLAN = "data.source.get_plan";
 	public static final String DATA_SOURCE_GET_PLAN_TYPES = "data.source.get_plan_types";
 	public static final String DATA_SOURCE_GET_PLAN_TYPE = "data.source.get_plan_type";
+	public static final String DATA_SOURCE_GET_PLAN_SUBTYPES = "data.source.get_plan_subtypes";
+	public static final String DATA_SOURCE_GET_PLAN_SUBTYPE = "data.source.get_plan_subtype";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
@@ -219,6 +221,10 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetPlanTypes;
 	@Getter
 	private Integer dataSourceGetPlanType;
+	@Getter
+	private Integer dataSourceGetPlanSubtypes;
+	@Getter
+	private Integer dataSourceGetPlanSubtype;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
 	@Getter
@@ -356,6 +362,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN));
 		this.dataSourceGetPlanTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_TYPES));
 		this.dataSourceGetPlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_TYPE));
+		this.dataSourceGetPlanSubtypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPES));
+		this.dataSourceGetPlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPE));
 		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));

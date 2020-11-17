@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.PlanBO;
+import com.revenga.rits.front.openits.bo.PlanSubtypeBO;
 import com.revenga.rits.front.openits.bo.PlanTypeBO;
 
 import io.swagger.annotations.Api;
@@ -29,6 +30,9 @@ public class PlanController {
 	
 	@Autowired
 	PlanTypeBO planTypeBO;
+	
+	@Autowired
+	PlanSubtypeBO planSubtypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
@@ -68,6 +72,26 @@ public class PlanController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(planTypeBO.getPlanType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_subtypes")
+	@ApiOperation(value = "Get all plan subtypes", notes = "Get all plan subtypes")
+	public ResponseEntity<Object> getPlanSubtypes() {
+		
+		return new ResponseEntity<>(planSubtypeBO.getPlanSubtypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_subtypes/{id}")
+	@ApiOperation(value = "Get plan subtype by id", notes = "Get plan subtype by id")
+	public ResponseEntity<Object> getPlanSubtype(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanSubtype by id",
+			example = "PlanSubtype:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planSubtypeBO.getPlanSubtype(id), HttpStatus.OK);
 	}
 
 }
