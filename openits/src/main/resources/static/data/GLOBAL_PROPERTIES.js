@@ -63,7 +63,10 @@ export const ELEMENT_TYPE = {
           urlParamVideo:"ElementTypeParam:2:1:3"}
         },
         {ELEMENT_FORM_TAB_SYN: {
-          idSynoptic:"synopticUnifilarCsa"}
+          idSynoptic:"synopticUnifilarCsa",
+          width: 900,
+          height: 700
+        }
         },
       ] 
     },
