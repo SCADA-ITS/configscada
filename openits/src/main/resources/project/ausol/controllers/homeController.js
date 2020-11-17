@@ -14,7 +14,7 @@ import Alarms from "../classes/Alarms.js";
 
 import { planschedules } from "../widgets/planschedule.js";
 import {usersmanager} from "../widgets/usersmanager.js";
-// import { cctv } from "../widgets/cctv.js";
+import { cctv } from "../widgets/cctv.js";
 import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
@@ -77,10 +77,10 @@ let viewCells = [
         id: "usersmanager",
         rows: [usersmanager]
     },
-    // {
-    //     id: "cctv",
-    //     rows: [cctv]
-    // }
+    {
+        id: "cctv",
+        rows: [cctv]
+    }
     ];
     synopticData.forEach((item, index) => {
         let syn = new Synoptic(item);
