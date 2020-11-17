@@ -93,7 +93,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (73, 1, 'getIncidentDocumentType', 'getIncidentDocumentType', 'ImsIncidentDocumentTypeVO', 'id', true, true),
 (74, 1, 'getLogTypes', 'getLogTypes', 'LogTypeVO', 'id', true, true),
 (75, 1, 'getLogType', 'getLogType', 'LogTypeVO', 'id', true, true),
-(76, 1, 'getPlan', 'getPlan', 'PlanVO', 'id', true, true);
+(76, 1, 'getPlan', 'getPlan', 'PlanVO', 'id', true, true),
+(77, 1, 'getPlanTypes', 'getPlanTypes', 'PlanTypeVO', 'id', true, true),
+(78, 1, 'getPlanType', 'getPlanType', 'PlanTypeVO', 'id', true, true);
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
 (1, 1, 'http://localhost:8082/graphql'),
@@ -476,4 +478,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (76, 1, 'http://localhost:8082/graphql'),
 (76, 2, 'getPlan'),
 (76, 3, 'planId'),
-(76, 4, '{id alias description planSubtype{id alias planType{id description alias}} planModeType}');
+(76, 4, '{id alias description planSubtype{id alias planType{id description alias}} planModeType}'),
+
+(77, 1, 'http://localhost:8082/graphql'),
+(77, 2, 'getPlanTypes'),
+(77, 3, ''),
+(77, 4, '{id alias description}'),
+
+(78, 1, 'http://localhost:8082/graphql'),
+(78, 2, 'getPlanType'),
+(78, 3, 'planTypeId'),
+(78, 4, '{id alias description}');

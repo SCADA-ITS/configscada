@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.PlanBO;
+import com.revenga.rits.front.openits.bo.PlanTypeBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,9 @@ public class PlanController {
 	
 	@Autowired
 	PlanBO planBO;
+	
+	@Autowired
+	PlanTypeBO planTypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
@@ -44,6 +48,26 @@ public class PlanController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(planBO.getPlan(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_types")
+	@ApiOperation(value = "Get all plan types", notes = "Get all plan types")
+	public ResponseEntity<Object> getPlanTypes() {
+		
+		return new ResponseEntity<>(planTypeBO.getPlanTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_types/{id}")
+	@ApiOperation(value = "Get plan type by id", notes = "Get plan type by id")
+	public ResponseEntity<Object> getPlanType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanType by id",
+			example = "PlanType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planTypeBO.getPlanType(id), HttpStatus.OK);
 	}
 
 }
