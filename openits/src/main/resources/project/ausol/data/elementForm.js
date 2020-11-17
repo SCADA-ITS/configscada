@@ -45,10 +45,10 @@ export let columnsElementFormList = {
 		"scroll": false,  
 		"width": 540,
 		"options": {			
-			"streamHeight": 234,
-			"streamWidth": 405,
-			"streamFullViewHeight": 619,
-			"streamFullViewWidth": 720
+			"streamHeight": 602,
+			"streamWidth": 730,
+			"streamFullViewHeight": 602,
+			"streamFullViewWidth": 730
 		}
 	},
 	"ElementType:3": {

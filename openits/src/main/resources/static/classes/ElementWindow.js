@@ -10,7 +10,6 @@ export default class ElementWindow {
     constructor(parentId,parentType) {
         this.parentId = parentId;
         this.parentType = parentType;
-        this.synopticData=synopticData;
     }
 
     getComponent(){
@@ -38,12 +37,12 @@ export default class ElementWindow {
                     tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_VIDEO", value: $.i18n("element.window.tab.video"), width: 100 });
                 }
                 if(element["ELEMENT_FORM_TAB_SYN"] !== undefined) {
-                    this.synoptic = this.synopticData.find(x => x.id === element["ELEMENT_FORM_TAB_SYN"].idSynoptic);
-                    if(this.synoptic !== undefined && this.synoptic !== null) 
+                    let synoptic = synopticData.find(x => x.id === element["ELEMENT_FORM_TAB_SYN"].idSynoptic);
+                    if(synoptic !== undefined && synoptic !== null) 
                         tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_SYN", value: $.i18n("element.window.tab.syn"), width: 100 });
                 }
             });
-            var synoptic = this.synoptic !== undefined && this.synoptic !== null ? this.synoptic : null;
+
             result = {
                 id: "window" + this.parentId,
                 rows:
@@ -93,15 +92,11 @@ export default class ElementWindow {
                                     case parentId + "_" + parentType + "_TAB_SYN":
                                         try {
                                             let idSynop  = null;
-                                            let v_width = null;
-                                            let v_height = null;
                                             tabs.forEach(element =>{
-                                                idSynop  = element["ELEMENT_FORM_TAB_SYN"] !== undefined ? element["ELEMENT_FORM_TAB_SYN"].idSynoptic : idSynop;
-                                                v_width  = element["ELEMENT_FORM_TAB_SYN"] !== undefined ? element["ELEMENT_FORM_TAB_SYN"].width      : v_width;
-                                                v_height = element["ELEMENT_FORM_TAB_SYN"] !== undefined ? element["ELEMENT_FORM_TAB_SYN"].height     : v_height;
+                                                idSynop = element["ELEMENT_FORM_TAB_SYN"] !== undefined ? element["ELEMENT_FORM_TAB_SYN"].idSynoptic : idSynop;
                                             });
                                             if(idSynop !== null) {
-                                                let tabSynoptic = new TabSynoptic(parentId,idSynop,synoptic,v_width,v_height);
+                                                let tabSynoptic = new TabSynoptic(parentId,idSynop);
                                                 $$(parentId + "_" + parentType + "_TAB_FORM").addView({             
                                                     id: "cuerpo"+elementF.id,
                                                     cols:[tabSynoptic.getComponent()]
@@ -164,5 +159,3 @@ export default class ElementWindow {
         hijos.getComponent();
     }
 }
-
-

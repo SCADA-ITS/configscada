@@ -6,7 +6,7 @@ export default class CCTV {
         // for using the object inside callbacks
         let self = this;
 
-        this.ncols = 2;
+        this.ncols = 3;
         this.nrows = 2;
 
         this.graph = `query($element: String!) { 
@@ -43,30 +43,13 @@ export default class CCTV {
             view: "tree",
             drag: true,
             select: true,
+            width:200,
             url: elementTree.getComponent(),
             template: function(obj, common){
                 return common.icon(obj,common) + "&nbsp;" + "<span class='elementTreeLeaf'>" + obj.value + "</span>";
             }
         }
 
-    }
-
-    processStompMessageWithFallback(message) {
-        try {
-            let obj = JSON.parse(JSON.parse(message.body));
-            obj.basicElementsVO.forEach(element => {
-                console.log(element);
-                //Modificar
-
-                //crear
-
-                //Eliminar
-
-            });
-        }catch (err) {
-            console.log("Error: " + err.message);
-            console.log("RETRY WITH GRAPHQL");
-        }
     }
 
     getComponent() {
@@ -130,18 +113,16 @@ export default class CCTV {
         // adds the required cells to the layout
         for(let i=0; i<this.nrows; i++) {
             for(let j=0; j<this.ncols; j++) {
-                $$("dropArea").addView({ id: "cam" + i + j, template: i + "," + j + '<br><img src="" id="img_cam' + i + j + '" style="width:100%; height:100%" />', x:j, y:i, dx:1, dy:1 });
+                if($$("cam"+ i + j)=== undefined || !$$("cam"+ i + j)){
+                    $$("dropArea").addView({ id: "cam" + i + j, template: i + "," + j + '<br><img src="" id="img_cam' + i + j + '" style="width:100%; height:96%" />', x:j, y:i, dx:1, dy:1 });    
+                }
 
                 // add the drag&drop event handling
                 webix.DragControl.addDrop($$("cam" + i + j).$view, {
                     $drop:function(source, target, event){
                         let dnd = webix.DragControl.getContext();
                         let value = dnd.from.getItem(dnd.source[0]);
-                        
-                        //alert(JSON.stringify(value.id));
-        
-                        self.graphql.load({element: value.id})
-                        .then((data) => {
+                        self.graphql.load({element: value.id}).then((data) => {
                             let streamMjpeg = null;
                             if(data.elementValues !== null){
                                 streamMjpeg = data.elementValues.filter(elementValue => elementValue.id != null && elementTypeMap.getElementParamTypeId(elementValue.id) === elementTypeMap.CAM_STREAM_MJPEG); //"ElementTypeParam:2:1:3" );	
