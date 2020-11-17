@@ -87,6 +87,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_PLAN_TYPE = "data.source.get_plan_type";
 	public static final String DATA_SOURCE_GET_PLAN_SUBTYPES = "data.source.get_plan_subtypes";
 	public static final String DATA_SOURCE_GET_PLAN_SUBTYPE = "data.source.get_plan_subtype";
+	public static final String DATA_SOURCE_GET_PLAN_ORDER_TYPES = "data.source.get_plan_order_types";
+	public static final String DATA_SOURCE_GET_PLAN_ORDER_TYPE = "data.source.get_plan_order_type";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
 	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
 	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
@@ -226,6 +228,10 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceGetPlanSubtype;
 	@Getter
+	private Integer dataSourceGetPlanOrderTypes;
+	@Getter
+	private Integer dataSourceGetPlanOrderType;
+	@Getter
 	private Integer dataSourceGetTranslationsByLocale;
 	@Getter
 	private Integer dataSourceGetTranslationsByLocaleAndModule;
@@ -364,6 +370,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetPlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_TYPE));
 		this.dataSourceGetPlanSubtypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPES));
 		this.dataSourceGetPlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPE));
+		this.dataSourceGetPlanOrderTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER_TYPES));
+		this.dataSourceGetPlanOrderType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER_TYPE));
 		this.dataSourceGetTranslationsByLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
 		this.dataSourceGetTranslationsByLocaleAndModule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
 		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));

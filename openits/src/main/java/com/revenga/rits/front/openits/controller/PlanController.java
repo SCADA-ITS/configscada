@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.PlanBO;
+import com.revenga.rits.front.openits.bo.PlanOrderTypeBO;
 import com.revenga.rits.front.openits.bo.PlanSubtypeBO;
 import com.revenga.rits.front.openits.bo.PlanTypeBO;
 
@@ -33,6 +34,9 @@ public class PlanController {
 	
 	@Autowired
 	PlanSubtypeBO planSubtypeBO;
+	
+	@Autowired
+	PlanOrderTypeBO planOrderTypeBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
@@ -92,6 +96,26 @@ public class PlanController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(planSubtypeBO.getPlanSubtype(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_order_types")
+	@ApiOperation(value = "Get all plan order types", notes = "Get all plan order types")
+	public ResponseEntity<Object> getPlanOrderTypes() {
+		
+		return new ResponseEntity<>(planOrderTypeBO.getPlanOrderTypes(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_order_types/{id}")
+	@ApiOperation(value = "Get plan order type by id", notes = "Get plan order type by id")
+	public ResponseEntity<Object> getPlanOrderType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanOrderType by id",
+			example = "PlanOrderType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planOrderTypeBO.getPlanOrderType(id), HttpStatus.OK);
 	}
 
 }
