@@ -36,7 +36,7 @@ export default class CCTV {
 
         this.camerasTree = {
             tittle:"Cameras",
-            view:"sidebar",
+            view:"list",
             id:"element_tree:cctv",
             width:200,
             drag:true,
@@ -51,6 +51,16 @@ export default class CCTV {
                , { id:"Element:2:8",  icon: "mdi mdi-video", value:"RV-TV-3MA"}
                , { id:"Element:2:9",  icon: "mdi mdi-video", value:"RV-TV-4MA"}
                , { id:"Element:2:10",  icon: "mdi mdi-video", value:"RV-TVD-1MA"}
+            ]
+        };
+        this.rows={
+            rows:[
+                this.camerasTree,
+                // {
+                //     view:"button", value:"Reset", click:function(){
+                //         $$("dropArea").clearAll();
+                //     }
+                // }
             ]
         };
     }
@@ -103,8 +113,6 @@ export default class CCTV {
     }
 
     disconnect(){
-        this.client.deactivate();
-        //$$("schelduleContainer").destructor();
         $$("planSchedulesTable").clearAll();
         unLoadDetailForm()
     }
