@@ -61,12 +61,12 @@ export const ELEMENT_TYPE = {
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3"}
-        },
-        {ELEMENT_FORM_TAB_SYN: {
-          idSynoptic:"synopticUnifilarCsa",
-          width: 900,
-          height: 700
         }
+        // ,{ELEMENT_FORM_TAB_SYN: {
+        //   idSynoptic:"synopticUnifilarCsa",
+        //   width: 900,
+        //   height: 700
+        // }
         },
       ] 
     },
