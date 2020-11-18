@@ -112,7 +112,10 @@ export let columnsElementFormList = {
 			"ElementTypeParam:9:2:3",	
 			"ElementTypeParam:9:2:4",	
 			"ElementTypeParam:9:2:5",
-			"ElementTypeParam:9:2:6"		
+			"ElementTypeParam:9:2:6",	
+			"ElementTypeParam:9:2:7",
+			"ElementTypeParam:9:2:8"
+			
 		],
 		"rowCounts": 7,
 		"scroll": false,  
