@@ -117,7 +117,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (97, 3, 'deleteElement', 'deleteElement', 'ElementVO', 'id', true, true),
 (98, 3, 'createRole', 'createRole', 'RoleVO', 'id', true, true),
 (99, 3, 'updateRole', 'updateRole', 'RoleVO', 'id', true, true),
-(100, 3, 'deleteRole', 'deleteRole', 'RoleVO', 'id', true, true);
+(100, 3, 'deleteRole', 'deleteRole', 'RoleVO', 'id', true, true),
+(101, 3, 'createPlan', 'createPlan', 'PlanVO', 'id', true, true),
+(102, 3, 'updatePlan', 'updatePlan', 'PlanVO', 'id', true, true),
+(103, 3, 'deletePlan', 'deletePlan', 'PlanVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -577,19 +580,19 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (91, 9, 'createAlarmConfig'),
 (91, 10, 'alarmConfig'),
 (91, 11, 'AlarmConfigVO!'),
-(91, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+(91, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}'),
 
 (92, 8, 'http://localhost:8082/graphql'),
 (92, 9, 'updateAlarmConfig'),
 (92, 10, 'alarmConfig'),
 (92, 11, 'AlarmConfigVO!'),
-(92, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+(92, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}'),
 
 (93, 8, 'http://localhost:8082/graphql'),
 (93, 9, 'deleteAlarmConfig'),
 (93, 10, 'alarmConfigId'),
 (93, 11, 'String!'),
-(93, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+(93, 12, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}'),
 
 (94, 8, 'http://localhost:8082/graphql'),
 (94, 9, 'createElement'),
@@ -631,4 +634,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (100, 9, 'deleteRole'),
 (100, 10, 'roleId'),
 (100, 11, 'String!'),
-(100, 12, '{id alias description preset rolePermissions{id}}');
+(100, 12, '{id alias description preset rolePermissions{id}}'),
+
+(101, 8, 'http://localhost:8082/graphql'),
+(101, 9, 'createPlan'),
+(101, 10, 'plan'),
+(101, 11, 'PlanVO!'),
+(101, 12, '{id alias description planStateType{id} planModeType planSubtype{id}}'),
+
+(102, 8, 'http://localhost:8082/graphql'),
+(102, 9, 'updatePlan'),
+(102, 10, 'plan'),
+(102, 11, 'PlanVO!'),
+(102, 12, '{id alias description planStateType{id} planModeType planSubtype{id}}'),
+
+(103, 8, 'http://localhost:8082/graphql'),
+(103, 9, 'deletePlan'),
+(103, 10, 'planId'),
+(103, 11, 'String!'),
+(103, 12, '{id alias description planStateType{id} planModeType planSubtype{id}}');

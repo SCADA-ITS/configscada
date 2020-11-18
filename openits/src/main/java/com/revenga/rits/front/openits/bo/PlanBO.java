@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +37,33 @@ public class PlanBO {
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlan()).getFieldId(), plan);
+	}
+	
+	public Map<String, Object> createPlan(Object input) {
+		
+		Map<String, Object> createdPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreatePlan(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCreatePlan()).getFieldId(), createdPlan);
+	}
+	
+	public Map<String, Object> updatePlan(Object input) {
+			
+		Map<String, Object> updatedPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdatePlan(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceUpdatePlan()).getFieldId(), updatedPlan);
+	}
+	
+	public Map<String, Object> deletePlan(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+		
+		input.put("planId", id);
+		
+		Map<String, Object> deletedPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeletePlan(), input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceDeletePlan()).getFieldId(), deletedPlan);
 	}
 }
