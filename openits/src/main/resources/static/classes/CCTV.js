@@ -133,7 +133,6 @@ export default class CCTV {
                     $drop:function(source, target, event){
                         let dnd = webix.DragControl.getContext();
                         let value = dnd.from.getItem(dnd.source[0]);
-                        console.warn(value);
                         self.graphql.load({element: value.id}).then((data) => {
                             let streamMjpeg = null;
                             if(data.elementValues !== null){

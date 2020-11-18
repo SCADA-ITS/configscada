@@ -172,9 +172,9 @@ export default class UserManagerInterface extends userManager.services.Backend {
             }
             }`);
             
-        if(data.roles[0] !== undefined && data.roles[0] !==null)
+        if(data.roles !== undefined && data.roles[0] !==null){
+            // console.warn(data);
             return Promise.resolve(graphUpdateUser.load({
-
                 user: {
                     "id": "User:"+ data.id,
                     "name": data.name,
@@ -189,6 +189,24 @@ export default class UserManagerInterface extends userManager.services.Backend {
             }).then(dataReturn => {
                 return { 'id': data.id}
             }));
+        }else{
+            return Promise.resolve(graphUpdateUser.load({
+                user: {
+                    "id": "User:"+ data.id,
+                    "name": data.name,
+                    "preset": false,
+                    "isAdmin": false,
+                    "language": "es",
+                    "country": "Spain",
+                    "timezone": "Asia/Nepal",
+                    "roleId": "Role:2",
+                    "allowMultipleSessions": !!parseInt(data.multisession)
+                }
+            }).then(dataReturn => {
+                return { 'id': data.id}
+            })); 
+        }
+            
     }
 
     deleteUser(data) {

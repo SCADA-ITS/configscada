@@ -793,7 +793,7 @@ export default class SynopticTab {
         // adds the dropdown button
         let buttonToAdd = document.createElement("button");
         buttonToAdd.innerHTML = "<span class='webix_icon wxi-angle-double-down'></span>";
-        buttonToAdd.setAttribute("class", "addButton");
+        buttonToAdd.setAttribute("class", "tagsButton");
         document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(buttonToAdd);
         
         let layersList = {};
@@ -896,7 +896,7 @@ export default class SynopticTab {
 
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", this.synopticDiv + "dropdownDiv");
-      divToAdd.setAttribute("class", "addButton ol-unselectable ol-control");
+      divToAdd.setAttribute("class", "tagsButton ol-unselectable ol-control");
       document.querySelector('[view_id="' + this.synopticDiv + '"]').prepend(divToAdd);
 
       this.elementReady("#" + this.synopticDiv + "SVG").then((c1) => {

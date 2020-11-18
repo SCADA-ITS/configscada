@@ -1182,6 +1182,11 @@ var i18_es = {
     "lbl_order_window_command_error": "Seleccione un comando por favor",
     "lbl_order_window_planordertype_error": "Seleccione un tipo de panel por favor",
     "lbl_order_window_alias_error": "Seleccione un alias por favor",
+    "lbl_schedule_running_correctly": "La planificación se ha activado correctamente",
+    "lbl_schedule_running_error": "No se ha podido activar la planificación",
+    "lbl_schedule_pause_correctly": "La planificación se ha pausado correctamente",
+    "lbl_schedule_pause_error": "No se ha podido pausar la planificación",
+
 
 
     /*  BRATISLAVA 

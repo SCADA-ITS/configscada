@@ -744,7 +744,7 @@ export default class Map {
           button.innerHTML = '<span class="webix_icon wxi-angle-double-down">&nbsp;</span>';
       
           var element = document.createElement('div');
-          element.className = 'addButton ol-unselectable ol-control';
+          element.className = 'tagsButtonMap ol-unselectable ol-control';
           element.appendChild(button);
       
           Control.call(this, {

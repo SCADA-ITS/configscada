@@ -277,10 +277,11 @@ export default class PlanScheduleForm {
                                             control.config.labelRight = html;
                                             control.refresh();
                                             //mandamos mensaje de planSchedule PAUSE
-                                            webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+                                            webix.message({type:"success", text:$.i18n("lbl_schedule_pause_correctly")});
                                         }else{
-                                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
+                                            webix.message({type:"error", text:$.i18n("lbl_schedule_pause_error")});
                                         }
+                                        unLoadDetailForm();
                                     });
                                 } catch (e) {console.log(e);}
                             }
@@ -305,14 +306,15 @@ export default class PlanScheduleForm {
                                         if(data[0] !== null){
                                             //actualizamos el panel
                                             let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                            let html = statusBadge(data[0].data[0].planScheduleStateType.alias);
+                                            let html = statusBadge(data[0].planScheduleStateType.alias);
                                             control.config.labelRight = html;
                                             control.refresh();
                                             //mandamos mensaje de planSchedule RUNNING
-                                            webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+                                            webix.message({type:"success", text:$.i18n("lbl_schedule_running_correctly")});
                                         }else{
-                                            webix.message({type:"error", text:$.i18n("cronUi.popup.error.second")});
-                                        }                                
+                                            webix.message({type:"error", text:$.i18n("lbl_schedule_running_error")});
+                                        }
+                                        unLoadDetailForm();                              
                                     });
                                 } catch (e) {console.log(e);}
                             }
@@ -537,7 +539,20 @@ export default class PlanScheduleForm {
 }
 
 function statusBadge(value) {
-    var cssStatusName = value.toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + value + "</span>\n\t\t</div>";
+    try {
+        var cssStatusName = value.toLowerCase();
+        var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + cssStatusName + "\">" + value + "</span>\n\t\t</div>";
+    } catch (error) {
+         console.error(error);   
+    }
     return html;
+}
+
+function unLoadDetailForm(){
+	$$("planSchedulesTable").unselect();
+	$$("b_delete_planSchedule").hide();
+	if($$("scheduleDetailForm")){
+		$$("schelduleContainer").removeView("scheduleResizer");
+		$$("schelduleContainer").removeView("scheduleDetailForm");
+	}
 }

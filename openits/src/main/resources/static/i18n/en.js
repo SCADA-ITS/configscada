@@ -1116,6 +1116,10 @@ var i18_en = {
     "lbl_order_window_command_error": "Select a command please",
     "lbl_order_window_planordertype_error": "Select a Plan type please",
     "lbl_order_window_alias_error": "Select a alias please",
+    "lbl_schedule_running_correctly": "Schedule plan Running",
+    "lbl_schedule_running_error": "Error activating schedule plan",
+    "lbl_schedule_pause_correctly": "Schedule plan Pause",
+    "lbl_schedule_pause_error": "Error pausing schedule plan",
 
     /* BRATISLAVA */
     "AlarmConfig:2": "ALARM WS NO CONNECTION",
