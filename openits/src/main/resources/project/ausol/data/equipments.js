@@ -1,31 +1,32 @@
 export let optionElementType = [
-	{id:"ElementType:2",  value:"CAMERA"},
-	{id:"ElementType:8",  value:"BARRIER"},
-	{id:"ElementType:9",  value:"FAN"},
-	{id:"ElementType:10", value:"ROTAPANEL"},
-	{id:"ElementType:11", value:"SOS"},
-	{id:"ElementType:12", value:"LUX"},
-	{id:"ElementType:13", value:"SEM"},
-	{id:"ElementType:14", value:"LUM"},
-	{id:"ElementType:15", value:"FIRE_DET"},
-	{id:"ElementType:16", value:"MEG"},
-	{id:"ElementType:17", value:"ANEM_EXT"},
-	{id:"ElementType:18", value:"ANEM_INT"},
-	{id:"ElementType:19", value:"CO"},
-	{id:"ElementType:20", value:"NO"},
-	{id:"ElementType:21", value:"OPAC"},
-	{id:"ElementType:26", value:"PANEL"},
-	{id:"ElementType:51", value:"ETD"},
-	{id:"ElementType:53", value:"SEM_AMBAR_AMBAR"},
-	{id:"ElementType:55", value:"CT"},
-	{id:"ElementType:56", value:"UNIFILAR"},
-	{id:"ElementType:57", value:"MAGNETOTERMICO"},
-	{id:"ElementType:58", value:"PULSADOR"},
-	{id:"ElementType:59", value:"SMOKE_DETECTOR"},
-	{id:"ElementType:60", value:"SIRENA"},
-	{id:"ElementType:61", value:"FIRE_DET_CT"},
-	{id:"ElementType:62", value:"TEMP_PROBE"},
-	{id:"ElementType:63", value:"AIR_CONDITIONER"},
+	{id:"ElementType:2",  value: $.i18n("ElementType:2.alias")},
+	{id:"ElementType:3",  value: $.i18n("ElementType:3.alias")},
+	{id:"ElementType:4",  value: $.i18n("ElementType:4.alias")},
+	{id:"ElementType:8",  value: $.i18n("ElementType:8.alias")},
+	{id:"ElementType:9",  value: $.i18n("ElementType:9.alias")},
+	{id:"ElementType:11", value: $.i18n("ElementType:11.alias")},
+	{id:"ElementType:12", value: $.i18n("ElementType:12.alias")},
+	{id:"ElementType:13", value: $.i18n("ElementType:13.alias")},
+	{id:"ElementType:14", value: $.i18n("ElementType:14.alias")},
+	{id:"ElementType:15", value: $.i18n("ElementType:15.alias")},
+	{id:"ElementType:16", value: $.i18n("ElementType:16.alias")},
+	{id:"ElementType:17", value: $.i18n("ElementType:17.alias")},
+	{id:"ElementType:18", value: $.i18n("ElementType:18.alias")},
+	{id:"ElementType:19", value: $.i18n("ElementType:19.alias")},
+	{id:"ElementType:20", value: $.i18n("ElementType:20.alias")},
+	{id:"ElementType:21", value: $.i18n("ElementType:21.alias")},
+	{id:"ElementType:26", value: $.i18n("ElementType:26.alias")},
+	{id:"ElementType:51", value: $.i18n("ElementType:51.alias")},
+	{id:"ElementType:53", value: $.i18n("ElementType:53.alias")},
+	{id:"ElementType:55", value: $.i18n("ElementType:55.alias")},
+	{id:"ElementType:56", value: $.i18n("ElementType:56.alias")},
+	{id:"ElementType:57", value: $.i18n("ElementType:57.alias")},
+	{id:"ElementType:58", value: $.i18n("ElementType:58.alias")},
+	{id:"ElementType:59", value: $.i18n("ElementType:59.alias")},
+	{id:"ElementType:60", value: $.i18n("ElementType:60.alias")},
+	{id:"ElementType:61", value: $.i18n("ElementType:61.alias")},
+	{id:"ElementType:62", value: $.i18n("ElementType:62.alias")},
+	{id:"ElementType:63", value: $.i18n("ElementType:63.alias")},
 ]
 
 export let columnsElementList = {
@@ -84,6 +85,59 @@ export let columnsElementList = {
 			"ElementTypeParam:2:2:5",
 			"ElementTypeParam:2:2:4",
 			"ElementTypeParam:2:2:3"
+		]
+	},
+	"ElementType:3": { 
+		1:[
+			"alias",
+			"ElementTypeParam:3:1:2",
+			"ElementTypeParam:3:1:10",
+			"ElementTypeParam:3:1:11",
+			"ElementTypeParam:3:1:12",
+		],
+		2:[
+			"alias",
+			"state",
+			"ElementTypeParam:3:2:1",
+			"ElementTypeParam:3:2:4",
+			"ElementTypeParam:3:2:6",
+			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:10",
+			"ElementTypeParam:3:2:100",
+			"ElementTypeParam:3:2:101",
+			"ElementTypeParam:3:2:102",
+			"ElementTypeParam:3:2:103",
+			"ElementTypeParam:3:2:104",
+			"ElementTypeParam:3:2:105",
+			"ElementTypeParam:3:2:106",
+			"ElementTypeParam:3:2:107",
+			"ElementTypeParam:3:2:108",
+			"ElementTypeParam:3:2:109",
+			"ElementTypeParam:3:2:110",
+			"ElementTypeParam:3:2:111",
+			"ElementTypeParam:3:2:112"
+		]
+	},
+	"ElementType:4": {
+		1:[
+			"alias",
+			"ElementTypeParam:4:1:10",
+			"ElementTypeParam:4:1:11",
+			"ElementTypeParam:4:1:12",
+		],
+		2:[
+			"alias",
+			"state",
+            "ElementTypeParam:4:2:1",
+			"ElementTypeParam:4:2:2",
+			"ElementTypeParam:4:2:4",
+			"ElementTypeParam:4:2:5",
+			"ElementTypeParam:4:2:6",
+			"ElementTypeParam:4:2:7",
+			"ElementTypeParam:4:2:9",
+			"ElementTypeParam:4:2:10",
+			"ElementTypeParam:4:2:160",	
+			"ElementTypeParam:4:2:161"	
 		]
 	},
 	"ElementType:8": { 
@@ -804,6 +858,145 @@ export let columnsElementConfig = {
             "ElementTypeParam:2:2:3": { //"power supply fail"
 				"header": [ $.i18n("ElementTypeParam:2:2:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
+		}
+	},
+	"ElementType:3": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:2": { //"date"
+				"header": [ $.i18n("ElementTypeParam:3:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:10": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:3:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:11": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:3:1:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:1:12": { //"Section"
+				"header": [ $.i18n("ElementTypeParam:3:1:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"ElementTypeParam:3:2:1": { //"date"
+				"header": [ $.i18n("ElementTypeParam:3:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:4": { //"n_vehicles"
+				"header": [ $.i18n("ElementTypeParam:3:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:6": { //"occupancy"
+				"header": [ $.i18n("ElementTypeParam:3:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:9": { //"speed"
+				"header": [ $.i18n("ElementTypeParam:3:2:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:10": { //"gap"
+				"header": [ $.i18n("ElementTypeParam:3:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:100": { //"veh_pa_1"
+				"header": [ $.i18n("ElementTypeParam:3:2:100.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:101": { //"veh_pa_2"
+				"header": [ $.i18n("ElementTypeParam:3:2:101.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:102": { //"veh_pa_3"
+				"header": [ $.i18n("ElementTypeParam:3:2:102.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:103": { //"veh_pa_4"
+				"header": [ $.i18n("ElementTypeParam:3:2:103.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:104": { //"veh_pa_5"
+				"header": [ $.i18n("ElementTypeParam:3:2:104.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:105": { //"veh_pa_6"
+				"header": [ $.i18n("ElementTypeParam:3:2:105.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:106": { //"veh_pa_7"
+				"header": [ $.i18n("ElementTypeParam:3:2:106.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:107": { //"veh_pa_8"
+				"header": [ $.i18n("ElementTypeParam:3:2:107.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:108": { //"veh_pa_9"
+				"header": [ $.i18n("ElementTypeParam:3:2:108.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:109": { //"veh_pa_10"
+				"header": [ $.i18n("ElementTypeParam:3:2:109.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:110": { //"veh_pa_11"
+				"header": [ $.i18n("ElementTypeParam:3:2:110.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:111": { //"veh_pa_12"
+				"header": [ $.i18n("ElementTypeParam:3:2:111.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:112": { //"veh_pa_13"
+				"header": [ $.i18n("ElementTypeParam:3:2:112.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		}
+	},
+	"ElementType:4": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:10": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:4:1:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:11": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:4:1:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:4:1:12": { //"Section"
+				"header": [ $.i18n("ElementTypeParam:4:1:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"ElementTypeParam:4:2:1": { //"date"
+				"header": [ $.i18n("ElementTypeParam:4:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:2": { //"period"
+				"header": [ $.i18n("ElementTypeParam:4:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:4": { //"n_vehicles"
+				"header": [ $.i18n("ElementTypeParam:4:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:5": { //"intensity"
+				"header": [ $.i18n("ElementTypeParam:4:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:6": { //"occupancy"
+				"header": [ $.i18n("ElementTypeParam:4:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:7": { //"congestion"
+				"header": [ $.i18n("ElementTypeParam:4:2:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:9": { //"speed"
+				"header": [ $.i18n("ElementTypeParam:4:2:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:10": { //"gap"
+				"header": [ $.i18n("ElementTypeParam:4:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:160": { //"veh_pa_1_percent"
+				"header": [ $.i18n("ElementTypeParam:4:2:160.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:4:2:161": { //"veh_pa_2_percent"
+				"header": [ $.i18n("ElementTypeParam:4:2:161.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
 		}
 	},
 	"ElementType:8": {

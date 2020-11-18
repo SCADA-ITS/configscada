@@ -1125,12 +1125,19 @@ var i18_es = {
 
     "CommandElementType:1:8": "BAJAR BARRERA",
     "CommandElementType:2:8": "SUBIR BARRERA",
+    
     "CommandElementType:1:9": "PARAR VENTILADOR",
     "CommandElementType:2:9": "ARRANCAR VENTILADOR",
     "CommandElementType:3:9": "ARRANCAR VENTILADOR REVERSO",
+    
     "CommandElementType:1:10": "MOSTRAR LADO PANEL 1",
     "CommandElementType:2:10": "MOSTRAR LADO PANEL 2",
     "CommandElementType:3:10": "NO MOSTRAR NADA",
+    
+    "CommandElementType:1:13": "ENCENDER VERDE",
+    "CommandElementType:2:13": "ENCENDER AMBAR",
+    "CommandElementType:3:13": "ENCENDER ROJO",
+    
     "CommandElementType:1:24": "REINICIAR",
     "CommandElementType:2:24": "SEÑALIZAR",
     "CommandElementType:3:24": "APAGAR",

@@ -220,8 +220,8 @@ export let synopticData= [
 		"Element:21:1": { "x": 1000, "y": 902, "width": 50,  "height": 50,  "alias": "RV-OPC-1CA" },
 		"Element:21:2": { "x": 745,  "y": 132, "width": 50,  "height": 50,  "alias": "RV-OPC-1MA" },
 
-		"Element:36:1": { "x": 63,   "y": 310, "width": 200, "height": 54,  "alias": "GT_1" },
-		"Element:36:2": { "x": 1517, "y": 715, "width": 200, "height": 54,  "alias": "GT_2" },
+		"Element:36:1": { "x": 63,   "y": 335, "width": 200, "height": 54,  "alias": "GT_1" },
+		"Element:36:2": { "x": 1517, "y": 735, "width": 200, "height": 54,  "alias": "GT_2" },
 		
 		"Element:51:1": { "x": 210,   "y": 360, "width": 184, "height": 204,  "alias": "RV-ETD-1MA" },
 		
@@ -315,19 +315,19 @@ export let synopticData= [
 		"Element:9:10":  { "x": 1722, "y": 588,  "width": 15,  "height": 15 },
 	
 		"Element:13:1": { "x": 1823, "y": 645,  "width": 22,  "height": 25 },
-		"Element:13:2": { "x": 1407, "y": 632,  "width": 22,  "height": 25 },
+		"Element:13:2": { "x": 1407, "y": 652,  "width": 22,  "height": 25 },
 
 		"Element:53:1": { "x": 1845, "y": 653,  "width": 22,  "height": 22 },
 		"Element:53:2": { "x": 1880, "y": 653,  "width": 22,  "height": 22 },
-		"Element:53:3": { "x": 1430, "y": 640,  "width": 22,  "height": 22 },
-		"Element:53:4": { "x": 1465, "y": 640,  "width": 22,  "height": 22 },
+		"Element:53:3": { "x": 1430, "y": 660,  "width": 22,  "height": 22 },
+		"Element:53:4": { "x": 1465, "y": 660,  "width": 22,  "height": 22 },
 		
 		"Element:8:1":  { "x": 1820, "y": 730,  "width": 88,  "height": 48 },
 		"Element:8:2":  { "x": 1820, "y": 690,  "width": 88,  "height": 48 },
 		"Element:8:3":  { "x": 1411, "y": 590,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
 		
-		"Element:4:1": { "x": 1410,  "y": 680, "width": 80, "height": 80, "alias": "SEC_1",
+		"Element:4:1": { "x": 1410,  "y": 700, "width": 80, "height": 80, "alias": "SEC_1",
 			"values": [
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_veh_length_1", label: "C1L"},
