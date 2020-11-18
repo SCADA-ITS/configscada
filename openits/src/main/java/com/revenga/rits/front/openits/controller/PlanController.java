@@ -285,5 +285,31 @@ public class PlanController {
 		
 		return new ResponseEntity<>(planTypeBO.deletePlanType(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/createPlanSubtype")
+	@ApiOperation(value = "Create Plan Subtype", notes = "Create Plan Subtype")
+	public ResponseEntity<Object> createPlanSubtype(@RequestBody Object planSubtype) {
+		
+		return new ResponseEntity<>(planSubtypeBO.createPlanSubtype(planSubtype), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updatePlanSubtype")
+	@ApiOperation(value = "Update Plan Subtype", notes = "Update Plan Subtype")
+	public ResponseEntity<Object> updatePlanSubtype(@RequestBody Object planSubtype) {
+		
+		return new ResponseEntity<>(planSubtypeBO.updatePlanSubtype(planSubtype), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deletePlanSubtype/{id}")
+	@ApiOperation(value = "Delete Plan Subtype", notes = "Delete Plan Subtype")
+	public ResponseEntity<Object> deletePlanSubtype(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanSubtype id",
+			example = "PlanSubtype:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planSubtypeBO.deletePlanSubtype(id), HttpStatus.OK);
+	}
 
 }
