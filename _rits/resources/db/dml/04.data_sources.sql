@@ -120,7 +120,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (100, 3, 'deleteRole', 'deleteRole', 'RoleVO', 'id', true, true),
 (101, 3, 'createPlan', 'createPlan', 'PlanVO', 'id', true, true),
 (102, 3, 'updatePlan', 'updatePlan', 'PlanVO', 'id', true, true),
-(103, 3, 'deletePlan', 'deletePlan', 'PlanVO', 'id', true, true);
+(103, 3, 'deletePlan', 'deletePlan', 'PlanVO', 'id', true, true),
+(104, 3, 'createPlanOrder', 'createPlanOrder', 'PlanOrderVO', 'id', true, true),
+(105, 3, 'updatePlanOrder', 'updatePlanOrder', 'PlanOrderVO', 'id', true, true),
+(106, 3, 'deletePlanOrder', 'deletePlanOrder', 'PlanOrderVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -652,4 +655,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (103, 9, 'deletePlan'),
 (103, 10, 'planId'),
 (103, 11, 'String!'),
-(103, 12, '{id alias description planStateType{id} planModeType planSubtype{id}}');
+(103, 12, '{id alias description planStateType{id} planModeType planSubtype{id}}'),
+
+(104, 8, 'http://localhost:8082/graphql'),
+(104, 9, 'createPlanOrder'),
+(104, 10, 'planOrder'),
+(104, 11, 'PlanOrderVO!'),
+(104, 12, '{id alias description nTimes planOrderStateType{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderType{id} planOrderValues{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id} comandElement{id}}'),
+
+(105, 8, 'http://localhost:8082/graphql'),
+(105, 9, 'updatePlanOrder'),
+(105, 10, 'planOrder'),
+(105, 11, 'PlanOrderVO!'),
+(105, 12, '{id alias description nTimes planOrderStateType{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderType{id} planOrderValues{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id} comandElement{id}}'),
+
+(106, 8, 'http://localhost:8082/graphql'),
+(106, 9, 'deletePlanOrder'),
+(106, 10, 'planOrderId'),
+(106, 11, 'String!'),
+(106, 12, '{id alias description nTimes planOrderStateType{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderType{id} planOrderValues{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id} comandElement{id}}');

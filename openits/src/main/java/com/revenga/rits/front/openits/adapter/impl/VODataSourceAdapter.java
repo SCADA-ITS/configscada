@@ -146,6 +146,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_PLAN = "data.source.create_plan";
 	public static final String DATA_SOURCE_UPDATE_PLAN = "data.source.update_plan";
 	public static final String DATA_SOURCE_DELETE_PLAN = "data.source.delete_plan";
+	public static final String DATA_SOURCE_CREATE_PLAN_ORDER = "data.source.create_plan_order";
+	public static final String DATA_SOURCE_UPDATE_PLAN_ORDER = "data.source.update_plan_order";
+	public static final String DATA_SOURCE_DELETE_PLAN_ORDER = "data.source.delete_plan_order";
 	
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -362,7 +365,13 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceUpdatePlan;
 	@Getter
-	private Integer dataSourceDeletePlan;
+	private Integer dataSourceDeletePlan;	
+	@Getter
+	private Integer dataSourceCreatePlanOrder;
+	@Getter
+	private Integer dataSourceUpdatePlanOrder;
+	@Getter
+	private Integer dataSourceDeletePlanOrder;
 	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
@@ -492,6 +501,9 @@ public class VODataSourceAdapter {
 		this.dataSourceCreatePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN));
 		this.dataSourceUpdatePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN));
 		this.dataSourceDeletePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN));
+		this.dataSourceCreatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_ORDER));
+		this.dataSourceUpdatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_ORDER));
+		this.dataSourceDeletePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_ORDER));
 		
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));

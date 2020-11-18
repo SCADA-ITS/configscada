@@ -233,5 +233,31 @@ public class PlanController {
 		
 		return new ResponseEntity<>(planBO.deletePlan(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/createPlanOrder")
+	@ApiOperation(value = "Create Plan Order", notes = "Create Plan Order")
+	public ResponseEntity<Object> createPlanOrder(@RequestBody Object planOrder) {
+		
+		return new ResponseEntity<>(planOrderBO.createPlanOrder(planOrder), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updatePlanOrder")
+	@ApiOperation(value = "Update Plan Order", notes = "Update Plan Order")
+	public ResponseEntity<Object> updatePlanOrder(@RequestBody Object planOrder) {
+		
+		return new ResponseEntity<>(planOrderBO.updatePlanOrder(planOrder), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deletePlanOrder/{id}")
+	@ApiOperation(value = "Delete Plan Order", notes = "Delete Plan Order")
+	public ResponseEntity<Object> deletePlanOrder(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanOrder id",
+			example = "PlanOrder:1:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planOrderBO.deletePlanOrder(id), HttpStatus.OK);
+	}
 
 }
