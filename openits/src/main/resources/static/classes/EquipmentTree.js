@@ -23,17 +23,11 @@ webix.protoUI({
 export default class EquipmentTree {
   elementTree = [];
 
-  // There are two types of trees:
-  // - Element => get the element and its childs and generates the tree
-  // - ElementType => get all the elements of the specified type (parameter id) and generates the tree
-  constructor(id, data, type="Element") {
+  constructor(id, data) {
     this.id = id;
     this.data = data;
-    this.treeType = type;
-    var graphElements = null;
-
-    if(this.treeType == "Element") {
-      graphElements = `query   {
+    var graphElements =
+      `query   {
           getElement(elementId: "` + this.id + `")
           {
             id
@@ -54,30 +48,6 @@ export default class EquipmentTree {
             }
           }
         }`;
-      } else if(type == "ElementType") {
-        graphElements = `query {
-          getElementsByType(elementTypeId: "` + this.id + `"){
-              id
-              alias
-              description
-              state
-              elementType {
-                    id
-                    alias
-                  }
-              elementValues {
-                id 
-                value 
-                alerted 
-                elementTypeParam {
-                  id 
-                  alias
-                  representation
-                }
-              }
-            }            
-          }`;
-      }
 
     this.graphqlElements = webix.proxy("GraphQL", graphElements);
   }
@@ -151,17 +121,11 @@ export default class EquipmentTree {
 
     this.graphqlElements.load().then((data) => {
         // if componentId is not given, 
-        // the default tree will be grouped by elementTypes  
+        // the default tree will be grouped by elementTypes
         if(componentId == "") {
-          if(self.Treetype == "Element") {
-            data.childs.forEach((element) => {
-              self.addToElementTree(element);
-            });
-          } else {
-            data.forEach((element) => {
-              self.addToElementTree(element);
-            });
-          }
+          data.childs.forEach((element) => {
+            self.addToElementTree(element);
+          });
         }
       }).then(() => {
         $$("element_tree" + componentId).clearAll();

@@ -1,4 +1,3 @@
-import EquipmentTree from "../classes/EquipmentTree.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 export default class CCTV {
@@ -35,21 +34,25 @@ export default class CCTV {
 
         this.graphql = webix.proxy("GraphQL", this.graph);
 
-        // replaces the element tree in the DOM
-        let elementTree = new EquipmentTree("ElementType:2", null, "ElementType");
-
         this.camerasTree = {
-            id: "element_tree",
-            view: "tree",
-            drag: true,
-            select: true,
+            tittle:"Cameras",
+            view:"sidebar",
+            id:"element_tree:cctv",
             width:200,
-            url: elementTree.getComponent(),
-            template: function(obj, common){
-                return common.icon(obj,common) + "&nbsp;" + "<span class='elementTreeLeaf'>" + obj.value + "</span>";
-            }
-        }
-
+            drag:true,
+            data:[
+               { id:"Element:2:1",  icon: "mdi mdi-video", value:"RV-TV-1CA"}
+               , { id:"Element:2:2",  icon: "mdi mdi-video", value:"RV-TV-2CA"}
+               , { id:"Element:2:3",  icon: "mdi mdi-video", value:"RV-TV-3CA"}
+               , { id:"Element:2:4",  icon: "mdi mdi-video", value:"RV-TV-4CA"}
+               , { id:"Element:2:5",  icon: "mdi mdi-video", value:"RV-TVD-1CA"}
+               , { id:"Element:2:6",  icon: "mdi mdi-video", value:"RV-TV-1MA"}
+               , { id:"Element:2:7",  icon: "mdi mdi-video", value:"RV-TV-2MA"}
+               , { id:"Element:2:8",  icon: "mdi mdi-video", value:"RV-TV-3MA"}
+               , { id:"Element:2:9",  icon: "mdi mdi-video", value:"RV-TV-4MA"}
+               , { id:"Element:2:10",  icon: "mdi mdi-video", value:"RV-TVD-1MA"}
+            ]
+        };
     }
 
     getComponent() {
@@ -70,10 +73,10 @@ export default class CCTV {
                             icon:"wxi-close",
                             click: function() {
                                 // hide the panel
-                                if($$("element_tree").isVisible()) {
-                                    $$("element_tree").hide();
+                                if($$("element_tree:cctv").isVisible()) {
+                                    $$("element_tree:cctv").hide();
                                 } else {
-                                    $$("element_tree").show();
+                                    $$("element_tree:cctv").show();
                                 }
                             }
                         }
@@ -122,6 +125,7 @@ export default class CCTV {
                     $drop:function(source, target, event){
                         let dnd = webix.DragControl.getContext();
                         let value = dnd.from.getItem(dnd.source[0]);
+                        console.warn(value);
                         self.graphql.load({element: value.id}).then((data) => {
                             let streamMjpeg = null;
                             if(data.elementValues !== null){
