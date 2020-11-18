@@ -1,5 +1,6 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,34 @@ public class RoleBO {
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetRole()).getFieldId(), role);
+	}
+	
+	public Map<String, Object> createRole(Object input) {
+		
+		Map<String, Object> createdRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateRole(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCreateRole()).getFieldId(), createdRole);
+	}
+	
+	public Map<String, Object> updateRole(Object input) {
+			
+		Map<String, Object> updatedRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateRole(), (Map<String, Object>) input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceUpdateRole()).getFieldId(), updatedRole);
+	}
+	
+	public Map<String, Object> deleteRole(String id) {
+		
+		Map<String, Object> input = new HashMap<>();
+		
+		input.put("roleId", id);
+		
+		Map<String, Object> deletedRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeleteRole(), input);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceDeleteRole()).getFieldId(), deletedRole);
 	}
 
 }

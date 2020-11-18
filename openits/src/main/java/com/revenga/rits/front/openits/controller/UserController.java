@@ -130,4 +130,30 @@ public class UserController {
 		
 		return new ResponseEntity<>(systemPermissionBO.getSystemPermission(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/createRole")
+	@ApiOperation(value = "Create Role", notes = "Create Role")
+	public ResponseEntity<Object> createRole(@RequestBody Object role) {
+		
+		return new ResponseEntity<>(roleBO.createRole(role), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updateRole")
+	@ApiOperation(value = "Update Role", notes = "Update Role")
+	public ResponseEntity<Object> updateRole(@RequestBody Object role) {
+		
+		return new ResponseEntity<>(roleBO.updateRole(role), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteRole/{id}")
+	@ApiOperation(value = "Delete Role", notes = "Delete Role")
+	public ResponseEntity<Object> deleteRole(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Role id",
+			example = "Role:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(roleBO.deleteRole(id), HttpStatus.OK);
+	}
 }
