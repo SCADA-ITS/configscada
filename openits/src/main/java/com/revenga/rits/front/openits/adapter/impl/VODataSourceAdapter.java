@@ -133,6 +133,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
 	public static final String DATA_SOURCE_DELETE_USER = "data.source.delete_user";
+	public static final String DATA_SOURCE_CREATE_ROLE = "data.source.create_role";
+	public static final String DATA_SOURCE_UPDATE_ROLE = "data.source.update_role";
+	public static final String DATA_SOURCE_DELETE_ROLE = "data.source.delete_role";
 	public static final String DATA_SOURCE_CREATE_ALARM_CONFIG = "data.source.create_alarm_config";
 	public static final String DATA_SOURCE_UPDATE_ALARM_CONFIG = "data.source.update_alarm_config";
 	public static final String DATA_SOURCE_DELETE_ALARM_CONFIG = "data.source.delete_alarm_config";
@@ -346,6 +349,12 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeleteAlarmConfig;
 	@Getter
+	private Integer dataSourceCreateRole;
+	@Getter
+	private Integer dataSourceUpdateRole;
+	@Getter
+	private Integer dataSourceDeleteRole;
+	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
 	private Integer dataSourceTypeGraphqlMutation;
@@ -461,6 +470,9 @@ public class VODataSourceAdapter {
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
 		this.dataSourceDeleteUser = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_USER));
+		this.dataSourceCreateRole = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ROLE));
+		this.dataSourceUpdateRole = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ROLE));
+		this.dataSourceDeleteRole = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ROLE));
 		this.dataSourceCreateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ALARM_CONFIG));
 		this.dataSourceUpdateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ALARM_CONFIG));
 		this.dataSourceDeleteAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ALARM_CONFIG));

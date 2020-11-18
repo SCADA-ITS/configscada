@@ -114,7 +114,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (94, 3, 'createElement', 'createElement', 'ElementVO', 'id', true, true),
 (95, 3, 'updateElement', 'updateElement', 'ElementVO', 'id', true, true),
 (96, 3, 'cloneElement', 'cloneElement', 'ElementVO', 'id', true, true),
-(97, 3, 'deleteElement', 'deleteElement', 'ElementVO', 'id', true, true);
+(97, 3, 'deleteElement', 'deleteElement', 'ElementVO', 'id', true, true),
+(98, 3, 'createRole', 'createRole', 'RoleVO', 'id', true, true),
+(99, 3, 'updateRole', 'updateRole', 'RoleVO', 'id', true, true),
+(100, 3, 'deleteRole', 'deleteRole', 'RoleVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -610,4 +613,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (97, 9, 'deleteElement'),
 (97, 10, 'elementId'),
 (97, 11, 'String!'),
-(97, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}');
+(97, 12, '{id keepValuesOnDisconnected alias description state longitude latitude icon zoomIn zoomOut positionX positionY elementSubtype{id} location{id} elementType{id} elementTypeState{id} elementValues{id value elementValueState{id} elementTypeParam{id}} alarms {id alarmConfig{id alarmLevel{id} alarmType{id}} recognized activation deactivation} parents{id} childs{id}}'),
+
+(98, 8, 'http://localhost:8082/graphql'),
+(98, 9, 'createRole'),
+(98, 10, 'role'),
+(98, 11, 'RoleVO!'),
+(98, 12, '{id alias description preset rolePermissions{id}}'),
+
+(99, 8, 'http://localhost:8082/graphql'),
+(99, 9, 'updateRole'),
+(99, 10, 'role'),
+(99, 11, 'RoleVO!'),
+(99, 12, '{id alias description preset rolePermissions{id}}'),
+
+(100, 8, 'http://localhost:8082/graphql'),
+(100, 9, 'deleteRole'),
+(100, 10, 'roleId'),
+(100, 11, 'String!'),
+(100, 12, '{id alias description preset rolePermissions{id}}');
