@@ -67,7 +67,7 @@ export const ELEMENT_TYPE = {
         //   width: 900,
         //   height: 700
         // }
-        },
+        // },
       ] 
     },
     "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_GENERIC, value: 3, scale_x: 28, scale_y: 28, svgRaw:SVG_3_DET},
