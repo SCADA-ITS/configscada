@@ -259,5 +259,31 @@ public class PlanController {
 		
 		return new ResponseEntity<>(planOrderBO.deletePlanOrder(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/createPlanType")
+	@ApiOperation(value = "Create Plan Type", notes = "Create Plan Type")
+	public ResponseEntity<Object> createPlanType(@RequestBody Object planType) {
+		
+		return new ResponseEntity<>(planTypeBO.createPlanType(planType), HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updatePlanType")
+	@ApiOperation(value = "Update Plan Type", notes = "Update Plan Type")
+	public ResponseEntity<Object> updatePlanType(@RequestBody Object planType) {
+		
+		return new ResponseEntity<>(planTypeBO.updatePlanType(planType), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deletePlanType/{id}")
+	@ApiOperation(value = "Delete Plan Type", notes = "Delete Plan Type")
+	public ResponseEntity<Object> deletePlanType(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "PlanType id",
+			example = "PlanType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planTypeBO.deletePlanType(id), HttpStatus.OK);
+	}
 
 }

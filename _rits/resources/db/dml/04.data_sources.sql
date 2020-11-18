@@ -123,7 +123,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (103, 3, 'deletePlan', 'deletePlan', 'PlanVO', 'id', true, true),
 (104, 3, 'createPlanOrder', 'createPlanOrder', 'PlanOrderVO', 'id', true, true),
 (105, 3, 'updatePlanOrder', 'updatePlanOrder', 'PlanOrderVO', 'id', true, true),
-(106, 3, 'deletePlanOrder', 'deletePlanOrder', 'PlanOrderVO', 'id', true, true);
+(106, 3, 'deletePlanOrder', 'deletePlanOrder', 'PlanOrderVO', 'id', true, true),
+(107, 3, 'createPlanType', 'createPlanType', 'PlanTypeVO', 'id', true, true),
+(108, 3, 'updatePlanType', 'updatePlanType', 'PlanTypeVO', 'id', true, true),
+(109, 3, 'deletePlanType', 'deletePlanType', 'PlanTypeVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -673,4 +676,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (106, 9, 'deletePlanOrder'),
 (106, 10, 'planOrderId'),
 (106, 11, 'String!'),
-(106, 12, '{id alias description nTimes planOrderStateType{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderType{id} planOrderValues{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id} comandElement{id}}');
+(106, 12, '{id alias description nTimes planOrderStateType{id} planOrderOrder nextPlanOrder{id} nextPlan{id} planOrderType{id} planOrderValues{id} planOrderElementValues{id} planOrderElementTypeStates{id} planOrderConditions{id} comandElement{id}}'),
+
+(107, 8, 'http://localhost:8082/graphql'),
+(107, 9, 'createPlanType'),
+(107, 10, 'planType'),
+(107, 11, 'PlanTypeVO!'),
+(107, 12, '{id alias description}'),
+
+(108, 8, 'http://localhost:8082/graphql'),
+(108, 9, 'updatePlanType'),
+(108, 10, 'planType'),
+(108, 11, 'PlanTypeVO!'),
+(108, 12, '{id alias description}'),
+
+(109, 8, 'http://localhost:8082/graphql'),
+(109, 9, 'deletePlanType'),
+(109, 10, 'planTypeId'),
+(109, 11, 'String!'),
+(109, 12, '{id alias description}');

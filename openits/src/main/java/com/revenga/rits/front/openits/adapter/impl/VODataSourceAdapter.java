@@ -149,6 +149,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_PLAN_ORDER = "data.source.create_plan_order";
 	public static final String DATA_SOURCE_UPDATE_PLAN_ORDER = "data.source.update_plan_order";
 	public static final String DATA_SOURCE_DELETE_PLAN_ORDER = "data.source.delete_plan_order";
+	public static final String DATA_SOURCE_CREATE_PLAN_TYPE = "data.source.create_plan_type";
+	public static final String DATA_SOURCE_UPDATE_PLAN_TYPE = "data.source.update_plan_type";
+	public static final String DATA_SOURCE_DELETE_PLAN_TYPE = "data.source.delete_plan_type";
 	
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -373,6 +376,12 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeletePlanOrder;
 	@Getter
+	private Integer dataSourceCreatePlanType;
+	@Getter
+	private Integer dataSourceUpdatePlanType;
+	@Getter
+	private Integer dataSourceDeletePlanType;
+	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
 	private Integer dataSourceTypeGraphqlMutation;
@@ -504,6 +513,9 @@ public class VODataSourceAdapter {
 		this.dataSourceCreatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_ORDER));
 		this.dataSourceUpdatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_ORDER));
 		this.dataSourceDeletePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_ORDER));
+		this.dataSourceCreatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_TYPE));
+		this.dataSourceUpdatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_TYPE));
+		this.dataSourceDeletePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_TYPE));
 		
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
