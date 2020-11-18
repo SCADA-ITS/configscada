@@ -407,7 +407,7 @@ function updateIcon(element, suffix="") {
   } else if(element.elementType.id === ELEMENT_TYPE.ID_9_FAN){
     if (typeof params != 'undefined' && params && params["FAN_COMMAND_FOR_FAN"]) {
       if (params["FAN_COMMAND_FOR_FAN"] == 0) {
-        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
+        // document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
         document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
       } else if (params["FAN_COMMAND_FOR_FAN"] == 1) {

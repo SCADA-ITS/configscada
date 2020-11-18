@@ -877,7 +877,10 @@ export default class TabForm {
 									}								
 								}, -1);
 							}else{
-	
+								// if(this.id!=data.id){
+								// 	console.warn(data);
+								// }
+								let elementId=this.id;
 								$$(this.commands).addView({
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
@@ -887,11 +890,17 @@ export default class TabForm {
 											sendCommandElement(commands: $commands)  
 										}`;
 										var graphql = webix.proxy("GraphQL", sendCommand);
+										// if(elementId!=data.id){
+										// 	console.warn(elementId+" vs "+data.id+" vs "+selfData.id);
+										// 	console.warn(data.elementType.commandElementTypes[index].id +" vs "+ selfData.elementType.commandElementTypes[index].id);
+										// 	console.warn(data);
+										// 	console.warn(selfData);
+										// }
 										graphql.save({
 											"commands": [
 												{
 													"commandElementTypeId": data.elementType.commandElementTypes[index].id,
-													"elementId": data.id
+													"elementId": elementId
 												}
 											]
 										}).then(() => {
