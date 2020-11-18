@@ -126,7 +126,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (106, 3, 'deletePlanOrder', 'deletePlanOrder', 'PlanOrderVO', 'id', true, true),
 (107, 3, 'createPlanType', 'createPlanType', 'PlanTypeVO', 'id', true, true),
 (108, 3, 'updatePlanType', 'updatePlanType', 'PlanTypeVO', 'id', true, true),
-(109, 3, 'deletePlanType', 'deletePlanType', 'PlanTypeVO', 'id', true, true);
+(109, 3, 'deletePlanType', 'deletePlanType', 'PlanTypeVO', 'id', true, true),
+(110, 3, 'createPlanSubtype', 'createPlanSubtype', 'PlanSubtypeVO', 'id', true, true),
+(111, 3, 'updatePlanSubtype', 'updatePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
+(112, 3, 'deletePlanSubtype', 'deletePlanSubtype', 'PlanSubtypeVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -694,4 +697,22 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (109, 9, 'deletePlanType'),
 (109, 10, 'planTypeId'),
 (109, 11, 'String!'),
-(109, 12, '{id alias description}');
+(109, 12, '{id alias description}'),
+
+(110, 8, 'http://localhost:8082/graphql'),
+(110, 9, 'createPlanSubtype'),
+(110, 10, 'planSubtype'),
+(110, 11, 'PlanSubtypeVO!'),
+(110, 12, '{id alias description planType{id}}'),
+
+(111, 8, 'http://localhost:8082/graphql'),
+(111, 9, 'updatePlanSubtype'),
+(111, 10, 'planSubtype'),
+(111, 11, 'PlanSubtypeVO!'),
+(111, 12, '{id alias description planType{id}}'),
+
+(112, 8, 'http://localhost:8082/graphql'),
+(112, 9, 'deletePlanSubtype'),
+(112, 10, 'planSubtypeId'),
+(112, 11, 'String!'),
+(112, 12, '{id alias description planType{id}}');

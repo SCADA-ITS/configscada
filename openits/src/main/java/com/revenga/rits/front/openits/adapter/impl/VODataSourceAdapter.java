@@ -152,6 +152,9 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_PLAN_TYPE = "data.source.create_plan_type";
 	public static final String DATA_SOURCE_UPDATE_PLAN_TYPE = "data.source.update_plan_type";
 	public static final String DATA_SOURCE_DELETE_PLAN_TYPE = "data.source.delete_plan_type";
+	public static final String DATA_SOURCE_CREATE_PLAN_SUBTYPE = "data.source.create_plan_subtype";
+	public static final String DATA_SOURCE_UPDATE_PLAN_SUBTYPE = "data.source.update_plan_subtype";
+	public static final String DATA_SOURCE_DELETE_PLAN_SUBTYPE = "data.source.delete_plan_subtype";
 	
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -382,6 +385,12 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeletePlanType;
 	@Getter
+	private Integer dataSourceCreatePlanSubtype;
+	@Getter
+	private Integer dataSourceUpdatePlanSubtype;
+	@Getter
+	private Integer dataSourceDeletePlanSubtype;
+	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
 	private Integer dataSourceTypeGraphqlMutation;
@@ -516,6 +525,9 @@ public class VODataSourceAdapter {
 		this.dataSourceCreatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_TYPE));
 		this.dataSourceUpdatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_TYPE));
 		this.dataSourceDeletePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_TYPE));
+		this.dataSourceCreatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_SUBTYPE));
+		this.dataSourceUpdatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_SUBTYPE));
+		this.dataSourceDeletePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_SUBTYPE));
 		
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
