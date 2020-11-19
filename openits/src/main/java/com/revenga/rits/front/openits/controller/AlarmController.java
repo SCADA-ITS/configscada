@@ -119,6 +119,32 @@ public class AlarmController {
 		return new ResponseEntity<>(alarmConfigBO.getItem(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/alarm_configs/alarm_type/{id}")
+	@ApiOperation(value = "Get alarm configs by alarm type id", notes = "Get alarm configs by alarm type id")
+	public ResponseEntity<Object> getAlarmConfigsByAlarmType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmType by id",
+			example = "AlarmType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmConfigBO.getAlarmConfigsByAlarmType(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/alarm_configs/alarm_level/{id}")
+	@ApiOperation(value = "Get alarm configs by alarm level id", notes = "Get alarm configs by alarm level id")
+	public ResponseEntity<Object> getAlarmConfigsByAlarmLevel(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "AlarmLevel by id",
+			example = "AlarmLevel:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(alarmConfigBO.getAlarmConfigsByAlarmLevel(id), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/alarm_types")
 	@ApiOperation(value = "Get all alarm types", notes = "Get all alarm types")
 	public ResponseEntity<Object> getAlarmTypes() {
@@ -139,7 +165,7 @@ public class AlarmController {
 		return new ResponseEntity<>(alarmTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/alarm_types/{id}/alarms")
+	@GetMapping(value = "/alarm_types/alarms/{id}")
 	@ApiOperation(value = "Get alarms by alarm type id", notes = "Get alarms by alarm type id")
 	public ResponseEntity<Object> getAlarmsByAlarmType(
 			@ApiParam(

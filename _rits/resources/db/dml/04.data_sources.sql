@@ -132,7 +132,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (112, 3, 'deletePlanSubtype', 'deletePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
 (113, 3, 'sendIncidents', 'sendIncidents', 'ImsIncidentVO', 'id', true, true),
 (114, 1, 'getAlarmsBySource', 'getAlarmsBySource', 'AlarmVO', 'id', true, true),
-(115, 1, 'getAlarmsBySourceAndAlarmType', 'getAlarmsBySourceAndAlarmType', 'AlarmVO', 'id', true, true);
+(115, 1, 'getAlarmsBySourceAndAlarmType', 'getAlarmsBySourceAndAlarmType', 'AlarmVO', 'id', true, true),
+(116, 1, 'getAlarmConfigsByAlarmType', 'getAlarmConfigsByAlarmType', 'AlarmConfigVO', 'id', true, true),
+(117, 1, 'getAlarmConfigsByAlarmLevel', 'getAlarmConfigsByAlarmLevel', 'AlarmConfigVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -734,5 +736,14 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (115, 1, 'http://localhost:8082/graphql'),
 (115, 2, 'getAlarmsBySource'),
 (115, 3, 'sourceElementId,alarmTypeId'),
-(115, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}');
+(115, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
 
+(116, 1, 'http://localhost:8082/graphql'),
+(116, 2, 'getAlarmConfigsByAlarmType'),
+(116, 3, 'alarmTypeId'),
+(116, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}'),
+
+(117, 1, 'http://localhost:8082/graphql'),
+(117, 2, 'getAlarmConfigsByAlarmLevel'),
+(117, 3, 'alarmLevelId'),
+(117, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}');

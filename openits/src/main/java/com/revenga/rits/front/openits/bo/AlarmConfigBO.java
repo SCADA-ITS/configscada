@@ -41,6 +41,22 @@ public class AlarmConfigBO extends GenericBO {
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmConfig()).getFieldId(), alarmConfig);
 	}
 	
+	public List<Map<String, Object>> getAlarmConfigsByAlarmType(String alarmTypeId) {
+		
+		List<Map<String, Object>> alarmConfigs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmConfigsByAlarmType(), new Object[] { alarmTypeId });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetAlarmConfigsByAlarmType()).getFieldId(), alarmConfigs);
+	}
+	
+	public List<Map<String, Object>> getAlarmConfigsByAlarmLevel(String alarmTypeId) {
+		
+		List<Map<String, Object>> alarmConfigs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmConfigsByAlarmLevel(), new Object[] { alarmTypeId });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetAlarmConfigsByAlarmLevel()).getFieldId(), alarmConfigs);
+	}
+	
 	public Map<String, Object> createAlarmConfig(Object input) {
 		
 		Map<String, Object> createdAlarmConfig = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateAlarmConfig(), (Map<String, Object>) input);

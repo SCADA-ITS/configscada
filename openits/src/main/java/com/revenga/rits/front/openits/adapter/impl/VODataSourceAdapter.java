@@ -52,6 +52,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_ALARM_LEVELS = "data.source.get_alarm_levels";
 	public static final String DATA_SOURCE_GET_ALARM_LEVEL = "data.source.get_alarm_level";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIGS = "data.source.get_alarm_configs";
+	public static final String DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE = "data.source.get_alarm_configs_by_alarm_type";
+	public static final String DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL = "data.source.get_alarm_configs_by_alarm_level";
 	public static final String DATA_SOURCE_GET_ALARM_CONFIG = "data.source.get_alarm_config";
 	public static final String DATA_SOURCE_GET_THRESOLD_OPERATIONS = "data.source.get_threshold_operations";
 	public static final String DATA_SOURCE_GET_THRESOLD_OPERATION = "data.source.get_threshold_operation";
@@ -191,6 +193,10 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetAlarmLevel;
 	@Getter
 	private Integer dataSourceGetAlarmConfigs;
+	@Getter
+	private Integer dataSourceGetAlarmConfigsByAlarmType;
+	@Getter
+	private Integer dataSourceGetAlarmConfigsByAlarmLevel;
 	@Getter
 	private Integer dataSourceGetAlarmConfig;
 	@Getter
@@ -435,6 +441,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetAlarmLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVELS));
 		this.dataSourceGetAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVEL));
 		this.dataSourceGetAlarmConfigs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS));
+		this.dataSourceGetAlarmConfigsByAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE));
+		this.dataSourceGetAlarmConfigsByAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL));
 		this.dataSourceGetAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIG));
 		this.dataSourceGetThresholdOperations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATIONS));
 		this.dataSourceGetThresholdOperation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATION));
