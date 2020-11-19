@@ -1,6 +1,7 @@
 import TabForm from "../classes/ElementForm.js";
 import ElementChildsList from "../classes/ElementChildsList.js";
 import TabVideo from "../classes/TabVideo.js";
+import TabVideoList from "../classes/TabVideoList.js";
 import TabSynoptic from "../classes/TabSynoptic.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 import {ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
@@ -69,9 +70,12 @@ export default class ElementWindow {
             if(tabs[0]["ELEMENT_FORM_TAB_VIDEO"] !== undefined){
                 this.defaultTab = 1;
                 let urlStream  = null;
+                let videoList = false;
                 tabs.forEach(element =>{
                     urlStream = element["ELEMENT_FORM_TAB_VIDEO"] !== undefined ? element["ELEMENT_FORM_TAB_VIDEO"].urlParamVideo : urlStream;
+                    videoList = element["ELEMENT_FORM_TAB_VIDEO"] !== undefined ? element["ELEMENT_FORM_TAB_VIDEO"].videoList : videoList;
                 });
+                this.videoList = videoList;
                 if(urlStream !== null) {
                     this.tabVideo = new TabVideo(parentId,urlStream);
                     this.defaultTabView={             
@@ -188,6 +192,8 @@ export default class ElementWindow {
                 break;
                 case 1:
                     this.tabVideo.loadData();
+                    let videoList = new TabVideoList(this.elementForm.id,this.parentType,this.videoList,this.tabVideo.urlStream);
+                    videoList.getComponent();
                 break;
                 case 2:
                     this.tabSynoptic.loadData();
@@ -219,8 +225,10 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
         break;
         case parentId + "_" + parentType + "_TAB_VIDEO":
             let urlStream  = null;
+            let videoList = false;
             tabs.forEach(element =>{
                 urlStream = element["ELEMENT_FORM_TAB_VIDEO"] !== undefined ? element["ELEMENT_FORM_TAB_VIDEO"].urlParamVideo : urlStream;
+                videoList = element["ELEMENT_FORM_TAB_VIDEO"] !== undefined ? element["ELEMENT_FORM_TAB_VIDEO"].videoList : videoList;
             });
             if(urlStream !== null) {
                 let tabVideo = new TabVideo(parentId,urlStream);
@@ -229,6 +237,8 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
                     cols:[tabVideo.getComponent()]
                 });
                 tabVideo.loadData();
+                let evideoList = new TabVideoList(parentId,parentType,videoList,urlStream);
+                evideoList.getComponent();
             }else{
                 webix.message({type:"error", text:"ERROR VIDEO NO CONFIGURADO"});
             }

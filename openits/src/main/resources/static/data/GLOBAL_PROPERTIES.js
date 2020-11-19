@@ -171,7 +171,16 @@ export const ELEMENT_TYPE = {
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 50, scale_y: 50, svgRaw:SVG_51_ETD},
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
     "ElementType:54" :{ id: "ElementType:54", uiType: UI_ELEMENT_TYPE_GENERIC, value: 54, scale_x: 50, scale_y: 50, svgRaw:SVG_54_ATC},
-    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT },
+    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT, 
+      tabs:[
+        {ELEMENT_FORM_TAB_FORM: {}},
+        {ELEMENT_FORM_TAB_SYN: {
+          idSynoptic:"synopticUnifilarCsa",
+          width: 900,
+          height: 700
+        }
+      }]
+    },
     "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 56, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR },
     "ElementType:57" :{ id: "ElementType:57", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 57, scale_x: 120, scale_y: 120, svgRaw:SVG_57_MAGNETOTERMICO,
       elementTypeParams:[

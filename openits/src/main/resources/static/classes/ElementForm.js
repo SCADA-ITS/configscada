@@ -891,10 +891,8 @@ export default class TabForm {
 										}`;
 										var graphql = webix.proxy("GraphQL", sendCommand);
 										// if(elementId!=data.id){
-										// 	console.warn(elementId+" vs "+data.id+" vs "+selfData.id);
-										// 	console.warn(data.elementType.commandElementTypes[index].id +" vs "+ selfData.elementType.commandElementTypes[index].id);
+										// 	console.warn(elementId+" vs "+data.id+" vs "+this.id);
 										// 	console.warn(data);
-										// 	console.warn(selfData);
 										// }
 										graphql.save({
 											"commands": [

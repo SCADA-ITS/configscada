@@ -21,8 +21,8 @@ export default class TabSynoptic {
             this.syn = new Synoptic(vSinoptico);
             let result = {
                 id: "tabtabSyn" + this.parentId,
-                //width: this.width,
-                //height: this.height,
+                width: this.width,
+                height: this.height,
                 rows: [{
                     view: "template",
                     id: this.idSynoptic + this.parentId,
