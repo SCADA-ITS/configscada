@@ -1,4 +1,5 @@
 import Synoptic from "../classes/Synoptic.js";
+import {synopticData} from "../data/synoptics.js";
 
 export default class TabSynoptic {
     constructor(parentId,idSynoptic,synoptic,width,height) {
@@ -11,18 +12,22 @@ export default class TabSynoptic {
 
     getComponent(){
         if(this.synoptic !== undefined){
-            this.synoptic.id = this.idSynoptic + this.parentId;
-            this.syn = new Synoptic(this.synoptic);
+            let vSinoptico = {};
+            vSinoptico["id"] = this.idSynoptic + this.parentId;
+            Object.entries(this.synoptic).map(([k, v]) => {
+                if(k!== "id")
+                    vSinoptico[k] = v;
+            });
+            this.syn = new Synoptic(vSinoptico);
             let result = {
                 id: "tabtabSyn" + this.parentId,
-                width: this.width,
-                height: this.height,
+                //width: this.width,
+                //height: this.height,
                 rows: [{
                     view: "template",
                     id: this.idSynoptic + this.parentId,
                 }]
             };
-            console.log(result);
             return result;
         }
     }

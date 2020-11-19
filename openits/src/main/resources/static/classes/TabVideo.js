@@ -34,16 +34,9 @@ export default class TabVideo {
         let result = {
             id: "vvtabVideo"+this.parentId,
             cols:[],
-            on: {
-              onShow: function(obj){
-              },
-              onHide: function(obj){
-              }
-          }
         };
        
         return result;
-
     }
 
     loadData(){
@@ -61,9 +54,7 @@ export default class TabVideo {
                 if(stremMjpeg != null && stremMjpeg.length >= 1){
                     let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
                     let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
-                    
                     let stream = stremMjpeg;
-                   
                     let camera = $$("vvtabVideo"+this.parentId).addView({  
                         id: "stream_"+ this.parentId,
                         height:streamHeight,
@@ -79,8 +70,5 @@ export default class TabVideo {
                 console.warn(e);
             }
         });
-
-
-
     }
 }
