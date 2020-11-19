@@ -42,7 +42,7 @@ public class UserController {
 	@ApiOperation(value = "Get all users", notes = "Get all users")
 	public ResponseEntity<Object> getUsers() {
 		
-		return new ResponseEntity<>(userBO.getUsers(), HttpStatus.OK);
+		return new ResponseEntity<>(userBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -55,7 +55,7 @@ public class UserController {
 			example = "User:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(userBO.getUser(id), HttpStatus.OK);
+		return new ResponseEntity<>(userBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/create")
@@ -95,7 +95,7 @@ public class UserController {
 	@ApiOperation(value = "Get roles", notes = "Get roles")
 	public ResponseEntity<Object> getRoles() {
 		
-		return new ResponseEntity<>(roleBO.getRoles(), HttpStatus.OK);
+		return new ResponseEntity<>(roleBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/role/{id}")
@@ -108,14 +108,14 @@ public class UserController {
 			example = "Role:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(roleBO.getRole(id), HttpStatus.OK);
+		return new ResponseEntity<>(roleBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/systemPermissions")
 	@ApiOperation(value = "Get system permissions", notes = "Get system permissions")
 	public ResponseEntity<Object> getSystemPermissions() {
 		
-		return new ResponseEntity<>(systemPermissionBO.getSystemPermissions(), HttpStatus.OK);
+		return new ResponseEntity<>(systemPermissionBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/systemPermission/{id}")
@@ -128,7 +128,7 @@ public class UserController {
 			example = "SystemPermission:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(systemPermissionBO.getSystemPermission(id), HttpStatus.OK);
+		return new ResponseEntity<>(systemPermissionBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/createRole")

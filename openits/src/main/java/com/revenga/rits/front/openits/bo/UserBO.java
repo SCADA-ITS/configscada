@@ -13,7 +13,7 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 
 @Service
-public class UserBO {
+public class UserBO extends GenericBO {
 	
 	@Autowired 
 	VO2UIAdapter vo2uiAdapter;
@@ -24,17 +24,19 @@ public class UserBO {
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
 	
-	public List<Map<String, Object>> getUsers() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> users = voDataSourceAdapter
 				.getList(voDataSourceAdapter.getDataSourceGetUsers(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetUsers()).getFieldId(), users);
 	}
-	
-	public Map<String, Object> getUser(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> user = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetUser(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
@@ -76,4 +78,5 @@ public class UserBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceDeleteUser()).getFieldId(), deletedUser);
 	}
+
 }

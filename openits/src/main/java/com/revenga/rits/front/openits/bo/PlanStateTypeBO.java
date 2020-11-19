@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class PlanStateTypeBO {
+public class PlanStateTypeBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -44,6 +44,18 @@ public class PlanStateTypeBO {
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanScheduleStateTypes()).getFieldId(), planScheduleStateTypes);
+	}
+
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.revenga.rits.front.openits.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,25 @@ import com.revenga.rits.front.openits.adapter.impl.GridAdapter;
 import com.revenga.rits.front.openits.model.GridUI;
 
 @Service
-public class GridBO {
+public class GridBO extends GenericBO {
 	
 	@Autowired
 	GridService gridService;
 	
 	@Autowired
 	GridAdapter gridAdapter;
+	
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	public List<GridUI> getGridUIs() {
 		
@@ -56,4 +69,5 @@ public class GridBO {
 		
 		return gridUI;
 	}
+
 }

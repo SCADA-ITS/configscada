@@ -129,7 +129,10 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (109, 3, 'deletePlanType', 'deletePlanType', 'PlanTypeVO', 'id', true, true),
 (110, 3, 'createPlanSubtype', 'createPlanSubtype', 'PlanSubtypeVO', 'id', true, true),
 (111, 3, 'updatePlanSubtype', 'updatePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
-(112, 3, 'deletePlanSubtype', 'deletePlanSubtype', 'PlanSubtypeVO', 'id', true, true);
+(112, 3, 'deletePlanSubtype', 'deletePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
+(113, 3, 'sendIncidents', 'sendIncidents', 'ImsIncidentVO', 'id', true, true),
+(114, 1, 'getAlarmsBySource', 'getAlarmsBySource', 'AlarmVO', 'id', true, true),
+(115, 1, 'getAlarmsBySourceAndAlarmType', 'getAlarmsBySourceAndAlarmType', 'AlarmVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -715,4 +718,21 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (112, 9, 'deletePlanSubtype'),
 (112, 10, 'planSubtypeId'),
 (112, 11, 'String!'),
-(112, 12, '{id alias description planType{id}}');
+(112, 12, '{id alias description planType{id}}'),
+
+(113, 8, 'http://localhost:8082/graphql'),
+(113, 9, 'sendIncident'),
+(113, 10, 'incidents'),
+(113, 11, '[ImsIncidentVO!]!'),
+(113, 12, ''),
+
+(114, 1, 'http://localhost:8082/graphql'),
+(114, 2, 'getAlarmsBySource'),
+(114, 3, 'sourceElementId'),
+(114, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}'),
+
+(115, 1, 'http://localhost:8082/graphql'),
+(115, 2, 'getAlarmsBySource'),
+(115, 3, 'sourceElementId,alarmTypeId'),
+(115, 4, '{id alarmConfig{id alias alarmType{id}} recognized recognizedComments activation activationComments deactivation deactivationComments sourceElement{id alias} targetElement{id alias} mutedUntil}');
+

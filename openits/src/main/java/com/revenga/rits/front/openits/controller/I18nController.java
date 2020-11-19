@@ -30,7 +30,7 @@ public class I18nController {
 	@ApiOperation(value = "Get all locales", notes = "Get all locales")
 	public ResponseEntity<Object> getLocales() {
 		
-		return new ResponseEntity<>(i18nBO.getLocales(), HttpStatus.OK);
+		return new ResponseEntity<>(i18nBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/locales/{id}")
@@ -42,7 +42,7 @@ public class I18nController {
 			example = "I18nLocale:es_ES",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(i18nBO.getLocale(id), HttpStatus.OK);
+		return new ResponseEntity<>(i18nBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/translations/{localeId}")

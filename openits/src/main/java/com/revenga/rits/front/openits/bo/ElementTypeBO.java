@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class ElementTypeBO {
+public class ElementTypeBO extends GenericBO {
 	
 	public static final String FIELD_ELEMENT_TYPE_STATES = "elementTypeStates";
 	
@@ -24,15 +24,17 @@ public class ElementTypeBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getElementTypes() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> elementTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetElementTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetElementTypes()).getFieldId(), elementTypes);
 	}
-	
-	public Map<String, Object> getElementType(String id) {
+
+	@Override
+	public Map<String, Object> getItem(String id) {
 		
 		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementType(), new Object[] { id });
 		

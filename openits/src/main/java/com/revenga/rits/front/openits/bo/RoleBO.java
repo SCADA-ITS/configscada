@@ -12,7 +12,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class RoleBO {
+public class RoleBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -23,16 +23,18 @@ public class RoleBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getRoles() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> roles = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoles(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetRoles()).getFieldId(), roles);
 	}
-				
-	public Map<String, Object> getRole(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> role = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRole(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()

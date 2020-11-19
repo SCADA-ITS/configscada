@@ -12,7 +12,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class AlarmConfigBO {
+public class AlarmConfigBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -23,15 +23,17 @@ public class AlarmConfigBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getAlarmConfigs() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> alarmConfigs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmConfigs(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmConfigs()).getFieldId(), alarmConfigs);
 	}
-				
-	public Map<String, Object> getAlarmConfig(String id) {
+
+	@Override
+	public Map<String, Object> getItem(String id) {
 		
 		Map<String, Object> alarmConfig = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmConfig(), new Object[] { id });
 		

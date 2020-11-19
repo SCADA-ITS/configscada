@@ -19,7 +19,7 @@ import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
 import com.revenga.rits.front.openitsdao.service.SynopticService;
 
 @Service
-public class SynopticBO {
+public class SynopticBO extends GenericBO {
 	
 	@Autowired
 	SynopticService synopticService;
@@ -133,5 +133,17 @@ public class SynopticBO {
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

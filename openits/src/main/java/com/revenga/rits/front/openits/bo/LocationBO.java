@@ -21,7 +21,7 @@ import com.revenga.rits.front.openitsdao.service.VoEntityHierarchyService;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
 @Service
-public class LocationBO {
+public class LocationBO extends GenericBO {
 
 	private static final String FIELD_LOCATION = "location";
 	private static final String FIELD_LOCATION_ID = "id";
@@ -44,7 +44,8 @@ public class LocationBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getLocations() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> locations = voDataSourceAdapter
 				.getList(voDataSourceAdapter.getDataSourceGetLocations(), null);
@@ -52,8 +53,9 @@ public class LocationBO {
 		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetLocations()).getFieldId(), locations));
 	}
-	
-	public Map<String, Object> getLocation(String id) {
+
+	@Override
+	public Map<String, Object> getItem(String id) {
 		
 		Map<String, Object> location = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetLocation(), new Object[] { id });
 		
@@ -87,7 +89,7 @@ public class LocationBO {
 				
 				if (locationElement != null) {
 				
-					Map<String, Object> location = getLocation(locationElement.get(FIELD_LOCATION_ID).toString());
+					Map<String, Object> location = getItem(locationElement.get(FIELD_LOCATION_ID).toString());
 					
 					if (location != null) {
 						
@@ -186,4 +188,5 @@ public class LocationBO {
 		
 		return location;
 	}
+
 }

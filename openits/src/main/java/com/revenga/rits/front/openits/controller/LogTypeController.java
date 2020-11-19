@@ -30,7 +30,7 @@ public class LogTypeController {
 	@ApiOperation(value = "Get all log types", notes = "Get all log types")
 	public ResponseEntity<Object> getLogTypes() {
 		
-		return new ResponseEntity<>(logTypeBO.getLogTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(logTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -43,7 +43,7 @@ public class LogTypeController {
 			example = "LogType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(logTypeBO.getLogType(id), HttpStatus.OK);
+		return new ResponseEntity<>(logTypeBO.getItem(id), HttpStatus.OK);
 	}
 
 }

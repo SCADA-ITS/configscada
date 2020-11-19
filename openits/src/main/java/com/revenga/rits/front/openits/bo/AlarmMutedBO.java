@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class AlarmMutedBO {
+public class AlarmMutedBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -52,6 +52,18 @@ public class AlarmMutedBO {
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement()).getFieldId(), alarmMuteds);
+	}
+
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

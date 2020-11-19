@@ -12,7 +12,7 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 
 @Service
-public class ImsIncidentDocumentBO {
+public class ImsIncidentDocumentBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,17 +22,19 @@ public class ImsIncidentDocumentBO {
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
-	
-	public List<Map<String, Object>> getIncidentDocuments() {
+
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> incidentDocuments = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentDocuments(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidentDocuments()).getFieldId(), incidentDocuments);
 	}
-				
-	public Map<String, Object> getIncidentDocument(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> incidentDocument = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncidentDocument(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()

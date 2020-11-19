@@ -30,7 +30,7 @@ public class GenericDataController {
 	@ApiOperation(value = "Get all generic datas", notes = "Get all generic datas")
 	public ResponseEntity<Object> getGenericDatas() {
 	    
-		return new ResponseEntity<>(genericDataBO.getGenericDatas(), HttpStatus.OK);
+		return new ResponseEntity<>(genericDataBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -43,6 +43,6 @@ public class GenericDataController {
 			example = "GenericData:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(genericDataBO.getGenericData(id), HttpStatus.OK);
+		return new ResponseEntity<>(genericDataBO.getItem(id), HttpStatus.OK);
 	}
 }

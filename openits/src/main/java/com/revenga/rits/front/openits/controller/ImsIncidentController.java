@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +64,7 @@ public class ImsIncidentController {
 	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
 	public ResponseEntity<Object> getIncidents() {
 		
-		return new ResponseEntity<>(imsIncidentBO.getIncidents(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -75,7 +77,7 @@ public class ImsIncidentController {
 			example = "ImsIncident:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentBO.getIncident(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incident/incident_type/{id}")
@@ -95,7 +97,7 @@ public class ImsIncidentController {
 	@ApiOperation(value = "Get incidentTypes", notes = "Get incidentTypes")
 	public ResponseEntity<Object> getIncidentTypes() {
 		
-		return new ResponseEntity<>(imsIncidentTypeBO.getIncidentTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentType/{id}")
@@ -108,14 +110,14 @@ public class ImsIncidentController {
 			example = "ImsIncidentType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentTypeBO.getIncidentType(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentTypeStates")
 	@ApiOperation(value = "Get incidentTypeStates", notes = "Get incidentTypeStates")
 	public ResponseEntity<Object> getIncidentTypeStates() {
 		
-		return new ResponseEntity<>(imsIncidentTypeStateBO.getIncidentTypeStates(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTypeStateBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentNextState/incident/{id}")
@@ -181,7 +183,7 @@ public class ImsIncidentController {
 	@ApiOperation(value = "Get incidents source", notes = "Get incidents source")
 	public ResponseEntity<Object> getIncidentsSource() {
 		
-		return new ResponseEntity<>(imsIncidentSourceBO.getIncidentsSource(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentSourceBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentSource/{id}")
@@ -194,14 +196,14 @@ public class ImsIncidentController {
 			example = "ImsIncidentSource:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentSourceBO.getIncidentSource(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentSourceBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/extIncidents")
 	@ApiOperation(value = "Get ext incidents", notes = "Get ext incidents")
 	public ResponseEntity<Object> getExtIncidents() {
 		
-		return new ResponseEntity<>(imsExtIncidentBO.getExtIncidents(), HttpStatus.OK);
+		return new ResponseEntity<>(imsExtIncidentBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/extIncident/{id}")
@@ -214,14 +216,14 @@ public class ImsIncidentController {
 			example = "ImsExtIncident:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsExtIncidentBO.getExtIncident(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsExtIncidentBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/extIncidentTypes")
 	@ApiOperation(value = "Get ext incident types", notes = "Get ext incident types")
 	public ResponseEntity<Object> getExtIncidentTypes() {
 		
-		return new ResponseEntity<>(imsExtIncidentTypeBO.getExtIncidentTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(imsExtIncidentTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/extIncidentType/{id}")
@@ -234,14 +236,14 @@ public class ImsIncidentController {
 			example = "ImsExtIncidentType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsExtIncidentTypeBO.getExtIncidentType(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsExtIncidentTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentDocuments")
 	@ApiOperation(value = "Get incident documents", notes = "Get incident documents")
 	public ResponseEntity<Object> getIncidenDocuments() {
 		
-		return new ResponseEntity<>(imsIncidentDocumentBO.getIncidentDocuments(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentDocumentBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentDocument/{id}")
@@ -254,14 +256,14 @@ public class ImsIncidentController {
 			example = "ImsIncidentDocument:1:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentDocumentBO.getIncidentDocument(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentDocumentBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentDocumentTypes")
 	@ApiOperation(value = "Get incident document types", notes = "Get incident document types")
 	public ResponseEntity<Object> getIncidenDocumentTypes() {
 		
-		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getIncidentDocumentTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentDocumentType/{id}")
@@ -274,7 +276,15 @@ public class ImsIncidentController {
 			example = "ImsIncidentDocumentType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getIncidentDocumentType(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getItem(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/send_incident")
+	@ApiOperation(value = "Send Incidents", notes = "Send Incidents")
+	public ResponseEntity<Boolean> sendIncident(@RequestBody Object incident) {
+		
+		return new ResponseEntity<>(imsIncidentBO.sendIncident(incident), HttpStatus.OK);
+	}
+	
 
 }

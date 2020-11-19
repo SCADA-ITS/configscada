@@ -30,7 +30,7 @@ public class ThresoldOperationController {
 	@ApiOperation(value = "Get all threshold operations", notes = "Get all threshold operations")
 	public ResponseEntity<Object> getThresholdOperations() {
 		
-		return new ResponseEntity<>(thresoldOperationBO.getThresholdOperations(), HttpStatus.OK);
+		return new ResponseEntity<>(thresoldOperationBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -43,7 +43,7 @@ public class ThresoldOperationController {
 			example = "ThresholdOperation:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(thresoldOperationBO.getThresholdOperation(id), HttpStatus.OK);
+		return new ResponseEntity<>(thresoldOperationBO.getItem(id), HttpStatus.OK);
 	}
 
 }

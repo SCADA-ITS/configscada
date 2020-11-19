@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class StretchBO {
+public class StretchBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,16 +22,18 @@ public class StretchBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getStretchs() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+	
 		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetStretchs(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetStretchs()).getFieldId(), stretchs);
 	}
-				
-	public Map<String, Object> getStretch(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> stretch = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetStretch(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()

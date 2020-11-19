@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class I18nBO {
+public class I18nBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -21,9 +21,10 @@ public class I18nBO {
 
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
-
-	public List<Map<String, Object>> getLocales() {
-
+	
+	@Override
+	public List<Map<String, Object>> getList() {
+		
 		List<Map<String, Object>> locales = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetLocales(),
 				null);
 
@@ -31,8 +32,9 @@ public class I18nBO {
 				.getById(voDataSourceAdapter.getDataSourceGetLocales()).getFieldId(), locales);
 	}
 
-	public Map<String, Object> getLocale(String id) {
-
+	@Override
+	public Map<String, Object> getItem(String id) {
+		
 		Map<String, Object> locale = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetLocale(),
 				new Object[] { id });
 

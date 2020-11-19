@@ -38,7 +38,7 @@ public class LocationController {
 	@ApiOperation(value = "Get all locations", notes = "Get all locations")
 	public ResponseEntity<Object> getLocations() {
 		
-		return new ResponseEntity<>(locationBO.getLocations(), HttpStatus.OK);
+		return new ResponseEntity<>(locationBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -51,14 +51,14 @@ public class LocationController {
 			example = "Location:33:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(locationBO.getLocation(id), HttpStatus.OK);
+		return new ResponseEntity<>(locationBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/roads")
 	@ApiOperation(value = "Get roads", notes = "Get roads")
 	public ResponseEntity<Object> getRoads() {
 		
-		return new ResponseEntity<>(roadBO.getRoads(), HttpStatus.OK);
+		return new ResponseEntity<>(roadBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/road/{id}")
@@ -71,14 +71,14 @@ public class LocationController {
 			example = "Road:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(roadBO.getRoad(id), HttpStatus.OK);
+		return new ResponseEntity<>(roadBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/stretchs")
 	@ApiOperation(value = "Get stretchs", notes = "Get stretchs")
 	public ResponseEntity<Object> getStretchs() {
 		
-		return new ResponseEntity<>(stretchBO.getStretchs(), HttpStatus.OK);
+		return new ResponseEntity<>(stretchBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/stretch/{id}")
@@ -91,7 +91,7 @@ public class LocationController {
 			example = "Stretch:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(stretchBO.getStretch(id), HttpStatus.OK);
+		return new ResponseEntity<>(stretchBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/stretch/road/{id}")

@@ -13,7 +13,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class ElementTypeStateBO {
+public class ElementTypeStateBO extends GenericBO {
 	
 	private static final String FIELD_ELEMENT_TYPE_STATE_ID = "id";
 	
@@ -29,11 +29,36 @@ public class ElementTypeStateBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		
+		List<Map<String, Object>> elementTypeStates = getElementTypeStates();
+		
+		if (!CollectionUtils.isEmpty(elementTypeStates)) {
+			
+			for (Map<String, Object> elementTypeState : elementTypeStates) {
+				
+				if (elementTypeState.get(FIELD_ELEMENT_TYPE_STATE_ID).equals(id)) {
+					
+					return elementTypeState;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getElementTypeStates() {
 		
 		List<Map<String, Object>> elementTypeStates = new ArrayList<>();
-		List<Map<String, Object>> elementTypes = elementTypeBO.getElementTypes();
+		List<Map<String, Object>> elementTypes = elementTypeBO.getList();
 		
 		if (!CollectionUtils.isEmpty(elementTypes)) {
 			
@@ -51,21 +76,4 @@ public class ElementTypeStateBO {
 		return elementTypeStates;
 	}
 				
-	public Map<String, Object> getElementTypeState(String id) {
-		
-		List<Map<String, Object>> elementTypeStates = getElementTypeStates();
-				
-		if (!CollectionUtils.isEmpty(elementTypeStates)) {
-			
-			for (Map<String, Object> elementTypeState : elementTypeStates) {
-				
-				if (elementTypeState.get(FIELD_ELEMENT_TYPE_STATE_ID).equals(id)) {
-					
-					return elementTypeState;
-				}
-			}
-		}
-		
-		return null;
-	}
 }

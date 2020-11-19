@@ -37,7 +37,7 @@ public class ElementController {
 	@ApiOperation(value = "Get all elements", notes = "Get all elements")
 	public ResponseEntity<Object> getElements() {
 		
-		return new ResponseEntity<>(elementBO.getElements(), HttpStatus.OK);
+		return new ResponseEntity<>(elementBO.getList(), HttpStatus.OK);
 	}
 	
 	@PostMapping
@@ -57,7 +57,7 @@ public class ElementController {
 			example = "Element:33:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(elementBO.getElement(id), HttpStatus.OK);
+		return new ResponseEntity<>(elementBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/createElement")

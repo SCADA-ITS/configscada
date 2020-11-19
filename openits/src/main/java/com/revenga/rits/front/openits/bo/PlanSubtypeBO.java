@@ -12,8 +12,8 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class PlanSubtypeBO {
-
+public class PlanSubtypeBO extends GenericBO {
+	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
@@ -22,22 +22,25 @@ public class PlanSubtypeBO {
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
-	
-	public List<Map<String, Object>> getPlanSubtypes() {
+
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> planSubtypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanSubtypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanSubtypes()).getFieldId(), planSubtypes);
 	}
-				
-	public Map<String, Object> getPlanSubtype(String id) {
+
+	@Override
+	public Map<String, Object> getItem(String id) {
 		
 		Map<String, Object> planSubtype = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlanSubtype(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanSubtype()).getFieldId(), planSubtype);
 	}
+
 	
 	public Map<String, Object> createPlanSubtype(Object input) {
 		
@@ -66,4 +69,5 @@ public class PlanSubtypeBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceDeletePlanSubtype()).getFieldId(), deletedPlanSubtype);
 	}
+
 }

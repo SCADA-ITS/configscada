@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class LogTypeBO {
+public class LogTypeBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,16 +22,18 @@ public class LogTypeBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 
-	public List<Map<String, Object>> getLogTypes() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> logTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetLogTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetLogTypes()).getFieldId(), logTypes);
 	}
-				
-	public Map<String, Object> getLogType(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> logType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetLogType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()

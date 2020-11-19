@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class ImsIncidentBO {
+public class ImsIncidentBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,21 +22,24 @@ public class ImsIncidentBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getIncidents() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> incidents = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidents(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidents()).getFieldId(), incidents);
 	}
-				
-	public Map<String, Object> getIncident(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> incident = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncident(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncident()).getFieldId(), incident);
 	}
+	
 	
 	public List<Map<String, Object>> getIncidentByType(String id) {
 		
@@ -45,5 +48,18 @@ public class ImsIncidentBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidentByType()).getFieldId(), incidents);
 	}
+	
+	public Boolean sendIncident(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendIncident = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendIncidents(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendIncident);
+
+	    return res;
+	    
+	  }
+	
 
 }

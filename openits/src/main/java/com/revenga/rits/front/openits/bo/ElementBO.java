@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class ElementBO {
+public class ElementBO extends GenericBO {
 			
 	@Autowired
 	LocationBO locationBO;
@@ -22,13 +22,23 @@ public class ElementBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getElements() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(voDataSourceAdapter.getDataSourceGetElements(), null);
 		
 		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetElements()).getFieldId(), elements));
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		
+		Map<String, Object> element = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElement(), new Object[] { id });
+		
+		return locationBO.replaceLocation(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetElement()).getFieldId(), element));
 	}
 	
 	public List<Map<String, Object>> getElements(List<String> ids) {
@@ -38,14 +48,6 @@ public class ElementBO {
 		
 		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetElementsArray()).getFieldId(), elements));
-	}
-	
-	public Map<String, Object> getElement(String id) {
-		
-		Map<String, Object> element = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElement(), new Object[] { id });
-		
-		return locationBO.replaceLocation(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElement()).getFieldId(), element));
 	}
 	
 	public Map<String, Object> createElement(Object input) {

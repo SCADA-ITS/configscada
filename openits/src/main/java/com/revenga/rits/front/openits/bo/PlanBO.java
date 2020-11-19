@@ -12,7 +12,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class PlanBO {
+public class PlanBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -23,16 +23,19 @@ public class PlanBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getPlans() {
-		
+
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> plans = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlans(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlans()).getFieldId(), plans);
 	}
-				
-	public Map<String, Object> getPlan(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> plan = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlan(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
@@ -66,4 +69,5 @@ public class PlanBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceDeletePlan()).getFieldId(), deletedPlan);
 	}
+
 }

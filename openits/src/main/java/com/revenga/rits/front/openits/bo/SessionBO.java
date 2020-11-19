@@ -31,7 +31,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
-public class SessionBO {
+public class SessionBO extends GenericBO {
 	
 	private static final String HEADER_AUTHOTIZATION = "authorization";
 	private static final String USER_FIELD_ID = "id";
@@ -321,5 +321,17 @@ public class SessionBO {
 		}
 		
 		return userSession;
+	}
+
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

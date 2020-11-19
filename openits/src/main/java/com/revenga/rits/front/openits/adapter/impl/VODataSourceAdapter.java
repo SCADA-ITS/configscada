@@ -44,6 +44,8 @@ public class VODataSourceAdapter {
 	
 	public static final String DATA_SOURCE_GET_ALARMS = "data.source.get_alarms";
 	public static final String DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = "data.source.get_alarms_by_alarm_type";
+	public static final String DATA_SOURCE_GET_ALARMS_BY_SOURCE = "data.source.get_alarms_by_source";
+	public static final String DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE = "data.source.get_alarms_by_source_and_alarm_type";
 	public static final String DATA_SOURCE_GET_ALARM = "data.source.get_alarm";
 	public static final String DATA_SOURCE_GET_ALARM_TYPES = "data.source.get_alarm_types";
 	public static final String DATA_SOURCE_GET_ALARM_TYPE = "data.source.get_alarm_type";
@@ -155,6 +157,7 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_PLAN_SUBTYPE = "data.source.create_plan_subtype";
 	public static final String DATA_SOURCE_UPDATE_PLAN_SUBTYPE = "data.source.update_plan_subtype";
 	public static final String DATA_SOURCE_DELETE_PLAN_SUBTYPE = "data.source.delete_plan_subtype";
+	public static final String DATA_SOURCE_SEND_INCIDENTS = "data.source.send_incidents";
 	
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -172,6 +175,10 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetAlarms;
 	@Getter
 	private Integer dataSourceGetAlarmsByAlarmType;
+	@Getter
+	private Integer dataSourceGetAlarmsBySource;
+	@Getter
+	private Integer dataSourceGetAlarmsBySourceAndAlarmType;
 	@Getter
 	private Integer dataSourceGetAlarm;
 	@Getter
@@ -391,6 +398,8 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeletePlanSubtype;
 	@Getter
+	private Integer dataSourceSendIncidents;
+	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
 	private Integer dataSourceTypeGraphqlMutation;
@@ -418,6 +427,8 @@ public class VODataSourceAdapter {
 	
 		this.dataSourceGetAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS));
 		this.dataSourceGetAlarmsByAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE));
+		this.dataSourceGetAlarmsBySource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_SOURCE));
+		this.dataSourceGetAlarmsBySourceAndAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE));
 		this.dataSourceGetAlarm = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM));
 		this.dataSourceGetAlarmTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPES));
 		this.dataSourceGetAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPE));
@@ -528,6 +539,7 @@ public class VODataSourceAdapter {
 		this.dataSourceCreatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_SUBTYPE));
 		this.dataSourceUpdatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_SUBTYPE));
 		this.dataSourceDeletePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_SUBTYPE));
+		this.dataSourceSendIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_INCIDENTS));
 		
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
@@ -623,7 +635,7 @@ public class VODataSourceAdapter {
 			if (dataSourceValContent != null) content = dataSourceValContent.getValue();
 			
 			if (!StringUtils.isEmpty(method) && !StringUtils.isEmpty(params) && !StringUtils.isEmpty(paramTypes)
-					&& !StringUtils.isEmpty(content)) {
+					) {
 				
 				Map<String, Object> inputForMutation = getInputForMutation(dataSource, input);
 				

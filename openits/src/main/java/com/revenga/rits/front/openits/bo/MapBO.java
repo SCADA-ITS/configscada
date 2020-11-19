@@ -18,7 +18,7 @@ import com.revenga.rits.front.openitsdao.model.MapLayerElement;
 import com.revenga.rits.front.openitsdao.service.MapService;
 
 @Service
-public class MapBO {
+public class MapBO extends GenericBO {
 		
 	@Autowired
 	MapService mapService;
@@ -135,5 +135,17 @@ public class MapBO {
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

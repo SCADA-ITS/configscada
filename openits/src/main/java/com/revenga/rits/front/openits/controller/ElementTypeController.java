@@ -30,7 +30,7 @@ public class ElementTypeController {
 	@ApiOperation(value = "Get all elements types by id", notes = "Get all elements types by id")
 	public ResponseEntity<Object> getElementTypes() {
 		
-		return new ResponseEntity<>(elementTypeBO.getElementTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(elementTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -43,7 +43,7 @@ public class ElementTypeController {
 			example = "ElementType:3",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(elementTypeBO.getElementType(id), HttpStatus.OK);
+		return new ResponseEntity<>(elementTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}/elements")

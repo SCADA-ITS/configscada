@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class AlarmLevelBO {
+public class AlarmLevelBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,19 +22,22 @@ public class AlarmLevelBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getAlarmLevels() {
+	@Override
+	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> alarmLevels = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmLevels(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmLevels()).getFieldId(), alarmLevels);
 	}
-				
-	public Map<String, Object> getAlarmLevel(String id) {
+
+	@Override
+	public Map<String, Object> getItem(String id) {
 		
 		Map<String, Object> alarmLevel = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmLevel(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmLevel()).getFieldId(), alarmLevel);
 	}
+
 }

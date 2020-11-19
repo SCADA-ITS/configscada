@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class PlanOrderTypeBO {
+public class PlanOrderTypeBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,19 +22,22 @@ public class PlanOrderTypeBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getPlanOrderTypes() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> planOrderTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanOrderTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanOrderTypes()).getFieldId(), planOrderTypes);
 	}
-				
-	public Map<String, Object> getPlanOrderType(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> planOrderType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlanOrderType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanOrderType()).getFieldId(), planOrderType);
 	}
+
 }

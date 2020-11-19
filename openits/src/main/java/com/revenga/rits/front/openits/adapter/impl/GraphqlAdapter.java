@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,6 +152,16 @@ public class GraphqlAdapter {
 				if (data.isArray()) {
 					
 					list = ConversionUtil.stringToListMap(data.toString());
+				}
+				else if (data.isBoolean()) {
+					
+					Map<String, Object> mapBool = new HashedMap<>();
+					
+					mapBool.put(method, data.asBoolean());
+					
+					list = new ArrayList<>();
+					
+					list.add(mapBool);
 				}
 				else {
 					

@@ -58,7 +58,7 @@ public class PlanController {
 	@ApiOperation(value = "Get all plans", notes = "Get all plans")
 	public ResponseEntity<Object> getPlans() {
 		
-		return new ResponseEntity<>(planBO.getPlans(), HttpStatus.OK);
+		return new ResponseEntity<>(planBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -71,14 +71,14 @@ public class PlanController {
 			example = "Plan:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planBO.getPlan(id), HttpStatus.OK);
+		return new ResponseEntity<>(planBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_types")
 	@ApiOperation(value = "Get all plan types", notes = "Get all plan types")
 	public ResponseEntity<Object> getPlanTypes() {
 		
-		return new ResponseEntity<>(planTypeBO.getPlanTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(planTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_types/{id}")
@@ -91,14 +91,14 @@ public class PlanController {
 			example = "PlanType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planTypeBO.getPlanType(id), HttpStatus.OK);
+		return new ResponseEntity<>(planTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_subtypes")
 	@ApiOperation(value = "Get all plan subtypes", notes = "Get all plan subtypes")
 	public ResponseEntity<Object> getPlanSubtypes() {
 		
-		return new ResponseEntity<>(planSubtypeBO.getPlanSubtypes(), HttpStatus.OK);
+		return new ResponseEntity<>(planSubtypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_subtypes/{id}")
@@ -111,14 +111,14 @@ public class PlanController {
 			example = "PlanSubtype:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planSubtypeBO.getPlanSubtype(id), HttpStatus.OK);
+		return new ResponseEntity<>(planSubtypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_order_types")
 	@ApiOperation(value = "Get all plan order types", notes = "Get all plan order types")
 	public ResponseEntity<Object> getPlanOrderTypes() {
 		
-		return new ResponseEntity<>(planOrderTypeBO.getPlanOrderTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(planOrderTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_order_types/{id}")
@@ -131,7 +131,7 @@ public class PlanController {
 			example = "PlanOrderType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planOrderTypeBO.getPlanOrderType(id), HttpStatus.OK);
+		return new ResponseEntity<>(planOrderTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_state_types")
@@ -159,7 +159,7 @@ public class PlanController {
 	@ApiOperation(value = "Get all plan schedules", notes = "Get all plan schedules")
 	public ResponseEntity<Object> getPlanSchedules() {
 		
-		return new ResponseEntity<>(planScheduleBO.getPlanSchedules(), HttpStatus.OK);
+		return new ResponseEntity<>(planScheduleBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_schedules/{id}")
@@ -172,7 +172,7 @@ public class PlanController {
 			example = "PlanSchedules:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planScheduleBO.getPlanSchedule(id), HttpStatus.OK);
+		return new ResponseEntity<>(planScheduleBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_schedules/plan/{id}")
@@ -192,7 +192,7 @@ public class PlanController {
 	@ApiOperation(value = "Get all plan orders", notes = "Get all plan orders")
 	public ResponseEntity<Object> getPlanOrders() {
 		
-		return new ResponseEntity<>(planOrderBO.getPlanOrders(), HttpStatus.OK);
+		return new ResponseEntity<>(planOrderBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_orders/{id}")
@@ -205,7 +205,7 @@ public class PlanController {
 			example = "PlanOrder:1:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(planOrderBO.getPlanOrder(id), HttpStatus.OK);
+		return new ResponseEntity<>(planOrderBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/createPlan")

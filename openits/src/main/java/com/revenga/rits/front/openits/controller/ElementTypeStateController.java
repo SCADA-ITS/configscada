@@ -47,13 +47,13 @@ public class ElementTypeStateController {
 			example = "ElementTypeState:3:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(elementTypeStateBO.getElementTypeState(id), HttpStatus.OK);
+		return new ResponseEntity<>(elementTypeStateBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/element_values_states")
 	@ApiOperation(value = "Get all element values states", notes = "Get all element values states")
 	public ResponseEntity<Object> getElementValueStates() {
 		
-		return new ResponseEntity<>(elementValueStateBO.getElementValueStates(), HttpStatus.OK);
+		return new ResponseEntity<>(elementValueStateBO.getList(), HttpStatus.OK);
 	}
 }

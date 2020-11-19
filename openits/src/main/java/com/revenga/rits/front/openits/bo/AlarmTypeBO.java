@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class AlarmTypeBO {
+public class AlarmTypeBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -22,27 +22,22 @@ public class AlarmTypeBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getAlarmTypes() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> alarmTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmTypes()).getFieldId(), alarmTypes);
 	}
-				
-	public Map<String, Object> getAlarmType(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> alarmType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmType()).getFieldId(), alarmType);
 	}
 	
-	public List<Map<String, Object>> getAlarmsByAlarmType(String id) {
-		
-		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType(), new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType()).getFieldId(), alarms);
-	}
 }

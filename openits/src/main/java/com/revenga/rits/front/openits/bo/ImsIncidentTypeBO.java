@@ -11,7 +11,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
-public class ImsIncidentTypeBO {
+public class ImsIncidentTypeBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -21,17 +21,19 @@ public class ImsIncidentTypeBO {
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
-	
-	public List<Map<String, Object>> getIncidentTypes() {
-		
+
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> incidents = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentTypes(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidentTypes()).getFieldId(), incidents);
 	}
-				
-	public Map<String, Object> getIncidentType(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> incident = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncidentType(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()

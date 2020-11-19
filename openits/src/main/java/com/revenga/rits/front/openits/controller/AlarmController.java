@@ -50,7 +50,7 @@ public class AlarmController {
 	@ApiOperation(value = "Get all alarms", notes = "Get all alarms")
 	public ResponseEntity<Object> getAlarms() {
 		
-		return new ResponseEntity<>(alarmBO.getAlarms(), HttpStatus.OK);
+		return new ResponseEntity<>(alarmBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -63,14 +63,47 @@ public class AlarmController {
 			example = "Alarm:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmBO.getAlarm(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmBO.getItem(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/alarms/{sourceElementId}")
+	@ApiOperation(value = "Get all alarms by Element Source", notes = "Get all alarms by Element Source")
+	public ResponseEntity<Object> getAlarmsBySource(
+			@ApiParam(
+				name = "sourceElementId",
+				type = "String",
+				value = "Source Element id",
+				example = "Element:1:1",
+				required = true) @PathVariable String sourceElementId) {
+		
+		return new ResponseEntity<>(alarmBO.getAlarmsBySource(sourceElementId), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{sourceElementId}/{alarmTypeId}")
+	@ApiOperation(value = "Get all alarms by Element Source and Alarm Type", notes = "Get all alarms by Element Source and Alarm Type")
+	public ResponseEntity<Object> getAlarmsBySourceAndAlarmType(
+			@ApiParam(
+				name = "sourceElementId",
+				type = "String",
+				value = "Source Element id",
+				example = "Element:1:1",
+				required = true) @PathVariable String sourceElementId,
+			@ApiParam(
+				name = "alarmTypeId",
+				type = "String",
+				value = "Alarm Type id",
+				example = "AlarmType:1",
+				required = true) @PathVariable String alarmTypeId) {
+		
+		return new ResponseEntity<>(alarmBO.getAlarmsBySourceAndAlarmType(sourceElementId, alarmTypeId), HttpStatus.OK);
+	}
+	
 	
 	@GetMapping(value = "/alarm_configs")
 	@ApiOperation(value = "Get all alarm configs", notes = "Get all alarm configs")
 	public ResponseEntity<Object> getAlarmConfigs() {
 		
-		return new ResponseEntity<>(alarmConfigBO.getAlarmConfigs(), HttpStatus.OK);
+		return new ResponseEntity<>(alarmConfigBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_configs/{id}")
@@ -83,14 +116,14 @@ public class AlarmController {
 			example = "AlarmConfig:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmConfigBO.getAlarmConfig(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmConfigBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_types")
 	@ApiOperation(value = "Get all alarm types", notes = "Get all alarm types")
 	public ResponseEntity<Object> getAlarmTypes() {
 		
-		return new ResponseEntity<>(alarmTypeBO.getAlarmTypes(), HttpStatus.OK);
+		return new ResponseEntity<>(alarmTypeBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_types/{id}")
@@ -103,7 +136,7 @@ public class AlarmController {
 			example = "AlarmType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmTypeBO.getAlarmType(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_types/{id}/alarms")
@@ -116,14 +149,14 @@ public class AlarmController {
 			example = "AlarmType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmTypeBO.getAlarmsByAlarmType(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmBO.getAlarmsByAlarmType(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_levels")
 	@ApiOperation(value = "Get all alarm levels", notes = "Get all alarm levels")
 	public ResponseEntity<Object> getAlarmLevels() {
 		
-		return new ResponseEntity<>(alarmLevelBO.getAlarmLevels(), HttpStatus.OK);
+		return new ResponseEntity<>(alarmLevelBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_levels/{id}")
@@ -136,7 +169,7 @@ public class AlarmController {
 			example = "AlarmLevel:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmLevelBO.getAlarmLevel(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmLevelBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_muteds")
