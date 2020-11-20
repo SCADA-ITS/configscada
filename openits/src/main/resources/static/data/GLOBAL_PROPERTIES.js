@@ -62,12 +62,6 @@ export const ELEMENT_TYPE = {
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3"}
         }
-        // ,{ELEMENT_FORM_TAB_SYN: {
-        //   idSynoptic:"synopticUnifilarCsa",
-        //   width: 900,
-        //   height: 700
-        // }
-        // },
       ] 
     },
     "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_GENERIC, value: 3, scale_x: 28, scale_y: 28, svgRaw:SVG_3_DET},
@@ -175,13 +169,22 @@ export const ELEMENT_TYPE = {
       tabs:[
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_SYN: {
-          idSynoptic:"synopticUnifilarCsa",
-          width: 900,
-          height: 700
+          idSynoptic:"synopticCTs",
+          width: 680,
+          height: 500
         }
       }]
     },
-    "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 56, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR },
+    "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 56, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR, 
+    tabs:[
+      {ELEMENT_FORM_TAB_FORM: {}},
+      {ELEMENT_FORM_TAB_SYN: {
+        idSynoptic:"synopticUnifilarCsa",
+        width: 580,
+        height: 400
+      }
+    }]
+   },
     "ElementType:57" :{ id: "ElementType:57", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 57, scale_x: 120, scale_y: 120, svgRaw:SVG_57_MAGNETOTERMICO,
       elementTypeParams:[
         {MAGNETOTERMICO_STATE: "1:2"}

@@ -347,7 +347,7 @@ export let synopticData= [
 	},
 	{
 		"id":"synopticCTs",
-		"parentId":"Element:7:1",
+		"parentId":"Element:55:1",
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
