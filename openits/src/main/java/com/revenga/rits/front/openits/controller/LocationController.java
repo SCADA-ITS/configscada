@@ -48,10 +48,23 @@ public class LocationController {
 			name = "id",
 			type = "String",
 			value = "Location by id",
-			example = "Location:33:1",
+			example = "Location:1",
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(locationBO.getItem(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/locations/stretch/{id}")
+	@ApiOperation(value = "Get locations by stretch id", notes = "Get locations by stretch id")
+	public ResponseEntity<Object> getLocationByStretch(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Location by stretch id",
+			example = "Stretch:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(locationBO.getLocationByStretch(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/roads")

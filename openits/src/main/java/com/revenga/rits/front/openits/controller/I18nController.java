@@ -1,5 +1,8 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -124,9 +127,17 @@ public class I18nController {
 				required = true) @PathVariable String label,
 			@ApiParam(
 				name = "fields",
-				type = "String[]",
-				required = true) @PathVariable String[] fields) {	
+				type = "String",
+				required = true) @PathVariable String fields) {
 		
-		return new ResponseEntity<>(i18nBO.getLabelTranslatedUsingFields(localeId, moduleId, label, fields), HttpStatus.OK);
+		 String[] arrayFields = fields.split(",");
+		 List<String> listaString = new ArrayList<>();
+		 
+		 for (String string : arrayFields) {
+			
+			 listaString.add(string);
+		}
+		
+		return new ResponseEntity<>(i18nBO.getLabelTranslatedUsingFields(localeId, moduleId, label, listaString), HttpStatus.OK);
 	}	
 }

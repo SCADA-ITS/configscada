@@ -77,7 +77,7 @@ public class I18nBO extends GenericBO {
 						translation);
 	}
 	
-	public Map<String, Object> getLabelTranslatedUsingFields(String localeId, Integer moduleId, String label, String[] fields) {
+	public Map<String, Object> getLabelTranslatedUsingFields(String localeId, Integer moduleId, String label, List<String> fields) {
 
 		Map<String, Object> translation = voDataSourceAdapter.get(
 				voDataSourceAdapter.getDataSourceGetLabelTranslatedUsingFields(),

@@ -134,7 +134,9 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (114, 1, 'getAlarmsBySource', 'getAlarmsBySource', 'AlarmVO', 'id', true, true),
 (115, 1, 'getAlarmsBySourceAndAlarmType', 'getAlarmsBySourceAndAlarmType', 'AlarmVO', 'id', true, true),
 (116, 1, 'getAlarmConfigsByAlarmType', 'getAlarmConfigsByAlarmType', 'AlarmConfigVO', 'id', true, true),
-(117, 1, 'getAlarmConfigsByAlarmLevel', 'getAlarmConfigsByAlarmLevel', 'AlarmConfigVO', 'id', true, true);
+(117, 1, 'getAlarmConfigsByAlarmLevel', 'getAlarmConfigsByAlarmLevel', 'AlarmConfigVO', 'id', true, true),
+(118, 1, 'getLocationByStretch', 'getLocationByStretch', 'LocationVO', 'id', true, true),
+(119, 3, 'sendAuditLogs', 'sendAuditLogs', 'AuditLogVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -276,12 +278,12 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (28, 1, 'http://localhost:8082/graphql'),
 (28, 2, 'getLocations'),
 (28, 3, ''),
-(28, 4, '{id, alias, description, locationType, stretch {id}}'),
+(28, 4, '{id alias description locationType{id} stretch {id}}'),
 
 (29, 1, 'http://localhost:8082/graphql'),
 (29, 2, 'getLocation'),
 (29, 3, 'locationId'),
-(29, 4, '{id, alias, description, locationType, stretch {id}}'),
+(29, 4, '{id alias description locationType{id} stretch {id}}'),
 
 (30, 1, 'http://localhost:8082/graphql'),
 (30, 2, 'getElements'),
@@ -746,4 +748,15 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (117, 1, 'http://localhost:8082/graphql'),
 (117, 2, 'getAlarmConfigsByAlarmLevel'),
 (117, 3, 'alarmLevelId'),
-(117, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}');
+(117, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment alarmConfigMeasures{id} alarmTargetElements{id}}'),
+
+(118, 1, 'http://localhost:8082/graphql'),
+(118, 2, 'getLocationByStretch'),
+(118, 3, 'stretchId'),
+(118, 4, '{id alias description locationType{id} stretch {id}}'),
+
+(119, 8, 'http://localhost:8082/graphql'),
+(119, 9, 'sendAuditLogs'),
+(119, 10, 'auditLogs'),
+(119, 11, '[AuditLogVO!]!'),
+(119, 12, '');

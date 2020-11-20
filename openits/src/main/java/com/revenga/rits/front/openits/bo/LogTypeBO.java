@@ -40,4 +40,15 @@ public class LogTypeBO extends GenericBO {
 				.getById(voDataSourceAdapter.getDataSourceGetLogType()).getFieldId(), logType);
 	}
 
+	public Boolean sendAuditLogs(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendAuditLog = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAuditLogs(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendAuditLog);
+
+	    return res;
+	    
+	  }
 }

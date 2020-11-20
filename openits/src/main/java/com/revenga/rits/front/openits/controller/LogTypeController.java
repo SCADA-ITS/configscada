@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +46,13 @@ public class LogTypeController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(logTypeBO.getItem(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_audit_logs")
+	@ApiOperation(value = "Send Audit Logs", notes = "Send Audit Logs")
+	public ResponseEntity<Boolean> sendAuditLogs(@RequestBody Object auditLog) {
+		
+		return new ResponseEntity<>(logTypeBO.sendAuditLogs(auditLog), HttpStatus.OK);
 	}
 
 }
