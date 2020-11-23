@@ -6,8 +6,10 @@ import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 import SynopticElement from "../classes/SynopticElement.js";
 
 export default class TabForm {
-	constructor(id,columnsElementFormList) {
-		this.id = id;
+	constructor(id,parentId,columnsElementFormList) {
+		this.id = parentId !== null && parentId !== undefined ? parentId + "_" + id : id;
+		this.idQuery = id;
+		this.parentId = parentId;
 		if(columnsElementFormList){
 			this.columnsElementFormList = columnsElementFormList;
 		}else{
@@ -18,7 +20,7 @@ export default class TabForm {
 		this.synopticElement;
 
 		var graphElem = `query { 
-			getElement(elementId: "` + this.id + `"){
+			getElement(elementId: "` + this.idQuery + `"){
 				id
 				alias
 				description
@@ -344,14 +346,14 @@ export default class TabForm {
 			heartbeatOutgoing: 4000
 		});
 
-		this.topic = "/topic/element." + this.id;
+		this.topic = "/topic/element." + this.idQuery;
 		let update_table = (message) => {
 			try {
 				// console.warn(synopticElement);
 				let obj = JSON.parse(JSON.parse(message.body));
 				obj.basicElementsVO.forEach((element) => {
 					try {
-						let item = $$("elementBody" + element.id);
+						let item = $$("elementBody" + this.id);
 						if (item != null) {
 							let evalues = element.elementValues !== undefined ? element.elementValues : null;
 							let ealarms = element.alarms !== undefined ? element.alarms : null;
@@ -420,7 +422,7 @@ export default class TabForm {
 								element.elementValues.forEach(evalue => {
 									try {
 										let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
-										let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
+										let item3 = $$("elementBody" + this.id).getItem("elementBody" + this.id + "_" + eparam);
 										if (item3 !== null && typeof item3 != 'undefined') {
 											let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
 											let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
@@ -438,7 +440,7 @@ export default class TabForm {
 												item3["iconAlerted"] = evalue.alerted;
 											}
 											try {
-												$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
+												$$("elementBody" + this.id).updateItem("elementBody" + this.id + "_" + eparam, item3);
 											} catch (err) {
 												console.warn(err);
 											}
@@ -451,7 +453,7 @@ export default class TabForm {
 							if (ealarms !== null)
 								//gestionAlarms(element.alarms);
 								element.alarms.forEach(item => {
-									let itemSearch = $$( element.id + "_elementAlarmsTable").getItem(item.id + "_AlarmsElementForm");
+									let itemSearch = $$( this.id + "_elementAlarmsTable").getItem(item.id + "_AlarmsElementForm");
 									if (itemSearch !== undefined) {
 										
 										let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
@@ -461,17 +463,17 @@ export default class TabForm {
 										let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
 										if (controlDeactivation && controlrecognized) {
 											try {
-												$$( element.id + "_elementAlarmsTable").remove(itemSearch.id);
+												$$( this.id + "_elementAlarmsTable").remove(itemSearch.id);
 											} catch (err) {
 												console.log("Error: " + err.message);
 											}
 						
-											let itemSearch2 = $$( element.id + "_elementAlarmsTable");
+											let itemSearch2 = $$( this.id + "_elementAlarmsTable");
 											let items = itemSearch2.count();
 											
 											if (items === 0) {
-												$$(element.id + "_elementAlarmsTable").hide();
-												$$(element.id + "_elementAlarmsTable_HEADER").hide();
+												$$(this.id + "_elementAlarmsTable").hide();
+												$$(this.id + "_elementAlarmsTable_HEADER").hide();
 											}
 										} else {
 											let outlets = itemSearch["outlets"];
@@ -502,7 +504,7 @@ export default class TabForm {
 	
 											itemSearch["outlets"] = outlets;
 											try {
-												$$( element.id + "_elementAlarmsTable").updateItem(item.id + "_AlarmsElementForm", itemSearch);
+												$$( this.id + "_elementAlarmsTable").updateItem(item.id + "_AlarmsElementForm", itemSearch);
 												
 											} catch (err) {
 												console.log("Error: " + err.message);
@@ -548,9 +550,9 @@ export default class TabForm {
 															deactivation: deactivation, 
 															outlets: outlets };
 	
-												$$(element.id + "_elementAlarmsTable").add(row);
-												$$(element.id + "_elementAlarmsTable").show();
-												$$(element.id + "_elementAlarmsTable_HEADER").show();
+												$$(this.id + "_elementAlarmsTable").add(row);
+												$$(this.id + "_elementAlarmsTable").show();
+												$$(this.id + "_elementAlarmsTable_HEADER").show();
 										}
 									}
 								});
@@ -622,7 +624,7 @@ export default class TabForm {
 	getComponent() {
 		var client = this.client;
 		let result = {
-			id: "component"+this.id,
+			id: "component_" + this.id,
 			rows: [
 				this.header,
 				this.body,
@@ -816,7 +818,7 @@ export default class TabForm {
 			try {
 				if (checkUserPermission(RULE.COMMAND_ACTION)){
 					if(data.elementType.commandElementTypes){
-						this.commands = $$("component"+this.id).addView({
+						this.commands = $$("component_"+this.id).addView({
 							view: "form",
 							id: "comandos" + this.id,
 							elements:[]

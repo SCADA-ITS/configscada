@@ -61,9 +61,10 @@ export const ELEMENT_TYPE = {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
     "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_STATIC, value: 2, scale_x: 28, scale_y: 28, 
       tabs:[
-        {ELEMENT_FORM_TAB_FORM: {}},
+        
+        // {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
-          urlParamVideo:"ElementTypeParam:2:1:3"}
+          urlParamVideo:"ElementTypeParam:2:1:3", videoList: true}
         }
       ] 
     },

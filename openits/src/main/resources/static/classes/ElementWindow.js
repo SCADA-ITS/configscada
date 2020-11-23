@@ -17,7 +17,7 @@ export default class ElementWindow {
         let result = {};
         var parentId = this.parentId;
         var parentType = this.parentType;
-        this.elementForm = new TabForm(parentId,columnsElementFormList);
+        this.elementForm = new TabForm(parentId,null,columnsElementFormList);
         var elementF = this.elementForm;
         var v_synoptic = null;
         var tabs = null;
@@ -54,8 +54,8 @@ export default class ElementWindow {
             if(tabs[0]["ELEMENT_FORM_TAB_FORM"] !== undefined){
                 this.defaultTab = 0;
                 this.defaultTabView={             
-                    id: "cuerpo"+this.elementForm.id,
-                    cols:[ this.elementForm.getComponent()],
+                    id: "cuerpo"+parentId,
+                    cols:[this.elementForm.getComponent()],
                     on: {
                         onDestruct: function(obj){
                             //elementForm.disconnect();
@@ -77,9 +77,10 @@ export default class ElementWindow {
                 });
                 this.videoList = videoList;
                 if(urlStream !== null) {
-                    this.tabVideo = new TabVideo(parentId,urlStream);
+                    this.urlStream = urlStream;
+                    this.tabVideo = new TabVideo(parentId,parentId,urlStream);
                     this.defaultTabView={             
-                        id: "cuerpo"+this.elementForm.id,
+                        id: "cuerpo"+parentId,
                         cols:[this.tabVideo.getComponent()],
                     };
                 }else{
@@ -89,7 +90,6 @@ export default class ElementWindow {
 
             if(tabs[0]["ELEMENT_FORM_TAB_SYN"] !== undefined){
                 this.defaultTab = 2;
-
                 try {
                     let idSynop  = null;
                     let v_width = null;
@@ -102,7 +102,7 @@ export default class ElementWindow {
                     if(idSynop !== null) {
                         this.tabSynoptic = new TabSynoptic(parentId,idSynop,v_synoptic,v_width,v_height);
                         this.defaultTabView={        
-                            id: "cuerpo"+elementF.id,
+                            id: "cuerpo"+parentId,
                             cols:[this.tabSynoptic.getComponent()],
                         };
                     }else{
@@ -114,8 +114,8 @@ export default class ElementWindow {
             if(counter === 0) {
                 this.defaultTab = 0;
                 this.defaultTabView={             
-                    id: "cuerpo"+this.elementForm.id,
-                    cols:[ this.elementForm.getComponent()],
+                    id: "cuerpo"+parentId,
+                    cols:[this.elementForm.getComponent()],
                     on: {
                         onDestruct: function(obj){
                             //elementForm.disconnect();
@@ -126,44 +126,56 @@ export default class ElementWindow {
                     }
                 };
             }
-
-            result = {
-                id: "window" + this.parentId,
-                rows:
-                [
-                    {
-                        id: "tabbar" + this.parentId,
-                        view: "tabbar",
-                        options:tabsArray,
-                        on: {
-                            onAfterTabClick: function(obj){
-                                if($$("cuerpo"+elementF.id)) {
-                                    $$(parentId + "_" + parentType + "_TAB_FORM").removeView("cuerpo"+elementF.id);
-                                    if(idSyn !== undefined && idSyn !== null){
-                                        if($$("menu" + idSyn + parentId.replaceAll(":","_"))){
-                                            $$("menu" + idSyn + parentId.replaceAll(":","_")).destructor();
+            if(counter === 1){
+                result = {
+                    id: "window" + this.parentId,
+                    rows:
+                    [
+                        {
+                            id: this.parentId + "_" + this.parentType + "_TAB_FORM", 
+                            rows: [this.defaultTabView]  
+                        }
+                    ]
+                };
+            }else{
+                result = {
+                    id: "window" + this.parentId,
+                    rows:
+                    [
+                        {
+                            id: "tabbar" + this.parentId,
+                            view: "tabbar",
+                            options:tabsArray,
+                            on: {
+                                onAfterTabClick: function(obj){
+                                    if($$("cuerpo"+parentId)) {
+                                        $$(parentId + "_" + parentType + "_TAB_FORM").removeView("cuerpo"+parentId);
+                                        if(idSyn !== undefined && idSyn !== null){
+                                            if($$("menu" + idSyn + parentId.replaceAll(":","_"))){
+                                                $$("menu" + idSyn + parentId.replaceAll(":","_")).destructor();
+                                            }
                                         }
                                     }
+                                    createTabView(obj,parentId,parentType,elementF,tabs,v_synoptic);
                                 }
-                                createTabView(obj,parentId,parentType,elementF,tabs,v_synoptic);
                             }
+                        },
+                        {
+                            cells: [
+                                {
+                                    id: this.parentId + "_" + this.parentType + "_TAB_FORM", 
+                                    rows: [this.defaultTabView]  
+                                }
+                            ]
                         }
-                    },
-                    {
-                        cells: [
-                            {
-                                id: this.parentId + "_" + this.parentType + "_TAB_FORM", 
-                                rows: [this.defaultTabView]  
-                            }
-                        ]
-                    }
-                ]
-            };
+                    ]
+                };
+            }
 
         } else {
             result = {
-                id: "cuerpo"+this.elementForm.id,
-                cols:[ this.elementForm.getComponent()],
+                id: "cuerpo"+parentId,
+                cols:[this.elementForm.getComponent()],
                 on: {
                     onDestruct: function(obj){
                         //elementForm.disconnect();
@@ -181,18 +193,18 @@ export default class ElementWindow {
     loadData(){
         if(this.defaultTab === undefined){
             this.elementForm.loadData();
-            let hijos = new ElementChildsList(this.elementForm.id);
+            let hijos = new ElementChildsList(this.parentId);
             hijos.getComponent();
         }else{
             switch(this.defaultTab){
                 case 0:
                     this.elementForm.loadData();
-                    let hijos = new ElementChildsList(this.elementForm.id);
+                    let hijos = new ElementChildsList(this.parentId);
                     hijos.getComponent();
                 break;
                 case 1:
                     this.tabVideo.loadData();
-                    let videoList = new TabVideoList(this.elementForm.id,this.parentType,this.videoList,this.tabVideo.urlStream);
+                    let videoList = new TabVideoList(this.elementForm.id,this.parentType,this.videoList,this.urlStream);
                     videoList.getComponent();
                 break;
                 case 2:
@@ -208,7 +220,7 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
     switch (id) {
         case parentId + "_" + parentType + "_TAB_FORM":
             $$(parentId + "_" + parentType + "_TAB_FORM").addView({             
-                id: "cuerpo"+elementF.id,
+                id: "cuerpo"+parentId,
                 cols:[ elementF.getComponent()],
                 on: {
                     onDestruct: function(obj){
@@ -231,9 +243,9 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
                 videoList = element["ELEMENT_FORM_TAB_VIDEO"] !== undefined ? element["ELEMENT_FORM_TAB_VIDEO"].videoList : videoList;
             });
             if(urlStream !== null) {
-                let tabVideo = new TabVideo(parentId,urlStream);
+                let tabVideo = new TabVideo(parentId,parentId,urlStream);
                 $$(parentId + "_" + parentType + "_TAB_FORM").addView({             
-                    id: "cuerpo"+elementF.id,
+                    id: "cuerpo"+parentId,
                     cols:[tabVideo.getComponent()]
                 });
                 tabVideo.loadData();
@@ -257,7 +269,7 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
                     //let v_synoptic = synopticData.find(x => x.id === idSynop);
                     let tabSynoptic = new TabSynoptic(parentId,idSynop,synoptic,v_width,v_height);
                     $$(parentId + "_" + parentType + "_TAB_FORM").addView({             
-                        id: "cuerpo"+elementF.id,
+                        id: "cuerpo"+parentId,
                         cols:[tabSynoptic.getComponent()]
                     });
                     tabSynoptic.loadData();

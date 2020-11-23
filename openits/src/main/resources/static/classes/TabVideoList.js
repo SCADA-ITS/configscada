@@ -39,21 +39,17 @@ export default class TabVideoList {
                     select: true,
                     template: "#alias#",
                     click: function(obj) {
-                        if($$("vvtabVideo"+parentId) !== undefined) {
-                            $$("cuerpo" + parentId).removeView($$("vvtabVideo"+parentId));
-                        }
-                        else {
-                            $$($$("cuerpo" + parentId).getChildViews()[0].config.id).data.order.forEach(element => {
-                                if($$("vvtabVideo"+element) !== undefined) {
-                                    $$("cuerpo" + parentId).removeView($$("vvtabVideo"+element));
-                                }
-                            });
-                        }
-                        let eTabVideo = new TabVideo(parentId,obj.split("_")[3]);
+                        $$($$("cuerpo" + parentId).getChildViews()[0].config.id).data.order.forEach(element => {
+                            if($$("vvtabVideo_"+parentId+"_"+element.split("_")[2]) !== undefined) {
+                                $$("cuerpo" + parentId).removeView($$("vvtabVideo_"+parentId+"_"+element.split("_")[2]));
+                            }
+                        });
+                        let eTabVideo = new TabVideo(obj.split("_")[2],obj.split("_")[1],obj.split("_")[3]);
                         $$("cuerpo" + parentId).addView(eTabVideo.getComponent(),1);
                         eTabVideo.loadData();
                     }
                 },0);
+                $$("videoList" + this.parentId).select("videoList_" + parentId + "_" + parentId + "_" + this.urlParamVideo);
             });
         }
     }
