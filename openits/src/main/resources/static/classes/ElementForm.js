@@ -387,6 +387,7 @@ export default class TabForm {
 
 	update_table(message) {
 		try {
+			// console.warn(synopticElement);
 			let obj = JSON.parse(JSON.parse(message.body));
 			obj.basicElementsVO.forEach((element) => {
 				try {
@@ -446,7 +447,7 @@ export default class TabForm {
 									});
 							} else {
 								synopticElement.updateElement(element);
-								getElementIcon(synopticElement.element, ":Form");
+								synopticElement.getElementIcon(":Form");
 							}
 						} catch (err) {
 							console.log("Error: " + err.message);
@@ -646,7 +647,6 @@ export default class TabForm {
 	}
 
 	loadData() {
-		
 		// waits for the element and starts drawing
 		this.elementReady('[view_id="' + "elementBody" + this.id + '"]').then((c) => {
 			let spinnerDivToAdd = document.createElement("div");
@@ -684,8 +684,6 @@ export default class TabForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
 				) {
-					//"ElementType:10"){
-					
 					// obtain the panel configuration
 					let panelConfig = data.elementValues.find(
 						(ic) =>
@@ -715,7 +713,7 @@ export default class TabForm {
 					let scale_height = 40 / total_height;
 					let scaled_width = total_width * scale_height;
 					//iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
-					iconoSvg = getElementSVG(data, scaled_width, total_height, ":Form");
+					iconoSvg = synopticElement.getElementSVG(scaled_width, total_height, ":Form");
 
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 
@@ -723,13 +721,14 @@ export default class TabForm {
 					document.getElementById(data.id + ":Form").setAttribute("transform", "scale(" + scale_height + "," + scale_height + ")");
 
 				} else if(elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_DMS) {
-					iconoSvg = getElementSVG(data, 180, 40, ":Form");
+					iconoSvg = synopticElement.getElementSVG(180, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 			 	} else {
-					iconoSvg = getElementSVG(data, 40, 40, ":Form");
+					iconoSvg = synopticElement.getElementSVG(40, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 				}
 				synopticElement.updateElement(data);
+				// synopticElement.paintIcon()
 				getElementIcon(synopticElement.element, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);

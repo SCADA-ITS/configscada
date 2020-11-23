@@ -191,10 +191,14 @@ export default class synopticElement {
   }
 
   getElementSVG(width, height, suffix=""){
-    return getElementSVG(this.element, width, height, suffix) 
+    return getElementSVG(this.element, width, height, suffix);
   }
 
-  updatePaint(suffix){
+  getElementIcon(suffix=""){
+    return getElementIcon(this.element, suffix);
+  }
+
+  updatePaint(suffix=""){
     getElementIcon(this.element, suffix);
   }
 
