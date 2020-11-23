@@ -1,12 +1,9 @@
-import {getElementSVG, getElementIcon} from "../lib/iconGenerator.js";
+import {getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-import {alarmsCfg} from "../data/alarmsCfg.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
 import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 import SynopticElement from "../classes/SynopticElement.js";
-
-let synopticElement;
 
 export default class TabForm {
 	constructor(id,columnsElementFormList) {
@@ -18,7 +15,7 @@ export default class TabForm {
 		}
 		var idtable = this.id;
 		let self = this;
-		
+		this.synopticElement;
 
 		var graphElem = `query { 
 			getElement(elementId: "` + this.id + `"){
@@ -61,9 +58,6 @@ export default class TabForm {
 					alarmConfig {
 						id 
 						alias 
-						alarmLevel {
-							labelAlias
-					  	}
 					}
 					recognized
 					recognizedComments
@@ -351,8 +345,227 @@ export default class TabForm {
 		});
 
 		this.topic = "/topic/element." + this.id;
+		let update_table = (message) => {
+			try {
+				// console.warn(synopticElement);
+				let obj = JSON.parse(JSON.parse(message.body));
+				obj.basicElementsVO.forEach((element) => {
+					try {
+						let item = $$("elementBody" + element.id);
+						if (item != null) {
+							let evalues = element.elementValues !== undefined ? element.elementValues : null;
+							let ealarms = element.alarms !== undefined ? element.alarms : null;
+							try {
+								if (evalues === null)
+									element["elementValues"] = [];
+	
+								if (elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
+								) {
+									let elementQuery = webix.proxy(
+										"GraphQL",`
+										query ($elem: String!) {
+											getElement(elementId: $elem)
+											{
+												id
+												state
+												elementType {
+													id
+													alias
+												}
+												elementValues
+												{
+													id
+													value
+													alerted
+													elementTypeParam {
+														description
+													}
+												}
+											}
+										}
+										`
+									);
+	
+									// loads the data
+									elementQuery.load({
+											elem: element.id,
+										}).then((data) => {
+											// process the received data
+											let element = data;
+	
+											getElementIcon(data, ":Form");
+										});
+								} else {
+									if(this.synopticElement == undefined){
+										this.synopticElement= new SynopticElement(element);
+									}else{
+										this.synopticElement.updateElement(element);
+									}
+									this.synopticElement.getElementIcon(":Form");
+								}
+							} catch (err) {
+								console.error(err);
+							}
+							if (evalues !== null) {
+								element.elementValues.forEach(evalue => {
+									try {
+										let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
+										let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
+										if (item3 !== null && typeof item3 != 'undefined') {
+											let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
+											let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
+											try {
+												if(typeof ELEMENT_TYPE_PARAM.values[eparam] != 'undefined' && typeof ELEMENT_TYPE_PARAM.values[eparam].dataTypeId != 'undefined'){
+													let itemParamTypeId = ELEMENT_TYPE_PARAM.values[eparam].dataTypeId;
+													value = parseUIParam(value, itemParamTypeId);
+												}
+											} catch (error) {
+												console.warn("Eparam: "+ eparam + ", evalue.id: "+evalue.id);
+												console.warn(error);
+											}
+											item3["measure"] = value;
+											if (alerted !== -1) {
+												item3["iconAlerted"] = evalue.alerted;
+											}
+											try {
+												$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
+											} catch (err) {
+												console.warn(err);
+											}
+										}
+									} catch (err) {
+										console.error(err);
+									}
+								});
+							}
+							if (ealarms !== null)
+								//gestionAlarms(element.alarms);
+								element.alarms.forEach(item => {
+									let itemSearch = $$( element.id + "_elementAlarmsTable").getItem(item.id + "_AlarmsElementForm");
+									if (itemSearch !== undefined) {
+										
+										let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
+										let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+										
+										let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
+										let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
+										if (controlDeactivation && controlrecognized) {
+											try {
+												$$( element.id + "_elementAlarmsTable").remove(itemSearch.id);
+											} catch (err) {
+												console.log("Error: " + err.message);
+											}
+						
+											let itemSearch2 = $$( element.id + "_elementAlarmsTable");
+											let items = itemSearch2.count();
+											
+											if (items === 0) {
+												$$(element.id + "_elementAlarmsTable").hide();
+												$$(element.id + "_elementAlarmsTable_HEADER").hide();
+											}
+										} else {
+											let outlets = itemSearch["outlets"];
+											if (deactivation !== "NA") {
+												itemSearch["deactivation"] = deactivation;
+												outlets[2]["measure"] = new Date(item.deactivation).toISOString();
+												if (itemSearch.$subContent !== undefined) {
+													let subDeactivation = $$(itemSearch.$subContent).getItem(element.id + "_outlet_deactivation");
+													if (subDeactivation !== undefined) {
+														let v_subDeactivation = subDeactivation;
+														v_subDeactivation["measure"] = new Date(item.deactivation).toISOString();
+														$$(itemSearch.$subContent).updateItem(element.id + "_outlet_deactivation", v_subDeactivation);
+													}
+												}
+											}
+											if (recognized !== "NA") {
+												itemSearch["recognized"] = recognized;
+												outlets[3]["measure"] = new Date(item.recognized).toISOString();
+												if (itemSearch.$subContent !== undefined) {
+													let subrecognized = $$(itemSearch.$subContent).getItem(element.id + "_outlet_recognized");
+													if (subrecognized !== undefined) {
+														let v_subrecognized = subrecognized;
+														v_subrecognized["measure"] = new Date(item.recognized).toISOString();
+														$$(itemSearch.$subContent).updateItem(element.id + "_outlet_recognized", v_subrecognized);
+													}
+												}
+											}
+	
+											itemSearch["outlets"] = outlets;
+											try {
+												$$( element.id + "_elementAlarmsTable").updateItem(item.id + "_AlarmsElementForm", itemSearch);
+												
+											} catch (err) {
+												console.log("Error: " + err.message);
+											}
+										}
+						
+									} else {
+										
+										let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
+										let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
+	
+										let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
+										let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
+	
+										if (controlDeactivation && controlrecognized) {
+											//no hacemos nada
+										} else {
+											let elementQueryacf = webix.proxy(
+												"GraphQL",`query getAlarm($alarmId: String!) {
+													getAlarm(alarmId: $alarmId) {
+														id
+														alarmConfig {
+															id 
+															alias 
+														}
+													}
+												}`
+											);
+	
+												let activation = item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : null : null;
+												let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
+												let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
+												let outlets = [];
+												outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? moment(new Date(item.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
+												outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? moment(new Date(item.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
+												outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? moment(new Date(item.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
+	
+												let row = { 
+															id: item.id + "_AlarmsElementForm" , 
+															title: $.i18n(item.alarmConfig.id), 
+															recognized: recognized, 
+															activation: activation, 
+															deactivation: deactivation, 
+															outlets: outlets };
+	
+												$$(element.id + "_elementAlarmsTable").add(row);
+												$$(element.id + "_elementAlarmsTable").show();
+												$$(element.id + "_elementAlarmsTable_HEADER").show();
+										}
+									}
+								});
+						}
+					} catch (err) {
+						console.error(err);
+					}
+				});
+			} catch (err) {
+				console.error(error);
+			}
+		}
+
 		this.client.onConnect = function(frame) {
-			this.suscription = self.client.subscribe(self.topic, self.update_table);
+			this.suscription = self.client.subscribe(self.topic, update_table);
 		};
 		this.client.onStompError = function(frame) {
 			// Will be invoked in case of error encountered at Broker
@@ -384,225 +597,6 @@ export default class TabForm {
     {
         return timestamp !== null ? new Date(timestamp).toISOString() : '-';
     }
-
-	update_table(message) {
-		try {
-			// console.warn(synopticElement);
-			let obj = JSON.parse(JSON.parse(message.body));
-			obj.basicElementsVO.forEach((element) => {
-				try {
-					let item = $$("elementBody" + element.id);
-					if (item != null) {
-						let evalues = element.elementValues !== undefined ? element.elementValues : null;
-						let ealarms = element.alarms !== undefined ? element.alarms : null;
-						try {
-							if (evalues === null)
-								element["elementValues"] = [];
-
-							if (elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_DMS
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_27_PMV_A_B
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
-							|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
-							) {
-								let elementQuery = webix.proxy(
-									"GraphQL",`
-									query ($elem: String!) {
-										getElement(elementId: $elem)
-										{
-											id
-											state
-											elementType {
-												id
-												alias
-											}
-											elementValues
-											{
-												id
-												value
-												alerted
-												elementTypeParam {
-													description
-												}
-											}
-										}
-									}
-									`
-								);
-
-								// loads the data
-								elementQuery.load({
-										elem: element.id,
-									}).then((data) => {
-										// process the received data
-										let element = data;
-
-										getElementIcon(data, ":Form");
-									});
-							} else {
-								synopticElement.updateElement(element);
-								synopticElement.getElementIcon(":Form");
-							}
-						} catch (err) {
-							console.log("Error: " + err.message);
-						}
-						if (evalues !== null) {
-							element.elementValues.forEach(evalue => {
-								try {
-									let eparam = elementTypeMap.getElementParamTypeIdi18(evalue.id);
-									let item3 = $$("elementBody" + element.id).getItem("elementBody" + element.id + "_" + eparam);
-									if (item3 !== null && typeof item3 != 'undefined') {
-										let value = evalue.value !== undefined ? evalue.value === null ? "" : evalue.value : "";
-										let alerted = evalue.alerted !== undefined ? evalue.alerted : -1;
-										try {
-											if(typeof ELEMENT_TYPE_PARAM.values[eparam] != 'undefined' && typeof ELEMENT_TYPE_PARAM.values[eparam].dataTypeId != 'undefined'){
-												let itemParamTypeId = ELEMENT_TYPE_PARAM.values[eparam].dataTypeId;
-												value = parseUIParam(value, itemParamTypeId);
-											}
-										} catch (error) {
-											console.warn("Eparam: "+ eparam + ", evalue.id: "+evalue.id);
-											console.warn(error);
-										}
-										item3["measure"] = value;
-										if (alerted !== -1) {
-											item3["iconAlerted"] = evalue.alerted;
-										}
-										try {
-											$$("elementBody" + element.id).updateItem("elementBody" + element.id + "_" + eparam, item3);
-										} catch (err) {
-											console.log("Error: " + err.message);
-										}
-									}
-								} catch (err) {
-									console.log("Error: " + err.message);
-								}
-							});
-						}
-						if (ealarms !== null)
-							//gestionAlarms(element.alarms);
-							element.alarms.forEach(item => {
-								let itemSearch = $$( element.id + "_elementAlarmsTable").getItem(item.id + "_AlarmsElementForm");
-								if (itemSearch !== undefined) {
-									
-									let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
-									let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
-									
-									let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
-									let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
-									if (controlDeactivation && controlrecognized) {
-										try {
-											$$( element.id + "_elementAlarmsTable").remove(itemSearch.id);
-										} catch (err) {
-											console.log("Error: " + err.message);
-										}
-					
-										let itemSearch2 = $$( element.id + "_elementAlarmsTable");
-										let items = itemSearch2.count();
-										
-										if (items === 0) {
-											$$(element.id + "_elementAlarmsTable").hide();
-											$$(element.id + "_elementAlarmsTable_HEADER").hide();
-										}
-									} else {
-										let outlets = itemSearch["outlets"];
-										if (deactivation !== "NA") {
-											itemSearch["deactivation"] = deactivation;
-											outlets[2]["measure"] = new Date(item.deactivation).toISOString();
-											if (itemSearch.$subContent !== undefined) {
-												let subDeactivation = $$(itemSearch.$subContent).getItem(element.id + "_outlet_deactivation");
-												if (subDeactivation !== undefined) {
-													let v_subDeactivation = subDeactivation;
-													v_subDeactivation["measure"] = new Date(item.deactivation).toISOString();
-													$$(itemSearch.$subContent).updateItem(element.id + "_outlet_deactivation", v_subDeactivation);
-												}
-											}
-										}
-										if (recognized !== "NA") {
-											itemSearch["recognized"] = recognized;
-											outlets[3]["measure"] = new Date(item.recognized).toISOString();
-											if (itemSearch.$subContent !== undefined) {
-												let subrecognized = $$(itemSearch.$subContent).getItem(element.id + "_outlet_recognized");
-												if (subrecognized !== undefined) {
-													let v_subrecognized = subrecognized;
-													v_subrecognized["measure"] = new Date(item.recognized).toISOString();
-													$$(itemSearch.$subContent).updateItem(element.id + "_outlet_recognized", v_subrecognized);
-												}
-											}
-										}
-
-										itemSearch["outlets"] = outlets;
-										try {
-											$$( element.id + "_elementAlarmsTable").updateItem(item.id + "_AlarmsElementForm", itemSearch);
-											
-										} catch (err) {
-											console.log("Error: " + err.message);
-										}
-									}
-					
-								} else {
-									
-									let deactivation = item.deactivation !== undefined ? item.deactivation === null ? "-" : item.deactivation : "NA"; //NA por si no nos dan valor
-									let recognized = item.recognized !== undefined ? item.recognized === null ? "-" : item.recognized : "NA";
-
-									let controlDeactivation = (deactivation !== "-" && deactivation !== "NA") ? true : false;
-									let controlrecognized = (recognized !== "-" && recognized !== "NA") ? true : false;
-
-									if (controlDeactivation && controlrecognized) {
-										//no hacemos nada
-									} else {
-										let elementQueryacf = webix.proxy(
-											"GraphQL",`query getAlarm($alarmId: String!) {
-												getAlarm(alarmId: $alarmId) {
-													id
-													alarmConfig {
-														id 
-														alias 
-														alarmLevel {
-															labelAlias
-														}
-													}
-												}
-											}`
-										);
-
-											let activation = item.activation !== undefined ? item.activation !== null ? new Date(item.activation).toISOString() : null : null;
-											let deactivation = item.deactivation !== undefined ? item.deactivation !== null ? new Date(item.deactivation).toISOString() : null : null;
-											let recognized = item.recognized !== undefined ? item.recognized !== null ? new Date(item.recognized).toISOString() : null : null;
-											let outlets = [];
-											outlets.push({id: element.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== undefined ? item.activation !== null ? moment(new Date(item.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: alarmsCfg[item.alarmConfig.id].alarmLevel });
-											outlets.push({id: element.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== undefined ? item.deactivation !== null ? moment(new Date(item.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
-											outlets.push({id: element.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== undefined ? item.recognized !== null ? moment(new Date(item.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-' });
-
-											let row = { 
-														id: item.id + "_AlarmsElementForm" , 
-														title: $.i18n(item.alarmConfig.id), 
-														recognized: recognized, 
-														activation: activation, 
-														deactivation: deactivation, 
-														outlets: outlets };
-
-											$$(element.id + "_elementAlarmsTable").add(row);
-											$$(element.id + "_elementAlarmsTable").show();
-											$$(element.id + "_elementAlarmsTable_HEADER").show();
-									}
-								}
-							});
-					}
-				} catch (err) {
-					console.log("Error: " + err.message);
-				}
-			});
-		} catch (err) {
-			console.log("Error: " + err.message);
-		}
-	}
 
     // got from Github
     elementReady(selector) {
@@ -659,7 +653,12 @@ export default class TabForm {
 
 		this.graphql.load().then(data => {
 			this.data = data;
-			synopticElement = new SynopticElement(data);
+			if(this.synopticElement==undefined){
+				this.synopticElement = new SynopticElement(data);
+			}else{
+				this.synopticElement.updateElement(data);
+			}
+			
 			// HEADER
 			try {
 				let headerTitle = $.i18n(data.elementType.id + ".alias") + " " + data.alias;
@@ -713,7 +712,7 @@ export default class TabForm {
 					let scale_height = 40 / total_height;
 					let scaled_width = total_width * scale_height;
 					//iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
-					iconoSvg = synopticElement.getElementSVG(scaled_width, total_height, ":Form");
+					iconoSvg = this.synopticElement.getElementSVG(scaled_width, total_height, ":Form");
 
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 
@@ -721,15 +720,15 @@ export default class TabForm {
 					document.getElementById(data.id + ":Form").setAttribute("transform", "scale(" + scale_height + "," + scale_height + ")");
 
 				} else if(elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_DMS) {
-					iconoSvg = synopticElement.getElementSVG(180, 40, ":Form");
+					iconoSvg = this.synopticElement.getElementSVG(180, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 			 	} else {
-					iconoSvg = synopticElement.getElementSVG(40, 40, ":Form");
+					iconoSvg = this.synopticElement.getElementSVG(40, 40, ":Form");
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
 				}
-				synopticElement.updateElement(data);
+				this.synopticElement.updateElement(data);
 				// synopticElement.paintIcon()
-				getElementIcon(synopticElement.element, ":Form");
+				getElementIcon(this.synopticElement.element, ":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);
@@ -796,7 +795,6 @@ export default class TabForm {
 
 							let outlets = [];
 							outlets.push({id: item.id + "_outlet_activation", title: $.i18n("elementForm.alarms.activation"), measure: item.activation !== null ?  moment(new Date(item.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' });
-							outlets.push({id: item.id + "_outlet_alarmLevel", title: $.i18n("elementForm.alarms.alarmLevel"), measure: item.alarmConfig.alarmLevel });
 							outlets.push({id: item.id + "_outlet_deactivation", title: $.i18n("elementForm.alarms.deactivation"), measure: item.deactivation !== null ? moment(new Date(item.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' });
 							outlets.push({id: item.id + "_outlet_recognized", title: $.i18n("elementForm.alarms.recognized"), measure: item.recognized !== null ? moment(new Date(item.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' });
 							let row = {id: item.id + "_AlarmsElementForm", title: $.i18n(item.alarmConfig.id), recognized: item.recognized, activation: item.activation, deactivation: item.deactivation, outlets: outlets };
@@ -902,6 +900,21 @@ export default class TabForm {
 											]
 										}).then(() => {
 											webix.message({type:"success", text:$.i18n("lbl_command_sended")});
+											//Audit
+											let auditLog={
+												"logTypeId": "LogType:3",
+												"auditLogValues": [
+													{
+														"value": data.elementType.commandElementTypes[index].id,
+														"logTypeParamId": "LogTypeParam:3:1"
+													  }
+													  ,{
+														"value": elementId,
+														"logTypeParamId": "LogTypeParam:3:2"
+													  }
+												]
+											};
+											auditMutation(auditLog);
 										});
 									}
 								}, -1);

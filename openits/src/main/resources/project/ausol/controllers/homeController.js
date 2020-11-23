@@ -1,7 +1,7 @@
 import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
 import {synopticData} from "../data/synoptics.js";
 
-import { map } from "../widgets/map.js";
+//import { map } from "../widgets/map.js";
 import { equipments } from "../widgets/equipments.js";
 import { alarms } from "../widgets/alarms.js";
 import { plans } from "../widgets/plans.js";
@@ -17,6 +17,9 @@ import {usersmanager} from "../widgets/usersmanager.js";
 import { cctv } from "../widgets/cctv.js";
 import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
+
+import { mapsData } from "../data/mapsData.js";
+import Map from "../classes/Map.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -53,10 +56,12 @@ let viewCells = [
         id: "equipments",
         rows: [equipments]
     },
+    /*
     {
         id: "map",
         rows: [map]
     },
+    */
     {
         id: "plans",
         rows: [plans]                            
@@ -93,6 +98,20 @@ let viewCells = [
                   syn.init();
                 }
               }]
+        });
+    });
+
+    mapsData.forEach((item, index) => {
+        let map = new Map(item, item.parentId);
+        viewCells.push({
+            id: "map" + index,
+            rows: [{
+                view: "template",
+                id: item.id,
+                url: function() {
+                    map.init();
+                }
+            }]
         });
     });
 

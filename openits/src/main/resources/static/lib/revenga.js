@@ -64,3 +64,26 @@ function parseUIParam(value, dataTypeId) {
   }
   return result;
 }
+
+//Deprecated
+function auditMutation(auditLog) {
+  let auditMutation = webix.proxy("GraphQL",
+    `mutation  sendAuditLogs ($auditLogs: [AuditLogVO!]!){
+      sendAuditLogs(auditLogs :  $auditLogs)
+     }`
+  );
+  if(auditLog==undefined){
+    auditLog={};
+  }
+  auditLog.userId=webix.storage.session.get("userId");
+  auditLog.time=new Date().getTime();
+  
+  auditMutation.load({
+    auditLogs: [auditLog]
+  })
+  // .then(auditResult => {
+  //   console.warn(auditResult);
+  //   console.warn(auditLog);
+  //   console.warn(JSON.stringify(auditLog));
+  // });
+}

@@ -261,8 +261,7 @@ export default class ElementCommand {
 											sendCommandElement(commands: $commands)  
 										}`;
                       var graphql = webix.proxy("GraphQL", sendCommand);
-                      graphql
-                        .save({
+                      graphql.save({
                           commands: [
                             {
                               commandElementTypeId:
@@ -276,6 +275,21 @@ export default class ElementCommand {
                             type: "success",
                             text: $.i18n("lbl_command_sended"),
                           });
+                          //Audit
+                          let auditLog={
+                            "logTypeId": "LogType:3",
+                            "auditLogValues": [
+                              {
+                                "value": data.elementType.commandElementTypes[index].id,
+                                "logTypeParamId": "LogTypeParam:3:1"
+                              }
+                              ,{
+                                "value": idtable[i],
+                                "logTypeParamId": "LogTypeParam:3:2"
+                              }
+                            ]
+                          };
+                          auditMutation(auditLog);
                         });
                     }
                   },

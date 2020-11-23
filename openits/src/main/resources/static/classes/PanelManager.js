@@ -393,6 +393,24 @@ export default class PanelManager {
 							}).then(() => {
 								$$("panelManager" + datos.elementId).hide();
 								webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
+								let auditLog={
+									"logTypeId": "LogType:3",
+									"auditLogValues": [
+										{
+											"value": datos.v_commandtypeId,
+											"logTypeParamId": "LogTypeParam:3:1"
+										}
+										,{
+											"value": datosId,
+											"logTypeParamId": "LogTypeParam:3:2"
+										}
+										,{
+											"value": v_commands_values,
+											"logTypeParamId": "LogTypeParam:3:3"
+										}
+									]
+								};
+								auditMutation(auditLog);
 							});
 						}else{
 							if(!tamanio) {
@@ -552,7 +570,27 @@ export default class PanelManager {
 								]
 								}).then(() => {
 									webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-									$$("panelManager" + datos.elementId).destructor();
+									if($$("panelManager" + datosId[idt])){
+										$$("panelManager" + datosId[idt]).destructor();
+									}
+									let auditLog={
+										"logTypeId": "LogType:3",
+										"auditLogValues": [
+											{
+												"value": datos.v_commandtypeId,
+												"logTypeParamId": "LogTypeParam:3:1"
+											}
+											,{
+												"value": datosId[idt],
+												"logTypeParamId": "LogTypeParam:3:2"
+											}
+											,{
+												"value": v_commands_values,
+												"logTypeParamId": "LogTypeParam:3:3"
+											}
+										]
+									};
+									auditMutation(auditLog);
 								});
 							}
 							

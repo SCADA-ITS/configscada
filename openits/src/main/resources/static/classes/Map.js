@@ -1,4 +1,3 @@
-import { mapTG } from "../data/maps.js";
 import * as iconGenerator from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
@@ -7,6 +6,7 @@ import ElementCommand from "../classes/ElementCommand.js";
 import EquipmentTree from "../classes/EquipmentTree.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 import { element_tree } from "../widgets/element_tree.js";
+import SynopticElement from "../classes/SynopticElement.js";
 
 let map = null;
 let view = null;
@@ -19,8 +19,44 @@ var visibleElements = [];
 var mapElements = [];
 var mapIcons = {};
 
+// GraphQL
+//initialize a proxy
+var graphSynoptic = webix.proxy(
+  "GraphQL",
+  `query($elem: String!)   {
+    getElement(elementId: $elem)
+    {
+      id
+      alias
+      description
+      state
+      icon
+      childs{
+        id
+        alias
+        positionX
+        positionY
+        state
+        elementType {
+          id
+          alias
+        }
+        elementValues{
+          id
+          value
+          alerted
+          elementTypeParam {
+            description
+          }
+        }
+      }
+    }
+  }
+  `
+);
+
 export default class Map {
-  constructor(data, metadata, synopticDiv, elementId) {
+  constructor(synopticConf, elementId) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -29,15 +65,14 @@ export default class Map {
     this.ratioHeight = 1.0;
     this.baseWidth = 0;
     this.baseHeight = 0;
-    this.data = data;
+    this.data = graphSynoptic;
 
-    this.synopticDiv = synopticDiv;
-    this.synopticConf = "";
+    this.synopticDiv = synopticConf.id;
+    this.synopticConf = synopticConf;
     this.synopticType = "";
 
     this.map = null;
     this.elementId = elementId;
-
   }
 
   /*
@@ -177,8 +212,7 @@ export default class Map {
 								value
 								alerted
 								elementTypeParam {
-                  description
-                  alias
+									description
 								}
 							}
 						}
@@ -187,7 +221,7 @@ export default class Map {
         );
 
         // loads the data
-        elementQuery
+        graphSynoptic
           .load({
             elem: element.id,
           })
@@ -431,10 +465,13 @@ export default class Map {
     let self = this;
 
     this.data
-      .load()
+      .load({
+        elem: this.elementId,
+      })
       .then((d) => {
         let markers = [];
 
+        
         // TODO: should we clean the created canvas?
         d.childs.forEach((element) => {
           if (element.id in this.synopticConf) {
@@ -503,9 +540,11 @@ export default class Map {
             }
 
             let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
-
+            
             // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
             tmpIcon = tmpIcon.replace(/#/g, "%23");
+
+
 
             // update the icon cache
             mapIcons[element.id] = tmpIcon;
@@ -536,7 +575,7 @@ export default class Map {
         // create the sidemenu for the equipment tree
         webix.ui({
           view: "sidemenu-win",
-          id: "menu",
+          id: "menu" + this.synopticDiv,
           width: 400,
           position: function(position) {
             var toolbarHeight = $$("mainToolbar").$height;
@@ -574,9 +613,9 @@ export default class Map {
                   icon:"wxi-angle-double-up",
                   click: function() {
                     // hide the panel
-                    $$("menu").hide();
+                    $$("menu" + self.synopticDiv).hide();
                     // hide the children
-                    $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+                    $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
                   }
                 }
               ]
@@ -725,7 +764,7 @@ export default class Map {
   /*
    *	Initializes everything
    */
-  init(synopticConf) {
+  init() {
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", "map");
@@ -733,7 +772,7 @@ export default class Map {
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(divToAdd);
 
-      view = new ol.View({ center: ol.proj.fromLonLat([-4.936173, 36.457911]), zoom: 12});
+      view = new ol.View({ center: ol.proj.fromLonLat([this.synopticConf["lon"], this.synopticConf["lat"]]), zoom: this.synopticConf["zoom"]});
 
       // treeMap Button
       var TreeMapControl = /*@__PURE__*/(function (Control) {
@@ -761,17 +800,17 @@ export default class Map {
       
         TreeMapControl.prototype.handleTreeMap = function handleTreeMap () {
           //$$("menu").show();
-          if (!$$("menu").isVisible()){
+          if (!$$("menu" + self.synopticDiv).isVisible()){
             // show the panel
-            $$("menu").show();
+            $$("menu" + self.synopticDiv).show();
             // show the children
-            $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.show() });
+            $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.show() });
           }
           else {
             // hide the panel
-            $$("menu").hide();
+            $$("menu" + self.synopticDiv).hide();
             // hide the children
-            $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+            $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
           }
         };
       
@@ -841,31 +880,31 @@ export default class Map {
           elementTypeMap.ELEMENT_TYPE_7_ZONE
         ) {
           if($$("winMap" + element_id) != null){
-              $$("winMap" + element_id).destructor();
+            $$("winMap" + element_id).destructor();
+        }
+        let elementWindow = new ElementWindow(element_id,"ElementType:" + element_id.split(":")[1]);
+        webix
+        .ui({
+          id: "winMap" + element_id,
+          view: "window",
+          move: true,
+          close: true,
+          position: "right",
+          body: elementWindow.getComponent(),
+          on: {
+          onDestruct: function(obj){
+            //elementForm.disconnect();
+          },
+          onHide: function(obj){
+            //elementForm.disconnect();
+            //$$("win" + elementId).destructor();
+          },
+          onShow: function(obj){
+            elementWindow.loadData();
           }
-          let elementWindow = new ElementWindow(element_id,"ElementType:" + element_id.split(":")[1]);
-          webix
-          .ui({
-            id: "winMap" + element_id,
-            view: "window",
-            move: true,
-            close: true,
-            position: "right",
-            body: elementWindow.getComponent(),
-            on: {
-            onDestruct: function(obj){
-              //elementForm.disconnect();
-            },
-            onHide: function(obj){
-              //elementForm.disconnect();
-              //$$("win" + elementId).destructor();
-            },
-            onShow: function(obj){
-              elementWindow.loadData();
-            }
-            }                            
-          })
-          .show();
+          }
+        })
+        .show();
           
             // auto de-select
             //e.target.getFeatures().remove(feature);
@@ -881,8 +920,7 @@ export default class Map {
       this.loadData();
     });
 
-    this.synopticConf = mapTG;
-    mapConf = mapTG;
+    mapConf = this.synopticConf;
 
     let self = this;
     // waits for the element and starts drawing
@@ -923,21 +961,30 @@ export default class Map {
     // it has to filter if the event is related to the synoptic instance
     let showOrHideObserver = new MutationObserver(function (event) {
       try {
-        if ($$("menu").isVisible()){
+        if ($$("menu" + self.synopticDiv).isVisible()){
           // show the panel
-          $$("menu").hide();
+          $$("menu" + self.synopticDiv).hide();
           // show the children
-          $$("menu").getChildViews()[0].getChildViews()[0].getChildViews().forEach(e => { e.hide() });
+          $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
         }
-
-        let newNode =
-          event[0].addedNodes[0].children[0].children[0].attributes["view_id"]
-            .value;
+        
+        let newNode = null;
+        if(event[0].addedNodes.length > 0) {
+          Array.from(event[0].addedNodes[0].children).forEach(e => {
+            if(typeof e.attributes["view_id"] != 'undefined') {
+              if(e.attributes["view_id"].value == self.synopticDiv) {
+                newNode = e.attributes["view_id"].value;
+              }
+            }
+          });          
+        }
 
           if (newNode == self.synopticDiv) {
             // Launch the query again
             document.getElementById(self.synopticDiv + "spinner").style.display = "block";
-            self.data.load().then((d) => {
+            self.data.load({
+              elem: self.elementId,
+            }).then((d) => {
               
               let markers = [];
 

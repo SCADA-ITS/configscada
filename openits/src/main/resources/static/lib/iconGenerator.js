@@ -20,6 +20,10 @@ import * as etd from "./icons/etd.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
 
+import * as vis from "./icons/vis.js";
+import * as accel from "./icons/accel.js";
+import * as radar from "./icons/accel.js";
+
 import * as elementTypeMap from "./elementTypeMap.js";
 import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
 
@@ -171,6 +175,12 @@ export function getElementIcon(element, suffix="") {
     tfa.updateTfaIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU) {
     tu.updateTuIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_71_VIS) {
+    vis.updateVisIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_72_ACCEL) {
+    accel.updateAccelIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_73_RADAR) {
+    radar.updateRadarIcon(element, suffix);
   } else {
     if (typeof staticsIcons[elementType] != "undefined") {
       elem_icon = staticsIcons[elementType]["state"].find(
@@ -289,7 +299,16 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
-      break;      
+      break;
+    case elementTypeMap.ELEMENT_TYPE_71_VIS:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 602) + ',' + (height / 503) + ')">' + createIcon(element, suffix) + '</g>';
+      break;  
+    case elementTypeMap.ELEMENT_TYPE_72_ACCEL:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 369) + ',' + (height / 248) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_73_RADAR:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
     default:
       console.log("Icon not found");
       break;
@@ -344,6 +363,7 @@ function createIcon(element, suffix="") {
       }
     });
   }
+
   return prepareStr(iconStr, params);
 }
 
@@ -407,7 +427,7 @@ function updateIcon(element, suffix="") {
   } else if(element.elementType.id === ELEMENT_TYPE.ID_9_FAN){
     if (typeof params != 'undefined' && params && params["FAN_COMMAND_FOR_FAN"]) {
       if (params["FAN_COMMAND_FOR_FAN"] == 0) {
-        // document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
+        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
         document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
       } else if (params["FAN_COMMAND_FOR_FAN"] == 1) {

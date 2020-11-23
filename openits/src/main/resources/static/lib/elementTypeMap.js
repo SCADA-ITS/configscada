@@ -53,6 +53,10 @@ export const ELEMENT_TYPE_61_FIRE_DET_CT = "61";
 export const ELEMENT_TYPE_62_TEMP_PROBE = "62";
 export const ELEMENT_TYPE_63_AIR_CONDITIONER = "63";
 
+export const ELEMENT_TYPE_71_VIS = "71";
+export const ELEMENT_TYPE_72_ACCEL = "72";
+export const ELEMENT_TYPE_73_RADAR = "73";
+
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
 export const POSITION_OF_ELEMENT_TYPE_PARAM_ID = 3;

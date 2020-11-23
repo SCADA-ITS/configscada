@@ -324,18 +324,26 @@ export default class Plan {
       }
       `
     );
+
     // loads the data
-    planMutation
-      .load({
+    planMutation.load({
         planIds: [this.id]
-      })
-      .then(data => {
+      }).then(data => {
         // process the received data
         if (data === true) {
           webix.message(this.id + " " + $.i18n("plan.execution.correct"));
         } else {
           webix.message(this.id + " " + $.i18n("plan.execution.error"));
         }
+        //Audit
+        let auditLog={
+          "logTypeId": "LogType:2",
+          "auditLogValues": {
+            "value": this.id,
+            "logTypeParamId": "LogTypeParam:2:1"
+          }
+        };
+        auditMutation(auditLog);        
       });
   }
 
