@@ -22,16 +22,18 @@ public class AlarmMutedBO extends GenericBO {
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
 	
-	public List<Map<String, Object>> getAlarmMuteds() {
-		
+	@Override
+	public List<Map<String, Object>> getList() {
+
 		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMuteds(), null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMuteds()).getFieldId(), alarmMuteds);
 	}
-				
-	public Map<String, Object> getAlarmMuted(String id) {
-		
+
+	@Override
+	public Map<String, Object> getItem(String id) {
+
 		Map<String, Object> alarmMuted = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmMuted(), new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
@@ -54,16 +56,17 @@ public class AlarmMutedBO extends GenericBO {
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement()).getFieldId(), alarmMuteds);
 	}
 
-	@Override
-	public List<Map<String, Object>> getList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Map<String, Object> getItem(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Boolean sendAlarmMutedActions(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendAlarmMutedActions = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAlarmMutedActions(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendAlarmMutedActions);
+
+	    return res;
+	    
+	  }
 
 }

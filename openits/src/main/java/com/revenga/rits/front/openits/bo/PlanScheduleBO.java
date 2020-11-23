@@ -47,7 +47,14 @@ public class PlanScheduleBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetPlanScheduleByPlan()).getFieldId(), planScheduleByPlan);
 	}
+	
+	public List<Map<String, Object>> sendPlanScheduleActions(Object input) {
+		
+		List<Map<String, Object>> sendPlanScheduleActions = voDataSourceAdapter.putList(voDataSourceAdapter.getDataSourceSendPlanScheduleActions(), (Map<String, Object>)input);
 
-
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceCreatePlanSubtype()).getFieldId(), sendPlanScheduleActions);
+	}
 
 }

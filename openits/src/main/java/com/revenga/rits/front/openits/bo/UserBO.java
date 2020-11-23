@@ -71,12 +71,15 @@ public class UserBO extends GenericBO {
 				.getById(voDataSourceAdapter.getDataSourceDeleteUser()).getFieldId(), deletedUser);
 	}
 	
-	public Map<String, Object> sendKillUsers(Object input) {
+	public Boolean sendKillUser(Object input) {
 		
-		Map<String, Object> deletedUser = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeleteUser(), (Map<String, Object>) input);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceDeleteUser()).getFieldId(), deletedUser);
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendKillUser = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendKillUser(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendKillUser);
+
+	    return res;
 	}
 
 }

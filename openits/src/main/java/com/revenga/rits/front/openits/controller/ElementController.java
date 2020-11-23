@@ -98,4 +98,11 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.deleteElement(id), HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/send_command_element")
+	@ApiOperation(value = "Send Command Element", notes = "Send Command Element")
+	public ResponseEntity<Boolean> sendCommandElement(@RequestBody Object commands) {
+		
+		return new ResponseEntity<>(elementBO.sendCommandElement(commands), HttpStatus.OK);
+	}
+	
 }

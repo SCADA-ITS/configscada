@@ -278,13 +278,5 @@ public class ImsIncidentController {
 		
 		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getItem(id), HttpStatus.OK);
 	}
-	
-	@PostMapping(value = "/send_incident")
-	@ApiOperation(value = "Send Incidents", notes = "Send Incidents")
-	public ResponseEntity<Boolean> sendIncident(@RequestBody Object incident) {
-		
-		return new ResponseEntity<>(imsIncidentBO.sendIncident(incident), HttpStatus.OK);
-	}
-	
 
 }

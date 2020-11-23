@@ -90,4 +90,16 @@ public class ElementBO extends GenericBO {
 				.getById(voDataSourceAdapter.getDataSourceDeleteElement()).getFieldId(), deletedElement);
 	}
 	
+	public Boolean sendCommandElement(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendCommandElement = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendCommandElement(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendCommandElement);
+
+	    return res;
+	    
+	  }
+	
 }

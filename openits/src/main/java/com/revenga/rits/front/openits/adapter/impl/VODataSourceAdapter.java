@@ -159,8 +159,15 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_CREATE_PLAN_SUBTYPE = "data.source.create_plan_subtype";
 	public static final String DATA_SOURCE_UPDATE_PLAN_SUBTYPE = "data.source.update_plan_subtype";
 	public static final String DATA_SOURCE_DELETE_PLAN_SUBTYPE = "data.source.delete_plan_subtype";
-	public static final String DATA_SOURCE_SEND_INCIDENTS = "data.source.send_incidents";
 	public static final String DATA_SOURCE_SEND_AUDIT_LOGS = "data.source.send_audit_logs";
+	public static final String DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS = "data.source.send_plan_schedule_actions";
+	public static final String DATA_SOURCE_SEND_PLAY_PLAN = "data.source.send_play_plan";
+	public static final String DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS = "data.source.send_alarm_muted_actions";
+	public static final String DATA_SOURCE_SEND_ALARMS= "data.source.send_alarms";
+	public static final String DATA_SOURCE_SEND_RECOGNIZE_ALARM = "data.source.send_recognize_alarm";
+	public static final String DATA_SOURCE_SEND_DEACTIVATION_ALARMS = "data.source.send_deactivation_alarms";
+	public static final String DATA_SOURCE_SEND_KILL_USER = "data.source.send_kill_user";
+	public static final String DATA_SOURCE_SEND_COMMAND_ELEMENT = "data.source.send_command_element";
 
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
 	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
@@ -407,9 +414,23 @@ public class VODataSourceAdapter {
 	@Getter
 	private Integer dataSourceDeletePlanSubtype;
 	@Getter
-	private Integer dataSourceSendIncidents;
-	@Getter
 	private Integer dataSourceSendAuditLogs;
+	@Getter
+	private Integer dataSourceSendPlanScheduleActions;
+	@Getter
+	private Integer dataSourceSendPlayPlan;
+	@Getter
+	private Integer dataSourceSendAlarmMutedActions;
+	@Getter
+	private Integer dataSourceSendAlarms;
+	@Getter
+	private Integer dataSourceSendRecognizeAlarms;
+	@Getter
+	private Integer dataSourceSendCommandElement;
+	@Getter
+	private Integer dataSourceSendKillUser;
+	@Getter
+	private Integer dataSourceSendDeactivationAlarms;
 	@Getter
 	private Integer dataSourceTypeGraphqlQuery;
 	@Getter
@@ -571,8 +592,15 @@ public class VODataSourceAdapter {
 		this.dataSourceCreatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_SUBTYPE));
 		this.dataSourceUpdatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_SUBTYPE));
 		this.dataSourceDeletePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_SUBTYPE));
-		this.dataSourceSendIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_INCIDENTS));
 		this.dataSourceSendAuditLogs = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_AUDIT_LOGS));
+		this.dataSourceSendPlanScheduleActions = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS));
+		this.dataSourceSendPlayPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_PLAY_PLAN));
+		this.dataSourceSendAlarmMutedActions = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS));
+		this.dataSourceSendAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_ALARMS));
+		this.dataSourceSendRecognizeAlarms= Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_RECOGNIZE_ALARM));
+		this.dataSourceSendDeactivationAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_DEACTIVATION_ALARMS));
+		this.dataSourceSendKillUser = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_KILL_USER));
+		this.dataSourceSendCommandElement = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_COMMAND_ELEMENT));
 
 		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
 		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
@@ -635,6 +663,19 @@ public class VODataSourceAdapter {
 		}
 
 		return output;
+	}
+	
+	public List<Map<String, Object>> putList(Integer dataSourceId, Map<String, Object> input) {
+
+		DataSource dataSource = dataSourceService.getById(dataSourceId);
+		List<Map<String, Object>> list = null;
+
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphqlMutation)) {
+
+			list = putGraphql(dataSource, input);	
+		}
+
+		return list;		
 	}
 
 	private List<Map<String, Object>> putGraphql(DataSource dataSource, Map<String, Object> input) {

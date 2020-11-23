@@ -130,13 +130,20 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (110, 3, 'createPlanSubtype', 'createPlanSubtype', 'PlanSubtypeVO', 'id', true, true),
 (111, 3, 'updatePlanSubtype', 'updatePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
 (112, 3, 'deletePlanSubtype', 'deletePlanSubtype', 'PlanSubtypeVO', 'id', true, true),
-(113, 3, 'sendIncidents', 'sendIncidents', 'ImsIncidentVO', 'id', true, true),
+(113, 3, 'sendPlanScheduleActions', 'sendPlanScheduleActions', 'PlanSchedulesVO', 'id', true, true),
 (114, 1, 'getAlarmsBySource', 'getAlarmsBySource', 'AlarmVO', 'id', true, true),
 (115, 1, 'getAlarmsBySourceAndAlarmType', 'getAlarmsBySourceAndAlarmType', 'AlarmVO', 'id', true, true),
 (116, 1, 'getAlarmConfigsByAlarmType', 'getAlarmConfigsByAlarmType', 'AlarmConfigVO', 'id', true, true),
 (117, 1, 'getAlarmConfigsByAlarmLevel', 'getAlarmConfigsByAlarmLevel', 'AlarmConfigVO', 'id', true, true),
 (118, 1, 'getLocationByStretch', 'getLocationByStretch', 'LocationVO', 'id', true, true),
-(119, 3, 'sendAuditLogs', 'sendAuditLogs', 'AuditLogVO', 'id', true, true);
+(119, 3, 'sendAuditLogs', 'sendAuditLogs', 'AuditLogVO', 'id', true, true),
+(120, 3, 'sendPlayPlan', 'sendPlayPlan', 'PlanVO', 'id', true, true),
+(121, 3, 'sendAlarmMutedActions', 'sendAlarmMutedActions', 'AlarmMutedVO', 'id', true, true),
+(122, 3, 'sendAlarms', 'sendAlarms', 'AlarmVO', 'id', true, true),
+(123, 3, 'sendRecognizeAlarms', 'sendRecognizeAlarms', 'AlarmVO', 'id', true, true),
+(124, 3, 'sendDeactivationAlarms', 'sendDeactivationAlarms', 'AlarmVO', 'id', true, true),
+(125, 3, 'sendKillUser', 'sendKillUser', 'UserVO', 'id', true, true),
+(126, 3, 'sendCommandElement', 'sendCommandElement', 'CommandElementVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -725,10 +732,10 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (112, 12, '{id alias description planType{id}}'),
 
 (113, 8, 'http://localhost:8082/graphql'),
-(113, 9, 'sendIncident'),
-(113, 10, 'incidents'),
-(113, 11, '[ImsIncidentVO!]!'),
-(113, 12, ''),
+(113, 9, 'sendPlanScheduleActions'),
+(113, 10, 'planSchedules'),
+(113, 11, '[PlanSchedulesVO!]!'),
+(113, 12, '{id plan{id} cronExpression alias description planScheduleStateType{id}}'),
 
 (114, 1, 'http://localhost:8082/graphql'),
 (114, 2, 'getAlarmsBySource'),
@@ -759,4 +766,49 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (119, 9, 'sendAuditLogs'),
 (119, 10, 'auditLogs'),
 (119, 11, '[AuditLogVO!]!'),
-(119, 12, '');
+(119, 12, ''),
+
+(120, 8, 'http://localhost:8082/graphql'),
+(120, 9, 'sendPlayPlan'),
+(120, 10, 'planIds'),
+(120, 11, '[String!]!'),
+(120, 12, ''),
+
+(121, 8, 'http://localhost:8082/graphql'),
+(121, 9, 'sendAlarmMutedActions'),
+(121, 10, 'alarmMuteds'),
+(121, 11, '[AlarmMutedVO!]!'),
+(121, 12, ''),
+
+(122, 8, 'http://localhost:8082/graphql'),
+(122, 9, 'sendAlarms'),
+(122, 10, 'alarmConfigIds,targetElementIds'),
+(122, 11, '[String!]!,[String!]!'),
+(122, 12, ''),
+
+(123, 8, 'http://localhost:8082/graphql'),
+(123, 9, 'sendRecognizeAlarms'),
+(123, 10, 'alarmIds,recognizedComments'),
+(123, 11, '[String!],String'),
+(123, 12, ''),
+
+(124, 8, 'http://localhost:8082/graphql'),
+(124, 9, 'sendDeactivationAlarms'),
+(124, 10, 'alarmIds,deactivationComments'),
+(124, 11, '[String!],String'),
+(124, 12, ''),
+
+(125, 8, 'http://localhost:8082/graphql'),
+(125, 9, 'sendKillUser'),
+(125, 10, 'userIds,lockedTimeS'),
+(125, 11, '[String!]!,Int!'),
+(125, 12, ''),
+
+(126, 8, 'http://localhost:8082/graphql'),
+(126, 9, 'sendCommandElement'),
+(126, 10, 'commands'),
+(126, 11, '[CommandElementVO!]!'),
+(126, 12, '');
+
+
+

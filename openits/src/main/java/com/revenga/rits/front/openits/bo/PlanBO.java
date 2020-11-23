@@ -69,5 +69,17 @@ public class PlanBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceDeletePlan()).getFieldId(), deletedPlan);
 	}
+	
+	public Boolean sendPlayPlan(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendPlayPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendPlayPlan(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendPlayPlan);
+
+	    return res;
+	    
+	  }
 
 }

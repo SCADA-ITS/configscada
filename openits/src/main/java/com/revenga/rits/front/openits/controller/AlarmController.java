@@ -202,7 +202,7 @@ public class AlarmController {
 	@ApiOperation(value = "Get all alarm muteds", notes = "Get all alarm muteds")
 	public ResponseEntity<Object> getAlarmMuteds() {
 		
-		return new ResponseEntity<>(alarmMutedBO.getAlarmMuteds(), HttpStatus.OK);
+		return new ResponseEntity<>(alarmMutedBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_muted/{id}")
@@ -215,7 +215,7 @@ public class AlarmController {
 			example = "AlarmMuted:2:1:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(alarmMutedBO.getAlarmMuted(id), HttpStatus.OK);
+		return new ResponseEntity<>(alarmMutedBO.getItem(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/alarm_muted/alarm_configs/{id}")
@@ -268,5 +268,33 @@ public class AlarmController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(alarmConfigBO.deleteAlarmConfig(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_alarm_muted_actions")
+	@ApiOperation(value = "Send Alarm Muted Actions", notes = "Send Alarm Muted Actions")
+	public ResponseEntity<Boolean> sendAlarmMutedActions(@RequestBody Object alarmMuted) {
+		
+		return new ResponseEntity<>(alarmMutedBO.sendAlarmMutedActions(alarmMuted), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_alarms")
+	@ApiOperation(value = "Send Alarms", notes = "Send Alarms")
+	public ResponseEntity<Boolean> sendAlarms(@RequestBody Object alarms) {
+		
+		return new ResponseEntity<>(alarmBO.sendAlarms(alarms), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_recognize_alarm")
+	@ApiOperation(value = "Send Recognize Alarm", notes = "Send Recognize Alarm")
+	public ResponseEntity<Boolean> sendRecognizeAlarms(@RequestBody Object alarmRecognize) {
+		
+		return new ResponseEntity<>(alarmBO.sendRecognizeAlarms(alarmRecognize), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_deactivation_alarm")
+	@ApiOperation(value = "Send Deactivation Alarm", notes = "Send Deactivation Alarm")
+	public ResponseEntity<Boolean> sendDeactivationAlarms(@RequestBody Object alarmDeactivation) {
+		
+		return new ResponseEntity<>(alarmBO.sendDeactivationAlarms(alarmDeactivation), HttpStatus.OK);
 	}
 }

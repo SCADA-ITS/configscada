@@ -48,18 +48,5 @@ public class ImsIncidentBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidentByType()).getFieldId(), incidents);
 	}
-	
-	public Boolean sendIncident(Object input) {
-	    
-	    Boolean res = false;
-	    
-	    Map<String, Object> sendIncident = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendIncidents(), (Map<String, Object>) input);
-	    
-	    res = checkMapIsBoolean(sendIncident);
-
-	    return res;
-	    
-	  }
-	
 
 }

@@ -63,5 +63,42 @@ public class AlarmBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetAlarmsBySourceAndAlarmType()).getFieldId(), alarms);
 	}
+	
+	
+	public Boolean sendAlarms(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAlarms(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendAlarms);
+
+	    return res;
+	    
+	  }
+	
+	public Boolean sendRecognizeAlarms(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendRecognizeAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendRecognizeAlarms(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendRecognizeAlarms);
+
+	    return res;
+	    
+	  }
+	
+	public Boolean sendDeactivationAlarms(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendDeactivationAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendDeactivationAlarms(), (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendDeactivationAlarms);
+
+	    return res;
+	    
+	  }
 
 }

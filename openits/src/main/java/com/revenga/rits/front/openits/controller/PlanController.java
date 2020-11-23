@@ -312,4 +312,18 @@ public class PlanController {
 		return new ResponseEntity<>(planSubtypeBO.deletePlanSubtype(id), HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/send_plan_schedules")
+	@ApiOperation(value = "Send Plan Schedules", notes = "Send Plan Schedules")
+	public ResponseEntity<Object> sendPlanScheduleActions(@RequestBody Object planSchedule) {
+		
+		return new ResponseEntity<>(planScheduleBO.sendPlanScheduleActions(planSchedule), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_play_plan")
+	@ApiOperation(value = "Send Play Plan", notes = "Send Play Plan")
+	public ResponseEntity<Boolean> sendPlayPlan(@RequestBody Object planIds) {
+		
+		return new ResponseEntity<>(planBO.sendPlayPlan(planIds), HttpStatus.OK);
+	}
+
 }

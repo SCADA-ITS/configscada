@@ -84,13 +84,6 @@ public class UserController {
 		return new ResponseEntity<>(userBO.deleteUser(id), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/send_kill_users")
-	@ApiOperation(value = "Kill users", notes = "Kill users")
-	public ResponseEntity<Object> sendKillUsers(@RequestBody Object input) {
-		
-		return new ResponseEntity<>(userBO.sendKillUsers(input), HttpStatus.OK);
-	}
-	
 	@GetMapping(value = "/roles")
 	@ApiOperation(value = "Get roles", notes = "Get roles")
 	public ResponseEntity<Object> getRoles() {
@@ -155,5 +148,12 @@ public class UserController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(roleBO.deleteRole(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/send_kill_user")
+	@ApiOperation(value = "Send Kill User", notes = "Send Kill User")
+	public ResponseEntity<Boolean> sendKillUser(@RequestBody Object killUser) {
+		
+		return new ResponseEntity<>(userBO.sendKillUser(killUser), HttpStatus.OK);
 	}
 }
