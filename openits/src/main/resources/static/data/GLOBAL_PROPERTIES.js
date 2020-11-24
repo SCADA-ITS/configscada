@@ -61,7 +61,6 @@ export const ELEMENT_TYPE = {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
     "ElementType:2" :{ id: "ElementType:2", uiType: UI_ELEMENT_TYPE_STATIC, value: 2, scale_x: 28, scale_y: 28, 
       tabs:[
-        
         // {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3", videoList: true}
@@ -171,17 +170,17 @@ export const ELEMENT_TYPE = {
     "ElementType:54" :{ id: "ElementType:54", uiType: UI_ELEMENT_TYPE_GENERIC, value: 54, scale_x: 50, scale_y: 50, svgRaw:SVG_54_ATC},
     "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT, 
       tabs:[
-        {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_SYN: {
           idSynoptic:"synopticCTs",
           width: 680,
           height: 500
-        }
-      }]
+        }},
+        {ELEMENT_FORM_TAB_FORM: {}}        
+      ]
     },
     "ElementType:56" :{ id: "ElementType:56", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 56, scale_x: 392, scale_y: 528, svgRaw:SVG_56_UNIFILAR, 
     tabs:[
-      {ELEMENT_FORM_TAB_FORM: {}},
+      // {ELEMENT_FORM_TAB_FORM: {}},
       {ELEMENT_FORM_TAB_SYN: {
         idSynoptic:"synopticUnifilarCsa",
         width: 580,

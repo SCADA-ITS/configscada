@@ -880,6 +880,8 @@ var i18_sk = {
     "synoptic.layer.road": "Cesta",
     "synoptic.layer.CAMERA": "Kamery",
     "synoptic.layer.WEATHER_STATION": "Meteorologick&eacute; stanice",
+    "synoptic.sendToMainFrame": "Send synoptic to main frame",
+    
     "map.base": "Podkladov&aacute; vrstva",
     "map.road": "Cesta",
     "map.camera": "Kamery",

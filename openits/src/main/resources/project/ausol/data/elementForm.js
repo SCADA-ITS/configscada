@@ -422,7 +422,7 @@ export let columnsElementFormList = {
 		],
 		"rowCounts": 3,
 		"scroll": false,  
-		"width": 540,
+		"width": 407,
 		"options": {}
 	},
 	"ElementType:56": {

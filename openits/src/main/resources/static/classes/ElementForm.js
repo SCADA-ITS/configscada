@@ -1,4 +1,3 @@
-import {getElementIcon} from "../lib/iconGenerator.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
@@ -404,8 +403,12 @@ export default class TabForm {
 										}).then((data) => {
 											// process the received data
 											let element = data;
-	
-											getElementIcon(data, ":Form");
+											if(this.synopticElement == undefined){
+												this.synopticElement= new SynopticElement(element);
+											}else{
+												this.synopticElement.updateElement(element);
+											}
+											this.synopticElement.getElementIcon(":Form");
 										});
 								} else {
 									if(this.synopticElement == undefined){
@@ -730,7 +733,7 @@ export default class TabForm {
 				}
 				this.synopticElement.updateElement(data);
 				// synopticElement.paintIcon()
-				getElementIcon(this.synopticElement.element, ":Form");
+				this.synopticElement.getElementIcon(":Form");
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);

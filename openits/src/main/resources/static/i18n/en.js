@@ -896,6 +896,7 @@ var i18_en = {
     "synoptic.layer.road": "road",
     "synoptic.layer.CAMERA": "CAMERA",
     "synoptic.layer.WEATHER_STATION": "WEATHER_STATION",
+    "synoptic.sendToMainFrame": "Send synoptic to main frame",
 
     "map.base": "Base Map",
     "map.road": "Road",

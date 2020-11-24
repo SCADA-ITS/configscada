@@ -960,6 +960,7 @@ var i18_es = {
     "synoptic.layer.road": "Carreteras",
     "synoptic.layer.CAMARA": "C&aacute;maras",
     "synoptic.layer.ESTACION_METEOROLOGICA": "Meteos",
+    "synoptic.sendToMainFrame": "Enviar el sinoptico al marco central de trabajo",
 
     "map.base": "Mapa Base",
     "map.road": "Carreteras",

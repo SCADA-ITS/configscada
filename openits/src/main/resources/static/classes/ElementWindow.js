@@ -104,6 +104,13 @@ export default class ElementWindow {
                         this.defaultTabView={        
                             id: "cuerpo"+parentId,
                             cols:[this.tabSynoptic.getComponent()],
+                            on: {
+                                onDestruct: function(obj){
+                                    if($$("menu" + idSynop + parentId.replaceAll(":","_"))){
+                                        $$("menu" + idSynop + parentId.replaceAll(":","_")).destructor();
+                                    }
+                                }
+                            }
                         };
                     }else{
                         webix.message({type:"error", text:"ERROR SINOPTICO NO CONFIGURADO"});

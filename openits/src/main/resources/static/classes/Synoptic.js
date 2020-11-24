@@ -56,6 +56,7 @@ export default class Synoptic {
       "autoConfig":true,
       "select":true
     };
+    this.isTree=true;
   }
 
   getComponent() {
@@ -682,159 +683,162 @@ export default class Synoptic {
           // alert(JSON.stringify(elementsMap));
         });
         
-        // replaces the element tree in the DOM
-        this.elementTree = new EquipmentTree(this.elementId, null);
-
-        // create the sidemenu for the equipment tree
-        webix.ui({
-          view: "sidemenu-win",
-          id: "menu" + this.synopticDiv,
-          head:{
-                cols:[
-                  { 
-                    view: "label", 
-                    label: $.i18n("defaultheader.equipment")
-                  },
-                  { 
-                    view: "button", 
-                    value: "Close", 
-                    width: 38, 
-                    type:"icon", 
-                    icon:"wxi-angle-double-up",
-                    click: function() {
-                      $$("menu" + self.synopticDiv).hide();
+        if(this.isTree){
+          // replaces the element tree in the DOM
+          this.elementTree = new EquipmentTree(this.elementId, null);
+          // create the sidemenu for the equipment tree
+          webix.ui({
+            view: "sidemenu-win",
+            id: "menu" + this.synopticDiv,
+            head:{
+                  cols:[
+                    { 
+                      view: "label", 
+                      label: $.i18n("defaultheader.equipment")
+                    },
+                    { 
+                      view: "button", 
+                      value: "Close", 
+                      width: 38, 
+                      type:"icon", 
+                      icon:"wxi-angle-double-up",
+                      click: function() {
+                        $$("menu" + self.synopticDiv).hide();
+                      }
+                    }
+                  ]},
+            move:true, 
+            width: 200,
+            position: function(position) {
+              var toolbarHeight = $$("mainToolbar").$height;
+              position.top = toolbarHeight;
+              position.left = $$("mainBody").$width - 200;
+              var mainHeight = $$("mainBody").$height - toolbarHeight;
+              position.height = mainHeight;
+              position.width = 200;
+            },
+            body: {
+              id: "elementTreeView" + this.synopticDiv, 
+              rows: [
+                {
+                  id: "element_tree_filter" + self.synopticDiv,
+                  view: "text",
+                  label: "Filter",
+                  labelPosition: "left"
+                },
+                {
+                  id: "element_tree" + self.synopticDiv,
+                  view: "tree",
+                  borderless: true,
+                  scroll: "auto",
+                  select: true,
+                  multiselect: true,
+                  threeState: true,
+                  template: function(obj, common){
+                    // if (obj.$level > 1) {
+                    //   return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
+                    // } else {
+                      return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>";
+                    // }
+                  }
+                },
+                {
+                  id: "element_tree_button" + self.synopticDiv,
+                  view: "button",
+                  disabled: true,
+                  value: "Command",
+                  on: {
+                    "onItemClick": function(id, e) {
+                      let filteredElements = $$("element_tree" + self.synopticDiv).getChecked().filter(e => e.match(/Element/g));
+                      let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
+                      webix.ui({
+                          id: "win_command" + filteredElements[0],
+                          view: "window",
+                          move: true,
+                          close: true,
+                          position: "right",
+                          body: elementCommand.getComponent(),
+                          on: {
+                            onDestruct: function (obj) {
+                              
+                            },
+                            onHide: function (obj) {
+                              $$("win_command" + filteredElements[0]).destructor();
+                            },
+                          },
+                        })
+                        .show();
                     }
                   }
-                ]},
-          move:true, 
-          width: 200,
-          position: function(position) {
-            var toolbarHeight = $$("mainToolbar").$height;
-            position.top = toolbarHeight;
-            position.left = $$("mainBody").$width - 200;
-            var mainHeight = $$("mainBody").$height - toolbarHeight;
-            position.height = mainHeight;
-            position.width = 200;
-          },
-          body: {
-            id: "elementTreeView" + this.synopticDiv, 
-            rows: [
-              {
-                id: "element_tree_filter" + self.synopticDiv,
-                view: "text",
-                label: "Filter",
-                labelPosition: "left"
-              },
-              {
-                id: "element_tree" + self.synopticDiv,
-                view: "tree",
-                borderless: true,
-                scroll: "auto",
-                select: true,
-                multiselect: true,
-                threeState: true,
-                template: function(obj, common){
-                  // if (obj.$level > 1) {
-                  //   return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>" +"&nbsp;"+ obj.icon;
-                  // } else {
-                    return common.icon(obj,common) + common.checkbox(obj, common) +"&nbsp;"+ "<span class='elementTreeLeaf'>" + obj.value + "</span>";
-                  // }
                 }
-              },
-              {
-                id: "element_tree_button" + self.synopticDiv,
-                view: "button",
-                disabled: true,
-                value: "Command",
-                on: {
-                  "onItemClick": function(id, e) {
-                    let filteredElements = $$("element_tree" + self.synopticDiv).getChecked().filter(e => e.match(/Element/g));
-                    let elementCommand = new ElementCommand(filteredElements, columnsElementFormList);
-                    webix.ui({
-                        id: "win_command" + filteredElements[0],
-                        view: "window",
-                        move: true,
-                        close: true,
-                        position: "right",
-                        body: elementCommand.getComponent(),
-                        on: {
-                          onDestruct: function (obj) {
-                            
-                          },
-                          onHide: function (obj) {
-                            $$("win_command" + filteredElements[0]).destructor();
-                          },
-                        },
-                      })
-                      .show();
-                  }
-                }
-              }
-            ],
-            url: this.elementTree.getComponent(this.synopticDiv)
+              ],
+              url: this.elementTree.getComponent(this.synopticDiv)
+            }
+          });
+          if(document.getElementsByClassName("synoptic-svg")[0].attributes["exclusive"].value == "false") {
+            // general case
+            $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElement);
+            $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElement);
+          } else {
+            // for exclusive layers
+            $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElementExclusiveLayers);
+            $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElementExclusiveLayers);
           }
-        });
-
-        if(document.getElementsByClassName("synoptic-svg")[0].attributes["exclusive"].value == "false") {
-          // general case
-          $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElement);
-          $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElement);
-        } else {
-          // for exclusive layers
-          $$("element_tree" + self.synopticDiv).attachEvent("onItemClick", self.clickElementExclusiveLayers);
-          $$("element_tree" + self.synopticDiv).attachEvent("onItemCheck", self.checkElementExclusiveLayers);
         }
+       
         return d;
-      })
-      .then((d) => {
+      }).then((d) => {
         // draw the buttons for filtering the element type
         let self = this;
 
         // adds the dropdown button
-        let buttonToAdd = document.createElement("button");
-        buttonToAdd.innerHTML = "<span class='webix_icon wxi-angle-double-down'></span>";
-        buttonToAdd.setAttribute("class", "tagsButton");
-        document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(buttonToAdd);
+        if(this.isTree){
+          let buttonToAdd = document.createElement("button");
+          buttonToAdd.innerHTML = "<span class='webix_icon wxi-angle-double-down'></span>";
+          buttonToAdd.setAttribute("class", "tagsButton");
+          document.getElementById(this.synopticDiv + "dropdownDiv").appendChild(buttonToAdd);
+
+          let layersList = {};
+          let alreadyAddedLayersList = [];
+
+          // Generate the layer tree
+          for(let l in Object.keys(this.synopticConf["Layers"])) {
+            let layerName = Object.keys(this.synopticConf["Layers"])[l];
+            if(!alreadyAddedLayersList.includes(layerName)) {
+              layersList[layerName] = {};
+              for(let item in this.synopticConf["Layers"][layerName]["items"]) {
+                let itemName = this.synopticConf["Layers"][layerName]["items"][item];
+                if(Object.keys(this.synopticConf["Layers"]).includes(itemName)) {
+                  delete layersList[itemName];
+                  layersList[layerName][itemName] = {};
+                }
+              }
+            }
+          }
+
+          // Generate the tree
+          this.generateLayerTree2(layersList, 0);
+
+          // For Bratislava, clean all layers and show only the ones marked as visible
+          if(this.synopticConf["ExclusiveLayers"] == true) {
+            for(let layerName in this.synopticConf["Layers"]) {
+              let isVisible = this.synopticConf["Layers"][layerName]["visibility"];
+
+              // updates the base layer visibility
+              if(document.getElementById(layerName) != null && isVisible == "hidden") {
+                document.getElementById(layerName).style.opacity = 0;
+              }
+
+              for(let item in this.synopticConf["Layers"][layerName]["items"]) {
+                let itemName = this.synopticConf["Layers"][layerName]["items"][item];
+                if(document.getElementById(itemName) != null && isVisible == "hidden") {
+                  document.getElementById(itemName).style.opacity = 0;
+                }
+              }
+            }
+          }
+        }
         
-        let layersList = {};
-        let alreadyAddedLayersList = [];
-
-        // Generate the layer tree
-        for(let l in Object.keys(this.synopticConf["Layers"])) {
-          let layerName = Object.keys(this.synopticConf["Layers"])[l];
-          if(!alreadyAddedLayersList.includes(layerName)) {
-            layersList[layerName] = {};
-            for(let item in this.synopticConf["Layers"][layerName]["items"]) {
-              let itemName = this.synopticConf["Layers"][layerName]["items"][item];
-              if(Object.keys(this.synopticConf["Layers"]).includes(itemName)) {
-                delete layersList[itemName];
-                layersList[layerName][itemName] = {};
-              }
-            }
-          }
-        }
-
-        // Generate the tree
-        this.generateLayerTree2(layersList, 0);
-
-        // For Bratislava, clean all layers and show only the ones marked as visible
-        if(this.synopticConf["ExclusiveLayers"] == true) {
-          for(let layerName in this.synopticConf["Layers"]) {
-            let isVisible = this.synopticConf["Layers"][layerName]["visibility"];
-
-            // updates the base layer visibility
-            if(document.getElementById(layerName) != null && isVisible == "hidden") {
-              document.getElementById(layerName).style.opacity = 0;
-            }
-
-            for(let item in this.synopticConf["Layers"][layerName]["items"]) {
-              let itemName = this.synopticConf["Layers"][layerName]["items"][item];
-              if(document.getElementById(itemName) != null && isVisible == "hidden") {
-                document.getElementById(itemName).style.opacity = 0;
-              }
-            }
-          }
-        }
         document.getElementById(this.synopticDiv + "spinner").style.display = "none";
 
         return d;
@@ -877,7 +881,8 @@ export default class Synoptic {
   /*
    *	Initializes everything
    */
-  init() {
+  init(isTree=true) {
+    this.isTree=isTree;
     let self = this;
     // waits for the element and starts drawing
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {

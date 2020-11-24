@@ -186,7 +186,6 @@ export default class Map {
 
       });
     } catch (err) {
-      console.error(e);
       console.log("Error: " + err.message);
       console.log("RETRY WITH GRAPHQL");
 
@@ -196,32 +195,33 @@ export default class Map {
         //initialize the proxy
         let elementQuery = webix.proxy(
           "GraphQL",
-          `
-					query ($elem: String!) {
-						getElement(elementId: $elem)
-						{
-							id
+          `query ($elem: String!) {
+            getElement(elementId: $elem)
+            {
+              id
               state
+              description
               elementType {
                 id
                 alias
               }
-							elementValues
-							{
-								id
-								value
-								alerted
-								elementTypeParam {
-									description
-								}
-							}
-						}
-					}
-					`
+              elementValues
+              {
+                id
+                value
+                alerted
+                elementTypeParam {
+                  description
+                  alias
+                }
+              }
+            }
+          }`
         );
 
         // loads the data
-        graphSynoptic
+        //graphSynoptic
+        elementQuery
           .load({
             elem: element.id,
           })
