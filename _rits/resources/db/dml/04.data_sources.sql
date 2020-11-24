@@ -194,13 +194,13 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (10, 1, 'http://localhost:8082/graphql'),
 (10, 2, 'getUser'),
 (10, 3, 'userId'),
-(10, 4, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+(10, 4, '{id name password passwordExpiredAt sessionExpireTimeS lockedUntil preset allowMultipleSessions fullName email isAdmin language country timezone role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
 
 (11, 8, 'http://localhost:8082/graphql'),
 (11, 9, 'updateUser'),
 (11, 10, 'user'),
 (11, 11, 'UserVO!'),
-(11, 12, '{id, name, password, passwordExpiredAt, sessionExpireTimeS, lockedUntil, preset, allowMultipleSessions, fullName, email, isAdmin, language, country, timezone, role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
+(11, 12, '{id name password passwordExpiredAt sessionExpireTimeS lockedUntil preset allowMultipleSessions fullName email isAdmin language country timezone role{id alias rolePermissions{id alias}} userPermissions{id alias}}'),
 
 (12, 1, 'http://localhost:8082/graphql'),
 (12, 2, 'getLocales'),

@@ -40,7 +40,7 @@ public class GridBO extends GenericBO {
 		
 		List<Grid> grids= gridService.getAll();
 		
-		if (CollectionUtils.isEmpty(grids)) {
+		if (!CollectionUtils.isEmpty(grids)) {
 			
 			for (Grid grid : grids) {
 				
