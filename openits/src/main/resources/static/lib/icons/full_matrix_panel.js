@@ -70,7 +70,7 @@ export function generateIcon(element, suffix = "") {
       total_height = panel_height;
     }
 
-    
+    index= 0;
     for(let r=0; r<zone_rows; r++) {
       subpanel_matrix.push([]);
       for(let c=0; c<zone_cols; c++) {
