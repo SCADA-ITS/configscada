@@ -384,17 +384,7 @@ export let synopticData= [
 				"items": ["Element:61:1"],
 				"translation_key": "",
 				"visibility": "visible"
-			},
-			"TEMP_PROBE" : {
-				"items": ["Element:62:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"AIR_CONDITIONER" : {
-				"items": ["Element:63:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
+			}
 		},
 
 		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" },
@@ -406,10 +396,6 @@ export let synopticData= [
 		"Element:60:1": { "x": 900,   "y": 100, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
 
 		"Element:61:1": { "x": 150,   "y": 200, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
-
-		"Element:62:1": { "x": 310,   "y": 870, "width": 50, "height": 50,  "alias": "RV-CT-SONDA-1" },
-
-		"Element:63:1": { "x": 260,   "y": 880, "width": 50, "height": 50,  "alias": "RV-CT-AIRE-1" },
 	},
 	{
 		"id":"synopticUnifilarCsa",
