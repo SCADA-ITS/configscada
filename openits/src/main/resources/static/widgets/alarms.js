@@ -1,7 +1,6 @@
 import Alarms from "../classes/Alarms.js";
 import ElementWindow from "../classes/ElementWindow.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
-import * as revenga from "../lib/revenga.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 var graphAlarm = webix.proxy(
@@ -133,7 +132,7 @@ let genericTablei18n = {
 										},
 										{
 											cols: [
-												{ view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-canel", label: "Cancel", value: "Cancel", click: function () { $$("popup_alarm" + alarmId).close() } },
+												{ view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", label: "Cancel", value: "Cancel", click: function () { $$("popup_alarm" + alarmId).close() } },
 												{
 													view: "button", css:"webix_primary", type:"icon", icon:"mdi mdi-content-save", label:$.i18n("alarms.d.recognized"), value: $.i18n("alarms.d.recognized"), click: function () {
 														let comment = $$("Comment" + alarmId).getValue();

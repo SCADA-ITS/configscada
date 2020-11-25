@@ -464,10 +464,28 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + "red").style["visibility"] = "visible";
       }
     }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_53_SEM){
+    if (params != undefined && params && params["SEM_AMBAR_AMBAR_STATUS"]) {
+      if (params["SEM_AMBAR_AMBAR_STATUS"] == 'true') {
+        var tidUp = setInterval(  function startLightsUp() {
+          document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "visible";
+          document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "hidden";
+        }, 2000);
+        setTimeout(function(){ 
+          var tidDown = setInterval(function startLightsDown() {
+            document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "hidden";
+            document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "visible";
+          }, 2000);
+        }, 1000);
+      } else if (params["SEM_AMBAR_AMBAR_STATUS"] == 'false'){
+        clearInterval(tidUp)
+        document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "hidden";
+      }
+    }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){
     if (params != undefined && params && params["MAGNETOTERMICO_STATE"]) {
-      console.warn(params["MAGNETOTERMICO_STATE"]);
-      if (params["MAGNETOTERMICO_STATE"]) {
+      if (params["MAGNETOTERMICO_STATE"]=="true") {
         if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform){
           Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="matrix(3.9203726,2.756964,-2.756964,3.9203726,1116.645,-2389.7641)";
         }
@@ -477,5 +495,5 @@ function updateIcon(element, suffix="") {
         } 
       } 
     }
-  }
+  } 
 }

@@ -191,9 +191,10 @@ export default class TabForm {
 								webix.ui({
 									view: "window",
 									id: "popup_alarm" + alarmId.split("_")[0],
-									head: alarmId + " " + data[index].title,
+									head: data[index].title,
 									width: 330,
 									height: 300,
+									position:"top",
 									modal: true,
 									body: {
 										view: "form",
@@ -208,8 +209,9 @@ export default class TabForm {
 											},
 											{
 												cols: [
+													{ view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", label: "Cancel", value: "Cancel", click: function () { $$("popup_alarm" + alarmId.split("_")[0]).close() } },
 													{
-														view: "button", value: "Recognize", css: "webix_primary", click: function () {
+														view: "button", css:"webix_primary", type:"icon", icon:"mdi mdi-content-save", label: $.i18n("alarms.d.recognized"), value: $.i18n("alarms.d.recognized"), click: function () {
 															let comment = $$("Comment" + alarmId.split("_")[0]).getValue();
 															let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
 															graphql.save({
@@ -235,8 +237,7 @@ export default class TabForm {
 																}
 															})
 														}
-													},
-													{ view: "button", value: "Cancel", click: function () { $$("popup_alarm" + alarmId.split("_")[0]).close() } }
+													}
 												]
 											}
 										]

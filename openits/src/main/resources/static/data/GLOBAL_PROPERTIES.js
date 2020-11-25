@@ -164,7 +164,11 @@ export const ELEMENT_TYPE = {
     "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_STATIC, value: 46, scale_x: 28, scale_y: 28},
     "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_STATIC, value: 47, scale_x: 28, scale_y: 28},
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 50, scale_y: 50, svgRaw:SVG_51_ETD},
-    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM },
+    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM,
+      elementTypeParams:[
+        {SEM_AMBAR_AMBAR_STATUS: "1:2"}
+      ] 
+    },
     "ElementType:54" :{ id: "ElementType:54", uiType: UI_ELEMENT_TYPE_GENERIC, value: 54, scale_x: 50, scale_y: 50, svgRaw:SVG_54_ATC},
     "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT, 
       tabs:[
