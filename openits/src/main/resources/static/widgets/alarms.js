@@ -119,6 +119,7 @@ let genericTablei18n = {
 								width: 330,
 								height: 300,
 								modal: true,
+								position: "top",
 								body: {
 									view: "form",
 									elements: [
@@ -132,8 +133,9 @@ let genericTablei18n = {
 										},
 										{
 											cols: [
+												{ view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-canel", label: "Cancel", value: "Cancel", click: function () { $$("popup_alarm" + alarmId).close() } },
 												{
-													view: "button", value: $.i18n("alarms.d.recognized"), css: "webix_primary", click: function () {
+													view: "button", css:"webix_primary", type:"icon", icon:"mdi mdi-content-save", label:$.i18n("alarms.d.recognized"), value: $.i18n("alarms.d.recognized"), click: function () {
 														let comment = $$("Comment" + alarmId).getValue();
 														let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
 														graphql.save({
@@ -159,8 +161,7 @@ let genericTablei18n = {
 															}
 														})
 													}
-												},
-												{ view: "button", value: "Cancel", click: function () { $$("popup_alarm" + alarmId).close() } }
+												}
 											]
 										}
 									]
@@ -300,6 +301,7 @@ let genericTablei18n = {
 								width: 330,
 								height: 300,
 								modal: true,
+								position: "top",
 								body: {
 									view: "form",
 									elements: [
@@ -314,7 +316,14 @@ let genericTablei18n = {
 										{
 											cols: [
 												{
-													view: "button", value: $.i18n("alarms.d.recognized"), css: "webix_primary", click: function () {
+													view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", label:"Cancel", value: "Cancel", click: function () {
+														alarmas = []
+														alarmasId = []
+														$$("popup_alarm_array_recognice").close();
+													}
+												},
+												{
+													view: "button", css:"webix_primary", type:"icon", icon:"mdi mdi-content-save", label: $.i18n("alarms.d.recognized"), value: $.i18n("alarms.d.recognized"), click: function () {
 														let comment = $$("Comment_array_recognize").getValue();
 														let graphql = webix.proxy("GraphQL", sendRecognizeAlarms);
 														graphql.save({
@@ -343,13 +352,6 @@ let genericTablei18n = {
 																$$("popup_alarm_array_recognice").close();
 															}
 														})
-													}
-												},
-												{
-													view: "button", value: "Cancel", click: function () {
-														alarmas = []
-														alarmasId = []
-														$$("popup_alarm_array_recognice").close();
 													}
 												}
 											]

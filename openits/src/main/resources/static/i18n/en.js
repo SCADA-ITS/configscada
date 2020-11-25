@@ -1944,6 +1944,7 @@ var i18_en = {
     //Planificador Planes
     "planSchedule.popup.button.create": "Add",
     "planSchedule.popup.button.save": "Save",
+    "planSchedule.popup.button.cancel": "Cancel",
     "planSchedule.popup.id": "Id",
     "planSchedule.popup.alias": "Alias",
     "planSchedule.popup.description": "Description",

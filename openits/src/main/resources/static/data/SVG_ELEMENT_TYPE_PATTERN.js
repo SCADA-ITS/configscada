@@ -536,16 +536,13 @@ inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><sodipodi:namedview
     id="clipPath24"
     clipPathUnits="userSpaceOnUse"><path
       id="path22"
-      d="M 724,0 H 6017 V 9411 H 724 V 0" /></clipPath></defs><g
-  id="g914"
-  transform="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)"><path
-    id="path156"` +
-    'style="fill:none;stroke:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.96;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"' + 
+      d="M 724,0 H 6017 V 9411 H 724 V 0" /></clipPath></defs><g id="g914" transform="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)"><path id="`
+   + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
+   `:stroke0" style="fill:none;stroke:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.96;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"' + 
     `d="m 125.7867,531.2534 c -9.94109,0 -18,8.05886 -18,18 0,9.94114 8.05891,18 18,18 9.94109,0 18,-8.05886 18,-18 0,-9.94114 -8.05891,-18 -18,-18"
-    sodipodi:nodetypes="csssc" /></g><g
-  id="g917"
-  transform="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)"><path
-    id="path160"
+    sodipodi:nodetypes="csssc" /></g><g id="`
+  + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
+  `:transform" transform="matrix(3.9203726,2.756964,-2.756964,3.9203726,1116.645,-2389.7641)"><path id="path160"
     style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
     d="m 125.5467,555.8934 0.48,-0.48 -8.48,-10.72 z m 0.48,-0.48 -8.48,-10.72 0.64,-0.32 3.69173,5.19856 z"
     sodipodi:nodetypes="ccccccccc" /></g></g></g></g><g

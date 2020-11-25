@@ -953,16 +953,16 @@ export default class Synoptic {
       // scales the base layer
       let base = document.querySelector('[component="BASE_LAYER"]');
       if(base != null) {
-        base.setAttribute("width", self.baseWidth * ratioWidth);
-        base.setAttribute("height", self.baseHeight * ratioHeight);
+        base.setAttribute("width", base.getAttribute("width") * ratioWidth);
+        base.setAttribute("height", base.getAttribute("height") * ratioHeight);
       }
 
       // scales the other base layers
       Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
         if(k != "base") { // base is already added
           let base = document.getElementById(k);
-          base.setAttribute("width", self.baseWidth * ratioWidth);
-          base.setAttribute("height", self.baseHeight * ratioHeight);
+          base.setAttribute("width", base.getAttribute("width") * ratioWidth);
+          base.setAttribute("height", base.getAttribute("height") * ratioHeight);
         }
       });
 
@@ -1037,7 +1037,9 @@ export default class Synoptic {
       self.baseHeight = self.baseHeight * ratioHeight;
 
       // update the dropdown size
-      document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px"
+      if(document.getElementsByClassName("dropdown-content")[0] != undefined){
+        document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px";
+      }
     }
   } 
 

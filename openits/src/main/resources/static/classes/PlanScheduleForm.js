@@ -338,13 +338,17 @@ export default class PlanScheduleForm {
 		this.buttons = {
             id: "planScheduleFormButtons_" + this.id,
 			view: "form",
-			elements: [
+			cols: [
                 { 
-                    view: "button", hidden: true, id: "planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
+                    view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", id: "planScheduleFormButtons_cancel_" + this.id, label: $.i18n("planSchedule.popup.button.cancel"), value: "",
+                    click: unLoadDetailForm
+                },
+                { 
+                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: "planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
                     click: createNewPlanSchedule
                 },
                 { 
-                    view: "button", hidden: true, id: "planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
+                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: "planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
                     click: saveEditPlanSchedule
                 }
 			]

@@ -9,19 +9,24 @@ if (language) {
 }
 
 var j_language = null;
+var j_language_usermanager = null;
 
 switch (language) {
   case "es":
     j_language= "es_ES";
+    j_language_usermanager= "es";
     break;
   case "en":
     j_language= "en_EN";
+    j_language_usermanager= "en";
     break;
   case "sk":
     j_language= "sk_SK";
+    j_language_usermanager= "sk";
     break;
   default:
     j_language= "es_ES";
+    j_language_usermanager= "es";
     break;
 }
 

@@ -2026,6 +2026,7 @@ var i18_es = {
     //Planificador Planes
     "planSchedule.popup.button.create": "Crear",
     "planSchedule.popup.button.save": "Guardar",
+    "planSchedule.popup.button.cancel": "Cancelar",
     "planSchedule.popup.id": "Identificador",
     "planSchedule.popup.alias": "Alias",
     "planSchedule.popup.description": "Descripción",
@@ -2131,3 +2132,4 @@ var i18_es = {
     "element.window.tab.syn": "Synoptic"
 
 };
+

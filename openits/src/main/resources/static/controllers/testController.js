@@ -14,9 +14,10 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 // import { alarmconfigs } from "../widgets/alarmconfigs.js";
 // import { equipments } from "../widgets/equipments.js";
 import ElementForm from "../classes/ElementForm.js";
+import ElementWindow from "../classes/ElementWindow.js"
 import UserManagerInt from "../classes/UserManagerInterface.js";
 import ElementChildsList from "../classes/ElementChildsList.js";
-//let elementForm = new ElementForm("Element:46:1", null);
+let elementForm = new ElementWindow("Element:2:1","ElementType:2");
 //let elementForm2 = new ElementForm("Element:9:2");
 //let elementForm3 = new ElementForm("Element:10:1");
 //let elementForm4 = new ElementForm("Element:2:1");
@@ -59,8 +60,8 @@ var grid = {
         drag:true,
         template:"#value# - (#dx#x#dy#)",
         data:[
-         // { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
-          // ,
+         { id:"elementForm", value:"elementForm", dx:1, dy:1, body: elementForm.getComponent()}
+          ,
            //{ id:"elementForm3", value:"elementForm3", dx:1, dy:1, body: elementForm3.getComponent()}
            //,
            { id:"plans", value:"plans", dx:1, dy:1, body: plans }

@@ -464,5 +464,18 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + "red").style["visibility"] = "visible";
       }
     }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){
+    if (params != undefined && params && params["MAGNETOTERMICO_STATE"]) {
+      console.warn(params["MAGNETOTERMICO_STATE"]);
+      if (params["MAGNETOTERMICO_STATE"]) {
+        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform){
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="matrix(3.9203726,2.756964,-2.756964,3.9203726,1116.645,-2389.7641)";
+        }
+       } else{ 
+        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform){
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)";
+        } 
+      } 
+    }
   }
 }
