@@ -652,16 +652,18 @@ export default class Synoptic {
         }
 
         // draws the base layer
+        /*
         this.s.image("./img/" + this.baseLayer, 0, 0, total_width, total_height).attr({
           id: "capa_base",
           visibility: this.synopticConf["Layers"]["BASE_LAYER"]["visibility"],
           component: "BASE_LAYER",
         });
+        */
 
         // adds the other base layers
         let self = this;
         Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
-          if(k != "base") { // base is already added
+          //if(k != "BASE_LAYER") { // base is already added
             self.elementsToDraw[k] = "visible";
             if(!self.elementsTypes.includes(k)) {
               self.elementsTypes.push(k);
@@ -672,7 +674,7 @@ export default class Synoptic {
               visibility: self.elementsToDraw[k],
               component: k,
             });
-          }
+          //}
         });
         return d;
       }).then((d) => {
@@ -943,24 +945,39 @@ export default class Synoptic {
     let c = document.querySelector('[view_id="' + self.synopticDiv + '"]');
     let svg = document.getElementById(self.synopticDiv + "SVG");
 
-    if(svg != null) {
+    if(svg != null && typeof c != 'undefined') {
       svg.setAttribute("width", c.offsetWidth);
       svg.setAttribute("height", c.offsetHeight);
-
+      
       let ratioWidth = c.offsetWidth / self.baseWidth;
       let ratioHeight = c.offsetHeight / self.baseHeight;
 
+      // if ratio is 0, resets to 1
+      if(ratioHeight == 0) {
+        ratioHeight = 1;
+      }
+      if(ratioWidth == 0) {
+        ratioWidth = 1;
+      }
+
       // scales the base layer
-      let base = document.querySelector('[component="BASE_LAYER"]');
+      /*
+      let base = c.querySelector('[component="BASE_LAYER"]');
       if(base != null) {
+        //base.setAttribute("width", self.baseWidth * ratioWidth);
+        //base.setAttribute("height", self.baseHeight * ratioHeight);
         base.setAttribute("width", base.getAttribute("width") * ratioWidth);
         base.setAttribute("height", base.getAttribute("height") * ratioHeight);
       }
+      */
 
       // scales the other base layers
       Object.keys(this.synopticConf["BaseLayers"]).forEach(function(k) {
         if(k != "base") { // base is already added
-          let base = document.getElementById(k);
+          //let base = c.getElementById(k);
+          let base = c.querySelector('#' + k);
+          //base.setAttribute("width", self.baseWidth * ratioWidth);
+          //base.setAttribute("height", self.baseHeight * ratioHeight);
           base.setAttribute("width", base.getAttribute("width") * ratioWidth);
           base.setAttribute("height", base.getAttribute("height") * ratioHeight);
         }
@@ -969,10 +986,10 @@ export default class Synoptic {
       // scales all the images of the svg (class == "capa_mapa")
       for (
         let i = 0;
-        i < document.getElementsByClassName("capa_mapa").length;
+        i < c.getElementsByClassName("capa_mapa").length;
         i++
       ) {
-        let item = document.getElementsByClassName("capa_mapa")[i];
+        let item = c.getElementsByClassName("capa_mapa")[i];
 
         // update size
         item.setAttribute("width", item.getAttribute("width") * ratioWidth);
@@ -994,10 +1011,10 @@ export default class Synoptic {
       // scales the text of the tunnel banner
       for (
         let i = 0;
-        i < document.getElementsByClassName("banner_title").length;
+        i < c.getElementsByClassName("banner_title").length;
         i++
       ) {
-        let item = document.getElementsByClassName("banner_title")[i];
+        let item = c.getElementsByClassName("banner_title")[i];
 
         // update size
         let newSize = (parseFloat(item.style["font-size"].split("px")[0]) * ratioHeight).toString() + "px";
@@ -1011,16 +1028,16 @@ export default class Synoptic {
       // updates the svg icon, this is a special case
       for (
         let i = 0;
-        i < document.getElementsByClassName("svg_icon").length;
+        i < c.getElementsByClassName("svg_icon").length;
         i++
       ) {
-        let item = document.getElementsByClassName("svg_icon")[i];
+        let item = c.getElementsByClassName("svg_icon")[i];
 
         if (item.getAttribute("transform") != null) {
-          item.transform.baseVal[0].matrix["e"] = item.transform.baseVal[0].matrix["e"] * ratioWidth;
-          item.transform.baseVal[0].matrix["f"] = item.transform.baseVal[0].matrix["f"] * ratioHeight;
-          item.transform.baseVal[0].matrix["a"] = item.transform.baseVal[0].matrix["a"] * ratioWidth;
-          item.transform.baseVal[0].matrix["d"] = item.transform.baseVal[0].matrix["d"] * ratioHeight;
+          item.transform.baseVal[0].matrix["e"] = parseFloat(item.transform.baseVal[0].matrix["e"] * ratioWidth) || 0;
+          item.transform.baseVal[0].matrix["f"] = parseFloat(item.transform.baseVal[0].matrix["f"] * ratioHeight) || 0;
+          item.transform.baseVal[0].matrix["a"] = parseFloat(item.transform.baseVal[0].matrix["a"] * ratioWidth) || 0;
+          item.transform.baseVal[0].matrix["d"] = parseFloat(item.transform.baseVal[0].matrix["d"] * ratioHeight) || 0;
         }
 
         // scales the texts inside the item
@@ -1037,8 +1054,8 @@ export default class Synoptic {
       self.baseHeight = self.baseHeight * ratioHeight;
 
       // update the dropdown size
-      if(document.getElementsByClassName("dropdown-content")[0] != undefined){
-        document.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(document.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px";
+      if(c.getElementsByClassName("dropdown-content")[0] != undefined){
+        c.getElementsByClassName("dropdown-content")[0].style["height"] = (parseInt(c.querySelector('[view_id="' + this.synopticDiv + '"]').style["height"]) - 70) + "px";
       }
     }
   } 
