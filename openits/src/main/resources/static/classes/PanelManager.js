@@ -1168,8 +1168,10 @@ function configData(data,scale,orderId) {
 							on: {
 								onItemClick: function(id, event){
 									try {
-										Keyboard.open($$(id).getValue(), currentValue => {
-											$$(id).setValue(currentValue);
+										var index = document.getElementById(event.target.id).selectionStart;
+										Keyboard.updatePos(index);
+										Keyboard.open($$(id).getValue() ,currentValue => {
+											$$(id).setValue(currentValue.substring(0, currentValue.length - 1));
 										});
 									} catch (error) {
 										console.error(error);
@@ -1183,6 +1185,13 @@ function configData(data,scale,orderId) {
 									}
 								},
 								onKeyPress: function(code, e) {
+									try {
+										// En caso de scribir, llevar el cursor al final del texto
+										var index =  $$(e.target.id).getValue().length + 1;
+										Keyboard.updatePos(index +1);
+									} catch (error) {
+										console.error(error);
+									}
 									let num_Element = parseInt($$(e.target).config.id.split("_")[1]);
 									if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
 										let v_input = e.target;
@@ -1194,8 +1203,12 @@ function configData(data,scale,orderId) {
 											if (c_permitido) {
 											//Sumamos los que tenemos 
 												for(let i = 0; i < v_input.value.length; i++) {
-													let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
-													v_suma = v_suma + parseInt(ptype.split("x")[0]);
+													try {
+														let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === v_input.value[i].charCodeAt())[1];
+														v_suma = v_suma + parseInt(ptype.split("x")[0]);
+													} catch (error) {
+														console.error(error);
+													}
 												}
 												let ptype = pictos_permitidos["panel_" + cellList[num_Element - 1].split("_")[1] + "_" + cellList[num_Element -1].split("_")[10] + "_" + orderId].find(x => parseInt(x[2].split("CH")[1],16) === e.key.charCodeAt())[1];
 												v_suma = v_suma + parseInt(ptype.split("x")[0]);

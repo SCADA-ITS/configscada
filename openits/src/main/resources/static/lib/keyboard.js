@@ -2,7 +2,8 @@ const Keyboard = {
     elements: {
         main: null,
         keysContainer: null,
-        keys: []
+        keys: [],
+        pos:null
     },
 
     eventHandlers: {
@@ -134,7 +135,7 @@ const Keyboard = {
                     break;
                 default:
                     keyElement.textContent = key.toLowerCase();
-
+                    console.log("default")
                     keyElement.addEventListener("click", () => {
                         this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
                         this._triggerEvent("oninput");
@@ -171,20 +172,18 @@ const Keyboard = {
 
     open(initialValue, oninput, onclose) {
         if (typeof keyLayout !== 'undefined' && keyLayout) {
-            console.log(initialValue);
-            console.log(oninput)
-            console.log(onclose)
-            this.properties.value = initialValue || "";
+            var output = [initialValue.slice(0, this.elements.pos), keyLayout[0], initialValue.slice(this.elements.pos)].join('');
+            this.properties.value = output;
             this.eventHandlers.oninput = oninput;
             this.eventHandlers.onclose = onclose;
             this.elements.main.classList.remove("keyboard--hidden");
         }
     },
 
-    reValue(initialValue) {
+    reValue(initialValue, index) {
         if (typeof keyLayout !== 'undefined' && keyLayout) {
-            console.log(initialValue);
-            this.properties.value = initialValue || "";
+            var output = [initialValue.slice(0, this.elements.pos), keyLayout[0], initialValue.slice(this.elements.pos)].join('');
+            this.properties.value = output;
         }
     },
 
@@ -193,6 +192,9 @@ const Keyboard = {
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.add("keyboard--hidden");
+    },
+    updatePos(pos){
+        this.elements.pos = pos
     }
 };
 
