@@ -1732,6 +1732,18 @@ var i18_en = {
 	"VmsGraphic:2:826":"Estacionamiento Metro",
 	"VmsGraphic:2:827":"Estacionamiento Autobus",
 	
+	//Otros
+	"VmsGraphic:2:863":"Presignated Text 1",
+	"VmsGraphic:2:864":"Presignated Text 2",
+	"VmsGraphic:2:865":"Presignated Text 3",
+	"VmsGraphic:2:866":"Presignated Text 4",
+	"VmsGraphic:2:867":"Presignated Text 5",
+	"VmsGraphic:2:868":"Presignated Text 6",
+	"VmsGraphic:2:869":"Presignated Text 7",
+	"VmsGraphic:2:870":"Presignated Text 8",
+	"VmsGraphic:2:871":"Presignated Text 9",
+	"VmsGraphic:2:872":"Presignated Text 10",
+	
 	//Advertencia de peligro
 	"VmsGraphic:2:1001":"Obras: Prioridad",
 	"VmsGraphic:2:1002":"Obras: Prioridad Via Derecha",

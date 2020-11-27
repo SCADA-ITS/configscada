@@ -1640,6 +1640,18 @@ var i18_sk = {
 	"VmsGraphic:2:826":"Estacionamiento Metro",
 	"VmsGraphic:2:827":"Estacionamiento Autobus",
 	
+	//Otros
+	"VmsGraphic:2:863":"Predbežný text 1",
+	"VmsGraphic:2:864":"Predbežný text 2",
+	"VmsGraphic:2:865":"Predbežný text 3",
+	"VmsGraphic:2:866":"Predbežný text 4",
+	"VmsGraphic:2:867":"Predbežný text 5",
+	"VmsGraphic:2:868":"Predbežný text 6",
+	"VmsGraphic:2:869":"Predbežný text 7",
+	"VmsGraphic:2:870":"Predbežný text 8",
+	"VmsGraphic:2:871":"Predbežný text 9",
+	"VmsGraphic:2:872":"Predbežný text 10",
+	
 	//Advertencia de peligro
 	"VmsGraphic:2:1001":"Obras: Prioridad",
 	"VmsGraphic:2:1002":"Obras: Prioridad Via Derecha",
