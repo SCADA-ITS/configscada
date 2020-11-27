@@ -22,7 +22,7 @@ export let panelData = {
     "ElementType:30": {
         "scala": 5,
         "scala_List": 4,
-        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"128x64\",\"Zonas\":[{\"Tamanio\":\"128x64\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"}]}]}",
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"128x64\",\"Zonas\":[{\"Tamanio\":\"128x64\",\"Tipo\":\"Dual\",\"NumLineas\":\"3\",\"TamLineas\":\"15\"}]}]}",
     },
     "ElementType:31": {
         "scala": 5,
