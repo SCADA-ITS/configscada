@@ -599,6 +599,11 @@ export default class PanelManager {
 										});
 										counter_commands +=1;
 									}
+								}else{
+									v_commands_values.push({
+										"commandElementTypeParamId": datos.commands[i],
+										"value": v_values[i]
+									});
 								}
 
 
