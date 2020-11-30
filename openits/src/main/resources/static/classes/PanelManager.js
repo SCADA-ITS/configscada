@@ -1474,8 +1474,10 @@ function generateTextLineaBody(cellList,numElement,i,orderId,v_text,pictos_permi
 		on: {
 			onItemClick: function(id, event){
 				try {
-					Keyboard.open($$(id).getValue(), currentValue => {
-						$$(id).setValue(currentValue);
+					var index = document.getElementById(event.target.id).selectionStart;
+					Keyboard.updatePos(index);
+					Keyboard.open($$(id).getValue() ,currentValue => {
+						$$(id).setValue(currentValue.substring(0, currentValue.length - 1));
 					});
 				} catch (error) {
 					console.error(error);
@@ -1489,6 +1491,13 @@ function generateTextLineaBody(cellList,numElement,i,orderId,v_text,pictos_permi
 				}
 			},
 			onKeyPress: function(code, e) {
+				try {
+					// En caso de scribir, llevar el cursor al final del texto
+					var index =  $$(e.target.id).getValue().length + 1;
+					Keyboard.updatePos(index +1);
+				} catch (error) {
+					console.error(error);
+				}
 				let num_Element = parseInt($$(e.target).config.id.split("_")[1]);
 				if (code !== 8) {   //NO HACEMOS NADA ES BACKSPACE
 					let v_input = e.target;
