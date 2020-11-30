@@ -405,11 +405,13 @@ function updateIcon(element, suffix="") {
           (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
         );
       }
-      if(typeof tempValue != 'undefined' && tempValue){
-        params[key]=tempValue.value;
-        if(document.getElementById(element.id + suffix + ":Value") != null){
-          document.getElementById(element.id + suffix + ":Value").innerHTML = tempValue.value;
-        }
+      if(tempValue != undefined && tempValue){
+        params[key]=tempValue.value; 
+      }else{
+        params[key]=null;
+      }
+      if(document.getElementById(element.id + suffix + ":Value") != null){
+        document.getElementById(element.id + suffix + ":Value").innerHTML = params[key];
       }
     });
   }
@@ -425,7 +427,7 @@ function updateIcon(element, suffix="") {
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_9_FAN){
-    if (typeof params != 'undefined' && params && params["FAN_COMMAND_FOR_FAN"]) {
+    if (params != undefined) {
       if (params["FAN_COMMAND_FOR_FAN"] == 0) {
         document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
         document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
@@ -442,6 +444,10 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + ":IconArrowMI").style["visibility"] = "visible";
         document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
         document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "visible";
+      }else {
+        document.getElementById(element.id + suffix + ":Animation").setAttribute("dur", "0");
+        document.getElementById(element.id + suffix + ":IconMD").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM){

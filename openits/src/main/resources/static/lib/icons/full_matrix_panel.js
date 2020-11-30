@@ -128,7 +128,13 @@ export function generateIcon(element, suffix = "") {
 
         // find the element with that value
         let value_to_find = 1001 + n_elements;
-        let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
+        let content_value;
+        try {
+          content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
+        } catch (error) {
+          content_value = null;
+        }
+        
         
         //Hola PABLO!!!!!!!!!!!!! descomenta esto y comenta linea 144. Tira por esta solucion :P
         // let isGraphic=false;

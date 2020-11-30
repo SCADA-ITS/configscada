@@ -4,6 +4,7 @@ import {panelData} from "../data/panelData.js";
 
 //const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
 const TOP_INIT = 5;
+let datosAlias;
 
 export default class PanelManager {
 	constructor(id, idType, gestPlan,scale,values,orderId) {
@@ -30,6 +31,7 @@ export default class PanelManager {
 					commandElementTypes{
 						id
 						alias
+						labelAlias
 						commandElementTypeParams{
 						  id
 						  alias
@@ -70,6 +72,7 @@ export default class PanelManager {
 				commandElementTypes{  
 					id 
 					alias 
+					labelAlias
 					commandElementTypeParams { 
 						id 
 						alias 
@@ -145,6 +148,7 @@ export default class PanelManager {
 			switch (this.panelManagerType) {
 				case elementTypeMap.PANELMANAGER_TYPE_PANEL:
 					this.graphql.load().then(elem => {
+						datosAlias = elem.alias; 
 						this.values = [];
 						let counter = 0;
 						elem.elementValues.forEach(evalues => {
@@ -368,7 +372,7 @@ export default class PanelManager {
 		var datosId = this.id;
 		var orderId = this.orderId;
 		let controlCPermitido  = true;
-
+		
 		//SI ES UN PANEL DEL ELEMENTFORM PONEMOS EL BOTON SEÑALIZAR
 		switch (this.panelManagerType) {
 			case elementTypeMap.PANELMANAGER_TYPE_PANEL:
@@ -616,18 +620,17 @@ export default class PanelManager {
 								webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
 								let auditLog={
 									"logTypeId": "LogType:3",
+									"logSubtypeId": "LogSubtype:1",
 									"auditLogValues": [
 										{
-											"value": datos.v_commandtypeId,
-											"logTypeParamId": "LogTypeParam:3:1"
-										}
-										,{
-											"value": datosId,
-											"logTypeParamId": "LogTypeParam:3:2"
-										}
-										,{
-											"value": v_commands_values,
-											"logTypeParamId": "LogTypeParam:3:3"
+										"value": datos.v_commandTypeAlias,
+										"logTypeParamId": "LogTypeParam:3:1"
+										},{
+										"value": datosAlias,
+										"logTypeParamId": "LogTypeParam:3:2"
+										},{
+										"value": v_commands_values,
+										"logTypeParamId": "LogTypeParam:3:3"
 										}
 									]
 								};
@@ -798,25 +801,23 @@ export default class PanelManager {
 									}
 									let auditLog={
 										"logTypeId": "LogType:3",
+										"logSubtypeId": "LogSubtype:1",
 										"auditLogValues": [
 											{
-												"value": datos.v_commandtypeId,
-												"logTypeParamId": "LogTypeParam:3:1"
-											}
-											,{
-												"value": datosId[idt],
-												"logTypeParamId": "LogTypeParam:3:2"
-											}
-											,{
-												"value": v_commands_values,
-												"logTypeParamId": "LogTypeParam:3:3"
+											"value": datos.v_commandTypeAlias,
+											"logTypeParamId": "LogTypeParam:3:1"
+											},{
+											"value": datosId[idt],
+											"logTypeParamId": "LogTypeParam:3:2"
+											},{
+											"value": v_commands_values,
+											"logTypeParamId": "LogTypeParam:3:3"
 											}
 										]
 									};
 									auditMutation(auditLog);
 								});
 							}
-							
 						}else{
 							if(!tamanio) {
 								webix.message({type:"error", text:$.i18n("lbl_panel_signaling_tam_error")});
@@ -1063,7 +1064,8 @@ export default class PanelManager {
 				description
 				commandElementTypes{  
 					id 
-					alias 
+					alias
+					labelAlias 
 					commandElementTypeParams { 
 						id 
 						alias 
@@ -1075,10 +1077,12 @@ export default class PanelManager {
 		graphqlEType.load().then(data => {
 			//console.log(data);
 			let v_commandtypeId = null;
+			let v_commandTypeAlias = null;
 			let v_commands = [];
 			data.commandElementTypes.forEach(element => {
 				if (element.alias === "SEND MESSAGE") {
 					v_commandtypeId = element.id;
+					v_commandTypeAlias = element.labelAlias;
 					element.commandElementTypeParams.forEach(item => {
 						v_commands.push(item.id);
 					});
@@ -1725,10 +1729,12 @@ function configData(data,scale,orderId) {
 	});
 
 	let v_commandtypeId = null;
+	let v_commandTypeAlias = null;
 	let v_commands = [];
 	data.commandElementTypes.forEach(element => {
 		if (element.alias === "SEND MESSAGE") {
 			v_commandtypeId = element.id;
+			v_commandTypeAlias = element.labelAlias;
 			element.commandElementTypeParams.forEach(item => {
 				v_commands.push(item.id);
 			});
@@ -1745,6 +1751,7 @@ function configData(data,scale,orderId) {
 			 commands:v_commands.sort(), 
 			 availablePictosList: availablePictosList, 
 			 v_commandtypeId: v_commandtypeId,
+			 v_commandTypeAlias: v_commandTypeAlias,
 			 elementId: data.id,
 			 dual_panels: dual_panels
 			};

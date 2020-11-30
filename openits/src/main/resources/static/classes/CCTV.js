@@ -31,36 +31,30 @@ export default class CCTV {
 			}
 		}
         `;
-
+        this.graphElementType2 = `query($elem: String!) { 
+            getElementsByType(elementTypeId: $elem){
+                id
+                alias
+                description
+                state
+                elementValues {id value alerted elementTypeParam {
+                  id 
+                  alias  
+                  representation
+                  graphics {id alias graphicType graphicValues {id value}}
+                }}
+            
+              }
+		}
+        `;
+        
         this.graphql = webix.proxy("GraphQL", this.graph);
+        this.grpahqlElementType2 = webix.proxy("GraphQL", this.graphElementType2)
 
-        this.camerasTree = {
-            tittle:"Cameras",
-            view:"list",
-            id:"element_tree:cctv",
-            width:200,
-            drag:true,
-            data:[
-               { id:"Element:2:1",  icon: "mdi mdi-video", value:"RV-TV-1CA"}
-               , { id:"Element:2:2",  icon: "mdi mdi-video", value:"RV-TV-2CA"}
-               , { id:"Element:2:3",  icon: "mdi mdi-video", value:"RV-TV-3CA"}
-               , { id:"Element:2:4",  icon: "mdi mdi-video", value:"RV-TV-4CA"}
-               , { id:"Element:2:5",  icon: "mdi mdi-video", value:"RV-TVD-1CA"}
-               , { id:"Element:2:6",  icon: "mdi mdi-video", value:"RV-TV-1MA"}
-               , { id:"Element:2:7",  icon: "mdi mdi-video", value:"RV-TV-2MA"}
-               , { id:"Element:2:8",  icon: "mdi mdi-video", value:"RV-TV-3MA"}
-               , { id:"Element:2:9",  icon: "mdi mdi-video", value:"RV-TV-4MA"}
-               , { id:"Element:2:10",  icon: "mdi mdi-video", value:"RV-TVD-1MA"}
-            ]
-        };
+        
         this.rows={
             rows:[
-                this.camerasTree,
-                // {
-                //     view:"button", value:"Reset", click:function(){
-                //         $$("dropArea").clearAll();
-                //     }
-                // }
+                this.camerasTree
             ]
         };
     }
@@ -83,29 +77,16 @@ export default class CCTV {
                             icon:"wxi-close",
                             click: function() {
                                 // hide the panel
-                                if($$("element_tree:cctv").isVisible()) {
-                                    $$("element_tree:cctv").hide();
+                                if($$("element_tree_cctv").isVisible()) {
+                                    $$("element_tree_cctv").hide();
                                 } else {
-                                    $$("element_tree:cctv").show();
+                                    $$("element_tree_cctv").show();
                                 }
                             }
                         }
                     ]
                 },
-                { 
-                    cols: [
-                       this.camerasTree,
-                       {
-                            id: "dropArea",
-                            drag: true,
-                            view: "gridlayout",
-                            gridColumns: this.ncols, 
-                            gridRows: this.nrows,
-                            cells:[
-                            ]
-                        }
-                    ]
-                }
+                
             ]
         };
 
@@ -118,9 +99,49 @@ export default class CCTV {
     }
     
     loadData() {
-
         let self = this;
+        this.grpahqlElementType2.load({ elem: "ElementType:2"}).then(data => {
+            
+            let vdata = []
+            data.forEach(ele => {
+                vdata.push({
+                    id: ele.id,
+                    icon: "mdi mdi-video",
+                    value: ele.alias
+                })
+            });
+        try {
+            if ($$('element_tree_cctv') != undefined){
+                $$('cctvContainer').removeView('cctv_controller_layout')
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
+        $$('cctvContainer').addView(
+        {
+            id: "cctv_controller_layout",
+            cols: [
+                {
+                    tittle:"Cameras",
+                    view:"list",
+                    id:"element_tree_cctv",
+                    width:200,
+                    drag:true,
+                    data:vdata
+                },
+               {
+                    id: "dropArea",
+                    drag: true,
+                    view: "gridlayout",
+                    gridColumns: this.ncols, 
+                    gridRows: this.nrows,
+                    cells:[
+                    ]
+                }
+            ]
+        }
+        );
         // adds the required cells to the layout
         for(let i=0; i<this.nrows; i++) {
             for(let j=0; j<this.ncols; j++) {
@@ -150,6 +171,8 @@ export default class CCTV {
 
             }
         }
+       
+    })
 
     }
 

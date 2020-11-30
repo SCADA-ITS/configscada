@@ -77,6 +77,7 @@ function auditMutation(auditLog) {
   }
   auditLog.userId=webix.storage.session.get("userId");
   auditLog.time=new Date().getTime();
+  auditLog.level="INFO";
   
   auditMutation.load({
     auditLogs: [auditLog]

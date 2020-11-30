@@ -30,6 +30,7 @@ export default class TabForm {
 					commandElementTypes{
 						id
 						alias
+						labelAlias
 						commandElementTypeParams{
 						  id
 						  alias
@@ -888,7 +889,7 @@ export default class TabForm {
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
 									value: $.i18n(data.elementType.commandElementTypes[index].id),
-									click: function(){
+									click: () =>{
 										var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
 											sendCommandElement(commands: $commands)  
 										}`;
@@ -909,15 +910,18 @@ export default class TabForm {
 											//Audit
 											let auditLog={
 												"logTypeId": "LogType:3",
+												"logSubtypeId": "LogSubtype:1",
 												"auditLogValues": [
 													{
-														"value": data.elementType.commandElementTypes[index].id,
-														"logTypeParamId": "LogTypeParam:3:1"
-													  }
-													  ,{
-														"value": elementId,
-														"logTypeParamId": "LogTypeParam:3:2"
-													  }
+													"value": data.elementType.commandElementTypes[index].labelAlias,
+													"logTypeParamId": "LogTypeParam:3:1"
+													},{
+													"value": data.alias,
+													"logTypeParamId": "LogTypeParam:3:2"
+													},{
+													"value": "",
+													"logTypeParamId": "LogTypeParam:3:3"
+													}
 												]
 											};
 											auditMutation(auditLog);

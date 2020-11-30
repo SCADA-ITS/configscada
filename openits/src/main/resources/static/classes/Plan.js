@@ -338,8 +338,9 @@ export default class Plan {
         //Audit
         let auditLog={
           "logTypeId": "LogType:2",
+          "logSubtypeId": "LogSubtype:3",
           "auditLogValues": {
-            "value": this.id,
+            "value": this.alias,
             "logTypeParamId": "LogTypeParam:2:1"
           }
         };

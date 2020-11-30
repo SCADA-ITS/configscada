@@ -1,6 +1,5 @@
 import { plan } from "../data/plan.js";
 import Plan from "../classes/Plan.js";
-import * as revenga from "../lib/revenga.js";
 
 export default class PlansTree {
   constructor(data, metadata) {
@@ -154,7 +153,6 @@ export default class PlansTree {
   
     switch (item.$level) {
       case 4:  //PLAN
-
         if ( item.qid === "new" ) {
           let planForm = $$(item.id + "_form").getValues();
           let planMutation = webix.proxy(
@@ -163,27 +161,28 @@ export default class PlansTree {
               id
               alias
               description
-              state
+              planStateType{
+                id
+                alias
+              }
               planModeType
               planSubtype{id alias description}
             }
           }`);
-          planMutation
-          .load({
+          planMutation.load({
             plan: {
               "alias": planForm.alias,
               "description": planForm.description,
               "planModeType": planForm.planModeType,
               "planSubtypeId": parentItem.qid
             }
-          })
-          .then(data => {
+          }).then(data => {
             item["qid"] = data.id;
             item["alias"] = data.alias;
             item["description"] = data.description; 
             item["planModeType"] = data.planModeType; 
             item["planSubtype"] = data.planSubtype;
-            item["state"] = data.state;
+            item["planStateType"] = data.planStateType;
             item["data"] = [];
             item["planOrders"] = [];
             $$('treePlan').updateItem(selectPlan, item);
@@ -229,7 +228,10 @@ export default class PlansTree {
                 alias
                 description
                 planModeType
-                state
+                planStateType {
+                  id
+                  alias
+                }
               }
             }`);
           planMutation
@@ -458,17 +460,19 @@ export default class PlansTree {
             element.planOrders.map(order => { 
               planOrders.push(order);
             });
-          } catch { console.log(""); }
+          } catch (error){
+            console.error(error); 
+          }
 
           this.order.forEach(e => {
             try {
               if (element.planSubtype.id === $$("treePlan").data.pull[e].qid ) {
                 let parentBranch = $$("treePlan").data.pull[e].id;
-                $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.state, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders, planStateType: element.planStateType },0, parentBranch );
+                $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.planStateType, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders, planStateType: element.planStateType },0, parentBranch );
                 this.order.push(parentBranch + "." + counter.toString());
               }
-            } catch {
-              console.log("ERROR");
+            } catch (error){
+              console.error(error); 
             }
           });
           counter +=1;

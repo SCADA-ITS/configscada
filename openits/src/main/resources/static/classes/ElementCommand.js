@@ -28,7 +28,8 @@ export default class ElementCommand {
 					alias
 					commandElementTypes{
 						id
-						alias
+            alias
+            labelAlias
 						commandElementTypeParams{
 						  id
 						  alias
@@ -264,8 +265,7 @@ export default class ElementCommand {
                       graphql.save({
                           commands: [
                             {
-                              commandElementTypeId:
-                              data.elementType.commandElementTypes[index].id,
+                              commandElementTypeId: data.elementType.commandElementTypes[index].id,
                               elementId: idtable[i],
                             },
                           ],
@@ -278,14 +278,17 @@ export default class ElementCommand {
                           //Audit
                           let auditLog={
                             "logTypeId": "LogType:3",
+                            "logSubtypeId": "LogSubtype:1",
                             "auditLogValues": [
                               {
-                                "value": data.elementType.commandElementTypes[index].id,
+                                "value": data.elementType.commandElementTypes[index].labelAlias,
                                 "logTypeParamId": "LogTypeParam:3:1"
-                              }
-                              ,{
+                              },{
                                 "value": idtable[i],
                                 "logTypeParamId": "LogTypeParam:3:2"
+                              },{
+                                "value": "",
+                                "logTypeParamId": "LogTypeParam:3:3"
                               }
                             ]
                           };
