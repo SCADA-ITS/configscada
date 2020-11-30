@@ -52,6 +52,7 @@ export const ELEMENT_TYPE_60_SIRENA = "60";
 export const ELEMENT_TYPE_61_FIRE_DET_CT = "61";
 export const ELEMENT_TYPE_62_TEMP_PROBE = "62";
 export const ELEMENT_TYPE_63_AIR_CONDITIONER = "63";
+export const ELEMENT_TYPE_64_VMS_SNOW = "64";
 
 export const ELEMENT_TYPE_71_VIS = "71";
 export const ELEMENT_TYPE_72_ACCEL = "72";

@@ -175,6 +175,8 @@ export function getElementIcon(element, suffix="") {
     tfa.updateTfaIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU) {
     tu.updateTuIcon(element, suffix);
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW) {
+      full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_71_VIS) {
     vis.updateVisIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_72_ACCEL) {
@@ -299,6 +301,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
+        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_71_VIS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 602) + ',' + (height / 503) + ')">' + createIcon(element, suffix) + '</g>';
