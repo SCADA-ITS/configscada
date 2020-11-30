@@ -117,6 +117,8 @@ var i18_es = {
     "ElementType:60.description": "SIRENA",
     "ElementType:61.alias": "DETECTOR DE INCENDIOS",
     "ElementType:61.description": "DETECTOR DE INCENDIOS",
+    "ElementType:64.alias": "PANEL NIEVE",
+    "ElementType:64.description": "PANEL NIEVE",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -931,6 +933,19 @@ var i18_es = {
     "ElementTypeParam:61:1:4.alias": "Tramo",
     "ElementTypeParam:61:1:4.description": "Tramo",
 
+    "ElementTypeParam:64:1:1.alias": "PK",
+    "ElementTypeParam:64:1:1.description": "PK",
+    "ElementTypeParam:64:1:2.alias": "Sentido",
+    "ElementTypeParam:64:1:2.description": "Sentido",
+	"ElementTypeParam:64:1:3.alias": "Carretera",
+    "ElementTypeParam:64:1:3.description": "Carretera",
+    "ElementTypeParam:64:1:4.alias": "Tramo",
+    "ElementTypeParam:64:1:4.description": "Tramo",
+    "ElementTypeParam:64:1:6.alias": "Armario asociado",
+    "ElementTypeParam:64:1:6.description": "Armario asociado",
+	"ElementTypeParam:64:1:7.alias": "Estaci&oacute;n asociada",
+    "ElementTypeParam:64:1:7.description": "Estaci&oacute;n asociada",
+
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
 
@@ -1163,6 +1178,9 @@ var i18_es = {
     "CommandElementType:2:36": "SEÑALIZAR",
     "CommandElementType:3:36": "APAGAR",
 
+    "CommandElementType:1:64": "SEÑALIZAR",
+    "CommandElementType:2:64": "APAGAR",
+
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
     "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
@@ -1178,7 +1196,7 @@ var i18_es = {
 
 
 
-    /*  BRATISLAVA 
+    /*  BRATISLAVA */
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1313,12 +1331,13 @@ var i18_es = {
     "AlarmConfig:133": "ALARMA ARMARIO_EL&Eacute;CTRICO PUERTA ABIERTA TRANSFORMADOR",   
     "AlarmConfig:135": "ALARMA ATC NO CONECTADO",
     "AlarmConfig:139": "ALARMA FALLO DETECTOR",
-    "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",*/
+    "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
+    "AlarmConfig:141": "ALARMA PANEL NIEVE NO CONECTADO",
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL*/
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1354,7 +1373,7 @@ var i18_es = {
     "AlarmConfig:37": "ALARMA SIRENA SIN CONEXI&Oacute;N",
     "AlarmConfig:38": "ALARMA SIRENA ACTIVADA",
     "AlarmConfig:39": "ALARMA DETECTOR DE INCENDIOS SIN CONEXI&Oacute;N",
-    "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",
+    "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",*/
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",

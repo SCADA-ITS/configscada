@@ -129,6 +129,8 @@ var i18_en = {
     "ElementType:62.description": "SONDA DE TEMPERATURA",
     "ElementType:63.alias": "AIRE ACONDICIONADO",
     "ElementType:63.description": "AIRE ACONDICIONADO",
+    "ElementType:64.alias": "VMS",
+    "ElementType:64.description": "VMS",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -1111,6 +1113,9 @@ var i18_en = {
     "CommandElementType:2:36": "SEND MESSAGE",
     "CommandElementType:3:36": "SWITCH OFF",
 
+    "CommandElementType:1:64": "SEND MESSAGE",
+    "CommandElementType:2:64": "SWITCH OFF",
+
     "lbl_command_sended": "Command successfully executed",
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
     "lbl_panel_signaling_error": "Select a pictogram please",
@@ -1260,6 +1265,7 @@ var i18_en = {
     "AlarmConfig:135": "ALARM ATC NO CONNECTION",
     "AlarmConfig:139": "ALARM DETECTOR FAIL",
     "AlarmConfig:140": "ALARM DETECTOR NO CONNECTION",
+    "AlarmConfig:141": "ALARM VMS NO CONNECTION",
     
     "AlarmType:1": "Alarm",
     "AlarmType:2": "Alert",

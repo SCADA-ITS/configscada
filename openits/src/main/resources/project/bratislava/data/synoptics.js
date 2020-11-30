@@ -317,6 +317,12 @@ export let synopticData= [
 					"Element:24:11",			
 					"Element:31:3",
 					"Element:31:5",
+					"Element:64:3",
+					"Element:64:4",
+					"Element:64:7",
+					"Element:64:8",
+					"Element:64:11",
+					"Element:64:12"
 
 				],
 				"translation_key": "",
@@ -326,7 +332,13 @@ export let synopticData= [
 				"items": [
 			    "Element:31:1",
 			    "Element:31:2",
-			    "Element:31:4",
+				"Element:31:4",
+				"Element:64:1",
+				"Element:64:2",
+				"Element:64:5",
+				"Element:64:6",
+				"Element:64:9",
+				"Element:64:10",
 			
 					
 				],
@@ -468,10 +480,24 @@ export let synopticData= [
 		"Element:31:3": { "x": 1215, "y": 274,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
 		"Element:31:5": { "x": 1623, "y": 52,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
 		
+		"Element:64:3": { "x": 1209, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD03L"  },
+		"Element:64:4": { "x": 1283, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD04L"  },
+		"Element:64:7": { "x": 1209, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH21L"  },
+		"Element:64:8": { "x": 1283, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH22L"  },
+		"Element:64:11": { "x": 1623, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH25L"  },
+		"Element:64:12": { "x": 1697, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH26L"  },
+		
 		// S4-S5 P
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:2": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
+
+		"Element:64:1": { "x": 124, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD01P"  },
+		"Element:64:2": { "x": 198, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD02P"  },
+		"Element:64:5": { "x": 124, "y": 628,  "width": 60, "height": 60, "alias": "PDZDH23P"  },
+		"Element:64:6": { "x": 198, "y": 628,  "width": 60, "height": 60, "alias": "PDZDH24P"  },
+		"Element:64:9": { "x": 550, "y": 100,  "width": 60, "height": 60, "alias": "PDZDH27P"  },
+		"Element:64:10": { "x": 624, "y": 100,  "width": 60, "height": 60, "alias": "PDZDH28P"  },
 	},
 	{
 		"id":"synopticCabinets",

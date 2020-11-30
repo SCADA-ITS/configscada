@@ -13,7 +13,8 @@ export let optionElementType = [
 	{id:"ElementType:45", value: $.i18n("ElementType:45.alias")},
 	{id:"ElementType:46", value: $.i18n("ElementType:46.alias")},
 	{id:"ElementType:47", value: $.i18n("ElementType:47.alias")},
-	{id:"ElementType:54", value: $.i18n("ElementType:54.alias")}
+	{id:"ElementType:54", value: $.i18n("ElementType:54.alias")},
+	{id:"ElementType:64", value: $.i18n("ElementType:64.alias")}
 ]
 
 export let columnsElementList = {
@@ -253,6 +254,21 @@ export let columnsElementList = {
 			"ElementTypeParam:54:1:1",
 			"ElementTypeParam:54:1:2",
 			"ElementTypeParam:54:1:3"
+		],
+		2:[
+			"alias",
+			"state",
+		]
+	},
+	"ElementType:64": { 
+		1:[
+			"alias",
+			"ElementTypeParam:64:1:1",
+			"ElementTypeParam:64:1:2",
+			"ElementTypeParam:64:1:3",
+			"ElementTypeParam:64:1:4",
+			"ElementTypeParam:64:1:6",
+			"ElementTypeParam:64:1:7",
 		],
 		2:[
 			"alias",
@@ -969,6 +985,41 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:54:1:3": { //"Road"
 				"header": [ $.i18n("ElementTypeParam:54:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+		}
+	},
+	"ElementType:64": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:64:1:1": { //"PK"
+				"header": [ $.i18n("ElementTypeParam:64:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:64:1:2": { //"Sentido"
+				"header": [ $.i18n("ElementTypeParam:64:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:64:1:3": { //"Road"
+				"header": [ $.i18n("ElementTypeParam:64:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:64:1:4": { //"alias section"
+				"header": [ $.i18n("ElementTypeParam:64:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:64:1:6": { //"associated_cabinet"
+				"header": [ $.i18n("ElementTypeParam:64:1:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:64:1:7": { //"associated_meteo"
+				"header": [ $.i18n("ElementTypeParam:64:1:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		},
 		2:{

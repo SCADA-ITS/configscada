@@ -314,5 +314,19 @@ export let columnsElementFormList = {
 		"scroll": false,  
 		"width": 540,
 		"options": {}
+	},
+	"ElementType:64": {
+		"rows":[
+			"ElementTypeParam:64:1:1", 
+			"ElementTypeParam:64:1:2",
+			"ElementTypeParam:64:1:3",
+			"ElementTypeParam:64:1:4",
+			"ElementTypeParam:64:1:6",
+			"ElementTypeParam:64:1:7",
+		],
+		"rowCounts": 6,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
 	}
 }

@@ -153,6 +153,8 @@ var i18_sk = {
     "ElementType:62.description": "SONDA DE TEMPERATURA",
     "ElementType:63.alias": "AIRE ACONDICIONADO",
     "ElementType:63.description": "AIRE ACONDICIONADO",
+    "ElementType:64.alias": "VMS",
+    "ElementType:64.description": "VMS",
     
     "ElementTypeParam:1:1:1.alias": "Zna&#269;ka",
     "ElementTypeParam:1:1:1.description": "Zna&#269;ka",
@@ -1190,6 +1192,7 @@ var i18_sk = {
     "AlarmConfig:135": "UPOZORNEIE ATC &#x17d;IADNE SPOJENIE",
     "AlarmConfig:139": "UPOZORNEIE PORUCHA DETEKTORA",
     "AlarmConfig:140": "UPOZORNEIE DETEKTORA &#x17d;IADNE SPOJENIE",
+    "AlarmConfig:141": "PDZ (VMS) - &#382;iadne spojenie, volaj &#250;dr&#382;bu !",
     
     "Alarm_recon": "Alarm u&#382; bol potvrden&#253;",
     "Alarm_deactivated": "Alarm u&#382; bol potvrden&#253;",
