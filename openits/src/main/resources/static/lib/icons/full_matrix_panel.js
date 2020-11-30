@@ -128,26 +128,20 @@ export function generateIcon(element, suffix = "") {
 
         // find the element with that value
         let value_to_find = 1001 + n_elements;
-        let content_value;
-        try {
-          content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
-        } catch (error) {
-          content_value = null;
+        let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
+        
+        let isGraphic=false;
+        if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
+          let value_to_find2 = 2001 + n_elements;
+          let content_value2 = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find2 + ":2").value;
+          
+          if(parseInt(content_value2)==1){
+            isGraphic=true;
+          }
+        }else if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico"){
+          isGraphic=true;
         }
-        
-        
-        //Hola PABLO!!!!!!!!!!!!! descomenta esto y comenta linea 144. Tira por esta solucion :P
-        // let isGraphic=false;
-        // if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
-        //   let dualMeasure;//aqui te toca picar codigo vuelca la measure +1000 que le toque en el array de zonas
-        //   if(dualMeasure==1){
-        //     isGraphic=true;
-        //   }
-        // }else if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico"){
-        //   isGraphic=true;
-        // }
-        // if(isGraphic) {
-        if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico") {
+        if(isGraphic) {
           let auxBase64;
           if(availablePictos[content_value]){
             auxBase64=availablePictos[content_value].base64;

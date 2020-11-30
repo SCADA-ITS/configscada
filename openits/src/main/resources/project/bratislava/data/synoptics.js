@@ -479,7 +479,6 @@ export let synopticData= [
 		"Element:24:11": { "x": 1315, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-3"  },	
 		"Element:31:3": { "x": 1215, "y": 274,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
 		"Element:31:5": { "x": 1623, "y": 52,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
-		
 		"Element:64:3": { "x": 1209, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD03L"  },
 		"Element:64:4": { "x": 1283, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD04L"  },
 		"Element:64:7": { "x": 1209, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH21L"  },
@@ -826,7 +825,7 @@ export let synopticData= [
 			"ATC": {
 				"items": ["Element:54:1", "Element:3:1"],
 				"translation_key": "",
-				"visibility": "visible"
+				"visibility": "hidden"
 			}
 		},
 		"Element:54:1": { "x": 570,  "y": 60, "width": 180, "height": 180, "alias": "ASDDH01"  },
