@@ -128,14 +128,10 @@ export let columnsElementList = {
 			"state",
             "ElementTypeParam:4:2:1",
 			"ElementTypeParam:4:2:2",
-			"ElementTypeParam:4:2:4",
-			"ElementTypeParam:4:2:5",
-			"ElementTypeParam:4:2:6",
-			"ElementTypeParam:4:2:7",
 			"ElementTypeParam:4:2:9",
-			"ElementTypeParam:4:2:10",
-			"ElementTypeParam:4:2:160",	
-			"ElementTypeParam:4:2:161"	
+			"ElementTypeParam:4:2:60",
+			"ElementTypeParam:4:2:61",
+			"ElementTypeParam:4:2:62"	
 		]
 	},
 	"ElementType:8": { 
@@ -945,29 +941,17 @@ export let columnsElementConfig = {
             "ElementTypeParam:4:2:2": { //"period"
 				"header": [ $.i18n("ElementTypeParam:4:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:4:2:4": { //"n_vehicles"
-				"header": [ $.i18n("ElementTypeParam:4:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:5": { //"intensity"
-				"header": [ $.i18n("ElementTypeParam:4:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:6": { //"occupancy"
-				"header": [ $.i18n("ElementTypeParam:4:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:4:2:7": { //"congestion"
-				"header": [ $.i18n("ElementTypeParam:4:2:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
             "ElementTypeParam:4:2:9": { //"speed"
 				"header": [ $.i18n("ElementTypeParam:4:2:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:4:2:10": { //"gap"
-				"header": [ $.i18n("ElementTypeParam:4:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            "ElementTypeParam:4:2:60": { //"gap"
+				"header": [ $.i18n("ElementTypeParam:4:2:60.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:4:2:160": { //"veh_pa_1_percent"
-				"header": [ $.i18n("ElementTypeParam:4:2:160.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            "ElementTypeParam:4:2:61": { //"veh_pa_1_percent"
+				"header": [ $.i18n("ElementTypeParam:4:2:61.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:4:2:161": { //"veh_pa_2_percent"
-				"header": [ $.i18n("ElementTypeParam:4:2:161.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+            "ElementTypeParam:4:2:62": { //"veh_pa_2_percent"
+				"header": [ $.i18n("ElementTypeParam:4:2:62.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
