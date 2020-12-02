@@ -576,14 +576,14 @@ export default class Map {
         webix.ui({
           view: "sidemenu-win",
           id: "menu" + this.synopticDiv,
-          width: 400,
+          width: 230,
           position: function(position) {
             var toolbarHeight = $$("mainToolbar").$height;
             position.top = toolbarHeight;
-            position.left = $$("mainBody").$width - 400;
+            position.left = $$("mainBody").$width - 230;
             var mainHeight = $$("mainBody").$height - toolbarHeight;
             position.height = mainHeight;
-            position.width = 400;
+            position.width = 230;
           },
           body: element_tree
         });

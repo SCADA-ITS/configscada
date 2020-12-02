@@ -14,7 +14,7 @@ export let usersmanager= {
 	id:"usersmanagerContainer",
     body: {
         view:"usermanager",
-        id: "userManagerDelete",
+        id: "userManagerModule",
         override: new Map([[userManager.services.Backend, UserManagerInt],
             [userManager.views["users/roles"], CustomRoleManager],
             [userManager.views["users/details"], CustomUserDetails],

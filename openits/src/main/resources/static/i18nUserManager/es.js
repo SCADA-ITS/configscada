@@ -57,14 +57,14 @@ export var es = {
 	Who: "Quien",
 
 	// used if Roles feature enabled
-	"Add new role": "Añadir nueva regla",
+	"Add new role": "Añadir nuevo rol",
 	"All assignments": "Todos los derechos",
-	"Are you sure to delete this role ?": "¿Estás seguro de borrar este permiso?",
+	"Are you sure to delete this role ?": "¿Estás seguro de borrar este rol?",
 	"Assigned directly": "Asignad directamente",
-	"Enter role name": "Introducir nombre del permiso",
-	"No roles": "Sin permisos",
-	Role: "Permiso",
-	Roles: "Permisos",
-	"Roles assigned": "Permiso asignado",
-	"Role Matrix": "Matriz de permisos",
+	"Enter role name": "Introducir nombre del rol",
+	"No roles": "Sin roles",
+	Role: "Rol",
+	Roles: "Roles",
+	"Roles assigned": "Rol asignado",
+	"Role Matrix": "Matriz de Roles",
 };

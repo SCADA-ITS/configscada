@@ -88,7 +88,7 @@ export default class synopticElement {
             }
             let checkedElement = document.getElementById(this.element.id);
             if(checkedElement != null) {
-              console.warn(synopticConf);
+              // console.warn(synopticConf);
               checkedElement.style.opacity = 0;
               checkedElement.setAttribute("visibility", "hidden");
             }

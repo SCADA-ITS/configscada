@@ -141,16 +141,41 @@ export default class UserManagerInterface extends userManager.services.Backend {
         let graphCreateUser = webix.proxy("GraphQL",
             `mutation  createUser($user: UserVO!){
                 createUser(user: $user)   {
-                  id
+                    id
+                    name
+                    password
+                    passwordExpiredAt
+                    sessionExpireTimeS
+                    passwordExpiredAt
+                    allowMultipleSessions
+                    isAdmin
+                    lockedUntil
+                    preset
+                    fullName
+                    email
+                    language
+                    timezone
+                    role{
+                      id
+                      alias
+                      rolePermissions
+                      {
+                      id
+                      alias
+                      }
+                    }
+                    userPermissions{
+                      id
+                      alias
+                    }
                 }
               }`);
         return Promise.resolve(graphCreateUser.load({
             user: {
-
                 "name": data.name,
                 "password": "1234",
                 "preset": false,
-                "allowMultipleSessions": !!parseInt(data.multisession),
+                "allowMultipleSessions": true,
                 "isAdmin": false,
                 "language": "es",
                 "country": "Spain",
@@ -158,6 +183,12 @@ export default class UserManagerInterface extends userManager.services.Backend {
                 "roleId": "Role:2",
             }
         }).then(dataReturn => {
+            $$("userManagerModule").getService("local").users(true).load(collection => this.users());
+            // $$("userManagerModule").getService("local").roles(true).load(collection => this.roles());
+            // $$("userManagerModule").getService("local").rules(true).load(collection => this.rules());
+            // $$("userManagerModule").getService("local").meta(true).RoleRule = (collection => this.meta().RoleRule);
+            // $$("userManagerModule").getService("local").meta(true).load(collection => this.meta());
+            // $$("userManagerModule").$app.refresh();  
             return { 'id': dataReturn.id.split(":")[1] }
         }));
 
@@ -169,6 +200,32 @@ export default class UserManagerInterface extends userManager.services.Backend {
         `mutation  updateUser($user: UserVO!){
             updateUser(user: $user)   {
                 id
+              name
+              password
+              passwordExpiredAt
+              sessionExpireTimeS
+              passwordExpiredAt
+              allowMultipleSessions
+              isAdmin
+              lockedUntil
+              preset
+              fullName
+              email
+              language
+              timezone
+              role{
+                id
+                alias
+                rolePermissions
+                {
+                id
+                alias
+                }
+              }
+              userPermissions{
+                id
+                alias
+              }
             }
             }`);
             

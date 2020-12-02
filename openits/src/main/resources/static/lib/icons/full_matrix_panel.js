@@ -148,6 +148,13 @@ export function generateIcon(element, suffix = "") {
           }else{
             auxBase64=availablePictos["0"].base64
           }
+          
+          //FIX ajuste iconos paneles en el mapa
+          // subpanel_width = subpanel_width - 20
+          // subpanel_height = subpanel_height - 20
+          // subpanel_x = subpanel_x + 1
+          // subpanel_y = subpanel_y + 2
+          
           let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
           im.attr("id", element.id + suffix + ":" + value_to_find);
           im.attr("subpanel_type", "graphic");

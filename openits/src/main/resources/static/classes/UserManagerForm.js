@@ -14,7 +14,7 @@ export class CustomRoleManager extends userManager.views["users/roles"] {
         let ui = super.config()
         let modify_button = ui.rows[0].rows[0].rows[0].rows[1].cols[1]
 
-        if (! checkUserPermission(RULE.EDIT_ROLE)){
+        if (!checkUserPermission(RULE.EDIT_ROLE)){
             this.$$(modify_button.localId).disable()
         }
         return ui
@@ -32,17 +32,24 @@ export class CustomUserDetails extends userManager.views["users/details"]{
         let ui = super.config();
         let button_edit = ui.rows[0].cols[2];
         if (!checkUserPermission(RULE.EDIT_USER)){
-            this.$$(button_edit.localId).disable()
+            if(this.$$(button_edit.localId)){
+                this.$$(button_edit.localId).disable();
+            }
         }
         return ui
     }
 }
 
 export class CustomAddRoleAndUser extends userManager.views["addmenu"]{
+    config() {
+        let ui = super.config();
+        ui.body.data.pop();
+        return ui;
+    }
     init() {
         // default logic
         super.init();
-        // custom logic below
+       // custom logic below
         this.editPermissions();
     }
     editPermissions(){
