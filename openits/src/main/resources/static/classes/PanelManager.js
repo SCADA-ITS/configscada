@@ -237,7 +237,7 @@ export default class PanelManager {
 												try {
 													let value_text = null;
 													let v_value = this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1];
-													value_text = v_value !== null ? v_value !== "" ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null;
+													value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
 													if (value_text !== null)
 														$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
 												} catch (e) {

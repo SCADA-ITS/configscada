@@ -26,14 +26,23 @@ export function getLinesOfText(panelType, zone, subPanel) {
 export function generateIcon(element, suffix = "") {
 
   // check for the panel config
+  try {
   let panelConfig = element.elementValues.find(
     (ic) =>
       elementTypeMap.getElementTypeParam(ic.id) ==
       elementTypeMap.PANEL_MANAGER_CONFIG
   );
 
-  panelConfig = JSON.parse(panelConfig.value);
+  //console.log(element);
+  if(panelConfig === undefined) {
+    panelConfig = JSON.parse(panelData[element.id].panel.replace('\"','"'));
 
+    //panel_config = panelData[data.id].panel;
+    //let cfgJson = JSON.parse(panel_config.replace('\"','"'));
+
+  } else {
+    panelConfig = JSON.parse(panelConfig.value);
+  }
   // changes the color based on the status
   let color = "";
   let elementState = "";
@@ -219,6 +228,8 @@ export function generateIcon(element, suffix = "") {
   s.clear();
 
   return retSVG;
+} catch(e){ console.log(e);}
+  
 }
 
 export function changeMatrixPanelIcon(element, suffix = "") {
@@ -245,7 +256,14 @@ export function updateMatrixPanelIcon(element, suffix = "") {
       let picToShow = element.elementValues.find(
         (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"
       );
-
+      try {
+      let value_to_find2 = elementTypeParam + 1000;
+      //console.log(value_to_find2);
+      //console.log(element.elementValues);
+      let content_value2 = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find2 + ":2").value;
+      //console.log(value_to_find2);
+      //console.log(content_value2);
+      
       let subpanelType = "";
       if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
         if(document.getElementById(element.id + suffix + ":" + elementTypeParam).getAttribute("subpanel_type") == "text") {
@@ -255,36 +273,166 @@ export function updateMatrixPanelIcon(element, suffix = "") {
         }
       }
 
-      if(subpanelType == "graphical") {
-        if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-          if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
-            document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
-          } else {
-            document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
-          }
-        } 
-        else {
+      if(content_value2 === undefined){
+        if(subpanelType == "graphical") {
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
+            } else {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+          } 
+          else {
             if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
               document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
             }
-        }
-      } else if(subpanelType == "text") {  // text
-        if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-          if(picToShow.value != null) {
-            let all_lines = picToShow.value.split(":$");
-            all_lines.forEach((item, i) => { 
-              if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
-                document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+          }
+        } else if(subpanelType == "text") {  // text
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if(picToShow.value != null) {
+              let all_lines = picToShow.value.split(":$");
+              all_lines.forEach((item, i) => { 
+                if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+                  document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+                }
+              });
+            } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
+              // clean the panel if no data is received
+              for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
+                document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
               }
-            });
-          } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
-            // clean the panel if no data is received
-            for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
-              document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
             }
           }
-        
         }
+        
+      }else{
+        //console.log(element);
+        //console.log("DESTRUIR Y CREAR");
+        //console.log(content_value2);
+        //generateIcon(element, suffix = "");
+        if(content_value2 === "1" && subpanelType == "graphical") {
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
+            } else {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+          } 
+          else {
+            if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+          }
+        } else if(content_value2 === "1" && subpanelType == "text") {  // text 
+          //console.log("TENEMOS QUE CAMBIAR A GRAFICO");
+          try{ 
+          //console.log(document.getElementById(element.id + suffix + ":" + elementTypeParam));
+        } catch(e) { console.log(e) }
+          try{ 
+          document.getElementById(element.id + suffix + ":" + elementTypeParam).remove();
+        } catch(e) { console.log(e) }
+          try{ 
+          generateIcon(element, suffix);
+        } catch(e) { console.log(e) }
+          try{ 
+            //console.log(document.getElementById(element.id + suffix + ":" + elementTypeParam));
+          } catch(e) { console.log(e) }
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
+            } else {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+          } 
+          else {
+            if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+          }
+
+
+          //if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            
+            //generateIcon(element, suffix);
+            /*
+            let auxBase64;
+            if(availablePictos[picToShow.value]){
+              auxBase64=availablePictos[picToShow.value].base64;
+            }else{
+              auxBase64=availablePictos["0"].base64
+            }
+            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
+            im.attr("id", element.id + suffix + ":" + value_to_find);
+            im.attr("subpanel_type", "graphic");
+            if(subpanel_width != subpanel_height) {
+              im.attr("preserveAspectRatio", "xMidYMax meet");
+            } else {
+              im.attr("preserveAspectRatio", "none");
+            }
+            if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
+            } else {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
+            }
+            */
+          //} 
+          //else {
+          //  if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+          //    document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
+          //  }
+          //}
+        } else if(content_value2 === "2" && subpanelType == "graphical") {
+          try{ 
+          //console.log(document.getElementById(element.id + suffix + ":" + elementTypeParam));
+        } catch(e) { console.log(e) }
+          //console.log("TENEMOS QUE CAMBIAR A TEXTO");
+
+          document.getElementById(element.id + suffix + ":" + elementTypeParam).remove();
+          try{ 
+            //console.log(document.getElementById(element.id + suffix + ":" + elementTypeParam));
+          } catch(e) { console.log(e) }
+          generateIcon(element, suffix);
+          try{ 
+          //console.log(document.getElementById(element.id + suffix + ":" + elementTypeParam));
+        } catch(e) { console.log(e) }
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if(picToShow.value != null) {
+              let all_lines = picToShow.value.split(":$");
+              all_lines.forEach((item, i) => { 
+                if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+                  document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+                }
+              });
+            } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
+              // clean the panel if no data is received
+              for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
+                document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
+              }
+            }
+          }
+          
+        } else if(content_value2 === "2" && subpanelType == "text") {
+          //console.log("AL FIN TEXT");
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if(picToShow.value != null) {
+              let all_lines = picToShow.value.split(":$");
+              all_lines.forEach((item, i) => { 
+                if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+                  document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+                }
+              });
+            } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
+              // clean the panel if no data is received
+              for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
+                document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
+              }
+            }
+          }
+        }
+      }
+      
+      }catch(e) {
+        //console.log(e);
       }
     }
   }
