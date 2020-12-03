@@ -11,11 +11,13 @@ if (window.app)
 			module: {id: 6, endpoint: appConfig.restUrl + "modules" }
 		},
 		
+		isLoaded: false,
+		
 		entities: {},
 	
 		load: function() {
 	
-			for(var em_type in window.app.em.em_types) {
+			for (var em_type in window.app.em.em_types) {
 				
 				if (window.app.em.entities[em_type] == undefined) {
 				
@@ -23,6 +25,7 @@ if (window.app)
 				}   
 			}
 			
+			window.app.em.isLoaded = true;
 		},
 		
 		assign: function(em_type) {

@@ -1,13 +1,23 @@
+import DataTable from "../component/datatable.js";
+
 const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
 
-function getGenericGridView(module, instance, args) {
+export default class GenericGrid {
+	
+	constructor(module, instance, args){
 
-	let moduleInstance = "module-" + module.id + "-" + instance;
-	let view;
-	
-	if (module.moduleType.id == MODULE_TYPE_GENERIC_GRID_WINDOW) {
-	
-		view = {
+        this.module = module;
+		this.instance = instance;
+		this.args = args;
+		this.moduleInstance = "module-" + this.module.id + "-" + this.instance;
+
+        // for using the object inside callbacks
+        self = this;
+    }
+
+	getView() {
+
+		let	view = {
 			css: "custom_window",
 			cols: [
 				{
@@ -17,8 +27,8 @@ function getGenericGridView(module, instance, args) {
 							cols: [
 								{ width: 6 },
 								{
-									id: moduleInstance,
-									rows: [drawNoData()]
+									id: this.moduleInstance,
+									rows: [this.drawNoData]
 								},
 								{ width: 6 }
 							]
@@ -28,63 +38,66 @@ function getGenericGridView(module, instance, args) {
 				}
 			]
 		}	
+	
+		return view;
 	}
-
-	return view;
-}
-
-function assingGenericGridCallbacks(module, instance, args) {
-
-	let moduleInstance = "module-" + module.id + "-" + instance;
-	let equipmentTable = $$(moduleInstance);
-	let viewsToRemove = [];
-	equipmentTable.getChildViews().forEach(view => {
-
-		viewsToRemove.push(view.config.id);
-	});
 	
-	let dataGridId = app.module.getParamValue(module, MODULE_TYPE_GENERIC_PARAM_GRID_ID);
-	
-	webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat){
-			
-		if (dat != null) {
-			
-			viewsToRemove.forEach(viewId => {
+	loadData() {
 
-				if (viewId.indexOf("dt-") !== -1) {
-					let ctx = viewId.replace("dt-", "ctx_menu-");
+		let equipmentTable = $$(this.moduleInstance);
+		let viewsToRemove = [];
+		equipmentTable.getChildViews().forEach(view => {
+	
+			viewsToRemove.push(view.config.id);
+		});
 		
-					if (!webix.isUndefined($$(ctx))) {
+		let dataGridId = window.app.module.getParamValue(this.module, MODULE_TYPE_GENERIC_PARAM_GRID_ID);
 		
-						$$(ctx).destructor();
+		webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat){
+				
+			if (dat != null) {
+				
+				viewsToRemove.forEach(viewId => {
+	
+					if (viewId.indexOf("dt-") !== -1) {
+						let ctx = viewId.replace("dt-", "ctx_menu-");
+			
+						if (!webix.isUndefined($$(ctx))) {
+			
+							$$(ctx).destructor();
+						}
 					}
-				}
-		
-				equipmentTable.removeView(viewId);
-			});
-
-
-			let metadata = dat.json().metadata;
-			let data = dat.json().data;
-
-			//let newTable = app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + id, metadata, data);
-			let newTable = app.datatable.draw(dataGridId, null, moduleInstance, metadata, data);
-
-			newTable.forEach(newView => {
-
-				equipmentTable.addView(newView);
-			});
-
-			app.datatable.callbacks(module, instance);
 			
-			$$(moduleInstance).hideProgress();
-		}
-	});
-}
-
-function drawNoData() {
-
-	return {
+					equipmentTable.removeView(viewId);
+				});
+	
+	
+				let metadata = dat.json().metadata;
+				let data = dat.json().data;
+	
+				//let newTable = app.datatable.draw(moduleInstance + "-" + metadata.id + "-" + id, metadata, data);
+				//let newTable = window.app.datatable.draw(dataGridId, null, self.moduleInstance, metadata, data);
+				
+				let dataTable = new DataTable(dataGridId, null, metadata, data);
+				
+				let newTable = dataTable.getView();
+	
+				newTable.forEach(newView => {
+	
+					equipmentTable.addView(newView);
+				});
+	
+				//window.app.datatable.callbacks(self.module, self.instance);
+				
+				dataTable.callbacks();
+				
+				$$(self.moduleInstance).hideProgress();
+			}
+		});
+	}
+	
+	drawNoData = {
+	
 		view: "template",
 		template: function(data) {
 			let icon = "<img src='img/not_found_150.png' align='center'>";

@@ -39,7 +39,7 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.grids (
-		id serial primary key,
+		id int not null,
 		adapter_id int NULL,
 		label varchar NOT NULL,
 		icon varchar NULL,
@@ -49,7 +49,8 @@
 		filter bool NOT NULL,
 		pagination bool NOT NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_grids PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_grids_adapters ON ui.grids USING btree (adapter_id);
@@ -88,7 +89,7 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.grid_fields (
-		id serial primary key,	
+		id int not null,	
 		grid_id int NOT NULL,
 		grid_field_data_type_id int NOT NULL,
 		position int NOT NULL,
@@ -107,7 +108,8 @@
 		width_px int NOT NULL,
 		grid_field_group_operation_id int NULL,
 		enabled bool NULL,
-		visible bool NULL
+		visible bool NULL,
+		CONSTRAINT pk_grid_fields PRIMARY KEY (id)
 	);
 	
 	CREATE INDEX idx_grid_fields_grids ON ui.grid_fields USING btree (grid_id);

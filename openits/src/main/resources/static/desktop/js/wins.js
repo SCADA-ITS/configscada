@@ -1,3 +1,6 @@
+import GenericGrid from "./modules/generic_grid.js";
+import CustomWindow from "./modules/custom_window.js";
+
 if (window.app)
 	window.app.wins = {
 		winInstances: new Map(),
@@ -285,60 +288,80 @@ if (window.app)
 
 				window.app.wins.setActiveStyle(winId);
 
-				window.app.module.loadScript(jsFile, function(path, result) {
-
-					if (result === "ok") {
-						webix.delay(function() {
-
-							webix.extend($$(winId), webix.ProgressBar);
-
-							$$(winId).showProgress({
-								type: "bottom",
-								hide: true
-							});
-
-							if (typeof window[jsMethodDraw] === "function") {
-								moduleView = window[jsMethodDraw](module, currentInstance, args);
-
-								if (!webix.isUndefined(moduleView)) {
-									webix.ui(moduleView, $$("splash-" + winId));
-
-									if (typeof window[jsMethodCallbacks] === "function") {
-										window[jsMethodCallbacks](module, currentInstance, args);
+				if (module.moduleType.id == 999/*MODULE_TYPE_CUSTOM_WINDOW*/) {
+					
+					window.app.module.loadScript(jsFile, function(path, result) {
+	
+						if (result === "ok") {
+							webix.delay(function() {
+	
+								webix.extend($$(winId), webix.ProgressBar);
+	
+								$$(winId).showProgress({
+									type: "bottom",
+									hide: true
+								});
+	
+								if (typeof window[jsMethodDraw] === "function") {
+									moduleView = window[jsMethodDraw](module, currentInstance, args);
+	
+									if (!webix.isUndefined(moduleView)) {
+										webix.ui(moduleView, $$("splash-" + winId));
+	
+										if (typeof window[jsMethodCallbacks] === "function") {
+											window[jsMethodCallbacks](module, currentInstance, args);
+										}
 									}
-								}
-								else {
-
-									let viewUnavailable = {
-
-										id: "splash-info-" + winId,
-										css: "empty-app",
-										rows: [
-											{
-												template: function() {
-													if (window_params.image) {
-														icon = "<img src='" + window_params.image + "' align='center'>";
+									else {
+	
+										let viewUnavailable = {
+	
+											id: "splash-info-" + winId,
+											css: "empty-app",
+											rows: [
+												{
+													template: function() {
+														if (window_params.image) {
+															icon = "<img src='" + window_params.image + "' align='center'>";
+														}
+														else if (icon) {
+															icon = "<span class='webix_icon mdi mdi-" + icon + "'></span>";
+														}
+														return "<div class='empty-app-inner' style='background-color:" + window_params.color + ";'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_UNAVAILABLE") + "</span></div>";
 													}
-													else if (icon) {
-														icon = "<span class='webix_icon mdi mdi-" + icon + "'></span>";
-													}
-													return "<div class='empty-app-inner' style='background-color:" + window_params.color + ";'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_UNAVAILABLE") + "</span></div>";
 												}
-											}
-										]
+											]
+										}
+	
+										webix.ui(viewUnavailable, $$(winId).getBody());
 									}
-
-									webix.ui(viewUnavailable, $$(winId).getBody());
 								}
-							}
-
-							$$(winId).hideProgress();
-						}, null, null, 1);
-					}
-				});
+	
+								$$(winId).hideProgress();
+							}, null, null, 1);
+						}
+					});
+				}
+				else {
+					
+					this.loadModule(winId, module, currentInstance, args);
+				}
 			}
 
 			$$("winmenu").hide();
+		},
+		loadModule: function(winId, module, currentInstance, args) {
+			
+			webix.delay(function() {
+				
+				webix.extend($$(winId), webix.ProgressBar);
+				
+				let customWindow = new CustomWindow($$("splash-" + winId), module, currentInstance, args);
+			
+				$$(winId).hideProgress();
+				
+			}, null, null, 1);
+			
 		},
 		showEmptyApp: function(obj) {
 			var winId = obj.id + "_win";

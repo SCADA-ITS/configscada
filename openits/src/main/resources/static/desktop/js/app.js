@@ -101,6 +101,11 @@ window.app = {
 				i18n.load(`${userData.language}_${userData.country}`);
 
 				this.createToolbar();
+				
+				if (!window.app.em.isLoaded) {
+			
+					window.app.em.load();
+				}
 
 				if (!window.app.service.isLoaded) {
 
@@ -115,17 +120,12 @@ window.app = {
 					text: "User data not defined"
 				});
 			}
-
-
 		}
 		else {
 			webix.$$('toolbar').show();
 		}
 
 		if ($$("winmenu") == webix.undefined) {
-
-
-
 
 			this.createMenu();
 		}
