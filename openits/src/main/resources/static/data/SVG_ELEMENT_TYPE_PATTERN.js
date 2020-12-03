@@ -468,9 +468,9 @@ sodipodi:docname="unifilar.svg">
   inkscape:groupmode="layer"
   id="layer1">
  <rect
-    style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:1.965;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-    id="rect879"
-    width="111.125"
+    style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:1.965;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"` + 
+    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + '"' +
+    `width="111.125"
     height="21.922617"
     x="6.8035712"
     y="24.190477" />
@@ -483,9 +483,9 @@ sodipodi:docname="unifilar.svg">
       sodipodi:role="line"
       id="tspan17"
       x="23.786987"
-      y="39.28862"
-      style="stroke-width:0.264583">UF-Iluminacion</tspan></text>
-</g>
+      y="39.28862"` + 
+      'style="stroke-width:0.264583">' +REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END+ '</tspan></text>' + 
+`</g>
 </svg>
 `;
 

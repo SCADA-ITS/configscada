@@ -361,7 +361,7 @@ export let synopticData= [
 			},
 
 			"UNIFILAR" : {
-				"items": ["Element:56:1"],
+				"items": ["Element:56:1", "Element:56:2", "Element:56:3", "Element:56:4"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -388,6 +388,9 @@ export let synopticData= [
 		},
 
 		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" },
+		"Element:56:2": { "x": 1020,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSB" },
+		"Element:56:3": { "x": 820,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSV" },
+		//"Element:56:4": { "x": 620,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CGBT" },
 
 		"Element:58:1": { "x": 1440,   "y": 290, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 
@@ -412,40 +415,41 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"MAGNETOTERMICO" : {
-				"items": ["Element:57:8", "Element:57:9", "Element:57:10", "Element:57:11", "Element:57:12", "Element:57:13", "Element:57:14", "Element:57:15", "Element:57:16", "Element:57:17", "Element:57:18", "Element:57:19", "Element:57:25", "Element:57:24", "Element:57:26", "Element:57:27", "Element:57:28", "Element:57:29", "Element:57:30", "Element:57:31"],
+				"items": ["Element:57:7", "Element:57:8", "Element:57:9", "Element:57:10", "Element:57:11", "Element:57:12", "Element:57:13", "Element:57:14", 
+				          "Element:57:15", "Element:57:16", "Element:57:17", "Element:57:18", "Element:57:19", "Element:57:20", "Element:57:21", "Element:57:22", 
+				          "Element:57:23", "Element:57:24", "Element:57:25", "Element:57:26"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
 		},
-		"Element:57:8": { "x": 985,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A3" },
-		"Element:57:9": { "x": 793,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A4" },
-		"Element:57:10": { "x": 1081,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A5" },
-		"Element:57:11": { "x": 889,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A6" },
-		"Element:57:12": { "x": 602,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A10" },
-		"Element:57:13": { "x": 410,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A11" },
-		"Element:57:14": { "x": 698,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A12" },
-		"Element:57:15": { "x": 505,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A13" },
-		"Element:57:16": { "x": 1178,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A15" },
-		"Element:57:17": { "x": 1369,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
-		"Element:57:18": { "x": 1273,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A16" },
-		"Element:57:19": { "x": 1464,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
-		"Element:57:24": { "x": 890,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA1" },
-		"Element:57:25": { "x": 795,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA2" },
-		"Element:57:26": { "x": 698,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA8" },
-		"Element:57:27": { "x": 602,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA9" },
-		"Element:57:28": { "x": 985,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE7" },
-		"Element:57:29": { "x": 1081,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE14" },
-		"Element:57:30": { "x": 1178,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE15" },
-		"Element:57:31": { "x": 1273,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE16" },
+		"Element:57:7": { "x": 985,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A3" },
+		"Element:57:8": { "x": 793,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A4" },
+		"Element:57:9": { "x": 1081,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A5" },
+		"Element:57:10": { "x": 889,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A6" },
+		"Element:57:11": { "x": 602,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A10" },
+		"Element:57:12": { "x": 410,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A11" },
+		"Element:57:13": { "x": 698,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A12" },
+		"Element:57:14": { "x": 505,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A13" },
+		"Element:57:15": { "x": 1178,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A15" },
+		"Element:57:16": { "x": 1369,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
+		"Element:57:17": { "x": 1273,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A16" },
+		"Element:57:18": { "x": 1464,   "y": 713, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
+		"Element:57:19": { "x": 890,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA1" },
+		"Element:57:20": { "x": 795,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA2" },
+		"Element:57:21": { "x": 698,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA8" },
+		"Element:57:22": { "x": 602,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AA9" },
+		"Element:57:23": { "x": 985,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE7" },
+		"Element:57:24": { "x": 1081,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE14" },
+		"Element:57:25": { "x": 1178,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE15" },
+		"Element:57:26": { "x": 1273,   "y": 332, "width": 28, "height": 28,  "alias": "RV-MAGDIF-AE16" },
 	},
-	/*{
+	{
 		"id":"synopticUnifilarCsb",
-		"parentId":"Element:7:1",
+		"parentId":"Element:56:2",
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "UNIFlLAR-RIO-VERDE-1-1-CABLE.svg",
-			"UNIFILAR_CSB_ICONO": "UNIFlLAR-RIO-VERDE-1-1-ICONO.svg"
+			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE -CSB - ITS_v2.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -453,7 +457,77 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"UNIFILAR_CSB_ICONO": {
+			"MAGNETOTERMICO" : {
+				"items": ["Element:57:1", "Element:57:2", "Element:57:3", "Element:57:4", "Element:57:5", "Element:57:6", "Element:57:29", "Element:57:30", "Element:57:32", 
+				          "Element:57:33", "Element:57:34", "Element:57:35", "Element:57:36", "Element:57:37", "Element:57:38", "Element:57:39","Element:57:40", "Element:57:41"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+		
+		"Element:57:1": { "x": 951,   "y": 405, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-2" },
+		"Element:57:2": { "x": 620,   "y": 305, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF27-PMV" },
+		"Element:57:3": { "x": 1426,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF28-SOS" },
+		"Element:57:4": { "x": 902,   "y": 305, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF30-BARR-M" },
+		"Element:57:5": { "x": 995,   "y": 305, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF31-SEM" },
+		"Element:57:6": { "x": 710,   "y": 305, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF32-ETD" },
+		"Element:57:29": { "x": 285,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF10" },
+		"Element:57:30": { "x": 379,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF11" },
+		"Element:57:32": { "x": 476,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF13" },
+		"Element:57:33": { "x": 571,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF14" },
+		"Element:57:34": { "x": 666,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF15" },
+		"Element:57:35": { "x": 857,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF19" },
+		"Element:57:36": { "x": 952,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF20" },
+		"Element:57:37": { "x": 1046,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF21" },
+		"Element:57:38": { "x": 1140,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF22" },
+		"Element:57:39": { "x": 1236,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF23" },
+		"Element:57:40": { "x": 1520,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF26" },
+		"Element:57:41": { "x": 952,   "y": 795, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-1" },
+	},
+	{
+		"id":"synopticUnifilarCsv",
+		"parentId":"Element:56:3",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE - CSV - VENTILACION_v2.svg",
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"MAGNETOTERMICO" : {
+				"items": ["Element:57:16", "Element:57:18", "Element:57:42", "Element:57:43", "Element:57:44", "Element:57:45", 
+				          "Element:57:46", "Element:57:47", "Element:57:48", "Element:57:49", "Element:57:50", "Element:57:51"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+		"Element:57:16": { "x": 1585,   "y": 565, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
+		"Element:57:18": { "x": 1730,   "y": 565, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
+		"Element:57:42": { "x": 143,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF1" },
+		"Element:57:43": { "x": 288,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF2" },
+		"Element:57:44": { "x": 433,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF3" },
+		"Element:57:45": { "x": 576,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF4" },
+		"Element:57:46": { "x": 721,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF5" },
+		"Element:57:47": { "x": 865,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF6" },
+		"Element:57:48": { "x": 1010,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF7" },
+		"Element:57:49": { "x": 1153,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF8" },
+		"Element:57:50": { "x": 1297,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF9" },
+		"Element:57:51": { "x": 1441,   "y": 565, "width": 28, "height": 28,  "alias": "RV-INT-VF10" },
+	},
+	/*{
+		"id":"synopticUnifilarCGBT",
+		"parentId":"Element:56:4",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE - CSB - ITS_v1.svg",
+		},
+		"Layers": {
+			"BASE_LAYER": {
 				"items": [],
 				"translation_key": "",
 				"visibility": "visible"
