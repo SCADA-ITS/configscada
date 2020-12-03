@@ -1334,6 +1334,7 @@ var i18_es = {
     "AlarmConfig:139": "ALARMA FALLO DETECTOR",
     "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
     "AlarmConfig:141": "ALARMA PANEL NIEVE NO CONECTADO",
+    "AlarmConfig:142": "ALARMA CONGESTION DETECTOR",
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",

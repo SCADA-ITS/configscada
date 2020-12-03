@@ -1266,6 +1266,7 @@ var i18_en = {
     "AlarmConfig:139": "ALARM DETECTOR FAIL",
     "AlarmConfig:140": "ALARM DETECTOR NO CONNECTION",
     "AlarmConfig:141": "ALARM VMS NO CONNECTION",
+    "AlarmConfig:142": "ALARM DETECTOR CONGESTION",
     
     "AlarmType:1": "Alarm",
     "AlarmType:2": "Alert",

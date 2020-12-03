@@ -110,6 +110,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
     || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
+    || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR
