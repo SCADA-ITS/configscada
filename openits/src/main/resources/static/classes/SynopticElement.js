@@ -174,7 +174,7 @@ export default class synopticElement {
                     },
                     onHide: function(obj){
                       //elementForm.disconnect();
-                      //$$("win" + elementId).destructor();
+                      $$("win" + elementId).destructor();
                     },
                     onShow: function(obj){
                       elementWindow.loadData();
