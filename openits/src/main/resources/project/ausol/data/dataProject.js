@@ -14,7 +14,7 @@ export let menu_data_multi  = [
 		{ id: "syn4", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csa")},
 		{ id: "syn5", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csb")},
 		{ id: "syn6", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csv")},
-		//{ id: "syn7", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_cgbt")},
+		{ id: "syn7", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_cgbt")},
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("menu.tables.equipments")},

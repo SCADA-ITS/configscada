@@ -1001,6 +1001,7 @@ var i18_es = {
     "menu.dashboard.unifilar_csa" : "UNIFILAR CSA",
     "menu.dashboard.unifilar_csb" : "UNIFILAR CSB",
     "menu.dashboard.unifilar_csv" : "UNIFILAR CSV",
+    "menu.dashboard.unifilar_cgbt" : "UNIFILAR CGBT",
     "menu.dashboard.list": "Listado",
     "menu.tables.title": "Tablas",
     "menu.tables.equipments": "Equipos",
