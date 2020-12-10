@@ -86,12 +86,17 @@ export default class synopticElement {
               el.attr({ component: ELEMENT_TYPE.values[this.element.elementType.id].value });
               el.attr({ state: this.element.state });
             }
-            let checkedElement = document.getElementById(this.element.id);
-            if(checkedElement != null) {
-              // console.warn(synopticConf);
-              checkedElement.style.opacity = 0;
-              checkedElement.setAttribute("visibility", "hidden");
+
+            //Deprecated quitar cuando se quiten capas exclusivas
+            if(synopticConf.ExclusiveLayers){
+              let checkedElement = document.getElementById(this.element.id);
+              if(checkedElement != null) {
+                // console.warn(synopticConf);
+                checkedElement.style.opacity = 0;
+                checkedElement.setAttribute("visibility", "hidden");
+              }
             }
+            
             // update the icon based on the state and/or the value
             getElementIcon(this.element, suffix);
           }
