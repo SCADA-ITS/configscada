@@ -579,7 +579,7 @@ function replaceDualIcon(element,elementTypeParam,suffix){
 
 
           //let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
-          let im = document.createElementNS('image');
+          let im = document.createElementNS("http://www.w3.org/2000/svg",'image');
           im.setAttribute("href","data:image/png;base64," + auxBase64);
           im.setAttribute("x",subpanel_x.toString());
           im.setAttribute("y",subpanel_y.toString());
@@ -601,57 +601,65 @@ function replaceDualIcon(element,elementTypeParam,suffix){
         } else {
           if(content_value != null) {
             let all_lines = content_value.split(":$");
-            let g1 = document.createElementNS('g');
-            g1.setAttribute("id", element.id + suffix + ":" + value_to_find);
-            g1.setAttribute("subpanel_type", "text");
             try{
               document.getElementById(element.id + suffix + ":" + elementTypeParam).remove();
             } catch(e){
               console.log(e);
             }
+            let g1 = document.createElementNS("http://www.w3.org/2000/svg",'g');
+            g1.setAttributeNS(null,"id", element.id + suffix + ":" + value_to_find);
+            g1.setAttributeNS(null,"subpanel_type", "text");
+
             document.getElementById(element.id + suffix).appendChild(g1);
 
             all_lines.forEach((item, i) => { 
-              let r1 = document.createElementNS('text',item);
+              let r1 = document.createElementNS("http://www.w3.org/2000/svg",'text');
+              let myText = document.createTextNode(item);
               //let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
-              r1.setAttribute("x",(subpanel_x + 3).toString());
-              r1.setAttribute("y",(10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString());
-              r1.setAttribute("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
-              r1.setAttribute("fill", "white");
-              r1.setAttribute("font-family", "'VT323', monospace")
-              r1.setAttribute("font-size", "10px");
+              r1.setAttributeNS(null,"x",(subpanel_x + 3).toString());
+              r1.setAttributeNS(null,"y",(10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString());
+              r1.setAttributeNS(null,"id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+              r1.setAttributeNS(null,"fill", "white");
+              r1.setAttributeNS(null,"font-family", "'VT323', monospace")
+              r1.setAttributeNS(null,"font-size", "10px");
+              r1.appendChild(myText);
               document.getElementById(element.id + suffix + ":" + value_to_find).appendChild(r1);
+              //console.log("creación1");
             });
           } else {
+            try {
             // if there is no text, we create the placeholder based on the panel configuration
             let nLines = getLinesOfText("ElementType:" + elementTypeMap.getElementType(element.id), r, c);
             let all_lines = [];
             for(let iLine=0; iLine<nLines; iLine++) {
               all_lines.push([]);
             }
-
-            let g1 = document.createElementNS('g');
-            g1.setAttribute("id", element.id + suffix + ":" + value_to_find);
-            g1.setAttribute("subpanel_type", "text");
             try{
               document.getElementById(element.id + suffix + ":" + elementTypeParam).remove();
             } catch(e){
               console.log(e);
             }
+            let g1 = document.createElementNS("http://www.w3.org/2000/svg",'g');
+            g1.setAttributeNS(null,"id", element.id + suffix + ":" + value_to_find);
+            g1.setAttributeNS(null,"subpanel_type", "text");
+
             document.getElementById(element.id + suffix).appendChild(g1);
 
             all_lines.forEach((item, i) => { 
-              let r1 = document.createElementNS('text',item);
+              let r1 = document.createElementNS("http://www.w3.org/2000/svg",'text');
+              let myText = document.createTextNode(item);
               //let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
-              r1.setAttribute("x",(subpanel_x + 3).toString());
-              r1.setAttribute("y",(10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString());
-              r1.setAttribute("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
-              r1.setAttribute("fill", "white");
-              r1.setAttribute("font-family", "'VT323', monospace")
-              r1.setAttribute("font-size", "10px");
+              r1.setAttributeNS(null,"x",(subpanel_x + 3).toString());
+              r1.setAttributeNS(null,"y",(10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString());
+              r1.setAttributeNS(null,"id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+              r1.setAttributeNS(null,"fill", "white");
+              r1.setAttributeNS(null,"font-family", "'VT323', monospace")
+              r1.setAttributeNS(null,"font-size", "10px");
+              r1.appendChild(myText);
               document.getElementById(element.id + suffix + ":" + value_to_find).appendChild(r1);
+              //console.log("creación2");
             });
-
+          } catch(e){ console.log(e);}
           }
         }
 
