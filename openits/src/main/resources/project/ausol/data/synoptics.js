@@ -5,7 +5,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "tunel.svg"
+			"BASE_LAYER": "tunel_v2.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
