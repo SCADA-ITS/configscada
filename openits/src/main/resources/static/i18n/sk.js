@@ -3,6 +3,7 @@ var i18_sk = {
     "defaultheader.cabinets": "Rozv&#225;dza&#269;e",
     "defaultheader.panels": "Panely",
     "defaultheader.etds": "ATCs",
+    "defaultheader.tfas": "TFAs",
     "defaultheader.users": "U&#382;&iacute;vatelia", 
     "defaultheader.equipment" : "Zariadenie ",
     "defaultheader.elements": "Prvky",

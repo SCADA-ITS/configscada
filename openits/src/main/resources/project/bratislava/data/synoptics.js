@@ -964,5 +964,86 @@ export let synopticData= [
 				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		}
+	},
+	{
+		"id":"tfaSyn",
+		"parentId":"Element:7:2",
+		"ExclusiveLayers": true,
+		"BaseLayers": {
+			"BASE_LAYER": "mapa_base.png",
+			"ROAD": "D4-R7_trazado.png",
+			"TFA": "Equipos_TFA_PK_1.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"ROAD": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"TFA": {
+				"items": 
+				[
+					"Element:51:1","Element:51:2","Element:51:3","Element:51:4","Element:51:5","Element:51:6","Element:51:7","Element:51:8","Element:51:9","Element:51:10",
+					"Element:51:11","Element:51:12","Element:51:13","Element:51:14","Element:51:15","Element:51:16","Element:51:17","Element:51:18","Element:51:19","Element:51:20",
+					"Element:51:21","Element:51:22","Element:51:23","Element:51:24","Element:51:25","Element:51:26","Element:51:27","Element:51:28","Element:51:29","Element:51:30",
+					"Element:51:31","Element:51:32","Element:51:33","Element:51:34","Element:51:35","Element:51:36","Element:51:37","Element:51:38","Element:51:39","Element:51:40"
+
+
+				],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+
+		"Element:51:1": { "x": 1730,  "y": 330, "width": 150, "height": 150, "alias": "RNRJS19P+9,176"  },
+		"Element:51:2": { "x": 1730,  "y": 365, "width": 150, "height": 150, "alias": "SCJS04P+9,272"  },
+		"Element:51:3": { "x": 1730,  "y": 400, "width": 150, "height": 150, "alias": "RNRJS22P+9,982"  },
+		"Element:51:4": { "x": 1730,  "y": 440, "width": 150, "height": 150, "alias": "RNRJS23P+10,328"  },
+		"Element:51:5": { "x": 1730,  "y": 475, "width": 150, "height": 150, "alias": "RNRJS24P+10,901"  },
+		"Element:51:6": { "x": 1730,  "y": 510, "width": 150, "height": 150, "alias": "RNRJS25P+11,101"  },
+		"Element:51:7": { "x": 1730,  "y": 545, "width": 150, "height": 150, "alias": "RNRJS26P+11,892"  },
+		"Element:51:8": { "x": 1730,  "y": 580, "width": 150, "height": 150, "alias": "RNRJS27L+12,095"  },
+		"Element:51:9": { "x": 1730,  "y": 615, "width": 150, "height": 150, "alias": "RNRJS28P+12,736"  },
+		"Element:51:10": { "x": 1730,  "y": 655, "width": 150, "height": 150, "alias": "RNRJS29P+13,316"  },
+		"Element:51:11": { "x": 1490,  "y": 400, "width": 150, "height": 150, "alias": "RNRJS30P+14,062"  },
+		"Element:51:12": { "x": 1490,  "y": 435, "width": 150, "height": 150, "alias": "RNRJS31P+14,498"  },
+		"Element:51:13": { "x": 1490,  "y": 475, "width": 150, "height": 150, "alias": "RNRJS32P+15,274"  },
+		"Element:51:14": { "x": 1490,  "y": 510, "width": 150, "height": 150, "alias": "RNRJS33P+15,698"  },
+		"Element:51:15": { "x": 1490,  "y": 550, "width": 150, "height": 150, "alias": "RNRJS34P+16,363"  },
+		"Element:51:16": { "x": 1490,  "y": 585, "width": 150, "height": 150, "alias": "RNRJS35P+16,96"  },
+		"Element:51:17": { "x": 1490,  "y": 620, "width": 150, "height": 150, "alias": "RNRJS36P+17,52"  },
+		"Element:51:18": { "x": 1490,  "y": 655, "width": 150, "height": 150, "alias": "RNRJS37P+18,04"  },
+		"Element:51:19": { "x": 1490,  "y": 690, "width": 150, "height": 150, "alias": "RNRJS38P+19,015"  },
+		"Element:51:20": { "x": 1490,  "y": 725, "width": 150, "height": 150, "alias": "RNRJS39P+19,565"  },
+		"Element:51:21": { "x": 1270,  "y": 400, "width": 150, "height": 150, "alias": "RNRJS40P+20,451"  },
+		"Element:51:22": { "x": 1270,  "y": 435, "width": 150, "height": 150, "alias": "RNRJS41P+21,09"  },
+		"Element:51:23": { "x": 1270,  "y": 475, "width": 150, "height": 150, "alias": "RNRJS42P+21,608"  },
+		"Element:51:24": { "x": 1270,  "y": 510, "width": 150, "height": 150, "alias": "RNRJS43P+21,914"  },
+		"Element:51:25": { "x": 1270,  "y": 550, "width": 150, "height": 150, "alias": "RNRJS44P+22,606"  },
+		"Element:51:26": { "x": 1270,  "y": 585, "width": 150, "height": 150, "alias": "RNRJS45P+23,018"  },
+		"Element:51:27": { "x": 1270,  "y": 620, "width": 150, "height": 150, "alias": "RNRJS46P+23,406"  },
+		"Element:51:28": { "x": 1270,  "y": 655, "width": 150, "height": 150, "alias": "RNRJS47P+23,598"  },
+		"Element:51:40": { "x": 1270,  "y": 690, "width": 150, "height": 150, "alias": "SCJS05P+23,849"  },
+		"Element:51:29": { "x": 1270,  "y": 725, "width": 150, "height": 150, "alias": "RNRJS48P+24,27"  },
+		"Element:51:30": { "x": 1270,  "y": 765, "width": 150, "height": 150, "alias": "RNRJS49P+24,614"  },
+		"Element:51:31": { "x": 1075,  "y": 475, "width": 150, "height": 150, "alias": "SCJS06P+0,266 JA-TT"  },
+		"Element:51:32": { "x": 1075,  "y": 510, "width": 150, "height": 150, "alias": "SCJS07L+0,310 ST-BA"  },
+		"Element:51:33": { "x": 1075,  "y": 550, "width": 150, "height": 150, "alias": "SCJS08P+0,032 TT-ST"  },
+		"Element:51:34": { "x": 1730,  "y": 110, "width": 150, "height": 150, "alias": "RNRKD01L+6,347"  },
+		"Element:51:35": { "x": 1730,  "y": 75, "width": 150, "height": 150, "alias": "RNRKD03L+7,217"  },
+		"Element:51:36": { "x": 1730,  "y": 40, "width": 150, "height": 150, "alias": "RNRKD08L+8,767"  },
+		"Element:51:37": { "x": 1730,  "y": 0, "width": 150, "height": 150, "alias": "RNRKD09L+10,557"  },
+		"Element:51:38": { "x": 1730,  "y": -35, "width": 150, "height": 150, "alias": "RNRKD10L+12,359"  },
+		"Element:51:39": { "x": 1730,  "y": -70, "width": 150, "height": 150, "alias": "RNRKD11L+14,157"  }
+
+
+		
+
 	}
+
 ];

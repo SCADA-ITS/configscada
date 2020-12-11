@@ -3,6 +3,8 @@ var i18_en = {
     "defaultheader.cabinets": "Cabinets",
     "defaultheader.panels": "Panels",
     "defaultheader.etds": "ATCs",
+    "defaultheader.tfas": "TFAs",
+
     "defaultheader.users": "Users",
     "defaultheader.equipment" : "Equipment ",
     "defaultheader.managementAlarms": "Alarms",

@@ -3,6 +3,7 @@ var i18_es = {
     "defaultheader.cabinets": "Armarios",
     "defaultheader.panels": "Paneles",
     "defaultheader.etds": "ATCs",
+    "defaultheader.tfas": "TFAs",
     "defaultheader.users": "Usuarios",
     "defaultheader.managementAlarms": "Alarmas ",
     "defaultheader.alarmSettings": "Configuracion alarmas",
