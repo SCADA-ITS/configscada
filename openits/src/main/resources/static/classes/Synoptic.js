@@ -20,6 +20,7 @@ let graphSynoptic = webix.proxy(
       childs{
         id    
         state
+        alias
         description
         elementType{
           id

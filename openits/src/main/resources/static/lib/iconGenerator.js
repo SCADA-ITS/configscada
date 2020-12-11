@@ -345,6 +345,8 @@ export function drawInlineSVG(canvas, ctx, rawSVG, callback) {
 
 function createIcon(element, suffix="") {
   let elementId= element.id+suffix;
+  let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
+  let elementAlias = element.alias;
   let color = ICON_COLOR[element.state];
   // override generic color with ElementType color if exist
   if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
@@ -354,7 +356,9 @@ function createIcon(element, suffix="") {
   let iconStr = ELEMENT_TYPE.values[element.elementType.id].svgRaw;
   let params={
     "elementId": elementId,
-    "color": color
+    "color": color,
+    "elementAlias": elementAlias,
+    "elementTypeAlias": elementTypeAlias
   };
   //param values
   if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){

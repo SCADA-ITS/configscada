@@ -308,7 +308,7 @@ export let SVG_51_ETD =
     '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:5.94396px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;' +
 	   'fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1486"' +
        'x="2.2343771" y="296.4025" id="text842" transform="scale(1.0080833,0.99198153)">' +
-	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">ETD</tspan></text>' +
+	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">'+REGEX_PATTERN_INIT+'elementTypeAlias'+REGEX_PATTERN_END+'</tspan></text>' +
   '</g>';
 export let SVG_53_SEM =`<g
 id="g2866"
@@ -350,13 +350,13 @@ transform="matrix(0.07467129,0,0,0.07467129,47.275466,111.40327)">
 export let SVG_54_ATC = 
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-287.2104)"><path id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':stroke0" style="fill:#008000;stroke:'
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.43681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
+    ':fill0" style="stroke:#000000;fill:'
+    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.63681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
        'd="M 0.22152031,296.77848 H 16.383 v -9.4649 H 0.22152031 v 9.4649" inkscape:connector-curvature="0" />' +
     '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:5.94396px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;' +
 	   'fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1486"' +
        'x="2.2343771" y="296.4025" id="text842" transform="scale(1.0080833,0.99198153)">' +
-	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">ATC</tspan></text>' +
+	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">'+REGEX_PATTERN_INIT+'elementTypeAlias'+REGEX_PATTERN_END+'</tspan></text>' +
   '</g>';
 export let SVG_55_CT = `<g
 id="g2866"
@@ -484,7 +484,7 @@ sodipodi:docname="unifilar.svg">
       id="tspan17"
       x="23.786987"
       y="39.28862"` + 
-      'style="stroke-width:0.264583">' +REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END+ '</tspan></text>' + 
+      'style="stroke-width:0.264583">' +REGEX_PATTERN_INIT+'elementAlias'+REGEX_PATTERN_END+ '</tspan></text>' + 
 `</g>
 </svg>
 `;
