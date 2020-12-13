@@ -81,14 +81,21 @@ export default class Synoptic {
         try {
           // console.warn(element);
           // console.warn(elementsMap);
-            if(elementsMap && elementsMap.get(element.id)){
-              elementsMap.get(element.id).updateElement(element);
-              elementsMap.get(element.id).updatePaint();
+          if(elementsMap && elementsMap.get(element.id)){
+            elementsMap.get(element.id).updateElement(element);
+            if(elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
+              let parent    = document.getElementById(element.id).parentNode;
+              document.getElementById(element.id).remove();
+              elementsMap.get(element.id).paintIcon(this.synopticConf, parent,  this.ratioWidth,  this.ratioHeight);
             }else{
-              let synopticElement = new SynopticElement(element);
-              synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
-              elementsMap.set(synopticElement.element.id, synopticElement);
+              elementsMap.get(element.id).updateElement(element);
+              elementsMap.get(element.id).updatePaint();              
             }
+          }else{
+            let synopticElement = new SynopticElement(element);
+            synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
+            elementsMap.set(synopticElement.element.id, synopticElement);
+          }
         } catch (error) {
           console.log(error);
           console.log("Retrying with GraphQL");
