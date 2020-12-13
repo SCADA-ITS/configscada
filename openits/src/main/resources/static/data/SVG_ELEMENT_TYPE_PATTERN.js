@@ -302,7 +302,7 @@ export let SVG_21_OPAC=
 export let SVG_51_ETD = 
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-287.2104)"><path id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':stroke0" style="fill:#cccccc;stroke:'
+    ':fill0" style="stroke:#000000;fill:'
     + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:1.03681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
        'd="M 0.22152031,296.77848 H 16.383 v -9.4649 H 0.22152031 v 9.4649" inkscape:connector-curvature="0" />' +
     '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:5.94396px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;' +
@@ -489,76 +489,33 @@ sodipodi:docname="unifilar.svg">
 </svg>
 `;
 
-export let SVG_57_MAGNETOTERMICO = `<svg
-xmlns:dc="http://purl.org/dc/elements/1.1/"
-xmlns:cc="http://creativecommons.org/ns#"
-xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-xmlns:svg="http://www.w3.org/2000/svg"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-viewBox="0 0 1122.6667 1587.9999"
-height="1588"
-width="1122.6667"
-xml:space="preserve"
-id="svg2"
-version="1.1"
-sodipodi:docname="magnetotermico_open.svg"
-inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><sodipodi:namedview
-  pagecolor="#ffffff"
-  bordercolor="#666666"
-  borderopacity="1"
-  objecttolerance="10"
-  gridtolerance="10"
-  guidetolerance="10"
-  inkscape:pageopacity="0"
-  inkscape:pageshadow="2"
-  inkscape:window-width="1920"
-  inkscape:window-height="1017"
-  id="namedview132"
-  showgrid="false"
-  inkscape:zoom="0.3202141"
-  inkscape:cx="368.99338"
-  inkscape:cy="455.96091"
-  inkscape:window-x="1912"
-  inkscape:window-y="-8"
-  inkscape:window-maximized="1"
-  inkscape:current-layer="svg2"
-  inkscape:document-rotation="0" /><metadata
-  id="metadata8"><rdf:RDF><cc:Work
-      rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-        rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
-  id="defs6"><clipPath
-    id="clipPath14"
-    clipPathUnits="userSpaceOnUse"><path
-      id="path12"
-      d="M 0,0 H 842 V 1191 H 0 Z" /></clipPath><clipPath
-    id="clipPath24"
-    clipPathUnits="userSpaceOnUse"><path
-      id="path22"
-      d="M 724,0 H 6017 V 9411 H 724 V 0" /></clipPath></defs><g id="g914" transform="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)"><path id="`
-   + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-   `:stroke0" style="fill:none;stroke:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.96;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"' + 
-    `d="m 125.7867,531.2534 c -9.94109,0 -18,8.05886 -18,18 0,9.94114 8.05891,18 18,18 9.94109,0 18,-8.05886 18,-18 0,-9.94114 -8.05891,-18 -18,-18"
-    sodipodi:nodetypes="csssc" /></g><g id="`
-  + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-  `:transform" transform="matrix(3.9203726,2.756964,-2.756964,3.9203726,1116.645,-2389.7641)"><path id="path160"
-    style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-    d="m 125.5467,555.8934 0.48,-0.48 -8.48,-10.72 z m 0.48,-0.48 -8.48,-10.72 0.64,-0.32 3.69173,5.19856 z"
-    sodipodi:nodetypes="ccccccccc" /></g></g></g></g><g
-    inkscape:groupmode="layer"
-    id="layer1"
-    inkscape:label="Layer 1"
-    style="mix-blend-mode:overlay"><g
-      id="g32"
-      transform="translate(-226.02066,-7.8072765)"
-      style="stroke:#000000"><ellipse
-        style="fill:#ffffff;stroke:#000000;stroke-width:9.85132;stroke-opacity:0"
-        id="path29"
-        ry="83.301498"
-        rx="83.496674"
-        cy="106.37415"
-        cx="323.61163" /></g></g></svg>`;
+export let SVG_57_MAGNETOTERMICO = `<svg width="26.377014mm" height="30.513727mm" viewBox="0 0 26.377014 30.513727">
+ <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.6864934,-5.1538495)">
+    <g
+       id="g844"
+       style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(0.21267684,0,0,0.24197571,-8.6820889,-12.665983)">
+      <g
+         id="g840"
+         style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1">
+        <ellipse
+           style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path837"
+           cx="115.91099"
+           cy="136.59665"
+           rx="58.972004"
+           ry="60.146717" />
+      </g>
+    </g>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.00321;stroke-miterlimit:10"
+       id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +`:transform" transform="rotate(-24.280147)" width="1.4530518" height="24.876173" x="5.2098141" y="12.825212"/>
+  </g>
+</svg>`;
     
 export let SVG_58_PULSADOR = `<g
 inkscape:label="Capa 1"

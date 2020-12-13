@@ -10,11 +10,6 @@ export let menu_data_multi  = [
 		{ id: "syn1", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.line")},
 		{ id: "syn2", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.global")},
 		{ id: "map0", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.map")},
-		{ id: "syn3", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.cts")},
-		{ id: "syn4", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csa")},
-		{ id: "syn5", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csb")},
-		{ id: "syn6", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_csv")},
-		{ id: "syn7", icon:"mdi mdi-circle", value: $.i18n("menu.dashboard.unifilar_cgbt")},
 	]},
 	{ id: "tables", icon: "mdi mdi-calendar", value:$.i18n("menu.tables.title"), data:[
 		{ id: "equipments", icon:"mdi mdi-circle", value: $.i18n("menu.tables.equipments")},
@@ -23,13 +18,13 @@ export let menu_data_multi  = [
 		{ id: "alarmconfigs", icon:"mdi mdi-circle", value: $.i18n("menu.tables.alarmsconfig")}
 	]},
 	{ id: "alarms", icon: "mdi mdi-bell", value:$.i18n("menu.alarms.title")},
-	{ id: "cctv", icon: "mdi mdi-video", value:$.i18n("menu.cctv.title")},
+	//{ id: "cctv", icon: "mdi mdi-video", value:$.i18n("menu.cctv.title")},
 	{ id: "plans1", icon: "mdi mdi-clock", value:"Plans", data:[
 		{ id: "plans", icon:"mdi mdi-circle", value: $.i18n("menu.plans.title")},
 		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
 	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana")},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")},
-	{ id: "usersmanager", icon: "mdi mdi-account", value:$.i18n("defaultheader.users.manager")}
+	//{ id: "usersmanager", icon: "mdi mdi-account", value:$.i18n("defaultheader.users.manager")}
 		
 ];
 

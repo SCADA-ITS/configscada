@@ -300,7 +300,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 290) + ',' + (height / 290) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
         iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
@@ -501,12 +501,16 @@ function updateIcon(element, suffix="") {
   } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){
     if (params != undefined && params && params["MAGNETOTERMICO_STATE"]) {
       if (params["MAGNETOTERMICO_STATE"]=="true") {
-        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform){
-          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="matrix(3.9203726,2.756964,-2.756964,3.9203726,1116.645,-2389.7641)";
+        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform && Snap.select("#"+element.id + suffix +":transform").node.attributes.x && Snap.select("#"+element.id + suffix +":transform").node.attributes.y){
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="rotate(-24.280147)";
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.x.value="5.2098141";
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.y.value="12.825212";
         }
        } else{ 
-        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform){
-          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="matrix(4.7927207,0,0,4.7927207,-506.42952,-2534.1134)";
+        if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform && Snap.select("#"+element.id + suffix +":transform").node.attributes.x && Snap.select("#"+element.id + suffix +":transform").node.attributes.y){
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="rotate(0.11021549)";
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.x.value="15.112525";
+          Snap.select("#"+element.id + suffix +":transform").node.attributes.y.value="8.1191225";
         } 
       } 
     }
