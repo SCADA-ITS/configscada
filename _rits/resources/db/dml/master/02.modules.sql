@@ -11,7 +11,8 @@ INSERT INTO ui.module_params(id, module_type_id, name, description, enabled, vis
 (2, 6, 'config', 'config', true, true),
 (3, 2, 'grid', 'grid id', true, true),
 (4, 4, 'synopticId', 'synopticId', true, true),
-(5, 5, 'url', 'url', true, true);
+(5, 5, 'url', 'url', true, true),
+(6, 3, 'mapId', 'mapId', true, true);
 
 INSERT INTO ui.window_params(id, "name", description, enabled, visible) VALUES
 (1, 'hasMinButton', 'hasMinButton', true, true),

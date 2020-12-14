@@ -34,15 +34,22 @@ public class VO2UIAdapter {
 			
 			for (Map<String, Object> entity : entities) {
 				
-				entitiesUI.add(convert(fieldId, entity));
+				List<VoEntity> listVoEntity = voEntityService.getAll();
+				
+				entitiesUI.add(convert(fieldId, entity, listVoEntity));
 			}
 		}
 		
 		return entitiesUI;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Map<String, Object> convert(String fieldId, Map<String, Object> entity) {
+		
+		return convert(fieldId, entity, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> convert(String fieldId, Map<String, Object> entity, List<VoEntity> listVoEntity) {
 		
 		Map<String, Object> entityUI = null;
 		VoEntity voEntity = null;
@@ -56,8 +63,16 @@ public class VO2UIAdapter {
 				Object entityObj = entity.get(fieldId);
 				
 				if (entityObj != null) {
-				
-					voEntity = voEntityService.getById(entityObj.toString());
+					
+					if (!CollectionUtils.isEmpty(listVoEntity)) {
+						
+						voEntity = listVoEntity.stream().filter(e -> e.getId().equals(entityObj.toString())).findFirst()
+								.orElse(null);
+					}
+					else {
+					
+						voEntity = voEntityService.getById(entityObj.toString());
+					}
 				}
 			}
 			
@@ -104,7 +119,7 @@ public class VO2UIAdapter {
 							
 							Map<String, Object> m = (Map<String, Object>) mapObjectFromList;
 							
-							listNew.add(convert(fieldId, m));
+							listNew.add(convert(fieldId, m, listVoEntity));
 						}
 						
 						if (!CollectionUtils.isEmpty(listNew)) {
@@ -116,7 +131,7 @@ public class VO2UIAdapter {
 					}
 					else if (value != null && value.getClass().getSimpleName().contains(Map.class.getSimpleName())) {
 						
-						entry.setValue(convert(fieldId, (Map<String, Object>) value));
+						entry.setValue(convert(fieldId, (Map<String, Object>) value, listVoEntity));
 						
 //						log.debug(String.format("%s instance of %s", key, value.getClass().getSimpleName()));
 					}
