@@ -260,12 +260,12 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (23, 1, 'http://localhost:8082/graphql'),
 (23, 2, 'getAlarmConfigs'),
 (23, 3, ''),
-(23, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+(23, 4, '{id alias description labelAlias labelDescription alarmType{id alias description labelAlias labelDescription} alarmLevel{id alias description labelAlias labelDescription} element{id alias} elementType{id alias description labelAlias labelDescription} mine treatment}'),
 
 (24, 1, 'http://localhost:8082/graphql'),
 (24, 2, 'getAlarmConfig'),
 (24, 3, 'alarmConfigId'),
-(24, 4, '{id alias description alarmType{id} alarmLevel{id} element{id} elementType{id} mine treatment}'),
+(24, 4, '{id alias description labelAlias labelDescription alarmType{id alias description labelAlias labelDescription} alarmLevel{id alias description labelAlias labelDescription} element{id alias} elementType{id alias description labelAlias labelDescription} mine treatment}'),
 
 (25, 1, 'http://localhost:8082/graphql'),
 (25, 2, 'getElements'),

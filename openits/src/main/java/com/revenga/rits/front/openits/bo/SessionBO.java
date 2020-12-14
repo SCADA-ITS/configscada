@@ -222,14 +222,14 @@ public class SessionBO extends GenericBO {
 	private boolean isActive(String sessionId) {
 		
 		return (this.sessions.entrySet().stream().filter(e -> e.getValue().getSessionId().equals(sessionId)
-				&& e.getValue().getAccess().equals(UserSessionUI.ALLOWED)).findFirst().orElse(null) != null);
+				&& e.getValue().getAccess().equals(UserSessionUI.AUTHORIZED)).findFirst().orElse(null) != null);
 	}
 
 	private UserSessionUI keepAlive(String sessionId) {
 		
 		UserSessionUI userSession = this.sessions.get(sessionId);
 		
-		if (userSession != null && userSession.getAccess().equals(UserSessionUI.ALLOWED)) {
+		if (userSession != null && userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
 			
 			if (userSession.getSessionExpireTimeS() != null) {
 			
@@ -309,7 +309,7 @@ public class SessionBO extends GenericBO {
 		if (userSession != null) {
 						
 			userSession.setSessionId(httpSessionId);
-			userSession.setAccess(UserSessionUI.ALLOWED);
+			userSession.setAccess(UserSessionUI.AUTHORIZED);
 			userSession.setLoginSince(Instant.now().toEpochMilli());
 			
 			if (sessionExpireTimeS != null) {

@@ -36,9 +36,14 @@ public class GridCommand implements Serializable {
 	@ManyToOne
 	private Grid grid;
 
-	//uni-directional many-to-one association to Module
+	//uni-directional many-to-one association to ModuleAction
 	@ManyToOne
-	private Module module;
+	private ModuleAction moduleAction;
+	
+	//uni-directional many-to-one association to ViewType
+	@ManyToOne
+	@JoinColumn(name="view_type_id")
+	private ViewType viewType;
 
 	public GridCommand() {
 	}
@@ -99,12 +104,19 @@ public class GridCommand implements Serializable {
 		this.grid = grid;
 	}
 
-	public Module getModule() {
-		return this.module;
+	public ModuleAction getModuleAction() {
+		return this.moduleAction;
 	}
 
-	public void setModule(Module module) {
-		this.module = module;
+	public void setModuleAction(ModuleAction moduleAction) {
+		this.moduleAction = moduleAction;
+	}
+	
+	public ViewType getViewType() {
+		return this.viewType;
 	}
 
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
 }

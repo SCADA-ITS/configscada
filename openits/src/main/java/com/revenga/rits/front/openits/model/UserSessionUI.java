@@ -17,7 +17,7 @@ public class UserSessionUI implements Serializable {
 	 */
 	private static final long serialVersionUID = 8887753141990261203L;
 	
-	public static final String ALLOWED = "ALLOWED";
+	public static final String AUTHORIZED = "AUTHORIZED";
 	public static final String DENY_PASSWORD_EXPIRED = "DENY_PASSWORD_EXPIRED";
 	public static final String DENY_LOCKED = "DENY_LOCKED";
 	public static final String DENY_MULTI_SESSION_NOT_ALLOWED = "DENY_MULTI_SESSION_NOT_ALLOWED";

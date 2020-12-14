@@ -185,7 +185,7 @@ if(window.app)
 				$$("login-result").resize();	
 				$$("login-result").show();
 				
-				if (login.access === "ALLOWED") {
+				if (login.access === "AUTHORIZED") {
 					
 					webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
 					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, login);

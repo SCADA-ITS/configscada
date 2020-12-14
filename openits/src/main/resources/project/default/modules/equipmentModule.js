@@ -1,26 +1,21 @@
+import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 
-export default class EquipmentModule {
+export default class EquipmentModule extends GenericModule {
 
-	constructor(module, args){
-
-        this.module = module;
-		this.args = args;
-		this.uid = webix.uid();
+	constructor(module, moduleAction, args){
+		
+		super(module, moduleAction, args);
 		
 		this.drawNoEquipmentTypeData = {
 			view: "template",
 			template: function(data) {
 				
-				let icon = "<img src='img/not_found_150.png' align='center'>";
+				let icon = "<img src='img/loading.svg' align='center'>";
 
-				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADIND_DATA") + "</span></div>";
+				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
 			}
 		}
-    }
-
-	runOne(method) {
-        return this[method]();
     }
 
 	getView() {

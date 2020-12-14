@@ -1,0 +1,114 @@
+package com.revenga.rits.front.openitsdao.model.backup;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the map_layer_element_zooms database table.
+ * 
+ */
+@Entity
+@Table(name="map_layer_element_zooms")
+@NamedQuery(name="MapLayerElementZoom.findAll", query="SELECT m FROM MapLayerElementZoom m")
+public class MapLayerElementZoom implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private Integer height;
+
+	@Column(name="horizontal_flip")
+	private Boolean horizontalFlip;
+
+	private Integer width;
+
+	@Column(name="zoom_lower")
+	private Integer zoomLower;
+
+	@Column(name="zoom_upper")
+	private Integer zoomUpper;
+
+	//bi-directional many-to-one association to CustomGraphicEquipment
+	@ManyToOne
+	@JoinColumn(name="custom_graphic_equipment_id")
+	private CustomGraphicEquipment customGraphicEquipment;
+
+	//bi-directional many-to-one association to MapLayerElement
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="map_layer_element_id")
+	private MapLayerElement mapLayerElement;
+
+	public MapLayerElementZoom() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getHeight() {
+		return this.height;
+	}
+
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public Boolean getHorizontalFlip() {
+		return this.horizontalFlip;
+	}
+
+	public void setHorizontalFlip(Boolean horizontalFlip) {
+		this.horizontalFlip = horizontalFlip;
+	}
+
+	public Integer getWidth() {
+		return this.width;
+	}
+
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
+
+	public Integer getZoomLower() {
+		return this.zoomLower;
+	}
+
+	public void setZoomLower(Integer zoomLower) {
+		this.zoomLower = zoomLower;
+	}
+
+	public Integer getZoomUpper() {
+		return this.zoomUpper;
+	}
+
+	public void setZoomUpper(Integer zoomUpper) {
+		this.zoomUpper = zoomUpper;
+	}
+
+	public CustomGraphicEquipment getCustomGraphicEquipment() {
+		return this.customGraphicEquipment;
+	}
+
+	public void setCustomGraphicEquipment(CustomGraphicEquipment customGraphicEquipment) {
+		this.customGraphicEquipment = customGraphicEquipment;
+	}
+
+	public MapLayerElement getMapLayerElement() {
+		return this.mapLayerElement;
+	}
+
+	public void setMapLayerElement(MapLayerElement mapLayerElement) {
+		this.mapLayerElement = mapLayerElement;
+	}
+
+}

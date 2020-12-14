@@ -83,8 +83,11 @@ export default class DataTable {
 					}
 
 					if (posField < metadata.gridFields.length) {
-						col.width = field.widthPx;
+						
+						col.hidden = !field.visible; 
+						col.width = field.widthPx;	
 					}
+					
 					col.sort = field.gridFieldDataType.name;
 
 					if (field.align != undefined) {
@@ -100,6 +103,8 @@ export default class DataTable {
 
 							let state;
 							let icon;
+							let badgeColor;
+							let avatar;
 							let showValue = false;
 
 							if (typeof data[field.sourceField] === 'object') {
@@ -111,13 +116,17 @@ export default class DataTable {
 
 								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
 
-									let gridFieldIcon = field.gridFieldIcons.filter(e => e.value == data[field.sourceField]);
+									badgeColor = field.gridFieldIcons[0].badgeColor;
+									avatar = field.gridFieldIcons[0].avatar;
+									value = data[field.sourceField];
+									
+									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == data[field.sourceField]);
+									
+									if (gridFieldIcon) {
 
-									if (gridFieldIcon != undefined && gridFieldIcon.length > 0) {
-
-										icon = gridFieldIcon[0].icon;
-										showValue = gridFieldIcon[0].showValue;
-										value = gridFieldIcon[0].value;
+										icon = gridFieldIcon.icon;
+										showValue = gridFieldIcon.showValue;
+										value = gridFieldIcon.value;
 									}
 								}
 								else if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
@@ -140,35 +149,83 @@ export default class DataTable {
 									value = data[field.sourceField];
 								}
 							}
+							
+							if (field.needsTranslation) {
 
-							if (icon != undefined) {
+								value = i18n.t(value);
+							}
 
-								if (!showValue) {
+							if (field.isEpochMilli) {
 
-									return `<img class="table-field-icons" src="${icon}" />`;
+								value = util.toLocalTime(value);
+							}
+
+							if (icon != undefined || badgeColor != undefined || avatar != undefined) {
+
+								if (icon) {
+								
+									if (!showValue) {
+
+										return `<img class="table-field-icons" src="${icon}" />`;
+									}
+									else {
+	
+										return `<div style="width: ${field.widthPx}">
+													<span>${value}</span>		
+													<img class="table-field-icons" src="${icon}" 
+														 onerror="this.onerror=null; this.style.display = 'none'"/>
+												</div>`
+									}	
 								}
-								else {
+								else if (badgeColor) {
+									
+									let hashValue = util.getHash(value);
+									let color;
+									
+									let mod = Math.abs(hashValue) % 10;
+									
+									switch (mod) {
+											
+										case 0:
+											color = '#008000';
+											break;
+										case 1:
+											color = '#0000ff';
+											break;
+										case 2:
+											color = '#a52a2a';
+											break;
+										case 3:
+											color = '#009688';
+											break;
+										case 4:
+											color = '#ffa500';
+											break;
+										case 5:
+											color = '#ff00ff';
+											break;
+										case 6:
+											color = '#800080';
+											break;
+										case 7:
+											color = '#000000';
+											break;
+										case 8:
+											color = '#808080';
+											break;
+										case 9:
+											color = '#6495ed';
+											break;
+									}
 
-									return `<div style="width: ${field.widthPx}">
-												<span>${value}</span>		
-												<img class="table-field-icons" src="${icon}" 
-													 onerror="this.onerror=null; this.style.display = 'none'"/>
-											</div>`
+									return `<div><span class="table-badge" style="background: ${color+'3b'}; color: ${color+'a0'};">${value}</span></div>`;									
 								}
-
+								else if (avatar) {
+									
+								}
 							}
 							else if (value != undefined) {
-
-								if (field.needsTranslation) {
-
-									value = i18n.t(value);
-								}
-
-								if (field.isEpochMilli) {
-
-									value = util.toLocalTime(value);
-								}
-
+								
 								if (state != undefined) {
 
 									//let iconElementState = "ElementValueState_" + state + ".png";
@@ -181,7 +238,8 @@ export default class DataTable {
 											</div>`
 								}
 								else {
-									return `<span>${value}</span>`;
+									
+									return `<span>${value}</span>`;	
 								}
 							}
 							else {
@@ -189,7 +247,16 @@ export default class DataTable {
 							}
 						}
 						else {
-							return `<span>${value}</span>`;
+							
+							if (value === '') {
+									
+								return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
+							}
+							else {
+							
+								return `<span>${value}</span>`;	
+							}
+							
 						}
 					}
 
@@ -449,12 +516,33 @@ export default class DataTable {
 			});
 		}
 	}
+	
+	find_module(moduleActionId) {
+		
+		let moduleFound = undefined;
+		let modules = window.em.getAll(EntityType.MODULE.id);
+		
+		if (modules && modules.length > 0) {
+			
+			modules.forEach(module => {
+
+				if (!moduleFound && module.moduleActions.find(moduleAction => moduleAction.id === moduleActionId)) {
+					
+					moduleFound = module;
+				}
+			});
+		}
+		
+		return moduleFound;
+	}
 
 	open_module(gridCommand) {
 
+		let args = {};
+		
 		if (gridCommand) {
 
-			let module = window.em.getByField(EntityType.MODULE.id, "id", gridCommand.module.id);
+			let module = this.find_module(gridCommand.moduleAction.id);
 
 			let selectedPks = this.getSelectedIds();
 
@@ -470,8 +558,22 @@ export default class DataTable {
 					});
 				}
 				else {
+					
+					let viewTypeId = undefined;
+					
+					if (gridCommand.viewType) {
+						
+						viewTypeId = gridCommand.viewType.id;
+					}
+					
+					if (gridCommand.args) {
+						
+						args = gridCommand.args; 
+					}
+					
+					args.selectedPks = selectedPks;
 
-					util.module.open(module, selectedPks);
+					util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
 				}
 			}
 			else {

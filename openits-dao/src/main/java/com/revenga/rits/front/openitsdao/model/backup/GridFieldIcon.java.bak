@@ -23,7 +23,7 @@ public class GridFieldIcon implements Serializable {
 	private Boolean enabled;
 
 	private String icon;
-	
+
 	@Column(name="show_value")
 	private Boolean showValue;
 
@@ -61,7 +61,7 @@ public class GridFieldIcon implements Serializable {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	
+
 	public Boolean getShowValue() {
 		return this.showValue;
 	}

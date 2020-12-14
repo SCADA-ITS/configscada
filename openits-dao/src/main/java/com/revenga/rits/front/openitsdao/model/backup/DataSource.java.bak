@@ -25,10 +25,9 @@ public class DataSource implements Serializable {
 
 	@Column(name="entity_vo")
 	private String entityVo;
-	
+
 	@Column(name="field_id")
 	private String fieldId;
-	
 
 	private String name;
 
@@ -77,7 +76,7 @@ public class DataSource implements Serializable {
 	public void setEntityVo(String entityVo) {
 		this.entityVo = entityVo;
 	}
-	
+
 	public String getFieldId() {
 		return this.fieldId;
 	}

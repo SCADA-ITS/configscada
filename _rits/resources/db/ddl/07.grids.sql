@@ -71,15 +71,19 @@
 		label varchar NOT NULL,
 		icon varchar NULL,
 		"default" bool NOT NULL,
-		module_id int NOT NULL,
+		module_action_id int NOT NULL,
+		args varchar NULL,
+		view_type_id int NULL,
 		multiselect bool NOT NULL
 	);
 	
 	CREATE INDEX idx_grid_commands_grids ON ui.grid_commands USING btree (grid_id);
-	CREATE INDEX idx_grid_commands_modules ON ui.grid_commands USING btree (module_id);
+	CREATE INDEX idx_grid_commands_module_actions ON ui.grid_commands USING btree (module_action_id);
+	CREATE INDEX idx_grid_commands_view_types ON ui.grid_commands USING btree (view_type_id);
 	
 	ALTER TABLE ui.grid_commands ADD CONSTRAINT fk_grid_commands_grids FOREIGN KEY (grid_id) REFERENCES ui.grids(id);
-	ALTER TABLE ui.grid_commands ADD CONSTRAINT fk_grid_commands_modules FOREIGN KEY (module_id) REFERENCES ui.modules(id);
+	ALTER TABLE ui.grid_commands ADD CONSTRAINT fk_grid_commands_module_actions FOREIGN KEY (module_action_id) REFERENCES ui.module_actions(id);
+	ALTER TABLE ui.grid_commands ADD CONSTRAINT fk_grid_commands_view_types FOREIGN KEY (view_type_id) REFERENCES ui.view_types(id);
 	
 	ALTER TABLE ui.grid_commands SET TABLESPACE tbl_ui;
 	
@@ -130,9 +134,11 @@
 	CREATE TABLE ui.grid_field_icons (
 		id serial primary key,
 		grid_field_id int NOT NULL,
-		icon varchar NOT NULL,
-		value varchar NOT NULL,
+		icon varchar NULL,
+		value varchar NULL,
 		show_value boolean NOT NULL,
+		badge_color bool NOT NULL,
+		avatar bool NOT NULL,
 		enabled bool
 	);
 	

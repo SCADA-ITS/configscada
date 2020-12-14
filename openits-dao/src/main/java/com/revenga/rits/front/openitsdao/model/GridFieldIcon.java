@@ -19,6 +19,11 @@ public class GridFieldIcon implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
+	private Boolean avatar;
+	
+	@Column(name="badge_color")
+	private String badgeColor;
 
 	private Boolean enabled;
 
@@ -44,6 +49,22 @@ public class GridFieldIcon implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Boolean getAvatar() {
+		return this.avatar;
+	}
+
+	public void setAvatar(Boolean avatar) {
+		this.avatar = avatar;
+	}
+	
+	public String getBadgeColor() {
+		return this.badgeColor;
+	}
+
+	public void setBadgeColor(String badgeColor) {
+		this.badgeColor = badgeColor;
 	}
 
 	public Boolean getEnabled() {

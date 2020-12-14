@@ -1,14 +1,23 @@
+import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 
 const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
 
-export default class GenericGridModule {
+export default class GenericGridModule extends GenericModule {
 	
-	constructor(module, args){
+	constructor(module, moduleAction, args){
 
-        this.module = module;
-		this.args = args;
-		this.uid = webix.uid();
+		super(module, moduleAction, args);        
+
+		this.drawNoData = {
+			view: "template",
+			template: function(data) {
+				
+				let icon = "<img src='img/loading.svg' align='center'>";
+
+				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+			}
+		}
     }
 
 	getView() {
@@ -49,7 +58,7 @@ export default class GenericGridModule {
 		});
 		
 		//let dataGridId = window.app.module.getParamValue(this.module, MODULE_TYPE_GENERIC_PARAM_GRID_ID);
-		let dataGridId = module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_ID).value;	
+		let dataGridId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_ID).value;	
 		
 		webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat){
 				
@@ -86,16 +95,5 @@ export default class GenericGridModule {
 				$$(self.uid).hideProgress();
 			}
 		});
-	}
-	
-	drawNoData = {
-	
-		view: "template",
-		template: function(data) {
-			let icon = "<img src='img/not_found_150.png' align='center'>";
-
-			return "<div class='empty-app-inner'>" + icon + "</div>"
-
-		}
 	}
 }

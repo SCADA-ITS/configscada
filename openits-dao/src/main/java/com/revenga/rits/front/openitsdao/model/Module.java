@@ -34,13 +34,22 @@ public class Module implements Serializable {
 
 	@Column(name="js_method_draw")
 	private String jsMethodDraw;
-
+	
 	private String name;
+
+	//uni-directional many-to-one association to ViewType
+	@ManyToOne
+	@JoinColumn(name="default_view_type_id")
+	private ViewType viewType;
 
 	private Boolean visible;
 
 	@Column(name="wss_topic")
 	private String wssTopic;
+	
+	//bi-directional many-to-one association to ModuleAction
+	@OneToMany(mappedBy="module")
+	private List<ModuleAction> moduleActions;
 
 	//bi-directional many-to-one association to ModuleValue
 	@OneToMany(mappedBy="module")
@@ -137,6 +146,28 @@ public class Module implements Serializable {
 	public void setWssTopic(String wssTopic) {
 		this.wssTopic = wssTopic;
 	}
+	
+	public List<ModuleAction> getModuleActions() {
+		return this.moduleActions;
+	}
+
+	public void setModuleActions(List<ModuleAction> moduleActions) {
+		this.moduleActions = moduleActions;
+	}
+	
+	public ModuleAction addModuleAction(ModuleAction moduleAction) {
+		getModuleActions().add(moduleAction);
+		moduleAction.setModule(this);
+
+		return moduleAction;
+	}
+
+	public ModuleAction removeModuleAction(ModuleAction moduleAction) {
+		getModuleActions().remove(moduleAction);
+		moduleAction.setModule(null);
+
+		return moduleAction;
+	}
 
 	public List<ModuleValue> getModuleValues() {
 		return this.moduleValues;
@@ -189,5 +220,12 @@ public class Module implements Serializable {
 
 		return windowValue;
 	}
+	
+	public ViewType getViewType() {
+		return this.viewType;
+	}
 
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
 }

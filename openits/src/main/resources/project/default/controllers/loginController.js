@@ -1,8 +1,9 @@
 import { RULE } from "../data/GLOBAL_PROPERTIES.js"
+import { util } from "../lib/util.js"
 
 webix.ready(function() {
 
-	const language = webix.storage.local.get("app_user_language");
+	const language = webix.storage.session.get("app_user_language");
 	const language_default = "es";
 
 	if (language !== null) {
@@ -42,13 +43,13 @@ webix.ready(function() {
 					labelWidth: 150
 
 				},
-				on: {
-					onKeyPress: function(code, e) {
-						if (code == 13) {
-							login()
-						}
-					}
-				},
+//				on: {
+//					onKeyPress: function(code, e) {
+//						if (code == 13) {
+//							login()
+//						}
+//					}
+//				},
 				elements: [
 					{ "template": "<span class='webix_icon fa-user-circle-o'></span>Login", type: "header" },
 					{
@@ -63,12 +64,12 @@ webix.ready(function() {
 								if (this.$scope != null) {
 									this.$scope.validateForm()
 								}
-							},
+							}/*,
 							onKeyPress: function(code, e) {
 								if (code == 13) {
 									login()
 								}
-							}
+							}*/
 						}
 					},
 					{
@@ -84,12 +85,12 @@ webix.ready(function() {
 								if (this.$scope != null) {
 									this.$scope.validateForm()
 								}
-							},
+							}/*,
 							onKeyPress: function(code, e) {
 								if (code == 13) {
 									login()
 								}
-							}
+							}*/
 						}
 					},
 					{
@@ -124,14 +125,14 @@ webix.ready(function() {
 									'onChange': function(obj) {
 										switch (obj) {
 											case "sk":
-												webix.storage.local.put("app_user_language", "sk");
+												webix.storage.session.put("app_user_language", "sk");
 												break;
 											case "en":
-												webix.storage.local.put("app_user_language", "en");
+												webix.storage.session.put("app_user_language", "en");
 												webix.i18n.setLocale("en-EN");
 												break;
 											case "es":
-												webix.storage.local.put("app_user_language", "es");
+												webix.storage.session.put("app_user_language", "es");
 												webix.i18n.setLocale("es-ES");
 												break;
 										}
@@ -141,8 +142,15 @@ webix.ready(function() {
 							},
 							{},
 							{
-								view: "button", label: $.i18n("login.LoginButton"), type: "form", id: "loginFormSubmitButton", width: 150, click:
-									login
+								view: "button", 
+								label: $.i18n("login.LoginButton"), 
+								type: "form", 
+								id: "loginFormSubmitButton", 
+								width: 150, 
+								hotkey: "enter",
+								click: function() {
+									login()
+								}
 							}
 						]
 					}
@@ -167,24 +175,32 @@ function login() {
 	
 			let login = JSON.parse(loginResponse.responseText);
 	
-			if (login.access === "ALLOWED") {
+			if (login.access === "AUTHORIZED") {
+				
+				webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
+				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, login);
 	
-				webix.storage.local.put("loginSession", login.sessionId);
-				webix.storage.local.put("userId", login.userId);
+				//webix.storage.session.put("loginSession", login.sessionId);
+				//webix.storage.session.put("userId", login.userId);
 	
 				let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${login.userId}`);
 	
 				if (userResponse != undefined) {
 	
-					let user = JSON.parse(userResponse.responseText);
+					let userData = JSON.parse(userResponse.responseText);
+					
+					userData.password = undefined;
+					
+					webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
 	
-					webix.storage.local.put("app_user_language", user.language);
-					webix.storage.local.put("app_user_country", user.country);
-					webix.storage.local.put("app_user_name", user.name);
+//					webix.storage.session.put("app_user_language", user.language);
+//					webix.storage.session.put("app_user_country", user.country);
+//					webix.storage.session.put("app_user_name", user.name);
+//					
+//					var isLogin = webix.storage.session.get("loginSession");
 					
-					var isLogin = webix.storage.local.get("loginSession");
-					
-					window.location = "./home.html";
+					userPermissions(userData);
+					//window.location = "./home.html";
 				}
 			}
 			else if (login.access === "WRONG_USER_PASSWORD") {
@@ -207,4 +223,35 @@ function login() {
 			}		
 		}
 	}
+}
+
+function userPermissions(userData) {
+	
+	let permissions = [];
+    if (userData.role.rolePermissions)
+        userData.role.rolePermissions.forEach(item => {
+            permissions.push({
+                'id': item.id.split(":")[1],
+                'alias': item.alias
+            });
+        });
+    if (userData.userPermissions)
+        userData.userPermissions.forEach(item => {
+            permissions.push(item.id);
+        });
+
+    if (permissions)
+        try {
+            webix.storage.session.put("app_user_permissions", permissions);
+        } catch { }
+
+    if (checkUserPermission(RULE.LOGIN_ROLE)) {
+        window.location = "./home.html";
+    } else {
+        webix.alert({ title: "USER_LOGIN_DENY", type: "alert-success", text: "ERROR" })
+        webix.storage.session.put("loginSession", "");
+        webix.storage.session.put("userId", "");
+        webix.storage.session.put("app_user_name", "");
+        webix.storage.session.put("app_user_permissions", "");
+    }
 }

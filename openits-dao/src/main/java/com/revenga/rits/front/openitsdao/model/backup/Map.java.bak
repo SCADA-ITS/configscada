@@ -1,0 +1,147 @@
+package com.revenga.rits.front.openitsdao.model.backup;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the maps database table.
+ * 
+ */
+@Entity
+@Table(name="maps")
+@NamedQuery(name="Map.findAll", query="SELECT m FROM Map m")
+public class Map implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name="base_map_url")
+	private String baseMapUrl;
+
+	private String description;
+
+	@Column(name="exclusive_layers")
+	private Boolean exclusiveLayers;
+
+	private String icon;
+
+	private String label;
+
+	private String name;
+
+	//bi-directional many-to-one association to MapLayerRelationship
+	@OneToMany(mappedBy="map")
+	private List<MapLayerRelationship> mapLayerRelationships;
+
+	//bi-directional many-to-one association to MapLayer
+	@OneToMany(mappedBy="map")
+	private List<MapLayer> mapLayers;
+
+	public Map() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getBaseMapUrl() {
+		return this.baseMapUrl;
+	}
+
+	public void setBaseMapUrl(String baseMapUrl) {
+		this.baseMapUrl = baseMapUrl;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getExclusiveLayers() {
+		return this.exclusiveLayers;
+	}
+
+	public void setExclusiveLayers(Boolean exclusiveLayers) {
+		this.exclusiveLayers = exclusiveLayers;
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<MapLayerRelationship> getMapLayerRelationships() {
+		return this.mapLayerRelationships;
+	}
+
+	public void setMapLayerRelationships(List<MapLayerRelationship> mapLayerRelationships) {
+		this.mapLayerRelationships = mapLayerRelationships;
+	}
+
+	public MapLayerRelationship addMapLayerRelationship(MapLayerRelationship mapLayerRelationship) {
+		getMapLayerRelationships().add(mapLayerRelationship);
+		mapLayerRelationship.setMap(this);
+
+		return mapLayerRelationship;
+	}
+
+	public MapLayerRelationship removeMapLayerRelationship(MapLayerRelationship mapLayerRelationship) {
+		getMapLayerRelationships().remove(mapLayerRelationship);
+		mapLayerRelationship.setMap(null);
+
+		return mapLayerRelationship;
+	}
+
+	public List<MapLayer> getMapLayers() {
+		return this.mapLayers;
+	}
+
+	public void setMapLayers(List<MapLayer> mapLayers) {
+		this.mapLayers = mapLayers;
+	}
+
+	public MapLayer addMapLayer(MapLayer mapLayer) {
+		getMapLayers().add(mapLayer);
+		mapLayer.setMap(this);
+
+		return mapLayer;
+	}
+
+	public MapLayer removeMapLayer(MapLayer mapLayer) {
+		getMapLayers().remove(mapLayer);
+		mapLayer.setMap(null);
+
+		return mapLayer;
+	}
+
+}

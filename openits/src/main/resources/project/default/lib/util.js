@@ -1,99 +1,236 @@
 import { synopticData } from "../data/synoptics.js";
 
-const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
-
 export let util = {
 
 	module: {
+		
+		getParamValue(module, param) {
+			
+			return module.moduleValues.find(e => e.moduleParam.id === param).value;
+		},
 
-		open(module, args) {
+		getWindowParamValue(module, param) {
+			
+			return module.windowValues.find(e => e.windowParam.id === param).value;
+		},
 
-			function loadInTab(mod) {
+		loadInCustom(module, moduleAction, mod, args, view) {
 
-				let viewModule;
-				let allowMultipleInstances, image, icon, color, label, externalizable;
-				let lazyClass;
+		},
 
-				if (module.windowValues) {
+		loadInWindow(module, moduleAction, mod, args) {
 
-					allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value;
-					image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
-					icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
-					color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
-					label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
-					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value;
+			let viewModule;
+			let allowMultipleInstances, image, icon, color, label, externalizable;
+			let lazyClass;
 
-				}
+			if (module.windowValues) {
 
-				// TODO: Remove this block in future
-				if (module.jsMethodCallbacks === "DEPRECATED") {
+				allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
+				image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
+				icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
+				color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
+				label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
+				externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
+			}
 
-					if (module.moduleType.id !== 4) {
+			// TODO: Remove this block in future
+			if (module.jsMethodCallbacks === "DEPRECATED") {
 
-						viewModule = mod[module.jsMethodDraw];
-					}
-					else {
+				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
 
-						if (module.moduleValues) {
-
-							let synopticId = module.moduleValues.find(e => e.moduleParam.id === 4).value;
-							let item = synopticData.find(e => e.id === synopticId);
-							let syn = new mod.default(item);
-
-							viewModule = {
-								id: "syn-" + synopticId,
-								rows: [{
-									view: "template",
-									id: item.id,
-									url: function() {
-										syn.init();
-									}
-								}]
-							};
-						}
-					}
+					viewModule = mod[module.jsMethodDraw];
 				}
 				else {
 
-					lazyClass = new mod.default(module, args);
+					if (module.moduleValues) {
 
-					viewModule = lazyClass.runOne(module.jsMethodDraw)
-				}
+						let synopticId = module.moduleValues.find(e => e.moduleParam.id === 4).value;
+						let item = synopticData.find(e => e.id === synopticId);
+						let syn = new mod.default(item);
 
-				if (viewModule) {
-
-					let tab_id = "tab_" + module.id + "_" + webix.uid();
-
-					$$(MAIN_TAB_ID).addView({
-						id: tab_id,
-						header: `<div style='float: left; width: 250px;'>
-									<img class='tab-icon' src='${icon}'/>
-									<span class='tab-text'>${i18n.t(label)}</span>
-									<span style='float: right; padding-top: 2px'><a href='#'><img src='../img/externalize_button.png'></a></span>
-								</div>`,
-						body: {
-							autoheight: true,
-							id: tab_id.replace("tab", "tab_body"),
-							autowidth: true,
-							cols: [
-								{
-									rows: [
-										{ view: "template", role: "placeholder", borderless: 1, "height": 10 },
-										viewModule
-									]
+						viewModule = {
+							id: "syn-" + synopticId,
+							rows: [{
+								view: "template",
+								id: item.id,
+								url: function() {
+									syn.init();
 								}
-							]
-						}
-					});
-
-					$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
-
-					if (lazyClass && module.jsMethodCallbacks) {
-
-						lazyClass.runOne(module.jsMethodCallbacks)
+							}]
+						};
 					}
 				}
 			}
+			else {
+
+				lazyClass = new mod.default(module, moduleAction, args);
+
+				viewModule = lazyClass.runOne(module.jsMethodDraw)
+			}
+
+			if (viewModule) {
+
+				let win_id = "win_" + module.id + "_" + webix.uid();
+				
+				let head = {
+					view: "toolbar",
+					css: "default-window-head",
+					//height: 35,
+					elements: [
+						{ 
+							
+							view: "label", 
+							//css: "notification-center-title", 
+							template: i18n.t(label)},
+						{
+							view: "icon",
+							//css: "notification-center-close-btn",
+							icon: "mdi mdi-close",
+							on: {
+								onItemClick: function(id) {
+									$$(win_id).close();
+								}
+							}
+						}
+					],
+					borderless: 1
+				};
+
+				webix.ui({
+					view: "window",
+					id: win_id,
+					move: true,
+					css: "default-window",
+					head: head,
+					height: 720,
+					width: 1400,
+					body: {
+						rows: [
+							viewModule		
+						]	
+					}, 
+					position: function(state) {
+						state.left = (document.documentElement.clientWidth / 2) - 700;
+						state.top = (document.documentElement.clientHeight / 2) - 360;
+					},
+					on: {
+						onBeforeShow: function() {
+							
+						}
+					}
+				});
+				
+				if(lazyClass && module.jsMethodCallbacks) {
+
+					lazyClass.runOne(module.jsMethodCallbacks)
+					
+					$$(win_id).show();
+				}
+			}
+		},
+
+		loadInTab(module, moduleAction, mod, args) {
+
+			let viewModule;
+			let allowMultipleInstances, image, icon, color, label, externalizable;
+			let lazyClass;
+
+			if (module.windowValues) {
+
+				allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
+				image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
+				icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
+				color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
+				label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
+				externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
+
+			}
+
+			let tab_body_id = "tab_body_" + module.id;
+
+			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+
+			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
+
+			if (moduleOpened && !allowMultipleInstances) {
+
+				$$(MAIN_TAB_ID).getTabbar().setValue(moduleOpened.config.id);
+
+				return;
+			}
+
+			// TODO: Remove this block in future
+			if (module.jsMethodCallbacks === "DEPRECATED") {
+
+				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
+
+					viewModule = mod[module.jsMethodDraw];
+				}
+				else {
+
+					if (module.moduleValues) {
+
+						let synopticId = module.moduleValues.find(e => e.moduleParam.id === 4).value;
+						let item = synopticData.find(e => e.id === synopticId);
+						let syn = new mod.default(item);
+
+						viewModule = {
+							id: "syn-" + synopticId,
+							rows: [{
+								view: "template",
+								id: item.id,
+								url: function() {
+									syn.init();
+								}
+							}]
+						};
+					}
+				}
+			}
+			else {
+				
+				lazyClass = new mod.default(module, moduleAction, args);
+	
+				viewModule = lazyClass.runOne(module.jsMethodDraw)
+			}
+
+			if (viewModule) {
+
+				let tab_id = "tab_" + module.id + "_" + webix.uid();
+
+				$$(MAIN_TAB_ID).addView({
+					id: tab_id,
+					header: `<div style='float: left; width: 250px;'>
+								<img class='tab-icon' src='${icon}'/>
+								<span class='tab-text'>${i18n.t(label)}</span>
+								<span style='float: right; padding-top: 2px'><a href='#'><img src='../img/externalize_button.png'></a></span>
+							</div>`,
+					body: {
+						autoheight: true,
+						id: tab_id.replace("tab", "tab_body"),
+						autowidth: true,
+						cols: [
+							{
+								rows: [
+									{ view: "template", role: "placeholder", borderless: 1, "height": 10 },
+									viewModule
+								]
+							}
+						]
+					}
+				});
+
+				$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
+
+				if (lazyClass && module.jsMethodCallbacks) {
+
+					lazyClass.runOne(module.jsMethodCallbacks)
+				}
+			}
+		},
+
+		open(module, moduleAction, viewTypeId, customView, args) {
 
 			try {
 
@@ -101,7 +238,20 @@ export let util = {
 
 					const mod = await import(module.jsFile);
 
-					loadInTab(mod);
+					if (viewTypeId === VIEW_TYPE_CUSTOM && customView) {
+
+						util.module.loadInCustom(module, moduleAction, mod, args, customView);
+					}
+					else if (!viewTypeId && module.viewType.id === VIEW_TYPE_TAB ||
+						viewTypeId === VIEW_TYPE_TAB) {
+
+						util.module.loadInTab(module, moduleAction, mod, args);
+					}
+					else if (!viewTypeId && module.viewType.id === VIEW_TYPE_WINDOW ||
+						viewTypeId === VIEW_TYPE_WINDOW) {
+
+						util.module.loadInWindow(module, moduleAction, mod, args);
+					}
 				}
 
 				lazy();
@@ -110,6 +260,60 @@ export let util = {
 
 				console.log(error);
 			}
+		}
+	},
+	
+	user: {
+		
+		keepAlive() {
+		
+			let response = webix.ajax().sync().post(appConfig.restUrl + "auth/keep_alive");
+			
+			if (response != undefined) {
+				
+				return JSON.parse(response.responseText)
+			}
+			
+			return undefined;
+		},
+		
+		auth() {
+			
+			let sessionData = util.user.keepAlive();
+			let userData = null;
+			
+			if (!sessionData) {
+	
+				return false;
+			}
+			else {
+				
+				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+				
+				if (sessionData.userId) {
+					
+					let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${sessionData.userId}`);
+							
+					if (userDataResponse != undefined) {
+						
+						if (userDataResponse.responseText) {
+							
+							userData = JSON.parse(userDataResponse.responseText);
+							
+							userData.password = undefined;
+							
+							webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+						}
+					}
+				}
+				
+				if (!userData) {
+					
+					return false
+				}
+			}
+			
+			return userData;
 		}
 	},
 
@@ -131,14 +335,14 @@ export let util = {
 			client.onConnect = function(frame) {
 				// Do something, all subscribes must be done is this callback
 				// This is needed because this will be executed after a (re)connect
-				
+
 				console.log("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
-				
+
 				if (onConnected) {
-					
+
 					onConnected();
 				}
-				
+
 				this.suscription = client.subscribe(topic, onMessage);
 			};
 
@@ -154,7 +358,7 @@ export let util = {
 				console.log("Broker reported error: " + frame.headers["message"]);
 				console.log("Additional details: " + frame.body);
 			};
-			
+
 			client.activate();
 
 			return client;
@@ -231,5 +435,17 @@ export let util = {
 		}
 
 		return date;
+	},
+	
+	getHash(input) {
+	  var hash = 0, len = input.length;
+
+	  for (var i = 0; i < len; i++) {
+		
+	    hash  = ((hash << 5) - hash) + input.charCodeAt(i);
+	    hash |= 0; // to 32bit integer
+	  }
+
+	  return hash;
 	}
 };

@@ -1,5 +1,35 @@
 .main-footer {
-	background: rgb(96, 125, 139, 0.2);
+	background: transparent;
+}
+
+.head-color {
+	background: rgb(28, 161, 193);
+}
+
+.main-toolbar {
+	/*background: rgb(28, 161, 193);*/
+	border: 0px;	
+}
+
+.main-toolbar .webix_icon_button .webix_icon {
+    color: white;
+}
+
+.main-toolbar .webix_icon_button:hover:before {
+	background-color: #0d5b6d;
+	opacity: 1;
+	transform: scale(1);
+}
+
+/*.main-toolbar .webix_icon_button .webix_icon:hover {
+    color: gray;
+}*/
+.main-toolbar .webix_el_label .webix_el_box {
+	color: white;
+}
+
+.webix_layout_space {
+    background-color: #303030;
 }
 
 .logo-project {
@@ -26,27 +56,43 @@
 .webix_menu-x.menu-custom .webix_list_item {
 	padding-top: 3px;
 	background-color: transparent;
-	color: #475466;
-	font-size: 16px;
+	color: white;
 	font-weight: 500;
+	margin-top: -6px;
+	border-right: 0px;
 } 
-.webix_menu-x.menu-custom .webix_list_item:hover {
+.webix_menu-x.menu-custom .webix_list_item:hover{
 	/*background-color: transparent; */
 	/*box-shadow: 0px 2px #1CA1C1; */
-	background-color: rgb(28, 161, 193, 0.1);
+	/*background-color: rgb(28, 161, 193, 0.1);*/
+	border-radius: 60px;
+	background-color: #0d5b6d;
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* menu vertical */
 .webix_menu.menu-custom {
   	background-color: white;
-  	color: #475466;
+  	box-shadow: 0 1.5rem 1.8rem;
+  	border: 1px solid rgb(28, 161, 193) !important;
+  	margin: 7px;
 }
 .webix_menu.menu-custom .webix_list_item {
   	background-color:transparent;
 }
+
 .webix_menu.menu-custom .webix_list_item:hover {
-  	background-color: rgb(28, 161, 193, 0.1);
+  	background-color: rgb(28 161 193 / 0.2);
 }
+
+.menu-toolbar {
+	margin-top: -2px !important;
+	height: 34px !important;
+	/*background: rgb(28, 161, 193);*/
+	border: 0px;
+}
+
 
 .main-tab .webix_all_tabs .webix_item_tab{
 	color: #475466;
@@ -56,17 +102,15 @@
 .main-tab .webix_all_tabs .webix_item_tab.webix_selected {
     color: #475466;
     font-weight: 500;
+    background: rgb(28 161 193 / 0.2);
 }
-
-.main-tab .webix_all_tabs .webix_item_tab.webix_selected:focus {
-    color: #475466;
-}
-
+ 
 .main-tab .webix_item_tab:not(.webix_selected) {
-	
 	color: rgb(71, 84, 102, 0.4);
-	font-weight: 500;
-}
+    font-weight: 500;
+    background: rgb(71 84 102 / 0.07);
+}   
+ 
 
 .main-tab .webix_item_tab:not(.webix_selected):hover {
 	color: rgb(71, 84, 102, 0.8);
@@ -75,6 +119,11 @@
 
 .main-tab .tab-text{
 	padding-left: 27px;
+	display: inline-block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .main-tab .tab-icon {
@@ -84,8 +133,7 @@
 }
 
 .submenu-icon{
-    float:left;
-    padding: 5px;
+    padding: 7px;
     background: transparent;
 }
 
@@ -103,6 +151,9 @@
 
 .notification-center-main {
 	border-color: #1CA1C1;
+	box-shadow: 0 1.5rem 2.8rem !important;
+	backdrop-filter: blur(10px);
+    background-color: rgb(28 161 193 / 0.8);
 }
 
 .notification-panel {
@@ -193,7 +244,7 @@
 
 .rows .webix_cell.webix_row_select{
   color: #2e3436;
-  background: rgb(28, 161, 193, 0.1) !important;
+  background: rgb(28 161 193 / 0.2) !important;
 }
 
 .list-photo{
@@ -261,12 +312,21 @@
 
 .webix_list_item.webix_selected {
     box-shadow: inset 2px 0 #1CA1C1;
-    background: rgb(28, 161, 193, 0.1);
+    background: rgb(28 161 193 / 0.2);
 }
 
 .table-field-icons {
 	
 	vertical-align: -3px;
+	width: 20px;
+	height: 20px;
+}
+
+.table-badge {
+	font-size: 14px;
+	font-weight: 500;
+	padding: 4px 12px;
+	border-radius: 8px;
 }
 
 .status_ws_connected {
@@ -326,4 +386,35 @@
 	color: #fff;
 	text-align: center;
 	font-size: 90px;
+}
+
+.default-window {
+	border-color: #1CA1C1;
+	box-shadow: 0 1.5rem 2.8rem !important;
+}
+
+.default-window-head {
+	background-color: #1CA1C1;
+	height: 32px !important;
+}
+
+.default-window-head .webix_view.webix_el_label  {
+	font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.default-window-head .webix_icon_button .webix_icon {
+    color: white;
+    padding: 0px 0px 10px;
+}
+
+.default-window-head .webix_icon_button:hover:before {
+	background-color: #0d5b6d;
+	opacity: 1;
+	transform: scale(0.65);
+	margin-top: -8px;
 }

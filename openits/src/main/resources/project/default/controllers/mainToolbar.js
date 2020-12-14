@@ -1,4 +1,4 @@
-import MainMenu from "./mainMenu.js";
+//import MainMenu from "./mainMenu.js";
 import NotificationCenter from "./notificationCenter.js";
 import {NotificationType}  from "./notificationCenter.js";
 
@@ -8,7 +8,7 @@ export default class MainToolbar {
 
 	constructor() {
 
-		this.mainMenu = new MainMenu();
+		//this.mainMenu = new MainMenu();
 	}
 
 	getView() {
@@ -17,6 +17,7 @@ export default class MainToolbar {
 			id: MAIN_TOOLBAR_ID,
 			view: "toolbar",
 			height: 46,
+			css: "head-color main-toolbar",
 			//padding: 3,
 			elements: [
 				{
@@ -24,10 +25,13 @@ export default class MainToolbar {
 					label: "<img class='logo-project' src='../img/logo-project.svg'>",
 					width: 175
 				},
-				this.mainMenu.getView(),
+				//this.mainMenu.getView(),
+				{ view: "template", css: "head-color main-toolbar", role: "placeholder", borderless: 1, minWidth: 500 },
 				{ id: "nameUser", view: "label", label: "admin", align: "right", maxWidth: 350 },
 				{
-					id: "tb-notification-center-user", view: "icon", icon: "mdi mdi-account-circle", tooltip: i18n.t("LBL_USER"), popup: {
+					id: "tb-notification-center-user", view: "icon", icon: "mdi mdi-account-circle",
+					//, tooltip: i18n.t("LBL_USER"), 
+					popup: {
 						view: 'contextmenu',
 						data: [
 							{ id: 'logout', value: 'Logout' },
@@ -37,8 +41,8 @@ export default class MainToolbar {
 								if (id === 'logout') {
 									webix.message('Loging out...');
 
-									webix.storage.local.get("url.auth.path");
-									var paramUser = webix.storage.local.get("userId");
+									webix.storage.session.get("url.auth.path");
+									var paramUser = webix.storage.session.get("userId");
 									webix.proxy("GraphQL", `query($rowId: String!){
 						getUser(userId: $rowId){
 							id
@@ -52,10 +56,10 @@ export default class MainToolbar {
 										// console.log(data2.name);
 										// console.log(data2.password);
 										// webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(webix.storage.session.get("url.auth.path") + "logout").then(function(data){
-										webix.storage.local.remove("loginSession");
-										webix.storage.local.remove("app_user_language");
-										webix.storage.local.remove("app_user_name");
-										webix.storage.local.remove("app_user_permissions");
+										webix.storage.session.remove("loginSession");
+										webix.storage.session.remove("app_user_language");
+										webix.storage.session.remove("app_user_name");
+										webix.storage.session.remove("app_user_permissions");
 										window.location = "./login.html";
 										// });
 									});

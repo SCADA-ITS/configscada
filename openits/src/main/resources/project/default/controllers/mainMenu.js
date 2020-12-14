@@ -47,32 +47,11 @@ export default class MainMenu {
 		
 					if (this.getMenuItem(id).moduleId) {
 						
-						
 						let module = window.em.getByField(EntityType.MODULE.id, "id", this.getMenuItem(id).moduleId);
-						let allowMultipleInstances = false;
-		
+						
 						if (module) {
-		
-							let tab_body_id = "tab_body_" + module.id;
-							
-							let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
-							
-							let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
-							
-							if (module.windowValues) {
-		
-								allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
-							}
-							
-							if (allowMultipleInstances || (!allowMultipleInstances && !moduleOpened)) {
-							
-								util.module.open(module, null);
-								//new ModuleLoader($$("tabs"), module, null);	
-							}
-							else if (moduleOpened) {
-								
-								$$(MAIN_TAB_ID).getTabbar().setValue(moduleOpened.config.id);	
-							}
+						
+							util.module.open(module, null, null, null, null);	
 						}
 					}
 				}

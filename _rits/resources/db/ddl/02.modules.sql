@@ -5,6 +5,22 @@
 ---------------------------------------------------------
 
 -- 
+-- Table: ui.view_type
+-- Description: View types table
+-- Scope: ui
+--
+CREATE TABLE ui.view_types (
+	id int NOT NULL,
+	name varchar NOT NULL,
+	description varchar NULL,
+	enabled bool NULL,
+	visible bool NULL,
+	CONSTRAINT pk_view_types PRIMARY KEY (id)
+);
+	
+ALTER TABLE ui.view_types SET TABLESPACE tbl_ui;
+
+-- 
 -- Table: ui.module_types
 -- Description: Module types table
 -- Scope: ui
@@ -30,6 +46,7 @@
 		module_type_id int NOT NULL,
 		name varchar NOT NULL,
 		description varchar NULL,
+		default_view_type_id int NULL,
 		js_file varchar NULL,
 		js_method_draw varchar NULL,
 		js_method_callbacks varchar NULL,
@@ -40,10 +57,34 @@
 	);
 	
 	CREATE INDEX idx_modules_module_types ON ui.modules USING btree (module_type_id);
+	CREATE INDEX idx_modules_view_types ON ui.modules USING btree (default_view_type_id);
+	
 
 	ALTER TABLE ui.modules ADD CONSTRAINT fk_modules_module_types FOREIGN KEY (module_type_id) REFERENCES ui.module_types(id);
+	ALTER TABLE ui.modules ADD CONSTRAINT fk_modules_view_types FOREIGN KEY (default_view_type_id) REFERENCES ui.view_types(id);
 		
 	ALTER TABLE ui.modules SET TABLESPACE tbl_ui;
+	
+-- 
+-- Table: ui.module_actions
+-- Description: Actions for modules
+-- Scope: ui
+--
+	CREATE TABLE ui.module_actions (
+	    id int not null,
+		module_id int NOT NULL,
+		name varchar NOT NULL,
+		description varchar NULL,
+		enabled bool NULL,
+		visible bool NULL,
+		CONSTRAINT pk_module_action PRIMARY KEY (id)
+	);
+	
+	CREATE INDEX idx_module_action_modules ON ui.module_actions USING btree (module_id);
+
+	ALTER TABLE ui.module_actions ADD CONSTRAINT fk_module_action_modules FOREIGN KEY (module_id) REFERENCES ui.modules(id);
+		
+	ALTER TABLE ui.module_actions SET TABLESPACE tbl_ui;
 	
 -- 
 -- Table: ui.module_params

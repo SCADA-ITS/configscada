@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+class AdapterGridElement {
+
+	static final String FIELD_OBJECT_ROLE = "role";
+	static final String FIELD_OBJECT_ROLE_ALIAS = "alias";
+	
+	static final String FIELD_ROLE_ALIAS = "roleAlias";
+	
+	org.apache.logging.log4j.Logger log;
+	
+	public AdapterGridElement(org.apache.logging.log4j.Logger log) {
+		
+		this.log = log;
+	}
+	
+	List<Map<String, Object>> toGridData(VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
+		
+		List<Map<String, Object>> data = new ArrayList<>();
+		
+		try {
+			
+			if (!CollectionUtils.isEmpty(entities)) {
+				
+				for (Map<String, Object> entity : entities) {
+					
+					Map<String, Object> dataRow = new HashMap<>();
+					
+					dataRow.putAll(entity);
+					
+					flattenRole(dataRow);
+					
+					data.add(vo2uiAdapter.convert(fieldId, dataRow));
+				}
+			}
+			
+		} catch (IllegalArgumentException e) {
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
+		}
+
+		return data;
+	}
+	
+	void flattenRole(Map<String, Object> dataRow) {
+		
+		if (dataRow.containsKey(FIELD_OBJECT_ROLE)) {
+			
+			Object objRole = dataRow.get(FIELD_OBJECT_ROLE);
+			
+			if (objRole instanceof Map) {
+				
+				Map<String, Object> role = (Map<String, Object>) objRole; 
+				
+				dataRow.put(FIELD_ROLE_ALIAS, role.get(FIELD_OBJECT_ROLE_ALIAS));
+			}
+			
+			dataRow.remove(FIELD_OBJECT_ROLE);
+		}
+	}
+}
