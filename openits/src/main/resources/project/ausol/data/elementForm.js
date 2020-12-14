@@ -55,15 +55,18 @@ export let columnsElementFormList = {
 		"rows":[ 
 			"ElementTypeParam:3:1:2",
 			"ElementTypeParam:3:2:1",
+			"ElementTypeParam:3:2:4",
 			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:17",
+			"ElementTypeParam:3:2:10",
+			"ElementTypeParam:3:2:6",
 			"ElementTypeParam:3:2:20",
 			"ElementTypeParam:3:2:21",
-			"ElementTypeParam:3:2:22",
 			"ElementTypeParam:3:2:40",
 			"ElementTypeParam:3:2:41",
 			"ElementTypeParam:3:2:42"
 		],
-		"rowCounts": 11,
+		"rowCounts": 12,
 		"scroll": "y",  
 		"width": 540,
 		"options": {}
@@ -72,12 +75,18 @@ export let columnsElementFormList = {
 		"rows":[ 
 			"ElementTypeParam:4:2:1",
 			"ElementTypeParam:4:2:2",
+			"ElementTypeParam:4:2:4",
 			"ElementTypeParam:4:2:9",
+			"ElementTypeParam:4:2:18",
+			"ElementTypeParam:4:2:10",
+			"ElementTypeParam:4:2:6",
 			"ElementTypeParam:4:2:60",
 			"ElementTypeParam:4:2:61",
-			"ElementTypeParam:4:2:62"
+			"ElementTypeParam:4:2:80",
+			"ElementTypeParam:4:2:81",
+			"ElementTypeParam:4:2:82",
 		],
-		"rowCounts": 8,
+		"rowCounts": 12,
 		"scroll": "y",  
 		"width": 540,
 		"options": {}

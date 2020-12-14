@@ -97,23 +97,16 @@ export let columnsElementList = {
 			"alias",
 			"state",
 			"ElementTypeParam:3:2:1",
-			"ElementTypeParam:3:2:4",
-			"ElementTypeParam:3:2:6",
 			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:4",
+			"ElementTypeParam:3:2:17",
 			"ElementTypeParam:3:2:10",
-			"ElementTypeParam:3:2:100",
-			"ElementTypeParam:3:2:101",
-			"ElementTypeParam:3:2:102",
-			"ElementTypeParam:3:2:103",
-			"ElementTypeParam:3:2:104",
-			"ElementTypeParam:3:2:105",
-			"ElementTypeParam:3:2:106",
-			"ElementTypeParam:3:2:107",
-			"ElementTypeParam:3:2:108",
-			"ElementTypeParam:3:2:109",
-			"ElementTypeParam:3:2:110",
-			"ElementTypeParam:3:2:111",
-			"ElementTypeParam:3:2:112"
+			"ElementTypeParam:3:2:6",
+			"ElementTypeParam:3:2:20",
+			"ElementTypeParam:3:2:21",
+			"ElementTypeParam:3:2:40",
+			"ElementTypeParam:3:2:41",
+			"ElementTypeParam:3:2:42"
 		]
 	},
 	"ElementType:4": {
@@ -126,12 +119,18 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
-            "ElementTypeParam:4:2:1",
+			"ElementTypeParam:4:2:1",
 			"ElementTypeParam:4:2:2",
+			"ElementTypeParam:4:2:4",
 			"ElementTypeParam:4:2:9",
+			"ElementTypeParam:4:2:18",
+			"ElementTypeParam:4:2:10",
+			"ElementTypeParam:4:2:6",
 			"ElementTypeParam:4:2:60",
 			"ElementTypeParam:4:2:61",
-			"ElementTypeParam:4:2:62"	
+			"ElementTypeParam:4:2:80",
+			"ElementTypeParam:4:2:81",
+			"ElementTypeParam:4:2:82",	
 		]
 	},
 	"ElementType:8": { 
