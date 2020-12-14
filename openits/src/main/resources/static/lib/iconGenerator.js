@@ -15,6 +15,7 @@ import * as tfa3d from "./icons/tfa3d.js";
 import * as tfa from "./icons/tfa.js";
 import * as tu from "./icons/tu.js";
 
+
 import * as dms from "./icons/dms.js";
 import * as etd from "./icons/etd.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
@@ -110,8 +111,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
     || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
-    || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR
     || elementType === elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO
@@ -412,7 +413,7 @@ function updateIcon(element, suffix="") {
       if(element.elementValues){
         tempValue = element.elementValues.find(
           (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-        );
+        );        
       }
       if(tempValue != undefined && tempValue){
         params[key]=tempValue.value; 
@@ -481,21 +482,11 @@ function updateIcon(element, suffix="") {
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_53_SEM){
     if (params != undefined && params && params["SEM_AMBAR_AMBAR_STATUS"]) {
+      let svgAmbar = document.getElementById(element.id + suffix);
       if (params["SEM_AMBAR_AMBAR_STATUS"] == 'true') {
-        var tidUp = setInterval(  function startLightsUp() {
-          document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "visible";
-          document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "hidden";
-        }, 2000);
-        setTimeout(function(){ 
-          var tidDown = setInterval(function startLightsDown() {
-            document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "hidden";
-            document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "visible";
-          }, 2000);
-        }, 1000);
+        svgAmbar.children[0].children[0].children[1].children[1].style.display = "block"
       } else if (params["SEM_AMBAR_AMBAR_STATUS"] == 'false'){
-        clearInterval(tidUp)
-        document.getElementById(element.id + suffix + ":yellowUp").style["visibility"] = "hidden";
-        document.getElementById(element.id + suffix + ":yellowDown").style["visibility"] = "hidden";
+        svgAmbar.children[0].children[0].children[1].children[1].style.display = "none"
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){
