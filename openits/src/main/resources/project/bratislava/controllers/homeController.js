@@ -18,6 +18,7 @@ import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
+let map = {view:"iframe", src:  webix.storage.session.get("url.map")};
 
 toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-menu").click=function(){$$("$sidebar1").toggle();};
 toolbar_data_menu.elements.find(x => x.icon === "webix_icon wxi-pencil").click=function(){changeStyle();};
@@ -66,6 +67,10 @@ let viewCells = [
     {
         id: "usersmanager",
         rows: [usersmanager]
+    },
+    {
+        id: "map",
+        rows: [map]
     }];
 
 synopticData.forEach((item, index) => {

@@ -11,6 +11,7 @@ var i18_es = {
     "defaultheader.equipment" : "Equipamiento ",
     "defaultheader.deActivealarms": "Alarmas reconocidas",
     "defaultheader.users.manager": "User Manager",
+    "defaultheader.map": "Mapa",
 
     "login.Login": "Login",
 

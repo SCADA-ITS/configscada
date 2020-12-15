@@ -83,10 +83,16 @@ export let columnsElementList = {
 			"alias",
 			"state",
 			"ElementTypeParam:3:2:1",
-			"ElementTypeParam:3:2:4",
-			"ElementTypeParam:3:2:6",
 			"ElementTypeParam:3:2:9",
+			"ElementTypeParam:3:2:4",
+			"ElementTypeParam:3:2:17",
 			"ElementTypeParam:3:2:10",
+			"ElementTypeParam:3:2:6",
+			"ElementTypeParam:3:2:20",
+			"ElementTypeParam:3:2:21",
+			"ElementTypeParam:3:2:40",
+			"ElementTypeParam:3:2:41",
+			"ElementTypeParam:3:2:42",
 			"ElementTypeParam:3:2:100",
 			"ElementTypeParam:3:2:101",
 			"ElementTypeParam:3:2:102",
@@ -575,6 +581,24 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:3:2:10": { //"gap"
 				"header": [ $.i18n("ElementTypeParam:3:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:3:2:17": { //"length"
+				"header": [ $.i18n("ElementTypeParam:3:2:17.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:20": { //"veh_length_1"
+				"header": [ $.i18n("ElementTypeParam:3:2:20.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:21": { //"veh_length_2"
+				"header": [ $.i18n("ElementTypeParam:3:2:21.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:40": { //"veh_speed_1"
+				"header": [ $.i18n("ElementTypeParam:3:2:40.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:41": { //"veh_speed_2"
+				"header": [ $.i18n("ElementTypeParam:3:2:41.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:3:2:42": { //"veh_speed_3"
+				"header": [ $.i18n("ElementTypeParam:3:2:42.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
             "ElementTypeParam:3:2:100": { //"veh_pa_1"
 				"header": [ $.i18n("ElementTypeParam:3:2:100.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
