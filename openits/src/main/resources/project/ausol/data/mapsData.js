@@ -1,7 +1,7 @@
 export let mapsData = [
   {
-		"id": "mapAusol",
-    "parentId": "Element:7:1",
+	"id": "mapAusol",
+    "parentId": "Element:7:4",
     "lon": -4.933339,
     "lat": 36.514373,
     "zoom": 12,

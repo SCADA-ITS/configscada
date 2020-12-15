@@ -66,7 +66,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:3:2:41",
 			"ElementTypeParam:3:2:42"
 		],
-		"rowCounts": 12,
+		"rowCounts": 10,
 		"scroll": "y",  
 		"width": 540,
 		"options": {}
@@ -86,7 +86,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:4:2:81",
 			"ElementTypeParam:4:2:82",
 		],
-		"rowCounts": 12,
+		"rowCounts": 10,
 		"scroll": "y",  
 		"width": 540,
 		"options": {}
@@ -107,7 +107,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:8:1:1",
 			"ElementTypeParam:8:1:2"
 		],
-		"rowCounts": 3,
+		"rowCounts": 2,
 		"scroll": false,  
 		"width": 540,
 		"options": {}
@@ -126,7 +126,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:9:2:8"
 			
 		],
-		"rowCounts": 7,
+		"rowCounts": 9,
 		"scroll": false,  
 		"width": 540,
 		"options": {}
@@ -281,66 +281,6 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
-		
-	"ElementType:23": {
-		"rows":[ 
-			"ElementTypeParam:23:1:1",
-			"ElementTypeParam:23:1:2",
-			"ElementTypeParam:23:2:1", 
-			"ElementTypeParam:23:2:2",  
-			"ElementTypeParam:23:2:3",
-			"ElementTypeParam:23:2:4",
-			"ElementTypeParam:23:2:5",
-			"ElementTypeParam:23:2:6",
-			"ElementTypeParam:23:2:7",
-			"ElementTypeParam:23:2:8",
-			"ElementTypeParam:23:2:9",
-			"ElementTypeParam:23:2:10",
-			"ElementTypeParam:23:2:11",
-			"ElementTypeParam:23:2:12",
-			"ElementTypeParam:23:2:13",
-			"ElementTypeParam:23:2:14",
-			"ElementTypeParam:23:2:15",
-			"ElementTypeParam:23:2:16",
-			"ElementTypeParam:23:2:17",
-			"ElementTypeParam:23:2:18",
-			"ElementTypeParam:23:2:19",
-			"ElementTypeParam:23:2:20",
-			"ElementTypeParam:23:2:21",
-			"ElementTypeParam:23:2:22",
-			"ElementTypeParam:23:2:23",
-			"ElementTypeParam:23:2:24",
-			"ElementTypeParam:23:2:25",
-			"ElementTypeParam:23:2:26",
-			"ElementTypeParam:23:2:27",
-			"ElementTypeParam:23:2:28",
-			"ElementTypeParam:23:2:29",
-			"ElementTypeParam:23:2:30",
-			"ElementTypeParam:23:2:31",
-			"ElementTypeParam:23:2:32",
-			"ElementTypeParam:23:2:33",
-			"ElementTypeParam:23:2:34",
-			"ElementTypeParam:23:2:35",
-			"ElementTypeParam:23:2:36",
-			"ElementTypeParam:23:2:37",
-			"ElementTypeParam:23:2:38",
-			"ElementTypeParam:23:2:39",
-			"ElementTypeParam:23:2:40",
-			"ElementTypeParam:23:2:41",
-			"ElementTypeParam:23:2:42",
-			"ElementTypeParam:23:2:43",
-			"ElementTypeParam:23:2:44",
-			"ElementTypeParam:23:2:45",
-			"ElementTypeParam:23:2:46",
-			"ElementTypeParam:23:2:47",
-			"ElementTypeParam:23:2:48",
-			"ElementTypeParam:23:2:49"
-		],
-		"rowCounts": 10,
-		"scroll": "y",  
-		"width": 540,
-		"options": {}
-	},
 	"ElementType:24": {
 		"rows":[
 			"ElementTypeParam:24:1:1",
@@ -358,7 +298,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:26:1:2"
 		],
 		"rowCounts": 2,
-		"scroll": "y", 
+		"scroll": false, 
 		"width": 540,
 		"options": {}
 		},
@@ -368,7 +308,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:28:1:10"
 		],
 		"rowCounts": 2,
-		"scroll": "y", 
+		"scroll": false, 
 		"width": 540,
 		"options": {}
 		},
@@ -379,7 +319,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:34:1:1"
 		],
 		"rowCounts": 3,
-		"scroll": "y", 
+		"scroll": false, 
 		"width": 540,
 		"options": {}
 		},
@@ -389,7 +329,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:35:1:2"
 		],
 		"rowCounts": 2,
-		"scroll": "y", 
+		"scroll": false, 
 		"width": 540,
 		"options": {}
 		},
@@ -399,7 +339,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:36:1:2"
 		],
 		"rowCounts": 2,
-		"scroll": "y", 
+		"scroll": false, 
 		"width": 540,
 		"options": {}
 		},	
@@ -408,8 +348,8 @@ export let columnsElementFormList = {
 			"ElementTypeParam:51:1:1", 
 			"ElementTypeParam:51:1:2"
 		],
-		"rowCounts": 2,
-		"scroll": false,  
+		"rowCounts": 10,
+		"scroll": "y",  
 		"width": 540,
 		"options": {}
 	},
@@ -431,7 +371,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:55:2:2"
 		],
 		"rowCounts": 4,
-		"scroll": false,  
+		"scroll": "y",  
 		"width": 407,
 		"options": {}
 	},

@@ -859,6 +859,8 @@ var i18_en = {
     "ElementTypeParam:51:1:1.description": "Brand",
     "ElementTypeParam:51:1:2.alias": "Model",
     "ElementTypeParam:51:1:2.description": "Model",
+    "ElementTypeParam:51:1:3.alias": "PK",
+    "ElementTypeParam:51:1:3.description": "PK",
     
     "ElementTypeParam:53:1:1.alias": "PK",
     "ElementTypeParam:53:1:1.description": "PK",
@@ -1269,6 +1271,7 @@ var i18_en = {
     "AlarmConfig:140": "ALARM DETECTOR NO CONNECTION",
     "AlarmConfig:141": "ALARM VMS NO CONNECTION",
     "AlarmConfig:142": "ALARM DETECTOR CONGESTION",
+    "AlarmConfig:143": "ALARM TFA NO CONNECTION",
     
     "AlarmType:1": "Alarm",
     "AlarmType:2": "Alert",

@@ -843,6 +843,8 @@ var i18_sk = {
     "ElementTypeParam:51:1:1.description": "Brand",
     "ElementTypeParam:51:1:2.alias": "Model",
     "ElementTypeParam:51:1:2.description": "Model",
+    "ElementTypeParam:51:1:3.alias": "KM",
+    "ElementTypeParam:51:1:3.description": "KM",
     
     "ElementTypeParam:53:1:1.alias": "KM",
     "ElementTypeParam:53:1:1.description": "KM",
@@ -1194,6 +1196,7 @@ var i18_sk = {
     "AlarmConfig:139": "UPOZORNEIE PORUCHA DETEKTORA",
     "AlarmConfig:140": "UPOZORNEIE DETEKTORA &#x17d;IADNE SPOJENIE",
     "AlarmConfig:141": "PDZ (VMS) - &#382;iadne spojenie, volaj &#250;dr&#382;bu !",
+    "AlarmConfig:142": "UPOZORNEIE TFA &#x17d;IADNE SPOJENIE",
     
     "Alarm_recon": "Alarm u&#382; bol potvrden&#253;",
     "Alarm_deactivated": "Alarm u&#382; bol potvrden&#253;",
