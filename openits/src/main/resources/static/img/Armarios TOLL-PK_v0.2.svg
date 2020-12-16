@@ -34,17 +34,18 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
      id="namedview284"
      showgrid="false"
-     inkscape:zoom="0.64042821"
-     inkscape:cx="794"
-     inkscape:cy="561.33333"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.45285113"
+     inkscape:cx="755.77731"
+     inkscape:cy="647.71542"
+     inkscape:window-x="1272"
+     inkscape:window-y="120"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg282" />
+     inkscape:current-layer="surface1"
+     inkscape:document-rotation="0" />
   <defs
      id="defs5">
     <clipPath
@@ -56,7 +57,9 @@
   </defs>
   <g
      id="surface1"
-     transform="matrix(1.0304431,0,0,1.2944183,-16.479557,-124.27422)">
+     transform="matrix(1.0304431,0,0,1.2944183,-16.479557,-124.27422)"
+     style="display:inline"
+     inkscape:groupmode="layer">
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 656.44141,585.60156 v -4.80078 h 2.16015 l 0.11719,0.12109 h 0.12109 l 0.1211,0.11719 h 0.11718 v 0.1211 h 0.1211 v 0.23828 h 0.12109 v 0.36328 h 0.1211 v 0.71875 l -0.1211,0.12109 v 0.35938 h -0.12109 v 0.11718 l -0.1211,0.1211 v 0.12109 h -0.11718 v 0.1211 h -0.24219 v 0.11718 h -0.48047 v 0.1211 h -1.19922 v 1.92187 z m 0.59765,-2.52344 h 1.19922 l 0.12109,-0.11718 h 0.24219 v -0.1211 h 0.11719 v -0.12109 h 0.12109 v -0.95703 l -0.12109,-0.1211 v -0.12109 h -0.11719 v -0.12109 h -0.48047 L 658,581.28125 h -0.96094 z m 0,0"
@@ -401,7 +404,9 @@
     <g
        clip-path="url(#clip1)"
        clip-rule="nonzero"
-       id="g177">
+       id="g177"
+       sodipodi:insensitive="true"
+       style="display:none">
       <path
          style="fill:none;stroke:#ff00ff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
          d="M 0,5798.9909 H 9645.9961 V 373.99088 H 0 V 5798.9909"

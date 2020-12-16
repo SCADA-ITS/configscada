@@ -101,7 +101,6 @@ export let columnsElementFormList = {
 			"ElementTypeParam:4:2:4",
 			"ElementTypeParam:4:2:5",
 			"ElementTypeParam:4:2:6",
-			"ElementTypeParam:4:2:7",
 			"ElementTypeParam:4:2:9",
 			"ElementTypeParam:4:2:10",	
 			"ElementTypeParam:4:2:18",	
