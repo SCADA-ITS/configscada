@@ -562,7 +562,7 @@ export let synopticData= [
 				"visibility": "hidden"
 			},
 			"TFA": {
-				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39"],
+				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39", "Element:45:40"],
 				"translation_key": "",
 				"visibility": "hidden"
 			},
@@ -839,7 +839,7 @@ export let synopticData= [
 		"Element:54:6": { "x": 1350,  "y": 430, "width": 180, "height": 180, "alias": "ASDJS05"  },
 		"Element:54:7": { "x": 1350,  "y": 500, "width": 180, "height": 180, "alias": "ASDJS06"  },
 		"Element:54:8": { "x": 1350,  "y": 540, "width": 180, "height": 180, "alias": "ASDJS07"  },
-		"Element:4:1": { "x": 547,  "y": 155, "width": 80, "height": 80, "alias": "ASDDH01P",
+		"Element:4:3": { "x": 547,  "y": 155, "width": 80, "height": 80, "alias": "ASDKD01P",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -847,7 +847,7 @@ export let synopticData= [
 				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:2": { "x": 870,  "y": 252, "width": 80, "height": 80, "alias": "ASDDH01L",
+		"Element:4:4": { "x": 870,  "y": 252, "width": 80, "height": 80, "alias": "ASDKD01L",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -855,7 +855,7 @@ export let synopticData= [
 				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:3": { "x": 560,  "y": 260, "width": 80, "height": 80, "alias": "ASDKD01P",
+		"Element:4:1": { "x": 560,  "y": 260, "width": 80, "height": 80, "alias": "ASDDH01P",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -863,7 +863,7 @@ export let synopticData= [
 				{name: "etd_veh_pa_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:4": { "x": 695,  "y": 310, "width": 80, "height": 80, "alias": "ASDKD01L",
+		"Element:4:2": { "x": 695,  "y": 310, "width": 80, "height": 80, "alias": "ASDDH01L",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},

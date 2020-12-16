@@ -34,17 +34,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
      id="namedview426"
      showgrid="false"
-     inkscape:zoom="0.64042821"
-     inkscape:cx="794"
-     inkscape:cy="561.33333"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.45285113"
+     inkscape:cx="618.40033"
+     inkscape:cy="636.31093"
+     inkscape:window-x="1272"
+     inkscape:window-y="120"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg424"
+     inkscape:current-layer="surface1"
      inkscape:document-rotation="0" />
   <defs
      id="defs5">
@@ -768,7 +768,8 @@
     <g
        clip-path="url(#clip1)"
        clip-rule="nonzero"
-       id="g357">
+       id="g357"
+       style="display:none">
       <path
          style="fill:none;stroke:#ff00ff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
          d="M 0,5798.9909 H 9645.9961 V 373.99088 H 0 V 5798.9909"

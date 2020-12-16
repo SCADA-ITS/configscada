@@ -11,7 +11,7 @@ var i18_sk = {
     "defaultheader.managementAlarms": "Alarmy",
     "defaultheader.alarmSettings": "Konfigur&#225;cia alarmu",
     "defaultheader.activealarms": "Akt&#237;vne alarmy",
-    "defaultheader.map": "Map",
+    "defaultheader.map": "Externá Mapa",
 
     "login.loginError": "Chyba prihl&#xE1;senia",
     "login.Login": "Prihl&#xE1;si&#x165; sa",
