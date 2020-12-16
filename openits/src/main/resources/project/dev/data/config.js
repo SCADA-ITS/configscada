@@ -1,9 +1,12 @@
 // Endpoints configuration
 const appConfig = {
 
-	restUrl: '../api/v1/',
+	restUrl: 'http://localhost:8787/api/v1/',
 	stompUrl: 'ws://192.168.88.163:61614',
 }
+
+// APP properties
+const APP_DEVMODE_ON = true;
 
 const MAIN_TAB_ID = "tabs";
 

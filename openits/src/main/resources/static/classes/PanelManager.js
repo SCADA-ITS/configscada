@@ -191,12 +191,11 @@ export default class PanelManager {
 									//label: "state",
 									value: stateValue,
 									on: {
-										onItemClick: (value) => {
+										onChange: (value) => {
 											//Modificamos el panel para que muestre el estado actual
 											//rellenamos los datos si el panel tenia datos 
-
-											let dato = parseInt($$(value).getValue());
-											switch (dato){
+											//let dato = parseInt($$(value).getValue());
+											switch (value){
 												case 0: //texto
 													generateTextReplace(this.config,counter -1);
 												break;
@@ -260,10 +259,48 @@ export default class PanelManager {
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN:
 					if(this.values !== null){
-						let contador2 = 0;
-						Object.entries(this.values).map(([k, item]) => {
-							let code = this.config.cod_listaCells[contador2];
-							if (code !== undefined) {
+						let contador2 = 1;
+
+						this.config.cod_listaCells.forEach(ele =>{
+							let dual = false;
+							let dualActual = null;
+							let dualOption = null;
+							this.config.dual_panels.forEach(y => {
+								if(ele.split("_")[1] === y.split("_")[1])
+								{
+									dual = true;
+									dualActual = y;
+									dualOption = this.values[parseInt(y.split("_")[1]) + 1].value === "1" ? "1" : "0";
+								}	
+							});
+
+							if(dual){
+								//let dato = parseInt($$(dualActual + "_state").getValue());
+								switch (dualOption){
+									case "0": //texto
+										//generateTextReplace(this.config,contador2);
+										let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
+										for(let i=1;i<=len;i++) {
+											try {
+												let value_text = null;
+												let v_value = this.values[contador2].value;
+												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
+												if (value_text !== null)
+													$$("panel_" + ele.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+											} catch (e) {
+												console.log(e);
+											}
+										}
+									break;
+									case "1": //gráfico
+										generateGraphicReplace(this.config,contador2 - 1,this.scale);
+										this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
+									break;
+								}
+								contador2 =+ 2;
+							}else{
+								let code = ele;
+								let item = this.values[contador2];
 								if (code.split("_")[10] === "G") {
 									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
 								} else {
@@ -278,18 +315,105 @@ export default class PanelManager {
 										}
 									}
 								}
+								contador2 =+1;
+							}
+						});
+/*
+						Object.entries(this.values).map(([k, item]) => {
+							let code = this.config.cod_listaCells[contador2];
+							if (code !== undefined) {
+								if(dual.includes("panel_" + "k")){
+
+								} 
+								else {
+									if (code.split("_")[10] === "G") {
+										item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+									} else {
+										for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+											try {
+												let value_text = null;
+												value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
+												if (value_text !== null)
+													$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
+											} catch (e) {
+												console.log(e);
+											}
+										}
+									}
+								}
 							}
 							contador2 += 1;
 						});
+						*/
 					}
 					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
+
 					if(this.values !== null){
-						let contador2 = 0;
-						Object.entries(this.values).map(([k, item]) => {
-							let code = this.config.cod_listaCells[contador2];
-							if (code !== undefined) {
+						let contador2 = 1;
+
+						this.config.cod_listaCells.forEach(ele =>{
+							let dual = false;
+							let dualActual = null;
+							let dualOption = null;
+							this.config.dual_panels.forEach(y => {
+								if(ele.split("_")[1] === y.split("_")[1])
+								{
+									dual = true;
+									dualActual = y;
+									dualOption = this.values[parseInt(y.split("_")[1]) + 1].value;
+								}	
+							});
+
+							if(dual){
+								//let dato = parseInt($$(dualActual + "_state").getValue());
+								switch (dualOption){
+									case "0": //texto
+										//generateTextReplace(this.config,contador2);
+										let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
+										for(let i=1;i<=len;i++) {
+											try {
+												let value_text = null;
+												let v_value = this.values[contador2].value;
+												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
+												if (value_text !== null)
+													$$("panel_" + ele.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+											} catch (e) {
+												console.log(e);
+											}
+										}
+									break;
+									case "1": //gráfico
+										generateGraphicReplace(this.config,contador2 - 1,this.scale);
+										this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
+									break;
+								}
+								$$(this.config.dual_panels[contador2 - 1]).addView({
+									view: "switch",
+									id: this.config.dual_panels[contador2 - 1] + "_state",
+									//label: "state",
+									value: dualOption,
+									on: {
+										onChange: (value) => {
+											//Modificamos el panel para que muestre el estado actual
+											//rellenamos los datos si el panel tenia datos 
+											//let dato = parseInt($$(value).getValue());
+											switch (value){
+												case 0: //texto
+													generateTextReplace(this.config,contador2 -2);
+												break;
+												case 1: //gráfico
+													generateGraphicReplace(this.config,contador2 -2,this.scale);
+												break;
+											}
+										}
+									}
+								},0);
+								contador2 =+ 2;
+							}else{
+								let code = ele;
+								let item = this.values[contador2];
 								if (code.split("_")[10] === "G") {
 									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
 								} else {
@@ -304,14 +428,55 @@ export default class PanelManager {
 										}
 									}
 								}
+								contador2 =+1;
 							}
-							contador2 += 1;
 						});
+					}else{
+						let contador2 = 1;
+
+						this.config.cod_listaCells.forEach(ele =>{
+							let dual = false;
+							let dualActual = null;
+							let dualOption = null;
+							this.config.dual_panels.forEach(y => {
+								if(ele.split("_")[1] === y.split("_")[1])
+								{
+									dual = true;
+									dualActual = y;
+									dualOption = "0";
+								}	
+							});
+
+							if(dual){
+								$$(this.config.dual_panels[contador2 - 1]).addView({
+									view: "switch",
+									id: this.config.dual_panels[contador2 - 1] + "_state",
+									//label: "state",
+									value: dualOption,
+									on: {
+										onChange: (value) => {
+											//Modificamos el panel para que muestre el estado actual
+											//rellenamos los datos si el panel tenia datos 
+											//let dato = parseInt($$(value).getValue());
+											switch (value){
+												case 0: //texto
+													generateTextReplace(this.config,contador2 -2);
+												break;
+												case 1: //gráfico
+													generateGraphicReplace(this.config,contador2 -2,this.scale);
+												break;
+											}
+										}
+									}
+								},0);
+								contador2 =+ 2;
+							}
+						});
+					
 					}
 					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					break;	
 			}
-			
 		});
 
 	}
@@ -902,7 +1067,7 @@ export default class PanelManager {
 								v_values_texts[element] = null;  //para poder unir las lineas
 							});
 						}
-	
+
 						datos.v_id_list.forEach(element =>{
 							if (element.split("_")[2] === "G") {//Pictogramas
 								let valor = $$(element).data.src;
@@ -1056,7 +1221,7 @@ export default class PanelManager {
 				}
 			}
 		});
-		return [idsList,tamX,tamY]
+		return [idsList,tamX,tamY,cdata[3],this.orderId]
 	}
 
 	exportCommands(){
@@ -1105,7 +1270,8 @@ export default class PanelManager {
 		let cdata = generateCodeList(cfgJson);
 
 		let cellList = cdata[0];
-		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList,this.orderId);
+		let dual = cdata[3];
+		let pictosPermitidos = this.pictosPermitidos(data.elementTypeParams,cellList,this.orderId,dual);
 
 		let allowedList = pictosPermitidos[0];
 		let controlCPermitido = true;
@@ -1134,39 +1300,119 @@ export default class PanelManager {
 		  }
 		});
 
-		Object.entries(panelHash).map(([k, v]) => {
-		  if (v.type === "G"){
-			datos.push($$("panel_" + k + "_G_" + this.orderId).data.src);
-		  } else {
-			let texto = "";
-			for(let i=0;i<v.numLineas;i++) {
-				//quitamos los :% si hubiera
-				let tdata = $$("panel_" + k + "_T_L_" + i + "_" + this.orderId).data.value;
-				let datoFormateado = this.replaceSpecial(tdata);
-				//Comprobamos que no tiene ningun caracter no permitido
-				for(let i = 0; i < datoFormateado.length; i++) {
-					let ptype = null;
-					try {
-						ptype = allowedList["panel_" + k + "_T_" + this.orderId].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
-					} catch (e){
-						console.log(e);
+		try{
+			if(dual.length>0){
+				let counter1 = 0;
+				cellList.forEach(e =>{
+					if(dual[counter1].split("_")[1] === e.split("_")[1]){ //panel Dual
+						console.log("panel_" + e.split("_")[1] + "_VIEW_" + this.orderId + "_state");
+						let dato = parseInt($$("panel_" + e.split("_")[1] + "_VIEW_" + this.orderId + "_state").getValue());
+						switch (dato){
+							case 0: //texto
+								let texto = "";
+								for(let i=0;i<parseInt(e.split("_")[11]);i++) {
+									//quitamos los :% si hubiera
+									let tdata = $$("panel_" + e.split("_")[1] + "_T_L_" + i + "_" + this.orderId).data.value;
+									let datoFormateado = this.replaceSpecial(tdata);
+									//Comprobamos que no tiene ningun caracter no permitido
+									for(let i = 0; i < datoFormateado.length; i++) {
+										let ptype = null;
+										try {
+											ptype = allowedList["panel_" + e.split("_")[1] + "_T_" + this.orderId].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
+										} catch (e){
+											console.log(e);
+										}
+										if (ptype !== undefined && ptype !== null) {
+											//console.log(ptype);
+										} else {
+											webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
+											controlCPermitido = false;
+										}
+									}
+									texto = texto + datoFormateado;		
+									if(i !== (parseInt(e.split("_")[11]) - 1 )){
+										texto = texto + ":$";
+									}
+								}
+								datos.push(texto);
+								datos.push("2");
+							break;
+							case 1:
+								datos.push($$("panel_" + e.split("_")[1] + "_G_" + this.orderId).data.src);
+								datos.push("1");
+							break;
+						}
+					}else{
+						if (e.split("_")[10] === "G"){
+							datos.push($$("panel_" + e.split("_")[1] + "_G_" + this.orderId).data.src);
+						} else {
+							let texto = "";
+							for(let i=0;i<parseInt(e.split("_")[11]);i++) {
+								//quitamos los :% si hubiera
+								let tdata = $$("panel_" + e.split("_")[1] + "_T_L_" + i + "_" + this.orderId).data.value;
+								let datoFormateado = this.replaceSpecial(tdata);
+								//Comprobamos que no tiene ningun caracter no permitido
+								for(let i = 0; i < datoFormateado.length; i++) {
+									let ptype = null;
+									try {
+										ptype = allowedList["panel_" + e.split("_")[1] + "_T_" + this.orderId].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
+									} catch (e){
+										console.log(e);
+									}
+									if (ptype !== undefined && ptype !== null) {
+										//console.log(ptype);
+									} else {
+										webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
+										controlCPermitido = false;
+									}
+								}
+								texto = texto + datoFormateado;		
+								if(i !== (parseInt(e.split("_")[11]) - 1 )){
+									texto = texto + ":$";
+								}
+							}
+							datos.push(texto);
+						}
 					}
-					if (ptype !== undefined && ptype !== null) {
-						//console.log(ptype);
+					
+				})
+			}else{
+				Object.entries(panelHash).map(([k, v]) => {
+					if (v.type === "G"){
+					datos.push($$("panel_" + k + "_G_" + this.orderId).data.src);
 					} else {
-						webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
-						controlCPermitido = false;
+					let texto = "";
+					for(let i=0;i<v.numLineas;i++) {
+						//quitamos los :% si hubiera
+						let tdata = $$("panel_" + k + "_T_L_" + i + "_" + this.orderId).data.value;
+						let datoFormateado = this.replaceSpecial(tdata);
+						//Comprobamos que no tiene ningun caracter no permitido
+						for(let i = 0; i < datoFormateado.length; i++) {
+							let ptype = null;
+							try {
+								ptype = allowedList["panel_" + k + "_T_" + this.orderId].find(x => parseInt(x[2].split("CH")[1],16) === datoFormateado[i].charCodeAt())[2];
+							} catch (e){
+								console.log(e);
+							}
+							if (ptype !== undefined && ptype !== null) {
+								//console.log(ptype);
+							} else {
+								webix.message({type:"error", text:"CARACTER NO PERMITIDO " + datoFormateado[i]});
+								controlCPermitido = false;
+							}
+						}
+						texto = texto + datoFormateado;		
+						if(i !== (v.numLineas - 1 )){
+							texto = texto + ":$";
+						}
 					}
-				}
-				texto = texto + datoFormateado;
-				
-				if(i !== (v.numLineas - 1 )){
-					texto = texto + ":$";
-				}
+					datos.push(texto);
+					}
+				});	  
 			}
-			datos.push(texto);
-		  }
-		});
+		}catch(e){
+			console.log(e);
+		}
 		if(controlCPermitido){
 			return datos;
 		} else {
@@ -1178,8 +1424,8 @@ export default class PanelManager {
 		return replaceSpecial(valor)
 	}
 
-	pictosPermitidos(data,cellList,orderId){
-		return pictosPermitidos(data,cellList,orderId);
+	pictosPermitidos(data,cellList,orderId,dual){
+		return pictosPermitidos(data,cellList,orderId,dual);
 	}
 
 }

@@ -858,6 +858,7 @@ function saveWindowOrder(id){
           
           let graphqlEType = webix.proxy("GraphQL", graphElemType);
           graphqlEType.load().then(data => {
+            let dual = false;
             let send_command = null;
             data.commandElementTypes.forEach(element => {
               if (element.alias === "SEND MESSAGE") {
@@ -876,7 +877,8 @@ function saveWindowOrder(id){
               if(v_commandElementType === send_command){ //si es SEND COMMAND MIRAMOS LOS VALORES DEL PANEL
                 let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null,undefined);
                 let dataList = panelMan.configExportData();
-
+                //si es dual, obtendremos del dataList los ids de las lineas de texto
+                let dual = dataList[3];
                 let panels = dataList[0];
                 let datos = [];
                 let panelHash = {};
@@ -901,17 +903,39 @@ function saveWindowOrder(id){
                   }
                 });
                 Object.entries(panelHash).map(([k, v]) => {
-                  if (v.type === "G"){
-                    datos.push($$("panel_" + k + "_G_undefined").data.src);
-                  } else {
-                    let texto = "";
-                    for(let i=0;i<v.numLineas;i++) {
-                      texto = texto + $$("panel_" + k + "_T_L_" + i + "_undefined").data.value;
-                      if(i !== (v.numLineas - 1 )){
-                        texto = texto + ":$";
-                      }
+                  if(dual.includes("panel_" + k)){
+                    let typeDual = parseInt($$("panel_" + k + "_VIEW_undefined_state").getValue()); 
+                    switch (typeDual){
+                      case 0: //texto
+                        let texto = "";
+                        for(let i=0;i<v.numLineas;i++) {
+                          texto = texto + $$("panel_" + k + "_T_L_" + i + "_undefined").data.value;
+                          if(i !== (v.numLineas - 1 )){
+                            texto = texto + ":$";
+                          }
+                        }
+                        datos.push(texto);
+                        datos.push("0");
+                      break;
+                      case 1:
+                        datos.push($$("panel_" + k + "_G_undefined").data.src);
+                        datos.push("1");
+                      break;
                     }
-                    datos.push(texto);
+                  }
+                  else{
+                    if (v.type === "G"){
+                      datos.push($$("panel_" + k + "_G_undefined").data.src);
+                    } else {
+                      let texto = "";
+                      for(let i=0;i<v.numLineas;i++) {
+                        texto = texto + $$("panel_" + k + "_T_L_" + i + "_undefined").data.value;
+                        if(i !== (v.numLineas - 1 )){
+                          texto = texto + ":$";
+                        }
+                      }
+                      datos.push(texto);
+                    }
                   }
                 });
                 if (v_commands.length > 0) {
@@ -1140,7 +1164,6 @@ function createOrderDinamic(container,data){
           ]
         }]
       });
-      
       let message = data.comandElement.commandElementType.alias;
       let idtype = "ElementType:" + data.comandElement.element.id.split(":")[1];
       let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV];
@@ -1507,7 +1530,6 @@ function orderSave(id){
                   lista_valores[parseInt(item.id.split(":")[3])] = { value: item.value };
                 });
               }
-
               let panelMan2 = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,scala2,lista_valores,id.toString().split("_")[1]);
               $$(id.toString().split("_")[1] + "_form").addView(
                 {

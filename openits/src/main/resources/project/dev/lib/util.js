@@ -300,41 +300,45 @@ export let util = {
 		},
 		
 		auth() {
-			
-			let sessionData = util.user.keepAlive();
-			let userData = null;
-			
-			if (!sessionData) {
-	
-				return false;
-			}
-			else {
+			let userData;
+
+			if(APP_DEVMODE_ON){
+				userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			}else {
+				let sessionData = util.user.keepAlive();
+				userData = null;
 				
-				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
-				
-				if (sessionData.userId) {
+				if (!sessionData) {
+		
+					return false;
+				}
+				else {
 					
-					let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${sessionData.userId}`);
-							
-					if (userDataResponse != undefined) {
+					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
+					
+					if (sessionData.userId) {
 						
-						if (userDataResponse.responseText) {
+						let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${sessionData.userId}`);
+								
+						if (userDataResponse != undefined) {
 							
-							userData = JSON.parse(userDataResponse.responseText);
-							
-							userData.password = undefined;
-							
-							webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+							if (userDataResponse.responseText) {
+								
+								userData = JSON.parse(userDataResponse.responseText);
+								
+								userData.password = undefined;
+								
+								webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+							}
 						}
 					}
-				}
-				
-				if (!userData) {
 					
-					return false
+					if (!userData) {
+						
+						return false
+					}
 				}
 			}
-			
 			return userData;
 		}
 	},

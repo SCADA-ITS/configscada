@@ -79,26 +79,34 @@ export default class Synoptic {
       let obj = JSON.parse(JSON.parse(message.body));
       obj.basicElementsVO.forEach((element) => {
         try {
-          // console.warn(element);
-          // console.warn(elementsMap);
           if(elementsMap && elementsMap.get(element.id)){
             elementsMap.get(element.id).updateElement(element);
+            //Deprecated
             if(elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
-              let parent    = document.getElementById(element.id).parentNode;
-              document.getElementById(element.id).remove();
-              elementsMap.get(element.id).paintIcon(this.synopticConf, parent,  this.ratioWidth,  this.ratioHeight);
+              if(elementsMap.get(element.id)!=null){
+                document.getElementById(element.id).remove();
+                elementsMap.get(element.id).paintIcon(elementsMap.get(element.id).synopticConf, elementsMap.get(element.id).snapDiv,  elementsMap.get(element.id).ratioWidth,  elementsMap.get(element.id).ratioHeight);  
+                if($$("element_tree"+elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
+                  let checkedElement = document.getElementById(element.id);
+                  if(checkedElement != null) {
+                    checkedElement.style.opacity = 1;
+                    checkedElement.setAttribute("visibility", "visible");
+                  }
+                }
+              }
+              // elementsMap.get(element.id).errorPaint();
             }else{
               elementsMap.get(element.id).updateElement(element);
               elementsMap.get(element.id).updatePaint();              
             }
           }else{
             let synopticElement = new SynopticElement(element);
-            synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
+            synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth, this.ratioHeight);
             elementsMap.set(synopticElement.element.id, synopticElement);
           }
         } catch (error) {
-          console.log(error);
-          console.log("Retrying with GraphQL");
+          console.info(error);
+          console.info("Retrying with GraphQL");
           if(typeof element != 'undefined' && elementsMap && elementsMap.get(element.id)){
             elementsMap.get(element.id).errorPaint();
           }else{

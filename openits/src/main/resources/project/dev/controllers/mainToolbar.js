@@ -60,6 +60,7 @@ export default class MainToolbar {
 										webix.storage.session.remove("app_user_language");
 										webix.storage.session.remove("app_user_name");
 										webix.storage.session.remove("app_user_permissions");
+										webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
 										window.location = "./login.html";
 										// });
 									});

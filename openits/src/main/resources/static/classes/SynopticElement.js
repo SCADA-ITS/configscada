@@ -44,6 +44,11 @@ export default class synopticElement {
 
   paintIcon(synopticConf, snapDiv, ratioWidth, ratioHeight, suffix) {
     try {
+      this.synopticConf = synopticConf;
+      this.snapDiv = snapDiv;
+      this.ratioWidth = ratioWidth;
+      this.ratioHeight = ratioHeight;
+      
       if (this.element.id in synopticConf) {
         let synopticConfElement = synopticConf[this.element.id];
         // initializes the svg icon
