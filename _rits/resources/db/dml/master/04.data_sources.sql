@@ -143,7 +143,19 @@ INSERT INTO ui.data_sources(id, data_source_type_id, "name", description, entity
 (123, 3, 'sendRecognizeAlarms', 'sendRecognizeAlarms', 'AlarmVO', 'id', true, true),
 (124, 3, 'sendDeactivationAlarms', 'sendDeactivationAlarms', 'AlarmVO', 'id', true, true),
 (125, 3, 'sendKillUser', 'sendKillUser', 'UserVO', 'id', true, true),
-(126, 3, 'sendCommandElement', 'sendCommandElement', 'CommandElementVO', 'id', true, true);
+(126, 3, 'sendCommandElement', 'sendCommandElement', 'CommandElementVO', 'id', true, true),
+(127, 1, 'getImsIncidentReports', 'getImsIncidentReports', 'ImsIncidentReportVO', 'id', true, true),
+(128, 1, 'getImsIncidentReport', 'getImsIncidentReport', 'ImsIncidentReportVO', 'id', true, true),
+(129, 1, 'getImsIncidentStates', 'getImsIncidentStates', 'ImsIncidentStateVO', 'id', true, true),
+(130, 1, 'getImsIncidentState', 'getImsIncidentState', 'ImsIncidentStateVO', 'id', true, true),
+(131, 1, 'getImsIncidentLevels', 'getImsIncidentLevels', 'ImsIncidentLevelVO', 'id', true, true),
+(132, 1, 'getImsIncidentLevel', 'getImsIncidentLevel', 'ImsIncidentLevelVO', 'id', true, true),
+(133, 1, 'getImsTaskTypes', 'getImsTaskTypes', 'ImsTaskTypeVO', 'id', true, true),
+(134, 1, 'getImsTaskType', 'getImsTaskType', 'ImsTaskTypeVO', 'id', true, true),
+(135, 1, 'getAllImsTaskPlans', 'getAllImsTaskPlans', 'ImsIncidentTaskPlanVO', 'id', true, true),
+(136, 1, 'getImsTaskPlans', 'getImsTaskPlans', 'ImsIncidentTaskPlanVO', 'id', true, true),
+(137, 1, 'getAllImsIncidentTypeTasks', 'getAllImsIncidentTypeTasks', 'ImsIncidentTypeTaskVO', 'id', true, true),
+(138, 1, 'getImsIncidentTypeTasks', 'getImsIncidentTypeTasks', 'ImsIncidentTypeTaskVO', 'id', true, true);
 
 
 INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) VALUES
@@ -808,7 +820,67 @@ INSERT INTO ui.data_source_values(data_source_id, data_source_param_id, value) V
 (126, 9, 'sendCommandElement'),
 (126, 10, 'commands'),
 (126, 11, '[CommandElementVO!]!'),
-(126, 12, '');
+(126, 12, ''),
+
+(127, 1, 'http://localhost:8082/graphql'),
+(127, 2, 'getImsIncidentReports'),
+(127, 3, ''),
+(127, 4, '{id validForMin confirm incidentType{id} affectionStretch{id} location{id} incidentState{id} incidentLevel{id} currentUser{id} incidentLogs{id}}'),
+
+(128, 1, 'http://localhost:8082/graphql'),
+(128, 2, 'getImsIncidentReport'),
+(128, 3, 'imsIncidentReportId'),
+(128, 4, '{id validForMin confirm incidentType{id} affectionStretch{id} location{id} incidentState{id} incidentLevel{id} currentUser{id} incidentLogs{id}}'),
+
+(129, 1, 'http://localhost:8082/graphql'),
+(129, 2, 'getImsIncidentStates'),
+(129, 3, ''),
+(129, 4, '{id finalState alias description labelAlias labelDescription}'),
+
+(130, 1, 'http://localhost:8082/graphql'),
+(130, 2, 'getImsIncidentState'),
+(130, 3, 'imsIncidentStateId'),
+(130, 4, '{id finalState alias description labelAlias labelDescription}'),
+
+(131, 1, 'http://localhost:8082/graphql'),
+(131, 2, 'getImsIncidentLevels'),
+(131, 3, ''),
+(131, 4, '{id alias description labelAlias labelDescription}'),
+
+(132, 1, 'http://localhost:8082/graphql'),
+(132, 2, 'getImsIncidentLevel'),
+(132, 3, 'imsIncidentLevelId'),
+(132, 4, '{id alias description labelAlias labelDescription}'),
+
+(133, 1, 'http://localhost:8082/graphql'),
+(133, 2, 'getImsTaskTypes'),
+(133, 3, ''),
+(133, 4, '{id alias description labelAlias labelDescription}'),
+
+(134, 1, 'http://localhost:8082/graphql'),
+(134, 2, 'getImsTaskType'),
+(134, 3, 'imsTaskTypeId'),
+(134, 4, '{id alias description labelAlias labelDescription}'),
+
+(135, 1, 'http://localhost:8082/graphql'),
+(135, 2, 'getAllImsTaskPlans'),
+(135, 3, ''),
+(135, 4, '{id position plan{id} incidentTypeTask{id} incidentType{id} stretch{id}}'),
+
+(136, 1, 'http://localhost:8082/graphql'),
+(136, 2, 'getImsTaskPlans'),
+(136, 3, 'stretchId,incidentTypeId,incidentTypeTaskId'),
+(136, 4, '{id position plan{id} incidentTypeTask{id} incidentType{id} stretch{id}}'),
+
+(137, 1, 'http://localhost:8082/graphql'),
+(137, 2, 'getAllImsIncidentTypeTasks'),
+(137, 3, ''),
+(137, 4, '{id incidentType{id} taskType{id} incidentState{id} mandatory position auto}'),
+
+(138, 1, 'http://localhost:8082/graphql'),
+(138, 2, 'getImsIncidentTypeTasks'),
+(138, 3, 'incidentTypeId,incidentStateId'),
+(138, 4, '{id incidentType{id} taskType{id} incidentState{id} mandatory position auto}');
 
 
 

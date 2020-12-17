@@ -112,6 +112,8 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSION = "data.source.get_system_permission";
 	public static final String DATA_SOURCE_GET_INCIDENTS = "data.source.get_incidents";
 	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
+	public static final String DATA_SOURCE_GET_INCIDENT_REPORTS = "data.source.get_incident_reports";
+	public static final String DATA_SOURCE_GET_INCIDENT_REPORT = "data.source.get_incident_report";
 	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
 	public static final String DATA_SOURCE_GET_INCIDENT_TYPES = "data.source.get_incident_types";
 	public static final String DATA_SOURCE_GET_INCIDENT_TYPE = "data.source.get_incident_type";
@@ -133,7 +135,17 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE = "data.source.get_incident_document_type";
 	public static final String DATA_SOURCE_GET_LOG_TYPES = "data.source.get_log_types";
 	public static final String DATA_SOURCE_GET_LOG_TYPE = "data.source.get_log_type";
-
+	public static final String DATA_SOURCE_GET_INCIDENT_STATES = "data.source.get_incident_states";
+	public static final String DATA_SOURCE_GET_INCIDENT_STATE = "data.source.get_incident_state";
+	public static final String DATA_SOURCE_GET_INCIDENT_LEVELS = "data.source.get_incident_levels";
+	public static final String DATA_SOURCE_GET_INCIDENT_LEVEL = "data.source.get_incident_level";
+	public static final String DATA_SOURCE_GET_TASK_TYPES = "data.source.get_task_types";
+	public static final String DATA_SOURCE_GET_TASK_TYPE = "data.source.get_task_type";
+	public static final String DATA_SOURCE_GET_INCIDENT_TASK_PLANS = "data.source.get_incident_task_plans";
+	public static final String DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK = "data.source.get_task_plans_by_stretch_and_incident_type_and_incident_type_task";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPE_TASKS = "data.source.get_incident_type_tasks";
+	public static final String DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE = "data.source.get_incident_type_task_by_incident_type_and_incident_state";
+	
 	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
 	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
 	public static final String DATA_SOURCE_DELETE_USER = "data.source.delete_user";
@@ -321,6 +333,30 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetIncidents;
 	@Getter
 	private Integer dataSourceGetIncident;
+	@Getter
+	private Integer dataSourceGetIncidentReports;
+	@Getter
+	private Integer dataSourceGetIncidentReport;
+	@Getter
+	private Integer dataSourceGetIncidentStates;
+	@Getter
+	private Integer dataSourceGetIncidentState;
+	@Getter
+	private Integer dataSourceGetIncidentLevels;
+	@Getter
+	private Integer dataSourceGetIncidentLevel;
+	@Getter
+	private Integer dataSourceGetTaskTypes;
+	@Getter
+	private Integer dataSourceGetTaskType;
+	@Getter
+	private Integer dataSourceGetIncidentTaskPlans;
+	@Getter
+	private Integer dataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask;
+	@Getter
+	private Integer dataSourceGetIncidentTypeTasks;
+	@Getter
+	private Integer dataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState;
 	@Getter
 	private Integer dataSourceGetIncidentByType;
 	@Getter
@@ -540,8 +576,8 @@ public class VODataSourceAdapter {
 		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
 		this.dataSourceGetSystemPermissions = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSIONS));
 		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
-		this.dataSourceGetIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS));
-		this.dataSourceGetIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT));
+		this.dataSourceGetIncidentReports = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORTS));
+		this.dataSourceGetIncidentReport = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORT));
 		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
 		this.dataSourceGetIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPES));
 		this.dataSourceGetIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE));
@@ -566,7 +602,18 @@ public class VODataSourceAdapter {
 				.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE));
 		this.dataSourceGetLogTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPES));
 		this.dataSourceGetLogType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPE));
+		this.dataSourceGetIncidentStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_STATES));
+		this.dataSourceGetIncidentState = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_STATE));
+		this.dataSourceGetIncidentLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_LEVELS));
+		this.dataSourceGetIncidentLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_LEVEL));
+		this.dataSourceGetTaskTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_TYPES));
+		this.dataSourceGetTaskType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_TYPE));
+		this.dataSourceGetIncidentTaskPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TASK_PLANS));
+		this.dataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK));
+		this.dataSourceGetIncidentTypeTasks= Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE_TASKS));
+		this.dataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE));
 
+		
 		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
 		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
 		this.dataSourceDeleteUser = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_USER));

@@ -6,21 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsExtIncidentTypeBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentDocumentBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentDocumentTypeBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentSourceBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
-import com.revenga.rits.front.openits.bo.ImsIncidentTypeStateBO;
-import com.revenga.rits.front.openits.bo.RoadImpactBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentLevelBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentReportBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentStateBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTaskPlanBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeTaskBO;
+import com.revenga.rits.front.openits.bo.ImsTaskTypeBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,173 +27,169 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping(value = "/api/v1/incidents", produces = { "application/json", "application/xml" })
-@Api(value = "ImsIncident", tags = { "INCIDENTS" })
+@Api(value = "ImsIncidentReport", tags = { "INCIDENT REPORTS" })
 public class ImsIncidentController {
 	
 	@Autowired
-	ImsIncidentBO imsIncidentBO;
+	ImsIncidentReportBO imsIncidentReportBO;
 	
 	@Autowired
-	ImsIncidentTypeBO imsIncidentTypeBO;
+	ImsIncidentStateBO imsIncidentStateBO;
 	
 	@Autowired
-	ImsIncidentTypeStateBO imsIncidentTypeStateBO;
+	ImsIncidentLevelBO imsIncidentLevelBO;
 	
 	@Autowired
-	RoadImpactBO roadImpactBO;
+	ImsTaskTypeBO imsTaskTypeBO;
 	
 	@Autowired
-	ImsIncidentSourceBO imsIncidentSourceBO;
+	ImsIncidentTaskPlanBO imsIncidentTaskPlanBO;
 	
+	@Autowired
+	ImsIncidentTypeTaskBO imsIncidentTypeTaskBO;
+			
 	@Autowired
 	ImsExtIncidentBO imsExtIncidentBO;
 	
 	@Autowired
-	ImsExtIncidentTypeBO imsExtIncidentTypeBO;
-	
-	@Autowired
-	ImsIncidentDocumentBO imsIncidentDocumentBO;
-	
-	@Autowired
-	ImsIncidentDocumentTypeBO imsIncidentDocumentTypeBO;
+	ImsExtIncidentTypeBO imsExtIncidentTypeBO;	
 	
 	@GetMapping
-	@ApiOperation(value = "Get all incidents", notes = "Get all incidents")
-	public ResponseEntity<Object> getIncidents() {
+	@ApiOperation(value = "Get all incident reports", notes = "Get all incident reports")
+	public ResponseEntity<Object> getImsIncidentReports() {
 		
-		return new ResponseEntity<>(imsIncidentBO.getList(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentReportBO.getList(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")
-	@ApiOperation(value = "Get incident by id", notes = "Get incident by id")
-	public ResponseEntity<Object> getIncident(
+	@ApiOperation(value = "Get incident report by id", notes = "Get incident report by id")
+	public ResponseEntity<Object> getImsIncidentReport(
 			@ApiParam(
 			name = "id",
 			type = "String",
-			value = "Incident id",
-			example = "ImsIncident:1",
+			value = "Incident report id",
+			example = "ImsIncidentReport:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentBO.getItem(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentReportBO.getItem(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incident/incident_type/{id}")
-	@ApiOperation(value = "Get incident by incident type id", notes = "Get incident by incident type id")
-	public ResponseEntity<Object> getIncidentByType(
+	@GetMapping(value = "/incidentStates")
+	@ApiOperation(value = "Get incident states", notes = "Get incident states")
+	public ResponseEntity<Object> getImsIncidentStates() {
+		
+		return new ResponseEntity<>(imsIncidentStateBO.getList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incidentState/{id}")
+	@ApiOperation(value = "Get incident state by id", notes = "Get incident state by id")
+	public ResponseEntity<Object> getImsIncidentState(
 			@ApiParam(
 			name = "id",
 			type = "String",
-			value = "Incident by incident type id",
-			example = "ImsIncidentType:1",
+			value = "Incident State by id",
+			example = "ImsIncidentState:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentBO.getIncidentByType(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentStateBO.getItem(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentTypes")
-	@ApiOperation(value = "Get incidentTypes", notes = "Get incidentTypes")
-	public ResponseEntity<Object> getIncidentTypes() {
+	@GetMapping(value = "/incidentLevels")
+	@ApiOperation(value = "Get incident levels", notes = "Get incident levels")
+	public ResponseEntity<Object> getImsIncidentLevels() {
 		
-		return new ResponseEntity<>(imsIncidentTypeBO.getList(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentLevelBO.getList(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentType/{id}")
-	@ApiOperation(value = "Get incidentType by id", notes = "Get incidentType by id")
-	public ResponseEntity<Object> getIncidentType(
+	@GetMapping(value = "/incidentLevel/{id}")
+	@ApiOperation(value = "Get incident level by id", notes = "Get incident level by id")
+	public ResponseEntity<Object> getImsIncidentLevel(
 			@ApiParam(
 			name = "id",
 			type = "String",
-			value = "IncidentType by id",
-			example = "ImsIncidentType:1",
+			value = "Incident Level by id",
+			example = "ImsIncidentLevel:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentTypeBO.getItem(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentLevelBO.getItem(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentTypeStates")
-	@ApiOperation(value = "Get incidentTypeStates", notes = "Get incidentTypeStates")
-	public ResponseEntity<Object> getIncidentTypeStates() {
+	@GetMapping(value = "/taskTypes")
+	@ApiOperation(value = "Get task types", notes = "Get task types")
+	public ResponseEntity<Object> getImsTaskTypes() {
 		
-		return new ResponseEntity<>(imsIncidentTypeStateBO.getList(), HttpStatus.OK);
+		return new ResponseEntity<>(imsTaskTypeBO.getList(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentNextState/incident/{id}")
-	@ApiOperation(value = "Get nextState by incident id", notes = "Get nextState by incident id")
-	public ResponseEntity<Object> getNextState(
+	@GetMapping(value = "/taskType/{id}")
+	@ApiOperation(value = "Get task type by id", notes = "Get task type by id")
+	public ResponseEntity<Object> getImsTaskType(
 			@ApiParam(
 			name = "id",
 			type = "String",
-			value = "Next state by incident id",
-			example = "ImsIncident:1",
+			value = "Task Type by id",
+			example = "ImsTaskType:1",
 			required = true) @PathVariable String id) {
 		
-		return new ResponseEntity<>(imsIncidentTypeStateBO.getNextState(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsTaskTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/roadImpacts")
-	@ApiOperation(value = "Get road impacts", notes = "Get road impacts")
-	public ResponseEntity<Object> getRoadImpacts() {
+	@GetMapping(value = "/incidentTaskPlans")
+	@ApiOperation(value = "Get incident task plans", notes = "Get incident task plans")
+	public ResponseEntity<Object> getAllImsTaskPlans() {
 		
-		return new ResponseEntity<>(roadImpactBO.getRoadImpacts(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTaskPlanBO.getList(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/roadImpact/{id}")
-	@ApiOperation(value = "Get road impact by id", notes = "Get road impact by id")
-	public ResponseEntity<Object> getRoadImpact(
+	@GetMapping(value = "/{stretchId}/{incidentTypeId}/{incidentTypeTaskId}")
+	@ApiOperation(value = "Get all task plans by Stretch, Incident Type and Incident Type Task", notes = "Get all task plans by Stretch, Incident Type and Incident Type Task")
+	public ResponseEntity<Object> getTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask(
 			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "RoadImpact by id",
-			example = "RoadImpact:1",
-			required = true) @PathVariable String id) {
-		
-		return new ResponseEntity<>(roadImpactBO.getRoadImpact(id), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/initRoadImpacts/incidentType/{id}")
-	@ApiOperation(value = "Get init road impact by incidentType id", notes = "Get init road impact by incidentType id")
-	public ResponseEntity<Object> getInitRoadImpacts(
+				name = "stretchId",
+				type = "String",
+				value = "Stretch id",
+				example = "Stretch:1",
+				required = true) @PathVariable String stretchId,
 			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "Init RoadImpact by incidentType id",
-			example = "ImsIncidentType:1",
-			required = true) @PathVariable String id) {
-		
-		return new ResponseEntity<>(roadImpactBO.getInitRoadImpacts(id), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/roadImpact/incident/{id}")
-	@ApiOperation(value = "Get road impact by incident id", notes = "Get road impact by incident id")
-	public ResponseEntity<Object> getRoadImpactsByIncident(
+				name = "incidentTypeId",
+				type = "String",
+				value = "Incident Type id",
+				example = "ImsIncidentType:1",
+				required = true) @PathVariable String incidentTypeId,
 			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "RoadImpact by incident id",
-			example = "ImsIncident:1",
-			required = true) @PathVariable String id) {
+				name = "incidentTypeTaskId",
+				type = "String",
+				value = "Incident Type Task id",
+				example = "ImsIncidentTypeTask:1",
+				required = true) @PathVariable String incidentTypeTaskId){
 		
-		return new ResponseEntity<>(roadImpactBO.getRoadImpactsByIncident(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTaskPlanBO.getTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask(stretchId, incidentTypeId, incidentTypeTaskId), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentsSource")
-	@ApiOperation(value = "Get incidents source", notes = "Get incidents source")
-	public ResponseEntity<Object> getIncidentsSource() {
+	@GetMapping(value = "/incidentTypeTasks")
+	@ApiOperation(value = "Get incident type tasks", notes = "Get incident type tasks")
+	public ResponseEntity<Object> getAllImsIncidentTypeTasks() {
 		
-		return new ResponseEntity<>(imsIncidentSourceBO.getList(), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTypeTaskBO.getList(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/incidentSource/{id}")
-	@ApiOperation(value = "Get incident source by id", notes = "Get incident source by id")
-	public ResponseEntity<Object> getIncidentSource(
+	@GetMapping(value = "/{incidentTypeId}/{incidentStateId}")
+	@ApiOperation(value = "Get all incident type tasks by Incident Type and Incident State", notes = "Get all incident type tasks by Incident Type and Incident State")
+	public ResponseEntity<Object> getIncidentTypeTaskByIncidentTypeAndIncidentState(
 			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "IncidentSource by id",
-			example = "ImsIncidentSource:1",
-			required = true) @PathVariable String id) {
+				name = "incidentTypeId",
+				type = "String",
+				value = "Incident Type id",
+				example = "ImsIncidentType:1",
+				required = true) @PathVariable String incidentTypeId,
+			@ApiParam(
+				name = "incidentStateId",
+				type = "String",
+				value = "Incident State id",
+				example = "ImsIncidentState:1",
+				required = true) @PathVariable String incidentStateId){
 		
-		return new ResponseEntity<>(imsIncidentSourceBO.getItem(id), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentTypeTaskBO.getIncidentTypeTaskByIncidentTypeAndIncidentState(incidentTypeId, incidentStateId), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/extIncidents")
@@ -237,46 +230,6 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsExtIncidentTypeBO.getItem(id), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/incidentDocuments")
-	@ApiOperation(value = "Get incident documents", notes = "Get incident documents")
-	public ResponseEntity<Object> getIncidenDocuments() {
-		
-		return new ResponseEntity<>(imsIncidentDocumentBO.getList(), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/incidentDocument/{id}")
-	@ApiOperation(value = "Get incident document by id", notes = "Get incident document by id")
-	public ResponseEntity<Object> getIncidenDocument(
-			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "ImsIncidentDocument by id",
-			example = "ImsIncidentDocument:1:1",
-			required = true) @PathVariable String id) {
-		
-		return new ResponseEntity<>(imsIncidentDocumentBO.getItem(id), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/incidentDocumentTypes")
-	@ApiOperation(value = "Get incident document types", notes = "Get incident document types")
-	public ResponseEntity<Object> getIncidenDocumentTypes() {
-		
-		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getList(), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/incidentDocumentType/{id}")
-	@ApiOperation(value = "Get incident document type by id", notes = "Get incident type document by id")
-	public ResponseEntity<Object> getIncidenDocumentType(
-			@ApiParam(
-			name = "id",
-			type = "String",
-			value = "ImsIncidentDocumentType by id",
-			example = "ImsIncidentDocumentType:1",
-			required = true) @PathVariable String id) {
-		
-		return new ResponseEntity<>(imsIncidentDocumentTypeBO.getItem(id), HttpStatus.OK);
 	}
 
 }
