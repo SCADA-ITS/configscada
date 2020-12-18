@@ -18,6 +18,31 @@ export let util = {
 		loadInCustom(module, moduleAction, mod, args, view) {
 
 		},
+		
+		loadService(module, mod, args) {
+
+			let lazyClass = new mod.default(module, mod, args);
+			
+			if (lazyClass) {
+				
+				let service = {
+					id: module.id,
+					object: lazyClass
+				}
+				
+				if (module.jsMethodDraw) {
+				
+					lazyClass.runOne(module.jsMethodDraw);	
+				}
+				
+				if (module.jsMethodCallbacks) {
+				
+					lazyClass.runOne(module.jsMethodCallbacks)	
+				}
+				
+				args.push(service);
+			}
+		},
 
 		loadInWindow(module, moduleAction, mod, args) {
 
@@ -264,15 +289,22 @@ export let util = {
 
 						util.module.loadInCustom(module, moduleAction, mod, args, customView);
 					}
-					else if (!viewTypeId && module.viewType.id === VIEW_TYPE_TAB ||
-						viewTypeId === VIEW_TYPE_TAB) {
-
-						util.module.loadInTab(module, moduleAction, mod, args);
+					else if (!viewTypeId && module.viewType) {
+					
+						if (module.viewType.id === VIEW_TYPE_TAB ||
+							viewTypeId === VIEW_TYPE_TAB) {
+	
+							util.module.loadInTab(module, moduleAction, mod, args);
+						}
+						else if (module.viewType.id === VIEW_TYPE_WINDOW ||
+								 viewTypeId === VIEW_TYPE_WINDOW) {
+	
+							util.module.loadInWindow(module, moduleAction, mod, args);
+						}	
 					}
-					else if (!viewTypeId && module.viewType.id === VIEW_TYPE_WINDOW ||
-						viewTypeId === VIEW_TYPE_WINDOW) {
-
-						util.module.loadInWindow(module, moduleAction, mod, args);
+					else if (module.moduleType.id === MODULE_TYPE_SERVICE) {
+						
+						util.module.loadService(module, mod, args);
 					}
 				}
 

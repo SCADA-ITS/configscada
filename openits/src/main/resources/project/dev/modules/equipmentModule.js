@@ -167,20 +167,6 @@ export default class EquipmentModule extends GenericModule {
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
 				
 				if (dat != null) {
-					
-					viewsToRemove.forEach(viewId => {
-	
-						if (viewId.indexOf("dt-") !== -1) {
-							let ctx = viewId.replace("dt-", "ctx_menu-");
-				
-							if (!webix.isUndefined($$(ctx))) {
-				
-								$$(ctx).destructor();
-							}
-						}
-						
-						equipmentTable.removeView(viewId);
-					});
 	
 					let metadata = dat.json().metadata;
 					let data = dat.json().data;
@@ -196,6 +182,20 @@ export default class EquipmentModule extends GenericModule {
 		
 					//app.datatable.callbacks(self.module, self.instance);
 					dataTable.callbacks();
+					
+					viewsToRemove.forEach(viewId => {
+	
+						if (viewId.indexOf("dt-") !== -1) {
+							let ctx = viewId.replace("dt-", "ctx_menu-");
+				
+							if (!webix.isUndefined($$(ctx))) {
+				
+								$$(ctx).destructor();
+							}
+						}
+						
+						equipmentTable.removeView(viewId);
+					});
 					
 					$$(this.uid).hideProgress();
 				}

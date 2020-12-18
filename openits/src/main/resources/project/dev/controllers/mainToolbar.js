@@ -1,6 +1,8 @@
 //import MainMenu from "./mainMenu.js";
+import AlarmControlPanel  from "./alarmControlPanel.js";
 import NotificationCenter from "./notificationCenter.js";
 import {NotificationType}  from "./notificationCenter.js";
+
 
 const MAIN_TOOLBAR_ID = "mainToolbar";
 
@@ -68,10 +70,10 @@ export default class MainToolbar {
 							}
 						}
 					}
-				},
-				{ id: "tb-notification-center-alarms", view: "icon", icon: "mdi mdi-bell", tooltip: i18n.t("LBL_ALARM_CENTER") },
-				{ id: "tb-notification-center-events", view: "icon", icon: "mdi mdi-comment", tooltip: i18n.t("LBL_NOTIFICATION_CENTER") },
-				{ id: "tb-notification-center-config", view: "icon", icon: "mdi mdi-cog", tooltip: i18n.t("LBL_CONFIGURATION") }
+				}
+				//{ id: "tb-notification-center-alarms", view: "icon", icon: "mdi mdi-bell", tooltip: i18n.t("LBL_ALARM_CENTER") },
+				//{ id: "tb-notification-center-events", view: "icon", icon: "mdi mdi-comment", tooltip: i18n.t("LBL_NOTIFICATION_CENTER") },
+				//{ id: "tb-notification-center-config", view: "icon", icon: "mdi mdi-cog", tooltip: i18n.t("LBL_CONFIGURATION") }
 			]
 		};
 
@@ -87,20 +89,34 @@ export default class MainToolbar {
 			
 		});
 
-		$$("tb-notification-center-alarms").attachEvent("onItemClick", function(id, e) {
+//		$$("tb-notification-center-alarms").attachEvent("onItemClick", function(id, e) {
+//
+//			self.callAlarmControlPanel();
+//		});
+//
+//		$$("tb-notification-center-events").attachEvent("onItemClick", function(id, e) {
+//
+//			self.callNotificationCenter(NotificationType.EVENTS);
+//		});
+//
+//		$$("tb-notification-center-config").attachEvent("onItemClick", function(id, e) {
+//
+//			
+//		});
+	}
+	
+	callAlarmControlPanel() {
 
-			self.callNotificationCenter(NotificationType.ALARMS);
-		});
+		if (!alarmControlPanel) {
 
-		$$("tb-notification-center-events").attachEvent("onItemClick", function(id, e) {
+			alarmControlPanel = new AlarmControlPanel();
+		}
 
-			self.callNotificationCenter(NotificationType.EVENTS);
-		});
-
-		$$("tb-notification-center-config").attachEvent("onItemClick", function(id, e) {
-
-			
-		});
+		if (alarmControlPanel.hidden()) {
+			alarmControlPanel.show();
+		} else {
+			alarmControlPanel.hide();
+		}
 	}
 
 	callNotificationCenter(option) {

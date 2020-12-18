@@ -63,6 +63,19 @@ export default class GenericGridModule extends GenericModule {
 		webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat){
 				
 			if (dat != null) {
+	
+				let metadata = dat.json().metadata;
+				let data = dat.json().data;
+				let dataTable = new DataTable(dataGridId, null, metadata, data);
+				let newTable = dataTable.getView();
+	
+				newTable.forEach(newView => {
+	
+					equipmentTable.addView(newView);
+				});
+	
+				
+				dataTable.callbacks();
 				
 				viewsToRemove.forEach(viewId => {
 	
@@ -77,20 +90,6 @@ export default class GenericGridModule extends GenericModule {
 			
 					equipmentTable.removeView(viewId);
 				});
-	
-	
-				let metadata = dat.json().metadata;
-				let data = dat.json().data;
-				let dataTable = new DataTable(dataGridId, null, metadata, data);
-				let newTable = dataTable.getView();
-	
-				newTable.forEach(newView => {
-	
-					equipmentTable.addView(newView);
-				});
-	
-				
-				dataTable.callbacks();
 				
 				$$(self.uid).hideProgress();
 			}

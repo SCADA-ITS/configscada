@@ -2,8 +2,6 @@
 import NotificationCenter from "./notificationCenter.js";
 import {NotificationType}  from "./notificationCenter.js";
 
-const MAIN_TOOLBAR_ID = "mainToolbar";
-
 export default class MainToolbar {
 
 	constructor() {
