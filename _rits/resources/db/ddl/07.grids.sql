@@ -136,7 +136,7 @@
 		grid_field_id int NOT NULL,
 		icon varchar NULL,
 		value varchar NULL,
-		show_value boolean NOT NULL,
+		show_value bool NOT NULL,
 		badge_color bool NOT NULL,
 		avatar bool NOT NULL,
 		enabled bool

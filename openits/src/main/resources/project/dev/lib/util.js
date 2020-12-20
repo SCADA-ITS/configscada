@@ -19,31 +19,6 @@ export let util = {
 
 		},
 		
-		loadService(module, mod, args) {
-
-			let lazyClass = new mod.default(module, mod, args);
-			
-			if (lazyClass) {
-				
-				let service = {
-					id: module.id,
-					object: lazyClass
-				}
-				
-				if (module.jsMethodDraw) {
-				
-					lazyClass.runOne(module.jsMethodDraw);	
-				}
-				
-				if (module.jsMethodCallbacks) {
-				
-					lazyClass.runOne(module.jsMethodCallbacks)	
-				}
-				
-				args.push(service);
-			}
-		},
-
 		loadInWindow(module, moduleAction, mod, args) {
 
 			let viewModule;
@@ -302,10 +277,6 @@ export let util = {
 							util.module.loadInWindow(module, moduleAction, mod, args);
 						}	
 					}
-					else if (module.moduleType.id === MODULE_TYPE_SERVICE) {
-						
-						util.module.loadService(module, mod, args);
-					}
 				}
 
 				lazy();
@@ -313,6 +284,17 @@ export let util = {
 			} catch (error) {
 
 				console.log(error);
+			}
+		}
+	},
+	
+	ajax: {
+		
+		handleError(response) {
+			
+			if (response.status === 401) {
+				
+				window.location = "./login.html";
 			}
 		}
 	},
@@ -374,6 +356,7 @@ export let util = {
 			return userData;
 		}
 	},
+	
 
 	stomp: {
 
@@ -475,6 +458,20 @@ export let util = {
 		//			}
 		//		},
 	},
+	
+	ui: {
+		
+		notImplementedMessage() {
+			
+			webix.alert({
+				title: i18n.t("LBL_NOT IMPLEMENTED"),
+				text: i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"),
+				type: "alert-error",
+				width: 500
+			});
+		}
+	},
+
 
 	toLocalTime(ts) {
 

@@ -23,7 +23,7 @@ public class GridFieldIcon implements Serializable {
 	private Boolean avatar;
 	
 	@Column(name="badge_color")
-	private String badgeColor;
+	private Boolean badgeColor;
 
 	private Boolean enabled;
 
@@ -59,11 +59,11 @@ public class GridFieldIcon implements Serializable {
 		this.avatar = avatar;
 	}
 	
-	public String getBadgeColor() {
+	public Boolean getBadgeColor() {
 		return this.badgeColor;
 	}
 
-	public void setBadgeColor(String badgeColor) {
+	public void setBadgeColor(Boolean badgeColor) {
 		this.badgeColor = badgeColor;
 	}
 

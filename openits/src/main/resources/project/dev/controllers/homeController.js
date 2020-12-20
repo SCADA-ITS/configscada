@@ -26,14 +26,34 @@ document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/mat
 //var language = webix.storage.session.get("app_user_language");
 //var country = webix.storage.session.get("app_user_country");
 window.i18n = new I18n(`${userData.language}_${userData.country}`);
-window.splashScreen = new SplashScreen(initialize);
+//window.splashScreen = new SplashScreen(initialize);
 //window.splashScreen.show();
+
+window.splashScreen = new SplashScreen(null);
+
+window.onload = function() {
+	
+	//$$("splashScreen").refresh();
+	
+	$.ajaxSetup({
+        statusCode: {
+            401: function(){
+                    window.location = "./login.html";
+                }
+        }
+    });
+	
+	webix.delay(function() {
+
+		initialize();
+	}, null, null, 1000);
+}
 
 function initialize() {
     
-	window.notificationCenter = undefined;
 	window.alarmControlPanel = undefined;
 	window.notificationControlPanel = undefined;
+	window.userControlPanel = undefined;
 	
 	window.em = new EntitiesManager();
 	window.stompClient = undefined;
@@ -96,7 +116,6 @@ function initialize() {
 	
 	webix.ui(main_screen);
 	mainTab.attachOnBeforeTabClose();
-	mainToolbar.attachOnClickEvents();
 	
 	window.sm = new ServiceManager();
 	

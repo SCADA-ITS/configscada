@@ -62,7 +62,7 @@ export default class SplashScreen {
 					on: {
 						onAfterRender: function() {
 							
-							callback();
+							//callback();
 						}
 					}
 				}

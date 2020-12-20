@@ -1,3 +1,4 @@
+import {util} from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 
@@ -199,7 +200,7 @@ export default class EquipmentModule extends GenericModule {
 					
 					$$(this.uid).hideProgress();
 				}
-			});
+			}, function(response) { util.ajax.handleError(response); });
 		}
 		else {
 			equipmentTable.addView(self.drawNoEquipmentTypeData);

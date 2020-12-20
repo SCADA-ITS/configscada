@@ -116,8 +116,9 @@ export default class DataTable {
 
 								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
 
-									badgeColor = field.gridFieldIcons[0].badgeColor;
-									avatar = field.gridFieldIcons[0].avatar;
+									badgeColor = (field.gridFieldIcons[0].badgeColor == true);
+									avatar = (field.gridFieldIcons[0].avatar == true);
+									showValue = (field.gridFieldIcons[0].showValue == true);
 									value = data[field.sourceField];
 									
 									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == data[field.sourceField]);
@@ -125,7 +126,7 @@ export default class DataTable {
 									if (gridFieldIcon) {
 
 										icon = gridFieldIcon.icon;
-										showValue = gridFieldIcon.showValue;
+										showValue = (gridFieldIcon.showValue == true);
 										value = gridFieldIcon.value;
 									}
 								}
@@ -160,7 +161,7 @@ export default class DataTable {
 								value = util.toLocalTime(value);
 							}
 
-							if (icon != undefined || badgeColor != undefined || avatar != undefined) {
+							if (icon || badgeColor || avatar) {
 
 								if (icon) {
 								
@@ -222,6 +223,17 @@ export default class DataTable {
 								}
 								else if (avatar) {
 									
+									if (!showValue) {
+
+										return `<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>`;
+									}
+									else {
+	
+										return `<div style="width: ${field.widthPx}">	
+													<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>
+													<span>${value}</span>
+												</div>`
+									}
 								}
 							}
 							else if (value != undefined) {

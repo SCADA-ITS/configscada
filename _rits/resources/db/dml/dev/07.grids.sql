@@ -78,12 +78,17 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (7, './img/state/stateDown.png', 'ElementTypeState:33:2', false, false, false, true),
 (7, './img/state/stateAlarm.png', 'ElementTypeState:33:3', false, false, false, true),
 
+(100002, NULL, NULL, true, false, true, true),
+(100003, NULL, NULL, false, true, false, true),
+
+(100205, NULL, NULL, false, true, false, true),
+
 (100006, './img/flags/128-spain.png', 'es', false, false, false, true),
 (100006, './img/flags/260-united-kingdom.png', 'en', false, false, false, true),
-(100006, './img/flags/091-slovakia.png', 'sk', false, false, false, true),
+(100006, './img/flags/091-slovakia.png', 'sk', false, false, false, true);
 
-(100003, NULL, NULL, false, true, false, true),
-(100205, NULL, NULL, false, true, false, true);
+
+
 
 
 INSERT INTO ui.grid_field_references(grid_field_id, ref_field_id, em_id, em_field, em_field_returned, enabled) VALUES

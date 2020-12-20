@@ -9,7 +9,7 @@ function load(i18n) {
 	
 	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${I18N_LOCALE_ID_PREFIX}:${i18n.localeId}/${I18N_MODULE}`);
 		
-	if (translationsResponse != undefined) {
+	if (translationsResponse && translationsResponse.responseText) {
 						
 		translations = JSON.parse(translationsResponse.responseText);
 		
@@ -48,7 +48,7 @@ export default class I18n {
 				
 				let translationResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${I18N_LOCALE_ID_PREFIX}:${this.localeId}/${I18N_MODULE}/${label}`);
 				
-				if (translationResponse != undefined) {
+				if (translationResponse && translationResponse.responseText) {
 							
 					let translationJson = JSON.parse(translationResponse.responseText);
 

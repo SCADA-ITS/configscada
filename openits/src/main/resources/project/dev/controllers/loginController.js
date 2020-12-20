@@ -159,6 +159,8 @@ webix.ready(function() {
 				, {}],
 		}, {}]
 	});
+	
+	webix.UIManager.setFocus("user"); //to set focus
 
 });
 

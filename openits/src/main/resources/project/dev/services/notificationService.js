@@ -4,37 +4,35 @@ import NotificationControlPanel  from "../controllers/notificationControlPanel.j
 
 export default class NotificationService extends GenericModule {
 	
-	constructor(module, mod, args){
+	constructor(module, mod){
 		
-		super(module, null, args);
+		super(module, null, null);
 		
 		this.module = module;
 		this.mod = mod;
-		this.args = args;
 		
 		this.stomp = {};
 		this.notifications = {};
 	}
 	
 	getView() {
-
-		let toolbar = $$(MAIN_TOOLBAR_ID);
 		
-		if (!webix.isUndefined(toolbar)) {
+		let views = [];
+
+		let iconNotification = { 
+			id: "icon-notification-service", 
+			view: "icon", 
+			css: "notification-template",
+			//width: 75,
+			badge:0, 
+			icon: "mdi mdi-comment", 
+			value:"Notification",
+			tooltip: i18n.t("LBL_NOTIFICATIONS") 
+		} 
 			
-			let iconNotification = { 
-				id: "icon-notification-service", 
-				view: "icon", 
-				css: "notification-template",
-				//width: 75,
-				badge:0, 
-				icon: "mdi mdi-comment", 
-				value:"Notification",
-				tooltip: i18n.t("LBL_NOTIFICATIONS") 
-			} 
-			
-			toolbar.addView(iconNotification);
-		}
+		views.push(iconNotification);
+		
+		return views;
 	}
 	
 	loadData() {
@@ -49,8 +47,12 @@ export default class NotificationService extends GenericModule {
 				self.callNotificationControlPanel();
 			});
 			
-			this.notifications.config = JSON.parse(moduleValue.value);
 			this.notifications.stats = {};
+			
+			if (moduleValue.value) {
+			
+				this.notifications.config = JSON.parse(moduleValue.value);	
+			}
 			
 			this.updateStatistics(); 
 		}

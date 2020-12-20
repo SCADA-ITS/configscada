@@ -4,13 +4,12 @@ import AlarmControlPanel  from "../controllers/alarmControlPanel.js";
 
 export default class AlarmService extends GenericModule {
 	
-	constructor(module, mod, args){
+	constructor(module, mod){
 		
-		super(module, null, args);
+		super(module, null, null);
 		
 		this.module = module;
 		this.mod = mod;
-		this.args = args;
 		
 		this.stomp = {};
 		this.alarms = {};
@@ -18,23 +17,22 @@ export default class AlarmService extends GenericModule {
 	
 	getView() {
 
-		let toolbar = $$(MAIN_TOOLBAR_ID);
+		let views = [];
+
+		let iconAlarm = { 
+			id: "icon-alarm-service", 
+			view: "icon", 
+			css: "alarm-template",
+			//width: 75,
+			badge:0, 
+			icon: "mdi mdi-bell", 
+			value:"Alert",
+			tooltip: i18n.t("LBL_ALARMS") 
+		} 
+
+		views.push(iconAlarm);
 		
-		if (!webix.isUndefined(toolbar)) {
-			
-			let iconAlarm = { 
-				id: "icon-alarm-service", 
-				view: "icon", 
-				css: "alarm-template",
-				//width: 75,
-				badge:0, 
-				icon: "mdi mdi-bell", 
-				value:"Alert",
-				tooltip: i18n.t("LBL_ALARMS") 
-			} 
-			
-			toolbar.addView(iconAlarm);
-		}
+		return views;
 	}
 	
 	loadData() {
@@ -49,8 +47,12 @@ export default class AlarmService extends GenericModule {
 				self.callAlarmControlPanel();
 			});
 			
-			this.alarms.config = JSON.parse(moduleValue.value);
 			this.alarms.stats = {};
+			
+			if (moduleValue.value) {
+			
+				this.alarms.config = JSON.parse(moduleValue.value);	
+			}
 			
 			this.updateStatistics(); 
 		}

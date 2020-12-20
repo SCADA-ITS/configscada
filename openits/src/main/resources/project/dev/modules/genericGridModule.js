@@ -93,6 +93,6 @@ export default class GenericGridModule extends GenericModule {
 				
 				$$(self.uid).hideProgress();
 			}
-		});
+		}, function(response) { util.ajax.handleError(response); });
 	}
 }
