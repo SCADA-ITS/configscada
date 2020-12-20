@@ -38,6 +38,13 @@ export class CustomUserDetails extends userManager.views["users/details"]{
         }
         return ui
     }
+
+    GetDetailsHTML(user, roles, rules) {
+        var userDetails = "";
+        userDetails += this.InfoTemplate(user.email, this._("Email"), "umi-email");
+        userDetails += this.GetListsHTML(user, roles, rules);
+        return userDetails;
+    };
 }
 
 export class CustomAddRoleAndUser extends userManager.views["addmenu"]{
@@ -73,6 +80,204 @@ export class CustomUsersForm extends userManager.views["users/form"]{
         super.init();
         // custom logic below
         this.addMultisessionButton();
+        this.removeLastLoginDate()
+    }
+    config(){
+        function userCss(name) {
+            return " webix_um_avatar_" + ((name.charCodeAt(1) + (name.length % 10)) % 10);
+        }
+        function userAvatar(user, cssClass) {
+            var css = typeof cssClass == "string" ? cssClass : "webix_um_member_avatar";
+            if (user.avatar)
+                return "<img class=\"" + css + "\" src=\"" + user.avatar + "\"/>";
+            return "<div class='" + css + " " + (user.name ? userCss(user.name) : "webix_um_no_name") + "'>" + (user.name ? user.name.charAt(0).toUpperCase() : "") + "</div>";
+        }
+        var _this = this;
+            var _ = this.app.getService("locale")._;
+            var buttons = {
+                view: "form",
+                margin: 10,
+                cols: [
+                    {},
+                    {
+                        width: 120,
+                        value: _("Delete"),
+                        view: "button",
+                        click: function () { return _this.Delete(); },
+                    },
+                    {
+                        width: 120,
+                        value: _("Save"),
+                        view: "button",
+                        css: "webix_primary",
+                        click: function () { return _this.Save(); },
+                    },
+                ],
+            };
+            var info = {
+                type: "clean",
+                rows: [
+                    buttons,
+                    {
+                        view: "form",
+                        localId: "form",
+                        margin: 20,
+                        css: "webix_um_edit_form",
+                        scroll: "auto",
+                        elementsConfig: {
+                            labelAlign: "right",
+                            labelWidth: 130,
+                        },
+                        rows: [
+                            {
+                                cols: [
+                                    {
+                                        view: "text",
+                                        label: _("Full Name"),
+                                        localId: "focus",
+                                        name: "name",
+                                        gravity: 2,
+                                        maxWidth: 550,
+                                        minWidth: 420,
+                                    },
+                                    {},
+                                ],
+                            },
+                            {
+                                cols: [
+                                    {
+                                        view: "text",
+                                        label: _("Email"),
+                                        name: "email",
+                                        gravity: 2,
+                                        maxWidth: 550,
+                                        minWidth: 420,
+                                    },
+                                    {},
+                                ],
+                            },
+                            {
+                                cols: [
+                                    {
+                                        view: "forminput",
+                                        label: _("Avatar"),
+                                        body: {
+                                            localId: "avatar",
+                                            css: "webix_um_form_avatar",
+                                            width: 95,
+                                            height: 95,
+                                            borderless: true,
+                                            template: function (user) {
+                                                return "" + userAvatar(user, "webix_um_avatarbox");
+                                            },
+                                        },
+                                    },
+                                    {
+                                        rows: [
+                                            {},
+                                            {
+                                                view: "uploader",
+                                                localId: "avatarUpl",
+                                                accept: "image/*",
+                                                autowidth: true,
+                                                autosend: true,
+                                                label: _("Upload new photo"),
+                                                type: "icon",
+                                                icon: "umi-upload",
+                                                css: "webix_transparent webix_um_uploader",
+                                                on: {
+                                                    onAfterFileAdd: function (fileData) { return _this.UpdateAvatar(fileData); },
+                                                    onUploadComplete: function (response) {
+                                                        return _this.UpdateAvatar(response);
+                                                    },
+                                                },
+                                            },
+                                        ],
+                                    },
+                                    {},
+                                ],
+                            },
+                            {
+                                view: "switch",
+                                name: "status",
+                                localId: "status",
+                                label: _("Status"),
+                                css: "webix_um_status_switch",
+                                on: {
+                                    onChange: function (value) { return _this.UpdateBadge(value); },
+                                },
+                            },
+                            
+                            {
+                                visibleBatch: "def",
+                                localId: "credentials",
+                                css: "webix_um_credentials",
+                                cols: [
+                                    {
+                                        view: "label",
+                                        label: _("Credentials"),
+                                        width: 130,
+                                        css: "webix_um_form_label",
+                                    },
+                                    {
+                                        batch: "def",
+                                    },
+                                    {
+                                        batch: "no-credentials",
+                                        cols: [
+                                            {
+                                                view: "button",
+                                                label: _("Add credentials"),
+                                                width: 160,
+                                                click: function () { return _this.AddCredentials(); },
+                                            },
+                                            {},
+                                        ],
+                                    },
+                                    {
+                                        batch: "credentials",
+                                        margin: 5,
+                                        cols: [
+                                            {
+                                                view: "button",
+                                                css: "webix_transparent",
+                                                label: _("Reset password"),
+                                                width: 140,
+                                                click: function () { return _this.ResetPassword(); },
+                                            },
+                                            {
+                                                view: "button",
+                                                css: "webix_transparent",
+                                                label: _("Delete credentials"),
+                                                width: 150,
+                                                click: function () { return _this.DeleteCredentials(); },
+                                            },
+                                            {},
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                cols: [
+                                    {
+                                        view: "textarea",
+                                        name: "details",
+                                        label: _("Details"),
+                                        height: 128,
+                                        gravity: 2,
+                                        maxWidth: 550,
+                                        minWidth: 420,
+                                    },
+                                    {},
+                                ],
+                            },
+                            {},
+                        ],
+                    },
+                ],
+            };
+            return info;
+        
     }
    
     statusBadge(value, _) {
@@ -111,6 +316,19 @@ export class CustomUsersForm extends userManager.views["users/form"]{
         return ui;
     
     }
+    removeLastLoginDate(){
+        let ui = super.config();
+        let form = this.$$('form');
+        console.log("ui", ui)
+        let reg = ui.rows[1].rows[4]
+        //this.$$(reg.body.localId).hide()
+
+        
+        return ui
+        
+
+    }
+
 
 
     Delete() {

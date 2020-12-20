@@ -157,6 +157,31 @@ webix.ready(function() {
     changeConnectedIcon();
 });
 
+//Control de los clicks rapidos
+/*
+document.addEventListener( 'click', function(event) {  
+    if(event.target.id !== ""){ 
+        let control = webix.storage.session.get("control.click");
+        if(control === null){
+            webix.storage.session.put("control.click", event.target.id + ";" + Date.now());
+        }
+        else{
+            if(control.split(";")[0] !== event.target.id){
+                webix.storage.session.put("control.click", event.target.id + ";" + Date.now());
+            }else{
+                try{
+                    if(parseInt(control.split(";")[1]) + 1000 > Date.now()){ //1 segundo entre clicks
+                        event.stopImmediatePropagation();    
+                    } else {
+                        webix.storage.session.put("control.click", event.target.id + ";" + Date.now());
+                    }
+                }catch(e){console.log(e);}
+            }
+        }
+    }
+  },  true //capturing phase!!
+);
+*/
 function changeStyle(){
     let styleCss = "compact";
     switch (Math.floor(Math.random()*10)) {
