@@ -277,6 +277,10 @@ export let util = {
 							util.module.loadInWindow(module, moduleAction, mod, args);
 						}	
 					}
+					else {
+						
+						util.module.loadInWindow(module, moduleAction, mod, args);
+					}
 				}
 
 				lazy();
