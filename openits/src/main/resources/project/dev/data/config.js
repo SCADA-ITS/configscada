@@ -1,7 +1,7 @@
 // Endpoints configuration
 const appConfig = {
 
-	restUrl: '../api/v1/',
+	restUrl: './api/v1/',
 	stompUrl: 'ws://localhost:61614',
 }
 
