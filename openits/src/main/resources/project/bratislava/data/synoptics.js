@@ -343,7 +343,7 @@ export let synopticData= [
 					
 				],
 				"translation_key": "",
-				"visibility": "hidden"
+				"visibility": "visible"
 			}
 		},
 		/*// S1F1_(6-11) L
@@ -526,11 +526,6 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"CABINETS": {
-				"items": ["Element:25:1", "Element:25:2", "Element:25:3", "Element:25:4", "Element:25:5", "Element:25:6", "Element:25:7", "Element:25:8", "Element:25:9", "Element:25:10", "Element:25:11", "Element:25:12", "Element:25:13", "Element:25:14", "Element:25:15", "Element:25:16", "Element:25:17", "Element:25:18", "Element:25:19", "Element:25:20", "Element:25:21", "Element:25:22", "Element:25:23", "Element:25:24", "Element:25:25", "Element:25:26", "Element:25:27", "Element:25:28", "Element:25:29", "Element:25:30", "Element:25:31", "Element:25:32", "Element:25:33", "Element:25:34", "Element:25:35", "Element:25:36", "Element:25:37", "Element:25:38", "Element:25:39", "Element:25:40", "Element:25:41", "Element:25:42", "Element:25:43", "Element:25:44", "Element:25:45", "Element:25:46", "Element:25:47", "Element:25:48", "Element:25:49", "Element:25:50", "Element:25:51", "Element:25:52", "Element:25:53", "Element:25:54", "Element:25:55", "Element:25:56", "Element:25:57", "Element:25:58", "Element:25:59", "Element:25:60", "Element:25:61", "Element:25:62", "Element:25:63", "Element:25:64", "Element:25:65", "Element:25:66", "Element:25:67", "Element:25:68", "Element:25:69", "Element:25:70", "Element:25:71", "Element:25:89", "Element:25:76", "Element:25:75", "Element:25:88", "Element:25:74", "Element:25:73", "Element:25:72", "Element:25:85", "Element:25:94", "Element:25:93", "Element:25:84", "Element:25:92", "Element:25:83","Element:25:82", "Element:25:91", "Element:25:81", "Element:25:90", "Element:25:80", "Element:25:79", "Element:25:78", "Element:25:100", "Element:25:77", "Element:25:96", "Element:25:95", "Element:25:87", "Element:25:86", "Element:25:98", "Element:25:97", "Element:25:99", "Element:25:101"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
 			"SCN": {
 				"items": ["Element:34:1", "Element:34:2", "Element:34:3", "Element:34:4", "Element:34:5", "Element:34:6", "Element:34:7", "Element:34:8"],
 				"translation_key": "",
@@ -570,6 +565,11 @@ export let synopticData= [
 				"items": ["Element:47:1", "Element:47:2", "Element:47:3", "Element:47:4", "Element:47:5", "Element:47:6", "Element:47:7", "Element:47:8", "Element:47:9", "Element:47:10", "Element:47:11", "Element:47:12", "Element:47:13"],
 				"translation_key": "",
 				"visibility": "hidden"
+			},
+			"CABINETS": {
+				"items": ["Element:25:1", "Element:25:2", "Element:25:3", "Element:25:4", "Element:25:5", "Element:25:6", "Element:25:7", "Element:25:8", "Element:25:9", "Element:25:10", "Element:25:11", "Element:25:12", "Element:25:13", "Element:25:14", "Element:25:15", "Element:25:16", "Element:25:17", "Element:25:18", "Element:25:19", "Element:25:20", "Element:25:21", "Element:25:22", "Element:25:23", "Element:25:24", "Element:25:25", "Element:25:26", "Element:25:27", "Element:25:28", "Element:25:29", "Element:25:30", "Element:25:31", "Element:25:32", "Element:25:33", "Element:25:34", "Element:25:35", "Element:25:36", "Element:25:37", "Element:25:38", "Element:25:39", "Element:25:40", "Element:25:41", "Element:25:42", "Element:25:43", "Element:25:44", "Element:25:45", "Element:25:46", "Element:25:47", "Element:25:48", "Element:25:49", "Element:25:50", "Element:25:51", "Element:25:52", "Element:25:53", "Element:25:54", "Element:25:55", "Element:25:56", "Element:25:57", "Element:25:58", "Element:25:59", "Element:25:60", "Element:25:61", "Element:25:62", "Element:25:63", "Element:25:64", "Element:25:65", "Element:25:66", "Element:25:67", "Element:25:68", "Element:25:69", "Element:25:70", "Element:25:71", "Element:25:89", "Element:25:76", "Element:25:75", "Element:25:88", "Element:25:74", "Element:25:73", "Element:25:72", "Element:25:85", "Element:25:94", "Element:25:93", "Element:25:84", "Element:25:92", "Element:25:83","Element:25:82", "Element:25:91", "Element:25:81", "Element:25:90", "Element:25:80", "Element:25:79", "Element:25:78", "Element:25:100", "Element:25:77", "Element:25:96", "Element:25:95", "Element:25:87", "Element:25:86", "Element:25:98", "Element:25:97", "Element:25:99", "Element:25:101"],
+				"translation_key": "",
+				"visibility": "visible"
 			},
 		},
 		"Element:34:7":  { "x": 1095, "y": 700,  "width": 63, "height": 37, "alias": "SCNJS.6" },
@@ -820,15 +820,16 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"SECTIONS": {
-				"items": ["Element:4:1", "Element:4:2", "Element:4:3", "Element:4:4", "Element:4:5", "Element:4:6", "Element:4:7", "Element:4:8", "Element:4:9", "Element:4:10", "Element:4:11", "Element:4:12", "Element:4:13", "Element:4:14", "Element:4:15", "Element:4:16"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
+			
 			"ATC": {
 				"items": ["Element:54:1", "Element:54:2", "Element:54:3", "Element:54:4", "Element:54:5", "Element:54:6", "Element:54:7", "Element:54:8"],
 				"translation_key": "",
 				"visibility": "hidden"
+			},
+			"SECTIONS": {
+				"items": ["Element:4:1", "Element:4:2", "Element:4:3", "Element:4:4", "Element:4:5", "Element:4:6", "Element:4:7", "Element:4:8", "Element:4:9", "Element:4:10", "Element:4:11", "Element:4:12", "Element:4:13", "Element:4:14", "Element:4:15", "Element:4:16"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 		"Element:54:1": { "x": 1350,  "y": 247, "width": 180, "height": 180, "alias": "ASDKD01"  },
@@ -1043,10 +1044,6 @@ export let synopticData= [
 		"Element:51:37": { "x": 1730,  "y": 0, "width": 150, "height": 150, "alias": "RNRKD09L+10,557"  },
 		"Element:51:38": { "x": 1730,  "y": -35, "width": 150, "height": 150, "alias": "RNRKD10L+12,359"  },
 		"Element:51:39": { "x": 1730,  "y": -70, "width": 150, "height": 150, "alias": "RNRKD11L+14,157"  }
-
-
-		
-
 	}
 
 ];
