@@ -690,6 +690,12 @@ export default class Synoptic {
               visibility: self.elementsToDraw[k],
               component: k,
             });
+            //Deprecated
+            if(self.synopticConf["ExclusiveLayers"] && k != "BASE_LAYER" && self.synopticConf["BaseLayers"][k].visibility=="hidden") {
+              let checkedElement = document.getElementById(k);
+              checkedElement.style.opacity = 0;
+              checkedElement.setAttribute("visibility", "hidden");
+            }
           //}
         });
         return d;
