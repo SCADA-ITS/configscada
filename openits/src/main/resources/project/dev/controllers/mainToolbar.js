@@ -17,7 +17,7 @@ export default class MainToolbar {
 			elements: [
 				{
 					view: "label",
-					label: "<img class='logo-project' src='../img/logo-project.svg'>",
+					label: "<img class='logo-project' src='./img/logo-project.svg'>",
 					width: 175
 				},
 				//this.mainMenu.getView(),

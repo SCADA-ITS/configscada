@@ -95,7 +95,7 @@
 -- Scope: ui
 --
 	CREATE TABLE ui.map_layer_element_zooms (
-		id serial primary key,	
+		id serial primary key,
 		map_layer_element_id int not null,
 		zoom_lower int not null,
 		zoom_upper int not null,
