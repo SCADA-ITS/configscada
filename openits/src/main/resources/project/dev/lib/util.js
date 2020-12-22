@@ -226,7 +226,7 @@ export let util = {
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
 								<span class='tab-text'>${i18n.t(label)}</span>
-								<span style='float: right; padding-top: 2px'><a href='#'><img src='../img/externalize_button.png'></a></span>
+								<span style='float: right; padding-top: 2px'><a href='#'><img src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
 						autoheight: true,

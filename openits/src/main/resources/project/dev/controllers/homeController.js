@@ -71,7 +71,7 @@ function initialize() {
 			{},
 			{
 				view: "label",
-				label: `<img class='logo-revenga' src='../img/open_its_full.png'>`,
+				label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
 				align: "right",
 				width: 150
 			},
