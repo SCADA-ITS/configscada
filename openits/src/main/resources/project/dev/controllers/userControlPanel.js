@@ -87,12 +87,9 @@ export default class UserControlPanel {
 			body: {
 				rows: [
 					{
-						height: 10,
-						borderless: true
-					},
-					{
 						view: "label",
-						label: `<span class="user-panel-title">${i18n.t("LBL_USER_INFORMATION")}</span>`,
+						css: "control-panel-title",
+						label: `<span class="title-text">${i18n.t("LBL_USER_INFORMATION")}</span>`,
 						borderless: true 
 					},
 					{

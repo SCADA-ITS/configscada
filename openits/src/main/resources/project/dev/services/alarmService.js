@@ -11,6 +11,7 @@ export default class AlarmService extends GenericModule {
 		this.module = module;
 		this.mod = mod;
 		
+		this.recentAlarmCount = 0;
 		this.stomp = {};
 		this.alarms = {};
 	}
@@ -41,7 +42,12 @@ export default class AlarmService extends GenericModule {
 		let moduleValue = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_SERVICE_CONFIG);
 		
 		if (moduleValue != undefined) {
-			
+
+			if (!alarmControlPanel) {
+
+				alarmControlPanel = new AlarmControlPanel();
+			}
+					
 			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
 
 				self.callAlarmControlPanel();
@@ -54,13 +60,16 @@ export default class AlarmService extends GenericModule {
 				this.alarms.config = JSON.parse(moduleValue.value);	
 			}
 			
-			this.updateStatistics(); 
+			self.updateStatistics();
 		}
 	}
 	
 	updateStatistics() {
 	
 		this.updateActiveAlarms();
+		this.updateNoRecognizedAlarms();
+		this.updateMutedAlarms();
+		this.updateAlarms();
 	}
 	
 	updateActiveAlarms() {
@@ -74,8 +83,11 @@ export default class AlarmService extends GenericModule {
 				self.alarms.stats.active_alarms = data.json().value;
 				$$("icon-alarm-service").data.badge = self.alarms.stats.active_alarms;
 				$$("icon-alarm-service").refresh();
+				
+				$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${self.alarms.stats.active_alarms}</span>`);
+				$$("alarm-control-panel-box-active").refresh();
 					
-				self.stomp.client = util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.active_alarms, null, on_message);
+				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.active_alarms, null, on_message);
 				
 				function on_message(message) {
 			
@@ -83,17 +95,114 @@ export default class AlarmService extends GenericModule {
 			
 					$$("icon-alarm-service").data.badge = data.basicElementsVO[0].value;
 					$$("icon-alarm-service").refresh();
+					
+					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
+					$$("alarm-control-panel-box-active").refresh();
 				}
 			} 
 		});
 	}
 	
-	callAlarmControlPanel() {
+	updateNoRecognizedAlarms() {
+		
+		let self = this;
+		
+		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.no_recognized_alarms).then(function(data) {
+								
+			if (data.json() != undefined) {
+				
+				self.alarms.stats.no_recognized_alarms = data.json().value;
+				
+				$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${self.alarms.stats.no_recognized_alarms}</span>`);
+				$$("alarm-control-panel-box-no-recognized").refresh();
 
-		if (!alarmControlPanel) {
+				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.no_recognized_alarms, null, on_message);
+				
+				function on_message(message) {
+			
+					var data = JSON.parse(JSON.parse(message.body));
+			
+					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
+					$$("alarm-control-panel-box-no-recognized").refresh();
+				}
+			} 
+		});
+	}
+	
+	updateMutedAlarms() {
+		
+		let self = this;
+		
+		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.muted_alarms).then(function(data) {
+								
+			if (data.json() != undefined) {
+				
+				self.alarms.stats.muted_alarms = data.json().value;
+				
+				$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${self.alarms.stats.muted_alarms}</span>`);
+				$$("alarm-control-panel-box-muted").refresh();
 
-			alarmControlPanel = new AlarmControlPanel();
+				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.muted_alarms, null, on_message);
+				
+				function on_message(message) {
+			
+					var data = JSON.parse(JSON.parse(message.body));
+			
+					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
+					$$("alarm-control-panel-box-muted").refresh();
+				}
+			} 
+		});
+	}
+	
+	updateAlarms() {
+		
+		let self = this;
+		
+		util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.alarms, null, on_message);
+				
+		function on_message(message) {
+	
+			var data = JSON.parse(JSON.parse(message.body));
+			
+			data.basicElementsVO.forEach(be => {
+
+				self.recentAlarmCount++;
+				
+				let date = undefined;
+				
+				if (be.deactivation) {
+					date = be.deactivation / 1000;	
+				}
+				else {
+					date = be.activation / 1000;
+				}
+							
+				let alarm = {
+					id: self.recentAlarmCount,
+					date: date,
+					dateFormatted: util.toLocaleString(date),
+					alarm: be.alarmConfig.id,
+					equipment: window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias,
+					activation: be.activation,
+					deactivation: be.deactivation,
+					recognized: be.recognized	
+				};
+				
+				if (self.recentAlarmCount > 10) {
+					
+					$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
+				}
+				
+				$$("alarm-control-panel-recent-list").add(alarm);
+				$$("alarm-control-panel-recent-list").sort("#date#","desc","int");
+				
+				console.log(be);
+			});
 		}
+	}
+	
+	callAlarmControlPanel() {
 
 		if (alarmControlPanel.hidden()) {
 			alarmControlPanel.show();

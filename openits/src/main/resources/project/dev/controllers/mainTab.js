@@ -32,7 +32,7 @@ export default class MainTab {
 		
 			$$(MAIN_TAB_ID).getTabbar().attachEvent("onBeforeTabClose", function(id, e) {
 
-				webix.message("Close tab: " + id);
+				//webix.message("Close tab: " + id);
 				view.removeView(id);
 			});
 			

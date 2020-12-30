@@ -6,7 +6,7 @@ INSERT INTO ui.grid_field_data_types(id, name, format, description) VALUES
 
 INSERT INTO ui.grids(id, adapter_id, "label", icon, multiselect, sort, "search", "filter", pagination, enabled, visible) VALUES
 (1, 2, 'LBL_DETECTORS', 'img/grid/detector.png', true, true, true, true, false, true, true),
-(2, 2, 'LBL_ETDS', 'img/grid/etd.png', true, true, true, true, false, true, true),
+(2, 2, 'LBL_ELECTRICAL_CABINET_SCN', 'img/grid/electrical_cabinet_scn.png', true, true, true, true, false, true, true),
 (1000, 3, 'LBL_USERS', 'img/grid/user.png', true, true, true, true, false, true, true),
 (1001, 1, 'LBL_ROLES', 'img/grid/role.png', true, true, true, true, false, true, true),
 (1002, 4, 'LBL_ALARM_CONFIGS', 'img/grid/alarmConfig.png', true, true, true, true, false, true, true);
@@ -24,15 +24,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (8, 2, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true),
 (9, 2, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true),
 (10, 2, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true),
-(11, 2, 1, 6, false, false, true, false, 'LBL_LENGTH_01', 'LBL_LENGTH_01', 'ElementTypeParam:33:2:101', false, false, 'center', false, false, 50, NULL, true, true),
-(12, 2, 1, 7, false, false, true, false, 'LBL_LENGTH_02', 'LBL_LENGTH_02', 'ElementTypeParam:33:2:102', false, false, 'center', false, false, 50, NULL, true, true),
-(13, 2, 1, 8, false, false, true, false, 'LBL_LENGTH_03', 'LBL_LENGTH_03', 'ElementTypeParam:33:2:103', false, false, 'center', false, false, 50, NULL, true, true),
-(14, 2, 1, 9, false, false, true, false, 'LBL_BOOL_01', 'LBL_BOOL_01', 'ElementTypeParam:33:2:201', false, false, 'center', false, false, 50, NULL, true, true),
-(15, 2, 1, 10, false, false, true, false, 'LBL_GROOVY_TEST_OUTPUT_1', 'LBL_GROOVY_TEST_OUTPUT_1', 'ElementTypeParam:33:2:302', false, false, 'center', false, false, 50, NULL, true, true),
-(16, 2, 1, 11, false, false, true, false, 'LBL_GROOVY_TEST_OUTPUT_2', 'LBL_GROOVY_TEST_OUTPUT_2', 'ElementTypeParam:33:2:303', false, false, 'center', false, false, 50, NULL, true, true),
-(17, 2, 1, 12, false, false, true, false, 'LBL_LEN_01', 'LBL_LEN_01', 'ElementTypeParam:33:2:401', false, false, 'center', false, false, 50, NULL, true, true),
-(18, 2, 1, 13, false, false, true, false, 'LBL_LEN_02', 'LBL_LEN_02', 'ElementTypeParam:33:2:402', false, false, 'center', false, false, 50, NULL, true, true),
-(19, 2, 1, 14, false, false, true, false, 'LBL_LEN_03', 'LBL_LEN_03', 'ElementTypeParam:33:2:403', false, false, 'center', false, false, 50, NULL, true, true),
+(11, 2, 1, 6, false, false, true, false, 'LBL_PK', 'LBL_PK', 'ElementTypeParam:34:1:1', false, false, 'center', false, false, 100, NULL, true, true),
+(12, 2, 1, 7, false, false, true, false, 'LBL_ROAD', 'LBL_ROAD', 'ElementTypeParam:34:1:2', false, false, 'center', false, false, 100, NULL, true, true),
+(13, 2, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:34:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (100001, 1000, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false),
 (100002, 1000, 1, 2, true, false, false, false, 'LBL_USER', 'LBL_USER', 'name', false, false, null, false, false, 300, NULL, true, true),
@@ -73,10 +67,10 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (2, './img/state/stateUp.png', 'ElementTypeState:3:1', false, false, false, true),
 (2, './img/state/stateDown.png', 'ElementTypeState:3:2', false, false, false, true),
 (2, './img/state/stateAlarm.png', 'ElementTypeState:3:3', false, false, false, true),
-(7, './img/state/stateUnknown.png', 'ElementTypeState:33:0', false, false, false, true),
-(7, './img/state/stateUp.png', 'ElementTypeState:33:1', false, false, false, true),
-(7, './img/state/stateDown.png', 'ElementTypeState:33:2', false, false, false, true),
-(7, './img/state/stateAlarm.png', 'ElementTypeState:33:3', false, false, false, true),
+(7, './img/state/stateUnknown.png', 'ElementTypeState:34:0', false, false, false, true),
+(7, './img/state/stateUp.png', 'ElementTypeState:34:1', false, false, false, true),
+(7, './img/state/stateDown.png', 'ElementTypeState:34:2', false, false, false, true),
+(7, './img/state/stateAlarm.png', 'ElementTypeState:34:3', false, false, false, true),
 
 (100002, NULL, NULL, true, false, true, true),
 (100003, NULL, NULL, false, true, false, true),
@@ -86,9 +80,6 @@ INSERT INTO ui.grid_field_icons(grid_field_id, icon, value, show_value, badge_co
 (100006, './img/flags/128-spain.png', 'es', false, false, false, true),
 (100006, './img/flags/260-united-kingdom.png', 'en', false, false, false, true),
 (100006, './img/flags/091-slovakia.png', 'sk', false, false, false, true);
-
-
-
 
 
 INSERT INTO ui.grid_field_references(grid_field_id, ref_field_id, em_id, em_field, em_field_returned, enabled) VALUES

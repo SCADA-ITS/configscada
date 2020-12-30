@@ -33,7 +33,7 @@ function load(service) {
 
 			svcs.forEach(svc => {
 				
-				let module = window.em.getByField(EntityType.MODULE.id, "id", svc.id);
+				let module = window.em.getByField(EntityType.MODULE, "id", svc.id);
 						
 				if (module) {
 				
@@ -129,7 +129,7 @@ function runServices(service) {
 	
 	if (toolbar) {
 		
-		toolbar.addView({width: 20});
+		toolbar.addView({width: 1});
 	}
 	
 	return true;

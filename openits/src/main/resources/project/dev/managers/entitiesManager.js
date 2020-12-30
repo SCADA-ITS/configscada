@@ -6,10 +6,10 @@ function assign(entitiesManager, em_type) {
 
 		entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
 
-		if (Object.keys(entitiesManager.entities).length === Object.keys(EntityType).length) {
-
-			entitiesManager.loaded = true;
-		}
+//		if (Object.keys(entitiesManager.entities).length === Object.keys(EntityType).length) {
+//
+//			entitiesManager.loaded = true;
+//		}
 	}
 }
 
@@ -19,15 +19,13 @@ function load(entitiesManager) {
 		
 		try {
 
-			if (entitiesManager.entities[em_type] == undefined) {
+			if (EntityType[em_type].mode === ENTITY_TYPE_MODE_PERMANENT && entitiesManager.entities[em_type] == undefined) {
 	
 				assign(entitiesManager, em_type);
 			}
 		}
 		catch {}
 	}
-
-	entitiesManager.isLoaded = true;
 }
 
 export default class EntitiesManager {
@@ -35,21 +33,70 @@ export default class EntitiesManager {
 	constructor() {
 
 		this.entities = {};
-		this.isLoaded = false;
-
+		this.tempEntities = {};
 		load(this);
 	}
 
-	getAll(entity) {
+	getAll(em_type) {
 
-		return this.entities[entity];
+		if (em_type.mode === ENTITY_TYPE_MODE_PERMANENT) {
+		
+			return this.entities[em_type.id];	
+		}
 	}
 
-	getByField(entity, field, value) {
+	getByField(em_type, field, value) {
 
-		if (this.entities[entity] != undefined) {
+		if (em_type.mode=== ENTITY_TYPE_MODE_PERMANENT && this.entities[em_type.id] != undefined) {
 
-			return this.entities[entity].find(e => { return e[field] === value });
+			return this.entities[em_type.id].find(e => { return e[field] === value });
+		}
+		else if (em_type.mode === ENTITY_TYPE_MODE_TEMPORARY) {
+			
+			if (!this.tempEntities[em_type.id]) {
+				
+				this.tempEntities[em_type.id] = [];
+			}
+			
+			let tempEntity = undefined;
+			
+			if (this.tempEntities[em_type.id].length > 0) {
+			
+				let index = this.tempEntities[em_type.id].findIndex(v => v.id === value);
+				
+				if (index > -1) {
+					
+					tempEntity = this.tempEntities[em_type.id][index];
+					
+					if (tempEntity && (Math.floor(new Date() / 1000) - tempEntity.date) > em_type.expireSeconds) {
+					
+						this.tempEntities[em_type.id].splice(index, 1);
+						tempEntity = undefined;
+					}
+				}
+			}
+			
+			if (!tempEntity) {
+				
+				let response = webix.ajax().sync().get(em_type.endpoint + "/" + value) ;
+				
+				if (response) {
+				
+					let responseObject = JSON.parse(response.responseText);
+				
+					this.tempEntities[em_type.id].push({
+						id: value,
+						date: Math.floor(new Date() / 1000),
+						data: responseObject
+					});
+					
+					return responseObject;	
+				}
+			}
+			else {
+				
+				return tempEntity.data;
+			}
 		}
 	}
 }

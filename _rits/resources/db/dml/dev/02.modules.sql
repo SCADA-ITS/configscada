@@ -9,6 +9,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (10, 6, 'User service', 'User service', null, '../services/userService.js', 'getView', 'loadData', NULL, NULL, true, true),
 (11, 6, 'Alarm service', 'Alarm service', null, '../services/alarmService.js', 'getView', 'loadData', NULL, NULL, true, true),
 (12, 6, 'Notification service', 'Notification service', null, '../services/notificationService.js', 'getView', 'loadData', NULL, NULL, true, true),
+(13, 6, 'Time service', 'Time service', null, '../services/timeService.js', 'getView', 'loadData', NULL, NULL, true, true),
 
 (100, 3, 'Main Map', 'Main Map', 1, '../classes/Map.js', 'map', 'DEPRECATED', NULL, NULL, true, true),
 (101, 4, 'Generic Synoptic', 'Generic Synoptic', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
@@ -43,12 +44,15 @@ INSERT INTO ui.module_actions(id, module_id, name, description) VALUES
 (100103, 1001, 'remove', 'remove roles');
 
 INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
+
 (10, 1, '1'),
 (10, 2, null),
 (11, 1, '2'),
-(11, 2, '{"stats":{"rest":{"active_alarms":"generic_datas/GenericData:1","no_recognize_alarms":"generic_datas/GenericData:2","muted_alarms":"generic_datas/GenericData:3"},"ws":{"active_alarms":"/topic/generic_data.GenericData:1","no_recognize_alarms":"/topic/generic_data.GenericData:2","muted_alarms":"/topic/generic_data.GenericData:3"}},"levels_notif":[3,4,5,6],"level_acustic":[6],"default_sound":"alarm.wav"}'),
+(11, 2, '{"stats":{"rest":{"active_alarms":"generic_datas/GenericData:1","no_recognized_alarms":"generic_datas/GenericData:2","muted_alarms":"generic_datas/GenericData:3"},"ws":{"alarms": "/topic/alarm.>","active_alarms":"/topic/generic_data.GenericData:1","no_recognized_alarms":"/topic/generic_data.GenericData:2","muted_alarms":"/topic/generic_data.GenericData:3"}},"levels_notif":[3,4,5,6],"level_acustic":[6],"default_sound":"alarm.wav"}'),
 (12, 1, '3'),
 (12, 2, null),
+(13, 1, '4'),
+(13, 2, null),
 
 (101, 4, 'synopticBratislava'),
 (402, 5, 'http://192.168.88.200:3030/d/qQFlxpaZz/detectors?orgId=1&refresh=5s'),

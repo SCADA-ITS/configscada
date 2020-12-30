@@ -54,6 +54,7 @@ function initialize() {
 	window.alarmControlPanel = undefined;
 	window.notificationControlPanel = undefined;
 	window.userControlPanel = undefined;
+	window.serverTime = undefined;
 	
 	window.em = new EntitiesManager();
 	window.stompClient = undefined;
@@ -97,7 +98,7 @@ function initialize() {
 					menuToolbar.getView(),
 					{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
 					mainTab.getView(),
-					{ view: "template", role: "placeholder", borderless: 1, "height": 10 },
+					/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
 					main_footer
 				],
 				borderless: 1,
@@ -123,7 +124,7 @@ function initialize() {
 	
 	function loadWelcomeScreen() {
 	
-		let module = window.em.getByField(EntityType.MODULE.id, "id", WELCOME_SCREEN_MODULE_ID);
+		let module = window.em.getByField(EntityType.MODULE, "id", WELCOME_SCREEN_MODULE_ID);
 								
 		if (module) {
 		

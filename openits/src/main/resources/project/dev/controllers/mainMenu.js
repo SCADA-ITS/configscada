@@ -47,7 +47,7 @@ export default class MainMenu {
 		
 					if (this.getMenuItem(id).moduleId) {
 						
-						let module = window.em.getByField(EntityType.MODULE.id, "id", this.getMenuItem(id).moduleId);
+						let module = window.em.getByField(EntityType.MODULE, "id", this.getMenuItem(id).moduleId);
 						
 						if (module) {
 						

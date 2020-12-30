@@ -235,7 +235,7 @@ export let util = {
 						cols: [
 							{
 								rows: [
-									{ view: "template", role: "placeholder", borderless: 1, "height": 10 },
+									/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
 									viewModule
 								]
 							}
@@ -477,7 +477,26 @@ export let util = {
 	},
 
 
-	toLocalTime(ts) {
+	toLocaleString(ts) {
+
+		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+		let date = new Date(ts * 1000);
+
+		if (userData) {
+
+			let language = userData.language;
+			let country = userData.country;
+
+			if (language && country) {
+
+				date = new Date(ts * 1000).toLocaleString(language + "-" + country);
+			}
+		}
+
+		return date;
+	},
+	
+	toLocaleDateString(ts) {
 
 		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
@@ -490,6 +509,25 @@ export let util = {
 			if (language && country) {
 
 				date = new Date(ts * 1000).toLocaleDateString(language + "-" + country);
+			}
+		}
+
+		return date;
+	},
+	
+	toLocaleTimeString(ts) {
+
+		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+		let date = new Date(ts * 1000);
+
+		if (userData) {
+
+			let language = userData.language;
+			let country = userData.country;
+
+			if (language && country) {
+
+				date = new Date(ts * 1000).toLocaleTimeString(language + "-" + country);
 			}
 		}
 

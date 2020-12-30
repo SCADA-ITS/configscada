@@ -32,14 +32,18 @@ const VIEW_TYPE_TAB = 1;
 const VIEW_TYPE_WINDOW = 2;
 const VIEW_TYPE_CUSTOM = 3;
 
+const ENTITY_TYPE_MODE_PERMANENT = 1;
+const ENTITY_TYPE_MODE_TEMPORARY = 2;
+
 // Type of entities to load
 const EntityType = Object.freeze({
-	ELEMENT_TYPE: { id: 1, endpoint: appConfig.restUrl + "element_types" },
-	ELEMENT_TYPE_STATE: { id: 2, endpoint: appConfig.restUrl + "element_type_states" },
-	ALARM_TYPE: { id: 3, endpoint: appConfig.restUrl + "alarms/alarm_types" },
-	ALARM_LEVEL: { id: 4, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
-	ALARM_CONFIG: { id: 5, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
-	MODULE: { id: 6, endpoint: appConfig.restUrl + "modules" } 
+	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "element_types" },
+	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "element_type_states" },
+	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_types" },
+	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
+	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
+	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "modules" },
+	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, expireSeconds: 300, endpoint: appConfig.restUrl + "elements" }
 });
 
 // Params for windowed ui

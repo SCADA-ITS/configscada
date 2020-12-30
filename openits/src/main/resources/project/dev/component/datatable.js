@@ -140,7 +140,7 @@ export default class DataTable {
 
 									if (refField != undefined) {
 
-										value = window.em.getByField(EntityType[gridFieldReference.emId].id, gridFieldReference.emField, data[refField[0].sourceField]);
+										value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, data[refField[0].sourceField]);
 
 										value = value[gridFieldReference.emFieldReturned];
 									}
@@ -158,7 +158,7 @@ export default class DataTable {
 
 							if (field.isEpochMilli) {
 
-								value = util.toLocalTime(value);
+								value = util.toLocaleString(value);
 							}
 
 							if (icon || badgeColor || avatar) {
@@ -412,6 +412,8 @@ export default class DataTable {
 		toolbar.elements = [];
 		toolbar.elements.push({ width: 4 })
 
+		toolbar.elements.push({ id: "tb_btn-select-all-" + this.uid, view: "icon", icon: "mdi mdi-check-box-outline", value: i18n.t("LBL_SELECT_ALL"), tooltip: true });
+		toolbar.elements.push({ id: "tb_btn-unselect-all-" + this.uid, view: "icon", icon: "mdi mdi-checkbox-blank-outline", value: i18n.t("LBL_UNSELECT_ALL"), tooltip: true });
 		toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
 		toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });
 		toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
@@ -452,6 +454,8 @@ export default class DataTable {
 	callbacks() {
 
 		this.search_callback();
+		this.select_all_callback();
+		this.unselect_all_callback();
 		this.refresh_callback();
 		this.print_callback();
 		this.export_pdf_callback();
@@ -532,7 +536,7 @@ export default class DataTable {
 	find_module(moduleActionId) {
 		
 		let moduleFound = undefined;
-		let modules = window.em.getAll(EntityType.MODULE.id);
+		let modules = window.em.getAll(EntityType.MODULE);
 		
 		if (modules && modules.length > 0) {
 			
@@ -637,6 +641,34 @@ export default class DataTable {
 		}
 	}
 	
+	select_all_callback() {
+		
+		let selectAllButton = $$("tb_btn-select-all-" + this.uid);
+		let grid = $$("dt-" + this.uid);
+		
+		if (!webix.isUndefined(grid) && !webix.isUndefined(selectAllButton)) {
+			
+			selectAllButton.attachEvent("onItemClick", function(id, e) {
+				
+				grid.selectAll();	
+			});
+		}
+	}
+	
+	unselect_all_callback() {
+		
+		let unselectAllButton = $$("tb_btn-unselect-all-" + this.uid);
+		let grid = $$("dt-" + this.uid);
+		
+		if (!webix.isUndefined(grid) && !webix.isUndefined(unselectAllButton)) {
+			
+			unselectAllButton.attachEvent("onItemClick", function(id, e) {
+				
+				grid.unselectAll();	
+			});
+		}
+	}
+	
 	refresh_callback() {
 
 		let self = this;
@@ -676,8 +708,8 @@ export default class DataTable {
 			printButton.attachEvent("onItemClick", function(id, e) {
 
 				webix.alert({
-					title: i18n.t("LBL_NOT_IMPLEMENTED_YET"),
-					text: i18n.t("LBL_NOT_IMPLEMENTED_YET_DESCRIPTION"),
+					title: i18n.t("LBL_NOT_IMPLEMENTED"),
+					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
 					type: "alert-error",
 					width: 500
 				});
@@ -726,8 +758,8 @@ export default class DataTable {
 			xlsButton.attachEvent("onItemClick", function(id, e) {
 
 				webix.alert({
-					title: i18n.t("LBL_NOT_IMPLEMENTED_YET"),
-					text: i18n.t("LBL_NOT_IMPLEMENTED_YET_DESCRIPTION"),
+					title: i18n.t("LBL_NOT_IMPLEMENTED"),
+					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
 					type: "alert-error",
 					width: 500
 				});

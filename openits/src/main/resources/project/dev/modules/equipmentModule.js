@@ -21,7 +21,7 @@ export default class EquipmentModule extends GenericModule {
 
 	getView() {
 		
-		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType.ELEMENT_TYPE.id);
+		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType.ELEMENT_TYPE);
 		
 		jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
 
