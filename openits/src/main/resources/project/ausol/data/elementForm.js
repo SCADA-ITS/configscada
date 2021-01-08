@@ -436,5 +436,22 @@ export let columnsElementFormList = {
 		"scroll": false,  
 		"width": 540,
 		"options": {}
+	},
+	"ElementType:65": {
+		"rows":[
+			"ElementTypeParam:65:1:1", 
+			"ElementTypeParam:65:1:2",
+			"ElementTypeParam:65:2:1",
+			"ElementTypeParam:65:2:2",
+			"ElementTypeParam:65:2:3",
+			"ElementTypeParam:65:2:4",
+			"ElementTypeParam:65:2:5",
+			"ElementTypeParam:65:2:6",
+			"ElementTypeParam:65:2:7",
+		],
+		"rowCounts": 9,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
 	}
 }

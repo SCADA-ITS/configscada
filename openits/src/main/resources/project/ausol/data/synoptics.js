@@ -403,7 +403,13 @@ export let synopticData= [
 				"items": ["Element:61:1"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"SAI" : {
+				"items": ["Element:65:1"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
+			
 		},
 
 		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" },
@@ -418,6 +424,8 @@ export let synopticData= [
 		"Element:60:1": { "x": 900,   "y": 100, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
 
 		"Element:61:1": { "x": 150,   "y": 200, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
+		
+		"Element:65:1": { "x": 1640,   "y": 300, "width": 300, "height": 300,  "alias": "RV-SAI-1" },
 	},
 	{
 		"id":"synopticUnifilarCsa",
