@@ -1015,6 +1015,7 @@ var i18_en = {
     "equipment.table.id": "Id",
     "equipment.table.alias": "Alias",
     "equipment.table.state": "State",
+    "equipment.table.description": "Description",
 
     "user.popup.tab.details": "Details",
     "user.popup.tab.permissions": "Permissions",

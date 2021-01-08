@@ -747,6 +747,7 @@ export default class TabForm {
 			try {
 				valuesList["id"] = {id: "elementBody" + this.id + "_id", iconAlerted: false, title: $.i18n("role.popup.id"), measure: data.id, tooltiplab: data.id  };
 				valuesList["alias"] = {id: "elementBody" + this.id + "_alias", iconAlerted: false, title: $.i18n("role.popup.alias"), measure: data.alias, tooltiplab: data.id  };
+				valuesList["description"] = {id: "elementBody" + this.id + "_description", iconAlerted: false, title: $.i18n("role.popup.description"), measure: data.description, tooltiplab: data.id  };
 			} catch (e) {
 				console.error("Error. id: "+this.id);
 				console.error(e);		

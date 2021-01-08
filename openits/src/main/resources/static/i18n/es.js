@@ -1072,6 +1072,7 @@ var i18_es = {
     "equipment.table.id": "Identificador",
     "equipment.table.alias": "Alias",
     "equipment.table.state": "Estado",
+    "equipment.table.description": "Descripcion",
 
     "user.popup.tab.details": "Detalles",
     "user.popup.tab.permissions": "Permisos",

@@ -999,6 +999,7 @@ var i18_sk = {
     "equipment.table.id": "Id",
     "equipment.table.alias": "N&#225;zov",
     "equipment.table.state": "Stav",
+    "equipment.table.description": "Description",
 
     "user.popup.tab.details": "Podrobnosti",
     "user.popup.tab.permissions": "Opr&aacute;vnenie",
