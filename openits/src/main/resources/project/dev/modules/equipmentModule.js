@@ -24,6 +24,14 @@ export default class EquipmentModule extends GenericModule {
 		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType.ELEMENT_TYPE);
 		
 		jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
+			
+		jsonEquipmentTypesWithGridAssigned.forEach(elementType => {
+			
+			elementType.labelAlias = i18n.t(elementType.labelAlias);
+			elementType.labelDescription = i18n.t(elementType.labelDescription);
+		});
+		
+		jsonEquipmentTypesWithGridAssigned.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));
 
 		let view = {
 			cols: [
@@ -105,7 +113,7 @@ export default class EquipmentModule extends GenericModule {
 	
 				}, null, null, 1);
 			});
-	
+			
 			listEquipmentTypes.select(listEquipmentTypes.getFirstId());
 			
 			listEquipmentTypes.refresh();
@@ -134,8 +142,8 @@ export default class EquipmentModule extends GenericModule {
 						}
 						return `<image class="list-photo" src="img/${elementTypePhoto}" />
 								<div class="text">
-							  		<span class="list-first-line">${i18n.t(obj.labelAlias)} </span>
-							  		<span class="list-second-line">${i18n.t(obj.labelDescription)} </span>
+							  		<span class="list-first-line">${obj.labelAlias} </span>
+							  		<span class="list-second-line">${obj.labelDescription} </span>
 								</div>`
 					},
 					height: 66
@@ -157,12 +165,6 @@ export default class EquipmentModule extends GenericModule {
 		let dataGridParams = id;
 		let equipmentTable = $$(this.uid);
 	
-		let viewsToRemove = [];
-		equipmentTable.getChildViews().forEach(view => {
-	
-			viewsToRemove.push(view.config.id);
-		});
-	
 		if (dataGridId != undefined && dataGridParams != undefined) {
 	
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
@@ -175,28 +177,11 @@ export default class EquipmentModule extends GenericModule {
 					let dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
 					
 					let newTable = dataTable.getView();
-		
-					newTable.forEach(newView => {
-		
-						equipmentTable.addView(newView);
-					});
+					
+					webix.ui(newTable, equipmentTable);
 		
 					//app.datatable.callbacks(self.module, self.instance);
 					dataTable.callbacks();
-					
-					viewsToRemove.forEach(viewId => {
-	
-						if (viewId.indexOf("dt-") !== -1) {
-							let ctx = viewId.replace("dt-", "ctx_menu-");
-				
-							if (!webix.isUndefined($$(ctx))) {
-				
-								$$(ctx).destructor();
-							}
-						}
-						
-						equipmentTable.removeView(viewId);
-					});
 					
 					$$(this.uid).hideProgress();
 				}
@@ -207,4 +192,62 @@ export default class EquipmentModule extends GenericModule {
 			equipmentTable.addView({ height: 20 });
 		}
 	}
+	
+//	callbackSelectedElemenType(list, id) {
+//
+//		let item = list.getItem(id);
+//		let dataGridId = item.grid;
+//		let dataGridParams = id;
+//		let equipmentTable = $$(this.uid);
+//	
+//		if (dataGridId != undefined && dataGridParams != undefined) {
+//	
+//			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
+//				
+//				if (dat != null) {
+//	
+//					let viewsToRemove = [];
+//					equipmentTable.getChildViews().forEach(view => {
+//				
+//						viewsToRemove.push(view.config.id);
+//					});
+//					
+//					let metadata = dat.json().metadata;
+//					let data = dat.json().data;
+//		
+//					let dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
+//					
+//					let newTable = dataTable.getView();
+//		
+//					newTable.forEach(newView => {
+//		
+//						equipmentTable.addView(newView);
+//					});
+//		
+//					//app.datatable.callbacks(self.module, self.instance);
+//					dataTable.callbacks();
+//					
+//					viewsToRemove.forEach(viewId => {
+//	
+//						if (viewId.indexOf("dt-") !== -1) {
+//							let ctx = viewId.replace("dt-", "ctx_menu-");
+//				
+//							if (!webix.isUndefined($$(ctx))) {
+//				
+//								$$(ctx).destructor();
+//							}
+//						}
+//						
+//						equipmentTable.removeView(viewId);
+//					});
+//					
+//					$$(this.uid).hideProgress();
+//				}
+//			}, function(response) { util.ajax.handleError(response); });
+//		}
+//		else {
+//			equipmentTable.addView(self.drawNoEquipmentTypeData);
+//			equipmentTable.addView({ height: 20 });
+//		}
+//	}
 }

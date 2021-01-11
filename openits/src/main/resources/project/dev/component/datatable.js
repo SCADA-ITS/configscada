@@ -56,7 +56,14 @@ export default class DataTable {
 
 					if (field.filtered) {
 
-						col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+						if (field.label) {
+							
+							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);	
+						}
+						else {
+							
+							col.header.push(`<div></div>`);
+						}
 
 						if (field.parameterized) {
 							col.header.push({ content: "selectFilter" });
@@ -79,7 +86,15 @@ export default class DataTable {
 					else {
 
 						//col.header = i18n.t(field.label);
-						col.header = `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`;
+						
+						if (field.label) {
+							
+							col.header = `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`;	
+						}		
+						else {
+							
+							col.header = `<div></div>`;
+						}				
 					}
 
 					if (posField < metadata.gridFields.length) {
