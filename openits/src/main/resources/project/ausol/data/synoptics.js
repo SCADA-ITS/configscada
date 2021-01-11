@@ -123,6 +123,11 @@ export let synopticData= [
 				"items": ["Element:55:1"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"VELETA": {
+				"items": ["Element:66:1"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 		
@@ -223,6 +228,7 @@ export let synopticData= [
 		"Element:16:6": { "x": 881,  "y": 444, "width": 40,  "height": 40,  "alias": "RV-MEG_2MA" },
 
 		"Element:17:1": { "x": 150,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
+		"Element:66:1": { "x": 230,  "y": 387, "width": 200,  "height": 200,  "alias": "RV-VTA-1C" },
 
 		"Element:18:1": { "x": 890,  "y": 813, "width": 50,  "height": 50,  "alias": "RV-ANI-1CA" },
 		"Element:18:2": { "x": 900,  "y": 235, "width": 50,  "height": 50,  "alias": "RV-ANI-1MA" },

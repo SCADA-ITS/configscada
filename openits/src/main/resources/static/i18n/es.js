@@ -123,6 +123,8 @@ var i18_es = {
     "ElementType:64.description": "PANEL NIEVE",
     "ElementType:65.alias": "SAI",
     "ElementType:65.description": "SAI",
+    "ElementType:66.alias": "VELETA",
+    "ElementType:66.description": "VELETA",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -974,6 +976,18 @@ var i18_es = {
     "ElementTypeParam:65:2:6.description": "L3 (%)",
     "ElementTypeParam:65:2:7.alias": "Autonomia (min.)",
     "ElementTypeParam:65:2:7.description": "Autonomia (min.)",
+    
+    "ElementTypeParam:66:1:1.alias": "PK",
+    "ElementTypeParam:66:1:1.description": "PK",
+    "ElementTypeParam:66:1:2.alias": "Sentido",
+    "ElementTypeParam:66:1:2.description": "Sentido",
+	"ElementTypeParam:66:1:3.alias": "Carretera",
+    "ElementTypeParam:66:1:3.description": "Carretera",
+    "ElementTypeParam:66:1:4.alias": "Tramo",
+    "ElementTypeParam:66:1:4.description": "Tramo",
+    "ElementTypeParam:66:2:1.alias": "wind direction (&deg)",
+    "ElementTypeParam:66:2:1.description": "wind direction (&deg)",
+    
     
     
 
