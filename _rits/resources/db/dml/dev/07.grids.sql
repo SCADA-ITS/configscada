@@ -55,13 +55,13 @@ INSERT INTO ui.grids(id, adapter_id, "label", icon, multiselect, sort, "search",
 INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", required, parameterized, extended, filtered, "label", label_tooltip, source_field, is_pk, is_epoch_milli, align, needs_translation, grouping_summary, width_px, grid_field_group_operation_id, enabled, visible) VALUES
 --BRATISLAVA
 (1, 1, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 100, NULL, true, true),
-(2, 1, 1, 2, true, true, false, false, '', NULL, 'state', false, false, null, false, false, 30, NULL, true, true),
+(2, 1, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, null, false, false, 30, NULL, true, true),
 (3, 1, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true),
 (4, 1, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true),
 (5, 1, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true),
 
 (6, 2, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 100, NULL, true, true),
-(7, 2, 1, 2, true, true, false, false, '', null, 'state', false, false, null, false, false, 30, NULL, true, true),
+(7, 2, 1, 2, true, true, false, false, NULL, null, 'state', false, false, null, false, false, 30, NULL, true, true),
 (8, 2, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, null, true, false, 250, NULL, true, true),
 (9, 2, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, null, false, false, 150, NULL, true, true),
 (10, 2, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, null, false, false, 200, NULL, true, true),
@@ -70,7 +70,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (13, 2, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:34:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (14, 3, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(15, 3, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(15, 3, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (16, 3, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (17, 3, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (18, 3, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -82,7 +82,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (24, 3, 1, 11, false, false, true, false, 'LBL_ENTRANCE_TUNNEL_DISTANCE', 'LBL_ENTRANCE_TUNNEL_DISTANCE', 'ElementTypeParam:1:1:6', false, false, 'center', false, false, 100, NULL, true, true),
 
 (25, 4, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(26, 4, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(26, 4, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (27, 4, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (28, 4, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (29, 4, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -98,7 +98,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (39, 4, 1, 15, false, false, true, false, 'LBL_ASSOCIATED_CABINET', 'LBL_ASSOCIATED_CABINET', 'ElementTypeParam:2:1:10', false, false, 'center', false, false, 100, NULL, true, true),
 
 (40, 5, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(41, 5, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(41, 5, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (42, 5, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (43, 5, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (44, 5, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -107,7 +107,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (47, 5, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:4:1:12', false, false, 'center', false, false, 100, NULL, true, true),
 
 (48, 6, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(49, 6, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(49, 6, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (50, 6, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (51, 6, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (52, 6, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -117,7 +117,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (56, 6, 1, 8, false, false, true, false, 'LBL_ASSOCIATED_CABINET', 'LBL_ASSOCIATED_CABINET', 'ElementTypeParam:25:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (57, 7, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(58, 7, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(58, 7, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (59, 7, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (60, 7, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (61, 7, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -131,7 +131,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (69, 7, 1, 13, false, false, true, false, 'LBL_ASSOCIATED_CABINET', 'LBL_ASSOCIATED_CABINET', 'ElementTypeParam:31:1:8', false, false, 'center', false, false, 100, NULL, true, true),
 
 (70, 8, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(71, 8, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(71, 8, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (72, 8, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (73, 8, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (74, 8, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -140,7 +140,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (77, 8, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:41:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (78, 9, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(79, 9, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(79, 9, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (80, 9, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (81, 9, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (82, 9, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -149,7 +149,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (85, 9, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:42:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (86, 10, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(87, 10, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(87, 10, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (88, 10, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (89, 10, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (90, 10, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -158,7 +158,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (93, 10, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:43:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (94, 11, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(95, 11, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(95, 11, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (96, 11, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (97, 11, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (98, 11, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -167,7 +167,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (101, 11, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:44:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (102, 12, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(103, 12, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(103, 12, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (104, 12, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (105, 12, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (106, 12, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -176,7 +176,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (109, 12, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:46:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (110, 13, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(111, 13, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(111, 13, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (112, 13, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (113, 13, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (114, 13, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -185,7 +185,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (117, 13, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:46:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (118, 14, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(119, 14, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(119, 14, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (120, 14, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (121, 14, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (122, 14, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -194,7 +194,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (125, 14, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:47:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (126, 15, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(127, 15, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(127, 15, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (128, 15, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (129, 15, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (130, 15, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -203,7 +203,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (133, 15, 1, 8, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:54:1:3', false, false, 'center', false, false, 100, NULL, true, true),
 
 (134, 16, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(135, 16, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(135, 16, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (136, 16, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (137, 16, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (138, 16, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -217,7 +217,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 
 --AUSOL
 (146, 17, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(147, 17, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(147, 17, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (148, 17, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (149, 17, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (150, 17, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -227,7 +227,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (154, 17, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:8:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (155, 18, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(156, 18, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(156, 18, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (157, 18, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (158, 18, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (159, 18, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -237,7 +237,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (163, 18, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:9:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (164, 19, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(165, 19, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(165, 19, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (166, 19, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (167, 19, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (168, 19, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -247,7 +247,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (172, 19, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:11:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (173, 20, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(174, 20, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(174, 20, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (175, 20, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (176, 20, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (177, 20, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -257,7 +257,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (181, 20, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:12:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (182, 21, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(183, 21, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(183, 21, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (184, 21, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (185, 21, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (186, 21, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -267,7 +267,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (190, 21, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:13:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (191, 22, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(192, 22, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(192, 22, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (193, 22, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (194, 22, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (195, 22, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -277,7 +277,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (199, 22, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:14:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (200, 23, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(201, 23, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(201, 23, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (202, 23, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (203, 23, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (204, 23, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -287,7 +287,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (208, 23, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:15:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (209, 24, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(210, 24, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(210, 24, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (211, 24, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (212, 24, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (213, 24, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -297,7 +297,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (217, 24, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:16:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (218, 25, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(219, 25, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(219, 25, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (220, 25, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (221, 25, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (222, 25, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -307,7 +307,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (226, 25, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:17:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (227, 26, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(228, 26, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(228, 26, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (229, 26, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (230, 26, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (231, 26, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -317,7 +317,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (235, 26, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:18:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (236, 27, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(237, 27, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(237, 27, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (238, 27, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (239, 27, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (240, 27, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -327,7 +327,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (244, 27, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:19:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (245, 28, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(246, 28, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(246, 28, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (247, 28, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (248, 28, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (249, 28, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -337,7 +337,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (253, 28, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:20:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (254, 29, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(255, 29, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(255, 29, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (256, 29, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (257, 29, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (258, 29, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -347,7 +347,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (262, 29, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:21:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (263, 30, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(264, 30, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(264, 30, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (265, 30, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (266, 30, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (267, 30, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -361,7 +361,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (275, 30, 1, 13, false, false, true, false, 'LBL_ASSOCIATED_CABINET', 'LBL_ASSOCIATED_CABINET', 'ElementTypeParam:26:1:8', false, false, 'center', false, false, 100, NULL, true, true),
 
 (276, 31, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(277, 31, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(277, 31, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (278, 31, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (279, 31, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (280, 31, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -373,7 +373,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (286, 31, 1, 11, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:51:1:6', false, false, 'center', false, false, 100, NULL, true, true),
 
 (287, 32, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(288, 32, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(288, 32, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (289, 32, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (290, 32, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (291, 32, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -383,7 +383,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (295, 32, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:53:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (296, 33, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(297, 33, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(297, 33, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (298, 33, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (299, 33, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (300, 33, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -393,7 +393,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (304, 33, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:55:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (305, 34, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(306, 34, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(306, 34, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (307, 34, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (308, 34, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (309, 34, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -403,7 +403,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (313, 34, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:56:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (314, 35, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(315, 35, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(315, 35, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (316, 35, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (317, 35, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (318, 35, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -413,7 +413,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (322, 35, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:57:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (323, 36, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(324, 36, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(324, 36, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (325, 36, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (326, 36, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (327, 36, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -423,7 +423,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (331, 36, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:58:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (332, 37, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(333, 37, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(333, 37, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (334, 37, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (335, 37, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (336, 37, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -433,7 +433,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (340, 37, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:59:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (341, 38, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(342, 38, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(342, 38, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (343, 38, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (344, 38, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (345, 38, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),
@@ -443,7 +443,7 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 (349, 38, 1, 9, false, false, true, false, 'LBL_SECTION', 'LBL_SECTION', 'ElementTypeParam:60:1:4', false, false, 'center', false, false, 100, NULL, true, true),
 
 (350, 39, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, NULL, false, false, 100, NULL, true, true),
-(351, 39, 1, 2, true, true, false, false, '', NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
+(351, 39, 1, 2, true, true, false, false, NULL, NULL, 'state', false, false, NULL, false, false, 30, NULL, true, true),
 (352, 39, 1, 3, true, true, false, false, 'LBL_STATE_LABEL', 'LBL_STATE_LABEL', 'stateLabel', false, false, NULL, true, false, 250, NULL, true, true),
 (353, 39, 1, 4, true, false, false, false, 'LBL_NAME', 'LBL_NAME', 'alias', false, false, NULL, false, false, 150, NULL, true, true),
 (354, 39, 1, 5, true, false, false, false, 'LBL_DESCRIPTION', 'LBL_DESCRIPTION', 'description', false, false, NULL, false, false, 200, NULL, true, true),

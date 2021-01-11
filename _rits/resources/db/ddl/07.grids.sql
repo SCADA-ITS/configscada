@@ -101,7 +101,7 @@
 		parameterized bool NOT NULL,
 		extended bool NOT NULL,
 		filtered bool NOT NULL,
-		label varchar NOT NULL,
+		label varchar NULL,
 		label_tooltip varchar NULL,
 		source_field varchar NOT NULL,
 		is_pk bool NOT NULL,
