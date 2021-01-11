@@ -62,7 +62,13 @@ INSERT INTO ui.vo_entities(id, vo_entity_type_id, enabled, visible) VALUES
 ('Location:1', 'LocationUI', true, true),
 ('Location:2', 'LocationUI', true, true),
 ('Location:3', 'LocationUI', true, true),
-('Location:4', 'LocationUI', true, true);
+('Location:4', 'LocationUI', true, true),
+('AlarmLevel:1', 'AlarmLevelUI', true, true),
+('AlarmLevel:2', 'AlarmLevelUI', true, true),
+('AlarmLevel:3', 'AlarmLevelUI', true, true),
+('AlarmLevel:4', 'AlarmLevelUI', true, true),
+('AlarmLevel:5', 'AlarmLevelUI', true, true),
+('AlarmLevel:6', 'AlarmLevelUI', true, true);
 
 INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('ElementType:1', 1, '3'),
@@ -152,7 +158,19 @@ INSERT INTO ui.vo_entity_values(vo_entity_id, vo_entity_field_id, value) VALUES
 ('Location:2', 5, '40.50601573088965'),
 ('Location:2', 6, '-3.5115705015736878'),
 ('Location:3', 5, '40.49601573088965'),
-('Location:3', 6, '-3.5015705015736878');
+('Location:3', 6, '-3.5015705015736878'),
+('AlarmLevel:1', 8, 'false'),
+('AlarmLevel:1', 9, null),
+('AlarmLevel:2', 8, 'false'),
+('AlarmLevel:2', 9, null),
+('AlarmLevel:3', 8, 'false'),
+('AlarmLevel:3', 9, null),
+('AlarmLevel:4', 8, 'false'),
+('AlarmLevel:4', 9, null),
+('AlarmLevel:5', 8, 'true'),
+('AlarmLevel:5', 9, 'alarm.mp3'),
+('AlarmLevel:6', 8, 'true'),
+('AlarmLevel:6', 9, 'alarm.mp3');
 
 INSERT INTO ui.vo_entity_hierarchies(parent_id, child_id, "position") VALUES
 ('Location:4', 'Location:2', 1),

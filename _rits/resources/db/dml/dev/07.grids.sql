@@ -467,9 +467,9 @@ INSERT INTO ui.grid_fields(id, grid_id, grid_field_data_type_id, "position", req
 
 (100201, 1002, 1, 1, true, false, false, false, 'LBL_ID', 'LBL_ID', 'id', true, false, null, false, false, 500, NULL, true, false),
 (100202, 1002, 1, 2, true, false, false, false, 'LBL_ALIAS', 'LBL_ALIAS', 'alias', false, false, null, false, false, 300, NULL, true, true),
-(100203, 1002, 1, 3, true, false, false, false, 'LBL_ALARM_TYPE_LABEL_ALIAS', 'LBL_ALARM_TYPE_LABEL_ALIAS', 'alarmTypeLabelAlias', false, false, null, false, false, 400, NULL, true, true),
-(100204, 1002, 1, 4, true, false, false, false, 'LBL_ALARM_LEVEL_LABEL_ALIAS', 'LBL_ALARM_LEVEL_LABEL_ALIAS', 'alarmLevelLabelAlias', false, false, null, false, false, 400, NULL, true, true),
-(100205, 1002, 1, 5, true, false, false, false, 'LBL_ELEMENT_TYPE_LABEL_ALIAS', 'LBL_ELEMENT_TYPE_LABEL_ALIAS', 'elementTypeLabelAlias', false, false, null, false, false, 400, NULL, true, true),
+(100203, 1002, 1, 3, true, false, false, false, 'LBL_ALARM_TYPE_LABEL_ALIAS', 'LBL_ALARM_TYPE_LABEL_ALIAS', 'alarmTypeLabelAlias', false, false, null, true, false, 400, NULL, true, true),
+(100204, 1002, 1, 4, true, false, false, false, 'LBL_ALARM_LEVEL_LABEL_ALIAS', 'LBL_ALARM_LEVEL_LABEL_ALIAS', 'alarmLevelLabelAlias', false, false, null, true, false, 400, NULL, true, true),
+(100205, 1002, 1, 5, true, false, false, false, 'LBL_ELEMENT_TYPE_LABEL_ALIAS', 'LBL_ELEMENT_TYPE_LABEL_ALIAS', 'elementTypeLabelAlias', false, false, null, true, false, 400, NULL, true, true),
 (100206, 1002, 1, 6, true, false, false, false, 'LBL_ELEMENT_ALIAS', 'LBL_ELEMENT_ALIAS', 'elementAlias', false, false, null, false, false, 400, NULL, true, true);
 
 INSERT INTO ui.grid_commands(grid_id, "position", "label", icon, "default", module_action_id, args, view_type_id, multiselect) VALUES
