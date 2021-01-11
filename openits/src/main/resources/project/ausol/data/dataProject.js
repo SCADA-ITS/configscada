@@ -25,8 +25,12 @@ export let menu_data_multi  = [
 	//{ id: "cctv", icon: "mdi mdi-video", value:$.i18n("menu.cctv.title")},
 	{ id: "plans1", icon: "mdi mdi-clock", value:"Plans", data:[
 		{ id: "plans", icon:"mdi mdi-circle", value: $.i18n("menu.plans.title")},
-		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}]},
-	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana")},
+		{ id: "planschedule", icon:"mdi mdi-circle", value: $.i18n("menu.plans.schedule")}
+	]},
+	{ id: "grafana", icon: "mdi mdi-monitor", value:$.i18n("menu.grafana"), data:[
+		{ id: "imd", icon:"mdi mdi-circle", value: $.i18n("menu.grafana.imd")},
+		{ id: "speed", icon:"mdi mdi-circle", value: $.i18n("menu.grafana.speed")}
+	]},
 	{ id: "jasper", icon: "mdi mdi-file", value:$.i18n("menu.jasper")},
 	//{ id: "usersmanager", icon: "mdi mdi-account", value:$.i18n("defaultheader.users.manager")}
 		

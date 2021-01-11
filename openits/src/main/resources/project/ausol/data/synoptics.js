@@ -139,7 +139,7 @@ export let synopticData= [
 
 		"Element:4:1": { "x": 1485,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1_ETD1",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -147,7 +147,7 @@ export let synopticData= [
 		},
 		"Element:4:2": { "x": 1485,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2_ETD1",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -155,7 +155,7 @@ export let synopticData= [
 		},
 		"Element:4:3": { "x": 235,  "y": 300, "width": 80, "height": 80, "alias": "SEC_1_ETD2",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -163,7 +163,7 @@ export let synopticData= [
 		},
 		"Element:4:4": { "x": 235,  "y": 711, "width": 80, "height": 80, "alias": "SEC_2_ETD2",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -348,7 +348,7 @@ export let synopticData= [
 		
 		"Element:4:4": { "x": 1410,  "y": 700, "width": 80, "height": 80, "alias": "SEC_1",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -356,7 +356,7 @@ export let synopticData= [
 		},
 		"Element:4:2": { "x": 1825,  "y": 555, "width": 80, "height": 80, "alias": "SEC_2",
 			"values": [
-				{name: "etd_n_vehicles", label: "I (V/h)"},
+				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
 				{name: "etd_occupancy", label: "O (%)"},
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
@@ -409,7 +409,6 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			}
-			
 		},
 
 		"Element:56:1": { "x": 1220,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSA" },

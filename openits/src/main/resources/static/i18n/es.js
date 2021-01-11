@@ -99,12 +99,12 @@ var i18_es = {
     "ElementType:46.description": "ARMARIO_ELECTRICO_TOLL",
     "ElementType:47.alias": "ARMARIO_ELECTRICO_TU",
     "ElementType:47.description": "ARMARIO_ELECTRICO_TU",
-    "ElementType:51.alias": "TFA",
-    "ElementType:51.description": "TFA",
+    "ElementType:51.alias": "ETD",
+    "ElementType:51.description": "ETD",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
-    "ElementType:54.alias": "ATC",
-    "ElementType:54.description": "ATC",
+    "ElementType:54.alias": "ETD",
+    "ElementType:54.description": "ETD",
     "ElementType:55.alias": "CT",
     "ElementType:55.description": "CT",
     "ElementType:56.alias": "UNIFILAR",
@@ -1046,6 +1046,8 @@ var i18_es = {
     "menu.jasper": "Informes",
     "menu.dashboard.bratislava":"ITS Dashboard",
     "menu.plans.schedule": "Planificador",
+    "menu.grafana.speed": "Velocidad 24h",
+    "menu.grafana.imd": "IMD 24h",
 
     "alarmsconfig.d.id": "Identificador",
     "alarmsconfig.d.alias": "Alias",
@@ -1233,7 +1235,7 @@ var i18_es = {
 
 
 
-    /*  BRATISLAVA  */
+    /*  BRATISLAVA  
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1371,12 +1373,12 @@ var i18_es = {
     "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
     "AlarmConfig:141": "ALARMA PANEL NIEVE NO CONECTADO",
     "AlarmConfig:142": "ALARMA CONGESTION DETECTOR",
-    "AlarmConfig:143": "ALARMA TFA NO CONECTADO",
+    "AlarmConfig:143": "ALARMA TFA NO CONECTADO",*/
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL
+/*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1412,7 +1414,7 @@ var i18_es = {
     "AlarmConfig:37": "ALARMA SIRENA SIN CONEXI&Oacute;N",
     "AlarmConfig:38": "ALARMA SIRENA ACTIVADA",
     "AlarmConfig:39": "ALARMA DETECTOR DE INCENDIOS SIN CONEXI&Oacute;N",
-    "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",*/
+    "AlarmConfig:40": "ALARMA DETECTOR DE INCENDIOS INCENDIO",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",

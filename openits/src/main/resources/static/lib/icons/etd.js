@@ -43,7 +43,7 @@ export function generateIcon(element, values, suffix, state) {
     '<g inkscape:label ="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-268.68957)"> ' +
     '<rect id="'+element.id +':fill0" stroke="black" style="stroke-width:0.2" fill="' + color + '" width="28.228191" height="5.6456451" x="0.041112646" y="268.73068" ry="0" />' +
     '<text fill="black" xml:space="preserve" x="13.904327" y="272.36899" id="titulo" transform="scale(0.99833799,1.0016648)">' +
-    '<tspan fill="black" x="13.904327" y="272.36899" style="font-size:3.15464282px;line-height:2.62886882px;text-align:center;text-anchor:middle" id="tspan1693-0">' +
+    '<tspan fill="black" x="13.904327" y="272.36899" style="font-size:2.7px;line-height:2.62886882px;text-align:center;text-anchor:middle" id="tspan1693-0">' +
     element.description +
     "</tspan></text>";
 

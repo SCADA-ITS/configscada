@@ -209,6 +209,10 @@ export const ELEMENT_TYPE = {
   }
 };
 
+export const ELEMENTS = {
+  ID_ELEMENT_FAN : "Element:9:"
+}
+
 export const ICON_COLOR = {
   undefined:"gray",
   null:"gray",

@@ -22,6 +22,8 @@ import { mapsData } from "../data/mapsData.js";
 import Map from "../classes/Map.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
+let imd = {view:"iframe", src:  webix.storage.session.get("url.grafana.imd") };
+let speed = {view:"iframe", src:  webix.storage.session.get("url.grafana.speed") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
 
 toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-menu").click=function(){$$("$sidebar1").toggle();};
@@ -85,6 +87,14 @@ let viewCells = [
     {
         id: "cctv",
         rows: [cctv]
+    },
+    {
+        id: "imd",
+        rows: [imd]
+    },
+    {
+        id: "speed",
+        rows: [speed]
     }
     ];
     synopticData.forEach((item, index) => {

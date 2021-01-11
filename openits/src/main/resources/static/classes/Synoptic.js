@@ -3,7 +3,7 @@ import {columnsElementFormList} from "../data/elementForm.js";
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import EquipmentTree from "./EquipmentTree.js";
 import SynopticElement from "../classes/SynopticElement.js";
-import {ELEMENT_TYPE, WIDTH_RESOLUTION, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
+import {ELEMENT_TYPE, WIDTH_RESOLUTION, HEIGHT_RESOLUTION, ELEMENTS} from "../data/GLOBAL_PROPERTIES.js";
 
 let graphSynoptic = webix.proxy(
   "GraphQL",
@@ -231,7 +231,11 @@ export default class Synoptic {
     // clean the current selection
     Array.prototype.forEach.call(document.querySelectorAll(".synoptic-highlight"), (e) => { e.classList.remove("synoptic-highlight") });
     // highlights the selected item
-    document.getElementById(id).classList.add("synoptic-highlight");
+    if(id.startsWith(ELEMENTS.ID_ELEMENT_FAN)){
+    	document.getElementById(id + ":IconInterior").classList.add("synoptic-highlight");
+    }else{
+    	document.getElementById(id).classList.add("synoptic-highlight");
+    }
   }
 
   checkElement(id) {
