@@ -206,7 +206,7 @@ export const ELEMENT_TYPE = {
     "ElementType:65" :{ id: "ElementType:65", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 100, scale_y: 100, svgRaw:SVG_65_SAI, },
     "ElementType:66" :{ id: "ElementType:66", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 100, scale_y: 100, svgRaw:SVG_66_VANE, 
     	 elementTypeParams:[
-    	        {VANE_WIND_DIR: "2:1"}
+    	        {VANE_WIND_DIR: "1:2"}
     	      ]	
     },
     "ElementType:71" :{ id: "ElementType:71", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_71_VIS },

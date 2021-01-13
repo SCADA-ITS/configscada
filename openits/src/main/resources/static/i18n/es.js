@@ -985,8 +985,10 @@ var i18_es = {
     "ElementTypeParam:66:1:3.description": "Carretera",
     "ElementTypeParam:66:1:4.alias": "Tramo",
     "ElementTypeParam:66:1:4.description": "Tramo",
-    "ElementTypeParam:66:2:1.alias": "wind direction (&deg)",
-    "ElementTypeParam:66:2:1.description": "wind direction (&deg)",
+    "ElementTypeParam:66:2:1.alias": "direccion viento (&deg)",
+    "ElementTypeParam:66:2:1.description": "direccion viento (&deg)",
+    "ElementTypeParam:66:2:2.alias": "velocidad viento ",
+    "ElementTypeParam:66:2:2.description": "velocidad viento",
     
     
     

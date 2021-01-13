@@ -178,7 +178,7 @@ export const ETD_VEH_PA14_PERCENT = "173:2";
 export const ETD_VEH_PA15_PERCENT = "174:2";
 export const ETD_VEH_PA16_PERCENT = "175:2";
 
-export const VANE_WIND_DIR = "2:1";
+export const VANE_WIND_DIR = "1:2";
 
 export const DMS_COMAND_FOR_DMS = "1:2";
 export const DMS_TEXT_FOR_STATUS_1 = "1:1";
