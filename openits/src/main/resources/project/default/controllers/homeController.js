@@ -21,7 +21,7 @@ document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/mat
 
 //var language = webix.storage.session.get("app_user_language");
 //var country = webix.storage.session.get("app_user_country");
-window.i18n = new I18n(`${userData.language}_${userData.country}`);
+window.i18n = new I18n(`${userData.locale.id}`);
 window.em = new EntitiesManager();
 window.stompClient = undefined;
 

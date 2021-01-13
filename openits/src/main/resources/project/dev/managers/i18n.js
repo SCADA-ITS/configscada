@@ -1,5 +1,3 @@
-const I18N_LOCALE_ID_PREFIX = "I18nLocale";
-//const I18N_ENDPOINT_LOCALES = appConfig.restUrl + "i18n/locales";
 const I18N_ENDPOINT_TRANSLATIONS = appConfig.restUrl + "i18n/translations";
 const I18N_MODULE = 1;
 
@@ -7,7 +5,7 @@ function load(i18n) {
 			
 	let translations;
 	
-	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${I18N_LOCALE_ID_PREFIX}:${i18n.localeId}/${I18N_MODULE}`);
+	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`);
 		
 	if (translationsResponse && translationsResponse.responseText) {
 						
@@ -46,7 +44,7 @@ export default class I18n {
 			
 			if (translation == undefined ) {
 				
-				let translationResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${I18N_LOCALE_ID_PREFIX}:${this.localeId}/${I18N_MODULE}/${label}`);
+				let translationResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`);
 				
 				if (translationResponse && translationResponse.responseText) {
 							

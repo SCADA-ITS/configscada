@@ -1,5 +1,4 @@
 import { RULE } from "../data/GLOBAL_PROPERTIES.js"
-import { util } from "../lib/util.js"
 
 webix.ready(function() {
 

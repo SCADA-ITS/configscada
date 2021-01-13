@@ -179,6 +179,7 @@ export default class UserManagerInterface extends userManager.services.Backend {
                 "isAdmin": false,
                 "language": "es",
                 "country": "Spain",
+				"localeId": "I18nLocale:es_ES",
                 "timezone": "Asia/Nepal",
                 "roleId": "Role:2",
             }
@@ -239,7 +240,8 @@ export default class UserManagerInterface extends userManager.services.Backend {
                     "isAdmin": false,
                     "language": "es",
                     "country": "Spain",
-                    "timezone": "Asia/Nepal",
+					"localeId": "I18nLocale:es_ES",
+                    "timezone": "Europe/Madrid",
                     "roleId": "Role:"+data.roles[0].toString(),
                     "allowMultipleSessions": !!parseInt(data.multisession)
                 }
@@ -255,7 +257,8 @@ export default class UserManagerInterface extends userManager.services.Backend {
                     "isAdmin": false,
                     "language": "es",
                     "country": "Spain",
-                    "timezone": "Asia/Nepal",
+				    "localeId": "I18nLocale:es_ES",
+                    "timezone": "Europe/Madrid",
                     "roleId": "Role:2",
                     "allowMultipleSessions": !!parseInt(data.multisession)
                 }
@@ -409,6 +412,9 @@ export default class UserManagerInterface extends userManager.services.Backend {
                     isAdmin
                     country
                     timezone
+					locale{
+						id
+					}
                     role{
                         id
                     }
@@ -435,6 +441,7 @@ export default class UserManagerInterface extends userManager.services.Backend {
                         "isAdmin": a.isAdmin,
                         "language": a.language,
                         "country": a.country,
+                        "localeId": a.locale.id,
                         "timezone": a.timezone,
                         "roleId": a.role.id,
                     }
@@ -458,6 +465,7 @@ export default class UserManagerInterface extends userManager.services.Backend {
                         "isAdmin": a.isAdmin,
                         "language": a.language,
                         "country": a.country,
+                        "localeId": a.locale.id,
                         "timezone": a.timezone,
                         "roleId": a.role.id,
                     }
