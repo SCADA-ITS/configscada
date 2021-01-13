@@ -445,7 +445,7 @@ export let columnsElementFormList = {
 			"ElementTypeParam:66:2:1",
 			"ElementTypeParam:66:2:2",
 		],
-		"rowCounts": 3,
+		"rowCounts": 4,
 		"scroll": false,  
 		"width": 540,
 		"options": {}
