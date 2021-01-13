@@ -53,13 +53,11 @@ export default class AlarmControlPanel {
 								stateAlarm = "alarm-state-deactive";
 							}
 							
-							let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", obj.alarm);
-		
 							if (obj.deactivation) {
 								
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line" style="text-decoration:line-through;">${alarmConfig.alias} </span>
+									  		<span class="first-line" style="text-decoration:line-through;">${obj.alarmConfig.alias} </span>
 									  		<span class="second-line">${obj.dateFormatted} : ${obj.equipment}</span>
 										</div>`;	
 							}
@@ -67,7 +65,7 @@ export default class AlarmControlPanel {
 								
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line">${alarmConfig.alias} </span>
+									  		<span class="first-line">${obj.alarmConfig.alias} </span>
 									  		<span class="second-line">${obj.dateFormatted} : ${obj.equipment}</span>
 										</div>`;	
 							}
@@ -106,10 +104,10 @@ export default class AlarmControlPanel {
 				{
 				    view: "button",
 					width: 180, 
-					label: i18n.t("LBL_ALARMS_UNMUTE_ALL"),
-					tooltip: i18n.t("LBL_ALARMS_UNMUTE_ALL_DESCRIPTION"),
+					label: i18n.t("LBL_ALARMS_MONITOR"),
+					tooltip: i18n.t("LBL_ALARMS_MONITOR_DESCRIPTION"),
 				    type: "icon", 
-					icon: "mdi mdi-volume-high", 
+					icon: "mdi mdi-bell", 
 					on: {
 					
 						onItemClick() {
@@ -282,47 +280,7 @@ export default class AlarmControlPanel {
 					},
 					{ height: 20},
 					recent_alarms,
-					{
-					},
-					{
-						view: "toolbar",
-						css: "control-panel-main-toolbar",
-						height: 75,
-						elements: [
-							{},
-							{
-							    view: "button",
-								width: 125, 
-								label: i18n.t("LBL_VIEW_ALARMS"),
-								tooltip: i18n.t("LBL_VIEW_ALARMS"),
-							    type: "iconTop", 
-								icon: "mdi mdi-bell", 
-								on: {
-								
-									onItemClick() {
-										
-										self.viewAlarms();
-									}
-								}
-							},
-							{
-							    view: "button",
-								width: 125, 
-								label: i18n.t("LBL_SETTINGS"),
-								tooltip: i18n.t("LBL_SETTINGS_DESCRIPTION"),
-							    type: "iconTop", 
-								icon: "mdi mdi-cog", 
-								on: {
-								
-									onItemClick() {
-										
-										self.viewConfig();
-									}
-								}
-							},
-						],
-						borderless: true 
-					}
+					{}
 				]	
 			}, 
 			position: function(state) {

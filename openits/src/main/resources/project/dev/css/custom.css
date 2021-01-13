@@ -887,3 +887,54 @@
 .toolbar-time{
    text-align: center;
 }
+
+.notification-alarm-window {
+	border-color: red;
+	box-shadow: 0 1.5rem 2.8rem !important;
+	animation: zoomIn;
+    animation-duration: 0.2s;
+}
+
+.notification-alarm-window-head {
+    height: 32px !important;
+    /*background: linear-gradient(45deg, red, rgba(255 0 0 / 0.4));*/
+    -webkit-animation: notification-alarm-window-head-animation 1s infinite;  /* Safari 4+ */
+	-moz-animation: notification-alarm-window-head-animation 1s infinite;  /* Fx 5+ */
+	-o-animation: notification-alarm-window-head-animation 1s infinite;  /* Opera 12+ */
+	animation: notification-alarm-window-head-animation 1s infinite;
+}
+
+@-webkit-keyframes notification-alarm-window-head-animation {
+  0%, 49% {
+    background-color: rgba(255 0 0 / 0.7);
+  }
+  50%, 100% {
+    background-color: red;
+  }
+}
+
+.notification-alarm-window-head .webix_view.webix_el_label  {
+	font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 6px 0px 0px 38px;
+}
+
+.notification-alarm-window-head .webix_view.webix_el_icon {
+	margin-top: 0px !important;
+}
+
+.notification-alarm-window-head .webix_icon_button .webix_icon {
+    color: white;
+    padding: 0px 0px 10px;
+}
+
+.notification-alarm-window-head .webix_icon_button:hover:before {
+	background-color: rgba(255 0 0 / 0.4);
+	opacity: 1;
+	transform: scale(0.70);
+	margin-top: -6px;
+	margin-left: 2px;
+}

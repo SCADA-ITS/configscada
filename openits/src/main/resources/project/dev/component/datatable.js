@@ -46,6 +46,31 @@ export default class DataTable {
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
+				
+				
+				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
+					
+					let field = metadata.gridFields[posField];
+					
+					if (field.needsTranslation) {
+						
+						data.forEach(item => {
+							
+							if (item[field.sourceField] != undefined) {
+									
+								if (typeof item[field.sourceField] === 'object') {
+	
+									item[field.sourceField].value = i18n.t(item[field.sourceField].value);
+								}
+								else {
+									
+									item[field.sourceField] = i18n.t(item[field.sourceField]);
+								}
+							}
+						});
+					}
+				}
+				
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					let field = metadata.gridFields[posField];
 					let col = {};
@@ -110,11 +135,11 @@ export default class DataTable {
 						col.css = { 'text-align': field.align }
 					}
 
-					col.template = function(data) {
+					col.template = function(obj) {
 
 						let value = "";
 
-						if (data[field.sourceField] != undefined) {
+						if (obj[field.sourceField] != undefined) {
 
 							let state;
 							let icon;
@@ -122,10 +147,10 @@ export default class DataTable {
 							let avatar;
 							let showValue = false;
 
-							if (typeof data[field.sourceField] === 'object') {
+							if (typeof obj[field.sourceField] === 'object') {
 
-								value = data[field.sourceField].value;
-								state = data[field.sourceField].state;
+								value = obj[field.sourceField].value;
+								state = obj[field.sourceField].state;
 							}
 							else {
 
@@ -134,9 +159,9 @@ export default class DataTable {
 									badgeColor = (field.gridFieldIcons[0].badgeColor == true);
 									avatar = (field.gridFieldIcons[0].avatar == true);
 									showValue = (field.gridFieldIcons[0].showValue == true);
-									value = data[field.sourceField];
+									value = obj[field.sourceField];
 									
-									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == data[field.sourceField]);
+									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
 									
 									if (gridFieldIcon) {
 
@@ -155,21 +180,28 @@ export default class DataTable {
 
 									if (refField != undefined) {
 
-										value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, data[refField[0].sourceField]);
+										value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, obj[refField[0].sourceField]);
 
 										value = value[gridFieldReference.emFieldReturned];
+							
+										if (field.needsTranslation) {
+											
+											value = i18n.t(value);
+														
+											obj[field.sourceField] = value;
+										}
 									}
 								}
 								else {
 
-									value = data[field.sourceField];
+									value = obj[field.sourceField];
 								}
 							}
 							
-							if (field.needsTranslation) {
-
-								value = i18n.t(value);
-							}
+//							if (field.needsTranslation) {
+//
+//								value = i18n.t(value);
+//							}
 
 							if (field.isEpochMilli) {
 

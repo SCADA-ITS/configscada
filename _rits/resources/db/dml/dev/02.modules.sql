@@ -28,7 +28,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (403, 5, 'Reports', 'Reports', 1, '../modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true),
 (404, 1, 'User manager', 'User manager', 1, '../widgets/usersmanager.js', 'usersmanager', 'DEPRECATED', NULL, NULL, true, true),
 
-(500, 1, 'Equipments', 'Equipments module', 2, '../modules/equipmentModule.js', 'getView', 'loadData', NULL, NULL, true, true),
+(500, 1, 'Equipments', 'Equipments module', 1, '../modules/equipmentModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 
 (1000, 2, 'Users', 'Users', 1, '../modules/genericGridModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 (1001, 2, 'Roles', 'Roles', 1, '../modules/genericGridModule.js', 'getView', 'loadData', NULL, NULL, true, true),

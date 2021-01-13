@@ -22,16 +22,19 @@ export default class EquipmentModule extends GenericModule {
 	getView() {
 		
 		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType.ELEMENT_TYPE);
+		let jsonEquipmentTypesWithGridAssignedCopy = undefined;
 		
 		jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");
+		
+		jsonEquipmentTypesWithGridAssignedCopy = webix.copy(jsonEquipmentTypesWithGridAssigned);
 			
-		jsonEquipmentTypesWithGridAssigned.forEach(elementType => {
+		jsonEquipmentTypesWithGridAssignedCopy.forEach(elementType => {
 			
 			elementType.labelAlias = i18n.t(elementType.labelAlias);
 			elementType.labelDescription = i18n.t(elementType.labelDescription);
 		});
 		
-		jsonEquipmentTypesWithGridAssigned.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));
+		jsonEquipmentTypesWithGridAssignedCopy.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));
 
 		let view = {
 			cols: [
@@ -51,7 +54,7 @@ export default class EquipmentModule extends GenericModule {
 								{ width: 4 }
 							]
 						},
-						this.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssigned),
+						this.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssignedCopy),
 						{ height: 6 }
 					]
 				},
