@@ -47,6 +47,7 @@ export default class DataTable {
 
 				datatable.columns = [];
 				
+				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 				
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					
@@ -472,6 +473,7 @@ export default class DataTable {
 			metadata.gridCommands.forEach(cmd => {
 
 				toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "icon", icon: cmd.icon, value: i18n.t(cmd.label), tooltip: true });
+				//toolbar.elements.push({ id: "tb_btn-label-" + this.uid + "_" + cmd.id, css: "grid-toolbar-actions-button-text", view: "label", label: i18n.t(cmd.label) });
 			});
 		}
 
@@ -832,8 +834,8 @@ export default class DataTable {
 
 						buttonAction.attachEvent("onItemClick", function(id, e) {
 
-							let gridCommand = metadata.gridCommands.find(gridCommand => {
-								return gridCommand.id === cmd.id
+							let gridCommand = metadata.gridCommands.find(gridCmd => {
+								return gridCmd.id === cmd.id
 							});
 
 							self.open_module(gridCommand);
