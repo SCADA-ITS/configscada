@@ -403,6 +403,8 @@ var i18_es = {
     "ElementTypeParam:9:2:6.description": "Estado Modo Local",
     "ElementTypeParam:9:2:7.alias": "Estado Interruptor Ventilador",
     "ElementTypeParam:9:2:7.description": "Estado Interruptor Ventilador",
+    "ElementTypeParam:9:2:8.alias": "Estado Engranaje Ventilador",
+    "ElementTypeParam:9:2:8.description": "Estado Engranaje Ventilador",
     "ElementTypeParam:9:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:9:1:1003.description": "MANGO SESSION_UID",
 
