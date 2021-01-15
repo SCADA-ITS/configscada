@@ -109,9 +109,9 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
-    || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM_RAV
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
-    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM
+    || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM_AA
     || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_56_UNIFILAR
@@ -121,7 +121,10 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_60_SIRENA
     || elementType === elementTypeMap.ELEMENT_TYPE_61_FIRE_DET_CT
     || elementType === elementTypeMap.ELEMENT_TYPE_62_TEMP_PROBE
-    || elementType === elementTypeMap.ELEMENT_TYPE_63_AIR_CONDITIONER) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_63_AIR_CONDITIONER
+    || elementType === elementTypeMap.ELEMENT_TYPE_65_SAI
+    || elementType === elementTypeMap.ELEMENT_TYPE_66_VANE
+    || elementType === elementTypeMap.ELEMENT_TYPE_67_SEM_RR) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -246,16 +249,19 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
     case elementTypeMap.ELEMENT_TYPE_12_LUX:
-    case elementTypeMap.ELEMENT_TYPE_13_SEM:
+    case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
     case elementTypeMap.ELEMENT_TYPE_14_LUM:
     case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
     case elementTypeMap.ELEMENT_TYPE_19_CO:
     case elementTypeMap.ELEMENT_TYPE_20_NO:
     case elementTypeMap.ELEMENT_TYPE_21_OPAC:
+    case elementTypeMap.ELEMENT_TYPE_65_SAI:
+    case elementTypeMap.ELEMENT_TYPE_66_VANE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
-   case elementTypeMap.ELEMENT_TYPE_53_SEM:
+   case elementTypeMap.ELEMENT_TYPE_53_SEM_AA:
+   case elementTypeMap.ELEMENT_TYPE_67_SEM_RR:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 15) + ',' + (height / 15) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_9_FAN:
@@ -460,7 +466,7 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + ":IconMI").style["visibility"] = "hidden";
       }
     }
-  } else if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM){
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_13_SEM_RAV){
     if (typeof params != 'undefined' && params && params["SEM_STATUS"]) {
       if (params["SEM_STATUS"] == "0") {
         document.getElementById(element.id + suffix + "green").style["visibility"] = "hidden";
@@ -480,13 +486,24 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + "red").style["visibility"] = "visible";
       }
     }
-  } else if(element.elementType.id === ELEMENT_TYPE.ID_53_SEM){
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_53_SEM_AA){
     if (params != undefined && params && params["SEM_AMBAR_AMBAR_STATUS"]) {
       let svgAmbar = document.getElementById(element.id + suffix);
       if (params["SEM_AMBAR_AMBAR_STATUS"] == 'true') {
         svgAmbar.children[0].children[0].children[1].children[1].style.display = "block"
       } else if (params["SEM_AMBAR_AMBAR_STATUS"] == 'false'){
         svgAmbar.children[0].children[0].children[1].children[1].style.display = "none"
+      }
+    }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_67_SEM_RR){
+    if (params != undefined && params && params["SEM_ROJO_ROJO_STATUS"]) {
+      let svgAmbar = document.getElementById(element.id + suffix);
+      if (params["SEM_ROJO_ROJO_STATUS"] == 'true') {
+        document.getElementById(element.id + suffix + "ligth1").style["visibility"] = "visible";
+        document.getElementById(element.id + suffix + "ligth2").style["visibility"] = "visible";
+      } else if (params["SEM_ROJO_ROJO_STATUS"] == 'false'){
+        document.getElementById(element.id + suffix + "ligth1").style["visibility"] = "hidden";
+        document.getElementById(element.id + suffix + "ligth2").style["visibility"] = "hidden";
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){

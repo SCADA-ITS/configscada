@@ -143,7 +143,7 @@ export let SVG_12_LUX = '<g inkscape:label="Capa 1" inkscape:groupmode="layer" i
     ':Value" sodipodi:role="line">' 
     + REGEX_PATTERN_INIT+'LUX_LUMINOSITY'+REGEX_PATTERN_END +
     '</tspan></text><text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve"><tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUX</tspan></text></g></g>';
-export let SVG_13_SEM =
+export let SVG_13_SEM_RAV =
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-286.68123)">' +
     '<g id="g2866" transform="matrix(0.2822222,0,0,0.2822222,34.461018,264.46835)">' +
     '<rect ry="3.974129" y="80.367165" x="-120.69973" height="33.496231" width="28.197393" id="' 
@@ -310,7 +310,7 @@ export let SVG_51_ETD =
        'x="2.2343771" y="296.4025" id="text842" transform="scale(1.0080833,0.99198153)">' +
 	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">'+REGEX_PATTERN_INIT+'elementTypeAlias'+REGEX_PATTERN_END+'</tspan></text>' +
   '</g>';
-export let SVG_53_SEM =`<g
+export let SVG_53_SEM_AA =`<g
 id="g2866"
 transform="matrix(0.07467129,0,0,0.07467129,47.275466,111.40327)">
 <g
@@ -644,140 +644,64 @@ transform="translate(-14.967094,-84.724441)">
     'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
     'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.0581209" /></g></g>';
 
-export let SVG_65_SAI= `<g
-    inkscape:label="Capa 1"
-    inkscape:groupmode="layer"
-    id="layer1"
-    style="opacity:1"
-    transform="translate(0.1257902,0.42946498)">
-   <g
-      style="fill:#808080;fill-opacity:0.83132498;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6"
-      id="g69">
-     <rect
-        y="-0.39801317"
-        x="-0.39037278"
-        height="23.463051"
-        width="24.211872"
-        id="rect828"` +
-        'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-        'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
+export let SVG_65_SAI= `<g style="fill:#808080;fill-opacity:0.83132498;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" id="g69">
+     <rect y="-0.39801317" x="-0.39037278" height="23.463051"
+        width="24.211872"` +
+        'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' +
+        'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
         `;fill-opacity:1;stroke:#000000;stroke-width:0.52899998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-     <path
-        inkscape:connector-curvature="0"
-        sodipodi:nodetypes="cccccccc"
-        id="path981"
+     <path sodipodi:nodetypes="cccccccc" id="path981"
         d="M 13.525125,2.7789011 5.8930186,10.95422 10.762247,13.045583 5.4304606,19.890037 17.57497,11.90484 11.443615,8.482612 Z"
         style="fill:#ffff00;stroke:#000000;stroke-width:0.29356915px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-   </g>
- </g>`;
+   </g>`;
+ 
+export let SVG_66_VANE= `<g id="g1230" transform="matrix(0.39073264,0,0,0.34874242,-16.679245,-10.274799)">
+      <g id="g1213" transform="translate(6.3500003,-7.4083337)">` +
+        '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' +
+    		'd="m 247.94531,272.86719 v 57.82617 h 0.0508 a 17.172593,5.0507626 0 0 0 -0.004,0.0859 17.172593,5.0507626 0 0 0 17.17187,5.05078 17.172593,5.0507626 0 0 0 17.17383,-5.05078 17.172593,5.0507626 0 0 0 -0.004,-0.0859 h 0.041 v -57.82617 z"' +
+            'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+            `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.376049;stroke-miterlimit:4;stroke-dasharray:none" transform="scale(0.26458333)" />
+        <path id="ellipse1174"
+        	d="m 247.94531,260.39062 v 12.47657 h 0.0508 a 17.172593,5.0507626 0 0 0 17.16797,4.96289 17.172593,5.0507626 0 0 0 17.16992,-4.96289 h 0.0664 v -12.47657 z"
+            style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.377953;stroke-miterlimit:4;stroke-dasharray:none"
+            transform="scale(0.26458333)" />` +
+        '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill1"' +
+            'd="M 264.27148,210.11328 A 10.793885,1.8287812 0 0 0 253.8125,211.875 h -0.10742 l -5.75977,14.88086 v 33.63476 h 0.0488 a 17.172593,5.0507626 0 0 0 17.16992,5.01758 17.172593,5.0507626 0 0 0 17.17188,-5.01758 h 0.0254 v -33.63476 l -7.00391,-14.9707 h -0.008 a 10.793885,1.8287812 0 0 0 -10.75195,-1.67188 10.793885,1.8287812 0 0 0 -0.32618,0 z"' +
+    	    'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+            `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.377953;stroke-miterlimit:4;stroke-dasharray:none" transform="scale(0.26458333)" />
+      </g>` +
+      '<rect id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill2"' +
+	     'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+	     ';fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2" width="39.908752" height="1.3849324" x="54.906574" y="47.73307" />' +
+      '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill3"' +
+         'd="m 174.84666,201.09494 -6.51785,-0.10592 v -37.84228 -37.84228 l 0.80357,-0.18036 c 2.45879,-0.55186 18.18353,-3.10805 18.31441,-2.97717 0.0856,0.0855 4.46633,12.84132 9.73507,28.34616 l 9.57954,28.19062 -0.19844,4.28571 -0.19844,4.28572 -5.82746,7.05357 -5.82746,7.05357 -6.67254,-0.0807 c -3.6699,-0.0444 -9.60557,-0.12838 -13.1904,-0.18663 z"' +
+	     'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+         `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.691114" transform="scale(0.26458333)" />` +
+      '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill4"' +
+         'd="m 93.62469,44.534289 a 2.4095981,4.1104907 0 0 0 -0.07493,0.0026 h -0.06667 v 0.0052 a 2.4095981,4.1104907 0 0 0 -2.268077,4.103108 2.4095981,4.1104907 0 0 0 2.268077,4.10311 v 0.0072 h 0.141595 12.615255 v -8.21862 H 93.700654 a 2.4095981,4.1104907 0 0 0 -0.07596,-0.0026 z" />' +
+         'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+         `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"` +
+      '<ellipse id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill5"' +
+    	 'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +
+         `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.2"
+         cx="106.32478" cy="48.645004" rx="2.4095981" ry="4.1104908" />
+   </g>`;
 
-
-export let SVG_66_VANE= `<g
-     inkscape:label="Capa 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-    <g
-       id="g1230"
-       transform="matrix(0.39073264,0,0,0.34874242,-16.679245,-10.274799)">
-      <g
-         id="g1213"
-         transform="translate(6.3500003,-7.4083337)">
-        <ellipse `
-	+
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-           `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none"
-           id="path1170"
-           cx="70.158249"
-           cy="60.00201"
-           rx="4.543582"
-           ry="1.3363476" />
-        <path
-           id="rect1204"`
-    +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-           `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.376049;stroke-miterlimit:4;stroke-dasharray:none"
-           d="m 247.94531,272.86719 v 57.82617 h 0.0508 a 17.172593,5.0507626 0 0 0 -0.004,0.0859 17.172593,5.0507626 0 0 0 17.17187,5.05078 17.172593,5.0507626 0 0 0 17.17383,-5.05078 17.172593,5.0507626 0 0 0 -0.004,-0.0859 h 0.041 v -57.82617 z"
-           transform="scale(0.26458333)" />
-        <path
-           id="ellipse1174"
-           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.377953;stroke-miterlimit:4;stroke-dasharray:none"
-           d="m 247.94531,260.39062 v 12.47657 h 0.0508 a 17.172593,5.0507626 0 0 0 17.16797,4.96289 17.172593,5.0507626 0 0 0 17.16992,-4.96289 h 0.0664 v -12.47657 z"
-           transform="scale(0.26458333)" />
-        <path
-           id="ellipse1172"`
-    +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-           `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.377953;stroke-miterlimit:4;stroke-dasharray:none"
-           d="M 264.27148,210.11328 A 10.793885,1.8287812 0 0 0 253.8125,211.875 h -0.10742 l -5.75977,14.88086 v 33.63476 h 0.0488 a 17.172593,5.0507626 0 0 0 17.16992,5.01758 17.172593,5.0507626 0 0 0 17.17188,-5.01758 h 0.0254 v -33.63476 l -7.00391,-14.9707 h -0.008 a 10.793885,1.8287812 0 0 0 -10.75195,-1.67188 10.793885,1.8287812 0 0 0 -0.32618,0 z"
-           transform="scale(0.26458333)" />
-      </g>
-      <path
-         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 44.353301,32.993967 0.0021,20.319515 7.213798,0.189082 3.866544,-4.711157 -5.710899,-16.72609 z"
-         id="path10" />
-      <rect `
-          +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-         `;fill-opacity:0.831325;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"
-         id="rect12"
-         width="39.908752"
-         height="1.3849324"
-         x="54.906574"
-         y="47.73307" />
-      <path `
-         +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-         `;fill-opacity:0.831325;fill-rule:evenodd;stroke:#000000;stroke-width:0.691114"
-         d="m 174.84666,201.09494 -6.51785,-0.10592 v -37.84228 -37.84228 l 0.80357,-0.18036 c 2.45879,-0.55186 18.18353,-3.10805 18.31441,-2.97717 0.0856,0.0855 4.46633,12.84132 9.73507,28.34616 l 9.57954,28.19062 -0.19844,4.28571 -0.19844,4.28572 -5.82746,7.05357 -5.82746,7.05357 -6.67254,-0.0807 c -3.6699,-0.0444 -9.60557,-0.12838 -13.1904,-0.18663 z"
-         id="path14"
-         transform="scale(0.26458333)" />
-      <path
-         id="path1134"`
-    +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-         `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"
-         d="m 93.62469,44.534289 a 2.4095981,4.1104907 0 0 0 -0.07493,0.0026 h -0.06667 v 0.0052 a 2.4095981,4.1104907 0 0 0 -2.268077,4.103108 2.4095981,4.1104907 0 0 0 2.268077,4.10311 v 0.0072 h 0.141595 12.615255 v -8.21862 H 93.700654 a 2.4095981,4.1104907 0 0 0 -0.07596,-0.0026 z" />
-      <ellipse`
-    +
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-    'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-         `;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"
-         id="ellipse1153"
-         cx="106.32478"
-         cy="48.645004"
-         rx="2.4095981"
-         ry="4.1104908" />
-    </g>
-     <rect
-       style="fill:#d3d3d3;fill-opacity:1;fill-rule:evenodd;stroke: `
-        + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-        
-       ` ;stroke-width:0.29774979;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1232"
-       width="15.590122"
-       height="8.4611635"
-       x="5.7461777"
-       y="19.322994" />
-       <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:5.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="9.4647055"
-       y="25.5"
-       id="text838"><tspan
-         sodipodi:role="line"
-         id= "tspan836"
-         x="9.4647055"
-         y="25.5"
-         style="stroke-width:0.26458332"> `
-         + REGEX_PATTERN_INIT+'VANE_WIND_DIR'+REGEX_PATTERN_END +       
-         ` </tspan></text>
-  </g>`;
+export let SVG_67_SEM_RR =`<g id="g2866" transform="matrix(0.07467129,0,0,0.07467129,47.275466,111.40327)">
+	<g id="g20" transform="matrix(0.13822576,0,0,0.10348978,-532.83279,-1313.0394)">
+		<rect ry="186.46927" y="-1406.6233" x="-535.36365" height="1571.6696" width="1096.4066"` +
+	    'id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':stroke0"' + 
+	    'style="fill:#cccccc;fill-opacity:1;stroke:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:120.132;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
+	 	`<g	style="fill:#000000;stroke-opacity:1" id="g3-9-9" transform="matrix(1.2106366,0,0,1.4608863,-516.64374,-1058.0206)">
+	   		<path inkscape:connector-curvature="0" id="path7-08-0"
+	      		d="m 607.99327,556.62982 c 0,-4.135 -0.78827,-34.74482 2.28373,-37.51282 22.87,-20.61 119.424,-110.374 122.948,-159.939 0.595,-8.37 -6.179,-15.438 -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 v -66.102 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.871,-20.61 119.427,-110.377 122.949,-159.948 0.595,-8.371 -6.179,-15.438 -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 V 61.46 C 605.454,27.518 577.938,0 543.992,0 H 323.164 C 289.22,0 261.702,27.517 261.702,61.462 v 0.768 c 0,8.059 -6.533,14.592 -14.592,14.592 H 148.5 c -8.392,0 -15.165,7.067 -14.57,15.438 3.521,49.571 100.078,139.338 122.949,159.948 3.072,2.768 4.824,6.705 4.824,10.84 v 66.102 c 0,8.059 -6.533,14.592 -14.592,14.592 h -98.61 c -8.392,0 -15.165,7.067 -14.57,15.438 3.524,49.566 100.078,139.329 122.948,159.939 3.072,2.768 4.824,35.9181 4.824,40.0531 2.40019,21.49974 358.88404,15.29019 346.29027,-2.54228 z M 434.103,74.082 c 53.213,0 96.35,43.137 96.35,96.35 0,53.213 -43.137,96.35 -96.35,96.35 -53.213,0 -96.351,-43.137 -96.351,-96.35 0,-53.213 43.138,-96.35 96.351,-96.35 z m 0,263.668 c 53.213,0 96.35,43.137 96.35,96.351 0,53.213 -43.137,96.35 -96.35,96.35 -53.213,0 -96.351,-43.137 -96.351,-96.351 0,-53.213 43.138,-96.35 96.351,-96.35 z"
+	      		sodipodi:nodetypes="cssssssssssssssssssssssssssccssssssssss" />
+	    	<g>` +
+	         '<circle id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 'ligth1"' + 'cx="440" cy="130" r="120" stroke="black" stroke-width="3" fill="#ff0000"></circle>' +
+	         '<circle id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 'ligth2"' + 'cx="440" cy="420" r="120" stroke="black" stroke-width="3" fill="#ff0000"></circle>' +
+	      	`</g>
+		</g>
+</g>`;
 
 export let SVG_71_VIS= `
    <path stroke="black" stroke-width="6" style="fill:` +REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +

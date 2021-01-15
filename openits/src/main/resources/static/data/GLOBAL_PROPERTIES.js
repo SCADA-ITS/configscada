@@ -1,4 +1,4 @@
-import {SVG_3_DET, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM, SVG_54_ATC, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, SVG_65_SAI, SVG_66_VANE, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_3_DET, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_51_ETD, SVG_53_SEM_AA, SVG_54_ATC, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -12,7 +12,7 @@ export const ELEMENT_TYPE = {
   ID_10_DMS : "ElementType:10",
   ID_11_SOS : "ElementType:11",
   ID_12_LUX : "ElementType:12",
-  ID_13_SEM : "ElementType:13",
+  ID_13_SEM_RAV : "ElementType:13",
   ID_14_LUM : "ElementType:14",
   ID_15_FIRE : "ElementType:15",
   ID_16_MEG : "ElementType:16",
@@ -42,7 +42,7 @@ export const ELEMENT_TYPE = {
   ID_46_CABIN_TOLL : "ElementType:46",
   ID_47_CABIN_TU : "ElementType:47",
   ID_51_ETD : "ElementType:51",
-  ID_53_SEM : "ElementType:53",
+  ID_53_SEM_AA : "ElementType:53",
   ID_54_ATC : "ElementType:54",
   ID_55_CT : "ElementType:55",
   ID_56_UNIFILAR : "ElementType:56",
@@ -54,6 +54,7 @@ export const ELEMENT_TYPE = {
   ID_64_VMS_SNOW : "ElementType:64",
   ID_65_SAI : "ElementType:65",
   ID_66_VANE : "ElementType:66",
+  ID_67_SEM_RR : "ElementType:67",
   ID_71_VIS : "ElementType:71",
   ID_72_ACCEL : "ElementType:72",
   ID_73_RADAR : "ElementType:73",
@@ -72,6 +73,12 @@ export const ELEMENT_TYPE = {
     "ElementType:4" :{ id: "ElementType:4", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 4, scale_x: 28, scale_y: 28, 
       elementTypeParams:[
         {SERVICE_LEVEL : "12:2"}
+      ],
+      tabs:[
+        {ELEMENT_FORM_TAB_FORM: {}},
+        {ELEMENT_FORM_TAB_VIDEO: {
+          urlParamVideo:"ElementTypeParam:4:1:13", videoList: true}
+        }
       ]},
     "ElementType:5" :{ id: "ElementType:5", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 5, scale_x: 28, scale_y: 28},
     "ElementType:7" :{ id: "ElementType:7", uiType: UI_ELEMENT_TYPE_GENERIC, value: 7, scale_x: 4122.35, scale_y: 3382.97, svgRaw:SVG_7_ZONE, 
@@ -109,7 +116,7 @@ export const ELEMENT_TYPE = {
         {LUX_LUMINOSITY: "1:2"}
       ]
     },
-    "ElementType:13" :{ id: "ElementType:13", uiType: UI_ELEMENT_TYPE_GENERIC, value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM, 
+    "ElementType:13" :{ id: "ElementType:13", uiType: UI_ELEMENT_TYPE_GENERIC, value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM_RAV, 
       elementTypeParams:[
         {SEM_STATUS: "1:2"}
       ] 
@@ -167,7 +174,7 @@ export const ELEMENT_TYPE = {
     "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_STATIC, value: 46, scale_x: 28, scale_y: 28},
     "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_STATIC, value: 47, scale_x: 28, scale_y: 28},
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 50, scale_y: 50, svgRaw:SVG_51_ETD},
-    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM,
+    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM_AA,
       elementTypeParams:[
         {SEM_AMBAR_AMBAR_STATUS: "1:2"}
       ] 
@@ -203,11 +210,16 @@ export const ELEMENT_TYPE = {
     "ElementType:60" :{ id: "ElementType:60", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 60, scale_x: 100, scale_y: 100, svgRaw:SVG_60_SIRENA },
     "ElementType:61" :{ id: "ElementType:61", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 61, scale_x: 100, scale_y: 100, svgRaw:SVG_61_FIRE_DET_CT },
     "ElementType:64" :{ id: "ElementType:64", uiType: UI_ELEMENT_TYPE_MATRIX, 	value: 64, scale_x: 28, scale_y: 28},
-    "ElementType:65" :{ id: "ElementType:65", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 100, scale_y: 100, svgRaw:SVG_65_SAI, },
-    "ElementType:66" :{ id: "ElementType:66", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 100, scale_y: 100, svgRaw:SVG_66_VANE, 
+    "ElementType:65" :{ id: "ElementType:65", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 28, scale_y: 28, svgRaw:SVG_65_SAI, },
+    "ElementType:66" :{ id: "ElementType:66", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 65, scale_x: 28, scale_y: 28, svgRaw:SVG_66_VANE, 
     	 elementTypeParams:[
     	        {VANE_WIND_DIR: "1:2"}
     	      ]	
+    },
+    "ElementType:67" :{ id: "ElementType:67", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 67, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_67_SEM_RR ,
+      elementTypeParams:[
+        {SEM_ROJO_ROJO_STATUS: "1:2"}
+      ] 
     },
     "ElementType:71" :{ id: "ElementType:71", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_71_VIS },
     "ElementType:72" :{ id: "ElementType:72", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_72_ACCEL },

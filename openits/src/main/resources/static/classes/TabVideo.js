@@ -54,8 +54,8 @@ export default class TabVideo {
             }	
             try {
                 if(stremMjpeg != null && stremMjpeg.length >= 1){
-                    let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 300 ; //700 por defecto
-                    let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 300 ; //700 por defecto
+                    let streamHeight = this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamHeight"] : 800 ; //700 por defecto
+                    let streamWidth = this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] !== undefined ? this.columnsElementFormList[data.elementType.id]["options"]["streamWidth"] : 800 ; //700 por defecto
                     let stream = stremMjpeg;
 
                     let camera = $$("vvtabVideo_"+this.parentId+"_"+this.elementId).addView({  

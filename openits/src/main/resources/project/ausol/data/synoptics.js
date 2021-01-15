@@ -133,6 +133,11 @@ export let synopticData= [
 				"items": ["Element:1:1"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"SEM_ROJO_ROJO": {
+				"items": ["Element:67:1", "Element:67:2", "Element:67:3", "Element:67:4"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 		
@@ -163,7 +168,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:3": { "x": 235,  "y": 300, "width": 80, "height": 80, "alias": "SEC_1_ETD2",
+		"Element:4:3": { "x": 265,  "y": 300, "width": 80, "height": 80, "alias": "SEC_1_ETD2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -171,7 +176,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:4": { "x": 235,  "y": 711, "width": 80, "height": 80, "alias": "SEC_2_ETD2",
+		"Element:4:4": { "x": 265,  "y": 711, "width": 80, "height": 80, "alias": "SEC_2_ETD2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -179,11 +184,13 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		
+
+		"Element:1:1": { "x": 310,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-MET-1MA" },		
+
 		"Element:8:1":  { "x": 1529, "y": 817, "width": 88,  "height": 48,  "alias": "RV-BAR-1CA" },
 		"Element:8:2":  { "x": 1529, "y": 658, "width": 88,  "height": 48,  "alias": "RV-BAR-2CA" },
-		"Element:8:3":  { "x": 150,   "y": 258, "width": 88,  "height": 48,  "alias": "RV-BAR-1MA" },
-		"Element:8:4":  { "x": 150,   "y": 407, "width": 88,  "height": 48,  "alias": "RV-BAR-2MA" },
+		"Element:8:3":  { "x": 170,   "y": 258, "width": 88,  "height": 48,  "alias": "RV-BAR-1MA" },
+		"Element:8:4":  { "x": 170,   "y": 407, "width": 88,  "height": 48,  "alias": "RV-BAR-2MA" },
 
 		"Element:9:1":  { "x": 1172, "y": 800, "width": 40,  "height": 40,  "alias": "RV-VNT-1CA" },
 		"Element:9:2":  { "x": 1172, "y": 738, "width": 40,  "height": 40,  "alias": "RV-VNT-2CA" },
@@ -212,10 +219,10 @@ export let synopticData= [
 		"Element:12:7": { "x": 1200,  "y": 132, "width": 50,  "height": 50,  "alias": "RV-LUX-3MA" },
 		"Element:12:8": { "x": 1400, "y": 132, "width": 50,  "height": 50,  "alias": "RV-LUX-4MA" },
 	
-		"Element:13:1": { "x": 1660, "y": 660, "width": 40,  "height": 40,  "alias": "RV-SRAV-1CA" },
-		"Element:13:2": { "x": 100,   "y": 405, "width": 40,  "height": 40,  "alias": "RV-SRAV-1MA" },
-		"Element:13:3": { "x": 1660, "y": 805, "width": 40,  "height": 40,  "alias": "RV-SRAV-2CA" },
-		"Element:13:4": { "x": 100,   "y": 248, "width": 40,  "height": 40,  "alias": "RV-SRAV-2MA" },
+		"Element:13:1": { "x": 1625, "y": 660, "width": 40,  "height": 40,  "alias": "RV-SRAV-1CA" },
+		"Element:13:2": { "x": 130,   "y": 405, "width": 40,  "height": 40,  "alias": "RV-SRAV-1MA" },
+		"Element:13:3": { "x": 1625, "y": 805, "width": 40,  "height": 40,  "alias": "RV-SRAV-2CA" },
+		"Element:13:4": { "x": 130,   "y": 248, "width": 40,  "height": 40,  "alias": "RV-SRAV-2MA" },
 
 		"Element:14:1": { "x": 1640, "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1CA" },
 		"Element:14:2": { "x": 77,   "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1MA" },
@@ -229,12 +236,10 @@ export let synopticData= [
 		
 		"Element:16:3": { "x": 1438, "y": 724, "width": 40,  "height": 40,  "alias": "RV-MEG_3CA" },
 		"Element:16:4": { "x": 881,  "y": 600, "width": 40,  "height": 40,  "alias": "RV-MEG_4CA" },
-		"Element:16:5": { "x": 320,  "y": 320, "width": 40,  "height": 40,  "alias": "RV-MEG_1MA" },
+		"Element:16:5": { "x": 360,  "y": 320, "width": 40,  "height": 40,  "alias": "RV-MEG_1MA" },
 		"Element:16:6": { "x": 881,  "y": 444, "width": 40,  "height": 40,  "alias": "RV-MEG_2MA" },
 
 		"Element:17:1": { "x": 150,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
-		"Element:66:1": { "x": 230,  "y": 387, "width": 200,  "height": 200,  "alias": "RV-VTA-1C" },
-		"Element:1:1": { "x": 310,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-MET-1MA" },
 
 		"Element:18:1": { "x": 890,  "y": 813, "width": 50,  "height": 50,  "alias": "RV-ANI-1CA" },
 		"Element:18:2": { "x": 900,  "y": 235, "width": 50,  "height": 50,  "alias": "RV-ANI-1MA" },
@@ -254,12 +259,19 @@ export let synopticData= [
 		"Element:51:1": { "x": 1485,   "y": 360, "width": 184, "height": 204,  "alias": "RV-ETD-1" },
 		"Element:51:2": { "x": 75,   "y": -30, "width": 184, "height": 204,  "alias": "RV-ETD-1" },
 		
-		"Element:53:1": { "x": 1700, "y": 675, "width": 30,  "height": 35,  "alias": "RV-SAA-1CA" },
-		"Element:53:2": { "x": 1700, "y": 818, "width": 30,  "height": 35,  "alias": "RV-SAA-2CA" },
-		"Element:53:3": { "x": 50,  "y": 260, "width": 30,  "height": 35,  "alias": "RV-SAA-1MA" },
-		"Element:53:4": { "x": 50,  "y": 420, "width": 30,  "height": 35,  	"alias": "RV-SAA-2MA" },
+		"Element:53:1": { "x": 1660, "y": 675, "width": 30,  "height": 35,  "alias": "RV-SAA-1CA" },
+		"Element:53:2": { "x": 1660, "y": 818, "width": 30,  "height": 35,  "alias": "RV-SAA-2CA" },
+		"Element:53:3": { "x": 85,  "y": 260, "width": 30,  "height": 35,  "alias": "RV-SAA-1MA" },
+		"Element:53:4": { "x": 85,  "y": 420, "width": 30,  "height": 35,  	"alias": "RV-SAA-2MA" },
 
 		"Element:55:1": { "x": 1560,   "y": 450, "width": 120, "height": 120,  "alias": "RV-CT-ITS-1" },
+		
+		"Element:66:1": { "x": 205,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
+
+		"Element:67:1": { "x": 1705,   "y": 675, "width": 30, "height": 35,  "alias": "RV-SMF-RR-1CA" },
+		"Element:67:2": { "x": 1705,   "y": 818, "width": 30, "height": 35,  "alias": "RV-SMF-RR-1MA" },
+		"Element:67:3": { "x": 40,   "y": 260, "width": 30, "height": 35,  "alias": "RV-SMF-RR-2CA" },
+		"Element:67:4": { "x": 40,   "y": 420, "width": 30, "height": 35,  "alias": "RV-SMF-RR-2MA" },
 	},
 	{
 		"id":"synopticMetro",
@@ -436,7 +448,7 @@ export let synopticData= [
 
 		"Element:61:1": { "x": 150,   "y": 200, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
 		
-		"Element:65:1": { "x": 1640,   "y": 300, "width": 300, "height": 300,  "alias": "RV-SAI-1" },
+		"Element:65:1": { "x": 1640,   "y": 475, "width": 80, "height": 80,  "alias": "RV-SAI-1" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

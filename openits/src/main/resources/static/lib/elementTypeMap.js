@@ -9,7 +9,7 @@ export const ELEMENT_TYPE_9_FAN = "9";
 export const ELEMENT_TYPE_10_DMS = "10";
 export const ELEMENT_TYPE_11_SOS = "11";
 export const ELEMENT_TYPE_12_LUX = "12";
-export const ELEMENT_TYPE_13_SEM = "13";
+export const ELEMENT_TYPE_13_SEM_RAV = "13";
 export const ELEMENT_TYPE_14_LUM = "14";
 export const ELEMENT_TYPE_15_FIRE = "15";
 export const ELEMENT_TYPE_16_MEG = "16";
@@ -41,7 +41,7 @@ export const ELEMENT_TYPE_45_CABIN_TFA = "45";
 export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
 export const ELEMENT_TYPE_47_CABIN_TU = "47";
 export const ELEMENT_TYPE_51_ETD = "51";
-export const ELEMENT_TYPE_53_SEM = "53";
+export const ELEMENT_TYPE_53_SEM_AA = "53";
 export const ELEMENT_TYPE_54_ETD_KINEO = "54";
 export const ELEMENT_TYPE_55_CT = "55";
 export const ELEMENT_TYPE_56_UNIFILAR = "56";
@@ -53,6 +53,9 @@ export const ELEMENT_TYPE_61_FIRE_DET_CT = "61";
 export const ELEMENT_TYPE_62_TEMP_PROBE = "62";
 export const ELEMENT_TYPE_63_AIR_CONDITIONER = "63";
 export const ELEMENT_TYPE_64_VMS_SNOW = "64";
+export const ELEMENT_TYPE_65_SAI = "65";
+export const ELEMENT_TYPE_66_VANE = "66";
+export const ELEMENT_TYPE_67_SEM_RR = "67";
 
 export const ELEMENT_TYPE_71_VIS = "71";
 export const ELEMENT_TYPE_72_ACCEL = "72";
@@ -260,7 +263,7 @@ export function getElementTypeName(elementTypeIdString) {
     case ELEMENT_TYPE_10_DMS:
     case ELEMENT_TYPE_11_SOS:
     case ELEMENT_TYPE_12_LUX:
-    case ELEMENT_TYPE_13_SEM:
+    case ELEMENT_TYPE_13_SEM_RAV:
     case ELEMENT_TYPE_14_LUM:
     case ELEMENT_TYPE_15_FIRE:
     case ELEMENT_TYPE_16_MEG:

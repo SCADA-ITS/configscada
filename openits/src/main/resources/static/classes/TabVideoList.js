@@ -34,7 +34,7 @@ export default class TabVideoList {
                 $$("cuerpo" + this.parentId).addView({
                     id: "videoList" + this.parentId,
                     view: "list", 
-                    width: 150,
+                    width: 200,
                     data:vdata,
                     select: true,
                     template: "#alias#",

@@ -125,6 +125,8 @@ var i18_es = {
     "ElementType:65.description": "SAI",
     "ElementType:66.alias": "VELETA",
     "ElementType:66.description": "VELETA",
+    "ElementType:67.alias": "SEM_ROJO_ROJO",
+    "ElementType:67.description": "SEM_ROJO_ROJO",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -989,11 +991,13 @@ var i18_es = {
     "ElementTypeParam:66:1:4.description": "Tramo",   
     "ElementTypeParam:66:2:1.alias": "Direcci&oacute;n viento (&deg)",
     "ElementTypeParam:66:2:1.description": "Direcci&oacute;n viento (&deg)",
-    "ElementTypeParam:66:2:2.alias": "Velocidad viento ",
-    "ElementTypeParam:66:2:2.description": "Velocidad viento",
+    "ElementTypeParam:66:2:2.alias": "Velocidad viento (m/s)",
+    "ElementTypeParam:66:2:2.description": "Velocidad viento (m/s)",
     
-    
-    
+    "ElementTypeParam:67:1:1.alias": "PK",
+    "ElementTypeParam:67:1:1.description": "PK",
+    "ElementTypeParam:67:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:67:1:2.description": "Distancia entrada del t&uacute;nel (m)",
 
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
@@ -1064,8 +1068,8 @@ var i18_es = {
     "menu.jasper": "Informes",
     "menu.dashboard.bratislava":"ITS Dashboard",
     "menu.plans.schedule": "Planificador",
-    "menu.grafana.speed": "Velocidad 24h",
-    "menu.grafana.imd": "IMD 24h",
+    "menu.grafana.speed": "Velocidad Media(Km/h)",
+    "menu.grafana.imd": "IMD (Veh/h)",
 
     "alarmsconfig.d.id": "Identificador",
     "alarmsconfig.d.alias": "Alias",
@@ -1237,6 +1241,9 @@ var i18_es = {
 
     "CommandElementType:1:64": "SEÑALIZAR",
     "CommandElementType:2:64": "APAGAR",
+    
+    "CommandElementType:1:67": "SEÑALIZAR",
+    "CommandElementType:2:67": "APAGAR",
 
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
@@ -1436,6 +1443,7 @@ var i18_es = {
     "AlarmConfig:41": "ALARMA SAI SIN CONEXI&Oacute;N",
     "AlarmConfig:42": "ALARMA VELETA SIN CONEXI&Oacute;N",
     "AlarmConfig:43": "ALARMA METEO SIN CONEXI&Oacute;N",
+    "AlarmConfig:44": "ALARMA SEM SIN CONEXI&Oacute;N",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
@@ -2217,7 +2225,7 @@ var i18_es = {
     "cronUi.popup.yearsOpt04.02": " y ",
 
     "element.window.tab.form": "Detalle",
-    "element.window.tab.video": "Video",
+    "element.window.tab.video": "Extras",
     "element.window.tab.syn": "Synoptic"
 
 };
