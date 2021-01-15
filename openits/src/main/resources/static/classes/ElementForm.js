@@ -103,7 +103,7 @@ export default class TabForm {
 					data: {
 						value: ""
 					},
-					width: 400,
+					width: 600,
 					template: function (obj) {
 						return obj.value;
 					},
