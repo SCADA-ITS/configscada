@@ -508,7 +508,7 @@ function updateIcon(element, suffix="") {
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_57_MAGNETOTERMICO){
     if (params != undefined && params && params["MAGNETOTERMICO_STATE"]) {
-      if (params["MAGNETOTERMICO_STATE"]=="true") {
+      if (params["MAGNETOTERMICO_STATE"]=="false") {
         if(Snap.select("#"+element.id + suffix +":transform") && Snap.select("#"+element.id + suffix +":transform").node && Snap.select("#"+element.id + suffix +":transform").node.attributes.transform && Snap.select("#"+element.id + suffix +":transform").node.attributes.x && Snap.select("#"+element.id + suffix +":transform").node.attributes.y){
           Snap.select("#"+element.id + suffix +":transform").node.attributes.transform.value="rotate(-24.280147)";
           Snap.select("#"+element.id + suffix +":transform").node.attributes.x.value="5.2098141";
