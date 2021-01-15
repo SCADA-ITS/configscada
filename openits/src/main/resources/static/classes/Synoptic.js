@@ -539,7 +539,7 @@ export default class Synoptic {
           if(elementsMap && elementsMap.get(elementId)){
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
               id: elementId,
-              value: "<div style=\"display: inline;vertical-align: text-top;\">" + elementsMap.get(elementId).element.description + "</div>",
+              value: "<div style=\"display: inline;vertical-align: text-top;\">" + elementsMap.get(elementId).element.alias + "</div>",
               data: [],
             });
           } else {
