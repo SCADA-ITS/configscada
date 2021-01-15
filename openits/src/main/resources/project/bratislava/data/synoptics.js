@@ -154,10 +154,10 @@ export let synopticData= [
 		"ExclusiveLayers": true,
 		"BaseLayers": {
 			"BASE_LAYER": "mapa_base.png",
-			/*"S1F1_(6-11) L": "PANELS-S1F1__6-11_-pk-L_v0.4.svg",
+			"S1F1_(6-11) L": "PANELS-S1F1__6-11_-pk-L_v0.4.svg",
 			"S1F1_(6-11) P": "PANELS-S1F1__6-11_-pk-P_v0.4.svg",
 			"S1F2_(11-24) L": "PANELS-S1F2-_11-24_-pk-L-_v0.2_1.svg",
-			"S1F2_(11-24) P": "PANELS-S1F2-_11-24_-pk-P-_v0.2_1.svg",*/
+			"S1F2_(11-24) P": "PANELS-S1F2-_11-24_-pk-P-_v0.2_1.svg",
 			"S4-S5 L": "PANELS-S4-S5-pk-L_v0.3_old.svg",
 			"S4-S5 P": "PANELS-S4-S5-pk-P_v0.3_old.svg"
 		},
@@ -167,7 +167,7 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-		/*	"S1F1_(6-11) L": {
+			"S1F1_(6-11) L": {
 				"items": [
 					"Element:24:12",
 					"Element:29:7",
@@ -288,10 +288,10 @@ export let synopticData= [
 				],
 				"translation_key": "",
 				"visibility": "hidden"
-			},*/
+			},
 			"S4-S5 L": {
 				"items": [
-					/*"Element:24:1",
+					"Element:24:1",
 					"Element:29:1",
 					"Element:24:2",
 					"Element:29:2",
@@ -314,15 +314,15 @@ export let synopticData= [
 					"Element:24:9",
 					"Element:24:10",
 					"Element:29:6",
-					"Element:24:11",*/			
+					"Element:24:11",			
 					"Element:31:2",
 					"Element:31:5",
-					/*"Element:64:3",
+					"Element:64:3",
 					"Element:64:4",
 					"Element:64:7",
 					"Element:64:8",
 					"Element:64:11",
-					"Element:64:12"*/
+					"Element:64:12"
 
 				],
 				"translation_key": "",
@@ -333,12 +333,12 @@ export let synopticData= [
 			    "Element:31:1",
 			    "Element:31:3",
 				"Element:31:4",
-				/*"Element:64:1",
+				"Element:64:1",
 				"Element:64:2",
 				"Element:64:5",
 				"Element:64:6",
 				"Element:64:9",
-				"Element:64:10",*/
+				"Element:64:10",
 			
 					
 				],
@@ -346,7 +346,7 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
-		/*// S1F1_(6-11) L
+		// S1F1_(6-11) L
 		"Element:24:12": { "x": 529, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-1"  },
 		"Element:29:7": { "x": 582, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-2"  },
 		"Element:24:13": { "x": 635, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-3"  },
@@ -450,10 +450,10 @@ export let synopticData= [
 		"Element:24:61": { "x": 1389, "y": 154,  "width": 30, "height": 35, "alias": "NRJS426P-6"  },
 		"Element:24:66": { "x": 904, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-1"  },
 		"Element:29:35": { "x": 957, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-2"  },
-		"Element:24:67": { "x": 1010, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-3"  },*/
+		"Element:24:67": { "x": 1010, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-3"  },
 		
 		// S4-S5 L
-		/*"Element:24:1": { "x": 543, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-1"  },
+		"Element:24:1": { "x": 543, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-1"  },
 		"Element:29:1": { "x": 596, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-2"  },
 		"Element:24:2": { "x": 649, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-3"  },
 		"Element:29:2": { "x": 702, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-4"  },
@@ -476,27 +476,27 @@ export let synopticData= [
 		"Element:24:9": { "x": 1315, "y": 523,  "width": 30, "height": 35, "alias": "NRLKD10L-3"  },
 		"Element:24:10": { "x": 1209, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-1"  },
 		"Element:29:6": { "x": 1262, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-2"  },
-		"Element:24:11": { "x": 1315, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-3"  },	*/
+		"Element:24:11": { "x": 1315, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-3"  },	
 		"Element:31:2": { "x": 1215, "y": 274,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
 		"Element:31:5": { "x": 1623, "y": 52,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
-		/*"Element:64:3": { "x": 1209, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD03L"  },
+		"Element:64:3": { "x": 1209, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD03L"  },
 		"Element:64:4": { "x": 1283, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD04L"  },
 		"Element:64:7": { "x": 1209, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH21L"  },
 		"Element:64:8": { "x": 1283, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH22L"  },
 		"Element:64:11": { "x": 1623, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH25L"  },
-		"Element:64:12": { "x": 1697, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH26L"  },*/
+		"Element:64:12": { "x": 1697, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH26L"  },
 		
 		// S4-S5 P
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:3": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
 
-		/*"Element:64:1": { "x": 124, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD01P"  },
+		"Element:64:1": { "x": 124, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD01P"  },
 		"Element:64:2": { "x": 198, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD02P"  },
 		"Element:64:5": { "x": 124, "y": 628,  "width": 60, "height": 60, "alias": "PDZDH23P"  },
 		"Element:64:6": { "x": 198, "y": 628,  "width": 60, "height": 60, "alias": "PDZDH24P"  },
 		"Element:64:9": { "x": 550, "y": 100,  "width": 60, "height": 60, "alias": "PDZDH27P"  },
-		"Element:64:10": { "x": 624, "y": 100,  "width": 60, "height": 60, "alias": "PDZDH28P"  },*/
+		"Element:64:10": { "x": 624, "y": 100,  "width": 60, "height": 60, "alias": "PDZDH28P"  },
 	},
 	{
 		"id":"synopticCabinets",
