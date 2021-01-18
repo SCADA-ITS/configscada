@@ -158,8 +158,8 @@ export let synopticData= [
 			"S1F1_(6-11) P": "PANELS-S1F1__6-11_-pk-P_v0.4.svg",
 			"S1F2_(11-24) L": "PANELS-S1F2-_11-24_-pk-L-_v0.2_1.svg",
 			"S1F2_(11-24) P": "PANELS-S1F2-_11-24_-pk-P-_v0.2_1.svg",
-			"S4-S5 L": "PANELS-S4-S5-pk-L_v0.3_old.svg",
-			"S4-S5 P": "PANELS-S4-S5-pk-P_v0.3_old.svg"
+			"S4-S5 L": "PANELS-S4-S5-pk-L_v0.3.svg",
+			"S4-S5 P": "PANELS-S4-S5-pk-P_v0.3.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -185,6 +185,10 @@ export let synopticData= [
 					"Element:24:24",
 					"Element:29:13",
 					"Element:24:25",
+         	"Element:32:12",
+					"Element:32:13",
+					"Element:32:14",
+					"Element:32:15",
 				],
 				"translation_key": "",
 				"visibility": "visible"
@@ -203,6 +207,10 @@ export let synopticData= [
 					"Element:24:26",
 					"Element:29:14",
 					"Element:24:27",
+    	    "Element:32:8",
+					"Element:32:9",
+					"Element:32:10",
+					"Element:32:11",
 				],
 				"translation_key": "",
 				"visibility": "hidden"
@@ -322,7 +330,10 @@ export let synopticData= [
 					"Element:64:7",
 					"Element:64:8",
 					"Element:64:11",
-					"Element:64:12"
+					"Element:64:12",
+          "Element:32:5",
+          "Element:32:6",
+          "Element:32:7",
 
 				],
 				"translation_key": "",
@@ -360,6 +371,10 @@ export let synopticData= [
 		"Element:24:20": { "x": 1105, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-1"  },
 		"Element:29:11": { "x": 1158, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-2"  },
 		"Element:24:21": { "x": 1211, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-3"  },
+    "Element:32:12": { "x": 1105, "y": 612,  "width": 30, "height": 35, "alias": "PDZJS07L"  },
+		"Element:32:13": { "x": 1685, "y": 950,  "width": 30, "height": 35, "alias": "PDZJS08L"  },
+		"Element:32:14": { "x": 1685, "y": 800,  "width": 30, "height": 35, "alias": "PDZJS09L"  },
+		"Element:32:15": { "x": 1761, "y": 800,  "width": 30, "height": 35, "alias": "PDZJS10L"  },		
 		"Element:24:24": { "x": 1685, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-1"  },
 		"Element:29:13": { "x": 1738, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-2"  },
 		"Element:24:25": { "x": 1791, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-3"  },
@@ -368,6 +383,10 @@ export let synopticData= [
 		"Element:24:14": { "x": 981, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-1"  },
 		"Element:29:8": { "x": 1034, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-2"  },
 		"Element:24:15": { "x": 1087, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-3"  },
+    "Element:32:8":  { "x": 988, "y": 724,  "width": 30, "height": 35, "alias": "PDZJS01P"  }, 
+    "Element:32:9":  { "x": 1067, "y": 724,  "width": 30, "height": 35, "alias": "PDZJS02P"  }, 
+    "Element:32:10": { "x": 988, "y": 510,  "width": 30, "height": 35, "alias": "PDZJS03P"  },
+    "Element:32:11": { "x": 1452, "y": 961,  "width": 30, "height": 35, "alias": "PDZJS04P"  },
 		"Element:24:18": { "x": 1452, "y": 835,  "width": 30, "height": 35, "alias": "NRJS414P-1"  },
 		"Element:29:10": { "x": 1505, "y": 835,  "width": 30, "height": 35, "alias": "NRJS414P-2"  },
 		"Element:24:19": { "x": 1558, "y": 835,  "width": 30, "height": 35, "alias": "NRJS414P-3"  },
@@ -483,6 +502,9 @@ export let synopticData= [
 		"Element:64:4": { "x": 1283, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD04L"  },
 		"Element:64:7": { "x": 1209, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH21L"  },
 		"Element:64:8": { "x": 1283, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH22L"  },
+    "Element:32:5": { "x": 1623, "y": 785,  "width": 30, "height": 35, "alias": "PDZDH09L"  },
+    "Element:32:6": { "x": 1623, "y": 523,  "width": 30, "height": 35, "alias": "PDZDH11L"  },
+    "Element:32:7": { "x": 1623, "y": 363,  "width": 30, "height": 35, "alias": "PDZDH12L"  },
 		"Element:64:11": { "x": 1623, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH25L"  },
 		"Element:64:12": { "x": 1697, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH26L"  },
 		
