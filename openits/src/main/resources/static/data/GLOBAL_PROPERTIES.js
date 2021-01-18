@@ -66,6 +66,15 @@ export const ELEMENT_TYPE = {
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3", videoList: false}
+        },
+        {ELEMENT_FORM_TAB_IFRAME: {
+          dataTabs: [
+            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 700, iframeWidth: 700, tabTitle: $.i18n("element.window.tab.iframe1")},
+            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 600, iframeWidth: 600, tabTitle: $.i18n("element.window.tab.iframe2")},
+            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 500, iframeWidth: 500, tabTitle: $.i18n("element.window.tab.iframe3")},
+            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 400, iframeWidth: 400, tabTitle: $.i18n("element.window.tab.iframe4")},
+          ]
+          }
         }
       ] 
     },

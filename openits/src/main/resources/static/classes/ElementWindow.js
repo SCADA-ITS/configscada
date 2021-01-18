@@ -1,5 +1,6 @@
 import TabForm from "../classes/ElementForm.js";
 import ElementChildsList from "../classes/ElementChildsList.js";
+import TabIFrame from "../classes/TabIFrame.js";
 import TabVideo from "../classes/TabVideo.js";
 import TabVideoList from "../classes/TabVideoList.js";
 import TabSynoptic from "../classes/TabSynoptic.js";
@@ -48,6 +49,15 @@ export default class ElementWindow {
                     if(v_synoptic !== undefined && v_synoptic !== null) 
                         tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_SYN", value: $.i18n("element.window.tab.syn"), width: 100 });
                         
+                    counter += 1;
+                }
+                if(element["ELEMENT_FORM_TAB_IFRAME"] !== undefined) {
+                    let iframeData = element["ELEMENT_FORM_TAB_IFRAME"].dataTabs;
+                    iframeData.forEach((item, index) => {
+                        //console.log(item);
+                        //console.log(index);
+                        tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_IFRAME_" + index, value: item.tabTitle, width: 100 });
+                    });
                     counter += 1;
                 }
             });
@@ -116,6 +126,29 @@ export default class ElementWindow {
                         webix.message({type:"error", text:"ERROR SINOPTICO NO CONFIGURADO"});
                     }
                 } catch (e) { console.log(e); }
+            }
+
+            if(tabs[0]["ELEMENT_FORM_TAB_IFRAME"] !== undefined){
+                this.defaultTab = 3;
+                let iframeData = tabs[0]["ELEMENT_FORM_TAB_IFRAME"].dataTabs;
+                let urlIFrame = null;
+                let iframeHeight = null;
+                let iframeWidth = null;
+                let tabTitle = null;
+                if(iframeData[0]){ 
+                    urlIFrame = iframeData[0].urlIFrame ? iframeData[0].urlIFrame : "";
+                    iframeHeight = iframeData[0].iframeHeight ? iframeData[0].iframeHeight : 700;
+                    iframeWidth = iframeData[0].iframeWidth ? iframeData[0].iframeWidth : 700;
+                    //tabsArray.push({ id: this.parentId + "_" + this.parentType + "_TAB_IFRAME_" + index, value: item.tabTitle, width: 100 });
+                    this.urlIFrame = urlIFrame;
+                    this.tabIFrame = new TabIFrame(parentId,parentId,urlIFrame,"0",iframeWidth,iframeHeight);
+                    this.defaultTabView={             
+                        id: "cuerpo"+parentId,
+                        cols:[this.tabIFrame.getComponent()],
+                    };
+                }else{
+                    webix.message({type:"error", text:"ERROR IFRAME NO CONFIGURADO"});
+                }
             }
 
             if(counter === 0) {
@@ -282,6 +315,31 @@ function createTabView(id,parentId,parentType,elementF,tabs,synoptic) {
                     tabSynoptic.loadData();
                 }else{
                     webix.message({type:"error", text:"ERROR SINOPTICO NO CONFIGURADO"});
+                }
+            } catch (e) { console.log(e); }
+        break;
+        default:
+            try {
+                let index = parseInt(id.split("_")[4]);
+                let iframeData = null;
+                tabs.forEach(element =>{
+                    iframeData = element["ELEMENT_FORM_TAB_IFRAME"] ? element["ELEMENT_FORM_TAB_IFRAME"].dataTabs : iframeData;
+                });
+                let urlIFrame = null;
+                let iframeHeight = null;
+                let iframeWidth = null;
+                if(iframeData[index]){ 
+                    urlIFrame = iframeData[index].urlIFrame ? iframeData[index].urlIFrame : "";
+                    iframeHeight = iframeData[index].iframeHeight ? iframeData[index].iframeHeight : 700;
+                    iframeWidth = iframeData[index].iframeWidth ? iframeData[index].iframeWidth : 700;
+                    let tabIFrame = new TabIFrame(parentId,parentId,urlIFrame,index,iframeWidth,iframeHeight);
+                    $$(parentId + "_" + parentType + "_TAB_FORM").addView({             
+                        id: "cuerpo"+parentId,
+                        cols:[tabIFrame.getComponent()]
+                    });
+                    tabIFrame.loadData();
+                }else{
+                    webix.message({type:"error", text:"ERROR IFRAME NO CONFIGURADO"});
                 }
             } catch (e) { console.log(e); }
         break;
