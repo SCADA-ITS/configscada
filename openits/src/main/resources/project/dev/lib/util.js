@@ -40,7 +40,7 @@ export let util = {
 
 				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
 
-					viewModule = mod[module.jsMethodDraw];
+					viewModule = mod[module.jsMethodDraw]();
 				}
 				else {
 
@@ -191,7 +191,7 @@ export let util = {
 
 				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW &&
 				    module.moduleType.id !== MODULE_TYPE_GENERIC_MAP_WINDOW) {
-					viewModule = mod[module.jsMethodDraw];
+					viewModule = mod[module.jsMethodDraw]();
 				}
 				else {
 
