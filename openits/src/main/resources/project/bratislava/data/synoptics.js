@@ -350,6 +350,10 @@ export let synopticData= [
 				"Element:64:6",
 				"Element:64:9",
 				"Element:64:10",
+        "Element:32:1",
+        "Element:32:2",
+        "Element:32:3",
+        "Element:32:4",
 			
 					
 				],
@@ -512,6 +516,10 @@ export let synopticData= [
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:3": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
+    "Element:32:1": { "x": 124, "y": 425,  "width": 30, "height": 35, "alias": "PDZDH04aP"  },
+    "Element:32:2": { "x": 124, "y": 280,  "width": 30, "height": 35, "alias": "PDZDH05P"  },
+    "Element:32:3": { "x": 124, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH06P"  },
+    "Element:32:4": { "x": 344, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH08P"  },
 
 		"Element:64:1": { "x": 124, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD01P"  },
 		"Element:64:2": { "x": 198, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD02P"  },
