@@ -12,19 +12,19 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (105, 4, 'Synoptic CSB', 'Synoptic CSB', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
 (106, 4, 'Synoptic CSV', 'Synoptic CSV', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
 
-(200, 1, 'Equipments', 'Equipments', 1, '../widgets/equipments.js', 'equipments', 'DEPRECATED', NULL, NULL, true, true),
-(201, 1, 'Users', 'User', 1, '../widgets/users.js', 'users', 'DEPRECATED', NULL, NULL, true, true),
-(202, 1, 'Roles', 'Roles', 1, '../widgets/roles.js', 'roles', 'DEPRECATED', NULL, NULL, true, true),
-(203, 1, 'Alarm Configs', 'Alarm Configs', 1, '../widgets/alarmconfigs.js', 'alarmconfigs', 'DEPRECATED', NULL, NULL, true, true),
+(200, 1, 'Equipments', 'Equipments', 1, '../widgets/equipments.js', 'equipments()', 'DEPRECATED', NULL, NULL, true, true),
+(201, 1, 'Users', 'User', 1, '../widgets/users.js', 'users()', 'DEPRECATED', NULL, NULL, true, true),
+(202, 1, 'Roles', 'Roles', 1, '../widgets/roles.js', 'roles()', 'DEPRECATED', NULL, NULL, true, true),
+(203, 1, 'Alarm Configs', 'Alarm Configs', 1, '../widgets/alarmconfigs.js', 'alarmconfigs()', 'DEPRECATED', NULL, NULL, true, true),
 
-(300, 1, 'Plans', 'Plans', 1, '../widgets/plans.js', 'plans', 'DEPRECATED', NULL, NULL, true, true),
-(301, 1, 'Plan schedules', 'Plan schedules', 1, '../widgets/planschedule.js', 'planschedules', 'DEPRECATED', NULL, NULL, true, true),
+(300, 1, 'Plans', 'Plans', 1, '../widgets/plans.js', 'plans()', 'DEPRECATED', NULL, NULL, true, true),
+(301, 1, 'Plan schedules', 'Plan schedules', 1, '../widgets/planschedule.js', 'planschedules()', 'DEPRECATED', NULL, NULL, true, true),
 
-(400, 1, 'Alarms', 'Alarms', 1, '../widgets/alarms.js', 'alarms', 'DEPRECATED', NULL, NULL, true, true),
-(401, 1, 'CCTV', 'CCTV', 1, '../widgets/cctv.js', 'cctv', 'DEPRECATED', NULL, NULL, true, true),
+(400, 1, 'Alarms', 'Alarms', 1, '../widgets/alarms.js', 'alarms()', 'DEPRECATED', NULL, NULL, true, true),
+(401, 1, 'CCTV', 'CCTV', 1, '../widgets/cctv.js', 'cctv()', 'DEPRECATED', NULL, NULL, true, true),
 (402, 5, 'Control panel', 'Control panel', 1, '../modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true),
 (403, 5, 'Reports', 'Reports', 1, '../modules/externalApp.js', 'getView', NULL, NULL, NULL, true, true),
-(404, 1, 'User manager', 'User manager', 1, '../widgets/usersmanager.js', 'usersmanager', 'DEPRECATED', NULL, NULL, true, true),
+(404, 1, 'User manager', 'User manager', 1, '../widgets/usersmanager.js', 'usersmanager()', 'DEPRECATED', NULL, NULL, true, true),
 
 (500, 1, 'Equipments', 'Equipments module', 2, '../modules/equipmentModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 

@@ -46,20 +46,45 @@ export let util = {
 
 					if (module.moduleValues) {
 
-						let synopticId = module.moduleValues.find(e => e.moduleParam.id === 4).value;
-						let item = synopticData.find(e => e.id === synopticId);
-						let syn = new mod.default(item);
-
-						viewModule = {
-							id: "syn-" + synopticId,
-							rows: [{
-								view: "template",
-								id: item.id,
-								url: function() {
-									syn.init();
-								}
-							}]
-						};
+						if (module.moduleType.id === MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
+						
+							let synopticConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_SYNOPTIC_ID).value;
+							let item = synopticData.find(e => e.id === synopticConfigId);
+							let synId="syn-"+webix.uid();
+							let syn = new mod.default(item, synId);
+	
+							viewModule = {
+								rows: [{
+									view: "template",
+									id: syn.synopticDiv,
+									url: function() {
+										syn.init();
+									}
+								}],
+								on: {
+									onDestruct: function (obj) {
+										syn.on_destroy();
+									}
+								  }
+							};	
+						}
+						else if (module.moduleType.id === MODULE_TYPE_GENERIC_MAP_WINDOW) {
+							
+							let mapConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_MAP_ID).value;
+							let item = mapsData.find(e => e.id === mapConfigId);
+							let mapId="map-"+webix.uid();
+							let map = new mod.default(item, undefined, mapId);
+	
+							viewModule = {
+								rows: [{
+									view: "template",
+									id: map.synopticDiv,
+									url: function() {
+										map.init();
+									}
+								}]
+							};
+						}
 					}
 				}
 			}
@@ -166,7 +191,7 @@ export let util = {
 
 				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW &&
 				    module.moduleType.id !== MODULE_TYPE_GENERIC_MAP_WINDOW) {
-					viewModule = mod[module.jsMethodDraw]();
+					viewModule = mod[module.jsMethodDraw];
 				}
 				else {
 
