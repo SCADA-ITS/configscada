@@ -12,8 +12,10 @@ var graph =  `GraphQL->{
   }
 }`;
 
-let genericTablei18n = {
-		id:"alarmconfigsTable",
+
+
+export function alarmconfigs(){
+	let genericTablei18n = {
 		"view":"datatable",
 		"autoConfig":true,
 		"select":true,
@@ -28,9 +30,10 @@ let genericTablei18n = {
 		]
 	};
 
-let table = new Table(graph, genericTablei18n ).getComponent();
-table.scrollY=true;
-
-export let alarmconfigs= {
-	rows:[table]
-};
+	let table = new Table(graph, genericTablei18n ).getComponent();
+	table.scrollY=true;
+	let result = {
+		rows:[table]
+	};
+	return result;
+}

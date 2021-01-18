@@ -2,8 +2,9 @@ import {timezones,countries} from "../data/datacountry.js";
 
 
 export default class UserForm {
-	constructor(id,data,mode) {
+	constructor(id,data,mode, parentId) {
         this.id = id;
+        this.parentId=parentId;
         this.mode = mode; // 0 details, 1 edition, 2 new, 3 delete
         if (this.id === null && data !== null) {
             this.name = data.name;
@@ -96,7 +97,7 @@ export default class UserForm {
                     "userPermissionIds": createUserForm3.split(",")
                 }
             }).then(data => {
-                let item = $$("usersTable").getItem(data.id);
+                let item = $$(this.parentId).getItem(data.id);
                 item["id"] = data.id;
                 item["name"] = data.name;
                 item["fullName"] = data.fullName;
@@ -105,7 +106,7 @@ export default class UserForm {
                 item["timezone"] = data.timezone;
                 item["isAdmin"] = data.isAdmin;
                 item["role"] = data.role;
-                $$("usersTable").updateItem(data.id, item);
+                $$(this.parentId).updateItem(data.id, item);
                 $$("user_win").destructor();
             });            
         }
@@ -153,7 +154,7 @@ export default class UserForm {
                     "userPermissionIds": createUserForm3.split(",")
                 }
             }).then(data => {
-                $$("usersTable").add({
+                $$(this.parentId).add({
                     id:data.id,
                     name:data.name,
                     fullName: data.fullName,
@@ -661,11 +662,11 @@ export default class UserForm {
                                         userId: obj
                                     }).then(data => {
                                         try {
-                                            $$("usersTable").remove(data.id);
+                                            $$(this.parentId).remove(data.id);
                                             $$("user_win").destructor();
-                                            $$("b_details_user").hide();
-                                            $$("b_edit_user" ).hide();
-                                            $$("b_delete_user").hide();
+                                            $$("btn_detail"+this.parentId).hide();
+                                            $$("btn_edit"+this.parentId).hide();
+                                            $$("btn_delete"+this.parentId).hide();
                                         } catch  {}
                                     });
                                 }

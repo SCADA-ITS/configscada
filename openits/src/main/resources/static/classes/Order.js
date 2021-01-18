@@ -114,8 +114,9 @@ var createOrderGrap = webix.proxy("GraphQL",`
 `);
 
 export default class Order {
-  constructor(id,data,elements,planOrderType,planId,view) {
+  constructor(id,data,elements,planOrderType,planId,view, parentId) {
     this.data = data;
+    this.parentId = parentId;
     this.elements = [];
     this.planOrderType = [];
     this.elementsOption = [];
@@ -182,10 +183,10 @@ export default class Order {
     })
     .then(data => {
       if(data) {
-        let selectPlan = $$("treePlan").getSelectedId();
-        let item = $$('treePlan').getItem(selectPlan);
+        let selectPlan = $$(this.parentId).getSelectedId();
+        let item = $$(this.parentId).getItem(selectPlan);
         item["planOrders"].push(data);
-        $$('treePlan').updateItem(selectPlan, item);
+        $$(this.parentId).updateItem(selectPlan, item);
         $$("order_new_form_" + idplan).hide();
         $$("order_new_commandElementType_" + idplan).getList().clearAll();
         $$("order_new_planOrderType_" + idplan).getList().clearAll();
@@ -284,13 +285,19 @@ export default class Order {
                   click: orderEdit              
                 },
                 { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
-                  click: orderSave
+                  click: (id,event)=>{
+                    orderSave(id,event, this.parentId);
+                  }
                 },
                 { view:"button", id: "bremove_" + this.id, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
-                  click: orderRemove
+                  click: (id,event)=>{
+                    orderRemove(id,event, this.parentId);
+                  }
                 },
                 { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
-                  click: orderEditCancel
+                  click: (id,event)=>{
+                    orderEditCancel(id,event, this.parentId);
+                  }
                 }
               ]
             }
@@ -382,13 +389,19 @@ export default class Order {
                     click: orderEdit              
                   },
                   { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
-                    click: orderSave
+                    click: (id,event)=>{
+                      orderSave(id,event, this.parentId);
+                    }
                   },
                   { view:"button", id: "bremove_" + this.id, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
-                    click: orderRemove
+                    click: (id,event)=>{
+                      orderRemove(id,event, this.parentId);
+                    }
                   },
                   { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
-                    click: orderEditCancel
+                    click:  (id,event)=>{
+                      orderEditCancel(id,event, this.parentId);
+                    }
                   }
                 ]
               }
@@ -486,13 +499,19 @@ export default class Order {
                     click: orderEdit              
                   },
                   { view:"button", id: "bsave_" + this.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
-                    click: orderSave
+                    click: (id,event)=>{
+                      orderSave(id,event, this.parentId);
+                    }
                   },
                   { view:"button", id: "bremove_" + this.id, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
-                    click: orderRemove
+                    click: (id,event)=>{
+                      orderRemove(id,event, this.parentId);
+                    }
                   },
                   { view:"button", id: "becancel_" + this.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
-                    click: orderEditCancel
+                    click:  (id,event)=>{
+                      orderEditCancel(id,event, this.parentId);
+                    }
                   }
                 ]
               }
@@ -795,7 +814,9 @@ export default class Order {
                 id:"window_order_new_toolbar",
                 cols:[
                     { view:"button", id: this.planId + "_" + this.view + "_window_order_new_button_load", value:"Guardar", width:100, align:"right", 
-                    click: saveWindowOrder
+                    click: (id,event)=>{
+                      saveWindowOrder(id,event, this.parentId);
+                    }
                   }]
             }
             ]
@@ -819,7 +840,7 @@ export default class Order {
   }
 }
 
-function saveWindowOrder(id){
+let saveWindowOrder = (id, event, parentId)=> {
   let container = id.split("_")[1];
   if ($$("window_order_new_alias_" + id.split("_")[0]).data.value !== "") {
     let v_alias = $$("window_order_new_alias_" + id.split("_")[0]).data.value;
@@ -1021,7 +1042,7 @@ function saveWindowOrder(id){
               createOrden.load(data_query).then(data => {
                 if(data) {
                   Object.entries(data).map(([k, v]) => {
-                    createOrderDinamic(container,v);
+                    createOrderDinamic(container,v, parentId);
                   });
                   $$("new_order_window_" + id.split("_")[0]).hide();
                   webix.message("Guardado Correctamente");
@@ -1046,7 +1067,7 @@ function saveWindowOrder(id){
                 })
                 .then(data => {
                   if(data) {
-                    createOrderDinamic(container,data);
+                    createOrderDinamic(container,data, parentId);
                     $$("new_order_window_" + id.split("_")[0]).hide();
                     webix.message("Creado Correctamente");
                   } else {
@@ -1070,8 +1091,8 @@ function saveWindowOrder(id){
   }
 }
 
-function createOrderDinamic(container,data){
-  let result = updateOrderTree("treePlan",data,"new");
+function createOrderDinamic(container,data, parentId){
+  let result = updateOrderTree(parentId,data,"new");
 
   try {
     let v_view = $$(data.id + "_form");
@@ -1151,13 +1172,19 @@ function createOrderDinamic(container,data){
                   click: orderEdit              
                 },
                 { view:"button", id: "bsave_" + data.id, type:"icon", icon:"mdi mdi-content-save", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.save"),
-                  click: orderSave
+                  click: (id,event)=>{
+                    orderSave(id,event, parentId);
+                  }
                 },
                 { view:"button", id: "bremove_" + data.id, type:"icon", disabled: !checkUserPermission(RULE.PLAN_ADMIN), icon:"mdi mdi-delete", width:50, placeHolder: $.i18n("plan.button.tooltip.remove"),
-                  click: orderRemove
+                  click: (id,event)=>{
+                    orderRemove(id,event, parentId);
+                  }
                 },
                 { view:"button", id: "becancel_" + data.id, type:"icon", icon:"mdi mdi-close-outline", width:50, hidden: true, placeHolder: $.i18n("plan.button.tooltip.cancel"),
-                  click: orderEditCancel
+                  click:  (id,event)=>{
+                    orderEditCancel(id,event, parentId);
+                  }
                 }
               ]
             }
@@ -1205,10 +1232,10 @@ function createOrderDinamic(container,data){
   }
 }
 
-function orderEditCancel(id) {
+let orderEditCancel = (id, event, parentId) => {
   let idOrder = id.split("_")[1];
-  let selectPlan = $$("treePlan").getSelectedId();
-  let item = $$("treePlan").getItem(selectPlan);
+  let selectPlan = $$(parentId).getSelectedId();
+  let item = $$(parentId).getItem(selectPlan);
   let itemPlanOrders = item["planOrders"].find(function(value, index, arr){ return value.id === idOrder;});
   let idform = $$(idOrder + "_form").getValues();
 
@@ -1424,7 +1451,7 @@ function orderEdit(id){
   }
 }
 
-function orderSave(id){
+function orderSave(id, event, parentId){
   let idform = $$(id.toString().split("_")[1] + "_form").getValues();
   let value = $$(id.toString().split("_")[1] + "_element").data.value;
   let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
@@ -1505,7 +1532,7 @@ function orderSave(id){
         })
         .then(data => {
           if(data) {
-            let result = updateOrderTree("treePlan",data,"update");
+            let result = updateOrderTree(parentId,data,"update");
             let result_list = updateOrderList(data,"update");
             if (result && result_list) {
               $$("bsave_" + data.id).hide();
@@ -1576,7 +1603,7 @@ function orderSave(id){
     })
     .then(data => {
       if(data) {
-        let result = updateOrderTree("treePlan",data,"update");
+        let result = updateOrderTree(parentId,data,"update");
         let result_list = updateOrderList(data,"update");
 
         if (result && result_list) {
@@ -1647,7 +1674,7 @@ function updateOrderTree(view,data,parameter){
   }
 }
 
-function orderRemove(id){
+function orderRemove(id, event, parentId){
   let idform = id.toString().split("_")[1];
   let delOrderGrap = webix.proxy("GraphQL",`
   mutation deletePlanOrder($planOrderId: String!){
@@ -1663,7 +1690,7 @@ function orderRemove(id){
     if(data) {
       let padre = $$(idform + "_form").getParentView();
       $$(padre).removeView(idform + "_form");
-      let result = updateOrderTree("treePlan",data,"remove");
+      let result = updateOrderTree(parentId,data,"remove");
       webix.message("Eliminado Correctamente");
     }
   });

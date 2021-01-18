@@ -32,31 +32,31 @@ var selectView = "";
 let viewCells = [
     {
         id: "alarms",
-        rows: [alarms]
+        rows: [alarms()]
     },
     {
         id: "users",
-        rows: [users]
+        rows: [users()]
     },
     {
         id: "roles",
-        rows: [roles]
+        rows: [roles()]
     },
     {
         id: "alarmconfigs",
-        rows: [alarmconfigs]
+        rows: [alarmconfigs()]
     },
     {
         id: "equipments",
-        rows: [equipments]
+        rows: [equipments()]
     },
     {
         id: "plans",
-        rows: [plans]                            
+        rows: [plans()]                            
     },
     {
         id: "planschedule",
-        rows: [planschedules]                            
+        rows: [planschedules()]                            
     },
     {
         id: "grafana",
@@ -68,7 +68,7 @@ let viewCells = [
     },
     {
         id: "usersmanager",
-        rows: [usersmanager]
+        rows: [usersmanager()]
     }];
 
 mapsData.forEach((item, index) => {
@@ -129,31 +129,6 @@ webix.ready(function() {
 
     $$("nameUser").setValue(userName);
     
-    if (userPermissions !== "") {
-        let userPermissionsList = userPermissions.split(",");
-        if (userPermissionsList.includes("SystemPermission:2")) {//Edit User
-            console.log();
-        } else {
-            $$("b_new_user").disable();
-            $$("b_edit_user").disable();
-            $$("b_delete_user").disable();	
-        }
-        if (userPermissionsList.includes("SystemPermission:3")) {//Edit Role
-            console.log();
-        } else {
-            $$("b_new_role").disable();
-            $$("b_edit_role").disable();
-            $$("b_delete_role").disable();	
-        }
-    } else {
-        $$("b_new_user").disable();
-        $$("b_edit_user").disable();
-        $$("b_delete_user").disable();
-
-        $$("b_new_role").disable();
-        $$("b_edit_role").disable();
-        $$("b_delete_role").disable();
-    }
     changeConnectedIcon();
 });
 

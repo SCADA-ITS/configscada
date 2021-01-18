@@ -56,7 +56,7 @@ var graphSynoptic = webix.proxy(
 );
 
 export default class Map {
-  constructor(synopticConf, elementId) {
+  constructor(synopticConf, elementId, id) {
     this.elements = [];
     this.elementsTypes = [];
     this.elementsToDraw = {};
@@ -66,8 +66,11 @@ export default class Map {
     this.baseWidth = 0;
     this.baseHeight = 0;
     this.data = graphSynoptic;
-
-    this.synopticDiv = synopticConf.id;
+    if(id){
+      this.synopticDiv = id;
+    }else{
+      this.synopticDiv = synopticConf.id;
+    }
     this.synopticConf = synopticConf;
     this.synopticType = "";
 

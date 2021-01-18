@@ -22,8 +22,9 @@ const PLAN_ORDER_STATE_TYPE = {
 };
  
 export default class Plan {
-  constructor(id, data) {
+  constructor(id, data, parentId) {
     this.data = data;
+    this.parentId=parentId;
     if (id === null)
     {
       if ( data !== null ) {
@@ -196,13 +197,13 @@ export default class Plan {
     };
   }
 
-  update_table(message) {
+  update_table =(message) => {
 		try {
       let obj = JSON.parse(JSON.parse(message.body));
         //console.log(obj);
         obj.basicElementsVO.forEach((element) => {
           if(element.planStateType !== undefined)
-            $$("planHeaderState" + element.id ).setValues({ value: element.planStateType.alias });
+            $$(this.parentId+"planHeaderState" + element.id ).setValues({ value: element.planStateType.alias });
           
           /*
           if (element.planOrders !== undefined)
@@ -226,10 +227,8 @@ export default class Plan {
 
   newForm(container,idForm){
     $$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:idForm.toString() ,template: "<div>" + $.i18n("plan.form.new.title") + "</div>" },3);
-    $$(container)
-      .addView({
+    $$(container).addView({
         view:"form", 
-        id:idForm + "_form", 
         scroll:false, 
         elements:[{
           rows: [{
@@ -248,10 +247,8 @@ export default class Plan {
 
   editForm(container,data1){
     $$(container).addView({
-    id: "planHeader_"+this.id,
     cols:[
       {
-        id: "planHeaderTitle"+this.id,
         view: "template",
         type: "header",
         data: {
@@ -264,11 +261,11 @@ export default class Plan {
       },
 
       {
-        id: "planHeaderState"+this.id,
+        id: this.parentId+"planHeaderState"+this.id,
         view: "template",
         type: "header",
         data: {
-          value: this.data.planStateType.alias
+          value: ""
         },
         heigth: 150,
         template: function (obj) {
@@ -279,21 +276,20 @@ export default class Plan {
     ]
     },3);
 
+    let planFormId = webix.uid();
 
-    //$$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:this.id.toString() ,template: "<div>" + this.alias + statusBadge(this.state) + "</div>" },3);
-    $$(container)
-      .addView({
+    $$(container).addView({
         view:"form", 
-        id:this.id.toString() + "_form", 
+        id:planFormId, 
         scroll:false, 
-        elements:[{ responsive:this.id.toString() + "_form", 
-          rows: [{ responsive:this.id.toString() + "_form", 
+        elements:[{ responsive:planFormId, 
+          rows: [{ responsive:planFormId, 
             cols:[
               { view:"text", id: this.id.toString() + "_alias",  disabled: true, name: "alias",  label:$.i18n("plan.form.alias"), value: this.alias,         labelAlign:"left", labelWidth: 125, inputWidth:0 },                        
               { view:"text", id: this.id.toString() + "_planId", disabled: true, name: "planId", label:$.i18n("plan.form.id"),    value: this.id.toString(), labelAlign:"left", labelWidth: 200, inputWidth:0 },
-              { view:"text", id: this.id.toString() + "_state",  disabled: true, name: "state",  label:$.i18n("plan.form.state"), value: this.planStateType.alias,         labelAlign:"left", labelWidth: 200, inputWidth:0 }
+              { view:"text", id: this.id.toString() + "_state",  disabled: true, name: "state",  label:$.i18n("plan.form.state"), value: "",         labelAlign:"left", labelWidth: 200, inputWidth:0 }
             ]
-          },{ responsive:this.id.toString() + "_form", 
+          },{ responsive:planFormId, 
             cols:[
               { view:"text", id: this.id.toString() + "_description",  disabled: true, name: "description",  label:$.i18n("plan.form.description"),  value: this.description,       labelAlign:"left", labelWidth: 125, inputWidth:0 },
               { view:"text", id: this.id.toString() + "_planSubtype",  disabled: true, name: "planSubtype",  label:$.i18n("plan.form.planSubtype"),  value: this.planSubtype.alias, labelAlign:"left", labelWidth: 200, inputWidth:0 },
@@ -304,11 +300,9 @@ export default class Plan {
     });
     let orderelements = [];
     let orderplanOrderType = [];
-    //let neworder = new Order(null,"new",orderelements,orderplanOrderType,container);
-    //neworder.new_dinamicFormOrder(container,this.id.toString());
     try {
       this.planOrders.forEach(e => {
-        let order = new Order(null,e,orderelements,orderplanOrderType,container);
+        let order = new Order(null,e,orderelements,orderplanOrderType,container, null, this.parentId);
         order.dinamicFormOrder(container);
       });
     } catch {}

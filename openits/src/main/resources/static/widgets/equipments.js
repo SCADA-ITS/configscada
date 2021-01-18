@@ -1,66 +1,62 @@
 import EquipmentTable from "../classes/EquipmentTable.js"
 import {optionElementType, columnsElementConfig, columnsElementList} from "../data/equipments.js"
 
-function build_table(){
-	
-	let elementTypeId = $$("combo_element_type").getValue();
-	let param = new EquipmentTable(elementTypeId,1,null,null,columnsElementConfig,columnsElementList);
-	let measure = new EquipmentTable(elementTypeId,2,null,null,columnsElementConfig,columnsElementList);
-	try {
-		$$("equipmentsView").removeView("tabview_equipmentsView");
-	} catch  {}
 
-	$$("equipmentsView").addView({
-		id: "tabview_equipmentsView",
-		view:"tabview", 
-		cells:[
-			{
-				id:"equipmentMeasures",
-				header: $.i18n("equipment.tabbar.measures"), 
-				width:100,
-				body: {
-					view:"scrollview", body:{
-					  //padding:10,
-					  scroll:false, 
-					  //type:"clean", 
-					  rows:[
-						measure.getComponent(),
-					  ]
-					}
+export function equipments(){
+	let widgetId=webix.uid();
+	let equipmentId= "table_"+widgetId;
+	let result ={
+		rows:[{
+			view:"combo",
+			autoConfig:true,
+			label: $.i18n("equipment.combo.label"),
+			labelWidth:160,
+			labelAlign:"center",
+			icon: "mdi mdi-arrow-down",
+			tooltip:"Element Type #value#",
+			options: optionElementType,
+			on:{
+				onChange: function(newValue){
+				let param = new EquipmentTable(newValue,1,null,null,columnsElementConfig,columnsElementList,widgetId);
+				let measure = new EquipmentTable(newValue,2,null,null,columnsElementConfig,columnsElementList,widgetId);
+				try {
+					$$(widgetId).removeView(equipmentId);
+				} catch  {}
+
+				$$(widgetId).addView({
+					id: equipmentId,
+					view:"tabview", 
+					cells:[
+						{
+							id:"equipmentMeasures",
+							header: $.i18n("equipment.tabbar.measures"), 
+							width:100,
+							body: {
+								view:"scrollview", body:{
+									//padding:10,
+									scroll:false, 
+									//type:"clean", 
+									rows:[
+									measure.getComponent(),
+									]
+								}
+							}
+						},
+						{
+							id:"equipmentParameter",
+							header: $.i18n("equipment.tabbar.parameter"),
+							width:100,
+							body:param.getComponent(),
+						}
+					],
+			
+				})
 				}
-			},
-			{
-				id:"equipmentParameter",
-				header: $.i18n("equipment.tabbar.parameter"),
-				width:100,
-				body:param.getComponent(),
 			}
-		],
-
-	});
+		}, {            
+			id: widgetId, 
+			rows:[{id: equipmentId}]
+		}]
+	};
+	return result;
 }
-
-var comboElementType = {
-  id:"combo_element_type",	
-  view:"combo",
-  autoConfig:true,
-  label: $.i18n("equipment.combo.label"),
-  labelWidth:160,
-  labelAlign:"center",
-  icon: "mdi mdi-arrow-down",
-  tooltip:"Element Type #value#",
-  options: optionElementType,
-  on:{
-	  onChange: build_table
-    }
-};
-
-
-var equipmentsView = {            
-	id: "equipmentsView", 
-	rows:[{id: "tabview_equipmentsView"}]
-};
-
-export let equipments = {
-	rows:[comboElementType, equipmentsView]
-};

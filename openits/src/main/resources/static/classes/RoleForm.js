@@ -2,8 +2,13 @@ import {timezones,countries} from "../data/datacountry.js";
 
 
 export default class RoleForm {
-	constructor(id,data,mode) {
+	constructor(id,data,mode, parentId) {
         this.id = id;
+        this.parentId=parentId;
+        this.btnDetailId= "btn_detail"+this.parentId;
+	    this.btnEditId= "btn_edit"+this.parentId;
+	    this.btnDeleteId= "btn_delete"+this.parentId;
+
         this.mode = mode; // 0 details, 1 edition, 2 new, 3 delete
         if (this.id === null && data !== null) {
             this.alias = data.alias;
@@ -61,12 +66,12 @@ export default class RoleForm {
                     "rolePermissionIds": createRoleForm3.split(",")
                 }
             }).then(data => {
-                let item = $$("rolesTable").getItem(data.id);
+                let item = $$(this.parentId).getItem(data.id);
                 item["id"] = data.id;
                 item["alias"] = data.alias;
                 item["description"] = data.description;
                 item["preset"] = data.preset;
-                $$("rolesTable").updateItem(data.id, item);
+                $$(this.parentId).updateItem(data.id, item);
                 $$("role_win").destructor();
             });            
         }
@@ -97,7 +102,7 @@ export default class RoleForm {
                     "rolePermissionIds": createRoleForm3.split(",")
                 }
             }).then(data => {
-                $$("rolesTable").add({
+                $$(this.parentId).add({
                     id:data.id,
                     alias:data.alias,
                     description: data.description,
@@ -306,11 +311,11 @@ export default class RoleForm {
                                         roleId: obj
                                     }).then(data => {
                                         try {
-                                            $$("rolesTable").remove(data.id);
+                                            $$(this.parentId).remove(data.id);
                                             $$("role_win").destructor();
-                                            $$("b_details_role").hide();
-                                            $$("b_edit_role" ).hide();
-                                            $$("b_delete_role").hide();
+                                            $$(btnDetailId).hide();
+                                            $$(btnEditId).hide();
+                                            $$(btnDeleteId).hide();
                                         } catch  {}
                                     });
                                 }

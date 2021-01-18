@@ -1,10 +1,14 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
 export default class CCTV {
-    constructor() {
+    constructor(parentId) {
         // for using the object inside callbacks
         let self = this;
-
+        this.parentId=parentId;
+        this.containerId=webix.uid();
+        this.layoutId=webix.uid();
+        this.treeId=webix.uid();
+        this.dropAreaId=webix.uid();
         this.ncols = 3;
         this.nrows = 2;
 
@@ -61,7 +65,7 @@ export default class CCTV {
 
     getComponent() {
         let generic = {
-            id: "cctvContainer",
+            id: this.containerId,
             rows: [
                 {
                     view:"toolbar", 
@@ -75,12 +79,12 @@ export default class CCTV {
                             value: "Show/Hide", 
                             width: 108,
                             icon:"wxi-close",
-                            click: function() {
+                            click: ()=> {
                                 // hide the panel
-                                if($$("element_tree_cctv").isVisible()) {
-                                    $$("element_tree_cctv").hide();
+                                if($$(this.treeId).isVisible()) {
+                                    $$(this.treeId).hide();
                                 } else {
-                                    $$("element_tree_cctv").show();
+                                    $$(this.treeId).show();
                                 }
                             }
                         }
@@ -91,11 +95,6 @@ export default class CCTV {
         };
 
         return generic;
-    }
-
-    disconnect(){
-        $$("planSchedulesTable").clearAll();
-        unLoadDetailForm()
     }
     
     loadData() {
@@ -111,27 +110,27 @@ export default class CCTV {
                 })
             });
         try {
-            if ($$('element_tree_cctv') != undefined){
-                $$('cctvContainer').removeView('cctv_controller_layout')
+            if ($$(this.treeId) != undefined){
+                $$(this.containerId).removeView(this.layoutId)
             }
         } catch (error) {
             console.log(error)
         }
 
-        $$('cctvContainer').addView(
+        $$(this.containerId).addView(
         {
-            id: "cctv_controller_layout",
+            id: this.layoutId,
             cols: [
                 {
                     tittle:"Cameras",
                     view:"list",
-                    id:"element_tree_cctv",
+                    id:this.treeId,
                     width:200,
                     drag:true,
                     data:vdata
                 },
                {
-                    id: "dropArea",
+                    id: this.dropAreaId,
                     drag: true,
                     view: "gridlayout",
                     gridColumns: this.ncols, 
@@ -146,12 +145,12 @@ export default class CCTV {
         for(let i=0; i<this.nrows; i++) {
             for(let j=0; j<this.ncols; j++) {
                 if($$("cam"+ i + j)=== undefined || !$$("cam"+ i + j)){
-                    $$("dropArea").addView({ id: "cam" + i + j, template: i + "," + j + '<br><img src="" id="img_cam' + i + j + '" style="width:100%; height:96%" />', x:j, y:i, dx:1, dy:1 });    
+                    $$(this.dropAreaId).addView({ id: "cam" + i + j, template: i + "," + j + '<br><img src="" id="img_cam' + i + j + '" style="width:100%; height:96%" />', x:j, y:i, dx:1, dy:1 });    
                 }
 
                 // add the drag&drop event handling
                 webix.DragControl.addDrop($$("cam" + i + j).$view, {
-                    $drop:function(source, target, event){
+                    $drop:(source, target, event) =>{
                         let dnd = webix.DragControl.getContext();
                         let value = dnd.from.getItem(dnd.source[0]);
                         self.graphql.load({element: value.id}).then((data) => {
@@ -181,12 +180,3 @@ export default class CCTV {
     }
 }
 
-
-function unLoadDetailForm(){
-	$$("planSchedulesTable").unselect();
-	$$("b_delete_planSchedule").hide();
-	if($$("scheduleDetailForm")){
-		$$("schelduleContainer").removeView("scheduleResizer");
-		$$("schelduleContainer").removeView("scheduleDetailForm");
-	}
-}

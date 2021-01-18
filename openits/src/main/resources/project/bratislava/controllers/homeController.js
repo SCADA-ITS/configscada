@@ -13,8 +13,6 @@ import AlarmNotification from "../classes/AlarmNotification.js";
 import Alarms from "../classes/Alarms.js";
 
 import {usersmanager} from "../widgets/usersmanager.js";
-import * as revenga from "../lib/revenga.js";
-import {RULE} from "../data/GLOBAL_PROPERTIES.js";
 
 let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
 let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
@@ -34,31 +32,31 @@ if (!isLogin) {
 let viewCells = [
     {
         id: "alarms",
-        rows: [alarms]
+        rows: [alarms()]
     },
     {
         id: "plans",
-        rows: [plans]                            
+        rows: [plans()]                            
     },
     {
         id: "planschedule",
-        rows: [planschedules]                  
+        rows: [planschedules()]                  
     },
     {
         id: "users",
-        rows: [users]
+        rows: [users()]
     },
     {
         id: "roles",
-        rows: [roles]
+        rows: [roles()]
     },
     {
         id: "alarmconfigs",
-        rows: [alarmconfigs]
+        rows: [alarmconfigs()]
     },
     {
         id: "equipments",
-        rows: [equipments]
+        rows: [equipments()]
     },
     {
         id: "jasper",
@@ -66,7 +64,7 @@ let viewCells = [
     },
     {
         id: "usersmanager",
-        rows: [usersmanager]
+        rows: [usersmanager()]
     },
     {
         id: "map",
@@ -130,30 +128,6 @@ webix.ready(function() {
     alarm_notification.loadData();
     $$("nameUser").setValue(userName);
     
-    if (userPermissions !== "") {
-        if (checkUserPermission(RULE.EDIT_USER)) {//Edit User
-            console.log();
-        } else {
-            $$("b_new_user").disable();
-            $$("b_edit_user").disable();
-            $$("b_delete_user").disable();	
-        }
-        if (checkUserPermission(RULE.EDIT_ROLE)) {//Edit Role
-            console.log();
-        } else {
-            $$("b_new_role").disable();
-            $$("b_edit_role").disable();
-            $$("b_delete_role").disable();	
-        }
-    } else {
-        $$("b_new_user").disable();
-        $$("b_edit_user").disable();
-        $$("b_delete_user").disable();
-
-        $$("b_new_role").disable();
-        $$("b_edit_role").disable();
-        $$("b_delete_role").disable();
-    }
     changeConnectedIcon();
 });
 

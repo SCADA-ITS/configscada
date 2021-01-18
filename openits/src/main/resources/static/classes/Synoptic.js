@@ -36,7 +36,7 @@ var shouldICheck = true;
 let elementsMap = new Map();
 
 export default class Synoptic {
-  constructor(synopticConf) {
+  constructor(synopticConf, id) {
     this.elementsTypes = [];
     this.elementsToDraw = {};
     this.layersToDraw = {};
@@ -46,13 +46,16 @@ export default class Synoptic {
     this.baseWidth = 0;
     this.baseHeight = 0;
     this.elementId = synopticConf.parentId;
-    this.synopticDiv = synopticConf.id;
     this.synopticConf = synopticConf;
     this.synopticType = synopticConf.id;
     this.elementTree = null;
     this.layerTree = {};
+    if(id){
+      this.synopticDiv = id;
+    }else{
+      this.synopticDiv = synopticConf.id;
+    }
     this.metadata = {
-      "id":"synoptic",
       "view":"view",
       "autoConfig":true,
       "select":true
@@ -738,10 +741,9 @@ export default class Synoptic {
             move:true, 
             width: 200,
             position: function(position) {
-              var toolbarHeight = $$("mainToolbar").$height;
-              position.top = toolbarHeight;
-              position.left = $$("mainBody").$width - 200;
-              var mainHeight = $$("mainBody").$height - toolbarHeight;
+              position.top = 140;
+              position.left = window.innerWidth - 220;
+              var mainHeight = window.innerHeight - 151;
               position.height = mainHeight;
               position.width = 200;
             },
@@ -873,7 +875,7 @@ export default class Synoptic {
       })
       .then((d) => {
         // creates the stomp connection
-        self.client = new StompJs.Client({
+        this.client = new StompJs.Client({
           brokerURL: webix.storage.session.get("url.ws.stomp"),
           connectHeaders: {
             login: "user",
@@ -884,16 +886,16 @@ export default class Synoptic {
           heartbeatOutgoing: 4000,
         });
 
-        self.client.onConnect = function (frame) {
+        this.client.onConnect = (xframe) => {
           // Do something, all subscribes must be done is this callback
           // This is needed because this will be executed after a (re)connect
-          self.suscription = self.client.subscribe(
+          this.suscription = this.client.subscribe(
             "/topic/element.>",
-            self.processStompMessageWithFallback
+            this.processStompMessageWithFallback
           );
         };
 
-        self.client.onStompError = function (frame) {
+        this.client.onStompError = (frame) => {
           // Will be invoked in case of error encountered at Broker
           // Bad login/passcode typically will cause an error
           // Complaint brokers will set `message` header with a brief message. Body may contain details.
@@ -902,7 +904,7 @@ export default class Synoptic {
           console.log("Additional details: " + frame.body);
         };
 
-        self.client.activate();
+        this.client.activate();
       });
   }
 
@@ -957,6 +959,12 @@ export default class Synoptic {
 
       this.initResponsive();
     });
+  }
+
+  on_destroy(){
+    $$("elementTreeView" + this.synopticDiv).destructor();
+    $$("menu" + this.synopticDiv).destructor();
+    this.client.deactivate();
   }
 
   /*

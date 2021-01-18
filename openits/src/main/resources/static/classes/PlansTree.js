@@ -2,7 +2,7 @@ import { plan } from "../data/plan.js";
 import Plan from "../classes/Plan.js";
 
 export default class PlansTree {
-  constructor(data, metadata) {
+  constructor(data, metadata, parentId) {
     this.planSubtype = [];
     this.planType = [];
     this.planes = [];
@@ -11,6 +11,7 @@ export default class PlansTree {
     this.dato = [];
     this.order = [];
     this.topic = "";
+    this.parentId=parentId;
 
     // for using the object inside callbacks
     let self = this;
@@ -23,36 +24,36 @@ export default class PlansTree {
   }
 
   addToTree(){
-    let selectPlan = $$("treePlan").getSelectedId();
-    let item = $$('treePlan').getItem(selectPlan);
-    let pos = $$("treePlan").getBranchIndex(item.id);
+    let selectPlan = $$(this.parentId).getSelectedId();
+    let item = $$(this.parentId).getItem(selectPlan);
+    let pos = $$(this.parentId).getBranchIndex(item.id);
     let counte = item.$count * 20;
     if (item.$level < 4 ) {
-      $$('treePlan').add({id: item.id + "." + counte.toString() ,alias:"New item", description: "", qid: "new" }, pos, item.id);
+      $$(this.parentId).add({id: item.id + "." + counte.toString() ,alias:"New item", description: "", qid: "new" }, pos, item.id);
     }
   }
 
   editPlan(){
-    let selectPlan = $$("treePlan").getSelectedId();
-    let item = $$('treePlan').getItem(selectPlan);
-    let pos = $$("treePlan").getBranchIndex(item.id);
+    let selectPlan = $$(this.parentId).getSelectedId();
+    let item = $$(this.parentId).getItem(selectPlan);
+    let pos = $$(this.parentId).getBranchIndex(item.id);
 
     console.log($$(item.qid + "_alias"));
     $$(item.qid + "_alias").enable();
     $$(item.qid + "_description").enable();
     $$(item.qid + "_planModeType").enable();
-    $$("b_edit").hide();
-    $$("b_save").show();
-    $$("b_play").hide();
-    $$("b_stop").hide();
-    $$("b_pause").hide();
-    $$("b_remove").hide();
-    $$("b_add_order").hide();
+    $$("btn_edit"+this.parentId).hide();
+    $$("btn_save"+this.parentId).show();
+    $$("btn_play"+this.parentId).hide();
+    $$("btn_stop"+this.parentId).hide();
+    $$("btn_pause"+this.parentId).hide();
+    $$("btn_delete"+this.parentId).hide();
+    $$("btn_add_order"+this.parentId).hide();
   }
 
   removeToTree(){
-    let selectPlan = $$("treePlan").getSelectedId();
-    let item = $$('treePlan').getItem(selectPlan);
+    let selectPlan = $$(this.parentId).getSelectedId();
+    let item = $$(this.parentId).getItem(selectPlan);
     if (item.$count > 0) {
       webix.message("ERROR, Eliminar Hijos");
     } else {
@@ -73,7 +74,7 @@ export default class PlansTree {
               })
               .then(data => {
                 if (data.id === item.qid) {
-                  $$('treePlan').remove(item.id);
+                  $$(this.parentId).remove(item.id);
                   return true;
                 } else {
                   webix.message("ERROR, Al Eliminar");
@@ -81,7 +82,7 @@ export default class PlansTree {
                 }
               });
           } else {
-            $$('treePlan').remove(item.id);
+            $$(this.parentId).remove(item.id);
             return true;
           }
           break;
@@ -101,7 +102,7 @@ export default class PlansTree {
             })
             .then(data => {
               if (data.id === item.qid) {
-                $$('treePlan').remove(item.id);
+                $$(this.parentId).remove(item.id);
                 return true;
               } else {
                 webix.message("ERROR, Al Eliminar");
@@ -109,7 +110,7 @@ export default class PlansTree {
               }
             });
           } else {
-            $$('treePlan').remove(item.id);
+            $$(this.parentId).remove(item.id);
             return true;
           }
           break; 
@@ -129,7 +130,7 @@ export default class PlansTree {
               })
               .then(data => {
                 if (data.id === item.qid) {
-                  $$('treePlan').remove(item.id);
+                  $$(this.parentId).remove(item.id);
                   return true;
                 } else {
                   webix.message("ERROR, Al Eliminar");
@@ -137,7 +138,7 @@ export default class PlansTree {
                 }
               }); 
           } else {
-            $$('treePlan').remove(item.id);
+            $$(this.parentId).remove(item.id);
             return true;
           }     
           break;
@@ -146,10 +147,10 @@ export default class PlansTree {
   }
 
   saveItems(){
-    let selectPlan = $$("treePlan").getSelectedId();
-    let item = $$('treePlan').getItem(selectPlan);
-    let parentId = $$("treePlan").getParentId(item.id);
-    let parentItem = $$('treePlan').getItem(parentId);
+    let selectPlan = $$(this.parentId).getSelectedId();
+    let item = $$(this.parentId).getItem(selectPlan);
+    let parentId = $$(this.parentId).getParentId(item.id);
+    let parentItem = $$(this.parentId).getItem(parentId);
   
     switch (item.$level) {
       case 4:  //PLAN
@@ -185,35 +186,35 @@ export default class PlansTree {
             item["planStateType"] = data.planStateType;
             item["data"] = [];
             item["planOrders"] = [];
-            $$('treePlan').updateItem(selectPlan, item);
-            let item2 = $$('treePlan').getItem(item.id);
-            removeGrid("planParent");
+            $$(this.parentId).updateItem(selectPlan, item);
+            let item2 = $$(this.parentId).getItem(item.id);
+            removeGrid("grid"+this.parentId);
             
-            $$("toolbar_tree").show();
-            $$("b_remove").hide();
-            $$("treePlan").data.each(function(obj){  
+            $$("bar_tree"+this.parentId).show();
+            $$("btn_delete"+this.parentId).hide();
+            $$(this.parentId).data.each(function(obj){  
               if ( obj.id.toString() === item2.id.toString() ) {
                
                 switch (obj.$level) {
                   case 4:  //PLAN
-                    $$("toolbar_plan").show();
-                    $$("b_edit").hide();
-                    $$("b_save").hide();
-                    $$("b_play").hide();
-                    $$("b_stop").hide();
-                    $$("b_pause").hide();
-                    $$("b_remove").hide();
-                    $$("b_add_order").hide();
+                    $$("bar"+this.parentId).show();
+                    $$("btn_edit"+this.parentId).hide();
+                    $$("btn_save"+this.parentId).hide();
+                    $$("btn_play"+this.parentId).hide();
+                    $$("btn_stop"+this.parentId).hide();
+                    $$("btn_pause"+this.parentId).hide();
+                    $$("btn_delete"+this.parentId).hide();
+                    $$("btn_add_order"+this.parentId).hide();
                     
-                    let plan = new Plan(null,obj);
-                    $$("b_edit").show();
-                    $$("b_save").hide();
-                    $$("b_play").show();
-                    $$("b_stop").show();
-                    $$("b_pause").show();
-                    $$("b_remove").show();
-                    $$("b_add_order").show();
-                    plan.editForm("planParent",plan.data);
+                    let plan = new Plan(null,obj, this.parentId);
+                    $$("btn_edit"+this.parentId).show();
+                    $$("btn_save"+this.parentId).hide();
+                    $$("btn_play"+this.parentId).show();
+                    $$("btn_stop"+this.parentId).show();
+                    $$("btn_pause"+this.parentId).show();
+                    $$("btn_delete"+this.parentId).show();
+                    $$("btn_add_order"+this.parentId).show();
+                    plan.editForm("grid"+this.parentId,plan.data);
                   break;
                 }
               }
@@ -251,7 +252,7 @@ export default class PlansTree {
               item["description"] = data.description; 
               item["planModeType"] = data.planModeType; 
               
-              $$('treePlan').updateItem(selectPlan, item);
+              $$(this.parentId).updateItem(selectPlan, item);
             }
           });
         }
@@ -284,7 +285,7 @@ export default class PlansTree {
               item["qid"] = data.id;
               item["alias"] = data.alias;
               item["description"] = data.description; 
-              $$('treePlan').updateItem(selectPlan, item);
+              $$(this.parentId).updateItem(selectPlan, item);
             });
         }else{
           let planMutation = webix.proxy(
@@ -312,7 +313,7 @@ export default class PlansTree {
               item["qid"] = data.id;
               item["alias"] = data.alias;
               item["description"] = data.description; 
-              $$('treePlan').updateItem(selectPlan, item);
+              $$(this.parentId).updateItem(selectPlan, item);
             });
         }                          
         break;
@@ -338,7 +339,7 @@ export default class PlansTree {
               item["qid"] = data.id;
               item["alias"] = data.alias;
               item["description"] = data.description; 
-              $$('treePlan').updateItem(selectPlan, item);
+              $$(this.parentId).updateItem(selectPlan, item);
             });
         }else{
           let planMutation = webix.proxy(
@@ -362,7 +363,7 @@ export default class PlansTree {
               item["qid"] = data.id;
               item["alias"] = data.alias;
               item["description"] = data.description; 
-              $$('treePlan').updateItem(selectPlan, item);
+              $$(this.parentId).updateItem(selectPlan, item);
             });
         }
         break;
@@ -374,9 +375,9 @@ export default class PlansTree {
   }
 
   sendPlan(){
-    let selectPlan = $$("treePlan").getSelectedId();
-    let item = $$('treePlan').getItem(selectPlan);
-    let plan = new Plan(null,item);
+    let selectPlan = $$(this.parentId).getSelectedId();
+    let item = $$(this.parentId).getItem(selectPlan);
+    let plan = new Plan(null,item,this.parentId);
     plan.sendExecutionPlan();
   }
 
@@ -432,20 +433,20 @@ export default class PlansTree {
         d.forEach(element => {
           this.planes.push(element);
         });
-        $$("treePlan").add({ alias:"\\", id: "1", open:true, qid: "0" }, 0);
+        $$(this.parentId).add({ alias:"\\", id: "1", open:true, qid: "0" }, 0);
         let count = 1;
         this.order.push("1");
         this.planType.forEach(element => {
-          $$("treePlan").add({ id: "1." + count.toString(), qid: element.id, alias: element.alias, description: element.description }, 0, "1");
+          $$(this.parentId).add({ id: "1." + count.toString(), qid: element.id, alias: element.alias, description: element.description }, 0, "1");
           this.order.push("1." + count.toString());
           count += 1;
         });
         let count1 = 1000;
         this.planSubtype.forEach(etype => {
           this.order.forEach(e => {
-            if (etype.planType.id === $$("treePlan").data.pull[e].qid ) {
-              let parentBranch = $$("treePlan").data.pull[e].id;
-              $$("treePlan").add({ id: parentBranch + "." + count1.toString(), qid: etype.id, alias: etype.alias, description: etype.description }, 0, parentBranch );
+            if (etype.planType.id === $$(this.parentId).data.pull[e].qid ) {
+              let parentBranch = $$(this.parentId).data.pull[e].id;
+              $$(this.parentId).add({ id: parentBranch + "." + count1.toString(), qid: etype.id, alias: etype.alias, description: etype.description }, 0, parentBranch );
               this.order.push(parentBranch + "." + count1.toString());
               count1 += 1;
             }
@@ -466,9 +467,9 @@ export default class PlansTree {
 
           this.order.forEach(e => {
             try {
-              if (element.planSubtype.id === $$("treePlan").data.pull[e].qid ) {
-                let parentBranch = $$("treePlan").data.pull[e].id;
-                $$("treePlan").add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.planStateType, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders, planStateType: element.planStateType },0, parentBranch );
+              if (element.planSubtype.id === $$(this.parentId).data.pull[e].qid ) {
+                let parentBranch = $$(this.parentId).data.pull[e].id;
+                $$(this.parentId).add({ id: parentBranch + "." + counter.toString(), qid: element.id, alias: element.alias, description: element.description, state: element.planStateType, planSubtype: element.planSubtype, planModeType: element.planModeType, planOrders: element.planOrders, data: planOrders, planStateType: element.planStateType },0, parentBranch );
                 this.order.push(parentBranch + "." + counter.toString());
               }
             } catch (error){

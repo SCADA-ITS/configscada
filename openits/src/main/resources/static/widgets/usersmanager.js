@@ -10,30 +10,33 @@ userManager.locales.es = es;
 userManager.locales.sk = sk;
 userManager.locales.en = en;
 
-export let usersmanager= {
-	id:"usersmanagerContainer",
-    body: {
-        view:"usermanager",
-        id: "userManagerModule",
-        override: new Map([[userManager.services.Backend, UserManagerInt],
-            [userManager.views["users/roles"], CustomRoleManager],
-            [userManager.views["users/details"], CustomUserDetails],
-            [userManager.views["addmenu"], CustomAddRoleAndUser],
-            [userManager.views["users/form"], CustomUsersForm],
-            [userManager.views["users/credentials"], CustomCredentialsView]
-        ]),
-        locale: {
-            lang: j_language_usermanager,
-            webix:{
-                // switch all webix widgets to the selected locale
-                es:"es-ES",
-                en: "en-EN",
-                sk: "sk-SK"
+export let usersmanager = () =>{
+    let widgetId=webix.uid();
+	
+    let result = {
+        body: {
+            view:"usermanager",
+            id: "userManagerModule",
+            override: new Map([[userManager.services.Backend, UserManagerInt],
+                [userManager.views["users/roles"], CustomRoleManager],
+                [userManager.views["users/details"], CustomUserDetails],
+                [userManager.views["addmenu"], CustomAddRoleAndUser],
+                [userManager.views["users/form"], CustomUsersForm],
+                [userManager.views["users/credentials"], CustomCredentialsView]
+            ]),
+            locale: {
+                lang: j_language_usermanager,
+                webix:{
+                    // switch all webix widgets to the selected locale
+                    es:"es-ES",
+                    en: "en-EN",
+                    sk: "sk-SK"
+                }
             }
+
         }
-
-    }
-};
-
+    };
+    return result;
+}
 
 

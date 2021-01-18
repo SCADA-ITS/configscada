@@ -2,7 +2,7 @@ import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {ELEMENT_TYPE_PARAM} from  "../data/GLOBAL_PROPERTIES.js";
 
 export default class EquipmentTable {
-    constructor(id,mode,columns,data,columnsElementConfig,columnsElementList) {
+    constructor(id,mode,columns,data,columnsElementConfig,columnsElementList, parentId) {
         this.id = id;
         this.mode = mode; //measure = 2, parameter = 1
         this.columns = columns;
@@ -10,6 +10,7 @@ export default class EquipmentTable {
         this.modeType = this.mode === 1 ? "parameter" : "measure";
         this.columnsElementConfig = columnsElementConfig;
         this.columnsElementList = columnsElementList;
+        this.parentId=parentId;
         //this.id === null ? this.id = columns.id : null ;
 
         let self = this;
@@ -42,7 +43,7 @@ export default class EquipmentTable {
         this.graphqlElements = webix.proxy("GraphQL", graphElements);
 
         this.table = {
-            id:"tabla_element_" + this.modeType,	
+            id:this.modeType +this.parentId,	
             view:"datatable",
             editable:true,
             //scroll: true,
@@ -125,7 +126,7 @@ export default class EquipmentTable {
             let obj = JSON.parse(JSON.parse(message.body));
             obj.basicElementsVO.forEach((element) => {
                 try {
-                    let item = $$("tabla_element_measure").getItem(element.id);
+                    let item = $$("measure"+this.parentId).getItem(element.id);
                     if(item != null) {
                         let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
                         let colorList = item["$cellCss"];
@@ -164,7 +165,7 @@ export default class EquipmentTable {
                             });
                         }
                         item["$cellCss"] = colorList;
-                        $$("tabla_element_measure").updateItem(element.id, item); 
+                        $$("measure"+this.parentId).updateItem(element.id, item); 
                     }
                 } catch (err) { console.log("Error: " + err.message); }
             });
@@ -182,16 +183,15 @@ export default class EquipmentTable {
 				{}
 			]
         };
-        console.log("tabla_element_" + this.modeType);
         let status = ["state.unknown","state.connected","state.noconnected","state.alarm"];
         if (this.mode === 2) {
             // waits for the element and starts drawing
-            this.elementReady('[view_id="' + "tabla_element_" + this.modeType + '"]').then((c) => {
+            this.elementReady('[view_id="' + this.modeType +this.parentId+ '"]').then((c) => {
                 let spinnerDivToAdd = document.createElement("div");
-                spinnerDivToAdd.setAttribute("id", "tabla_element_" + this.modeType + "spinner");
+                spinnerDivToAdd.setAttribute("id", this.modeType+ this.parentId + "spinner");
                 spinnerDivToAdd.setAttribute("class", "spinner");
                 document
-                .querySelector('[view_id="' + "tabla_element_" + this.modeType + '"]')
+                .querySelector('[view_id="' + this.modeType + this.parentId + '"]')
                 .prepend(spinnerDivToAdd);
             });
         }
@@ -202,9 +202,8 @@ export default class EquipmentTable {
                 }).then(data => {
 
                     try {
-                        //document.getElementById("tabla_element_" + this.modeType + "spinner").style.display = "block";
                         this.columnsElementList[this.id][this.mode].forEach(obj => {
-                            $$("tabla_element_" + this.modeType)
+                            $$(this.modeType + this.parentId)
                                 .config.columns.push({ id: obj,  
                                     header: this.columnsElementConfig[this.id][this.mode][obj]["header"],
                                     rotate: this.columnsElementConfig[this.id][this.mode][obj]["rotate"], 
@@ -263,8 +262,8 @@ export default class EquipmentTable {
                             });	
                         }
                         row["$cellCss"] = colorList;
-                        $$("tabla_element_" + this.modeType).add(row);
-                        $$("tabla_element_" + this.modeType).sort({
+                        $$(this.modeType + this.parentId).add(row);
+                        $$(this.modeType + this.parentId).sort({
                             as:"string",
                             dir:"asc",
                             by:"id"
@@ -272,7 +271,7 @@ export default class EquipmentTable {
                     });
                 }).then(() => {
                     if (this.mode === 2) 
-                        document.getElementById("tabla_element_" + this.modeType + "spinner").style.display = "none";
+                        document.getElementById(this.modeType + this.parentId + "spinner").style.display = "none";
                 });
                   
         } else {
@@ -280,7 +279,7 @@ export default class EquipmentTable {
 
                 this.columnsElementList[this.id][this.mode].forEach(obj => {
 
-                    $$("tabla_element_" + this.modeType)
+                    $$(this.modeType + this.parentId)
                         .config.columns.push({ id: obj,  
                             header: this.columnsElementConfig[this.id][this.mode][obj]["header"],
                             rotate: this.columnsElementConfig[this.id][this.mode][obj]["rotate"], 
@@ -328,8 +327,8 @@ export default class EquipmentTable {
                 }
 
                 row["$cellCss"] = colorList;
-                $$("tabla_element_" + this.modeType).add(row);
-                $$("tabla_element_" + this.modeType).sort({
+                $$(this.modeType + this.parentId).add(row);
+                $$(this.modeType + this.parentId).sort({
                     as:"string",
                     dir:"asc",
                     by:"id"

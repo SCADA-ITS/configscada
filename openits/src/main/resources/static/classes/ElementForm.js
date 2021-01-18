@@ -889,7 +889,7 @@ export default class TabForm {
 								$$(this.commands).addView({
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
-									value: $.i18n(data.elementType.commandElementTypes[index].id),
+									value: $.i18n(this.data.elementType.commandElementTypes[index].id),
 									click: () =>{
 										var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
 											sendCommandElement(commands: $commands)  
@@ -902,7 +902,7 @@ export default class TabForm {
 										graphql.save({
 											"commands": [
 												{
-													"commandElementTypeId": data.elementType.commandElementTypes[index].id,
+													"commandElementTypeId": this.data.elementType.commandElementTypes[index].id,
 													"elementId": elementId
 												}
 											]
@@ -914,10 +914,10 @@ export default class TabForm {
 												"logSubtypeId": "LogSubtype:1",
 												"auditLogValues": [
 													{
-													"value": data.elementType.commandElementTypes[index].labelAlias,
+													"value": this.data.elementType.commandElementTypes[index].labelAlias,
 													"logTypeParamId": "LogTypeParam:3:1"
 													},{
-													"value": data.alias,
+													"value": this.data.alias,
 													"logTypeParamId": "LogTypeParam:3:2"
 													},{
 													"value": "",
