@@ -14,8 +14,9 @@ const LBL_PLAN_SCHEDULE_STATE = {
 };
 
 export default class PlanScheduleForm {
-	constructor(id,data,mode) {
+	constructor(id,data,mode, parentId) {
         this.id = id;
+        this.parentId=parentId;
         let self = this;
         this.mode = mode;
         if (this.id === null && data !== null) {
@@ -41,10 +42,10 @@ export default class PlanScheduleForm {
             heartbeatOutgoing: 4000
         });
         this.topic = "/topic/planSchedules." + this.id;
-		this.client.onConnect = function(frame) {
+		this.client.onConnect = (frame) => {
 			this.suscription = self.client.subscribe(self.topic, self.update_table);
 		};
-		this.client.onStompError = function(frame) {
+		this.client.onStompError = (frame) => {
 			// Will be invoked in case of error encountered at Broker
 			// Bad login/passcode typically will cause an error
 			// Complaint brokers will set `message` header with a brief message. Body may contain details.
@@ -83,7 +84,7 @@ export default class PlanScheduleForm {
 		this.formHeader = {
 			view: "template",
 			type: "header",
-			id: "planScheduleFormHeader_"+this.id,
+			id: this.parentId+"planScheduleFormHeader_"+this.id,
 			data: {
 				value: ""
 			},
@@ -93,10 +94,10 @@ export default class PlanScheduleForm {
 			css: { "text-align": "left !important" }
         };
         
-        function saveEditPlanSchedule(id) {
+        let saveEditPlanSchedule=(id)=> {
             let itemId = id.toString().split("_")[2];
-            let updateplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
-            if($$("planScheduleForm_" + itemId).validate()){
+            let updateplanScheduleForm = $$(this.parentId+"planScheduleForm_" + itemId).getValues();
+            if($$(this.parentId+"planScheduleForm_" + itemId).validate()){
                 let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
                 let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                 graphqlSendPlan2.load({
@@ -123,18 +124,18 @@ export default class PlanScheduleForm {
                             }`;
                         let graphqlSendPlanU = webix.proxy("GraphQL", graphPlanScheduleQuery);
                         graphqlSendPlanU.load({}).then(dataPlan => {
-                            let item = $$("planSchedulesTable").getItem(dataPlan.id);
+                            let item = $$(this.parentId+"Table").getItem(dataPlan.id);
                             item["alias"] = dataPlan.alias;
                             item["description"] = dataPlan.description;
                             item["cronExpression"] = dataPlan.cronExpression;
                             item["plan"] = dataPlan.plan;
-                            $$("planSchedulesTable").updateItem(dataPlan.id, item);
+                            $$(this.parentId+"Table").updateItem(dataPlan.id, item);
     
-                            $$("planSchedulesTable").unselect();
-                            $$("b_delete_planSchedule").hide();
-                            if($$("scheduleDetailForm")){
-                                $$("schelduleContainer").removeView("scheduleResizer");
-                                $$("schelduleContainer").removeView("scheduleDetailForm");
+                            $$(this.parentId+"Table").unselect();
+                            $$("btn_delete"+this.parentId).hide();
+                            if($$(this.parentId+"DetailForm")){
+                                $$(this.parentId).removeView(this.parentId+"Resizer");
+                                $$(this.parentId).removeView(this.parentId+"DetailForm");
                             }
                         });
                     }
@@ -144,10 +145,10 @@ export default class PlanScheduleForm {
             }  
         }
 
-        function createNewPlanSchedule(id) {
+        let createNewPlanSchedule=(id)=> {
             let itemId = id.toString().split("_")[2];
-            let createplanScheduleForm = $$("planScheduleForm_" + itemId).getValues();
-            if($$("planScheduleForm_" + itemId).validate()){
+            let createplanScheduleForm = $$(this.parentId+"planScheduleForm_" + itemId).getValues();
+            if($$(this.parentId+"planScheduleForm_" + itemId).validate()){
                 let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan) { id } }`; 
                 let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                 let graphPlanSchedulesQuery = `query  {
@@ -174,8 +175,8 @@ export default class PlanScheduleForm {
                 }).then(data => {
                     if(data){
                     //Como no tenemos el id del plan creado pedimos todos y volvemos a rellenar la tabla
-                    $$("planSchedulesTable").clearAll();
-                    $$("planSchedulesTable").load(`GraphQL->{ 
+                    $$(this.parentId+"Table").clearAll();
+                    $$(this.parentId+"Table").load(`GraphQL->{ 
                         getPlanSchedules{
                             id
                             plan{id alias description planStateType{id alias description}}
@@ -186,11 +187,11 @@ export default class PlanScheduleForm {
                         }
                         }`);
 
-                        $$("planSchedulesTable").unselect();
-                        $$("b_delete_planSchedule").hide();
-                        if($$("scheduleDetailForm")){
-                            $$("schelduleContainer").removeView("scheduleResizer");
-                            $$("schelduleContainer").removeView("scheduleDetailForm");
+                        $$(this.parentId+"Table").unselect();
+                        $$("btn_delete"+this.parentId).hide();
+                        if($$(this.parentId+"DetailForm")){
+                            $$(this.parentId).removeView(this.parentId+"Resizer");
+                            $$(this.parentId).removeView(this.parentId+"DetailForm");
                         }
                     }
                 });
@@ -201,21 +202,21 @@ export default class PlanScheduleForm {
 
         this.form = {   
             view: "form",
-            id: "planScheduleForm_" + this.id,
+            id: this.parentId+"planScheduleForm_" + this.id,
             width: 0,
             margin: 0,
             elements: [
-                { view: "text",  id: "planScheduleForm_" + this.id + "_id", name: "id", label: $.i18n("planSchedule.popup.id") , labelWidth: 200, disabled: true } ,
-                { view: "text",  id: "planScheduleForm_" + this.id + "_alias",name: "alias", label: $.i18n("planSchedule.popup.alias") , labelWidth: 200, disabled: true },
-                { view: "textarea",  id: "planScheduleForm_" + this.id + "_description",name: "description", label: $.i18n("planSchedule.popup.description") ,labelWidth: 200, disabled: true },
+                { view: "text",  id: this.parentId+"planScheduleForm_" + this.id + "_id", name: "id", label: $.i18n("planSchedule.popup.id") , labelWidth: 200, disabled: true } ,
+                { view: "text",  id: this.parentId+"planScheduleForm_" + this.id + "_alias",name: "alias", label: $.i18n("planSchedule.popup.alias") , labelWidth: 200, disabled: true },
+                { view: "textarea",  id: this.parentId+"planScheduleForm_" + this.id + "_description",name: "description", label: $.i18n("planSchedule.popup.description") ,labelWidth: 200, disabled: true },
                 { 
                     view: "text",  
-                    id: "planScheduleForm_" + this.id + "_cronExpression",
+                    id: this.parentId+"planScheduleForm_" + this.id + "_cronExpression",
                     name: "cronExpression", label: $.i18n("planSchedule.popup.cronExpression") ,
                     labelWidth: 200, 
                     disabled: true,
                     on: {
-                        "onFocus": function(id){
+                        "onFocus": (id)=>{
                             let popupid = "cronUiPopup";
                             let cron = new CronUi(id,popupid);
                             webix.ui({
@@ -226,12 +227,12 @@ export default class PlanScheduleForm {
                                 width: 800,
                                 body: cron.getComponent(),
                                 on: {
-                                    onHide: function(obj){
+                                    onHide: (obj)=>{
                                         $$(popupid).getChildViews()[0].destructor();
                                         $$(popupid).destructor();
                                         $$(id).enable();
                                     },
-                                    onShow: function(obj){
+                                    onShow: (obj)=>{
                                         cron.loadData();
                                         $$(id).disable();
                                     }
@@ -240,11 +241,11 @@ export default class PlanScheduleForm {
                         }
                     } 
                 },
-                { view: "combo", id: "planScheduleForm_" + this.id + "_plan",name: "plan", label: $.i18n("planSchedule.popup.plan") ,labelWidth: 200, disabled: true, options: [],},
+                { view: "combo", id: this.parentId+"planScheduleForm_" + this.id + "_plan",name: "plan", label: $.i18n("planSchedule.popup.plan") ,labelWidth: 200, disabled: true, options: [],},
                 {
                     view: "switch",
                     name: "state",
-                    id: "planScheduleForm_" + this.id + "_state",
+                    id: this.parentId+"planScheduleForm_" + this.id + "_state",
                     label: "state",
                     //css: "webix_um_status_switch",
                     hidden: (this.id === "new" ? true : false),
@@ -255,7 +256,7 @@ export default class PlanScheduleForm {
                             if(dato === 0) {
                                 //Mandamos la pausa al server
                                 try {
-                                    let planScheduleForm = $$("planScheduleForm_" + id).getValues();
+                                    let planScheduleForm = $$(this.parentId+"planScheduleForm_" + id).getValues();
                                     let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id planScheduleStateType{id alias} }}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
@@ -272,7 +273,7 @@ export default class PlanScheduleForm {
                                     }).then(data => {
                                         if(data[0] !== null){
                                             //actualizamos el panel
-                                            let control = $$("planScheduleForm_" + data[0].id + "_state");
+                                            let control = $$(this.parentId+"planScheduleForm_" + data[0].id + "_state");
                                             let html = statusBadge(data[0].planScheduleStateType.alias);
                                             control.config.labelRight = html;
                                             control.refresh();
@@ -288,7 +289,7 @@ export default class PlanScheduleForm {
                             if(dato === 1) {
                                 //mandamos el running al server
                                 try {
-                                    let planScheduleForm = $$("planScheduleForm_" + id).getValues();
+                                    let planScheduleForm = $$(this.parentId+"planScheduleForm_" + id).getValues();
                                     let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) {sendPlanScheduleActions(planSchedules: $plan){ id planScheduleStateType{id alias} }}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
@@ -305,7 +306,7 @@ export default class PlanScheduleForm {
                                     }).then(data => {
                                         if(data[0] !== null){
                                             //actualizamos el panel
-                                            let control = $$("planScheduleForm_" + data[0].id + "_state");
+                                            let control = $$(this.parentId+"planScheduleForm_" + data[0].id + "_state");
                                             let html = statusBadge(data[0].planScheduleStateType.alias);
                                             control.config.labelRight = html;
                                             control.refresh();
@@ -327,28 +328,21 @@ export default class PlanScheduleForm {
                 "plan":webix.rules.isNotEmpty
             }               
         };
-
-        function UpdateBadge(value){
-            var control = $$("planScheduleForm_" + this.id + "_state");
-            var html = statusBadge(value);
-            control.config.labelRight = html;
-            control.refresh();
-        }
         
 		this.buttons = {
             id: "planScheduleFormButtons_" + this.id,
 			view: "form",
 			cols: [
                 { 
-                    view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", id: "planScheduleFormButtons_cancel_" + this.id, label: $.i18n("planSchedule.popup.button.cancel"), value: "",
+                    view: "button", css:"webix_danger", type:"icon", icon:"mdi mdi-cancel", label: $.i18n("planSchedule.popup.button.cancel"), value: "",
                     click: unLoadDetailForm
                 },
                 { 
-                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: "planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
+                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: this.parentId+"planScheduleFormButtons_create_" + this.id, label: $.i18n("planSchedule.popup.button.create"), value: "",
                     click: createNewPlanSchedule
                 },
                 { 
-                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: "planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
+                    view: "button", css:"webix_primary", hidden: true, type:"icon", icon:"mdi mdi-content-save", id: this.parentId+"planScheduleFormButtons_save_" + this.id,  label: $.i18n("planSchedule.popup.button.save"), value: "",
                     click: saveEditPlanSchedule
                 }
 			]
@@ -360,7 +354,7 @@ export default class PlanScheduleForm {
 			let obj = JSON.parse(JSON.parse(message.body));
             obj.basicElementsVO.forEach((element) => {
                 if (element.planScheduleStateType !== undefined) {
-                    let control = $$("planScheduleForm_" + element.id + "_state");
+                    let control = $$(this.parentId+"planScheduleForm_" + element.id + "_state");
                     let html = statusBadge(LBL_PLAN_SCHEDULE_STATE[element.planScheduleStateType.id.split(":")[1]]);
                     control.config.labelRight = html;
                     control.refresh();
@@ -380,7 +374,7 @@ export default class PlanScheduleForm {
         let header = "";
 
 		let genericForm = {
-            id:"scheduleDetailForm",
+            id:this.parentId+"DetailForm",
             width:"500",
 			rows: [
                 this.formHeader,
@@ -389,7 +383,7 @@ export default class PlanScheduleForm {
 				{}
             ],
             on: {
-                onDestruct: function(obj){
+                onDestruct: (obj)=>{
                     client.deactivate();
                 }
             }
@@ -401,19 +395,19 @@ export default class PlanScheduleForm {
                     if (data) {
                         header = data.id + " " + data.alias;
                         try {
-                            $$("planScheduleForm_" + this.id).setValues({
+                            $$(this.parentId+"planScheduleForm_" + this.id).setValues({
                                 id: data.id,
                                 alias: data.alias,
                                 description: data.description,
                                 cronExpression: data.cronExpression
                             });
-                            $$("planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
-                            let control = $$("planScheduleForm_" + this.id + "_state");
+                            $$(this.parentId+"planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
+                            let control = $$(this.parentId+"planScheduleForm_" + this.id + "_state");
                             let html = statusBadge(data.planScheduleStateType.alias);
                             control.config.labelRight = html;
                             control.refresh();
-                            $$("planScheduleForm_" + this.id + "_plan").setValue({ id: "planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
-                            $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
+                            $$(this.parentId+"planScheduleForm_" + this.id + "_plan").setValue({ id: this.parentId+"planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
+                            $$(this.parentId+"planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                         } catch {}
                     } 
                 });
@@ -422,24 +416,24 @@ export default class PlanScheduleForm {
             case 1: //Edit Mode
                 this.graphql.load().then(data => {
                     if (data) {
-                        $$("planScheduleForm_" + this.id + "_alias").enable();
-                        $$("planScheduleForm_" + this.id + "_description").enable();
-                        $$("planScheduleForm_" + this.id + "_cronExpression").enable();
-                        $$("planScheduleForm_" + this.id + "_plan").enable();
-                        $$("planScheduleFormButtons_save_" + this.id).show();
+                        $$(this.parentId+"planScheduleForm_" + this.id + "_alias").enable();
+                        $$(this.parentId+"planScheduleForm_" + this.id + "_description").enable();
+                        $$(this.parentId+"planScheduleForm_" + this.id + "_cronExpression").enable();
+                        $$(this.parentId+"planScheduleForm_" + this.id + "_plan").enable();
+                        $$(this.parentId+"planScheduleFormButtons_save_" + this.id).show();
                         header = data.id + " " + data.alias;
                         try {
-                            $$("planScheduleForm_" + this.id).setValues({
+                            $$(this.parentId+"planScheduleForm_" + this.id).setValues({
                                 id: data.id,
                                 alias: data.alias,
                                 description: data.description,
                                 cronExpression: data.cronExpression,
                                 //state: data.state
                             });
-                            $$("planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
+                            $$(this.parentId+"planScheduleForm_" + this.id + "_state").setValue(data.planScheduleStateType.alias === 'RUNNING' ? 1 : 0);
                             //let state = data.state === 2 ? 1 : 0;
-                            //$$("planScheduleForm_" + this.id + "_state").setValue(state);
-                            let control = $$("planScheduleForm_" + this.id + "_state");
+                            //$$(this.parentId+"planScheduleForm_" + this.id + "_state").setValue(state);
+                            let control = $$(this.parentId+"planScheduleForm_" + this.id + "_state");
                             let html = statusBadge(data.planScheduleStateType.alias);
                             control.config.labelRight = html;
                             control.refresh();
@@ -447,13 +441,13 @@ export default class PlanScheduleForm {
                                 if(data2){
                                     data2.forEach(item => {
                                         if(data.plan.id !== item.id){
-                                            $$("planScheduleForm_" + this.id + "_plan").getList().add({ id: "planScheduleForm_" + this.id + "_" + item.id, value: item.alias });
+                                            $$(this.parentId+"planScheduleForm_" + this.id + "_plan").getList().add({ id: this.parentId+"planScheduleForm_" + this.id + "_" + item.id, value: item.alias });
                                         }
                                     });
                                 }
                             });
-                            $$("planScheduleForm_" + this.id + "_plan").setValue({ id: "planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
-                            $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
+                            $$(this.parentId+"planScheduleForm_" + this.id + "_plan").setValue({ id: this.parentId+"planScheduleForm_" + this.id + "_" + data.plan.id, value: data.plan.alias });
+                            $$(this.parentId+"planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                         } catch {}
                     } 
                 });
@@ -461,18 +455,18 @@ export default class PlanScheduleForm {
                 break;
             case 2: //new Mode
                 this.graphqlPlans.load().then(data2 => {
-                    $$("planScheduleForm_" + this.id + "_id").hide();
-                    $$("planScheduleForm_" + this.id + "_alias").enable();
-                    $$("planScheduleForm_" + this.id + "_description").enable();
-                    $$("planScheduleForm_" + this.id + "_cronExpression").enable();
-                    $$("planScheduleForm_" + this.id + "_plan").enable();
-                    $$("planScheduleFormButtons_create_" + this.id).show();
+                    $$(this.parentId+"planScheduleForm_" + this.id + "_id").hide();
+                    $$(this.parentId+"planScheduleForm_" + this.id + "_alias").enable();
+                    $$(this.parentId+"planScheduleForm_" + this.id + "_description").enable();
+                    $$(this.parentId+"planScheduleForm_" + this.id + "_cronExpression").enable();
+                    $$(this.parentId+"planScheduleForm_" + this.id + "_plan").enable();
+                    $$(this.parentId+"planScheduleFormButtons_create_" + this.id).show();
                     if(data2){
                         data2.forEach(item => {
-                            $$("planScheduleForm_" + this.id + "_plan").getList().add({ id: "planScheduleForm_" + this.id + "_" + item.id, value: item.alias });
+                            $$(this.parentId+"planScheduleForm_" + this.id + "_plan").getList().add({ id: this.parentId+"planScheduleForm_" + this.id + "_" + item.id, value: item.alias });
                         });
                     }
-                    $$("planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
+                    $$(this.parentId+"planScheduleFormHeader_"+this.id).setValues({ value: data.alias });
                 });
                 break;
             case 3: // delete Mode
@@ -481,7 +475,7 @@ export default class PlanScheduleForm {
                     rows: [
                         { margin:5, cols:[
                             { view:"button", value:"Confirmar", css:"webix_primary", id: this.id,
-                                click: function deletePlanSchedule(obj){
+                                click: (obj)=>{
                                     let graphqlSendPlanQuery2 = `mutation sendPlanScheduleActions($plan: [PlanSchedulesVO!]!) { sendPlanScheduleActions(planSchedules: $plan){ id }}`; 
                                     let graphqlSendPlan2 = webix.proxy("GraphQL", graphqlSendPlanQuery2);
                                     graphqlSendPlan2.load({
@@ -509,11 +503,11 @@ export default class PlanScheduleForm {
                                                 let graphPlanScheduleQuery2 = webix.proxy("GraphQL", graphPlanScheduleQuery);
                                                 graphPlanScheduleQuery2.load({}).then(dataPlan => {
                                                     if(dataPlan === null){
-                                                        $$("planSchedulesTable").remove(obj);
+                                                        $$(this.parentId+"Table").remove(obj);
                                                         $$("planSchedule_win").destructor();
-                                                        $$("b_details_planSchedule").hide();
-                                                        $$("b_edit_planSchedule" ).hide();
-                                                        $$("b_delete_planSchedule").hide();
+                                                        $$("btn_detail"+this.parentId).hide();
+                                                        $$("btn_edit"+this.parentId ).hide();
+                                                        $$("btn_delete"+this.parentId).hide();
                                                     }
                                                 });
                                             }
@@ -522,7 +516,7 @@ export default class PlanScheduleForm {
                                 }
                             },
                             { view:"button", value:"Cancel",
-                                click: function cancelUser(obj){
+                                click: (obj)=>{
                                     try {
                                         $$("planSchedule_win").destructor();
                                     } catch  {}
@@ -553,10 +547,10 @@ function statusBadge(value) {
 }
 
 function unLoadDetailForm(){
-	$$("planSchedulesTable").unselect();
-	$$("b_delete_planSchedule").hide();
-	if($$("scheduleDetailForm")){
-		$$("schelduleContainer").removeView("scheduleResizer");
-		$$("schelduleContainer").removeView("scheduleDetailForm");
+	$$(this.parentId+"Table").unselect();
+	$$("btn_delete"+this.parentId).hide();
+	if($$(this.parentId+"DetailForm")){
+		$$(this.parentId).removeView(this.parentId+"Resizer");
+		$$(this.parentId).removeView(this.parentId+"DetailForm");
 	}
 }

@@ -1,10 +1,9 @@
 import PlanSchedule from "../classes/PlanSchedule.js";
 
-let planSchedule = new PlanSchedule();
 
 export let planschedules=() =>{
+	let planSchedule = new PlanSchedule();
 	let result = {
-		id:"schelduleWidget",
 		body: planSchedule.getComponent(),
 		on: {
 			onViewShow: function(){

@@ -19,8 +19,83 @@ const PLAN_STATE_TYPE = {
 
 export default class PlanSchedule {
     constructor() {
+
         // for using the object inside callbacks
-        let self = this;
+        this.id = webix.uid();
+
+
+        let edit_planSchedule =() =>{
+            let selectPlan = $$(this.id+"Table").getSelectedId();
+            let item = $$(this.id+"Table").getItem(selectPlan);
+            loadDetailForm(item.id, 1)
+        }
+
+        let detail_planSchedule=()=>{
+            let selectPlan = $$(this.id+"Table").getSelectedId();
+            let item = $$(this.id+"Table").getItem(selectPlan);
+            loadDetailForm(item.id, 0); 
+        }
+        
+        let unLoadDetailForm=()=>{
+            $$(this.id+"Table").unselect();
+            $$("btn_delete"+this.id).hide();
+            if($$(this.id+"DetailForm")){
+                $$(this.id).removeView(this.id+"Resizer");
+                $$(this.id).removeView(this.id+"DetailForm");
+            }
+        }
+        
+        let delete_planSchedule=(id)=>{
+            let selectPlan = $$(this.id+"Table").getSelectedId();
+            let item = $$(this.id+"Table").getItem(selectPlan);
+            try {
+                $$("planSchedule_win").destructor();
+            } catch  {}
+        
+            let planScheduleForm = new PlanScheduleForm(item.id,null,3, this.id);
+            webix
+              .ui({ 
+                id: "planSchedule_win",
+                view: "window",
+                width: 400,
+                move: true,
+                close: true,
+                position: "right",
+                body: planScheduleForm.getComponent(),
+                on: {
+                    onHide: function(obj){
+                        planScheduleForm.disconnect();
+                        $$("planSchedule_win").destructor();
+                        unLoadDetailForm();
+                    }
+                }
+              })
+              .show();	
+        }
+        
+        let loadDetailForm=(id, num)=>{
+            let auxPlanSchedule = new PlanScheduleForm(id,null,num, this.id);
+            if(!$$(this.id+"DetailForm")){
+                $$(this.id).addView({ id:this.id+"Resizer", view:"resizer" });
+                $$(this.id).addView(auxPlanSchedule.getComponent());
+            }else{
+                $$(this.id).removeView(this.id+"Resizer");
+                $$(this.id).removeView(this.id+"DetailForm");
+                $$(this.id).addView({ id:this.id+"Resizer", view:"resizer" });
+                $$(this.id).addView(auxPlanSchedule.getComponent());
+            }
+        }
+
+        let addToTable=()=>{
+            unLoadDetailForm();
+            loadDetailForm(null, 2); 
+        }
+            
+        let onKeyPressTable=(code, e)=>{
+            if(code==27){
+                unLoadDetailForm();
+            }
+        }
 
         // creates the stomp connection
         this.client = new StompJs.Client({
@@ -36,17 +111,17 @@ export default class PlanSchedule {
 	        heartbeatOutgoing: 4000
         });
 
-        this.client.onConnect = function(frame) {
+        this.client.onConnect =(frame) => {
 	        // Do something, all subscribes must be done is this callback
 	        // This is needed because this will be executed after a (re)connect
-	        this.suscription = self.client.subscribe(
+	        this.suscription = this.client.subscribe(
                 //"/topic/planSchedules.>",
                 "/topic/planSchedules.>",
-	            self.processStompMessageWithFallback
+	            this.processStompMessageWithFallback
 	        );
         };
         //topic://planSchedules.PlanSchedules:4
-        this.client.onStompError = function(frame) {
+        this.client.onStompError = (frame) => {
 	        // Will be invoked in case of error encountered at Broker
 	        // Bad login/passcode typically will cause an error
 	        // Complaint brokers will set `message` header with a brief message. Body may contain details.
@@ -68,7 +143,7 @@ export default class PlanSchedule {
 
         this.graphql = webix.proxy("GraphQL", this.graph);
         this.genericTablei18n = {
-            id:"planSchedulesTable",
+            id:this.id+"Table",
             "view":"datatable",
             "autoConfig":true,
             "select":true,
@@ -116,7 +191,11 @@ export default class PlanSchedule {
                     ],   
                     sort:"text",
                     width: 150,
-                    template: function (data, type, value) { return statusBadge(data.planScheduleStateType !== undefined ? data.planScheduleStateType.alias : ""); },
+                    template: (data, type, value) => { 
+                        let tmpValue=data.planScheduleStateType !== undefined ? data.planScheduleStateType.alias : "";
+                        var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + tmpValue.toLowerCase() + "\">" + tmpValue + "</span>\n\t\t</div>";
+                        return html;
+                    },
                 },
                 { 
                     "id":"plan", 
@@ -151,20 +230,25 @@ export default class PlanSchedule {
                         }
                     ], 
                     sort:"text",  
-                    "template": function (data, type, value) {                                         
-                        return planStatusBadge(data.plan.planStateType !== undefined ? data.plan.planStateType.alias : "UNKNOWN")}, 
+                    "template": (data, type, value) => {
+                        let tmpValue=data.plan.planStateType !== undefined ? data.plan.planStateType.alias : "UNKNOWN";
+                        var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + tmpValue.toLowerCase() + "\">" + tmpValue + "</span>\n\t\t</div>";
+                        return html;
+                    }, 
                     fillspace:1 
                 },
             ],
             on:{
-                onItemClick: planSchedule_select,
+                onItemClick: (id) =>{
+                    $$("btn_delete"+this.id).show();
+                    edit_planSchedule()
+                },
                 onKeyPress: onKeyPressTable
             }
         };
 
         this.toolbar = {
             view: "toolbar",
-            id: "toolbar_planSchedule",
             heigth: 50,
             rows: [
                 {
@@ -172,7 +256,6 @@ export default class PlanSchedule {
                         { gravity: 8},
                         { 
                             view:"button", 
-                            id: "planSchedule_add_button", 
                             autowidth:true,
                             hidden: false,
                             //disabled: !checkUserPermission(RULE.PLAN_ADMIN), 
@@ -182,7 +265,7 @@ export default class PlanSchedule {
                         },				
                         { 
                             view:"button", 
-                            id: "b_details_planSchedule", 
+                            id: "btn_detail"+this.id, 
                             align:"right", 
                             hidden:true, 
                             autowidth:true, 
@@ -193,7 +276,7 @@ export default class PlanSchedule {
                         },
                         { 
                             view:"button", 
-                            id: "b_edit_planSchedule" , 
+                            id: "btn_edit"+this.id, 
                             type:"icon", 
                             hidden:true, 
                             icon:"mdi mdi-grease-pencil", 
@@ -203,7 +286,7 @@ export default class PlanSchedule {
                         },
                         { 
                             view:"button", 
-                            id: "b_delete_planSchedule", 
+                            id: "btn_delete"+this.id, 
                             align:"right", 
                             hidden:true, 
                             autowidth:true, 
@@ -223,12 +306,12 @@ export default class PlanSchedule {
             let obj = JSON.parse(JSON.parse(message.body));
             obj.basicElementsVO.forEach(element => {
                 try {
-                    let item = $$("planSchedulesTable").getItem(element.id);
+                    let item = $$(this.id+"Table").getItem(element.id);
                     if(item != null) {
                         let planScheduleStateType = element.planScheduleStateType !== undefined ? element.planScheduleStateType : null;
                         if(planScheduleStateType !== null){
                             item['planScheduleStateType'] = {id: planScheduleStateType.id, alias: LBL_PLAN_SCHEDULE_STATE[planScheduleStateType.id.split(":")[1]]};
-                            $$("planSchedulesTable").updateItem(element.id, item); 
+                            $$(this.id+"Table").updateItem(element.id, item); 
                         } else {
                             let v_alias = element.alias !== undefined ? element.alias : null;
                             if (v_alias !== null){
@@ -254,7 +337,7 @@ export default class PlanSchedule {
                                         
                                         item['plan'] = {id: element.plan.id, alias: data.alias, planStateType: data.planStateType};
                                         item['planState'] = {id: data.planStateType.id, alias: data.planStateType.alias};
-                                        $$("planSchedulesTable").updateItem(element.id, item); 
+                                        $$(this.id+"Table").updateItem(element.id, item); 
                                     });
                                 }else{
                                     if (v_alias !== null && v_alias !== item.alias)
@@ -266,7 +349,7 @@ export default class PlanSchedule {
                                     if(element.cronExpression !== item.cronExpression)
                                         item['cronExpression'] = element.cronExpression;
 
-                                    $$("planSchedulesTable").updateItem(element.id, item);
+                                    $$(this.id+"Table").updateItem(element.id, item);
                                 }
                             }
                         }
@@ -281,7 +364,7 @@ export default class PlanSchedule {
 
     getComponent() {
         let generic = {
-            id:"schelduleContainer",
+            id:this.id,
             cols:
             [
                 {rows:[
@@ -297,8 +380,8 @@ export default class PlanSchedule {
 
     disconnect(){
         this.client.deactivate();
-        //$$("schelduleContainer").destructor();
-        $$("planSchedulesTable").clearAll();
+        //$$(this.id).destructor();
+        $$(this.id+"Table").clearAll();
         unLoadDetailForm()
     }
     
@@ -331,11 +414,11 @@ export default class PlanSchedule {
             const v_planAlias = Array.from(new Set(planAlias));
             const v_planScheduleStates = Array.from(new Set(planScheduleStates));
             const v_planState = Array.from(new Set(planState));
-            $$('planSchedulesTable').parse({
+            $$(this.id+"Table").parse({
 				"data": datos,
-				"pos": $$('planSchedulesTable').count(),
+				"pos": $$(this.id+"Table").count(),
             });
-            $$("planSchedulesTable").config.columns.forEach(element => {
+            $$(this.id+"Table").config.columns.forEach(element => {
                 if(element.id === "plan"){
                     let counter = 0;
                     element.header[1].options.clearAll();
@@ -367,7 +450,7 @@ export default class PlanSchedule {
                     });
                 }
             });
-            $$("planSchedulesTable").refresh();
+            $$(this.id+"Table").refresh();
             this.client.activate();
             return d;
         });
@@ -376,97 +459,7 @@ export default class PlanSchedule {
     init() {
         this.loadData();
     }
+    
 }
 
-function statusBadge(value) {
-    //var cssStatusName = LBL_PLAN_SCHEDULE_STATE[value].toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + value.toLowerCase() + "\">" + value + "</span>\n\t\t</div>";
-    return html;
-}
 
-function planStatusBadge(value) {
-    //var cssStatusName = PLAN_STATE_TYPE[value].toLowerCase();
-    var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + value.toLowerCase() + "\">" + value + "</span>\n\t\t</div>";
-    return html;
-}
-
-function planSchedule_select(id){
-	$$("b_delete_planSchedule").show();
-	edit_planSchedule()
-}
-
-function addToTable(){
-	unLoadDetailForm();
-	loadDetailForm(null, 2); 
-}
-
-function detail_planSchedule(){
-	let selectPlan = $$("planSchedulesTable").getSelectedId();
-	let item = $$('planSchedulesTable').getItem(selectPlan);
-	loadDetailForm(item.id, 0); 
-}
-
-function edit_planSchedule(id){
-	let selectPlan = $$("planSchedulesTable").getSelectedId();
-	let item = $$('planSchedulesTable').getItem(selectPlan);
-	loadDetailForm(item.id, 1)
-}
-
-function loadDetailForm(id, num){
-	let auxPlanSchedule = new PlanScheduleForm(id,null,num);
-	if(!$$("scheduleDetailForm")){
-		$$("schelduleContainer").addView({ id:"scheduleResizer", view:"resizer" });
-		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
-	}else{
-		//webix.ui(
-		//	auxPlanSchedule.getComponent()
-        //  , $$('scheduleDetailForm'));
-        $$("schelduleContainer").removeView("scheduleResizer");
-        $$("schelduleContainer").removeView("scheduleDetailForm");
-        $$("schelduleContainer").addView({ id:"scheduleResizer", view:"resizer" });
-		$$("schelduleContainer").addView(auxPlanSchedule.getComponent());
-	}
-}
-
-function onKeyPressTable(code, e){
-	if(code==27){
-		unLoadDetailForm();
-	}
-}
-
-function unLoadDetailForm(){
-	$$("planSchedulesTable").unselect();
-	$$("b_delete_planSchedule").hide();
-	if($$("scheduleDetailForm")){
-		$$("schelduleContainer").removeView("scheduleResizer");
-		$$("schelduleContainer").removeView("scheduleDetailForm");
-	}
-}
-
-function delete_planSchedule(id){
-	let selectPlan = $$("planSchedulesTable").getSelectedId();
-	let item = $$('planSchedulesTable').getItem(selectPlan);
-	try {
-		$$("planSchedule_win").destructor();
-	} catch  {}
-
-	let planScheduleForm = new PlanScheduleForm(item.id,null,3);
-	webix
-	  .ui({ 
-		id: "planSchedule_win",
-		view: "window",
-		width: 400,
-		move: true,
-		close: true,
-		position: "right",
-		body: planScheduleForm.getComponent(),
-		on: {
-			onHide: function(obj){
-                planScheduleForm.disconnect();
-				$$("planSchedule_win").destructor();
-				unLoadDetailForm();
-			}
-		}
-	  })
-	  .show();	
-}
