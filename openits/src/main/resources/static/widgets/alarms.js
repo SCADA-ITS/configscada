@@ -473,7 +473,7 @@ export function alarms(){
 
 	let genericTablei18n_recon = {
 		rows: [{
-			"id": "alarmsTable_recon",
+			"id": widgetId+"_recon",
 			"view": "datatable",
 			"autoConfig": true,
 			"select": true,
@@ -529,7 +529,7 @@ export function alarms(){
 					openElementForm(this.getItem(id)[id.column].id)
 				},
 				action_deactivate: function (ev, id, html) {
-					var data = $$("alarmsTable_recon").serialize();
+					var data = $$(widgetId+"_recon").serialize();
 					var alarmId = id.row;
 					for (let index = 0; index < data.length; index++) {
 						if (data[index].id == alarmId) {
@@ -619,7 +619,7 @@ export function alarms(){
 						click: function () {
 							var alarmas = [];
 							var alarmasId = [];
-							var data = $$("alarmsTable_recon").serialize();
+							var data = $$(widgetId+"_recon").serialize();
 							for (let index = 0; index < data.length; index++) {
 								if (data[index].check_recon == "on") {
 									alarmas.push(data[index])
@@ -771,7 +771,7 @@ export function alarms(){
 		],
 		on:{
 			onViewShow: function(){
-				let table = new Alarms(graphAlarm, null);
+				let table = new Alarms(graphAlarm, null, widgetId);
 				table.init();
 			}
 		}

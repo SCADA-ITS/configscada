@@ -149,8 +149,7 @@ export default class PlansTree {
   saveItems(){
     let selectPlan = $$(this.parentId).getSelectedId();
     let item = $$(this.parentId).getItem(selectPlan);
-    let parentId = $$(this.parentId).getParentId(item.id);
-    let parentItem = $$(this.parentId).getItem(parentId);
+    let parentItem = $$(this.parentId).getItem($$(this.parentId).getParentId(item.id));
   
     switch (item.$level) {
       case 4:  //PLAN

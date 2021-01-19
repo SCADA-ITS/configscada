@@ -229,6 +229,7 @@ export default class Plan {
     $$(container).addView({ view:"template",type:"header", autoheight:true, heigth: 150, select:true, id:idForm.toString() ,template: "<div>" + $.i18n("plan.form.new.title") + "</div>" },3);
     $$(container).addView({
         view:"form", 
+        id:idForm + "_form", 
         scroll:false, 
         elements:[{
           rows: [{

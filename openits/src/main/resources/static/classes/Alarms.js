@@ -2,8 +2,9 @@ import {genericTable} from "../data/genericTable.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
 
 export default class Alarms {
-	constructor(data, metadata){
-        this.data=data;
+	constructor(data, metadata, parentId){
+		this.data=data;
+		this.parentId = parentId;
 		this.alarmas = [];
 		if(metadata==null){
 			this.metadata=genericTable;
@@ -28,16 +29,16 @@ export default class Alarms {
 	        heartbeatOutgoing: 4000
         });
 
-        this.client.onConnect = function(frame) {
+        this.client.onConnect = (frame) => {
 	        // Do something, all subscribes must be done is this callback
 	        // This is needed because this will be executed after a (re)connect
-	        this.suscription = self.client.subscribe(
+	        this.suscription = this.client.subscribe(
 	            "/topic/alarm.>",
-	            self.processStompMessageWithFallback
+	            this.processStompMessageWithFallback
 	        );
         };
 
-        this.client.onStompError = function(frame) {
+        this.client.onStompError = (frame) => {
 	        // Will be invoked in case of error encountered at Broker
 	        // Bad login/passcode typically will cause an error
 	        // Complaint brokers will set `message` header with a brief message. Body may contain details.
@@ -52,14 +53,14 @@ export default class Alarms {
    *	Tries to get the data from Stomp, but if it doesn't find the needed data,
    * gets it by GraphQL
    */
-  processStompMessageWithFallback(message) {
+  processStompMessageWithFallback =(message) => {
 	  try {
 	      let obj = JSON.parse(JSON.parse(message.body));
 
 	      obj.basicElementsVO.forEach(element => {
 	    	  
 			let control = false;
-			let item = $$('alarmsTable').getItem(element.id);
+			let item = $$(this.parentId).getItem(element.id);
 			
 		    if (item != null && item != undefined) {
 		    	  
@@ -75,11 +76,11 @@ export default class Alarms {
         
 		        // Se borra la alarma
 		        if (data.recognized != null && data.deactivation != null) {
-		        	$$('alarmsTable').remove(element.id);
+		        	$$(this.parentId).remove(element.id);
 		        	
 		        }else{
-					$$('alarmsTable').updateItem(element.id, data);
-					let orden = $$("alarmsTable")._last_sorted;
+					$$(this.parentId).updateItem(element.id, data);
+					let orden = $$(this.parentId)._last_sorted;
 					let orden_campos = [];
 					let orden_values = [];
 					Object.entries(orden).map(([k, v]) => {
@@ -87,23 +88,23 @@ export default class Alarms {
 						orden_values.push(v);
 					});
 					if (orden_campos.length > 0){
-						$$("alarmsTable").sort(orden_values);
+						$$(this.parentId).sort(orden_values);
 					}
 		        	
 		        	if(data.recognized != null){
-		        		$$("alarmsTable").move(element.id, 0, $$("alarmsTable_recon"), {newId: element.id});
+		        		$$(this.parentId).move(element.id, 0, $$(this.parentId+"_recon"), {newId: element.id});
 		        	}
 		        }
 
 	        control = true;
    
 		    }else{
-				item = $$('alarmsTable_recon').getItem(element.id);
+				item = $$(this.parentId+"_recon").getItem(element.id);
 				
 		        if (item != null && item != undefined) {  //ALARMA PREVIAMENTE CREADA
 		
 		            if (element.deactivation != null) { // BORRADA CUANDO SE MODIFICA
-		            	$$('alarmsTable_recon').remove(element.id);	
+		            	$$(this.parentId+"_recon").remove(element.id);	
 		            }else{
 						let data = {
 							id_recon: element.id,
@@ -114,8 +115,8 @@ export default class Alarms {
 							sourceElement: item.sourceElement, 
 							targetElement: item.targetElement
 						  }
-						$$('alarmsTable_recon').updateItem(element.id, data);
-						let orden = $$("alarmsTable_recon")._last_sorted;
+						$$(this.parentId+"_recon").updateItem(element.id, data);
+						let orden = $$(this.parentId+"_recon")._last_sorted;
 						let orden_campos = [];
 						let orden_values = [];
 						Object.entries(orden).map(([k, v]) => {
@@ -123,7 +124,7 @@ export default class Alarms {
 							orden_values.push(v);
 						});
 						if (orden_campos.length > 0){
-							$$("alarmsTable_recon").sort(orden_values);
+							$$(this.parentId+"_recon").sort(orden_values);
 						}
 		            }
 		            control = true;
@@ -172,9 +173,9 @@ export default class Alarms {
 					//targetElementAlias: ""
 				}
 
-				$$('alarmsTable_recon').add(data_recon, 0);
-				$$('alarmsTable_recon').refresh();
-				let orden = $$("alarmsTable_recon")._last_sorted;
+				$$(this.parentId+"_recon").add(data_recon, 0);
+				$$(this.parentId+"_recon").refresh();
+				let orden = $$(this.parentId+"_recon")._last_sorted;
 				let orden_campos = [];
 				let orden_values = [];
 				Object.entries(orden).map(([k, v]) => {
@@ -182,20 +183,20 @@ export default class Alarms {
 					orden_values.push(v);
 				});
 				if (orden_campos.length > 0){
-					$$("alarmsTable_recon").sort(orden_values);
+					$$(this.parentId+"_recon").sort(orden_values);
 				}
 			}else if(data.recognized == null){	
 
-				let orden = $$("alarmsTable")._last_sorted;
+				let orden = $$(this.parentId)._last_sorted;
 				let orden_campos = [];
 				let orden_values = [];
 				Object.entries(orden).map(([k, v]) => {
 					orden_campos.push(k);
 					orden_values.push(v);
 				});
-				$$('alarmsTable').add(data, 0); 
+				$$(this.parentId).add(data, 0); 
 				if (orden_campos.length > 0){
-					$$("alarmsTable").sort(orden_values);
+					$$(this.parentId).sort(orden_values);
 				}
 			}
 
@@ -209,13 +210,13 @@ export default class Alarms {
 			graphqlEquipS.load().then(equipS => {
 				try {
 					if(data.recognized != null && data.deactivation == null){
-						var tmpItem = $$('alarmsTable_recon').getItem(element.id);
+						var tmpItem = $$(this.parentId+"_recon").getItem(element.id);
 						tmpItem.sourceElement.alias=equipS.alias;
-						$$('alarmsTable_recon').updateItem(element.id, tmpItem);
+						$$(this.parentId+"_recon").updateItem(element.id, tmpItem);
 					}else if(data.recognized == null){
-						var tmpItem = $$('alarmsTable').getItem(element.id);
+						var tmpItem = $$(this.parentId).getItem(element.id);
 						tmpItem.sourceElement.alias=equipS.alias;
-						$$('alarmsTable').updateItem(element.id, tmpItem);
+						$$(this.parentId).updateItem(element.id, tmpItem);
 					}
 				} catch (e) {
 				}
@@ -232,13 +233,13 @@ export default class Alarms {
 			graphqlEquipD.load().then(equipD => {
 				try {
 					if(data.recognized != null && data.deactivation == null){
-						var tmpItem = $$('alarmsTable_recon').getItem(element.id);
+						var tmpItem = $$(this.parentId+"_recon").getItem(element.id);
 						tmpItem.targetElement.alias=equipD.alias;
-						$$('alarmsTable_recon').updateItem(element.id, tmpItem);
+						$$(this.parentId+"_recon").updateItem(element.id, tmpItem);
 					}else if(data.recognized == null){
-						var tmpItem = $$('alarmsTable').getItem(element.id);
+						var tmpItem = $$(this.parentId).getItem(element.id);
 						tmpItem.targetElement.alias=equipD.alias;
-						$$('alarmsTable').updateItem(element.id, tmpItem);
+						$$(this.parentId).updateItem(element.id, tmpItem);
 					}
 				}catch (e) {
 				}
@@ -268,15 +269,12 @@ export default class Alarms {
 	
 	disconnect(){
 		this.client.deactivate();
-		$$("alarmsTable").clearAll();
-		$$("alarmsTable_recon").clearAll();
+		$$(this.parentId).clearAll();
+		$$(this.parentId+"_recon").clearAll();
 	}
 
     loadData() {
-
-        this.data
-        .load()
-        .then(d => {
+        this.data.load().then(d => {
 			
 			let datos = [];
 			let datos_recon = [];
@@ -309,39 +307,39 @@ export default class Alarms {
 							//targetElementAlias: ""
 						}
 						datos_recon.push(data_recon);
-						//$$('alarmsTable_recon').add(data, 0);
+						//$$(this.parentId+"_recon").add(data, 0);
 					
                 	}else if(data.recognized == null){
 						datos.push(data);
-                		//$$('alarmsTable').add(data, 0); 
+                		//$$(this.parentId).add(data, 0); 
 					}
 				
 			}
 			
 		  );
-		  //$$('alarmsTable_recon').load({ "data": datos_recon, pos: 0, "total_count": datos_recon.length }, function(text, data, http_request){
+		  //$$(this.parentId+"_recon").load({ "data": datos_recon, pos: 0, "total_count": datos_recon.length }, function(text, data, http_request){
 			// do something with data.json()
 			//console.log(text);
 			//console.log(data);
 			//console.log(http_request);
 			//});
-		  //$$('alarmsTable_recon').load({ "data": datos_recon, pos: $$('alarmsTable_recon').count(), "total_count": datos_recon.length + $$('alarmsTable_recon').count() });
-		  //console.log($$('alarmsTable_recon'));
+		  //$$(this.parentId+"_recon").load({ "data": datos_recon, pos: $$(this.parentId+"_recon").count(), "total_count": datos_recon.length + $$(this.parentId+"_recon").count() });
+		  //console.log($$(this.parentId+"_recon"));
 		  //console.log(datos_recon);
 		 
-			$$('alarmsTable_recon').parse({
+			$$(this.parentId+"_recon").parse({
 				"data": datos_recon,
-				"pos": $$('alarmsTable_recon').count(),
+				"pos": $$(this.parentId+"_recon").count(),
 			});
-			$$("alarmsTable_recon").refresh();
-			$$('alarmsTable').parse({
+			$$(this.parentId+"_recon").refresh();
+			$$(this.parentId).parse({
 				"data": datos,
-				"pos": $$('alarmsTable').count(),
+				"pos": $$(this.parentId).count(),
 			});
-			$$("alarmsTable").refresh();
-			//console.log($$('alarmsTable_recon'));
-		  //$$('alarmsTable').load({ "data": datos, pos: 0, "total_count": datos.length });
-		  //$$('alarmsTable').sort("activation", "desc");
+			$$(this.parentId).refresh();
+			//console.log($$(this.parentId+"_recon"));
+		  //$$(this.parentId).load({ "data": datos, pos: 0, "total_count": datos.length });
+		  //$$(this.parentId).sort("activation", "desc");
           this.client.activate();
           return d;
         });
