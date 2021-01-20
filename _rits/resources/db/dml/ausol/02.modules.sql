@@ -131,7 +131,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (106, 14, 'true'),
 
 
-(300, 8, 'true'),
+(300, 8, 'false'),
 (300, 9, 'img/module/default.png'),
 (300, 10, 'img/module/default.png'),
 (300, 11, '#464646'),
@@ -152,7 +152,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (400, 12, 'LBL_ALARMS'),
 (400, 14, 'true'),
 
-(401, 8, 'true'),
+(401, 8, 'false'),
 (401, 9, 'img/module/default.png'),
 (401, 10, 'img/module/default.png'),
 (401, 11, '#464646'),
@@ -180,7 +180,7 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (403, 12, 'LBL_REPORTS'),
 (403, 14, 'true'),
 
-(404, 8, 'true'),
+(404, 8, 'false'),
 (404, 9, 'img/module/default.png'),
 (404, 10, 'img/module/default.png'),
 (404, 11, '#464646'),
