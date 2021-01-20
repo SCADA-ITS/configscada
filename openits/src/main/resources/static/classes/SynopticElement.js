@@ -1,4 +1,5 @@
 import ElementWindow from "../classes/ElementWindow.js";
+import { util } from "../lib/util.js"
 import {
   generateIcon,
   getElementIcon,
@@ -10,6 +11,7 @@ import {
 import {columnsElementFormList} from "../data/elementForm.js";
 import {ELEMENT_TYPE, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
+const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
 
 let elementQuery = webix.proxy(
   "GraphQL",
@@ -124,8 +126,15 @@ export default class synopticElement {
         if (el != null) {
           if(this.element.elementType.id == ELEMENT_TYPE.ID_7_ZONE) {
             el.click(function (e) {
-              $$("syn0").show();
+              //TODO Deprecated, quedarse con la parte del catch correctamente recuperado el idModule
+              try {
+                $$("syn0").show();  
+              } catch (error) {
+                let module = window.em.getByField(EntityType.MODULE, "id", SYNOPTIC_TUNNEL_RIOVERDE_ID);
+                util.module.open(module, null, null, null, null);	
+              }
             });
+            
             // FIXME: this is for the global synoptic, adds the title to the tunnel
             if (synopticConf.id == "synopticGlobal") {
               let c = document.querySelector('[view_id="' + synopticConf.id + '"]');
@@ -158,7 +167,12 @@ export default class synopticElement {
               });
   
               titleBackground.click(function (e) {
-                $$("syn0").show();
+                try {
+                  $$("syn0").show();  
+                } catch (error) {
+                  let module = window.em.getByField(EntityType.MODULE, "id", SYNOPTIC_TUNNEL_RIOVERDE_ID);
+                  util.module.open(module, null, null, null, null);	
+                }
               });
             }
           } else {

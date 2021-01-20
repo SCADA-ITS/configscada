@@ -2,6 +2,9 @@ import Alarms from "../classes/Alarms.js";
 import ElementWindow from "../classes/ElementWindow.js";
 import {alarmsCfg} from "../data/alarmsCfg.js";
 import {RULE} from "../data/GLOBAL_PROPERTIES.js";
+import { util } from "../lib/util.js"
+
+const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
 
 var graphAlarm = webix.proxy(
 	"GraphQL", `
@@ -720,8 +723,13 @@ export function alarms(){
 	function openElementForm(id){
 		try {
 			if(project==0){
-				$$("$sidebar1").unselectAll();
-				$$("syn0").show();
+				try {
+					$$("$sidebar1").unselectAll();
+					$$("syn0").show();  
+				} catch (error) {
+					let module = window.em.getByField(EntityType.MODULE, "id", SYNOPTIC_TUNNEL_RIOVERDE_ID);
+					util.module.open(module, null, null, null, null);	
+				}
 			}else{
 				if ($$("winAlarmss" + id) != null) {
 					$$("winAlarmss" + id).destructor();

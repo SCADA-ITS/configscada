@@ -162,7 +162,7 @@ export let util = {
 			let allowMultipleInstances, image, icon, color, label, externalizable;
 			let lazyClass;
 
-			if (module.windowValues) {
+			if (module.windowValues && module.windowValues.length>0) {
 
 				allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
 				image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;

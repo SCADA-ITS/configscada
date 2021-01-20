@@ -30,6 +30,8 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 
 (500, 1, 'Equipments', 'Equipments module', 1, '../modules/equipmentModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 
+(900, 4, 'Rio Verde', 'Tunel Rio verde', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
+
 (1000, 2, 'Users', 'Users', 1, '../modules/genericGridModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 (1001, 2, 'Roles', 'Roles', 1, '../modules/genericGridModule.js', 'getView', 'loadData', NULL, NULL, true, true),
 (1002, 2, 'Alarm config', 'Alarm config', 1, '../modules/genericGridModule.js', 'getView', 'loadData', NULL, NULL, true, true);
@@ -58,6 +60,8 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (402, 5, 'http://192.168.88.200:3030/d/qQFlxpaZz/detectors?orgId=1&refresh=5s'),
 (403, 5, 'http://192.168.88.163:8081/jasperserver?j_username=user&j_password=bitnami&userLocale=es_ES'),
 (100, 6, 'mapAusol'),
+
+(900, 4, 'synopticTunnel'),
 
 (1000, 3, '1000'),
 (1001, 3, '1001'),
@@ -168,6 +172,13 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (500, 11, '#464646'),
 (500, 12, 'LBL_EQUIPMENTS'),
 (500, 14, 'true'),
+
+(900, 8, 'true'),
+(900, 9, 'img/module/default.png'),
+(900, 10, 'img/module/default.png'),
+(900, 11, '#464646'),
+(900, 12, 'LBL_RIO_VERDE'),
+(900, 14, 'false'),
 
 (1000, 8, 'true'),
 (1000, 9, 'img/module/user.png'),

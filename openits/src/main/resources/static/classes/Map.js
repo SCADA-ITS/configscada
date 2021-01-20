@@ -7,6 +7,9 @@ import EquipmentTree from "../classes/EquipmentTree.js";
 import {columnsElementFormList} from "../data/elementForm.js";
 import { element_tree } from "../widgets/element_tree.js";
 import SynopticElement from "../classes/SynopticElement.js";
+import { util } from "../lib/util.js"
+
+const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
 
 let map = null;
 let view = null;
@@ -912,7 +915,13 @@ export default class Map {
             // auto de-select
             //e.target.getFeatures().remove(feature);
         } else {
-          $$("syn0").show();
+          //TODO Deprecated, quedarse con la parte del catch correctamente recuperado el idModule
+          try {
+            $$("syn0").show();  
+          } catch (error) {
+            let module = window.em.getByField(EntityType.MODULE, "id", SYNOPTIC_TUNNEL_RIOVERDE_ID);
+            util.module.open(module, null, null, null, null);	
+          }
         }
       });
 
