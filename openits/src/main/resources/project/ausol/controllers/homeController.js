@@ -1,196 +1,134 @@
-import { menu_data_multi, toolbar_data_menu } from "../data/dataProject.js";
-import {synopticData} from "../data/synoptics.js";
+import { util } from "../lib/util.js"
+import MainTab from "./mainTab.js";
+import MainToolbar from "./mainToolbar.js";
+import MenuToolbar from "./menuToolbar.js";
+import I18n from "../managers/i18n.js";
+import EntitiesManager from "../managers/entitiesManager.js";
+import ServiceManager from "../managers/serviceManager.js";
+import SplashScreen from "./splashScreen.js";
 
-//import { map } from "../widgets/map.js";
-import { equipments } from "../widgets/equipments.js";
-import { alarms } from "../widgets/alarms.js";
-import { plans } from "../widgets/plans.js";
-import { users } from "../widgets/users.js";
-import { roles } from "../widgets/roles.js";
-import { alarmconfigs } from "../widgets/alarmconfigs.js";
-import Synoptic from "../classes/Synoptic.js";
-import AlarmNotification from "../classes/AlarmNotification.js";
-import Alarms from "../classes/Alarms.js";
+const WELCOME_SCREEN_MODULE_ID = 1;
 
-import { planschedules } from "../widgets/planschedule.js";
-import {usersmanager} from "../widgets/usersmanager.js";
-import { cctv } from "../widgets/cctv.js";
+//var isLogin = webix.storage.session.get("loginSession");
 
-import { mapsData } from "../data/mapsData.js";
-import Map from "../classes/Map.js";
+//if (!isLogin) {
+//	
+//}
 
-let grafana = {view:"iframe", src:  webix.storage.session.get("url.grafana") };
-let imd = {view:"iframe", src:  webix.storage.session.get("url.imd") };
-let speed = {view:"iframe", src:  webix.storage.session.get("url.speed") };
-let jasper = {view:"iframe", src:  webix.storage.session.get("url.jasper")};
+var userData = util.user.auth();
 
-toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-menu").click=function(){$$("$sidebar1").toggle();};
-toolbar_data_menu.elements.find(x => x.icon === "webix_icon wxi-pencil").click=function(){changeStyle();};
-toolbar_data_menu.elements.find(x => x.icon === "mdi mdi-bell").click=function(){$$("$sidebar1").select("alarms");};
-
-var isLogin = webix.storage.session.get("loginSession");
-if (!isLogin) {
-    window.location = "./login.html";
+if (!userData) {
+	window.location = "./login.html";
 }
 
-var selectView = "";
+document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
 
-let viewCells = [
-    {
-        id: "alarms",
-        rows: [alarms()]
-    },
-    {
-        id: "users",
-        rows: [users()]
-    },
-    {
-        id: "roles",
-        rows: [roles()]
-    },
-    {
-        id: "alarmconfigs",
-        rows: [alarmconfigs()]
-    },
-    {
-        id: "equipments",
-        rows: [equipments()]
-    },
-    /*
-    {
-        id: "map",
-        rows: [map]
-    },
-    */
-    {
-        id: "plans",
-        rows: [plans()]                            
-    },
-    {
-        id: "planschedule",
-        rows: [planschedules()]                      
-    },
-    {
-        id: "grafana",
-        rows: [grafana]
-    },
-    {
-        id: "jasper",
-        rows: [jasper]
-    },
-    {
-        id: "usersmanager",
-        rows: [usersmanager()]
-    },
-    {
-        id: "cctv",
-        rows: [cctv()]
-    },
-    {
-        id: "imd",
-        rows: [imd]
-    },
-    {
-        id: "speed",
-        rows: [speed]
-    }
-    ];
-    synopticData.forEach((item, index) => {
-        let syn = new Synoptic(item);
-        viewCells.push({
-            id: "syn"+index,
-            rows: [{
-                view: "template",
-                id: item.id,
-                url: function() {
-                  syn.init();
+//var language = webix.storage.session.get("app_user_language");
+//var country = webix.storage.session.get("app_user_country");
+window.i18n = new I18n(`${userData.locale.id}`);
+//window.splashScreen = new SplashScreen(initialize);
+//window.splashScreen.show();
+
+window.splashScreen = new SplashScreen(null);
+
+window.onload = function() {
+	
+	//$$("splashScreen").refresh();
+	
+	$.ajaxSetup({
+        statusCode: {
+            401: function(){
+                    window.location = "./login.html";
                 }
-              }]
-        });
-    });
-
-    mapsData.forEach((item, index) => {
-        let map = new Map(item, item.parentId);
-        viewCells.push({
-            id: "map" + index,
-            rows: [{
-                view: "template",
-                id: item.id,
-                url: function() {
-                    map.init();
-                }
-            }]
-        });
-    });
-
-let main_body = {
-    cols: [{
-            view: "sidebar",
-            data: menu_data_multi,
-            multiview: true,
-            on: {
-                onAfterSelect: function(id) {
-                    $$("multiview").setValue(id);
-
-                    if(selectView === "alarms" && id !=="alarms"){
-                        //Como el anterior era alarms lo destruimos.
-                        let table = new Alarms(null, null);
-                        table.disconnect();
-                    }else{
-                        selectView = id;
-                    }
-                }
-            },
-            ready: function() {
-                let firstItem = this.getFirstId();
-                this.select("syn1");
-            }
-        },
-        {
-            id: "multiview",
-            cells: viewCells
         }
-    ]
-};
-let alarm_notification = new AlarmNotification();
-webix.ready(function() {
-    webix.ui({
-    	id:"mainBody",
-        rows: [
-            toolbar_data_menu,
-            main_body,
-            alarm_notification.getComponent()
-        ]
     });
-    webix.extend($$("mainBody"), webix.ProgressBar);
-    alarm_notification.loadData();
+	
+	webix.delay(function() {
 
-    $$("nameUser").setValue(userName);
-    
-    
-    changeConnectedIcon();
-});
+		initialize();
+	}, null, null, 1000);
+}
 
-function changeStyle(){
-    let styleCss = "compact";
-    switch (Math.floor(Math.random()*10)) {
-        case 0,1:
-        styleCss="contrast";
-        break;
-        case 2,3:
-        styleCss="flat";
-        break;
-        case 4,5:
-        styleCss="material";
-        case 6,7:
-        styleCss="compact";
-        default:
-        styleCss="mini";
-        break;
-    }
-    if(document.getElementById("pagestyle").getAttribute("href")==="./lib/webix/skins/"+styleCss+".css"){
-        changeStyle();
-    }else{
-        document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/"+styleCss+".css");
-    }
+function initialize() {
+    
+	window.alarmControlPanel = undefined;
+	window.notificationControlPanel = undefined;
+	window.userControlPanel = undefined;
+	window.serverTime = undefined;
+	
+	window.em = new EntitiesManager();
+	window.stompClient = undefined;
+	
+	var mainTab = new MainTab();
+	var mainToolbar = new MainToolbar();
+	var menuToolbar = new MenuToolbar();
+	
+	let main_footer = {
+		view: "toolbar",
+		css: "main-footer",
+		id: "mainFooter",
+		height: 40,
+		elements: [
+			{},
+			{
+				view: "label",
+				label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
+				align: "right",
+				width: 150
+			},
+			{
+				view: "label",
+				label: `<span class='open-its-version'>version 0.01</span>`,
+				align: "right",
+				width: 85
+			}
+		],
+		borderless: 0
+	};
+	
+	let main_screen = {
+		type: "space",
+	
+		cols: [
+			//{ view: "template", role: "placeholder", borderless: 1, width: 10 },
+			{ width: 0.1 },
+			{
+				rows: [
+					mainToolbar.getView(),
+					menuToolbar.getView(),
+					{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
+					mainTab.getView(),
+					/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
+					main_footer
+				],
+				borderless: 1,
+			},
+			//{ view: "template", template: "Content", role: "placeholder", borderless: 1, width: 10 }
+			{ width: 0.1 }
+		],
+		borderless: 0
+	
+	};
+	
+	//splashScreen.hide();
+	//window.splashScreen.hide();
+	
+	$$("splashScreen").hide();
+	
+	webix.ui(main_screen);
+	mainTab.attachOnBeforeTabClose();
+	
+	window.sm = new ServiceManager();
+	
+	loadWelcomeScreen();
+	
+	function loadWelcomeScreen() {
+	
+		let module = window.em.getByField(EntityType.MODULE, "id", WELCOME_SCREEN_MODULE_ID);
+								
+		if (module) {
+		
+			util.module.open(module, null, null, null, null);	
+		}	
+	}
 }
