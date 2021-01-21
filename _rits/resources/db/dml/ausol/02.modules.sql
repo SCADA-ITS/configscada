@@ -18,6 +18,7 @@ INSERT INTO ui.modules(id, module_type_id, "name", description, default_view_typ
 (104, 4, 'UNIFILAR CSB', 'UNIFILAR CSB', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
 (105, 4, 'UNIFILAR CSV', 'UNIFILAR CSV', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
 (106, 4, 'UNIFILAR CGBT', 'UNIFILAR CGBT', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
+(900, 4, 'RIO VERDE', 'RIO VERDE', 1, '../classes/Synoptic.js', '', 'DEPRECATED', NULL, NULL, true, true),
 
 (300, 1, 'Plans', 'Plans', 1, '../widgets/plans.js', 'plans', 'DEPRECATED', NULL, NULL, true, true),
 (301, 1, 'Plan schedules', 'Plan schedules', 1, '../widgets/planschedule.js', 'planschedules', 'DEPRECATED', NULL, NULL, true, true),
@@ -63,6 +64,7 @@ INSERT INTO ui.module_values(module_id, module_param_id, value) VALUES
 (104, 4, 'synopticUnifilarCsb'),
 (105, 4, 'synopticUnifilarCsv'),
 (106, 4, 'synopticUnifilarCGBT'),
+(900, 4, 'synopticTunnel'),
 
 (402, 5, 'http://192.168.88.200:3030/d/TYXiORfMk/imd-veh-h?orgId=1&refresh=30s'),
 (405, 5, 'http://192.168.88.200:3030/d/FfFhOgfGk/velocidad-media-km-h?orgId=1&refresh=30s'),
@@ -130,6 +132,12 @@ INSERT INTO ui.window_values(module_id, window_param_id, value) VALUES
 (106, 12, 'LBL_UNIFILAR_CGBT'),
 (106, 14, 'true'),
 
+(900, 8, 'true'),
+(900, 9, 'img/module/default.png'),
+(900, 10, 'img/module/default.png'),
+(900, 11, '#464646'),
+(900, 12, 'LBL_RIO_VERDE'),
+(900, 14, 'true'),
 
 (300, 8, 'false'),
 (300, 9, 'img/module/default.png'),
