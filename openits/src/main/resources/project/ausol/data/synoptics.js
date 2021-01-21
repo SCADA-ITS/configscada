@@ -235,9 +235,9 @@ export let synopticData= [
 		"Element:15:6": { "x": 1063, "y": 195, "width": 315, "height": 20,  "alias": "FIRE_3_SM" },
 		
 		"Element:16:3": { "x": 1438, "y": 724, "width": 40,  "height": 40,  "alias": "RV-MEG_3CA" },
-		"Element:16:4": { "x": 881,  "y": 600, "width": 40,  "height": 40,  "alias": "RV-MEG_4CA" },
+		"Element:16:4": { "x": 881,  "y": 544, "width": 40,  "height": 40,  "alias": "RV-MEG_4CA" },
 		"Element:16:5": { "x": 360,  "y": 320, "width": 40,  "height": 40,  "alias": "RV-MEG_1MA" },
-		"Element:16:6": { "x": 881,  "y": 444, "width": 40,  "height": 40,  "alias": "RV-MEG_2MA" },
+		"Element:16:6": { "x": 881,  "y": 500, "width": 40,  "height": 40,  "alias": "RV-MEG_2MA" },
 
 		"Element:17:1": { "x": 150,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
 
