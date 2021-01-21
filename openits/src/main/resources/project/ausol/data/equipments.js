@@ -196,7 +196,7 @@ export let columnsElementList = {
 		],
 		2:[
 			"alias",
-			"state",
+			"state"
 		]
 	},
 	"ElementType:12": { 
@@ -1073,9 +1073,6 @@ export let columnsElementConfig = {
 			"state": {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
-			},
-            "ElementTypeParam:11:2:1": { //"status
-				"header": [ $.i18n("ElementTypeParam:11:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},

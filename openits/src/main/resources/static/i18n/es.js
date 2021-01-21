@@ -478,9 +478,6 @@ var i18_es = {
     "ElementTypeParam:11:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:11:1:2.description": "Entrance Tunnel Distance (m)",
 
-    "ElementTypeParam:11:2:1.alias": "Status",
-    "ElementTypeParam:11:2:1.description": "Status",
-
     "ElementTypeParam:12:1:1.alias": "PK",
     "ElementTypeParam:12:1:1.description": "PK",
     "ElementTypeParam:12:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
@@ -1514,6 +1511,10 @@ var i18_es = {
     "AlarmConfig:42": "ALARMA VELETA SIN CONEXI&Oacute;N",
     "AlarmConfig:43": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:44": "ALARMA SEM SIN CONEXI&Oacute;N",
+    "AlarmConfig:45": "ALARMA SOS PUERTA ABIERTA",
+    "AlarmConfig:46": "ALARMA SOS FA PLACA",
+    "AlarmConfig:47": "ALARMA SOS PUERTA EXTINTOR IZQDA. ABIERTA",
+    "AlarmConfig:48": "ALARMA SOS PUERTA EXTINTOR DCHA. ABIERTA",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
