@@ -268,14 +268,13 @@ export function alarms(){
 		},
 		{
 			view: "toolbar",
-			id: "toolbar_alarms",
 			heigth: 50,
 			align: "right",
 			rows: [{
 				cols: [
 					{ gravity: 4 },
 					{
-						view: "button", id: "recognize_bottom", disabled: !checkUserPermission(RULE.ALARM_RECOGNIZE)  ,align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: $.i18n("alarms.d.button.recognize"),
+						view: "button", disabled: !checkUserPermission(RULE.ALARM_RECOGNIZE)  ,align: "right", autowidth: true, type: "icon", icon: "mdi mdi-eye-check-outline", label: $.i18n("alarms.d.button.recognize"),
 						click: function () {
 							var alarmas = [];
 							var alarmasId = [];
@@ -372,7 +371,7 @@ export function alarms(){
 						}
 					},
 					{
-						view: "button", id: "deactivate_bottom", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-delete-outline", label: "Deactivate",
+						view: "button", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-delete-outline", label: "Deactivate",
 						click: function () {
 							var alarmas = [];
 							var alarmasId = [];
@@ -466,7 +465,7 @@ export function alarms(){
 						}
 					},
 					{
-						view: "button", id: "activation_bottom", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-bell-plus-outline", label: "Activation",
+						view: "button", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-bell-plus-outline", label: "Activation",
 						click: function () { }
 					}
 				]
@@ -610,7 +609,6 @@ export function alarms(){
 		},
 		{
 			view: "toolbar",
-			id: "toolbar_alarms_recon",
 			heigth: 50,
 			hidden: true,
 			align: "right",
@@ -618,7 +616,7 @@ export function alarms(){
 				cols: [
 					{ gravity: 4 },
 					{
-						view: "button", id: "deactivate_bottom_recon", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-delete-outline", label: "Deactivate",
+						view: "button", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-delete-outline", label: "Deactivate",
 						click: function () {
 							var alarmas = [];
 							var alarmasId = [];
@@ -712,7 +710,7 @@ export function alarms(){
 						}
 					},
 					{
-						view: "button", id: "activation_bottom_recon", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-bell-plus-outline", label: "Activation",
+						view: "button", hidden: true, align: "right", autowidth: true, type: "icon", icon: "mdi mdi-bell-plus-outline", label: "Activation",
 						click: function () { }
 					}
 				]
