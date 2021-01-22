@@ -214,6 +214,21 @@ export let SVG_14_LUM=
     "</text>" +
     "</g>" +
     "</g>";
+
+export let SVG_15_FIRE_DET =`<g
+inkscape:label="Capa 1"
+inkscape:groupmode="layer"
+id="layer1"
+transform="translate(0,-291.70832)">
+<rect
+  style="fill:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +`;fill-opacity:1;stroke:#000000;stroke-width:0.18743469;stroke-opacity:1"
+  id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +`:fill0"
+  width="83.156319"
+  height="5.1042309"
+  x="0.093717344"
+  y="291.80206" />
+</g>`;
+
 export let SVG_17_ANEM_EXT =  '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-278.47915)"><g transform="matrix(0.2822222,0,0,0.2822222,-223.71911,238.10826)" id="g6408"><g id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
     ':IconBackground" fill="silver" stroke="' 

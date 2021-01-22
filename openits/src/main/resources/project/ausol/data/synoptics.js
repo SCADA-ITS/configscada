@@ -70,7 +70,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"FIRE": {
-				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4", "Element:15:5", "Element:15:6"],
+				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -227,12 +227,10 @@ export let synopticData= [
 		"Element:14:1": { "x": 1640, "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1CA" },
 		"Element:14:2": { "x": 77,   "y": 503, "width": 60,  "height": 60,  "alias": "RV-LUM-1MA" },
 
-		"Element:15:1": { "x": 434,  "y": 870, "width": 315, "height": 20,  "alias": "FIRE_1_SC" },
-		"Element:15:2": { "x": 434,  "y": 195, "width": 315, "height": 20,  "alias": "FIRE_1_SM" },
-		"Element:15:3": { "x": 748,  "y": 870, "width": 315, "height": 20,  "alias": "FIRE_2_SC" },
-		"Element:15:4": { "x": 748,  "y": 195, "width": 315, "height": 20,  "alias": "FIRE_2_SM" },
-		"Element:15:5": { "x": 1063, "y": 870, "width": 315, "height": 20,  "alias": "FIRE_3_SC" },
-		"Element:15:6": { "x": 1063, "y": 195, "width": 315, "height": 20,  "alias": "FIRE_3_SM" },
+		"Element:15:1": { "x": 898,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-1CA" },
+		"Element:15:2": { "x": 184,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-2CA" },
+		"Element:15:3": { "x": 184,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-1MA" },
+		"Element:15:4": { "x": 898,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-2MA" },
 		
 		"Element:16:3": { "x": 1438, "y": 724, "width": 40,  "height": 40,  "alias": "RV-MEG_3CA" },
 		"Element:16:4": { "x": 881,  "y": 544, "width": 40,  "height": 40,  "alias": "RV-MEG_4CA" },
