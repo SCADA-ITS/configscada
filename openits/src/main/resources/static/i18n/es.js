@@ -1515,6 +1515,7 @@ var i18_es = {
     "AlarmConfig:46": "ALARMA SOS FA PLACA",
     "AlarmConfig:47": "ALARMA SOS PUERTA EXTINTOR IZQDA. ABIERTA",
     "AlarmConfig:48": "ALARMA SOS PUERTA EXTINTOR DCHA. ABIERTA",
+	"AlarmConfig:49": "ALARMA FIRE_DET INCENDIO",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
