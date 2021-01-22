@@ -259,14 +259,12 @@ export default class PanelManager {
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN:
 					if(this.values !== null){
-						let contador2 = 1;
-
-						this.config.cod_listaCells.forEach(ele =>{
+						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
 							let dual = false;
 							let dualActual = null;
 							let dualOption = null;
 							this.config.dual_panels.forEach(y => {
-								if(ele.split("_")[1] === y.split("_")[1])
+								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
 								{
 									dual = true;
 									dualActual = y;
@@ -286,7 +284,7 @@ export default class PanelManager {
 												let v_value = this.values[contador2].value;
 												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
 												if (value_text !== null)
-													$$("panel_" + ele.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+													$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
 											} catch (e) {
 												console.log(e);
 											}
@@ -299,7 +297,7 @@ export default class PanelManager {
 								}
 								contador2 =+ 2;
 							}else{
-								let code = ele;
+								let code = this.config.cod_listaCells[contador2-1];
 								let item = this.values[contador2];
 								if (code.split("_")[10] === "G") {
 									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
@@ -315,50 +313,19 @@ export default class PanelManager {
 										}
 									}
 								}
-								contador2 =+1;
 							}
-						});
-/*
-						Object.entries(this.values).map(([k, item]) => {
-							let code = this.config.cod_listaCells[contador2];
-							if (code !== undefined) {
-								if(dual.includes("panel_" + "k")){
-
-								} 
-								else {
-									if (code.split("_")[10] === "G") {
-										item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
-									} else {
-										for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
-											try {
-												let value_text = null;
-												value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
-												if (value_text !== null)
-													$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
-											} catch (e) {
-												console.log(e);
-											}
-										}
-									}
-								}
-							}
-							contador2 += 1;
-						});
-						*/
+						};
 					}
 					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 					break;
 				case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
-
 					if(this.values !== null){
-						let contador2 = 1;
-
-						this.config.cod_listaCells.forEach(ele =>{
+						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
 							let dual = false;
 							let dualActual = null;
 							let dualOption = null;
 							this.config.dual_panels.forEach(y => {
-								if(ele.split("_")[1] === y.split("_")[1])
+								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
 								{
 									dual = true;
 									dualActual = y;
@@ -378,7 +345,7 @@ export default class PanelManager {
 												let v_value = this.values[contador2].value;
 												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
 												if (value_text !== null)
-													$$("panel_" + ele.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+													$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
 											} catch (e) {
 												console.log(e);
 											}
@@ -410,9 +377,8 @@ export default class PanelManager {
 										}
 									}
 								},0);
-								contador2 =+ 2;
 							}else{
-								let code = ele;
+								let code = this.config.cod_listaCells[contador2-1];
 								let item = this.values[contador2];
 								if (code.split("_")[10] === "G") {
 									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
@@ -428,18 +394,15 @@ export default class PanelManager {
 										}
 									}
 								}
-								contador2 =+1;
 							}
-						});
+						};
 					}else{
-						let contador2 = 1;
-
-						this.config.cod_listaCells.forEach(ele =>{
+						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
 							let dual = false;
 							let dualActual = null;
 							let dualOption = null;
 							this.config.dual_panels.forEach(y => {
-								if(ele.split("_")[1] === y.split("_")[1])
+								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
 								{
 									dual = true;
 									dualActual = y;
@@ -469,9 +432,8 @@ export default class PanelManager {
 										}
 									}
 								},0);
-								contador2 =+ 2;
 							}
-						});
+						};
 					
 					}
 					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
