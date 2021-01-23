@@ -22,12 +22,16 @@ public class Adapter implements Serializable {
 	private String description;
 
 	private Boolean enabled;
-	
+
 	private String file;
 
 	private String name;
 
 	private Boolean visible;
+
+	//bi-directional many-to-one association to AdapterDataSource
+	@OneToMany(mappedBy="adapter")
+	private List<AdapterDataSource> adapterDataSources;
 
 	//bi-directional many-to-one association to AdapterParam
 	@OneToMany(mappedBy="adapter")
@@ -37,19 +41,6 @@ public class Adapter implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="adapter_type_id")
 	private AdapterType adapterType;
-
-	//uni-directional many-to-many association to DataSource
-	@ManyToMany
-	@JoinTable(
-		name="adapter_data_sources"
-		, joinColumns={
-			@JoinColumn(name="adapter_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="data_source_id")
-			}
-		)
-	private List<DataSource> dataSources;
 
 	public Adapter() {
 	}
@@ -77,7 +68,7 @@ public class Adapter implements Serializable {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public String getFile() {
 		return this.file;
 	}
@@ -100,6 +91,28 @@ public class Adapter implements Serializable {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
+	}
+
+	public List<AdapterDataSource> getAdapterDataSources() {
+		return this.adapterDataSources;
+	}
+
+	public void setAdapterDataSources(List<AdapterDataSource> adapterDataSources) {
+		this.adapterDataSources = adapterDataSources;
+	}
+
+	public AdapterDataSource addAdapterDataSource(AdapterDataSource adapterDataSource) {
+		getAdapterDataSources().add(adapterDataSource);
+		adapterDataSource.setAdapter(this);
+
+		return adapterDataSource;
+	}
+
+	public AdapterDataSource removeAdapterDataSource(AdapterDataSource adapterDataSource) {
+		getAdapterDataSources().remove(adapterDataSource);
+		adapterDataSource.setAdapter(null);
+
+		return adapterDataSource;
 	}
 
 	public List<AdapterParam> getAdapterParams() {
@@ -130,14 +143,6 @@ public class Adapter implements Serializable {
 
 	public void setAdapterType(AdapterType adapterType) {
 		this.adapterType = adapterType;
-	}
-
-	public List<DataSource> getDataSources() {
-		return this.dataSources;
-	}
-
-	public void setDataSources(List<DataSource> dataSources) {
-		this.dataSources = dataSources;
 	}
 
 }

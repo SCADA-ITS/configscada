@@ -1,0 +1,78 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the vw_equip_measures database table.
+ * 
+ */
+@Entity
+@Table(name="vw_equip_measures")
+@NamedQuery(name="VwEquipMeasure.findAll", query="SELECT v FROM VwEquipMeasure v")
+public class VwEquipMeasure implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private Integer position;
+
+	private Boolean visible;
+
+	//bi-directional many-to-one association to VoEntity
+	@ManyToOne
+	@JoinColumn(name="vo_entities_id")
+	private VoEntity voEntity;
+
+	//bi-directional many-to-one association to VwEquipGrpMeasure
+	@ManyToOne
+	@JoinColumn(name="vw_equip_grp_measure_id")
+	private VwEquipGrpMeasure vwEquipGrpMeasure;
+
+	public VwEquipMeasure() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public VoEntity getVoEntity() {
+		return this.voEntity;
+	}
+
+	public void setVoEntity(VoEntity voEntity) {
+		this.voEntity = voEntity;
+	}
+
+	public VwEquipGrpMeasure getVwEquipGrpMeasure() {
+		return this.vwEquipGrpMeasure;
+	}
+
+	public void setVwEquipGrpMeasure(VwEquipGrpMeasure vwEquipGrpMeasure) {
+		this.vwEquipGrpMeasure = vwEquipGrpMeasure;
+	}
+
+}

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openitsdao.model.AdapterDataSource;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.Grid;
 
@@ -28,8 +29,10 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class GridAdapter {
 	
-	private static final String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
+//	private static final String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
 	private static final String METHOD_TO_GRID_DATA = "toGridData";
+	
+	private static final int ADAPTER_DATA_SOURCE_TYPE_GROOVY = 1;
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
@@ -40,12 +43,12 @@ public class GridAdapter {
 	@Autowired
 	Environment env;
 	
-	private Integer dataSourceTypeGraphql;
+//	private Integer dataSourceTypeGraphql;
 	
 	@PostConstruct
 	private void initialize() {
 		
-		this.dataSourceTypeGraphql = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL));
+//		this.dataSourceTypeGraphql = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL));
 	}
 	
 	
@@ -80,48 +83,54 @@ public class GridAdapter {
 							.collect(Collectors.toList());
 				}
 			}
-					
-			DataSource dataSourceGraphQL =  grid.getAdapter().getDataSources().stream()
-					.filter(e -> e.getDataSourceType().getId().equals((dataSourceTypeGraphql))).findFirst()
-					.orElse(null);
 			
-			if (dataSourceGraphQL != null) {
 			
-				List<Map<String, Object>> items = voDataSourceAdapter.getList(dataSourceGraphQL.getId(),
-						paramsObj != null ? paramsObj.toArray(Object[]::new) : null);
+			AdapterDataSource adapterDataSource = grid.getAdapter().getAdapterDataSources().stream()
+					.filter(e -> e.getAdapterDataSourceType().getId().equals(ADAPTER_DATA_SOURCE_TYPE_GROOVY))
+					.findFirst().orElse(null);
+			
+			if (adapterDataSource != null) {
 				
-				if (!CollectionUtils.isEmpty(items)) {
-												
-					// TODO: Load from groovy file here
-					String groovyFile = grid.getAdapter().getFile();
+				DataSource dataSourceGraphQL = adapterDataSource.getDataSource();
+				
+				if (dataSourceGraphQL != null) {
 					
-					GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
+					List<Map<String, Object>> items = voDataSourceAdapter.getList(dataSourceGraphQL.getId(),
+							paramsObj != null ? paramsObj.toArray(Object[]::new) : null);
 					
-					if (groovyObj != null) {
+					if (!CollectionUtils.isEmpty(items)) {
+													
+						// TODO: Load from groovy file here
+						String groovyFile = adapterDataSource.getValue();
 						
-						@SuppressWarnings("unchecked")
-						List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
-								METHOD_TO_GRID_DATA,
-								new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+						GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
 						
-						if (gridData != null) {
+						if (groovyObj != null) {
 							
-							gridUI.setData(gridData);		
+							@SuppressWarnings("unchecked")
+							List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
+									METHOD_TO_GRID_DATA,
+									new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+							
+							if (gridData != null) {
+								
+								gridUI.setData(gridData);		
+							}
 						}
-					}
-					
-					// TODO: Test groovy from class here
-//					AdapterGridGeneric adapterGridGeneric = new AdapterGridGeneric(log);
-//					
-//					List<Map<String, Object>> gridData = adapterGridGeneric.toGridData(vo2uiAdapter,
-//							dataSourceGraphQL.getFieldId(), items);
-//					
-//					if (gridData != null) {
+						
+						// TODO: Test groovy from class here
+//						AdapterGridGeneric adapterGridGeneric = new AdapterGridGeneric(log);
 //						
-//						gridUI.setData(gridData);		
-//					}
+//						List<Map<String, Object>> gridData = adapterGridGeneric.toGridData(vo2uiAdapter,
+//								dataSourceGraphQL.getFieldId(), items);
+//						
+//						if (gridData != null) {
+//							
+//							gridUI.setData(gridData);		
+//						}
+					}
 				}
-			}
+			}		
 			
 		} catch (Exception e) {
 			

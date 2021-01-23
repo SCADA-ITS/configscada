@@ -1,0 +1,72 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the view_types database table.
+ * 
+ */
+@Entity
+@Table(name="view_types")
+@NamedQuery(name="ViewType.findAll", query="SELECT v FROM ViewType v")
+public class ViewType implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String description;
+
+	private Boolean enabled;
+
+	private String name;
+
+	private Boolean visible;
+
+	public ViewType() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getEnabled() {
+		return this.enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Boolean getVisible() {
+		return this.visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+}

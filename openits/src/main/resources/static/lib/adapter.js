@@ -1,5 +1,8 @@
 export let adapter = {
 	
+	ADAPTER_TYPE_VO_TO_GRID_DATA : 1,
+	ADAPTER_DATA_SOURCE_TYPE_JS : 2,
+	
 	getElementTypeParamId(elementValueId) {
 	
 		let elementTypeParamId;

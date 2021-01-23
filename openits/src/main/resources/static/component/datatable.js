@@ -845,9 +845,7 @@ export default class DataTable {
 			}
 		}
 	}
-	
-	
-
+					
 	connect_ws() {
 		
 		let self = this;
@@ -855,43 +853,57 @@ export default class DataTable {
 		if (this.metadata.adapter != undefined) {
 
 			let grid = $$("dt-" + this.uid);
-			let dataSource = this.metadata.adapter.dataSources.filter(e => e.dataSourceType.id === STOMP_DATA_SOURCE_TYPE);
-
-			if (!webix.isUndefined(grid) && dataSource != undefined && dataSource.length > 0) {
-				
-				function on_connected() {
-
-					$$("tb_ws_status-" + self.uid).setHTML(`<div><span class="status_ws_connected">${i18n.t("LBL_CONNECTED")}</span></div>`);
-				}
-				
-				function on_message(message) {
-
-					var data = JSON.parse(JSON.parse(message.body));
-
-					//console.log(data);
-
-					var dataGrid = adapter.ws.element.getList(data);
-
-					self.update(dataGrid.data);
-				}
-
-				let url = dataSource[0].dataSourceValues[0].value;
-				let topic = dataSource[0].dataSourceValues[1].value;
-				
-				let params;
-				
-				if (self.dataGridParams) {
+			let dataSource = undefined;
+			
+			if (self.metadata.adapter.adapterType.id === adapter.ADAPTER_TYPE_VO_TO_GRID_DATA) {
+						
+				let adapterDataSource = self.metadata.adapter.adapterDataSources.find(e => {
 					
-					params = "." + self.dataGridParams + ".>";
-				}
-				else {
+					return e.adapterDataSourceType.id === adapter.ADAPTER_DATA_SOURCE_TYPE_JS
+				});
+				
+				if (adapterDataSource && adapterDataSource.value) {
 					
-					params = ".>";
+					dataSource = adapterDataSource.dataSource;
+					
+					function on_connected() {
+
+						$$("tb_ws_status-" + self.uid).setHTML(`<div><span class="status_ws_connected">${i18n.t("LBL_CONNECTED")}</span></div>`);
+					}
+					
+					function on_message(message) {
+	
+						var data = JSON.parse(JSON.parse(message.body));
+	
+						//console.log(data);
+	
+						var dataGrid = eval("adapter." + adapterDataSource.value)(data);
+						//var dataGrid = adapter[adapterDataSource.value](data);
+	
+						self.update(dataGrid.data);
+					}
+	
+					let url = dataSource.dataSourceValues[0].value;
+					let topic = dataSource.dataSourceValues[1].value;
+					
+					let params;
+					
+					if (self.dataGridParams) {
+						
+						params = "." + self.dataGridParams + ".>";
+					}
+					else {
+						
+						params = ".>";
+					}
+	
+					$$("tb_ws_status-" + this.uid).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
+	
+					this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
+					
+					
 				}
-
-				$$("tb_ws_status-" + this.uid).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
-
-				this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
+				
 			}
 		}
 	}
