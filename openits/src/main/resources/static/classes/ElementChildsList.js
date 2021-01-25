@@ -39,7 +39,7 @@ export default class ElementChildsList {
                 $$("cuerpo" + this.parentId).addView({
                     id: "childList" + this.parentId,
                     view: "list", 
-                    width: 150,
+                    width: 250,
                     data:vdata,
                     select: true,
                     template: "#alias#",
