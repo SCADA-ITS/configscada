@@ -43,5 +43,10 @@ export let panelData = {
         "scala": 3.3,
         "scala_List": 4,
         "panel": "{\"Subpaneles\":[{\"NumZonas\":\"2x1\",\"Tamanio\":\"192x64\",\"Zonas\":[{\"Tamanio\":\"64x64\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"128x64\",\"Tipo\":\"Texto\",\"NumLineas\":\"3\",\"TamLineas\":\"15\"}]}]}",
+    },
+    "ElementType:69": {
+        "scala": 3.3,
+        "scala_List": 4,
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"48x16\",\"Zonas\":[{\"Tamanio\":\"48x16\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"32\"}]}]}",
     }
 }

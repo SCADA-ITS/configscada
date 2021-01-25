@@ -55,6 +55,7 @@ export const ELEMENT_TYPE = {
   ID_65_SAI : "ElementType:65",
   ID_66_VANE : "ElementType:66",
   ID_67_SEM_RR : "ElementType:67",
+  ID_69_PMV : "ElementType:69",
   ID_71_VIS : "ElementType:71",
   ID_72_ACCEL : "ElementType:72",
   ID_73_RADAR : "ElementType:73",
@@ -230,6 +231,7 @@ export const ELEMENT_TYPE = {
         {SEM_ROJO_ROJO_STATUS: "1:2"}
       ] 
     },
+    "ElementType:69" :{ id: "ElementType:69", uiType: UI_ELEMENT_TYPE_MATRIX, 	value: 69, scale_x: 28, scale_y: 28},
     "ElementType:71" :{ id: "ElementType:71", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_71_VIS },
     "ElementType:72" :{ id: "ElementType:72", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_72_ACCEL },
     "ElementType:73" :{ id: "ElementType:73", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_73_RADAR },

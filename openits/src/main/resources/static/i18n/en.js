@@ -134,6 +134,8 @@ var i18_en = {
     "ElementType:63.description": "AIRE ACONDICIONADO",
     "ElementType:64.alias": "VMS",
     "ElementType:64.description": "VMS",
+    "ElementType:69.alias": "VMS",
+    "ElementType:69.description": "VMS",
 
     "ElementTypeParam:1:1:1.alias": "Brand",
     "ElementTypeParam:1:1:1.description": "Brand",
@@ -964,6 +966,30 @@ var i18_en = {
 
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
+	
+	
+	"ElementTypeParam:69:1:1.alias": "PK",
+    "ElementTypeParam:69:1:1.description": "PK",
+    "ElementTypeParam:69:1:2.alias": "Direction",
+    "ElementTypeParam:69:1:2.description": "Direction",
+    "ElementTypeParam:69:1:3.alias": "Logic Address",
+    "ElementTypeParam:69:1:3.description": "Logic Address",
+    "ElementTypeParam:69:1:4.alias": "Protocol",
+    "ElementTypeParam:69:1:4.description": "Protocol",
+    "ElementTypeParam:69:1:5.alias": "Layout",
+    "ElementTypeParam:69:1:5.description": "Layout",
+    "ElementTypeParam:69:1:6.alias": "Road",
+    "ElementTypeParam:69:1:6.description": "Road",
+    "ElementTypeParam:69:1:7.alias": "Section",
+    "ElementTypeParam:69:1:7.description": "Section",
+    "ElementTypeParam:69:1:8.alias": "Associated Cabinet",
+    "ElementTypeParam:69:1:8.description": "Associated Cabinet",
+    "ElementTypeParam:69:2:1.alias": "Brightness",
+    "ElementTypeParam:69:2:1.description": "Brightness",
+    "ElementTypeParam:69:2:2.alias": "Brightness Contol",
+    "ElementTypeParam:69:2:2.description": "Brightness Contol",
+    "ElementTypeParam:69:2:3.alias": "Temperature",
+    "ElementTypeParam:69:2:3.description": "Temperature",
 
     "synoptic.layer.base": "Base Map",
     "synoptic.layer.road": "road",
@@ -1187,6 +1213,10 @@ var i18_en = {
 
     "CommandElementType:1:64": "SEND MESSAGE",
     "CommandElementType:2:64": "SWITCH OFF",
+    
+    "CommandElementType:1:69": "RESET",
+    "CommandElementType:2:69": "SEND MESSAGE",
+    "CommandElementType:3:69": "SWITCH OFF",
 
     "lbl_command_sended": "Command successfully executed",
     "lbl_panel_signaling_correctly": "The panel has been signaled correctly",
@@ -1340,6 +1370,12 @@ var i18_en = {
     "AlarmConfig:141": "ALARM VMS NO CONNECTION",
     "AlarmConfig:142": "ALARM DETECTOR CONGESTION",
     "AlarmConfig:143": "ALARM TFA NO CONNECTION",
+    "AlarmConfig:149": "ALARM VMS NO CONNECTION",
+    "AlarmConfig:150": "ALARM VMS PIXEL ERROR",
+    "AlarmConfig:151": "ALARM VMS PHOTOCELL ERROR",
+    "AlarmConfig:152": "ALARM VMS WARNING TEMPERATURE ERROR",
+    "AlarmConfig:153": "ALARM VMS CRITICAL TEMPERATURE ERROR",
+    "AlarmConfig:154": "ALARM VMS DOOR OPEN ERROR",
     
     "AlarmType:1": "Alarm",
     "AlarmType:2": "Alert",

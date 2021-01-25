@@ -56,6 +56,7 @@ export const ELEMENT_TYPE_64_VMS_SNOW = "64";
 export const ELEMENT_TYPE_65_SAI = "65";
 export const ELEMENT_TYPE_66_VANE = "66";
 export const ELEMENT_TYPE_67_SEM_RR = "67";
+export const ELEMENT_TYPE_69_PMV = "69";
 
 export const ELEMENT_TYPE_71_VIS = "71";
 export const ELEMENT_TYPE_72_ACCEL = "72";
@@ -204,6 +205,8 @@ export const COMMAND_TYPE_MATRIX_PANEL_TEMP = "2:31";
 export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT = "2:35";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT = "2:36";
+export const COMMAND_TYPE_PMV_WEIGHT_LIMIT = "2:69";
+
 export const PANEL_MANAGER_CONFIG = "5:1";
 
 export const PANELMANAGER_TYPE_PANEL = 1;

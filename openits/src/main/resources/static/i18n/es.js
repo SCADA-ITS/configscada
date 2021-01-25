@@ -127,6 +127,8 @@ var i18_es = {
     "ElementType:66.description": "VELETA",
     "ElementType:67.alias": "SEM_ROJO_ROJO",
     "ElementType:67.description": "SEM_ROJO_ROJO",
+    "ElementType:69.alias": "Panel",
+    "ElementType:69.description": "Panel",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -1066,6 +1068,30 @@ var i18_es = {
     "ElementTypeParam:67:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
     "ElementTypeParam:67:1:2.description": "Distancia entrada del t&uacute;nel (m)",
 
+    "ElementTypeParam:69:1:1.alias": "PK",
+    "ElementTypeParam:69:1:1.description": "PK",
+    "ElementTypeParam:69:1:2.alias": "Sentido",
+    "ElementTypeParam:69:1:2.description": "Sentido",
+    "ElementTypeParam:69:1:3.alias": "Direccion Logica",
+    "ElementTypeParam:69:1:3.description": "Direccion Logica",
+    "ElementTypeParam:69:1:4.alias": "Protocolo",
+    "ElementTypeParam:69:1:4.description": "Protocolo",
+    "ElementTypeParam:69:1:5.alias": "Disposicion",
+    "ElementTypeParam:69:1:5.description": "Disposicion",
+    "ElementTypeParam:69:1:6.alias": "Carretera",
+    "ElementTypeParam:69:1:6.description": "Carretera",
+    "ElementTypeParam:69:1:7.alias": "Seccion",
+    "ElementTypeParam:69:1:7.description": "Seccion",
+    "ElementTypeParam:69:1:8.alias": "Armario Asociado",
+    "ElementTypeParam:69:1:8.description": "Armario Asociado",
+    "ElementTypeParam:69:2:1.alias": "Brillo",
+    "ElementTypeParam:69:2:1.description": "Brillo",
+    "ElementTypeParam:69:2:2.alias": "Control de Brillo",
+    "ElementTypeParam:69:2:2.description": "Control de Brillo",
+    "ElementTypeParam:69:2:3.alias": "Temperatura",
+    "ElementTypeParam:69:2:3.description": "Temperatura",
+    
+
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
 
@@ -1311,6 +1337,10 @@ var i18_es = {
     
     "CommandElementType:1:67": "SEÑALIZAR",
     "CommandElementType:2:67": "APAGAR",
+    
+    "CommandElementType:1:69": "REINICIAR",
+    "CommandElementType:2:69": "SEÑALIZAR",
+    "CommandElementType:3:69": "APAGAR",
 
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
@@ -1465,7 +1495,14 @@ var i18_es = {
     "AlarmConfig:140": "ALARMA DETECTOR NO CONECTADO",
     "AlarmConfig:141": "ALARMA PANEL NIEVE NO CONECTADO",
     "AlarmConfig:142": "ALARMA CONGESTION DETECTOR",
-    "AlarmConfig:143": "ALARMA TFA NO CONECTADO",*/
+    "AlarmConfig:143": "ALARMA TFA NO CONECTADO",
+    "AlarmConfig:149": "ALARMA PMV NO CONECTADO",
+    "AlarmConfig:150": "ALARMA PMV ERROR DE PIXEL",
+    "AlarmConfig:151": "ALARMA PMV ERROR DE FOTOCELULA",
+    "AlarmConfig:152": "ALARMA PMV ADVERTENCIA DE TEMPERATURA",
+    "AlarmConfig:153": "ALARMA PMV TEMPERATURA CRITICA",
+    "AlarmConfig:154": "ALARMA PMV ERROR DE PUERTA ABIERTA",
+    */
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",

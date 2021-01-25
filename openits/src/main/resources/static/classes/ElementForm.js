@@ -373,6 +373,7 @@ export default class TabForm {
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_69_PMV
 								) {
 									let elementQuery = webix.proxy(
 										"GraphQL",`
@@ -689,6 +690,7 @@ export default class TabForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_69_PMV
 				) {
 					// obtain the panel configuration
 					let panelConfig = data.elementValues.find(
@@ -843,6 +845,7 @@ export default class TabForm {
 								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
 								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
 								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
+								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_WEIGHT_LIMIT
 							){
 	
 								$$(this.commands).addView({

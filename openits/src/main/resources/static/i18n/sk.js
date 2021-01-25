@@ -157,6 +157,8 @@ var i18_sk = {
     "ElementType:63.description": "AIRE ACONDICIONADO",
     "ElementType:64.alias": "VMS",
     "ElementType:64.description": "VMS",
+    "ElementType:69.alias": "VMS",
+    "ElementType:69.description": "VMS",
     
     "ElementTypeParam:1:1:1.alias": "Zna&#269;ka",
     "ElementTypeParam:1:1:1.description": "Zna&#269;ka",
@@ -846,8 +848,8 @@ var i18_sk = {
     "ElementTypeParam:31:2:3.alias": "Teplota",
     "ElementTypeParam:31:2:3.description": "Teplota",
     
-    "ElementTypeParam:31:1:1.alias": "KM",
-    "ElementTypeParam:31:1:1.description": "KM",
+    "ElementTypeParam:32:1:1.alias": "KM",
+    "ElementTypeParam:32:1:1.description": "KM",
     "ElementTypeParam:32:1:2.alias": "Smer",
     "ElementTypeParam:32:1:2.description": "Smer",
     "ElementTypeParam:32:1:3.alias": "Logick&aacute; adresa",
@@ -973,6 +975,32 @@ var i18_sk = {
 
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
+	
+	
+
+    "ElementTypeParam:69:1:1.alias": "KM",
+    "ElementTypeParam:69:1:1.description": "KM",
+    "ElementTypeParam:69:1:2.alias": "Smer",
+    "ElementTypeParam:69:1:2.description": "Smer",
+    "ElementTypeParam:69:1:3.alias": "Logick&aacute; adresa",
+    "ElementTypeParam:69:1:3.description": "Logick&aacute; adresa",
+    "ElementTypeParam:69:1:4.alias": "Protokol",
+    "ElementTypeParam:69:1:4.description": "Protokol",
+    "ElementTypeParam:69:1:5.alias": "Rozlo&#382;enie",
+    "ElementTypeParam:69:1:5.description": "Rozlo&#382;enie",
+    "ElementTypeParam:69:1:6.alias": "Cesta",
+    "ElementTypeParam:69:1:6.description": "Cesta",
+    "ElementTypeParam:69:1:7.alias": "Sekcia",
+    "ElementTypeParam:69:1:7.description": "Sekcia",
+    "ElementTypeParam:69:1:8.alias": "Pridru&#382;en&#xFD; rozv&#225;dza&#269;",
+    "ElementTypeParam:69:1:8.description": "Pridru&#382;en&#xFD; rozv&#225;dza&#269;",
+    "ElementTypeParam:69:2:1.alias": "Jas",
+    "ElementTypeParam:69:2:1.description": "Jas",
+    "ElementTypeParam:69:2:2.alias": "Ovl&aacute;danie jasu",
+    "ElementTypeParam:69:2:2.description": "Ovl&aacute;danie jasu",
+    "ElementTypeParam:69:2:3.alias": "Teplota",
+    "ElementTypeParam:69:2:3.description": "Teplota",
+    
     
     "synoptic.layer.base": "Podkladov&aacute; vrstva",
     "synoptic.layer.road": "Cesta",
@@ -1291,6 +1319,12 @@ var i18_sk = {
     "AlarmConfig:140": "UPOZORNEIE DETEKTORA &#x17d;IADNE SPOJENIE",
     "AlarmConfig:141": "PDZ (VMS) - &#382;iadne spojenie, volaj &#250;dr&#382;bu !",
     "AlarmConfig:142": "UPOZORNEIE TFA &#x17d;IADNE SPOJENIE",
+    "AlarmConfig:149": "PDZ (VMS) - &#382;iadne spojenie, volaj &#250;dr&#382;bu !",
+    "AlarmConfig:150": "PDZ (VMS) - chybn&#253; pixel",
+    "AlarmConfig:151": "PDZ (VMS) - chybn&#225; LED",
+    "AlarmConfig:152": "PDZ (VMS) - vysok&#225; teplota - varovanie",
+    "AlarmConfig:153": "PDZ (VMS) - kritick&#225; teplota",
+    "AlarmConfig:154": "PDZ (VMS) - otvoren&#233; dvere",
     
     "Alarm_recon": "Alarm u&#382; bol potvrden&#253;",
     "Alarm_deactivated": "Alarm u&#382; bol potvrden&#253;",
