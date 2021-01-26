@@ -8,16 +8,33 @@ export default class EquipmentModule extends GenericModule {
 		
 		super(module, moduleAction, args);
 		
-		this.drawNoEquipmentTypeData = {
+		this.dataTable = undefined;
+		
+//		this.drawNoEquipmentTypeData = {
+//			view: "template",
+//			id: "no-data-" + webix.uid(),
+//			template: function(data) {
+//				
+//				let icon = "<img src='img/loading.svg' align='center'>";
+//
+//				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+//			}
+//		}
+    }
+
+	getViewDrawNoData() {
+		
+		return {
 			view: "template",
+			id: "no-data-" + this.uid,
 			template: function(data) {
 				
 				let icon = "<img src='img/loading.svg' align='center'>";
-
+	
 				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
 			}
 		}
-    }
+	}
 
 	getView() {
 		
@@ -67,7 +84,7 @@ export default class EquipmentModule extends GenericModule {
 								{ width: 6 },
 								{
 									id: this.uid,
-									rows: [this.drawNoEquipmentTypeData]
+									rows: [this.getViewDrawNoData()]
 								},
 								{ width: 6 }
 							]
@@ -112,7 +129,7 @@ export default class EquipmentModule extends GenericModule {
 					
 					self.callbackSelectedElemenType(list, id);
 					
-					$$(self.uid).hideProgress();
+					//$$(self.uid).hideProgress();
 	
 				}, null, null, 1);
 			});
@@ -155,7 +172,7 @@ export default class EquipmentModule extends GenericModule {
 			};
 		}
 		else {
-			equipmentTypeList = this.drawNoEquipmentTypeData();
+			equipmentTypeList = this.getViewDrawNoData();
 		}
 	
 		return equipmentTypeList;
@@ -163,13 +180,34 @@ export default class EquipmentModule extends GenericModule {
 	
 	callbackSelectedElemenType(list, id) {
 
+		let self = this;
 		let item = list.getItem(id);
 		let dataGridId = item.grid;
 		let dataGridParams = id;
 		let equipmentTable = $$(this.uid);
 	
 		if (dataGridId != undefined && dataGridParams != undefined) {
+			
+			if (self.dataTable) {
+				
+				webix.ui(self.getViewDrawNoData(), $$(self.dataTable.getViewId()));
+				
+				let viewsToRemove = [];
+				equipmentTable.getChildViews().forEach(view => {
+			
+					viewsToRemove.push(view.config.id);
+				});
+				
+				viewsToRemove.forEach(viewId => {
 	
+					if (viewId.indexOf("no-data-") === -1) {
+						equipmentTable.removeView(viewId);
+					}
+				});
+			}
+			
+			$$("listEquipmentType-" + self.uid).disable();
+			
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
 				
 				if (dat != null) {
@@ -177,21 +215,23 @@ export default class EquipmentModule extends GenericModule {
 					let metadata = dat.json().metadata;
 					let data = dat.json().data;
 		
-					let dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
+					self.dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
 					
-					let newTable = dataTable.getView();
+					let newTable = self.dataTable.getView();
 					
 					webix.ui(newTable, equipmentTable);
 		
 					//app.datatable.callbacks(self.module, self.instance);
-					dataTable.callbacks();
+					self.dataTable.callbacks();
 					
-					$$(this.uid).hideProgress();
+					$$(self.uid).hideProgress();
+					
+					$$("listEquipmentType-" + self.uid).enable();
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
 		else {
-			equipmentTable.addView(self.drawNoEquipmentTypeData);
+			equipmentTable.addView(self.getViewDrawNoData());
 			equipmentTable.addView({ height: 20 });
 		}
 	}
