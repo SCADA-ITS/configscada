@@ -1552,7 +1552,11 @@ var i18_es = {
     "AlarmConfig:46": "ALARMA SOS FA PLACA",
     "AlarmConfig:47": "ALARMA SOS PUERTA EXTINTOR IZQDA. ABIERTA",
     "AlarmConfig:48": "ALARMA SOS PUERTA EXTINTOR DCHA. ABIERTA",
-	"AlarmConfig:49": "ALARMA FIRE_DET INCENDIO",
+    "AlarmConfig:49": "ALARMA FIRE_DET INCENDIO",
+    "AlarmConfig:701": "ALARMA METEO PRECIPITACION MODERADA",
+    "AlarmConfig:702": "ALARMA METEO VISIBILIDAD REDUCIDA",
+    "AlarmConfig:703": "ALARMA METEO VIENTOS FUERTES",
+    "AlarmConfig:704": "ALARMA METEO BAJA TEMPERATURA",
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
