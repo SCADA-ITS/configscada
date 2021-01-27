@@ -111,21 +111,69 @@ export default class PlanSchedule {
 	        heartbeatOutgoing: 4000
         });
 
+        let processStompMessageWithFallback =(message) => {
+            try {
+                let obj = JSON.parse(JSON.parse(message.body));
+                obj.basicElementsVO.forEach(element => {
+                    try {
+                        let item = $$(this.id+"Table").getItem(element.id);
+                        if(item != null) {
+                            let planScheduleStateType = element.planScheduleStateType !== undefined ? element.planScheduleStateType : null;
+                            if(planScheduleStateType !== null){
+                                item['planScheduleStateType'] = {id: planScheduleStateType.id, alias: LBL_PLAN_SCHEDULE_STATE[planScheduleStateType.id.split(":")[1]]};
+                                $$(this.id+"Table").updateItem(element.id, item); 
+                            } else {
+                                let v_alias = element.alias !== undefined ? element.alias : null;
+                                if (v_alias !== null){
+                                    if(element.plan.id !== item.plan.id) {
+                                        let graphElem = `query { getPlan(planId: "` + element.plan.id + `") {
+                                            id
+                                            alias
+                                            planStateType{
+                                                id
+                                                alias
+                                            }
+                                        }}`;
+                                        let graphql = webix.proxy("GraphQL", graphElem);
+                                        graphql.load().then(data => {
+                                            if (v_alias !== item.alias)
+                                                item['alias'] = v_alias;
+        
+                                            if(element.description !== item.description)
+                                                item['description'] = element.description;
+        
+                                            if(element.cronExpression !== item.cronExpression)
+                                                item['cronExpression'] = element.cronExpression;
+                                            
+                                            item['plan'] = {id: element.plan.id, alias: data.alias, planStateType: data.planStateType};
+                                            item['planState'] = {id: data.planStateType.id, alias: data.planStateType.alias};
+                                            $$(this.id+"Table").updateItem(element.id, item); 
+                                        });
+                                    }else{
+                                        if (v_alias !== null && v_alias !== item.alias)
+                                        item['alias'] = v_alias;
+    
+                                        if(element.description !== item.description)
+                                            item['description'] = element.description;
+    
+                                        if(element.cronExpression !== item.cronExpression)
+                                            item['cronExpression'] = element.cronExpression;
+    
+                                        $$(this.id+"Table").updateItem(element.id, item);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err) { console.log("Error: " + err.message); }
+                });
+            }catch (err) {
+                console.error(err);
+            }
+        }
         this.client.onConnect =(frame) => {
-	        // Do something, all subscribes must be done is this callback
-	        // This is needed because this will be executed after a (re)connect
-	        this.suscription = this.client.subscribe(
-                //"/topic/planSchedules.>",
-                "/topic/planSchedules.>",
-	            this.processStompMessageWithFallback
-	        );
+	        this.suscription = this.client.subscribe("/topic/planSchedules.>",processStompMessageWithFallback);
         };
-        //topic://planSchedules.PlanSchedules:4
         this.client.onStompError = (frame) => {
-	        // Will be invoked in case of error encountered at Broker
-	        // Bad login/passcode typically will cause an error
-	        // Complaint brokers will set `message` header with a brief message. Body may contain details.
-	        // Compliant brokers will terminate the connection after any error
 	        console.log("Broker reported error: " + frame.headers["message"]);
 	        console.log("Additional details: " + frame.body);
         };
@@ -299,67 +347,6 @@ export default class PlanSchedule {
                 }
             ]
         };
-    }
-
-    processStompMessageWithFallback(message) {
-        try {
-            let obj = JSON.parse(JSON.parse(message.body));
-            obj.basicElementsVO.forEach(element => {
-                try {
-                    let item = $$(this.id+"Table").getItem(element.id);
-                    if(item != null) {
-                        let planScheduleStateType = element.planScheduleStateType !== undefined ? element.planScheduleStateType : null;
-                        if(planScheduleStateType !== null){
-                            item['planScheduleStateType'] = {id: planScheduleStateType.id, alias: LBL_PLAN_SCHEDULE_STATE[planScheduleStateType.id.split(":")[1]]};
-                            $$(this.id+"Table").updateItem(element.id, item); 
-                        } else {
-                            let v_alias = element.alias !== undefined ? element.alias : null;
-                            if (v_alias !== null){
-                                if(element.plan.id !== item.plan.id) {
-                                    let graphElem = `query { getPlan(planId: "` + element.plan.id + `") {
-                                        id
-                                        alias
-                                        planStateType{
-                                            id
-                                            alias
-                                        }
-                                    }}`;
-                                    let graphql = webix.proxy("GraphQL", graphElem);
-                                    graphql.load().then(data => {
-                                        if (v_alias !== item.alias)
-                                            item['alias'] = v_alias;
-    
-                                        if(element.description !== item.description)
-                                            item['description'] = element.description;
-    
-                                        if(element.cronExpression !== item.cronExpression)
-                                            item['cronExpression'] = element.cronExpression;
-                                        
-                                        item['plan'] = {id: element.plan.id, alias: data.alias, planStateType: data.planStateType};
-                                        item['planState'] = {id: data.planStateType.id, alias: data.planStateType.alias};
-                                        $$(this.id+"Table").updateItem(element.id, item); 
-                                    });
-                                }else{
-                                    if (v_alias !== null && v_alias !== item.alias)
-                                    item['alias'] = v_alias;
-
-                                    if(element.description !== item.description)
-                                        item['description'] = element.description;
-
-                                    if(element.cronExpression !== item.cronExpression)
-                                        item['cronExpression'] = element.cronExpression;
-
-                                    $$(this.id+"Table").updateItem(element.id, item);
-                                }
-                            }
-                        }
-                    }
-                } catch (err) { console.log("Error: " + err.message); }
-            });
-        }catch (err) {
-            console.log("Error: " + err.message);
-            console.log("RETRY WITH GRAPHQL");
-        }
     }
 
     getComponent() {

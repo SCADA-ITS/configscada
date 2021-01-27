@@ -42,8 +42,23 @@ export default class PlanScheduleForm {
             heartbeatOutgoing: 4000
         });
         this.topic = "/topic/planSchedules." + this.id;
+        let update_table = (message) => {
+            try {
+                let obj = JSON.parse(JSON.parse(message.body));
+                obj.basicElementsVO.forEach((element) => {
+                    if (element.planScheduleStateType !== undefined) {
+                        let control = $$(this.parentId+"planScheduleForm_" + element.id + "_state");
+                        let html = statusBadge(LBL_PLAN_SCHEDULE_STATE[element.planScheduleStateType.id.split(":")[1]]);
+                        control.config.labelRight = html;
+                        control.refresh();
+                    }
+                });
+            } catch (err) {
+                console.error("Error: " + err.message);
+            }
+        }
 		this.client.onConnect = (frame) => {
-			this.suscription = self.client.subscribe(self.topic, self.update_table);
+			this.suscription = this.client.subscribe(this.topic, update_table);
 		};
 		this.client.onStompError = (frame) => {
 			// Will be invoked in case of error encountered at Broker
@@ -250,7 +265,7 @@ export default class PlanScheduleForm {
                     //css: "webix_um_status_switch",
                     hidden: (this.id === "new" ? true : false),
                     on: {
-                        onItemClick: function(value) {
+                        onItemClick: (value) => {
                             let dato = parseInt($$(value).getValue());
                             
                             if(dato === 0) {
@@ -284,7 +299,7 @@ export default class PlanScheduleForm {
                                         }
                                         unLoadDetailForm();
                                     });
-                                } catch (e) {console.log(e);}
+                                } catch (e) {console.error(e);}
                             }
                             if(dato === 1) {
                                 //mandamos el running al server
@@ -317,7 +332,7 @@ export default class PlanScheduleForm {
                                         }
                                         unLoadDetailForm();                              
                                     });
-                                } catch (e) {console.log(e);}
+                                } catch (e) {console.error(e);}
                             }
                         }
                     },
@@ -330,7 +345,6 @@ export default class PlanScheduleForm {
         };
         
 		this.buttons = {
-            id: "planScheduleFormButtons_" + this.id,
 			view: "form",
 			cols: [
                 { 
@@ -347,22 +361,6 @@ export default class PlanScheduleForm {
                 }
 			]
 		};
-	}
-
-	update_table(message) {
-		try {
-			let obj = JSON.parse(JSON.parse(message.body));
-            obj.basicElementsVO.forEach((element) => {
-                if (element.planScheduleStateType !== undefined) {
-                    let control = $$(this.parentId+"planScheduleForm_" + element.id + "_state");
-                    let html = statusBadge(LBL_PLAN_SCHEDULE_STATE[element.planScheduleStateType.id.split(":")[1]]);
-                    control.config.labelRight = html;
-                    control.refresh();
-                }
-            });
-        } catch (err) {
-			console.log("Error: " + err.message);
-		}
 	}
 
     disconnect(){

@@ -68,7 +68,7 @@ export default class TabIFrame {
                         data: {title: "Image One", src: iframe },
                         template: function (obj) {
                         // obj is a data record object
-                        return '<iframe style="width:105%;height:100%;border:none;overflow:hidden;" src="'+obj.src+'" />'
+                        return '<iframe style="width:100%;height:100%;border:none;overflow:hidden;" src="'+obj.src+'" />'
                         }
                     }, 1);
                 }
