@@ -1,8 +1,6 @@
 import { staticsIcons } from "../icons/synopticJson.js";
 
 import * as meteo from "./icons/meteo.js";
-import * as sos from "./icons/sos.js";
-import * as fire from "./icons/fire.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
 import * as plc from "./icons/plc.js";
@@ -102,8 +100,10 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_3_DET
     || elementType === elementTypeMap.ELEMENT_TYPE_8_BAR
     || elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE
+    || elementType === elementTypeMap.ELEMENT_TYPE_11_SOS
     || elementType === elementTypeMap.ELEMENT_TYPE_12_LUX
     || elementType === elementTypeMap.ELEMENT_TYPE_14_LUM
+    || elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE
     || elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT
     || elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
@@ -130,10 +130,6 @@ export function getElementIcon(element, suffix="") {
     etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_11_SOS) {
-    sos.updateSosIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE) {
-    fire.updateFireIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_16_MEG) {
     meg.updateMegIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
@@ -234,8 +230,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_1_WS:
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
     case elementTypeMap.ELEMENT_TYPE_5_PLC:
-    case elementTypeMap.ELEMENT_TYPE_11_SOS:
-    case elementTypeMap.ELEMENT_TYPE_15_FIRE:
     case elementTypeMap.ELEMENT_TYPE_16_MEG:
     case elementTypeMap.ELEMENT_TYPE_25_CABIN:
     case elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN:
@@ -250,9 +244,15 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
+    case elementTypeMap.ELEMENT_TYPE_11_SOS:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 20) + ',' + (height / 20) + ')">' + createIcon(element, suffix) + '</g>';
+    break; 
     case elementTypeMap.ELEMENT_TYPE_12_LUX:
     case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
     case elementTypeMap.ELEMENT_TYPE_14_LUM:
+    case elementTypeMap.ELEMENT_TYPE_15_FIRE:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 25) + ')">' + createIcon(element, suffix) + '</g>';
+    break; 
     case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
     case elementTypeMap.ELEMENT_TYPE_19_CO:
