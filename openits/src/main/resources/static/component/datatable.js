@@ -391,6 +391,11 @@ export default class DataTable {
 		return layout;
 	}
 	
+	getViewId() {
+		
+		return "dt-" + this.uid;
+	}
+	
 	getSelectedIds() {
 
 		let grid = $$("dt-" + this.uid);
@@ -637,6 +642,9 @@ export default class DataTable {
 					}
 					
 					args.selectedPks = selectedPks;
+					args.callbacks = [];
+					
+					args.callbacks.push(this.refresh);
 
 					util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
 				}
@@ -730,19 +738,30 @@ export default class DataTable {
 
 			refreshButton.attachEvent("onItemClick", function(id, e) {
 
-				grid.showProgress({
-					//hide: false, type: "icon"
-					hide: true, type: "bottom"
-				});
+				self.refresh();
+			});
+		}
+	}
+	
+	refresh() {
+		
+		let grid = $$("dt-" + this.uid);
+
+		if (!webix.isUndefined(grid)) {
+			
+			grid.showProgress({
+
+				hide: true, type: "bottom"
+			});
 				
-				webix.ajax(appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams).then(function(data) {
-					webix.delay(function() {
+			webix.ajax(appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams).then(function(data) {
 
-						grid.parse(data);
-						grid.hideProgress();
-					}, null, null, 1);
+				webix.delay(function() {
 
-				});
+					grid.parse(data);
+					grid.hideProgress();
+					
+				}, null, null, 1);
 			});
 		}
 	}

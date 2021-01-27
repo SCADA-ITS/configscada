@@ -50,9 +50,9 @@ export default class GenericGridModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let equipmentTable = $$(this.uid);
+		let genericGridContainer = $$(this.uid);
 		let viewsToRemove = [];
-		equipmentTable.getChildViews().forEach(view => {
+		genericGridContainer.getChildViews().forEach(view => {
 	
 			viewsToRemove.push(view.config.id);
 		});
@@ -71,7 +71,7 @@ export default class GenericGridModule extends GenericModule {
 	
 				newTable.forEach(newView => {
 	
-					equipmentTable.addView(newView);
+					genericGridContainer.addView(newView);
 				});
 	
 				
@@ -88,7 +88,7 @@ export default class GenericGridModule extends GenericModule {
 						}
 					}
 			
-					equipmentTable.removeView(viewId);
+					genericGridContainer.removeView(viewId);
 				});
 				
 				$$(self.uid).hideProgress();

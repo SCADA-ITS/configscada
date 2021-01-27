@@ -33,10 +33,13 @@ export default class TimeService extends GenericModule {
 			
 			let timeElapsed = -1;
 			let lastUTCSeconds = 0;
+			let waitingResponse = false;
 			
 			setInterval(function(){
 				
-				if (timeElapsed === -1 || timeElapsed > 60000) {
+				if (!waitingResponse && timeElapsed === -1 || timeElapsed > 60000) {
+					
+					waitingResponse = true;
 					webix.ajax(appConfig.restUrl + "server/time").then(function(data) {
 						
 						timeElapsed = 1000;
@@ -61,29 +64,39 @@ export default class TimeService extends GenericModule {
 							
 							//labelTime.setValue(time + " " + date);	
 						}
+						
+						waitingResponse = false;
 					});
 				}
 				else {
 					
-					var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch
+					if (!waitingResponse) {
 					
-					let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
-					tm.setUTCSeconds(utcSeconds);
+						var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch
+						
+						let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
+						tm.setUTCSeconds(utcSeconds);
+						
+						window.serverTime = utcSeconds;
+						
+						let h = tm.getHours();
+						let m = webix.Date.toFixed(tm.getMinutes());
+						let s = webix.Date.toFixed(tm.getSeconds());
+						let time = +h + ":" + m + ":" + s;
+						//let date = month + "/" + day + "/" + year;
+						let date = util.toLocaleDateString(utcSeconds);
+						labelTime.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
+						
+						//labelTime.setValue(time + " " + date)	
+					}
 					
-					window.serverTime = utcSeconds;
-					
-					let h = tm.getHours();
-					let m = webix.Date.toFixed(tm.getMinutes());
-					let s = webix.Date.toFixed(tm.getSeconds());
-					let time = +h + ":" + m + ":" + s;
-					//let date = month + "/" + day + "/" + year;
-					let date = util.toLocaleDateString(utcSeconds);
-					labelTime.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
-					
-					//labelTime.setValue(time + " " + date)
 				}
 				
-				timeElapsed += 1000;
+				if (!waitingResponse) {
+				
+					timeElapsed += 1000;	
+				}
+				
 				
 			}, 999);
 		}

@@ -22,7 +22,7 @@ export let util = {
 		loadInWindow(module, moduleAction, mod, args) {
 
 			let viewModule;
-			let allowMultipleInstances, image, icon, color, label, externalizable;
+			let allowMultipleInstances, image, icon, color, label, externalizable, height, width;
 			let lazyClass;
 
 			if (module.windowValues) {
@@ -33,6 +33,8 @@ export let util = {
 				color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
 				label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
 				externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
+				height = module.windowValues.find(e => e.windowParam.id === WindowParam.HEIGHT).value;
+				width = module.windowValues.find(e => e.windowParam.id === WindowParam.WIDTH).value;
 			}
 
 			// TODO: Remove this block in future
@@ -129,16 +131,16 @@ export let util = {
 					move: true,
 					css: "default-window",
 					head: head,
-					height: 720,
-					width: 1400,
+					height: height,
+					width: width,
 					body: {
 						rows: [
 							viewModule		
 						]	
 					}, 
 					position: function(state) {
-						state.left = (document.documentElement.clientWidth / 2) - 700;
-						state.top = (document.documentElement.clientHeight / 2) - 360;
+						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
+						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
 					},
 					on: {
 						onBeforeShow: function() {
@@ -150,6 +152,9 @@ export let util = {
 				if(lazyClass && module.jsMethodCallbacks) {
 
 					lazyClass.runOne(module.jsMethodCallbacks)
+				}
+				
+				if ($$(win_id)) {
 					
 					$$(win_id).show();
 				}
@@ -308,7 +313,16 @@ export let util = {
 					}
 					else {
 						
-						util.module.loadInWindow(module, moduleAction, mod, args);
+						if (viewTypeId === VIEW_TYPE_TAB) {
+							
+							util.module.loadInTab(module, moduleAction, mod, args);
+						}
+						else if (viewTypeId === VIEW_TYPE_WINDOW) {
+						
+							util.module.loadInWindow(module, moduleAction, mod, args);	
+						}
+						
+						
 					}
 				}
 
