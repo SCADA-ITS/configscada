@@ -761,7 +761,7 @@ export default class PanelManager {
 										"value": datosAlias,
 										"logTypeParamId": "LogTypeParam:3:2"
 										},{
-										"value": v_commands_values,
+										"value": JSON.stringify(v_commands_values), 
 										"logTypeParamId": "LogTypeParam:3:3"
 										}
 									]
@@ -942,7 +942,7 @@ export default class PanelManager {
 											"value": datosId[idt],
 											"logTypeParamId": "LogTypeParam:3:2"
 											},{
-											"value": v_commands_values,
+											"value": JSON.stringify(v_commands_values),
 											"logTypeParamId": "LogTypeParam:3:3"
 											}
 										]
