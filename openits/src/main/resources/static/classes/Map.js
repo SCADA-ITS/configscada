@@ -78,7 +78,11 @@ export default class Map {
     this.synopticType = "";
 
     this.map = null;
-    this.elementId = elementId;
+    if(elementId){
+      this.elementId = elementId;
+    }else{
+      this.elementId = synopticConf.parentId;
+    }
   }
 
   /*
@@ -966,12 +970,17 @@ export default class Map {
       setTimeout( function() { self.map.updateSize();}, 10);
     });
 
-    observer.observe(e, {
-      attributes: true,
-      attributeFilter: ["class"],
-      childList: false,
-      characterData: false,
-    });
+    try {
+      observer.observe(e, {
+        attributes: true,
+        attributeFilter: ["class"],
+        childList: false,
+        characterData: false,
+      });  
+    } catch (error) {
+      
+    }
+    
 
     // observer for the change multiview event (show or hide)
     // it has to filter if the event is related to the synoptic instance
