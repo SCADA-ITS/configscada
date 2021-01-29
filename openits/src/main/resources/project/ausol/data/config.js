@@ -2,7 +2,7 @@
 const appConfig = {
 
 	restUrl: './api/v1/',
-	stompUrl: 'ws://192.168.88.190:61614',
+	stompUrl: 'ws://192.168.88.231:61614',
 }
 
 // APP properties
