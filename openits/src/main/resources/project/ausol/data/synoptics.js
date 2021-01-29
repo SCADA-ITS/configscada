@@ -569,7 +569,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "UNIFILARES VENTILACION CABLES-Model_v0.2.svg",
+			"BASE_LAYER": "UNIFILARES VENTILACION CABLES-Model_v0.3.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -578,9 +578,9 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"INTERRUPTOR" : {
-				"items": ["Element:57:16", "Element:57:18", "Element:57:27", "Element:57:28", "Element:57:42", "Element:57:43", "Element:57:44", "Element:57:45", 
+				"items": ["Element:57:16", "Element:57:18", "Element:57:42", "Element:57:43", "Element:57:44", "Element:57:45", 
 				          "Element:57:46", "Element:57:47", "Element:57:48", "Element:57:49", "Element:57:50", "Element:57:51",
-						  "Element:57:89", "Element:57:90", "Element:57:91"],
+						  "Element:57:89"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
@@ -597,11 +597,7 @@ export let synopticData= [
 		"Element:57:50": { "x": 1307,   "y": 615, "width": 28, "height": 28,  "alias": "RV-INT-VF9" },
 		"Element:57:51": { "x": 1451,   "y": 615, "width": 28, "height": 28,  "alias": "RV-INT-VF10" },
 		"Element:57:16": { "x": 1595,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
-		"Element:57:18": { "x": 1740,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
-		"Element:57:90": { "x": 1595,   "y": 528, "width": 28, "height": 28,  "alias": "RV-RCAL-CV1" },
-		"Element:57:91": { "x": 1740,   "y": 528, "width": 28, "height": 28,  "alias": "RV-RCAL-CV2" },
-		"Element:57:27": { "x": 1595,   "y": 340, "width": 28, "height": 28,  "alias": "RV-MAGDIF-CV1" },
-		"Element:57:28": { "x": 1740,   "y": 340, "width": 28, "height": 28,  "alias": "RV-MAGDIF-CV2" },
+		"Element:57:18": { "x": 1740,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" }
 
 	},
 	{
