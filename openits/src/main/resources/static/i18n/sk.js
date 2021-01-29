@@ -1325,6 +1325,10 @@ var i18_sk = {
     "AlarmConfig:152": "PDZ (VMS) - vysok&#225; teplota - varovanie",
     "AlarmConfig:153": "PDZ (VMS) - kritick&#225; teplota",
     "AlarmConfig:154": "PDZ (VMS) - otvoren&#233; dvere",
+    "AlarmConfig:156": "PDZ (VMS CONTROLLER) - vysok&#225; teplota - varovanie",
+    "AlarmConfig:157": "PDZ (VMS CONTROLLER) - kritick&#225; teplota",
+    "AlarmConfig:158": "PDZ (VMS CONTROLLER) - vysok&#225; teplota - varovanie",
+    "AlarmConfig:159": "PDZ (VMS CONTROLLER) - kritick&#225; teplota",
     
     "Alarm_recon": "Alarm u&#382; bol potvrden&#253;",
     "Alarm_deactivated": "Alarm u&#382; bol potvrden&#253;",
