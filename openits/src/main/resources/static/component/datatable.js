@@ -48,29 +48,8 @@ export default class DataTable {
 				datatable.columns = [];
 				
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-				
-				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
-					
-					let field = metadata.gridFields[posField];
-					
-					if (field.needsTranslation) {
-						
-						data.forEach(item => {
-							
-							if (item[field.sourceField] != undefined) {
-									
-								if (typeof item[field.sourceField] === 'object') {
-	
-									item[field.sourceField].value = i18n.t(item[field.sourceField].value);
-								}
-								else {
-									
-									item[field.sourceField] = i18n.t(item[field.sourceField]);
-								}
-							}
-						});
-					}
-				}
+
+				self.translateFieldValues(data);
 				
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					let field = metadata.gridFields[posField];
@@ -389,6 +368,32 @@ export default class DataTable {
 		}
 
 		return layout;
+	}
+	
+	translateFieldValues(data) {
+		
+		for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
+					
+			let field = this.metadata.gridFields[posField];
+			
+			if (field.needsTranslation) {
+				
+				data.forEach(item => {
+					
+					if (item[field.sourceField] != undefined) {
+							
+						if (typeof item[field.sourceField] === 'object') {
+
+							item[field.sourceField].value = i18n.t(item[field.sourceField].value);
+						}
+						else {
+							
+							item[field.sourceField] = i18n.t(item[field.sourceField]);
+						}
+					}
+				});
+			}
+		}
 	}
 	
 	getViewId() {
@@ -746,6 +751,7 @@ export default class DataTable {
 	refresh() {
 		
 		let grid = $$("dt-" + this.uid);
+		let self = this;
 
 		if (!webix.isUndefined(grid)) {
 			
@@ -757,6 +763,8 @@ export default class DataTable {
 			webix.ajax(appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams).then(function(data) {
 
 				webix.delay(function() {
+					
+					self.translateFieldValues(data);
 
 					grid.parse(data);
 					grid.hideProgress();

@@ -1,0 +1,131 @@
+package com.revenga.rits.front.openitsdao.model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the tree_commands database table.
+ * 
+ */
+@Entity
+@Table(name="tree_commands")
+@NamedQuery(name="TreeCommand.findAll", query="SELECT t FROM TreeCommand t")
+public class TreeCommand implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String args;
+
+	@Column(name="default")
+	private Boolean default_;
+
+	private String icon;
+
+	private String label;
+
+	private Boolean multiselect;
+
+	private Integer position;
+
+	//bi-directional many-to-one association to ModuleAction
+	@ManyToOne
+	@JoinColumn(name="module_action_id")
+	private ModuleAction moduleAction;
+
+	//bi-directional many-to-one association to Tree
+	@ManyToOne
+	private Tree tree;
+
+	//bi-directional many-to-one association to ViewType
+	@ManyToOne
+	@JoinColumn(name="view_type_id")
+	private ViewType viewType;
+
+	public TreeCommand() {
+	}
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getArgs() {
+		return this.args;
+	}
+
+	public void setArgs(String args) {
+		this.args = args;
+	}
+
+	public Boolean getDefault_() {
+		return this.default_;
+	}
+
+	public void setDefault_(Boolean default_) {
+		this.default_ = default_;
+	}
+
+	public String getIcon() {
+		return this.icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Boolean getMultiselect() {
+		return this.multiselect;
+	}
+
+	public void setMultiselect(Boolean multiselect) {
+		this.multiselect = multiselect;
+	}
+
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+
+	public ModuleAction getModuleAction() {
+		return this.moduleAction;
+	}
+
+	public void setModuleAction(ModuleAction moduleAction) {
+		this.moduleAction = moduleAction;
+	}
+
+	public Tree getTree() {
+		return this.tree;
+	}
+
+	public void setTree(Tree tree) {
+		this.tree = tree;
+	}
+
+	public ViewType getViewType() {
+		return this.viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
+
+}

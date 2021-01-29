@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the window_params database table.
+ * The persistent class for the grid_options database table.
  * 
  */
 @Entity
-@Table(name="window_params")
-@NamedQuery(name="WindowParam.findAll", query="SELECT w FROM WindowParam w")
-public class WindowParam implements Serializable {
+@Table(name="grid_options")
+@NamedQuery(name="GridOption.findAll", query="SELECT g FROM GridOption g")
+public class GridOption implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,7 +26,7 @@ public class WindowParam implements Serializable {
 
 	private Boolean visible;
 
-	public WindowParam() {
+	public GridOption() {
 	}
 
 	public Integer getId() {

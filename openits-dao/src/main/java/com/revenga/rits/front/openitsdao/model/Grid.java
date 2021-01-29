@@ -45,6 +45,10 @@ public class Grid implements Serializable {
 	@OneToMany(mappedBy="grid")
 	private List<GridField> gridFields;
 
+	//bi-directional many-to-one association to GridOptionValue
+	@OneToMany(mappedBy="grid")
+	private List<GridOptionValue> gridOptionValues;
+
 	//uni-directional many-to-one association to Adapter
 	@ManyToOne
 	private Adapter adapter;
@@ -174,6 +178,28 @@ public class Grid implements Serializable {
 		gridField.setGrid(null);
 
 		return gridField;
+	}
+
+	public List<GridOptionValue> getGridOptionValues() {
+		return this.gridOptionValues;
+	}
+
+	public void setGridOptionValues(List<GridOptionValue> gridOptionValues) {
+		this.gridOptionValues = gridOptionValues;
+	}
+
+	public GridOptionValue addGridOptionValue(GridOptionValue gridOptionValue) {
+		getGridOptionValues().add(gridOptionValue);
+		gridOptionValue.setGrid(this);
+
+		return gridOptionValue;
+	}
+
+	public GridOptionValue removeGridOptionValue(GridOptionValue gridOptionValue) {
+		getGridOptionValues().remove(gridOptionValue);
+		gridOptionValue.setGrid(null);
+
+		return gridOptionValue;
 	}
 
 	public Adapter getAdapter() {

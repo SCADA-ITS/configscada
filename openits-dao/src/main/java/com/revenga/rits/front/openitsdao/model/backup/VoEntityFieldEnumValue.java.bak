@@ -3,27 +3,22 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 /**
- * The persistent class for the vo_entity_values database table.
+ * The persistent class for the vo_entity_field_enum_values database table.
  * 
  */
 @Entity
-@Table(name="vo_entity_values")
-@NamedQuery(name="VoEntityValue.findAll", query="SELECT v FROM VoEntityValue v")
-public class VoEntityValue implements Serializable {
+@Table(name="vo_entity_field_enum_values")
+@NamedQuery(name="VoEntityFieldEnumValue.findAll", query="SELECT v FROM VoEntityFieldEnumValue v")
+public class VoEntityFieldEnumValue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	private String value;
-
 	//bi-directional many-to-one association to VoEntity
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="vo_entity_id")
 	private VoEntity voEntity;
@@ -33,7 +28,12 @@ public class VoEntityValue implements Serializable {
 	@JoinColumn(name="vo_entity_field_id")
 	private VoEntityField voEntityField;
 
-	public VoEntityValue() {
+	//uni-directional many-to-one association to VoEnumTypeValue
+	@ManyToOne
+	@JoinColumn(name="vo_enum_type_value_id")
+	private VoEnumTypeValue voEnumTypeValue;
+
+	public VoEntityFieldEnumValue() {
 	}
 
 	public Integer getId() {
@@ -42,14 +42,6 @@ public class VoEntityValue implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getValue() {
-		return this.value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public VoEntity getVoEntity() {
@@ -66,6 +58,14 @@ public class VoEntityValue implements Serializable {
 
 	public void setVoEntityField(VoEntityField voEntityField) {
 		this.voEntityField = voEntityField;
+	}
+
+	public VoEnumTypeValue getVoEnumTypeValue() {
+		return this.voEnumTypeValue;
+	}
+
+	public void setVoEnumTypeValue(VoEnumTypeValue voEnumTypeValue) {
+		this.voEnumTypeValue = voEnumTypeValue;
 	}
 
 }
