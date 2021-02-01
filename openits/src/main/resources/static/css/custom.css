@@ -21,7 +21,19 @@
   --blue-mid-opacity-8: rgba(51 66 94 / 0.8);
   --blue-mid-opacity-9: rgba(51 66 94 / 0.9);
   
+  --blue-mid2: rgb(86, 126, 186);
+  --blue-mid2-opacity-1: rgba(86 126 186 / 0.1);
+  --blue-mid2-opacity-2: rgba(86 126 186 / 0.2);
+  --blue-mid2-opacity-3: rgba(86 126 186 / 0.3);
+  --blue-mid2-opacity-4: rgba(86 126 186 / 0.4);
+  --blue-mid2-opacity-5: rgba(86 126 186 / 0.5);
+  --blue-mid2-opacity-6: rgba(86 126 186 / 0.6);
+  --blue-mid2-opacity-7: rgba(86 126 186 / 0.7);
+  --blue-mid2-opacity-8: rgba(86 126 186 / 0.8);
+  --blue-mid2-opacity-9: rgba(86 126 186 / 0.9);
+  
   --blue-soft: rgb(146, 171, 207);
+  --blue-soft-opacity-0-7: rgba(146 171 207 / 0.07);
   --blue-soft-opacity-1: rgba(146 171 207 / 0.1);
   --blue-soft-opacity-2: rgba(146 171 207 / 0.2);
   --blue-soft-opacity-3: rgba(146 171 207 / 0.3);
@@ -136,6 +148,10 @@
 	height: 34px !important;
 	/*background: rgb(28, 161, 193);*/
 	border: 0px;
+}
+
+.main-tab  {
+	border-width: 1px;
 }
 
 
@@ -947,3 +963,319 @@
 	margin-top: -6px;
 	margin-left: 2px;
 }
+
+.ims-incident-report-icon {
+	width: 64px;
+    height: 64px;
+    float: left;
+    padding: 15px 0px 0px 15px;
+}
+
+.ims-incident-report-title {
+	padding-top: 14px;
+    padding-left: 101px !important;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.ims-incident-badge {
+	font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+
+.ims-incident-report-state-first-line{
+	font-size:14px;
+	letter-spacing:0.2px;
+	color: white;
+	line-height:15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 230px;
+	text-align: center;
+}
+
+.ims-incident-report-state-second-line{
+	font-size:14px;
+	letter-spacing:0.2px;
+	color: white;
+	line-height:15px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 230px;
+	text-align: center;
+}
+
+.ims-incident-report-state-box {
+  position: relative;
+  padding: 5px;
+}
+
+.ims-incident-report-state-box:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transform: skew(-20deg);
+  -webkit-transform: skew(-20deg);
+}
+
+.ims-incident-report-tab-details .ico {
+	float: left;
+    padding-left: 0px;
+    font-size: 30px;
+}
+
+.ims-incident-report-tab-details .field {
+	font-weight: 500;
+    float: left;
+    padding-left: 20px;
+    font-size: 16px;
+    padding-top: 3px;
+}
+
+.ims-incident-report-tab-details .value {
+	position: absolute;
+    padding-left: 400px;
+    font-size: 16px;
+    padding-top: 4px;
+}
+
+.progressbar {
+    counter-reset: step;
+}
+
+.progressbar-wrapper {
+      background: #fff;
+      width: 100%;
+      padding-top: 0px;
+      padding-bottom: 5px;
+      margin-top: -10px;
+}
+
+.progressbar li {
+      list-style-type: none;
+      width: 20%;
+      float: left;
+      font-size: 14px;
+      position: relative;
+      text-align: center;
+      text-transform: uppercase;
+      color: #dedede;
+}
+
+.progressbar li:before {
+    width: 24px;
+    height: 24px;
+    content: "";
+    line-height: 60px;
+    display: block;
+    text-align: center;
+    margin: 0 auto 3px auto;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    background-color: #dedede;
+    /*
+    content: counter(step);
+    counter-increment: step;
+    */
+}
+.progressbar li:after {
+     width: 100%;
+     height: 2px;
+     content: '';
+     position: absolute;
+     background-color: #dedede;
+     top: 11px;
+     left: -50%;
+     z-index: 0;
+}
+.progressbar li:first-child:after {
+     content: none;
+}
+
+.progressbar li.active {
+    color: #4caf50;
+    font-weight: 500;  
+}
+.progressbar li.active:before {
+    border-color: trasparent;
+    background: #4caf50;
+ }
+.progressbar li.active + li:after {
+    background-color: #4caf50;
+}
+
+.progressbar li.current {
+    color: #475466;
+    font-weight: 500;  
+}
+.progressbar li.current:before {
+    border-color: trasparent;
+    background: #475466;
+ }
+.progressbar li.current + li:after {
+    background-color: #dedede !important;
+}
+
+.panel-action {
+
+	background-color: var(--blue-soft-opacity-0-7);
+}
+
+.panel-action .section {
+
+	background-color: var(--blue-soft-opacity-1);
+}
+
+.panel-action .section-text {
+
+	background-color: transparent;
+    color: var(--blue-mid2-opacity-9);
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.panel-action .section-info {
+	
+	background-color: transparent;
+}
+
+.panel-action .section-info .ico {
+	position: fixed;
+    font-size: 22px;
+    padding-left: 7px;
+    color: var(--blue-mid2);
+    margin-top: 1px;
+}
+
+.panel-action .section-info .field {
+	padding-left: 42px;
+    color: var(--blue-mid2-opacity-9);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.panel-action .section-info .value {
+	font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    margin-left: 43px;
+    margin-top: 7px;
+    color: var(--blue-mid2);
+}
+
+.panel-action .tb-buttons {
+	background: transparent;
+	right: 3px;
+	position: absolute;
+	bottom: 25px;
+}
+
+.panel-action .tb-actions {
+	background: transparent;
+	right: 3px;
+	bottom: 25px;
+}
+
+.panel-action .tb-buttons .webix_secondary .webix_button,
+.panel-action .tb-actions .webix_secondary .webix_button{
+	
+	font-size: 12px;
+	width: 100% !important;
+	border-radius: 4px;
+	border-width: 0px;
+    background: transparent;
+}
+
+.panel-action .tb-buttons .webix_secondary .webix_button:hover,
+.panel-action .tb-actions .webix_secondary .webix_button:hover{
+	
+	background: var(--blue-soft-opacity-2);
+}
+
+.panel-action .tb-buttons .webix_secondary .webix_button .webix_icon,
+.panel-action .tb-actions .webix_secondary .webix_button .webix_icon {
+	left: 45%;
+	color: var(--blue-mid2);
+	font-size: 34px;
+}
+
+.panel-action .tb-buttons .webix_secondary .webix_button .webix_img_btn_text,
+.panel-action .tb-actions .webix_secondary .webix_button .webix_img_btn_text {
+	color: var(--blue-mid2);
+	font-size: 12px;
+	bottom: 9px;
+}
+.action-button .webix_button{
+	
+	width: 100% !important;
+    border-radius: 4px;
+    border-width: 0px;
+    background: #ff9800 !important;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-button .webix_icon_btn{
+	
+    color: white !important;
+}
+
+.action-button .webix_button:hover{
+	
+	background: rgba(255 152 0 / 0.5) !important;
+}
+
+.secondary-tab  {
+	border-width: 1px;
+	border-color: var(--blue-soft-opacity-2);
+	margin-top: -2px !important;
+}
+
+.secondary-tab .webix_all_tabs .webix_item_tab{
+	color: var(--blue-mid);
+	font-weight: 100;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.secondary-tab .webix_all_tabs .webix_tab_filler {
+    border: none;
+    background-color: var(--blue-soft-opacity-2);
+    border-top: 1px solid var(--blue-soft-opacity-2);
+}
+
+.secondary-tab .webix_all_tabs .webix_item_tab.webix_selected {
+    color: white;
+    font-weight: 500;
+    background-color: #475466;
+    box-shadow: inset 0 -2px var(--blue-soft);
+    border-top: 1px solid var(--blue-soft-opacity-2);
+}
+ 
+.secondary-tab .webix_item_tab:not(.webix_selected) {
+	color: var(--blue-soft);
+    font-weight: 100;
+    background-color: var(--blue-soft-opacity-2);
+    border-top: 1px solid var(--blue-soft-opacity-2);
+}   
+ 
+
+.secondary-tab .webix_item_tab:not(.webix_selected):hover {
+	color: white;
+	background-color: var(--blue-soft-opacity-4);
+}
+
+/*
+.secondary-tab .tab-text{
+	text-align: center;
+}
+*/

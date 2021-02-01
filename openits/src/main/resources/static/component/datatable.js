@@ -185,7 +185,7 @@ export default class DataTable {
 
 							if (field.isEpochMilli) {
 
-								value = util.toLocaleString(value);
+								value = util.toLocaleString(value / 1000);
 							}
 
 							if (icon || badgeColor || avatar) {
@@ -309,42 +309,45 @@ export default class DataTable {
 
 				datatable.data = data;
 
-				let ctxMenuData = [];
+				if (metadata.gridCommands) {
 
-				metadata.gridCommands.forEach(cmd => {
+					let ctxMenuData = [];
 
-					ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
-				});
-
-				if (ctxMenuData.length > 0) {
-					datatable.ready = function() {
-						webix.ui({
-							view: "contextmenu", 
-							id: "ctx_menu-" + self.uid,
-							width: 250,
-							data: ctxMenuData,
-							template: (obj) => {
-
-								if (!obj.default) {
-									return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
+					metadata.gridCommands.forEach(cmd => {
+	
+						ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+					});
+	
+					if (ctxMenuData.length > 0) {
+						datatable.ready = function() {
+							webix.ui({
+								view: "contextmenu", 
+								id: "ctx_menu-" + self.uid,
+								width: 250,
+								data: ctxMenuData,
+								template: (obj) => {
+	
+									if (!obj.default) {
+										return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
+									}
+									else {
+										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
+									}
+	
+								},
+								on: {
+									onMenuItemClick: function(id) {
+	
+										let gridCommand = metadata.gridCommands.find(e => {
+											return e.id === this.getItem(id).id
+										});
+	
+										self.open_module(gridCommand);
+									}
 								}
-								else {
-									return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
-								}
-
-							},
-							on: {
-								onMenuItemClick: function(id) {
-
-									let gridCommand = metadata.gridCommands.find(e => {
-										return e.id === this.getItem(id).id
-									});
-
-									self.open_module(gridCommand);
-								}
-							}
-						}).attachTo(this);
-					};
+							}).attachTo(this);
+						};
+					}					
 				}
 			}
 

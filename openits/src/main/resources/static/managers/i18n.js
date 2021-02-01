@@ -5,20 +5,36 @@ function load(i18n) {
 			
 	let translations;
 	
-	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`);
+//	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`);
+//	
+//	if (translationsResponse && translationsResponse.responseText) {
+//						
+//		translations = JSON.parse(translationsResponse.responseText);
+//		
+//		if (translations != undefined && Array.isArray(translations)) {
+//			
+//			translations.forEach(e => {
+//				
+//				i18n.labels[e.label] = e.translation;
+//			});
+//		}
+//	}
+	
+	webix.ajax().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`).then(function(dat){
 		
-	if (translationsResponse && translationsResponse.responseText) {
+		if (dat) {
 						
-		translations = JSON.parse(translationsResponse.responseText);
-		
-		if (translations != undefined && Array.isArray(translations)) {
+			translations = dat.json();
 			
-			translations.forEach(label => {
+			if (translations != undefined && Array.isArray(translations)) {
 				
-				i18n.labels[label] = label.translation;
-			});
+				translations.forEach(e => {
+					
+					i18n.labels[e.label] = e.translation;
+				});
+			}
 		}
-	}
+	});
 }
 
 export default class I18n {
