@@ -580,7 +580,7 @@ export let synopticData= [
 			"INTERRUPTOR" : {
 				"items": ["Element:57:16", "Element:57:18", "Element:57:42", "Element:57:43", "Element:57:44", "Element:57:45", 
 				          "Element:57:46", "Element:57:47", "Element:57:48", "Element:57:49", "Element:57:50", "Element:57:51",
-						  "Element:57:89"],
+						  "Element:57:89", "Element:57:90", "Element:57:91"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
@@ -597,7 +597,9 @@ export let synopticData= [
 		"Element:57:50": { "x": 1307,   "y": 615, "width": 28, "height": 28,  "alias": "RV-INT-VF9" },
 		"Element:57:51": { "x": 1451,   "y": 615, "width": 28, "height": 28,  "alias": "RV-INT-VF10" },
 		"Element:57:16": { "x": 1595,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A1" },
-		"Element:57:18": { "x": 1740,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" }
+		"Element:57:18": { "x": 1740,   "y": 615, "width": 28, "height": 28,  "alias": "RV-MAGDIF-A18" },
+		"Element:57:90": { "x": 1595,   "y": 345, "width": 28, "height": 28,  "alias": "RV-RCAL-CV1" },
+		"Element:57:91": { "x": 1740,   "y": 345, "width": 28, "height": 28,  "alias": "RV-RCAL-CV2" }
 
 	},
 	{
