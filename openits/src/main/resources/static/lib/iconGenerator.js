@@ -245,7 +245,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 20) + ',' + (height / 20) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 250) + ',' + (height / 250) + ')">' + createIcon(element, suffix) + '</g>';
     break; 
     case elementTypeMap.ELEMENT_TYPE_12_LUX:
     case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:

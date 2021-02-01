@@ -120,7 +120,7 @@ export const ELEMENT_TYPE = {
       ]
     },
     "ElementType:10" :{ id: "ElementType:10", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 10, scale_x: 76, scale_y: 24},
-    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 14, scale_y: 14, svgRaw:SVG_11_SOS},
+    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 200, scale_y: 200, svgRaw:SVG_11_SOS},
     "ElementType:12" :{ id: "ElementType:12", uiType: UI_ELEMENT_TYPE_GENERIC, value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
       elementTypeParams:[
         {LUX_LUMINOSITY: "1:2"}

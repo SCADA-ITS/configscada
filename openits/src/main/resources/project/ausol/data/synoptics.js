@@ -203,12 +203,12 @@ export let synopticData= [
 		"Element:9:9":  { "x": 1172, "y": 332, "width": 40,  "height": 40,  "alias": "RV-VENT-5MA" },
 		"Element:9:10":  { "x": 1172, "y": 270, "width": 40,  "height": 40,  "alias": "RV-VENT-6MA" },
 
-		"Element:11:1": { "x": 1700,  "y": 880, "width": 70,  "height": 70,  "alias": "RV-SOSE-1CA" },		
-		"Element:11:2": { "x": 40, "y": 880, "width": 70,  "height": 70,  "alias": "RV-SOSE-2CA" },
-		"Element:11:3": { "x": 40,  "y": 110, "width": 70,  "height": 70,  "alias": "RV-SOSE-1MA" },		
-		"Element:11:4": { "x": 1700, "y": 110, "width": 70,  "height": 70,  "alias": "RV-SOSE-2MA" },
-		"Element:11:5": { "x": 670,  "y": 880, "width": 70,  "height": 70,  "alias": "RV-SOS-1CA" },		
-		"Element:11:6": { "x": 640, "y": 110, "width": 70,  "height": 70,  "alias": "RV-SOS-1MA" },
+		"Element:11:1": { "x": 1700,  "y": 910, "width": 40,  "height": 50,  "alias": "RV-SOSE-1CA" },		
+		"Element:11:2": { "x": 40, "y": 910, "width": 40,  "height": 50,  "alias": "RV-SOSE-2CA" },
+		"Element:11:3": { "x": 40,  "y": 140, "width": 40,  "height": 50,  "alias": "RV-SOSE-1MA" },		
+		"Element:11:4": { "x": 1700, "y": 140, "width": 40,  "height": 50,  "alias": "RV-SOSE-2MA" },
+		"Element:11:5": { "x": 670,  "y": 910, "width": 40,  "height": 50,  "alias": "RV-SOS-1CA" },		
+		"Element:11:6": { "x": 640, "y": 140, "width": 40,  "height": 50,  "alias": "RV-SOS-1MA" },
 		
 		"Element:12:1": { "x": 1440, "y": 901, "width": 50,  "height": 50,  "alias": "RV-LUX-1CA" },
 		"Element:12:2": { "x": 1350,  "y": 901, "width": 50,  "height": 50,  "alias": "RV-LUX-2CA" },
