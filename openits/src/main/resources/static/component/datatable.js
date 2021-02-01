@@ -755,6 +755,7 @@ export default class DataTable {
 		
 		let grid = $$("dt-" + this.uid);
 		let self = this;
+		let url = undefined;
 
 		if (!webix.isUndefined(grid)) {
 			
@@ -762,14 +763,28 @@ export default class DataTable {
 
 				hide: true, type: "bottom"
 			});
+			
+			if (this.dataGridParams) {
 				
-			webix.ajax(appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams).then(function(data) {
+				url = appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams;
+			}
+			else {
+				
+				url = appConfig.restUrl + "grids/" + this.dataGridId;
+			}
+				
+			webix.ajax(url).then(function(dat) {
 
 				webix.delay(function() {
 					
-					self.translateFieldValues(data);
+					if (dat && dat.json) {
+						
+						let data = dat.json();
+						self.translateFieldValues(data.data);
 
-					grid.parse(data);
+						grid.parse(data.data);
+					}
+					
 					grid.hideProgress();
 					
 				}, null, null, 1);
