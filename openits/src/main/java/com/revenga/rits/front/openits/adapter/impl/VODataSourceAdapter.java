@@ -114,6 +114,7 @@ public class VODataSourceAdapter {
 	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
 	public static final String DATA_SOURCE_GET_INCIDENT_REPORTS = "data.source.get_incident_reports";
 	public static final String DATA_SOURCE_GET_INCIDENT_REPORT = "data.source.get_incident_report";
+	public static final String DATA_SOURCE_GET_INCIDENT_REPORT_SUMMARY = "data.source.get_incident_report_summary";
 	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
 	public static final String DATA_SOURCE_GET_INCIDENT_TYPES = "data.source.get_incident_types";
 	public static final String DATA_SOURCE_GET_INCIDENT_TYPE = "data.source.get_incident_type";
@@ -337,6 +338,8 @@ public class VODataSourceAdapter {
 	private Integer dataSourceGetIncidentReports;
 	@Getter
 	private Integer dataSourceGetIncidentReport;
+	@Getter
+	private Integer dataSourceGetIncidentReportSummary;
 	@Getter
 	private Integer dataSourceGetIncidentStates;
 	@Getter
@@ -578,6 +581,7 @@ public class VODataSourceAdapter {
 		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
 		this.dataSourceGetIncidentReports = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORTS));
 		this.dataSourceGetIncidentReport = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORT));
+		this.dataSourceGetIncidentReportSummary = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORT_SUMMARY));
 		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
 		this.dataSourceGetIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPES));
 		this.dataSourceGetIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE));

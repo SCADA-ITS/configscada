@@ -24,7 +24,8 @@ class AdapterGridElement {
 	static final String FIELD_OBJECT_INCIDENT_STATE = "incidentState";
 
 	static final String FIELD_INCIDENT_LEVEL_ID = "incidentLevelId";
-	
+	static final String FIELD_INCIDENT_ID = "incidentId";
+
 	static final String FIELD_INCIDENT_TYPE_TYPE_ALIAS = "incidentTypeAlias";
 	static final String FIELD_LOCATION_ALIAS = "locationAlias";
 	static final String FIELD_AFFECTION_STRETCH_ALIAS = "affectionStretchAlias";
@@ -59,6 +60,8 @@ class AdapterGridElement {
 
 					dataRow.putAll(entity);
 
+
+					flattenIncidentId(dataRow);
 					flattenIncidentType(dataRow);
 					flattenLocation(dataRow);
 					flattenAffectionStretch(dataRow);
@@ -76,6 +79,18 @@ class AdapterGridElement {
 		}
 
 		return data;
+	}
+
+	void flattenIncidentId(Map<String, Object> dataRow) {
+
+		if (dataRow.containsKey(FIELD_ID)) {
+
+			String id = dataRow.get(FIELD_ID);
+			String[] str;
+			str = id.split(':');
+			
+			dataRow.put(FIELD_INCIDENT_ID, str[1]);
+		}
 	}
 
 	void flattenIncidentType(Map<String, Object> dataRow) {
@@ -139,7 +154,7 @@ class AdapterGridElement {
 			if (obj instanceof Map) {
 
 				Map<String, Object> map = (Map<String, Object>) obj;
-	
+
 				dataRow.put(FIELD_INCIDENT_LEVEL_ID, map.get(FIELD_ID));
 				dataRow.put(FIELD_INCIDENT_LEVEL_LABEL_ALIAS, map.get(FIELD_LABEL_ALIAS));
 			}

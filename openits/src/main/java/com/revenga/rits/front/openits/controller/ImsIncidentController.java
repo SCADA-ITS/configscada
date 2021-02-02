@@ -74,6 +74,19 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentReportBO.getItem(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/summary/{id}")
+	@ApiOperation(value = "Get summary of incident report by id", notes = "Get incident report by id")
+	public ResponseEntity<Object> getImsIncidentReportSummary(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident report id",
+			example = "ImsIncidentReport:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.getItemSumary(id), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/incidentStates")
 	@ApiOperation(value = "Get incident states", notes = "Get incident states")
 	public ResponseEntity<Object> getImsIncidentStates() {

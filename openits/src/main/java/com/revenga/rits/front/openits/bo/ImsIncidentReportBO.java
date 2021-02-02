@@ -39,4 +39,12 @@ public class ImsIncidentReportBO extends GenericBO  {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(voDataSourceAdapter.getDataSourceGetIncidentReport()).getFieldId(), incidentReport);
 	}
+	
+	public Map<String, Object> getItemSumary(String id) {
+
+		Map<String, Object> incidentReport = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncidentReportSummary(), new Object[] { id });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(voDataSourceAdapter.getDataSourceGetIncidentReportSummary()).getFieldId(), incidentReport);
+	}
 }

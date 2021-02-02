@@ -1,5 +1,5 @@
-import {util} from "../lib/util.js";
-import {adapter} from "../lib/adapter.js";
+import { util } from "../lib/util.js";
+import { adapter } from "../lib/adapter.js";
 
 const DataType = {
 	STRING: { value: 1, filter: "textFilter" },
@@ -11,7 +11,7 @@ const DataType = {
 export default class DataTable {
 
 	constructor(dataGridId, dataGridParams, metadata, data) {
-	
+
 		this.dataGridId = dataGridId;
 		this.dataGridParams = dataGridParams;
 		this.metadata = metadata;
@@ -19,9 +19,9 @@ export default class DataTable {
 		this.stomp = {};
 		this.uid = webix.uid();
 	}
-	
+
 	getView() {
-		
+
 		let self = this;
 		let metadata = this.metadata;
 		let data = this.data;
@@ -46,11 +46,11 @@ export default class DataTable {
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
-				
+
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 				self.translateFieldValues(data);
-				
+
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					let field = metadata.gridFields[posField];
 					let col = {};
@@ -62,11 +62,11 @@ export default class DataTable {
 					if (field.filtered) {
 
 						if (field.label) {
-							
-							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);	
+
+							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
 						}
 						else {
-							
+
 							col.header.push(`<div></div>`);
 						}
 
@@ -91,23 +91,23 @@ export default class DataTable {
 					else {
 
 						//col.header = i18n.t(field.label);
-						
+
 						if (field.label) {
-							
-							col.header = `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`;	
-						}		
+
+							col.header = `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`;
+						}
 						else {
-							
+
 							col.header = `<div></div>`;
-						}				
+						}
 					}
 
 					if (posField < metadata.gridFields.length) {
-						
-						col.hidden = !field.visible; 
-						col.width = field.widthPx;	
+
+						col.hidden = !field.visible;
+						col.width = field.widthPx;
 					}
-					
+
 					col.sort = field.gridFieldDataType.name;
 
 					if (field.align != undefined) {
@@ -140,9 +140,9 @@ export default class DataTable {
 									avatar = (field.gridFieldIcons[0].avatar == true);
 									showValue = (field.gridFieldIcons[0].showValue == true);
 									value = obj[field.sourceField];
-									
+
 									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
-									
+
 									if (gridFieldIcon) {
 
 										icon = gridFieldIcon.icon;
@@ -163,11 +163,11 @@ export default class DataTable {
 										value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, obj[refField[0].sourceField]);
 
 										value = value[gridFieldReference.emFieldReturned];
-							
+
 										if (field.needsTranslation) {
-											
+
 											value = i18n.t(value);
-														
+
 											obj[field.sourceField] = value;
 										}
 									}
@@ -177,11 +177,11 @@ export default class DataTable {
 									value = obj[field.sourceField];
 								}
 							}
-							
-//							if (field.needsTranslation) {
-//
-//								value = i18n.t(value);
-//							}
+
+							//							if (field.needsTranslation) {
+							//
+							//								value = i18n.t(value);
+							//							}
 
 							if (field.isEpochMilli) {
 
@@ -191,29 +191,29 @@ export default class DataTable {
 							if (icon || badgeColor || avatar) {
 
 								if (icon) {
-								
+
 									if (!showValue) {
 
 										return `<img class="table-field-icons" src="${icon}" />`;
 									}
 									else {
-	
+
 										return `<div style="width: ${field.widthPx}">
 													<span>${value}</span>		
 													<img class="table-field-icons" src="${icon}" 
 														 onerror="this.onerror=null; this.style.display = 'none'"/>
 												</div>`
-									}	
+									}
 								}
 								else if (badgeColor) {
-									
+
 									let hashValue = util.getHash(value);
 									let color;
-									
+
 									let mod = Math.abs(hashValue) % 10;
-									
+
 									switch (mod) {
-											
+
 										case 0:
 											color = '#008000';
 											break;
@@ -246,16 +246,16 @@ export default class DataTable {
 											break;
 									}
 
-									return `<div><span class="table-badge" style="background: ${color+'3b'}; color: ${color+'a0'};">${value}</span></div>`;									
+									return `<div><span class="table-badge" style="background: ${color + '3b'}; color: ${color + 'a0'};">${value}</span></div>`;
 								}
 								else if (avatar) {
-									
+
 									if (!showValue) {
 
 										return `<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>`;
 									}
 									else {
-	
+
 										return `<div style="width: ${field.widthPx}">	
 													<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>
 													<span>${value}</span>
@@ -264,7 +264,7 @@ export default class DataTable {
 								}
 							}
 							else if (value != undefined) {
-								
+
 								if (state != undefined) {
 
 									//let iconElementState = "ElementValueState_" + state + ".png";
@@ -277,8 +277,8 @@ export default class DataTable {
 											</div>`
 								}
 								else {
-									
-									return `<span>${value}</span>`;	
+
+									return `<span>${value}</span>`;
 								}
 							}
 							else {
@@ -286,16 +286,16 @@ export default class DataTable {
 							}
 						}
 						else {
-							
+
 							if (value === '') {
-									
+
 								return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
 							}
 							else {
-							
-								return `<span>${value}</span>`;	
+
+								return `<span>${value}</span>`;
 							}
-							
+
 						}
 					}
 
@@ -314,40 +314,40 @@ export default class DataTable {
 					let ctxMenuData = [];
 
 					metadata.gridCommands.forEach(cmd => {
-	
+
 						ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
 					});
-	
+
 					if (ctxMenuData.length > 0) {
 						datatable.ready = function() {
 							webix.ui({
-								view: "contextmenu", 
+								view: "contextmenu",
 								id: "ctx_menu-" + self.uid,
 								width: 250,
 								data: ctxMenuData,
 								template: (obj) => {
-	
+
 									if (!obj.default) {
 										return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
 									}
 									else {
 										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
 									}
-	
+
 								},
 								on: {
 									onMenuItemClick: function(id) {
-	
+
 										let gridCommand = metadata.gridCommands.find(e => {
 											return e.id === this.getItem(id).id
 										});
-	
+
 										self.open_module(gridCommand);
 									}
 								}
 							}).attachTo(this);
 						};
-					}					
+					}
 				}
 			}
 
@@ -372,25 +372,25 @@ export default class DataTable {
 
 		return layout;
 	}
-	
+
 	translateFieldValues(data) {
-		
+
 		for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
-					
+
 			let field = this.metadata.gridFields[posField];
-			
+
 			if (field.needsTranslation) {
-				
+
 				data.forEach(item => {
-					
+
 					if (item[field.sourceField] != undefined) {
-							
+
 						if (typeof item[field.sourceField] === 'object') {
 
 							item[field.sourceField].value = i18n.t(item[field.sourceField].value);
 						}
 						else {
-							
+
 							item[field.sourceField] = i18n.t(item[field.sourceField]);
 						}
 					}
@@ -398,12 +398,12 @@ export default class DataTable {
 			}
 		}
 	}
-	
+
 	getViewId() {
-		
+
 		return "dt-" + this.uid;
 	}
-	
+
 	getSelectedIds() {
 
 		let grid = $$("dt-" + this.uid);
@@ -429,9 +429,9 @@ export default class DataTable {
 
 		return selectedPks;
 	}
-	
+
 	drawMainToolbar() {
-		
+
 		let metadata = this.metadata;
 
 		let toolbar = {
@@ -464,7 +464,7 @@ export default class DataTable {
 	drawActionsToolbar() {
 
 		let metadata = this.metadata;
-		
+
 		let toolbar = {
 			view: "toolbar",
 			id: "tbActions-" + this.uid
@@ -512,7 +512,7 @@ export default class DataTable {
 
 		return toolbar;
 	}
-	
+
 	callbacks() {
 
 		this.search_callback();
@@ -570,7 +570,7 @@ export default class DataTable {
 			}
 		}
 	}
-	
+
 	search_callback() {
 
 		let grid = $$("dt-" + this.uid);
@@ -594,30 +594,30 @@ export default class DataTable {
 			});
 		}
 	}
-	
+
 	find_module(moduleActionId) {
-		
+
 		let moduleFound = undefined;
 		let modules = window.em.getAll(EntityType.MODULE);
-		
+
 		if (modules && modules.length > 0) {
-			
+
 			modules.forEach(module => {
 
 				if (!moduleFound && module.moduleActions.find(moduleAction => moduleAction.id === moduleActionId)) {
-					
+
 					moduleFound = module;
 				}
 			});
 		}
-		
+
 		return moduleFound;
 	}
 
 	open_module(gridCommand) {
 
 		let args = {};
-		
+
 		if (gridCommand) {
 
 			let module = this.find_module(gridCommand.moduleAction.id);
@@ -636,22 +636,22 @@ export default class DataTable {
 					});
 				}
 				else {
-					
+
 					let viewTypeId = undefined;
-					
+
 					if (gridCommand.viewType) {
-						
+
 						viewTypeId = gridCommand.viewType.id;
 					}
-					
+
 					if (gridCommand.args) {
-						
-						args = gridCommand.args; 
+
+						args = gridCommand.args;
 					}
-					
+
 					args.selectedPks = selectedPks;
 					args.callbacks = [];
-					
+
 					args.callbacks.push(this.refresh);
 
 					util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
@@ -705,35 +705,35 @@ export default class DataTable {
 			});
 		}
 	}
-	
+
 	select_all_callback() {
-		
+
 		let selectAllButton = $$("tb_btn-select-all-" + this.uid);
 		let grid = $$("dt-" + this.uid);
-		
+
 		if (!webix.isUndefined(grid) && !webix.isUndefined(selectAllButton)) {
-			
+
 			selectAllButton.attachEvent("onItemClick", function(id, e) {
-				
-				grid.selectAll();	
+
+				grid.selectAll();
 			});
 		}
 	}
-	
+
 	unselect_all_callback() {
-		
+
 		let unselectAllButton = $$("tb_btn-unselect-all-" + this.uid);
 		let grid = $$("dt-" + this.uid);
-		
+
 		if (!webix.isUndefined(grid) && !webix.isUndefined(unselectAllButton)) {
-			
+
 			unselectAllButton.attachEvent("onItemClick", function(id, e) {
-				
-				grid.unselectAll();	
+
+				grid.unselectAll();
 			});
 		}
 	}
-	
+
 	refresh_callback() {
 
 		let self = this;
@@ -750,43 +750,43 @@ export default class DataTable {
 			});
 		}
 	}
-	
+
 	refresh() {
-		
+
 		let grid = $$("dt-" + this.uid);
 		let self = this;
 		let url = undefined;
 
 		if (!webix.isUndefined(grid)) {
-			
+
 			grid.showProgress({
 
 				hide: true, type: "bottom"
 			});
-			
+
 			if (this.dataGridParams) {
-				
+
 				url = appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams;
 			}
 			else {
-				
+
 				url = appConfig.restUrl + "grids/" + this.dataGridId;
 			}
-				
+
 			webix.ajax(url).then(function(dat) {
 
 				webix.delay(function() {
-					
+
 					if (dat && dat.json) {
-						
+
 						let data = dat.json();
 						self.translateFieldValues(data.data);
 
 						grid.parse(data.data);
 					}
-					
+
 					grid.hideProgress();
-					
+
 				}, null, null, 1);
 			});
 		}
@@ -890,65 +890,111 @@ export default class DataTable {
 			}
 		}
 	}
-					
+
 	connect_ws() {
-		
+
 		let self = this;
 
 		if (this.metadata.adapter != undefined) {
 
 			let grid = $$("dt-" + this.uid);
 			let dataSource = undefined;
-			
+
 			if (self.metadata.adapter.adapterType.id === adapter.ADAPTER_TYPE_VO_TO_GRID_DATA) {
-						
+
 				let adapterDataSource = self.metadata.adapter.adapterDataSources.find(e => {
-					
+
 					return e.adapterDataSourceType.id === adapter.ADAPTER_DATA_SOURCE_TYPE_JS
 				});
-				
+
 				if (adapterDataSource && adapterDataSource.value) {
-					
+
 					dataSource = adapterDataSource.dataSource;
-					
+
 					function on_connected() {
 
 						$$("tb_ws_status-" + self.uid).setHTML(`<div><span class="status_ws_connected">${i18n.t("LBL_CONNECTED")}</span></div>`);
 					}
-					
+
 					function on_message(message) {
-	
+
+						function update(gridData) {
+
+							let grid = $$("dt-" + self.uid);
+							let rowsUpdated = 0;
+
+							if (!webix.isUndefined(grid) && gridData != undefined && gridData.data != undefined && Array.isArray(gridData.data) && gridData.data.length > 0) {
+
+								self.translateFieldValues(gridData.data);
+
+								gridData.data.forEach(dataItem => {
+
+									var record = grid.getItem(dataItem.id);
+		
+									if (record != undefined && gridData.action == 'DELETE') {
+											
+										grid.remove(record.id);
+										rowsUpdated++;
+									}
+									else if (gridData.action == 'CREATE') {
+										
+										grid.add(dataItem);
+										rowsUpdated++;
+										
+									} else if(record != undefined ) {
+										
+										var keys = Object.keys(dataItem);
+
+										if (keys != undefined && Array.isArray(keys) && keys.length > 0) {
+
+											keys.forEach(key => {
+
+												if (dataItem[key] != undefined) {
+
+													record[key] = dataItem[key];
+												} else {
+
+													record[key] = "";
+												}
+											});
+										} 
+									}
+									rowsUpdated++;
+								});
+
+								if (rowsUpdated > 0) {
+
+									grid.refresh();
+								}
+							}
+						}
+
 						var data = JSON.parse(JSON.parse(message.body));
-	
-						//console.log(data);
-	
-						var dataGrid = eval("adapter." + adapterDataSource.value)(data);
-						//var dataGrid = adapter[adapterDataSource.value](data);
-	
-						self.update(dataGrid.data);
+
+						eval("adapter." + adapterDataSource.value)(data, update);
 					}
-	
+
 					let url = dataSource.dataSourceValues[0].value;
 					let topic = dataSource.dataSourceValues[1].value;
-					
+
 					let params;
-					
+
 					if (self.dataGridParams) {
-						
+
 						params = "." + self.dataGridParams + ".>";
 					}
 					else {
-						
+
 						params = ".>";
 					}
-	
+
 					$$("tb_ws_status-" + this.uid).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
-	
+
 					this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
-					
-					
+
+
 				}
-				
+
 			}
 		}
 	}
@@ -959,47 +1005,6 @@ export default class DataTable {
 
 			util.stomp.disconnect(this.stomp.client);
 			this.stomp = {};
-		}
-	}
-
-	update(data) {
-
-		let grid = $$("dt-" + this.uid);
-		let rowsUpdated = 0;
-
-		if (!webix.isUndefined(grid) && data != undefined && Array.isArray(data) && data.length > 0) {
-
-			data.forEach(dataItem => {
-
-				var record = grid.getItem(dataItem.id);
-
-				if (record != undefined) {
-
-					var keys = Object.keys(dataItem);
-
-					if (keys != undefined && Array.isArray(keys) && keys.length > 0) {
-
-						keys.forEach(key => {
-
-							if (dataItem[key] != undefined) {
-
-								record[key] = dataItem[key];
-							}
-							else {
-
-								record[key] = "";
-							}
-						});
-					}
-
-					rowsUpdated++;
-				}
-			});
-
-			if (rowsUpdated > 0) {
-
-				grid.refresh();
-			}
 		}
 	}
 }

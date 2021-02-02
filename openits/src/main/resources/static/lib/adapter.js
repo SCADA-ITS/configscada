@@ -1,10 +1,12 @@
+const INCIDENT_REPORT_END_POINT = "incidents/summary"
+
 export let adapter = {
-	
-	ADAPTER_TYPE_VO_TO_GRID_DATA : 1,
-	ADAPTER_DATA_SOURCE_TYPE_JS : 2,
-	
+
+	ADAPTER_TYPE_VO_TO_GRID_DATA: 1,
+	ADAPTER_DATA_SOURCE_TYPE_JS: 2,
+
 	getElementTypeParamId(elementValueId) {
-	
+
 		let elementTypeParamId;
 
 		let splitStr = elementValueId.split(":");
@@ -18,7 +20,7 @@ export let adapter = {
 
 		element: {
 
-			getList(data) {
+			getList(data, update_callback) {
 
 				let gridData = {};
 
@@ -31,9 +33,9 @@ export let adapter = {
 						let dataItem = {};
 
 						dataItem.id = element.id;
-						
+
 						if (element.elementTypeState != undefined) {
-						
+
 							dataItem.state = element.elementTypeState.id;
 						}
 
@@ -46,27 +48,88 @@ export let adapter = {
 								dataItem[elementTypeParamId] = {};
 
 								if (elementValue.elementValueState != undefined) {
-									
-									dataItem[elementTypeParamId].state = elementValue.elementValueState.id;	
+
+									dataItem[elementTypeParamId].state = elementValue.elementValueState.id;
 								}
-								
+
 								if (elementValue.value != undefined) {
-								
-									dataItem[elementTypeParamId].value = elementValue.value;	
+
+									dataItem[elementTypeParamId].value = elementValue.value;
 								}
 								else {
-								
-									dataItem[elementTypeParamId].value = ""; 	
+
+									dataItem[elementTypeParamId].value = "";
 								}
-								
+
 							});
 						}
-						
+
 						gridData.data.push(dataItem);
 					});
 				}
-				
-				return gridData;
+
+				update_callback(gridData);
+			}
+		},
+
+		incidentReport: {
+
+			getList(data, update_callback) {
+
+				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
+		
+					let gridData = {};
+					let count = data.basicElementsVO.length;
+					gridData.data = [];
+					gridData.action = data.action;
+
+					data.basicElementsVO.forEach(incidentReport => {
+
+						let dataItem = {};
+						dataItem.id = incidentReport.id;
+
+						if (gridData.action != 'DELETE') {
+
+							webix.ajax().get(appConfig.restUrl + INCIDENT_REPORT_END_POINT + "/" + incidentReport.id).then(function(dat) {
+								
+								console.log(dataItem);
+								if (dat != null) {
+
+									let incidentReport = dat.json();
+
+									dataItem.incidentId = incidentReport.id.split(":")[1];
+									dataItem.confirm = incidentReport.confirm;
+									dataItem.incidentLevelId = incidentReport.incidentLevel.id;
+									dataItem.incidentLevelLabelAlias = incidentReport.incidentLevel.labelAlias;
+									dataItem.generatedAt = incidentReport.generatedAt;
+									dataItem.incidentTypeAlias = incidentReport.incidentType.alias;
+									dataItem.incidentTypeDescription = incidentReport.incidentType.description;
+									dataItem.affectionStretchAlias = incidentReport.affectionStretch.alias;
+									dataItem.locationAlias = incidentReport.location.alias;
+									dataItem.incidentStateLabelAlias = incidentReport.incidentState.labelAlias;
+									dataItem.currentUserName = incidentReport.currentUser.name;
+
+									gridData.data.push(dataItem);
+
+									count--;
+
+									if (count == 0)
+										update_callback(gridData);
+								}
+
+							}, function(response) { util.ajax.handleError(response); });
+							
+						} else {
+							
+							gridData.data.push(dataItem);
+
+							count--;
+
+							if (count == 0)
+								update_callback(gridData);
+						}
+					});
+				}
 			}
 		}
 	}
