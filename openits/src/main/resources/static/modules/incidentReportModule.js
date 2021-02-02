@@ -120,6 +120,8 @@ export default class IncidentReportModule extends GenericModule {
 
 						self.callbacks();
 					}
+					
+					self.initTabViewContent();
 				}
 
 			}, function(response) { util.ajax.handleError(response); });
@@ -130,6 +132,39 @@ export default class IncidentReportModule extends GenericModule {
 
 		this.connect_ws();
 		this.on_destroy();
+	}
+	
+	initTabViewContent() {
+		
+		let tabViewContent = $$("tabview-content" + this.uid);
+		let tabDetails = $$("tab-details-" + this.uid);
+		let tabTaskBoard = $$("tab-task-board-" + this.uid);
+		let tabLogs = $$("tab-logs-" + this.uid); 
+		
+		if (this.incidentReport && tabViewContent) {
+			
+			if (this.incidentReport.confirm && this.incidentReport.confirm == true && tabTaskBoard) {
+				
+				tabViewContent.getTabbar().setValue(tabTaskBoard.config.id);
+			}
+			else {
+				
+				if (tabDetails) {
+					
+					tabViewContent.getTabbar().setValue(tabDetails.config.id);	
+				}
+				
+				if (tabTaskBoard) {
+				
+					tabTaskBoard.disable();	
+				}
+				
+				if (tabLogs) {
+					
+					tabLogs.disable();
+				}
+			}
+		}
 	}
 
 	on_destroy() {
@@ -226,38 +261,45 @@ export default class IncidentReportModule extends GenericModule {
 						borderless: true,
 						template: function() {
 							
-							let steps = `<div class="progressbar-wrapper">
-									      <ul class="progressbar">`;
-							
-							self.incidentReport.sequenceOfStates.forEach(e => {
+							if (self.incidentReport.confirm && self.incidentReport.confirm == true) {
 								
-								steps += `<li style="width: ${100/self.incidentReport.sequenceOfStates.length}% !important" `;
-								if (e.state.id === self.incidentReport.incidentState.id) {
-								//if (e.state.id === 	"ImsIncidentState:2") {
-									
-									labelNoCss = true;
-									steps += `class="current">`;
-								}
-								else {
-									
-									if (!labelNoCss) {
+								let steps = `<div class="progressbar-wrapper">
+										      <ul class="progressbar">`;
 								
-										steps += `class="active">`;	
+								self.incidentReport.sequenceOfStates.forEach(e => {
+									
+									steps += `<li style="width: ${100/self.incidentReport.sequenceOfStates.length}% !important" `;
+									if (e.state.id === self.incidentReport.incidentState.id) {
+									//if (e.state.id === 	"ImsIncidentState:2") {
+										
+										labelNoCss = true;
+										steps += `class="current">`;
 									}
 									else {
 										
-										steps += `>`;
+										if (!labelNoCss) {
+									
+											steps += `class="active">`;	
+										}
+										else {
+											
+											steps += `>`;
+										}
 									}
-								}
+									
+									steps += `${i18n.t(e.state.labelAlias)}</li>`;
+									
+								});
 								
-								steps += `${i18n.t(e.state.labelAlias)}</li>`;
+								steps += `  </ul>
+										  </div>`;
+	
+								return steps;
+							}
+							else {
 								
-							});
-							
-							steps += `  </ul>
-									  </div>`;
-
-							return steps;
+								return `<div></div>`;
+							}
 						}		
 					}					
 				]
@@ -272,30 +314,41 @@ export default class IncidentReportModule extends GenericModule {
 
 			let contentTabs = {
 				view: "tabview",
-				id: "content-tabs" + self.uid,
+				id: "tabview-content" + self.uid,
 				css: "secondary-tab",
 //				tabbar: {
 //					optionWidth: 283
 //				},
 				animate: false,
-				cells: [
-					{
-						id: "content-tab-details-" + self.uid,
-						header: i18n.t("LBL_DETAILS"),
-						body: getTabDetails()
-					},
-					{
-						id: "content-tab-task-board-" + self.uid,
-						header: i18n.t("LBL_TASK_BOARD"),
-						body: getTabTasksBoard()
-					},
-					{
-						id: "content-tab-logs-" + self.uid,
-						header: i18n.t("LBL_LOGS"),
-						body: getTabLogs()
+				cells: [],
+				tabbar:{
+					on:{
+				    	onBeforeTabClick:function(id){
+				        	return $$(id).isEnabled();
+				    	}
 					}
-				]
+				}
 			};
+			
+			let tasks = self.currentSequenceOfState.taskStates;
+						
+			contentTabs.cells.push({
+				header: i18n.t("LBL_DETAILS"),
+				body: getTabDetails()
+			});
+			
+			if (Array.isArray(tasks) && tasks.length) {
+			
+				contentTabs.cells.push({
+					header: i18n.t("LBL_TASK_BOARD"),
+					body: getTabTasksBoard()
+				});	
+			}
+			
+			contentTabs.cells.push({
+				header: i18n.t("LBL_LOGS"),
+				body: getTabLogs()
+			});
 			
 			let viewContent = {
 
@@ -316,6 +369,7 @@ export default class IncidentReportModule extends GenericModule {
 			function getTabDetails() {
 				
 				let tabDetails = {
+					id: "tab-details-" + self.uid,
 					borderless: true,
 					css: "ims-incident-report-tab-details",
 					rows: [
@@ -376,6 +430,7 @@ export default class IncidentReportModule extends GenericModule {
 			function getTabTasksBoard() {
 				
 				let tabTasksBoard = {
+					id: "tab-task-board-" + self.uid,
 					borderless: true,
 					rows: [
 						{ height: 10},
@@ -522,17 +577,20 @@ export default class IncidentReportModule extends GenericModule {
 						let data = [];
 						let tasks = self.currentSequenceOfState.taskStates;
 						
-						for (let i = 0; i < tasks.length; i++) {
+						if (Array.isArray(tasks) && tasks.length) {
 						
-							let row = {};
-							
-							row.status = tasks[i].completed ? "executed" : "pending";
-							row.position =  i + 1;
-							row.alias = tasks[i].incidentTypeTask.alias;
-							row.type = tasks[i].incidentTypeTask.auto ? "auto" : "manual";
-							row.required = tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
-							
-							data.push(row);	
+							for (let i = 0; i < tasks.length; i++) {
+						
+								let row = {};
+								
+								row.status = tasks[i].completed ? "executed" : "pending";
+								row.position =  i + 1;
+								row.alias = tasks[i].incidentTypeTask.alias;
+								row.type = tasks[i].incidentTypeTask.auto ? "auto" : "manual";
+								row.required = tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
+								
+								data.push(row);	
+							}	
 						}
 						
 						self.dtTasks = new DataTable(null, null, metadata, data);
@@ -571,6 +629,7 @@ export default class IncidentReportModule extends GenericModule {
 			function getTabLogs() {
 				
 				let tabLogs = {
+					id: "tab-logs-" + self.uid,
 					borderless: true,
 					rows: [
 						{ height: 10},
@@ -655,31 +714,36 @@ export default class IncidentReportModule extends GenericModule {
 									{ height: 20 },
 									{
 									    view: "button",
-										css: "action-button",
-										height: 50,
-//										disabled: (function() {
-//											
+										css: (function() {
+											
 //											if (self.incidentReport.confirm === true) {
 //												
-//												let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completed);
+//												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 //												
-//												return (tasksCompleted.length < self.currentSequenceOfState.taskStates.length);
+//													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completed);
+//													
+//													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length)	{
+//														
+//													}
+//												}
 //											}
-//											else {
-//												
-//												return false;
-//											}
-//										})(),
+											
+											
+											return "action-button";
+												
+										})(), 
+										height: 50,
 										label: (function() {
 											
 											if (self.incidentReport.confirm === true) {
 												
-												return i18n.t("LBL_INCIDENT_ACTION_NEXT");											
-												
+												//return i18n.t("LBL_INCIDENT_ACTION_NEXT");											
+												return "Next";
 											}
 											else {
 												
-												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												//return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												return "Confirm";
 											}
 										})(),
 									    type: "icon", 
@@ -913,6 +977,8 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 	connect_ws() {
+		
+		let self = this;
 
 		function on_connected() {
 
@@ -921,9 +987,13 @@ export default class IncidentReportModule extends GenericModule {
 		function on_message(message) {
 
 			var data = JSON.parse(JSON.parse(message.body));
-
-			console.log(data);
-
+			
+			if (data.action === "UPDATE") {
+			
+				console.log(data);
+				
+				self.refresh();	
+			}
 		}
 
 		let url = appConfig.stompUrl;
