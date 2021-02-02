@@ -155,8 +155,8 @@ export let synopticData= [
 		"BaseLayers": {
 			"BASE_LAYER": "mapa_base.png",
 			"S1F1_(6-11) L": "PANELS-S1F1__6-11_-pk-L_v0.4.svg",
-			"S1F1_(6-11) P": "PANELS-S1F1__6-11_-pk-P_v0.4.svg",
-			"S1F2_(11-24) L": "PANELS-S1F2-_11-24_-pk-L-_v0.2_1.svg",
+			/*"S1F1_(6-11) P": "PANELS-S1F1__6-11_-pk-P_v0.4.svg",*/
+			/*"S1F2_(11-24) L": "PANELS-S1F2-_11-24_-pk-L-_v0.2_1.svg",*/
 			"S1F2_(11-24) P": "PANELS-S1F2-_11-24_-pk-P-_v0.2_1.svg",
 			"S4-S5 L": "PANELS-S4-S5-pk-L_v0.3.svg",
 			"S4-S5 P": "PANELS-S4-S5-pk-P_v0.3.svg"
@@ -169,16 +169,16 @@ export let synopticData= [
 			},
 			"S1F1_(6-11) L": {
 				"items": [
-					"Element:24:12",
+					/*"Element:24:12",
 					"Element:29:7",
-					"Element:24:13",
+					"Element:24:13",*/
 					"Element:28:4",
-					"Element:30:4",
+				/*	"Element:30:4",
 					"Element:24:16",
 					"Element:29:9",
-					"Element:24:17",
+					"Element:24:17",*/
 					"Element:28:5",
-					"Element:30:5",
+					/*"Element:30:5",
 					"Element:24:20",
 					"Element:29:11",
 					"Element:24:21",
@@ -190,12 +190,12 @@ export let synopticData= [
 					"Element:32:14",
 					"Element:32:15",
 					"Element:69:5",
-					"Element:69:6",
+					"Element:69:6",*/
 				],
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"S1F1_(6-11) P": {
+			/*"S1F1_(6-11) P": {
 				"items": [
 					"Element:24:14",
 					"Element:29:8",
@@ -218,8 +218,8 @@ export let synopticData= [
 				],
 				"translation_key": "",
 				"visibility": "hidden"
-			},
-			"S1F2_(11-24) L": {
+			},*/
+			/*"S1F2_(11-24) L": {
 				"items": [
 					"Element:24:28",
 					"Element:29:15",
@@ -260,10 +260,10 @@ export let synopticData= [
 				],
 				"translation_key": "",
 				"visibility": "hidden"
-			},
+			},*/
 			"S1F2_(11-24) P": {
 				"items": [
-					"Element:24:30",
+					/*"Element:24:30",
 					"Element:29:16",
 					"Element:24:31",
 					"Element:24:34",
@@ -280,14 +280,14 @@ export let synopticData= [
 					"Element:24:47",
 					"Element:24:50",
 					"Element:29:26",
-					"Element:24:51",
+					"Element:24:51",*/
 					"Element:28:6",
-					"Element:30:6",
+					/*"Element:30:6",
 					"Element:24:54",
 					"Element:29:28",
-					"Element:24:55",
+					"Element:24:55",*/
 					"Element:28:7",
-					"Element:30:7",
+					/*"Element:30:7",
 					"Element:24:58",
 					"Element:29:30",
 					"Element:24:59",
@@ -296,25 +296,25 @@ export let synopticData= [
 					"Element:24:61",
 					"Element:24:66",
 					"Element:29:35",
-					"Element:24:67",
+					"Element:24:67",*/
 				],
 				"translation_key": "",
 				"visibility": "hidden"
 			},
 			"S4-S5 L": {
 				"items": [
-					"Element:24:1",
+				/*	"Element:24:1",
 					"Element:29:1",
 					"Element:24:2",
 					"Element:29:2",
-					"Element:24:3",
+					"Element:24:3",*/
 					"Element:28:1",
-					"Element:30:1",
-					"Element:26:1",
+					/*"Element:30:1",
+					"Element:26:1",*/
 					"Element:28:2",
-					"Element:30:2",
+				/*	"Element:30:2",*/
 					"Element:28:3",
-					"Element:30:3",
+					/*"Element:30:3",
 					"Element:24:4",
 					"Element:29:3",
 					"Element:24:5",
@@ -326,7 +326,7 @@ export let synopticData= [
 					"Element:24:9",
 					"Element:24:10",
 					"Element:29:6",
-					"Element:24:11",			
+					"Element:24:11",*/			
 					"Element:31:2",
 					"Element:31:5",
 					"Element:64:3",
@@ -335,10 +335,10 @@ export let synopticData= [
 					"Element:64:8",
 					"Element:64:11",
 					"Element:64:12",
-					"Element:32:5",
+					/*"Element:32:5",
 					"Element:32:6",
 					"Element:32:7",
-					"Element:69:2",
+					"Element:69:2",*/
 
 				],
 				"translation_key": "",
@@ -355,11 +355,11 @@ export let synopticData= [
 				"Element:64:6",
 				"Element:64:9",
 				"Element:64:10",
-				"Element:32:1",
+			/*	"Element:32:1",
 				"Element:69:1",
 				"Element:32:2",
 				"Element:32:3",
-				"Element:32:4",
+				"Element:32:4",*/
 			
 					
 				],
@@ -368,16 +368,16 @@ export let synopticData= [
 			}
 		},
 		// S1F1_(6-11) L
-		"Element:24:12": { "x": 529, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-1"  },
+		/*"Element:24:12": { "x": 529, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-1"  },
 		"Element:29:7": { "x": 582, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-2"  },
-		"Element:24:13": { "x": 635, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-3"  },
+		"Element:24:13": { "x": 635, "y": 820,  "width": 30, "height": 35, "alias": "NRJS488L-3"  },*/
 		"Element:28:4": { "x": 529, "y": 612,  "width": 30, "height": 35, "alias": "PSJS488LB"  },
-		"Element:30:4": { "x": 741, "y": 612,  "width": 30, "height": 35, "alias": "PSJS488LM"  },
+		/*"Element:30:4": { "x": 741, "y": 612,  "width": 30, "height": 35, "alias": "PSJS488LM"  },
 		"Element:24:16": { "x": 1105, "y": 1027,  "width": 30, "height": 35, "alias": "NRJS487L-1"  },
 		"Element:29:9": { "x": 1158, "y": 1027,  "width": 30, "height": 35, "alias": "NRJS487L-2"  },
-		"Element:24:17": { "x": 1211, "y": 1027,  "width": 30, "height": 35, "alias": "NRJS487L-3"  },
+		"Element:24:17": { "x": 1211, "y": 1027,  "width": 30, "height": 35, "alias": "NRJS487L-3"  },*/
 		"Element:28:5": { "x": 1105, "y": 925,  "width": 30, "height": 35, "alias": "PSJS489LB"  },
-		"Element:30:5": { "x": 1317, "y": 925,  "width": 30, "height": 35, "alias": "PSJS489LM"  },
+	/*	"Element:30:5": { "x": 1317, "y": 925,  "width": 30, "height": 35, "alias": "PSJS489LM"  },
 		"Element:24:20": { "x": 1105, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-1"  },
 		"Element:29:11": { "x": 1158, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-2"  },
 		"Element:24:21": { "x": 1211, "y": 714,  "width": 30, "height": 35, "alias": "NRJS485L-3"  },
@@ -390,10 +390,10 @@ export let synopticData= [
 		
 		"Element:24:24": { "x": 1685, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-1"  },
 		"Element:29:13": { "x": 1738, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-2"  },
-		"Element:24:25": { "x": 1791, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-3"  },
+		"Element:24:25": { "x": 1791, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-3"  },*/
 		
 		// S1F1_(6-11) P
-		"Element:24:14": { "x": 981, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-1"  },
+		/*"Element:24:14": { "x": 981, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-1"  },
 		"Element:29:8": { "x": 1034, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-2"  },
 		"Element:24:15": { "x": 1087, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-3"  },
 		"Element:32:8":  { "x": 988, "y": 724,  "width": 30, "height": 35, "alias": "PDZJS01P"  }, 
@@ -410,10 +410,10 @@ export let synopticData= [
 		"Element:24:23": { "x": 1558, "y": 616,  "width": 30, "height": 35, "alias": "NRJS415P-3"  },
 		"Element:24:26": { "x": 1452, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-1"  },
 		"Element:29:14": { "x": 1505, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-2"  },
-		"Element:24:27": { "x": 1558, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-3"  },
+		"Element:24:27": { "x": 1558, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-3"  },*/
 		
 		// S1F2_(11-24) L
-		"Element:24:28": { "x": 333, "y": 981,  "width": 30, "height": 35, "alias": "NRJS482L-1"  },
+		/*"Element:24:28": { "x": 333, "y": 981,  "width": 30, "height": 35, "alias": "NRJS482L-1"  },
 		"Element:29:15": { "x": 386, "y": 981,  "width": 30, "height": 35, "alias": "NRJS482L-2"  },
 		"Element:24:29": { "x": 439, "y": 981,  "width": 30, "height": 35, "alias": "NRJS482L-3"  },
 		"Element:24:32": { "x": 114, "y": 912,  "width": 30, "height": 35, "alias": "NRJS481L-1"  },
@@ -448,10 +448,10 @@ export let synopticData= [
 		"Element:29:36": { "x": 386, "y": 201,  "width": 30, "height": 35, "alias": "NRJS470L-2"  },
 		"Element:24:69": { "x": 114, "y": 135,  "width": 30, "height": 35, "alias": "NRJS469L-1"  },
 		"Element:29:37": { "x": 167, "y": 135,  "width": 30, "height": 35, "alias": "NRJS469L-2"  },
-		"Element:24:70": { "x": 220, "y": 135,  "width": 30, "height": 35, "alias": "NRJS469L-3"  },
+		"Element:24:70": { "x": 220, "y": 135,  "width": 30, "height": 35, "alias": "NRJS469L-3"  },*/
 		
 		// S1F2_(11-24) P
-		"Element:24:30": { "x": 1124, "y": 1031,  "width": 30, "height": 35, "alias": "NRJS418P-1"  },
+		/*"Element:24:30": { "x": 1124, "y": 1031,  "width": 30, "height": 35, "alias": "NRJS418P-1"  },
 		"Element:29:16": { "x": 1177, "y": 1031,  "width": 30, "height": 35, "alias": "NRJS418P-2"  },
 		"Element:24:31": { "x": 1230, "y": 1031,  "width": 30, "height": 35, "alias": "NRJS418P-3"  },
 		"Element:24:34": { "x": 904, "y": 950,  "width": 30, "height": 35, "alias": "NRJS419P-1"  },
@@ -468,14 +468,14 @@ export let synopticData= [
 		"Element:24:47": { "x": 1230, "y": 683,  "width": 30, "height": 35, "alias": "NRJS423P-3"  },
 		"Element:24:50": { "x": 904, "y": 603,  "width": 30, "height": 35, "alias": "NRJS424P-1"  },
 		"Element:29:26": { "x": 957, "y": 603,  "width": 30, "height": 35, "alias": "NRJS424P-2"  },
-		"Element:24:51": { "x": 1010, "y": 603,  "width": 30, "height": 35, "alias": "NRJS424P-3"  },
+		"Element:24:51": { "x": 1010, "y": 603,  "width": 30, "height": 35, "alias": "NRJS424P-3"  },*/
 		"Element:28:6" : { "x": 904, "y": 501,  "width": 30, "height": 35, "alias": "PSJS418PB"  },		
-		"Element:30:6" : { "x": 1116, "y": 501,  "width": 30, "height": 35, "alias": "PSJS418PM"  },
+		/*"Element:30:6" : { "x": 1116, "y": 501,  "width": 30, "height": 35, "alias": "PSJS418PM"  },
 		"Element:24:54": { "x": 904, "y": 378,  "width": 30, "height": 35, "alias": "NRJS425P-1"  },
 		"Element:29:28": { "x": 957, "y": 378,  "width": 30, "height": 35, "alias": "NRJS425P-2"  },
-		"Element:24:55": { "x": 1010, "y": 378,  "width": 30, "height": 35, "alias": "NRJS425P-3"  },
+		"Element:24:55": { "x": 1010, "y": 378,  "width": 30, "height": 35, "alias": "NRJS425P-3"  },*/
 		"Element:28:7":  { "x": 904,  "y": 276,  "width": 30, "height": 35, "alias": "PSJS419PB"   },
-		"Element:30:7" : { "x": 1116, "y": 276,  "width": 30, "height": 35, "alias": "PSJS419PM"  },
+		/*"Element:30:7" : { "x": 1116, "y": 276,  "width": 30, "height": 35, "alias": "PSJS419PM"  },
 		"Element:24:58": { "x": 1124, "y": 154,  "width": 30, "height": 35, "alias": "NRJS426P-1"  },
 		"Element:29:30": { "x": 1177, "y": 154,  "width": 30, "height": 35, "alias": "NRJS426P-2"  },
 		"Element:24:59": { "x": 1230, "y": 154,  "width": 30, "height": 35, "alias": "NRJS426P-3"  },
@@ -484,21 +484,21 @@ export let synopticData= [
 		"Element:24:61": { "x": 1389, "y": 154,  "width": 30, "height": 35, "alias": "NRJS426P-6"  },
 		"Element:24:66": { "x": 904, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-1"  },
 		"Element:29:35": { "x": 957, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-2"  },
-		"Element:24:67": { "x": 1010, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-3"  },
+		"Element:24:67": { "x": 1010, "y": 79,  "width": 30, "height": 35, "alias": "NRJS428P-3"  },*/
 		
 		// S4-S5 L
-		"Element:24:1": { "x": 543, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-1"  },
+		/*"Element:24:1": { "x": 543, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-1"  },
 		"Element:29:1": { "x": 596, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-2"  },
 		"Element:24:2": { "x": 649, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-3"  },
 		"Element:29:2": { "x": 702, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-4"  },
-		"Element:24:3": { "x": 755, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-5"  },
+		"Element:24:3": { "x": 755, "y": 1029,  "width": 30, "height": 35, "alias": "NRLKD01L-5"  },*/
 		"Element:28:1": { "x": 543,  "y": 745,  "width": 30, "height": 35, "alias": "NRSKD03LG"   },
-		"Element:30:1": { "x": 755,  "y": 745,  "width": 30, "height": 35, "alias": "NRSKD03LM"   },
-		"Element:26:1": { "x": 897,  "y": 745,  "width": 30, "height": 35, "alias": "NRSKD03LS"   },
+	/*	"Element:30:1": { "x": 755,  "y": 745,  "width": 30, "height": 35, "alias": "NRSKD03LM"   },
+		"Element:26:1": { "x": 897,  "y": 745,  "width": 30, "height": 35, "alias": "NRSKD03LS"   },*/
 		"Element:28:2": { "x": 543,  "y": 541,  "width": 30, "height": 35, "alias": "NRSKD05LG"   },
-		"Element:30:2": { "x": 755,  "y": 541,  "width": 30, "height": 35, "alias": "NRSKD05LM"   },
+		/*"Element:30:2": { "x": 755,  "y": 541,  "width": 30, "height": 35, "alias": "NRSKD05LM"   },*/
 		"Element:28:3": { "x": 1209,  "y": 949,  "width": 30, "height": 35, "alias": "NRSKD07LG"   },
-		"Element:30:3": { "x": 1421,  "y": 949,  "width": 30, "height": 35, "alias": "NRSKD07LM"   },
+		/*"Element:30:3": { "x": 1421,  "y": 949,  "width": 30, "height": 35, "alias": "NRSKD07LM"   },
 		"Element:24:4": { "x": 1209, "y": 847,  "width": 30, "height": 35, "alias": "NRLKD08L-1"  },
 		"Element:29:3": { "x": 1262, "y": 847,  "width": 30, "height": 35, "alias": "NRLKD08L-2"  },
 		"Element:24:5": { "x": 1315, "y": 847,  "width": 30, "height": 35, "alias": "NRLKD08L-3"  },
@@ -510,7 +510,7 @@ export let synopticData= [
 		"Element:24:9": { "x": 1315, "y": 523,  "width": 30, "height": 35, "alias": "NRLKD10L-3"  },
 		"Element:24:10": { "x": 1209, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-1"  },
 		"Element:29:6": { "x": 1262, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-2"  },
-		"Element:24:11": { "x": 1315, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-3"  },	
+		"Element:24:11": { "x": 1315, "y": 421,  "width": 30, "height": 35, "alias": "NRLKD11L-3"  },	*/
 		"Element:31:2": { "x": 1215, "y": 274,  "width": 88, "height": 79, "alias": "PDZTDH01L"  },
 		"Element:31:5": { "x": 1623, "y": 52,  "width": 88, "height": 79, "alias": "PDZTDH14L"  },
 		"Element:64:3": { "x": 1209, "y": 600,  "width": 60, "height": 60, "alias": "PDZKD03L"  },
@@ -528,11 +528,11 @@ export let synopticData= [
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:3": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
-		"Element:32:1": { "x": 124, "y": 425,  "width": 30, "height": 35, "alias": "PDZDH04aP"  },
+		/*"Element:32:1": { "x": 124, "y": 425,  "width": 30, "height": 35, "alias": "PDZDH04aP"  },
 		"Element:69:1": { "x": 255, "y": 327,  "width": 40, "height": 45, "alias": "PDZDH04bP"  },
 		"Element:32:2": { "x": 124, "y": 280,  "width": 30, "height": 35, "alias": "PDZDH05P"  },
 		"Element:32:3": { "x": 124, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH06P"  },
-		"Element:32:4": { "x": 344, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH08P"  },
+		"Element:32:4": { "x": 344, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH08P"  },*/
 
 		"Element:64:1": { "x": 124, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD01P"  },
 		"Element:64:2": { "x": 198, "y": 885,  "width": 60, "height": 60, "alias": "PDZKD02P"  },
