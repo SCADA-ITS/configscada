@@ -831,7 +831,10 @@ var i18_en = {
     "ElementTypeParam:31:2:2.description": "Brightness Contol",
     "ElementTypeParam:31:2:3.alias": "Temperature",
     "ElementTypeParam:31:2:3.description": "Temperature",
-
+    "ElementTypeParam:31:2:1002.alias": "Air Temperature",
+    "ElementTypeParam:31:2:1002.description": "Air Temperature",
+    "ElementTypeParam:31:2:1005.alias": "Road Temperature",
+    "ElementTypeParam:31:2:1005.description": "Road Temperature",
 
 	"ElementTypeParam:32:1:1.alias": "PK",
     "ElementTypeParam:32:1:1.description": "PK",

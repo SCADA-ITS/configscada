@@ -847,6 +847,10 @@ var i18_sk = {
     "ElementTypeParam:31:2:2.description": "Ovl&aacute;danie jasu",
     "ElementTypeParam:31:2:3.alias": "Teplota",
     "ElementTypeParam:31:2:3.description": "Teplota",
+    "ElementTypeParam:31:2:1002.alias": "Teplota vzduchu",
+    "ElementTypeParam:31:2:1002.description": "Teplota vzduchu",
+    "ElementTypeParam:31:2:1005.alias": "Teplota vozovky",
+    "ElementTypeParam:31:2:1005.description": "Teplota vozovky",
     
     "ElementTypeParam:32:1:1.alias": "KM",
     "ElementTypeParam:32:1:1.description": "KM",

@@ -842,6 +842,10 @@ var i18_es = {
     "ElementTypeParam:31:2:2.description": "Control de Brillo",
     "ElementTypeParam:31:2:3.alias": "Temperatura",
     "ElementTypeParam:31:2:3.description": "Temperatura",
+    "ElementTypeParam:31:2:1002.alias": "Temperatura del Aire",
+    "ElementTypeParam:31:2:1002.description": "Temperatura del Aire",
+    "ElementTypeParam:31:2:1005.alias": "Temperatura de la Calzada",
+    "ElementTypeParam:31:2:1005.description": "Temperatura de la Calzada",
 
 
     "ElementTypeParam:32:1:1.alias": "PK",
