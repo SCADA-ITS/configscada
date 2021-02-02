@@ -2344,9 +2344,7 @@ var i18_es = {
     "element.window.tab.form": "Detalle",
     "element.window.tab.video": "Video",
     "element.window.tab.syn": "Synoptic",
-    "element.window.tab.iframe1": "iframe1",
-    "element.window.tab.iframe2": "iframe2",
-    "element.window.tab.iframe3": "iframe3",
-    "element.window.tab.iframe4": "iframe4"
+    "element.window.tab.imd": "IMD",
+    "element.window.tab.speed": "Vel_Media",
 };
 

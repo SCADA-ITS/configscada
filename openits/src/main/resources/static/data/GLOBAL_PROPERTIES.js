@@ -67,15 +67,6 @@ export const ELEMENT_TYPE = {
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3", videoList: false}
-        },
-        {ELEMENT_FORM_TAB_IFRAME: {
-          dataTabs: [
-            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 700, iframeWidth: 700, tabTitle: $.i18n("element.window.tab.iframe1")},
-            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 600, iframeWidth: 600, tabTitle: $.i18n("element.window.tab.iframe2")},
-            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 500, iframeWidth: 500, tabTitle: $.i18n("element.window.tab.iframe3")},
-            {urlIFrame: "ElementTypeParam:2:1:3", iframeHeight: 400, iframeWidth: 400, tabTitle: $.i18n("element.window.tab.iframe4")},
-          ]
-          }
         }
       ] 
     },
@@ -86,8 +77,12 @@ export const ELEMENT_TYPE = {
       ],
       tabs:[
         {ELEMENT_FORM_TAB_FORM: {}},
-        {ELEMENT_FORM_TAB_VIDEO: {
-          urlParamVideo:"ElementTypeParam:4:1:13", videoList: true}
+        {ELEMENT_FORM_TAB_IFRAME: {
+          dataTabs: [
+            {urlIFrame: "ElementTypeParam:4:1:13", iframeHeight: 700, iframeWidth: 700, tabTitle: $.i18n("element.window.tab.imd")},
+            {urlIFrame: "ElementTypeParam:4:1:14", iframeHeight: 700, iframeWidth: 700, tabTitle: $.i18n("element.window.tab.speed")}
+          ]
+          }
         }
       ]},
     "ElementType:5" :{ id: "ElementType:5", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 5, scale_x: 28, scale_y: 28},
@@ -164,7 +159,7 @@ export const ELEMENT_TYPE = {
       ]
     },
     "ElementType:24" :{ id: "ElementType:24", uiType: UI_ELEMENT_TYPE_MATRIX, value: 24, scale_x: 28, scale_y: 28},
-    "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_GENERIC, value: 25, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
+    "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_GENERIC, value: 25, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:26" :{ id: "ElementType:26", uiType: UI_ELEMENT_TYPE_MATRIX, value: 26, scale_x: 28, scale_y: 28},
     "ElementType:27" :{ id: "ElementType:27", uiType: UI_ELEMENT_TYPE_MATRIX, value: 27, scale_x: 28, scale_y: 28},
     "ElementType:28" :{ id: "ElementType:28", uiType: UI_ELEMENT_TYPE_MATRIX, value: 28, scale_x: 28, scale_y: 28},
@@ -173,16 +168,16 @@ export const ELEMENT_TYPE = {
     "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 45, scale_y: 45},
     "ElementType:32" :{ id: "ElementType:32", uiType: UI_ELEMENT_TYPE_MATRIX, value: 32, scale_x: 28, scale_y: 28},
     "ElementType:33" :{ id: "ElementType:33", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 33, scale_x: 28, scale_y: 28},
-    "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_GENERIC, value: 34, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
+    "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_GENERIC, value: 34, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:35" :{ id: "ElementType:35", uiType: UI_ELEMENT_TYPE_MATRIX, value: 35, scale_x: 28, scale_y: 28},
     "ElementType:36" :{ id: "ElementType:36", uiType: UI_ELEMENT_TYPE_MATRIX, value: 36, scale_x: 220, scale_y: 52},
-    "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_GENERIC, value: 41, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_GENERIC, value: 42, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_GENERIC, value: 43, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:44" :{ id: "ElementType:44", uiType: UI_ELEMENT_TYPE_GENERIC, value: 44, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_GENERIC, value: 45, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_GENERIC, value: 46, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
-    "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_GENERIC, value: 47, scale_x: 28, scale_y: 28, svgRaw:SVG_25_CABIN},
+    "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_GENERIC, value: 41, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_GENERIC, value: 42, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_GENERIC, value: 43, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:44" :{ id: "ElementType:44", uiType: UI_ELEMENT_TYPE_GENERIC, value: 44, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_GENERIC, value: 45, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_GENERIC, value: 46, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
+    "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_GENERIC, value: 47, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 50, scale_y: 50, svgRaw:SVG_51_ETD},
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM_AA,
       elementTypeParams:[

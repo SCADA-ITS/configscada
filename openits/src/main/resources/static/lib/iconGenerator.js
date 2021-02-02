@@ -3,17 +3,6 @@ import { staticsIcons } from "../icons/synopticJson.js";
 import * as meteo from "./icons/meteo.js";
 import * as meg from "./icons/meg.js";
 import * as cam from "./icons/cam.js";
-import * as plc from "./icons/plc.js";
-import * as scn from "./icons/scn.js";
-import * as atc from "./icons/atc.js";
-import * as toll from "./icons/toll.js";
-import * as nrs from "./icons/nrs.js";
-import * as nrl from "./icons/nrl.js";
-import * as tfa3d from "./icons/tfa3d.js";
-import * as tfa from "./icons/tfa.js";
-import * as tu from "./icons/tu.js";
-
-
 import * as dms from "./icons/dms.js";
 import * as etd from "./icons/etd.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
@@ -102,6 +91,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE
     || elementType === elementTypeMap.ELEMENT_TYPE_11_SOS
     || elementType === elementTypeMap.ELEMENT_TYPE_12_LUX
+    || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM_RAV
     || elementType === elementTypeMap.ELEMENT_TYPE_14_LUM
     || elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE
     || elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT
@@ -109,7 +99,15 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
-    || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM_RAV
+    || elementType === elementTypeMap.ELEMENT_TYPE_25_CABIN
+    || elementType === elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN
+    || elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC
+    || elementType === elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL
+    || elementType === elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS
+    || elementType === elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D
+    || elementType === elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA
+    || elementType === elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL
+    || elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM_AA
     || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
@@ -136,12 +134,6 @@ export function getElementIcon(element, suffix="") {
     dms.updateDmsIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_2_CAM) {
     cam.updateCamIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_5_PLC) {
-    plc.updatePlcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_25_CABIN) {
-    plc.updatePlcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN) {
-    scn.updateScnIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_24_PMV_A_C) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_26_PMV_64X64) {
@@ -162,20 +154,6 @@ export function getElementIcon(element, suffix="") {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_36_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC) {
-    atc.updateAtcIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL) {
-    toll.updateTollIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS) {
-    nrs.updateNrsIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL) {
-    nrl.updateNrlIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D) {
-    tfa3d.updateTfa3dIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA) {
-    tfa.updateTfaIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU) {
-    tu.updateTuIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW) {
       full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {
@@ -231,15 +209,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
     case elementTypeMap.ELEMENT_TYPE_5_PLC:
     case elementTypeMap.ELEMENT_TYPE_16_MEG:
-    case elementTypeMap.ELEMENT_TYPE_25_CABIN:
-    case elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN:
-    case elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC:
-    case elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL:
-    case elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS:
-    case elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D:
-    case elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA:
-    case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
-    case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
@@ -258,6 +227,15 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_19_CO:
     case elementTypeMap.ELEMENT_TYPE_20_NO:
     case elementTypeMap.ELEMENT_TYPE_21_OPAC:
+    case elementTypeMap.ELEMENT_TYPE_25_CABIN:
+    case elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN:
+    case elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC:
+    case elementTypeMap.ELEMENT_TYPE_42_CABIN_NRL:
+    case elementTypeMap.ELEMENT_TYPE_43_CABIN_NRS:
+    case elementTypeMap.ELEMENT_TYPE_44_CABIN_TFA3D:
+    case elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA:
+    case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
+    case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
     case elementTypeMap.ELEMENT_TYPE_65_SAI:
     case elementTypeMap.ELEMENT_TYPE_66_VANE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
