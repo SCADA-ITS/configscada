@@ -185,10 +185,10 @@ export const ELEMENT_TYPE = {
       ] 
     },
     "ElementType:54" :{ id: "ElementType:54", uiType: UI_ELEMENT_TYPE_GENERIC, value: 54, scale_x: 50, scale_y: 50, svgRaw:SVG_54_ATC},
-    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 392, scale_y: 528, svgRaw:SVG_55_CT, 
+    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 50, scale_y: 50, svgRaw:SVG_55_CT, 
       tabs:[
         {ELEMENT_FORM_TAB_SYN: {
-          idSynoptic:"synopticCTs",
+          idSynoptic:"synopticUnifilarCtMap",
           width: 680,
           height: 500
         }},

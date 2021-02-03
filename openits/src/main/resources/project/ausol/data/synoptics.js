@@ -120,7 +120,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"CT": {
-				"items": ["Element:55:1"],
+				"items": ["Element:55:2"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -262,7 +262,7 @@ export let synopticData= [
 		"Element:53:3": { "x": 85,  "y": 260, "width": 30,  "height": 35,  "alias": "RV-SAA-1MA" },
 		"Element:53:4": { "x": 85,  "y": 420, "width": 30,  "height": 35,  	"alias": "RV-SAA-2MA" },
 
-		"Element:55:1": { "x": 1560,   "y": 450, "width": 120, "height": 120,  "alias": "RV-CT-ITS-1" },
+		"Element:55:2": { "x": 1558,   "y": 450, "width": 95, "height": 120,  "alias": "RV-MAP-CT" },
 		
 		"Element:66:1": { "x": 205,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
 
@@ -637,5 +637,27 @@ export let synopticData= [
 		"Element:57:63": { "x": 1193,   "y": 660, "width": 28, "height": 28,  "alias": "RV-INT-GE" },
 		"Element:57:64": { "x": 807,   "y": 660, "width": 28, "height": 28,  "alias": "RV-INT-ACOM-CGBT" },
 		
+	},
+	{
+		"id":"synopticUnifilarCtMap",
+		"parentId":"Element:55:2",
+		"ExclusiveLayers": false,
+		"tittle": "CT MAP RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "CUARTOS TECNICOS BOCA RIO VERDE_v0.7.svg",
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"CT" : {
+				"items": ["Element:55:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+		"Element:55:1": { "x": 840,   "y": 3, "width": 200, "height": 140,  "alias": "RV-CT-ITS-1" },
 	}
 ];
