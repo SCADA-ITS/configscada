@@ -105,7 +105,7 @@ public class SessionBO extends GenericBO {
 		
 		//List<Map<String, Object>> users = userBO.getUsers();
 		
-		List<Map<String, Object>> users = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetUsers(), null);
+		List<Map<String, Object>> users = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS, null);
 		
 		if (!CollectionUtils.isEmpty(users)) {
 			
@@ -283,7 +283,7 @@ public class SessionBO extends GenericBO {
 								Map<String, Object> input = new HashMap<>();
 								input.put(GraphqlTypeAdapter.USER_DATA, user);
 								
-								voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateUser(), input);
+								voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, input);
 								sessionLoginRetries.remove(httpSessionId);
 							}
 							

@@ -26,19 +26,19 @@ public class ImsIncidentDocumentBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> incidentDocuments = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentDocuments(), null);
+		List<Map<String, Object>> incidentDocuments = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_DOCUMENTS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentDocuments()).getFieldId(), incidentDocuments);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_DOCUMENTS).getFieldId(), incidentDocuments);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> incidentDocument = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncidentDocument(), new Object[] { id });
+		Map<String, Object> incidentDocument = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_DOCUMENT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentDocument()).getFieldId(), incidentDocument);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_DOCUMENT).getFieldId(), incidentDocument);
 	}
 
 }

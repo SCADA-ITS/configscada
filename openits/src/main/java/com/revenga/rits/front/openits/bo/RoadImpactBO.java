@@ -24,34 +24,34 @@ public class RoadImpactBO extends GenericBO {
 	
 	public List<Map<String, Object>> getRoadImpacts() {
 		
-		List<Map<String, Object>> roadImpacts = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoadImpacts(), null);
+		List<Map<String, Object>> roadImpacts = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACTS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoadImpacts()).getFieldId(), roadImpacts);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACTS).getFieldId(), roadImpacts);
 	}
 				
 	public Map<String, Object> getRoadImpact(String id) {
 		
-		Map<String, Object> roadImpact = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRoadImpact(), new Object[] { id });
+		Map<String, Object> roadImpact = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoadImpact()).getFieldId(), roadImpact);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACT).getFieldId(), roadImpact);
 	}
 	
 	public List<Map<String, Object>> getInitRoadImpacts(String id) {
 		
-		List<Map<String, Object>> initRoadImpacts = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetInitRoadImpacts(), new Object[] { id });
+		List<Map<String, Object>> initRoadImpacts = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INIT_ROAD_IMPACTS, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetInitRoadImpacts()).getFieldId(), initRoadImpacts);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INIT_ROAD_IMPACTS).getFieldId(), initRoadImpacts);
 	}
 	
 	public Map<String, Object> getRoadImpactsByIncident(String id) {
 		
-		Map<String, Object> roadImpactsByIncident = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRoadImpactsByIncident(), new Object[] { id });
+		Map<String, Object> roadImpactsByIncident = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoadImpactsByIncident()).getFieldId(), roadImpactsByIncident);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT).getFieldId(), roadImpactsByIncident);
 	}
 
 	@Override

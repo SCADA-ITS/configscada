@@ -26,35 +26,35 @@ public class RoleBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> roles = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoles(), null);
+		List<Map<String, Object>> roles = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ROLES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoles()).getFieldId(), roles);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROLES).getFieldId(), roles);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> role = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRole(), new Object[] { id });
+		Map<String, Object> role = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ROLE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRole()).getFieldId(), role);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROLE).getFieldId(), role);
 	}
 	
 	public Map<String, Object> createRole(Object input) {
 		
-		Map<String, Object> createdRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreateRole(), (Map<String, Object>) input);
+		Map<String, Object> createdRole = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_ROLE, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceCreateRole()).getFieldId(), createdRole);
+				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_ROLE).getFieldId(), createdRole);
 	}
 	
 	public Map<String, Object> updateRole(Object input) {
 			
-		Map<String, Object> updatedRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdateRole(), (Map<String, Object>) input);
+		Map<String, Object> updatedRole = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_ROLE, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceUpdateRole()).getFieldId(), updatedRole);
+				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_ROLE).getFieldId(), updatedRole);
 	}
 	
 	public Map<String, Object> deleteRole(String id) {
@@ -63,10 +63,10 @@ public class RoleBO extends GenericBO {
 		
 		input.put("roleId", id);
 		
-		Map<String, Object> deletedRole = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeleteRole(), input);
+		Map<String, Object> deletedRole = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_ROLE, input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceDeleteRole()).getFieldId(), deletedRole);
+				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_ROLE).getFieldId(), deletedRole);
 	}
 
 }

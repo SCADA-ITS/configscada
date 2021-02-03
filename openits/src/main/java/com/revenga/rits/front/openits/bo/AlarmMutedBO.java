@@ -25,35 +25,35 @@ public class AlarmMutedBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMuteds(), null);
+		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmMuteds()).getFieldId(), alarmMuteds);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS).getFieldId(), alarmMuteds);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> alarmMuted = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmMuted(), new Object[] { id });
+		Map<String, Object> alarmMuted = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTED, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmMuted()).getFieldId(), alarmMuted);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTED).getFieldId(), alarmMuted);
 	}
 	
 	public List<Map<String, Object>> getAlarmMutedsByAlarmConfig(String id) {
 		
-		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMutedsByAlarmConfig(), new Object[] { id });
+		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByAlarmConfig()).getFieldId(), alarmMuteds);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG).getFieldId(), alarmMuteds);
 	}
 	
 	public List<Map<String, Object>> getAlarmMutedsByElement(String id) {
 		
-		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement(), new Object[] { id });
+		List<Map<String, Object>> alarmMuteds = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmMutedsByElement()).getFieldId(), alarmMuteds);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT).getFieldId(), alarmMuteds);
 	}
 
 
@@ -61,7 +61,7 @@ public class AlarmMutedBO extends GenericBO {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendAlarmMutedActions = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAlarmMutedActions(), (Map<String, Object>) input);
+	    Map<String, Object> sendAlarmMutedActions = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendAlarmMutedActions);
 

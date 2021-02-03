@@ -14,9 +14,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.util.ConfigProperty;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.DataSourceValue;
@@ -29,6 +29,184 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class VODataSourceAdapter {
 
+	protected static final String FILE_DATASOURCES_CONSTANTS = "datasources.properties";
+	
+	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_DATASOURCES_CONSTANTS);
+	
+	public static final int DATA_SOURCE_GET_ALARMS = getPropertyInt("get_alarms");
+	public static final int DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = getPropertyInt("get_alarms_by_alarm_type");
+	public static final int DATA_SOURCE_GET_ALARMS_BY_SOURCE = getPropertyInt("get_alarms_by_source");
+	public static final int DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE = getPropertyInt("get_alarms_by_source_and_alarm_type");
+	public static final int DATA_SOURCE_GET_ALARM = getPropertyInt("get_alarm");
+	public static final int DATA_SOURCE_GET_ALARM_TYPES = getPropertyInt("get_alarm_types");
+	public static final int DATA_SOURCE_GET_ALARM_TYPE = getPropertyInt("get_alarm_type");
+	public static final int DATA_SOURCE_GET_ALARM_LEVELS = getPropertyInt("get_alarm_levels");
+	public static final int DATA_SOURCE_GET_ALARM_LEVEL = getPropertyInt("get_alarm_level");
+	public static final int DATA_SOURCE_GET_ALARM_CONFIGS = getPropertyInt("get_alarm_configs");
+	public static final int DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE = getPropertyInt("get_alarm_configs_by_alarm_type");
+	public static final int DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL = getPropertyInt("get_alarm_configs_by_alarm_level");
+	public static final int DATA_SOURCE_GET_ALARM_CONFIG = getPropertyInt("get_alarm_config");
+	public static final int DATA_SOURCE_GET_THRESOLD_OPERATIONS = getPropertyInt("get_threshold_operations");
+	public static final int DATA_SOURCE_GET_THRESOLD_OPERATION = getPropertyInt("get_threshold_operation");
+	public static final int DATA_SOURCE_GET_ALARM_MUTEDS = getPropertyInt("get_alarm_muteds");
+	public static final int DATA_SOURCE_GET_ALARM_MUTED = getPropertyInt("get_alarm_muted");
+	public static final int DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG = getPropertyInt("get_alarm_muteds_by_alarm_config");
+	public static final int DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT = getPropertyInt("get_alarm_muteds_by_element");
+	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_by_element_type");
+	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC = getPropertyInt("get_elements_array_states_synoptic");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC = getPropertyInt("get_elements_array_states_measures_alarms_synoptic");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP = getPropertyInt("get_elements_array_states_map");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP = getPropertyInt("get_elements_array_states_measures_alarms_map");
+	public static final int DATA_SOURCE_GET_ELEMENT = getPropertyInt("get_element");
+	public static final int DATA_SOURCE_GET_ELEMENT_TYPES = getPropertyInt("get_element_types");
+	public static final int DATA_SOURCE_GET_ELEMENT_TYPE = getPropertyInt("get_element_type");
+	public static final int DATA_SOURCE_GET_ELEMENT_VALUES_STATES = getPropertyInt("get_element_values_states");
+	public static final int DATA_SOURCE_GET_GENERIC_DATAS = getPropertyInt("get_generic_datas");
+	public static final int DATA_SOURCE_GET_GENERIC_DATA = getPropertyInt("get_generic_data");
+	public static final int DATA_SOURCE_GET_LABEL_TRANSLATED = getPropertyInt("get_label_translated");
+	public static final int DATA_SOURCE_GET_LABEL_TRANSLATED_USING_FIELDS = getPropertyInt("get_label_translated_using_fields");
+	public static final int DATA_SOURCE_GET_LOCALES = getPropertyInt("get_locales");
+	public static final int DATA_SOURCE_GET_LOCALE = getPropertyInt("get_locale");
+	public static final int DATA_SOURCE_GET_LOCATIONS = getPropertyInt("get_locations");
+	public static final int DATA_SOURCE_GET_LOCATION_BY_STRETCH = getPropertyInt("get_location_by_stretch");
+	public static final int DATA_SOURCE_GET_LOCATION = getPropertyInt("get_location");
+	public static final int DATA_SOURCE_GET_ROADS = getPropertyInt("get_roads");
+	public static final int DATA_SOURCE_GET_ROAD = getPropertyInt("get_road");
+	public static final int DATA_SOURCE_GET_STRETCHS = getPropertyInt("get_stretchs");
+	public static final int DATA_SOURCE_GET_STRETCH = getPropertyInt("get_stretch");
+	public static final int DATA_SOURCE_GET_STRETCH_BY_ROAD = getPropertyInt("get_stretch_by_road");
+	public static final int DATA_SOURCE_GET_PLANS = getPropertyInt("get_plans");
+	public static final int DATA_SOURCE_GET_PLAN = getPropertyInt("get_plan");
+	public static final int DATA_SOURCE_GET_PLAN_TYPES = getPropertyInt("get_plan_types");
+	public static final int DATA_SOURCE_GET_PLAN_TYPE = getPropertyInt("get_plan_type");
+	public static final int DATA_SOURCE_GET_PLAN_SUBTYPES = getPropertyInt("get_plan_subtypes");
+	public static final int DATA_SOURCE_GET_PLAN_SUBTYPE = getPropertyInt("get_plan_subtype");
+	public static final int DATA_SOURCE_GET_PLAN_ORDER_TYPES = getPropertyInt("get_plan_order_types");
+	public static final int DATA_SOURCE_GET_PLAN_ORDER_TYPE = getPropertyInt("get_plan_order_type");
+	public static final int DATA_SOURCE_GET_PLAN_STATE_TYPES = getPropertyInt("get_plan_state_types");
+	public static final int DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES = getPropertyInt("get_plan_order_state_types");
+	public static final int DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES = getPropertyInt("get_plan_schedule_state_types");
+	public static final int DATA_SOURCE_GET_PLAN_SCHEDULES = getPropertyInt("get_plan_schedules");
+	public static final int DATA_SOURCE_GET_PLAN_SCHEDULE = getPropertyInt("get_plan_schedule");
+	public static final int DATA_SOURCE_GET_PLAN_SCHEDULE_BY_PLAN = getPropertyInt("get_plan_schedule_by_plan");
+	public static final int DATA_SOURCE_GET_PLAN_ORDERS = getPropertyInt("get_plan_orders");
+	public static final int DATA_SOURCE_GET_PLAN_ORDER = getPropertyInt("get_plan_order");
+	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = getPropertyInt("get_translations_by_locale");
+	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = getPropertyInt("get_translations_by_locale_and_module");
+	public static final int DATA_SOURCE_GET_USERS = getPropertyInt("get_users");
+	public static final int DATA_SOURCE_GET_USER = getPropertyInt("get_user");
+	public static final int DATA_SOURCE_GET_ROLES = getPropertyInt("get_roles");
+	public static final int DATA_SOURCE_GET_ROLE = getPropertyInt("get_role");
+	public static final int DATA_SOURCE_GET_SYSTEM_PERMISSIONS = getPropertyInt("get_system_permissions");
+	public static final int DATA_SOURCE_GET_SYSTEM_PERMISSION = getPropertyInt("get_system_permission");
+	public static final int DATA_SOURCE_GET_INCIDENTS = getPropertyInt("get_incidents");
+	public static final int DATA_SOURCE_GET_INCIDENT = getPropertyInt("get_incident");
+	public static final int DATA_SOURCE_GET_INCIDENT_REPORTS = getPropertyInt("get_incident_reports");
+	public static final int DATA_SOURCE_GET_INCIDENT_REPORT = getPropertyInt("get_incident_report");
+	public static final int DATA_SOURCE_GET_INCIDENT_BY_TYPE = getPropertyInt("get_incident_by_type");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPES = getPropertyInt("get_incident_types");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPE = getPropertyInt("get_incident_type");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_STATES = getPropertyInt("get_incident_type_states");
+	public static final int DATA_SOURCE_GET_NEXT_STATE = getPropertyInt("get_next_state");
+	public static final int DATA_SOURCE_GET_ROAD_IMPACTS = getPropertyInt("get_road_impacts");
+	public static final int DATA_SOURCE_GET_ROAD_IMPACT = getPropertyInt("get_road_impact");
+	public static final int DATA_SOURCE_GET_INIT_ROAD_IMPACTS = getPropertyInt("get_init_road_impacts");
+	public static final int DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT = getPropertyInt("get_road_impacts_by_incident");
+	public static final int DATA_SOURCE_GET_INCIDENTS_SOURCE = getPropertyInt("get_incidents_source");
+	public static final int DATA_SOURCE_GET_INCIDENT_SOURCE = getPropertyInt("get_incident_source");
+	public static final int DATA_SOURCE_GET_EXT_INCIDENTS = getPropertyInt("get_ext_incidents");
+	public static final int DATA_SOURCE_GET_EXT_INCIDENT = getPropertyInt("get_ext_incident");
+	public static final int DATA_SOURCE_GET_EXT_INCIDENT_TYPES = getPropertyInt("get_ext_incident_types");
+	public static final int DATA_SOURCE_GET_EXT_INCIDENT_TYPE = getPropertyInt("get_ext_incident_type");
+	public static final int DATA_SOURCE_GET_INCIDENT_DOCUMENTS = getPropertyInt("get_incident_documents");
+	public static final int DATA_SOURCE_GET_INCIDENT_DOCUMENT = getPropertyInt("get_incident_document");
+	public static final int DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPES = getPropertyInt("get_incident_document_types");
+	public static final int DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE = getPropertyInt("get_incident_document_type");
+	public static final int DATA_SOURCE_GET_LOG_TYPES = getPropertyInt("get_log_types");
+	public static final int DATA_SOURCE_GET_LOG_TYPE = getPropertyInt("get_log_type");
+	public static final int DATA_SOURCE_GET_INCIDENT_STATES = getPropertyInt("get_incident_states");
+	public static final int DATA_SOURCE_GET_INCIDENT_STATE = getPropertyInt("get_incident_state");
+	public static final int DATA_SOURCE_GET_INCIDENT_LEVELS = getPropertyInt("get_incident_levels");
+	public static final int DATA_SOURCE_GET_INCIDENT_LEVEL = getPropertyInt("get_incident_level");
+	public static final int DATA_SOURCE_GET_TASK_TYPES = getPropertyInt("get_task_types");
+	public static final int DATA_SOURCE_GET_TASK_TYPE = getPropertyInt("get_task_type");
+	public static final int DATA_SOURCE_GET_INCIDENT_TASK_PLANS = getPropertyInt("get_incident_task_plans");
+	public static final int DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK = getPropertyInt("get_task_plans_by_stretch_and_incident_type_and_incident_type_task");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_TASKS = getPropertyInt("get_incident_type_tasks");
+	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE = getPropertyInt("get_incident_type_task_by_incident_type_and_incident_state");
+	public static final int DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY = getPropertyInt("get_incident_report_summary");
+	
+	public static final int DATA_SOURCE_CREATE_USER = getPropertyInt("create_user");
+	public static final int DATA_SOURCE_UPDATE_USER = getPropertyInt("update_user");
+	public static final int DATA_SOURCE_DELETE_USER = getPropertyInt("delete_user");
+	public static final int DATA_SOURCE_CREATE_ROLE = getPropertyInt("create_role");
+	public static final int DATA_SOURCE_UPDATE_ROLE = getPropertyInt("update_role");
+	public static final int DATA_SOURCE_DELETE_ROLE = getPropertyInt("delete_role");
+	public static final int DATA_SOURCE_CREATE_ALARM_CONFIG = getPropertyInt("create_alarm_config");
+	public static final int DATA_SOURCE_UPDATE_ALARM_CONFIG = getPropertyInt("update_alarm_config");
+	public static final int DATA_SOURCE_DELETE_ALARM_CONFIG = getPropertyInt("delete_alarm_config");
+	public static final int DATA_SOURCE_CREATE_ELEMENT = getPropertyInt("create_element");
+	public static final int DATA_SOURCE_UPDATE_ELEMENT = getPropertyInt("update_element");
+	public static final int DATA_SOURCE_CLONE_ELEMENT = getPropertyInt("clone_element");
+	public static final int DATA_SOURCE_DELETE_ELEMENT = getPropertyInt("delete_element");
+	public static final int DATA_SOURCE_CREATE_PLAN = getPropertyInt("create_plan");
+	public static final int DATA_SOURCE_UPDATE_PLAN = getPropertyInt("update_plan");
+	public static final int DATA_SOURCE_DELETE_PLAN = getPropertyInt("delete_plan");
+	public static final int DATA_SOURCE_CREATE_PLAN_ORDER = getPropertyInt("create_plan_order");
+	public static final int DATA_SOURCE_UPDATE_PLAN_ORDER = getPropertyInt("update_plan_order");
+	public static final int DATA_SOURCE_DELETE_PLAN_ORDER = getPropertyInt("delete_plan_order");
+	public static final int DATA_SOURCE_CREATE_PLAN_TYPE = getPropertyInt("create_plan_type");
+	public static final int DATA_SOURCE_UPDATE_PLAN_TYPE = getPropertyInt("update_plan_type");
+	public static final int DATA_SOURCE_DELETE_PLAN_TYPE = getPropertyInt("delete_plan_type");
+	public static final int DATA_SOURCE_CREATE_PLAN_SUBTYPE = getPropertyInt("create_plan_subtype");
+	public static final int DATA_SOURCE_UPDATE_PLAN_SUBTYPE = getPropertyInt("update_plan_subtype");
+	public static final int DATA_SOURCE_DELETE_PLAN_SUBTYPE = getPropertyInt("delete_plan_subtype");
+	public static final int DATA_SOURCE_SEND_AUDIT_LOGS = getPropertyInt("send_audit_logs");
+	public static final int DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS = getPropertyInt("send_plan_schedule_actions");
+	public static final int DATA_SOURCE_SEND_PLAY_PLAN = getPropertyInt("send_play_plan");
+	public static final int DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS = getPropertyInt("send_alarm_muted_actions");
+	public static final int DATA_SOURCE_SEND_ALARMS= getPropertyInt("send_alarms");
+	public static final int DATA_SOURCE_SEND_RECOGNIZE_ALARM = getPropertyInt("send_recognize_alarm");
+	public static final int DATA_SOURCE_SEND_DEACTIVATION_ALARMS = getPropertyInt("send_deactivation_alarms");
+	public static final int DATA_SOURCE_SEND_KILL_USER = getPropertyInt("send_kill_user");
+	public static final int DATA_SOURCE_SEND_COMMAND_ELEMENT = getPropertyInt("send_command_element");
+
+	public static final int DATA_SOURCE_TYPE_GRAPHQL_QUERY = getPropertyInt("type.graphql_query");
+	public static final int DATA_SOURCE_TYPE_GRAPHQL_MUTATION = getPropertyInt("type.graphql_mutation");
+	public static final int DATA_SOURCE_GRAPHQL_QUERY_URL = getPropertyInt("graphql_query.url");
+	public static final int DATA_SOURCE_GRAPHQL_QUERY_METHOD = getPropertyInt("graphql_query.method");
+	public static final int DATA_SOURCE_GRAPHQL_QUERY_PARAMS = getPropertyInt("graphql_query.params");
+	public static final int DATA_SOURCE_GRAPHQL_QUERY_CONTENT = getPropertyInt("graphql_query.content");
+	public static final int DATA_SOURCE_GRAPHQL_MUTATION_URL = getPropertyInt("graphql_mutation.url");
+	public static final int DATA_SOURCE_GRAPHQL_MUTATION_METHOD = getPropertyInt("graphql_mutation.method");
+	public static final int DATA_SOURCE_GRAPHQL_MUTATION_PARAMS = getPropertyInt("graphql_mutation.params");
+	public static final int DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES = getPropertyInt("graphql_mutation.param_types");
+	public static final int DATA_SOURCE_GRAPHQL_MUTATION_CONTENT = getPropertyInt("graphql_mutation.content");
+	
+	public static final int DATA_SOURCE_SEND_CONFIRM_INCIDENT_REPORT = getPropertyInt("send_confirm_incident_report");
+	public static final int DATA_SOURCE_SEND_FORWARD_INCIDENT_REPORT = getPropertyInt("send_forward_incident_report");
+	public static final int DATA_SOURCE_SEND_CANCEL_INCIDENT_REPORT = getPropertyInt("send_cancel_incident_report");
+	public static final int DATA_SOURCE_SEND_ASSING_USER_INCIDENT_REPORT = getPropertyInt("send_assign_user_incident_report");
+	public static final int DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT = getPropertyInt("send_finalize_task_incident_report");
+	public static final int DATA_SOURCE_SEND_EXECUTE_TASK_PLAN_INCIDENT_REPORT = getPropertyInt("send_execute_task_plan_incident_report");
+	
+	private static int getPropertyInt(final String prop) {
+		
+		if (!MapUtils.isEmpty(props)) {
+			
+			String value = props.get(prop);
+			
+			if (!StringUtils.isEmpty(value)) {
+				
+				return Integer.parseInt(value);
+			}
+		}
+		
+		return -1;
+	}
+	
 	@Autowired
 	@Getter
 	DataSourceService dataSourceService;
@@ -39,632 +217,10 @@ public class VODataSourceAdapter {
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
 
-	@Autowired
-	private Environment env;
-
-	public static final String DATA_SOURCE_GET_ALARMS = "data.source.get_alarms";
-	public static final String DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = "data.source.get_alarms_by_alarm_type";
-	public static final String DATA_SOURCE_GET_ALARMS_BY_SOURCE = "data.source.get_alarms_by_source";
-	public static final String DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE = "data.source.get_alarms_by_source_and_alarm_type";
-	public static final String DATA_SOURCE_GET_ALARM = "data.source.get_alarm";
-	public static final String DATA_SOURCE_GET_ALARM_TYPES = "data.source.get_alarm_types";
-	public static final String DATA_SOURCE_GET_ALARM_TYPE = "data.source.get_alarm_type";
-	public static final String DATA_SOURCE_GET_ALARM_LEVELS = "data.source.get_alarm_levels";
-	public static final String DATA_SOURCE_GET_ALARM_LEVEL = "data.source.get_alarm_level";
-	public static final String DATA_SOURCE_GET_ALARM_CONFIGS = "data.source.get_alarm_configs";
-	public static final String DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE = "data.source.get_alarm_configs_by_alarm_type";
-	public static final String DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL = "data.source.get_alarm_configs_by_alarm_level";
-	public static final String DATA_SOURCE_GET_ALARM_CONFIG = "data.source.get_alarm_config";
-	public static final String DATA_SOURCE_GET_THRESOLD_OPERATIONS = "data.source.get_threshold_operations";
-	public static final String DATA_SOURCE_GET_THRESOLD_OPERATION = "data.source.get_threshold_operation";
-	public static final String DATA_SOURCE_GET_ALARM_MUTEDS = "data.source.get_alarm_muteds";
-	public static final String DATA_SOURCE_GET_ALARM_MUTED = "data.source.get_alarm_muted";
-	public static final String DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG = "data.source.get_alarm_muteds_by_alarm_config";
-	public static final String DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT = "data.source.get_alarm_muteds_by_element";
-	public static final String DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = "data.source.get_elements_by_element_type";
-	public static final String DATA_SOURCE_GET_ELEMENTS = "data.source.get_elements";
-	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY = "data.source.get_elements_array";
-	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC = "data.source.get_elements_array_states_synoptic";
-	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC = "data.source.get_elements_array_states_measures_alarms_synoptic";
-	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP = "data.source.get_elements_array_states_map";
-	public static final String DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP = "data.source.get_elements_array_states_measures_alarms_map";
-	public static final String DATA_SOURCE_GET_ELEMENT = "data.source.get_element";
-	public static final String DATA_SOURCE_GET_ELEMENT_TYPES = "data.source.get_element_types";
-	public static final String DATA_SOURCE_GET_ELEMENT_TYPE = "data.source.get_element_type";
-	public static final String DATA_SOURCE_GET_ELEMENT_VALUES_STATES = "data.source.get_element_values_states";
-	public static final String DATA_SOURCE_GET_GENERIC_DATAS = "data.source.get_generic_datas";
-	public static final String DATA_SOURCE_GET_GENERIC_DATA = "data.source.get_generic_data";
-	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED = "data.source.get_label_translated";
-	public static final String DATA_SOURCE_GET_LABEL_TRANSLATED_USING_FIELDS = "data.source.get_label_translated_using_fields";
-	public static final String DATA_SOURCE_GET_LOCALES = "data.source.get_locales";
-	public static final String DATA_SOURCE_GET_LOCALE = "data.source.get_locale";
-	public static final String DATA_SOURCE_GET_LOCATIONS = "data.source.get_locations";
-	public static final String DATA_SOURCE_GET_LOCATION_BY_STRETCH = "data.source.get_location_by_stretch";
-	public static final String DATA_SOURCE_GET_LOCATION = "data.source.get_location";
-	public static final String DATA_SOURCE_GET_ROADS = "data.source.get_roads";
-	public static final String DATA_SOURCE_GET_ROAD = "data.source.get_road";
-	public static final String DATA_SOURCE_GET_STRETCHS = "data.source.get_stretchs";
-	public static final String DATA_SOURCE_GET_STRETCH = "data.source.get_stretch";
-	public static final String DATA_SOURCE_GET_STRETCH_BY_ROAD = "data.source.get_stretch_by_road";
-	public static final String DATA_SOURCE_GET_PLANS = "data.source.get_plans";
-	public static final String DATA_SOURCE_GET_PLAN = "data.source.get_plan";
-	public static final String DATA_SOURCE_GET_PLAN_TYPES = "data.source.get_plan_types";
-	public static final String DATA_SOURCE_GET_PLAN_TYPE = "data.source.get_plan_type";
-	public static final String DATA_SOURCE_GET_PLAN_SUBTYPES = "data.source.get_plan_subtypes";
-	public static final String DATA_SOURCE_GET_PLAN_SUBTYPE = "data.source.get_plan_subtype";
-	public static final String DATA_SOURCE_GET_PLAN_ORDER_TYPES = "data.source.get_plan_order_types";
-	public static final String DATA_SOURCE_GET_PLAN_ORDER_TYPE = "data.source.get_plan_order_type";
-	public static final String DATA_SOURCE_GET_PLAN_STATE_TYPES = "data.source.get_plan_state_types";
-	public static final String DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES = "data.source.get_plan_order_state_types";
-	public static final String DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES = "data.source.get_plan_schedule_state_types";
-	public static final String DATA_SOURCE_GET_PLAN_SCHEDULES = "data.source.get_plan_schedules";
-	public static final String DATA_SOURCE_GET_PLAN_SCHEDULE = "data.source.get_plan_schedule";
-	public static final String DATA_SOURCE_GET_PLAN_SCHEDULE_BY_PLAN = "data.source.get_plan_schedule_by_plan";
-	public static final String DATA_SOURCE_GET_PLAN_ORDERS = "data.source.get_plan_orders";
-	public static final String DATA_SOURCE_GET_PLAN_ORDER = "data.source.get_plan_order";
-	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = "data.source.get_translations_by_locale";
-	public static final String DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = "data.source.get_translations_by_locale_and_module";
-	public static final String DATA_SOURCE_GET_USERS = "data.source.get_users";
-	public static final String DATA_SOURCE_GET_USER = "data.source.get_user";
-	public static final String DATA_SOURCE_GET_ROLES = "data.source.get_roles";
-	public static final String DATA_SOURCE_GET_ROLE = "data.source.get_role";
-	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSIONS = "data.source.get_system_permissions";
-	public static final String DATA_SOURCE_GET_SYSTEM_PERMISSION = "data.source.get_system_permission";
-	public static final String DATA_SOURCE_GET_INCIDENTS = "data.source.get_incidents";
-	public static final String DATA_SOURCE_GET_INCIDENT = "data.source.get_incident";
-	public static final String DATA_SOURCE_GET_INCIDENT_REPORTS = "data.source.get_incident_reports";
-	public static final String DATA_SOURCE_GET_INCIDENT_REPORT = "data.source.get_incident_report";
-	public static final String DATA_SOURCE_GET_INCIDENT_REPORT_SUMMARY = "data.source.get_incident_report_summary";
-	public static final String DATA_SOURCE_GET_INCIDENT_BY_TYPE = "data.source.get_incident_by_type";
-	public static final String DATA_SOURCE_GET_INCIDENT_TYPES = "data.source.get_incident_types";
-	public static final String DATA_SOURCE_GET_INCIDENT_TYPE = "data.source.get_incident_type";
-	public static final String DATA_SOURCE_GET_INCIDENT_TYPE_STATES = "data.source.get_incident_type_states";
-	public static final String DATA_SOURCE_GET_NEXT_STATE = "data.source.get_next_state";
-	public static final String DATA_SOURCE_GET_ROAD_IMPACTS = "data.source.get_road_impacts";
-	public static final String DATA_SOURCE_GET_ROAD_IMPACT = "data.source.get_road_impact";
-	public static final String DATA_SOURCE_GET_INIT_ROAD_IMPACTS = "data.source.get_init_road_impacts";
-	public static final String DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT = "data.source.get_road_impacts_by_incident";
-	public static final String DATA_SOURCE_GET_INCIDENTS_SOURCE = "data.source.get_incidents_source";
-	public static final String DATA_SOURCE_GET_INCIDENT_SOURCE = "data.source.get_incident_source";
-	public static final String DATA_SOURCE_GET_EXT_INCIDENTS = "data.source.get_ext_incidents";
-	public static final String DATA_SOURCE_GET_EXT_INCIDENT = "data.source.get_ext_incident";
-	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPES = "data.source.get_ext_incident_types";
-	public static final String DATA_SOURCE_GET_EXT_INCIDENT_TYPE = "data.source.get_ext_incident_type";
-	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENTS = "data.source.get_incident_documents";
-	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT = "data.source.get_incident_document";
-	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPES = "data.source.get_incident_document_types";
-	public static final String DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE = "data.source.get_incident_document_type";
-	public static final String DATA_SOURCE_GET_LOG_TYPES = "data.source.get_log_types";
-	public static final String DATA_SOURCE_GET_LOG_TYPE = "data.source.get_log_type";
-	public static final String DATA_SOURCE_GET_INCIDENT_STATES = "data.source.get_incident_states";
-	public static final String DATA_SOURCE_GET_INCIDENT_STATE = "data.source.get_incident_state";
-	public static final String DATA_SOURCE_GET_INCIDENT_LEVELS = "data.source.get_incident_levels";
-	public static final String DATA_SOURCE_GET_INCIDENT_LEVEL = "data.source.get_incident_level";
-	public static final String DATA_SOURCE_GET_TASK_TYPES = "data.source.get_task_types";
-	public static final String DATA_SOURCE_GET_TASK_TYPE = "data.source.get_task_type";
-	public static final String DATA_SOURCE_GET_INCIDENT_TASK_PLANS = "data.source.get_incident_task_plans";
-	public static final String DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK = "data.source.get_task_plans_by_stretch_and_incident_type_and_incident_type_task";
-	public static final String DATA_SOURCE_GET_INCIDENT_TYPE_TASKS = "data.source.get_incident_type_tasks";
-	public static final String DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE = "data.source.get_incident_type_task_by_incident_type_and_incident_state";
-	
-	public static final String DATA_SOURCE_CREATE_USER = "data.source.create_user";
-	public static final String DATA_SOURCE_UPDATE_USER = "data.source.update_user";
-	public static final String DATA_SOURCE_DELETE_USER = "data.source.delete_user";
-	public static final String DATA_SOURCE_CREATE_ROLE = "data.source.create_role";
-	public static final String DATA_SOURCE_UPDATE_ROLE = "data.source.update_role";
-	public static final String DATA_SOURCE_DELETE_ROLE = "data.source.delete_role";
-	public static final String DATA_SOURCE_CREATE_ALARM_CONFIG = "data.source.create_alarm_config";
-	public static final String DATA_SOURCE_UPDATE_ALARM_CONFIG = "data.source.update_alarm_config";
-	public static final String DATA_SOURCE_DELETE_ALARM_CONFIG = "data.source.delete_alarm_config";
-	public static final String DATA_SOURCE_CREATE_ELEMENT = "data.source.create_element";
-	public static final String DATA_SOURCE_UPDATE_ELEMENT = "data.source.update_element";
-	public static final String DATA_SOURCE_CLONE_ELEMENT = "data.source.clone_element";
-	public static final String DATA_SOURCE_DELETE_ELEMENT = "data.source.delete_element";
-	public static final String DATA_SOURCE_CREATE_PLAN = "data.source.create_plan";
-	public static final String DATA_SOURCE_UPDATE_PLAN = "data.source.update_plan";
-	public static final String DATA_SOURCE_DELETE_PLAN = "data.source.delete_plan";
-	public static final String DATA_SOURCE_CREATE_PLAN_ORDER = "data.source.create_plan_order";
-	public static final String DATA_SOURCE_UPDATE_PLAN_ORDER = "data.source.update_plan_order";
-	public static final String DATA_SOURCE_DELETE_PLAN_ORDER = "data.source.delete_plan_order";
-	public static final String DATA_SOURCE_CREATE_PLAN_TYPE = "data.source.create_plan_type";
-	public static final String DATA_SOURCE_UPDATE_PLAN_TYPE = "data.source.update_plan_type";
-	public static final String DATA_SOURCE_DELETE_PLAN_TYPE = "data.source.delete_plan_type";
-	public static final String DATA_SOURCE_CREATE_PLAN_SUBTYPE = "data.source.create_plan_subtype";
-	public static final String DATA_SOURCE_UPDATE_PLAN_SUBTYPE = "data.source.update_plan_subtype";
-	public static final String DATA_SOURCE_DELETE_PLAN_SUBTYPE = "data.source.delete_plan_subtype";
-	public static final String DATA_SOURCE_SEND_AUDIT_LOGS = "data.source.send_audit_logs";
-	public static final String DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS = "data.source.send_plan_schedule_actions";
-	public static final String DATA_SOURCE_SEND_PLAY_PLAN = "data.source.send_play_plan";
-	public static final String DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS = "data.source.send_alarm_muted_actions";
-	public static final String DATA_SOURCE_SEND_ALARMS= "data.source.send_alarms";
-	public static final String DATA_SOURCE_SEND_RECOGNIZE_ALARM = "data.source.send_recognize_alarm";
-	public static final String DATA_SOURCE_SEND_DEACTIVATION_ALARMS = "data.source.send_deactivation_alarms";
-	public static final String DATA_SOURCE_SEND_KILL_USER = "data.source.send_kill_user";
-	public static final String DATA_SOURCE_SEND_COMMAND_ELEMENT = "data.source.send_command_element";
-
-	public static final String DATA_SOURCE_TYPE_GRAPHQL_QUERY = "data.source.type.graphql_query";
-	public static final String DATA_SOURCE_TYPE_GRAPHQL_MUTATION = "data.source.type.graphql_mutation";
-	public static final String DATA_SOURCE_GRAPHQL_QUERY_URL = "data.source.graphql_query.url";
-	public static final String DATA_SOURCE_GRAPHQL_QUERY_METHOD = "data.source.graphql_query.method";
-	public static final String DATA_SOURCE_GRAPHQL_QUERY_PARAMS = "data.source.graphql_query.params";
-	public static final String DATA_SOURCE_GRAPHQL_QUERY_CONTENT = "data.source.graphql_query.content";
-	public static final String DATA_SOURCE_GRAPHQL_MUTATION_URL = "data.source.graphql_mutation.url";
-	public static final String DATA_SOURCE_GRAPHQL_MUTATION_METHOD = "data.source.graphql_mutation.method";
-	public static final String DATA_SOURCE_GRAPHQL_MUTATION_PARAMS = "data.source.graphql_mutation.params";
-	public static final String DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES = "data.source.graphql_mutation.param_types";
-	public static final String DATA_SOURCE_GRAPHQL_MUTATION_CONTENT = "data.source.graphql_mutation.content";
-
-	@Getter
-	private Integer dataSourceGetAlarms;
-	@Getter
-	private Integer dataSourceGetAlarmsByAlarmType;
-	@Getter
-	private Integer dataSourceGetAlarmsBySource;
-	@Getter
-	private Integer dataSourceGetAlarmsBySourceAndAlarmType;
-	@Getter
-	private Integer dataSourceGetAlarm;
-	@Getter
-	private Integer dataSourceGetAlarmTypes;
-	@Getter
-	private Integer dataSourceGetAlarmType;
-	@Getter
-	private Integer dataSourceGetAlarmLevels;
-	@Getter
-	private Integer dataSourceGetAlarmLevel;
-	@Getter
-	private Integer dataSourceGetAlarmConfigs;
-	@Getter
-	private Integer dataSourceGetAlarmConfigsByAlarmType;
-	@Getter
-	private Integer dataSourceGetAlarmConfigsByAlarmLevel;
-	@Getter
-	private Integer dataSourceGetAlarmConfig;
-	@Getter
-	private Integer dataSourceGetThresholdOperations;
-	@Getter
-	private Integer dataSourceGetThresholdOperation;
-	@Getter
-	private Integer dataSourceGetAlarmMuteds;
-	@Getter
-	private Integer dataSourceGetAlarmMuted;
-	@Getter
-	private Integer dataSourceGetAlarmMutedsByAlarmConfig;
-	@Getter
-	private Integer dataSourceGetAlarmMutedsByElement;
-	@Getter
-	private Integer dataSourceGetElementsByElementType;
-	@Getter
-	private Integer dataSourceGetElements;
-	@Getter
-	private Integer dataSourceGetElementsArray;
-	@Getter
-	private Integer dataSourceGetElementsArrayStatesSynoptic;
-	@Getter
-	private Integer dataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic;
-	@Getter
-	private Integer dataSourceGetElementsArrayStatesMap;
-	@Getter
-	private Integer dataSourceGetElementsArrayStatesMeasuresAlarmsMap;
-	@Getter
-	private Integer dataSourceGetElement;
-	@Getter
-	private Integer dataSourceGetElementTypes;
-	@Getter
-	private Integer dataSourceGetElementType;
-	@Getter
-	private Integer dataSourceGetElementValueStates;
-	@Getter
-	private Integer dataSourceGetGenericDatas;
-	@Getter
-	private Integer dataSourceGetGenericData;
-	@Getter
-	private Integer dataSourceGetLabelTranslated;
-	@Getter
-	private Integer dataSourceGetLabelTranslatedUsingFields;
-	@Getter
-	private Integer dataSourceGetLocales;
-	@Getter
-	private Integer dataSourceGetLocale;
-	@Getter
-	private Integer dataSourceGetLocations;
-	@Getter
-	private Integer dataSourceGetLocationByStretch;
-	@Getter
-	private Integer dataSourceGetLocation;
-	@Getter
-	private Integer dataSourceGetRoads;
-	@Getter
-	private Integer dataSourceGetRoad;
-	@Getter
-	private Integer dataSourceGetStretchs;
-	@Getter
-	private Integer dataSourceGetStretch;
-	@Getter
-	private Integer dataSourceGetStretchByRoad;
-	@Getter
-	private Integer dataSourceGetPlans;
-	@Getter
-	private Integer dataSourceGetPlan;
-	@Getter
-	private Integer dataSourceGetPlanTypes;
-	@Getter
-	private Integer dataSourceGetPlanType;
-	@Getter
-	private Integer dataSourceGetPlanSubtypes;
-	@Getter
-	private Integer dataSourceGetPlanSubtype;
-	@Getter
-	private Integer dataSourceGetPlanOrderTypes;
-	@Getter
-	private Integer dataSourceGetPlanOrderType;
-	@Getter
-	private Integer dataSourceGetPlanStateTypes;
-	@Getter
-	private Integer dataSourceGetPlanOrderStateTypes;
-	@Getter
-	private Integer dataSourceGetPlanScheduleStateTypes;
-	@Getter
-	private Integer dataSourceGetPlanSchedules;
-	@Getter
-	private Integer dataSourceGetPlanSchedule;
-	@Getter
-	private Integer dataSourceGetPlanScheduleByPlan;
-	@Getter
-	private Integer dataSourceGetPlanOrders;
-	@Getter
-	private Integer dataSourceGetPlanOrder;
-	@Getter
-	private Integer dataSourceGetTranslationsByLocale;
-	@Getter
-	private Integer dataSourceGetTranslationsByLocaleAndModule;
-	@Getter
-	private Integer dataSourceGetUsers;
-	@Getter
-	private Integer dataSourceGetUser;
-	@Getter
-	private Integer dataSourceGetRoles;
-	@Getter
-	private Integer dataSourceGetRole;
-	@Getter
-	private Integer dataSourceGetSystemPermissions;
-	@Getter
-	private Integer dataSourceGetSystemPermission;
-	@Getter
-	private Integer dataSourceGetIncidents;
-	@Getter
-	private Integer dataSourceGetIncident;
-	@Getter
-	private Integer dataSourceGetIncidentReports;
-	@Getter
-	private Integer dataSourceGetIncidentReport;
-	@Getter
-	private Integer dataSourceGetIncidentReportSummary;
-	@Getter
-	private Integer dataSourceGetIncidentStates;
-	@Getter
-	private Integer dataSourceGetIncidentState;
-	@Getter
-	private Integer dataSourceGetIncidentLevels;
-	@Getter
-	private Integer dataSourceGetIncidentLevel;
-	@Getter
-	private Integer dataSourceGetTaskTypes;
-	@Getter
-	private Integer dataSourceGetTaskType;
-	@Getter
-	private Integer dataSourceGetIncidentTaskPlans;
-	@Getter
-	private Integer dataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask;
-	@Getter
-	private Integer dataSourceGetIncidentTypeTasks;
-	@Getter
-	private Integer dataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState;
-	@Getter
-	private Integer dataSourceGetIncidentByType;
-	@Getter
-	private Integer dataSourceGetIncidentTypes;
-	@Getter
-	private Integer dataSourceGetIncidentType;
-	@Getter
-	private Integer dataSourceGetIncidentTypeStates;
-	@Getter
-	private Integer dataSourceGetNextState;
-	@Getter
-	private Integer dataSourceGetRoadImpacts;
-	@Getter
-	private Integer dataSourceGetRoadImpact;
-	@Getter
-	private Integer dataSourceGetInitRoadImpacts;
-	@Getter
-	private Integer dataSourceGetRoadImpactsByIncident;
-	@Getter
-	private Integer dataSourceGetIncidentsSource;
-	@Getter
-	private Integer dataSourceGetIncidentSource;
-	@Getter
-	private Integer dataSourceGetExtIncidents;
-	@Getter
-	private Integer dataSourceGetExtIncident;
-	@Getter
-	private Integer dataSourceGetExtIncidentTypes;
-	@Getter
-	private Integer dataSourceGetExtIncidentType;
-	@Getter
-	private Integer dataSourceGetIncidentDocuments;
-	@Getter
-	private Integer dataSourceGetIncidentDocument;
-	@Getter
-	private Integer dataSourceGetIncidentDocumentTypes;
-	@Getter
-	private Integer dataSourceGetIncidentDocumentType;
-	@Getter
-	private Integer dataSourceGetLogTypes;
-	@Getter
-	private Integer dataSourceGetLogType;
-	@Getter
-	private Integer dataSourceCreateUser;
-	@Getter
-	private Integer dataSourceUpdateUser;
-	@Getter
-	private Integer dataSourceDeleteUser;
-	@Getter
-	private Integer dataSourceCreateElement;
-	@Getter
-	private Integer dataSourceUpdateElement;
-	@Getter
-	private Integer dataSourceCloneElement;
-	@Getter
-	private Integer dataSourceDeleteElement;
-	@Getter
-	private Integer dataSourceCreateAlarmConfig;
-	@Getter
-	private Integer dataSourceUpdateAlarmConfig;
-	@Getter
-	private Integer dataSourceDeleteAlarmConfig;
-	@Getter
-	private Integer dataSourceCreateRole;
-	@Getter
-	private Integer dataSourceUpdateRole;
-	@Getter
-	private Integer dataSourceDeleteRole;
-	@Getter
-	private Integer dataSourceCreatePlan;
-	@Getter
-	private Integer dataSourceUpdatePlan;
-	@Getter
-	private Integer dataSourceDeletePlan;
-	@Getter
-	private Integer dataSourceCreatePlanOrder;
-	@Getter
-	private Integer dataSourceUpdatePlanOrder;
-	@Getter
-	private Integer dataSourceDeletePlanOrder;
-	@Getter
-	private Integer dataSourceCreatePlanType;
-	@Getter
-	private Integer dataSourceUpdatePlanType;
-	@Getter
-	private Integer dataSourceDeletePlanType;
-	@Getter
-	private Integer dataSourceCreatePlanSubtype;
-	@Getter
-	private Integer dataSourceUpdatePlanSubtype;
-	@Getter
-	private Integer dataSourceDeletePlanSubtype;
-	@Getter
-	private Integer dataSourceSendAuditLogs;
-	@Getter
-	private Integer dataSourceSendPlanScheduleActions;
-	@Getter
-	private Integer dataSourceSendPlayPlan;
-	@Getter
-	private Integer dataSourceSendAlarmMutedActions;
-	@Getter
-	private Integer dataSourceSendAlarms;
-	@Getter
-	private Integer dataSourceSendRecognizeAlarms;
-	@Getter
-	private Integer dataSourceSendCommandElement;
-	@Getter
-	private Integer dataSourceSendKillUser;
-	@Getter
-	private Integer dataSourceSendDeactivationAlarms;
-	@Getter
-	private Integer dataSourceTypeGraphqlQuery;
-	@Getter
-	private Integer dataSourceTypeGraphqlMutation;
-	@Getter
-	private Integer dataSourceGraphqlQueryUrl;
-	@Getter
-	private Integer dataSourceGraphqlQueryMethod;
-	@Getter
-	private Integer dataSourceGraphqlQueryParams;
-	@Getter
-	private Integer dataSourceGraphqlQueryContent;
-	@Getter
-	private Integer dataSourceGraphqlMutationUrl;
-	@Getter
-	private Integer dataSourceGraphqlMutationMethod;
-	@Getter
-	private Integer dataSourceGraphqlMutationParams;
-	@Getter
-	private Integer dataSourceGraphqlMutationParamTypes;
-	@Getter
-	private Integer dataSourceGraphqlMutationContent;
-
 	@PostConstruct
 	private void initialize() {
 
-		this.dataSourceGetAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS));
-		this.dataSourceGetAlarmsByAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE));
-		this.dataSourceGetAlarmsBySource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_SOURCE));
-		this.dataSourceGetAlarmsBySourceAndAlarmType = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE));
-		this.dataSourceGetAlarm = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM));
-		this.dataSourceGetAlarmTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPES));
-		this.dataSourceGetAlarmType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_TYPE));
-		this.dataSourceGetAlarmLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVELS));
-		this.dataSourceGetAlarmLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_LEVEL));
-		this.dataSourceGetAlarmConfigs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS));
-		this.dataSourceGetAlarmConfigsByAlarmType = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE));
-		this.dataSourceGetAlarmConfigsByAlarmLevel = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL));
-		this.dataSourceGetAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_CONFIG));
-		this.dataSourceGetThresholdOperations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATIONS));
-		this.dataSourceGetThresholdOperation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_THRESOLD_OPERATION));
-		this.dataSourceGetAlarmMuteds = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTEDS));
-		this.dataSourceGetAlarmMuted = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTED));
-		this.dataSourceGetAlarmMutedsByAlarmConfig = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG));
-		this.dataSourceGetAlarmMutedsByElement = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT));
-		this.dataSourceGetElementsByElementType = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE));
-		this.dataSourceGetElements = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS));
-		this.dataSourceGetElementsArray = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY));
-		this.dataSourceGetElementsArrayStatesSynoptic = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC));
-		this.dataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC));
-		this.dataSourceGetElementsArrayStatesMap = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP));
-		this.dataSourceGetElementsArrayStatesMeasuresAlarmsMap = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP));
-		this.dataSourceGetElement = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT));
-		this.dataSourceGetElementTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPES));
-		this.dataSourceGetElementType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_TYPE));
-		this.dataSourceGetElementValueStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ELEMENT_VALUES_STATES));
-		this.dataSourceGetGenericDatas = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATAS));
-		this.dataSourceGetGenericData = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_GENERIC_DATA));
-		this.dataSourceGetLabelTranslated = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED));
-		this.dataSourceGetLabelTranslatedUsingFields = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_LABEL_TRANSLATED_USING_FIELDS));
-		this.dataSourceGetLocales = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALES));
-		this.dataSourceGetLocale = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCALE));
-		this.dataSourceGetLocations = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATIONS));
-		this.dataSourceGetLocation = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATION));
-		this.dataSourceGetLocationByStretch = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOCATION_BY_STRETCH));
-		this.dataSourceGetRoads = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROADS));
-		this.dataSourceGetRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD));
-		this.dataSourceGetStretchs = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCHS));
-		this.dataSourceGetStretch = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH));
-		this.dataSourceGetStretchByRoad = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_STRETCH_BY_ROAD));
-		this.dataSourceGetPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLANS));
-		this.dataSourceGetPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN));
-		this.dataSourceGetPlanTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_TYPES));
-		this.dataSourceGetPlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_TYPE));
-		this.dataSourceGetPlanSubtypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPES));
-		this.dataSourceGetPlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SUBTYPE));
-		this.dataSourceGetPlanOrderTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER_TYPES));
-		this.dataSourceGetPlanOrderType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER_TYPE));
-		this.dataSourceGetPlanStateTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_STATE_TYPES));
-		this.dataSourceGetPlanOrderStateTypes = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES));
-		this.dataSourceGetPlanScheduleStateTypes = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES));
-		this.dataSourceGetPlanSchedules = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SCHEDULES));
-		this.dataSourceGetPlanSchedule = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SCHEDULE));
-		this.dataSourceGetPlanScheduleByPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_SCHEDULE_BY_PLAN));
-		this.dataSourceGetPlanOrders = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDERS));
-		this.dataSourceGetPlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_PLAN_ORDER));
-		this.dataSourceGetTranslationsByLocale = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE));
-		this.dataSourceGetTranslationsByLocaleAndModule = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE));
-		this.dataSourceGetUsers = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USERS));
-		this.dataSourceGetUser = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_USER));
-		this.dataSourceGetRoles = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLES));
-		this.dataSourceGetRole = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROLE));
-		this.dataSourceGetSystemPermissions = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSIONS));
-		this.dataSourceGetSystemPermission = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_SYSTEM_PERMISSION));
-		this.dataSourceGetIncidentReports = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORTS));
-		this.dataSourceGetIncidentReport = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORT));
-		this.dataSourceGetIncidentReportSummary = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_REPORT_SUMMARY));
-		this.dataSourceGetIncidentByType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_BY_TYPE));
-		this.dataSourceGetIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPES));
-		this.dataSourceGetIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE));
-		this.dataSourceGetIncidentTypeStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE_STATES));
-		this.dataSourceGetNextState = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_NEXT_STATE));
-		this.dataSourceGetRoadImpacts = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD_IMPACTS));
-		this.dataSourceGetRoadImpact = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD_IMPACT));
-		this.dataSourceGetInitRoadImpacts = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INIT_ROAD_IMPACTS));
-		this.dataSourceGetRoadImpactsByIncident = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_ROAD_IMPACTS_BY_INCIDENT));
-		this.dataSourceGetIncidentsSource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENTS_SOURCE));
-		this.dataSourceGetIncidentSource = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_SOURCE));
-		this.dataSourceGetExtIncidents = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENTS));
-		this.dataSourceGetExtIncident = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT));
-		this.dataSourceGetExtIncidentTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPES));
-		this.dataSourceGetExtIncidentType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_EXT_INCIDENT_TYPE));
-		this.dataSourceGetIncidentDocuments = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENTS));
-		this.dataSourceGetIncidentDocument = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT));
-		this.dataSourceGetIncidentDocumentTypes = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPES));
-		this.dataSourceGetIncidentDocumentType = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_DOCUMENT_TYPE));
-		this.dataSourceGetLogTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPES));
-		this.dataSourceGetLogType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_LOG_TYPE));
-		this.dataSourceGetIncidentStates = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_STATES));
-		this.dataSourceGetIncidentState = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_STATE));
-		this.dataSourceGetIncidentLevels = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_LEVELS));
-		this.dataSourceGetIncidentLevel = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_LEVEL));
-		this.dataSourceGetTaskTypes = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_TYPES));
-		this.dataSourceGetTaskType = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_TYPE));
-		this.dataSourceGetIncidentTaskPlans = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TASK_PLANS));
-		this.dataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK));
-		this.dataSourceGetIncidentTypeTasks= Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE_TASKS));
-		this.dataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState = Integer.parseInt(env.getProperty(DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE));
 
-		
-		this.dataSourceCreateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_USER));
-		this.dataSourceUpdateUser = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_USER));
-		this.dataSourceDeleteUser = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_USER));
-		this.dataSourceCreateRole = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ROLE));
-		this.dataSourceUpdateRole = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ROLE));
-		this.dataSourceDeleteRole = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ROLE));
-		this.dataSourceCreateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ALARM_CONFIG));
-		this.dataSourceUpdateAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ALARM_CONFIG));
-		this.dataSourceDeleteAlarmConfig = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ALARM_CONFIG));
-		this.dataSourceCreateElement = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_ELEMENT));
-		this.dataSourceUpdateElement = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_ELEMENT));
-		this.dataSourceCloneElement = Integer.parseInt(env.getProperty(DATA_SOURCE_CLONE_ELEMENT));
-		this.dataSourceDeleteElement = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_ELEMENT));
-		this.dataSourceCreatePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN));
-		this.dataSourceUpdatePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN));
-		this.dataSourceDeletePlan = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN));
-		this.dataSourceCreatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_ORDER));
-		this.dataSourceUpdatePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_ORDER));
-		this.dataSourceDeletePlanOrder = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_ORDER));
-		this.dataSourceCreatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_TYPE));
-		this.dataSourceUpdatePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_TYPE));
-		this.dataSourceDeletePlanType = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_TYPE));
-		this.dataSourceCreatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_CREATE_PLAN_SUBTYPE));
-		this.dataSourceUpdatePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_UPDATE_PLAN_SUBTYPE));
-		this.dataSourceDeletePlanSubtype = Integer.parseInt(env.getProperty(DATA_SOURCE_DELETE_PLAN_SUBTYPE));
-		this.dataSourceSendAuditLogs = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_AUDIT_LOGS));
-		this.dataSourceSendPlanScheduleActions = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS));
-		this.dataSourceSendPlayPlan = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_PLAY_PLAN));
-		this.dataSourceSendAlarmMutedActions = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS));
-		this.dataSourceSendAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_ALARMS));
-		this.dataSourceSendRecognizeAlarms= Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_RECOGNIZE_ALARM));
-		this.dataSourceSendDeactivationAlarms = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_DEACTIVATION_ALARMS));
-		this.dataSourceSendKillUser = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_KILL_USER));
-		this.dataSourceSendCommandElement = Integer.parseInt(env.getProperty(DATA_SOURCE_SEND_COMMAND_ELEMENT));
-
-		this.dataSourceTypeGraphqlQuery = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_QUERY));
-		this.dataSourceTypeGraphqlMutation = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL_MUTATION));
-		this.dataSourceGraphqlQueryUrl = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_QUERY_URL));
-		this.dataSourceGraphqlQueryMethod = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_QUERY_METHOD));
-		this.dataSourceGraphqlQueryParams = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_QUERY_PARAMS));
-		this.dataSourceGraphqlQueryContent = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_QUERY_CONTENT));
-		this.dataSourceGraphqlMutationUrl = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_MUTATION_URL));
-		this.dataSourceGraphqlMutationMethod = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_MUTATION_METHOD));
-		this.dataSourceGraphqlMutationParams = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_MUTATION_PARAMS));
-		this.dataSourceGraphqlMutationParamTypes = Integer
-				.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES));
-		this.dataSourceGraphqlMutationContent = Integer.parseInt(env.getProperty(DATA_SOURCE_GRAPHQL_MUTATION_CONTENT));
 	}
 
 	public List<Map<String, Object>> getList(Integer dataSourceId, Object[] params) {
@@ -672,7 +228,7 @@ public class VODataSourceAdapter {
 		List<Map<String, Object>> list = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphqlQuery)) {
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
 
 			list = getListFromGraphql(dataSource, params);
 		}
@@ -685,7 +241,7 @@ public class VODataSourceAdapter {
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphqlQuery)) {
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
 
 			List<Map<String, Object>> list = getListFromGraphql(dataSource, params);
 
@@ -703,7 +259,7 @@ public class VODataSourceAdapter {
 		Map<String, Object> output = null;
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphqlMutation)) {
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
 			List<Map<String, Object>> list = putGraphql(dataSource, input);
 
@@ -721,7 +277,7 @@ public class VODataSourceAdapter {
 		DataSource dataSource = dataSourceService.getById(dataSourceId);
 		List<Map<String, Object>> list = null;
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(this.dataSourceTypeGraphqlMutation)) {
+		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_MUTATION)) {
 
 			list = putGraphql(dataSource, input);	
 		}
@@ -744,19 +300,19 @@ public class VODataSourceAdapter {
 		try {
 
 			DataSourceValue dataSourceValMutationUrl = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationUrl)).findFirst()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_URL)).findFirst()
 					.orElse(null);
 			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationMethod))
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_METHOD))
 					.findFirst().orElse(null);
 			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationParams))
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAMS))
 					.findFirst().orElse(null);
 			DataSourceValue dataSourceValParamTypes = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationParamTypes))
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_PARAM_TYPES))
 					.findFirst().orElse(null);
 			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlMutationContent))
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_MUTATION_CONTENT))
 					.findFirst().orElse(null);
 
 			if (dataSourceValMutationUrl != null)
@@ -813,16 +369,16 @@ public class VODataSourceAdapter {
 		try {
 
 			DataSourceValue dataSourceValQueryUrl = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryUrl)).findFirst()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_URL)).findFirst()
 					.orElse(null);
 			DataSourceValue dataSourceValMethod = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryMethod)).findFirst()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_METHOD)).findFirst()
 					.orElse(null);
 			DataSourceValue dataSourceValParams = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryParams)).findFirst()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_PARAMS)).findFirst()
 					.orElse(null);
 			DataSourceValue dataSourceValContent = dataSource.getDataSourceValues().stream()
-					.filter(e -> e.getDataSourceParam().getId().equals(this.dataSourceGraphqlQueryContent)).findFirst()
+					.filter(e -> e.getDataSourceParam().getId().equals(DATA_SOURCE_GRAPHQL_QUERY_CONTENT)).findFirst()
 					.orElse(null);
 
 			if (dataSourceValQueryUrl != null)
@@ -975,7 +531,7 @@ public class VODataSourceAdapter {
 
 		Map<String, Object> inputForMutation = input;
 
-		if (dataSource.getId().equals(this.dataSourceUpdateUser)) {
+		if (dataSource.getId().equals(DATA_SOURCE_UPDATE_USER)) {
 
 			inputForMutation = graphqlTypeAdapter.getUserForMutation(input);
 		}

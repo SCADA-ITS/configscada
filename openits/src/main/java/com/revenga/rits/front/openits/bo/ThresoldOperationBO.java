@@ -25,19 +25,19 @@ public class ThresoldOperationBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> thresholdOperations = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetThresholdOperations(), null);
+		List<Map<String, Object>> thresholdOperations = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_THRESOLD_OPERATIONS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetThresholdOperations()).getFieldId(), thresholdOperations);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_THRESOLD_OPERATIONS).getFieldId(), thresholdOperations);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> thresholdOperation = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetThresholdOperation(), new Object[] { id });
+		Map<String, Object> thresholdOperation = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_THRESOLD_OPERATION, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetThresholdOperation()).getFieldId(), thresholdOperation);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_THRESOLD_OPERATION).getFieldId(), thresholdOperation);
 	}
 
 }

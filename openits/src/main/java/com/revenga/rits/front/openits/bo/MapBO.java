@@ -98,19 +98,19 @@ public class MapBO extends GenericBO {
 	private List<Map<String, Object>> getElementsStates(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMap(), new Object[] { ids });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP, new Object[] { ids });
 		
 		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMap()).getFieldId(), elements));
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP).getFieldId(), elements));
 	}
 	
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMeasuresAlarmsMap(), new Object[] { ids });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP, new Object[] { ids });
 		
 		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMeasuresAlarmsMap()).getFieldId(), elements));
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP).getFieldId(), elements));
 	}
 	
 	private void getElementIds(com.revenga.rits.front.openitsdao.model.Map map, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasuresAlarms) {

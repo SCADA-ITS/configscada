@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,7 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping(value = "/api/v1/incidents", produces = { "application/json", "application/xml" })
-@Api(value = "ImsIncidentReport", tags = { "INCIDENT REPORTS" })
+@Api(value = "ImsIncident", tags = { "INCIDENTS" })
 public class ImsIncidentController {
 	
 	@Autowired
@@ -54,14 +56,14 @@ public class ImsIncidentController {
 	@Autowired
 	ImsExtIncidentTypeBO imsExtIncidentTypeBO;	
 	
-	@GetMapping
+	@GetMapping(value = "/reports")
 	@ApiOperation(value = "Get all incident reports", notes = "Get all incident reports")
 	public ResponseEntity<Object> getImsIncidentReports() {
 		
 		return new ResponseEntity<>(imsIncidentReportBO.getList(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/reports/{id}")
 	@ApiOperation(value = "Get incident report by id", notes = "Get incident report by id")
 	public ResponseEntity<Object> getImsIncidentReport(
 			@ApiParam(
@@ -75,7 +77,7 @@ public class ImsIncidentController {
 	}
 	
 	@GetMapping(value = "/summary/{id}")
-	@ApiOperation(value = "Get summary of incident report by id", notes = "Get incident report by id")
+	@ApiOperation(value = "Get summary of incident report by id", notes = "Get summary of incident report by id")
 	public ResponseEntity<Object> getImsIncidentReportSummary(
 			@ApiParam(
 			name = "id",
@@ -85,6 +87,106 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsIncidentReportBO.getItemSumary(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/create")
+	@ApiOperation(value = "Create Incident Report", notes = "Create Incident Report")
+	public ResponseEntity<Object> createIncidentReport(@RequestBody Object report) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.create(report), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/confirm")
+	@ApiOperation(value = "Confirm Incident Report", notes = "Confirm Incident Report")
+	public ResponseEntity<Object> confirmIncidentReport(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident report id",
+			example = "ImsIncidentReport:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.confirm(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/forward")
+	@ApiOperation(value = "Forward Incident Report", notes = "Forward Incident Report")
+	public ResponseEntity<Object> forwardIncidentReport(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident report id",
+			example = "ImsIncidentReport:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.forward(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/cancel")
+	@ApiOperation(value = "Cancel Incident Report", notes = "Cancel Incident Report")
+	public ResponseEntity<Object> cancelIncidentReport(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident report id",
+			example = "ImsIncidentReport:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.cancel(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/user/{userId}")
+	@ApiOperation(value = "Assign user Incident Report", notes = "Assing user Incident Report")
+	public ResponseEntity<Object> assignUserIncidentReport(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Incident report id",
+					example = "ImsIncidentReport:1",
+					required = true) @PathVariable String id,
+			@ApiParam(
+					name = "userId",
+					type = "String",
+					value = "User id",
+					example = "User:1",
+					required = true) @PathVariable String userId) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.assignUser(id, userId), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/finalize_task/{taskId}")
+	@ApiOperation(value = "Finalize task Incident Report", notes = "Finalize task Incident Report")
+	public ResponseEntity<Object> finalizeTaskIncidentReport(
+			@ApiParam(
+				name = "id",
+				type = "String",
+				value = "Incident report id",
+				example = "ImsIncidentReport:1",
+				required = true) @PathVariable String id,
+			@ApiParam(
+				name = "taskId",
+				type = "String",
+				value = "Incident type task",
+				example = "ImsIncidentTypeTask:701",
+				required = true) @PathVariable String taskId) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.finalizeTask(id, taskId), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/execute_task_plan/{taskPlanId}")
+	@ApiOperation(value = "Finalize task Incident Report", notes = "Finalize task Incident Report")
+	public ResponseEntity<Object> executeTaskPlanIncidentReport(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Incident report id",
+					example = "ImsIncidentReport:1",
+					required = true) @PathVariable String id,
+			@ApiParam(
+				name = "taskPlanId",
+				type = "String",
+				value = "",
+				example = "",
+				required = true) @PathVariable String taskPlanId) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.executeTaskPlan(id, taskPlanId), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/incidentStates")

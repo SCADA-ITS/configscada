@@ -9,7 +9,7 @@ const INCIDENT_REPORT = Object.freeze({
 		confirm: 100402,
 		cancel: 100403 
 	},
-	restEndpoint: "incidents",
+	restEndpoint: "incidents/reports/",
 	topic: "/topic/incidentReport"
 });
 
@@ -20,6 +20,7 @@ export default class IncidentReportModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.currentSequenceOfState = undefined;
+		this.currentTask = undefined;
 		this.dtTasks = undefined;
 		this.incidentReport = undefined;
 		this.stompClient = undefined;
@@ -101,8 +102,6 @@ export default class IncidentReportModule extends GenericModule {
 					
 					if (self.incidentReport) {
 						
-						//self.incidentReport.incidentState.id = "ImsIncidentState:2";
-						
 						self.currentSequenceOfState = self.incidentReport.sequenceOfStates.find(e => {
 						
 							return (e.state.id == self.incidentReport.incidentState.id);
@@ -113,6 +112,21 @@ export default class IncidentReportModule extends GenericModule {
 						if (self.dtTasks) {
 							
 							self.dtTasks.callbacks();
+							
+							let tasks = self.currentSequenceOfState.taskStates;
+							
+							if (Array.isArray(tasks) && tasks.length) {
+								
+								let idxTask = tasks.findIndex(e => {
+									
+									return !e.completed;
+								});
+								
+								if (idxTask !== -1) {
+								
+									self.dtTasks.select(idxTask + 1);
+								}
+							}
 						}	
 					}
 					
@@ -381,36 +395,43 @@ export default class IncidentReportModule extends GenericModule {
 									borderless: true,
 									rows: [
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
 													   <div class="value">${self.incidentReport.incidentType.alias} - ${self.incidentReport.incidentType.description}</div>`	
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT")}</span></div>
 													   <div class="value">${self.incidentReport.id}</div>`
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
 													   <div class="value">${self.incidentReport.location.alias}</div>`
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
 													   <div class="value">${self.incidentReport.affectionStretch.alias}</div>`
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-clock-time-three-outline"></span><span class="field">${i18n.t("LBL_INCIDENT_CREATED")}</span></div>
 													   <div class="value">${util.toLocaleString(self.incidentReport.generatedAt / 1000)}</div>`
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-refresh"></span><span class="field">${i18n.t("LBL_INCIDENT_LAST_UPDATED")}</span></div>
 													   <div class="value">-</div>`
 										},
 										{
+											height: 50,
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-calendar"></span><span class="field">${i18n.t("LBL_INCIDENT_VALID_UNTIL")}</span></div>
 													   <div class="value">-</div>`
@@ -454,15 +475,30 @@ export default class IncidentReportModule extends GenericModule {
 
 					if (self.currentSequenceOfState) {
 						
+						const defaultGridOptionValues = [
+							{ gridOption: { id: 1 }, value: "false" },
+							{ gridOption: { id: 2 }, value: "false" },
+							{ gridOption: { id: 3 }, value: undefined },
+							{ gridOption: { id: 4 }, value: undefined },
+							{ gridOption: { id: 5 }, value: undefined },
+							{ gridOption: { id: 6 }, value: undefined },
+							{ gridOption: { id: 7 }, value: "false" },
+							{ gridOption: { id: 8 }, value: "false" },
+							{ gridOption: { id: 9 }, value: "true" },
+							{ gridOption: { id: 10 }, value: "false" },
+							{ gridOption: { id: 11 }, value: "false" },
+							{ gridOption: { id: 12 }, value: "false" },
+							{ gridOption: { id: 13 }, value: "false" },
+							{ gridOption: { id: 14 }, value: "false" },
+							{ gridOption: { id: 15 }, value: "false" },
+							{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+						];
+						
 						let metadata = {
 							filter: true,
-							icon: "img/grid/role.png",
 	    					label: "LBL_TASKS",
-	    					multiselect: false,
-	    					pagination: false,
-	    					search: false,
-	    					sort: false,
 	    					visible: true,
+							gridOptionValues: defaultGridOptionValues,
 							gridFields: [
 								{
 							        extended: false,
@@ -476,9 +512,6 @@ export default class IncidentReportModule extends GenericModule {
 							        sourceField: "status",
 							        visible: true,
 							        widthPx: 15,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
@@ -493,12 +526,9 @@ export default class IncidentReportModule extends GenericModule {
 							        parameterized: false,
 							        position: 2,
 							        required: true,
-							        sourceField: "position",
+							        sourceField: "id",
 							        visible: true,
 							        widthPx: 15,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
 							        gridFieldDataType: {
 							          	id: 2,
 										name: "int"
@@ -517,10 +547,7 @@ export default class IncidentReportModule extends GenericModule {
 							        required: true,
 							        sourceField: "alias",
 							        visible: true,
-							        widthPx: 200,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
+							        widthPx: 250,
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
@@ -539,10 +566,7 @@ export default class IncidentReportModule extends GenericModule {
 							        required: true,
 							        sourceField: "type",
 							        visible: true,
-							        widthPx: 75,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
+							        widthPx: 50,
 							        gridFieldDataType: {
 							          	id: 2,
 										name: "int"
@@ -562,10 +586,7 @@ export default class IncidentReportModule extends GenericModule {
 							        required: true,
 							        sourceField: "required",
 							        visible: true,
-							        widthPx: 75,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
+							        widthPx: 50,
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
@@ -575,16 +596,19 @@ export default class IncidentReportModule extends GenericModule {
 						};
 						
 						let data = [];
+						
 						let tasks = self.currentSequenceOfState.taskStates;
 						
 						if (Array.isArray(tasks) && tasks.length) {
+							
+							tasks.sort((a, b) => (a.incidentTypeTask.position > b.incidentTypeTask.position) ? 1 : ((b.incidentTypeTask.position > a.incidentTypeTask.position) ? -1 : 0));
 						
 							for (let i = 0; i < tasks.length; i++) {
 						
 								let row = {};
 								
 								row.status = tasks[i].completed ? "executed" : "pending";
-								row.position =  i + 1;
+								row.id =  i + 1;
 								row.alias = tasks[i].incidentTypeTask.alias;
 								row.type = tasks[i].incidentTypeTask.auto ? "auto" : "manual";
 								row.required = tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
@@ -650,15 +674,30 @@ export default class IncidentReportModule extends GenericModule {
 
 					if (self.currentSequenceOfState) {
 						
+						const defaultGridOptionValues = [
+							{ gridOption: { id: 1 }, value: "true" },
+							{ gridOption: { id: 2 }, value: "true" },
+							{ gridOption: { id: 3 }, value: undefined },
+							{ gridOption: { id: 4 }, value: undefined },
+							{ gridOption: { id: 5 }, value: undefined },
+							{ gridOption: { id: 6 }, value: undefined },
+							{ gridOption: { id: 7 }, value: "false" },
+							{ gridOption: { id: 8 }, value: "false" },
+							{ gridOption: { id: 9 }, value: "true" },
+							{ gridOption: { id: 10 }, value: "true" },
+							{ gridOption: { id: 11 }, value: "true" },
+							{ gridOption: { id: 12 }, value: "true" },
+							{ gridOption: { id: 13 }, value: "true" },
+							{ gridOption: { id: 14 }, value: "false" },
+							{ gridOption: { id: 15 }, value: "false" },
+							{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+						];
+						
 						let metadata = {
 							filter: true,
-							icon: "img/grid/role.png",
 	    					label: "LBL_LOGS",
-	    					multiselect: false,
-	    					pagination: false,
-	    					search: false,
-	    					sort: false,
 	    					visible: true,
+							gridOptionValues: defaultGridOptionValues,
 							gridFields: [
 								{
 							        extended: false,
@@ -674,9 +713,6 @@ export default class IncidentReportModule extends GenericModule {
 							        sourceField: "id",
 							        visible: true,
 							        widthPx: 300,
-							        gridFieldIcons: [],
-							        gridFieldReferences: [],
-							        gridFieldReplacements: [],
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
@@ -716,18 +752,18 @@ export default class IncidentReportModule extends GenericModule {
 									    view: "button",
 										css: (function() {
 											
-//											if (self.incidentReport.confirm === true) {
-//												
-//												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-//												
-//													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completed);
-//													
-//													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length)	{
-//														
-//													}
-//												}
-//											}
-											
+											if (self.incidentReport.confirm === true) {
+												
+												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+												
+													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completed);
+													
+													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length)	{
+														
+														return "action-button-dis";
+													}
+												}
+											}
 											
 											return "action-button";
 												
@@ -772,61 +808,61 @@ export default class IncidentReportModule extends GenericModule {
 							{ width: 30}
 						]
 					},
-					{
-						view: "label",
-						css: "section",
-						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_INFO")}</span>`,
-						borderless: true 
-					},
-					{ 
-						height: 280,
-						cols: [
-							{ width: 40 },
-							{
-								width: 200,
-								rows: [
-									{ height: 20},
-									{
-										css: "section-info",
-										borderless: true,
-										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_SINCE")}</span></div>
-											  	   <div>
-													<span class="ico webix_icon mdi mdi-clock-time-three-outline"></span>
-											  	   	<span class="value">${util.toLocaleString(self.incidentReport.generatedAt / 1000)}</span>
-												   </div>`
-									},
-									{
-										css: "section-info",
-										borderless: true,
-										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
-											  	   <div>
-													<span class="ico webix_icon mdi mdi-map-marker"></span>
-											  	   	<span class="value">${self.incidentReport.location.alias}</span>
-												   </div>`
-									},
-									{
-										css: "section-info",
-										borderless: true,
-										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
-											  	   <div>
-													<span class="ico webix_icon mdi mdi-road"></span>
-											  	   	<span class="value">${self.incidentReport.affectionStretch.alias}</span>
-												   </div>`
-									},
-									{
-										css: "section-info",
-										borderless: true,
-										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_ASIGNED_USER")}</span></div>
-											  	   <div>
-													<span class="ico webix_icon mdi mdi-account"></span>
-											  	   	<span class="value">${self.incidentReport.currentUser.name}</span>
-												   </div>`
-									}
-								]
-							},
-							{}
-						]
-					},
+//					{
+//						view: "label",
+//						css: "section",
+//						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_INFO")}</span>`,
+//						borderless: true 
+//					},
+//					{ 
+//						height: 280,
+//						cols: [
+//							{ width: 40 },
+//							{
+//								width: 200,
+//								rows: [
+//									{ height: 20},
+//									{
+//										css: "section-info",
+//										borderless: true,
+//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_SINCE")}</span></div>
+//											  	   <div>
+//													<span class="ico webix_icon mdi mdi-clock-time-three-outline"></span>
+//											  	   	<span class="value">${util.toLocaleString(self.incidentReport.generatedAt / 1000)}</span>
+//												   </div>`
+//									},
+//									{
+//										css: "section-info",
+//										borderless: true,
+//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
+//											  	   <div>
+//													<span class="ico webix_icon mdi mdi-map-marker"></span>
+//											  	   	<span class="value">${self.incidentReport.location.alias}</span>
+//												   </div>`
+//									},
+//									{
+//										css: "section-info",
+//										borderless: true,
+//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
+//											  	   <div>
+//													<span class="ico webix_icon mdi mdi-road"></span>
+//											  	   	<span class="value">${self.incidentReport.affectionStretch.alias}</span>
+//												   </div>`
+//									},
+//									{
+//										css: "section-info",
+//										borderless: true,
+//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_ASIGNED_USER")}</span></div>
+//											  	   <div>
+//													<span class="ico webix_icon mdi mdi-account"></span>
+//											  	   	<span class="value">${self.incidentReport.currentUser.name}</span>
+//												   </div>`
+//									}
+//								]
+//							},
+//							{}
+//						]
+//					},
 					{
 						view: "label",
 						css: "section",
@@ -925,7 +961,32 @@ export default class IncidentReportModule extends GenericModule {
 						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span>`,
 						borderless: true 
 					},
-					{ height: 150 },
+					{ 
+						height: 150,
+						cols: [
+							{ width: 30},
+							{
+								rows: [
+									{
+									    view: "button",
+										width: 135, 
+										label: i18n.t("LBL_INCIDENT_OPERATIONAL_PLAN"),
+										tooltip: i18n.t("LBL_INCIDENT_OPERATIONAL_PLAN_DESCRIPTION"),
+									    type: "icon", 
+										icon: "mdi mdi-sitemap", 
+										on: {
+										
+											onItemClick() {
+												
+												
+											}
+										}
+									}
+								]
+							},
+							{ width: 30}
+						]
+					},
 					{},
 					{
 						view: "toolbar",

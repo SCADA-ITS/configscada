@@ -27,35 +27,35 @@ public class PlanBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> plans = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlans(), null);
+		List<Map<String, Object>> plans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLANS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlans()).getFieldId(), plans);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLANS).getFieldId(), plans);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> plan = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlan(), new Object[] { id });
+		Map<String, Object> plan = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlan()).getFieldId(), plan);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN).getFieldId(), plan);
 	}
 	
 	public Map<String, Object> createPlan(Object input) {
 		
-		Map<String, Object> createdPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreatePlan(), (Map<String, Object>) input);
+		Map<String, Object> createdPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceCreatePlan()).getFieldId(), createdPlan);
+				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN).getFieldId(), createdPlan);
 	}
 	
 	public Map<String, Object> updatePlan(Object input) {
 			
-		Map<String, Object> updatedPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdatePlan(), (Map<String, Object>) input);
+		Map<String, Object> updatedPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceUpdatePlan()).getFieldId(), updatedPlan);
+				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN).getFieldId(), updatedPlan);
 	}
 	
 	public Map<String, Object> deletePlan(String id) {
@@ -64,17 +64,17 @@ public class PlanBO extends GenericBO {
 		
 		input.put("planId", id);
 		
-		Map<String, Object> deletedPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeletePlan(), input);
+		Map<String, Object> deletedPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN, input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceDeletePlan()).getFieldId(), deletedPlan);
+				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN).getFieldId(), deletedPlan);
 	}
 	
 	public Boolean sendPlayPlan(Object input) {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendPlayPlan = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendPlayPlan(), (Map<String, Object>) input);
+	    Map<String, Object> sendPlayPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_PLAY_PLAN, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendPlayPlan);
 

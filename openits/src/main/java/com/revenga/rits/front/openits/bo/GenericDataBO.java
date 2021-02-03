@@ -25,18 +25,18 @@ public class GenericDataBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> genericDatas = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetGenericDatas(), null);
+		List<Map<String, Object>> genericDatas = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_GENERIC_DATAS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetGenericDatas()).getFieldId(), genericDatas);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_GENERIC_DATAS).getFieldId(), genericDatas);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> genericData = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetGenericData(), new Object[] { id });
+		Map<String, Object> genericData = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_GENERIC_DATA, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetGenericData()).getFieldId(), genericData);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_GENERIC_DATA).getFieldId(), genericData);
 	}
 }

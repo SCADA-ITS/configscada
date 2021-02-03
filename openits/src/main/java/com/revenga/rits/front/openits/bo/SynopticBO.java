@@ -96,19 +96,19 @@ public class SynopticBO extends GenericBO {
 	private List<Map<String, Object>> getElementsStates(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsArrayStatesSynoptic(), new Object[] { ids });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC, new Object[] { ids });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementsArrayStatesSynoptic()).getFieldId(), elements);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC).getFieldId(), elements);
 	}
 	
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic(), new Object[] { ids });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC, new Object[] { ids });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementsArrayStatesMeasuresAlarmsSynoptic()).getFieldId(), elements);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC).getFieldId(), elements);
 	}
 	
 	private void getElementIds(Synoptic synoptic, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasuresAlarms) {

@@ -25,19 +25,19 @@ public class AlarmLevelBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> alarmLevels = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmLevels(), null);
+		List<Map<String, Object>> alarmLevels = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_LEVELS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmLevels()).getFieldId(), alarmLevels);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_LEVELS).getFieldId(), alarmLevels);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> alarmLevel = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarmLevel(), new Object[] { id });
+		Map<String, Object> alarmLevel = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_LEVEL, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmLevel()).getFieldId(), alarmLevel);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_LEVELS).getFieldId(), alarmLevel);
 	}
 
 }

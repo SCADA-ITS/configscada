@@ -25,10 +25,10 @@ public class ImsIncidentTypeStateBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> incidentTypeStates = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentTypeStates(), null);
+		List<Map<String, Object>> incidentTypeStates = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STATES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentTypeStates()).getFieldId(), incidentTypeStates);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STATES).getFieldId(), incidentTypeStates);
 	}
 
 	@Override
@@ -39,10 +39,10 @@ public class ImsIncidentTypeStateBO extends GenericBO {
 	
 	public List<Map<String, Object>> getNextState(String id) {
 		
-		List<Map<String, Object>> incidentNextState = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetNextState(), new Object[] { id });
+		List<Map<String, Object>> incidentNextState = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_NEXT_STATE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetNextState()).getFieldId(), incidentNextState);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_NEXT_STATE).getFieldId(), incidentNextState);
 	}
 
 }

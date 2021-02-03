@@ -25,19 +25,19 @@ public class PlanOrderTypeBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> planOrderTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanOrderTypes(), null);
+		List<Map<String, Object>> planOrderTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanOrderTypes()).getFieldId(), planOrderTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_TYPES).getFieldId(), planOrderTypes);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> planOrderType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlanOrderType(), new Object[] { id });
+		Map<String, Object> planOrderType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanOrderType()).getFieldId(), planOrderType);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_TYPE).getFieldId(), planOrderType);
 	}
 
 }

@@ -25,18 +25,18 @@ public class ImsIncidentTypeTaskBO extends GenericBO  {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> incidentTypeTasks = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentTypeTasks(), null);
+		List<Map<String, Object>> incidentTypeTasks = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_TASKS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentTypeTasks()).getFieldId(), incidentTypeTasks);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_TASKS).getFieldId(), incidentTypeTasks);
 	}
 	
 	public List<Map<String, Object>> getIncidentTypeTaskByIncidentTypeAndIncidentState(String incidentTypeId, String incidentStateId) {
 		
-		List<Map<String, Object>> incidentTypeTasks = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState(), new Object[] {incidentTypeId, incidentStateId });
+		List<Map<String, Object>> incidentTypeTasks = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE, new Object[] {incidentTypeId, incidentStateId });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentTypeTaskByIncidentTypeAndIncidentState()).getFieldId(), incidentTypeTasks);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_TASK_BY_INCIDENT_TYPE_AND_INCIDENT_STATE).getFieldId(), incidentTypeTasks);
 	}
 
 	@Override

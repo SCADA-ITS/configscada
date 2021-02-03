@@ -48,27 +48,27 @@ public class LocationBO extends GenericBO {
 	public List<Map<String, Object>> getList() {
 		
 		List<Map<String, Object>> locations = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetLocations(), null);
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS, null);
 		
 		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetLocations()).getFieldId(), locations));
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS).getFieldId(), locations));
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> location = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetLocation(), new Object[] { id });
+		Map<String, Object> location = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION, new Object[] { id });
 		
 		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetLocation()).getFieldId(), location));
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION).getFieldId(), location));
 	}
 	
 	public List<Map<String, Object>> getLocationByStretch(String alarmTypeId) {
 		
-		List<Map<String, Object>> locations = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetLocationByStretch(), new Object[] { alarmTypeId });
+		List<Map<String, Object>> locations = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH, new Object[] { alarmTypeId });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetLocationByStretch()).getFieldId(), locations);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH).getFieldId(), locations);
 	}
 	
 	public List<Map<String, Object>> replaceLocations(List<Map<String, Object>> elements) {

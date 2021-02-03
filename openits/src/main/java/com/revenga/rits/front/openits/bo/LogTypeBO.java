@@ -25,26 +25,26 @@ public class LogTypeBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> logTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetLogTypes(), null);
+		List<Map<String, Object>> logTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOG_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetLogTypes()).getFieldId(), logTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOG_TYPES).getFieldId(), logTypes);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> logType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetLogType(), new Object[] { id });
+		Map<String, Object> logType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_LOG_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetLogType()).getFieldId(), logType);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOG_TYPE).getFieldId(), logType);
 	}
 
 	public Boolean sendAuditLogs(Object input) {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendAuditLog = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAuditLogs(), (Map<String, Object>) input);
+	    Map<String, Object> sendAuditLog = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_AUDIT_LOGS, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendAuditLog);
 

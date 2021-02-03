@@ -24,26 +24,26 @@ public class PlanStateTypeBO extends GenericBO {
 	
 	public List<Map<String, Object>> getPlanStateTypes() {
 		
-		List<Map<String, Object>> planStateTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanStateTypes(), null);
+		List<Map<String, Object>> planStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_STATE_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanStateTypes()).getFieldId(), planStateTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_STATE_TYPES).getFieldId(), planStateTypes);
 	}
 				
 	public List<Map<String, Object>> getPlanOrderStateTypes() {
 		
-		List<Map<String, Object>> planOrderStateTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanOrderStateTypes(), null);
+		List<Map<String, Object>> planOrderStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanOrderStateTypes()).getFieldId(), planOrderStateTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES).getFieldId(), planOrderStateTypes);
 	}
 	
 	public List<Map<String, Object>> getPlanScheduleStateTypes() {
 		
-		List<Map<String, Object>> planScheduleStateTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanScheduleStateTypes(), null);
+		List<Map<String, Object>> planScheduleStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanScheduleStateTypes()).getFieldId(), planScheduleStateTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES).getFieldId(), planScheduleStateTypes);
 	}
 
 	@Override

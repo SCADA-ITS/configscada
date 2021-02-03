@@ -26,10 +26,10 @@ public class ElementValueStateBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> elementValueStates = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetElementValueStates(), null);
+		List<Map<String, Object>> elementValueStates = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_VALUES_STATES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementValueStates()).getFieldId(), elementValueStates);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_VALUES_STATES).getFieldId(), elementValueStates);
 	}
 
 	@Override

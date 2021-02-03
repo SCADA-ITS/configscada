@@ -25,43 +25,43 @@ public class AlarmBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarms(), null);
+		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarms()).getFieldId(), alarms);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS).getFieldId(), alarms);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> alarm = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetAlarm(), new Object[] { id });
+		Map<String, Object> alarm = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ALARM, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarm()).getFieldId(), alarm);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM).getFieldId(), alarm);
 	}
 	
 	public List<Map<String, Object>> getAlarmsByAlarmType(String id) {
 		
-		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType(), new Object[] { id });
+		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmsByAlarmType()).getFieldId(), alarms);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE).getFieldId(), alarms);
 	}
 	
 	public List<Map<String, Object>> getAlarmsBySource(String sourceElementId) {
 		
-		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmsBySource(), new Object[] { sourceElementId });
+		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_SOURCE, new Object[] { sourceElementId });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmsBySource()).getFieldId(), alarms);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_SOURCE).getFieldId(), alarms);
 	}
 	
 	public List<Map<String, Object>> getAlarmsBySourceAndAlarmType(String sourceElementId, String alarmTypeId) {
 		
-		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetAlarmsBySourceAndAlarmType(), new Object[] { sourceElementId, alarmTypeId });
+		List<Map<String, Object>> alarms = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE, new Object[] { sourceElementId, alarmTypeId });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetAlarmsBySourceAndAlarmType()).getFieldId(), alarms);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE).getFieldId(), alarms);
 	}
 	
 	
@@ -69,7 +69,7 @@ public class AlarmBO extends GenericBO {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendAlarms(), (Map<String, Object>) input);
+	    Map<String, Object> sendAlarms = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_ALARMS, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendAlarms);
 
@@ -81,7 +81,7 @@ public class AlarmBO extends GenericBO {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendRecognizeAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendRecognizeAlarms(), (Map<String, Object>) input);
+	    Map<String, Object> sendRecognizeAlarms = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_RECOGNIZE_ALARM, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendRecognizeAlarms);
 
@@ -93,7 +93,7 @@ public class AlarmBO extends GenericBO {
 	    
 	    Boolean res = false;
 	    
-	    Map<String, Object> sendDeactivationAlarms = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceSendDeactivationAlarms(), (Map<String, Object>) input);
+	    Map<String, Object> sendDeactivationAlarms = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_DEACTIVATION_ALARMS, (Map<String, Object>) input);
 	    
 	    res = checkMapIsBoolean(sendDeactivationAlarms);
 

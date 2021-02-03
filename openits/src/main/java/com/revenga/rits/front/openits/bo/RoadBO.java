@@ -25,19 +25,19 @@ public class RoadBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> roads = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetRoads(), null);
+		List<Map<String, Object>> roads = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ROADS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoads()).getFieldId(), roads);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROADS).getFieldId(), roads);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> road = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetRoad(), new Object[] { id });
+		Map<String, Object> road = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ROAD, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetRoad()).getFieldId(), road);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROAD).getFieldId(), road);
 	}
 
 }

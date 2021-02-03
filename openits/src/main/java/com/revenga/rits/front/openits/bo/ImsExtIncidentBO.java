@@ -25,19 +25,19 @@ public class ImsExtIncidentBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> extIncidents = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetExtIncidents(), null);
+		List<Map<String, Object>> extIncidents = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_EXT_INCIDENTS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetExtIncidents()).getFieldId(), extIncidents);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_EXT_INCIDENTS).getFieldId(), extIncidents);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> extIncident = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetExtIncident(), new Object[] { id });
+		Map<String, Object> extIncident = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_EXT_INCIDENT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetExtIncident()).getFieldId(), extIncident);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_EXT_INCIDENT).getFieldId(), extIncident);
 	}
 
 }

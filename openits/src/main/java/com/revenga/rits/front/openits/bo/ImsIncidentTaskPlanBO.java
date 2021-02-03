@@ -25,18 +25,18 @@ public class ImsIncidentTaskPlanBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> incidentTaskPlans = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentTaskPlans(), null);
+		List<Map<String, Object>> incidentTaskPlans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TASK_PLANS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentTaskPlans()).getFieldId(), incidentTaskPlans);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TASK_PLANS).getFieldId(), incidentTaskPlans);
 	}
 	
 	public List<Map<String, Object>> getTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask(String stretchId, String incidentTypeId, String incidentTypeTaskId) {
 		
-		List<Map<String, Object>> incidentTaskPlans = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask(), new Object[] { stretchId, incidentTypeId, incidentTypeTaskId });
+		List<Map<String, Object>> incidentTaskPlans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK, new Object[] { stretchId, incidentTypeId, incidentTypeTaskId });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetTaskPlansByStretchAndIncidentTypeAndIncidentTypeTask()).getFieldId(), incidentTaskPlans);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_TASK_PLANS_BY_STRETCH_AND_INCIDENT_TYPE_AND_INCIDENT_TYPE_TASK).getFieldId(), incidentTaskPlans);
 	}
 
 	@Override

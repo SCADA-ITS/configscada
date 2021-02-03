@@ -25,28 +25,28 @@ public class ImsIncidentBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> incidentReports = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidents(), null);
+		List<Map<String, Object>> incidentReports = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENTS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidents()).getFieldId(), incidentReports);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENTS).getFieldId(), incidentReports);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> incidentReport = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetIncident(), new Object[] { id });
+		Map<String, Object> incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncident()).getFieldId(), incidentReport);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT).getFieldId(), incidentReport);
 	}
 	
 	
 	public List<Map<String, Object>> getIncidentByType(String id) {
 		
-		List<Map<String, Object>> incidents = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetIncidentByType(), new Object[] { id });
+		List<Map<String, Object>> incidents = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_BY_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetIncidentByType()).getFieldId(), incidents);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_BY_TYPE).getFieldId(), incidents);
 	}
 
 }

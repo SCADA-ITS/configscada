@@ -22,19 +22,33 @@ export let util = {
 		loadInWindow(module, moduleAction, mod, args) {
 
 			let viewModule;
-			let allowMultipleInstances, image, icon, color, label, externalizable, height, width;
+			let allowMultipleInstances = true;
+			let image = 'img/module/default.png';
+			let icon = 'img/module/default.png';
+			let color = '#464646';
+			let label = i18n.t('LBL_UNDEFINED');
+			let externalizable = true;
+			let height = 768;
+			let width = 1280;
+			
 			let lazyClass;
 
 			if (module.windowValues) {
-
-				allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
-				image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
-				icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
-				color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
-				label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
-				externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
-				height = module.windowValues.find(e => e.windowParam.id === WindowParam.HEIGHT).value;
-				width = module.windowValues.find(e => e.windowParam.id === WindowParam.WIDTH).value;
+				
+				try {
+				
+					allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
+					image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
+					icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
+					color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
+					label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
+					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
+					height = module.windowValues.find(e => e.windowParam.id === WindowParam.HEIGHT).value;
+					width = module.windowValues.find(e => e.windowParam.id === WindowParam.WIDTH).value;	
+				}
+				catch {
+					
+				}
 			}
 
 			// TODO: Remove this block in future
@@ -164,18 +178,29 @@ export let util = {
 		loadInTab(module, moduleAction, mod, args) {
 
 			let viewModule;
-			let allowMultipleInstances, image, icon, color, label, externalizable;
+			let allowMultipleInstances = true;
+			let image = 'img/module/default.png';
+			let icon = 'img/module/default.png';
+			let color = '#464646';
+			let label = i18n.t('LBL_UNDEFINED');
+			let externalizable = true;
+
 			let lazyClass;
 
 			if (module.windowValues && module.windowValues.length>0) {
 
-				allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
-				image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
-				icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
-				color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
-				label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
-				externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
-
+				try {
+				
+					allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
+					image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
+					icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
+					color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
+					label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
+					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';	
+				}
+				catch {
+					
+				}
 			}
 
 			let tab_body_id = "tab_body_" + module.id;
@@ -462,48 +487,6 @@ export let util = {
 			}
 		},
 
-
-		//		connect(url, topic, onConnected, onMessage) {
-		//		
-		//			var client = Stomp.client(url);
-		//			
-		//			function onConnect() {
-		//			
-		//				console.log("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
-		//				
-		//				var subscription = client.subscribe(topic, onMessage);
-		//				
-		//				if (onConnected) {
-		//					onConnected();	
-		//				}
-		//			}
-		//			
-		//			function onError(error) {
-		//		    	// display the error's message header:
-		//		    	console.log(error);
-		//				console.log('Socket error. ' + url + "; topic: " + topic);
-		//			}
-		//		    
-		//			function onClose(error) {
-		//		    	// display the error's message header:
-		//		    	console.log(error);
-		//				console.log('Socket closed. ' + url + "; topic: " + topic);
-		//		    }
-		//			
-		//			client.connect("", "", onConnect, onError, onClose);
-		//
-		//			return client;
-		//		},
-
-		//		disconnect(client) {
-		//			
-		//			if (JSON.stringify(client) !== '{}') {
-		//				
-		//				console.log("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
-		//				
-		//				client.disconnect();	
-		//			}
-		//		},
 	},
 	
 	ui: {

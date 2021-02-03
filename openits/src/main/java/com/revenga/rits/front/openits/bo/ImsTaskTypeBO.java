@@ -25,19 +25,19 @@ public class ImsTaskTypeBO extends GenericBO{
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> taskTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetTaskTypes(), null);
+		List<Map<String, Object>> taskTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_TASK_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetTaskTypes()).getFieldId(), taskTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_TASK_TYPES).getFieldId(), taskTypes);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> taskType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetTaskType(), new Object[] { id });
+		Map<String, Object> taskType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_TASK_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetTaskType()).getFieldId(), taskType);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_TASK_TYPE).getFieldId(), taskType);
 	}
 
 }

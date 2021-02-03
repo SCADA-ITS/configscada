@@ -25,19 +25,19 @@ public class SystemPermissionBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 
-		List<Map<String, Object>> systemPermissions = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetSystemPermissions(), null);
+		List<Map<String, Object>> systemPermissions = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PERMISSIONS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetSystemPermissions()).getFieldId(), systemPermissions);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PERMISSIONS).getFieldId(), systemPermissions);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> systemPermission = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetSystemPermission(), new Object[] { id });
+		Map<String, Object> systemPermission = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PERMISSION, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetSystemPermission()).getFieldId(), systemPermission);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PERMISSION).getFieldId(), systemPermission);
 	}
 
 }

@@ -25,27 +25,27 @@ public class StretchBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 	
-		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetStretchs(), null);
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetStretchs()).getFieldId(), stretchs);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS).getFieldId(), stretchs);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> stretch = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetStretch(), new Object[] { id });
+		Map<String, Object> stretch = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetStretch()).getFieldId(), stretch);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH).getFieldId(), stretch);
 	}
 	
 	public List<Map<String, Object>> getStretchByRoad(String id) {
 		
-		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetStretchByRoad(), new Object[] { id });
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetStretchByRoad()).getFieldId(), stretchs);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD).getFieldId(), stretchs);
 	}
 
 }

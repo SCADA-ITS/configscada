@@ -27,37 +27,37 @@ public class ElementTypeBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> elementTypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetElementTypes(), null);
+		List<Map<String, Object>> elementTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementTypes()).getFieldId(), elementTypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES).getFieldId(), elementTypes);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementType(), new Object[] { id });
+		Map<String, Object> elementType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementType()).getFieldId(), elementType);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE).getFieldId(), elementType);
 	}
 	
 	public List<Map<String, Object>> getElementsByElementType(String id) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetElementsByElementType(), new Object[] { id });
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementsByElementType()).getFieldId(), elements);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE).getFieldId(), elements);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getElementTypeStatesByElementType(String id) {
 		
-		Map<String, Object> elementType = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetElementType(), new Object[] { id });
+		Map<String, Object> elementType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE, new Object[] { id });
 		
 		Map<String, Object> elementTypeConverted = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetElementType()).getFieldId(), elementType);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE).getFieldId(), elementType);
 		
 		return (List<Map<String, Object>>) elementTypeConverted.get(FIELD_ELEMENT_TYPE_STATES);	
 	}

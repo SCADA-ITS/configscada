@@ -26,36 +26,36 @@ public class PlanSubtypeBO extends GenericBO {
 	@Override
 	public List<Map<String, Object>> getList() {
 		
-		List<Map<String, Object>> planSubtypes = voDataSourceAdapter.getList(voDataSourceAdapter.getDataSourceGetPlanSubtypes(), null);
+		List<Map<String, Object>> planSubtypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPES, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanSubtypes()).getFieldId(), planSubtypes);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPES).getFieldId(), planSubtypes);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 		
-		Map<String, Object> planSubtype = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlanSubtype(), new Object[] { id });
+		Map<String, Object> planSubtype = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPE, new Object[] { id });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanSubtype()).getFieldId(), planSubtype);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPE).getFieldId(), planSubtype);
 	}
 
 	
 	public Map<String, Object> createPlanSubtype(Object input) {
 		
-		Map<String, Object> createdPlanSubtype = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceCreatePlanSubtype(), (Map<String, Object>) input);
+		Map<String, Object> createdPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_SUBTYPE, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceCreatePlanSubtype()).getFieldId(), createdPlanSubtype);
+				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_SUBTYPE).getFieldId(), createdPlanSubtype);
 	}
 	
 	public Map<String, Object> updatePlanSubtype(Object input) {
 			
-		Map<String, Object> updatedPlanSubtype = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceUpdatePlanSubtype(), (Map<String, Object>) input);
+		Map<String, Object> updatedPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_SUBTYPE, (Map<String, Object>) input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceUpdatePlanSubtype()).getFieldId(), updatedPlanSubtype);
+				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_SUBTYPE).getFieldId(), updatedPlanSubtype);
 	}
 	
 	public Map<String, Object> deletePlanSubtype(String id) {
@@ -64,10 +64,10 @@ public class PlanSubtypeBO extends GenericBO {
 		
 		input.put("planSubtypeId", id);
 		
-		Map<String, Object> deletedPlanSubtype = voDataSourceAdapter.put(voDataSourceAdapter.getDataSourceDeletePlanSubtype(), input);
+		Map<String, Object> deletedPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_SUBTYPE, input);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceDeletePlanSubtype()).getFieldId(), deletedPlanSubtype);
+				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_SUBTYPE).getFieldId(), deletedPlanSubtype);
 	}
 
 }

@@ -27,38 +27,38 @@ public class PlanOrderBO extends GenericBO {
 	public List<Map<String, Object>> getList() {
 
 		List<Map<String, Object>> planOrders = voDataSourceAdapter
-				.getList(voDataSourceAdapter.getDataSourceGetPlanOrders(), null);
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDERS, null);
 
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanOrders()).getFieldId(), planOrders);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDERS).getFieldId(), planOrders);
 	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {
 
-		Map<String, Object> planOrder = voDataSourceAdapter.get(voDataSourceAdapter.getDataSourceGetPlanOrder(),
+		Map<String, Object> planOrder = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER,
 				new Object[] { id });
 
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceGetPlanOrder()).getFieldId(), planOrder);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER).getFieldId(), planOrder);
 	}
 
 	public Map<String, Object> createPlanOrder(Object input) {
 
 		Map<String, Object> createdPlanOrder = voDataSourceAdapter
-				.put(voDataSourceAdapter.getDataSourceCreatePlanOrder(), (Map<String, Object>) input);
+				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_ORDER, (Map<String, Object>) input);
 
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceCreatePlanOrder()).getFieldId(), createdPlanOrder);
+				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_ORDER).getFieldId(), createdPlanOrder);
 	}
 
 	public Map<String, Object> updatePlanOrder(Object input) {
 
 		Map<String, Object> updatedPlanOrder = voDataSourceAdapter
-				.put(voDataSourceAdapter.getDataSourceUpdatePlanOrder(), (Map<String, Object>) input);
+				.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_ORDER, (Map<String, Object>) input);
 
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceUpdatePlanOrder()).getFieldId(), updatedPlanOrder);
+				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_ORDER).getFieldId(), updatedPlanOrder);
 	}
 
 	public Map<String, Object> deletePlanOrder(String id) {
@@ -68,10 +68,10 @@ public class PlanOrderBO extends GenericBO {
 		input.put("planOrderId", id);
 
 		Map<String, Object> deletedPlanOrder = voDataSourceAdapter
-				.put(voDataSourceAdapter.getDataSourceDeletePlanOrder(), input);
+				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_ORDER, input);
 
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.getDataSourceDeletePlanOrder()).getFieldId(), deletedPlanOrder);
+				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_ORDER).getFieldId(), deletedPlanOrder);
 	}
 
 }
