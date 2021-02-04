@@ -499,6 +499,52 @@ export let util = {
 				type: "alert-error",
 				width: 500
 			});
+		},
+		
+		loadWindow(title, body, height, width) {
+			
+			let uid = webix.uid();
+			
+			let head = {
+				view: "toolbar",
+				css: "default-window-head",
+				elements: [
+					{ 
+						view: "label", 
+						template: i18n.t(title)},
+					{
+						view: "icon",
+						//css: "notification-center-close-btn",
+						icon: "mdi mdi-close",
+						on: {
+							onItemClick: function(id) {
+								$$("win_aux_" + uid).close();
+							}
+						}
+					}
+				],
+				borderless: 1
+			};
+
+			webix.ui({
+				view: "window",
+				id: "win_aux_" + uid,
+				move: true,
+				css: "default-window",
+				head: head,
+				height: height,
+				width: width,
+				body: body, 
+				position: function(state) {
+					state.left = (document.documentElement.clientWidth / 2) - (width / 2);
+					state.top = (document.documentElement.clientHeight / 2) - (height / 2);
+				},
+				on: {
+					onBeforeShow: function() {
+						
+					}
+				}
+			}).show();
 		}
 	},
 

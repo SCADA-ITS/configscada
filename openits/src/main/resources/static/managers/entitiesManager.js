@@ -1,15 +1,36 @@
 function assign(entitiesManager, em_type) {
 
-	let response = webix.ajax().sync().get(EntityType[em_type].endpoint);
-
-	if (response != undefined) {
-
-		entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
-
-//		if (Object.keys(entitiesManager.entities).length === Object.keys(EntityType).length) {
+//	let response = webix.ajax().sync().get(EntityType[em_type].endpoint);
 //
-//			entitiesManager.loaded = true;
-//		}
+//	if (response != undefined) {
+//
+//		entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
+//
+////		if (Object.keys(entitiesManager.entities).length === Object.keys(EntityType).length) {
+////
+////			entitiesManager.loaded = true;
+////		}
+//	}
+	
+	if (!EntityType[em_type].syncLoad) {
+		
+		webix.ajax().get(EntityType[em_type].endpoint).then(function(dat){
+		
+			if (dat != undefined) {
+			
+				let response = dat.json();
+				entitiesManager.entities[EntityType[em_type].id] = response;	
+			}
+		});	
+	}
+	else {
+		
+		let response = webix.ajax().sync().get(EntityType[em_type].endpoint);
+		
+			if (response != undefined) {
+
+			entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
+		}
 	}
 }
 

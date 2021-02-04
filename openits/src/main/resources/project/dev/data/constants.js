@@ -37,13 +37,13 @@ const ENTITY_TYPE_MODE_TEMPORARY = 2;
 
 // Type of entities to load
 const EntityType = Object.freeze({
-	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "element_types" },
-	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "element_type_states" },
-	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_types" },
-	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
-	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
-	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, endpoint: appConfig.restUrl + "modules" },
-	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, expireSeconds: 300, endpoint: appConfig.restUrl + "elements" }
+	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_types" },
+	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states" },
+	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_types" },
+	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
+	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
+	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules" },
+	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 300, endpoint: appConfig.restUrl + "elements" }
 });
 
 // Params for windowed ui

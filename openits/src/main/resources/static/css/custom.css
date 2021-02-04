@@ -284,7 +284,7 @@
 
 .control-panel-list .alarm-state-deactive{
 	display:inline-block;
-	border-left: 3px solid #555753;
+	border-left: 3px solid var(--blue-soft);
 	float:left;
 	height: 36px;
 }
@@ -1196,7 +1196,6 @@
 .panel-action .tb-buttons .webix_secondary .webix_button,
 .panel-action .tb-actions .webix_secondary .webix_button{
 	
-	font-size: 12px;
 	width: 100% !important;
 	border-radius: 4px;
 	border-width: 0px;
@@ -1218,12 +1217,16 @@
 
 .panel-action .tb-buttons .webix_secondary .webix_button .webix_img_btn_text,
 .panel-action .tb-actions .webix_secondary .webix_button .webix_img_btn_text {
+	font-size: 13px;
 	color: var(--blue-mid2);
-	font-size: 12px;
 	bottom: 9px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .action-button .webix_button{
 	
+	font-size: 13px;
 	width: 100% !important;
     border-radius: 4px;
     border-width: 0px;
@@ -1259,6 +1262,36 @@
 .action-button-dis .webix_icon_btn{
 	
     color: white !important;
+}
+
+.panel-button .webix_button{
+	
+	font-size: 13px;
+	width: 100% !important;
+	border-radius: 4px;
+	border-width: 0px;
+    background: transparent;
+    color: var(--blue-mid2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    text-align: left;
+}
+
+.panel-button .webix_button:hover{
+	
+	background: var(--blue-soft-opacity-2);
+}
+
+.panel-button .webix_button .webix_icon_btn {
+	font-size: 24px;
+    color: var(--blue-mid2);
+    padding-right: 10px;
+}
+
+.panel-button .webix_button .webix_img_btn_text {
+	color: var(--blue-mid2);
 }
 
 .secondary-tab  {

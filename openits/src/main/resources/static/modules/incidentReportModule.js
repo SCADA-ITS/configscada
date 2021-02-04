@@ -870,7 +870,7 @@ export default class IncidentReportModule extends GenericModule {
 						borderless: true 
 					},
 					{ 
-						height: 170,
+						height: 200,
 						rows: [
 							{ height: 10 },
 							{
@@ -890,7 +890,7 @@ export default class IncidentReportModule extends GenericModule {
 										
 											onItemClick() {
 												
-												
+												util.ui.notImplementedMessage();
 											}
 										}
 									},
@@ -905,7 +905,7 @@ export default class IncidentReportModule extends GenericModule {
 										
 											onItemClick() {
 												
-		
+												util.ui.notImplementedMessage();
 											}
 										}
 									},
@@ -930,7 +930,7 @@ export default class IncidentReportModule extends GenericModule {
 										
 											onItemClick() {
 												
-												
+												util.ui.notImplementedMessage();
 											}
 										}
 									},
@@ -945,14 +945,15 @@ export default class IncidentReportModule extends GenericModule {
 										
 											onItemClick() {
 												
-		
+												util.ui.notImplementedMessage();
 											}
 										}
 									},
 									{}
 								],
 								borderless: true 
-							}
+							},
+							{}
 						]
 					},
 					{
@@ -964,12 +965,13 @@ export default class IncidentReportModule extends GenericModule {
 					{ 
 						height: 150,
 						cols: [
-							{ width: 30},
+							{ width: 50},
 							{
 								rows: [
+									{ height: 10 },
 									{
 									    view: "button",
-										width: 135, 
+										css: "panel-button",
 										label: i18n.t("LBL_INCIDENT_OPERATIONAL_PLAN"),
 										tooltip: i18n.t("LBL_INCIDENT_OPERATIONAL_PLAN_DESCRIPTION"),
 									    type: "icon", 
@@ -978,13 +980,76 @@ export default class IncidentReportModule extends GenericModule {
 										
 											onItemClick() {
 												
+												let h = document.documentElement.clientHeight - 200;
+												let w = document.documentElement.clientWidth - 500;
+												const img = new Image();
+												
+												img.onload = function() {
+
+													h = this.height + 50;
+													w = this.width;
+													
+													let body = {		
+														rows: [
+															{
+																template: function() {
+																	
+																	return `<div><img style="max-width:100%;width:auto;height:auto;" src="${img.src}"></div> `
+																}
+															}
+														]	
+													};
+													
+													util.ui.loadWindow(
+														i18n.t("LBL_OPERATION_PLAN"), 
+														body,
+														h,
+														w
+													);
+												};
+												
+												img.src = self.incidentReport.operationalPlanUrl;
+											}
+										}
+									},
+									{ height: 10 },
+									{
+									    view: "button",
+										heigth: 50,
+										css: "panel-button",
+										label: i18n.t("LBL_INCIDENT_DOCUMENTS"),
+										tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
+									    type: "icon", 
+										icon: "mdi mdi-file-document-multiple-outline", 
+										on: {
+										
+											onItemClick() {
+												
+												util.ui.notImplementedMessage();
+											}
+										}
+									},
+									{ height: 10 },
+									{
+									    view: "button",
+										heigth: 50,
+										css: "panel-button",
+										label: i18n.t("LBL_INCIDENT_ATTACHMENTS"),
+										tooltip: i18n.t("LBL_INCIDENT_ATTACHMENTS_DESCRIPTION"),
+									    type: "icon", 
+										icon: "mdi mdi-attachment", 
+										on: {
+										
+											onItemClick() {
+												
 												
 											}
 										}
-									}
+									},
+									{ height: 10 }
 								]
 							},
-							{ width: 30}
+							{ width: 50}
 						]
 					},
 					{},
