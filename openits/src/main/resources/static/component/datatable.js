@@ -27,9 +27,13 @@ const GridOptions = {
 	ICON: 16
 }
 
+export let EventTypes = {
+	ON_SELECT_ROW: 1
+}
+
 export default class DataTable {
 
-	constructor(dataGridId, dataGridParams, metadata, data) {
+	constructor(dataGridId, dataGridParams, metadata, data, events) {
 
 		this.dataGridId = dataGridId;
 		this.dataGridParams = dataGridParams;
@@ -37,6 +41,7 @@ export default class DataTable {
 		this.data = data;
 		this.stomp = {};
 		this.uid = webix.uid();
+		this.events = events;
 	}
 
 	getView() {
@@ -390,27 +395,29 @@ export default class DataTable {
 
 	translateFieldValues(data) {
 
-		for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
+		if (data && Array.isArray(data)) {
+			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
 
-			let field = this.metadata.gridFields[posField];
-
-			if (field.needsTranslation) {
-
-				data.forEach(item => {
-
-					if (item[field.sourceField] != undefined) {
-
-						if (typeof item[field.sourceField] === 'object') {
-
-							item[field.sourceField].value = i18n.t(item[field.sourceField].value);
+				let field = this.metadata.gridFields[posField];
+	
+				if (field.needsTranslation) {
+	
+					data.forEach(item => {
+	
+						if (item[field.sourceField] != undefined) {
+	
+							if (typeof item[field.sourceField] === 'object') {
+	
+								item[field.sourceField].value = i18n.t(item[field.sourceField].value);
+							}
+							else {
+	
+								item[field.sourceField] = i18n.t(item[field.sourceField]);
+							}
 						}
-						else {
-
-							item[field.sourceField] = i18n.t(item[field.sourceField]);
-						}
-					}
-				});
-			}
+					});
+				}
+			}	
 		}
 	}
 
@@ -780,6 +787,7 @@ export default class DataTable {
 		this.connect_ws();
 		this.on_destroy();
 		this.on_item_dbl_click();
+		this.on_item_selected();
 		this.other_commands_callback();
 	}
 
@@ -984,6 +992,20 @@ export default class DataTable {
 				});
 
 				self.open_module(defaultCommand);
+			});
+		}
+	}
+	
+	on_item_selected() {
+
+		if (this.events && this.events[EventTypes.ON_SELECT_ROW]) {
+			
+			let self = this;
+			let grid = $$("dt-" + this.uid);
+			
+			grid.attachEvent("onSelectChange", function() {
+
+				eval(self.events[EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
 			});
 		}
 	}
@@ -1309,47 +1331,6 @@ export default class DataTable {
 		}
 	}
 
-	update(data) {
-
-		let grid = $$("dt-" + this.uid);
-		let rowsUpdated = 0;
-
-		if (!webix.isUndefined(grid) && data != undefined && Array.isArray(data) && data.length > 0) {
-
-			data.forEach(dataItem => {
-
-				var record = grid.getItem(dataItem.id);
-
-				if (record != undefined) {
-
-					var keys = Object.keys(dataItem);
-
-					if (keys != undefined && Array.isArray(keys) && keys.length > 0) {
-
-						keys.forEach(key => {
-
-							if (dataItem[key] != undefined) {
-
-								record[key] = dataItem[key];
-							}
-							else {
-
-								record[key] = "";
-							}
-						});
-					}
-
-					rowsUpdated++;
-				}
-			});
-
-			if (rowsUpdated > 0) {
-
-				grid.refresh();
-			}
-		}
-	}
-	
 	select(ids) {
 		
 		let grid = $$("dt-" + this.uid);

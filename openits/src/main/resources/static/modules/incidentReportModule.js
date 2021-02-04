@@ -1,5 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
+import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
 
@@ -9,8 +10,14 @@ const INCIDENT_REPORT = Object.freeze({
 		confirm: 100402,
 		cancel: 100403 
 	},
-	restEndpoint: "incidents/reports/",
-	topic: "/topic/incidentReport"
+	restEndpoint: "incidents/reports/${id}",
+	topic: "/topic/incidentReport",
+	actionEndpoints: {
+		cancel: "incidents/reports/${id}/cancel",
+		confirm: "incidents/reports/${id}/confirm",
+		forward: "incidents/reports/${id}/forward",
+		finalizeTask: "incidents/reports/${id}/finalize_task/${taskId}"
+	}
 });
 
 export default class IncidentReportModule extends GenericModule {
@@ -19,8 +26,8 @@ export default class IncidentReportModule extends GenericModule {
 
 		super(module, moduleAction, args);
 
-		this.currentSequenceOfState = undefined;
 		this.currentTask = undefined;
+		this.currentSequenceOfState = undefined;
 		this.dtTasks = undefined;
 		this.incidentReport = undefined;
 		this.stompClient = undefined;
@@ -79,7 +86,7 @@ export default class IncidentReportModule extends GenericModule {
 		return {
 			view: "template",
 			id: "no-data-" + this.uid,
-			template: function(data) {
+			template: function() {
 
 				let icon = "<img src='img/loading.svg' align='center'>";
 
@@ -94,7 +101,7 @@ export default class IncidentReportModule extends GenericModule {
 
 		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
 
-			webix.ajax().get(appConfig.restUrl + INCIDENT_REPORT.restEndpoint + "/" + self.incidentReportId).then(function(dat) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
 
 				if (dat != null) {
 
@@ -106,28 +113,35 @@ export default class IncidentReportModule extends GenericModule {
 						
 							return (e.state.id == self.incidentReport.incidentState.id);
 						});
-	
-						self.drawComponents();
+											
+						if (self.currentSequenceOfState) {
 						
-						if (self.dtTasks) {
-							
-							self.dtTasks.callbacks();
-							
 							let tasks = self.currentSequenceOfState.taskStates;
 							
 							if (Array.isArray(tasks) && tasks.length) {
-								
-								let idxTask = tasks.findIndex(e => {
+							
+								self.currentTask = tasks.find(e => {
 									
-									return !e.completed;
+									return !e.completedAt;
 								});
+							}
+							
+							self.drawComponents();
+						
+							if (self.dtTasks) {
 								
-								if (idxTask !== -1) {
+								self.dtTasks.callbacks();
 								
-									self.dtTasks.select(idxTask + 1);
+								if (self.currentTask) {
+									
+									self.dtTasks.select(self.currentTask.incidentTypeTask.id);	
+								}
+								else {
+									
+									self.dtTasks.select(tasks[0].incidentTypeTask.id);
 								}
 							}
-						}	
+						}
 					}
 					
 					if (self.moduleAction.id === INCIDENT_REPORT.moduleAction.edit && !self.stompClient) {
@@ -463,7 +477,7 @@ export default class IncidentReportModule extends GenericModule {
 									rows: getTasks() 
 								},
 								{ view: "resizer" },
-								getTaskDetails(),
+								self.getTaskDetails(),
 								{ width: 10}
 							]
 						},
@@ -504,14 +518,14 @@ export default class IncidentReportModule extends GenericModule {
 							        extended: false,
 							        filtered: false,
 							        isEpochMilli: false,
-							        isPk: false,
+							        isPk: true,
 							        needsTranslation: false,
 							        parameterized: false,
 							        position: 1,
 							        required: true,
-							        sourceField: "status",
-							        visible: true,
-							        widthPx: 15,
+							        sourceField: "id",
+							        visible: false,
+							        widthPx: 1,
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
@@ -521,14 +535,43 @@ export default class IncidentReportModule extends GenericModule {
 							        extended: false,
 							        filtered: false,
 							        isEpochMilli: false,
-							        isPk: true,
+							        isPk: false,
 							        needsTranslation: false,
 							        parameterized: false,
 							        position: 2,
 							        required: true,
-							        sourceField: "id",
+							        sourceField: "status",
 							        visible: true,
-							        widthPx: 15,
+							        widthPx: 35,
+							        gridFieldDataType: {
+							          	id: 1,
+										name: "string"
+							        },
+									gridFieldIcons: [
+										{
+											icon: "./img/grid/confirmed.png",
+											showValue: false,
+											value: "confirmed"
+										},
+										{
+											icon: "./img/grid/not_confirmed.png",
+											showValue: false,
+											value: "not_confirmed"
+										}
+									]	
+								},
+								{
+							        extended: false,
+							        filtered: false,
+							        isEpochMilli: false,
+							        isPk: false,
+							        needsTranslation: false,
+							        parameterized: false,
+							        position: 3,
+							        required: true,
+							        sourceField: "position",
+							        visible: true,
+							        widthPx: 25,
 							        gridFieldDataType: {
 							          	id: 2,
 										name: "int"
@@ -543,15 +586,15 @@ export default class IncidentReportModule extends GenericModule {
 							        labelTooltip: "LBL_TASK",
 							        needsTranslation: false,
 							        parameterized: false,
-							        position: 3,
+							        position: 4,
 							        required: true,
 							        sourceField: "alias",
 							        visible: true,
-							        widthPx: 250,
+							        widthPx: 230,
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
-							        }	
+							        }
 								},
 								{
 							        extended: false,
@@ -562,15 +605,27 @@ export default class IncidentReportModule extends GenericModule {
 							        labelTooltip: "LBL_TYPE",
 							        needsTranslation: false,
 							        parameterized: false,
-							        position: 4,
+							        position: 5,
 							        required: true,
 							        sourceField: "type",
 							        visible: true,
-							        widthPx: 50,
+							        widthPx: 45,
 							        gridFieldDataType: {
 							          	id: 2,
 										name: "int"
-							        }	
+							        },
+									gridFieldIcons: [
+										{
+											icon: "./img/grid/auto.png",
+											showValue: false,
+											value: "auto"
+										},
+										{
+											icon: "./img/grid/manual.png",
+											showValue: false,
+											value: "manual"
+										}
+									]
 								},
 								
 								{
@@ -582,22 +637,32 @@ export default class IncidentReportModule extends GenericModule {
 							        labelTooltip: "LBL_REQUIRED",
 							        needsTranslation: false,
 							        parameterized: false,
-							        position: 5,
+							        position: 6,
 							        required: true,
 							        sourceField: "required",
 							        visible: true,
-							        widthPx: 50,
+							        widthPx: 45,
 							        gridFieldDataType: {
 							          	id: 1,
 										name: "string"
-							        }	
+							        },
+									gridFieldIcons: [
+										{
+											icon: "./img/grid/required.png",
+											showValue: false,
+											value: "yes"
+										},
+										{
+											icon: "./img/grid/not_confirmed.png",
+											showValue: false,
+											value: "no"
+										}
+									]	
 								}
 							]
 						};
 						
 						let data = [];
-						
-						let tasks = self.currentSequenceOfState.taskStates;
 						
 						if (Array.isArray(tasks) && tasks.length) {
 							
@@ -607,8 +672,9 @@ export default class IncidentReportModule extends GenericModule {
 						
 								let row = {};
 								
-								row.status = tasks[i].completed ? "executed" : "pending";
-								row.id =  i + 1;
+								row.id = tasks[i].incidentTypeTask.id;
+								row.status = tasks[i].completedAt ? "confirmed" : "not_confirmed";
+								row.position =  i + 1;
 								row.alias = tasks[i].incidentTypeTask.alias;
 								row.type = tasks[i].incidentTypeTask.auto ? "auto" : "manual";
 								row.required = tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
@@ -617,34 +683,26 @@ export default class IncidentReportModule extends GenericModule {
 							}	
 						}
 						
-						self.dtTasks = new DataTable(null, null, metadata, data);
+						let events = {};
+						
+						events[EventTypes.ON_SELECT_ROW] = function(rows) {
+							
+							if (Array.isArray(rows) && rows.length) {
+								
+								let taskDetailsBody = $$("taskDetails-" + self.uid);
+								
+								if (taskDetailsBody) {
+								
+									webix.ui(self.getTaskDetails(rows[0]), taskDetailsBody);
+								}
+
+							} 
+						};
+
+						self.dtTasks = new DataTable(null, null, metadata, data, events);
 					
 						return self.dtTasks.getView();
 					}
-				}
-				
-				function getTaskDetails() {
-					
-					let taskDetails = {
-						
-						borderless: false,
-						rows: [
-							{
-								view: "toolbar",
-								cols:[
-									{ width: 4 },
-									{ 
-										view: "label", 
-										label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t("LBL_TASK_DETAILS")}</span>`
-									}
-								]	
-							},
-							{}	
-						]
-					};
-					
-					
-					return taskDetails;
 				}
 				
 				return tabTasksBoard;
@@ -756,7 +814,7 @@ export default class IncidentReportModule extends GenericModule {
 												
 												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 												
-													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completed);
+													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt);
 													
 													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length)	{
 														
@@ -773,31 +831,53 @@ export default class IncidentReportModule extends GenericModule {
 											
 											if (self.incidentReport.confirm === true) {
 												
-												//return i18n.t("LBL_INCIDENT_ACTION_NEXT");											
-												return "Next";
+												return i18n.t("LBL_INCIDENT_ACTION_NEXT");											
 											}
 											else {
 												
-												//return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
-												return "Confirm";
+												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
 											}
 										})(),
 									    type: "icon", 
-										icon: (function() {
-											
-											if (self.incidentReport.confirm === true) {
-																						
-												return "mdi mdi-skip-next";
-											}
-											else {
-												
-												return "mdi mdi-check-bold";
-											}
-										})(),
+//										icon: (function() {
+//											
+//											if (self.incidentReport.confirm === true) {
+//																						
+//												return "mdi mdi-skip-next";
+//											}
+//											else {
+//												
+//												return "mdi mdi-check-bold";
+//											}
+//										})(),
 										on: {
 										
 											onItemClick() {
 												
+												if (self.incidentReport.confirm === true) {
+												
+													if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+													
+														let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt);
+														
+														if (tasksCompleted.length == self.currentSequenceOfState.taskStates.length)	{
+															
+															let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.forward, { 
+																id: self.incidentReportId
+															});
+															
+															self.restAction(endpoint);
+														}
+													}
+												}
+												else {
+													
+													let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.confirm, { 
+														id: self.incidentReportId
+													});
+													
+													self.restAction(endpoint);
+												}
 												
 											}
 										}
@@ -808,61 +888,6 @@ export default class IncidentReportModule extends GenericModule {
 							{ width: 30}
 						]
 					},
-//					{
-//						view: "label",
-//						css: "section",
-//						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_INFO")}</span>`,
-//						borderless: true 
-//					},
-//					{ 
-//						height: 280,
-//						cols: [
-//							{ width: 40 },
-//							{
-//								width: 200,
-//								rows: [
-//									{ height: 20},
-//									{
-//										css: "section-info",
-//										borderless: true,
-//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_SINCE")}</span></div>
-//											  	   <div>
-//													<span class="ico webix_icon mdi mdi-clock-time-three-outline"></span>
-//											  	   	<span class="value">${util.toLocaleString(self.incidentReport.generatedAt / 1000)}</span>
-//												   </div>`
-//									},
-//									{
-//										css: "section-info",
-//										borderless: true,
-//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
-//											  	   <div>
-//													<span class="ico webix_icon mdi mdi-map-marker"></span>
-//											  	   	<span class="value">${self.incidentReport.location.alias}</span>
-//												   </div>`
-//									},
-//									{
-//										css: "section-info",
-//										borderless: true,
-//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
-//											  	   <div>
-//													<span class="ico webix_icon mdi mdi-road"></span>
-//											  	   	<span class="value">${self.incidentReport.affectionStretch.alias}</span>
-//												   </div>`
-//									},
-//									{
-//										css: "section-info",
-//										borderless: true,
-//										template: `<div><span class="field">${i18n.t("LBL_INCIDENT_ASIGNED_USER")}</span></div>
-//											  	   <div>
-//													<span class="ico webix_icon mdi mdi-account"></span>
-//											  	   	<span class="value">${self.incidentReport.currentUser.name}</span>
-//												   </div>`
-//									}
-//								]
-//							},
-//							{}
-//						]
-//					},
 					{
 						view: "label",
 						css: "section",
@@ -1070,7 +1095,11 @@ export default class IncidentReportModule extends GenericModule {
 								
 									onItemClick() {
 										
+										let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.cancel, { 
+											id: self.incidentReportId
+										});
 										
+										self.restAction(endpoint);
 									}
 								}
 							},
@@ -1085,7 +1114,12 @@ export default class IncidentReportModule extends GenericModule {
 								
 									onItemClick() {
 										
-
+										let container = $$(self.args.containerId); 
+										
+										if (container) {
+											
+											container.close();
+										}
 									}
 								}
 							},
@@ -1100,6 +1134,192 @@ export default class IncidentReportModule extends GenericModule {
 		}
 
 		webix.ui(viewMain, $$(this.uid));
+	}
+	
+	restAction(endpoint) {
+		
+		console.log("Incident report action => " + endpoint);
+												
+		webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
+			
+			if (dat != null) {
+	
+				let resAction = dat.json();
+			}
+		}, function(response) { util.ajax.handleError(response); });
+	}
+	
+	getTaskDetails(incidentTypeTaskId) {
+					
+		let self = this;
+		let taskDetailsBody = {};
+		let task = undefined;
+		let taskDetails = {};
+		
+		if (!incidentTypeTaskId && self.currentTask) {
+			
+			task = self.currentTask;
+		}
+		else {
+			
+			let tasks = self.currentSequenceOfState.taskStates;
+							
+			if (Array.isArray(tasks) && tasks.length) {
+			
+				task = tasks.find(e => {
+					
+					return e.incidentTypeTask.id === incidentTypeTaskId;
+				});
+				
+				if (!task) {
+				
+					task = tasks[0];	
+				}
+			}
+		}
+		
+		if (task) {
+			
+			taskDetailsBody = {
+				id: "taskDetailsBody-" + self.uid,
+				borderless: true,
+				css: "ims-incident-report-tab-details",
+				rows: [
+					{ height: 40},
+					{
+						cols: [
+							{ width: 40},
+							{
+								borderless: true,
+								rows: [
+									{
+										height: 50,
+										borderless: true,
+										template: `<div><span class="ico webix_icon mdi mdi-form-textbox"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_ALIAS")}</span></div>
+												   <div class="value">${task.incidentTypeTask.alias}</div>`	
+									},
+									{
+										height: 50,
+										borderless: true,
+										template: `<div><span class="ico webix_icon mdi mdi-image-text"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_DESCRIPTION")}</span></div>
+												   <div class="value">${task.incidentTypeTask.description}</div>`	
+									},
+									{
+										height: 50,
+										borderless: true,
+										template: function() {
+											
+											let typeTask = i18n.t("LBL_INCICENT_TASK_MANUAL");
+											
+											if (task.incidentTypeTask.auto) {
+												
+												typeTask = i18n.t("LBL_INCICENT_TASK_AUTO");
+											}
+											
+											return `<div><span class="ico webix_icon mdi mdi-animation"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
+												   	<div class="value">${typeTask}</div>`;	
+										} 
+									},
+									{
+										height: 50,
+										borderless: true,
+										template: `<div><span class="ico webix_icon mdi mdi-asterisk"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_REQUIRED")}</span></div>
+												   <div class="value">${task.incidentTypeTask.mandatory ? i18n.t("LBL_YES") : i18n.t("LBL_NO")}</div>`
+									},
+									{
+										height: 50,
+										borderless: true,
+										template: function() {
+										
+											let completedAt = i18n.t("LBL_INCIDENT_TASK_NO_COMPLETED");
+											 
+											if (task.completedAt) {
+												
+												completedAt = util.toLocaleString(task.completedAt / 1000);
+											}
+											
+											return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_COMPLETED")}</span></div>
+												   <div class="value">${completedAt}</div>`	
+										}
+									}
+								]
+							},
+							{ width: 40}
+						]
+					},
+					{}		
+				]
+			};
+			
+			taskDetails = {
+			
+				id: "taskDetails-" + self.uid,
+				borderless: true,
+				rows: [
+					{ height: 5},
+					{
+						view: "toolbar",
+						cols:[
+							{ width: 4 },
+							{ 
+								view: "label", 
+								label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t("LBL_TASK_DETAILS")}</span>`
+							}
+						]	
+					},
+					taskDetailsBody,
+					{
+						view: "toolbar",
+						height: 55,
+						cols: [
+							{},
+							{
+							    view: "button",
+								css: (function() {
+									
+									if (!task.incidentTypeTask.auto && !task.completedAt) {
+										
+										return "action-button"
+									}
+									else {
+										
+										return "action-button-dis";
+									}
+										
+								})(),
+								height: 50,
+								width: 150,
+								label: (function() {
+									
+									return i18n.t("LBL_INCIDENT_END_TASK");
+								})(),
+								on: {
+								
+									onItemClick() {
+										
+										if (task) {
+										
+											if (!task.incidentTypeTask.auto && !task.completedAt) {
+											
+												let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.finalizeTask, { 
+													id: self.incidentReportId, 
+													taskId: self.currentTask.incidentTypeTask.id
+												});
+
+												self.restAction(endpoint);
+											}
+										}
+									}
+								}
+							},
+						]
+					},
+					{ height: 5},
+				]
+			};
+		}
+
+		return taskDetails;
 	}
 
 	connect_ws() {
@@ -1119,6 +1339,27 @@ export default class IncidentReportModule extends GenericModule {
 				console.log(data);
 				
 				self.refresh();	
+			}
+			else if (data.action === "DELETE") {
+				
+				console.log(data);
+				
+				webix.alert({
+				    title: i18n.t("LBL_INCIDENT_CLOSED") + " " + self.incidentReport.id,
+				    ok: "LBL_OK",
+				    text: "LBL_INCIDENT_CLOSED DESCRIPTION",
+					width: 600,
+				    type:"alert-warning"
+				}).then(function(){
+				    
+					let container = $$(self.args.containerId); 	
+										
+					if (container) {
+						
+						container.close();
+					}
+				});
+				
 			}
 		}
 

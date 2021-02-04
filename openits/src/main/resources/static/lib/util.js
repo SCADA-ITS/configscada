@@ -30,6 +30,7 @@ export let util = {
 			let externalizable = true;
 			let height = 768;
 			let width = 1280;
+			let win_id = "win_" + module.id + "_" + webix.uid();
 			
 			let lazyClass;
 
@@ -106,14 +107,19 @@ export let util = {
 			}
 			else {
 
+				if (!args) {
+					
+					args = {};
+				}
+				
+				args.containerId = win_id;
+				
 				lazyClass = new mod.default(module, moduleAction, args);
 
 				viewModule = lazyClass.runOne(module.jsMethodDraw)
 			}
 
 			if (viewModule) {
-
-				let win_id = "win_" + module.id + "_" + webix.uid();
 				
 				let head = {
 					view: "toolbar",
@@ -184,6 +190,7 @@ export let util = {
 			let color = '#464646';
 			let label = i18n.t('LBL_UNDEFINED');
 			let externalizable = true;
+			let tab_id = "tab_" + module.id + "_" + webix.uid();
 
 			let lazyClass;
 
@@ -271,14 +278,19 @@ export let util = {
 			}
 			else {
 				
+				if (!args) {
+					
+					args = {};
+				}
+				
+				args.containerId = tab_id;
+				
 				lazyClass = new mod.default(module, moduleAction, args);
 	
 				viewModule = lazyClass.runOne(module.jsMethodDraw)
 			}
 
 			if (viewModule) {
-
-				let tab_id = "tab_" + module.id + "_" + webix.uid();
 
 				$$(MAIN_TAB_ID).addView({
 					id: tab_id,
@@ -616,5 +628,10 @@ export let util = {
 	  }
 
 	  return hash;
+	},
+	
+	fillTemplate(templateString, templateVars){
+  		var func = new Function(...Object.keys(templateVars),  "return `"+templateString +"`;")
+  		return func(...Object.values(templateVars));
 	}
 };
