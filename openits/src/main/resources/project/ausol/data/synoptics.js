@@ -451,7 +451,7 @@ export let synopticData= [
 
 		"Element:61:1": { "x": 150,   "y": 200, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
 		
-		"Element:65:1": { "x": 1640,   "y": 475, "width": 80, "height": 80,  "alias": "RV-SAI-1" },
+		"Element:65:1": { "x": 1640,   "y": 475, "width": 120, "height": 120,  "alias": "RV-SAI-1" },
 
 		"Element:70:1": { "x": 1640,   "y": 675, "width": 22, "height": 27,  "alias": "RV-ANALIZADOR_RED-1" },
 

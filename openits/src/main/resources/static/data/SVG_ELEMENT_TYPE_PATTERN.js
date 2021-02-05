@@ -1166,16 +1166,37 @@ transform="translate(-14.967094,-84.724441)">
     'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
     'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.0581209" /></g></g>';
 
-export let SVG_65_SAI= `<g style="fill:#808080;fill-opacity:0.83132498;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" id="g69">
-     <rect y="-0.39801317" x="-0.39037278" height="23.463051"
-        width="24.211872"` +
-        'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' +
-        'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
-        `;fill-opacity:1;stroke:#000000;stroke-width:0.52899998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-     <path sodipodi:nodetypes="cccccccc" id="path981"
-        d="M 13.525125,2.7789011 5.8930186,10.95422 10.762247,13.045583 5.4304606,19.890037 17.57497,11.90484 11.443615,8.482612 Z"
-        style="fill:#ffff00;stroke:#000000;stroke-width:0.29356915px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-   </g>`;
+export let SVG_65_SAI= `<g
+style="fill:#808080;fill-opacity:0.831325;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6"
+id="g69">
+<g
+  id="g993"
+  transform="matrix(0.34789241,0,0,0.35651352,-11.331494,-7.5415401)">
+ <path` +
+    ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"'+
+    ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"'+
+    `d="m 37.230656,38.3646 22.111606,-3.6e-5 c 2.287224,14.048116 3.688893,28.096232 0,42.144348 l -22.111606,3.6e-5 c -2.403103,-13.807806 -2.63438,-27.832794 0,-42.144348 z"
+    sodipodi:nodetypes="ccccc" />
+ <path
+    id="path974"
+    style="fill:#333333;fill-opacity:0.831325;fill-rule:evenodd;stroke:#000000;stroke-width:0.512001"
+    d="m 56.92841,44.901281 c 0.533192,3.75687 -2.988716,16.300296 -9.087163,16.03617 -7.123552,-0.308524 -9.570827,-11.54414 -9.220799,-15.234362 0.348463,-3.673733 5.101724,-3.741773 9.087164,-3.741773 3.98544,0 8.702262,-0.713644 9.220798,2.939965 z"
+    sodipodi:nodetypes="sssss" />
+ <rect
+    style="fill:#000080;fill-opacity:0.831325;fill-rule:evenodd;stroke:#000000;stroke-width:0.562266"
+    id="rect977"
+    width="12.244132"
+    height="7.2996464"
+    x="41.719181"
+    y="45.060051" />
+ <path
+    style="fill:#ffff00;stroke:#000000;stroke-width:0.193287px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+    d="m 48.817889,62.193132 -3.374299,8.01588 2.152777,2.050574 -2.357279,6.71097 5.369298,-7.829465 -2.710761,-3.355484 z"
+    id="path981"
+    sodipodi:nodetypes="ccccccc" />
+</g>
+</g>
+</g>`;
  
 export let SVG_66_VANE= `<g id="g1230" transform="matrix(0.39073264,0,0,0.34874242,-16.679245,-10.274799)">
       <g id="g1213" transform="translate(6.3500003,-7.4083337)">` +
