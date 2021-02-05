@@ -59,9 +59,10 @@ export default class synopticElement {
         if (this.element.elementType.id === ELEMENT_TYPE.ID_4_SEC
             || this.element.elementType.id === ELEMENT_TYPE.ID_7_ZONE
             || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_GENERIC
-            || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) {
+            || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX
+            || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MTX) {
           // If complex icon need measures
-          if((ELEMENT_TYPE.values[this.element.elementType.id].elementTypeParams || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX || this.element.elementType.id === ELEMENT_TYPE.ID_4_SEC) 
+          if((ELEMENT_TYPE.values[this.element.elementType.id].elementTypeParams || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX || ELEMENT_TYPE.values[this.element.elementType.id].uiType === UI_ELEMENT_TYPE_MTX || this.element.elementType.id === ELEMENT_TYPE.ID_4_SEC) 
               && (typeof this.element.elementValues === 'undefined' || !this.element.elementValues) ){
             elementQuery.load({
               elem: this.element.id,
@@ -137,9 +138,7 @@ export default class synopticElement {
             
             // FIXME: this is for the global synoptic, adds the title to the tunnel
             if (synopticConf.id == "synopticGlobal") {
-              let c = document.querySelector('[view_id="' + synopticConf.id + '"]');
-              let total_width = c.offsetWidth;
-              let total_height = c.offsetHeight;
+              let total_height = snapDiv.node.clientHeight;
               let titleBackground = snapDiv.rect(
                 synopticConfElement.x * ratioWidth,
                 total_height - 30 * ratioHeight - synopticConfElement.y * ratioHeight,

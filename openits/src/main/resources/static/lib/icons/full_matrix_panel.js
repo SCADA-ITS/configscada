@@ -24,7 +24,6 @@ export function getLinesOfText(panelType, zone, subPanel) {
 
 
 export function generateIcon(element, suffix = "") {
-
   // check for the panel config
   let panelConfig = element.elementValues.find(
     (ic) =>
@@ -32,8 +31,12 @@ export function generateIcon(element, suffix = "") {
       elementTypeMap.PANEL_MANAGER_CONFIG
   );
 
-  panelConfig = JSON.parse(panelConfig.value);
-
+  // control stomp 5:1
+  if (panelConfig === undefined){
+    panelConfig = JSON.parse(panelData[element.elementType.id]["panel"]);
+  }else{
+    panelConfig = JSON.parse(panelConfig.value);
+  }
   // changes the color based on the status
   let color = "";
   let elementState = "";
@@ -129,12 +132,10 @@ export function generateIcon(element, suffix = "") {
         // find the element with that value
         let value_to_find = 1001 + n_elements;
         let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
-        
         let isGraphic=false;
         if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
           let value_to_find2 = 2001 + n_elements;
           let content_value2 = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find2 + ":2").value;
-          
           if(parseInt(content_value2)==1){
             isGraphic=true;
           }
@@ -240,7 +241,6 @@ export function updateMatrixPanelIcon(element, suffix = "") {
   // search in the values for an id greater than 1001
   for(let i=0; i<element.elementValues.length; i++) {
     let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
-
     if(elementTypeParam > 1000) {
       let picToShow = element.elementValues.find(
         (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"

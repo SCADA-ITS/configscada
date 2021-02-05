@@ -68,7 +68,7 @@ export function alarms(){
 				//"template": function (obj) { return getDate(obj.activation) }, 
 				"template": function (obj) { 
 					if(obj.activation !== null){
-						return webix.i18n.fullDateFormatStr(obj.activation);
+						return obj.activation !== undefined ? obj.activation !== null ? moment(new Date(obj.activation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}
@@ -80,7 +80,7 @@ export function alarms(){
 				// "template": function (obj) { return getDate(obj.recognized) }, 
 				"template": function (obj) { 
 					if(obj.recognized !== null){
-						return webix.i18n.fullDateFormatStr(obj.recognized);
+						return obj.recognized !== undefined ? obj.recognized !== null ? moment(new Date(obj.recognized)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}
@@ -90,7 +90,7 @@ export function alarms(){
 				// "template": function (obj) { return getDate(obj.deactivation) }, 
 				"template": function (obj) { 
 					if(obj.deactivation !== null){
-						return webix.i18n.fullDateFormatStr(obj.deactivation);
+						return obj.deactivation !== undefined ? obj.deactivation !== null ? moment(new Date(obj.deactivation)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}
@@ -487,7 +487,7 @@ export function alarms(){
 				{ "id": "activation_recon", sort:"date", "header": $.i18n("alarms.d.activation"), 
 				"template": function (obj_recon) { 
 					if(obj_recon.activation_recon !== null){
-						return webix.i18n.fullDateFormatStr(obj_recon.activation_recon);
+						return obj_recon.activation_recon !== undefined ? obj_recon.activation_recon !== null ? moment(new Date(obj_recon.activation_recon)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}
@@ -499,7 +499,7 @@ export function alarms(){
 				//format:webix.i18n.fullDateFormatStr,
 				"template": function (obj_recon) { 
 					if(obj_recon.recognized_recon !== null){
-						return webix.i18n.fullDateFormatStr(obj_recon.recognized_recon);
+						return obj_recon.recognized_recon !== undefined ? obj_recon.recognized_recon !== null ? moment(new Date(obj_recon.recognized_recon)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}
@@ -510,7 +510,7 @@ export function alarms(){
 				//format:webix.i18n.fullDateFormatStr,
 				"template": function (obj_recon) { 
 					if(obj_recon.deactivation_recon !== null){
-						return webix.i18n.fullDateFormatStr(obj_recon.deactivation_recon);
+						return obj_recon.deactivation_recon !== undefined ? obj_recon.deactivation_recon !== null ? moment(new Date(obj_recon.deactivation_recon)).format("YYYY-MM-DD HH:mm:ss") : '-' : '-';
 					}else{
 						return "-";
 					}

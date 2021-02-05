@@ -409,6 +409,12 @@ export default class TabForm {
 											if(this.synopticElement == undefined){
 												this.synopticElement= new SynopticElement(element);
 											}else{
+												if(parseInt(element.id.split(":")[1]) === 30){
+													this.synopticElement= new SynopticElement(element);
+													let iconoSvg = this.synopticElement.getElementSVG(80, 40, ":Form");
+													$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
+													document.getElementById(data.id + ":Form").setAttribute("transform", "scale(" + this.scale_height + "," + this.scale_height + ")");
+												}
 												this.synopticElement.updateElement(element);
 											}
 											this.synopticElement.getElementIcon(":Form");
@@ -661,6 +667,7 @@ export default class TabForm {
 
 		this.graphql.load().then(data => {
 			this.data = data;
+			this.commadsList = this.data.elementType.commandElementTypes;
 			if(this.synopticElement==undefined){
 				this.synopticElement = new SynopticElement(data);
 			}else{
@@ -721,6 +728,8 @@ export default class TabForm {
 					let scale_height = 40 / total_height;
 					let scaled_width = total_width * scale_height;
 					//iconoSvg = getElementSVG(data, total_width, total_height, ":Form");
+					this.scale_height = scale_height;
+					this.scaled_width = scaled_width;
 					iconoSvg = this.synopticElement.getElementSVG(scaled_width, total_height, ":Form");
 
 					$$("elementHeaderIcon" + this.id).setValues({ value: iconoSvg });
@@ -905,7 +914,7 @@ export default class TabForm {
 										graphql.save({
 											"commands": [
 												{
-													"commandElementTypeId": this.data.elementType.commandElementTypes[index].id,
+													"commandElementTypeId": this.commadsList[index].id,
 													"elementId": elementId
 												}
 											]
@@ -917,7 +926,7 @@ export default class TabForm {
 												"logSubtypeId": "LogSubtype:1",
 												"auditLogValues": [
 													{
-													"value": this.data.elementType.commandElementTypes[index].labelAlias,
+													"value": this.commadsList[index].labelAlias,
 													"logTypeParamId": "LogTypeParam:3:1"
 													},{
 													"value": this.data.alias,

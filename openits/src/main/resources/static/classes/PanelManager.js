@@ -144,303 +144,356 @@ export default class PanelManager {
 
 			this.doActions();
 
-			//DATOS
-			switch (this.panelManagerType) {
-				case elementTypeMap.PANELMANAGER_TYPE_PANEL:
-					this.graphql.load().then(elem => {
-						datosAlias = elem.alias; 
-						this.values = [];
-						let counter = 0;
-						elem.elementValues.forEach(evalues => {
-							if (parseInt(evalues.id.split(":")[3]) > 1000 && parseInt(evalues.id.split(":")[4]) === 2) {  //ese numero 3 será una constante
-								let code = this.config.cod_listaCells[parseInt(evalues.id.split(":")[3]) - 1001];
-								if (code !== undefined) {
-									this.values.push(evalues.value);
-									if (code.split("_")[10] === "G") {
-										evalues.value !== null ? evalues.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: evalues.value, file_type: availablePictos[evalues.value].file_type }) : null : null;
-									} else {
-										for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
-											try {
-												let value_text = null;
-												value_text = evalues.value !== null ? evalues.value !== "" ? evalues.value.split(":$")[i - 1] !== undefined ? evalues.value.split(":$")[i - 1] : null : null : null;
-												if (value_text !== null)
-													$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(evalues.value.split(":$")[i - 1]);
-											} catch (e) {
-												console.log(e);
-											}
-										}
-									}
+			this.loadData();
+			document.getElementById("pmvSignalForm" + this.orderId + "spinner").style.display = "none";
+		});
+
+	}
+
+	loadData(){
+		//DATOS
+		switch (this.panelManagerType) {
+			case elementTypeMap.PANELMANAGER_TYPE_PANEL:
+				this.loadDataPanel();
+				break;
+			case elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL:
+				document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
+				break;
+			case elementTypeMap.PANELMANAGER_TYPE_PLAN:
+				this.loadDataPlan();
+				document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
+				break;
+			case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
+				this.loadDataPlanEdit();
+				document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
+				break;	
+		}
+	}
+
+	loadDataPanel(){
+		this.graphql.load().then(elem => {
+			datosAlias = elem.alias; 
+			this.values = [];
+			let counter = 0;
+			elem.elementValues.forEach(evalues => {
+				if (parseInt(evalues.id.split(":")[3]) > 1000 && parseInt(evalues.id.split(":")[4]) === 2) {  //ese numero 3 será una constante
+					let code = this.config.cod_listaCells[parseInt(evalues.id.split(":")[3]) - 1001];
+					if (code !== undefined) {
+						this.values.push(evalues.value);
+						if (code.split("_")[10] === "G") {
+							evalues.value !== null ? evalues.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: evalues.value, file_type: availablePictos[evalues.value].file_type }) : null : null;
+						} else {
+							for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+								try {
+									let value_text = null;
+									value_text = evalues.value !== null ? evalues.value !== "" ? evalues.value.split(":$")[i - 1] !== undefined ? evalues.value.split(":$")[i - 1] : null : null : null;
+									if (value_text !== null)
+										$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(evalues.value.split(":$")[i - 1]);
+								} catch (e) {
+									console.log(e);
 								}
 							}
+						}
+					}
 
-							if (parseInt(evalues.id.split(":")[3]) > 2000 && parseInt(evalues.id.split(":")[4]) === 2) {  //ese numero 3 será una constante
-								let stateValue = 0;
-								switch (evalues.value){
-									case "2": //texto
-										//por defecto viene como texto por tanto no hacemos nada
-										stateValue = 0;
-									break;
-									case "1": //gráfico
-										stateValue = 1;
-										generateGraphicReplace(this.config,counter,this.scale);
-									break;
-								}
-								$$(this.config.dual_panels[counter]).addView({
-									view: "switch",
-									id: this.config.dual_panels[counter] + "_state",
-									//label: "state",
-									value: stateValue,
-									on: {
-										onChange: (value) => {
-											//Modificamos el panel para que muestre el estado actual
-											//rellenamos los datos si el panel tenia datos 
-											//let dato = parseInt($$(value).getValue());
-											switch (value){
-												case 0: //texto
-													generateTextReplace(this.config,counter -1);
-												break;
-												case 1: //gráfico
-													generateGraphicReplace(this.config,counter -1,this.scale);
-												break;
-											}
-							
-											/*
-											if(data[0] !== null){
-                                            	//actualizamos el panel
-                                            	let control = $$("planScheduleForm_" + data[0].id + "_state");
-                                            	let html = statusBadge(data[0].planScheduleStateType.alias);
-                                            	control.config.labelRight = html;
-                                            	control.refresh();
-                                            	//mandamos mensaje de planSchedule PAUSE
-                                            	webix.message({type:"success", text:$.i18n("lbl_schedule_pause_correctly")});
-                                        	}else{
-                                            	webix.message({type:"error", text:$.i18n("lbl_schedule_pause_error")});
-                                        	}
-											*/
+					//Codigo Final para el formato de parametro nuevo, en cuanto todos los elementos tenga este formato se eliminara la forma de arriba
+					//typos admitidos: 30
+					if(parseInt(evalues.id.split(":")[1]) === 30){
+
+						let code = this.config.cod_listaCells[parseInt(evalues.id.split(":")[3]) - 1001];
+						if (code !== undefined) {
+							if (evalues.value) {
+								let datos = JSON.parse(evalues.value);
+								this.values.push(datos.value);
+								console.log(code.split("_")[10]);
+								console.log(code);
+								console.log(datos);
+								if (code.split("_")[10] === "G") {
+									console.log(datos.value);
+									datos.value !== null ? datos.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: datos.value, file_type: availablePictos[datos.value].file_type }) : null : null;
+								} else {
+									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+										try {
+											let value_text = null;
+											value_text = datos.value !== null ? datos.value !== "" ? datos.value.split(":$")[i - 1] !== undefined ? datos.value.split(":$")[i - 1] : null : null : null;
+											if (value_text !== null)
+												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(datos.value.split(":$")[i - 1]);
+										} catch (e) {
+											console.log(e);
 										}
-									}
-								},0);
-								counter += 1;
-							}
-						});
-						//Actualizamos los valores de los paneles duales
-
-						if(this.config.dual_panels.length > 0){
-							if(this.values.length>0){
-								for (let i=0; i<this.config.dual_panels.length; i++) {
-									let dato = parseInt($$(this.config.dual_panels[i] + "_state").getValue());
-									switch (dato){
-										case 0: //texto
-											let len = this.config.listaCells[parseInt(this.config.dual_panels[i].split("_")[1]) - 1].cellValues.split("_")[11];
-											for(let i=1;i<=len;i++) {
-												try {
-													let value_text = null;
-													let v_value = this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1];
-													value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
-													if (value_text !== null)
-														$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
-												} catch (e) {
-													console.log(e);
-												}
-											}
-										break;
-										case 1: //gráfico
-											this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1] !== null ? this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1] !== "" ? $$("panel_" + this.config.dual_panels[i].split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1], file_type: availablePictos[this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1]].file_type }) : null : null;
-										break;
 									}
 								}
 							}
 						}
-						document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
-					});
-					break;
-				case elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL:
-					document.getElementById("pmvSignalForm" + this.orderId + "spinner").style.display = "none";
-					break;
-				case elementTypeMap.PANELMANAGER_TYPE_PLAN:
-					if(this.values !== null){
-						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
-							let dual = false;
-							let dualActual = null;
-							let dualOption = null;
-							this.config.dual_panels.forEach(y => {
-								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
-								{
-									dual = true;
-									dualActual = y;
-									dualOption = this.values[parseInt(y.split("_")[1]) + 1].value === "1" ? "1" : "0";
-								}	
-							});
 
-							if(dual){
-								//let dato = parseInt($$(dualActual + "_state").getValue());
-								switch (dualOption){
-									case "0": //texto
-										//generateTextReplace(this.config,contador2);
-										let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
-										for(let i=1;i<=len;i++) {
-											try {
-												let value_text = null;
-												let v_value = this.values[contador2].value;
-												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
-												if (value_text !== null)
-													$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
-											} catch (e) {
-												console.log(e);
-											}
-										}
-									break;
-									case "1": //gráfico
-										generateGraphicReplace(this.config,contador2 - 1,this.scale);
-										this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
-									break;
-								}
-								contador2 =+ 2;
-							}else{
-								let code = this.config.cod_listaCells[contador2-1];
-								let item = this.values[contador2];
-								if (code.split("_")[10] === "G") {
-									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
-								} else {
-									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
-										try {
-											let value_text = null;
-											value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
-											if (value_text !== null)
-												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
-										} catch (e) {
-											console.log(e);
-										}
-									}
-								}
-							}
-						};
 					}
-					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
-					break;
-				case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
-					if(this.values !== null){
-						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
-							let dual = false;
-							let dualActual = null;
-							let dualOption = null;
-							this.config.dual_panels.forEach(y => {
-								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
-								{
-									dual = true;
-									dualActual = y;
-									dualOption = this.values[parseInt(y.split("_")[1]) + 1].value;
-								}	
-							});
 
-							if(dual){
-								//let dato = parseInt($$(dualActual + "_state").getValue());
-								switch (dualOption){
-									case "0": //texto
-										//generateTextReplace(this.config,contador2);
-										let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
-										for(let i=1;i<=len;i++) {
-											try {
-												let value_text = null;
-												let v_value = this.values[contador2].value;
-												value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
-												if (value_text !== null)
-													$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
-											} catch (e) {
-												console.log(e);
-											}
-										}
-									break;
-									case "1": //gráfico
-										generateGraphicReplace(this.config,contador2 - 1,this.scale);
-										this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
-									break;
-								}
-								$$(this.config.dual_panels[contador2 - 1]).addView({
-									view: "switch",
-									id: this.config.dual_panels[contador2 - 1] + "_state",
-									//label: "state",
-									value: dualOption,
-									on: {
-										onChange: (value) => {
-											//Modificamos el panel para que muestre el estado actual
-											//rellenamos los datos si el panel tenia datos 
-											//let dato = parseInt($$(value).getValue());
-											switch (value){
-												case 0: //texto
-													generateTextReplace(this.config,contador2 -2);
-												break;
-												case 1: //gráfico
-													generateGraphicReplace(this.config,contador2 -2,this.scale);
-												break;
-											}
-										}
-									}
-								},0);
-							}else{
-								let code = this.config.cod_listaCells[contador2-1];
-								let item = this.values[contador2];
-								if (code.split("_")[10] === "G") {
-									item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
-								} else {
-									for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
-										try {
-											let value_text = null;
-											value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
-											if (value_text !== null)
-												$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
-										} catch (e) {
-											console.log(e);
-										}
-									}
-								}
-							}
-						};
-					}else{
-						for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
-							let dual = false;
-							let dualActual = null;
-							let dualOption = null;
-							this.config.dual_panels.forEach(y => {
-								if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
-								{
-									dual = true;
-									dualActual = y;
-									dualOption = "0";
-								}	
-							});
+				}
 
-							if(dual){
-								$$(this.config.dual_panels[contador2 - 1]).addView({
-									view: "switch",
-									id: this.config.dual_panels[contador2 - 1] + "_state",
-									//label: "state",
-									value: dualOption,
-									on: {
-										onChange: (value) => {
-											//Modificamos el panel para que muestre el estado actual
-											//rellenamos los datos si el panel tenia datos 
-											//let dato = parseInt($$(value).getValue());
-											switch (value){
-												case 0: //texto
-													generateTextReplace(this.config,contador2 -2);
-												break;
-												case 1: //gráfico
-													generateGraphicReplace(this.config,contador2 -2,this.scale);
-												break;
-											}
-										}
-									}
-								},0);
-							}
-						};
-					
+				if (parseInt(evalues.id.split(":")[3]) > 2000 && parseInt(evalues.id.split(":")[4]) === 2) {  //ese numero 3 será una constante
+					let stateValue = 0;
+					switch (evalues.value){
+						case "2": //texto
+							//por defecto viene como texto por tanto no hacemos nada
+							stateValue = 0;
+						break;
+						case "1": //gráfico
+							stateValue = 1;
+							generateGraphicReplace(this.config,counter,this.scale);
+						break;
 					}
-					document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
-					break;	
+					$$(this.config.dual_panels[counter]).addView({
+						view: "switch",
+						id: this.config.dual_panels[counter] + "_state",
+						//label: "state",
+						value: stateValue,
+						on: {
+							onChange: (value) => {
+								//Modificamos el panel para que muestre el estado actual
+								//rellenamos los datos si el panel tenia datos 
+								//let dato = parseInt($$(value).getValue());
+								switch (value){
+									case 0: //texto
+										generateTextReplace(this.config,counter -1);
+									break;
+									case 1: //gráfico
+										generateGraphicReplace(this.config,counter -1,this.scale);
+									break;
+								}
+				
+								/*
+								if(data[0] !== null){
+									//actualizamos el panel
+									let control = $$("planScheduleForm_" + data[0].id + "_state");
+									let html = statusBadge(data[0].planScheduleStateType.alias);
+									control.config.labelRight = html;
+									control.refresh();
+									//mandamos mensaje de planSchedule PAUSE
+									webix.message({type:"success", text:$.i18n("lbl_schedule_pause_correctly")});
+								}else{
+									webix.message({type:"error", text:$.i18n("lbl_schedule_pause_error")});
+								}
+								*/
+							}
+						}
+					},0);
+					counter += 1;
+				}
+			});
+			//Actualizamos los valores de los paneles duales
+
+			if(this.config.dual_panels.length > 0){
+				if(this.values.length>0){
+					for (let i=0; i<this.config.dual_panels.length; i++) {
+						let dato = parseInt($$(this.config.dual_panels[i] + "_state").getValue());
+						switch (dato){
+							case 0: //texto
+								let len = this.config.listaCells[parseInt(this.config.dual_panels[i].split("_")[1]) - 1].cellValues.split("_")[11];
+								for(let i=1;i<=len;i++) {
+									try {
+										let value_text = null;
+										let v_value = this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1];
+										value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
+										if (value_text !== null)
+											$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+									} catch (e) {
+										console.log(e);
+									}
+								}
+							break;
+							case 1: //gráfico
+								console.log(this.values);
+								console.log();
+								this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1] !== null ? this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1] !== "" ? $$("panel_" + this.config.dual_panels[i].split("_")[1] + "_G_" + this.orderId).setValues({src: JSON.parse(this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1]).value, file_type: availablePictos[JSON.parse(this.values[parseInt(this.config.dual_panels[i].split("_")[1]) - 1]).value].file_type }) : null : null;
+							break;
+						}
+					}
+				}
 			}
+			document.getElementById("pmvSignalForm" + this.orderId +  "spinner").style.display = "none";
 		});
+	}
 
+	loadDataPlan(){
+		if(this.values !== null){
+			for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
+				let dual = false;
+				let dualActual = null;
+				let dualOption = null;
+				this.config.dual_panels.forEach(y => {
+					if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
+					{
+						dual = true;
+						dualActual = y;
+						dualOption = this.values[parseInt(y.split("_")[1]) + 1].value === "1" ? "1" : "0";
+					}	
+				});
+
+				if(dual){
+					//let dato = parseInt($$(dualActual + "_state").getValue());
+					switch (dualOption){
+						case "0": //texto
+							//generateTextReplace(this.config,contador2);
+							let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
+							for(let i=1;i<=len;i++) {
+								try {
+									let value_text = null;
+									let v_value = this.values[contador2].value;
+									value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
+									if (value_text !== null)
+										$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+								} catch (e) {
+									console.log(e);
+								}
+							}
+						break;
+						case "1": //gráfico
+							generateGraphicReplace(this.config,contador2 - 1,this.scale);
+							this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
+						break;
+					}
+					contador2 =+ 2;
+				}else{
+					let code = this.config.cod_listaCells[contador2-1];
+					let item = this.values[contador2];
+					if (code.split("_")[10] === "G") {
+						item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+					} else {
+						for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+							try {
+								let value_text = null;
+								value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
+								if (value_text !== null)
+									$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
+							} catch (e) {
+								console.log(e);
+							}
+						}
+					}
+				}
+			};
+		}
+		
+	}
+
+	loadDataPlanEdit(){
+		if(this.values !== null){
+			for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
+				let dual = false;
+				let dualActual = null;
+				let dualOption = null;
+				this.config.dual_panels.forEach(y => {
+					if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
+					{
+						dual = true;
+						dualActual = y;
+						dualOption = this.values[parseInt(y.split("_")[1]) + 1].value;
+					}	
+				});
+
+				if(dual){
+					//let dato = parseInt($$(dualActual + "_state").getValue());
+					switch (dualOption){
+						case "0": //texto
+							//generateTextReplace(this.config,contador2);
+							let len = this.config.listaCells[parseInt(dualActual.split("_")[1]) - 1].cellValues.split("_")[11];
+							for(let i=1;i<=len;i++) {
+								try {
+									let value_text = null;
+									let v_value = this.values[contador2].value;
+									value_text = v_value !== null ? v_value !== "" ? v_value !== undefined ? v_value.split(":$")[i - 1] !== undefined ? v_value.split(":$")[i - 1] : null : null : null : null;
+									if (value_text !== null)
+										$$("panel_" + this.config.cod_listaCells[contador2-1].split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(v_value.split(":$")[i - 1]);
+								} catch (e) {
+									console.log(e);
+								}
+							}
+						break;
+						case "1": //gráfico
+							generateGraphicReplace(this.config,contador2 - 1,this.scale);
+							this.values[contador2] !== null ? this.values[contador2] !== "" ? $$("panel_" + dualActual.split("_")[1] + "_G_" + this.orderId).setValues({src: this.values[contador2].value, file_type: availablePictos[this.values[contador2].value].file_type }) : null : null;
+						break;
+					}
+					$$(this.config.dual_panels[contador2 - 1]).addView({
+						view: "switch",
+						id: this.config.dual_panels[contador2 - 1] + "_state",
+						//label: "state",
+						value: dualOption,
+						on: {
+							onChange: (value) => {
+								//Modificamos el panel para que muestre el estado actual
+								//rellenamos los datos si el panel tenia datos 
+								//let dato = parseInt($$(value).getValue());
+								switch (value){
+									case 0: //texto
+										generateTextReplace(this.config,contador2 -2);
+									break;
+									case 1: //gráfico
+										generateGraphicReplace(this.config,contador2 -2,this.scale);
+									break;
+								}
+							}
+						}
+					},0);
+				}else{
+					let code = this.config.cod_listaCells[contador2-1];
+					let item = this.values[contador2];
+					if (code.split("_")[10] === "G") {
+						item.value !== null ? item.value !== "" ? $$("panel_" + code.split("_")[1] + "_G_" + this.orderId).setValues({src: item.value, file_type: availablePictos[item.value].file_type }) : null : null;
+					} else {
+						for(let i=1;i<=parseInt(code.split("_")[11]);i++) {
+							try {
+								let value_text = null;
+								value_text = item.value !== null ? item.value !== "" ? item.value.split(":$")[i - 1] !== undefined ? item.value.split(":$")[i - 1] : null : null : null;
+								if (value_text !== null)
+									$$("panel_" + code.split("_")[1] + "_T_L_" + (i - 1) + "_" + this.orderId).setValue(item.value.split(":$")[i - 1]);
+							} catch (e) {
+								console.log(e);
+							}
+						}
+					}
+				}
+			};
+		}else{
+			for(let contador2=1;contador2<=this.config.cod_listaCells.length;contador2++) {
+				let dual = false;
+				let dualActual = null;
+				let dualOption = null;
+				this.config.dual_panels.forEach(y => {
+					if(this.config.cod_listaCells[contador2-1].split("_")[1] === y.split("_")[1])
+					{
+						dual = true;
+						dualActual = y;
+						dualOption = "0";
+					}	
+				});
+
+				if(dual){
+					$$(this.config.dual_panels[contador2 - 1]).addView({
+						view: "switch",
+						id: this.config.dual_panels[contador2 - 1] + "_state",
+						//label: "state",
+						value: dualOption,
+						on: {
+							onChange: (value) => {
+								//Modificamos el panel para que muestre el estado actual
+								//rellenamos los datos si el panel tenia datos 
+								//let dato = parseInt($$(value).getValue());
+								switch (value){
+									case 0: //texto
+										generateTextReplace(this.config,contador2 -2);
+									break;
+									case 1: //gráfico
+										generateGraphicReplace(this.config,contador2 -2,this.scale);
+									break;
+								}
+							}
+						}
+					},0);
+				}
+			};
+		
+		}
 	}
 
 	doIt(commandElementType) {
@@ -761,7 +814,7 @@ export default class PanelManager {
 										"value": datosAlias,
 										"logTypeParamId": "LogTypeParam:3:2"
 										},{
-										"value": JSON.stringify(v_commands_values), 
+										"value": v_commands_values,
 										"logTypeParamId": "LogTypeParam:3:3"
 										}
 									]
@@ -942,7 +995,7 @@ export default class PanelManager {
 											"value": datosId[idt],
 											"logTypeParamId": "LogTypeParam:3:2"
 											},{
-											"value": JSON.stringify(v_commands_values),
+											"value": v_commands_values,
 											"logTypeParamId": "LogTypeParam:3:3"
 											}
 										]
@@ -1267,7 +1320,6 @@ export default class PanelManager {
 				let counter1 = 0;
 				cellList.forEach(e =>{
 					if(dual[counter1].split("_")[1] === e.split("_")[1]){ //panel Dual
-						console.log("panel_" + e.split("_")[1] + "_VIEW_" + this.orderId + "_state");
 						let dato = parseInt($$("panel_" + e.split("_")[1] + "_VIEW_" + this.orderId + "_state").getValue());
 						switch (dato){
 							case 0: //texto

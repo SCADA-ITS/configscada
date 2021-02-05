@@ -67,7 +67,7 @@ export const ELEMENT_TYPE = {
         {ELEMENT_FORM_TAB_FORM: {}},
         {ELEMENT_FORM_TAB_VIDEO: {
           urlParamVideo:"ElementTypeParam:2:1:3", videoList: false}
-        }
+          }
       ] 
     },
     "ElementType:3" :{ id: "ElementType:3", uiType: UI_ELEMENT_TYPE_GENERIC, value: 3, scale_x: 28, scale_y: 28, svgRaw:SVG_3_DET},
@@ -164,7 +164,7 @@ export const ELEMENT_TYPE = {
     "ElementType:27" :{ id: "ElementType:27", uiType: UI_ELEMENT_TYPE_MATRIX, value: 27, scale_x: 28, scale_y: 28},
     "ElementType:28" :{ id: "ElementType:28", uiType: UI_ELEMENT_TYPE_MATRIX, value: 28, scale_x: 28, scale_y: 28},
     "ElementType:29" :{ id: "ElementType:29", uiType: UI_ELEMENT_TYPE_MATRIX, value: 29, scale_x: 28, scale_y: 28},
-    "ElementType:30" :{ id: "ElementType:30", uiType: UI_ELEMENT_TYPE_MATRIX, value: 30, scale_x: 28, scale_y: 28},
+    "ElementType:30" :{ id: "ElementType:30", uiType: UI_ELEMENT_TYPE_MTX, value: 30, scale_x: 28, scale_y: 28},
     "ElementType:31" :{ id: "ElementType:31", uiType: UI_ELEMENT_TYPE_MATRIX, value: 31, scale_x: 45, scale_y: 45},
     "ElementType:32" :{ id: "ElementType:32", uiType: UI_ELEMENT_TYPE_MATRIX, value: 32, scale_x: 28, scale_y: 28},
     "ElementType:33" :{ id: "ElementType:33", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 33, scale_x: 28, scale_y: 28},

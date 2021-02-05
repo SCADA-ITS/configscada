@@ -7,6 +7,7 @@ import * as dms from "./icons/dms.js";
 import * as etd from "./icons/etd.js";
 import * as matrix_panel from "./icons/matrix_panel.js";
 import * as full_matrix_panel from "./icons/full_matrix_panel.js";
+import * as matrix_json from "./icons/matrix_json.js";
 
 import * as vis from "./icons/vis.js";
 import * as accel from "./icons/accel.js";
@@ -21,7 +22,9 @@ export function generateIcon(element, suffix="", state="", values) {
     return generateDMSIcon(element, suffix, state);
   } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) {
     return generateFullMatrixPanelIcon(element, suffix, state);
-  } else if (element.elementType.id === ELEMENT_TYPE.ID_4_SEC) {
+  } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_MTX) {
+    return generateMatrixJsonIcon(element, suffix, state);
+  } else if (element.elementType.id === ELEMENT_TYPE.ID_4_SEC) {  
     return generateETDIcon(element, suffix, state, values);
   } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_GENERIC) {
     return createIcon(element, suffix);
@@ -42,6 +45,11 @@ export function generateMatrixPanelIcon(element, suffix="", state="") {
 
 export function generateFullMatrixPanelIcon(element, suffix="", state="") {
   let full_matrix_panel_str = full_matrix_panel.generateIcon(element, suffix, state);
+  return full_matrix_panel_str;
+}
+
+export function generateMatrixJsonIcon(element, suffix="", state="") {
+  let full_matrix_panel_str = matrix_json.generateIcon(element, suffix, state);
   return full_matrix_panel_str;
 }
 
@@ -145,7 +153,7 @@ export function getElementIcon(element, suffix="") {
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64) {
-    full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+    matrix_json.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_31_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_32_PMV) {
@@ -271,7 +279,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_30_PMV_128X64:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixJsonIcon(element, suffix, state) + '</g>';
       break;                              
     case elementTypeMap.ELEMENT_TYPE_3_DET:      
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
