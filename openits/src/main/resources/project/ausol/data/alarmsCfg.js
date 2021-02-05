@@ -40,7 +40,25 @@ export let alarmsCfg = {
     "AlarmConfig:47": { "alarmLevel": 3 },
     "AlarmConfig:48": { "alarmLevel": 3 },
 	"AlarmConfig:49": { "alarmLevel": 3 },
-    "AlarmConfig:50": { "alarmLevel": 3 }
+    "AlarmConfig:50": { "alarmLevel": 3 },
+    "AlarmConfig:51": { "alarmLevel": 3 },
+    "AlarmConfig:52": { "alarmLevel": 3 },
+    "AlarmConfig:53": { "alarmLevel": 3 },
+    "AlarmConfig:54": { "alarmLevel": 3 },
+    "AlarmConfig:55": { "alarmLevel": 3 },
+    "AlarmConfig:56": { "alarmLevel": 3 },
+    "AlarmConfig:57": { "alarmLevel": 3 },
+    "AlarmConfig:58": { "alarmLevel": 3 },
+    "AlarmConfig:59": { "alarmLevel": 3 },
+    "AlarmConfig:60": { "alarmLevel": 3 },
+    "AlarmConfig:61": { "alarmLevel": 3 },
+    "AlarmConfig:62": { "alarmLevel": 3 },
+    "AlarmConfig:63": { "alarmLevel": 3 },
+    "AlarmConfig:64": { "alarmLevel": 3 },
+    "AlarmConfig:65": { "alarmLevel": 3 },
+    "AlarmConfig:66": { "alarmLevel": 3 },
+    "AlarmConfig:67": { "alarmLevel": 3 },
+    "AlarmConfig:68": { "alarmLevel": 3 }
 };
 
 
