@@ -1107,9 +1107,13 @@ export default class DataTable {
 					if (dat && dat.json) {
 						
 						let data = dat.json();
-						self.translateFieldValues(data.data);
+						
+						if (data.data) {
+						
+							self.translateFieldValues(data.data);
 
-						grid.parse(data.data);
+							grid.parse(data.data);	
+						}
 					}
 					
 					grid.hideProgress();
