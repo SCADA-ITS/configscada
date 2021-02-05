@@ -1003,10 +1003,14 @@ export default class DataTable {
 			let self = this;
 			let grid = $$("dt-" + this.uid);
 			
-			grid.attachEvent("onSelectChange", function() {
+			if (grid) {
+			
+				grid.attachEvent("onSelectChange", function() {
 
-				eval(self.events[EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
-			});
+					eval(self.events[EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
+				});	
+			}
+			
 		}
 	}
 

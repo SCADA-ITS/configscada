@@ -534,7 +534,7 @@ export let SVG_21_OPAC=
 
 export let SVG_25_CABIN = `<svg id="svg8" height="73.537796mm" width="41.301537mm"><defs id="defs2" />	
 	<g id="g1" transform="translate(-6.3584653,-11.800212)">` +
-	 '<rect id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill"' +
+	 '<rect id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' +
 	    'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-opacity:1;' +
 	    `stroke:#000000;stroke-width:0.30394337;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
 	    width="33.040703" height="69.879822" x="10.352551" y="15.306212" />
@@ -580,7 +580,7 @@ export let SVG_25_CABIN = `<svg id="svg8" height="73.537796mm" width="41.301537m
 	        d="m 57.804759,120.2633 c 2.388118,-0.0444 4.761355,0.12937 7.148176,0.12937" id="path1139-3-7-6"/>
 	   </g>
 	 </g>` +
-	 '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill"' +
+	 '<path id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill1"' +
 	    'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-opacity:1;' +
 	 	`stroke:#000000;stroke-width:0.21748792;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
 	    d="M 6.6501177,15.212623 47.330085,15.23583 42.880377,11.941826 10.467736,11.908997 Z" sodipodi:nodetypes="ccccc" />
