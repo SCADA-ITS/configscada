@@ -630,6 +630,21 @@ export let util = {
 	  return hash;
 	},
 	
+	getSimpleId(key) {
+		
+		if (key) {
+			
+			if ((key.match(/:/g) || []).length == 1) {
+				
+				return key.substring(key.indexOf(':') + 1);
+			}
+			else {
+				
+				return key;
+			}
+		}
+	},
+	
 	fillTemplate(templateString, templateVars){
   		var func = new Function(...Object.keys(templateVars),  "return `"+templateString +"`;")
   		return func(...Object.values(templateVars));

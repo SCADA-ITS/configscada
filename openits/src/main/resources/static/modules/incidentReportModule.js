@@ -31,6 +31,9 @@ export default class IncidentReportModule extends GenericModule {
 		this.dtTasks = undefined;
 		this.incidentReport = undefined;
 		this.stompClient = undefined;
+		this.requestReport = true;
+		this.disconnectStomp = true;
+		this.closed = false;
 
 		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
 
@@ -61,7 +64,13 @@ export default class IncidentReportModule extends GenericModule {
 									{ width: 6 },
 									{
 										id: this.uid,
-										rows: [this.getViewDrawNoData()]
+										rows: [],
+										hidden: false
+									},
+									{
+										id: "loading-" + this.uid,
+										rows: [this.getViewDrawNoData()],
+										hidden: true
 									},
 									{ width: 6 }
 								]
@@ -85,7 +94,6 @@ export default class IncidentReportModule extends GenericModule {
 
 		return {
 			view: "template",
-			id: "no-data-" + this.uid,
 			template: function() {
 
 				let icon = "<img src='img/loading.svg' align='center'>";
@@ -98,61 +106,81 @@ export default class IncidentReportModule extends GenericModule {
 	refresh() {
 
 		let self = this;
+		
+		$$("loading-" + this.uid).show();
+		$$(this.uid).hide();
+		
+		if (this.requestReport) {
+			
+			if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
+				
+				this.requestReport = false;
 
-		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
-
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
-
-				if (dat != null) {
-
-					self.incidentReport = dat.json();
-					
-					if (self.incidentReport) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
+	
+					if (dat != null) {
+	
+						self.incidentReport = dat.json();
 						
-						self.currentSequenceOfState = self.incidentReport.sequenceOfStates.find(e => {
-						
-							return (e.state.id == self.incidentReport.incidentState.id);
-						});
-											
-						if (self.currentSequenceOfState) {
-						
-							let tasks = self.currentSequenceOfState.taskStates;
-							
-							if (Array.isArray(tasks) && tasks.length) {
-							
-								self.currentTask = tasks.find(e => {
-									
-									return !e.completedAt;
-								});
-							}
-							
-							self.drawComponents();
-						
-							if (self.dtTasks) {
-								
-								self.dtTasks.callbacks();
-								
-								if (self.currentTask) {
-									
-									self.dtTasks.select(self.currentTask.incidentTypeTask.id);	
-								}
-								else {
-									
-									self.dtTasks.select(tasks[0].incidentTypeTask.id);
-								}
-							}
-						}
+						self.update();		
 					}
-					
-					if (self.moduleAction.id === INCIDENT_REPORT.moduleAction.edit && !self.stompClient) {
-
-						self.callbacks();
-					}
-					
-					self.initTabViewContent();
+	
+				}, function(response) { util.ajax.handleError(response); });
+			}
+		}
+		else {
+			
+			this.update();
+		}
+	}
+	update() {
+		
+		
+		if (this.incidentReport) {
+						
+			this.currentSequenceOfState = this.incidentReport.sequenceOfStates.find(e => {
+			
+				return (e.state.id == this.incidentReport.incidentState.id);
+			});
+								
+			if (this.currentSequenceOfState) {
+			
+				let tasks = this.currentSequenceOfState.taskStates;
+				
+				if (Array.isArray(tasks) && tasks.length) {
+				
+					this.currentTask = tasks.find(e => {
+						
+						return !e.completedAt;
+					});
 				}
+				
+				this.drawComponents();
+			
+				if (this.dtTasks) {
+					
+					this.dtTasks.callbacks();
+					
+					if (this.currentTask) {
+						
+						this.dtTasks.select(this.currentTask.incidentTypeTask.id);	
+					}
+					else {
+						
+						this.dtTasks.select(tasks[0].incidentTypeTask.id);
+					}
+				}
+			}
+			
+			if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit && !this.stompClient) {
 
-			}, function(response) { util.ajax.handleError(response); });
+				this.callbacks();
+			}			
+			
+			this.initTabViewContent();
+			
+			$$("loading-" + this.uid).hide();
+			$$(this.uid).show();
 		}
 	}
 
@@ -171,9 +199,12 @@ export default class IncidentReportModule extends GenericModule {
 		
 		if (this.incidentReport && tabViewContent) {
 			
-			if (this.incidentReport.confirm && this.incidentReport.confirm == true && tabTaskBoard) {
+			if (this.incidentReport.confirm) {
 				
-				tabViewContent.getTabbar().setValue(tabTaskBoard.config.id);
+				if (tabTaskBoard) {
+				
+					tabViewContent.getTabbar().setValue(tabTaskBoard.config.id);	
+				}
 			}
 			else {
 				
@@ -212,6 +243,7 @@ export default class IncidentReportModule extends GenericModule {
 	drawComponents() {
 
 		let self = this;
+		this.dtTasks = undefined;
 
 		let viewMain = {
 			id: this.uid,
@@ -411,14 +443,14 @@ export default class IncidentReportModule extends GenericModule {
 										{
 											height: 50,
 											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
-													   <div class="value">${self.incidentReport.incidentType.alias} - ${self.incidentReport.incidentType.description}</div>`	
+											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT")}</span></div>
+													   <div class="value">${util.getSimpleId(self.incidentReport.id)}</div>`
 										},
 										{
 											height: 50,
 											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT")}</span></div>
-													   <div class="value">${self.incidentReport.id}</div>`
+											template: `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
+													   <div class="value">${self.incidentReport.incidentType.alias} - ${self.incidentReport.incidentType.description}</div>`	
 										},
 										{
 											height: 50,
@@ -431,6 +463,12 @@ export default class IncidentReportModule extends GenericModule {
 											borderless: true,
 											template: `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
 													   <div class="value">${self.incidentReport.affectionStretch.alias}</div>`
+										},
+										{
+											height: 50,
+											borderless: true,
+											template: `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
+													   <div class="value">${self.incidentReport.currentUser.name}</div>`
 										},
 										{
 											height: 50,
@@ -810,7 +848,7 @@ export default class IncidentReportModule extends GenericModule {
 									    view: "button",
 										css: (function() {
 											
-											if (self.incidentReport.confirm === true) {
+											if (!self.closed && self.incidentReport.confirm === true) {
 												
 												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 												
@@ -829,56 +867,69 @@ export default class IncidentReportModule extends GenericModule {
 										height: 50,
 										label: (function() {
 											
-											if (self.incidentReport.confirm === true) {
+											if (!self.closed) {
 												
-												return i18n.t("LBL_INCIDENT_ACTION_NEXT");											
+												if (self.incidentReport.confirm === true) {
+												
+													return i18n.t("LBL_INCIDENT_ACTION_NEXT");	
+												}
+												else {
+													
+													return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												}	
 											}
 											else {
 												
-												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												return i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
 											}
+											
 										})(),
+										tooltip: "#label#",
 									    type: "icon", 
-//										icon: (function() {
-//											
-//											if (self.incidentReport.confirm === true) {
-//																						
-//												return "mdi mdi-skip-next";
-//											}
-//											else {
-//												
-//												return "mdi mdi-check-bold";
-//											}
-//										})(),
 										on: {
 										
 											onItemClick() {
 												
-												if (self.incidentReport.confirm === true) {
+												if (!self.closed) {
 												
-													if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-													
-														let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt);
+													if (self.incidentReport.confirm === true) {
+												
+														let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.forward, { 
+																				id: self.incidentReportId
+																			});
+																
+														if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 														
-														if (tasksCompleted.length == self.currentSequenceOfState.taskStates.length)	{
+															let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt);
 															
-															let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.forward, { 
-																id: self.incidentReportId
-															});
+															if (tasksCompleted.length == self.currentSequenceOfState.taskStates.length)	{
+																
+																self.restAction(endpoint);
+															}
+														}
+														else {
 															
 															self.restAction(endpoint);
 														}
 													}
+													else {
+														
+														let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.confirm, { 
+															id: self.incidentReportId
+														});
+														
+														self.restAction(endpoint);
+													}	
 												}
 												else {
 													
-													let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.confirm, { 
-														id: self.incidentReportId
-													});
-													
-													self.restAction(endpoint);
+													let container = $$(self.args.containerId); 
+										
+													if (container) {
+														
+														container.close();
+													}
 												}
-												
 											}
 										}
 									},
@@ -1334,9 +1385,13 @@ export default class IncidentReportModule extends GenericModule {
 
 			var data = JSON.parse(JSON.parse(message.body));
 			
-			if (data.action === "UPDATE") {
+			self.disconnectStomp = false;
+			
+			if (data.action === "UPDATE" && !self.closed) {
 			
 				console.log(data);
+				
+				self.requestReport = true;
 				
 				self.refresh();	
 			}
@@ -1344,21 +1399,35 @@ export default class IncidentReportModule extends GenericModule {
 				
 				console.log(data);
 				
-				webix.alert({
-				    title: i18n.t("LBL_INCIDENT_CLOSED") + " " + self.incidentReport.id,
-				    ok: "LBL_OK",
-				    text: "LBL_INCIDENT_CLOSED DESCRIPTION",
-					width: 600,
-				    type:"alert-warning"
-				}).then(function(){
-				    
-					let container = $$(self.args.containerId); 	
-										
-					if (container) {
-						
-						container.close();
-					}
-				});
+				self.requestReport = false;
+				
+				if (Array.isArray(self.incidentReport.sequenceOfStates)  && self.incidentReport.sequenceOfStates.length > 0) {
+				
+					let lastState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 1];
+					
+					self.incidentReport.incidentState = lastState.state;
+					self.incidentReport.incidentState.finalState = true;
+					
+					self.closed = true;
+					self.refresh();	
+				} 
+				
+				
+//				webix.alert({
+//				    title: i18n.t("LBL_INCIDENT_CLOSED") + " " + self.incidentReport.id,
+//				    ok: "LBL_OK",
+//				    text: "LBL_INCIDENT_CLOSED DESCRIPTION",
+//					width: 600,
+//				    type:"alert-warning"
+//				}).then(function(){
+//				    
+//					let container = $$(self.args.containerId); 	
+//										
+//					if (container) {
+//						
+//						container.close();
+//					}
+//				});
 				
 			}
 		}
@@ -1371,10 +1440,18 @@ export default class IncidentReportModule extends GenericModule {
 
 	disconnect_ws() {
 
-		if (this.stompClient && this.stompClient.connected) {
-
-			util.stomp.disconnect(this.stompClient);
-			this.stompClient = undefined;
+		if (this.disconnectStomp) {
+		
+			if (this.stompClient && this.stompClient.connected) {
+	
+				util.stomp.disconnect(this.stompClient);
+				this.stompClient = undefined;
+			}	
 		}
+		else {
+			
+			this.disconnectStomp = true;
+		}
+		
 	}
 }
