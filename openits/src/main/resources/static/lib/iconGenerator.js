@@ -220,7 +220,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_16_MEG:
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
       break;
-    case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 250) + ',' + (height / 250) + ')">' + createIcon(element, suffix) + '</g>';
@@ -231,6 +230,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_15_FIRE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 25) + ')">' + createIcon(element, suffix) + '</g>';
     break; 
+    case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
     case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
     case elementTypeMap.ELEMENT_TYPE_19_CO:
@@ -306,7 +306,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 220) + ',' + (height / 220) + ')">' + createIcon(element, suffix) + '</g>';
-      break;  
+      break;    
     case elementTypeMap.ELEMENT_TYPE_71_VIS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 602) + ',' + (height / 503) + ')">' + createIcon(element, suffix) + '</g>';
       break;  

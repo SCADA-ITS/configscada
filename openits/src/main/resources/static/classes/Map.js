@@ -198,7 +198,7 @@ export default class Map {
 
       });
     } catch (err) {
-      console.log("Error: " + err.message);
+      console.error("Error: " + err);
       console.log("RETRY WITH GRAPHQL");
 
       let obj = JSON.parse(JSON.parse(message.body));
@@ -591,11 +591,11 @@ export default class Map {
           view: "sidemenu-win",
           id: "menu" + this.synopticDiv,
           width: 230,
-          position: function(position) {
+          position: (position) => {
             var toolbarHeight = $$("mainToolbar").$height;
             position.top = toolbarHeight;
-            position.left = $$("mainBody").$width - 230;
-            var mainHeight = $$("mainBody").$height - toolbarHeight;
+            position.left = $$(this.synopticDiv).$width - 230;
+            var mainHeight = $$(this.synopticDiv).$height - toolbarHeight;
             position.height = mainHeight;
             position.width = 230;
           },
@@ -1147,11 +1147,16 @@ export default class Map {
       '[view_id="multiview"]'
     );
 
-    showOrHideObserver.observe(showOrHideObserverTarget, {
-      attributes: false,
-      childList: true,
-      characterData: false,
-    });
+    try {
+      showOrHideObserver.observe(showOrHideObserverTarget, {
+        attributes: false,
+        childList: true,
+        characterData: false,
+      });  
+    } catch (error) {
+      console.warn(error);
+    }
+    
 
     // Attaching the event listener function to window's resize event
     window.addEventListener("resize", function() { self.doResponsive(self) });

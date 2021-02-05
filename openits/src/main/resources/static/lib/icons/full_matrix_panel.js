@@ -125,85 +125,89 @@ export function generateIcon(element, suffix = "") {
       
       
       for(let c=0; c<zone_cols; c++) {
-        let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tamanio"];
-        let subpanel_height = parseInt(subpanel_size.split("x")[1]);
-        let subpanel_width = parseInt(subpanel_size.split("x")[0]);
+        try {
+          let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tamanio"];
+          let subpanel_height = parseInt(subpanel_size.split("x")[1]);
+          let subpanel_width = parseInt(subpanel_size.split("x")[0]);
 
-        // find the element with that value
-        let value_to_find = 1001 + n_elements;
-        let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
-        let isGraphic=false;
-        if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
-          let value_to_find2 = 2001 + n_elements;
-          let content_value2 = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find2 + ":2").value;
-          if(parseInt(content_value2)==1){
+          // find the element with that value
+          let value_to_find = 1001 + n_elements;
+          let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
+          let isGraphic=false;
+          if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
+            let value_to_find2 = 2001 + n_elements;
+            let content_value2 = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find2 + ":2").value;
+            if(parseInt(content_value2)==1){
+              isGraphic=true;
+            }
+          }else if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico"){
             isGraphic=true;
           }
-        }else if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Grafico"){
-          isGraphic=true;
-        }
-        if(isGraphic) {
-          let auxBase64;
-          if(availablePictos[content_value]){
-            auxBase64=availablePictos[content_value].base64;
-          }else{
-            auxBase64=availablePictos["0"].base64
-          }
-          
-          //FIX ajuste iconos paneles en el mapa
-          // subpanel_width = subpanel_width - 20
-          // subpanel_height = subpanel_height - 20
-          // subpanel_x = subpanel_x + 1
-          // subpanel_y = subpanel_y + 2
-          
-          let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
-          im.attr("id", element.id + suffix + ":" + value_to_find);
-          im.attr("subpanel_type", "graphic");
-          if(subpanel_width != subpanel_height) {
-            im.attr("preserveAspectRatio", "xMidYMax meet");
-          } else {
-            im.attr("preserveAspectRatio", "none");
-          }
-        } else {
-          if(content_value != null) {
-            let all_lines = content_value.split(":$");
-            let g1 = s.group();
-            g1.attr("id", element.id + suffix + ":" + value_to_find);
-            g1.attr("subpanel_type", "text");
-            all_lines.forEach((item, i) => { 
-              let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
-              r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
-              r1.attr("fill", "white");
-              r1.attr("font-family", "'VT323', monospace")
-              r1.attr("font-size", "10px");
-            });
-          } else {
-            // if there is no text, we create the placeholder based on the panel configuration
-            let nLines = getLinesOfText("ElementType:" + elementTypeMap.getElementType(element.id), r, c);
-            let all_lines = [];
-            for(let iLine=0; iLine<nLines; iLine++) {
-              all_lines.push([]);
+          if(isGraphic) {
+            let auxBase64;
+            if(availablePictos[content_value]){
+              auxBase64=availablePictos[content_value].base64;
+            }else{
+              auxBase64=availablePictos["0"].base64
             }
+            
+            //FIX ajuste iconos paneles en el mapa
+            // subpanel_width = subpanel_width - 20
+            // subpanel_height = subpanel_height - 20
+            // subpanel_x = subpanel_x + 1
+            // subpanel_y = subpanel_y + 2
+            
+            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
+            im.attr("id", element.id + suffix + ":" + value_to_find);
+            im.attr("subpanel_type", "graphic");
+            if(subpanel_width != subpanel_height) {
+              im.attr("preserveAspectRatio", "xMidYMax meet");
+            } else {
+              im.attr("preserveAspectRatio", "none");
+            }
+          } else {
+            if(content_value != null) {
+              let all_lines = content_value.split(":$");
+              let g1 = s.group();
+              g1.attr("id", element.id + suffix + ":" + value_to_find);
+              g1.attr("subpanel_type", "text");
+              all_lines.forEach((item, i) => { 
+                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+                r1.attr("fill", "white");
+                r1.attr("font-family", "'VT323', monospace")
+                r1.attr("font-size", "10px");
+              });
+            } else {
+              // if there is no text, we create the placeholder based on the panel configuration
+              let nLines = getLinesOfText("ElementType:" + elementTypeMap.getElementType(element.id), r, c);
+              let all_lines = [];
+              for(let iLine=0; iLine<nLines; iLine++) {
+                all_lines.push([]);
+              }
 
-            let g1 = s.group();
-            g1.attr("id", element.id + suffix + ":" + value_to_find);
-            g1.attr("subpanel_type", "text");
-            all_lines.forEach((item, i) => { 
-              let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
-              r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
-              r1.attr("fill", "white");
-              r1.attr("font-family", "'VT323', monospace")
-              r1.attr("font-size", "10px");
-            });
+              let g1 = s.group();
+              g1.attr("id", element.id + suffix + ":" + value_to_find);
+              g1.attr("subpanel_type", "text");
+              all_lines.forEach((item, i) => { 
+                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
+                r1.attr("fill", "white");
+                r1.attr("font-family", "'VT323', monospace")
+                r1.attr("font-size", "10px");
+              });
 
+            }
           }
+
+          last_subpanel_height = subpanel_height;
+          subpanel_x += subpanel_width;
+
+          n_elements++;
+          subindex++;
+        } catch (error) {
+          console.error(error);
         }
-
-        last_subpanel_height = subpanel_height;
-        subpanel_x += subpanel_width;
-
-        n_elements++;
-        subindex++;
       }
       subpanel_y += last_subpanel_height;
     }
