@@ -2,7 +2,9 @@ import {util} from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 
-export default class EquipmentModule extends GenericModule {
+const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
+
+export default class GenericMultiGridModule extends GenericModule {
 
 	constructor(module, moduleAction, args){
 		
@@ -38,7 +40,8 @@ export default class EquipmentModule extends GenericModule {
 
 	getView() {
 		
-		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType.ELEMENT_TYPE);
+		let entity = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE).value;	
+		let jsonEquipmentTypesWithGridAssigned = window.em.getAll(EntityType[entity]);
 		let jsonEquipmentTypesWithGridAssignedCopy = undefined;
 		
 		jsonEquipmentTypesWithGridAssigned = jsonEquipmentTypesWithGridAssigned.filter(e => e.visible === true && e.grid != undefined && e.grid !== "");

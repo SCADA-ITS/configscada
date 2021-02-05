@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
-@RequestMapping(value = "/api/v1/logTypes", produces = { "application/json", "application/xml" })
+@RequestMapping(value = "/api/v1/log_types", produces = { "application/json", "application/xml" })
 @Api(value = "LogType", tags = { "LOG TYPES" })
 public class LogTypeController {
 	
