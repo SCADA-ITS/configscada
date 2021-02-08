@@ -765,6 +765,7 @@ export default class DataTable {
 		if (metadata) {
 
 			optionValue = metadata.gridOptionValues.find(e => e.gridOption.id === option);
+			
 			if (optionValue) {
 
 				if (optionValue.value === _TRUE) {
@@ -775,15 +776,14 @@ export default class DataTable {
 
 					return false;
 
-				} else if (DefOptionValues[option] === true || DefOptionValues[option] === false) {
-
-					return optionValue.value = DefOptionValues[option];
-
 				} else {
 
 					return optionValue.value;
-
 				}
+			}
+			else if (DefOptionValues[option]) {
+
+				return DefOptionValues[option];
 			}
 		}
 	}
