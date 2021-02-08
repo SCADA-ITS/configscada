@@ -4,6 +4,10 @@ import PanelManager from "../classes/PanelManager.js";
 import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 import SynopticElement from "../classes/SynopticElement.js";
 
+const ELEMENT_TYPE_UI_STRING="string";
+const ELEMENT_TYPE_UI_URL="url"
+
+
 export default class TabForm {
 	constructor(id,parentId,columnsElementFormList) {
 		this.id = parentId !== null && parentId !== undefined ? parentId + "_" + id : id;
@@ -136,7 +140,18 @@ export default class TabForm {
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				},
-				{ id:"measure", width:500, tooltip:function(obj){  
+				{ id:"measure", width:500, template:function(obj){
+					if (obj.type == ELEMENT_TYPE_UI_URL){
+						return '<a href="'+obj.measure+'" target="_blank">'+obj.measure+'</a>'
+					}
+					else if (obj.type == ELEMENT_TYPE_UI_STRING){
+						return obj.measure
+					}
+					else{
+						return obj.measure
+					}
+
+				},tooltip:function(obj){  
 						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
 					}
 				}
@@ -786,10 +801,16 @@ export default class TabForm {
 
 				this.columnsElementFormList[data.elementType.id]["rows"].forEach(item => {
 					try {
-						if(valuesList[item] !== undefined) 
-							$$("elementBody" + this.id).add(valuesList[item]);
+						if(valuesList[item.value] !== undefined)
+							if (item.type ==  ELEMENT_TYPE_UI_URL){
+								valuesList[item.value]['type'] = ELEMENT_TYPE_UI_URL
+							}
+							else{
+								valuesList[item.value]['type'] = ELEMENT_TYPE_UI_STRING
+							}
+							$$("elementBody" + this.id).add(valuesList[item.value]);
 					} catch (e) {
-						console.error("Error. id: "+this.id+ "_ " + item);
+						console.error("Error. id: "+this.id+ "_ " + item.value);
 						console.error(e);
 					}
 				});
