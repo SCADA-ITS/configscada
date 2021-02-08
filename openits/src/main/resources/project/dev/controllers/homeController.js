@@ -120,15 +120,19 @@ function initialize() {
 	
 	window.sm = new ServiceManager();
 	
-	loadWelcomeScreen();
+	autoloadModules();
 	
-	function loadWelcomeScreen() {
-	
-		let module = window.em.getByField(EntityType.MODULE, "id", WELCOME_SCREEN_MODULE_ID);
-								
-		if (module) {
-		
-			util.module.open(module, null, null, null, null);	
-		}	
+	function autoloadModules() {
+
+		let module = window.em.getAll(EntityType.MODULE);
+
+		for (let i = 0; i < module.length; i++) {
+
+			if (module[i].autoload && module[i].moduleType.id != MODULE_TYPE_SERVICE) {
+
+				util.module.open(module[i], null, null, null, null);
+
+			}
+		}
 	}
 }

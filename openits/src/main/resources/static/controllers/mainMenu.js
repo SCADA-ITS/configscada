@@ -72,9 +72,8 @@ export default class MainMenu {
 	
 			if (Array.isArray(menus)) {
 
-				// TODO: Change id for position in table ui.menu_groups				
-				menus.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-	
+				menus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
 				for (var menuIdx = 0; menuIdx < menus.length; menuIdx++) {
 	
 					var mainMenu = {};

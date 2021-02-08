@@ -24,8 +24,14 @@ const GridOptions = {
 	SEARCH: 13,
 	FILTER: 14,
 	PAGINATION: 15,
-	ICON: 16
-}
+	ICON: 16,
+	SELECT: 17
+};
+
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true };
+
+const _TRUE = "true";
+const _FALSE = "false";
 
 export let EventTypes = {
 	ON_SELECT_ROW: 1
@@ -54,11 +60,12 @@ export default class DataTable {
 		let datatable = {};
 		let layout = [];
 		let pager = {};
-		
+
 		let resultSort = this.getGridOptions(GridOptions.SORT);
 		let resultFilter = this.getGridOptions(GridOptions.FILTER);
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
-				
+		let resultSelect = this.getGridOptions(GridOptions.SELECT);
+
 		if (metadata != undefined) {
 
 			datatable.id = "dt-" + this.uid;
@@ -70,19 +77,19 @@ export default class DataTable {
 			datatable.multiselect = resultMulti;
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
+			datatable.select = resultSelect;
 
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
 
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-				
+
 				self.translateFieldValues(data);
 
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					let field = metadata.gridFields[posField];
-					
-					console.log(field)
+
 					let col = {};
 					col.id = field.sourceField;
 
@@ -105,7 +112,7 @@ export default class DataTable {
 						}
 						else {
 							if (field.gridFieldDataType) {
-								
+
 								if (field.gridFieldDataType.id == DataType.STRING.value) {
 									col.header.push({ content: DataType.STRING.filter });
 								}
@@ -117,7 +124,7 @@ export default class DataTable {
 								}
 								else if (field.gridFieldDataType.id == DataType.DATE.value) {
 									col.header.push({ content: DataType.DATE.filter });
-								}	
+								}
 							}
 							else {
 								col.header.push({ content: DataType.STRING.filter });
@@ -145,14 +152,14 @@ export default class DataTable {
 					}
 
 					if (field.gridFieldDataType) {
-						
-						col.sort = field.gridFieldDataType.name;	
+
+						col.sort = field.gridFieldDataType.name;
 					}
 					else {
-						
+
 						col.sort = "string";
 					}
-					
+
 
 					if (field.align != undefined) {
 
@@ -316,8 +323,8 @@ export default class DataTable {
 											</div>`
 								}
 								else {
-									
-									return `<span class="table-row-text">${value}</span>`;	
+
+									return `<span class="table-row-text">${value}</span>`;
 								}
 							}
 							else {
@@ -331,8 +338,8 @@ export default class DataTable {
 								return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
 							}
 							else {
-							
-								return `<span class="table-row-text">${value}</span>`;	
+
+								return `<span class="table-row-text">${value}</span>`;
 							}
 
 						}
@@ -376,7 +383,7 @@ export default class DataTable {
 			let resultPager = this.getGridOptions(GridOptions.PAGINATION);
 
 			if (resultPager) {
-				
+
 				pager = {
 					view: "pager",
 					id: "pager-" + this.uid,
@@ -399,25 +406,25 @@ export default class DataTable {
 			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
 
 				let field = this.metadata.gridFields[posField];
-	
+
 				if (field.needsTranslation) {
-	
+
 					data.forEach(item => {
-	
+
 						if (item[field.sourceField] != undefined) {
-	
+
 							if (typeof item[field.sourceField] === 'object') {
-	
+
 								item[field.sourceField].value = i18n.t(item[field.sourceField].value);
 							}
 							else {
-	
+
 								item[field.sourceField] = i18n.t(item[field.sourceField]);
 							}
 						}
 					});
 				}
-			}	
+			}
 		}
 	}
 
@@ -505,11 +512,13 @@ export default class DataTable {
 	drawActionsToolbar() {
 
 		let metadata = this.metadata;
+		let dataGridId = this.dataGridId;
 
 		let resultCommons = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMONS);
 		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
 		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
+		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 
 		let toolbar = {
 			view: "toolbar",
@@ -520,50 +529,74 @@ export default class DataTable {
 
 		toolbar.elements.push({ width: 4 })
 
-		if (resultMulti) {
+		if (resultMulti && resultSelect) {
 
 			toolbar.elements.push({ id: "tb_btn-select-all-" + this.uid, view: "icon", icon: "mdi mdi-check-box-outline", value: i18n.t("LBL_SELECT_ALL"), tooltip: true });
-
 			toolbar.elements.push({ id: "tb_btn-unselect-all-" + this.uid, view: "icon", icon: "mdi mdi-checkbox-blank-outline", value: i18n.t("LBL_UNSELECT_ALL"), tooltip: true });
 		}
 
 		if (resultCommons) {
 
-			toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
+			if (dataGridId) {
+
+				toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
+
+			}
+
 			toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });
 
 		}
 
-		if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0 && resultCommands) {
+		if (metadata.gridCommands && metadata.gridCommands.length > 0 && resultCommands) {
 
-			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-			
 			toolbar.elements.push({ width: 8 });
+			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
 			metadata.gridCommands.forEach(cmd => {
 
 				toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "icon", icon: cmd.icon, value: i18n.t(cmd.label), tooltip: true });
-				//toolbar.elements.push({ id: "tb_btn-label-" + this.uid + "_" + cmd.id, css: "grid-toolbar-actions-button-text", view: "label", label: i18n.t(cmd.label) });
+
+				if (cmd.showText) {
+
+					toolbar.elements.push({ id: "tb_btn-label-" + this.uid + "_" + cmd.id, css: "grid-toolbar-actions-button-text", width: 60, view: "label", label: i18n.t(cmd.label) });
+
+				}
 			});
 		}
 
-		toolbar.elements.push({ minWidth: 4 });
+		if (resultCommons || resultCommands || resultMulti) {
+
+			toolbar.elements.push({ minWidth: 4 });
+
+		}
 
 		toolbar.elements.push({
 			id: "tb_ws_status-" + this.uid,
-			width: 150,
+			width: 1,
 			view: "label"
 		});
 
 		if (resultSearch) {
 
-			toolbar.elements.push({
+			let searchBar = {
 				view: "search",
 				id: "txtSearch-" + this.uid,
 				placeholder: i18n.t("LBL_SEARCH"),
-				width: 300
-			});
+			}
+
+			if (resultCommons || resultCommands || resultMulti) {
+
+				searchBar.width = 300;
+
+				toolbar.elements.push(searchBar);
+
+			} else {
+
+				toolbar.elements.push(searchBar);
+
+			}
 		}
 
 		toolbar.elements.push({ width: 8 });
@@ -579,14 +612,14 @@ export default class DataTable {
 		let ctxMenuData = [];
 		let self = this;
 		let metadata = this.metadata;
-		
+
 		if (metadata.gridCommands) {
-		
+
 			metadata.gridCommands.forEach(cmd => {
 
 				ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
 			});
-	
+
 			if (ctxMenuData.length > 0) {
 				datatable.ready = function() {
 					webix.ui({
@@ -595,38 +628,39 @@ export default class DataTable {
 						width: 250,
 						data: ctxMenuData,
 						template: (obj) => {
-	
+
 							if (!obj.default) {
 								return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
 							}
 							else {
 								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
 							}
-	
+
 						},
 						on: {
 							onMenuItemClick: function(id) {
-	
+
 								let gridCommand = metadata.gridCommands.find(e => {
 									return e.id === this.getItem(id).id
 								});
-	
+
 								self.open_module(gridCommand);
 							}
 						}
 					}).attachTo(this);
 				};
-			}	
+			}
 		}
 	}
 
 	sortDatatable(gridFieldId, order) {
 
 		let dataTable = $$("dt-" + this.uid);
+		let metadata = this.metadata;
 
 		if (gridFieldId && order) {
 
-			let gridField = this.metadata.gridFields.find(e => {
+			let gridField = metadata.gridFields.find(e => {
 
 				return e.id === gridFieldId;
 
@@ -642,33 +676,31 @@ export default class DataTable {
 
 			let resultId = this.getGridOptions(GridOptions.SORT_FIELD_ID);
 
-			let gridField = this.metadata.gridFields.find(e => {
+			if (resultId) {
 
-				return e.id === parseInt(resultId.value);
-			});
+				let gridField = metadata.gridFields.find(e => {
+					return e.id === parseInt(resultId);
+				});
 
-			if (gridField) {
+				if (gridField) {
 
-				let resultOrd = this.getGridOptions(GridOptions.SORT_FIELD_ORDER);
+					let resultOrd = this.getGridOptions(GridOptions.SORT_FIELD_ORDER);
 
-				dataTable.markSorting(gridField.sourceField, resultOrd.value);
-				dataTable.sort(gridField.sourceField, resultOrd.value);
+					dataTable.markSorting(gridField.sourceField, resultOrd);
+					dataTable.sort(gridField.sourceField, resultOrd);
+				}
 			}
-
 		}
 	}
-
-
 
 	filterDatatable(gridFieldId, value) {
 
 		let metadata = this.metadata;
-		let self = this;
 		let dataTable = $$("dt-" + this.uid);
 
 		if (gridFieldId && value) {
 
-			let gridField = this.metadata.gridFields.find(e => {
+			let gridField = metadata.gridFields.find(e => {
 
 				return e.id === gridFieldId;
 			});
@@ -685,26 +717,25 @@ export default class DataTable {
 
 			let resultId = this.getGridOptions(GridOptions.FILTER_FIELD_ID);
 
-			let gridField = this.metadata.gridFields.find(e => {
+			if (resultId) {
 
-				return e.id === parseInt(resultId.value);
-			});
+				let gridField = metadata.gridFields.find(e => {
 
-			if (gridField) {
+					return e.id === parseInt(resultId);
+				});
 
-				let resultFilter = this.getGridOptions(GridOptions.FILTER_FIELD_VALUE);
+				if (gridField) {
 
-				dataTable.filter(function(obj) {
+					let resultFilter = this.getGridOptions(GridOptions.FILTER_FIELD_VALUE);
 
-					return obj[gridField.sourceField].toString().indexOf(resultFilter.value) != -1;
-				})
+					dataTable.filter(function(obj) {
 
+						return obj[gridField.sourceField].toString().indexOf(resultFilter) != -1;
+					});
+				}
 			}
-
 		}
 	}
-
-
 
 	showMainToolbar() {
 
@@ -726,30 +757,36 @@ export default class DataTable {
 		}
 	}
 
-
-
 	getGridOptions(option) {
 
 		let metadata = this.metadata;
-		let optionValues;
+		let optionValue = undefined;
 
 		if (metadata) {
-			optionValues = metadata.gridOptionValues.find(e => e.gridOption.id === option)
+
+			optionValue = metadata.gridOptionValues.find(e => e.gridOption.id === option);
+			if (optionValue) {
+
+				if (optionValue.value === _TRUE) {
+
+					return true;
+
+				} else if (optionValue.value === _FALSE) {
+
+					return false;
+
+				} else if (DefOptionValues[option] === true || DefOptionValues[option] === false) {
+
+					return optionValue.value = DefOptionValues[option];
+
+				} else {
+
+					return optionValue.value;
+
+				}
+			}
 		}
-		
-		if(optionValues.value === "true"){
-			
-			return true;
-	
-		} else if (optionValues.value === "false"){
-		
-			return false;
-		}
-		
-		return optionValues;
 	}
-
-
 
 	evalActionsToolbar() {
 
@@ -768,12 +805,77 @@ export default class DataTable {
 		return resultOption
 	}
 
+	addData() {
 
+		let dataTable = $$("dt-" + this.uid);
+		let newdata = {
+			country: "Slovakia",
+			visible: true,
+			timezone: "Europe/Bratislava",
+			roleAlias: "Operators",
+			fullName: "PA",
+			language: "sk",
+			preset: false,
+			isAdmin: false,
+			locale: {
+				visible: true,
+				id: "I18nLocale:sk_SK"
+			},
+			password: "IndePEN$$1",
+			name: "manolo",
+			allowMultipleSessions: true,
+			id: "User:45",
+			sessionExpireTimeS: 86400,
+			email: "indepen@mindop.sk"
+		}
+
+		if (dataTable && newdata) {
+
+			dataTable.add(newdata);
+		}
+	}
+
+	updateData() {
+
+		let dataTable = $$("dt-" + this.uid);
+		let data = this.data;
+
+		let newdata = {
+			country: "Slovakia",
+			visible: true,
+			timezone: "Europe/Bratislava",
+			roleAlias: "Operators",
+			fullName: "PA",
+			language: "sk",
+			preset: false,
+			isAdmin: false,
+			locale: {
+				visible: true,
+				id: "I18nLocale:sk_SK"
+			},
+			password: "IndePEN$$1",
+			name: "jose",
+			allowMultipleSessions: true,
+			id: "User:14",
+			sessionExpireTimeS: 86400,
+			email: "indepen@mindop.sk"
+		}
+		if (dataTable && data && newdata) {
+
+			let result = data.find(e => { return e.id === newdata.id });
+
+			console.log(result)
+			dataTable.updateItem(result.id, newdata)
+
+		}
+
+	}
 
 	callbacks() {
 
 		this.sortDatatable();
 		this.filterDatatable();
+
 		this.search_callback();
 		this.select_all_callback();
 		this.unselect_all_callback();
@@ -995,22 +1097,22 @@ export default class DataTable {
 			});
 		}
 	}
-	
+
 	on_item_selected() {
 
 		if (this.events && this.events[EventTypes.ON_SELECT_ROW]) {
-			
+
 			let self = this;
 			let grid = $$("dt-" + this.uid);
-			
+
 			if (grid) {
-			
+
 				grid.attachEvent("onSelectChange", function() {
 
 					eval(self.events[EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
-				});	
+				});
 			}
-			
+
 		}
 	}
 
@@ -1066,8 +1168,9 @@ export default class DataTable {
 		let self = this;
 		let refreshButton = $$("tb_btn-refresh-" + this.uid);
 		let grid = $$("dt-" + this.uid);
+		let dataGridId = this.dataGridId;
 
-		if (!webix.isUndefined(grid) && !webix.isUndefined(refreshButton)) {
+		if (!webix.isUndefined(grid) && !webix.isUndefined(refreshButton) && dataGridId) {
 
 			webix.extend(grid, webix.ProgressBar);
 
@@ -1079,45 +1182,45 @@ export default class DataTable {
 	}
 
 	refresh() {
-		
+
 		let grid = $$("dt-" + this.uid);
 		let self = this;
 		let url = undefined;
 
 		if (!webix.isUndefined(grid)) {
-			
+
 			grid.showProgress({
 
 				hide: true, type: "bottom"
 			});
-			
+
 			if (this.dataGridParams) {
-				
+
 				url = appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams;
 			}
 			else {
-				
+
 				url = appConfig.restUrl + "grids/" + this.dataGridId;
 			}
-				
+
 			webix.ajax(url).then(function(dat) {
 
 				webix.delay(function() {
-					
+
 					if (dat && dat.json) {
-						
+
 						let data = dat.json();
-						
+
 						if (data.data) {
-						
+
 							self.translateFieldValues(data.data);
 
-							grid.parse(data.data);	
+							grid.parse(data.data);
 						}
 					}
-					
+
 					grid.hideProgress();
-					
+
 				}, null, null, 1);
 			});
 		}
@@ -1261,19 +1364,19 @@ export default class DataTable {
 								gridData.data.forEach(dataItem => {
 
 									var record = grid.getItem(dataItem.id);
-		
+
 									if (record != undefined && gridData.action == 'DELETE') {
-											
+
 										grid.remove(record.id);
 										rowsUpdated++;
 									}
 									else if (gridData.action == 'CREATE') {
-										
+
 										grid.add(dataItem);
 										rowsUpdated++;
-										
-									} else if(record != undefined ) {
-										
+
+									} else if (record != undefined) {
+
 										var keys = Object.keys(dataItem);
 
 										if (keys != undefined && Array.isArray(keys) && keys.length > 0) {
@@ -1288,7 +1391,7 @@ export default class DataTable {
 													record[key] = "";
 												}
 											});
-										} 
+										}
 									}
 									rowsUpdated++;
 								});
@@ -1340,32 +1443,32 @@ export default class DataTable {
 	}
 
 	select(ids) {
-		
+
 		let grid = $$("dt-" + this.uid);
 
 		if (grid != undefined) {
-			
+
 			if (Array.isArray(ids) && ids.length) {
-				
+
 				ids.forEach(id => {
-					
+
 					let record = grid.getItem(id);
 
 					if (record != undefined) {
-					
-						grid.select(id);	
+
+						grid.select(id);
 					}
 				});
 			}
 			else if (ids) {
-				
+
 				let id = ids;
-				
+
 				let record = grid.getItem(id);
 
 				if (record != undefined) {
-				
-					grid.select(id);	
+
+					grid.select(id);
 				}
 			}
 		}

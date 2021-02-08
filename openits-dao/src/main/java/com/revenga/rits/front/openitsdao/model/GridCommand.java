@@ -30,6 +30,9 @@ public class GridCommand implements Serializable {
 	private Boolean multiselect;
 
 	private Integer position;
+	
+	@Column(name="show_text")
+	private Boolean showText;
 
 	//bi-directional many-to-one association to Grid
 	@JsonIgnore
@@ -118,5 +121,13 @@ public class GridCommand implements Serializable {
 
 	public void setViewType(ViewType viewType) {
 		this.viewType = viewType;
+	}
+
+	public Boolean getShowText() {
+		return this.showText;
+	}
+
+	public void setShowText(Boolean showText) {
+		this.showText = showText;
 	}
 }
