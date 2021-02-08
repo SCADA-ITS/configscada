@@ -76,7 +76,7 @@ export default class DataTable {
 				datatable.columns = [];
 
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-
+				
 				self.translateFieldValues(data);
 
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
@@ -536,8 +536,10 @@ export default class DataTable {
 
 		}
 
-		if (metadata.gridCommands && metadata.gridCommands.length > 0 && resultCommands) {
+		if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0 && resultCommands) {
 
+			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+			
 			toolbar.elements.push({ width: 8 });
 			metadata.gridCommands.forEach(cmd => {
 
@@ -620,9 +622,7 @@ export default class DataTable {
 
 	sortDatatable(gridFieldId, order) {
 
-		let self = this;
 		let dataTable = $$("dt-" + this.uid);
-		let metadata = this.metadata;
 
 		if (gridFieldId && order) {
 

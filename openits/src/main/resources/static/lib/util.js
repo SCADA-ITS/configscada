@@ -168,16 +168,16 @@ export let util = {
 						}
 					}
 				});
-				
-				if(lazyClass && module.jsMethodCallbacks) {
+			}
+			
+			if(module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
 
-					lazyClass.runOne(module.jsMethodCallbacks)
-				}
+				lazyClass.runOne(module.jsMethodCallbacks)
+			}
+			
+			if ($$(win_id)) {
 				
-				if ($$(win_id)) {
-					
-					$$(win_id).show();
-				}
+				$$(win_id).show();
 			}
 		},
 
@@ -315,11 +315,11 @@ export let util = {
 				});
 
 				$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
+			}
+			
+			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
 
-				if (lazyClass && module.jsMethodCallbacks) {
-
-					lazyClass.runOne(module.jsMethodCallbacks)
-				}
+				lazyClass.runOne(module.jsMethodCallbacks)
 			}
 		},
 
