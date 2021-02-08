@@ -34,7 +34,7 @@ public class DataSource implements Serializable {
 	private Boolean visible;
 
 	//bi-directional many-to-one association to DataSourceValue
-	@OneToMany(mappedBy="dataSource")
+	@OneToMany(mappedBy="dataSource", fetch = FetchType.EAGER)
 	private List<DataSourceValue> dataSourceValues;
 
 	//uni-directional many-to-one association to DataSourceType

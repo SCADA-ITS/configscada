@@ -14,8 +14,11 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+
+import com.revenga.rits.front.openits.service.CacheManager;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +35,9 @@ public class AppInfra {
 	
 	@Getter
 	private final String version = getVer();
+	
+	@Autowired
+	CacheManager entitiesManager;
 	
 		
 	public static boolean isDebugging() {
@@ -55,6 +61,8 @@ public class AppInfra {
 		showSplash();
 		
 		initShutdownHook();
+		
+		entitiesManager.start();
 	}
 	
 	private void initShutdownHook() {

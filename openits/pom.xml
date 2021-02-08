@@ -109,6 +109,10 @@
 		    <version>3.0.2</version>
 		    <type>pom</type>
 		</dependency>
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		</dependency>
 	</dependencies>
 
 	<!-- <build>

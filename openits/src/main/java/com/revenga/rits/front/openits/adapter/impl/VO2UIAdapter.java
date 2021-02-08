@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.model.VoEntityValue;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
@@ -24,6 +25,9 @@ public class VO2UIAdapter {
 	@Autowired
 	VoEntityService voEntityService;
 	
+	@Autowired
+	CacheManager cacheManager;
+	
 	public List<Map<String, Object>> convert(String fieldId, List<Map<String, Object>> entities) {
 		
 		List<Map<String, Object>> entitiesUI = null;
@@ -32,9 +36,14 @@ public class VO2UIAdapter {
 			
 			entitiesUI = new ArrayList<>();
 			
-			for (Map<String, Object> entity : entities) {
+			List<VoEntity> listVoEntity = cacheManager.getVoEntities();
+			
+			if (CollectionUtils.isEmpty(listVoEntity)) {
 				
-				List<VoEntity> listVoEntity = voEntityService.getAll();
+				listVoEntity = voEntityService.getAll();
+			}
+			
+			for (Map<String, Object> entity : entities) {
 				
 				entitiesUI.add(convert(fieldId, entity, listVoEntity));
 			}

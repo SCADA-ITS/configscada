@@ -29,7 +29,7 @@ public class VoEntity implements Serializable {
 	private VoEntityType voEntityType;
 
 	//bi-directional many-to-one association to VoEntityValue
-	@OneToMany(mappedBy="voEntity")
+	@OneToMany(mappedBy="voEntity", fetch = FetchType.EAGER)
 	private List<VoEntityValue> voEntityValues;
 
 	public VoEntity() {

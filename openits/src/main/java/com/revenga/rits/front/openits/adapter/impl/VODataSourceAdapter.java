@@ -16,6 +16,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.util.ConfigProperty;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 import com.revenga.rits.front.openitsdao.model.DataSource;
@@ -216,6 +217,9 @@ public class VODataSourceAdapter {
 
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
+	
+	@Autowired
+	CacheManager cacheManager;
 
 	@PostConstruct
 	private void initialize() {
@@ -223,14 +227,28 @@ public class VODataSourceAdapter {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getList(Integer dataSourceId, Object[] params) {
 
 		List<Map<String, Object>> list = null;
-		DataSource dataSource = dataSourceService.getById(dataSourceId);
+		DataSource dataSource = null;
 
-		if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+		if (dataSourceId != null) {
 
-			list = getListFromGraphql(dataSource, params);
+			if (params == null) {
+				
+				list = (List<Map<String, Object>>) cacheManager.getEntityCached(dataSourceId);
+			}
+			
+			if (list == null) {
+				
+				dataSource = dataSourceService.getById(dataSourceId);
+				
+				if (dataSource != null && dataSource.getDataSourceType().getId().equals(DATA_SOURCE_TYPE_GRAPHQL_QUERY)) {
+				
+					list = getListFromGraphql(dataSource, params);
+				}
+			}
 		}
 
 		return list;
