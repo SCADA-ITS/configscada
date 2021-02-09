@@ -1178,7 +1178,7 @@ export default class IncidentReportModule extends GenericModule {
 													};
 
 													util.ui.loadWindow(
-														i18n.t("LBL_OPERATION_PLAN"),
+														"LBL_OPERATION_PLAN",
 														body,
 														h,
 														w
