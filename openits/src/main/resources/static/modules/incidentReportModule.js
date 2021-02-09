@@ -1357,6 +1357,12 @@ export default class IncidentReportModule extends GenericModule {
 									{
 										height: 50,
 										borderless: true,
+										template: `<div><span class="ico webix_icon mdi mdi-format-list-bulleted-type"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
+												   <div class="value">${i18n.t(task.incidentTypeTask.taskType.labelAlias)}</div>`
+									},
+									{
+										height: 50,
+										borderless: true,
 										template: `<div><span class="ico webix_icon mdi mdi-form-textbox"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_ALIAS")}</span></div>
 												   <div class="value">${task.incidentTypeTask.alias}</div>`
 									},
