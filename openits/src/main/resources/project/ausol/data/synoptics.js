@@ -152,7 +152,7 @@ export let synopticData= [
 		"Element:2:9":  { "x": 1500,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-4MA" },
 		"Element:2:10":  { "x": 35,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1MA" },
 
-		"Element:4:1": { "x": 1485,  "y": 711, "width": 80, "height": 80, "alias": "SEC_1_ETD1",
+		"Element:4:1": { "x": 1485,  "y": 711, "width": 60, "height": 80, "alias": "SEC_1_ETD1",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -160,7 +160,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:2": { "x": 1485,  "y": 300, "width": 80, "height": 80, "alias": "SEC_2_ETD1",
+		"Element:4:2": { "x": 1485,  "y": 300, "width": 60, "height": 80, "alias": "SEC_2_ETD1",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -168,7 +168,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:3": { "x": 265,  "y": 300, "width": 80, "height": 80, "alias": "SEC_1_ETD2",
+		"Element:4:3": { "x": 265,  "y": 300, "width": 60, "height": 80, "alias": "SEC_1_ETD2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -176,7 +176,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:4": { "x": 265,  "y": 711, "width": 80, "height": 80, "alias": "SEC_2_ETD2",
+		"Element:4:4": { "x": 265,  "y": 711, "width": 60, "height": 80, "alias": "SEC_2_ETD2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -262,7 +262,7 @@ export let synopticData= [
 		"Element:53:3": { "x": 85,  "y": 260, "width": 30,  "height": 35,  "alias": "RV-SAA-1MA" },
 		"Element:53:4": { "x": 85,  "y": 420, "width": 30,  "height": 35,  	"alias": "RV-SAA-2MA" },
 
-		"Element:55:2": { "x": 1558,   "y": 450, "width": 95, "height": 120,  "alias": "RV-MAP-CT" },
+		"Element:55:2": { "x": 1558,   "y": 500, "width": 55, "height": 80,  "alias": "RV-MAP-CT" },
 		
 		"Element:66:1": { "x": 205,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
 
@@ -368,7 +368,7 @@ export let synopticData= [
 		"Element:8:3":  { "x": 1411, "y": 590,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
 		
-		"Element:4:4": { "x": 1410,  "y": 700, "width": 80, "height": 80, "alias": "SEC_1",
+		"Element:4:4": { "x": 1410,  "y": 700, "width": 60, "height": 80, "alias": "SEC_1",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -376,7 +376,7 @@ export let synopticData= [
 				{name: "etd_veh_length_1_percent", label: "C (%L)"}
 			]
 		},
-		"Element:4:2": { "x": 1825,  "y": 555, "width": 80, "height": 80, "alias": "SEC_2",
+		"Element:4:2": { "x": 1825,  "y": 555, "width": 60, "height": 80, "alias": "SEC_2",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
@@ -445,7 +445,7 @@ export let synopticData= [
 
 		"Element:58:1": { "x": 1440,   "y": 290, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 
-		"Element:59:1": { "x": -30,   "y": 680, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-HUM-1" },
+		"Element:59:1": { "x": 150,   "y": 700, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
 
 		"Element:60:1": { "x": 900,   "y": 100, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
 
@@ -652,7 +652,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "CT MAP RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "CUARTOS TECNICOS BOCA RIO VERDE_v0.7.svg",
+			"BASE_LAYER": "CUARTOS-TECNICOS-BOCA-RIO-VERDE_v0.14.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -666,6 +666,6 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
-		"Element:55:1": { "x": 840,   "y": 3, "width": 200, "height": 140,  "alias": "RV-CT-ITS-1" },
+		"Element:55:1": { "x": 925,   "y": 110, "width": 100, "height": 80,  "alias": "RV-CT-ITS-1" },
 	}
 ];

@@ -186,7 +186,7 @@ export const ELEMENT_TYPE = {
       ] 
     },
     "ElementType:54" :{ id: "ElementType:54", uiType: UI_ELEMENT_TYPE_GENERIC, value: 54, scale_x: 50, scale_y: 50, svgRaw:SVG_54_ATC},
-    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 50, scale_y: 50, svgRaw:SVG_55_CT, 
+    "ElementType:55" :{ id: "ElementType:55", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 55, scale_x: 40, scale_y: 30, svgRaw:SVG_55_CT, 
       tabs:[
         {ELEMENT_FORM_TAB_SYN: {
           idSynoptic:"synopticUnifilarCtMap",
@@ -212,7 +212,7 @@ export const ELEMENT_TYPE = {
       ] 
     },
     "ElementType:58" :{ id: "ElementType:58", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 58, scale_x: 100, scale_y: 100, svgRaw:SVG_58_PULSADOR },
-    "ElementType:59" :{ id: "ElementType:59", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 59, scale_x: 100, scale_y: 100, svgRaw:SVG_59_SMOKE_DETECTOR },
+    "ElementType:59" :{ id: "ElementType:59", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 59, scale_x: 180, scale_y: 180, svgRaw:SVG_59_SMOKE_DETECTOR },
     "ElementType:60" :{ id: "ElementType:60", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 60, scale_x: 100, scale_y: 100, svgRaw:SVG_60_SIRENA },
     "ElementType:61" :{ id: "ElementType:61", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 61, scale_x: 100, scale_y: 100, svgRaw:SVG_61_FIRE_DET_CT },
     "ElementType:64" :{ id: "ElementType:64", uiType: UI_ELEMENT_TYPE_MATRIX, 	value: 64, scale_x: 28, scale_y: 28},

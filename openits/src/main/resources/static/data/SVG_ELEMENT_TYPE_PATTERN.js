@@ -1,4 +1,5 @@
-export let SVG_3_DET = '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(-28.51863,3377.756)">' +
+export let SVG_3_DET = 
+	'<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(-28.51863,3377.756)">' +
     '<rect style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.96504492;stroke-opacity:1"' +
        'id="rect4138" width="1999.0349" height="1999.0349" x="514.26825" y="-2947.1553" />' +
     '<rect style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.96178776;stroke-opacity:1"' +
@@ -37,14 +38,13 @@ export let SVG_3_DET = '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id
   '</g>';
 
 export let SVG_7_ZONE = 
-    '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + 
-    ':IconBackground" transform="translate(0,3553.937)" fill="' 
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
+    '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="' + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + 
+    ':IconBackground" transform="translate(0,3553.937)" fill="' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
     '"><g transform="matrix(12.442344,0,0,-12.442344,395.71032,702.10879)" id="g8">' +
     '<path inkscape:connector-curvature="0" d="M 5,160 4.3910999,79.894707 c 108.1488201,0 217.9325401,0 310.0000001,0 L 315,160 V 315 H 160 5 Z m 255,40 V 110 H 160 60 v 90 90 h 100 100 z" id="path4" fill="black" sodipodi:nodetypes="ccccccccccccccccc" />' +
     '<path inkscape:connector-curvature="0" d="M 102,237 C 87,221 80,201 80,172 v -42 h 75 75 v 43 c 0,78 -79,117 -128,64 z m 26,-14 c -15,-15 -31,-24 -34,-20 -10,10 26,47 45,47 11,0 8,-7 -11,-27 z m 77,7 c 28,-31 8,-37 -23,-7 -19,20 -22,27 -11,27 9,0 24,-9 34,-20 z" id="path6" fill="black" />' +
     '</g><path d="m 490.1271,2746.7997 c 2.25479,-400.7603 5.37264,-1100.7914 5.37264,-1555.6348 V 364.17659 H 2548.1297 4600.7596 v 984.57481 c 0,541.5162 -2.4159,1241.5519 -5.3686,1555.6349 l 2.7126,837.7403 -2068.7964,-32.3249 -2044.55275,-8.0812 z M 3873.4498,1887.4866 V 687.42539 H 2544.089 1214.7283 V 1882.0991 c 0,657.0706 2.4244,1197.0981 5.3875,1200.0612 2.9631,2.9631 601.1754,5.3875 1329.3608,5.3875 h 1323.9732 z" id="path11" transform="matrix(0.93750001,0,0,0.93750001,0,-3553.937)" /></g>';
+
 export let SVG_8_BAR =
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="' 
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
@@ -93,6 +93,7 @@ export let SVG_8_BAR =
     ' d="m 1.4675828,289.92111 h 1.4689537 v -1.67232 H 1.4675828 Z m 0,0" style="fill:#c7c7c5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34995937" /><path inkscape:connector-curvature="0" id="' 
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill9"'+
     ' d="m 2.6722071,292.82732 c -0.4846041,0 -0.9458036,-0.2837 -1.1440505,-0.75336 -0.024776,-0.0597 -0.045436,-0.12081 -0.060572,-0.18053 v -0.57283 c 0.090863,-0.3665 0.3496835,-0.68685 0.7296589,-0.84159 0.1555668,-0.0638 0.3166463,-0.0951 0.4749654,-0.0951 0.089484,0 0.1775976,0.01 0.2643294,0.0285 v 2.38633 c -0.088106,0.019 -0.1762189,0.0285 -0.2643294,0.0285" style="fill:#c7c7c5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34995937" /></g>';
+
 export let SVG_9_FAN=
     '<g><defs id="defs3446"><marker  inkscape:stockid="Arrow1Sstart" orient="auto" refY="0" refX="0" id="Arrow1Sstart-7-7-4-9-9-4-8" style="overflow:visible" inkscape:isstock="true"><path id="' 
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
@@ -131,299 +132,143 @@ export let SVG_9_FAN=
     ':IconMI" fill="yellow" stroke="yellow" style="fill:#ffff00;fill-opacity:1;stroke:#ffff00;stroke-width:67.85962677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:5;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Sstart-7-7-4-9-9-4-8)" d="M 386.47125,87.97389 H -15.180432" inkscape:connector-curvature="0" />' +
     '</g>';
 
-export let SVG_11_SOS = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="228"
-   height="277"
-   viewBox="0 0 60.324999 73.289585"
-   version="1.1"
-   id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="posteSOS.svg"
-   enable-background="new">
-  <defs
-     id="defs2" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="4.0084328"
-     inkscape:cx="167.07994"
-     inkscape:cy="102.9122"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
-     showgrid="false"
-     units="px"
-     inkscape:window-width="2400"
-     inkscape:window-height="1271"
-     inkscape:window-x="2391"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1"
-     inkscape:document-rotation="0"
-     inkscape:lockguides="false" />
-  <metadata
-     id="metadata5">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:groupmode="layer"
-     id="layer9"
-     inkscape:label="soporte_arriba"
-     style="display:inline"
-     sodipodi:insensitive="true" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer13"
-     inkscape:label="conectores"
-     sodipodi:insensitive="true" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer11"
-     inkscape:label="soporte_lateral"
-     style="display:inline"
-     sodipodi:insensitive="true" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer8"
-     inkscape:label="cuadro_naranja_2"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <rect` +
-      ' style="fill: '+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +' ;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ' +
-      ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill0" ' +
-      ` width="39.414352"
-       height="50.501289"
-       x="11.953149"
-       y="10.663306" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer12"
-     inkscape:label="botones"
-     sodipodi:insensitive="true" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer7"
-     inkscape:label="Cuadro_naranja_1"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <rect` +
-       ' style="fill:' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +' ;fill-opacity:1;stroke:#000000;stroke-width:0.194849;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" '+
-       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill1" ' +
-       ` width="35.985386"
-       height="49.364933"
-       x="13.887915"
-       y="11.804322"
-       ry="0" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Cuadro_blanco"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <rect
-       id="rect24"
-       width="35.790279"
-       height="40.032948"
-       x="13.984169"
-       y="21.034374"
+export let SVG_11_SOS = 
+	`<svg width="228" height="277" viewBox="0 0 60.324999 73.289585">
+  	<g id="layer9" style="display:inline" sodipodi:insensitive="true" />
+  	<g id="layer13" sodipodi:insensitive="true" />
+  	<g id="layer11" style="display:inline" sodipodi:insensitive="true" />
+  	<g id="layer8" style="display:inline" sodipodi:insensitive="true">` +
+	    '<rect style="fill: '+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +' ;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ' +
+	      ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill0" width="39.414352" height="50.501289" x="11.953149" y="10.663306" />' +
+  	`</g>
+  	<g id="layer12" sodipodi:insensitive="true" />
+	<g id="layer7" style="display:inline" sodipodi:insensitive="true">` +
+    	'<rect style="fill:' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +' ;fill-opacity:1;stroke:#000000;stroke-width:0.194849;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" ' +
+       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill1" width="35.985386" height="49.364933" x="13.887915" y="11.804322" ry="0" />' +
+  `</g>
+  <g id="layer2" style="display:inline" sodipodi:insensitive="true">
+    <rect id="rect24" width="35.790279" height="40.032948" x="13.984169" y="21.034374"
        style="fill:#ffffff;fill-opacity:0.981818;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot838"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:5.28px;fill:#000000;fill-opacity:1;stroke:none"
-       transform="scale(0.26458333)"><flowRegion
-         id="flowRegion840"><rect
-           id="rect842"
-           width="14.285714"
-           height="42.142857"
-           x="59.642857"
-           y="18.785713" /></flowRegion><flowPara
-         id="flowPara844" /></flowRoot>
+    <flowRoot xml:space="preserve" id="flowRoot838" style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:5.28px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="scale(0.26458333)"><flowRegion id="flowRegion840">
+       <rect id="rect842" width="14.285714" height="42.142857" x="59.642857" y="18.785713" /></flowRegion><flowPara id="flowPara844" />
+  	</flowRoot>
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="cuadro azul"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <rect
-       style="fill:#364a98;fill-opacity:1;stroke:none;stroke-width:0.26558241;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect850"
-       width="35.71907"
-       height="9.7319374"
-       x="13.989719"
-       y="21.038578" />
+  <g id="layer4" style="display:inline" sodipodi:insensitive="true">
+    <rect style="fill:#364a98;fill-opacity:1;stroke:none;stroke-width:0.26558241;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect850" width="35.71907" height="9.7319374" x="13.989719" y="21.038578" />
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Letras SOSO"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <text
-       xml:space="preserve"
+  <g id="layer3" style="display:inline" sodipodi:insensitive="true">
+    <text xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:11.4013px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.285031"
-       x="14.206669"
-       y="29.985666"
-       id="text836"
-       transform="scale(1.0027009,0.99730637)"><tspan
-         sodipodi:role="line"
-         id="tspan834"
-         x="14.206669"
-         y="29.985666"
+       x="14.206669" y="29.985666" id="text836" transform="scale(1.0027009,0.99730637)">
+       <tspan sodipodi:role="line" id="tspan834" x="14.206669" y="29.985666"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:4.27547px;word-spacing:6.29064px;fill:#ffffff;fill-opacity:1;stroke-width:0.285031"
-         dx="0"
-         rotate="5 5 5 0">SOS</tspan></text>
+         dx="0" rotate="5 5 5 0">SOS</tspan></text>
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer5"
-     inkscape:label="telefono"
-     sodipodi:insensitive="true"
-     style="display:inline">
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+  <g inkscape:groupmode="layer" id="layer5" inkscape:label="telefono" sodipodi:insensitive="true" style="display:inline">
+    <path style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 20.512936,40.415432 -0.03341,-5.946749 1.186009,0.01669 c 2.003479,0.704288 3.100434,2.147226 3.908817,3.825296 l 0.267269,1.219417 0.05011,8.92012 c -0.453832,3.717637 -2.280231,6.388402 -5.362095,8.101608 l 0.0167,-5.930043 c 0.713523,0.0222 1.099258,-0.381716 1.369756,-0.935445 v -8.636145 c -0.241898,-0.420033 -0.587778,-0.744082 -1.403156,-0.634749 z"
-       id="path878"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccc" />
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path878" sodipodi:nodetypes="ccccccccccc" />
+    <path style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 16.737754,34.819476 0.417609,-0.451017 h 2.372017 l -0.03341,6.063676 -2.388721,-0.03341 -0.400905,-0.417608 z"
-       id="path880"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path880" sodipodi:nodetypes="ccccccc" />
+    <path style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 16.73754,50.98058 0.417609,-0.451017 h 2.372017 l -0.03341,6.063676 -2.388721,-0.03341 -0.400905,-0.417608 z"
-       id="path880-8"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
+       id="path880-8" sodipodi:nodetypes="ccccccc" />
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer6"
-     inkscape:label="extintor"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <path
-       style="fill:#de353a;fill-opacity:1;stroke:#de353a;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+  <g id="layer6" style="display:inline" sodipodi:insensitive="true">
+    <path style="fill:#de353a;fill-opacity:1;stroke:#de353a;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 35.080916,56.493266 c 0.35462,-6.03187 0.572128,-12.06374 0.425222,-18.09561 0.04741,-0.495659 0.569723,-0.520236 0.8032,-0.519717 l 2.291481,-0.02362 c 0.358004,-0.320897 0.164298,-0.942605 0.236235,-1.370165 -0.8032,-0.07512 -1.393788,-0.209177 -2.196988,0.25986 -0.841899,0.482028 -1.290297,0.719384 -1.866257,1.252047 -0.516362,0.122089 -0.70378,0.223681 -0.968564,-0.09449 -0.134468,-0.178031 0.328997,-0.472555 0.874069,-0.897692 l 1.913505,-1.181176 2.55134,-0.04725 0.02363,-1.063059 -0.472469,-0.354353 c -0.664148,-0.161008 -1.308459,-0.397247 -2.031625,-0.259859 -0.618231,-0.0053 -1.124617,-0.135716 -1.606398,-0.4016 l -0.188988,-0.47247 c -0.02284,-0.337815 -0.05873,-0.594201 0.165363,-0.685081 0.274638,-0.09159 0.330961,0.02293 0.543343,0.118117 -0.0087,0.548569 0.726927,0.689246 0.944938,0.897693 l 2.362353,0.212615 c 1.38783,0.135636 1.606398,0.87407 1.606398,0.87407 0,0 -0.465266,1.251595 0.751226,1.015811 l 1.351266,0.09449 c 1.884974,0.103477 2.982168,1.046528 3.992374,2.14974 0.784946,0.621298 1.488585,2.109059 1.275671,3.803385 -0.11029,0.843657 -0.0042,1.053333 -0.566965,2.858446 l -2.598587,5.858631 -0.87407,1.913503 v 3.874257 c -0.117544,0.437925 -0.481054,0.735298 -1.039434,0.921316 l -7.134301,-0.04725 c -0.413194,-0.04739 -0.528637,-0.293284 -0.566968,-0.590584 z"
-       id="path898"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccccccccccccccccccccccccc" />
-    <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path898" sodipodi:nodetypes="cccccccccccccccccccccccccccccccc" />
+    <path style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 40.821427,36.484152 v 1.393785 l 2.929316,-0.02363 c 0.40098,-0.01261 0.567059,0.170535 0.590589,0.472469 l -0.188989,10.016371 c 1.338587,-1.160844 2.064047,-3.425314 2.787573,-5.693267 0.247312,-1.487149 0.357137,-2.968798 -0.944938,-4.393972 -1.084438,-1.070973 -2.441934,-1.50201 -3.401788,-1.700894 z"
        id="path900"
-       inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
   </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer10"
-     inkscape:label="soporte_bajo"
-     sodipodi:insensitive="true" />
-</svg>
-`;
+  <g id="layer10" sodipodi:insensitive="true" />
+</svg>`;
 
-export let SVG_12_LUX = '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)"><g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1"><rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + 
-    ':IconBackground" fill="silver" stroke="' 
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-    '" /><rect fill="silver" stroke="' 
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-    '" y="387.27902" x="173.69635" height="21.42857" width="50.892853" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':ValueBackground" /><text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve"><tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':Value" sodipodi:role="line">' 
-    + REGEX_PATTERN_INIT+'LUX_LUMINOSITY'+REGEX_PATTERN_END +
-    '</tspan></text><text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve"><tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUX</tspan></text></g></g>';
+export let SVG_12_LUX = 
+	`<g id="layer1" transform="translate(0,-281.12499)"><g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1"><rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998"` + 
+	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':IconBackground"' + 
+	'fill="silver" stroke="' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + '" />' +
+	'<rect fill="silver" stroke="' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + '" y="387.27902" x="173.69635" height="21.42857" width="50.892853"' + 
+		'id="' + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':ValueBackground"/>' +
+	`<text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve">
+		<tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198"` + 
+			'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':Value" sodipodi:role="line">' + REGEX_PATTERN_INIT + 'LUX_LUMINOSITY' + REGEX_PATTERN_END +
+	    `</tspan>
+    </text>
+    <text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve">
+    	<tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUX</tspan>
+    </text>
+    </g>
+    </g>`;
+
 export let SVG_13_SEM_RAV =
-    '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-286.68123)">' +
-    '<g id="g2866" transform="matrix(0.2822222,0,0,0.2822222,34.461018,264.46835)">' +
-    '<rect ry="3.974129" y="80.367165" x="-120.69973" height="33.496231" width="28.197393" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':IconBackground" style="fill:#cccccc;fill-opacity:1;stroke:'
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-    ';stroke-width:2.8125;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />' +
-    '<g style="fill:#000000;stroke:#00ff00;stroke-opacity:1" id="g3-9-9" transform="matrix(0.03113516,0,0,0.03113516,-120.0617,83.098956)">' +
-    '<g style="fill:#000000;stroke:#00ff00;stroke-opacity:1" id="g5-9-5">' +
-    '<path style="fill:#000000;stroke:#00ff00;stroke-opacity:1" inkscape:connector-curvature="0" id="path7-08-0" d="m 247.111,610.652 h -98.61 c -8.392,0 -15.165,7.066 -14.57,15.438 3.521,49.571 100.078,139.338 122.949,159.948 3.072,2.768 4.824,6.705 4.824,10.84 v 8.817 c 0,33.944 27.517,61.461 61.461,61.461 h 220.81 c 33.948,0 61.47,-27.521 61.47,-61.47 v -8.808 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.871,-20.61 119.427,-110.377 122.948,-159.948 0.596,-8.371 -6.178,-15.438 -14.569,-15.438 h -98.603 c -8.059,0 -14.592,-6.533 -14.592,-14.592 v -66.103 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.87,-20.61 119.424,-110.374 122.948,-159.939 0.595,-8.37 -6.179,-15.438 -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 v -66.102 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.871,-20.61 119.427,-110.377 122.949,-159.948 0.595,-8.371 -6.179,-15.438 -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 V 61.46 C 605.454,27.518 577.938,0 543.992,0 H 323.164 C 289.22,0 261.702,27.517 261.702,61.462 v 0.768 c 0,8.059 -6.533,14.592 -14.592,14.592 H 148.5 c -8.392,0 -15.165,7.067 -14.57,15.438 3.521,49.571 100.078,139.338 122.949,159.948 3.072,2.768 4.824,6.705 4.824,10.84 v 66.102 c 0,8.059 -6.533,14.592 -14.592,14.592 h -98.61 c -8.392,0 -15.165,7.067 -14.57,15.438 3.524,49.566 100.078,139.329 122.948,159.939 3.072,2.768 4.824,6.705 4.824,10.84 v 66.103 c -10e-4,8.057 -6.534,14.59 -14.592,14.59 z M 434.103,74.082 c 53.213,0 96.35,43.137 96.35,96.35 0,53.213 -43.137,96.35 -96.35,96.35 -53.213,0 -96.351,-43.137 -96.351,-96.35 0,-53.213 43.138,-96.35 96.351,-96.35 z m 0,263.668 c 53.213,0 96.35,43.137 96.35,96.351 0,53.213 -43.137,96.35 -96.35,96.35 -53.213,0 -96.351,-43.137 -96.351,-96.351 0,-53.213 43.138,-96.35 96.351,-96.35 z m 0,263.658 c 53.213,0 96.35,43.137 96.35,96.35 0,53.213 -43.137,96.351 -96.35,96.351 -53.213,0 -96.351,-43.138 -96.351,-96.351 0,-53.213 43.138,-96.35 96.351,-96.35 z" />' +
-    '</g>' +
-    '</g>' +
-    '<path inkscape:connector-curvature="0" id="'
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
+    `<g id="layer1" transform="translate(0,-286.68123)">
+    <g id="g2866" transform="matrix(0.2822222,0,0,0.2822222,34.461018,264.46835)">
+    <rect ry="3.974129" y="80.367165" x="-120.69973" height="33.496231" width="28.197393"` + 
+    'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':IconBackground" style="fill:#cccccc;fill-opacity:1;' +
+    'stroke:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';stroke-width:2.8125;stroke-miterlimit:5;' +
+    `stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />
+    <g style="fill:#000000;stroke:#00ff00;stroke-opacity:1" id="g3-9-9" transform="matrix(0.03113516,0,0,0.03113516,-120.0617,83.098956)">
+    <g style="fill:#000000;stroke:#00ff00;stroke-opacity:1" id="g5-9-5">
+    <path style="fill:#000000;stroke:#00ff00;stroke-opacity:1" id="path7-08-0" 
+    d="m 247.111,610.652 h -98.61 c -8.392,0 -15.165,7.066 -14.57,15.438 3.521,49.571 100.078,139.338 122.949,159.948 3.072,2.768 4.824,6.705 4.824,10.84 v 8.817 c 0,33.944 27.517,61.461 61.461,61.461 h 220.81 c 33.948,0 61.47,-27.521 61.47,-61.47 v -8.808 c 0,-4.135 1.752,-8.072 
+    4.824,-10.84 22.871,-20.61 119.427,-110.377 122.948,-159.948 0.596,-8.371 -6.178,-15.438 -14.569,-15.438 h -98.603 c -8.059,0 -14.592,-6.533 -14.592,-14.592 v -66.103 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.87,-20.61 119.424,-110.374 122.948,-159.939 0.595,-8.37 -6.179,-15.438 
+    -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 v -66.102 c 0,-4.135 1.752,-8.072 4.824,-10.84 22.871,-20.61 119.427,-110.377 122.949,-159.948 0.595,-8.371 -6.179,-15.438 -14.57,-15.438 h -98.61 c -8.059,0 -14.592,-6.533 -14.592,-14.592 V 61.46 C 605.454,27.518 
+    577.938,0 543.992,0 H 323.164 C 289.22,0 261.702,27.517 261.702,61.462 v 0.768 c 0,8.059 -6.533,14.592 -14.592,14.592 H 148.5 c -8.392,0 -15.165,7.067 -14.57,15.438 3.521,49.571 100.078,139.338 122.949,159.948 3.072,2.768 4.824,6.705 4.824,10.84 v 66.102 c 0,8.059 -6.533,14.592 
+    -14.592,14.592 h -98.61 c -8.392,0 -15.165,7.067 -14.57,15.438 3.524,49.566 100.078,139.329 122.948,159.939 3.072,2.768 4.824,6.705 4.824,10.84 v 66.103 c -10e-4,8.057 -6.534,14.59 -14.592,14.59 z M 434.103,74.082 c 53.213,0 96.35,43.137 96.35,96.35 0,53.213 -43.137,96.35 -96.35,96.35 
+    -53.213,0 -96.351,-43.137 -96.351,-96.35 0,-53.213 43.138,-96.35 96.351,-96.35 z m 0,263.668 c 53.213,0 96.35,43.137 96.35,96.351 0,53.213 -43.137,96.35 -96.35,96.35 -53.213,0 -96.351,-43.137 -96.351,-96.351 0,-53.213 43.138,-96.35 96.351,-96.35 z m 0,263.658 c 53.213,0 96.35,43.137 
+    96.35,96.35 0,53.213 -43.137,96.351 -96.35,96.351 -53.213,0 -96.351,-43.138 -96.351,-96.351 0,-53.213 43.138,-96.35 96.351,-96.35 z" />
+    </g>
+    </g>` +
+    '<path inkscape:connector-curvature="0" id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +
     'green" d="m -107.38937,107.61692 c -1.94132,-0.61932 -2.69254,-3.12471 -1.39239,-4.64365 1.53347,-1.79155 4.51483,-1.10614 5.05924,1.16313 0.32251,1.34434 -0.42526,2.84082 -1.68178,3.36584 -0.60731,0.25374 -1.40477,0.29982 -1.98507,0.11468 z" style="fill:#00ff00;fill-opacity:1;stroke:#00ff00;stroke-width:0.11440272;stroke-opacity:1" />' +
-    '<path inkscape:connector-curvature="0" id="'
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
+    '<path inkscape:connector-curvature="0" id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +
     'yellow" d="m -107.38937,99.61692 c -1.94132,-0.61932 -2.69254,-3.12471 -1.39239,-4.64365 1.53347,-1.79155 4.51483,-1.10614 5.05924,1.16313 0.32251,1.34434 -0.42526,2.84082 -1.68178,3.36584 -0.60731,0.25374 -1.40477,0.29982 -1.98507,0.11468 z" style="fill:#ffff00;fill-opacity:1;stroke:#ffff00;stroke-width:0.11440272;stroke-opacity:1" />' +
-    '<path inkscape:connector-curvature="0" id="'
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    'red" d="m -107.38937,90.61692 c -1.94132,-0.61932 -2.69254,-3.12471 -1.39239,-4.64365 1.53347,-1.79155 4.51483,-1.10614 5.05924,1.16313 0.32251,1.34434 -0.42526,2.84082 -1.68178,3.36584 -0.60731,0.25374 -1.40477,0.29982 -1.98507,0.11468 z" style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.11440272;stroke-opacity:1" />' +
-    '</g>' +
-    '</g>';
-export let SVG_14_LUM=
-    '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)">' +
-    '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
-    '<rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':IconBackground" fill="silver" stroke="'
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +
-    '" /><rect fill="silver" color="' 
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
-    '" y="387.27902" x="173.69635" height="21.42857" width="50.892853" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':ValueBackground"  />' +
-    '<text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve">' +
-    '<tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198" id="' 
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':Value" sodipodi:role="line">' 
-    + REGEX_PATTERN_INIT+'LUM_LUMINOSITY'+REGEX_PATTERN_END +
-    "</tspan>" +
-    "</text>" +
-    '<text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve">' +
-    '<tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUM</tspan>' +
-    "</text>" +
-    "</g>" +
-    "</g>";
+    '<path inkscape:connector-curvature="0" id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +
+    `red" d="m -107.38937,90.61692 c -1.94132,-0.61932 -2.69254,-3.12471 -1.39239,-4.64365 1.53347,-1.79155 4.51483,-1.10614 5.05924,1.16313 0.32251,1.34434 -0.42526,2.84082 -1.68178,3.36584 -0.60731,0.25374 -1.40477,0.29982 -1.98507,0.11468 z" style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.11440272;stroke-opacity:1" />
+    </g>
+    </g>`;
+    
+export let SVG_14_LUM=   
+	`<g id="layer1" transform="translate(0,-281.12499)">
+	<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">
+    <rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998"` + 
+    'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':IconBackground"' + 
+    'fill="silver" stroke="' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + '" />' +
+    '<rect fill="silver" color="' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
+    '" y="387.27902" x="173.69635" height="21.42857" width="50.892853"' + 
+    'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 
+    `:ValueBackground"  />
+    <text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve">
+    <tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198"` + 
+	    'id="' + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':Value" sodipodi:role="line">' 
+	    + REGEX_PATTERN_INIT+'LUM_LUMINOSITY'+REGEX_PATTERN_END +
+    `</tspan> 
+    </text> +
+    <text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;
+    font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;
+    word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve">
+    	<tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;
+    	stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUM</tspan>
+    </text> 
+    </g>
+    </g>`;
 
-export let SVG_15_FIRE_DET =`<g
-inkscape:label="Capa 1"
-inkscape:groupmode="layer"
-id="layer1"
-transform="translate(0,-291.70832)">
-<rect
-  style="fill:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +`;fill-opacity:1;stroke:#000000;stroke-width:0.18743469;stroke-opacity:1"
-  id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +`:fill0"
-  width="83.156319"
-  height="5.1042309"
-  x="0.093717344"
-  y="291.80206" />
-</g>`;
+export let SVG_15_FIRE_DET =
+	`<g	id="layer1"	transform="translate(0,-291.70832)">` +
+	'<rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
+	';fill-opacity:1;stroke:#000000;stroke-width:0.18743469;stroke-opacity:1"' +
+	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 
+	`:fill0" width="83.156319" height="5.1042309" x="0.093717344" y="291.80206" />
+	</g>`;
 
-export let SVG_17_ANEM_EXT =  '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-278.47915)"><g transform="matrix(0.2822222,0,0,0.2822222,-223.71911,238.10826)" id="g6408"><g id="'
+export let SVG_17_ANEM_EXT =  
+	'<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-278.47915)"><g transform="matrix(0.2822222,0,0,0.2822222,-223.71911,238.10826)" id="g6408"><g id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
     ':fill0" fill="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'" stroke="' 
     + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
@@ -443,6 +288,7 @@ export let SVG_17_ANEM_EXT =  '<g inkscape:label="Capa 1" inkscape:groupmode="la
     ':Value" x="796.69501" y="201.27823" style="font-size:12.5px;stroke-width:0.93750006">'
     + REGEX_PATTERN_INIT+'ANEM_EXT_WIND_SPEED'+REGEX_PATTERN_END +
     ' m/s</tspan></text></g></g></g>'; 
+    
 export let SVG_18_ANEM_INT =
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-278.47915)"><g transform="matrix(0.2822222,0,0,0.2822222,-223.71911,238.10826)" id="g6408"><g id="'
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
@@ -464,8 +310,9 @@ export let SVG_18_ANEM_INT =
     ':Value" x="796.69501" y="201.27823" style="font-size:12.5px;stroke-width:0.93750006">'
     + REGEX_PATTERN_INIT+'ANEM_INT_WIND_SPEED'+REGEX_PATTERN_END +
     ' m/s</tspan></text></g></g></g>'; 
+    
 export let SVG_19_CO =
-'<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)">' +
+	'<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)">' +
     '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
     '<rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998" id="' 
     + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
@@ -487,6 +334,7 @@ export let SVG_19_CO =
     "</text>" +
     "</g>" +
     "</g>";   
+    
 export let SVG_20_NO =
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)">' +
     '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
@@ -510,6 +358,7 @@ export let SVG_20_NO =
     "</text>" +
     "</g>" +
     "</g>";
+    
 export let SVG_21_OPAC=
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-281.12499)">' +
     '<g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1">' +
@@ -641,397 +490,98 @@ export let SVG_54_ATC =
        'x="2.2343771" y="296.4025" id="text842" transform="scale(1.0080833,0.99198153)">' +
 	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">'+REGEX_PATTERN_INIT+'elementTypeAlias'+REGEX_PATTERN_END+'</tspan></text>' +
   '</g>';
-export let SVG_55_CT = `<svg
-xmlns:dc="http://purl.org/dc/elements/1.1/"
-xmlns:cc="http://creativecommons.org/ns#"
-xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-xmlns:svg="http://www.w3.org/2000/svg"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-sodipodi:docname="localtecnicobien.svg"
-id="svg8"
-version="1.1"
-viewBox="0 0 210 297"
-height="297mm"
-width="210mm"
-inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
-<defs
-  id="defs2">
- <filter
-    inkscape:collect="always"
-    style="color-interpolation-filters:sRGB"
-    id="filter927"
-    x="-1.2411172e-05"
-    width="1.0000248"
-    y="-4.2383479e-05"
-    height="1.0000848">
-   <feGaussianBlur
-      inkscape:collect="always"
-      stdDeviation="0.00095959728"
-      id="feGaussianBlur929" />
- </filter>
-</defs>
-<sodipodi:namedview
-  id="base"
-  pagecolor="#ffffff"
-  bordercolor="#666666"
-  borderopacity="1.0"
-  inkscape:pageopacity="0.0"
-  inkscape:pageshadow="2"
-  inkscape:zoom="16.995598"
-  inkscape:cx="27.013802"
-  inkscape:cy="22.877644"
-  inkscape:document-units="mm"
-  inkscape:current-layer="layer1"
-  inkscape:document-rotation="0"
-  showgrid="false"
-  inkscape:window-width="1680"
-  inkscape:window-height="987"
-  inkscape:window-x="1272"
-  inkscape:window-y="-8"
-  inkscape:window-maximized="1" />
-<metadata
-  id="metadata5">
- <rdf:RDF>
-   <cc:Work
-      rdf:about="">
-     <dc:format>image/svg+xml</dc:format>
-     <dc:type
-        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-     <dc:title />
-   </cc:Work>
- </rdf:RDF>
-</metadata>
-<g
-  inkscape:label="Capa 1"
-  inkscape:groupmode="layer"
-  id="layer1"
-  style="filter:url(#filter927)">
- <path
-    d="m 40.011,168.86 -0.2445,-9.546 H 193.712 l 0.244,9.546 H 40.011"
-    id="path890"
-    style="display:none;fill:#000000;fill-opacity:0.3;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" />
- <path
-    d="M 8.63918,213.652 8.39468,204.106 39.7665,159.314 40.011,168.86 8.63918,213.652"
-    id="path896"
-    style="display:none;fill:#000000;fill-opacity:0.3;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" />
- <g
-    id="g916"
-    transform="translate(-0.93406538,-3.5183129)">
-   <path
-      d="m 11.407889,9.0612608 -0.01611,-0.583213 H 1.2282107 l 0.016142,0.583213 H 11.407889"` +
+  
+export let SVG_55_CT = 
+	`<svg viewBox="0 0 210 297" height="297mm" width="210mm">
+	 <filter style="color-interpolation-filters:sRGB" id="filter927" x="-1.2411172e-05" width="1.0000248" y="-4.2383479e-05" height="1.0000848">
+	   <feGaussianBlur stdDeviation="0.00095959728" id="feGaussianBlur929" />
+	 </filter>
+	 <path d="m 40.011,168.86 -0.2445,-9.546 H 193.712 l 0.244,9.546 H 40.011" id="path890"
+	    style="display:none;fill:#000000;fill-opacity:0.3;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" />
+	 <path d="M 8.63918,213.652 8.39468,204.106 39.7665,159.314 40.011,168.86 8.63918,213.652"
+	    id="path896" style="display:none;fill:#000000;fill-opacity:0.3;stroke:#000000;stroke-width:0.529167;stroke-opacity:0.6" />
+	 <g id="g916" transform="translate(-0.93406538,-3.5183129)">
+	 <path d="m 11.407889,9.0612608 -0.01611,-0.583213 H 1.2282107 l 0.016142,0.583213 H 11.407889"` +
       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill0" ' +
       ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.6" />' +
-   ' <path'+
-      ' d="M 10.919666,4.1748882 V 8.474694 H 1.5583932 V 4.1748882 h 9.3612728" '+
+   '<path d="M 10.919666,4.1748882 V 8.474694 H 1.5583932 V 4.1748882 h 9.3612728" '+
       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill1" '+
       ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:0.995984;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.6" />'+
-   ' <path'+
-      ' d="m 584.57654,206.31685 -0.9222,-36.07937 H 1.8137533 l 0.9240945,36.07937 H 584.57654" '+
+   '<path d="m 584.57654,206.31685 -0.9222,-36.07937 H 1.8137533 l 0.9240945,36.07937 H 584.57654" '+
       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill2" '+
       ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.6;filter:url(#filter927)" '+
       ' transform="matrix(0.01746796,0,0,0.01616472,1.1965294,0.96370643)" />'+
-   `<rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.0363766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      id="rect1141"
-      width="1.7292402"
-      height="2.999881"
-      x="7.7632747"
-      y="5.458838" />
-   <ellipse
-      style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      id="path1143"
-      cx="9.1748991"
-      cy="7.1769052"
-      rx="0.088226534"
-      ry="0.073479749" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-      id="rect1147"
-      width="0.65287638"
-      height="0.52252269"
-      x="2.4130344"
-      y="5.390202" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-9"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.0494055,5.3749287)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-98"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,2.3965292,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-7"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,2.3965292,6.4199747)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-90"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.7022819,5.3749287)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-4"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,4.3551584,5.3749287)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-1"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.0080348,5.3749287)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-3"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.6609112,5.3749287)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-18"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.0494056,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-6"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.7022821,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-40"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.0494056,6.4199747)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-60"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,3.7022821,6.4199747)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-8"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,4.3551584,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-80"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.0080348,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-42"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,4.3551585,6.4199747)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-5"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.6609112,5.8974517)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-0"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.0080349,6.4199747)" />
-   <rect
-      style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
-      id="rect1147-06"
-      width="37.375645"
-      height="32.324883"
-      x="0.94488001"
-      y="0.94488001"
-      transform="matrix(0.01746796,0,0,0.01616472,5.6609112,6.4199747)" />
+   `<rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.0363766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+      id="rect1141" width="1.7292402" height="2.999881" x="7.7632747" y="5.458838" />
+   <ellipse style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+      id="path1143" cx="9.1748991" cy="7.1769052" rx="0.088226534" ry="0.073479749" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.031755;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+      id="rect1147" width="0.65287638" height="0.52252269" x="2.4130344" y="5.390202" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-9" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.0494055,5.3749287)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-98" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,2.3965292,5.8974517)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-7" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,2.3965292,6.4199747)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-90" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.7022819,5.3749287)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-4" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,4.3551584,5.3749287)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-1" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.0080348,5.3749287)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-3" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.6609112,5.3749287)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-18" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.0494056,5.8974517)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-6" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.7022821,5.8974517)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-40" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.0494056,6.4199747)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-60" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,3.7022821,6.4199747)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-8" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,4.3551584,5.8974517)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-80" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.0080348,5.8974517)" />
+   <rect  style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-42" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,4.3551585,6.4199747)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-5" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.6609112,5.8974517)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-0" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.0080349,6.4199747)" />
+   <rect style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.88976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter927)"
+      id="rect1147-06" width="37.375645" height="32.324883" x="0.94488001" y="0.94488001" transform="matrix(0.01746796,0,0,0.01616472,5.6609112,6.4199747)" />
  </g>
 </g>
 </svg>`;
 
-export let SVG_56_UNIFILAR = `<svg
-xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-xmlns:dc="http://purl.org/dc/elements/1.1/"
-xmlns:cc="http://creativecommons.org/ns#"
-xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-xmlns:svg="http://www.w3.org/2000/svg"
-xmlns="http://www.w3.org/2000/svg"
-xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-width="210mm"
-height="297mm"
-viewBox="0 0 210 297"
-version="1.1"
-id="svg8"
-inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-sodipodi:docname="unifilar.svg">
-<defs
-  id="defs2">
- <linearGradient
-    inkscape:collect="always"
-    id="linearGradient871"
-    osb:paint="gradient">
-   <stop
-      style="stop-color:#000000;stop-opacity:1;"
-      offset="0"
-      id="stop867" />
-   <stop
-      style="stop-color:#000000;stop-opacity:0;"
-      offset="1"
-      id="stop869" />
- </linearGradient>
- <linearGradient
-    id="linearGradient863"
-    osb:paint="solid">
-   <stop
-      style="stop-color:#000000;stop-opacity:1;"
-      offset="0"
-      id="stop861" />
- </linearGradient>
- <linearGradient
-    id="linearGradient855"
-    osb:paint="solid">
-   <stop
-      style="stop-color:#000000;stop-opacity:1;"
-      offset="0"
-      id="stop853" />
- </linearGradient>
- <linearGradient
-    id="linearGradient839"
-    osb:paint="solid">
-   <stop
-      style="stop-color:#000000;stop-opacity:1;"
-      offset="0"
-      id="stop837" />
- </linearGradient>
-</defs>
-<sodipodi:namedview
-  id="base"
-  pagecolor="#ffffff"
-  bordercolor="#666666"
-  borderopacity="1.0"
-  inkscape:pageopacity="0.0"
-  inkscape:pageshadow="2"
-  inkscape:zoom="0.35"
-  inkscape:cx="-150"
-  inkscape:cy="560"
-  inkscape:document-units="mm"
-  inkscape:current-layer="layer1"
-  inkscape:document-rotation="0"
-  showgrid="false"
-  inkscape:window-width="1920"
-  inkscape:window-height="1017"
-  inkscape:window-x="1912"
-  inkscape:window-y="-8"
-  inkscape:window-maximized="1" />
-<metadata
-  id="metadata5">
- <rdf:RDF>
-   <cc:Work
-      rdf:about="">
-     <dc:format>image/svg+xml</dc:format>
-     <dc:type
-        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-     <dc:title></dc:title>
-   </cc:Work>
- </rdf:RDF>
-</metadata>
-<g
-  inkscape:label="Capa 1"
-  inkscape:groupmode="layer"
-  id="layer1">
- <rect
-    style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:1.965;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"` + 
-    'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + '"' +
-    `width="111.125"
-    height="21.922617"
-    x="6.8035712"
-    y="24.190477" />
- <text
-    xml:space="preserve"
-    style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-    x="23.786987"
-    y="39.28862"
-    id="text19"><tspan
-      sodipodi:role="line"
-      id="tspan17"
-      x="23.786987"
-      y="39.28862"` + 
-      'style="stroke-width:0.264583">' +REGEX_PATTERN_INIT+'elementAlias'+REGEX_PATTERN_END+ '</tspan></text>' + 
-`</g>
-</svg>
-`;
+export let SVG_56_UNIFILAR = 
+	`<svg width="210mm" height="297mm" viewBox="0 0 210 297">
+ 	<rect style="fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:1.965;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"` + 
+	    'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + '"' +
+	    `width="111.125" height="21.922617" x="6.8035712" y="24.190477" />
+ 	<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+    	x="23.786987" y="39.28862" id="text19">
+	    <tspan sodipodi:role="line" id="tspan17" x="23.786987" y="39.28862"` + 
+	      	'style="stroke-width:0.264583">' + REGEX_PATTERN_INIT + 'elementAlias' + REGEX_PATTERN_END + 
+	    `</tspan>
+    </text> 
+</svg>`;
 
-export let SVG_57_MAGNETOTERMICO = `<svg width="26.377014mm" height="30.513727mm" viewBox="0 0 26.377014 30.513727">
- <g
-     inkscape:label="Capa 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-2.6864934,-5.1538495)">
-    <g
-       id="g844"
-       style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+export let SVG_57_MAGNETOTERMICO = 
+	`<svg width="26.377014mm" height="30.513727mm" viewBox="0 0 26.377014 30.513727">
+ 	<g id="layer1" transform="translate(-2.6864934,-5.1538495)">
+    <g id="g844" style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
        transform="matrix(0.21267684,0,0,0.24197571,-8.6820889,-12.665983)">
-      <g
-         id="g840"
-         style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1">
-        <ellipse
-           style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           id="path837"
-           cx="115.91099"
-           cy="136.59665"
-           rx="58.972004"
-           ry="60.146717" />
+      <g id="g840" style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1">
+        <ellipse style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path837" cx="115.91099" cy="136.59665" rx="58.972004" ry="60.146717" />
       </g>
     </g>
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.00321;stroke-miterlimit:10"
-       id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +`:transform" transform="rotate(-24.280147)" width="1.4530518" height="24.876173" x="5.2098141" y="12.825212"/>
-  </g>
+    <rect style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.00321;stroke-miterlimit:10"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +
+       `:transform" transform="rotate(-24.280147)" width="1.4530518" height="24.876173" x="5.2098141" y="12.825212"/>
+	</g>
 </svg>`;
     
 export let SVG_58_PULSADOR = `<g
@@ -1057,7 +607,7 @@ id="layer1">
  <path
     transform="matrix(3.1139,0,0,3.3734,126.29,308.8)"
     d="m 94.954,87.15 c 0,6.1368 -4.9749,11.112 -11.112,11.112 -6.1371,0 -11.112,-4.9749 -11.112,-11.112 0,-6.1371 4.9749,-11.112 11.112,-11.112 6.1371,0 11.112,4.9749 11.112,11.112 z"` +
-    'fill="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'"' + //bola
+    'fill="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'"' +
     `stroke-linecap="round"
     stroke-width="0.2875"` +
     'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill1" />' +
@@ -1074,35 +624,33 @@ id="layer1">
 </g>
 </g>`;
 
-export let SVG_59_SMOKE_DETECTOR = ` <g
-inkscape:label="Capa 1"
-inkscape:groupmode="layer"
-id="layer1"
-transform="rotate(-180.315952,115.69619,105.43783)">>
-<rect` + 
-  ' style="opacity:1;fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke-width:0.113407;stroke-miterlimit:4;stroke-dasharray:none"' +
-  ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' +
-  ` width="35.145947"
-  height="32.740517"
-  x="98.123215"
-  y="89.067574" />
-<path
-  style="opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.0676802;stroke-miterlimit:4;stroke-dasharray:none"
-  d="m 113.1592,119.43235 c -2.04904,-0.55289 -4.04467,-2.02513 -4.97173,-3.66779 -0.44866,-0.79497 -0.4782,-0.8106 -1.77682,-0.94013 -2.96138,-0.29538 -5.70025,-2.50283 -6.726197,-5.42112 -0.701807,-1.99629 -0.556577,-4.59155 0.366127,-6.54262 0.90426,-1.91204 3.02096,-4.197399 4.14809,-4.478589 0.42848,-0.1069 1.00122,0.35008 1.131,0.90238 0.0729,0.31034 0.003,0.44741 -0.44023,0.868629 -0.28974,0.27508 -0.92574,0.88626 -1.41334,1.35819 -1.86119,1.80138 -2.64266,4.39136 -2.03219,6.73513 0.2829,1.08612 0.66269,1.76694 1.4501,2.59951 1.20261,1.27158 2.50385,1.82472 4.65968,1.98076 0.68243,0.0494 1.32179,0.15413 1.42081,0.23276 0.099,0.0786 0.3653,0.53664 0.59173,1.01782 0.26871,0.57105 0.69348,1.15352 1.22312,1.67717 1.30605,1.29131 2.62878,1.7993 4.69217,1.80201 2.79578,0.004 4.92547,-1.19906 6.33595,-3.5782 0.31756,-0.53565 0.67441,-1.02376 0.79301,-1.0847 0.11859,-0.0609 0.69671,-0.14478 1.2847,-0.18633 1.39592,-0.0986 2.26231,-0.37471 3.25396,-1.03692 2.47851,-1.65508 3.1069,-5.22379 1.49542,-8.49267 -0.51905,-1.05289 -0.80747,-1.38841 -2.76164,-3.212609 -0.24801,-0.23152 -0.45094,-0.55186 -0.45094,-0.71186 0,-0.34747 0.68517,-1.07216 1.01369,-1.07216 0.69979,0 2.76023,1.915739 3.6441,3.388169 2.63281,4.38599 1.59317,9.88042 -2.3014,12.16279 -0.78685,0.46113 -2.38086,0.97494 -3.36116,1.08343 -0.75787,0.0839 -0.82149,0.11884 -1.10145,0.60529 -0.4881,0.8481 -1.77308,2.14204 -2.78465,2.80408 -1.46423,0.95829 -2.84836,1.36967 -4.79765,1.42592 -1.28571,0.0371 -1.79802,-0.006 -2.58426,-0.21834 z"
-  id="path1165" />
-<path
-  style="opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.0676802;stroke-miterlimit:4;stroke-dasharray:none"
-  d="m 115.33293,109.6686 c -0.60496,-0.22379 -0.60425,-0.21736 -0.72944,-6.63463 -0.18063,-9.259619 -0.19026,-8.813459 0.19845,-9.202169 0.40625,-0.40624 0.63013,-0.41196 1.07014,-0.0273 l 0.34397,0.30068 0.13909,7.461549 c 0.12217,6.55413 0.1148,7.49863 -0.0606,7.76639 -0.23159,0.35344 -0.5823,0.47581 -0.96157,0.33551 z"
-  id="path1167" />
-<path
-  style="opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.0676802;stroke-miterlimit:4;stroke-dasharray:none"
-  d="m 108.69588,104.18479 c -0.56423,-0.32873 -0.55787,-0.42535 0.42862,-6.510589 0.52077,-3.21246 1.03367,-6.0347 1.13978,-6.27165 0.32503,-0.72575 1.25551,-0.71036 1.53524,0.0254 0.0846,0.2225 -0.17087,2.05012 -0.88117,6.30406 -0.85169,5.100679 -1.04255,6.035699 -1.28471,6.293459 -0.30726,0.32707 -0.57249,0.37213 -0.93776,0.15932 z"
-  id="path1169" />
-<path
-  style="opacity:1;fill:#000000;fill-opacity:1;stroke-width:0.0676802;stroke-miterlimit:4;stroke-dasharray:none"
-  d="m 121.36334,103.75662 c -0.19695,-0.30059 -2.21219,-11.212429 -2.21219,-11.978289 0,-1.01026 1.44172,-1.22102 1.66889,-0.24396 0.14113,0.607 2.07288,11.593669 2.07288,11.789329 0,0.6591 -1.16528,0.98892 -1.52958,0.43292 z"
-  id="path1171" />
-</g>`;
+export let SVG_59_SMOKE_DETECTOR = `<svg width="210mm" height="297mm" viewBox="0 0 210 297">
+    <ellipse style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path10" cx="24.470034" cy="26.476492" rx="15.308036" ry="15.40253" />
+    <ellipse style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' + 
+       `cx="24.57872" cy="26.487007" rx="9.2112608" ry="9.8219137" />
+    <ellipse style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-rule:evenodd;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill1"' +  
+       `cx="31.563047" cy="36.71542" rx="0.80148005" ry="0.76331431" />
+    <g id="g927" transform="translate(0.52916667)">
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 21.468216,36.65817 v 2.442607" id="path868" />
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 22.346027,36.715419 -0.03817,3.816572" id="path870" />
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 23.128424,36.791751 v 4.427223" id="path874" />
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 24.053179,36.810834 v 4.427224" id="path874-5" />
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 25.082125,36.868082 -0.03817,3.816573" id="path870-6" />
+      <path style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 25.933605,36.887165 v 2.442607" id="path868-1" />
+    </g>
+    <path style="fill:#e6e6e6;fill-rule:evenodd;stroke:#000000;stroke-width:0.0541685;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 88.18554,157.88079 C 79.685175,157.01805 73.624228,155.31853 66.711066,151.85924 57.836015,147.41824 50.325388,140.78072 44.75907,132.45915 39.337417,124.35386 36.083309,115.23436 35.155,105.54416 34.88197,102.69412 34.881677,97.446201 35.154388,94.599489 37.80889,66.89035 59.560092,45.01666 87.081301,42.380162 c 2.851365,-0.273157 7.956366,-0.273157 10.807731,0 22.767918,2.181139 42.004768,17.598031 49.270638,39.486716 1.12305,3.383236 1.98548,7.254534 2.53831,11.394011 0.36619,2.741955 0.36376,10.808551 -0.004,13.615481 -0.45122,3.44306 -1.0139,6.20553 -1.8829,9.2442 -5.93866,20.76575 -22.93293,36.49939 -44.04102,40.77406 -3.76514,0.76249 -5.799169,0.95522 -10.56819,1.00136 -2.443622,0.0236 -4.700926,0.0168 -5.016232,-0.0152 z m 5.231212,-10.37295 v -8.45593 h -0.501623 -0.501623 v 8.45593 8.45594 h 0.501623 0.501623 z m -3.439701,-0.0717 v -8.38427 h -0.573284 -0.573283 v 8.38427 8.38428 h 0.573283 0.573284 z m 7.310943,-0.32247 c 8.6e-4,-3.68514 0.04155,-6.9421 0.09041,-7.2377 l 0.08883,-0.53746 h -0.570137 -0.570138 l -0.09291,1.61236 c -0.0511,0.8868 -0.0932,4.14377 -0.09356,7.23771 l -6.52e-4,5.62534 h 0.573284 0.573283 l 0.0016,-6.70025 z m -10.413803,4.81507 c 0.05122,-0.72155 0.09312,-3.97852 0.09312,-7.23771 v -5.9258 h -0.570669 -0.570668 l -0.03845,7.17806 c -0.02114,3.94793 -0.01157,7.20489 0.02127,7.2377 0.03284,0.0328 0.265041,0.0597 0.515991,0.0597 h 0.456275 z m 13.708609,-7.9323 v -4.65793 h -0.57329 -0.57328 v 4.65793 4.65793 h 0.57328 0.57329 z m -16.911868,-0.85992 v -4.65793 h -0.573284 -0.573283 v 4.65793 4.65793 h 0.573283 0.573284 z m 37.338358,-1.71419 c 0.35645,-0.20889 0.82401,-0.64564 1.03902,-0.97053 0.34009,-0.51392 0.39092,-0.73322 0.39092,-1.68657 0,-0.95335 -0.0508,-1.17265 -0.39092,-1.68656 -0.21501,-0.3249 -0.69872,-0.77165 -1.07491,-0.99278 -0.57347,-0.3371 -0.84608,-0.40206 -1.68723,-0.40206 -0.84115,0 -1.11376,0.065 -1.68723,0.40206 -0.9693,0.56976 -1.43995,1.33976 -1.51217,2.47393 -0.0462,0.72544 0.006,1.03947 0.25975,1.56372 0.80125,1.65515 3.00652,2.26942 4.66277,1.29879 z M 97.8597,137.11478 c 12.96586,-2.02384 23.72374,-11.43656 28.08955,-24.57723 1.45898,-4.39141 1.92889,-7.43916 1.92249,-12.46892 -0.005,-3.953993 -0.22476,-5.985978 -0.99189,-9.172536 -1.99012,-8.266673 -6.59491,-15.602161 -13.03987,-20.772663 -4.76673,-3.824135 -11.01969,-6.442232 -17.126847,-7.170969 -1.947165,-0.232344 -6.066306,-0.198453 -8.09763,0.06663 -6.012256,0.784573 -11.986927,3.365017 -16.911865,7.304187 -1.337498,1.069787 -3.731615,3.442331 -5.013515,4.968342 -4.382633,5.217207 -7.344272,11.882879 -8.46156,19.044178 -0.361082,2.314369 -0.443831,7.623661 -0.157211,10.086921 2.028988,17.43745 14.576206,30.75406 30.939398,32.83659 2.053761,0.26138 6.738657,0.18486 8.84895,-0.14453 z"
+       id="path929" transform="scale(0.26458333)" />
+</svg>`;
 
 export let SVG_60_SIRENA = `
 <path

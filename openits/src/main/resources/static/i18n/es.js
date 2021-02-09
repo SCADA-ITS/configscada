@@ -1041,6 +1041,8 @@ var i18_es = {
     "ElementTypeParam:65:1:3.description": "Carretera",
     "ElementTypeParam:65:1:4.alias": "Tramo",
     "ElementTypeParam:65:1:4.description": "Tramo",
+    "ElementTypeParam:65:1:5.alias": "URL",
+    "ElementTypeParam:65:1:5.description": "URL",
     "ElementTypeParam:65:2:1.alias": "Bypass",
     "ElementTypeParam:65:2:1.description": "Bypass",
 	"ElementTypeParam:65:2:2.alias": "Fallo alimentacion",
