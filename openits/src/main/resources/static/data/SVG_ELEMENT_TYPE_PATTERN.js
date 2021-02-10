@@ -190,21 +190,84 @@ export let SVG_11_SOS =
 </svg>`;
 
 export let SVG_12_LUX = 
-	`<g id="layer1" transform="translate(0,-281.12499)"><g transform="matrix(0.2822222,0,0,0.2822222,-48.888674,181.52135)" id="g3652-1"><rect ry="2.9559755" y="353.55258" x="185.01654" height="29.999998" width="29.999998"` + 
-	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':IconBackground"' + 
-	'fill="silver" stroke="' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + '" />' +
-	'<rect fill="silver" stroke="' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + '" y="387.27902" x="173.69635" height="21.42857" width="50.892853"' + 
-		'id="' + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':ValueBackground"/>' +
-	`<text fill="black" id="text1608-6-1-4-1-9" y="401.78311" x="187.84198" xml:space="preserve">
-		<tspan style="font-size:12.49999809px;stroke-width:0.93749994" y="401.78311" x="175.84198"` + 
-			'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':Value" sodipodi:role="line">' + REGEX_PATTERN_INIT + 'LUX_LUMINOSITY' + REGEX_PATTERN_END +
-	    `</tspan>
-    </text>
-    <text fill="black" id="text2729-8-9-9-3" y="372.26047" x="188.67026" style="font-style:normal;font-weight:normal;font-size:10.71748638px;line-height:0;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26793715" xml:space="preserve">
-    	<tspan style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;stroke-width:0.26793715" y="372.26047" x="188.07026" id="tspan2727-5-1-7-8" sodipodi:role="line">LUX</tspan>
-    </text>
+	`<g
+   inkscape:label="Capa 1"
+   inkscape:groupmode="layer"
+   id="layer1"
+   style="display:inline">
+  <g
+     id="g962"
+     style="display:inline;opacity:1"
+     transform="matrix(1.287787,0,0,1.1688997,-201.47431,70.058699)"
+     inkscape:label="g962" />
+</g>
+<g
+   inkscape:groupmode="layer"
+   id="layer2"
+   inkscape:label="Capa 2"
+   style="display:inline">
+  <g
+     id="g1398"
+     transform="matrix(0.3214458,0,0,0.28832996,-17.735551,-0.88127341)">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.48821;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="m 241.30259,-55.656441 c -21.59937,0 -39.01745,17.972774 -39.01745,39.954634 74.46446,0 0,0 78.03304,0 0,-21.981859 -17.41625,-39.954633 -39.01559,-39.954634 z m 0,3.409014 c 19.52677,1e-6 35.44701,16.278463 35.44701,36.54562 -70.89587,0 1.78479,-8.78e-4 -70.89587,0 0,-20.267158 15.92206,-36.54562 35.44886,-36.54562 z"
+       id="path966"
+       sodipodi:nodetypes="sccssccs"
+       transform="matrix(1.287787,0,0,1.1688997,-201.47431,70.058698)" />
+    <path` +
+       ' style="display:inline;opacity:1;fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:2.99984;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:fill markers stroke"' +
+       ' d="m 205.19303,-17.728499 c 0.49783,-6.794349 2.57872,-13.136034 6.03031,-18.377728 5.4163,-8.225402 13.94013,-13.969379 23.52489,-15.852809 2.95129,-0.579938 9.91344,-0.525362 12.8928,0.101065 16.27378,3.42165 28.11051,17.177272 29.10053,33.818139 l 0.1389,2.334995 h -35.91787 -35.91783 z"'+
+       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill1"' +
+       ` inkscape:label="path1004"
+       transform="matrix(1.287787,0,0,1.1688997,-201.47431,70.058698)" />
+    <path` +
+       ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill0"' +
+       ' style="display:inline;fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke:#000000;stroke-width:4.0252;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.445783;paint-order:fill markers stroke"' +
+       ` d="M 225.08984,197.41602 V 932.80664 H 600.86719 V 197.41602 Z"
+       transform="scale(0.26458333)" />
+    <path
+       id="path921-2"
+       style="display:inline;opacity:1;fill:#4d4d4d;fill-opacity:0.983936;stroke:#000000;stroke-width:3.78506;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:fill markers stroke"
+       d="m 109.10318,240.12332 a 50.243378,7.216277 0 0 0 -50.08364,7.2161 50.243378,7.216277 0 0 0 50.24346,7.21661 50.243378,7.216277 0 0 0 50.24346,-7.21661 50.243378,7.216277 0 0 0 -50.24346,-7.2161 50.243378,7.216277 0 0 0 -0.15982,0 z" />
+    <circle
+       style="display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.40862;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="path938"
+       cx="110.33623"
+       cy="131.34441"
+       r="10.33419" />
+    <circle
+       style="display:inline;fill:#4d4d4d;fill-opacity:1;stroke:#000000;stroke-width:3.8429;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0;paint-order:fill markers stroke"
+       id="path940"
+       cx="108.73322"
+       cy="230.23453"
+       r="4.7720513" />
+    <rect
+       style="display:inline;opacity:1;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:1.11594;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect1008"
+       width="22.966484"
+       height="25.169203"
+       x="97.726044"
+       y="246.73409" />
+    <path
+       id="path1010-1"
+       style="display:inline;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:0.687;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="m 109.09384,266.98664 a 11.694653,5.3453902 0 0 0 -11.578734,5.3449 11.694653,5.3453902 0 0 0 11.694484,5.34541 11.694653,5.3453902 0 0 0 11.69448,-5.34541 11.694653,5.3453902 0 0 0 -11.69448,-5.3449 11.694653,5.3453902 0 0 0 -0.11575,0 z" />
+    <g
+       id="g1107">
+      <path
+         id="path1010-1-5"
+         style="display:inline;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:2.18756;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         d="m 413.80273,1056.7207 a 11.535629,7.1564737 0 0 0 -11.53515,7.1563 11.535629,7.1564737 0 0 0 11.53515,7.1562 11.535629,7.1564737 0 0 0 11.53711,-7.1562 11.535629,7.1564737 0 0 0 -11.53711,-7.1563 z"
+         transform="scale(0.26458333)" />
+      <path
+         id="rect1008-3"
+         style="display:inline;fill:#666666;fill-opacity:1;stroke:#000000;stroke-width:1.29961;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+         d="m 401.82422,1030.3242 v 32.7442 h 23.94531 v -32.7442 z"
+         transform="scale(0.26458333)" />
     </g>
-    </g>`;
+  </g>
+</g>`;
 
 export let SVG_13_SEM_RAV =
     `<g id="layer1" transform="translate(0,-286.68123)">
