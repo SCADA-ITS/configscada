@@ -116,7 +116,7 @@ export const ELEMENT_TYPE = {
       ]
     },
     "ElementType:10" :{ id: "ElementType:10", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 10, scale_x: 76, scale_y: 24},
-    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 200, scale_y: 200, svgRaw:SVG_11_SOS},
+    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 250, scale_y: 250, svgRaw:SVG_11_SOS},
     "ElementType:12" :{ id: "ElementType:12", uiType: UI_ELEMENT_TYPE_GENERIC, value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
       elementTypeParams:[
         {LUX_LUMINOSITY: "1:2"}
@@ -179,7 +179,7 @@ export const ELEMENT_TYPE = {
     "ElementType:45" :{ id: "ElementType:45", uiType: UI_ELEMENT_TYPE_GENERIC, value: 45, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_GENERIC, value: 46, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_GENERIC, value: 47, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
-    "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 50, scale_y: 50, svgRaw:SVG_51_ETD},
+    "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 20, scale_y: 20, svgRaw:SVG_51_ETD},
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM_AA,
       elementTypeParams:[
         {SEM_AMBAR_AMBAR_STATUS: "1:2"}
