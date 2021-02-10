@@ -443,7 +443,7 @@ export let synopticData= [
 		"Element:56:3": { "x": 820,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSV" },
 		"Element:56:4": { "x": 620,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CGBT" },
 
-		"Element:58:1": { "x": 1440,   "y": 290, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
+		"Element:58:1": { "x": 1640,   "y": -15, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 
 		"Element:59:1": { "x": 150,   "y": 700, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
 

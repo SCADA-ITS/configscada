@@ -246,7 +246,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
     case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
     case elementTypeMap.ELEMENT_TYPE_55_CT:
-    case elementTypeMap.ELEMENT_TYPE_59_SMOKE_DETECTOR:    
+    case elementTypeMap.ELEMENT_TYPE_59_SMOKE_DETECTOR:         
     case elementTypeMap.ELEMENT_TYPE_65_SAI:
     case elementTypeMap.ELEMENT_TYPE_66_VANE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
@@ -296,6 +296,15 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_58_PULSADOR:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 25) + ',' + (height / 25) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_60_SIRENA:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 40) + ',' + (height / 40) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_61_FIRE_DET_CT:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 80) + ',' + (height / 80) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
         iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';

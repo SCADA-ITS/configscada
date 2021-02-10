@@ -589,35 +589,34 @@ inkscape:label="Capa 1"
 inkscape:groupmode="layer"
 id="layer1">
 <g
-  transform="matrix(0.06614945,0,0,0.0697206,54.317979,70.799013)"` + 
+  transform="matrix(0.06614945,0,0,0.0697206,52.617086,71.365977)"` + 
   ' stroke="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'"' + 
   'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':stroke0">' +
  `<path
-    d="M 252.11,473.3 H 522.62 V 732.28 H 252.11 Z"` +
+    d="m -787.83314,-1017.5571 h 270.51 v 258.97999 h -270.51 z"` +
     'fill="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'"' + //marco
     `stroke-linecap="round"
     stroke-width="0.9318"` +
     'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0" />' +
  `<path
-    d="M 286.83,514.97 H 487.91 V 690.62 H 286.83 Z"
+    d="m -753.11314,-975.88711 h 201.08 v 175.65 h -201.08 z"
     fill="#ffffff"
     stroke-linecap="round"
     stroke-width="1.0037"
     id="path1320-1" />
  <path
-    transform="matrix(3.1139,0,0,3.3734,126.29,308.8)"
-    d="m 94.954,87.15 c 0,6.1368 -4.9749,11.112 -11.112,11.112 -6.1371,0 -11.112,-4.9749 -11.112,-11.112 0,-6.1371 4.9749,-11.112 11.112,-11.112 6.1371,0 11.112,4.9749 11.112,11.112 z"` +
+    d="m -617.97588,-888.0653 c 0,20.70188 -15.49134,37.48522 -34.60166,37.48522 -19.11031,0 -34.60165,-16.78233 -34.60165,-37.48522 0,-20.7029 15.49134,-37.48522 34.60165,-37.48522 19.11032,0 34.60166,16.78232 34.60166,37.48522 z"` +
     'fill="'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +'"' +
     `stroke-linecap="round"
     stroke-width="0.2875"` +
     'id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill1" />' +
  `<path
-    d="m 293.33,610.96 -0.0446,-17.321 h 28.214 v -10.893 l 20.536,20.536 -19.911,19.554 v -12.232 l -28.795,0.3571 z"
+    d="m -746.61314,-879.89711 -0.0446,-17.321 h 28.214 v -10.893 l 20.536,20.536 -19.911,19.554 v -12.232 l -28.795,0.3571 z"
     fill="none"
     stroke-width="4"
     id="path1324-5" />
  <path
-    d="m 478.16,610.96 0.0446,-17.321 h -28.214 v -10.893 l -20.536,20.536 19.911,19.554 v -12.232 l 28.795,0.3571 z"
+    d="m -561.78314,-879.89711 0.0446,-17.321 h -28.214 v -10.893 l -20.536,20.536 19.911,19.554 v -12.232 l 28.795,0.3571 z"
     fill="none"
     stroke-width="4"
     id="path1326-7" />
