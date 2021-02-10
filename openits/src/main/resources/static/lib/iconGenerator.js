@@ -223,9 +223,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:      
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
-    case elementTypeMap.ELEMENT_TYPE_12_LUX:
     case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
-    case elementTypeMap.ELEMENT_TYPE_14_LUM:
     case elementTypeMap.ELEMENT_TYPE_15_FIRE:
     case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
@@ -304,6 +302,12 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
         iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      break;
+	  case elementTypeMap.ELEMENT_TYPE_12_LUX:
+	  	iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+	  case elementTypeMap.ELEMENT_TYPE_14_LUM:
+		  iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_69_PMV:
         iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
