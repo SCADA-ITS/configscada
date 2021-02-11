@@ -34,6 +34,7 @@ let graphSynoptic = webix.proxy(
 // in case of exclusive layers, manages the onItemCheck event
 var shouldICheck = true;
 let elementsMap = new Map();
+let elementsStompMap = new Map();
 
 export default class Synoptic {
   constructor(synopticConf, id) {
@@ -84,23 +85,28 @@ export default class Synoptic {
         try {
           if(elementsMap && elementsMap.get(element.id)){
             elementsMap.get(element.id).updateElement(element);
-            //Deprecated
-            if(elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
-              if(elementsMap.get(element.id)!=null){
-                document.getElementById(element.id).remove();
-                elementsMap.get(element.id).paintIcon(elementsMap.get(element.id).synopticConf, elementsMap.get(element.id).snapDiv,  elementsMap.get(element.id).ratioWidth,  elementsMap.get(element.id).ratioHeight);  
-                if($$("element_tree"+elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
-                  let checkedElement = document.getElementById(element.id);
-                  if(checkedElement != null) {
-                    checkedElement.style.opacity = 1;
-                    checkedElement.setAttribute("visibility", "visible");
+            if(document.getElementById(element.id)){
+              //Deprecated
+              if(elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
+                if(elementsMap.get(element.id)!=null){
+                  document.getElementById(element.id).remove();
+                  elementsMap.get(element.id).paintIcon(elementsMap.get(element.id).synopticConf, elementsMap.get(element.id).snapDiv,  elementsMap.get(element.id).ratioWidth,  elementsMap.get(element.id).ratioHeight);  
+                  if($$("element_tree"+elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
+                    let checkedElement = document.getElementById(element.id);
+                    if(checkedElement != null) {
+                      checkedElement.style.opacity = 1;
+                      checkedElement.setAttribute("visibility", "visible");
+                    }
                   }
                 }
+                // elementsMap.get(element.id).errorPaint();
+              }else{
+                elementsMap.get(element.id).updateElement(element);
+                elementsMap.get(element.id).updatePaint();              
               }
-              // elementsMap.get(element.id).errorPaint();
             }else{
-              elementsMap.get(element.id).updateElement(element);
-              elementsMap.get(element.id).updatePaint();              
+
+              elementsStompMap.set(element.id, elementsMap.get(element.id).element);
             }
           }else{
             let synopticElement = new SynopticElement(element);
@@ -967,6 +973,22 @@ export default class Synoptic {
     this.client.deactivate();
   }
 
+  on_show(){
+    if(elementsStompMap){
+      for (let [key, value] of elementsStompMap) {
+        try {
+          if(document.getElementById(key)){
+            elementsMap.get(key).updateElement(value);
+            elementsMap.get(key).updatePaint();
+          }
+          elementsStompMap.delete(key);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+  }
+
   /*
    * Resize the synoptic if the parent element changes its size
    */
@@ -1098,92 +1120,96 @@ export default class Synoptic {
    * Initializes the responsiveness
    */
   initResponsive() {
-    let e = document.getElementsByClassName("webix_sidebar")[0];
-    let self = this;
-    let observer = new MutationObserver(function (event) {
-      self.doResponsive();
-    });
+    try {
+      let e = document.getElementsByClassName("webix_sidebar")[0];
+      let self = this;
+      let observer = new MutationObserver(function (event) {
+        self.doResponsive();
+      });
 
-    observer.observe(e, {
-      attributes: true,
-      attributeFilter: ["class"],
-      childList: false,
-      characterData: false,
-    });
+      observer.observe(e, {
+        attributes: true,
+        attributeFilter: ["class"],
+        childList: false,
+        characterData: false,
+      });
 
-    // observer for the change multiview event (show or hide)
-    // it has to filter if the event is related to the synoptic instance
-    let showOrHideObserver = new MutationObserver(function (event) {
-      try {
-        if (typeof $$("menu" + self.synopticDiv) != 'undefined' && $$("menu" + self.synopticDiv).isVisible()){
-          // hide the panel
-          $$("menu" + self.synopticDiv).hide();
-          // hide the children
-          // $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
-        }
-        
-        let newNode = null;
-        if(event[0].addedNodes.length > 0) {
-          Array.from(event[0].addedNodes[0].children).forEach(e => {
-            if(typeof e.attributes["view_id"] != 'undefined') {
-              if(e.attributes["view_id"].value == self.synopticDiv) {
-                newNode = e.attributes["view_id"].value;
-              }
-            }
-          });          
-        }
-          if (newNode == self.synopticDiv) {
-            // Launch the query again
-            document.getElementById(self.synopticDiv + "spinner").style.display = "block";
-            graphSynoptic.load({
-              elem: self.elementId,
-            }).then((d) => {
-              // check if it's a tunnel synoptic and changes the main bar in the synoptic
-              let element_type = d.id.split(":")[1];
-              if(element_type == "7") {
-                let color = "";
-                if (d.state != 3) {
-                  color = "#ebb700";
-                } else {
-                  color = "#ff0000";
-                }
-                if(document.getElementById(d.id + ":Bar") != null) {
-                  document.getElementById(d.id + ":Bar").setAttribute("fill", color);
-                }
-              }
-              d.childs.forEach((element) => {
-                if(elementsMap && elementsMap.get(element.id)){
-                  // console.warn("existe: "+element.id);
-                  elementsMap.get(element.id).errorPaint();
-                }else{
-                  // console.warn("NO existe: "+element.id);
-                  let synopticElement = new SynopticElement(element);
-                  synopticElement.errorPaint();
-                  elementsMap.set(element.id, synopticElement);
-                }
-              });
-            }).then(() => {
-              document.getElementById(self.synopticDiv + "spinner").style.display = "none";
-            });
+      // observer for the change multiview event (show or hide)
+      // it has to filter if the event is related to the synoptic instance
+      let showOrHideObserver = new MutationObserver(function (event) {
+        try {
+          if (typeof $$("menu" + self.synopticDiv) != 'undefined' && $$("menu" + self.synopticDiv).isVisible()){
+            // hide the panel
+            $$("menu" + self.synopticDiv).hide();
+            // hide the children
+            // $$("menu" + self.synopticDiv).getChildViews()[0].getChildViews().forEach(e => { e.hide() });
           }
-      } catch (e) {
-        console.error(e);
-      }
-    });
+          
+          let newNode = null;
+          if(event[0].addedNodes.length > 0) {
+            Array.from(event[0].addedNodes[0].children).forEach(e => {
+              if(typeof e.attributes["view_id"] != 'undefined') {
+                if(e.attributes["view_id"].value == self.synopticDiv) {
+                  newNode = e.attributes["view_id"].value;
+                }
+              }
+            });          
+          }
+            if (newNode == self.synopticDiv) {
+              // Launch the query again
+              document.getElementById(self.synopticDiv + "spinner").style.display = "block";
+              graphSynoptic.load({
+                elem: self.elementId,
+              }).then((d) => {
+                // check if it's a tunnel synoptic and changes the main bar in the synoptic
+                let element_type = d.id.split(":")[1];
+                if(element_type == "7") {
+                  let color = "";
+                  if (d.state != 3) {
+                    color = "#ebb700";
+                  } else {
+                    color = "#ff0000";
+                  }
+                  if(document.getElementById(d.id + ":Bar") != null) {
+                    document.getElementById(d.id + ":Bar").setAttribute("fill", color);
+                  }
+                }
+                d.childs.forEach((element) => {
+                  if(elementsMap && elementsMap.get(element.id)){
+                    // console.warn("existe: "+element.id);
+                    elementsMap.get(element.id).errorPaint();
+                  }else{
+                    // console.warn("NO existe: "+element.id);
+                    let synopticElement = new SynopticElement(element);
+                    synopticElement.errorPaint();
+                    elementsMap.set(element.id, synopticElement);
+                  }
+                });
+              }).then(() => {
+                document.getElementById(self.synopticDiv + "spinner").style.display = "none";
+              });
+            }
+        } catch (e) {
+          console.error(e);
+        }
+      });
 
-    // obtains the parent of the synoptic
-    let showOrHideObserverTarget = document.querySelector(
-      '[view_id="multiview"]'
-    );
+      // obtains the parent of the synoptic
+      let showOrHideObserverTarget = document.querySelector(
+        '[view_id="multiview"]'
+      );
 
-    showOrHideObserver.observe(showOrHideObserverTarget, {
-      attributes: false,
-      childList: true,
-      characterData: false,
-    });
+      showOrHideObserver.observe(showOrHideObserverTarget, {
+        attributes: false,
+        childList: true,
+        characterData: false,
+      });
 
-    // Attaching the event listener function to window's resize event
-    window.addEventListener("resize", function() { self.doResponsive(self) });
+      // Attaching the event listener function to window's resize event
+      window.addEventListener("resize", function() { self.doResponsive(self) });
+    } catch (error) {
+      
+    }
   }
 	
 }

@@ -81,6 +81,8 @@ export let util = {
 								on: {
 									onDestruct: function (obj) {
 										syn.on_destroy();
+									}, onViewShow: ()=>{
+										syn.on_show();
 									}
 								  }
 							};	
@@ -252,6 +254,9 @@ export let util = {
 								on: {
 									onDestruct: function (obj) {
 										syn.on_destroy();
+									},
+									onViewShow: ()=>{
+										syn.on_show();
 									}
 								  }
 							};	

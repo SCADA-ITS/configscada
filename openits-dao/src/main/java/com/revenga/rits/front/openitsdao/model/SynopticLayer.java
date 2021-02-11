@@ -22,6 +22,9 @@ public class SynopticLayer implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
+	@Column(name="base_layer")
+	private String baseLayer;
+
 	private String description;
 
 	private String icon;
@@ -60,6 +63,14 @@ public class SynopticLayer implements Serializable {
 		this.description = description;
 	}
 
+	public String getBaseLayer() {
+		return this.baseLayer;
+	}
+
+	public void setBaseLayer(String baseLayer) {
+		this.baseLayer = baseLayer;
+	}
+	
 	public String getIcon() {
 		return this.icon;
 	}
