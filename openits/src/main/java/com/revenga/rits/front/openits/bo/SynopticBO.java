@@ -75,16 +75,28 @@ public class SynopticBO extends GenericBO {
 	private List<Map<String, Object>> getData(Synoptic synoptic) {
 		 
 		Set<String> elementsWithStates = new HashSet<>();
+		Set<String> elementsWithStatesMeasures = new HashSet<>();
+		Set<String> elementsWithStatesAlarms = new HashSet<>();
 		Set<String> elementsWithStatesMeasuresAlarms = new HashSet<>();
 		List<Map<String, Object>> elements = new ArrayList<>();
 
-		getElementIds(synoptic, elementsWithStates, elementsWithStatesMeasuresAlarms);
+		getElementIds(synoptic, elementsWithStates, elementsWithStatesMeasures, elementsWithStatesAlarms, elementsWithStatesMeasuresAlarms);
 		
 		if (!CollectionUtils.isEmpty(elementsWithStates)) {
 			
 			elements.addAll(getElementsStates(List.copyOf(elementsWithStates)));
 		}
 		
+		if (!CollectionUtils.isEmpty(elementsWithStatesMeasures)) {
+			
+			elements.addAll(getElementsStatesMeasures(List.copyOf(elementsWithStatesMeasures)));
+		}
+
+		if (!CollectionUtils.isEmpty(elementsWithStatesAlarms)) {
+			
+			elements.addAll(getElementsStatesAlarms(List.copyOf(elementsWithStatesAlarms)));
+		}
+
 		if (!CollectionUtils.isEmpty(elementsWithStatesMeasuresAlarms)) {
 			
 			elements.addAll(getElementsStatesMeasuresAlarms(List.copyOf(elementsWithStatesMeasuresAlarms)));
@@ -102,6 +114,24 @@ public class SynopticBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC).getFieldId(), elements);
 	}
 	
+	private List<Map<String, Object>> getElementsStatesMeasures(List<String> ids) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC).getFieldId(), elements);
+	}
+
+	private List<Map<String, Object>> getElementsStatesAlarms(List<String> ids) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC).getFieldId(), elements);
+	}
+
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
@@ -111,7 +141,7 @@ public class SynopticBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC).getFieldId(), elements);
 	}
 	
-	private void getElementIds(Synoptic synoptic, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasuresAlarms) {
+	private void getElementIds(Synoptic synoptic, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasures, Set<String> elementsWithStatesAlarms, Set<String> elementsWithStatesMeasuresAlarms) {
 		
 		if (synoptic != null && !CollectionUtils.isEmpty(synoptic.getSynopticLayers())) {
 				
@@ -121,11 +151,19 @@ public class SynopticBO extends GenericBO {
 					
 					for (SynopticLayerElement synopticLayerElement : synopticLayer.getSynopticLayerElements()) {
 						
-						if (synopticLayerElement.getCustomGraphicEquipment() != null) {
+						if (synopticLayerElement.getMeasures() && synopticLayerElement.getAlarms()) {
 						
 							elementsWithStatesMeasuresAlarms.add(synopticLayerElement.getElementId());
 						}
-						else {
+						else if(synopticLayerElement.getMeasures()){
+							
+							elementsWithStatesMeasures.add(synopticLayerElement.getElementId());
+						}
+						else if(synopticLayerElement.getAlarms()){
+							
+							elementsWithStatesAlarms.add(synopticLayerElement.getElementId());
+						}
+						else{
 							
 							elementsWithStates.add(synopticLayerElement.getElementId());
 						}
