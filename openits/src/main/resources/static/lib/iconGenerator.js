@@ -131,7 +131,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_65_SAI
     || elementType === elementTypeMap.ELEMENT_TYPE_66_VANE
     || elementType === elementTypeMap.ELEMENT_TYPE_67_SEM_RR
-    || elementType === elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED
+    || elementType === elementTypeMap.ELEMENT_TYPE_74_ERU) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -323,6 +324,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_73_RADAR:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_74_ERU:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 75) + ',' + (height / 75) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     default:
       console.log("Icon not found");

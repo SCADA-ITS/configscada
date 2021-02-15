@@ -435,6 +435,11 @@ export let synopticData= [
 				"items": ["Element:70:1"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"ERU" : {
+				"items": ["Element:74:1", "Element:74:2"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 
@@ -454,7 +459,9 @@ export let synopticData= [
 		"Element:65:1": { "x": 1640,   "y": 475, "width": 120, "height": 120,  "alias": "RV-SAI-1" },
 
 		"Element:70:1": { "x": 1640,   "y": 675, "width": 22, "height": 27,  "alias": "RV-ANALIZADOR_RED-1" },
-
+		
+		"Element:74:1": { "x": 1640,   "y": 390, "width": 35, "height": 35,  "alias": "RV-ERUM-1" },
+		"Element:74:2": { "x": 1640,   "y": 330, "width": 35, "height": 35,  "alias": "RV-ERUS-1" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

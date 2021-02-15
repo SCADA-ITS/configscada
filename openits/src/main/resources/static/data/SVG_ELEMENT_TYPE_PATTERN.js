@@ -2194,3 +2194,114 @@ export let SVG_73_RADAR= `
       d="m 64.753981,24.979804 c -4.85605,0 -9.35079,0.74779 -13.32172,2.12756 l 2.14537,-20.3672696 c 0.18671,-1.7272 -1.40201,-3.13178 -3.21374,-2.91506 -13.77811,1.6544 -24.432366,12.8232296 -24.432366,26.3545396 0,4.6472 0.78139,8.94863 2.22316,12.74878 L 6.8720846,40.875244 c -1.80481,-0.17868 -3.27251,1.34171 -3.04605,3.07552 1.72875,13.18554 13.3995204,23.38158 27.5389404,23.38158 4.856046,0 9.350786,-0.74779 13.321716,-2.12755 l -2.14538,20.36727 c -0.18152,1.72553 1.40202,3.13177 3.21374,2.91504 13.77811,-1.65439 24.43238,-12.82322 24.43238,-26.35453 0,-4.64719 -0.7814,-8.94862 -2.22317,-12.74877 l 21.2826,2.0531 c 1.80481,0.17372 3.27252,-1.34171 3.04605,-3.07552 -1.72875,-13.18553 -13.39951,-23.38158 -27.53893,-23.38158 z m -16.69451,26.47034 a 5.5319891,5.2940675 0 1 1 5.53199,-5.29407 5.5319891,5.2940675 0 0 1 -5.53199,5.29407 z"` +
       ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"' + 
       'style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.169116" />';
+
+export let SVG_74_ERU = `<g
+inkscape:label="Capa 1"
+inkscape:groupmode="layer"
+id="layer1">
+<rect` +
+  ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"'+
+  ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill0"'+
+  ` width="69.10672"
+  height="33.776882"
+  x="2.3294401"
+  y="3.8824"
+  ry="0" />
+<rect
+  style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal;stroke-opacity:1"
+  id="rect845"
+  width="29.506241"
+  height="14.753119"
+  x="33.776882"
+  y="13.588398"
+  ry="0" />
+<rect` +
+  ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"'+
+  ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill1"'+
+  ` width="6.4406924"
+  height="35.172268"
+  x="29.365786"
+  y="21.745588"
+  transform="matrix(0.94195186,-0.33574797,0.55157232,0.83412708,0,0)" />
+<g
+  id="g934"
+  transform="translate(-13.589093,-77.965708)"
+  style="fill:#ffffff">
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849"
+    width="1.9412"
+    height="11.647201"
+    x="24"
+    y="85.412796" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-3"
+    width="1.9412"
+    height="11.647201"
+    x="27"
+    y="85.413002" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-6"
+    width="1.9412"
+    height="11.647201"
+    x="30"
+    y="85.413002" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-0"
+    width="1.9412"
+    height="11.647201"
+    x="33"
+    y="85.413002" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-93"
+    width="1.9412"
+    height="11.647201"
+    x="23.903807"
+    y="99.869247" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-3-1"
+    width="1.9412"
+    height="11.647201"
+    x="26.903807"
+    y="99.869453" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-6-9"
+    width="1.9412"
+    height="11.647201"
+    x="29.903807"
+    y="99.869453" />
+ <rect
+    style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;paint-order:normal"
+    id="rect849-0-2"
+    width="1.9412"
+    height="11.647201"
+    x="32.903809"
+    y="99.869453" />
+</g>
+<rect
+  style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+  id="rect936"
+  width="34.453156"
+  height="19.903217"
+  x="30.884304"
+  y="11.118349" />
+<circle
+  style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+  id="path938"
+  cx="47.767719"
+  cy="14.6872"
+  r="1.2353723" />
+<rect` +
+  ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"'+
+  ' id="'+REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':fill2"'+
+  ` width="0.54905492"
+  height="2.1962175"
+  x="47.493195"
+  y="13.571939" />
+</g>`;

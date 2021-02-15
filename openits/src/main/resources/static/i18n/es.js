@@ -131,6 +131,8 @@ var i18_es = {
     "ElementType:69.description": "Panel",
     "ElementType:70.alias" : "ANALIZADOR_RED",
     "ElementType:70.description" : "ANALIZADOR_RED",
+	"ElementType:74.alias" : "ERU",
+    "ElementType:74.description" : "ERU",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -1202,6 +1204,14 @@ var i18_es = {
     "ElementTypeParam:70:2:47.alias" : "Demanda Maxima",
     "ElementTypeParam:70:2:47.description" : "Demanda Maxima",
     
+	"ElementTypeParam:74:1:1.alias": "PK",
+    "ElementTypeParam:74:1:1.description": "PK",
+    "ElementTypeParam:74:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:74:1:2.description": "Distancia entrada del t&uacute;nel (m)",
+	"ElementTypeParam:74:1:3.alias": "Carretera",
+    "ElementTypeParam:74:1:3.description": "Carretera",
+    "ElementTypeParam:74:1:4.alias": "Tramo",
+    "ElementTypeParam:74:1:4.description": "Tramo",
 
 	"ElementTypeParam:57:2:1.alias": "State",
 	"ElementTypeParam:57:2:1.description": "State",
@@ -1688,6 +1698,11 @@ var i18_es = {
     "AlarmConfig:67": "ALARMA SAI APAGADO INMINENTE",
     "AlarmConfig:68": "ALARMA SAI PRUEBA EN PROGRESO",
     "AlarmConfig:69": "ALARMA SEM AMBAR AMBAR SIN CONEXI&Oacute;N",
+    "AlarmConfig:70": "ALARMA ERU SIN CONEXI&Oacute;N",
+    "AlarmConfig:71": "ALARMA ERU MAESTRA CON CONTROL Y NO COMUNICA CON ERU REDUNDANTE",
+    "AlarmConfig:72": "ALARMA ERU ESCLAVA CON CONTROL Y NO  COMUNICA CON ERU REDUNDANTE",
+    "AlarmConfig:73": "ALARMA ERU ESCLAVA CON CONTROL Y COMUNICA CON ERU REDUNDANTE",
+
     "AlarmConfig:701": "ALARMA METEO PRECIPITACION MODERADA",
     "AlarmConfig:702": "ALARMA METEO VISIBILIDAD REDUCIDA",
     "AlarmConfig:703": "ALARMA METEO VIENTOS FUERTES",

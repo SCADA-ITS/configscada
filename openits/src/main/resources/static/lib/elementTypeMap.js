@@ -62,6 +62,7 @@ export const ELEMENT_TYPE_70_ANALIZADOR_RED = "70";
 export const ELEMENT_TYPE_71_VIS = "71";
 export const ELEMENT_TYPE_72_ACCEL = "72";
 export const ELEMENT_TYPE_73_RADAR = "73";
+export const ELEMENT_TYPE_74_ERU = "74";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;

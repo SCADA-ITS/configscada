@@ -1,4 +1,7 @@
-import {SVG_3_DET, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_11_SOS, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_15_FIRE_DET, SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_25_CABIN, SVG_51_ETD, SVG_53_SEM_AA, SVG_54_ATC, SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+import {SVG_3_DET, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_11_SOS, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_15_FIRE_DET, 
+  SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_25_CABIN, SVG_51_ETD, SVG_53_SEM_AA, SVG_54_ATC, 
+  SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, 
+  SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR, SVG_74_ERU} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -60,6 +63,7 @@ export const ELEMENT_TYPE = {
   ID_71_VIS : "ElementType:71",
   ID_72_ACCEL : "ElementType:72",
   ID_73_RADAR : "ElementType:73",
+  ID_74_ERU : "ElementType:74",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
@@ -232,6 +236,7 @@ export const ELEMENT_TYPE = {
     "ElementType:71" :{ id: "ElementType:71", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_71_VIS },
     "ElementType:72" :{ id: "ElementType:72", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_72_ACCEL },
     "ElementType:73" :{ id: "ElementType:73", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_73_RADAR },
+    "ElementType:74" :{ id: "ElementType:74", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 74, scale_x: 28, scale_y: 28, svgRaw:SVG_74_ERU },
   }
 };
 
