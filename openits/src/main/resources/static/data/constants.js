@@ -23,6 +23,7 @@ const PARAM_MODULE_TYPE_SERVICE_CONFIG = 2
 const PARAM_MODULE_TYPE_GENERIC_GRID_WINDOW_GRID_ID = 3
 const PARAM_MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW_SYNOPTIC_ID = 4
 const PARAM_MODULE_TYPE_GENERIC_EXTERNAL_APP_WINDOW_URL = 5
+const PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG = 8;
 
 const MODULE_PARAM_SYNOPTIC_ID = 4
 const MODULE_PARAM_MAP_ID = 6
@@ -35,15 +36,26 @@ const VIEW_TYPE_CUSTOM = 3;
 const ENTITY_TYPE_MODE_PERMANENT = 1;
 const ENTITY_TYPE_MODE_TEMPORARY = 2;
 
+// Services
+const Services =  Object.freeze({
+	USER_SERVICE: 10,
+	ALARM_SERVICE: 11,
+	NOTIFICATION_SERVICE: 12,
+	TIME_SERVICE: 13,
+	STOMP_SUBSCRIPTOR_SERVICE: 14
+});
+
+const ENTITIES_MANAGER_SCHEDULER_SECS = 60;
+
 // Type of entities to load
 const EntityType = Object.freeze({
-	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_types" },
-	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states" },
-	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_types" },
-	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_levels" },
-	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_configs" },
-	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules" },
-	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 300, endpoint: appConfig.restUrl + "elements" }
+	ELEMENT_TYPE: { id: 1, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_types", load: true },
+	ELEMENT_TYPE_STATE: { id: 2, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states", load: true },
+	ALARM_TYPE: { id: 3, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_types", load: true },
+	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
+	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
+	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
+	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "elements", load: true }
 });
 
 // Params for windowed ui

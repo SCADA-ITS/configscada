@@ -1,16 +1,39 @@
 function assign(entitiesManager, em_type) {
 
-//	let response = webix.ajax().sync().get(EntityType[em_type].endpoint);
-//
-//	if (response != undefined) {
-//
-//		entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
-//
-////		if (Object.keys(entitiesManager.entities).length === Object.keys(EntityType).length) {
-////
-////			entitiesManager.loaded = true;
-////		}
-//	}
+	function fill(response) {
+		
+		if (EntityType[em_type].mode === ENTITY_TYPE_MODE_PERMANENT) {
+				
+			entitiesManager.entities[EntityType[em_type].id] = response;
+			
+			if (Array.isArray(response) && response.length > 0) {
+			
+				console.log("[EntitiesManager] Cached " + response.length + " entities of type " + em_type);	
+			}
+				
+		}
+		else if (EntityType[em_type].mode === ENTITY_TYPE_MODE_TEMPORARY) {
+					
+			let tempEntities = response.map(function (obj) {
+ 
+			    return { 
+					id: obj.id, 
+					date: Math.floor(new Date() / 1000),
+					data: obj
+				};
+			});
+					
+			entitiesManager.tempEntities[EntityType[em_type].id] = tempEntities;
+			
+			if (Array.isArray(response) && response.length > 0) {
+			
+				let nextUpdate = new Date((new Date()).getTime() + (EntityType[em_type].expireSeconds * 1000));
+				console.log("[EntitiesManager] Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());	
+			}
+			
+			entitiesManager.lastUpdateTempEntities[[EntityType[em_type].id]] = Math.floor(new Date() / 1000);
+		}
+	}
 	
 	if (!EntityType[em_type].syncLoad) {
 		
@@ -19,17 +42,22 @@ function assign(entitiesManager, em_type) {
 			if (dat != undefined) {
 			
 				let response = dat.json();
-				entitiesManager.entities[EntityType[em_type].id] = response;	
+				
+				fill(response);
+				
+				
 			}
 		});	
 	}
 	else {
 		
-		let response = webix.ajax().sync().get(EntityType[em_type].endpoint);
+		let dat = webix.ajax().sync().get(EntityType[em_type].endpoint);
 		
-			if (response != undefined) {
+		if (dat != undefined) {
+			
+			let response = JSON.parse(dat.responseText);
 
-			entitiesManager.entities[EntityType[em_type].id] = JSON.parse(response.responseText);
+			fill(response);
 		}
 	}
 }
@@ -40,7 +68,8 @@ function load(entitiesManager) {
 		
 		try {
 
-			if (EntityType[em_type].mode === ENTITY_TYPE_MODE_PERMANENT && entitiesManager.entities[em_type] == undefined) {
+			//if (EntityType[em_type].mode === ENTITY_TYPE_MODE_PERMANENT && entitiesManager.entities[em_type] == undefined) {
+			if (EntityType[em_type].load) {
 	
 				assign(entitiesManager, em_type);
 			}
@@ -49,13 +78,43 @@ function load(entitiesManager) {
 	}
 }
 
+function scheduler(entitiesManager) {
+	
+	setInterval(function(){
+	
+		for (var em_type in EntityType) {
+		
+			try {
+
+				if (EntityType[em_type].load && EntityType[em_type].mode === ENTITY_TYPE_MODE_TEMPORARY) {
+					
+					let nextSchedulerDate = Math.floor(new Date() / 1000) + ENTITIES_MANAGER_SCHEDULER_SECS;
+					let nextExpireType = entitiesManager.lastUpdateTempEntities[EntityType[em_type].id] + EntityType[em_type].expireSeconds;
+					  
+					//if ((Math.floor(new Date() / 1000) - entitiesManager.lastUpdateTempEntities[EntityType[em_type].id]) > EntityType[em_type].expireSeconds) {
+					if (nextSchedulerDate > nextExpireType) {
+					
+						console.log("[EntitiesManager] Scheduled refresh cache for entity of type " + em_type);
+						assign(entitiesManager, em_type);	
+					}
+				}
+			}
+			catch {}
+		}	
+		
+	}, ENTITIES_MANAGER_SCHEDULER_SECS * 1000);
+	
+}
+
 export default class EntitiesManager {
 
 	constructor() {
 
 		this.entities = {};
 		this.tempEntities = {};
+		this.lastUpdateTempEntities = {};
 		load(this);
+		scheduler(this);
 	}
 
 	getAll(em_type) {
@@ -63,6 +122,13 @@ export default class EntitiesManager {
 		if (em_type.mode === ENTITY_TYPE_MODE_PERMANENT) {
 		
 			return this.entities[em_type.id];	
+		}
+		else if (em_type.mode === ENTITY_TYPE_MODE_TEMPORARY) {
+			
+			return this.entities[em_type.id].map(function (obj) {
+ 
+			    return obj.data;
+			});
 		}
 	}
 

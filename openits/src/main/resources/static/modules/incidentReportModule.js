@@ -3,22 +3,21 @@ import DataTable from "../component/datatable.js";
 import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
-
-const INCIDENT_REPORT = Object.freeze({
-	moduleAction: {
-		edit: 100401,
-		confirm: 100402,
-		cancel: 100403
-	},
-	restEndpoint: "incidents/reports/${id}",
-	topic: "/topic/incidentReport",
-	actionEndpoints: {
-		cancel: "incidents/reports/${id}/cancel",
-		confirm: "incidents/reports/${id}/confirm",
-		forward: "incidents/reports/${id}/forward",
-		finalizeTask: "incidents/reports/${id}/finalize_task/${taskId}"
-	}
-});
+//const INCIDENT_REPORT = Object.freeze({
+//	moduleAction: {
+//		edit: 100401,
+//		confirm: 100402,
+//		cancel: 100403
+//	},
+//	restEndpoint: "incidents/reports/${id}",
+//	topic: "/topic/incidentReport",
+//	actionEndpoints: {
+//		cancel: "incidents/reports/${id}/cancel",
+//		confirm: "incidents/reports/${id}/confirm",
+//		forward: "incidents/reports/${id}/forward",
+//		finalizeTask: "incidents/reports/${id}/finalize_task/${taskId}"
+//	}
+//});
 
 export default class IncidentReportModule extends GenericModule {
 
@@ -34,8 +33,10 @@ export default class IncidentReportModule extends GenericModule {
 		this.requestReport = true;
 		this.disconnectStomp = true;
 		this.closed = false;
+		
+		this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
 
-		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
+		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			if (this.args && this.args.selectedPks && this.args.selectedPks.length > 0) {
 
@@ -51,7 +52,7 @@ export default class IncidentReportModule extends GenericModule {
 
 		let view = undefined;
 
-		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
+		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			view = {
 				css: "custom_window",
@@ -87,15 +88,15 @@ export default class IncidentReportModule extends GenericModule {
 
 	loadData() {
 
-		if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
+		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			this.refresh();
 		}
-		else if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.confirm) {
+		else if (this.moduleAction.id === this.config.moduleAction.confirm) {
 
 			this.actionConfirm();
 		}
-		else if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.cancel) {
+		else if (this.moduleAction.id === this.config.moduleAction.cancel) {
 
 			this.actionCancel();
 		}
@@ -126,7 +127,7 @@ export default class IncidentReportModule extends GenericModule {
 			
 			self.args.selectedPks.forEach(e => {
 			
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT.restEndpoint, { id: e })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoint, { id: e })).then(function(dat) {
 					
 					if (dat != null) {
 						
@@ -152,7 +153,7 @@ export default class IncidentReportModule extends GenericModule {
 								
 								incidentReportsToConfirm.forEach(incidentReportToConfirmId => {
 									
-									let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.confirm, { id: incidentReportToConfirmId });
+									let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, { id: incidentReportToConfirmId });
 									
 									console.log(endpoint);
 				
@@ -193,7 +194,7 @@ export default class IncidentReportModule extends GenericModule {
 				
 				self.args.selectedPks.forEach(e => {
 					
-					let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.cancel, { id: e });
+					let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, { id: e });
 					
 					console.log(endpoint)
 
@@ -213,11 +214,11 @@ export default class IncidentReportModule extends GenericModule {
 
 		if (this.requestReport) {
 
-			if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit) {
+			if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 				this.requestReport = false;
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
 
 					if (dat != null) {
 
@@ -273,7 +274,7 @@ export default class IncidentReportModule extends GenericModule {
 				}
 			}
 
-			if (this.moduleAction.id === INCIDENT_REPORT.moduleAction.edit && !this.stompClient) {
+			if (this.moduleAction.id === this.config.moduleAction.edit && !this.stompClient) {
 
 				this.callbacks();
 			}
@@ -986,7 +987,7 @@ export default class IncidentReportModule extends GenericModule {
 
 										})(),
 										tooltip: "#label#",
-										type: "icon",
+										//type: "icon",
 										on: {
 
 											onItemClick() {
@@ -995,7 +996,7 @@ export default class IncidentReportModule extends GenericModule {
 
 													if (self.incidentReport.confirm === true) {
 
-														let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.forward, {
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
 															id: self.incidentReportId
 														});
 
@@ -1015,7 +1016,7 @@ export default class IncidentReportModule extends GenericModule {
 													}
 													else {
 
-														let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.confirm, {
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
 															id: self.incidentReportId
 														});
 
@@ -1256,7 +1257,7 @@ export default class IncidentReportModule extends GenericModule {
 											width: 600
 										}).then(function() {
 
-											let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.cancel, {
+											let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
 												id: self.incidentReportId
 											});
 	
@@ -1469,7 +1470,7 @@ export default class IncidentReportModule extends GenericModule {
 
 											if (!task.incidentTypeTask.auto && !task.completedAt) {
 
-												let endpoint = util.fillTemplate(INCIDENT_REPORT.actionEndpoints.finalizeTask, {
+												let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
 													id: self.incidentReportId,
 													taskId: self.currentTask.incidentTypeTask.id
 												});
@@ -1550,7 +1551,7 @@ export default class IncidentReportModule extends GenericModule {
 		}
 
 		let url = appConfig.stompUrl;
-		let topic = INCIDENT_REPORT.topic + "." + this.incidentReportId;
+		let topic = this.config.topic + "." + this.incidentReportId;
 
 		this.stompClient = util.stomp.connect(url, topic, on_connected, on_message);
 	}

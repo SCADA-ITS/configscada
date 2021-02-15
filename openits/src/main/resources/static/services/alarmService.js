@@ -157,68 +157,139 @@ export default class AlarmService extends GenericModule {
 		});
 	}
 
+	//	updateAlarms() {
+	//
+	//		let self = this;
+	//
+	//		util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.alarms, null, on_message);
+	//
+	//		function on_message(message) {
+	//
+	//			var data = JSON.parse(JSON.parse(message.body));
+	//
+	//			data.basicElementsVO.forEach(be => {
+	//
+	//				let date = undefined;
+	//
+	//				let equipment = window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias;
+	//				let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", be.alarmConfig.id);
+	//				let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
+	//
+	//				if (alarmConfig && alarmLevel && equipment) {
+	//					
+	//					self.recentAlarmCount++;
+	//				
+	//					if (be.deactivation) {
+	//						date = be.deactivation / 1000;
+	//					}
+	//					else {
+	//						date = be.activation / 1000;
+	//	
+	//						if (alarmLevel.notification === 'true') {
+	//							
+	//							let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
+	//						
+	//							let winNotif = webix.ui(notification.getView());
+	//							
+	//							winNotif.show();	
+	//						}
+	//					}
+	//	
+	//					let alarm = {
+	//						id: self.recentAlarmCount,
+	//						alarmId: be.id,
+	//						alarmConfig: alarmConfig,
+	//						date: date,
+	//						dateFormatted: util.toLocaleString(date),
+	//						equipment: equipment,
+	//						activation: be.activation,
+	//						deactivation: be.deactivation,
+	//						recognized: be.recognized
+	//					};
+	//	
+	//					if (self.recentAlarmCount > 10) {
+	//	
+	//						$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
+	//					}
+	//	
+	//					$$("alarm-control-panel-recent-list").add(alarm);
+	//					$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
+	//	
+	//					//console.log(be);	
+	//				}
+	//				
+	//			});
+	//		}
+	//	}
+
 	updateAlarms() {
 
 		let self = this;
 
-		util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.alarms, null, on_message);
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
-		function on_message(message) {
+		if (stompSubscriptorService) {
 
-			var data = JSON.parse(JSON.parse(message.body));
+			let dataSource = {
+				dataSourceValues: [
+					{ value: appConfig.stompUrl },
+					{ value: self.alarms.config.stats.ws.alarms }
+				]
+			};
 
-			data.basicElementsVO.forEach(be => {
+			this.idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
+		}
 
-				let date = undefined;
+		function onMessage(be) {
 
-				let equipment = window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias;
-				let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", be.alarmConfig.id);
-				let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
+			let date = undefined;
 
-				if (alarmConfig && alarmLevel && equipment) {
-					
-					self.recentAlarmCount++;
-				
-					if (be.deactivation) {
-						date = be.deactivation / 1000;
-					}
-					else {
-						date = be.activation / 1000;
-	
-						if (alarmLevel.notification === 'true') {
-							
-							let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
-						
-							let winNotif = webix.ui(notification.getView());
-							
-							winNotif.show();	
-						}
-					}
-	
-					let alarm = {
-						id: self.recentAlarmCount,
-						alarmId: be.id,
-						alarmConfig: alarmConfig,
-						date: date,
-						dateFormatted: util.toLocaleString(date),
-						equipment: equipment,
-						activation: be.activation,
-						deactivation: be.deactivation,
-						recognized: be.recognized
-					};
-	
-					if (self.recentAlarmCount > 10) {
-	
-						$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
-					}
-	
-					$$("alarm-control-panel-recent-list").add(alarm);
-					$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
-	
-					console.log(be);	
+			let equipment = window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias;
+			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", be.alarmConfig.id);
+			let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
+
+			if (alarmConfig && alarmLevel && equipment) {
+
+				self.recentAlarmCount++;
+
+				if (be.deactivation) {
+					date = be.deactivation / 1000;
 				}
-				
-			});
+				else {
+					date = be.activation / 1000;
+
+					if (alarmLevel.notification === 'true') {
+
+						let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
+
+						let winNotif = webix.ui(notification.getView());
+
+						winNotif.show();
+					}
+				}
+
+				let alarm = {
+					id: self.recentAlarmCount,
+					alarmId: be.id,
+					alarmConfig: alarmConfig,
+					date: date,
+					dateFormatted: util.toLocaleString(date),
+					equipment: equipment,
+					activation: be.activation,
+					deactivation: be.deactivation,
+					recognized: be.recognized
+				};
+
+				if (self.recentAlarmCount > 10) {
+
+					$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
+				}
+
+				$$("alarm-control-panel-recent-list").add(alarm);
+				$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
+
+				//console.log(be);	
+			}
 		}
 	}
 

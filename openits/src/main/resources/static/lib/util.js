@@ -448,6 +448,16 @@ export let util = {
 	
 
 	stomp: {
+		
+		getDataSourceFromTopic(topic) {
+			
+			return {
+				dataSourceValues: [
+					{ value: appConfig.stompUrl },
+					{ value: topic }
+				]
+			};
+		},
 
 		connect(url, topic, onConnected, onMessage) {
 
@@ -567,6 +577,11 @@ export let util = {
 
 
 	toLocaleString(ts) {
+		
+		if (!ts) {
+			
+			return undefined;
+		}
 
 		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
@@ -586,6 +601,11 @@ export let util = {
 	},
 	
 	toLocaleDateString(ts) {
+		
+		if (!ts) {
+			
+			return undefined;
+		}
 
 		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
@@ -605,6 +625,11 @@ export let util = {
 	},
 	
 	toLocaleTimeString(ts) {
+		
+		if (!ts) {
+			
+			return undefined;
+		}
 
 		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);

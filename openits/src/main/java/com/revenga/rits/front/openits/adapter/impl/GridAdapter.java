@@ -56,7 +56,7 @@ public class GridAdapter {
 		
 		GridUI gridUI = null;
 		
-		if (grid != null && grid.getAdapter() != null) {
+		if (grid != null) {
 			
 			gridUI = adapter(grid, params);
 		}
@@ -84,53 +84,55 @@ public class GridAdapter {
 				}
 			}
 			
-			
-			AdapterDataSource adapterDataSource = grid.getAdapter().getAdapterDataSources().stream()
-					.filter(e -> e.getAdapterDataSourceType().getId().equals(ADAPTER_DATA_SOURCE_TYPE_GROOVY))
-					.findFirst().orElse(null);
-			
-			if (adapterDataSource != null) {
+			if (grid.getAdapter() != null) {
 				
-				DataSource dataSourceGraphQL = adapterDataSource.getDataSource();
+				AdapterDataSource adapterDataSource = grid.getAdapter().getAdapterDataSources().stream()
+						.filter(e -> e.getAdapterDataSourceType().getId().equals(ADAPTER_DATA_SOURCE_TYPE_GROOVY))
+						.findFirst().orElse(null);
 				
-				if (dataSourceGraphQL != null) {
+				if (adapterDataSource != null) {
 					
-					List<Map<String, Object>> items = voDataSourceAdapter.getList(dataSourceGraphQL.getId(),
-							paramsObj != null ? paramsObj.toArray(Object[]::new) : null);
+					DataSource dataSourceGraphQL = adapterDataSource.getDataSource();
 					
-					if (!CollectionUtils.isEmpty(items)) {
-													
-						// TODO: Load from groovy file here
-						String groovyFile = adapterDataSource.getValue();
+					if (dataSourceGraphQL != null) {
 						
-						GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
+						List<Map<String, Object>> items = voDataSourceAdapter.getList(dataSourceGraphQL.getId(),
+								paramsObj != null ? paramsObj.toArray(Object[]::new) : null);
 						
-						if (groovyObj != null) {
+						if (!CollectionUtils.isEmpty(items)) {
+														
+							// TODO: Load from groovy file here
+							String groovyFile = adapterDataSource.getValue();
 							
-							@SuppressWarnings("unchecked")
-							List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
-									METHOD_TO_GRID_DATA,
-									new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+							GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
 							
-							if (gridData != null) {
+							if (groovyObj != null) {
 								
-								gridUI.setData(gridData);		
+								@SuppressWarnings("unchecked")
+								List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
+										METHOD_TO_GRID_DATA,
+										new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+								
+								if (gridData != null) {
+									
+									gridUI.setData(gridData);		
+								}
 							}
-						}
-						
-						// TODO: Test groovy from class here
-//						AdapterGridGeneric adapterGridGeneric = new AdapterGridGeneric(log);
-//						
-//						List<Map<String, Object>> gridData = adapterGridGeneric.toGridData(vo2uiAdapter,
-//								dataSourceGraphQL.getFieldId(), items);
-//						
-//						if (gridData != null) {
+							
+							// TODO: Test groovy from class here
+//							AdapterGridGeneric adapterGridGeneric = new AdapterGridGeneric(log);
 //							
-//							gridUI.setData(gridData);		
-//						}
+//							List<Map<String, Object>> gridData = adapterGridGeneric.toGridData(vo2uiAdapter,
+//									dataSourceGraphQL.getFieldId(), items);
+//							
+//							if (gridData != null) {
+//								
+//								gridUI.setData(gridData);		
+//							}
+						}
 					}
 				}
-			}		
+			}
 			
 		} catch (Exception e) {
 			

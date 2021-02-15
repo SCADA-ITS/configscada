@@ -698,7 +698,7 @@ export default class DataTable {
 		let metadata = this.metadata;
 		let dataTable = $$("dt-" + this.uid);
 
-		if (gridFieldId && value) {
+		if (gridFieldId) {
 
 			let gridField = metadata.gridFields.find(e => {
 
@@ -1473,5 +1473,23 @@ export default class DataTable {
 			}
 		}
 	}
+	
+	add(data) {
+		
+		let grid = $$("dt-" + this.uid);
+		
+		if (grid) {
+			
+			if (Array.isArray(data)) {
 
+				grid.clearAll();				
+				grid.parse(data)
+				
+			}
+			else {
+				
+				grid.add(data);
+			}
+		}
+	}
 }

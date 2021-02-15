@@ -25,7 +25,7 @@ function load(service) {
 		let svcs = data.json();
 
 		if (Array.isArray(svcs) && svcs.length > 0) {
-			console.log(svcs);
+			//console.log(svcs);
 
 			svcs.sort(compareByPriority);
 			
@@ -154,7 +154,12 @@ export default class ServiceManager {
 
 		if (this.services != undefined) {
 
-			return this.services.find(e => e.id === serviceId).object;
+			let service = this.services.find(e => e.module.id === serviceId);
+			
+			if (service) {
+				
+				return service.object;
+			}
 		}
 	}
 }

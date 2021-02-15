@@ -1,3 +1,5 @@
+import { util } from "../lib/util.js";
+
 const INCIDENT_REPORT_END_POINT = "incidents/summary"
 
 export let adapter = {
@@ -69,6 +71,95 @@ export let adapter = {
 				}
 
 				update_callback(gridData);
+			}
+		},
+		
+		alarm: {
+			
+			getList(data, update_callback) {
+			
+				let listOutput = [];
+				
+				if (data != undefined && Array.isArray(data) && data.length > 0) {
+					
+					data.forEach(e => {
+						
+						let itemOutput = {};
+						
+						let targetElement = window.em.getByField(EntityType.ELEMENT, undefined, e.targetElement.id);
+						let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", e.alarmConfig.id);
+						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
+			
+						itemOutput.id = e.id;
+						
+						itemOutput.activation = e.activation;
+						
+//						if (e.activation && typeof e.activation == 'number') {
+//						
+//							itemOutput.activation = util.toLocaleString(e.activation / 1000);	
+//						}
+//						else {
+//							
+//							itemOutput.activation = undefined;
+//						}
+						
+						itemOutput.idStr = e.id;
+						itemOutput.alarmConfigId = e.alarmConfig.id;
+						itemOutput.alarmConfigAlias = alarmConfig.alias;
+						itemOutput.alarmLevelId = alarmLevel.id;
+						itemOutput.alarmLevelAlias = alarmLevel.labelAlias;
+						
+						itemOutput.mutedUntil = e.mutedUntil;
+						itemOutput.recognized = e.recognized;
+						itemOutput.deactivation = e.deactivation;
+						
+//						if (e.mutedUntil && typeof e.mutedUntil == 'number') {
+//						
+//							itemOutput.mutedUntil = util.toLocaleString(e.mutedUntil / 1000);	
+//						}
+//						else {
+//							
+//							itemOutput.mutedUntil = undefined;
+//						}
+//						
+//						if (e.recognized && typeof e.recognized == 'number') {
+//						
+//							itemOutput.recognized = util.toLocaleString(e.recognized / 1000);	
+//						}
+//						else {
+//							
+//							itemOutput.recognized = undefined;
+//						}
+//						
+//						if (e.deactivation && typeof e.deactivation == 'number') {
+//						
+//							itemOutput.deactivation = util.toLocaleString(e.deactivation / 1000);	
+//						}
+//						else {
+//							
+//							itemOutput.deactivation = undefined;
+//						}
+
+						itemOutput.targetElementId = targetElement.id;
+						itemOutput.targetElementAlias = targetElement.alias;
+						
+						itemOutput.targetElementTypeId = targetElement.elementType.id;
+						itemOutput.targetElementTypeAlias = i18n.t(window.em.getByField(EntityType.ELEMENT_TYPE, "id", targetElement.elementType.id).labelAlias); 
+						
+						itemOutput.isActive = !itemOutput.deactivation;
+						itemOutput.alarmType = alarmConfig.alarmType.id;
+						
+						
+						listOutput.push(itemOutput);
+					});
+					
+					if (update_callback) {
+						
+						update_callback(listOutput);
+					}
+				}	
+				
+				return listOutput;
 			}
 		},
 
