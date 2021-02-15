@@ -12,8 +12,6 @@ export default class SynopticModule extends GenericModule{
     
     super(module, moduleAction, args);
     
-    this.ratioWidth = 1.0;
-    this.ratioHeight = 1.0;
     this.elementsMap = new Map(); 
     this.elementsStompMap = new Map();    
     this.synopticDivId = "Syn_"+this.uid;
@@ -88,6 +86,7 @@ export default class SynopticModule extends GenericModule{
             }
           }
         },
+        { view:"resizer" },
         {
           view: "template",
           id: this.synopticDivId,
@@ -109,7 +108,7 @@ export default class SynopticModule extends GenericModule{
 
   init() {
     // waits for the element and starts drawing
-    this.elementReady('[view_id="' + this.synopticDivId + '"]').then((c) => {
+    elementReady('[view_id="' + this.synopticDivId + '"]').then((c) => {
       let spinnerDivToAdd = document.createElement("div");
       spinnerDivToAdd.setAttribute("id", this.synopticDivId + "spinner");
       spinnerDivToAdd.setAttribute("class", "spinner");
@@ -122,43 +121,20 @@ export default class SynopticModule extends GenericModule{
       svg.setAttribute("height", c.offsetHeight);
       svg.setAttribute("class", "synoptic-svg");
 
-      let divToAdd = document.createElement("div");
-      divToAdd.setAttribute("id", this.synopticDivId + "dropdownDiv");
-      divToAdd.setAttribute("class", "tagsButton ol-unselectable ol-control");
-      document.querySelector('[view_id="' + this.synopticDivId + '"]').prepend(divToAdd);
-
-      this.elementReady("#" + this.synopticDivId + "SVG").then((c1) => {
+      elementReady("#" + this.synopticDivId + "SVG").then((c1) => {
         this.loadData();
-      });
-    });
-  }
-
-  elementReady(selector) {
-    return new Promise((resolve, reject) => {
-      let el = document.querySelector(selector);
-      if (el) {
-        resolve(el);
-      }
-      new MutationObserver((mutationRecords, observer) => {
-        // Query for elements matching the specified selector
-        Array.from(document.querySelectorAll(selector)).forEach((element) => {
-          resolve(element);
-          //Once we have resolved we don't need the observer anymore.
-          observer.disconnect();
-        });
-      }).observe(document.documentElement, {
-        childList: true,
-        subtree: true,
+        this.doResponsive();
+        document.getElementById(this.synopticDivId + "spinner").style.display = "none";
       });
     });
   }
 
   loadData() {
     let synopticContainer = document.querySelector('[view_id="' + this.synopticDivId + '"]');
-    let total_width = synopticContainer.offsetWidth;
+    let total_width = synopticContainer.offsetWidth-1;
     let total_height = synopticContainer.offsetHeight-3;
-    this.ratioWidth = total_width / WIDTH_RESOLUTION;
-    this.ratioHeight = total_height / HEIGHT_RESOLUTION;
+    let ratioWidth = total_width / WIDTH_RESOLUTION;
+    let ratioHeight = total_height / HEIGHT_RESOLUTION;
 
     // Main Layer
     this.snapMainCanvas = Snap("#" + this.synopticDivId + "SVG");
@@ -176,7 +152,7 @@ export default class SynopticModule extends GenericModule{
           try {
             let elementData = this.synopticConf.data.find(item => item.id === layerElement.elementId);
             let synopticElement = new SynopticElement(elementData);
-            synopticElement.paintIcon(layerElement, this.snapMainCanvas,  this.ratioWidth,  this.ratioHeight);
+            synopticElement.paintIcon(layerElement, this.snapMainCanvas,  ratioWidth,  ratioHeight);
             this.elementsMap.set(synopticElement.element.id, synopticElement);
           } catch (elemenError) {
             console.error("Fallo al cargar el elemento: "+ JSON.stringify(layerElement), elemenError);
@@ -186,9 +162,72 @@ export default class SynopticModule extends GenericModule{
         console.error("Fallo al cargar la capa: "+JSON.stringify(layer), layerError);
       }
     });
-
-    document.getElementById(this.synopticDivId + "spinner").style.display = "none";
     this.connect_ws();
+  }
+
+  doResponsive(){
+    let self = this;
+    $$(this.synopticDivId).$setSize=function(x,y){
+      let mainSvg = Snap("#"+self.synopticDivId + "SVG"); 
+      let ratioWidth = x / mainSvg.node.attributes.width.value;
+      if(ratioWidth == 0) {ratioWidth = 1;}
+      let ratioHeight = y / mainSvg.node.attributes.height.value;
+      if(ratioHeight == 0) {ratioHeight = 1;}
+      
+      // Main Svg container
+      webix.ui.template.prototype.$setSize.call(this, x,y);
+      mainSvg.node.attributes.width.value=x
+      mainSvg.node.attributes.height.value=y
+
+      // BaseLayer
+      let mainLayerSvg = Snap("#"+self.synopticConf.metadata.name);
+      mainLayerSvg.node.attributes.width.value = mainLayerSvg.node.attributes.width.value * ratioWidth;
+      mainLayerSvg.node.attributes.height.value = mainLayerSvg.node.attributes.height.value * ratioHeight;
+
+      // Layers
+      self.synopticConf.metadata.synopticLayers.forEach(layer => {
+        try {
+          if(layer.baseLayer != undefined){
+            let layerSvg = Snap("#"+layer.name);
+            layerSvg.node.attributes.width.value = layerSvg.node.attributes.width.value * ratioWidth;
+            layerSvg.node.attributes.height.value = layerSvg.node.attributes.height.value * ratioHeight;
+          }
+          // Elements
+          layer.synopticLayerElements.forEach(layerElement => {
+            try {
+              let elementSvg = document.getElementById(layerElement.elementId);
+              if(elementSvg.attributes.width != undefined) {
+                elementSvg.setAttribute("width", elementSvg.getAttribute("width") * ratioWidth);
+              }
+              if(elementSvg.attributes.height != undefined) {
+                elementSvg.setAttribute("height", elementSvg.getAttribute("height") * ratioHeight);
+              }
+              if(elementSvg.attributes.x != undefined) {
+                elementSvg.setAttribute("x", elementSvg.getAttribute("x") * ratioWidth);
+              }
+              if(elementSvg.attributes.y != undefined) {
+                elementSvg.setAttribute("y", elementSvg.getAttribute("y") * ratioHeight);
+              }
+              if(elementSvg.attributes.transform != undefined) {
+                if(elementSvg.attributes.class.value=="capa_mapa"){
+                  elementSvg.transform.baseVal[0].matrix["e"] = elementSvg.transform.baseVal[0].matrix["e"] * ratioWidth;
+                  elementSvg.transform.baseVal[0].matrix["f"] = elementSvg.transform.baseVal[0].matrix["f"] * ratioHeight;
+                }else if(elementSvg.attributes.class.value=="svg_icon"){
+                  elementSvg.transform.baseVal[0].matrix["e"] = parseFloat(elementSvg.transform.baseVal[0].matrix["e"] * ratioWidth) || 0;
+                  elementSvg.transform.baseVal[0].matrix["f"] = parseFloat(elementSvg.transform.baseVal[0].matrix["f"] * ratioHeight) || 0;
+                  elementSvg.transform.baseVal[0].matrix["a"] = parseFloat(elementSvg.transform.baseVal[0].matrix["a"] * ratioWidth) || 0;
+                  elementSvg.transform.baseVal[0].matrix["d"] = parseFloat(elementSvg.transform.baseVal[0].matrix["d"] * ratioHeight) || 0;
+                }
+              }
+            } catch (elemenError) {
+              console.error("Fallo al reescalar el elemento: "+ layerElement.elementId, elemenError);
+            }
+          });
+        } catch (layerError) {
+          console.error("Fallo al reescalar la capa: "+ layer.name, layerError);
+        }
+      });
+    }
   }
 
   connect_ws() {
