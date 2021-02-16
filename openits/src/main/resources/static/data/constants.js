@@ -1,6 +1,26 @@
 const MAIN_TAB_ID = "tabs";
 const MAIN_TOOLBAR_ID = "mainToolbar";
 
+const START_ON_MONDAY = true;
+
+const FORMAT_NUMERIC_DATES = {
+	month: '2-digit',
+	day: '2-digit',
+	year: 'numeric',
+	hour: '2-digit',
+	minute: '2-digit',
+	second: '2-digit'
+};
+const FORMAT_STRING_DATES = {
+	weekday: 'long',
+	month: 'long',
+	day: '2-digit',
+	year: 'numeric',
+	hour: '2-digit',
+	minute: '2-digit',
+	second: '2-digit'
+};
+
 // Browser Session Storage constants
 const SESSION_STORAGE_SESSION_DATA = "session.data";
 const SESSION_STORAGE_SESSION_LOCKED = "session.locked";
@@ -37,7 +57,7 @@ const ENTITY_TYPE_MODE_PERMANENT = 1;
 const ENTITY_TYPE_MODE_TEMPORARY = 2;
 
 // Services
-const Services =  Object.freeze({
+const Services = Object.freeze({
 	USER_SERVICE: 10,
 	ALARM_SERVICE: 11,
 	NOTIFICATION_SERVICE: 12,
@@ -55,7 +75,7 @@ const EntityType = Object.freeze({
 	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
 	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
 	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
-	ELEMENT: {id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "elements", load: true }
+	ELEMENT: { id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "elements", load: true }
 });
 
 // Params for windowed ui

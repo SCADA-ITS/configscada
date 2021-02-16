@@ -92,16 +92,10 @@ export let adapter = {
 			
 						itemOutput.id = e.id;
 						
-						itemOutput.activation = e.activation;
-						
-//						if (e.activation && typeof e.activation == 'number') {
-//						
-//							itemOutput.activation = util.toLocaleString(e.activation / 1000);	
-//						}
-//						else {
-//							
-//							itemOutput.activation = undefined;
-//						}
+						if (e.activation) {
+							
+							itemOutput.activation = new Date(e.activation);	
+						}
 						
 						itemOutput.idStr = e.id;
 						itemOutput.alarmConfigId = e.alarmConfig.id;
@@ -109,36 +103,20 @@ export let adapter = {
 						itemOutput.alarmLevelId = alarmLevel.id;
 						itemOutput.alarmLevelAlias = alarmLevel.labelAlias;
 						
-						itemOutput.mutedUntil = e.mutedUntil;
-						itemOutput.recognized = e.recognized;
-						itemOutput.deactivation = e.deactivation;
+						if (e.mutedUntil) {
 						
-//						if (e.mutedUntil && typeof e.mutedUntil == 'number') {
-//						
-//							itemOutput.mutedUntil = util.toLocaleString(e.mutedUntil / 1000);	
-//						}
-//						else {
-//							
-//							itemOutput.mutedUntil = undefined;
-//						}
-//						
-//						if (e.recognized && typeof e.recognized == 'number') {
-//						
-//							itemOutput.recognized = util.toLocaleString(e.recognized / 1000);	
-//						}
-//						else {
-//							
-//							itemOutput.recognized = undefined;
-//						}
-//						
-//						if (e.deactivation && typeof e.deactivation == 'number') {
-//						
-//							itemOutput.deactivation = util.toLocaleString(e.deactivation / 1000);	
-//						}
-//						else {
-//							
-//							itemOutput.deactivation = undefined;
-//						}
+							itemOutput.mutedUntil = new Date(e.mutedUntil);	
+						}
+						
+						if (e.recognized) {
+						
+							itemOutput.recognized = new Date(e.recognized);	
+						}
+						
+						if (e.deactivation) {
+						
+							itemOutput.deactivation = new Date(e.deactivation);	
+						}
 
 						itemOutput.targetElementId = targetElement.id;
 						itemOutput.targetElementAlias = targetElement.alias;

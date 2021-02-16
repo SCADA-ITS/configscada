@@ -35,16 +35,25 @@ function load(i18n) {
 			}
 		}
 	});
+	
+	webix.i18n.setLocale(i18n.localeCode);
+	webix.Date.startOnMonday = START_ON_MONDAY;
 }
 
 export default class I18n {
 
-	constructor(localeId) {
+	constructor(locale) {
 	
-		this.localeId = localeId;
+		this.localeId = locale.id;
+		this.localeCode = locale.code.replace("_", "-");
 		this.labels = {};
 		
 		load(this);
+	}
+	
+	getLocale() {
+		
+		return this.localeCode;
 	}
 	
 	t(label) {

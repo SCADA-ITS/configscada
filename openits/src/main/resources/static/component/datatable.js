@@ -2,10 +2,10 @@ import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 
 const DataType = {
-	STRING: { value: 1, filter: "textFilter" },
-	INT: { value: 2, filter: "numberFilter" },
-	DECIMAL: { value: 3, filter: "numberFilter" },
-	DATE: { value: 4, filter: "dateFilter" }
+	STRING: { value: 1, filter: "textFilter", sort: "string" },
+	INT: { value: 2, filter: "numberFilter", sort: "decimal" },
+	DECIMAL: { value: 3, filter: "numberFilter", sort: "int" },
+	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" }
 };
 
 const GridOptions = {
@@ -59,7 +59,6 @@ export default class DataTable {
 			sort: undefined
 		};
 		this.filteredFields = {};
-
 	}
 
 	getView() {
@@ -79,7 +78,7 @@ export default class DataTable {
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 
 		if (metadata != undefined) {
-
+			
 			datatable.id = "dt-" + this.uid;
 			datatable.view = "datatable";
 			datatable.css = "rows";
@@ -92,12 +91,13 @@ export default class DataTable {
 			datatable.select = resultSelect;
 
 			if (metadata.gridFields.length > 0) {
-
+				
 				datatable.columns = [];
 
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 				self.translateFieldValues(data);
+				self.convertDate(data);
 
 				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
 					let field = metadata.gridFields[posField];
@@ -125,16 +125,16 @@ export default class DataTable {
 						else {
 							if (field.gridFieldDataType) {
 
-								if (field.gridFieldDataType.id == DataType.STRING.value) {
+								if (field.gridFieldDataType.id === DataType.STRING.value) {
 									col.header.push({ content: DataType.STRING.filter });
 								}
-								else if (field.gridFieldDataType.id == DataType.INT.value) {
+								else if (field.gridFieldDataType.id === DataType.INT.value) {
 									col.header.push({ content: DataType.INT.filter });
 								}
-								else if (field.gridFieldDataType.id == DataType.DECIMAL.value) {
+								else if (field.gridFieldDataType.id === DataType.DECIMAL.value) {
 									col.header.push({ content: DataType.DECIMAL.filter });
 								}
-								else if (field.gridFieldDataType.id == DataType.DATE.value) {
+								else if (field.gridFieldDataType.id === DataType.DATE.value) {
 									col.header.push({ content: DataType.DATE.filter });
 								}
 							}
@@ -163,16 +163,24 @@ export default class DataTable {
 						col.width = field.widthPx;
 					}
 
+					col.sort = DataType.STRING.sort;
+					
 					if (field.gridFieldDataType) {
-
-						col.sort = field.gridFieldDataType.name;
+						
+						if (field.gridFieldDataType.id === DataType.DECIMAL.value) {
+							
+							col.sort = DataType.DECIMAL.sort;
+						}
+						else if (field.gridFieldDataType.id === DataType.INT.value) {
+							
+							col.sort = DataType.INT.sort;
+						}
+						else if (field.gridFieldDataType.id === DataType.DATE.value) {
+							
+							col.sort = DataType.DATE.sort;
+						}
 					}
-					else {
-
-						col.sort = "string";
-					}
-
-
+					
 					if (field.align != undefined) {
 
 						col.css = { 'text-align': field.align }
@@ -190,10 +198,14 @@ export default class DataTable {
 							let avatar;
 							let showValue = false;
 
-							if (typeof obj[field.sourceField] === 'object') {
+							if (typeof obj[field.sourceField] === 'object' && field.gridFieldDataType.id !== DataType.DATE.value) {
 
 								value = obj[field.sourceField].value;
 								state = obj[field.sourceField].state;
+							}
+							else if (field.gridFieldDataType.id === DataType.DATE.value) {
+								
+								value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 							}
 							else {
 
@@ -245,26 +257,21 @@ export default class DataTable {
 
 								col.tooltip = function(data) {
 
-										return data[field.sourceField];
-							
+									if (field.gridFieldDataType.id === DataType.DATE.value) {
+										
+										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
+									}
+									else {
+									
+										return data[field.sourceField];	
+									}
 								};
 							}
 
-							if (field.isEpochMilli) {
-
-
-								let dateField = data.find(e => e[field.sourceField] === value);
-
-								if (dateField) {
-									dateField[field.sourceField] = new Date(value);
-
-									let localeDate = util.toLocaleDateString(value / 1000);
-									let localeTime = util.toLocaleTimeString(value / 1000);
-									value = localeDate + " " + localeTime;
-								}
-
-
-							}
+//							if (field.isEpochMilli) {
+//
+//								value = util.toLocaleString(value / 1000);
+//							}
 
 							if (icon || badgeColor || avatar) {
 
@@ -361,7 +368,7 @@ export default class DataTable {
 							}
 							else {
 								return `<span></span>`;
-							}						
+							}
 						}
 						else {
 
@@ -454,6 +461,24 @@ export default class DataTable {
 								item[field.sourceField] = i18n.t(item[field.sourceField]);
 							}
 						}
+					});
+				}
+			}
+		}
+	}
+	
+	convertDate(data) {
+		
+		if (data && Array.isArray(data)) {
+			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
+
+				let field = this.metadata.gridFields[posField];
+
+				if (field.isEpochMilli) {
+
+					data.forEach(item => {
+						
+						item[field.sourceField] = new Date(item[field.sourceField]);
 					});
 				}
 			}
@@ -570,6 +595,10 @@ export default class DataTable {
 
 		if (resultCommons) {
 
+			if (resultFilters) {
+				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("Activar filtros"), tooltip: true });
+			}
+
 			if (dataGridId) {
 
 				toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
@@ -579,10 +608,6 @@ export default class DataTable {
 			toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });
-
-			if (resultFilters) {
-				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-search", value: i18n.t("Activar filtros"), tooltip: true });
-			}
 
 		}
 
@@ -604,7 +629,7 @@ export default class DataTable {
 					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: "wxi-" + tag[1], css: "webix_transparent", width: 100, label: i18n.t(cmd.label) });
 
 				} else {
-					
+
 					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "icon", icon: cmd.icon, value: i18n.t(cmd.label), tooltip: true });
 				}
 			});
@@ -820,15 +845,15 @@ export default class DataTable {
 
 					return false;
 
-				} else if (DefOptionValues[option] === true || DefOptionValues[option] === false) {
-
-					return optionValue.value = DefOptionValues[option];
-
 				} else {
 
 					return optionValue.value;
 
 				}
+			}
+			else {
+
+				return DefOptionValues[option];
 			}
 		}
 	}
@@ -850,102 +875,162 @@ export default class DataTable {
 		return resultOption
 	}
 
-	add(data) {
+	clear() {
 
-		let dataTable = $$("dt-" + this.uid);
+		let grid = $$("dt-" + this.uid);
+		let reApplyFilters = false;
 
-		if (dataTable && data) {
+		if (grid) {
 
-			if (Array.isArray(data) && data.length > 0) {
+			grid.eachColumn(function(id, col) {
+				
+				var filter = this.getFilter(id);
+				
+				if (filter) {
+					
+					reApplyFilters = true;
+					
+					if (filter.setValue) filter.setValue("")	// suggest-based filters 
+					else filter.value = "";					// html-based: select & text
+				}
+			});
 
-				data.forEach(dat => {
-
-					dataTable.add(dat);
-				});
+			if (reApplyFilters) {
+			
+				grid.filterByAll(); //applies filters (necessary only in case of selectFilter)	
 			}
-			else {
-
-				dataTable.add(data);
-			}
-
-			dataTable.refresh();
-			this.restoreSort();
-			this.restoreFilters();
+			
+			this.filteredFields = {};
+			
+			grid.refreshColumns();
+			
+			grid.clearAll();
 		}
 	}
 
-
-	update(newData) {
+	add(items) {
 
 		let dataTable = $$("dt-" + this.uid);
-		let data = this.data;
-		let updatedData = false;
+		let anyChange = false;
 
-		if (dataTable && data && newData) {
+		if (dataTable && items) {
 
-			if (Array.isArray(newData) && newData.length > 0) {
+			if (Array.isArray(items) && items.length > 0) {
 
-				newData.forEach(dat => {
+				items.forEach(dat => {
 
-					let dataToUpdate = data.find(e => { return e.id === dat.id; });
+					if (dataTable.find(function(e) { return e.id === dat.id; }), true) {
+
+						dataTable.add(dat);
+						anyChange = true;
+					}
+				});
+			}
+			else if (!Array.isArray(items)) {
+
+				if (dataTable.find(function(e) { return e.id === dat.id; }), true) {
+
+					dataTable.add(items);
+					anyChange = true;
+				}
+			}
+
+			if (anyChange) {
+
+				//dataTable.refresh();
+				this.restoreFilters();
+				this.restoreSort();
+				dataTable.refreshColumns();
+			}
+		}
+	}
+
+	update(items) {
+
+		let dataTable = $$("dt-" + this.uid);
+		let anyChange = false;
+
+		if (dataTable && data && items) {
+
+			if (Array.isArray(items) && items.length > 0) {
+
+				items.forEach(dat => {
+
+					let dataToUpdate = dataTable.find(function(e) { return e.id === dat.id; }, true);
 
 					if (dataToUpdate) {
 
 						dataTable.updateItem(dataToUpdate.id, dat);
 
-						updatedData = true;
+						anyChange = true;
 					}
 				});
 
-			} else {
+			} else if (!Array.isArray(items)) {
 
-				let dataToUpdate = data.find(e => { return e.id === newData.id; });
+				let dataToUpdate = dataTable.find(function(e) { return e.id === dat.id; }, true);
 
 				if (dataToUpdate) {
 
-					dataTable.updateItem(dataToUpdate.id, newData);
+					dataTable.updateItem(dataToUpdate.id, items);
 
-					updatedData = true;
+					anyChange = true;
 				}
 			}
 
-			if (updatedData) {
+			if (anyChange) {
 
-				dataTable.refresh();
+				//dataTable.refresh();
 				this.restoreFilters();
 				this.restoreSort();
+				dataTable.refreshColumns();
 			}
 		}
 	}
 
 
-	remove(removeData) {
+	delete(items) {
 
 		let dataTable = $$("dt-" + this.uid);
-		let data = this.data;
+		let anyChange = false;
 
-		if (dataTable && data && removeData) {
+		if (dataTable && items) {
 
-			if (Array.isArray(removeData) && removeData.length > 0) {
+			if (Array.isArray(items) && items.length > 0) {
 
-				removeData.forEach(rmv => {
-					data.find(e => e.id === rmv);
-					dataTable.remove(rmv);
+				items.forEach(dat => {
+
+					if (dataTable.find(function(e) { return e.id === dat.id; }), true) {
+
+						dataTable.remove(dat.id);
+
+						anyChange = true;
+					}
+
 				});
 
-			} else {
+			} else if (!Array.isArray(items)) {
 
-				dataTable.remove(removeData);
+				if (dataTable.find(function(e) { return e.id === dat.id; }), true) {
+
+					dataTable.remove(items.id);
+
+					anyChange = true;
+				}
 			}
 
-			dataTable.refresh();
-			this.restoreSort();
-			this.restoreFilters();
+			if (anyChange) {
+
+				//dataTable.refresh();
+				this.restoreFilters();
+				this.restoreSort();
+				dataTable.refreshColumns();
+			}
 		}
 	}
 
 	restoreSort() {
-		
+
 		let grid = $$("dt-" + this.uid);
 
 		if (this.sortedByField.field != undefined && this.sortedByField.sort != undefined) {
@@ -984,7 +1069,7 @@ export default class DataTable {
 							}
 							else {
 
-								res &= (data[field].toString().toLowerCase().indexOf(self.filteredFields[field].toLowerCase())) != -1;
+								res &= (data[field].toString().toLowerCase().indexOf(self.filteredFields[field].toString().toLowerCase())) != -1;
 							}
 						}
 					}
@@ -1046,6 +1131,11 @@ export default class DataTable {
 				self.filteredFields[id] = value;
 			}
 		});
+		
+		datatable.attachEvent("onAfterFilter", function() {
+
+			self.restoreSort();
+		});
 	}
 
 
@@ -1053,11 +1143,7 @@ export default class DataTable {
 
 	callbacks() {
 
-		this.sortDatatable();
-		this.filterDatatable();
-		this.add();
-		this.update();
-		this.remove();
+		this.datatableCapture();
 		this.search_callback();
 		this.select_all_callback();
 		this.unselect_all_callback();
@@ -1074,7 +1160,9 @@ export default class DataTable {
 		this.on_item_selected();
 		this.other_commands_callback();
 		this.showFilters();
-		this.datatableCapture();
+
+		this.sortDatatable();
+		this.filterDatatable();
 	}
 
 	on_destroy() {
@@ -1133,7 +1221,15 @@ export default class DataTable {
 					let res = false;
 					grid.config.columns.forEach(col => {
 						if (col.id != undefined) {
-							res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);
+							
+							if (col.sort === DataType.DATE.sort) {
+							
+								res |= (obj[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);	
+							}
+							else {
+								
+								res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);	
+							}
 						}
 					});
 

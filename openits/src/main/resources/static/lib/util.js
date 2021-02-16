@@ -593,7 +593,7 @@ export let util = {
 
 			if (language && country) {
 
-				date = new Date(ts * 1000).toLocaleString(language + "-" + country);
+				date = new Date(ts * 1000).toLocaleString(language + "-" + country, FORMAT_NUMERIC_DATES);
 			}
 		}
 

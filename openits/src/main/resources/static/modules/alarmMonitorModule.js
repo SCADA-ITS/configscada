@@ -232,6 +232,8 @@ export default class AlarmMonitorModule extends GenericModule {
 						self.elementTypeIdSelected = data[0];
 					
 						if (self.dtNoRecognized) {
+							
+							self.dtNoRecognized.clear();
 					
 							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
 							
@@ -246,6 +248,8 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 						
 						if (self.dtRecognized) {
+							
+							self.dtRecognized.clear();
 							
 							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
 							
@@ -394,130 +398,203 @@ export default class AlarmMonitorModule extends GenericModule {
 			function onMessage(be) {
 	
 				console.log(be);
-				let changed = false;
-	
+				
 				let flattenedData = eval("adapter." + self.config.adapter)([be], null);
-	
-				if (Array.isArray(flattenedData) && flattenedData.length == 1) {
-	
-					let flattenedItem = flattenedData[0];
-	
-					let elementInDataCollectionNoRecognized = self.dcNoRecognized.find(function(e) {
-	
-						return e.id === flattenedItem.id;
-					}, true);
-	
-					let elementInDataCollectionRecognized = self.dcRecognized.find(function(e) {
-	
-						return e.id === flattenedItem.id;
-					}, true);
-	
-					if (flattenedItem.recognized && flattenedItem.deactivation) {
-	
-						if (elementInDataCollectionNoRecognized) {
-	
-							self.dcNoRecognized = self.dcNoRecognized.filter(e => {
+				
+				if (flattenedData) {
+					
+					let changes = updateDataSources(flattenedData);
+					
+					updateDataTables(flattenedData, changes); 
+				}
+				
+				function updateDataTables(data, changes) {
+					
+					let changesNoRec = changes.noRecognized;
+					let changesRec = changes.recognized
+					
+					if (self.dtNoRecognized && (changesNoRec.add || changesNoRec.update || changesNoRec.delete)) {
+						
+						if (changesNoRec.add) {
 							
-								return (e.id !== elementInDataCollectionNoRecognized.id)	
-							});
-							
-							changed = true;
+							self.dtNoRecognized.add(data);
 						}
-	
-						if (elementInDataCollectionRecognized) {
+						else if (changesNoRec.update) {
 							
-							self.dcRecognized = self.dcRecognized.filter(e => {
+							self.dtNoRecognized.update(data);
+						}
+						else if (changesNoRec.delete) {
 							
-								return (e.id !== elementInDataCollectionRecognized.id)	
-							});
-	
-							changed = true;
+							self.dtNoRecognized.delete(data);
 						}
 					}
-					else {
+					
+					if (self.dtRecognized && (changesRec.add || changesRec.update || changesRec.delete)) {
+						
+						if (changesRec.add) {
+							
+							self.dtRecognized.add(data);	
+						}
+						else if (changesRec.update) {
+
+							self.dtRecognized.update(data);							
+						}
+						else if (changesRec.delete) {
+							
+							self.dtRecognized.delete(data);
+						}
+					}
+				}
+				
+				function updateDataSources(data) {
+					
+					let changes = {
+						noRecognized: {
+							add: false,
+							update: false,
+							delete: false
+						},
+						recognized: {
+							add: false,
+							update: false,
+							delete: false
+						}
+					};
+					
+					if (Array.isArray(data) && data.length == 1) {
 	
-						if (flattenedItem.recognized) {
-	
+						let flattenedItem = data[0];
+		
+						let elementInDataCollectionNoRecognized = self.dcNoRecognized.find(function(e) {
+		
+							return e.id === flattenedItem.id;
+						}, true);
+		
+						let elementInDataCollectionRecognized = self.dcRecognized.find(function(e) {
+		
+							return e.id === flattenedItem.id;
+						}, true);
+		
+						// Receive alarm recognized and desactivated.
+						// Actions: Remove from any datacollection
+						if (flattenedItem.recognized && flattenedItem.deactivation) {
+							
+							let items = 0;
+		
 							if (elementInDataCollectionNoRecognized) {
-	
-								self.dcNoRecognized = self.dcNoRecognized.filter(e => {
-							
-									return (e.id !== elementInDataCollectionNoRecognized.id)	
-								});
 								
-								changed = true;
+								items = self.dcNoRecognized.length;
+								
+								if (items > 0) {
+		
+									self.dcNoRecognized = self.dcNoRecognized.filter(e => {
+									
+										return (e.id !== elementInDataCollectionNoRecognized.id)	
+									});
+									
+									if (items - self.dcNoRecognized.length > 0) {
+									
+										changes.noRecognized.delete = true;	
+									}
+								}
 							}
-	
-							if (!elementInDataCollectionRecognized) {
-	
-								self.dcRecognized.push(flattenedItem);
-								changed = true;
-							}
-							else {
+		
+							if (elementInDataCollectionRecognized) {
 								
-								self.dcNoRecognized = self.dcNoRecognized.filter(e => {
-							
-									return (e.id !== elementInDataCollectionNoRecognized.id)	
-								});
+								items = self.dcRecognized.length;
 								
-								self.dcNoRecognized.push(flattenedItem);
-	
-								changed = true;
+								if (items > 0) {
+		
+									self.dcRecognized = self.dcRecognized.filter(e => {
+									
+										return (e.id !== elementInDataCollectionRecognized.id)	
+									});
+									
+									if (items - self.dcRecognized.length > 0) {
+									
+										changes.recognized.delete = true;	
+									}
+								}
 							}
 						}
 						else {
-	
-							if (!elementInDataCollectionNoRecognized) {
-	
-								self.dcNoRecognized.push(flattenedItem);
-								changed = true;
+		
+							// Receive alarm recognized
+							if (flattenedItem.recognized) {
+								
+								let items = 0;
+								
+								// Recognized alarm exists in no recognized datacollection. 
+								// Actions: Remove from this datacollection		
+								if (elementInDataCollectionNoRecognized) {
+									
+									items = self.dcNoRecognized.length;
+									
+									if (items > 0) {
+									
+										self.dcNoRecognized = self.dcNoRecognized.filter(e => {
+								
+											return (e.id !== elementInDataCollectionNoRecognized.id)	
+										});
+										
+										if (items - self.dcNoRecognized.length > 0) {
+											
+											changes.noRecognized.delete = true;
+										}
+									}
+								}
+								
+								// Recognized alarm not exists in recognized datacollection. 
+								// Actions: Add to this datacollection
+								if (!elementInDataCollectionRecognized) {
+		
+									self.dcRecognized.push(flattenedItem);
+									
+									changes.recognized.add = true;
+								}
+								// Recognized alarm exists in recognized datacollection. 
+								// Actions: Update this datacollection
+								else {
+																	
+									let index = self.dcRecognized.findIndex(e => e.id == elementInDataCollectionRecognized.id);
+									
+									if (index > -1) {
+										
+										self.dcRecognized[index] = flattenedItem;
+										
+										changes.recognized.update = true;
+									}
+								}
 							}
+							// Receive alarm not recognized
 							else {
-								
-								self.dcNoRecognized = self.dcNoRecognized.filter(e => {
-							
-									return (e.id !== elementInDataCollectionNoRecognized.id)	
-								});
-								
-								self.dcNoRecognized.push(flattenedItem);
-	
-								changed = true;
+
+								// Reveice alarm not recognized and not exists in no recognized datacollection
+								// Actions: Add to this datacollection		
+								if (!elementInDataCollectionNoRecognized) {
+									
+									self.dcNoRecognized.push(flattenedItem);
+									
+									changes.noRecognized.add = true;
+								}
+								// Reveice alarm not recognized and exists in no recognized datacollection
+								// Actions: Update this datacollection
+								else {
+									
+									let index = self.dcNoRecognized.findIndex(e => e.id == elementInDataCollectionNoRecognized.id);
+									
+									if (index > -1) {
+										
+										self.dcNoRecognized[index] = flattenedItem;
+										
+										changes.noRecognized.update = true;
+									}
+								}
 							}
 						}
 					}
 					
-					if (changed) {
-	
-						if (self.dtNoRecognized) {
-							
-							if (flattenedItem.targetElementTypeId === self.elementTypeIdSelected) {
-								
-								self.dtNoRecognized.add(self.dcNoRecognized.filter(e => {
-									return (e.targetElementTypeId == self.elementTypeIdSelected);
-								}));
-							}
-							
-							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-							
-								self.dtNoRecognized.add(self.dcNoRecognized);
-							}		
-						}
-						
-						if (self.dtRecognized) {
-							
-							if (flattenedItem.targetElementTypeId === self.elementTypeIdSelected) {
-								
-								self.dtRecognized.add(self.dcRecognized.filter(e => {
-									return (e.targetElementTypeId == self.elementTypeIdSelected);
-								}));
-							}
-							
-							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-							
-								self.dtRecognized.add(self.dcRecognized);
-							}		
-						}
-					}
+					return changes;										
 				}
 			}
 		}
