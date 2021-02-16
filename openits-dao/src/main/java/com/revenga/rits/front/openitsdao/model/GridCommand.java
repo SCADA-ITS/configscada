@@ -33,6 +33,9 @@ public class GridCommand implements Serializable {
 	
 	@Column(name="show_text")
 	private Boolean showText;
+	
+	@Column(name="item_required")
+	private Boolean itemRequired;
 
 	//bi-directional many-to-one association to Grid
 	@JsonIgnore
@@ -129,5 +132,13 @@ public class GridCommand implements Serializable {
 
 	public void setShowText(Boolean showText) {
 		this.showText = showText;
+	}
+
+	public Boolean getItemRequired() {
+		return this.itemRequired;
+	}
+
+	public void setItemRequired(Boolean itemRequired) {
+		this.itemRequired = itemRequired;
 	}
 }
