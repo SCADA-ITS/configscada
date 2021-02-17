@@ -75,7 +75,8 @@ const EntityType = Object.freeze({
 	ALARM_LEVEL: { id: 4, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_levels", load: true },
 	ALARM_CONFIG: { id: 5, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "alarms/alarm_configs", load: true },
 	MODULE: { id: 6, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: true, endpoint: appConfig.restUrl + "modules", load: true },
-	ELEMENT: { id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "elements", load: true }
+	ELEMENT: { id: 7, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "elements", load: true },
+	LOG_TYPE: { id: 8, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true }
 });
 
 // Params for windowed ui
@@ -94,4 +95,7 @@ const WindowParam = Object.freeze({
 	LABEL: 12,
 	RESIZABLE: 13,
 	EXTERNALIZABLE: 14
-});
+});  
+
+
+const CONTENT_TYPE_JSON = {"Content-type": "application/json"};

@@ -167,6 +167,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_UPDATE_PLAN_SUBTYPE = getPropertyInt("update_plan_subtype");
 	public static final int DATA_SOURCE_DELETE_PLAN_SUBTYPE = getPropertyInt("delete_plan_subtype");
 	public static final int DATA_SOURCE_SEND_AUDIT_LOGS = getPropertyInt("send_audit_logs");
+	public static final int DATA_SOURCE_SEND_RECOGNIZE_AUDIT_LOGS = getPropertyInt("send_recognize_audit_logs");
 	public static final int DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS = getPropertyInt("send_plan_schedule_actions");
 	public static final int DATA_SOURCE_SEND_PLAY_PLAN = getPropertyInt("send_play_plan");
 	public static final int DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS = getPropertyInt("send_alarm_muted_actions");

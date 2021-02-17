@@ -51,4 +51,16 @@ public class LogTypeBO extends GenericBO {
 	    return res;
 	    
 	  }
+	
+	public Boolean sendRecognizeAuditLogs(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendAuditLog = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_RECOGNIZE_AUDIT_LOGS, (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendAuditLog);
+
+	    return res;
+	    
+	  }
 }

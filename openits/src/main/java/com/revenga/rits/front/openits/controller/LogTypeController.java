@@ -55,4 +55,12 @@ public class LogTypeController {
 		return new ResponseEntity<>(logTypeBO.sendAuditLogs(auditLog), HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/send_recognize_audit_logs")
+	@ApiOperation(value = "Send Recognize Audit Logs", notes = "Send Recognize Alarm")
+	public ResponseEntity<Boolean> sendRecognizeAuditLogs(@RequestBody Object auditLogRecognize) {
+		
+		return new ResponseEntity<>(logTypeBO.sendRecognizeAuditLogs(auditLogRecognize), HttpStatus.OK);
+	}
+	
+
 }
