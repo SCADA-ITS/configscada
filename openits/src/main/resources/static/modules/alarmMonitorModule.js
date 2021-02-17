@@ -101,25 +101,25 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 
 						loadDataCollections(flattenedData);
-
-						connectWS();
-
-						drawComponents();
-
-						initDataTables();
-						
-						initListView();
-
-						$$(self.uid).attachEvent("onDestruct", function() {
-
-							let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
-							if (stompSubscriptorService) {
-
-								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
-							}
-						});
 					}
+					
+					connectWS();
+
+					drawComponents();
+
+					initDataTables();
+					
+					initListView();
+
+					$$(self.uid).attachEvent("onDestruct", function() {
+
+						let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+						if (stompSubscriptorService) {
+
+							stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+						}
+					});
 
 					$$("loading-" + self.uid).hide();
 					$$(self.uid).show();

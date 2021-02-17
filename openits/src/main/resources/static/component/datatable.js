@@ -1454,6 +1454,7 @@ export default class DataTable {
 						if (data.data) {
 
 							self.translateFieldValues(data.data);
+							self.convertDate(data.data);
 
 							grid.clearAll();
 							grid.parse(data.data);
