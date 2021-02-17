@@ -539,7 +539,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE - CSB_v3_1.svg",
+			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE -CSB_v4.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -547,36 +547,38 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"MAGNETOTERMICO" : {
+			"INTERRUPTOR" : {
 				"items": ["Element:57:1", "Element:57:2", "Element:57:3", "Element:57:4", "Element:57:5", "Element:57:6", "Element:57:29", "Element:57:30", "Element:57:32", 
 				          "Element:57:33", "Element:57:34", "Element:57:35", "Element:57:36", "Element:57:37", "Element:57:38", "Element:57:39","Element:57:40", "Element:57:41",
-				          "Element:57:65", "Element:57:66"],
+				          "Element:57:65", "Element:57:66","Element:57:92", "Element:57:93"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
 		},
 		
-		"Element:57:41": { "x": 948,   "y": 795, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-1" },
-		"Element:57:29": { "x": 404,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF10" },
-		"Element:57:30": { "x": 503,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF11" },
-		"Element:57:32": { "x": 605,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF13" },
-		"Element:57:33": { "x": 703,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF14" },	
-		"Element:57:34": { "x": 802,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF15" },
-		"Element:57:35": { "x": 900,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF19" },
-		"Element:57:36": { "x": 1000,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF20" },
-		"Element:57:37": { "x": 1097,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF21" },
-		"Element:57:38": { "x": 1198,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF22" },
-		"Element:57:39": { "x": 1295,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF23" },
-		"Element:57:3": { "x": 1394,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF28-SOS" },	
-		"Element:57:40": { "x": 1494,   "y": 700, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF26" },
+		"Element:57:41": { "x": 948,   "y": 815, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-1" },
+		"Element:57:29": { "x": 395,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF10" },
+		"Element:57:30": { "x": 496,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF11" },
+		"Element:57:32": { "x": 597,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF13" },
+		"Element:57:33": { "x": 698,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF14" },	
+		"Element:57:34": { "x": 799,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF15" },
+		"Element:57:92": { "x": 799,   "y": 639, "width": 28, "height": 28,  "alias": "RV-CONT-BF15-BARR" },
+		"Element:57:35": { "x": 900,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF19" },
+		"Element:57:36": { "x": 1000,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF20" },
+		"Element:57:37": { "x": 1102,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF21" },
+		"Element:57:38": { "x": 1202,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF22" },
+		"Element:57:39": { "x": 1303,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF23" },
+		"Element:57:3": { "x": 1404,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF28-SOS" },	
+		"Element:57:40": { "x": 1505,   "y": 720, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF26" },
 		
-		"Element:57:1": { "x": 948,   "y": 400, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-2" },
-		"Element:57:2": { "x": 703,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF27-PMV" },
-		"Element:57:6": { "x": 796,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF32" },
-		"Element:57:66": { "x": 895,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF34" },
-		"Element:57:4": { "x": 995,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF30-BARR-M" },
-		"Element:57:5": { "x": 1094,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF31-SEM" },
-		"Element:57:65": { "x": 1191,   "y": 295, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF33" },
+		"Element:57:1": { "x": 948,   "y": 410, "width": 28, "height": 28,  "alias": "RV-MAG-CSB-ITS-2" },
+		"Element:57:2": { "x": 700,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF27-PMV" },
+		"Element:57:6": { "x": 796,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF32" },
+		"Element:57:66": { "x": 897,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF34" },
+		"Element:57:4": { "x": 997,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF30-BARR-M" },
+		"Element:57:93": { "x": 997,   "y": 232, "width": 28, "height": 28,  "alias": "RV-CONT-BF30-BARR" },
+		"Element:57:5": { "x": 1099,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF31-SEM" },
+		"Element:57:65": { "x": 1201,   "y": 315, "width": 28, "height": 28,  "alias": "RV-MAGDIF-BF33" },
 	},
 	{
 		"id":"synopticUnifilarCsv",
@@ -623,7 +625,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE - CGBT_v3_1.svg",
+			"BASE_LAYER": "UNIFlLAR RIO VERDE CABLE - CGBT_v4.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -631,26 +633,26 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"MAGNETOTERMICO" : {
+			"INTERRUPTOR" : {
 				"items": ["Element:57:52", "Element:57:53", "Element:57:54", "Element:57:55", "Element:57:56", "Element:57:57", 
 				          "Element:57:58", "Element:57:59", "Element:57:60", "Element:57:61", "Element:57:62", "Element:57:63", "Element:57:64"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
 		},
-		"Element:57:52": { "x": 550,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSA-1" },
-		"Element:57:53": { "x": 722,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-BOMB-LIQ-1" },
-		"Element:57:54": { "x": 915,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSBT-1" },
-		"Element:57:55": { "x": 1303,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-SAI-IN-1" },
-		"Element:57:56": { "x": 1303,   "y": 335, "width": 28, "height": 28,  "alias": "RV-INT-SAI-OUT-1" },
-		"Element:57:57": { "x": 1399,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSV-1" },
-		"Element:57:58": { "x": 1496,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CS-PCI-1" },
-		"Element:57:59": { "x": 1593,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-BAT-1" },
-		"Element:57:60": { "x": 326,   "y": 542, "width": 28, "height": 28,  "alias": "RV-INT-CGBT" },
-		"Element:57:61": { "x": 1043,   "y": 600, "width": 28, "height": 28,  "alias": "RV-CONT-COM-CGBT" },
-		"Element:57:62": { "x": 1193,   "y": 600, "width": 28, "height": 28,  "alias": "RV-CONT-COM-GE" },
-		"Element:57:63": { "x": 1193,   "y": 660, "width": 28, "height": 28,  "alias": "RV-INT-GE" },
-		"Element:57:64": { "x": 807,   "y": 660, "width": 28, "height": 28,  "alias": "RV-INT-ACOM-CGBT" },
+		"Element:57:52": { "x": 537,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSA-1" },
+		"Element:57:53": { "x": 716,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-BOMB-LIQ-1" },
+		"Element:57:54": { "x": 918,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSBT-1" },
+		"Element:57:55": { "x": 1320,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-SAI-IN-1" },
+		"Element:57:56": { "x": 1320,   "y": 295, "width": 28, "height": 28,  "alias": "RV-INT-SAI-OUT-1" },
+		"Element:57:57": { "x": 1422,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CSV-1" },
+		"Element:57:58": { "x": 1522,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CS-PCI-1" },
+		"Element:57:59": { "x": 1623,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-BAT-1" },
+		"Element:57:60": { "x": 304,   "y": 490, "width": 28, "height": 28,  "alias": "RV-INT-CGBT" },
+		"Element:57:61": { "x": 1030,   "y": 597, "width": 28, "height": 28,  "alias": "RV-CONT-COM-CGBT" },
+		"Element:57:62": { "x": 1207,   "y": 597, "width": 28, "height": 28,  "alias": "RV-CONT-COM-GE" },
+		"Element:57:63": { "x": 1207,   "y": 730, "width": 28, "height": 28,  "alias": "RV-INT-GE" },
+		"Element:57:64": { "x": 805,   "y": 730, "width": 28, "height": 28,  "alias": "RV-INT-ACOM-CGBT" },
 		
 	},
 	{
