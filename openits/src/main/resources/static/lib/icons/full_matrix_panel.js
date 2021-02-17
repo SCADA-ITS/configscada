@@ -39,11 +39,9 @@ export function generateIcon(element, suffix = "") {
   }
   // changes the color based on the status
   let color = "";
-  let elementState = "";
+  let elementState;
   if (typeof element.state != "undefined") {
     elementState = element.state;
-  } else {
-    elementState = state;
   }
 
   if(typeof elementState != 'undefined') {

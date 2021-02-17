@@ -72,13 +72,8 @@ export default class synopticElement {
             });
             return;
           } else{
-            let measures;
-            if (typeof synopticConf[this.element.id].values !== 'undefined' && synopticConf[this.element.id].values) {
-              measures = synopticConf[this.element.id].values;
-            }
-              
             // generate the base icon
-            let pictoStr = generateIcon(this.element, suffix, "", measures);
+            let pictoStr = generateIcon(this.element, suffix);
             // modify the position of the icon and adds it to the DOM
             let snapIcon = Snap.parse(pictoStr);
             el = snapDiv.group().append(snapIcon);

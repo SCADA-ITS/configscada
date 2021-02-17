@@ -39,12 +39,10 @@ export function generateIcon(element, suffix = "") {
 
   // changes the color based on the status
   let color = "";
-  let elementState = "";
+  let elementState;
   if(typeof element.state != 'undefined') {
     elementState = element.state;
-  } else {
-    elementState = state;
-  }
+  } 
   
   if(typeof elementState != 'undefined') {
     color = ICON_COLOR[elementState];
@@ -185,9 +183,7 @@ export function updateDmsIcon(element, suffix = "") {
     }
 
     document.getElementById(element.id + suffix + ":rect2085-1").style["stroke"] = color;
-    document.getElementById(element.id + suffix + ":rect2250-2-89").style[
-      "stroke"
-    ] = color;
+    document.getElementById(element.id + suffix + ":rect2250-2-89").style["stroke"] = color;
 
   }
 

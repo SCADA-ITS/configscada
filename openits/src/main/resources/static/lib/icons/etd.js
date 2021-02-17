@@ -1,15 +1,21 @@
 import * as elementTypeMap from "../elementTypeMap.js";
 import {ELEMENT_TYPE, ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
 
-export function generateIcon(element, values, suffix, state) {
+export function generateIcon(element, suffix) {
+  //DEPRECATED
+  //Temporalmente se asignan aqui los "values" (son comunes para todos los equipos), esto deberá ir codificado dentro de Entities.ElementTypeUI
+  let values = [
+    {name: "etd_intensity", label: "I (V/h)"},
+    {name: "etd_speed", label: "V (K/h)"},
+    {name: "etd_occupancy", label: "O (%)"},
+    {name: "etd_veh_length_1_percent", label: "C (%L)"}
+  ];
   // changes the color based on the status
   let color = "";
   //let elementState = element.state;
-  let elementState = "";
+  let elementState;
   if(typeof element.state != 'undefined') {
     elementState = element.state;
-  } else {
-    elementState = state;
   }
   
   let params={};
@@ -82,12 +88,10 @@ export function generateIcon(element, values, suffix, state) {
 export function updateEtdIcon(element, suffix = "") {
   let color = "";
   //let elementState = element.state;
-  let elementState = "";
+  let elementState;
   if(typeof element.state != 'undefined') {
     elementState = element.state;
-  } else {
-    elementState = state;
-  }
+  } 
   
   let params={};
   //param values

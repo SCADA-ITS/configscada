@@ -17,15 +17,15 @@ import * as elementTypeMap from "./elementTypeMap.js";
 import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
 
 
-export function generateIcon(element, suffix="", state="", values) {
+export function generateIcon(element, suffix="") {
   if (element.elementType.id === ELEMENT_TYPE.ID_10_DMS) {
-    return generateDMSIcon(element, suffix, state);
+    return generateDMSIcon(element, suffix);
   } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_MATRIX) {
-    return generateFullMatrixPanelIcon(element, suffix, state);
+    return generateFullMatrixPanelIcon(element, suffix);
   } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_MTX) {
-    return generateMatrixJsonIcon(element, suffix, state);
+    return generateMatrixJsonIcon(element, suffix);
   } else if (element.elementType.id === ELEMENT_TYPE.ID_4_SEC) {  
-    return generateETDIcon(element, suffix, state, values);
+    return generateETDIcon(element, suffix);
   } else if (ELEMENT_TYPE.values[element.elementType.id].uiType === UI_ELEMENT_TYPE_GENERIC) {
     return createIcon(element, suffix);
   } else{
@@ -33,28 +33,28 @@ export function generateIcon(element, suffix="", state="", values) {
   }
 }
 
-export function generateDMSIcon(element, suffix="", state="") {
-  let pmv_str = dms.generateIcon(element, suffix, state);
+export function generateDMSIcon(element, suffix="") {
+  let pmv_str = dms.generateIcon(element, suffix);
   return pmv_str;
 }
 
-export function generateMatrixPanelIcon(element, suffix="", state="") {
-  let matrix_panel_str = matrix_panel.generateIcon(element, suffix, state);
+export function generateMatrixPanelIcon(element, suffix="") {
+  let matrix_panel_str = matrix_panel.generateIcon(element, suffix);
   return matrix_panel_str;
 }
 
-export function generateFullMatrixPanelIcon(element, suffix="", state="") {
-  let full_matrix_panel_str = full_matrix_panel.generateIcon(element, suffix, state);
+export function generateFullMatrixPanelIcon(element, suffix="") {
+  let full_matrix_panel_str = full_matrix_panel.generateIcon(element, suffix);
   return full_matrix_panel_str;
 }
 
-export function generateMatrixJsonIcon(element, suffix="", state="") {
-  let full_matrix_panel_str = matrix_json.generateIcon(element, suffix, state);
+export function generateMatrixJsonIcon(element, suffix="") {
+  let full_matrix_panel_str = matrix_json.generateIcon(element, suffix);
   return full_matrix_panel_str;
 }
 
-export function generateETDIcon(element, suffix="", state="",values) {
-  let etd_str = etd.generateIcon(element, values, suffix, state);
+export function generateETDIcon(element, suffix="") {
+  let etd_str = etd.generateIcon(element, suffix);
   return etd_str;
 }
 
@@ -255,30 +255,30 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_4_SEC:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix, state, values) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
     case elementTypeMap.ELEMENT_TYPE_32_PMV:  
     case elementTypeMap.ELEMENT_TYPE_31_PMV:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_28_PMV_192X64:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_35_PMV:
     case elementTypeMap.ELEMENT_TYPE_36_PMV:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 100) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 100) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_27_PMV_A_B:
     case elementTypeMap.ELEMENT_TYPE_29_PMV_B_D:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_30_PMV_128X64:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixJsonIcon(element, suffix, state) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixJsonIcon(element, suffix) + '</g>';
       break;                              
     case elementTypeMap.ELEMENT_TYPE_3_DET:      
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
@@ -302,7 +302,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 80) + ',' + (height / 80) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
-        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
 	  case elementTypeMap.ELEMENT_TYPE_12_LUX:
 	  	iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
@@ -311,7 +311,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
 		  iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_69_PMV:
-        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + generateFullMatrixPanelIcon(element, suffix, state) + '</g>';
+        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED:
       iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 220) + ',' + (height / 220) + ')">' + createIcon(element, suffix) + '</g>';
@@ -534,5 +534,5 @@ function updateIcon(element, suffix="") {
         } 
       } 
     }
-  }
+  } 
 }
