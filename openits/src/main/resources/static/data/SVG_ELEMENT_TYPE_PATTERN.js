@@ -1807,13 +1807,13 @@ export let SVG_56_UNIFILAR =
 
 export let SVG_57_MAGNETOTERMICO = 
 	`<svg width="26.377014mm" height="30.513727mm" viewBox="0 0 26.377014 30.513727">
- 	<g id="layer1" transform="translate(-2.6864934,-5.1538495)">
-    <g id="g844" style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-       transform="matrix(0.21267684,0,0,0.24197571,-8.6820889,-12.665983)">
-      <g id="g840" style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1">
-        <ellipse style="fill:#008000;stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           id="path837" cx="115.91099" cy="136.59665" rx="58.972004" ry="60.146717" />
-      </g>
+ 	<g id="layer1" transform="translate(-2.6864934,-5.1538495)">`+
+    ' <g id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0" style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"'+
+       ' transform="matrix(0.21267684,0,0,0.24197571,-8.6820889,-12.665983)">'+
+      ' <g id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill1" style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1">'+
+        ' <ellipse style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke:#000000;stroke-width:5.826;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"'+
+           ' id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill2" cx="115.91099" cy="136.59665" rx="58.972004" ry="60.146717" />' +
+      ` </g>
     </g>
     <rect style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.00321;stroke-miterlimit:10"` +
        'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +
