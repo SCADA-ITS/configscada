@@ -4,12 +4,9 @@ import * as elementTypeMap from "../elementTypeMap.js";
 export function generateIcon(element, suffix = "") {
   // changes the color based on the status
   let color = "";
-  //let elementState = element.state;
-  let elementState = "";
-  if(typeof element.state != 'undefined') {
-    elementState = element.state;
-  } else {
-    elementState = state;
+  let elementState;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
   }
 
   
@@ -37,7 +34,10 @@ export function updateVisIcon(element, suffix = "") {
   ) {
     // changes the color based on the state
     let color = "";
-    let elementState = element.state;
+    let elementState;
+    if(element.elementTypeState && element.elementTypeState.id) {
+      elementState = getTrimId(element.elementTypeState.id);
+    }
 
     if(typeof elementState != 'undefined') {
       if (elementState == 0) {

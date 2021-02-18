@@ -86,6 +86,16 @@ function elementReady(selector) {
   });
 }
 
+function getTrimId(complexId) {
+  let result;
+  try {
+    result = parseInt(complexId.substring(complexId.lastIndexOf(":")+1));
+  } catch (error) {
+    console.warn(error);
+  }
+  return result;
+}
+
 //Deprecated
 function auditMutation(auditLog) {
   let auditMutation = webix.proxy("GraphQL",

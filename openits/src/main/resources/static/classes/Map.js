@@ -32,14 +32,14 @@ var graphSynoptic = webix.proxy(
       id
       alias
       description
-      state
+      elementTypeState { id }
       icon
       childs{
         id
         alias
         positionX
         positionY
-        state
+        elementTypeState { id }
         elementType {
           id
           alias
@@ -125,8 +125,8 @@ export default class Map {
 
           let elementToUpdate = retLayer.getSource().getFeatureById(element.id);
 
-          if(typeof element.state != 'undefined') {
-            mapStates[element.id] = element.state;
+          if(element.elementTypeState || element.elementTypeState.id) {
+            mapStates[element.id] = element.elementTypeState.id;
           }
 
           let mapElement = mapConf[element.id];
@@ -211,7 +211,7 @@ export default class Map {
             getElement(elementId: $elem)
             {
               id
-              state
+              elementTypeState { id }
               description
               elementType {
                 id
@@ -258,7 +258,11 @@ export default class Map {
               if(elementToUpdate != null) {
                 
                 // let's store the states
-                mapStates[element.id] = element.state;
+                let elementState;
+                if(element.elementTypeState && element.elementTypeState.id){
+                  elementState = element.elementTypeState.id;
+                }
+                mapStates[element.id] = elementState;
 
                 // the values are only valid for ETDs
                 let mapElementValues = mapElement.values;
@@ -493,7 +497,11 @@ export default class Map {
             mapElements.push(element.id);
 
             // let's store the states
-            mapStates[element.id] = element.state;
+            let elementState;
+            if(element.elementTypeState && element.elementTypeState.id){
+              elementState = element.elementTypeState.id;
+            }
+            mapStates[element.id] = elementState;
             
             let mapElement = this.synopticConf[element.id];
 
@@ -1018,7 +1026,11 @@ export default class Map {
                 if (element.id in self.synopticConf) {
 
                   // let's store the states
-                  mapStates[element.id] = element.state;
+                  let elementState;
+                  if(element.elementTypeState && element.elementTypeState.id){
+                    elementState = element.elementTypeState.id;
+                  }
+                  mapStates[element.id] = elementState;
                   
                   let mapElement = self.synopticConf[element.id];
 

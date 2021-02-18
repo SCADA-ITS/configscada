@@ -70,7 +70,7 @@ export function getElementIcon(element, suffix="") {
   if (document.getElementById(element.id) != null) {
     elementState = parseInt(document.getElementById(element.id).getAttribute("state"));
   } else {
-    elementState = element.state;
+    elementState = getTrimId(element.elementTypeState.id);
   }
   
   // icon based on status
@@ -206,20 +206,24 @@ export function updateElementIcon(element) {
 export function updateElementState(element) {
   // check if the element exists and we are receiving an state update
   let el = document.getElementById(element.id);
-  if (el != null && element.state != null) {
-    el.setAttribute("state", element.state);
+  if (el != null && element.elementTypeState && element.elementTypeState.id) {
+    el.setAttribute("state", getTrimId(element.elementTypeState.id));
   }
 }
 
 export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
   let elementType = element.id.split(":")[1];
   let iconStr = "";
+  let elementState = "";
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
+  } 
   switch (elementType) {
     case elementTypeMap.ELEMENT_TYPE_1_WS:
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
     case elementTypeMap.ELEMENT_TYPE_5_PLC:
     case elementTypeMap.ELEMENT_TYPE_16_MEG:
-      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + element.state + '" width="' + width + '" height="' + height + '"></image>';
+      iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + elementState + '" width="' + width + '" height="' + height + '"></image>';
       break;  
     case elementTypeMap.ELEMENT_TYPE_7_ZONE:      
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
@@ -245,88 +249,88 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_59_SMOKE_DETECTOR:    
     case elementTypeMap.ELEMENT_TYPE_65_SAI:
     case elementTypeMap.ELEMENT_TYPE_66_VANE:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
    case elementTypeMap.ELEMENT_TYPE_53_SEM_AA:
    case elementTypeMap.ELEMENT_TYPE_67_SEM_RR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_9_FAN:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_4_SEC:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
     case elementTypeMap.ELEMENT_TYPE_32_PMV:  
     case elementTypeMap.ELEMENT_TYPE_31_PMV:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_28_PMV_192X64:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 200) + ',' + (height / 48) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_35_PMV:
     case elementTypeMap.ELEMENT_TYPE_36_PMV:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 200) + ',' + (height / 100) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 200) + ',' + (height / 100) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_27_PMV_A_B:
     case elementTypeMap.ELEMENT_TYPE_29_PMV_B_D:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_30_PMV_128X64:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixJsonIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateMatrixJsonIcon(element, suffix) + '</g>';
       break;                              
     case elementTypeMap.ELEMENT_TYPE_3_DET:      
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
     case elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO:   
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 18) + ',' + (height / 18) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 18) + ',' + (height / 18) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
     case elementTypeMap.ELEMENT_TYPE_56_UNIFILAR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 290) + ',' + (height / 290) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 290) + ',' + (height / 290) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_57_MAGNETOTERMICO:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_58_PULSADOR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 25) + ',' + (height / 25) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 25) + ',' + (height / 25) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_60_SIRENA:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 40) + ',' + (height / 40) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 40) + ',' + (height / 40) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_61_FIRE_DET_CT:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 80) + ',' + (height / 80) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 80) + ',' + (height / 80) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_64_VMS_SNOW:
-        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+        iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
 	  case elementTypeMap.ELEMENT_TYPE_12_LUX:
-	  	iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+	  	iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;
 	  case elementTypeMap.ELEMENT_TYPE_14_LUM:
-		  iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+		  iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_69_PMV:
-        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
+        iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 128) + ',' + (height / 128) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 220) + ',' + (height / 220) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 220) + ',' + (height / 220) + ')">' + createIcon(element, suffix) + '</g>';
       break;    
     case elementTypeMap.ELEMENT_TYPE_71_VIS:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 602) + ',' + (height / 503) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 602) + ',' + (height / 503) + ')">' + createIcon(element, suffix) + '</g>';
       break;  
     case elementTypeMap.ELEMENT_TYPE_72_ACCEL:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 369) + ',' + (height / 248) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 369) + ',' + (height / 248) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_73_RADAR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_74_ERU:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 75) + ',' + (height / 75) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 75) + ',' + (height / 75) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     default:
       console.log("Icon not found");
@@ -361,10 +365,14 @@ function createIcon(element, suffix="") {
   let elementId= element.id+suffix;
   let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
   let elementAlias = element.alias;
-  let color = ICON_COLOR[element.state];
+  let elementState = "";
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
+  }
+  let color = ICON_COLOR[elementState];
   // override generic color with ElementType color if exist
   if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
-    color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];
+    color = ELEMENT_TYPE.values[element.elementType.id].color[elementState];
   }
   //svg icon String
   let iconStr = ELEMENT_TYPE.values[element.elementType.id].svgRaw;
@@ -392,11 +400,11 @@ function createIcon(element, suffix="") {
 
 function updateIcon(element, suffix="") {
   // changes the color based on the status
-  if (typeof element.state != 'undefined' && element.state) {
-    let color = ICON_COLOR[element.state];
+  if (element.elementTypeState && element.elementTypeState.id) {
+    let color = ICON_COLOR[getTrimId(element.elementTypeState.id)];
     // override generic color with ElementType color if exist
     if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
-      color = ELEMENT_TYPE.values[element.elementType.id].color[element.state];
+      color = ELEMENT_TYPE.values[element.elementType.id].color[getTrimId(element.elementTypeState.id)];
     }
     if(document.getElementById(element.id + suffix + ":IconBackground") != null){
       document.getElementById(element.id + suffix + ":IconBackground").style["stroke"] = color;

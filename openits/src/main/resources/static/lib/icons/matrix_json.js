@@ -41,8 +41,8 @@ export function generateIcon(element, suffix = "") {
   // changes the color based on the status
   let color = "";
   let elementState;
-  if (typeof element.state != "undefined") {
-    elementState = element.state;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
   }
 
   if(typeof elementState != 'undefined') {
@@ -292,12 +292,10 @@ export function updateMatrixPanelIcon(element, suffix = "") {
   }
 
    // changes the color based on the status
-   let elementState;
-   if (typeof element != "undefined") {
-     elementState = element.state;
-   } else {
-     elementState = null;
-   }
+  let elementState;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
+  }
   let color = ICON_COLOR[elementState];
   if(Snap.select("#"+element.id + suffix +":stroke0") && Snap.select("#"+element.id + suffix +":stroke0").node && Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke){
     Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke.value=color;

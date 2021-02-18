@@ -5,7 +5,10 @@ export function updateMegIcon(element, suffix = "") {
   // MEG
   // icon based on status
   let elementType = elementTypeMap.getElementType(element.id);
-  let elementState = element.state;
+  let elementState;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
+  }
   let elem_icon = null;
 
   if (typeof staticsIcons[elementType] != "undefined") {

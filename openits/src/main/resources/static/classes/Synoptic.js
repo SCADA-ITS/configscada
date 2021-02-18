@@ -13,13 +13,13 @@ let graphSynoptic = webix.proxy(
       id
       alias
       description
-      state
+      elementTypeState { id }
       elementType {
         id
       }
       childs{
         id    
-        state
+        elementTypeState { id }
         alias
         description
         elementType{
@@ -642,7 +642,7 @@ export default class Synoptic {
           );
 
           // It's set just for the demo
-          if (d.state != 3) {
+          if (!d.elementTypeState || !d.elementTypeState.id || getTrimId(d.elementTypeState.id) != 3) {
             titleBackground.attr({
               fill: "#ebb700",
             });
@@ -1165,7 +1165,7 @@ export default class Synoptic {
                 let element_type = d.id.split(":")[1];
                 if(element_type == "7") {
                   let color = "";
-                  if (d.state != 3) {
+                  if (!d.elementTypeState || !d.elementTypeState.id || getTrimId(d.elementTypeState.id) != 3) {
                     color = "#ebb700";
                   } else {
                     color = "#ff0000";

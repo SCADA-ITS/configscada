@@ -27,7 +27,7 @@ export default class TabForm {
 				id
 				alias
 				description
-				state
+				elementTypeState { id }
 				elementType {
 			        id
 			        alias
@@ -44,7 +44,7 @@ export default class TabForm {
 				childs {
 					id
 					alias
-					state
+					elementTypeState { id }
 				}  
 				elementValues {
 					id 
@@ -396,7 +396,7 @@ export default class TabForm {
 											getElement(elementId: $elem)
 											{
 												id
-												state
+												elementTypeState { id }
 												elementType {
 													id
 													alias

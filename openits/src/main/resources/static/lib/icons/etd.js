@@ -14,8 +14,8 @@ export function generateIcon(element, suffix) {
   let color = "";
   //let elementState = element.state;
   let elementState;
-  if(typeof element.state != 'undefined') {
-    elementState = element.state;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
   }
   
   let params={};
@@ -87,11 +87,10 @@ export function generateIcon(element, suffix) {
 
 export function updateEtdIcon(element, suffix = "") {
   let color = "";
-  //let elementState = element.state;
   let elementState;
-  if(typeof element.state != 'undefined') {
-    elementState = element.state;
-  } 
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
+  }
   
   let params={};
   //param values

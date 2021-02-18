@@ -53,7 +53,7 @@ export default class synopticElement {
           el.attr({ name: this.element.id });
           el.attr({ type: ELEMENT_TYPE.values[this.element.elementType.id].value });
           el.attr({ component: ELEMENT_TYPE.values[this.element.elementType.id].value });
-          el.attr({ state: this.element.state });
+          el.attr({ state: getTrimId(this.element.elementTypeState.id) });
         }            
         // update the icon based on the state and/or the value
         getElementIcon(this.element, suffix);
@@ -68,7 +68,7 @@ export default class synopticElement {
             id: this.element.id,
             component: ELEMENT_TYPE.values[this.element.elementType.id].value,
             class: "capa_mapa",
-            state: this.element.state,
+            state: getTrimId(this.element.elementTypeState.id)
           });
 
       }

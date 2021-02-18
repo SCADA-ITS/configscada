@@ -19,7 +19,7 @@ let elementQuery = webix.proxy(
     getElement(elementId: $elem)
     {
       id
-      state
+      elementTypeState { id }
       description
       elementType {
         id
@@ -87,7 +87,7 @@ export default class synopticElement {
               el.attr({ name: this.element.id });
               el.attr({ type: ELEMENT_TYPE.values[this.element.elementType.id].value });
               el.attr({ component: ELEMENT_TYPE.values[this.element.elementType.id].value });
-              el.attr({ state: this.element.state });
+              el.attr({ state: getTrimId(this.element.elementTypeState.id) });
             }
 
             //Deprecated quitar cuando se quiten capas exclusivas
@@ -114,7 +114,7 @@ export default class synopticElement {
               id: this.element.id,
               component: ELEMENT_TYPE.values[this.element.elementType.id].value,
               class: "capa_mapa",
-              state: this.element.state,
+              state: getTrimId(this.element.elementTypeState.id)
             });
   
         }
@@ -142,7 +142,7 @@ export default class synopticElement {
               );
               el.remove();
               // It's set just for the demo
-              if (this.element.state != 3) {
+              if (!this.element.elementTypeState || !this.element.elementTypeState.id || getTrimId(this.element.elementTypeState.id) != 3) {
                 titleBackground.attr({fill: "#ebb700",});
               } else {
                 titleBackground.attr({fill: "#ff0000",});

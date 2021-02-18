@@ -33,14 +33,14 @@ export default class EquipmentTree {
             id
             alias
             description
-            state
+            elementTypeState { id }
             elementType {
               id
             }
             childs {
               id
               alias
-              state
+              elementTypeState { id }
               description
               elementType {
                 id

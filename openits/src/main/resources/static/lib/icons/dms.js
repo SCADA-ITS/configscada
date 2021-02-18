@@ -40,8 +40,8 @@ export function generateIcon(element, suffix = "") {
   // changes the color based on the status
   let color = "";
   let elementState;
-  if(typeof element.state != 'undefined') {
-    elementState = element.state;
+  if(element.elementTypeState && element.elementTypeState.id) {
+    elementState = getTrimId(element.elementTypeState.id);
   } 
   
   if(typeof elementState != 'undefined') {
@@ -170,7 +170,10 @@ export function updateDmsIcon(element, suffix = "") {
     document.getElementById(element.id + suffix + ":rect2250-2-89") != null
   ) {
     let color = "";
-    let elementState = element.state;
+    let elementState;
+    if(element.elementTypeState && element.elementTypeState.id) {
+      elementState = getTrimId(element.elementTypeState.id);
+    }
 
     if (elementState == 0) {
       color = "#ffcc00";
