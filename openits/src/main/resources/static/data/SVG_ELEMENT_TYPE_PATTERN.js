@@ -565,12 +565,12 @@ export let SVG_25_CABIN = `<svg id="svg8" height="73.537796mm" width="41.301537m
 	
 export let SVG_51_ETD = 
     `<svg width="210mm" height="297mm" viewBox="0 0 210 297">
-  	<g id="layer1" style="display:inline">
-    <rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.0178986;stroke-miterlimit:4;stroke-dasharray:none"` +
+  	<g id="layer1" style="display:inline">`+
+    ' <rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.0178986;stroke-miterlimit:4;stroke-dasharray:none"' +
        'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0"' + 
        `width="4.5071816" height="2.4631736" x="0.038830407" y="0.065397732" />
-    <g id="g1138" transform="translate(-3.1149388,-2.4227302)">
-      <rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"` +
+    <g id="g1138" transform="translate(-3.1149388,-2.4227302)">`+
+      ' <rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"' +
          'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill1"' + 
          `width="1.0992322" height="2.3516877" x="3.2077508" y="2.5455327" />
       <g id="g1792" transform="matrix(0.25899493,-0.02211635,0.00199415,0.15673999,-8.507774,-14.942718)" clip-path="none">
@@ -726,8 +726,8 @@ export let SVG_51_ETD =
        id="g1138-7"
        style="display:inline"
        transform="translate(-2.0157066,-2.4227302)">
-      <rect
-         style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"` +
+      <rect`+ 
+         'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"' +
          'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill2"' +
          `width="1.0992322"
          height="2.3516877"
@@ -1048,8 +1048,8 @@ export let SVG_51_ETD =
        id="g1138-1"
        style="display:inline"
        transform="translate(-0.91647445,-2.4227302)">
-      <rect
-         style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"` +
+      <rect`+
+         ' style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"' +
          'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill3"' + 
          `width="1.0992322"
          height="2.3516877"
@@ -1370,8 +1370,8 @@ export let SVG_51_ETD =
        id="g1138-9"
        style="display:inline"
        transform="translate(0.18275775,-2.4227302)">
-      <rect
-         style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"` +
+      <rect`+
+         'style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + ';fill-rule:evenodd;stroke:#000000;stroke-width:0.014867;stroke-miterlimit:4;stroke-dasharray:none"' +
          'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill4"' + 
          `width="1.0992322"
          height="2.3516877"
