@@ -29,6 +29,7 @@ export let optionElementType = [
 	{id:"ElementType:66", value: $.i18n("ElementType:66.alias")},
 	{id:"ElementType:67", value: $.i18n("ElementType:67.alias")},
 	{id:"ElementType:70", value: $.i18n("ElementType:70.alias")},
+	{id:"ElementType:71", value: $.i18n("ElementType:71.alias")},
 	{id:"ElementType:74", value: $.i18n("ElementType:74.alias")},
 ]
 
@@ -1029,6 +1030,29 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:4:2:62": { //"veh_pa_2_percent"
 				"header": [ $.i18n("ElementTypeParam:4:2:62.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			}
+		}
+	},
+	"ElementType:5": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:5:1:1": {
+				"header": [ $.i18n("ElementTypeParam:74:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:5:1:2": {
+				"header": [ $.i18n("ElementTypeParam:74:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
 			}
 		}
 	},

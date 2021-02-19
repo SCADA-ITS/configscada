@@ -1,6 +1,7 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {columnsElementFormList as colMetaData} from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
+import PAsystemManager from "../classes/PAsystemManager.js";
 import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 import SynopticElement from "../classes/SynopticElement.js";
 
@@ -914,7 +915,47 @@ export default class TabForm {
 										}
 									}								
 								}, -1);
-							}else{
+							}
+							else if (data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM){
+									$$(this.commands).addView({
+										view: "button", 
+										id: "command"+index+"_"+ this.id, 
+										value: $.i18n(data.elementType.commandElementTypes[index].id),
+										click: function(){
+											let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
+											//if( $$("panelManager" + data.id)){
+											//	$$("panelManager" + data.id).show();
+											if($$("PAsystemManager" + idtype)){
+												$$("PAsystemManager" + idtype).show();
+											}else{
+												let paMan = new PAsystemManager(data.id, data.elementType.id,null,null,null);//data.elementType.commandElementTypes[index]);
+												webix.ui({
+													id:"PAsystemManager"+idtype,
+													view:"window",	
+													move:false,
+													position:"center",
+													modal:true,
+													close: true,
+													body: paMan.getInitComponent(),
+													head:$.i18n("elementForm.señalization.panel.head"),
+													on: {
+														onShow: function(obj){
+															paMan.loadComponent();
+														},
+														onHide: function(obj){
+															if(typeof keyLayout != 'undefined' && Keyboard){
+																Keyboard.close();
+															}
+															$$("PAsystemManager" + idtype).destructor();
+														}
+													}
+												  }).show();
+											}
+										}								
+									}, -1);	
+									
+								}
+							else{
 								// if(this.id!=data.id){
 								// 	console.warn(data);
 								// }

@@ -31,8 +31,8 @@ var i18_en = {
     "ElementType:3.description": "Detector type of equipment",
     "ElementType:4.alias": "SECTION",
     "ElementType:4.description": "Section type",
-    "ElementType:5.alias": "PLC LOGO",
-    "ElementType:5.description": "PLC LOGO",
+    "ElementType:5.alias": "PA SYSTEM",
+    "ElementType:5.description": "PA SYSTEM",
     "ElementType:33.alias": "ETD",
     "ElementType:33.description": "Data adquisition station type of equipment",
     
@@ -510,6 +510,12 @@ var i18_en = {
     "ElementTypeParam:16:1:1.description": "PK",
     "ElementTypeParam:16:1:2.alias": "Entrance Tunnel Distance (m)",
     "ElementTypeParam:16:1:2.description": "Entrance Tunnel Distance (m)",
+    "ElementTypeParam:16:2:1001.alias": "Messages ids",
+    "ElementTypeParam:16:2:1001.description": "Messages ids",
+    "ElementTypeParam:16:2:1002.alias": "Messages description",
+    "ElementTypeParam:16:2:1002.description": "Messages description",
+    "ElementTypeParam:16:2:1004.alias": "Messages type",
+    "ElementTypeParam:16:2:1004.description": "Messages type",
 
     "ElementTypeParam:16:2:1.alias": "status",
     "ElementTypeParam:16:2:1.description": "status",

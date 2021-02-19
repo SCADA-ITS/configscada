@@ -74,8 +74,13 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"MEG_CONTROLLER": {
+				"items": ["Element:5:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 			"MEG": {
-				"items": ["Element:16:3", "Element:16:4", "Element:16:5", "Element:16:6"],
+				"items": ["Element:16:1", "Element:16:2", "Element:16:3", "Element:16:4"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -232,10 +237,12 @@ export let synopticData= [
 		"Element:15:3": { "x": 184,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-1MA" },
 		"Element:15:4": { "x": 898,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-2MA" },
 		
-		"Element:16:3": { "x": 1438, "y": 724, "width": 40,  "height": 40,  "alias": "RV-MEG_3CA" },
-		"Element:16:4": { "x": 881,  "y": 544, "width": 40,  "height": 40,  "alias": "RV-MEG_4CA" },
-		"Element:16:5": { "x": 360,  "y": 320, "width": 40,  "height": 40,  "alias": "RV-MEG_1MA" },
-		"Element:16:6": { "x": 881,  "y": 500, "width": 40,  "height": 40,  "alias": "RV-MEG_2MA" },
+		"Element:5:1": { "x": 1000, "y": 544, "width": 80,  "height": 40,  "alias": "PA-ESTEPONA" },
+		
+		"Element:16:1": { "x": 1438, "y": 724, "width": 120,  "height": 120,  "alias": "PA-ZONE-59" },
+		"Element:16:2": { "x": 881,  "y": 544, "width": 120,  "height": 120,  "alias": "PA-ZONE-60" },
+		"Element:16:3": { "x": 360,  "y": 320, "width": 120,  "height": 120,  "alias": "PA-ZONE-61" },
+		"Element:16:4": { "x": 881,  "y": 500, "width": 120,  "height": 120,  "alias": "PA-ZONE-62" },
 
 		"Element:17:1": { "x": 120,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
 

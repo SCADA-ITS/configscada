@@ -95,6 +95,7 @@ export function getElementIcon(element, suffix="") {
   // icon based on element value
   if (elementType === elementTypeMap.ELEMENT_TYPE_9_FAN
     || elementType === elementTypeMap.ELEMENT_TYPE_3_DET
+    || elementType === elementTypeMap.ELEMENT_TYPE_5_PA_SYSTEM
     || elementType === elementTypeMap.ELEMENT_TYPE_8_BAR
     || elementType === elementTypeMap.ELEMENT_TYPE_7_ZONE
     || elementType === elementTypeMap.ELEMENT_TYPE_11_SOS
@@ -102,6 +103,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_13_SEM_RAV
     || elementType === elementTypeMap.ELEMENT_TYPE_14_LUM
     || elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE
+    || elementType === elementTypeMap.ELEMENT_TYPE_16_PA_ZONE
     || elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT
     || elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
@@ -138,9 +140,7 @@ export function getElementIcon(element, suffix="") {
     etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_16_MEG) {
-    meg.updateMegIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
+    else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
     dms.updateDmsIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_2_CAM) {
     cam.updateCamIcon(element, suffix);
@@ -221,11 +221,10 @@ export function getElementSVG(element, width, height, suffix="", state="", value
   switch (elementType) {
     case elementTypeMap.ELEMENT_TYPE_1_WS:
     case elementTypeMap.ELEMENT_TYPE_2_CAM:
-    case elementTypeMap.ELEMENT_TYPE_5_PLC:
-    case elementTypeMap.ELEMENT_TYPE_16_MEG:
       iconStr = '<image xlink:href="./img/' + getElementIcon(element, suffix).icon + '" id="' + element.id + suffix + '" state="' + elementState + '" width="' + width + '" height="' + height + '"></image>';
       break;  
-    case elementTypeMap.ELEMENT_TYPE_7_ZONE:      
+    case elementTypeMap.ELEMENT_TYPE_7_ZONE:  
+    case elementTypeMap.ELEMENT_TYPE_5_PA_SYSTEM:
     case elementTypeMap.ELEMENT_TYPE_8_BAR:
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
     case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
@@ -261,6 +260,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_10_DMS:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 76) + ',' + (height / 24) + ')">' + generateDMSIcon(element, suffix) + '</g>';
       break;
+    case elementTypeMap.ELEMENT_TYPE_16_PA_ZONE:
+        iconStr = '<g id="' + element.id + suffix + '" state="' + element.state + '" transform="scale(' + (width / 12) + ',' + (height / 12) + ')">' + createIcon(element, suffix, state, values) + '</g>';
+        break;
     case elementTypeMap.ELEMENT_TYPE_4_SEC:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + generateETDIcon(element, suffix) + '</g>';
       break;
@@ -501,6 +503,14 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + "red").style["fill"] = "#FF0000";
       }
     }
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_16_PA_ZONE){
+	    if (typeof params != 'undefined' && params && params["PA_ZONE_PLAYING"] ) {
+	        if (params["PA_ZONE_PLAYING"] == " ") {
+	        	document.getElementById(element.id + suffix + "rect4529").style["fill"] = "gray";
+	        } else {
+	        	document.getElementById(element.id + suffix + "rect4529").style["fill"] = "#ffaa00";
+	        }
+	}
   } else if(element.elementType.id === ELEMENT_TYPE.ID_53_SEM_AA){
     if (params != undefined && params && params["SEM_AMBAR_AMBAR_STATUS"]) {
       let svgAmbar = document.getElementById(element.id + suffix);

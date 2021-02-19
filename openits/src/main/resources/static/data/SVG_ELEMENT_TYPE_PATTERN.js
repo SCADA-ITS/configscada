@@ -37,6 +37,14 @@ export let SVG_3_DET =
        'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':fill0" inkscape:connector-curvature="0" />' +
   '</g>';
 
+export let SVG_5_PA_SYSTEM =
+	`<g	id="layer1"	transform="translate(0,-291.70832)">` +
+	'<rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
+	';fill-opacity:1;stroke:#000000;stroke-width:0.18743469;stroke-opacity:1"' +
+	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 
+	`:fill0" width="83.156319" height="5.1042309" x="0.093717344" y="291.80206" />
+	</g>`;
+
 export let SVG_7_ZONE = 
     '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="' + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + 
     ':IconBackground" transform="translate(0,3553.937)" fill="' + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END + 
@@ -393,6 +401,65 @@ export let SVG_15_FIRE_DET =
 	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 
 	`:fill0" width="83.156319" height="5.1042309" x="0.093717344" y="291.80206" />
 	</g>`;
+export let SVG_16_PA_ZONE =
+	 `<g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-288.53332)">
+    <g
+       id="g1858"
+       transform="translate(-92.528572,121.25477)"
+       style="stroke:#ff0000;stroke-opacity:1">
+      <rect
+         ry="0.83424193"
+         y="167.27856"
+         x="92.528572"
+         height="8.4666662"
+         width="8.4666662"
+         id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':stroke0"' +
+         `style="fill:#cccccc;fill-opacity:1;stroke:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +`;stroke-width:0.79374987;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />
+      <g
+         id="g8-7-9-0"
+         transform="matrix(0.01339967,0,0,0.01339967,93.700968,168.49882)"
+         style="stroke:#ff0000;stroke-opacity:1">
+        <g
+           id="g6-2-1-9"
+           style="stroke:#ff0000;stroke-opacity:1">
+          <path
+             id="path2-6-4-9-3"
+             d="m 301.986,21.066 c -1.641,-1.143 -3.261,-1.797 -4.83,-2.148 -3.585,-2.422 -8.241,-2.808 -12.979,0.787 -53.212,40.396 -110.654,74.486 -166.501,111.015 -34.256,0.021 -68.482,0.276 -102.672,2.709 -0.208,0.016 -0.389,0.068 -0.592,0.089 -1.434,-0.089 -2.902,-0.01 -4.377,0.396 -6.979,1.919 -11.679,9.646 -9.496,16.727 1.663,5.398 2.085,10.76 2.189,16.333 -2.367,42.348 -1.211,84.602 1.404,126.911 0.63,10.218 10.227,14.427 17.857,12.675 30.008,3.174 59.943,3.266 90.04,1.133 58.25,35.708 109.451,81.217 165.349,120.322 4.291,2.996 8.49,2.971 11.918,1.249 2.031,-0.543 4.052,-1.584 5.916,-3.377 8.125,-7.784 15.787,-16.092 23.074,-24.75 3.468,-1.579 5.459,-4.347 6.21,-7.505 C 412.777,282.135 430.54,110.852 301.986,21.066 Z M 125.777,284.232 c -1.831,-2.22 -4.55,-3.692 -8.132,-3.896 -1.582,-0.274 -3.1,-0.218 -4.54,0.102 -27.602,2.011 -55.061,2.163 -82.568,-0.218 -1.866,-34.657 -2.501,-69.292 -0.973,-103.982 0.244,-1.043 0.394,-2.158 0.394,-3.37 0,-1.719 -0.03,-3.45 -0.061,-5.177 0.031,-0.541 0.031,-1.082 0.061,-1.617 0.074,-1.285 -0.036,-2.45 -0.254,-3.537 -0.041,-0.903 -0.089,-1.805 -0.15,-2.709 30.476,-1.658 60.979,-1.909 91.51,-1.914 2.679,0 4.896,-0.691 6.756,-1.762 0.935,-0.358 1.876,-0.833 2.829,-1.45 47.454,-31.07 96.047,-60.388 142.259,-93.255 -37.328,31.407 -47.124,108.453 -49.432,150.339 -2.184,39.591 -0.812,82.646 11.469,120.695 4.007,12.4 7.276,26.533 12.091,39.518 -39.704,-30.279 -78.609,-61.62 -121.259,-87.767 z m 124.658,-66.945 c 0.284,-9 0.979,-22.213 2.635,-36.986 38.161,21.787 42.498,73.25 -1.879,90.693 -1.366,-17.916 -1.326,-36.008 -0.756,-53.707 z m 54.44,156.942 c -3.352,0.239 -5.992,1.498 -7.937,3.383 -16.103,1.498 -20.774,-4.226 -26.015,-23.517 -3.931,-14.467 -10.074,-28.102 -13.624,-42.686 -1.026,-4.24 -1.895,-8.525 -2.677,-12.837 76.957,-25.06 68.736,-114.673 2.636,-146.165 8.338,-43.079 26.589,-86.166 66.694,-75.578 72.083,83.635 47.83,210.836 -19.077,297.4 z"
+             inkscape:connector-curvature="0"
+             style="stroke:#ff0000;stroke-opacity:1" />
+          <path
+             id="path4-2-0-6-6"
+             d="m 398.924,96.301 c 38.309,84.894 27.64,179.913 -25.999,255.539 -9.724,13.706 12.837,26.675 22.45,13.127 59.336,-83.665 68.009,-188.68 25.999,-281.782 -6.891,-15.262 -29.29,-2.034 -22.45,13.116 z"
+             inkscape:connector-curvature="0"
+             style="stroke:#ff0000;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <rect
+       id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END  + 'rect4529"' +
+      ` width="14.298962"
+       height="3.7590156"
+       x="-2.7338152"
+       y="297.43564"
+       style="fill:#cccccc;fill-opacity:1;stroke:#000000;stroke-width:0.16540174;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-1.7953866"
+       y="299.92926"
+       id="` + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':Value"' + `><tspan
+         sodipodi:role="line"
+         id="tspan4537"
+         x="-1.7953866"
+         y="299.92926"
+         style="font-size:2.11666656px;line-height:0.25;stroke-width:0.26458332">`
+         + REGEX_PATTERN_INIT+'PA_ZONE_PLAYING'+REGEX_PATTERN_END +`</tspan></text>
+   </g>`
+   
 
 export let SVG_17_ANEM_EXT =  
 	'<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-278.47915)"><g transform="matrix(0.2822222,0,0,0.2822222,-223.71911,238.10826)" id="g6408"><g id="'

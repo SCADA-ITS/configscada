@@ -75,6 +75,18 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
+	"ElementType:5": {
+		"rows":[
+			{value: "ElementTypeParam:5:1:1", type:"string"}, 
+			{value: "ElementTypeParam:5:1:2", type:"string"},
+			{value: "ElementTypeParam:5:1:3", type:"string"}, 
+			{value: "ElementTypeParam:5:1:4", type:"string"}
+		],
+		"rowCounts": 4,
+		"scroll": false,  
+		"width": 540,
+		"options": {}
+	},
 	"ElementType:7": {
 		"rows":[ 
 			"id",
@@ -187,9 +199,12 @@ export let columnsElementFormList = {
 	"ElementType:16": {
 		"rows":[ 
 			{value: "ElementTypeParam:16:1:1", type:"string"},
-			{value: "ElementTypeParam:16:1:2", type:"string"}
+			{value: "ElementTypeParam:16:1:2", type:"string"},
+			{value: "ElementTypeParam:16:2:1001", type:"string"},
+			{value: "ElementTypeParam:16:2:1002", type:"string"},
+			{value: "ElementTypeParam:16:2:1004", type:"string"}
 		],
-		"rowCounts": 2,
+		"rowCounts": 5,
 		"scroll": false,  
 		"width": 540,
 		"options": {}

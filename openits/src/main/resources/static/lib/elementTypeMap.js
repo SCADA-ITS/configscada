@@ -2,7 +2,7 @@ export const ELEMENT_TYPE_1_WS = "1";
 export const ELEMENT_TYPE_2_CAM = "2";
 export const ELEMENT_TYPE_3_DET = "3";
 export const ELEMENT_TYPE_4_SEC = "4";
-export const ELEMENT_TYPE_5_PLC = "5";
+export const ELEMENT_TYPE_5_PA_SYSTEM = "5";
 export const ELEMENT_TYPE_7_ZONE = "7";
 export const ELEMENT_TYPE_8_BAR = "8";
 export const ELEMENT_TYPE_9_FAN = "9";
@@ -12,7 +12,7 @@ export const ELEMENT_TYPE_12_LUX = "12";
 export const ELEMENT_TYPE_13_SEM_RAV = "13";
 export const ELEMENT_TYPE_14_LUM = "14";
 export const ELEMENT_TYPE_15_FIRE = "15";
-export const ELEMENT_TYPE_16_MEG = "16";
+export const ELEMENT_TYPE_16_PA_ZONE = "16";
 export const ELEMENT_TYPE_17_ANEM_EXT = "17";
 export const ELEMENT_TYPE_18_ANEM_INT = "18";
 export const ELEMENT_TYPE_19_CO = "19";
@@ -74,6 +74,7 @@ export const ELEMENT_TYPE_MEASURE = 2;
 export const ELEMENT_TYPE_STATIC = 1;
 
 //  elementTypeParamId : paramTypeId
+export const PA_ZONE_PLAYING = "1004:2";
 export const BAR_COMMAND_FOR_BARRIER = "1:2";
 export const FAN_COMMAND_FOR_FAN = "1:2";
 export const LUM_LUMINOSITY = "2:2";
@@ -197,6 +198,7 @@ export const CAM_STREAM_MJPEG = "2:1:3";
 export const MAGNETOTERMICO_STATE = "1:2";
 export const CT_TEMP = "1:2";
 
+export const COMMAND_TYPE_PA_SYSTEM = "2:5";
 export const COMMAND_TYPE_PMV_A_C = "2:24";
 export const COMMAND_TYPE_MATRIX_PANEL_64X64 = "2:26";
 export const COMMAND_TYPE_PMV_A_B = "2:27";
