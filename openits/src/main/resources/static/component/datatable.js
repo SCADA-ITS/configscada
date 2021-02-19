@@ -1605,6 +1605,7 @@ export default class DataTable {
 							if (!webix.isUndefined(grid) && gridData != undefined && gridData.data != undefined && Array.isArray(gridData.data) && gridData.data.length > 0) {
 
 								self.translateFieldValues(gridData.data);
+								self.convertDate(gridData.data);
 
 								gridData.data.forEach(dataItem => {
 
