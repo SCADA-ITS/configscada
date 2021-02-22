@@ -33,6 +33,7 @@ export default class UserService extends GenericModule {
 			view: "icon", 
 			css: "user-template",
 			//width: 75,
+			badge: "",
 			icon: "mdi mdi-account-circle", 
 			value:"User",
 			tooltip: i18n.t("LBL_USER") 
@@ -50,6 +51,11 @@ export default class UserService extends GenericModule {
 		let moduleValue = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_SERVICE_CONFIG);
 		
 		if (moduleValue != undefined) {
+			
+			if (!window.userControlPanel) {
+
+				window.userControlPanel = new UserControlPanel();
+			}
 			
 			$$("icon-user-service").attachEvent("onItemClick", function(id, e) {
 
@@ -74,20 +80,14 @@ export default class UserService extends GenericModule {
 	
 	updateUsers() {
 		
-		let self = this;
 	}
 	
 	callUserControlPanel() {
 
-		if (!userControlPanel) {
-
-			userControlPanel = new UserControlPanel();
-		}
-
-		if (userControlPanel.hidden()) {
-			userControlPanel.show();
+		if (window.userControlPanel.hidden()) {
+			window.userControlPanel.show();
 		} else {
-			userControlPanel.hide();
+			window.userControlPanel.hide();
 		}
 	}
 }

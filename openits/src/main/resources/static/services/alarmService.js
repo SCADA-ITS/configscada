@@ -4,6 +4,8 @@ import AlarmControlPanel from "../controllers/alarmControlPanel.js";
 import Notification from "../component/notification.js";
 import { NotificationType } from "../component/notification.js";
 
+const LATEST_ALARMS_MAX = 10;
+
 export default class AlarmService extends GenericModule {
 
 	constructor(module, mod) {
@@ -13,9 +15,24 @@ export default class AlarmService extends GenericModule {
 		this.module = module;
 		this.mod = mod;
 
-		this.recentAlarmCount = 0;
+		//this.recentAlarmCount = 0;
 		this.stomp = {};
-		this.alarms = {};
+		this.alarms = {
+			config: undefined,
+			data: {
+				stats: {
+					activeAlarms: 0,
+					noRecognizedAlarms: 0,
+					mutedAlarms: 0
+				},
+				latest: []
+			}
+		};
+	}
+	
+	getData() {
+		
+		return this.alarms.data;
 	}
 
 	getView() {
@@ -44,10 +61,10 @@ export default class AlarmService extends GenericModule {
 		let moduleValue = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_SERVICE_CONFIG);
 
 		if (moduleValue != undefined) {
+			
+			if (!window.alarmControlPanel) {
 
-			if (!alarmControlPanel) {
-
-				alarmControlPanel = new AlarmControlPanel();
+				window.alarmControlPanel = new AlarmControlPanel();
 			}
 
 			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
@@ -81,25 +98,33 @@ export default class AlarmService extends GenericModule {
 		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.active_alarms).then(function(data) {
 
 			if (data.json() != undefined) {
+				
+				let activeAlarms = data.json().value;
 
-				self.alarms.stats.active_alarms = data.json().value;
-				$$("icon-alarm-service").data.badge = self.alarms.stats.active_alarms;
-				$$("icon-alarm-service").refresh();
+				self.alarms.data.stats.activeAlarms = activeAlarms;
+//				$$("icon-alarm-service").data.badge = activeAlarms;
+//				$$("icon-alarm-service").refresh();
+				
+				window.alarmControlPanel.updateData();
 
-				$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${self.alarms.stats.active_alarms}</span>`);
-				$$("alarm-control-panel-box-active").refresh();
+//				$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${activeAlarms}</span>`);
+//				$$("alarm-control-panel-box-active").refresh();
 
 				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.active_alarms, null, on_message);
 
 				function on_message(message) {
 
-					var data = JSON.parse(JSON.parse(message.body));
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
 
-					$$("icon-alarm-service").data.badge = data.basicElementsVO[0].value;
-					$$("icon-alarm-service").refresh();
+//					$$("icon-alarm-service").data.badge = dat.basicElementsVO[0].value;
+//					$$("icon-alarm-service").refresh();
+					
+					window.alarmControlPanel.updateData();
 
-					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
-					$$("alarm-control-panel-box-active").refresh();
+//					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
+//					$$("alarm-control-panel-box-active").refresh();
 				}
 			}
 		});
@@ -112,20 +137,30 @@ export default class AlarmService extends GenericModule {
 		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.no_recognized_alarms).then(function(data) {
 
 			if (data.json() != undefined) {
+				
+				let noRecognizedAlarms = data.json().value;
 
-				self.alarms.stats.no_recognized_alarms = data.json().value;
+				self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
+				
+				window.alarmControlPanel.updateData();
+				window.userControlPanel.updateData();
 
-				$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${self.alarms.stats.no_recognized_alarms}</span>`);
-				$$("alarm-control-panel-box-no-recognized").refresh();
+//				$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${noRecognizedAlarms}</span>`);
+//				$$("alarm-control-panel-box-no-recognized").refresh();
 
 				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.no_recognized_alarms, null, on_message);
 
 				function on_message(message) {
 
-					var data = JSON.parse(JSON.parse(message.body));
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
+					
+					window.alarmControlPanel.updateData();
+					window.userControlPanel.updateData();
 
-					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
-					$$("alarm-control-panel-box-no-recognized").refresh();
+//					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
+//					$$("alarm-control-panel-box-no-recognized").refresh();
 				}
 			}
 		});
@@ -138,89 +173,32 @@ export default class AlarmService extends GenericModule {
 		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.muted_alarms).then(function(data) {
 
 			if (data.json() != undefined) {
+				
+				let mutedAlarms = data.json().value;
 
-				self.alarms.stats.muted_alarms = data.json().value;
+				self.alarms.data.stats.mutedAlarms = mutedAlarms;
+				
+				window.alarmControlPanel.updateData();
 
-				$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${self.alarms.stats.muted_alarms}</span>`);
-				$$("alarm-control-panel-box-muted").refresh();
+//				$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${mutedAlarms}</span>`);
+//				$$("alarm-control-panel-box-muted").refresh();
 
 				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.muted_alarms, null, on_message);
 
 				function on_message(message) {
 
-					var data = JSON.parse(JSON.parse(message.body));
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.mutedAlarms = dat.basicElementsVO[0].value;
+					
+					window.alarmControlPanel.updateData();
 
-					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${data.basicElementsVO[0].value}</span>`);
-					$$("alarm-control-panel-box-muted").refresh();
+//					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
+//					$$("alarm-control-panel-box-muted").refresh();
 				}
 			}
 		});
 	}
-
-	//	updateAlarms() {
-	//
-	//		let self = this;
-	//
-	//		util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.alarms, null, on_message);
-	//
-	//		function on_message(message) {
-	//
-	//			var data = JSON.parse(JSON.parse(message.body));
-	//
-	//			data.basicElementsVO.forEach(be => {
-	//
-	//				let date = undefined;
-	//
-	//				let equipment = window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias;
-	//				let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", be.alarmConfig.id);
-	//				let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
-	//
-	//				if (alarmConfig && alarmLevel && equipment) {
-	//					
-	//					self.recentAlarmCount++;
-	//				
-	//					if (be.deactivation) {
-	//						date = be.deactivation / 1000;
-	//					}
-	//					else {
-	//						date = be.activation / 1000;
-	//	
-	//						if (alarmLevel.notification === 'true') {
-	//							
-	//							let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
-	//						
-	//							let winNotif = webix.ui(notification.getView());
-	//							
-	//							winNotif.show();	
-	//						}
-	//					}
-	//	
-	//					let alarm = {
-	//						id: self.recentAlarmCount,
-	//						alarmId: be.id,
-	//						alarmConfig: alarmConfig,
-	//						date: date,
-	//						dateFormatted: util.toLocaleString(date),
-	//						equipment: equipment,
-	//						activation: be.activation,
-	//						deactivation: be.deactivation,
-	//						recognized: be.recognized
-	//					};
-	//	
-	//					if (self.recentAlarmCount > 10) {
-	//	
-	//						$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
-	//					}
-	//	
-	//					$$("alarm-control-panel-recent-list").add(alarm);
-	//					$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
-	//	
-	//					//console.log(be);	
-	//				}
-	//				
-	//			});
-	//		}
-	//	}
 
 	updateAlarms() {
 
@@ -269,7 +247,7 @@ export default class AlarmService extends GenericModule {
 				}
 
 				let alarm = {
-					id: self.recentAlarmCount,
+					id: webix.uid(),
 					alarmId: be.id,
 					alarmConfig: alarmConfig,
 					date: date,
@@ -279,14 +257,26 @@ export default class AlarmService extends GenericModule {
 					deactivation: be.deactivation,
 					recognized: be.recognized
 				};
-
-				if (self.recentAlarmCount > 10) {
-
-					$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
+				
+				self.alarms.data.latest.push(alarm);
+				
+				// Sort descending
+				self.alarms.data.latest.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+				
+				if (Array.isArray(self.alarms.data.latest) && self.alarms.data.latest.length > LATEST_ALARMS_MAX) {
+					
+					self.alarms.data.latest.splice(LATEST_ALARMS_MAX, 1);
 				}
+				
+				window.alarmControlPanel.updateData();
 
-				$$("alarm-control-panel-recent-list").add(alarm);
-				$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
+//				if (self.recentAlarmCount > 10) {
+//
+//					$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
+//				}
+//
+//				$$("alarm-control-panel-recent-list").add(alarm);
+//				$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
 
 				//console.log(be);	
 			}
@@ -294,11 +284,11 @@ export default class AlarmService extends GenericModule {
 	}
 
 	callAlarmControlPanel() {
-
-		if (alarmControlPanel.hidden()) {
-			alarmControlPanel.show();
+		
+		if (window.alarmControlPanel.hidden()) {
+			window.alarmControlPanel.show();
 		} else {
-			alarmControlPanel.hide();
+			window.alarmControlPanel.hide();
 		}
 	}
 }

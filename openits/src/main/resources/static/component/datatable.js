@@ -619,14 +619,8 @@ export default class DataTable {
 			metadata.gridCommands.forEach(cmd => {
 
 				if (cmd.showText) {
-					let tag = cmd.icon.split("-");
 
-					if (tag[1] === "delete") {
-
-						tag[1] = "trash";
-					}
-
-					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: "wxi-" + tag[1], css: "webix_transparent", width: 100, label: i18n.t(cmd.label) });
+					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, css: "grid-button-text", width: 150, label: i18n.t(cmd.label), tooltip: i18n.t(cmd.label) });
 
 				} else {
 
@@ -637,6 +631,7 @@ export default class DataTable {
 
 		if (resultCommons || resultCommands || resultMulti) {
 
+			toolbar.elements.push({});
 			toolbar.elements.push({ minWidth: 4 });
 
 		}
@@ -695,7 +690,7 @@ export default class DataTable {
 					webix.ui({
 						view: "contextmenu",
 						id: "ctx_menu-" + self.uid,
-						width: 250,
+						width: 300,
 						data: ctxMenuData,
 						template: (obj) => {
 

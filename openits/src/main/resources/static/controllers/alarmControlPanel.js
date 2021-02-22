@@ -29,7 +29,6 @@ export default class AlarmControlPanel {
 
 	createView() {
 
-		// for using the object inside callbacks
 		let self = this;
 		let panelWidth = 400;
 		
@@ -233,14 +232,15 @@ export default class AlarmControlPanel {
 			height: document.documentElement.clientHeight - 147,
 			width: panelWidth,
 			body: {
+				borderless: true,
 				rows: [
-					{
-						view: "label",
-						css: "control-panel-title",
-						label: `<span class="title-text">${i18n.t("LBL_ALARMS_INFORMATION")}</span>`,
-						borderless: true 
-					},
-					{ height: 20 },
+//					{
+//						view: "label",
+//						css: "control-panel-title",
+//						label: `<span class="title-text">${i18n.t("LBL_ALARMS_INFORMATION")}</span>`,
+//						borderless: true 
+//					},
+					{ height: 30 },
 					{
 						height: 115, 
 						cols: [
@@ -291,10 +291,53 @@ export default class AlarmControlPanel {
 				onBeforeShow: function() {
 					
 					this.config.height = document.documentElement.clientHeight - 147; 
-					this.adjust(); 
+					this.adjust();
+					self.updateData();
 				}
 			}
 		});
+	}
+	
+	updateData() {
+		
+		let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+
+		if (alarmService) {
+		
+			let stats = alarmService.getData().stats;
+			let latest = alarmService.getData().latest;
+
+			if (stats) {
+				
+				if (stats.activeAlarms) {
+					
+					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${stats.activeAlarms}</span>`);
+					$$("alarm-control-panel-box-active").refresh();
+					
+					$$("icon-alarm-service").data.badge = stats.activeAlarms;
+					$$("icon-alarm-service").refresh();
+				}
+				
+				if (stats.noRecognizedAlarms) {
+				
+					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${stats.noRecognizedAlarms}</span>`);
+					$$("alarm-control-panel-box-no-recognized").refresh();	
+				}
+				
+				if (stats.mutedAlarms) {
+				
+					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${stats.mutedAlarms}</span>`);
+					$$("alarm-control-panel-box-muted").refresh();	
+				}
+			}
+			
+			if (Array.isArray(latest) && latest.length > 0) {
+				
+				$$("alarm-control-panel-recent-list").clearAll();
+				$$("alarm-control-panel-recent-list").parse(latest);
+			}			
+		}
+		
 	}
 	
 	viewAlarms() {
