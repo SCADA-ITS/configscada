@@ -1418,7 +1418,7 @@
 
 .secondary-tab .webix_item_tab:not(.webix_selected):hover {
 	color: white;
-	background-color: transparent;
+	background-color: var(--blue-mid-opacity-6);
 }
 
 /*
