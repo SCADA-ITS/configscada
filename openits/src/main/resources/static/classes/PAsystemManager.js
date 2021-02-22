@@ -115,7 +115,7 @@ export default class PAsystemManager {
 	getInitComponent(){
 		let initComponent = {
 			view:"form",
-			id:'paSignalForm' + this.orderId,
+			id:'paSignalForm' + this.id,
 			elements:{}
 		  };
 		return initComponent;
@@ -143,12 +143,12 @@ export default class PAsystemManager {
     }
 
 	loadComponent(){
-		this.elementReady('[view_id="' + "paSignalForm" + this.orderId + '"]').then((c) => {
+		this.elementReady('[view_id="' + "paSignalForm" + this.id + '"]').then((c) => {
 			let spinnerDivToAdd = document.createElement("div");
-			spinnerDivToAdd.setAttribute("id", "paSignalForm"  + this.orderId + "spinner");
+			spinnerDivToAdd.setAttribute("id", "paSignalForm"  + this.id + "spinner");
 			spinnerDivToAdd.setAttribute("class", "spinner");
 			document
-			.querySelector('[view_id="' + "paSignalForm"  + this.orderId + '"]')
+			.querySelector('[view_id="' + "paSignalForm"  + this.id + '"]')
 			.prepend(spinnerDivToAdd);
 		});
 		
@@ -229,7 +229,7 @@ export default class PAsystemManager {
 						  }
 						]
 					}
-				webix.ui(gridview, $$('paSignalForm' + this.orderId));	 
+				webix.ui(gridview, $$('paSignalForm' + this.id));	 
 			});
 	
 			
@@ -343,10 +343,10 @@ export default class PAsystemManager {
 								}`;
 							var graphql = webix.proxy("GraphQL", sendCommand);
 							graphql.save(command).then(() => {
-								webix.message({type:"success", text:$.i18n("lbl_panel_signaling_correctly")});
-								/*$$("panelManager" + datos.elementId).hide();
+								webix.message({type:"success", text:$.i18n("lbl_command_sended")});
+								$$('PAsystemManager'  + "ElementType:5").hide();
 								
-								let auditLog={
+								/*let auditLog={
 									"logTypeId": "LogType:3",
 									"logSubtypeId": "LogSubtype:1",
 									"auditLogValues": [

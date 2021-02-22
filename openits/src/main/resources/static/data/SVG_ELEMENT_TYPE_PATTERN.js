@@ -38,11 +38,34 @@ export let SVG_3_DET =
   '</g>';
 
 export let SVG_5_PA_SYSTEM =
-	`<g	id="layer1"	transform="translate(0,-291.70832)">` +
-	'<rect style="fill:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END + 
-	';fill-opacity:1;stroke:#000000;stroke-width:0.18743469;stroke-opacity:1"' +
-	'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + 
-	`:fill0" width="83.156319" height="5.1042309" x="0.093717344" y="291.80206" />
+	`<g
+    inkscape:label="Capa 1"
+    inkscape:groupmode="layer"
+    id="layer1"
+    transform="translate(0,-288.53332)">
+   <g
+      id="g1858"
+      transform="translate(-92.528572,121.25477)"
+      style="stroke:#ff0000;stroke-opacity:1">
+     <rect
+        ry="0.83424193"
+        y="167.27856"
+        x="92.528572"
+        height="8.4666662"
+        width="8.4666662"
+        id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':stroke0"' +
+        `style="fill:#cccccc;fill-opacity:1;stroke:`+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +`;stroke-width:0.79374987;stroke-miterlimit:5;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1;paint-order:fill markers stroke" />
+     <path
+        inkscape:connector-curvature="0"
+        d="m 96.780801,174.52623 c -1.75558,0 -3.17499,-1.38773 -3.17499,-3.10413 0,-1.7164 1.41941,-3.10413 3.17499,-3.10413 1.75559,0 3.17501,1.38773 3.17501,3.10413 0,1.7164 -1.41942,3.10413 -3.17501,3.10413 z m 0,-5.84306 c -1.55014,0 -2.80147,1.22338 -2.80147,2.73893 0,1.51555 1.25133,2.73895 2.80147,2.73895 1.55015,0 2.80148,-1.2234 2.80148,-2.73895 0,-1.51555 -1.25133,-2.73893 -2.80148,-2.73893 z"
+        id="path5245"
+        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     <path
+        inkscape:connector-curvature="0"
+        d="m 95.846981,173.01068 v -3.17716 l 2.80148,1.58858 z m 0.37353,-2.55633 v 1.91725 l 1.68088,-0.96776 z"
+        id="path5247"
+        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+   </g>
 	</g>`;
 
 export let SVG_7_ZONE = 
