@@ -33,7 +33,14 @@ const GridOptions = {
 
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true };
+const RowAdjustement = {
+	DATA: "data",
+	HEADER: "header",
+	AUTO: "auto",
+	CUSTOM: "custom"
+};
+
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM };
 
 const _TRUE = "true";
 const _FALSE = "false";
@@ -42,13 +49,6 @@ const ExtendedHeader = {
 	TRUE: 42,
 	FALSE: 21,
 	CLOSE: 0
-};
-
-const RowAdjustement = {
-	DATA: "data",
-	HEADER: "header",
-	AUTO: "auto",
-	CUSTOM: "custom"
 };
 
 export let EventTypes = {
@@ -83,6 +83,7 @@ export default class DataTable {
 		let datatable = {};
 		let layout = [];
 		let pager = {};
+		let colFillSpace = false;
 
 		let resultSort = this.getGridOptions(GridOptions.SORT);
 		let resultFilter = this.getGridOptions(GridOptions.FILTER);
@@ -465,7 +466,9 @@ export default class DataTable {
 							if (field.adjust) {
 
 								col.fillspace = true;
-
+								col.width = undefined;
+								
+								colFillSpace = true;
 							}
 						}
 					}
@@ -479,10 +482,13 @@ export default class DataTable {
 					datatable.columns.push(col);
 				}
 
-				let lastCol = {};
-
-				lastCol.fillspace = true;
-				datatable.columns.push(lastCol);
+				if (!colFillSpace) {
+					
+					let lastCol = {};
+					
+					lastCol.fillspace = true;
+					datatable.columns.push(lastCol);	
+				}
 
 				datatable.data = data;
 
