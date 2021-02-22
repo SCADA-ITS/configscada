@@ -25,19 +25,31 @@ const GridOptions = {
 	FILTER: 14,
 	PAGINATION: 15,
 	ICON: 16,
-	SELECT: 17
+	SELECT: 17,
+	ROW_COLOR: 18,
+	REFRESH_BUTTON: 20,
+	ROW_ADJUSTEMENT: 21,
+	HEADER_ROW_HEIGHT: 22
+
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true };
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true };
 
 const _TRUE = "true";
 const _FALSE = "false";
 
 const ExtendedHeader = {
 	TRUE: 42,
-	FALSE: 21
-}
+	FALSE: 21,
+	CLOSE: 0
+};
 
+const RowAdjustement = {
+	DATA: "data",
+	HEADER: "header",
+	AUTO: "auto",
+	CUSTOM: "custom"
+};
 
 export let EventTypes = {
 	ON_SELECT_ROW: 1
@@ -76,9 +88,12 @@ export default class DataTable {
 		let resultFilter = this.getGridOptions(GridOptions.FILTER);
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
+		let resultAdjColumns = this.getGridOptions(GridOptions.ROW_ADJUSTEMENT);
+		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
+
 
 		if (metadata != undefined) {
-			
+
 			datatable.id = "dt-" + this.uid;
 			datatable.view = "datatable";
 			datatable.css = "rows";
@@ -89,9 +104,10 @@ export default class DataTable {
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
 			datatable.select = resultSelect;
-
+			console.log(metadata)
+			console.log(data)
 			if (metadata.gridFields.length > 0) {
-				
+
 				datatable.columns = [];
 
 				metadata.gridFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
@@ -108,11 +124,34 @@ export default class DataTable {
 					// Paint header and filters headers
 					col.header = [];
 
-					if (resultFilter) {
+					if (field.filtered) {
 
 						if (field.label) {
 
-							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+							if (field.headerVertical) {
+
+								col.header.push({
+									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
+									rotate: true,
+									css: { "font-size": "11px" }
+								});
+
+
+								//								if (resultVertical && !isNaN(parseInt(resultVertical))) {
+								//
+								//									col.header[0].height = (parseInt(resultVertical) + ExtendedHeader.FALSE).toString();
+								//
+								//								} else {
+								//
+								//									col.header[0].autoheight = true;
+								//
+								//								}
+
+							} else {
+
+								col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+							}
+
 						}
 						else {
 
@@ -149,11 +188,34 @@ export default class DataTable {
 
 						if (field.label) {
 
-							col.header = `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`;
+							if (field.headerVertical) {
+
+								col.header.push({
+									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
+									rotate: true,
+									css: { "font-size": "11px" }
+								});
+
+
+								//								if (resultVertical && !isNaN(parseInt(resultVertical))) {
+								//
+								//									col.header[0].height = resultVertical;
+								//
+								//								} else {
+								//
+								//									col.header[0].autoheight = true;
+								//
+								//								}
+
+							} else {
+
+								col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+							}
+
 						}
 						else {
 
-							col.header = `<div></div>`;
+							col.header.push(`<div></div>`);
 						}
 					}
 
@@ -164,23 +226,23 @@ export default class DataTable {
 					}
 
 					col.sort = DataType.STRING.sort;
-					
+
 					if (field.gridFieldDataType) {
-						
+
 						if (field.gridFieldDataType.id === DataType.DECIMAL.value) {
-							
+
 							col.sort = DataType.DECIMAL.sort;
 						}
 						else if (field.gridFieldDataType.id === DataType.INT.value) {
-							
+
 							col.sort = DataType.INT.sort;
 						}
 						else if (field.gridFieldDataType.id === DataType.DATE.value) {
-							
+
 							col.sort = DataType.DATE.sort;
 						}
 					}
-					
+
 					if (field.align != undefined) {
 
 						col.css = { 'text-align': field.align }
@@ -204,7 +266,7 @@ export default class DataTable {
 								state = obj[field.sourceField].state;
 							}
 							else if (field.gridFieldDataType.id === DataType.DATE.value) {
-								
+
 								value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 							}
 							else {
@@ -258,20 +320,20 @@ export default class DataTable {
 								col.tooltip = function(data) {
 
 									if (field.gridFieldDataType.id === DataType.DATE.value) {
-										
+
 										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
 									}
 									else {
-									
-										return data[field.sourceField];	
+
+										return data[field.sourceField];
 									}
 								};
 							}
 
-//							if (field.isEpochMilli) {
-//
-//								value = util.toLocaleString(value / 1000);
-//							}
+							//							if (field.isEpochMilli) {
+							//
+							//								value = util.toLocaleString(value / 1000);
+							//							}
 
 							if (icon || badgeColor || avatar) {
 
@@ -373,8 +435,8 @@ export default class DataTable {
 						else {
 
 							if (value === '') {
-
-								return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
+								return `<span class="table-row-text">-</span>`;
+								//return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
 							}
 							else {
 
@@ -382,6 +444,36 @@ export default class DataTable {
 							}
 
 						}
+					}
+
+					if (resultAdjColumns) {
+
+						if (resultAdjColumns === RowAdjustement.DATA) {
+
+							col.adjust = RowAdjustement.DATA;
+
+						} else if (resultAdjColumns === RowAdjustement.HEADER) {
+
+							col.adjust = RowAdjustement.HEADER;
+
+						} else if (resultAdjColumns === RowAdjustement.AUTO) {
+
+							col.adjust = true;
+
+						} else if (resultAdjColumns === RowAdjustement.CUSTOM) {
+
+							if (field.adjust) {
+
+								col.fillspace = true;
+
+							}
+						}
+					}
+
+					if (field.fixedColumn) {
+
+						datatable.leftSplit = field.position;
+
 					}
 
 					datatable.columns.push(col);
@@ -414,6 +506,7 @@ export default class DataTable {
 			let resultOption = this.evalActionsToolbar();
 
 			if (resultOption && resultTbActions) {
+				
 				layout.push(toolbarActions);
 			}
 
@@ -466,9 +559,9 @@ export default class DataTable {
 			}
 		}
 	}
-	
+
 	convertDate(data) {
-		
+
 		if (data && Array.isArray(data)) {
 			for (let posField = 0; posField < this.metadata.gridFields.length; posField++) {
 
@@ -477,7 +570,7 @@ export default class DataTable {
 				if (field.isEpochMilli) {
 
 					data.forEach(item => {
-						
+
 						item[field.sourceField] = new Date(item[field.sourceField]);
 					});
 				}
@@ -522,6 +615,7 @@ export default class DataTable {
 		let metadata = this.metadata;
 		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
 		let resultDetails = this.getGridOptions(GridOptions.SHOW_DETAILS);
+		let resultIcon = this.getGridOptions(GridOptions.ICON);
 
 		let toolbar = {
 			view: "toolbar",
@@ -532,7 +626,7 @@ export default class DataTable {
 		toolbar.elements = [];
 		toolbar.elements.push({ width: 4 })
 
-		toolbar.elements.push({ view: "label", label: "<img src='" + metadata.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(metadata.label) + "</span>" });
+		toolbar.elements.push({ view: "label", label: "<img src='" + resultIcon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(metadata.label) + "</span>" });
 
 		toolbar.elements.push({ minWidth: 4 });
 
@@ -576,7 +670,7 @@ export default class DataTable {
 		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
-		let resultFilters = this.getGridOptions(GridOptions.FILTER);
+		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
 
 		let toolbar = {
 			view: "toolbar",
@@ -595,11 +689,15 @@ export default class DataTable {
 
 		if (resultCommons) {
 
-			if (resultFilters) {
+			let resultFilter = metadata.gridFields.find(e => e.filtered === true);
+
+			if (resultFilter) {
+
 				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("Activar filtros"), tooltip: true });
+
 			}
 
-			if (dataGridId) {
+			if (dataGridId && resultRefresh) {
 
 				toolbar.elements.push({ id: "tb_btn-refresh-" + this.uid, view: "icon", icon: "mdi mdi-refresh", value: i18n.t("LBL_TABLE_REFRESH"), tooltip: true });
 
@@ -722,6 +820,7 @@ export default class DataTable {
 
 		let dataTable = $$("dt-" + this.uid);
 		let metadata = this.metadata;
+		console.log(dataTable.config.columns)
 
 		if (gridFieldId && order) {
 
@@ -840,16 +939,20 @@ export default class DataTable {
 
 					return false;
 
+				} else if (DefOptionValues[option] === true || DefOptionValues[option] === false) {
+
+					return optionValue.value = DefOptionValues[option];
+
 				} else {
 
 					return optionValue.value;
 
 				}
 			}
-			else {
-
-				return DefOptionValues[option];
-			}
+			//			else {
+			//
+			//				return DefOptionValues[option];
+			//			}
 		}
 	}
 
@@ -878,27 +981,27 @@ export default class DataTable {
 		if (grid) {
 
 			grid.eachColumn(function(id, col) {
-				
+
 				var filter = this.getFilter(id);
-				
+
 				if (filter) {
-					
+
 					reApplyFilters = true;
-					
+
 					if (filter.setValue) filter.setValue("")	// suggest-based filters 
 					else filter.value = "";					// html-based: select & text
 				}
 			});
 
 			if (reApplyFilters) {
-			
+
 				grid.filterByAll(); //applies filters (necessary only in case of selectFilter)	
 			}
-			
+
 			this.filteredFields = {};
-			
+
 			grid.refreshColumns();
-			
+
 			grid.clearAll();
 		}
 	}
@@ -1079,33 +1182,133 @@ export default class DataTable {
 
 		let showFiltersButton = $$("tb_btn-showfilters-" + this.uid);
 		let datatable = $$("dt-" + this.uid);
+		let resultFilters = this.getGridOptions(GridOptions.FILTER);
+		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
+		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
 
-		if (!webix.isUndefined(datatable) && !webix.isUndefined(showFiltersButton)) {
+		let header = document.getElementsByClassName('webix_ss_header');
+		let lateral = document.getElementsByClassName('webix_ss_vscroll_header');
 
-			showFiltersButton.attachEvent("onItemClick", function(id, e) {
+		if (!webix.isUndefined(datatable) && header && lateral) {
 
-				let header = document.getElementsByClassName('webix_ss_header');
-				let lateral = document.getElementsByClassName('webix_ss_vscroll_header');
+			if (Array.isArray(columnVertical) && columnVertical.length > 0) {
 
-				if (datatable.config.headerRowHeight === ExtendedHeader.TRUE) {
+				if (showFiltersButton) {
 
-					datatable.config.headerRowHeight = ExtendedHeader.FALSE;
-					header[0].style.borderBottom = "1px solid var(--blue-strong)";
-					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+					if (resultFilters) {
 
-					datatable.refreshColumns();
+						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
+						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
-				} else if (datatable.config.headerRowHeight === ExtendedHeader.FALSE) {
+						if (resultVertical && !isNaN(parseInt(resultVertical))) {
 
-					datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-					header[0].style.borderBottom = "0px solid var(--blue-strong)";
-					lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
+							for (let column of datatable.config.columns) {
 
-					datatable.refreshColumns();
+								column.header[0].height = parseInt(resultVertical);
 
+							}
+
+						} else {
+
+							for (let column of datatable.config.columns) {
+
+								column.header[0].autoheight = true;
+
+							}
+						}
+
+					} else {
+
+						datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+						if (resultVertical && !isNaN(parseInt(resultVertical))) {
+
+							for (let column of datatable.config.columns) {
+
+								column.header[0].height = parseInt(resultVertical);
+
+							}
+
+						} else {
+
+							for (let column of datatable.config.columns) {
+
+								column.header[0].autoheight = true;
+
+							}
+						}
+					}
+
+				} else {
+
+					if (resultVertical && !isNaN(parseInt(resultVertical))) {
+
+						for (let column of datatable.config.columns) {
+
+							column.header[0].height = parseInt(resultVertical);
+						}
+
+					} else {
+
+						for (let column of datatable.config.columns) {
+
+							column.header[0].autoheight = true;
+						}
+					}
 				}
-			});
+
+			} else {
+
+				if (showFiltersButton) {
+
+					if (resultFilters) {
+
+						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
+						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
+
+
+					} else {
+
+						datatable.config.headerRowHeight = ExtendedHeader.FALSE;
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+					}
+				}
+			}
+
+			if (showFiltersButton) {
+
+				showFiltersButton.attachEvent("onItemClick", function(id, e) {
+
+					if (datatable.config.headerRowHeight === ExtendedHeader.TRUE) {
+
+
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+						if (columnVertical && columnVertical.length > 0) {
+							datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
+						} else {
+							datatable.config.headerRowHeight = ExtendedHeader.FALSE;
+						}
+
+
+					} else if (datatable.config.headerRowHeight === ExtendedHeader.FALSE || datatable.config.headerRowHeight === ExtendedHeader.CLOSE) {
+
+						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
+						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
+					}
+					datatable.refreshColumns();
+				});
+			}
 		}
+		datatable.refreshColumns();
 	}
 
 	datatableCapture() {
@@ -1126,13 +1329,53 @@ export default class DataTable {
 				self.filteredFields[id] = value;
 			}
 		});
-		
+
 		datatable.attachEvent("onAfterFilter", function() {
 
 			self.restoreSort();
 		});
 	}
 
+
+	rowColors() {
+
+		let data = this.data;
+		let resultColor = this.getGridOptions(GridOptions.ROW_COLOR);
+		let fieldColor = undefined;
+
+		//		{"fieldId": "100003", "value": "Operators", "backcolor": "ddd"}  {"fieldId": "roleAlias", "value": "Operators", "backcolor": "ddd"}
+		if (resultColor != null) {
+			let jsColor = JSON.parse(resultColor);
+
+			if (isNaN(parseInt(jsColor.fieldId))) {
+
+				fieldColor = data.filter(e => e[jsColor.fieldId] === jsColor.value);
+
+				if (fieldColor && fieldColor.length > 0) {
+
+					fieldColor.forEach(e => {
+						e.$css = { "background-color": "#" + jsColor.backcolor + "3b !important", "color": "#" + jsColor.backcolor + "!important" };
+
+					});
+				}
+
+			} else {
+
+				fieldColor = this.metadata.gridFields.find(e => e.id === parseInt(jsColor.fieldId));
+
+				if (fieldColor) {
+
+					let rows = data.filter(e => e[fieldColor.sourceField] === jsColor.value);
+
+					if (rows && rows.length > 0) {
+						rows.forEach(e => {
+							e.$css = { "background-color": "#" + jsColor.backcolor + "3b !important", "color": "#" + jsColor.backcolor + "!important" };
+						});
+					}
+				}
+			}
+		}
+	}
 
 
 
@@ -1155,11 +1398,12 @@ export default class DataTable {
 		this.on_item_selected();
 		this.other_commands_callback();
 		this.showFilters();
+		this.rowColors();
 
 		this.sortDatatable();
 		this.filterDatatable();
 	}
-
+	
 	on_destroy() {
 
 		let self = this;
@@ -1216,14 +1460,14 @@ export default class DataTable {
 					let res = false;
 					grid.config.columns.forEach(col => {
 						if (col.id != undefined) {
-							
+
 							if (col.sort === DataType.DATE.sort) {
-							
-								res |= (obj[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);	
+
+								res |= (obj[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);
 							}
 							else {
-								
-								res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);	
+
+								res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);
 							}
 						}
 					});
@@ -1449,7 +1693,6 @@ export default class DataTable {
 						if (data.data) {
 
 							self.translateFieldValues(data.data);
-							self.convertDate(data.data);
 
 							grid.clearAll();
 							grid.parse(data.data);

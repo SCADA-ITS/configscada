@@ -212,6 +212,17 @@
 	background-color: var(--blue-mid-opacity-2);
 }
 
+.webix_pager_item_selected{
+	color: rgb(71, 84, 102, 0.8) !important;
+	background-color: var(--blue-mid-opacity-2) !important;
+}
+
+.webix_pager_item_selected:hover {
+	color:var(--blue-soft) !important;
+	background-color: rgb(71, 84, 102, 0.8)  !important;
+	transition: 0.5s;
+}
+
 .main-tab .tab-text{
 	padding-left: 27px;
 	padding-top: 3px;

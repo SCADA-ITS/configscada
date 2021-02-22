@@ -21,19 +21,7 @@ public class Grid implements Serializable {
 
 	private Boolean enabled;
 
-	private Boolean filter;
-
-	private String icon;
-
 	private String label;
-
-	private Boolean multiselect;
-
-	private Boolean pagination;
-
-	private Boolean search;
-
-	private Boolean sort;
 
 	private Boolean visible;
 
@@ -72,60 +60,12 @@ public class Grid implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public Boolean getFilter() {
-		return this.filter;
-	}
-
-	public void setFilter(Boolean filter) {
-		this.filter = filter;
-	}
-
-	public String getIcon() {
-		return this.icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
 	public String getLabel() {
 		return this.label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Boolean getMultiselect() {
-		return this.multiselect;
-	}
-
-	public void setMultiselect(Boolean multiselect) {
-		this.multiselect = multiselect;
-	}
-
-	public Boolean getPagination() {
-		return this.pagination;
-	}
-
-	public void setPagination(Boolean pagination) {
-		this.pagination = pagination;
-	}
-
-	public Boolean getSearch() {
-		return this.search;
-	}
-
-	public void setSearch(Boolean search) {
-		this.search = search;
-	}
-
-	public Boolean getSort() {
-		return this.sort;
-	}
-
-	public void setSort(Boolean sort) {
-		this.sort = sort;
 	}
 
 	public Boolean getVisible() {

@@ -57,6 +57,14 @@ public class GridField implements Serializable {
 	private String sourceField;
 
 	private Boolean visible;
+	
+	private Boolean adjust;
+	
+	@Column(name="header_vertical")
+	private Boolean headerVertical;
+	
+	@Column(name="fixed_column")
+	private Boolean fixedColumn;
 
 	@Column(name="width_px")
 	private Integer widthPx;
@@ -68,6 +76,10 @@ public class GridField implements Serializable {
 	//bi-directional many-to-one association to GridFieldBadge
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldBadge> gridFieldBadges;
+	
+	//bi-directional many-to-one association to GridFieldBalloon
+	@OneToMany(mappedBy="gridField")
+	private List<GridFieldBalloon> gridFieldBalloons;
 
 	//bi-directional many-to-one association to GridFieldReference
 	@OneToMany(mappedBy="gridField")
@@ -274,6 +286,28 @@ public class GridField implements Serializable {
 
 		return gridFieldBadge;
 	}
+	
+	public List<GridFieldBalloon> getGridFieldBalloons() {
+		return this.gridFieldBalloons;
+	}
+
+	public void setGridFieldBalloons(List<GridFieldBalloon> gridFieldBalloons) {
+		this.gridFieldBalloons = gridFieldBalloons;
+	}
+
+	public GridFieldBalloon addGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
+		getGridFieldBalloons().add(gridFieldBalloon);
+		gridFieldBalloon.setGridField(this);
+
+		return gridFieldBalloon;
+	}
+
+	public GridFieldBalloon removeGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
+		getGridFieldBalloons().remove(gridFieldBalloon);
+		gridFieldBalloon.setGridField(null);
+
+		return gridFieldBalloon;
+	}
 
 	public List<GridFieldReference> getGridFieldReferences() {
 		return this.gridFieldReferences;
@@ -341,6 +375,30 @@ public class GridField implements Serializable {
 
 	public void setGrid(Grid grid) {
 		this.grid = grid;
+	}
+
+	public Boolean getAdjust() {
+		return this.adjust;
+	}
+
+	public void setAdjust(Boolean adjust) {
+		this.adjust = adjust;
+	}
+
+	public Boolean getHeaderVertical() {
+		return this.headerVertical;
+	}
+
+	public void setHeaderVertical(Boolean headerVertical) {
+		this.headerVertical = headerVertical;
+	}
+
+	public Boolean getFixedColumn() {
+		return this.fixedColumn;
+	}
+
+	public void setFixedColumn(Boolean fixedColumn) {
+		this.fixedColumn = fixedColumn;
 	}
 
 }
