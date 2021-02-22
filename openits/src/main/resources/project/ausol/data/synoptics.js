@@ -340,6 +340,11 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"SEM_ROJO_ROJO": {
+				"items": ["Element:67:1", "Element:67:2", "Element:67:3", "Element:67:4"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 			"SECTIONS": {
 				"items": ["Element:4:1", "Element:4:2"],
 				"translation_key": "",
@@ -360,22 +365,27 @@ export let synopticData= [
 		"Element:9:9":  { "x": 1722, "y": 608,  "width": 15,  "height": 15 },
 		"Element:9:10":  { "x": 1722, "y": 588,  "width": 15,  "height": 15 },
 	
-		"Element:13:1": { "x": 1823, "y": 645,  "width": 22,  "height": 25 },
-		"Element:13:3": { "x": 1846, "y": 645,  "width": 22,  "height": 25 },
-		"Element:13:2": { "x": 1407, "y": 652,  "width": 22,  "height": 25 },
-		"Element:13:4": { "x": 1430, "y": 652,  "width": 22,  "height": 25 },
+		"Element:13:1": { "x": 1823, "y": 670,  "width": 25,  "height": 25 },
+		"Element:13:3": { "x": 1823, "y": 645,  "width": 25,  "height": 25 },
+		"Element:13:2": { "x": 1407, "y": 670,  "width": 25,  "height": 25 },
+		"Element:13:4": { "x": 1407, "y": 645,  "width": 25,  "height": 25 },
 
-		"Element:53:1": { "x": 1867, "y": 654,  "width": 15,  "height": 20 },
-		"Element:53:2": { "x": 1889, "y": 654,  "width": 15,  "height": 20 },
-		"Element:53:3": { "x": 1450, "y": 661,  "width": 15,  "height": 20 },
-		"Element:53:4": { "x": 1472, "y": 661,  "width": 15,  "height": 20 },
+		"Element:53:1": { "x": 1853, "y": 690,  "width": 3,  "height": 3 },
+		"Element:53:2": { "x": 1853, "y": 665,  "width": 3,  "height": 3 },
+		"Element:53:3": { "x": 1437, "y": 690,  "width": 3,  "height": 3 },
+		"Element:53:4": { "x": 1437, "y": 665,  "width": 3,  "height": 3 },
 		
-		"Element:8:1":  { "x": 1820, "y": 730,  "width": 88,  "height": 48 },
-		"Element:8:2":  { "x": 1820, "y": 690,  "width": 88,  "height": 48 },
+		"Element:67:1": { "x": 1883, "y": 690,  "width": 3,  "height": 3 },
+		"Element:67:2": { "x": 1467, "y": 690,  "width": 3,  "height": 3 },
+		"Element:67:3": { "x": 1883, "y": 665,  "width": 3,  "height": 3 },
+		"Element:67:4": { "x": 1467, "y": 665,  "width": 3,  "height": 3 },
+		
+		"Element:8:1":  { "x": 1820, "y": 740,  "width": 88,  "height": 48 },
+		"Element:8:2":  { "x": 1820, "y": 700,  "width": 88,  "height": 48 },
 		"Element:8:3":  { "x": 1411, "y": 590,  "width": 88,  "height": 48 },
 		"Element:8:4":  { "x": 1411, "y": 550,  "width": 88,  "height": 48 },
 		
-		"Element:4:4": { "x": 1410,  "y": 700, "width": 60, "height": 80, "alias": "SEC_1",
+		"Element:4:4": { "x": 1410,  "y": 710, "width": 60, "height": 80, "alias": "SEC_1",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
 				{name: "etd_speed", label: "V (K/h)"},
