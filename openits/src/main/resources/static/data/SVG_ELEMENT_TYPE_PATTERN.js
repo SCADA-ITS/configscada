@@ -1783,17 +1783,137 @@ transform="matrix(0.07467129,0,0,0.07467129,47.275466,111.40327)">
 </g>
 </g>`;
 
-export let SVG_54_ATC = 
-    '<g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-287.2104)"><path id="'
-    + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +
-    ':fill0" style="stroke:#000000;fill:'
-    + REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke-width:0.63681923;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"' +
-       'd="M 0.22152031,296.77848 H 16.383 v -9.4649 H 0.22152031 v 9.4649" inkscape:connector-curvature="0" />' +
-    '<text xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:5.94396px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;' +
-	   'fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1486"' +
-       'x="2.2343771" y="296.4025" id="text842" transform="scale(1.0080833,0.99198153)">' +
-	   '<tspan sodipodi:role="line" id="tspan840" x="2.2343771" y="296.4025" style="stroke-width:0.1486">'+REGEX_PATTERN_INIT+'elementTypeAlias'+REGEX_PATTERN_END+'</tspan></text>' +
-  '</g>';
+export let SVG_54_ATC = `  <g
+inkscape:label="Capa 1"
+inkscape:groupmode="layer"
+id="layer1">
+<rect `+
+  ' style="fill:'+ REGEX_PATTERN_INIT+'color'+REGEX_PATTERN_END +';stroke:#000000;stroke-width:0.354636;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"'+
+  ' id="'+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END +':fill0"'+
+  ` width="48.350464"
+  height="18.844225"
+  x="0.67538273"
+  y="0.48829365" />
+<rect
+  style="fill:#808080;stroke:#000000;stroke-width:0.130406;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="rect12"
+  width="9.3035994"
+  height="3.5334923"
+  x="18.959049"
+  y="5.2931309" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14"
+  cx="36.209049"
+  cy="5.9991546"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-56"
+  cx="39.132462"
+  cy="5.9991546"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-2"
+  cx="42.055874"
+  cy="5.9991546"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#ff0000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-03"
+  cx="44.97929"
+  cy="5.9991546"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-0"
+  cx="36.209049"
+  cy="8.6354704"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-56-9"
+  cx="39.132462"
+  cy="8.6354704"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#ff0000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-2-6"
+  cx="44.97929"
+  cy="8.6354704"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-03-0"
+  cx="42.055874"
+  cy="8.6354704"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-7"
+  cx="36.209049"
+  cy="11.271787"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-56-0"
+  cx="39.132462"
+  cy="11.271787"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-2-7"
+  cx="42.055874"
+  cy="11.271787"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#ff0000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-03-2"
+  cx="44.97929"
+  cy="11.271787"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-73"
+  cx="36.209049"
+  cy="13.908102"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-56-1"
+  cx="39.132462"
+  cy="13.908102"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#000000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-2-3"
+  cx="42.055874"
+  cy="13.908102"
+  rx="0.99311274"
+  ry="0.95955312" />
+<ellipse
+  style="fill:#ff0000;stroke:#000000;stroke-width:0.138808;stroke-linecap:square;stroke-miterlimit:0;stroke-dasharray:none"
+  id="path14-03-7"
+  cx="44.97929"
+  cy="13.908102"
+  rx="0.99311274"
+  ry="0.95955312" />
+</g>`;
   
 export let SVG_55_CT = 
 	`<svg viewBox="0 0 210 297" height="297mm" width="210mm">

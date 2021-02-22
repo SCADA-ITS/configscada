@@ -881,14 +881,14 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
-		"Element:54:1": { "x": 1350,  "y": 247, "width": 180, "height": 180, "alias": "ASDKD01"  },
-		"Element:54:2": { "x": 1350,  "y": 200, "width": 180, "height": 180, "alias": "ASDDH01"  },
-		"Element:54:3": { "x": 1350,  "y": 158, "width": 180, "height": 180, "alias": "ASDDH02"  },
-		"Element:54:4": { "x": 1350,  "y": 295, "width": 180, "height": 180, "alias": "ASDJS03"  },
-		"Element:54:5": { "x": 1350,  "y": 390, "width": 180, "height": 180, "alias": "ASDJS04"  },
-		"Element:54:6": { "x": 1350,  "y": 430, "width": 180, "height": 180, "alias": "ASDJS05"  },
-		"Element:54:7": { "x": 1350,  "y": 500, "width": 180, "height": 180, "alias": "ASDJS06"  },
-		"Element:54:8": { "x": 1350,  "y": 540, "width": 180, "height": 180, "alias": "ASDJS07"  },
+		"Element:54:1": { "x": 1350,  "y": 337, "width": 90, "height": 90, "alias": "ASDKD01"  },
+		"Element:54:2": { "x": 1350,  "y": 290, "width": 90, "height": 90, "alias": "ASDDH01"  },
+		"Element:54:3": { "x": 1350,  "y": 248, "width": 90, "height": 90, "alias": "ASDDH02"  },
+		"Element:54:4": { "x": 1350,  "y": 385, "width": 90, "height": 90, "alias": "ASDJS03"  },
+		"Element:54:5": { "x": 1350,  "y": 480, "width": 90, "height": 90, "alias": "ASDJS04"  },
+		"Element:54:6": { "x": 1350,  "y": 520, "width": 90, "height": 90, "alias": "ASDJS05"  },
+		"Element:54:7": { "x": 1350,  "y": 590, "width": 90, "height": 90, "alias": "ASDJS06"  },
+		"Element:54:8": { "x": 1350,  "y": 630, "width": 90, "height": 90, "alias": "ASDJS07"  },
 		"Element:4:3": { "x": 547,  "y": 155, "width": 80, "height": 80, "alias": "ASDKD01P",
 			"values": [
 				{name: "etd_intensity", label: "I (V/h)"},
