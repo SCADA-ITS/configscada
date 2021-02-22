@@ -140,7 +140,7 @@ export function getElementIcon(element, suffix="") {
     etd.updateEtdIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_1_WS) {
     meteo.updateMeteoIcon(element, suffix);
-    else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
+  } else if (elementType === elementTypeMap.ELEMENT_TYPE_10_DMS) {
     dms.updateDmsIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_2_CAM) {
     cam.updateCamIcon(element, suffix);
