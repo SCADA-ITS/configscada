@@ -929,6 +929,7 @@ export default class DataTable {
 		if (metadata) {
 
 			optionValue = metadata.gridOptionValues.find(e => e.gridOption.id === option);
+			
 			if (optionValue) {
 
 				if (optionValue.value === _TRUE) {
@@ -939,20 +940,15 @@ export default class DataTable {
 
 					return false;
 
-				} else if (DefOptionValues[option] === true || DefOptionValues[option] === false) {
-
-					return optionValue.value = DefOptionValues[option];
-
 				} else {
 
 					return optionValue.value;
-
 				}
 			}
-			//			else {
-			//
-			//				return DefOptionValues[option];
-			//			}
+			else {
+	
+				return DefOptionValues[option];
+			}
 		}
 	}
 
@@ -1186,8 +1182,8 @@ export default class DataTable {
 		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
 		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
 
-		let header = document.getElementsByClassName('webix_ss_header');
-		let lateral = document.getElementsByClassName('webix_ss_vscroll_header');
+		let header = datatable.getNode().getElementsByClassName('webix_ss_header');
+		let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
 
 		if (!webix.isUndefined(datatable) && header && lateral) {
 
@@ -1222,7 +1218,7 @@ export default class DataTable {
 
 						datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
 						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 						if (resultVertical && !isNaN(parseInt(resultVertical))) {
 
@@ -1267,7 +1263,7 @@ export default class DataTable {
 					if (resultFilters) {
 
 						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
 						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 
@@ -1275,7 +1271,7 @@ export default class DataTable {
 
 						datatable.config.headerRowHeight = ExtendedHeader.FALSE;
 						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 					}
 				}
@@ -1289,7 +1285,7 @@ export default class DataTable {
 
 
 						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 						if (columnVertical && columnVertical.length > 0) {
 							datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
@@ -1301,7 +1297,7 @@ export default class DataTable {
 					} else if (datatable.config.headerRowHeight === ExtendedHeader.FALSE || datatable.config.headerRowHeight === ExtendedHeader.CLOSE) {
 
 						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
 						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 					}
 					datatable.refreshColumns();

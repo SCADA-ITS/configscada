@@ -77,10 +77,6 @@ public class GridField implements Serializable {
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldBadge> gridFieldBadges;
 	
-	//bi-directional many-to-one association to GridFieldBalloon
-	@OneToMany(mappedBy="gridField")
-	private List<GridFieldBalloon> gridFieldBalloons;
-
 	//bi-directional many-to-one association to GridFieldReference
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldReference> gridFieldReferences;
@@ -287,28 +283,6 @@ public class GridField implements Serializable {
 		return gridFieldBadge;
 	}
 	
-	public List<GridFieldBalloon> getGridFieldBalloons() {
-		return this.gridFieldBalloons;
-	}
-
-	public void setGridFieldBalloons(List<GridFieldBalloon> gridFieldBalloons) {
-		this.gridFieldBalloons = gridFieldBalloons;
-	}
-
-	public GridFieldBalloon addGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
-		getGridFieldBalloons().add(gridFieldBalloon);
-		gridFieldBalloon.setGridField(this);
-
-		return gridFieldBalloon;
-	}
-
-	public GridFieldBalloon removeGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
-		getGridFieldBalloons().remove(gridFieldBalloon);
-		gridFieldBalloon.setGridField(null);
-
-		return gridFieldBalloon;
-	}
-
 	public List<GridFieldReference> getGridFieldReferences() {
 		return this.gridFieldReferences;
 	}

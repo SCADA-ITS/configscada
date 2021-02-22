@@ -186,7 +186,6 @@ export default class AlarmMonitorModule extends GenericModule {
 						body: getViewContent()
 					},
 					{
-						css: "panel-action",
 						header: i18n.t("LBL_ALARMS_MONITOR_STATS"),
 						body: getViewActionPanel()
 					}
