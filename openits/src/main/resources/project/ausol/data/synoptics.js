@@ -143,6 +143,11 @@ export let synopticData= [
 				"items": ["Element:67:1", "Element:67:2", "Element:67:3", "Element:67:4"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"GRUPO_ELECTROGENO": {
+				"items": ["Element:75:1"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 		
@@ -277,6 +282,8 @@ export let synopticData= [
 		"Element:67:2": { "x": 1715,   "y": 818, "width": 5, "height": 5,  "alias": "RV-SMF-RR-1MA" },
 		"Element:67:3": { "x": 40,   "y": 270, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2CA" },
 		"Element:67:4": { "x": 40,   "y": 420, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2MA" },
+
+		"Element:75:1": { "x": 340,   "y": 420, "width": 125, "height": 125,  "alias": "RV-GEL-1CA" },
 	},
 	{
 		"id":"synopticMetro",
@@ -457,6 +464,11 @@ export let synopticData= [
 				"items": ["Element:74:1", "Element:74:2"],
 				"translation_key": "",
 				"visibility": "visible"
+			},
+			"GRUPO_ELECTROGENO" : {
+				"items": ["Element:75:2"],
+				"translation_key": "",
+				"visibility": "visible"
 			}
 		},
 
@@ -479,6 +491,8 @@ export let synopticData= [
 		
 		"Element:74:1": { "x": 1640,   "y": 390, "width": 35, "height": 35,  "alias": "RV-ERUM-1" },
 		"Element:74:2": { "x": 1640,   "y": 330, "width": 35, "height": 35,  "alias": "RV-ERUS-1" },
+
+		"Element:75:2": { "x": 640,   "y": 530, "width": 250, "height": 250,  "alias": "RV-DEP-GE" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

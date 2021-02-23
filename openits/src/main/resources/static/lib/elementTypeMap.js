@@ -63,6 +63,7 @@ export const ELEMENT_TYPE_71_VIS = "71";
 export const ELEMENT_TYPE_72_ACCEL = "72";
 export const ELEMENT_TYPE_73_RADAR = "73";
 export const ELEMENT_TYPE_74_ERU = "74";
+export const ELEMENT_TYPE_75_GE = "75";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -260,6 +261,22 @@ export const ANALIZADOR_RED_ULTIMA_DEMANDA = "44:2";
 export const ANALIZADOR_RED_DEMANDA_ACTUAL = "45:2";
 export const ANALIZADOR_RED_DEMANDA_PREVISTA = "46:2";
 export const ANALIZADOR_RED_DEMANDA_MAXIMA = "47:2";
+
+export const GE_GRP_CORRIENTE_FASE_1 = "1:2";
+export const GE_GRP_CORRIENTE_FASE_2 = "2:2";
+export const GE_GRP_CORRIENTE_FASE_3 = "3:2";
+export const GE_GRP_FRECUENCIA_SALIDA = "4:2";
+export const GE_GRP_HORAS_TOT_MARCHA = "5:2";
+export const GE_GRP_RPM_GENERADOR = "6:2";
+export const GE_GRP_TENSION_BATERIA = "7:2";
+export const GE_GRP_TENSION_SALIDA_GEN = "8:2";
+export const GE_GRP_MODO_OPERACION_OFF = "9:2";
+export const GE_GRP_MODO_OPERACION_MAN = "10:2";
+export const GE_GRP_MODO_OPERACION_AUT = "11:2";
+export const GE_GRP_ALARMA_TEMPERATURA = "12:2";
+export const GE_GRP_ALARMA_GENERAL = "13:2";
+export const GE_GRP_MOTOR_ENCENDIDO = "14:2";
+export const GE_GRP_NIVEL_COMBUST_RSV = "15:2";
 
 export const PANELMANAGER_TYPE_PANEL = 1;
 export const PANELMANAGER_TYPE_MULTI_PANEL = 2;

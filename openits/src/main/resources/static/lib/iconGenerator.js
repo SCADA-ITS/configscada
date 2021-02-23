@@ -134,7 +134,8 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_66_VANE
     || elementType === elementTypeMap.ELEMENT_TYPE_67_SEM_RR
     || elementType === elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED
-    || elementType === elementTypeMap.ELEMENT_TYPE_74_ERU) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_74_ERU
+    || elementType === elementTypeMap.ELEMENT_TYPE_75_GE) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -332,6 +333,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 28) + ',' + (height / 28) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_74_ERU:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 75) + ',' + (height / 75) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
+    case elementTypeMap.ELEMENT_TYPE_75_GE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 75) + ',' + (height / 75) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     default:

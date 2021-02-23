@@ -548,4 +548,31 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
+	"ElementType:75": {
+		"rows":[
+			{value: "ElementTypeParam:75:1:1", type:"string"}, 
+			{value: "ElementTypeParam:75:1:2", type:"string"},
+			{value: "ElementTypeParam:75:1:3", type:"string"}, 
+			{value: "ElementTypeParam:75:1:4", type:"string"},
+			{value: "ElementTypeParam:75:2:1", type:"string"}, 
+			{value: "ElementTypeParam:75:2:2", type:"string"},
+			{value: "ElementTypeParam:75:2:3", type:"string"}, 
+			{value: "ElementTypeParam:75:2:4", type:"string"},
+			{value: "ElementTypeParam:75:2:5", type:"string"}, 
+			{value: "ElementTypeParam:75:2:6", type:"string"},
+			{value: "ElementTypeParam:75:2:7", type:"string"}, 
+			{value: "ElementTypeParam:75:2:8", type:"string"},
+			{value: "ElementTypeParam:75:2:9", type:"string"}, 
+			{value: "ElementTypeParam:75:2:10", type:"string"},
+			{value: "ElementTypeParam:75:2:11", type:"string"}, 
+			{value: "ElementTypeParam:75:2:12", type:"string"},
+			{value: "ElementTypeParam:75:2:13", type:"string"}, 
+			{value: "ElementTypeParam:75:2:14", type:"string"},
+			{value: "ElementTypeParam:75:2:15", type:"string"}, 
+		],
+		"rowCounts": 7,
+		"scroll": true,  
+		"width": 540,
+		"options": {}
+	},
 }

@@ -31,6 +31,7 @@ export let optionElementType = [
 	{id:"ElementType:70", value: $.i18n("ElementType:70.alias")},
 	{id:"ElementType:71", value: $.i18n("ElementType:71.alias")},
 	{id:"ElementType:74", value: $.i18n("ElementType:74.alias")},
+	{id:"ElementType:75", value: $.i18n("ElementType:75.alias")},
 ]
 
 export let columnsElementList = {
@@ -555,6 +556,34 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
+		]
+	},
+	"ElementType:75": { 
+		1:[
+			"alias",
+			"ElementTypeParam:75:1:1", 
+			"ElementTypeParam:75:1:2",
+			"ElementTypeParam:75:1:3", 
+			"ElementTypeParam:75:1:4",
+		],
+		2:[
+			"alias",
+			"state",
+			"ElementTypeParam:75:2:1",
+			"ElementTypeParam:75:2:2",
+			"ElementTypeParam:75:2:3",
+			"ElementTypeParam:75:2:4",
+			"ElementTypeParam:75:2:5",
+			"ElementTypeParam:75:2:6",
+			"ElementTypeParam:75:2:7",
+			"ElementTypeParam:75:2:8",
+			"ElementTypeParam:75:2:9",
+			"ElementTypeParam:75:2:10",
+			"ElementTypeParam:75:2:11",
+			"ElementTypeParam:75:2:12",
+			"ElementTypeParam:75:2:13",
+			"ElementTypeParam:75:2:14",
+			"ElementTypeParam:75:2:15",
 		]
 	},
 }
@@ -2199,5 +2228,79 @@ export let columnsElementConfig = {
 			}
 		}
 	},
+	"ElementType:75": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:75:1:1": {
+				"header": [ $.i18n("ElementTypeParam:75:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:75:1:2": {
+				"header": [ $.i18n("ElementTypeParam:75:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:1:3": {
+				"header": [ $.i18n("ElementTypeParam:75:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:75:1:4": {
+				"header": [ $.i18n("ElementTypeParam:75:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"ElementTypeParam:75:2:1": {
+				"header": [ $.i18n("ElementTypeParam:75:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:2": {
+				"header": [ $.i18n("ElementTypeParam:75:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:3": {
+				"header": [ $.i18n("ElementTypeParam:75:2:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:4": {
+				"header": [ $.i18n("ElementTypeParam:75:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:5": {
+				"header": [ $.i18n("ElementTypeParam:75:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:6": {
+				"header": [ $.i18n("ElementTypeParam:75:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:7": {
+				"header": [ $.i18n("ElementTypeParam:75:2:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:8": {
+				"header": [ $.i18n("ElementTypeParam:75:2:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:9": {
+				"header": [ $.i18n("ElementTypeParam:75:2:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:10": {
+				"header": [ $.i18n("ElementTypeParam:75:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:11": {
+				"header": [ $.i18n("ElementTypeParam:75:2:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:12": {
+				"header": [ $.i18n("ElementTypeParam:75:2:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:13": {
+				"header": [ $.i18n("ElementTypeParam:75:2:13.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:14": {
+				"header": [ $.i18n("ElementTypeParam:75:2:14.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:75:2:15": {
+				"header": [ $.i18n("ElementTypeParam:75:2:15.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+		}
+	}
 }
 
