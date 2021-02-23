@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,8 +83,12 @@ public class ModuleBO extends GenericBO {
 			for (Module module : modules) {
 				
 				Map<String, Object> moduleMap = ConversionUtil.objectToMap(module);
+				Map<String, Object> moduleConfig = getModuleConfig(module.getId());
 				
-				moduleMap.put(FIELD_CONFIG, getModuleConfig(module.getId()));
+				if (!MapUtils.isEmpty(moduleConfig)) {
+				
+					moduleMap.put(FIELD_CONFIG, getModuleConfig(module.getId()));
+				}
 				
 				list.add(moduleMap);
 			}
@@ -99,26 +104,29 @@ public class ModuleBO extends GenericBO {
 		
 		fileConfig = ResourcesUtil.getFile(MODULE_FILE_DIR + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
 		
-		try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(fileConfig)))) {
-			
-			String line = buf.readLine(); 
-			StringBuilder sb = new StringBuilder();
-
-			while(line != null) { 
-				sb.append(line).append("\n"); 
-				line = buf.readLine(); 
-			} 
-			
-			String fileAsString = sb.toString();
-
-			map = ConversionUtil.stringToMap(fileAsString);
-			
-		} catch (IOException e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		} 
+		if (fileConfig.exists()) {
 		
+			try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(fileConfig)))) {
+				
+				String line = buf.readLine(); 
+				StringBuilder sb = new StringBuilder();
+
+				while(line != null) { 
+					sb.append(line).append("\n"); 
+					line = buf.readLine(); 
+				} 
+				
+				String fileAsString = sb.toString();
+
+				map = ConversionUtil.stringToMap(fileAsString);
+				
+			} catch (IOException e) {
+				
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+
 		return map;
 	}
 }
