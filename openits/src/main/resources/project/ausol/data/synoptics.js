@@ -283,7 +283,7 @@ export let synopticData= [
 		"Element:67:3": { "x": 40,   "y": 270, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2CA" },
 		"Element:67:4": { "x": 40,   "y": 420, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2MA" },
 
-		"Element:75:1": { "x": 340,   "y": 420, "width": 125, "height": 125,  "alias": "RV-GEL-1CA" },
+		"Element:75:1": { "x": 340,   "y": 460, "width": 110, "height": 110,  "alias": "RV-GEL-1CA" },
 	},
 	{
 		"id":"synopticMetro",
@@ -492,7 +492,7 @@ export let synopticData= [
 		"Element:74:1": { "x": 1640,   "y": 390, "width": 35, "height": 35,  "alias": "RV-ERUM-1" },
 		"Element:74:2": { "x": 1640,   "y": 330, "width": 35, "height": 35,  "alias": "RV-ERUS-1" },
 
-		"Element:75:2": { "x": 640,   "y": 530, "width": 250, "height": 250,  "alias": "RV-DEP-GE" },
+		"Element:75:2": { "x": 1640,   "y": 680, "width": 110, "height": 110,  "alias": "RV-DEP-GE" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

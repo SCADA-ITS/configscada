@@ -242,7 +242,7 @@ export const ELEMENT_TYPE = {
     "ElementType:72" :{ id: "ElementType:72", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_72_ACCEL },
     "ElementType:73" :{ id: "ElementType:73", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_73_RADAR },
     "ElementType:74" :{ id: "ElementType:74", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 74, scale_x: 28, scale_y: 28, svgRaw:SVG_74_ERU },
-    "ElementType:75" :{ id: "ElementType:75", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 74, scale_x: 28, scale_y: 28, svgRaw:SVG_75_GE },
+    "ElementType:75" :{ id: "ElementType:75", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 75, scale_x: 10, scale_y: 10, svgRaw:SVG_75_GE },
 
   }
 };
