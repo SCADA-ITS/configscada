@@ -33,11 +33,11 @@ let graphSynoptic = webix.proxy(
 
 // in case of exclusive layers, manages the onItemCheck event
 var shouldICheck = true;
-let elementsMap = new Map();
-let elementsStompMap = new Map();
 
 export default class Synoptic {
   constructor(synopticConf, id) {
+    this.elementsMap = new Map();
+    this.elementsStompMap = new Map();
     this.elementsTypes = [];
     this.elementsToDraw = {};
     this.layersToDraw = {};
@@ -78,20 +78,20 @@ export default class Synoptic {
    *	Tries to get the data from Stomp, but if it doesn't find the needed data,
    * gets it by GraphQL
    */
-  processStompMessageWithFallback(message) {
+  processStompMessageWithFallback = (message) => {
     try {
       let obj = JSON.parse(JSON.parse(message.body));
       obj.basicElementsVO.forEach((element) => {
         try {
-          if(elementsMap && elementsMap.get(element.id)){
-            elementsMap.get(element.id).updateElement(element);
-            if(document.getElementById(element.id)){
+          if(this.elementsMap && this.elementsMap.get(element.id)){
+            this.elementsMap.get(element.id).updateElement(element);
+            if(document.getElementById(this.synopticDiv + "SVG") && document.getElementById(element.id)){
               //Deprecated
-              if(elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
-                if(elementsMap.get(element.id)!=null){
+              if(this.elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
+                if(this.elementsMap.get(element.id)!=null){
                   document.getElementById(element.id).remove();
-                  elementsMap.get(element.id).paintIcon(elementsMap.get(element.id).synopticConf, elementsMap.get(element.id).snapDiv,  elementsMap.get(element.id).ratioWidth,  elementsMap.get(element.id).ratioHeight);  
-                  if($$("element_tree"+elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
+                  this.elementsMap.get(element.id).paintIcon(this.elementsMap.get(element.id).synopticConf, this.elementsMap.get(element.id).snapDiv,  this.elementsMap.get(element.id).ratioWidth,  this.elementsMap.get(element.id).ratioHeight);  
+                  if($$("element_tree"+this.elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
                     let checkedElement = document.getElementById(element.id);
                     if(checkedElement != null) {
                       checkedElement.style.opacity = 1;
@@ -99,29 +99,28 @@ export default class Synoptic {
                     }
                   }
                 }
-                // elementsMap.get(element.id).errorPaint();
+                // this.elementsMap.get(element.id).errorPaint();
               }else{
-                elementsMap.get(element.id).updateElement(element);
-                elementsMap.get(element.id).updatePaint();              
+                this.elementsMap.get(element.id).updateElement(element);
+                this.elementsMap.get(element.id).updatePaint();              
               }
             }else{
-
-              elementsStompMap.set(element.id, elementsMap.get(element.id).element);
+              this.elementsStompMap.set(element.id, this.elementsMap.get(element.id).element);
             }
           }else{
             let synopticElement = new SynopticElement(element);
             synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth, this.ratioHeight);
-            elementsMap.set(synopticElement.element.id, synopticElement);
+            this.elementsMap.set(synopticElement.element.id, synopticElement);
           }
         } catch (error) {
           console.info(error);
           console.info("Retrying with GraphQL");
-          if(typeof element != 'undefined' && elementsMap && elementsMap.get(element.id)){
-            elementsMap.get(element.id).errorPaint();
+          if(typeof element != 'undefined' && this.elementsMap && this.elementsMap.get(element.id)){
+            this.elementsMap.get(element.id).errorPaint();
           }else{
             let synopticElement = new SynopticElement(element);
             synopticElement.errorPaint();
-            elementsMap.set(element.id, synopticElement);
+            this.elementsMap.set(element.id, synopticElement);
           }
         }
       });
@@ -545,10 +544,10 @@ export default class Synoptic {
           
           // search for the elementType key
           let elementId = this.synopticConf["Layers"][n]["items"][e];
-          if(elementsMap && elementsMap.get(elementId)){
+          if(this.elementsMap && this.elementsMap.get(elementId)){
             this.elementTree.elementTree[elementTypeKeyIndex]["data"].push({
               id: elementId,
-              value: "<div style=\"display: inline;vertical-align: text-top;\">" + elementsMap.get(elementId).element.alias + "</div>",
+              value: "<div style=\"display: inline;vertical-align: text-top;\">" + this.elementsMap.get(elementId).element.alias + "</div>",
               data: [],
             });
           } else {
@@ -716,8 +715,8 @@ export default class Synoptic {
         d.childs.forEach((element) => {
           let synopticElement = new SynopticElement(element);
           synopticElement.paintIcon(this.synopticConf, this.s,  this.ratioWidth,  this.ratioHeight);
-          elementsMap.set(synopticElement.element.id, synopticElement);
-          // alert(JSON.stringify(elementsMap));
+          this.elementsMap.set(synopticElement.element.id, synopticElement);
+          // alert(JSON.stringify(this.elementsMap));
         });
         
         if(this.isTree){
@@ -974,14 +973,14 @@ export default class Synoptic {
   }
 
   on_show(){
-    if(elementsStompMap){
-      for (let [key, value] of elementsStompMap) {
+    if(this.elementsStompMap){
+      for (let [key, value] of this.elementsStompMap) {
         try {
           if(document.getElementById(key)){
-            elementsMap.get(key).updateElement(value);
-            elementsMap.get(key).updatePaint();
+            this.elementsMap.get(key).updateElement(value);
+            this.elementsMap.get(key).updatePaint();
           }
-          elementsStompMap.delete(key);
+          this.elementsStompMap.delete(key);
         } catch (error) {
           console.error(error);
         }
@@ -1175,14 +1174,14 @@ export default class Synoptic {
                   }
                 }
                 d.childs.forEach((element) => {
-                  if(elementsMap && elementsMap.get(element.id)){
+                  if(this.elementsMap && this.elementsMap.get(element.id)){
                     // console.warn("existe: "+element.id);
-                    elementsMap.get(element.id).errorPaint();
+                    this.elementsMap.get(element.id).errorPaint();
                   }else{
                     // console.warn("NO existe: "+element.id);
                     let synopticElement = new SynopticElement(element);
                     synopticElement.errorPaint();
-                    elementsMap.set(element.id, synopticElement);
+                    this.elementsMap.set(element.id, synopticElement);
                   }
                 });
               }).then(() => {
