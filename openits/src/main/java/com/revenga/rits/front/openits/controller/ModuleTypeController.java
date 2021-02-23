@@ -1,6 +1,7 @@
 package com.revenga.rits.front.openits.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revenga.rits.front.openitsdao.model.Module;
+import com.revenga.rits.front.openits.bo.ModuleBO;
 import com.revenga.rits.front.openitsdao.model.ModuleType;
-import com.revenga.rits.front.openitsdao.service.ModuleService;
 import com.revenga.rits.front.openitsdao.service.ModuleTypeService;
 
 import io.swagger.annotations.Api;
@@ -31,8 +31,11 @@ public class ModuleTypeController {
 	@Autowired
 	ModuleTypeService moduleTypeService;
 	
+//	@Autowired
+//	ModuleService moduleService;
+	
 	@Autowired
-	ModuleService moduleService;
+	ModuleBO moduleBO;
 	
 	@GetMapping
 	@ApiOperation(value = "Get all module types", notes = "Get all module types")
@@ -56,7 +59,7 @@ public class ModuleTypeController {
 	
 	@GetMapping(value = "/{id}/modules")
 	@ApiOperation(value = "Get modules by module type identifier", notes = "Get modules by module type identifier")
-	public ResponseEntity<List<Module>> getModulesByModuleTypeId(
+	public ResponseEntity<List<Map<String, Object>>> getModulesByModuleTypeId(
 			@ApiParam(
 					name = "id",
 					type = "Integer",
@@ -64,6 +67,6 @@ public class ModuleTypeController {
 					example = "1",
 					required = true) @PathVariable Integer id) {
 		
-		return new ResponseEntity<>(moduleService.getByModuleTypeId(id), HttpStatus.OK);
+		return new ResponseEntity<>(moduleBO.getByModuleTypeId(id), HttpStatus.OK);
 	}
 }

@@ -1,0 +1,12 @@
+{
+	"moduleAction": {
+		"recognize": 100801,
+		"deactivate": 100802,
+		"mute": 100803
+	},
+	"actionEndpoints": {
+		"recognize": "alarms/send_recognize_alarm",
+		"deactivate": "alarms/send_deactivation_alarm",
+		"mute": "alarms/send_alarm_muted_actions"
+	}
+}

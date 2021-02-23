@@ -83,4 +83,18 @@ public class ConversionUtil {
 	    
 	    return valid;
 	}
+	
+	public static Map<String, Object> objectToMap(Object obj) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+
+		return mapper.convertValue(obj, new TypeReference<Map<String, Object>>() {});
+	}
+	
+	public static Object mapToObject(Class<?> clazz, Map<String, Object> map) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		return mapper.convertValue(map, clazz);
+	}
 }

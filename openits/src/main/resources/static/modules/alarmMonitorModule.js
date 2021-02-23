@@ -23,9 +23,8 @@ export default class AlarmMonitorModule extends GenericModule {
 
 		this.elementTypeIdSelected = ELEMENT_TYPE_ALL;
 
-		this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
-
-		console.log(this.uid);
+		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
+		this.config = module.config;
 	}
 
 	getView() {
@@ -103,13 +102,13 @@ export default class AlarmMonitorModule extends GenericModule {
 						loadDataCollections(flattenedData);
 					}
 
-					connectWS();
-
 					drawComponents();
 
 					initDataTables();
 
 					initListView();
+					
+					connectWS();
 
 					$$(self.uid).attachEvent("onDestruct", function() {
 
@@ -232,8 +231,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 
 				function onSelect(data) {
-
-					console.log(data);
 
 					if (Array.isArray(data) && data.length > 0) {
 
@@ -466,9 +463,9 @@ export default class AlarmMonitorModule extends GenericModule {
 							height: 66,
 							css: "stats-content",
 							cols: [
-								{ view: "label", label: 0 },
-								{ view: "label", label: 0 },
-								{ view: "label", label: 0 }
+								{ view: "label", id: "action-panel-alarm-stat-active-" + self.uid, label: 0 },
+								{ view: "label", id: "action-panel-alarm-stat-no-recognized-" + self.uid, label: 0 },
+								{ view: "label", id: "action-panel-alarm-stat-muted-" + self.uid, label: 0 }
 							]
 						}
 					]
@@ -619,10 +616,38 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage);
 			}
+			
+			let updateStats = function() {
+		
+				let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+		
+				if (alarmService) {
+				
+					let stats = alarmService.getData().stats;
+		
+					if (stats) {
+						
+						if (stats.activeAlarms) {
+							
+							$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
+						}
+						
+						if (stats.noRecognizedAlarms) {
+						
+							$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);	
+						}
+						
+						if (stats.mutedAlarms) {
+						
+							$$("action-panel-alarm-stat-muted-" + self.uid).setValue(stats.mutedAlarms);	
+						}
+					}
+				}
+			};
+			
+			updateStats();
 
 			function onMessage(be) {
-
-				console.log(be);
 
 				let flattenedData = eval("adapter." + self.config.adapter)([be], null);
 
@@ -631,6 +656,8 @@ export default class AlarmMonitorModule extends GenericModule {
 					let changes = updateDataSources(flattenedData);
 
 					updateDataTables(flattenedData, changes);
+					
+					updateStats();
 				}
 
 				function updateDataTables(data, changes) {

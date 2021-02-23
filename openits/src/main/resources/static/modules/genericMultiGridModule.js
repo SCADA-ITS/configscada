@@ -60,40 +60,45 @@ export default class GenericMultiGridModule extends GenericModule {
 			cols: [
 				{ width: 6 },
 				{
-					rows: [
-						{ height: 6 },
-						{
-							view: "toolbar",
-							elements: [
-								{ width: 4 },
-								{
-									view: "search",
-									id: "txtSearchEquipmentType-" + this.uid,
-									placeholder: i18n.t("LBL_EQUIPMENT_TYPE_SEARCH")
-								},
-								{ width: 4 }
-							]
-						},
-						this.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssignedCopy),
-						{ height: 6 }
-					]
+					header: i18n.t("LBL_" + entity),
+					body: {
+						rows: [
+							{ height: 6 },
+							{
+								view: "toolbar",
+								elements: [
+									{ width: 4 },
+									{
+										view: "search",
+										id: "txtSearchEquipmentType-" + this.uid,
+										placeholder: i18n.t("LBL_EQUIPMENT_TYPE_SEARCH")
+									},
+									{ width: 4 }
+								]
+							},
+							this.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssignedCopy),
+							{ height: 6 }
+						]		
+					}
 				},
 				{ view: "resizer" },
 				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [this.getViewDrawNoData()]
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
+					body: {
+						rows: [
+							{ height: 6 },
+							{
+								cols: [
+									{ width: 6 },
+									{
+										id: this.uid,
+										rows: [this.getViewDrawNoData()]
+									},
+									{ width: 6 }
+								]
+							},
+							{ height: 6 }
+						]
+					}
 				}
 			]
 		}

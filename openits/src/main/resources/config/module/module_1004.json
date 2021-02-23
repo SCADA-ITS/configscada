@@ -1,0 +1,15 @@
+{
+	"moduleAction": {
+		"edit": 100401,
+		"confirm": 100402,
+		"cancel": 100403
+	},
+	"restEndpoint": "incidents/reports/${id}",
+	"topic": "/topic/incidentReport",
+	"actionEndpoints": {
+		"cancel": "incidents/reports/${id}/cancel",
+		"confirm": "incidents/reports/${id}/confirm",
+		"forward": "incidents/reports/${id}/forward",
+		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}"
+	}
+}

@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,16 +24,34 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ResourcesUtil {
 
-	public static final String RESOURCES_ENVIRONMENT = "RITS_RESOURCES";
-	
 	private ResourcesUtil() {
 
 		throw new IllegalStateException(this.getClass().getSimpleName());
+
+	}
+	
+	private static String getResourcesPath() {
+		
+		String resourcesPath = null;
+		
+		try {
+			
+			URL res = ResourcesUtil.class.getClassLoader().getResource("application.properties");
+			
+			File file = Paths.get(res.toURI()).toFile();
+			
+			resourcesPath = file.getParent();
+			
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resourcesPath;
 	}
 
 	private static String getPath() {
 
-		return System.getenv().get(RESOURCES_ENVIRONMENT) + "/";
+		return getResourcesPath() + "/";
 	}
 	
 	public static InputStream getResource(String name) {

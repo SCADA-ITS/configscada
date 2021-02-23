@@ -34,7 +34,8 @@ export default class IncidentReportModule extends GenericModule {
 		this.disconnectStomp = true;
 		this.closed = false;
 		
-		this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
+		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
+		this.config = module.config;
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 

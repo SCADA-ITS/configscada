@@ -124,7 +124,16 @@ export let adapter = {
 						itemOutput.targetElementTypeId = targetElement.elementType.id;
 						itemOutput.targetElementTypeAlias = i18n.t(window.em.getByField(EntityType.ELEMENT_TYPE, "id", targetElement.elementType.id).labelAlias); 
 						
-						itemOutput.isActive = !itemOutput.deactivation;
+						if (itemOutput.deactivation) {
+						
+							itemOutput.isActive = String(false);	
+						}
+						else {
+							
+							itemOutput.isActive = String(true);
+						}
+						
+						
 						itemOutput.alarmType = alarmConfig.alarmType.id;
 						
 						

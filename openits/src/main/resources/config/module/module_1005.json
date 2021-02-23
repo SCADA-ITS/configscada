@@ -1,0 +1,13 @@
+{
+	"moduleAction": {},
+	"adapter": "ws.alarm.getList",
+	"restEndpoint": "alarms",
+	"topic": "/topic/alarm.>",
+	"gridNoRecognized": 1004,
+	"gridRecognized": 1005,
+	"levels": {
+		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
+		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
+		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
+	}
+}

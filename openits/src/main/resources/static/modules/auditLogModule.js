@@ -6,7 +6,8 @@ export default class AuditLogModule extends GenericModule {
 	constructor(module, moduleAction, args) {
 
 		super(module, moduleAction, args);
-		this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
+		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
+		this.config = module.config;
 	}
 
 	getView() {
