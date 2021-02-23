@@ -916,19 +916,19 @@ export default class TabForm {
 									}								
 								}, -1);
 							}
-							else if (data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM){
+							else if (data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_PLAY
+									 || data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_STOP
+									){
 									$$(this.commands).addView({
 										view: "button", 
 										id: "command"+index+"_"+ this.id, 
 										value: $.i18n(data.elementType.commandElementTypes[index].id),
 										click: function(){
 											let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
-											//if( $$("panelManager" + data.id)){
-											//	$$("panelManager" + data.id).show();
 											if($$("PAsystemManager" + idtype)){
 												$$("PAsystemManager" + idtype).show();
 											}else{
-												let paMan = new PAsystemManager(data.id, data.elementType.id,null,null,null);//data.elementType.commandElementTypes[index]);
+												let paMan = new PAsystemManager(data.id, data.elementType.id,data.elementType.commandElementTypes[index].id,null,null);//data.elementType.commandElementTypes[index]);
 												webix.ui({
 													id:"PAsystemManager"+idtype,
 													view:"window",	

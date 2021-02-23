@@ -242,7 +242,7 @@ export let synopticData= [
 		"Element:15:3": { "x": 184,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-1MA" },
 		"Element:15:4": { "x": 898,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-2MA" },
 		
-		"Element:5:1": { "x": 1398, "y": 410, "width": 160,  "height": 160,  "alias": "PA-ESTEPONA" },
+		"Element:5:1": { "x": 1358, "y": 410, "width": 160,  "height": 160,  "alias": "PA-ESTEPONA" },
 		
 		"Element:16:1": { "x": 1428, "y": 645, "width": 120,  "height": 120,  "alias": "PA-ZONE-59" },
 		"Element:16:2": { "x": 911,  "y": 450, "width": 120,  "height": 120,  "alias": "PA-ZONE-60" },

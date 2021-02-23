@@ -1,13 +1,7 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
-import {availablePictos} from "../data/pmvpicto.js";
-import {panelData} from "../data/panelData.js";
-
-//const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
-const TOP_INIT = 5;
-let datosAlias;
 
 export default class PAsystemManager {
-	constructor(id, idType, gestPlan,scale,values,orderId) {
+	constructor(id, idType, typeCommand,scale,values,orderId) {
 		this.id=id;
 		if (scale !== null && scale !== undefined) {
 			this.scale = scale;
@@ -15,7 +9,7 @@ export default class PAsystemManager {
 			this.scale = 5;
 		}
 		this.elementTypeId = idType;
-		this.panelManagerType = gestPlan;
+		this.typeCommand = typeCommand.split(":")[1] + ":" + typeCommand.split(":")[2];
 		this.values = values;
 		this.messages = [];
 		this.zones_checked= [];
@@ -214,21 +208,43 @@ export default class PAsystemManager {
 						  autowidth:true,  
 						  data: this.messages
 					};
-							          		          
-				var  gridview ={
-						 
-						 rows:[
-						  {
-							  cols:[grid1,grid2]
-						  },
-						  {
-							 id: this.id,
-							 view:"button", 
-							 value:"Enviar",
-							 click:this.doActions
-						  }
-						]
-					}
+				if(this.typeCommand === elementTypeMap.COMMAND_TYPE_PA_SYSTEM_PLAY)
+				{
+					
+					var  gridview ={
+							 
+							 rows:[
+								 {
+									 cols:[grid1,grid2]
+								 }, 
+								 {
+									 id: this.id,
+									 view:"button", 
+									 value:"Enviar",
+									 click:this.doActionsPlay
+								 }
+							]
+						}
+					
+				}
+				else 
+				{
+					var  gridview ={
+							 
+							 rows:[
+								 {
+									 cols:[grid1]
+								 }, 
+								 {
+									 id: this.id,
+									 view:"button", 
+									 value:"Enviar",
+									 click:this.doActionsStop
+								 }
+							]
+						}
+				}
+				
 				webix.ui(gridview, $$('paSignalForm' + this.id));	 
 			});
 	
@@ -255,8 +271,89 @@ export default class PAsystemManager {
 		};
 		return result; 
 	}
+	
+	
+	doActionsStop() {
+		var zones = [];
+		var zones_checked =[];
+		var zones_checked_ids =[];
 
-	doActions() {
+			
+		$$('table_zones').eachColumn(function(id,node){ 		  
+			if(id === "check_zones")
+			{
+				var node_data = node.node.childNodes;
+				node_data.forEach(data => {
+						zones_checked.push(data.firstChild.checked);
+					});
+			}	
+			if(id === "id_zones")
+			{
+				var node_data = node.node.childNodes;
+				node_data.forEach(data => {
+						zones_checked_ids.push(data.firstChild.data);
+					});
+			}
+			 });
+		
+
+		for (let index = 0; index < zones_checked.length; index++) 
+		{
+			if(zones_checked[index])
+			{
+				zones.push(zones_checked_ids[index]);
+			}
+		}
+		
+	
+	var command ={
+			"commands": [
+				{
+					"commandElementTypeId":"CommandElementType:1:5",
+					"elementId": this.data.id,
+					"commandElementValues": [
+					{
+						"commandElementTypeParamId": "CommandElementTypeParam:1:5:1",
+						"value": zones
+					}
+					]
+				}
+				
+				]
+	};
+
+	 
+	 var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
+								sendCommandElement(commands: $commands)  
+								}`;
+							var graphql = webix.proxy("GraphQL", sendCommand);
+							graphql.save(command).then(() => {
+								webix.message({type:"success", text:$.i18n("lbl_command_sended")});
+								$$('PAsystemManager'  + "ElementType:5").hide();
+								
+								/*let auditLog={
+									"logTypeId": "LogType:3",
+									"logSubtypeId": "LogSubtype:1",
+									"auditLogValues": [
+										{
+										"value": datos.v_commandTypeAlias,
+										"logTypeParamId": "LogTypeParam:3:1"
+										},{
+										"value": datosAlias,
+										"logTypeParamId": "LogTypeParam:3:2"
+										},{
+										"value": v_commands_values,
+										"logTypeParamId": "LogTypeParam:3:3"
+										}
+									]
+								};
+								auditMutation(auditLog);*/
+							});
+	 
+		
+	}
+	
+	doActionsPlay() {
 		var messages = [];
 		var zones = [];
 		var zones_checked =[];
@@ -298,7 +395,7 @@ export default class PAsystemManager {
 			}
 			 });
 		
-	
+
 		for (let index = 0; index < zones_checked.length; index++) 
 		{
 			if(zones_checked[index])
@@ -368,51 +465,9 @@ export default class PAsystemManager {
 		
 	}
 
-
-	exportCommands(){
-		//console.log("exportCommands01");
-		let graphElemType = `query {
-			getElementType(elementTypeId: "` + this.elementTypeId + `")
-			{
-				id
-				alias
-				description
-				commandElementTypes{  
-					id 
-					alias
-					labelAlias 
-					commandElementTypeParams { 
-						id 
-						alias 
-					}
-				}
-			}
-		}`;
-		let graphqlEType = webix.proxy("GraphQL", graphElemType);
-		graphqlEType.load().then(data => {
-			//console.log(data);
-			let v_commandtypeId = null;
-			let v_commandTypeAlias = null;
-			let v_commands = [];
-			data.commandElementTypes.forEach(element => {
-				if (element.alias === "SEND MESSAGE") {
-					v_commandtypeId = element.id;
-					v_commandTypeAlias = element.labelAlias;
-					element.commandElementTypeParams.forEach(item => {
-						v_commands.push(item.id);
-					});
-				}
-			});
-			return v_commands.sort();
-			//console.log("FIN");
-		});
 		
-	}
-
-	
 
 }
-
 
 
 

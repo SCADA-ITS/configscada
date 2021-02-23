@@ -199,7 +199,8 @@ export const CAM_STREAM_MJPEG = "2:1:3";
 export const MAGNETOTERMICO_STATE = "1:2";
 export const CT_TEMP = "1:2";
 
-export const COMMAND_TYPE_PA_SYSTEM = "2:5";
+export const COMMAND_TYPE_PA_SYSTEM_STOP = "1:5";
+export const COMMAND_TYPE_PA_SYSTEM_PLAY = "2:5";
 export const COMMAND_TYPE_PMV_A_C = "2:24";
 export const COMMAND_TYPE_MATRIX_PANEL_64X64 = "2:26";
 export const COMMAND_TYPE_PMV_A_B = "2:27";
