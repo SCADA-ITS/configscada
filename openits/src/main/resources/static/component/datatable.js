@@ -1625,7 +1625,10 @@ export default class DataTable {
 
 			selectAllButton.attachEvent("onItemClick", function(id, e) {
 
-				grid.selectAll();
+				if (Array.isArray(grid.data) && grid.data.length > 0) {
+				
+					grid.selectAll();	
+				}
 			});
 		}
 	}
@@ -1639,7 +1642,10 @@ export default class DataTable {
 
 			unselectAllButton.attachEvent("onItemClick", function(id, e) {
 
-				grid.unselectAll();
+				if (Array.isArray(grid.data) && grid.data.length > 0) {
+				
+					grid.unselectAll();	
+				}
 			});
 		}
 	}
@@ -1695,6 +1701,7 @@ export default class DataTable {
 						if (data.data) {
 
 							self.translateFieldValues(data.data);
+							self.convertDate(data.data);
 
 							grid.clearAll();
 							grid.parse(data.data);
