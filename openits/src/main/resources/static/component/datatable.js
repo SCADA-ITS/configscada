@@ -1635,7 +1635,7 @@ export default class DataTable {
 
 			selectAllButton.attachEvent("onItemClick", function(id, e) {
 
-				if (Array.isArray(grid.data) && grid.data.length > 0) {
+				if (grid.getFirstId()) {
 				
 					grid.selectAll();	
 				}
@@ -1652,7 +1652,7 @@ export default class DataTable {
 
 			unselectAllButton.attachEvent("onItemClick", function(id, e) {
 
-				if (Array.isArray(grid.data) && grid.data.length > 0) {
+				if (grid.getFirstId()) {
 				
 					grid.unselectAll();	
 				}

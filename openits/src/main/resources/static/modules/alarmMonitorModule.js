@@ -170,7 +170,7 @@ export default class AlarmMonitorModule extends GenericModule {
 					{
 						header: i18n.t("LBL_EQUIPMENT_TYPES"),
 						body: {
-							width: 350,
+							width: 300,
 							rows: [
 								{
 									cols: [
@@ -470,6 +470,109 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 					]
 				}
+				
+				let actionPanelAlarmLevelStats = {
+					rows: [
+						{
+							css: "stats-badge-content",
+							cols: [
+								{
+									view: "toolbar",
+									css: { "background":"rgba(236 108 108 / 0.2) !important" },
+									height: 38,
+									elements: [
+										{
+											view: "label",
+											width: 35,
+											label: `<div><img style="margin-top: 2px; margin-left: 10px; width: 24px; height: 24px;" src="./img/grid/critical.png"></div>`,
+										},
+										{
+											view: "label",
+											width: 160,
+											label: `<div><span style="color: rgba(236 108 108 / 0.9); font-size: 16px;">${i18n.t("LBL_ALARMS_CRITICAL")}</span></div>`,
+										},
+										{},
+										{
+											view: "label",
+											css: { "text-align": "right" },
+											width: 50,
+											id: "alarm-level-stats-critical-" + self.uid,
+											label: `<div><span style="color: rgba(236 108 108 / 0.9); padding-right: 10px;">-</span></div>`,
+											borderless: true
+										},
+									],
+									borderless: true
+								}
+							]
+						},
+						{ height: 20 },
+						{
+							css: "stats-badge-content",
+							cols: [
+								{
+									view: "toolbar",
+									css: { "background":"rgba(239 132 74 / 0.2) !important" },
+									height: 38,
+									elements: [
+										{
+											view: "label",
+											width: 35,
+											label: `<div><img style="margin-top: 2px; margin-left: 10px; width: 24px; height: 24px;" src="./img/grid/warn.png"></div>`,
+										},
+										{
+											view: "label",
+											width: 160,
+											label: `<div><span style="color: rgba(239 132 74 / 0.9); font-size: 16px;">${i18n.t("LBL_ALARMS_WARNING")}</span></div>`,
+										},
+										{},
+										{
+											view: "label",
+											css: { "text-align": "right" },
+											width: 50,
+											id: "alarm-level-stats-warning-" + self.uid,
+											label: `<div><span style="color: rgba(239 132 74 / 0.9); padding-right: 10px;">-</span></div>`,
+											borderless: true
+										}		
+									],
+									borderless: true
+								}
+							]
+						},
+						{ height: 20 },
+						{
+							css: "stats-badge-content",
+							cols: [
+								{
+									view: "toolbar",
+									css: { "background":"rgba(117 140 168 / 0.2) !important" },
+									height: 38,
+									elements: [
+										{
+											view: "label",
+											width: 35,
+											label: `<div><img style="margin-top: 2px; margin-left: 10px; width: 24px; height: 24px;" src="./img/grid/info.png"></div>`,
+										},
+										{
+											view: "label",
+											width: 160,
+											label: `<div><span style="color: rgba(117 140 168 / 0.9); font-size: 16px;">${i18n.t("LBL_ALARMS_INFO")}</span></div>`,
+										},
+										{},
+										{
+											view: "label",
+											css: { "text-align": "right" },
+											width: 50,
+											id: "alarm-level-stats-info-" + self.uid,
+											label: `<div><span style="color: rgba(117 140 168 / 0.9); padding-right: 10px;">-</span></div>`,
+											borderless: true
+										}		
+									],
+									borderless: true
+								}
+							]
+						}
+					]
+				}
 
 				let actionPanelActions = {
 					height: 200,
@@ -562,7 +665,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				viewActionPanel = {
 
 					id: "viewActionPanel-" + self.uid,
-					width: 350,
+					width: 325,
 					css: "panel-action",
 					rows: [
 						{ height: 20 },
@@ -585,6 +688,14 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{ width: 30 },
 								actionPanelAlarmStats,
+								{ width: 30 }
+							]
+						},
+						{ height: 30 },
+						{
+							cols: [
+								{ width: 30 },
+								actionPanelAlarmLevelStats,
 								{ width: 30 }
 							]
 						},
@@ -645,7 +756,93 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			};
 			
+			let updateLevelStats = function() {
+				
+				function updateLevelStatsCritical() {
+					
+					let levelBadge = $$("alarm-level-stats-critical-" + self.uid);
+					
+					if (levelBadge) {
+						
+						let criticalAlarms = [];
+						
+						criticalAlarms = self.dcNoRecognized.filter(alarm => {
+							
+							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1); 
+						});
+						
+						criticalAlarms.push(...self.dcRecognized.filter(alarm => {
+							
+							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1); 
+						}));
+						
+						if (Array.isArray(criticalAlarms)) {
+							
+							levelBadge.setHTML(`<div><span style="color: rgba(236 108 108 / 0.9); padding-right: 10px;">${criticalAlarms.length}</span></div>`);
+						}
+					}
+				}
+				
+				function updateLevelStatsWarning() {
+					
+					let levelBadge = $$("alarm-level-stats-warning-" + self.uid);
+					
+					if (levelBadge) {
+						
+						let warningAlarms = [];
+						
+						warningAlarms = self.dcNoRecognized.filter(alarm => {
+							
+							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1); 
+						});
+						
+						warningAlarms.push(...self.dcRecognized.filter(alarm => {
+							
+							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1); 
+						}));
+						
+						if (Array.isArray(warningAlarms)) {
+							
+							levelBadge.setHTML(`<div><span style="color: rgba(239 132 74 / 0.9);; padding-right: 10px;">${warningAlarms.length}</span></div>`);
+						}
+					}
+				}
+				
+				function updateLevelStatsInfo() {
+					
+					let levelBadge = $$("alarm-level-stats-info-" + self.uid);
+					
+					if (levelBadge) {
+						
+						let infoAlarms = [];
+						
+						infoAlarms = self.dcNoRecognized.filter(alarm => {
+							
+							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1); 
+						});
+						
+						infoAlarms.push(...self.dcRecognized.filter(alarm => {
+							
+							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1); 
+						}));
+						
+						if (Array.isArray(infoAlarms)) {
+							
+							levelBadge.setHTML(`<div><span style="color: rgba(117 140 168 / 0.9); padding-right: 10px;">${infoAlarms.length}</span></div>`);
+						}
+					}
+				}
+				
+				updateLevelStatsCritical();
+				
+				updateLevelStatsWarning();
+				
+				updateLevelStatsInfo();
+			}
+			
 			updateStats();
+			
+			updateLevelStats();
 
 			function onMessage(be) {
 
@@ -658,6 +855,8 @@ export default class AlarmMonitorModule extends GenericModule {
 					updateDataTables(flattenedData, changes);
 					
 					updateStats();
+					
+					updateLevelStats();
 				}
 
 				function updateDataTables(data, changes) {

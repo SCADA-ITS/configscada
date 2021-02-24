@@ -1313,6 +1313,13 @@
     color: #1bcec8;
 }
 
+.panel-action .stats-badge-content .webix_toolbar {
+	
+	font-size: 14px;
+	font-weight: 500;
+	border-radius: 8px;
+}
+
 .action-button .webix_button{
 	
 	width: 100% !important;

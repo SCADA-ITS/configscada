@@ -8,5 +8,9 @@
 		"recognize": "alarms/send_recognize_alarm",
 		"deactivate": "alarms/send_deactivation_alarm",
 		"mute": "alarms/send_alarm_muted_actions"
+	},
+	"restEndpoints": {
+		"alarms": "alarms",
+		"alarm": "alarms/${id}"
 	}
 }
