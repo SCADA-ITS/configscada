@@ -37,12 +37,20 @@ public class UserController {
 	
 	@Autowired
 	SystemPermissionBO systemPermissionBO;
+
 	
 	@GetMapping
 	@ApiOperation(value = "Get all users", notes = "Get all users")
 	public ResponseEntity<Object> getUsers() {
 		
 		return new ResponseEntity<>(userBO.getList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/with_role")
+	@ApiOperation(value = "Get all users with role", notes = "Get all users  with role")
+	public ResponseEntity<Object> getUsersWithRole() {
+		
+		return new ResponseEntity<>(userBO.getListWithRole(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")

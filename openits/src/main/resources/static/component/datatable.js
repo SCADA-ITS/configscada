@@ -1502,6 +1502,8 @@ export default class DataTable {
 	open_module(gridCommand) {
 
 		let args = {};
+		let obj = this;
+		
 		let viewTypeId = undefined;
 
 		if (gridCommand) {
@@ -1514,11 +1516,19 @@ export default class DataTable {
 				viewTypeId = gridCommand.viewType.id;
 			}
 
-			if (gridCommand.args) {
+			if (gridCommand.args != undefined) {
 
-				args = gridCommand.args;
+				try {
+					args = JSON.parse(gridCommand.args);
+
+				} catch (error) {
+
+					console.error(error);
+					args = {};
+				}
+
 				args.callbacks = [];
-				args.callbacks.push(this.refresh);
+				args.callbacks.push(function() {obj.refresh(obj)});
 			}
 
 			// Any selected?
@@ -1668,11 +1678,19 @@ export default class DataTable {
 		}
 	}
 
-	refresh() {
-
-		let grid = $$("dt-" + this.uid);
-		let self = this;
+	refresh(obj) {
+		
 		let url = undefined;
+		let self = undefined;
+		
+		if(obj != undefined){
+			self = obj;
+		}
+		else{
+			self = this;
+		}
+		
+		let grid = $$("dt-" + self.uid);
 
 		if (!webix.isUndefined(grid)) {
 
@@ -1683,11 +1701,11 @@ export default class DataTable {
 
 			if (this.dataGridParams) {
 
-				url = appConfig.restUrl + "grids/" + this.dataGridId + "/" + this.dataGridParams;
+				url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
 			}
 			else {
 
-				url = appConfig.restUrl + "grids/" + this.dataGridId;
+				url = appConfig.restUrl + "grids/" + self.dataGridId;
 			}
 
 			webix.ajax(url).then(function(dat) {

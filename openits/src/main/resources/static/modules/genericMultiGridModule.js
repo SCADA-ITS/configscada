@@ -48,10 +48,10 @@ export default class GenericMultiGridModule extends GenericModule {
 		
 		jsonEquipmentTypesWithGridAssignedCopy = webix.copy(jsonEquipmentTypesWithGridAssigned);
 			
-		jsonEquipmentTypesWithGridAssignedCopy.forEach(elementType => {
+		jsonEquipmentTypesWithGridAssignedCopy.forEach(item => {
 			
-			elementType.labelAlias = i18n.t(elementType.labelAlias);
-			elementType.labelDescription = i18n.t(elementType.labelDescription);
+			item.labelAlias = i18n.t(item.labelAlias);
+			item.labelDescription = i18n.t(item.labelDescription);
 		});
 		
 		jsonEquipmentTypesWithGridAssignedCopy.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));

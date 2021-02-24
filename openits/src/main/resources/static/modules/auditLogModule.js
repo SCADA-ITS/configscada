@@ -42,7 +42,10 @@ export default class AuditLogModule extends GenericModule {
 			}).then(function() {
 
 				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, { "auditLogIds": self.args.selectedPks }).then(function(data) {
-					console.log(data);
+					if (self.args.callbacks.length > 0) {
+
+						self.args.callbacks[0]();
+					}
 				});
 			});
 		}

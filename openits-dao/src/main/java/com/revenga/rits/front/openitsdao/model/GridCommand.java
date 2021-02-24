@@ -46,6 +46,8 @@ public class GridCommand implements Serializable {
 	@ManyToOne
 	private ModuleAction moduleAction;
 	
+	private String args;
+	
 	//uni-directional many-to-one association to ViewType
 	@ManyToOne
 	@JoinColumn(name="view_type_id")
@@ -116,6 +118,14 @@ public class GridCommand implements Serializable {
 
 	public void setModuleAction(ModuleAction moduleAction) {
 		this.moduleAction = moduleAction;
+	}
+	
+	public String getArgs() {
+		return this.args;
+	}
+
+	public void setArgs(String args) {
+		this.args = args;
 	}
 	
 	public ViewType getViewType() {

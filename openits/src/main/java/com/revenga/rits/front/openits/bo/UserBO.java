@@ -33,6 +33,15 @@ public class UserBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USERS).getFieldId(), users);
 	}
 
+	public List<Map<String, Object>> getListWithRole() {
+
+		List<Map<String, Object>> users = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, null);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE).getFieldId(), users);
+	}
+	
 	@Override
 	public Map<String, Object> getItem(String id) {
 

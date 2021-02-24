@@ -73,79 +73,79 @@ export let adapter = {
 				update_callback(gridData);
 			}
 		},
-		
+
 		alarm: {
-			
+
 			getList(data, update_callback) {
-			
+
 				let listOutput = [];
-				
+
 				if (data != undefined && Array.isArray(data) && data.length > 0) {
-					
+
 					data.forEach(e => {
-						
+
 						let itemOutput = {};
-						
+
 						let targetElement = window.em.getByField(EntityType.ELEMENT, undefined, e.targetElement.id);
 						let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", e.alarmConfig.id);
 						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
-			
+
 						itemOutput.id = e.id;
-						
+
 						if (e.activation) {
-							
-							itemOutput.activation = new Date(e.activation);	
+
+							itemOutput.activation = new Date(e.activation);
 						}
-						
+
 						itemOutput.idStr = e.id;
 						itemOutput.alarmConfigId = e.alarmConfig.id;
 						itemOutput.alarmConfigAlias = alarmConfig.alias;
 						itemOutput.alarmLevelId = alarmLevel.id;
 						itemOutput.alarmLevelAlias = alarmLevel.labelAlias;
-						
+
 						if (e.mutedUntil) {
-						
-							itemOutput.mutedUntil = new Date(e.mutedUntil);	
+
+							itemOutput.mutedUntil = new Date(e.mutedUntil);
 						}
-						
+
 						if (e.recognized) {
-						
-							itemOutput.recognized = new Date(e.recognized);	
+
+							itemOutput.recognized = new Date(e.recognized);
 						}
-						
+
 						if (e.deactivation) {
-						
-							itemOutput.deactivation = new Date(e.deactivation);	
+
+							itemOutput.deactivation = new Date(e.deactivation);
 						}
 
 						itemOutput.targetElementId = targetElement.id;
 						itemOutput.targetElementAlias = targetElement.alias;
-						
+
 						itemOutput.targetElementTypeId = targetElement.elementType.id;
-						itemOutput.targetElementTypeAlias = i18n.t(window.em.getByField(EntityType.ELEMENT_TYPE, "id", targetElement.elementType.id).labelAlias); 
-						
+						itemOutput.targetElementTypeAlias = i18n.t(window.em.getByField(EntityType.ELEMENT_TYPE, "id", targetElement.elementType.id).labelAlias);
+
 						if (itemOutput.deactivation) {
-						
-							itemOutput.isActive = String(false);	
+
+							itemOutput.isActive = String(false);
 						}
 						else {
-							
+
 							itemOutput.isActive = String(true);
 						}
-						
-						
+
+
 						itemOutput.alarmType = alarmConfig.alarmType.id;
-						
-						
+
+
 						listOutput.push(itemOutput);
 					});
-					
+
 					if (update_callback) {
-						
+
 						update_callback(listOutput);
 					}
-				}	
-				
+				}
+
 				return listOutput;
 			}
 		},
@@ -155,7 +155,7 @@ export let adapter = {
 			getList(data, update_callback) {
 
 				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
-		
+
 					let gridData = {};
 					let count = data.basicElementsVO.length;
 					gridData.data = [];
@@ -169,7 +169,7 @@ export let adapter = {
 						if (gridData.action != 'DELETE') {
 
 							webix.ajax().get(appConfig.restUrl + INCIDENT_REPORT_END_POINT + "/" + incidentReport.id).then(function(dat) {
-								
+
 								console.log(dataItem);
 								if (dat != null) {
 
@@ -196,9 +196,9 @@ export let adapter = {
 								}
 
 							}, function(response) { util.ajax.handleError(response); });
-							
+
 						} else {
-							
+
 							gridData.data.push(dataItem);
 
 							count--;
@@ -209,6 +209,69 @@ export let adapter = {
 					});
 				}
 			}
+		},
+
+		auditLog: {
+
+			getList(data, update_callback) {
+
+				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
+
+					let gridData = {};
+					gridData.data = [];
+					gridData.action = data.action;
+
+					data.basicElementsVO.forEach(auditLog => {
+
+						let dataItem = {};
+						dataItem.id = auditLog.id;
+
+						if (gridData.action == 'CREATE') {
+
+							let logType = window.em.getByField(EntityType.LOG_TYPE, "id", auditLog.logType.id);
+							let user = window.em.getByField(EntityType.USER, "id", auditLog.user.id);
+							let logSubtype = {};
+
+							if (logType != null && logType.logSubtypes != undefined && logType.logSubtypes.length > 0) {
+
+								logSubtype = logType.logSubtypes.find(logSubtype => logSubtype.id == auditLog.logSubtype.id);
+							}
+
+							dataItem.time = auditLog.time;
+							dataItem.level = auditLog.level;
+							dataItem.userName = user.name;
+
+							if (logSubtype != undefined) {
+
+								dataItem.logSubtypeLabelAlias = logSubtype.labelAlias;
+							}
+
+							if (auditLog.auditLogValues != undefined && Array.isArray(auditLog.auditLogValues) && auditLog.auditLogValues.length > 0) {
+
+								auditLog.auditLogValues.forEach(auditLogValue => {
+
+									if (auditLogValue.value != undefined && auditLogValue.logTypeParam != undefined) {
+
+										let logTypeParamId = auditLogValue.logTypeParam.id;
+
+										dataItem[logTypeParamId] = auditLogValue.value;
+									}
+
+								});
+							}
+							gridData.data.push(dataItem);
+
+						} else if (gridData.action == 'DELETE') {
+
+							gridData.data.push(dataItem);
+
+						}
+					});
+
+					update_callback(gridData);
+				}
+			}
 		}
+
 	}
 };

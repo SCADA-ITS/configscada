@@ -99,6 +99,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = getPropertyInt("get_translations_by_locale");
 	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = getPropertyInt("get_translations_by_locale_and_module");
 	public static final int DATA_SOURCE_GET_USERS = getPropertyInt("get_users");
+	public static final int DATA_SOURCE_GET_USERS_WITH_ROLE = getPropertyInt("get_users_with_role");
 	public static final int DATA_SOURCE_GET_USER = getPropertyInt("get_user");
 	public static final int DATA_SOURCE_GET_ROLES = getPropertyInt("get_roles");
 	public static final int DATA_SOURCE_GET_ROLE = getPropertyInt("get_role");
