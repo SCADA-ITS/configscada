@@ -1045,11 +1045,10 @@ export default class IncidentReportModule extends GenericModule {
 					{
 						view: "label",
 						css: "section",
-						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_ACTIONS")}</span>`,
+						label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_ACTIONS")}</span></div>`,
 						borderless: true
 					},
 					{
-						height: 200,
 						rows: [
 							{ height: 10 },
 							{
@@ -1131,23 +1130,23 @@ export default class IncidentReportModule extends GenericModule {
 									{}
 								],
 								borderless: true
-							},
-							{}
+							}
 						]
 					},
+					{ height: 40 },
 					{
 						view: "label",
 						css: "section",
-						label: `<span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span>`,
+						label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
 						borderless: true
 					},
+					{ height: 20 },
 					{
 						height: 150,
 						cols: [
 							{ width: 50 },
 							{
 								rows: [
-									{ height: 10 },
 									{
 										view: "button",
 										css: "panel-button",
@@ -1224,8 +1223,7 @@ export default class IncidentReportModule extends GenericModule {
 
 											}
 										}
-									},
-									{ height: 10 }
+									}
 								]
 							},
 							{ width: 50 }

@@ -724,7 +724,10 @@
 }
 
 .grid-icon {
+	display: inline-block;
 	margin-top: 4px;
+	width: 24px;
+	height: 24px;
 }
 
 .grid-title {
@@ -1214,6 +1217,7 @@
 .panel-action .section {
 
 	background-color: var(--blue-soft-opacity-1);
+	height: 23px !important;
 }
 
 .panel-action .section-text {
@@ -1222,6 +1226,11 @@
     color: var(--blue-mid2-opacity-9);
     margin-left: 15px;
     font-weight: 500;
+}
+
+.panel-action .section .title {
+	
+	margin-top: -8px;
 }
 
 .panel-action .section-info {
@@ -1438,10 +1447,19 @@
 .webix_accordionitem .webix_accordionitem_header {
 	background-color: var(--blue-mid-opacity-7);
 	color: white;
+	height: 23px !important;
+}
+
+.webix_accordionitem_label {
+    padding-left: 12px;
+    margin-top: -10px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .webix_accordionitem .webix_accordionitem_header .webix_accordionitem_button{
 	color: white;
+	margin-top: -10px;
 }
 
 .webix_accordionitem .webix_accordionitem_header:hover,

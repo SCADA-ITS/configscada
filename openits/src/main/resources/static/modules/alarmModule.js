@@ -2,8 +2,6 @@ import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
-const ALARM_TYPE_MANUAL = "AlarmType:1";
-
 export default class AlarmModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -128,7 +126,8 @@ export default class AlarmModule extends GenericModule {
 							let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
 							let alarmType = alarmConfig.alarmType.id;
 
-							allAlarmsManual &= (alarmType === ALARM_TYPE_MANUAL);
+
+							allAlarmsManual &= Array.isArray(self.config.alarmTypeManual) && (self.config.alarmTypeManual.indexOf(alarmType) !== -1);
 							
 							if (i >= self.args.selectedPks.length - 1) {
 								

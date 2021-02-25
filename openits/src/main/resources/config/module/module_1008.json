@@ -12,5 +12,7 @@
 	"restEndpoints": {
 		"alarms": "alarms",
 		"alarm": "alarms/${id}"
-	}
+	},
+	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2" ],
+	"alarmTypeManual": [ "AlarmType:3" ]
 }

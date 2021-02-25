@@ -5,6 +5,8 @@ import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 
 const ELEMENT_TYPE_ALL = "-1";
+const ALARM_TYPE_AUTO = 1;
+const ALARM_TYPE_MANUAL = 2;
 
 export default class AlarmMonitorModule extends GenericModule {
 
@@ -20,6 +22,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.listView = undefined;
 		this.dtNoRecognized = undefined;
 		this.dtRecognized = undefined;
+		this.filterAlarmType = undefined;
 
 		this.elementTypeIdSelected = ELEMENT_TYPE_ALL;
 
@@ -193,10 +196,70 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			function getViewListEquipments() {
 
+				let view = {};
+				
 				let viewListEquipments = {};
 				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
 				let elementTypesFiltered = undefined;
 				let elementTypeView = [];
+				
+				let alarmTypeSwitcher = {
+					view: "segmented",
+					value: "alarm-type-switcher-show-all-" + self.uid,
+					options: [
+						{
+							id: "alarm-type-switcher-show-all-" + self.uid,
+							value: i18n.t("LBL_ALL")
+						},
+						{
+							id: "alarm-type-switcher-show-auto-" + self.uid,
+							value: i18n.t("LBL_AUTO")
+						},
+						{
+							id: "alarm-type-switcher-show-manual-" + self.uid,
+							value: i18n.t("LBL_MANUAL")
+						}
+					],
+					tooltip: function(obj) {
+
+						if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
+
+							return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
+						}
+						else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
+
+							return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
+						}
+						else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
+
+							return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
+						}
+					},
+					on: {
+						onChange(newv, oldv) {
+
+							if (newv === "alarm-type-switcher-show-all-" + self.uid) {
+
+								self.filterAlarmType = undefined; 
+								onSelectAlarmType();
+							}
+							else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
+
+								self.filterAlarmType = ALARM_TYPE_AUTO;
+								onSelectAlarmType();
+							}
+							else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
+
+								self.filterAlarmType = ALARM_TYPE_MANUAL;
+								onSelectAlarmType();	
+							}
+						}
+					}
+				};
+				
+				view.rows = [];
+				
+				view.rows.push(alarmTypeSwitcher);
 
 				elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid);
 
@@ -229,6 +292,15 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					viewListEquipments = self.listView.getView();
 				}
+				
+				function onSelectAlarmType() {
+					
+					let elementTypeArray = [];
+					
+					elementTypeArray.push(self.elementTypeIdSelected);
+					
+					onSelect(elementTypeArray);
+				}
 
 				function onSelect(data) {
 
@@ -239,38 +311,76 @@ export default class AlarmMonitorModule extends GenericModule {
 						if (self.dtNoRecognized) {
 
 							self.dtNoRecognized.clear();
-
+							
+							let noRecognizedAlarms = self.dcNoRecognized;
+							
+							if (self.filterAlarmType) {
+								
+								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+								
+									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+									});	
+								}
+								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+									
+									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+									});
+								}
+							}
+							
 							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
 
-								self.dtNoRecognized.add(self.dcNoRecognized);
+								self.dtNoRecognized.add(noRecognizedAlarms);
 							}
 							else {
 
-								self.dtNoRecognized.add(self.dcNoRecognized.filter(e => {
+								self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
 									return (e.targetElementTypeId == self.elementTypeIdSelected);
 								}));
-							}
+							}	
 						}
 
 						if (self.dtRecognized) {
 
 							self.dtRecognized.clear();
+							
+							let recognizedAlarms = self.dcRecognized;
+							
+							if (self.filterAlarmType) {
+								
+								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+								
+									recognizedAlarms = recognizedAlarms.filter(e => {
+											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+									});	
+								}
+								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+									
+									recognizedAlarms = recognizedAlarms.filter(e => {
+											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+									});
+								}
+							}
 
 							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
 
-								self.dtRecognized.add(self.dcRecognized);
+								self.dtRecognized.add(recognizedAlarms);
 							}
 							else {
 
-								self.dtRecognized.add(self.dcRecognized.filter(e => {
+								self.dtRecognized.add(recognizedAlarms.filter(e => {
 									return (e.targetElementTypeId == self.elementTypeIdSelected);
 								}));
 							}
 						}
 					}
 				}
+				
+				view.rows.push(viewListEquipments);
 
-				return viewListEquipments;
+				return view;
 			}
 
 			function getViewContent() {
@@ -577,7 +687,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				let actionPanelActions = {
 					height: 200,
 					rows: [
-						{ height: 10 },
 						{
 							view: "toolbar",
 							height: 75,
@@ -678,13 +787,6 @@ export default class AlarmMonitorModule extends GenericModule {
 						},
 						{ height: 30 },
 						{
-							view: "label",
-							css: "section",
-							label: `<span class="section-text">${i18n.t("LBL_ALARMS_MONITOR_STATS")}</span>`,
-							borderless: true
-						},
-						{ height: 30 },
-						{
 							cols: [
 								{ width: 30 },
 								actionPanelAlarmStats,
@@ -699,13 +801,14 @@ export default class AlarmMonitorModule extends GenericModule {
 								{ width: 30 }
 							]
 						},
-						{ height: 30 },
+						{ height: 40 },
 						{
 							view: "label",
 							css: "section",
-							label: `<span class="section-text">${i18n.t("LBL_ALARMS_MONITOR_ACTIONS")}</span>`,
+							label: `<div class="title"><span class="section-text">${i18n.t("LBL_ALARMS_MONITOR_ACTIONS")}</span></div>`,
 							borderless: true
 						},
+						{ height: 20 },
 						actionPanelActions,
 						{},
 						//infiniteSvgView,
