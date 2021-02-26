@@ -240,7 +240,7 @@ export default class SynopticModule extends GenericModule{
           try {
             if(this.elementsMap && this.elementsMap.get(element.id)){
               this.elementsMap.get(element.id).updateElement(element);
-              if(document.getElementById(this.synopticDiv + "SVG") && document.getElementById(element.id)){
+              if(document.getElementById(this.synopticDivId + "SVG") && document.getElementById(element.id)){
                 //Deprecated
                 // soporte para dual mezclado con visibility del arbol antiguo, bajar a mtx tanto aqui como en elementForm
                 if(this.elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
