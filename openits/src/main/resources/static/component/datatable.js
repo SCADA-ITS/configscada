@@ -90,7 +90,10 @@ export default class DataTable {
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 		let resultAdjColumns = this.getGridOptions(GridOptions.ROW_ADJUSTEMENT);
-		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
+		let resultCommons = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMONS);
+		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
+		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
+		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 
 
 		if (metadata != undefined) {
@@ -136,17 +139,6 @@ export default class DataTable {
 									rotate: true,
 									css: { "font-size": "11px" }
 								});
-
-
-								//								if (resultVertical && !isNaN(parseInt(resultVertical))) {
-								//
-								//									col.header[0].height = (parseInt(resultVertical) + ExtendedHeader.FALSE).toString();
-								//
-								//								} else {
-								//
-								//									col.header[0].autoheight = true;
-								//
-								//								}
 
 							} else {
 
@@ -196,17 +188,6 @@ export default class DataTable {
 									rotate: true,
 									css: { "font-size": "11px" }
 								});
-
-
-								//								if (resultVertical && !isNaN(parseInt(resultVertical))) {
-								//
-								//									col.header[0].height = resultVertical;
-								//
-								//								} else {
-								//
-								//									col.header[0].autoheight = true;
-								//
-								//								}
 
 							} else {
 
@@ -261,12 +242,12 @@ export default class DataTable {
 							let avatar;
 							let showValue = false;
 
-							if (typeof obj[field.sourceField] === 'object' && field.gridFieldDataType.id !== DataType.DATE.value) {
+							if (typeof obj[field.sourceField] === 'object' && field.gridFieldDataType && field.gridFieldDataType.id !== DataType.DATE.value) {
 
 								value = obj[field.sourceField].value;
 								state = obj[field.sourceField].state;
 							}
-							else if (field.gridFieldDataType.id === DataType.DATE.value) {
+							else if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value) {
 
 								value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 							}
@@ -514,6 +495,11 @@ export default class DataTable {
 			if (resultOption && resultTbActions) {
 				
 				layout.push(toolbarActions);
+				
+				if (showOnlySearchBar) {
+				
+					layout.push({ height: 8 });	
+				}
 			}
 
 			layout.push(datatable);
@@ -626,6 +612,7 @@ export default class DataTable {
 		let toolbar = {
 			view: "toolbar",
 			id: "tbMain-" + this.uid,
+			borderless: true
 		}
 
 
@@ -637,7 +624,6 @@ export default class DataTable {
 		toolbar.elements.push({ minWidth: 4 });
 
 		if (resultSegmented) {
-
 
 			let segmentViews = {
 				view: "segmented", minWidth: 333,
@@ -677,15 +663,29 @@ export default class DataTable {
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
+		
+		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 
 		let toolbar = {
 			view: "toolbar",
-			id: "tbActions-" + this.uid
+			id: "tbActions-" + this.uid,
+			borderless: true
+		}
+		
+		let searchBar = {
+			view: "search",
+			id: "txtSearch-" + this.uid,
+			placeholder: i18n.t("LBL_SEARCH"),
+		}
+		
+		if (showOnlySearchBar) {
+			
+			return searchBar;
 		}
 
 		toolbar.elements = [];
-
-		toolbar.elements.push({ width: 4 })
+		
+		toolbar.elements.push({ width: 4 })	
 
 		if (resultMulti && resultSelect) {
 
@@ -733,12 +733,8 @@ export default class DataTable {
 			});
 		}
 
-		if (resultCommons || resultCommands || resultMulti) {
-
-			toolbar.elements.push({});
-			toolbar.elements.push({ minWidth: 4 });
-
-		}
+		toolbar.elements.push({});
+		toolbar.elements.push({ minWidth: 4 });
 
 		toolbar.elements.push({
 			id: "tb_ws_status-" + this.uid,
@@ -748,32 +744,17 @@ export default class DataTable {
 
 		if (resultSearch) {
 
-			let searchBar = {
-				view: "search",
-				id: "txtSearch-" + this.uid,
-				placeholder: i18n.t("LBL_SEARCH"),
-			}
-
-			if (resultCommons || resultCommands || resultMulti) {
-
-				searchBar.width = 300;
-
-				toolbar.elements.push(searchBar);
-
-			} else {
-
-				toolbar.elements.push(searchBar);
-
-			}
+			searchBar.width = 300;
+			toolbar.elements.push(searchBar);
 		}
 
-		toolbar.elements.push({ width: 8 });
+		if (!showOnlySearchBar) {
 
+			toolbar.elements.push({ width: 8 });
+		} 
+		
 		return toolbar;
-
 	}
-
-
 
 	drawContextButtonAction(datatable) {
 

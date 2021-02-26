@@ -1,5 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
+import SearchDialogBox from "../component/searchDialogBox.js";
 import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
@@ -1108,7 +1109,15 @@ export default class IncidentReportModule extends GenericModule {
 
 											onItemClick() {
 
-												util.ui.notImplementedMessage();
+												function resultSearch(data) {
+												
+													// TODO: Implement mutation to change user here
+													console.log(data);
+												}
+												
+												let s = new SearchDialogBox("LBL_SELECT_USER", DialogEntity.USER, resultSearch);
+												
+												s.show();
 											}
 										}
 									},

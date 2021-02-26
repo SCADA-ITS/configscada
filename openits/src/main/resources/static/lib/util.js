@@ -528,10 +528,10 @@ export let util = {
 			});
 		},
 		
-		loadWindow(title, body, height, width) {
+		loadWindow(title, body, height, width, modal) {
 			
-			let uid = webix.uid();
-			
+			let winId = "win_aux_" + webix.uid();
+					
 			let head = {
 				view: "toolbar",
 				css: "default-window-head",
@@ -545,7 +545,7 @@ export let util = {
 						icon: "mdi mdi-close",
 						on: {
 							onItemClick: function(id) {
-								$$("win_aux_" + uid).close();
+								$$(winId).close();
 							}
 						}
 					}
@@ -555,12 +555,13 @@ export let util = {
 
 			webix.ui({
 				view: "window",
-				id: "win_aux_" + uid,
+				id: winId,
 				move: true,
 				css: "default-window",
 				head: head,
 				height: height,
 				width: width,
+				modal: modal,
 				body: body, 
 				position: function(state) {
 					state.left = (document.documentElement.clientWidth / 2) - (width / 2);
@@ -572,6 +573,8 @@ export let util = {
 					}
 				}
 			}).show();
+			
+			return winId;
 		}
 	},
 

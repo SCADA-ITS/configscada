@@ -125,7 +125,7 @@ export default class EntitiesManager {
 		}
 		else if (em_type.mode === ENTITY_TYPE_MODE_TEMPORARY) {
 			
-			return this.entities[em_type.id].map(function (obj) {
+			return this.tempEntities[em_type.id].map(function (obj) {
  
 			    return obj.data;
 			});
