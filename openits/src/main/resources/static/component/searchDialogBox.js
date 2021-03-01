@@ -1,10 +1,16 @@
-import { EventTypes } from "../component/datatable.js";
+//import { EventTypes } from "../component/datatable.js";
 import DataTable from "../component/datatable.js";
 //import DialogEntitiesRepository from "../managers/dialogEntitiesRepository.js";
 import { util } from "../lib/util.js";
 
-export default class SearchDialogBox {
+const DIALOG_DATA_TYPE_TABLE = 1;
+const DIALOG_DATA_TYPE_TREE = 2;
 
+const DIALOG_ENDPOINT_TYPE_REST = 1;
+const DIALOG_ENDPOINT_TYPE_EM = 2;
+	
+export default class SearchDialogBox {
+	
 	constructor(title, dialogEntity, onAccept) {
 
 		this.uid = webix.uid();
@@ -249,7 +255,7 @@ export default class SearchDialogBox {
 				
 				let events = {};
 
-				events[EventTypes.ON_ITEM_DBL_CLIC] = acceptCallback;
+				events[DataTable.EventTypes.ON_ITEM_DBL_CLIC] = acceptCallback;
 				
 				self.searchDataTable = new DataTable(null, null, self.dialogInfo.metadata, self.dialogInfo.data, events);
 				
@@ -306,3 +312,10 @@ export default class SearchDialogBox {
 		}
 	}
 }
+
+Object.defineProperty(SearchDialogBox, 'USERS', {
+    value: { id: 1, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 },
+    writable : false,
+    enumerable : true,
+    configurable : false
+});

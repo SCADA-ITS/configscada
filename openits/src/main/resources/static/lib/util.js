@@ -1,6 +1,24 @@
 import { synopticData } from "../data/synoptics.js";
 import { mapsData } from "../data/mapsData.js";
 
+// Params for windowed ui
+const WindowParam = Object.freeze({
+	HAS_MIN_BUTTON: 1,
+	HAS_MAX_BUTTON: 2,
+	IS_MAXIMIZED: 3,
+	HEIGHT: 4,
+	WIDTH: 5,
+	X: 6,
+	Y: 7,
+	ALLOW_MULTIPLE_INSTANCES: 8,
+	IMAGE: 9,
+	ICON: 10,
+	COLOR: 11,
+	LABEL: 12,
+	RESIZABLE: 13,
+	EXTERNALIZABLE: 14
+}); 
+
 export let util = {
 
 	module: {

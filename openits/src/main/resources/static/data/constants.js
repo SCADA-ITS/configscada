@@ -56,12 +56,6 @@ const VIEW_TYPE_CUSTOM = 3;
 const ENTITY_TYPE_MODE_PERMANENT = 1;
 const ENTITY_TYPE_MODE_TEMPORARY = 2;
 
-const DIALOG_DATA_TYPE_TABLE = 1;
-const DIALOG_DATA_TYPE_TREE = 2;
-
-const DIALOG_ENDPOINT_TYPE_REST = 1;
-const DIALOG_ENDPOINT_TYPE_EM = 2;
-
 // Services
 const Services = Object.freeze({
 	USER_SERVICE: 10,
@@ -85,28 +79,6 @@ const EntityType = Object.freeze({
 	LOG_TYPE: { id: 8, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
 	USER: { id: 9, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "users/with_role", load: true }
 });
-
-const DialogEntity = Object.freeze({
-	USER: { id: 1, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 }
-});
-
-// Params for windowed ui
-const WindowParam = Object.freeze({
-	HAS_MIN_BUTTON: 1,
-	HAS_MAX_BUTTON: 2,
-	IS_MAXIMIZED: 3,
-	HEIGHT: 4,
-	WIDTH: 5,
-	X: 6,
-	Y: 7,
-	ALLOW_MULTIPLE_INSTANCES: 8,
-	IMAGE: 9,
-	ICON: 10,
-	COLOR: 11,
-	LABEL: 12,
-	RESIZABLE: 13,
-	EXTERNALIZABLE: 14
-});  
 
 
 const CONTENT_TYPE_JSON = {"Content-type": "application/json"};

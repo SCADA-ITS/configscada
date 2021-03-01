@@ -1487,20 +1487,28 @@
 	width: 100% !important;
     border-radius: 4px;
     border-width: 0px;
-    background: #4e9a06 !important;
+    background: rgb(78, 154, 6) !important;
     color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.dialog-accept .webix_button:hover{
+    background: rgba(78 154 6 / 0.9) !important;
+}
+
 .dialog-cancel .webix_button{
 	width: 100% !important;
     border-radius: 4px;
     border-width: 0px;
-    background: #cc0000 !important;
+    background: rgb(204, 0, 0) !important;
     color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.dialog-cancel .webix_button:hover{
+    background: rgba(204 0 0 / 0.9) !important;
 }

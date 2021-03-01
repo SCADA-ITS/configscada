@@ -51,11 +51,6 @@ const ExtendedHeader = {
 	CLOSE: 0
 };
 
-export let EventTypes = {
-	ON_SELECT_ROW: 1,
-	ON_ITEM_DBL_CLIC: 2
-}
-
 export default class DataTable {
 
 	constructor(dataGridId, dataGridParams, metadata, data, events) {
@@ -1562,9 +1557,9 @@ export default class DataTable {
 
 			grid.attachEvent("onItemDblClick", function(id, e, node) {
 				
-				if (self.events && self.events[EventTypes.ON_ITEM_DBL_CLIC]) {
+				if (self.events && self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC]) {
 
-					eval(self.events[EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());	
+					eval(self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());	
 				}
 				else {
 				
@@ -1581,7 +1576,7 @@ export default class DataTable {
 
 	on_item_selected() {
 
-		if (this.events && this.events[EventTypes.ON_SELECT_ROW]) {
+		if (this.events && this.events[DataTable.EventTypes.ON_SELECT_ROW]) {
 
 			let self = this;
 			let grid = $$("dt-" + this.uid);
@@ -1590,7 +1585,7 @@ export default class DataTable {
 
 				grid.attachEvent("onSelectChange", function() {
 
-					eval(self.events[EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
+					eval(self.events[DataTable.EventTypes.ON_SELECT_ROW])(self.getSelectedIds());
 				});
 			}
 
@@ -1976,3 +1971,22 @@ export default class DataTable {
 	}
 
 }
+
+Object.defineProperty(DataTable, 'EventTypes', {
+    value: {}
+});
+
+
+Object.defineProperty(DataTable.EventTypes, 'ON_SELECT_ROW', {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(DataTable.EventTypes, 'ON_ITEM_DBL_CLIC', {
+    value: 2,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});

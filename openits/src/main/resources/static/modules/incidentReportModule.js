@@ -1,7 +1,7 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
-import { EventTypes } from "../component/datatable.js";
+//import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
 //const INCIDENT_REPORT = Object.freeze({
@@ -827,7 +827,7 @@ export default class IncidentReportModule extends GenericModule {
 
 						let events = {};
 
-						events[EventTypes.ON_SELECT_ROW] = function(rows) {
+						events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
 							if (Array.isArray(rows) && rows.length) {
 
@@ -1115,7 +1115,7 @@ export default class IncidentReportModule extends GenericModule {
 													console.log(data);
 												}
 												
-												let s = new SearchDialogBox("LBL_SELECT_USER", DialogEntity.USER, resultSearch);
+												let s = new SearchDialogBox("LBL_SELECT_USER", SearchDialogBox.USERS, resultSearch);
 												
 												s.show();
 											}
