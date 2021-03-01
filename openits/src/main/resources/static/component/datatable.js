@@ -732,12 +732,6 @@ export default class DataTable {
 		toolbar.elements.push({});
 		toolbar.elements.push({ minWidth: 4 });
 
-		toolbar.elements.push({
-			id: "tb_ws_status-" + this.uid,
-			width: 1,
-			view: "label"
-		});
-
 		if (resultSearch) {
 
 			searchBar.width = 300;
@@ -1842,7 +1836,6 @@ export default class DataTable {
 
 					function on_connected() {
 
-						$$("tb_ws_status-" + self.uid).setHTML(`<div><span class="status_ws_connected">${i18n.t("LBL_CONNECTED")}</span></div>`);
 					}
 
 					function on_message(message) {
@@ -1917,8 +1910,6 @@ export default class DataTable {
 
 						params = ".>";
 					}
-
-					$$("tb_ws_status-" + this.uid).setHTML(`<div><span class="status_ws_disconnected">${i18n.t("LBL_DISCONNECTED")}</span></div>`);
 
 					this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
 
