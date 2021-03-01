@@ -52,7 +52,8 @@ const ExtendedHeader = {
 };
 
 export let EventTypes = {
-	ON_SELECT_ROW: 1
+	ON_SELECT_ROW: 1,
+	ON_ITEM_DBL_CLIC: 2
 }
 
 export default class DataTable {
@@ -1560,12 +1561,20 @@ export default class DataTable {
 		if (grid) {
 
 			grid.attachEvent("onItemDblClick", function(id, e, node) {
+				
+				if (self.events && self.events[EventTypes.ON_ITEM_DBL_CLIC]) {
 
-				let defaultCommand = self.metadata.gridCommands.find(gridCommand => {
-					return gridCommand.default_ === true
-				});
-
-				self.open_module(defaultCommand);
+					eval(self.events[EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());	
+				}
+				else {
+				
+					let defaultCommand = self.metadata.gridCommands.find(gridCommand => {
+						return gridCommand.default_ === true
+					});
+	
+					self.open_module(defaultCommand);	
+				}				
+				
 			});
 		}
 	}
