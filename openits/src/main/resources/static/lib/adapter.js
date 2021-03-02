@@ -271,7 +271,67 @@ export let adapter = {
 					update_callback(gridData);
 				}
 			}
-		}
+		},
+
+		planSchedule: {
+
+			getList(data, update_callback) {
+
+				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
+
+					let gridData = {};
+					gridData.data = [];
+					gridData.action = data.action;
+					
+					
+					data.basicElementsVO.forEach(planSchedule => {
+
+						
+						let dataItem = {};
+						dataItem.id = planSchedule.id;
+
+						if (gridData.action == 'CREATE') {
+
+							let plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id);
+							
+							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
+							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
+							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
+							planSchedule.plan !== undefined ? dataItem.planAlias = plan.alias : null;
+					
+							gridData.data.push(dataItem);
+
+						}
+
+						if (gridData.action == 'UPDATE') {
+
+							let planScheduleStateType = null;
+							let plan = null;
+							planSchedule.planScheduleStateType !== undefined ? planScheduleStateType = window.em.getByField(EntityType.PLAN_SCHEDULE_STATE, "id", planSchedule.planScheduleStateType.id) : null;
+							planSchedule.plan !== undefined ? plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id) : null;
+							
+							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
+							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
+							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
+							plan !== null ? dataItem.planAlias = plan.alias : null;
+							planScheduleStateType !== null ? dataItem.planScheduleStateTypeLabelAlias = planScheduleStateType.labelAlias : null;
+							
+							gridData.data.push(dataItem);
+
+						}
+
+						if (gridData.action == 'DELETE') {
+
+							gridData.data.push(dataItem);
+						}
+						
+					});
+
+					update_callback(gridData);
+				}
+
+			}
+		},
 
 	}
 };

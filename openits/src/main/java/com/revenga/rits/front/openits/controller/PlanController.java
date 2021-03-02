@@ -73,6 +73,13 @@ public class PlanController {
 		
 		return new ResponseEntity<>(planBO.getItem(id), HttpStatus.OK);
 	}
+
+	@GetMapping(value = "/summary")
+	@ApiOperation(value = "Get all plans summary", notes = "Get all plans summary")
+	public ResponseEntity<Object> getPlansSummary() {
+		
+		return new ResponseEntity<>(planBO.getSummaryList(), HttpStatus.OK);
+	}
 	
 	@GetMapping(value = "/plan_types")
 	@ApiOperation(value = "Get all plan types", notes = "Get all plan types")
