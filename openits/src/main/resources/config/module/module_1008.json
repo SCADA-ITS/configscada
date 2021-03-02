@@ -1,8 +1,10 @@
 {
 	"moduleAction": {
-		"recognize": 100801,
-		"deactivate": 100802,
-		"mute": 100803
+	    "view": 100801,
+		"recognize": 100802,
+		"deactivate": 100803,
+		"mute": 100804,
+		"unmute": 100805
 	},
 	"actionEndpoints": {
 		"recognize": "alarms/send_recognize_alarm",
@@ -11,6 +13,7 @@
 	},
 	"restEndpoints": {
 		"alarms": "alarms",
+		"alarmsArray": "alarms",
 		"alarm": "alarms/${id}"
 	},
 	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2" ],

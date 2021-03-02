@@ -41,8 +41,8 @@ public class ElementController {
 	}
 	
 	@PostMapping
-	@ApiOperation(value = "Get all elements", notes = "Get all elements")
-	public ResponseEntity<Object> getElements(@RequestParam List<String> ids) {
+	@ApiOperation(value = "Get selected elements", notes = "Get selected elements")
+	public ResponseEntity<Object> getElements(@RequestBody List<String> ids) {
 		
 		return new ResponseEntity<>(elementBO.getElements(ids), HttpStatus.OK);
 	}

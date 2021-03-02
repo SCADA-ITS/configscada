@@ -188,7 +188,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						body: getViewContent()
 					},
 					{
-						header: i18n.t("LBL_ALARMS_MONITOR_STATS"),
+						header: i18n.t("LBL_ALARMS_ACTION_PANEL"),
 						body: getViewActionPanel()
 					}
 				]
@@ -459,6 +459,7 @@ export default class AlarmMonitorModule extends GenericModule {
 			function getViewActionPanel() {
 
 				let viewActionPanel = {};
+				const marginActionPanel = 15;
 
 				let infiniteSvgView = {
 					view: "template",
@@ -692,7 +693,6 @@ export default class AlarmMonitorModule extends GenericModule {
 							height: 75,
 							css: "tb-actions",
 							elements: [
-								{},
 								{
 									view: "button",
 									width: 135,
@@ -708,6 +708,7 @@ export default class AlarmMonitorModule extends GenericModule {
 										}
 									}
 								},
+								{},
 								{
 									view: "button",
 									width: 135,
@@ -722,8 +723,7 @@ export default class AlarmMonitorModule extends GenericModule {
 											util.ui.notImplementedMessage();
 										}
 									}
-								},
-								{}
+								}
 							],
 							borderless: true
 						},
@@ -732,7 +732,6 @@ export default class AlarmMonitorModule extends GenericModule {
 							height: 75,
 							css: "tb-actions",
 							elements: [
-								{},
 								{
 									view: "button",
 									width: 135,
@@ -748,6 +747,7 @@ export default class AlarmMonitorModule extends GenericModule {
 										}
 									}
 								},
+								{},
 								{
 									view: "button",
 									width: 135,
@@ -762,12 +762,10 @@ export default class AlarmMonitorModule extends GenericModule {
 											util.ui.notImplementedMessage();
 										}
 									}
-								},
-								{}
+								}
 							],
 							borderless: true
 						},
-						{}
 					]
 				};
 
@@ -780,25 +778,25 @@ export default class AlarmMonitorModule extends GenericModule {
 						{ height: 20 },
 						{
 							cols: [
-								{ width: 30 },
+								{ width: marginActionPanel },
 								actionPanelSwitcher,
-								{ width: 30 }
+								{ width: marginActionPanel }
 							]
 						},
 						{ height: 30 },
 						{
 							cols: [
-								{ width: 30 },
+								{ width: marginActionPanel },
 								actionPanelAlarmStats,
-								{ width: 30 }
+								{ width: marginActionPanel }
 							]
 						},
 						{ height: 30 },
 						{
 							cols: [
-								{ width: 30 },
+								{ width: marginActionPanel },
 								actionPanelAlarmLevelStats,
-								{ width: 30 }
+								{ width: marginActionPanel }
 							]
 						},
 						{ height: 40 },
@@ -809,7 +807,13 @@ export default class AlarmMonitorModule extends GenericModule {
 							borderless: true
 						},
 						{ height: 20 },
-						actionPanelActions,
+						{
+							cols: [
+								{ width: marginActionPanel },
+								actionPanelActions,		
+								{ width: marginActionPanel }
+							]
+						},
 						{},
 						//infiniteSvgView,
 						{ height: 6 }

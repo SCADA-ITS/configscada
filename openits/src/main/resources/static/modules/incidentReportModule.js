@@ -935,6 +935,8 @@ export default class IncidentReportModule extends GenericModule {
 
 		function drawActionPanel() {
 
+			const marginActionPanel = 15;
+			
 			let viewActionPanel = {
 
 				id: "viewActionPanel-" + self.uid,
@@ -944,7 +946,7 @@ export default class IncidentReportModule extends GenericModule {
 					{
 						height: 95,
 						cols: [
-							{ width: 30 },
+							{ width: marginActionPanel },
 							{
 								rows: [
 									{ height: 20 },
@@ -1040,7 +1042,7 @@ export default class IncidentReportModule extends GenericModule {
 									{ height: 20 }
 								]
 							},
-							{ width: 30 }
+							{ width: marginActionPanel }
 						]
 					},
 					{
@@ -1053,92 +1055,102 @@ export default class IncidentReportModule extends GenericModule {
 						rows: [
 							{ height: 10 },
 							{
-								view: "toolbar",
-								height: 75,
-								css: "tb-actions",
-								elements: [
-									{},
+								cols: [
+									{ width: marginActionPanel },
 									{
-										view: "button",
-										width: 135,
-										label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
-										tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
-										type: "iconTop",
-										icon: "mdi mdi-cctv",
-										on: {
-
-											onItemClick() {
-
-												util.ui.notImplementedMessage();
+										view: "toolbar",
+										height: 75,
+										css: "tb-actions",
+										elements: [
+											{
+												view: "button",
+												width: 135,
+												label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
+												tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
+												type: "iconTop",
+												icon: "mdi mdi-cctv",
+												on: {
+		
+													onItemClick() {
+		
+														util.ui.notImplementedMessage();
+													}
+												}
+											},
+											{},
+											{
+												view: "button",
+												width: 135,
+												label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
+												tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
+												type: "iconTop",
+												icon: "mdi mdi-map-marker",
+												on: {
+		
+													onItemClick() {
+		
+														util.ui.notImplementedMessage();
+													}
+												}
 											}
-										}
+										],
+										borderless: true
 									},
-									{
-										view: "button",
-										width: 135,
-										label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
-										tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
-										type: "iconTop",
-										icon: "mdi mdi-map-marker",
-										on: {
-
-											onItemClick() {
-
-												util.ui.notImplementedMessage();
-											}
-										}
-									},
-									{}
-								],
-								borderless: true
+									{ width: marginActionPanel }
+								]
 							},
 							{
-								view: "toolbar",
-								height: 75,
-								css: "tb-actions",
-								elements: [
-									{},
+								cols: [
+									{ width: marginActionPanel },
 									{
-										view: "button",
-										width: 135,
-										label: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
-										tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-										type: "iconTop",
-										icon: "mdi mdi-account",
-										on: {
-
-											onItemClick() {
-
-												function resultSearch(data) {
-												
-													// TODO: Implement mutation to change user here
-													console.log(data);
+										view: "toolbar",
+										height: 75,
+										css: "tb-actions",
+										elements: [
+											{
+												view: "button",
+												width: 135,
+												label: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
+												tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
+												type: "iconTop",
+												icon: "mdi mdi-account",
+												on: {
+		
+													onItemClick() {
+		
+														function resultSearch(data) {
+														
+															// TODO: Implement mutation to change user here
+															console.log(data);
+														}
+														
+														let s = new SearchDialogBox("LBL_SELECT_USER", SearchDialogBox.USERS, resultSearch);
+														
+														s.show();
+													}
 												}
-												
-												let s = new SearchDialogBox("LBL_SELECT_USER", SearchDialogBox.USERS, resultSearch);
-												
-												s.show();
+											},
+											{},
+											{
+												view: "button",
+												width: 135,
+												label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
+												tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
+												type: "iconTop",
+												icon: "mdi mdi-bell",
+												on: {
+		
+													onItemClick() {
+		
+														util.ui.notImplementedMessage();
+													}
+												}
 											}
-										}
+										],
+										borderless: true
 									},
-									{
-										view: "button",
-										width: 135,
-										label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
-										tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
-										type: "iconTop",
-										icon: "mdi mdi-bell",
-										on: {
-
-											onItemClick() {
-
-												util.ui.notImplementedMessage();
-											}
-										}
-									},
-									{}
-								],
-								borderless: true
+									{ width: marginActionPanel }
+								]
 							}
 						]
 					},

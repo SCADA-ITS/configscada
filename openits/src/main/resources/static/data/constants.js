@@ -79,8 +79,13 @@ const EntityType = Object.freeze({
 	LOG_TYPE: { id: 8, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "log_types", load: true },
 	USER: { id: 9, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "users/with_role", load: true },
 	PLAN: { id: 10, mode: ENTITY_TYPE_MODE_TEMPORARY, syncLoad: false, expireSeconds: 50, endpoint: appConfig.restUrl + "plans/summary", load: true },
-	PLAN_SCHEDULE_STATE: { id: 11, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true },
+	PLAN_SCHEDULE_STATE: { id: 11, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_schedule_state_types", load: true }
 });
 
 
 const CONTENT_TYPE_JSON = {"Content-type": "application/json"};
+
+const HEADER_POST = {
+	"Content-type": "application/json",
+	"accept": "application/json"
+}

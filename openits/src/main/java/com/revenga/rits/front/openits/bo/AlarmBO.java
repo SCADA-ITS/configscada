@@ -30,6 +30,16 @@ public class AlarmBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS).getFieldId(), alarms);
 	}
+	
+	public List<Map<String, Object>> getAlarms(List<String> ids) {
+		
+		List<Map<String, Object>> alarms = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_ARRAY, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARMS_ARRAY).getFieldId(), alarms);
+		
+	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {

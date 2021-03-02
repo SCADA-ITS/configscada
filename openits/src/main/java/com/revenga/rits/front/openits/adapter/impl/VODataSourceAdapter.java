@@ -35,6 +35,7 @@ public class VODataSourceAdapter {
 	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_DATASOURCES_CONSTANTS);
 	
 	public static final int DATA_SOURCE_GET_ALARMS = getPropertyInt("get_alarms");
+	public static final int DATA_SOURCE_GET_ALARMS_ARRAY = getPropertyInt("get_alarms_array");
 	public static final int DATA_SOURCE_GET_ALARMS_BY_ALARM_TYPE = getPropertyInt("get_alarms_by_alarm_type");
 	public static final int DATA_SOURCE_GET_ALARMS_BY_SOURCE = getPropertyInt("get_alarms_by_source");
 	public static final int DATA_SOURCE_GET_ALARMS_BY_SOURCE_AND_ALARM_TYPE = getPropertyInt("get_alarms_by_source_and_alarm_type");

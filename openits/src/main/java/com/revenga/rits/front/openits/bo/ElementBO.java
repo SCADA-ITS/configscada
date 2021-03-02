@@ -28,8 +28,8 @@ public class ElementBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS, null);
 		
-		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS).getFieldId(), elements));
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), elements);
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class ElementBO extends GenericBO {
 		
 		Map<String, Object> element = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT, new Object[] { id });
 		
-		return locationBO.replaceLocation(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), element));
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), element);
 	}
 	
 	public List<Map<String, Object>> getElements(List<String> ids) {
@@ -46,8 +46,8 @@ public class ElementBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, new Object[] { ids });
 		
-		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY).getFieldId(), elements));
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), elements);
 	}
 	
 	public Map<String, Object> createElement(Object input) {

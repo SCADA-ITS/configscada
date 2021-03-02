@@ -1,5 +1,7 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +53,13 @@ public class AlarmController {
 	public ResponseEntity<Object> getAlarms() {
 		
 		return new ResponseEntity<>(alarmBO.getList(), HttpStatus.OK);
+	}
+	
+	@PostMapping
+	@ApiOperation(value = "Get selected alarms", notes = "Get selected alarms")
+	public ResponseEntity<Object> getAlarms(@RequestBody List<String> ids) {
+		
+		return new ResponseEntity<>(alarmBO.getAlarms(ids), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}")

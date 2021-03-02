@@ -106,6 +106,30 @@
 	margin-right: 10px;
 }
 
+.webix_modal {
+	opacity: 0.2;
+}
+
+.dialog-input-custom .webix_header {
+	
+	box-shadow: inset 0 4px #1CA1C1;
+}
+
+.dialog-input-custom .webix_secondary .webix_button {
+    color: var(--blue-soft);
+    border-radius: 4px;
+    border-width: 0px;
+    background: var(--blue-mid);
+}
+
+.dialog-input-custom .webix_secondary .webix_button:hover {
+    opacity: 0.9 !important;
+}
+
+.webix_modal_cover {
+	opacity: 0.2;
+}
+
 .webix_alert .webix_popup_title {
 	
 	box-shadow: inset 0 4px var(--blue-strong);
@@ -1515,6 +1539,7 @@
 
 
 /* FEature 904 */
+/*
 .webix_all_tabs .webix_item_tab.webix_selected {
     box-shadow: inset 0 -2px #475466;
     padding-bottom: 0;
@@ -1582,3 +1607,4 @@
     background-color: rgb(244, 245, 249);
     color: #475466;
 }
+*/
