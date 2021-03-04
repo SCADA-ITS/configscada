@@ -1137,12 +1137,131 @@ export default class IncidentReportModule extends GenericModule {
 												label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
 												tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
 												type: "iconTop",
+												disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
 												icon: "mdi mdi-bell",
 												on: {
 		
 													onItemClick() {
+														
+														if (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0) {
+
+															const defaultGridOptionValues = [
+																{ gridOption: { id: 1 }, value: "true" },
+																{ gridOption: { id: 2 }, value: "true" },
+																{ gridOption: { id: 3 }, value: undefined },
+																{ gridOption: { id: 4 }, value: undefined },
+																{ gridOption: { id: 5 }, value: undefined },
+																{ gridOption: { id: 6 }, value: undefined },
+																{ gridOption: { id: 7 }, value: "true" },
+																{ gridOption: { id: 8 }, value: "false" },
+																{ gridOption: { id: 9 }, value: "true" },
+																{ gridOption: { id: 10 }, value: "false" },
+																{ gridOption: { id: 11 }, value: "false" },
+																{ gridOption: { id: 12 }, value: "false" },
+																{ gridOption: { id: 13 }, value: "false" },
+																{ gridOption: { id: 14 }, value: "false" },
+																{ gridOption: { id: 15 }, value: "false" },
+																{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+															];
+
+															let metadata = {
+																filter: true,
+																label: "LBL_ALARMS",
+																visible: true,
+																gridOptionValues: defaultGridOptionValues,
+																gridFields: [
+																	{
+																		extended: false,
+																		filtered: false,
+																		isEpochMilli: false,
+																		isPk: false,
+																		needsTranslation: true,
+																		parameterized: false,
+																		position: 1,
+																		required: true,
+																		sourceField: "alarmConfigAlias",
+																		visible: true,
+																		label: "LBL_ALARM_CONFIG_ALIAS",
+																		widthPx: 300,
+																		gridFieldDataType: {
+																			id: 1,
+																			name: "string"
+																		}
+																	},
+																	{
+																		extended: false,
+																		filtered: false,
+																		isEpochMilli: false,
+																		isPk: false,
+																		needsTranslation: true,
+																		parameterized: false,
+																		position: 2,
+																		required: true,
+																		sourceField: "elementTypeLabelAlias",
+																		visible: true,
+																		label: "LBL_ELEMENT_TYPE_ALIAS",
+																		widthPx: 200,
+																		gridFieldDataType: {
+																			id: 1,
+																			name: "string"
+																		}
+																	},
+																	{
+																		extended: false,
+																		filtered: false,
+																		isEpochMilli: false,
+																		isPk: false,
+																		needsTranslation: false,
+																		parameterized: false,
+																		position: 2,
+																		required: true,
+																		sourceField: "elementAlias",
+																		visible: true,
+																		label: "LBL_ELEMENT_ALIAS",
+																		widthPx: 200,
+																		gridFieldDataType: {
+																			id: 1,
+																			name: "string"
+																		}
+																	}
+																
+																]
+															};
+								
+
+															let data = [];
+									
+															if (Array.isArray(self.incidentReport.alarms) && self.incidentReport.alarms.length) {
+																let alarms = self.incidentReport.alarms;
+																for (let i = 0; i < alarms.length; i++) {
+									
+																	let row = {};
+									
+																	row.alarmConfigAlias = alarms[i].alarmConfig.labelAlias;
+																	row.elementTypeLabelAlias = alarms[i].element.elementType.labelAlias;
+																	row.elementAlias = alarms[i].element.alias;
+									
+																	data.push(row);
+																}
+															}
+
+															let tableAlarms = new DataTable(null, null, metadata, data);
+															let h = document.documentElement.clientHeight - 200;
+															let w = document.documentElement.clientWidth - 900;
+															//let h = 400;
+															//let w =  800;
+
+															let body = {
+																rows: tableAlarms.getView()
+															};
 		
-														util.ui.notImplementedMessage();
+															util.ui.loadWindow(
+																"LBL_ALARMS",
+																body,
+																h,
+																w
+															);	
+														}
 													}
 												}
 											}
