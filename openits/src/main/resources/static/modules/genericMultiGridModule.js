@@ -12,16 +12,6 @@ export default class GenericMultiGridModule extends GenericModule {
 		
 		this.dataTable = undefined;
 		
-//		this.drawNoEquipmentTypeData = {
-//			view: "template",
-//			id: "no-data-" + webix.uid(),
-//			template: function(data) {
-//				
-//				let icon = "<img src='img/loading.svg' align='center'>";
-//
-//				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-//			}
-//		}
     }
 
 	getViewDrawNoData() {
@@ -243,62 +233,4 @@ export default class GenericMultiGridModule extends GenericModule {
 			equipmentTable.addView({ height: 20 });
 		}
 	}
-	
-//	callbackSelectedElemenType(list, id) {
-//
-//		let item = list.getItem(id);
-//		let dataGridId = item.grid;
-//		let dataGridParams = id;
-//		let equipmentTable = $$(this.uid);
-//	
-//		if (dataGridId != undefined && dataGridParams != undefined) {
-//	
-//			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
-//				
-//				if (dat != null) {
-//	
-//					let viewsToRemove = [];
-//					equipmentTable.getChildViews().forEach(view => {
-//				
-//						viewsToRemove.push(view.config.id);
-//					});
-//					
-//					let metadata = dat.json().metadata;
-//					let data = dat.json().data;
-//		
-//					let dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
-//					
-//					let newTable = dataTable.getView();
-//		
-//					newTable.forEach(newView => {
-//		
-//						equipmentTable.addView(newView);
-//					});
-//		
-//					//app.datatable.callbacks(self.module, self.instance);
-//					dataTable.callbacks();
-//					
-//					viewsToRemove.forEach(viewId => {
-//	
-//						if (viewId.indexOf("dt-") !== -1) {
-//							let ctx = viewId.replace("dt-", "ctx_menu-");
-//				
-//							if (!webix.isUndefined($$(ctx))) {
-//				
-//								$$(ctx).destructor();
-//							}
-//						}
-//						
-//						equipmentTable.removeView(viewId);
-//					});
-//					
-//					$$(this.uid).hideProgress();
-//				}
-//			}, function(response) { util.ajax.handleError(response); });
-//		}
-//		else {
-//			equipmentTable.addView(self.drawNoEquipmentTypeData);
-//			equipmentTable.addView({ height: 20 });
-//		}
-//	}
 }

@@ -1166,7 +1166,7 @@ export default class IncidentReportModule extends GenericModule {
 
 															let metadata = {
 																filter: true,
-																label: "LBL_ALARMS",
+																label: "LBL_INCIDENT_REPORT_ALARMS",
 																visible: true,
 																gridOptionValues: defaultGridOptionValues,
 																gridFields: [
@@ -1182,7 +1182,7 @@ export default class IncidentReportModule extends GenericModule {
 																		sourceField: "alarmConfigAlias",
 																		visible: true,
 																		label: "LBL_ALARM_CONFIG_ALIAS",
-																		widthPx: 300,
+																		widthPx: 400,
 																		gridFieldDataType: {
 																			id: 1,
 																			name: "string"
@@ -1200,7 +1200,7 @@ export default class IncidentReportModule extends GenericModule {
 																		sourceField: "elementTypeLabelAlias",
 																		visible: true,
 																		label: "LBL_ELEMENT_TYPE_ALIAS",
-																		widthPx: 200,
+																		widthPx: 175,
 																		gridFieldDataType: {
 																			id: 1,
 																			name: "string"
@@ -1213,12 +1213,12 @@ export default class IncidentReportModule extends GenericModule {
 																		isPk: false,
 																		needsTranslation: false,
 																		parameterized: false,
-																		position: 2,
+																		position: 3,
 																		required: true,
 																		sourceField: "elementAlias",
 																		visible: true,
 																		label: "LBL_ELEMENT_ALIAS",
-																		widthPx: 200,
+																		widthPx: 150,
 																		gridFieldDataType: {
 																			id: 1,
 																			name: "string"
@@ -1246,8 +1246,8 @@ export default class IncidentReportModule extends GenericModule {
 															}
 
 															let tableAlarms = new DataTable(null, null, metadata, data);
-															let h = document.documentElement.clientHeight - 200;
-															let w = document.documentElement.clientWidth - 900;
+															let h = document.documentElement.clientHeight - 600;
+															let w = document.documentElement.clientWidth - 1100;
 															//let h = 400;
 															//let w =  800;
 
@@ -1256,7 +1256,7 @@ export default class IncidentReportModule extends GenericModule {
 															};
 		
 															util.ui.loadWindow(
-																"LBL_ALARMS",
+																"LBL_INCIDENT_REPORT_ALARMS",
 																body,
 																h,
 																w
