@@ -596,7 +596,19 @@ export default class DataTable {
 
 		return selectedPks;
 	}
+	
+	getSelectedItems() {
 
+		let grid = $$("dt-" + this.uid);
+		let selectedItems = [];
+
+		if (grid != undefined) {
+
+			selectedItems = grid.getSelectedItem(true);
+		}
+
+		return selectedItems;
+	}
 
 	drawMainToolbar() {
 

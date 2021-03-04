@@ -300,7 +300,7 @@ export default class SearchDialogBox {
 								
 								if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
 								
-									acceptCallback(self.searchDataTable.getSelectedIds());	
+									acceptCallback(self.searchDataTable.getSelectedItems());	
 								}
 							}
 						}
