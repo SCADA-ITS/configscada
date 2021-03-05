@@ -556,7 +556,8 @@ export let util = {
 				elements: [
 					{ 
 						view: "label", 
-						template: i18n.t(title)},
+						template: title
+					},
 					{
 						view: "icon",
 						//css: "notification-center-close-btn",

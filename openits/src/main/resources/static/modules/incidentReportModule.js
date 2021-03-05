@@ -4,22 +4,6 @@ import SearchDialogBox from "../component/searchDialogBox.js";
 //import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
-//const INCIDENT_REPORT = Object.freeze({
-//	moduleAction: {
-//		edit: 100401,
-//		confirm: 100402,
-//		cancel: 100403
-//	},
-//	restEndpoint: "incidents/reports/${id}",
-//	topic: "/topic/incidentReport",
-//	actionEndpoints: {
-//		cancel: "incidents/reports/${id}/cancel",
-//		confirm: "incidents/reports/${id}/confirm",
-//		forward: "incidents/reports/${id}/forward",
-//		finalizeTask: "incidents/reports/${id}/finalize_task/${taskId}"
-//	}
-//});
-
 export default class IncidentReportModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -35,7 +19,6 @@ export default class IncidentReportModule extends GenericModule {
 		this.disconnectStomp = true;
 		this.closed = false;
 		
-		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
 		this.config = module.config;
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
@@ -1261,7 +1244,7 @@ export default class IncidentReportModule extends GenericModule {
 															};
 		
 															util.ui.loadWindow(
-																"LBL_INCIDENT_REPORT_ALARMS",
+																i18n.t("LBL_INCIDENT_REPORT_ALARMS"),
 																body,
 																h,
 																w
@@ -1324,7 +1307,7 @@ export default class IncidentReportModule extends GenericModule {
 													};
 
 													util.ui.loadWindow(
-														"LBL_OPERATION_PLAN",
+														i18n.t("LBL_OPERATION_PLAN"),
 														body,
 														h,
 														w
@@ -1365,7 +1348,7 @@ export default class IncidentReportModule extends GenericModule {
 
 											onItemClick() {
 
-
+												util.ui.notImplementedMessage();
 											}
 										}
 									}
@@ -1673,24 +1656,6 @@ export default class IncidentReportModule extends GenericModule {
 					self.closed = true;
 					self.refresh();
 				}
-
-
-				//				webix.alert({
-				//				    title: i18n.t("LBL_INCIDENT_CLOSED") + " " + self.incidentReport.id,
-				//				    ok: "LBL_OK",
-				//				    text: "LBL_INCIDENT_CLOSED DESCRIPTION",
-				//					width: 600,
-				//				    type:"alert-warning"
-				//				}).then(function(){
-				//				    
-				//					let container = $$(self.args.containerId); 	
-				//										
-				//					if (container) {
-				//						
-				//						container.close();
-				//					}
-				//				});
-
 			}
 		}
 

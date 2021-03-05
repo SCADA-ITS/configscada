@@ -51,7 +51,7 @@ export default class AlarmModule extends GenericModule {
 			
 			let recog = function(alarmsId) {
 				
-				(new InputDialogBox("LBL_DIALOG_RECOGNIZE_ALARMS", "LBL_ARE_YOU_SURE_RECOGNIZE", function(comments) {
+				(new InputDialogBox(i18n.t("LBL_DIALOG_RECOGNIZE_ALARMS"), i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE"), function(comments) {
 					
 					let body = {
 						alarmIds: alarmsId,

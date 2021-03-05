@@ -19,29 +19,23 @@ public class Tree implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="adapter_id")
-	private Integer adapterId;
-
-	@Column(name="cmd_buttons")
-	private Boolean cmdButtons;
-
 	private Boolean enabled;
 
-	private String icon;
-
 	private String label;
-
-	private Boolean multiselect;
-
-	private Boolean search;
-
-	private Boolean sorted;
 
 	private Boolean visible;
 
 	//bi-directional many-to-one association to TreeCommand
 	@OneToMany(mappedBy="tree")
 	private List<TreeCommand> treeCommands;
+	
+	//bi-directional many-to-one association to TreeOptionValue
+	@OneToMany(mappedBy="tree")
+	private List<TreeOptionValue> treeOptionValues;
+	
+	//uni-directional many-to-one association to Adapter
+	@ManyToOne
+	private Adapter adapter;
 
 	public Tree() {
 	}
@@ -54,22 +48,6 @@ public class Tree implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getAdapterId() {
-		return this.adapterId;
-	}
-
-	public void setAdapterId(Integer adapterId) {
-		this.adapterId = adapterId;
-	}
-
-	public Boolean getCmdButtons() {
-		return this.cmdButtons;
-	}
-
-	public void setCmdButtons(Boolean cmdButtons) {
-		this.cmdButtons = cmdButtons;
-	}
-
 	public Boolean getEnabled() {
 		return this.enabled;
 	}
@@ -78,44 +56,12 @@ public class Tree implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public String getIcon() {
-		return this.icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
 	public String getLabel() {
 		return this.label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Boolean getMultiselect() {
-		return this.multiselect;
-	}
-
-	public void setMultiselect(Boolean multiselect) {
-		this.multiselect = multiselect;
-	}
-
-	public Boolean getSearch() {
-		return this.search;
-	}
-
-	public void setSearch(Boolean search) {
-		this.search = search;
-	}
-
-	public Boolean getSorted() {
-		return this.sorted;
-	}
-
-	public void setSorted(Boolean sorted) {
-		this.sorted = sorted;
 	}
 
 	public Boolean getVisible() {
@@ -146,6 +92,14 @@ public class Tree implements Serializable {
 		treeCommand.setTree(null);
 
 		return treeCommand;
+	}
+	
+	public Adapter getAdapter() {
+		return this.adapter;
+	}
+
+	public void setAdapter(Adapter adapter) {
+		this.adapter = adapter;
 	}
 
 }

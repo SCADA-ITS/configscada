@@ -8,7 +8,7 @@ function assign(entitiesManager, em_type) {
 			
 			if (Array.isArray(response) && response.length > 0) {
 			
-				console.log("[EntitiesManager] Cached " + response.length + " entities of type " + em_type);	
+				console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type);	
 			}
 				
 		}
@@ -28,7 +28,7 @@ function assign(entitiesManager, em_type) {
 			if (Array.isArray(response) && response.length > 0) {
 			
 				let nextUpdate = new Date((new Date()).getTime() + (EntityType[em_type].expireSeconds * 1000));
-				console.log("[EntitiesManager] Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());	
+				console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());	
 			}
 			
 			entitiesManager.lastUpdateTempEntities[[EntityType[em_type].id]] = Math.floor(new Date() / 1000);
@@ -94,7 +94,7 @@ function scheduler(entitiesManager) {
 					//if ((Math.floor(new Date() / 1000) - entitiesManager.lastUpdateTempEntities[EntityType[em_type].id]) > EntityType[em_type].expireSeconds) {
 					if (nextSchedulerDate > nextExpireType) {
 					
-						console.log("[EntitiesManager] Scheduled refresh cache for entity of type " + em_type);
+						console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Scheduled refresh cache for entity of type " + em_type);
 						assign(entitiesManager, em_type);	
 					}
 				}
@@ -146,18 +146,21 @@ export default class EntitiesManager {
 			}
 			
 			let tempEntity = undefined;
+			let index = -1;
 			
 			if (this.tempEntities[em_type.id].length > 0) {
 			
-				let index = this.tempEntities[em_type.id].findIndex(v => v.id === value);
+				index = this.tempEntities[em_type.id].findIndex(v => v.id === value);
 				
 				if (index > -1) {
 					
 					tempEntity = this.tempEntities[em_type.id][index];
 					
 					if (tempEntity && (Math.floor(new Date() / 1000) - tempEntity.date) > em_type.expireSeconds) {
+						
+						log.console("[" + (new Date()).toISOString() + "] " + tempEntity + " needs to be updated because it exceeds expiration time");
 					
-						this.tempEntities[em_type.id].splice(index, 1);
+						//this.tempEntities[em_type.id].splice(index, 1);
 						tempEntity = undefined;
 					}
 				}
@@ -165,17 +168,36 @@ export default class EntitiesManager {
 			
 			if (!tempEntity) {
 				
-				let response = webix.ajax().sync().get(em_type.endpoint + "/" + value) ;
+				log.console("[" + (new Date()).toISOString() + "] " + "Querying => " + em_type.endpoint + "/" + value);
 				
+				let response = webix.ajax().sync().get(em_type.endpoint + "/" + value) ;
+						
 				if (response) {
+					
+					log.console("[" + (new Date()).toISOString() + "] " + "Response => " + em_type.endpoint + "/" + value);
 				
 					let responseObject = JSON.parse(response.responseText);
+					
+					if (index > -1) {
+						
+						log.console("[" + (new Date()).toISOString() + "] " + "Deleting old value => " + this.tempEntities[em_type.id][index]);
+
+						this.tempEntities[em_type.id].splice(index, 1);
+						
+						log.console("[" + (new Date()).toISOString() + "] " + "Deleted old value");
+					}
 				
-					this.tempEntities[em_type.id].push({
+					let newValue = {
 						id: value,
 						date: Math.floor(new Date() / 1000),
 						data: responseObject
-					});
+					};
+					
+					log.console("[" + (new Date()).toISOString() + "] " + "Adding new value => " + newValue);
+					
+					this.tempEntities[em_type.id].push(newValue);
+					
+					log.console("[" + (new Date()).toISOString() + "] " + "Added value");
 					
 					return responseObject;	
 				}
