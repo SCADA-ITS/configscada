@@ -65,7 +65,7 @@ const Services = Object.freeze({
 	STOMP_SUBSCRIPTOR_SERVICE: 14
 });
 
-const ENTITIES_MANAGER_SCHEDULER_SECS = 60;
+const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
 
 // Type of entities to load
 const EntityType = Object.freeze({

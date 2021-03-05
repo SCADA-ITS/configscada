@@ -104,8 +104,8 @@ export default class DataTable {
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
 			datatable.select = resultSelect;
-			console.log(metadata)
-			console.log(data)
+//			console.log(metadata)
+//			console.log(data)
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
@@ -809,7 +809,7 @@ export default class DataTable {
 
 		let dataTable = $$("dt-" + this.uid);
 		let metadata = this.metadata;
-		console.log(dataTable.config.columns)
+//		console.log(dataTable.config.columns)
 
 		if (gridFieldId && order) {
 
@@ -1033,7 +1033,7 @@ export default class DataTable {
 		let dataTable = $$("dt-" + this.uid);
 		let anyChange = false;
 
-		if (dataTable && data && items) {
+		if (dataTable && items) {
 
 			if (Array.isArray(items) && items.length > 0) {
 

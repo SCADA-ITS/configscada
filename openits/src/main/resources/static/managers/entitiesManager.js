@@ -158,7 +158,7 @@ export default class EntitiesManager {
 					
 					if (tempEntity && (Math.floor(new Date() / 1000) - tempEntity.date) > em_type.expireSeconds) {
 						
-						log.console("[" + (new Date()).toISOString() + "] " + tempEntity + " needs to be updated because it exceeds expiration time");
+						console.log("[" + (new Date()).toISOString() + "] " + tempEntity + " needs to be updated because it exceeds expiration time");
 					
 						//this.tempEntities[em_type.id].splice(index, 1);
 						tempEntity = undefined;
@@ -168,23 +168,23 @@ export default class EntitiesManager {
 			
 			if (!tempEntity) {
 				
-				log.console("[" + (new Date()).toISOString() + "] " + "Querying => " + em_type.endpoint + "/" + value);
+				console.log("[" + (new Date()).toISOString() + "] " + "Querying => " + em_type.endpoint + "/" + value);
 				
 				let response = webix.ajax().sync().get(em_type.endpoint + "/" + value) ;
 						
 				if (response) {
 					
-					log.console("[" + (new Date()).toISOString() + "] " + "Response => " + em_type.endpoint + "/" + value);
+					console.log("[" + (new Date()).toISOString() + "] " + "Response => " + em_type.endpoint + "/" + value);
 				
 					let responseObject = JSON.parse(response.responseText);
 					
 					if (index > -1) {
 						
-						log.console("[" + (new Date()).toISOString() + "] " + "Deleting old value => " + this.tempEntities[em_type.id][index]);
+						console.log("[" + (new Date()).toISOString() + "] " + "Deleting old value => " + this.tempEntities[em_type.id][index]);
 
 						this.tempEntities[em_type.id].splice(index, 1);
 						
-						log.console("[" + (new Date()).toISOString() + "] " + "Deleted old value");
+						console.log("[" + (new Date()).toISOString() + "] " + "Deleted old value");
 					}
 				
 					let newValue = {
@@ -193,11 +193,11 @@ export default class EntitiesManager {
 						data: responseObject
 					};
 					
-					log.console("[" + (new Date()).toISOString() + "] " + "Adding new value => " + newValue);
+					console.log("[" + (new Date()).toISOString() + "] " + "Adding new value => " + newValue);
 					
 					this.tempEntities[em_type.id].push(newValue);
 					
-					log.console("[" + (new Date()).toISOString() + "] " + "Added value");
+					console.log("[" + (new Date()).toISOString() + "] " + "Added value");
 					
 					return responseObject;	
 				}
