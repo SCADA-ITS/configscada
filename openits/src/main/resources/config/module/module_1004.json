@@ -10,7 +10,8 @@
 		"cancel": "incidents/reports/${id}/cancel",
 		"confirm": "incidents/reports/${id}/confirm",
 		"forward": "incidents/reports/${id}/forward",
-		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}"
+		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}",
+		"assignUserIncidentReport": "incidents/reports/${id}/user/${userId}"
 	},
 	"infoFields": [
 		{ "position": 1, "icon": "", "label": "", "objField": "" },

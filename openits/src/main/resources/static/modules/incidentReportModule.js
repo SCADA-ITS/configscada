@@ -1119,9 +1119,14 @@ export default class IncidentReportModule extends GenericModule {
 													onItemClick() {
 		
 														function resultSearch(data) {
-														
-															// TODO: Implement mutation to change user here
-															console.log(data);
+															
+															let body = {
+																id:  self.incidentReportId,
+																userId: data[0].id
+															};
+															let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+															self.restAction(endpoint);
+
 														}
 														
 														let s = new SearchDialogBox("LBL_SELECT_USER", SearchDialogBox.USERS, resultSearch);
