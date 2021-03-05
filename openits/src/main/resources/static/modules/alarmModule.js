@@ -170,7 +170,7 @@ export default class AlarmModule extends GenericModule {
 			
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 				
-				title = action ? i18n.t("LBL_DIALOG_MUTE_ALARMS") : "LBL_DIALOG_UNMUTE_ALARMS";
+				title = action ? i18n.t("LBL_DIALOG_MUTE_ALARMS") : i18n.t("LBL_DIALOG_UNMUTE_ALARMS");
 				text = action ? i18n.t("LBL_ARE_YOU_SURE_MUTE") : i18n.t("LBL_ARE_YOU_SURE_UNMUTE");
 				
 				(new CalendarDialogBox(title, text, false, 
