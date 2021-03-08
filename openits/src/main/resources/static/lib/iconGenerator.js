@@ -418,7 +418,7 @@ function updateIcon(element, suffix="") {
     if(document.getElementById(element.id + suffix + ":ValueBackground") != null){
       document.getElementById(element.id + suffix + ":ValueBackground").style["stroke"] = color;
     }
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 13; index++) {
       if(document.getElementById(element.id + suffix + ":fill"+index) != null){
         document.getElementById(element.id + suffix + ":fill"+index).style["fill"] = color;    
       }

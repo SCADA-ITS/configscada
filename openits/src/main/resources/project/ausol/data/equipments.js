@@ -581,10 +581,6 @@ export let columnsElementList = {
 			"ElementTypeParam:75:2:9",
 			"ElementTypeParam:75:2:10",
 			"ElementTypeParam:75:2:11",
-			"ElementTypeParam:75:2:12",
-			"ElementTypeParam:75:2:13",
-			"ElementTypeParam:75:2:14",
-			"ElementTypeParam:75:2:15",
 		]
 	},
 }
@@ -2288,18 +2284,6 @@ export let columnsElementConfig = {
 			},
 			"ElementTypeParam:75:2:11": {
 				"header": [ $.i18n("ElementTypeParam:75:2:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:75:2:12": {
-				"header": [ $.i18n("ElementTypeParam:75:2:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:75:2:13": {
-				"header": [ $.i18n("ElementTypeParam:75:2:13.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:75:2:14": {
-				"header": [ $.i18n("ElementTypeParam:75:2:14.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:75:2:15": {
-				"header": [ $.i18n("ElementTypeParam:75:2:15.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
 		}
 	}
