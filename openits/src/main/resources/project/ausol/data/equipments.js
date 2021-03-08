@@ -281,7 +281,8 @@ export let columnsElementList = {
 		2:[
 			"alias",
 			"state",
-			"ElementTypeParam:18:2:1"
+			"ElementTypeParam:18:2:1",
+			"ElementTypeParam:18:2:2"
 		]
 	},
 	"ElementType:19": { 
@@ -1400,7 +1401,7 @@ export let columnsElementConfig = {
             "ElementTypeParam:18:2:1": { //"wind_speed
 				"header": [ $.i18n("ElementTypeParam:18:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:18:2:2": { //"status
+            "ElementTypeParam:18:2:2": { //"traffic_direction
 				"header": [ $.i18n("ElementTypeParam:18:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}

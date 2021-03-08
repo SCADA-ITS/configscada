@@ -544,8 +544,8 @@ var i18_es = {
 
     "ElementTypeParam:18:2:1.alias": "wind speed",
     "ElementTypeParam:18:2:1.description": "wind speed",
-    "ElementTypeParam:18:2:2.alias": "status",
-    "ElementTypeParam:18:2:2.description": "status",
+    "ElementTypeParam:18:2:2.alias": "Direcci&oacute;n tr&aacute;fico",
+    "ElementTypeParam:18:2:2.description": "Direcci&oacute;n tr&aacute;fico",
 
     "ElementTypeParam:19:1:1.alias": "PK",
     "ElementTypeParam:19:1:1.description": "PK",
