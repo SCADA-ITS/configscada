@@ -20,6 +20,7 @@ import com.revenga.rits.front.openits.bo.ImsIncidentStateBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTaskPlanBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeTaskBO;
 import com.revenga.rits.front.openits.bo.ImsTaskTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,7 +55,11 @@ public class ImsIncidentController {
 	ImsExtIncidentBO imsExtIncidentBO;
 	
 	@Autowired
-	ImsExtIncidentTypeBO imsExtIncidentTypeBO;	
+	ImsExtIncidentTypeBO imsExtIncidentTypeBO;
+	
+
+	@Autowired
+	ImsIncidentTypeBO imsIncidentTypeBO;	
 	
 	@GetMapping(value = "/reports")
 	@ApiOperation(value = "Get all incident reports", notes = "Get all incident reports")
@@ -345,6 +350,26 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsExtIncidentTypeBO.getItem(id), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/imsIncidentTypes")
+	@ApiOperation(value = "Get ext incident types", notes = "Get ext incident types")
+	public ResponseEntity<Object> getImsIncidentTypes() {
+		
+		return new ResponseEntity<>(imsIncidentTypeBO.getList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/imsIncidentType/{id}")
+	@ApiOperation(value = "Get ext incident type by id", notes = "Get ext incident type by id")
+	public ResponseEntity<Object> getImsIncidentType(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "ExtIncidentType by id",
+			example = "ImsIncidentType:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeBO.getItem(id), HttpStatus.OK);
 	}
 
 }
