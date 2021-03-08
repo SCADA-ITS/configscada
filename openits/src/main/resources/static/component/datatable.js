@@ -29,7 +29,8 @@ const GridOptions = {
 	ROW_COLOR: 18,
 	REFRESH_BUTTON: 20,
 	ROW_ADJUSTEMENT: 21,
-	HEADER_ROW_HEIGHT: 22
+	HEADER_ROW_HEIGHT: 22,
+	SHOW_SELECTED: 23
 
 };
 
@@ -674,6 +675,14 @@ export default class DataTable {
 		
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 
+		let iconReplacement = metadata.gridFields.filter(e => e.gridFieldIcons.length > 0);
+		let label = undefined;
+
+		for (let element of iconReplacement) {
+			label = element.gridFieldIcons.find(e => e.labelValue && e.labelValue != "");
+		};
+
+
 		let toolbar = {
 			view: "toolbar",
 			id: "tbActions-" + this.uid,
@@ -707,7 +716,7 @@ export default class DataTable {
 
 			if (resultFilter) {
 
-				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("Activar filtros"), tooltip: true });
+				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("LBL_FILTERS"), tooltip: true });
 
 			}
 
@@ -721,6 +730,11 @@ export default class DataTable {
 			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });
 
+
+			if (label != undefined) {
+
+				toolbar.elements.push({ id: "tb_btn-icons-" + this.uid, view: "icon", icon: "mdi mdi-map-legend", value: i18n.t("LBL_TABLE_LEGEND"), tooltip: true })
+			}
 		}
 
 		if (metadata.gridCommands && metadata.gridCommands.length > 0 && resultCommands) {
@@ -1163,138 +1177,258 @@ export default class DataTable {
 		}
 	}
 
-	showFilters() {
 
+	clickShowFilters() {
+
+		let self = this;
 		let showFiltersButton = $$("tb_btn-showfilters-" + this.uid);
 		let datatable = $$("dt-" + this.uid);
 		let resultFilters = this.getGridOptions(GridOptions.FILTER);
-		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
 		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
+		let filtered = this.metadata.gridFields.find(e => e.filtered === true && e.visible === true);
 
-		let header = datatable.getNode().getElementsByClassName('webix_ss_header');
-		let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
+		let visible = resultFilters;
 
-		if (!webix.isUndefined(datatable) && header && lateral) {
+		if (showFiltersButton) {
 
-			if (Array.isArray(columnVertical) && columnVertical.length > 0) {
+			if (resultFilters) {
 
-				if (showFiltersButton) {
+				showFiltersButton._contentobj.className = "webix_view webix_control webix_el_icon filter_icon_selected";
+				showFiltersButton.refresh();
+			}
 
-					if (resultFilters) {
+			showFiltersButton.attachEvent("onItemClick", function(id, e) {
 
+				if (datatable && filtered) {
+
+					let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
+					let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+
+					if (visible) {
+
+						showFiltersButton._contentobj.className = "webix_view webix_control webix_el_icon";
+						showFiltersButton.refresh();
+
+						visible = false;
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+						if (columnVertical && columnVertical.length > 0) {
+
+							datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
+
+						} else {
+
+							datatable.config.headerRowHeight = ExtendedHeader.FALSE;
+
+						}
+
+					} else {
+						showFiltersButton._contentobj.className = "webix_view webix_control webix_el_icon filter_icon_selected";
+						showFiltersButton.refresh();
+
+						visible = true;
 						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
 						header[0].style.borderBottom = "0px solid var(--blue-strong)";
 						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
-						if (resultVertical && !isNaN(parseInt(resultVertical))) {
+					}
+				}
+
+				datatable.refreshColumns();
+			});
+		}
+	}
+
+
+	showFilters() {
+
+		let self = this;
+		let datatable = $$("dt-" + this.uid);
+		let resultFilters = this.getGridOptions(GridOptions.FILTER);
+		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
+		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
+		let columnFilterTrue = this.metadata.gridFields.filter(e => (e.filtered));
+
+		if (columnFilterTrue && columnFilterTrue.length > 0) {
+
+			let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
+			let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+			let columnFilterFalse = this.metadata.gridFields.filter(e => e.filtered === false);
+
+			if (columnVertical && columnVertical.length > 0) {
+
+				if (resultFilters) {
+
+					if (columnFilterFalse && columnFilterFalse.length > 0) {
+
+						if (!isNaN(parseInt(resultVertical))) {
 
 							for (let column of datatable.config.columns) {
 
 								column.header[0].height = parseInt(resultVertical);
 
+								if (column.header[0].rotate && !column.header[1]) {
+									column.header[0].css = { "text-align": "center" };
+								}
+
+								if (!column.header[0].rotate && column.header[1]) {
+									column.header[0].css = { "padding-top": "20px" };
+
+								}
 							}
+
+							datatable.config.headerRowHeight = ExtendedHeader.TRUE;
 
 						} else {
 
 							for (let column of datatable.config.columns) {
 
 								column.header[0].autoheight = true;
+								if (column.header[0].rotate && !column.header[1]) {
+									column.header[0].css = { "text-align": "center" };
+								}
 
+								if (!column.header[0].rotate && column.header[1]) {
+									column.header[0].css = { "padding-top": "20px" };
+
+								}
 							}
 						}
 
 					} else {
 
-						datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-
-						if (resultVertical && !isNaN(parseInt(resultVertical))) {
+						if (!isNaN(parseInt(resultVertical))) {
 
 							for (let column of datatable.config.columns) {
 
 								column.header[0].height = parseInt(resultVertical);
-
 							}
 
 						} else {
-
 							for (let column of datatable.config.columns) {
 
 								column.header[0].autoheight = true;
-
 							}
 						}
 					}
 
 				} else {
 
-					if (resultVertical && !isNaN(parseInt(resultVertical))) {
+					datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
+					header[0].style.borderBottom = "1px solid var(--blue-strong)";
+					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
 
-						for (let column of datatable.config.columns) {
+					if (columnFilterFalse && columnFilterFalse.length > 0) {
 
-							column.header[0].height = parseInt(resultVertical);
+
+						if (!isNaN(parseInt(resultVertical))) {
+
+							for (let column of datatable.config.columns) {
+
+								column.header[0].height = parseInt(resultVertical);
+
+								if (column.header[0].rotate && !column.header[1]) {
+									column.header[0].css = { "text-align": "center" };
+								}
+							}
+
+						} else {
+
+							for (let column of datatable.config.columns) {
+								column.header[0].autoheight = true;
+
+								if (column.header[0].rotate) {
+									column.header[0].css = { "text-align": "center" };
+								}
+							}
 						}
 
 					} else {
 
-						for (let column of datatable.config.columns) {
+						if (!isNaN(parseInt(resultVertical))) {
 
-							column.header[0].autoheight = true;
+							for (let column of datatable.config.columns) {
+
+								column.header[0].height = parseInt(resultVertical);
+							}
+
+						} else {
+
+							for (let column of datatable.config.columns) {
+
+								column.header[0].autoheight = true;
+							}
 						}
 					}
 				}
 
 			} else {
 
-				if (showFiltersButton) {
+				if (resultFilters) {
 
-					if (resultFilters) {
+					if (columnFilterFalse && columnFilterFalse.length > 0) {
 
-						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
+						columnFilterFalse.forEach(item => {
 
+							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
+							pad.header[0].css = { "padding-bottom": "85px !important" };
+						});
+					}
 
-					} else {
+					datatable.config.headerRowHeight = ExtendedHeader.TRUE;
 
-						datatable.config.headerRowHeight = ExtendedHeader.FALSE;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
+				} else {
+					if (columnFilterFalse && columnFilterFalse.length > 0) {
+
+						columnFilterFalse.forEach(item => {
+
+							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
+							pad.header[0].css = { "padding-bottom": "85px !important" };
+
+						});
+					}
+
+					datatable.config.headerRowHeight = ExtendedHeader.FALSE;
+					header[0].style.borderBottom = "1px solid var(--blue-strong)";
+					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+				}
+
+			}
+		} else {
+
+			if (columnVertical && columnVertical.length > 0) {
+
+				if (!isNaN(parseInt(resultVertical))) {
+
+					datatable.config.headerRowHeight = parseInt(resultVertical);
+					for (let column of datatable.config.columns) {
+
+						column.header[0].css = { "height": + parseInt(resultVertical) + "px !important", "line-height": + parseInt(resultVertical) + "px !important" };
+					}
+
+				} else {
+
+					for (let column of datatable.config.columns) {
+
+						column.header[0].autoheight = true;
 
 					}
 				}
-			}
 
-			if (showFiltersButton) {
+			} else {
 
-				showFiltersButton.attachEvent("onItemClick", function(id, e) {
+				datatable.config.headerRowHeight = ExtendedHeader.TRUE;
 
-					if (datatable.config.headerRowHeight === ExtendedHeader.TRUE) {
-
-
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-
-						if (columnVertical && columnVertical.length > 0) {
-							datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
-						} else {
-							datatable.config.headerRowHeight = ExtendedHeader.FALSE;
-						}
-
-
-					} else if (datatable.config.headerRowHeight === ExtendedHeader.FALSE || datatable.config.headerRowHeight === ExtendedHeader.CLOSE) {
-
-						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-					}
-					datatable.refreshColumns();
-				});
 			}
 		}
+
 		datatable.refreshColumns();
 	}
+
+
+
 
 	datatableCapture() {
 		let self = this;
@@ -1362,6 +1496,53 @@ export default class DataTable {
 		}
 	}
 
+	openIconList() {
+
+		let metadata = this.metadata;
+		let datatable = $$("dt-" + this.uid);
+		let listButton = $$("tb_btn-icons-" + this.uid);
+		let iconData = [];
+
+		if (!webix.isUndefined(datatable) && !webix.isUndefined(listButton)) {
+
+			listButton.attachEvent("onItemClick", function(id, e) {
+
+				iconData.length = 0;
+
+				for (let label of metadata.gridFields) {
+
+					if (label.gridFieldIcons.length > 0) {
+
+						label.gridFieldIcons.forEach(e => {
+
+							if (e.labelValue) {
+
+								let icon = "<img class='table-field-icons' src=" + e.icon + "/>";
+								let labelValue = e.labelValue;
+
+								iconData.push({ labelValue, icon });
+
+							}
+
+						});
+					}
+				}
+
+				let body = {
+					view: "datatable",
+					columns: [
+						{ id: "labelValue", header: i18n.t("LBL_LABEL"), width: 198 },
+						{ id: "icon", header: i18n.t("LBL_ICON"), width: 190 }
+					],
+					data: iconData
+				};
+
+				util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 600, 400, false);
+
+			});
+		}
+	}
+
 
 
 	callbacks() {
@@ -1384,6 +1565,8 @@ export default class DataTable {
 		this.other_commands_callback();
 		this.showFilters();
 		this.rowColors();
+		this.clickShowFilters();
+		this.openIconList();
 
 		this.sortDatatable();
 		this.filterDatatable();
