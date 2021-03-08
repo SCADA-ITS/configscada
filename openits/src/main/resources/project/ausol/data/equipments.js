@@ -2183,7 +2183,7 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("ElementTypeParam:70:2:41.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
 			"ElementTypeParam:70:2:42": {
-				"header": [ $.i18n("ElementTypeParam:70:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"header": [ $.i18n("ElementTypeParam:70:2:42.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
 			"ElementTypeParam:70:2:43": {
 				"header": [ $.i18n("ElementTypeParam:70:2:43.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
