@@ -576,4 +576,16 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
+	"ElementType:76": {
+		"rows":[
+			{value: "ElementTypeParam:76:1:1", type:"string"}, 
+			{value: "ElementTypeParam:76:1:2", type:"string"},
+			{value: "ElementTypeParam:76:1:3", type:"string"}, 
+			{value: "ElementTypeParam:76:1:4", type:"string"},
+		],
+		"rowCounts": 4,
+		"scroll": true,  
+		"width": 540,
+		"options": {}
+	},
 }

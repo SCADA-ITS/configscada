@@ -316,7 +316,25 @@ export let SVG_12_LUX = `<g
          transform="scale(0.26458333)" />
     </g>
   </g>
-</g>`;
+</g>
+<rect`+
+       ' style="fill:#b3b3b3;stroke:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +';stroke-width:1.344;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"'+
+       ' id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':stroke0"'+
+       ` width="110"
+       height="35"
+       x="-35"
+       y="80" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:30.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="0"
+       y="10"
+       id="text856"><tspan
+         sodipodi:role="line"`+ 
+         ' id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':Value"'+
+         ' x="-10"'+
+         ' y="110"'+
+         ' style="stroke-width:0.264583">' + REGEX_PATTERN_INIT + 'LUM_LUMINOSITY' + REGEX_PATTERN_END +'</tspan></text>';
 
 export let SVG_13_SEM_RAV =
     `  <g
@@ -434,7 +452,25 @@ export let SVG_14_LUM = `<g
   x="31.778774"
   y="27.204439"
   ry="0" />
-</g>`;
+  <rect`+
+       ' style="fill:#b3b3b3;stroke:' + REGEX_PATTERN_INIT + 'color' + REGEX_PATTERN_END +';stroke-width:1.344;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none"'+
+       ' id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':stroke0"' +
+       ` width="110"
+       height="35"
+       x="-25"
+       y="80" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:30.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="0"
+       y="10"
+       id="text856"><tspan
+         sodipodi:role="line"`+ 
+         ' id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END + ':Value"'+
+         ' x="-10"'+
+         ' y="110"'+
+         ' style="stroke-width:0.264583">' + REGEX_PATTERN_INIT + 'LUX_LUMINOSITY' + REGEX_PATTERN_END +'</tspan></text>'+
+'</g>';
 
 export let SVG_15_FIRE_DET =
 	`<g	id="layer1"	transform="translate(0,-291.70832)">` +

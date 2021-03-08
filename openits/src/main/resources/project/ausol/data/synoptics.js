@@ -143,11 +143,6 @@ export let synopticData= [
 				"items": ["Element:67:1", "Element:67:2", "Element:67:3", "Element:67:4"],
 				"translation_key": "",
 				"visibility": "visible"
-			},
-			"GRUPO_ELECTROGENO": {
-				"items": ["Element:75:1"],
-				"translation_key": "",
-				"visibility": "visible"
 			}
 		},
 		
@@ -195,7 +190,7 @@ export let synopticData= [
 			]
 		},
 
-		"Element:1:1": { "x": 260,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-MET-1MA" },		
+		"Element:1:1": { "x": 280,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-MET-1MA" },		
 
 		"Element:8:1":  { "x": 1529, "y": 817, "width": 88,  "height": 48,  "alias": "RV-BAR-1CA" },
 		"Element:8:2":  { "x": 1529, "y": 658, "width": 88,  "height": 48,  "alias": "RV-BAR-2CA" },
@@ -220,22 +215,22 @@ export let synopticData= [
 		"Element:11:5": { "x": 670,  "y": 910, "width": 40,  "height": 50,  "alias": "RV-SOS-1CA" },		
 		"Element:11:6": { "x": 640, "y": 140, "width": 40,  "height": 50,  "alias": "RV-SOS-1MA" },
 		
-		"Element:12:1": { "x": 1450, "y": 947, "width": 6,  "height": 9,  "alias": "RV-LUX-1CA" },
-		"Element:12:2": { "x": 1350,  "y": 947, "width": 6,  "height": 9,  "alias": "RV-LUX-2CA" },
-		"Element:12:3": { "x": 550, "y": 947, "width": 6,  "height": 9,  "alias": "RV-LUX-3CA" },
-		"Element:12:4": { "x": 300,  "y": 947, "width": 6,  "height": 9,  "alias": "RV-LUX-4CA" },
-		"Element:12:5": { "x": 320,  "y": 178, "width": 6,  "height": 9,  "alias": "RV-LUX-1MA" },
-		"Element:12:6": { "x": 500, "y": 178, "width": 6,  "height": 9,  "alias": "RV-LUX-2MA" },
-		"Element:12:7": { "x": 1200,  "y": 178, "width": 6,  "height": 9,  "alias": "RV-LUX-3MA" },
-		"Element:12:8": { "x": 1400, "y": 178, "width": 6,  "height": 9,  "alias": "RV-LUX-4MA" },
+		"Element:12:1": { "x": 1465, "y": 947, "width": 6,  "height": 7,  "alias": "RV-LUX-1CA" },
+		"Element:12:2": { "x": 1350,  "y": 947, "width": 6,  "height": 7,  "alias": "RV-LUX-2CA" },
+		"Element:12:3": { "x": 550, "y": 947, "width": 6,  "height": 7,  "alias": "RV-LUX-3CA" },
+		"Element:12:4": { "x": 300,  "y": 947, "width": 6,  "height": 7,  "alias": "RV-LUX-4CA" },
+		"Element:12:5": { "x": 335,  "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-1MA" },
+		"Element:12:6": { "x": 500, "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-2MA" },
+		"Element:12:7": { "x": 1200,  "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-3MA" },
+		"Element:12:8": { "x": 1400, "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-4MA" },
 	
 		"Element:13:1": { "x": 1619, "y": 650, "width": 50,  "height": 50,  "alias": "RV-SRAV-1CA" },
 		"Element:13:2": { "x": 115,   "y": 385, "width": 50,  "height": 50,  "alias": "RV-SRAV-1MA" },
 		"Element:13:3": { "x": 1619, "y": 785, "width": 50,  "height": 50,  "alias": "RV-SRAV-2CA" },
 		"Element:13:4": { "x": 115,   "y": 233, "width": 50,  "height": 50,  "alias": "RV-SRAV-2MA" },
 
-		"Element:14:1": { "x": 1660, "y": 553, "width": 6,  "height": 9,  "alias": "RV-LUM-1CA" },
-		"Element:14:2": { "x": 85,   "y": 553, "width": 6,  "height": 9,  "alias": "RV-LUM-1MA" },
+		"Element:14:1": { "x": 1660, "y": 565, "width": 6,  "height": 9,  "alias": "RV-LUM-1CA" },
+		"Element:14:2": { "x": 95,   "y": 565, "width": 6,  "height": 9,  "alias": "RV-LUM-1MA" },
 
 		"Element:15:1": { "x": 898,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-1CA" },
 		"Element:15:2": { "x": 184,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-2CA" },
@@ -249,7 +244,7 @@ export let synopticData= [
 		"Element:16:3": { "x": 360,  "y": 245, "width": 120,  "height": 120,  "alias": "PA-ZONE-61" },
 		"Element:16:4": { "x": 851,  "y": 450, "width": 120,  "height": 120,  "alias": "PA-ZONE-62" },
 
-		"Element:17:1": { "x": 120,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
+		"Element:17:1": { "x": 140,  "y": 517, "width": 50,  "height": 50,  "alias": "RV-ANE-1CA" },
 
 		"Element:18:1": { "x": 890,  "y": 813, "width": 50,  "height": 50,  "alias": "RV-ANI-1CA" },
 		"Element:18:2": { "x": 900,  "y": 235, "width": 50,  "height": 50,  "alias": "RV-ANI-1MA" },
@@ -276,14 +271,12 @@ export let synopticData= [
 
 		"Element:55:2": { "x": 1570,   "y": 500, "width": 55, "height": 80,  "alias": "RV-MAP-CT" },
 		
-		"Element:66:1": { "x": 170,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
+		"Element:66:1": { "x": 190,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
 
 		"Element:67:1": { "x": 1715,   "y": 685, "width": 5, "height": 5,  "alias": "RV-SMF-RR-1CA" },
 		"Element:67:2": { "x": 1715,   "y": 818, "width": 5, "height": 5,  "alias": "RV-SMF-RR-1MA" },
 		"Element:67:3": { "x": 40,   "y": 270, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2CA" },
 		"Element:67:4": { "x": 40,   "y": 420, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2MA" },
-
-		"Element:75:1": { "x": 340,   "y": 460, "width": 110, "height": 110,  "alias": "RV-GEL-1CA" },
 	},
 	{
 		"id":"synopticMetro",
@@ -466,7 +459,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"GRUPO_ELECTROGENO" : {
-				"items": ["Element:75:2"],
+				"items": ["Element:75:1"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
@@ -492,7 +485,7 @@ export let synopticData= [
 		"Element:74:1": { "x": 1640,   "y": 390, "width": 35, "height": 35,  "alias": "RV-ERUM-1" },
 		"Element:74:2": { "x": 1640,   "y": 330, "width": 35, "height": 35,  "alias": "RV-ERUS-1" },
 
-		"Element:75:2": { "x": 1640,   "y": 680, "width": 110, "height": 110,  "alias": "RV-DEP-GE" },
+		"Element:75:1": { "x": 1640,   "y": 680, "width": 110, "height": 110,  "alias": "RV-GEL-1CA" },
 	},
 	{
 		"id":"synopticUnifilarCsa",

@@ -137,6 +137,8 @@ var i18_es = {
     "ElementType:74.description" : "ERU",
     "ElementType:75.alias" : "GRUPO_ELECTROGENO",
     "ElementType:75.description" : "GRUPO_ELECTROGENO",
+    "ElementType:76.alias" : "DEP&Oacute;SITO_DIESEL",
+    "ElementType:76.description" : "DEP&Oacute;SITO_DIESEL",
 
     "ElementTypeParam:1:1:1.alias": "Marca",
     "ElementTypeParam:1:1:1.description": "Marca",
@@ -1245,6 +1247,15 @@ var i18_es = {
     "ElementTypeParam:75:2:11.alias" : "Modo operaci&oacute;n aut",
     "ElementTypeParam:75:2:11.description" : "Modo operaci&oacute;n aut",
 
+	"ElementTypeParam:76:1:1.alias": "PK",
+    "ElementTypeParam:76:1:1.description": "PK",
+    "ElementTypeParam:76:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:76:1:2.description": "Distancia entrada del t&uacute;nel (m)",
+	"ElementTypeParam:76:1:3.alias": "Carretera",
+    "ElementTypeParam:76:1:3.description": "Carretera",
+    "ElementTypeParam:76:1:4.alias": "Tramo",
+    "ElementTypeParam:76:1:4.description": "Tramo",
+
     "synoptic.layer.base": "Mapa Base",
     "synoptic.layer.road": "Carreteras",
     "synoptic.layer.CAMARA": "C&aacute;maras",
@@ -1741,6 +1752,9 @@ var i18_es = {
     "AlarmConfig:80" : "ALARMA GE GENERAL",
     "AlarmConfig:81" : "ALARMA GE MOTOR ENCENDIDO",
     "AlarmConfig:82" : "ALARMA GE NIVEL COMBUSTIBLE RESERVADO",
+
+    "AlarmConfig:83" : "ALARMA DEP&Oacute;SITO_DIESEL SIN CONEXI&Oacute;N",
+    "AlarmConfig:84" : "ALARMA DEP&Oacute;SITO_DIESEL NIVEL BAJO",
 
     "AlarmConfig:701": "ALARMA METEO PRECIPITACION MODERADA",
     "AlarmConfig:702": "ALARMA METEO VISIBILIDAD REDUCIDA",

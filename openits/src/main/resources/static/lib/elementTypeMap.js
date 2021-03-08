@@ -64,6 +64,7 @@ export const ELEMENT_TYPE_72_ACCEL = "72";
 export const ELEMENT_TYPE_73_RADAR = "73";
 export const ELEMENT_TYPE_74_ERU = "74";
 export const ELEMENT_TYPE_75_GE = "75";
+export const ELEMENT_TYPE_76_DEPOSITO_DIESEL = "76";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;

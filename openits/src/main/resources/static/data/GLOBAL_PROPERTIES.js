@@ -65,6 +65,9 @@ export const ELEMENT_TYPE = {
   ID_73_RADAR : "ElementType:73",
   ID_74_ERU : "ElementType:74",
   ID_75_GE : "ElementType:75",
+  ID_76_DEPOSITO_DIESEL : "ElementType:76",
+
+  
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},

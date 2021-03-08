@@ -32,6 +32,7 @@ export let optionElementType = [
 	{id:"ElementType:71", value: $.i18n("ElementType:71.alias")},
 	{id:"ElementType:74", value: $.i18n("ElementType:74.alias")},
 	{id:"ElementType:75", value: $.i18n("ElementType:75.alias")},
+	{id:"ElementType:76", value: $.i18n("ElementType:76.alias")},
 ]
 
 export let columnsElementList = {
@@ -581,6 +582,19 @@ export let columnsElementList = {
 			"ElementTypeParam:75:2:9",
 			"ElementTypeParam:75:2:10",
 			"ElementTypeParam:75:2:11",
+		]
+	},
+	"ElementType:76": { 
+		1:[
+			"alias",
+			"ElementTypeParam:76:1:1", 
+			"ElementTypeParam:76:1:2",
+			"ElementTypeParam:76:1:3", 
+			"ElementTypeParam:76:1:4",
+		],
+		2:[
+			"alias",
+			"state",
 		]
 	},
 }
@@ -2285,6 +2299,36 @@ export let columnsElementConfig = {
 			"ElementTypeParam:75:2:11": {
 				"header": [ $.i18n("ElementTypeParam:75:2:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
+		}
+	},
+
+	"ElementType:76": {
+		1:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:76:1:1": {
+				"header": [ $.i18n("ElementTypeParam:76:1:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:76:1:2": {
+				"header": [ $.i18n("ElementTypeParam:76:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:76:1:3": {
+				"header": [ $.i18n("ElementTypeParam:76:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:76:1:4": {
+				"header": [ $.i18n("ElementTypeParam:76:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+		},
+		2:{
+			"alias": {
+				"header": [ $.i18n("equipment.table.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			},
+			"state": {
+				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
+				"rotate": false
+			}
 		}
 	}
 }
