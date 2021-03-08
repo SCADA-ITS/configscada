@@ -2,7 +2,6 @@ package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Entity;
 
@@ -21,6 +20,6 @@ public class TreeUI implements Serializable {
 	private static final long serialVersionUID = 1783450175806606694L;
 	
 	@JsonProperty("metadata")
-	Tree tree;
-	List<Map<String, Object>> data;
+	private Tree tree;
+	private List<TreeDataUI> data;
 }

@@ -94,6 +94,28 @@ public class Tree implements Serializable {
 		return treeCommand;
 	}
 	
+	public List<TreeOptionValue> getTreeOptionValues() {
+		return this.treeOptionValues;
+	}
+
+	public void setTreeOptionValues(List<TreeOptionValue> treeOptionValues) {
+		this.treeOptionValues = treeOptionValues;
+	}
+	
+	public TreeOptionValue addTreeOptionValue(TreeOptionValue treeOptionValue) {
+		getTreeOptionValues().add(treeOptionValue);
+		treeOptionValue.setTree(this);
+
+		return treeOptionValue;
+	}
+
+	public TreeOptionValue removeTreeOptionValue(TreeOptionValue treeOptionValue) {
+		getTreeOptionValues().remove(treeOptionValue);
+		treeOptionValue.setTree(null);
+
+		return treeOptionValue;
+	}
+	
 	public Adapter getAdapter() {
 		return this.adapter;
 	}

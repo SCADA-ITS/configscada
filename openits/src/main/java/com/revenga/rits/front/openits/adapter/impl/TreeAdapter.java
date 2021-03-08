@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.model.TreeDataUI;
 import com.revenga.rits.front.openits.model.TreeUI;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.AdapterDataSource;
@@ -26,7 +27,7 @@ public class TreeAdapter {
 	
 	private static final String METHOD_TO_TREE_DATA = "toTreeData";
 	
-	private static final int ADAPTER_DATA_SOURCE_TYPE_GROOVY = 2;
+	private static final int ADAPTER_DATA_SOURCE_TYPE_GROOVY = 1;
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
@@ -87,7 +88,7 @@ public class TreeAdapter {
 							if (groovyObj != null) {
 								
 								@SuppressWarnings("unchecked")
-								List<Map<String, Object>> treeData = (List<Map<String, Object>>) groovyObj.invokeMethod(
+								List<TreeDataUI> treeData = (List<TreeDataUI>) groovyObj.invokeMethod(
 										METHOD_TO_TREE_DATA,
 										new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
 								
@@ -96,6 +97,8 @@ public class TreeAdapter {
 									treeUI.setData(treeData);		
 								}
 							}
+							
+//							treeUI.setData((new AdapterTreeElementWithStates(log)).toTreeData(vo2uiAdapter, dataSourceGraphQL.getFieldId(), items));
 						}
 					}
 				}

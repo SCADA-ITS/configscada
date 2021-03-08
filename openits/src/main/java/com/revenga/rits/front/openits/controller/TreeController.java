@@ -43,7 +43,7 @@ public class TreeController {
 					name = "id",
 					type = "Integer",
 					value = "Tree identifier",
-					example = "2",
+					example = "1",
 					required = true) @PathVariable Integer id) {
 
 		
