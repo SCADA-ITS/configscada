@@ -134,7 +134,7 @@ export default class DataTable {
 								col.header.push({
 									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
 									rotate: true,
-									css: { "font-size": "11px" }
+									css: { "font-size": "14px" }
 								});
 
 							} else {
@@ -183,7 +183,7 @@ export default class DataTable {
 								col.header.push({
 									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
 									rotate: true,
-									css: { "font-size": "11px" }
+									css: { "font-size": "14px" }
 								});
 
 							} else {
@@ -294,6 +294,14 @@ export default class DataTable {
 								}
 							}
 
+							if (field.replacementFunction) {
+
+								if (eval("util.datatable." + field.replacementFunction)) {
+									value = eval("util.datatable." + field.replacementFunction)(obj[field.sourceField]);
+								}
+
+							}
+
 							if (field.labelTooltip) {
 
 								col.tooltip = function(data) {
@@ -301,6 +309,19 @@ export default class DataTable {
 									if (field.gridFieldDataType.id === DataType.DATE.value) {
 
 										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
+
+									} else if (field.gridFieldIcons.length > 0) {
+
+										let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
+
+										if (label != undefined) {
+											let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
+											return tool;
+
+										} else {
+
+											return data[field.sourceField];
+										}
 									}
 									else {
 
@@ -333,46 +354,57 @@ export default class DataTable {
 								}
 								else if (badgeColor) {
 
-									let hashValue = util.getHash(value);
-									let color;
+									let balloon = field.gridFieldBalloons.find(e => e.value === value);
 
-									let mod = Math.abs(hashValue) % 10;
+									if (balloon != undefined) {
 
-									switch (mod) {
+										return `<div><span class="table-badge" style="background: ${balloon.color + '3b'}; color: ${balloon.color + 'a0'};">${value}</span></div>`;
 
-										case 0:
-											color = '#008000';
-											break;
-										case 1:
-											color = '#0000ff';
-											break;
-										case 2:
-											color = '#a52a2a';
-											break;
-										case 3:
-											color = '#009688';
-											break;
-										case 4:
-											color = '#ffa500';
-											break;
-										case 5:
-											color = '#ff00ff';
-											break;
-										case 6:
-											color = '#800080';
-											break;
-										case 7:
-											color = '#000000';
-											break;
-										case 8:
-											color = '#808080';
-											break;
-										case 9:
-											color = '#6495ed';
-											break;
+									} else {
+
+										let hashValue = util.getHash(value);
+										let color;
+
+										let mod = Math.abs(hashValue) % 10;
+
+										switch (mod) {
+
+											case 0:
+												color = '#008000';
+												break;
+											case 1:
+												color = '#0000ff';
+												break;
+											case 2:
+												color = '#a52a2a';
+												break;
+											case 3:
+												color = '#009688';
+												break;
+											case 4:
+												color = '#ffa500';
+												break;
+											case 5:
+												color = '#ff00ff';
+												break;
+											case 6:
+												color = '#800080';
+												break;
+											case 7:
+												color = '#000000';
+												break;
+											case 8:
+												color = '#808080';
+												break;
+											case 9:
+												color = '#6495ed';
+												break;
+										}
+
+										return `<div><span class="table-badge" style="background: ${color + '3b'}; color: ${color + 'a0'};">${value}</span></div>`;
 									}
 
-									return `<div><span class="table-badge" style="background: ${color + '3b'}; color: ${color + 'a0'};">${value}</span></div>`;
+
 								}
 								else if (avatar) {
 
