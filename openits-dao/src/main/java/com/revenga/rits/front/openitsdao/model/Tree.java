@@ -1,8 +1,16 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -28,6 +36,14 @@ public class Tree implements Serializable {
 	//bi-directional many-to-one association to TreeCommand
 	@OneToMany(mappedBy="tree")
 	private List<TreeCommand> treeCommands;
+	
+	//bi-directional many-to-one association to TreeFilter
+	@OneToMany(mappedBy="tree")
+	private List<TreeFilter> treeFilters;
+	
+	//bi-directional many-to-one association to TreeParam
+	@OneToMany(mappedBy="tree")
+	private List<TreeParam> treeParams;
 	
 	//bi-directional many-to-one association to TreeOptionValue
 	@OneToMany(mappedBy="tree")
@@ -92,6 +108,50 @@ public class Tree implements Serializable {
 		treeCommand.setTree(null);
 
 		return treeCommand;
+	}
+	
+	public List<TreeFilter> getTreeFilters() {
+		return this.treeFilters;
+	}
+
+	public void setTreeFilters(List<TreeFilter> treeFilters) {
+		this.treeFilters = treeFilters;
+	}
+
+	public TreeFilter addTreeFilter(TreeFilter treeFilter) {
+		getTreeFilters().add(treeFilter);
+		treeFilter.setTree(this);
+
+		return treeFilter;
+	}
+
+	public TreeFilter removeTreeFilter(TreeFilter treeFilter) {
+		getTreeFilters().remove(treeFilter);
+		treeFilter.setTree(null);
+
+		return treeFilter;
+	}
+	
+	public List<TreeParam> getTreeParams() {
+		return this.treeParams;
+	}
+
+	public void setTreeParams(List<TreeParam> treeParams) {
+		this.treeParams = treeParams;
+	}
+
+	public TreeParam addTreeParam(TreeParam treeParam) {
+		getTreeParams().add(treeParam);
+		treeParam.setTree(this);
+
+		return treeParam;
+	}
+
+	public TreeParam removeTreeParam(TreeParam treeParam) {
+		getTreeParams().remove(treeParam);
+		treeParam.setTree(null);
+
+		return treeParam;
 	}
 	
 	public List<TreeOptionValue> getTreeOptionValues() {

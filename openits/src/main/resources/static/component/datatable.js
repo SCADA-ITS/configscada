@@ -41,7 +41,7 @@ const RowAdjustement = {
 	CUSTOM: "custom"
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM };
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 23: true };
 
 const _TRUE = "true";
 const _FALSE = "false";
@@ -354,9 +354,14 @@ export default class DataTable {
 								}
 								else if (badgeColor) {
 
-									let balloon = field.gridFieldBalloons.find(e => e.value === value);
+									let balloon = undefined;
+									
+									if (Array.isArray(field.gridFieldBalloons) && field.gridFieldBalloons.length > 0) {
+									
+										balloon = field.gridFieldBalloons.find(e => e.value === value);	
+									}  
 
-									if (balloon != undefined) {
+									if (balloon) {
 
 										return `<div><span class="table-badge" style="background: ${balloon.color + '3b'}; color: ${balloon.color + 'a0'};">${value}</span></div>`;
 
@@ -938,21 +943,11 @@ export default class DataTable {
 
 	showMainToolbar() {
 
-		let metadata = this.metadata;
-		let dataTable = $$("dt-" + this.uid);
 		let resultViews = this.getGridOptions(GridOptions.SHOW_DETAILS);
 
-		if (resultViews) {
+		if (!resultViews) {
 
-			for (let i = 0; i < metadata.gridFields.length; i++) {
-
-				let field = metadata.gridFields[i];
-
-				if (field.extended) {
-
-					dataTable.showColumn(field.sourceField)
-				}
-			}
+			this.change_view("hide");
 		}
 	}
 
@@ -1353,7 +1348,6 @@ export default class DataTable {
 
 					if (columnFilterFalse && columnFilterFalse.length > 0) {
 
-
 						if (!isNaN(parseInt(resultVertical))) {
 
 							for (let column of datatable.config.columns) {
@@ -1404,7 +1398,12 @@ export default class DataTable {
 						columnFilterFalse.forEach(item => {
 
 							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-							pad.header[0].css = { "padding-bottom": "85px !important" };
+							
+							if (pad) {
+							
+								pad.header[0].css = { "padding-bottom": "85px !important" };		
+							}
+							
 						});
 					}
 
@@ -1416,7 +1415,12 @@ export default class DataTable {
 						columnFilterFalse.forEach(item => {
 
 							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-							pad.header[0].css = { "padding-bottom": "85px !important" };
+							
+							if (pad) {
+							
+								pad.header[0].css = { "padding-bottom": "85px !important" };	
+							}
+							
 
 						});
 					}
@@ -1587,8 +1591,8 @@ export default class DataTable {
 		this.print_callback();
 		this.export_pdf_callback();
 		this.export_xls_callback();
+		//this.change_view("hide");
 		this.main_toolbar_callback();
-		this.change_view("hide");
 		this.showMainToolbar();
 		this.connect_ws();
 		this.on_destroy();
@@ -1625,23 +1629,25 @@ export default class DataTable {
 		let metadata = this.metadata;
 
 		if (grid) {
+			
+			let columns = grid.config.columns;
 
-			if (metadata.gridFields.length > 0) {
-
-				for (let posField = 0; posField < metadata.gridFields.length; posField++) {
-
-					let field = metadata.gridFields[posField];
-
-					if (field.extended) {
-
+			if (metadata.gridFields.length > 0 && Array.isArray(columns) && columns.length > 0) {
+				
+				metadata.gridFields.forEach(e => {
+					
+					if (e.extended) {
+					
 						if (selection === "hide") {
-							grid.hideColumn(field.sourceField);
+							
+							grid.hideColumn(e.sourceField);
 						}
 						else if (selection === "show") {
-							grid.showColumn(field.sourceField);
-						}
+							
+							grid.showColumn(e.sourceField);
+						}	
 					}
-				}
+				});
 			}
 		}
 	}

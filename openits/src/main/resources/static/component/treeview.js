@@ -11,6 +11,17 @@ const GridOptions = {
 };
 
 const DefOptionValues = { 2: true, 3: true, 4: true, 5: true };
+const DefProperties = {
+	TRANSLATE: {
+		name: "translate",
+		value: false
+	},
+	FOLDER: {
+		name: "folder",
+		value: false
+	}
+};
+
 const _TRUE = "true";
 const _FALSE = "false";
 
@@ -61,9 +72,22 @@ export default class TreeView {
 			}
 		}
 		
+		let getItemProps = function(item, prop) {
+	
+			let propValue = prop.value;
+	
+			if (item && item.props) {
+	
+				propValue = item.props[prop.name];
+			}
+			
+			return propValue;
+		}
+		
 		let searchView = {
 			
 			view: "toolbar",
+			borderless: true,
 			elements: [
 				{ width: 4 },
 				{
@@ -80,10 +104,115 @@ export default class TreeView {
 				{ width: 4 }
 			]
 		};
+		
+		let tbActionView = {
+			
+			view: "toolbar",
+			borderless: true,
+			elements: [
+				{ width: 4 }
+			]
+		};
+		
+		let multiSelect = getTreeOptions(GridOptions.MULTISELECT);
+		
+		if (multiSelect) {
+			
+			let viewSelectAll = { 
+				id: "tb_btn-select-all-" + this.uid, 
+				view: "icon", 
+				icon: "mdi mdi-check-box-outline", 
+				value: i18n.t("LBL_SELECT_ALL"), 
+				tooltip: true,
+				on: {
+					onItemClick: function(id, e) {
+						
+						$$("tree-" + self.uid).checkAll();				
+					}
+				}
+			}; 
+			
+			let viewUnselectAll = { 
+				id: "tb_btn-unselect-all-" + this.uid, 
+				view: "icon", 
+				icon: "mdi mdi-checkbox-blank-outline", 
+				value: i18n.t("LBL_UNSELECT_ALL"), 
+				tooltip: true,
+				on: {
+					onItemClick: function(id, e) {
+						
+						$$("tree-" + self.uid).uncheckAll();				
+					}
+				}
+			};
+			
+			tbActionView.elements.push(viewSelectAll);
+			tbActionView.elements.push(viewUnselectAll);
+		}
+		
+		let viewExpandAll = { 
+			id: "tb_btn-expand-all-" + this.uid, 
+			view: "icon", 
+			icon: "mdi mdi-expand-all", 
+			value: i18n.t("LBL_EXPAND_ALL"), 
+			tooltip: true,
+			on: {
+				onItemClick: function(id, e) {
+					
+					$$("tree-" + self.uid).openAll();				
+				}
+			}
+		};
+		
+		let viewColapseAll = { 
+			id: "tb_btn-collapse-all-" + this.uid, 
+			view: "icon", 
+			icon: "mdi mdi-collapse-all", 
+			value: i18n.t("LBL_COLLAPSE_ALL"), 
+			tooltip: true,
+			on: {
+				onItemClick: function(id, e) {
+					
+					$$("tree-" + self.uid).closeAll();				
+				}
+			}
+		};  
+		
+		tbActionView.elements.push(viewExpandAll);
+		tbActionView.elements.push(viewColapseAll);
+			
+		tbActionView.elements.push({ width: 4 });
+		
+		let translate = function(data) {
+			
+			if (Array.isArray(data) && data.length > 0) {
+				
+				return data.map(e => {
+					
+					let item = {};
+					
+					item = e;
+									
+					if (getItemProps(item, DefProperties.TRANSLATE)) {
+						
+						item.value = i18n.t(item.value);
+					}
+					
+					if (item.data && Array.isArray(item.data) && item.data.length > 0) {
+					
+						item.data = translate(item.data);	
+					}
+
+					return item;
+				});
+			}
+		}
 	
 		let drawTree = function() {
 			
 			let multiSelect = getTreeOptions(GridOptions.MULTISELECT);
+			
+			let data = translate(self.data);
 			
 			let treeView = {
 				id: "tree-" + self.uid,
@@ -93,20 +222,30 @@ export default class TreeView {
 					
 					let value = obj.value;
 					let image = obj.image;
-					
-					if (obj.translate) {
-						
-						value = i18n.t(value);
-					}
-					
+									
 					if (image == undefined) {
 						image = "img/not_found_50.png";
 					}
 					
+//					let nodeValue = `<div>	
+//						<img class="table-field-icons" src="${image}" 
+//							 onerror="this.onerror=null; this.style.display = 'none'"/>
+//						<span>${value}</span>
+//					</div>`;
+
+					let fontWeight = 500;
+					let letterSpacing = "0.2px";
+					
+					if (obj.$level > 1) {
+						
+						fontWeight = 100;
+						letterSpacing = "0px";
+					}
+
 					let nodeValue = `<div>	
-						<img class="table-field-icons" src="${image}" 
+						<img src="${image}" 
 							 onerror="this.onerror=null; this.style.display = 'none'"/>
-						<span>${value}</span>
+						<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing};">${value}</span>
 					</div>`;
 					
 					if (multiSelect) {
@@ -118,7 +257,13 @@ export default class TreeView {
 						return common.icon(obj, common) + nodeValue;
 					}
 			    },
-				data: self.data
+				data: data,
+				on: {
+					onAfterLoad: function() {
+						
+						this.sort("#value#", "asc");
+					}
+				}
 			};
 			
 			return treeView;
@@ -129,6 +274,7 @@ export default class TreeView {
 			rows: [
 				{ height: 6 },
 				searchView,
+				tbActionView,
 				drawTree(),
 				{ height: 6 }
 			]

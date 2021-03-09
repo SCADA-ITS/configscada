@@ -9,6 +9,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.revenga.rits.front.openits.model.TreeDataUI;
+import com.revenga.rits.front.openitsdao.model.Tree;
+import com.revenga.rits.front.openitsdao.model.TreeParam;
 
 public class AdapterTreeElementWithStates {
 	
@@ -28,6 +30,8 @@ public class AdapterTreeElementWithStates {
 	static final String TREE_FIELD_VALUE = "value";
 	static final String TREE_FIELD_IMAGE = "image";
 	static final String TREE_FIELD_DATA = "data";
+	
+	static final String TREE_PARAM_STATE_IMAGE = "state_image";
 
 	org.apache.logging.log4j.Logger log;
 	
@@ -36,7 +40,7 @@ public class AdapterTreeElementWithStates {
 		this.log = log;
 	}
 	
-	List<TreeDataUI> toTreeData(VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
+	List<TreeDataUI> toTreeData(Tree tree, VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
 		
 		List<TreeDataUI> data = null;
 		Map<String, TreeDataUI> elementTypeNodes = new HashMap<>();
@@ -68,9 +72,12 @@ public class AdapterTreeElementWithStates {
 							}
 													
 							TreeDataUI item = new TreeDataUI((String) entity.get(FIELD_ELEMENT_ID),
-									(String) entity.get(FIELD_ELEMENT_ALIAS), false, elementTypeStateImage);
-							
+									(String) entity.get(FIELD_ELEMENT_ALIAS), elementTypeStateImage);
+									
+							addParameter(tree, item, TREE_PARAM_STATE_IMAGE, elementTypeStateImage);
+														
 							node.addItem(item);
+							 
 						}
 					}			
 				}
@@ -102,7 +109,10 @@ public class AdapterTreeElementWithStates {
 			
 			if (node == null) {
 		
-				node = new TreeDataUI(elementTypeId, elementTypeValue, true, elementTypeImage);
+				node = new TreeDataUI(elementTypeId, elementTypeValue, elementTypeImage);
+				
+				node.addProperty(TreeDataUI.PROP_TRANSLATE, true);
+				node.addProperty(TreeDataUI.PROP_FOLDER, true);
 				
 				elementTypeNodes.put(elementTypeId, node);
 			}
@@ -110,4 +120,25 @@ public class AdapterTreeElementWithStates {
 		
 		return node;
 	}
+	
+	void addParameter(final Tree tree, TreeDataUI node, final String treeParamName, final Object value) {
+
+		if (tree != null && treeParamName != null) {
+		
+			if (!CollectionUtils.isEmpty(tree.getTreeParams())) {
+			
+				for (TreeParam treeParam : tree.getTreeParams()) {
+				
+					if (treeParam.getName().equals(treeParamName)) {
+					
+						node.addParam(treeParamName, value);
+						
+						break;
+					}
+				}
+			}
+		}
+		
+	}
+	
 }

@@ -1608,3 +1608,22 @@
     color: #475466;
 }
 */
+
+.webix_tree_open, .webix_tree_close {
+	font-size: 32px;
+} 
+
+.webix_tree_checkbox {
+    margin: 0px 5px 10px;
+}
+
+.webix_tree_item img {
+    vertical-align: -3px;
+    width: 24px;
+    height: 24px;
+}
+
+.webix_tree_item span {
+	vertical-align: 4px;
+	font-size: 14px;
+}

@@ -10,6 +10,6 @@
 		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],
 		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
 	},
-	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2" ],
-	"alarmTypeManual": [ "AlarmType:3" ]
+	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
+	"alarmTypeManual": [ "AlarmType:4" ]
 }

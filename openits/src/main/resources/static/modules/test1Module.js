@@ -94,7 +94,13 @@ export default class Test1Module extends GenericModule {
 			let viewMain = {
 				id: self.uid,
 				cols: [
-					treeView.getView()
+					{
+						width: 400,
+						rows: [
+							treeView.getView()		
+						]
+					},
+					{}
 				]
 			};
 			

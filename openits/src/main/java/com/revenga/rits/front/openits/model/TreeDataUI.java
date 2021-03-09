@@ -2,7 +2,9 @@ package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 
@@ -17,18 +19,21 @@ public class TreeDataUI implements Serializable {
 	 */
 	private static final long serialVersionUID = 912965604604466364L;
 	
+	public static final String PROP_TRANSLATE = "translate";
+	public static final String PROP_FOLDER = "folder";
+	
 	private String id;
 	private String image;
 	private String value;
-	private Boolean translate;
 	private List<TreeDataUI> data;
+	private Map<String, Object> params;
+	private Map<String, Object> props;
 	
-	public TreeDataUI(String id, String value, Boolean translate, String image) {
+	public TreeDataUI(String id, String value, String image) {
 		super();
 		
 		this.id = id;
 		this.value = value;
-		this.translate = translate;
 		this.image = image;
 	}
 	
@@ -42,4 +47,23 @@ public class TreeDataUI implements Serializable {
 		this.data.add(item);
 	}
 	
+	public void addParam(String name, Object value) {
+		
+		if (this.params == null) {
+			
+			this.params = new HashMap<>();
+		}
+		
+		this.params.put(name, value);
+	}
+	
+	public void addProperty(String name, Object value) {
+		
+		if (this.props == null) {
+			
+			this.props = new HashMap<>();
+		}
+		
+		this.props.put(name, value);
+	}
 }
