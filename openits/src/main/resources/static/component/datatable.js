@@ -105,8 +105,8 @@ export default class DataTable {
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
 			datatable.select = resultSelect;
-//			console.log(metadata)
-//			console.log(data)
+			//			console.log(metadata)
+			//			console.log(data)
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
@@ -302,33 +302,30 @@ export default class DataTable {
 
 							}
 
-							if (field.labelTooltip) {
+							col.tooltip = function(data) {
 
-								col.tooltip = function(data) {
+								if (field.gridFieldDataType.id === DataType.DATE.value) {
 
-									if (field.gridFieldDataType.id === DataType.DATE.value) {
+									return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
 
-										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
+								} else if (field.gridFieldIcons.length > 0) {
 
-									} else if (field.gridFieldIcons.length > 0) {
+									let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
 
-										let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
+									if (label != undefined) {
+										//let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
+										return !label.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(label.labelValue);
 
-										if (label != undefined) {
-											let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
-											return tool;
-
-										} else {
-
-											return data[field.sourceField];
-										}
-									}
-									else {
+									} else {
 
 										return data[field.sourceField];
 									}
-								};
-							}
+								}
+								else {
+
+									return data[field.sourceField];
+								}
+							};
 
 							//							if (field.isEpochMilli) {
 							//
@@ -355,11 +352,11 @@ export default class DataTable {
 								else if (badgeColor) {
 
 									let balloon = undefined;
-									
+
 									if (Array.isArray(field.gridFieldBalloons) && field.gridFieldBalloons.length > 0) {
-									
-										balloon = field.gridFieldBalloons.find(e => e.value === value);	
-									}  
+
+										balloon = field.gridFieldBalloons.find(e => e.value === value);
+									}
 
 									if (balloon) {
 
@@ -482,7 +479,7 @@ export default class DataTable {
 
 								col.fillspace = true;
 								col.width = undefined;
-								
+
 								colFillSpace = true;
 							}
 						}
@@ -498,11 +495,11 @@ export default class DataTable {
 				}
 
 				if (!colFillSpace) {
-					
+
 					let lastCol = {};
-					
+
 					lastCol.fillspace = true;
-					datatable.columns.push(lastCol);	
+					datatable.columns.push(lastCol);
 				}
 
 				datatable.data = data;
@@ -527,12 +524,12 @@ export default class DataTable {
 			let resultOption = this.evalActionsToolbar();
 
 			if (resultOption && resultTbActions) {
-				
+
 				layout.push(toolbarActions);
-				
+
 				if (showOnlySearchBar) {
-				
-					layout.push({ height: 8 });	
+
+					layout.push({ height: 8 });
 				}
 			}
 
@@ -634,7 +631,7 @@ export default class DataTable {
 
 		return selectedPks;
 	}
-	
+
 	getSelectedItems() {
 
 		let grid = $$("dt-" + this.uid);
@@ -651,8 +648,8 @@ export default class DataTable {
 	drawMainToolbar() {
 
 		let metadata = this.metadata;
-		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
-		let resultDetails = this.getGridOptions(GridOptions.SHOW_DETAILS);
+		//		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
+		//		let resultDetails = this.getGridOptions(GridOptions.SHOW_DETAILS);
 		let resultIcon = this.getGridOptions(GridOptions.ICON);
 
 		let toolbar = {
@@ -669,27 +666,27 @@ export default class DataTable {
 
 		toolbar.elements.push({ minWidth: 4 });
 
-		if (resultSegmented) {
-
-			let segmentViews = {
-				view: "segmented", minWidth: 333,
-				id: "seg-" + this.uid,
-				options: [
-					{ id: "seg-basic-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_BASIC") },
-					{ id: "seg-details-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_DETAILED") }
-				]
-			}
-
-			if (resultDetails) {
-
-				segmentViews.value = "seg-details-" + this.uid;
-
-			} else {
-
-				segmentViews.value = "seg-basic-" + this.uid;
-			}
-			toolbar.elements.push(segmentViews)
-		}
+		//		if (resultSegmented) {
+		//
+		//			let segmentViews = {
+		//				view: "segmented", minWidth: 333,
+		//				id: "seg-" + this.uid,
+		//				options: [
+		//					{ id: "seg-basic-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_BASIC") },
+		//					{ id: "seg-details-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_DETAILED") }
+		//				]
+		//			}
+		//
+		//			if (resultDetails) {
+		//
+		//				segmentViews.value = "seg-details-" + this.uid;
+		//
+		//			} else {
+		//
+		//				segmentViews.value = "seg-basic-" + this.uid;
+		//			}
+		//			toolbar.elements.push(segmentViews)
+		//		}
 
 		toolbar.elements.push({ width: 8 });
 
@@ -709,15 +706,17 @@ export default class DataTable {
 		let resultMulti = this.getGridOptions(GridOptions.MULTISELECT);
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
-		
+		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
+
+
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 
 		let iconReplacement = metadata.gridFields.filter(e => e.gridFieldIcons.length > 0);
-		let label = undefined;
-
-		for (let element of iconReplacement) {
-			label = element.gridFieldIcons.find(e => e.labelValue && e.labelValue != "");
-		};
+		//		let label = undefined;
+		//
+		//		for (let element of iconReplacement) {
+		//			label = element.gridFieldIcons.find(e => e.labelValue && e.labelValue != "");
+		//		};
 
 
 		let toolbar = {
@@ -725,21 +724,21 @@ export default class DataTable {
 			id: "tbActions-" + this.uid,
 			borderless: true
 		}
-		
+
 		let searchBar = {
 			view: "search",
 			id: "txtSearch-" + this.uid,
 			placeholder: i18n.t("LBL_SEARCH"),
 		}
-		
+
 		if (showOnlySearchBar) {
-			
+
 			return searchBar;
 		}
 
 		toolbar.elements = [];
-		
-		toolbar.elements.push({ width: 4 })	
+
+		toolbar.elements.push({ width: 4 })
 
 		if (resultMulti && resultSelect) {
 
@@ -767,8 +766,12 @@ export default class DataTable {
 			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });
 
+			if (resultSegmented) {
 
-			if (label != undefined) {
+				toolbar.elements.push({ id: "tb_btn-showseg-" + this.uid, view: "icon", icon: "wxi-columns", value: i18n.t("LBL_SHOW_DETAILS"), tooltip: true });
+			}
+
+			if (iconReplacement) {
 
 				toolbar.elements.push({ id: "tb_btn-icons-" + this.uid, view: "icon", icon: "mdi mdi-map-legend", value: i18n.t("LBL_TABLE_LEGEND"), tooltip: true })
 			}
@@ -804,8 +807,8 @@ export default class DataTable {
 		if (!showOnlySearchBar) {
 
 			toolbar.elements.push({ width: 8 });
-		} 
-		
+		}
+
 		return toolbar;
 	}
 
@@ -860,7 +863,7 @@ export default class DataTable {
 
 		let dataTable = $$("dt-" + this.uid);
 		let metadata = this.metadata;
-//		console.log(dataTable.config.columns)
+		//		console.log(dataTable.config.columns)
 
 		if (gridFieldId && order) {
 
@@ -959,7 +962,7 @@ export default class DataTable {
 		if (metadata) {
 
 			optionValue = metadata.gridOptionValues.find(e => e.gridOption.id === option);
-			
+
 			if (optionValue) {
 
 				if (optionValue.value === _TRUE) {
@@ -976,7 +979,7 @@ export default class DataTable {
 				}
 			}
 			else {
-	
+
 				return DefOptionValues[option];
 			}
 		}
@@ -1398,12 +1401,12 @@ export default class DataTable {
 						columnFilterFalse.forEach(item => {
 
 							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-							
+
 							if (pad) {
-							
-								pad.header[0].css = { "padding-bottom": "85px !important" };		
+
+								pad.header[0].css = { "padding-bottom": "85px !important" };
 							}
-							
+
 						});
 					}
 
@@ -1415,12 +1418,12 @@ export default class DataTable {
 						columnFilterFalse.forEach(item => {
 
 							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-							
+
 							if (pad) {
-							
-								pad.header[0].css = { "padding-bottom": "85px !important" };	
+
+								pad.header[0].css = { "padding-bottom": "85px !important" };
 							}
-							
+
 
 						});
 					}
@@ -1538,6 +1541,14 @@ export default class DataTable {
 		let datatable = $$("dt-" + this.uid);
 		let listButton = $$("tb_btn-icons-" + this.uid);
 		let iconData = [];
+		let maxLengthLabel = 0;
+		let widthColLabel = 0;
+		const MIN_WIDTH_COL_LABEL = 200;
+		const MAX_WIDTH_COL_LABEL = 350;
+		const WIDTH_COL_ICON = 50;
+		const MAX_WIN_HEIGHT = 600;
+		const FONT_SIZE = 16;
+		const COL_HEIGHT = 36;
 
 		if (!webix.isUndefined(datatable) && !webix.isUndefined(listButton)) {
 
@@ -1545,41 +1556,66 @@ export default class DataTable {
 
 				iconData.length = 0;
 
-				for (let label of metadata.gridFields) {
+				for (let gridField of metadata.gridFields) {
 
-					if (label.gridFieldIcons.length > 0) {
+					if (gridField.gridFieldIcons.length > 0) {
 
-						label.gridFieldIcons.forEach(e => {
-
-							if (e.labelValue) {
-
+						gridField.gridFieldIcons.forEach(e => {
+							
+							if (e.icon) {
+							
 								let icon = "<img class='table-field-icons' src=" + e.icon + "/>";
-								let labelValue = e.labelValue;
-
-								iconData.push({ labelValue, icon });
-
+								let labelValue = !e.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(e.labelValue);
+	
+								let idxIcon = iconData.findIndex(i => i.icon === icon);
+	
+								if (idxIcon !== -1) {
+	
+									labelValue = iconData[idxIcon].labelValue + ", " + labelValue;
+									iconData.splice(idxIcon, 1);
+								}
+	
+								if (maxLengthLabel < labelValue.length) {
+	
+									maxLengthLabel = labelValue.length;
+								}
+	
+								iconData.push({ labelValue, icon });	
 							}
-
 						});
 					}
 				}
 
+				let lessThanMax = maxLengthLabel * FONT_SIZE < MAX_WIDTH_COL_LABEL;
+				let greatterThanMin = maxLengthLabel * FONT_SIZE > MIN_WIDTH_COL_LABEL;
+
+				if (lessThanMax && greatterThanMin) {
+
+					widthColLabel = maxLengthLabel * FONT_SIZE;
+				}
+				else {
+
+					widthColLabel = lessThanMax ? MIN_WIDTH_COL_LABEL : MAX_WIDTH_COL_LABEL;
+				}
+
 				let body = {
 					view: "datatable",
+					header: false,
 					columns: [
-						{ id: "labelValue", header: i18n.t("LBL_LABEL"), width: 198 },
-						{ id: "icon", header: i18n.t("LBL_ICON"), width: 190 }
+						{ id: "icon", width: WIDTH_COL_ICON },
+						{ id: "labelValue", width: widthColLabel }
 					],
 					data: iconData
 				};
 
-				util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 600, 400, false);
+				let winHeight = COL_HEIGHT * iconData.length + 60;
 
+				util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 
+									winHeight < MAX_WIN_HEIGHT ? winHeight : MAX_WIN_HEIGHT, 
+									widthColLabel + WIDTH_COL_ICON + 20, false);
 			});
 		}
 	}
-
-
 
 	callbacks() {
 
@@ -1607,7 +1643,7 @@ export default class DataTable {
 		this.sortDatatable();
 		this.filterDatatable();
 	}
-	
+
 	on_destroy() {
 
 		let self = this;
@@ -1629,23 +1665,23 @@ export default class DataTable {
 		let metadata = this.metadata;
 
 		if (grid) {
-			
+
 			let columns = grid.config.columns;
 
 			if (metadata.gridFields.length > 0 && Array.isArray(columns) && columns.length > 0) {
-				
+
 				metadata.gridFields.forEach(e => {
-					
+
 					if (e.extended) {
-					
+
 						if (selection === "hide") {
-							
+
 							grid.hideColumn(e.sourceField);
 						}
 						else if (selection === "show") {
-							
+
 							grid.showColumn(e.sourceField);
-						}	
+						}
 					}
 				});
 			}
@@ -1707,7 +1743,7 @@ export default class DataTable {
 
 		let args = {};
 		let obj = this;
-		
+
 		let viewTypeId = undefined;
 
 		if (gridCommand) {
@@ -1732,7 +1768,7 @@ export default class DataTable {
 				}
 
 				args.callbacks = [];
-				args.callbacks.push(function() {obj.refresh(obj)});
+				args.callbacks.push(function() { obj.refresh(obj) });
 			}
 
 			// Any selected?
@@ -1783,20 +1819,20 @@ export default class DataTable {
 		if (grid) {
 
 			grid.attachEvent("onItemDblClick", function(id, e, node) {
-				
+
 				if (self.events && self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC]) {
 
-					eval(self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());	
+					eval(self.events[DataTable.EventTypes.ON_ITEM_DBL_CLIC])(self.getSelectedIds());
 				}
 				else {
-				
+
 					let defaultCommand = self.metadata.gridCommands.find(gridCommand => {
 						return gridCommand.default_ === true
 					});
-	
-					self.open_module(defaultCommand);	
-				}				
-				
+
+					self.open_module(defaultCommand);
+				}
+
 			});
 		}
 	}
@@ -1822,20 +1858,49 @@ export default class DataTable {
 	main_toolbar_callback() {
 
 		let self = this;
-		let segInstance = $$("seg-" + this.uid);
+		let showButton = $$("tb_btn-showseg-" + this.uid);
+		let resultDetails = this.getGridOptions(GridOptions.SHOW_DETAILS);
 
-		if (segInstance) {
+		if (showButton) {
 
-			segInstance.attachEvent("onChange", function(newv, oldv) {
+			if (resultDetails) {
+				showButton._contentobj.className = "webix_view webix_control webix_el_icon details_icon_selected";
+				showButton.refresh();
 
-				if (newv === "seg-basic-" + self.uid) {
+			}
+
+			showButton.attachEvent("onItemClick", function(id, e, node) {
+
+				if (resultDetails) {
+					resultDetails = false;
 					self.change_view("hide");
+					showButton._contentobj.className = "webix_view webix_control webix_el_icon";
+					showButton.refresh();
 				}
-				else if (newv === "seg-details-" + self.uid) {
+				else {
+					resultDetails = true;
 					self.change_view("show");
+					showButton._contentobj.className = "webix_view webix_control webix_el_icon details_icon_selected";
+					showButton.refresh();
 				}
 			});
 		}
+
+		//						let self = this;
+		//						let segInstance = $$("seg-" + this.uid);
+		//						
+		//				
+		//						if (segInstance) {
+		//				
+		//							segInstance.attachEvent("onChange", function(newv, oldv) {
+		//								if (newv === "seg-basic-" + self.uid) {
+		//									self.change_view("hide");
+		//								}
+		//								else if (newv === "seg-details-" + self.uid) {
+		//									self.change_view("show");
+		//								}
+		//							});
+		//						}
 	}
 
 	select_all_callback() {
@@ -1848,8 +1913,8 @@ export default class DataTable {
 			selectAllButton.attachEvent("onItemClick", function(id, e) {
 
 				if (grid.getFirstId()) {
-				
-					grid.selectAll();	
+
+					grid.selectAll();
 				}
 			});
 		}
@@ -1865,8 +1930,8 @@ export default class DataTable {
 			unselectAllButton.attachEvent("onItemClick", function(id, e) {
 
 				if (grid.getFirstId()) {
-				
-					grid.unselectAll();	
+
+					grid.unselectAll();
 				}
 			});
 		}
@@ -1891,17 +1956,17 @@ export default class DataTable {
 	}
 
 	refresh(obj) {
-		
+
 		let url = undefined;
 		let self = undefined;
-		
-		if(obj != undefined){
+
+		if (obj != undefined) {
 			self = obj;
 		}
-		else{
+		else {
 			self = this;
 		}
-		
+
 		let grid = $$("dt-" + self.uid);
 
 		if (!webix.isUndefined(grid)) {
@@ -2197,20 +2262,20 @@ export default class DataTable {
 }
 
 Object.defineProperty(DataTable, 'EventTypes', {
-    value: {}
+	value: {}
 });
 
 
 Object.defineProperty(DataTable.EventTypes, 'ON_SELECT_ROW', {
-    value: 1,
-    writable : false,
-    enumerable : true,
-    configurable : false
+	value: 1,
+	writable: false,
+	enumerable: true,
+	configurable: false
 });
 
 Object.defineProperty(DataTable.EventTypes, 'ON_ITEM_DBL_CLIC', {
-    value: 2,
-    writable : false,
-    enumerable : true,
-    configurable : false
+	value: 2,
+	writable: false,
+	enumerable: true,
+	configurable: false
 });

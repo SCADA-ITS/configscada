@@ -597,7 +597,11 @@ export let util = {
 		}
 	},
 
-
+	datatable: {
+	
+		
+	},
+	
 	toLocaleString(ts) {
 		
 		if (!ts) {

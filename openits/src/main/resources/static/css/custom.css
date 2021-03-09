@@ -248,6 +248,16 @@
 	transition: 0.5s;
 }
 
+.webix_pager_item {
+	color:var(--blue-soft) !important;
+}
+
+.webix_pager_item:hover {
+	color:var(--blue-soft) !important;
+	background-color: var(--blue-mid-opacity-2) !important;
+	transition: 0.5s;
+}
+
 .main-tab .tab-text{
 	padding-left: 27px;
 	padding-top: 3px;
@@ -1537,6 +1547,26 @@
     background: rgba(204 0 0 / 0.9) !important;
 }
 
+.sel_label .webix_el_box {
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	color: #4f4f4f !important;
+}
+
+.sel_label_selected .webix_el_box {
+	font-size: 11px !important;
+	font-weight: 500 !important;
+	color: #757474 !important;
+	margin: 1px 0 1px 6px !important;
+}
+
+.filter_icon_selected .webix_icon.wxi-filter {
+	color:rgba(255 152 0 / 0.8);
+}
+
+.details_icon_selected .webix_icon.wxi-columns {
+	color: rgba(255 152 0 / 0.8);
+}
 
 /* FEature 904 */
 /*

@@ -65,6 +65,9 @@ public class GridField implements Serializable {
 	
 	@Column(name="fixed_column")
 	private Boolean fixedColumn;
+	
+	@Column(name="replacement_function")
+	private String replacementFunction;
 
 	@Column(name="width_px")
 	private Integer widthPx;
@@ -73,9 +76,9 @@ public class GridField implements Serializable {
 	@OneToMany(mappedBy="gridField")
 	private List<GridFieldIcon> gridFieldIcons;
 	
-	//bi-directional many-to-one association to GridFieldBadge
+	//bi-directional many-to-one association to GridFieldBalloon
 	@OneToMany(mappedBy="gridField")
-	private List<GridFieldBadge> gridFieldBadges;
+	private List<GridFieldBalloon> gridFieldBalloons;
 	
 	//bi-directional many-to-one association to GridFieldReference
 	@OneToMany(mappedBy="gridField")
@@ -261,28 +264,28 @@ public class GridField implements Serializable {
 		return gridFieldIcon;
 	}
 	
-	public List<GridFieldBadge> getGridFieldBadges() {
-		return this.gridFieldBadges;
+	public List<GridFieldBalloon> getGridFieldBalloons() {
+		return this.gridFieldBalloons;
 	}
 
-	public void setGridFieldBadges(List<GridFieldBadge> gridFieldBadges) {
-		this.gridFieldBadges = gridFieldBadges;
+	public void setGridFieldBalloons(List<GridFieldBalloon> gridFieldBalloons) {
+		this.gridFieldBalloons = gridFieldBalloons;
 	}
 
-	public GridFieldBadge addGridFieldBadge(GridFieldBadge gridFieldBadge) {
-		getGridFieldBadges().add(gridFieldBadge);
-		gridFieldBadge.setGridField(this);
+	public GridFieldBalloon addGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
+		getGridFieldBalloons().add(gridFieldBalloon);
+		gridFieldBalloon.setGridField(this);
 
-		return gridFieldBadge;
+		return gridFieldBalloon;
 	}
 
-	public GridFieldBadge removeGridFieldBadge(GridFieldBadge gridFieldBadge) {
-		getGridFieldBadges().remove(gridFieldBadge);
-		gridFieldBadge.setGridField(null);
+	public GridFieldBalloon removeGridFieldBalloon(GridFieldBalloon gridFieldBalloon) {
+		getGridFieldBalloons().remove(gridFieldBalloon);
+		gridFieldBalloon.setGridField(null);
 
-		return gridFieldBadge;
+		return gridFieldBalloon;
 	}
-	
+
 	public List<GridFieldReference> getGridFieldReferences() {
 		return this.gridFieldReferences;
 	}
@@ -373,6 +376,14 @@ public class GridField implements Serializable {
 
 	public void setFixedColumn(Boolean fixedColumn) {
 		this.fixedColumn = fixedColumn;
+	}
+
+	public String getReplacementFunction() {
+		return this.replacementFunction;
+	}
+
+	public void setReplacementFunction(String replacementFunction) {
+		this.replacementFunction = replacementFunction;
 	}
 
 }

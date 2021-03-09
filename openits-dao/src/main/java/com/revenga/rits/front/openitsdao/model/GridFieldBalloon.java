@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * The persistent class for the grid_field_badges database table.
+ * The persistent class for the grid_field_balloons database table.
  * 
  */
 @Entity
-@Table(name="grid_field_badges")
-@NamedQuery(name="GridFieldBadge.findAll", query="SELECT g FROM GridFieldBadge g")
-public class GridFieldBadge implements Serializable {
+@Table(name="grid_field_balloons")
+@NamedQuery(name="GridFieldBalloon.findAll", query="SELECT g FROM GridFieldBalloon g")
+public class GridFieldBalloon implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,7 +32,7 @@ public class GridFieldBadge implements Serializable {
 	@JoinColumn(name="grid_field_id")
 	private GridField gridField;
 
-	public GridFieldBadge() {
+	public GridFieldBalloon() {
 	}
 
 	public Integer getId() {

@@ -33,6 +33,9 @@ public class GridFieldIcon implements Serializable {
 	private Boolean showValue;
 
 	private String value;
+	
+	@Column(name="label_value")
+	private String labelValue;
 
 	//bi-directional many-to-one association to GridField
 	@JsonIgnore
@@ -105,6 +108,14 @@ public class GridFieldIcon implements Serializable {
 
 	public void setGridField(GridField gridField) {
 		this.gridField = gridField;
+	}
+
+	public String getLabelValue() {
+		return this.labelValue;
+	}
+
+	public void setLabelValue(String labelValue) {
+		this.labelValue = labelValue;
 	}
 
 }
