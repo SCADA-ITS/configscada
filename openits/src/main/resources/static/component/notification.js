@@ -131,7 +131,7 @@ export default class Notification {
 		
 		if (this.sound && !this.audio) {
 			
-			this.audio = new Audio('../sound/' + this.sound);
+			this.audio = new Audio('./sound/' + this.sound);
 			this.audio.loop = true;
 	  		this.audio.play();	
 		}
