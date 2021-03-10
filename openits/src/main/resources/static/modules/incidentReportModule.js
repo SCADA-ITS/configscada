@@ -229,6 +229,11 @@ export default class IncidentReportModule extends GenericModule {
 
 				return (e.state.id == this.incidentReport.incidentState.id);
 			});
+			
+			if (!this.currentSequenceOfState) {
+				
+				this.currentSequenceOfState = this.incidentReport.sequenceOfStates[this.incidentReport.sequenceOfStates.length - 1];
+			}
 
 			if (this.currentSequenceOfState) {
 				
@@ -271,6 +276,17 @@ export default class IncidentReportModule extends GenericModule {
 
 			$$("loading-" + this.uid).hide();
 			$$(this.uid).show();
+			
+			if (this.closed) {
+				
+				webix.alert({
+					title: i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE"),
+					ok: i18n.t("LBL_YES"),
+					text: i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"),
+					type:"alert-warning",
+					width: 600
+				});	
+			}
 		}
 	}
 
