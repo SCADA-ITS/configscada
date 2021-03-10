@@ -710,12 +710,24 @@ export default class DataTable {
 
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
-		let iconReplacement = undefined;
 		let resultFilter = undefined;
+		let showLegend = false;
 
 		if (Array.isArray(metadata.gridFields) &&  metadata.gridFields.length > 0) {
-		
-			iconReplacement = metadata.gridFields.filter(e => (e.gridFieldIcons && e.gridFieldIcons.length > 0));
+			
+			let gridFieldsWithIcons = undefined;		
+			gridFieldsWithIcons = metadata.gridFields.filter(e => (Array.isArray(e.gridFieldIcons) && e.gridFieldIcons.length > 0));
+			
+			if (Array.isArray(gridFieldsWithIcons) &&  gridFieldsWithIcons.length > 0) {
+			
+				for (let gridFieldItem = 0; !showLegend && gridFieldItem < gridFieldsWithIcons.length; gridFieldItem++) {
+					
+					let gridField = gridFieldsWithIcons[gridFieldItem];
+					
+					showLegend |= (gridField.gridFieldIcons.find(e => e.icon) != undefined);
+				}
+			}
+			
 			resultFilter = metadata.gridFields.find(e => e.filtered === true);	
 		}
 
@@ -769,7 +781,7 @@ export default class DataTable {
 				toolbar.elements.push({ id: "tb_btn-showseg-" + this.uid, view: "icon", icon: "wxi-columns", value: i18n.t("LBL_SHOW_DETAILS"), tooltip: true });
 			}
 
-			if (iconReplacement) {
+			if (showLegend) {
 
 				toolbar.elements.push({ id: "tb_btn-icons-" + this.uid, view: "icon", icon: "mdi mdi-map-legend", value: i18n.t("LBL_TABLE_LEGEND"), tooltip: true })
 			}
@@ -1553,64 +1565,67 @@ export default class DataTable {
 			listButton.attachEvent("onItemClick", function(id, e) {
 
 				iconData.length = 0;
+				
+				if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
+					
+					for (let gridField of metadata.gridFields) {
 
-				for (let gridField of metadata.gridFields) {
-
-					if (gridField.gridFieldIcons.length > 0) {
-
-						gridField.gridFieldIcons.forEach(e => {
-							
-							if (e.icon) {
-							
-								let icon = "<img class='table-field-icons' src=" + e.icon + "/>";
-								let labelValue = !e.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(e.labelValue);
+						if (gridField.gridFieldIcons.length > 0) {
 	
-								let idxIcon = iconData.findIndex(i => i.icon === icon);
-	
-								if (idxIcon !== -1) {
-	
-									labelValue = iconData[idxIcon].labelValue + ", " + labelValue;
-									iconData.splice(idxIcon, 1);
+							gridField.gridFieldIcons.forEach(e => {
+								
+								if (e.icon) {
+								
+									let icon = "<img class='table-field-icons' src=" + e.icon + "/>";
+									let labelValue = !e.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(e.labelValue);
+		
+									let idxIcon = iconData.findIndex(i => i.icon === icon);
+		
+									if (idxIcon !== -1) {
+		
+										labelValue = iconData[idxIcon].labelValue + ", " + labelValue;
+										iconData.splice(idxIcon, 1);
+									}
+		
+									if (maxLengthLabel < labelValue.length) {
+		
+										maxLengthLabel = labelValue.length;
+									}
+		
+									iconData.push({ labelValue, icon });	
 								}
-	
-								if (maxLengthLabel < labelValue.length) {
-	
-									maxLengthLabel = labelValue.length;
-								}
-	
-								iconData.push({ labelValue, icon });	
-							}
-						});
+							});
+						}
 					}
-				}
-
-				let lessThanMax = maxLengthLabel * FONT_SIZE < MAX_WIDTH_COL_LABEL;
-				let greatterThanMin = maxLengthLabel * FONT_SIZE > MIN_WIDTH_COL_LABEL;
-
-				if (lessThanMax && greatterThanMin) {
-
-					widthColLabel = maxLengthLabel * FONT_SIZE;
-				}
-				else {
-
-					widthColLabel = lessThanMax ? MIN_WIDTH_COL_LABEL : MAX_WIDTH_COL_LABEL;
-				}
-
-				let body = {
-					view: "datatable",
-					header: false,
-					columns: [
-						{ id: "icon", width: WIDTH_COL_ICON },
-						{ id: "labelValue", width: widthColLabel }
-					],
-					data: iconData
-				};
-
-				let winHeight = COL_HEIGHT * iconData.length + 60;
-
-				util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 
-									winHeight < MAX_WIN_HEIGHT ? winHeight : MAX_WIN_HEIGHT, 
-									widthColLabel + WIDTH_COL_ICON + 20, false);
+					
+					let lessThanMax = maxLengthLabel * FONT_SIZE < MAX_WIDTH_COL_LABEL;
+					let greatterThanMin = maxLengthLabel * FONT_SIZE > MIN_WIDTH_COL_LABEL;
+	
+					if (lessThanMax && greatterThanMin) {
+	
+						widthColLabel = maxLengthLabel * FONT_SIZE;
+					}
+					else {
+	
+						widthColLabel = lessThanMax ? MIN_WIDTH_COL_LABEL : MAX_WIDTH_COL_LABEL;
+					}
+	
+					let body = {
+						view: "datatable",
+						header: false,
+						columns: [
+							{ id: "icon", width: WIDTH_COL_ICON },
+							{ id: "labelValue", width: widthColLabel }
+						],
+						data: iconData
+					};
+	
+					let winHeight = COL_HEIGHT * iconData.length + 60;
+	
+					util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 
+										winHeight < MAX_WIN_HEIGHT ? winHeight : MAX_WIN_HEIGHT, 
+										widthColLabel + WIDTH_COL_ICON + 20, false);
+				} 
 			});
 		}
 	}

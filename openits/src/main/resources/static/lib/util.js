@@ -599,6 +599,10 @@ export let util = {
 
 	datatable: {
 	
+		concatTest(value) {
+			
+			return "This is a test with " + value;
+		}
 		
 	},
 	
