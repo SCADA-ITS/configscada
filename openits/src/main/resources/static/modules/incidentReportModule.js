@@ -231,6 +231,9 @@ export default class IncidentReportModule extends GenericModule {
 			});
 
 			if (this.currentSequenceOfState) {
+				
+				this.closed = (this.currentSequenceOfState.state.id === this.incidentReport.sequenceOfStates[this.incidentReport.sequenceOfStates.length - 1].state.id);
+				this.currentSequenceOfState.finalState = this.closed;
 
 				let tasks = this.currentSequenceOfState.taskStates;
 

@@ -710,14 +710,14 @@ export default class DataTable {
 
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
+		let iconReplacement = undefined;
+		let resultFilter = undefined;
 
-		let iconReplacement = metadata.gridFields.filter(e => e.gridFieldIcons.length > 0);
-		//		let label = undefined;
-		//
-		//		for (let element of iconReplacement) {
-		//			label = element.gridFieldIcons.find(e => e.labelValue && e.labelValue != "");
-		//		};
-
+		if (Array.isArray(metadata.gridFields) &&  metadata.gridFields.length > 0) {
+		
+			iconReplacement = metadata.gridFields.filter(e => (e.gridFieldIcons && e.gridFieldIcons.length > 0));
+			resultFilter = metadata.gridFields.find(e => e.filtered === true);	
+		}
 
 		let toolbar = {
 			view: "toolbar",
@@ -748,8 +748,6 @@ export default class DataTable {
 
 		if (resultCommons) {
 
-			let resultFilter = metadata.gridFields.find(e => e.filtered === true);
-
 			if (resultFilter) {
 
 				toolbar.elements.push({ id: "tb_btn-showfilters-" + this.uid, view: "icon", icon: "wxi-filter", value: i18n.t("LBL_FILTERS"), tooltip: true });
@@ -777,7 +775,7 @@ export default class DataTable {
 			}
 		}
 
-		if (metadata.gridCommands && metadata.gridCommands.length > 0 && resultCommands) {
+		if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0 && resultCommands) {
 
 			toolbar.elements.push({ width: 8 });
 			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));

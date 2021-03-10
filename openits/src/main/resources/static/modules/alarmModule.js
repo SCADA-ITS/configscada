@@ -10,6 +10,7 @@ export default class AlarmModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.uid = webix.uid();
+		this.userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 
 		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
 		this.config = module.config;
@@ -55,7 +56,8 @@ export default class AlarmModule extends GenericModule {
 					
 					let body = {
 						alarmIds: alarmsId,
-						recognizedComments: comments
+						recognizedComments: comments,
+						userId: self.userData.id
 					};
 
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, body).then(function(data) {
@@ -140,7 +142,8 @@ export default class AlarmModule extends GenericModule {
 					
 								let body = {
 									alarmIds: self.args.selectedPks,
-									deactivationComments: comments
+									deactivationComments: comments,
+									userId: self.userData.id
 								};
 
 								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.deactivate, body).then(function(data) {
