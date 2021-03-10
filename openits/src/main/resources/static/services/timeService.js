@@ -9,6 +9,8 @@ export default class TimeService extends GenericModule {
 		
 		this.module = module;
 		this.mod = mod;
+		
+		this.serverTime = undefined; 
 	}
 	
 	getView() {
@@ -20,85 +22,80 @@ export default class TimeService extends GenericModule {
 		return views;
 	}
 	
-	loadData() {
+	getDateTime() {
 		
-		this.updateServiceTime(this.module);
+		return this.serverTime;
 	}
 	
-	updateServiceTime() {
-	
-		let labelTime = $$("time-service");
+	loadData() {
 		
-		if (!webix.isUndefined(labelTime)) {
+		let self = this;
+		
+		let updateServiceTime = function() {
 			
-			let timeElapsed = -1;
-			let lastUTCSeconds = 0;
-			let waitingResponse = false;
-			
-			setInterval(function(){
+			let updateLabel = function(utcSeconds) {
 				
-				if (!waitingResponse && timeElapsed === -1 || timeElapsed > 60000) {
+				var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch							
+				tm.setUTCSeconds(utcSeconds);
+				let h = tm.getHours();
+				let m = webix.Date.toFixed(tm.getMinutes());
+				let s = webix.Date.toFixed(tm.getSeconds());
+				let time = +h + ":" + m + ":" + s;
+				let date = util.toLocaleDateString(utcSeconds);
+				labelTime.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
+			}
+	
+			let labelTime = $$("time-service");
+			
+			if (!webix.isUndefined(labelTime)) {
+				
+				let timeElapsed = -1;
+				let lastUTCSeconds = 0;
+				let waitingResponse = false;
+				
+				setInterval(function(){
 					
-					waitingResponse = true;
-					webix.ajax(appConfig.restUrl + "server/time").then(function(data) {
+					if (!waitingResponse && timeElapsed === -1 || timeElapsed > 60000) {
 						
-						timeElapsed = 1000;
-					
-						if (typeof data.json() === "object") {
+						waitingResponse = true;
+						webix.ajax(appConfig.restUrl + "server/time").then(function(data) {
 							
-							let utcSeconds = data.json().epochSecs + (timeElapsed / 1000);
+							timeElapsed = 1000;
+						
+							if (typeof data.json() === "object") {
+								
+								let utcSeconds = data.json().epochSecs + (timeElapsed / 1000);
+								
+								self.serverTime = utcSeconds; 
+								lastUTCSeconds = utcSeconds;
+
+								updateLabel(utcSeconds);
+							}
 							
-							window.serverTime = utcSeconds; 
-							var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch
+							waitingResponse = false;
+						});
+					}
+					else {
+						
+						if (!waitingResponse) {
 							
-							lastUTCSeconds = utcSeconds;
-							tm.setUTCSeconds(utcSeconds);
+							let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
 							
-							let h = tm.getHours();
-							let m = webix.Date.toFixed(tm.getMinutes());
-							let s = webix.Date.toFixed(tm.getSeconds());
-							let time = +h + ":" + m + ":" + s;
-							//let date = month + "/" + day + "/" + year;
-							let date = util.toLocaleDateString(utcSeconds);
-							labelTime.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
-							
-							//labelTime.setValue(time + " " + date);	
+							self.serverTime = utcSeconds;
+
+							updateLabel(utcSeconds);
 						}
-						
-						waitingResponse = false;
-					});
-				}
-				else {
+					}
 					
 					if (!waitingResponse) {
 					
-						var tm = new Date(0); // The 0 there is the key, which sets the date to the epoch
-						
-						let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
-						tm.setUTCSeconds(utcSeconds);
-						
-						window.serverTime = utcSeconds;
-						
-						let h = tm.getHours();
-						let m = webix.Date.toFixed(tm.getMinutes());
-						let s = webix.Date.toFixed(tm.getSeconds());
-						let time = +h + ":" + m + ":" + s;
-						//let date = month + "/" + day + "/" + year;
-						let date = util.toLocaleDateString(utcSeconds);
-						labelTime.setHTML("<div class='toolbar-time'>" + time + "</div><div class='toolbar-time'>" + date + "</div>");
-						
-						//labelTime.setValue(time + " " + date)	
+						timeElapsed += 1000;	
 					}
 					
-				}
-				
-				if (!waitingResponse) {
-				
-					timeElapsed += 1000;	
-				}
-				
-				
-			}, 999);
-		}
+				}, 999);
+			}
+		};
+		
+		updateServiceTime();
 	}
 }

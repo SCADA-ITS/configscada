@@ -217,6 +217,13 @@ export default class AlarmService extends GenericModule {
 
 			this.idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
 		}
+		
+		let isMuted = function(data) {
+			
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			
+			return (data.mutedUntil && timeService.getDateTime() < data.mutedUntil / 1000);
+		}
 
 		function onMessage(be) {
 
@@ -236,7 +243,7 @@ export default class AlarmService extends GenericModule {
 				else {
 					date = be.activation / 1000;
 
-					if (alarmLevel.notification === 'true') {
+					if (alarmLevel.notification === 'true' && !isMuted(be)) {
 
 						let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
 

@@ -197,15 +197,23 @@ export default class AlarmModule extends GenericModule {
 									mutedAlarms.push({
 										
 										alarmConfigId: alarm.alarmConfig.id,
-										mutedUntil: Math.floor(dates.from) * 1000,
+										mutedUntil: dates.from.getTime(),
 										elementId: alarm.targetElement.id,
-										enabled: true
+										enable: true
 									});
 								});
 								
-								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.mute, JSON.stringify(mutedAlarms)).then(function(data) {
-									console.log(data);
-								});
+								if (Array.isArray(mutedAlarms) && mutedAlarms.length > 0) {
+
+									let body = {
+									
+										alarmMuteds: mutedAlarms							
+									};
+									
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.mute, body).then(function(data) {
+										console.log(data);
+									});									
+								} 
 							}
 						});					
 					}

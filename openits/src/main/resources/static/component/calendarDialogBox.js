@@ -16,6 +16,7 @@ export default class CalendarDialogBox {
 		var calendar1 = {
 			view: "calendar",
 			id: "calendar1-" + self.uid,
+			date: new Date(),
 			timepicker: true,
 			blockDates: function(date) {
 				
@@ -26,6 +27,7 @@ export default class CalendarDialogBox {
 		var calendar2 = {
 		    view:"calendar",
 			id: "calendar2-" + self.uid,
+			date: new Date(),
 		    timepicker:true,
 			blockDates: function(date) {
 				
@@ -82,11 +84,19 @@ export default class CalendarDialogBox {
 									
 									let dates = {};
 									
-									dates.from = $$("calendar1-" + self.uid).getSelectedDate();
+									let dateFrom = $$("calendar1-" + self.uid).getSelectedDate();
+									
+									dateFrom.setSeconds(0, 0);
+									
+									dates.from = dateFrom;
 									
 									if (self.multidate) {
+										
+										let dateTo = $$("calendar2-" + self.uid).getSelectedDate();;
+										
+										dateTo.setSeconds(0, 0);
 									
-										dates.to = $$("calendar2-" + self.uid).getSelectedDate();	
+										dates.to = dateTo;	
 									}
 									
 									self.onAccept(dates);

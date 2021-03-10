@@ -129,19 +129,25 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			});
 		}
-
+		
+		function isMuted(data) {
+			
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			
+			return (data.mutedUntil && timeService.getDateTime() < (data.mutedUntil.getTime() / 1000));
+		}
+		
 		function loadDataCollections(data) {
-
+			
 			self.dcNoRecognized = data.filter(e => {
 
-				return !e.recognized && !e.mutedUntil;
+				return !e.recognized && !isMuted(e);
 			});
 
 			self.dcRecognized = data.filter(e => {
 
-				return e.recognized && !e.mutedUntil;
+				return e.recognized && !isMuted(e);
 			});
-
 		}
 
 		function initDataTables() {
@@ -1033,9 +1039,9 @@ export default class AlarmMonitorModule extends GenericModule {
 							return e.id === flattenedItem.id;
 						}, true);
 
-						// Receive alarm recognized and desactivated.
+						// Receive alarm recognized and desactivated or alarm is muted
 						// Actions: Remove from any datacollection
-						if (flattenedItem.recognized && flattenedItem.deactivation) {
+						if ((flattenedItem.recognized && flattenedItem.deactivation) || isMuted(flattenedItem)) {
 
 							let items = 0;
 
