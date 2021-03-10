@@ -1,5 +1,5 @@
 import GenericModule from "./genericModule.js";
-import SynopticElement from "../classes/SynopticIcon.js";
+import SynopticElement from "../component/graphicElement.js";
 import {WIDTH_RESOLUTION, HEIGHT_RESOLUTION, ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
 import { util } from "../lib/util.js";
 
@@ -23,7 +23,7 @@ export default class SynopticModule extends GenericModule{
     if (synopticResponse != undefined) {       
       this.synopticConf = JSON.parse(synopticResponse.responseText);
     }else{
-      webix.message({type:"error", text:$.i18n("INCORRECT SYNOPTIC CONFIG. ID: "+this.synConfigId)});
+      webix.message({type:"error", text:"INCORRECT SYNOPTIC CONFIG. ID: "+this.synConfigId});
     }
   }
 

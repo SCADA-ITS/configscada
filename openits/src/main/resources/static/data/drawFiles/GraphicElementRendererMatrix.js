@@ -1,37 +1,22 @@
-import { staticsIcons } from "../icons/synopticJson.js";
+import * as elementTypeMap from "../../lib/elementTypeMap.js";
+import {ELEMENT_TYPE} from "../GLOBAL_PROPERTIES.js";
+import { panelData } from "../panelData.js";
+import { availablePictos } from "../pmvpicto.js";
 
-
-import * as elementTypeMap from "./elementTypeMap.js";
-import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
-
+const ELMENT_TYPE_STATE_UI_COLOR = "color";
 
 export function generateIcon(element, suffix="") {
-  // check for the panel config
-  let panelConfig = element.elementValues.find(
-    (ic) =>
-      elementTypeMap.getElementTypeParam(ic.id) ==
-      elementTypeMap.PANEL_MANAGER_CONFIG
+  let panelConfig = element.elementValues.find((ic) =>
+      elementTypeMap.getElementTypeParam(ic.id) == elementTypeMap.PANEL_MANAGER_CONFIG
   );
-  //console.log(panelConfig);
-
   // control stomp 5:1
   if (panelConfig === undefined){
     panelConfig = JSON.parse(panelData[element.elementType.id]["panel"]);
   }else{
     panelConfig = JSON.parse(panelConfig.value);
   }
-  // changes the color based on the status
-  let color = "";
-  let elementState;
-  if(element.elementTypeState && element.elementTypeState.id) {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
 
-  if(typeof elementState != 'undefined') {
-    color = ICON_COLOR[elementState];
-  }
-
-  
+  let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
   let subpanel_matrix = [];
   let total_width = 0;
   let total_height = 0;
@@ -73,14 +58,12 @@ export function generateIcon(element, suffix="") {
   s.attr({ height: total_height, width: total_width});
 
   let n_elements = 0;
-
   for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
     let n_zones = panelConfig["Subpaneles"][nsubpanel]["NumZonas"];
     let zone_cols = parseInt(n_zones.split("x")[0]);
     let zone_rows = parseInt(n_zones.split("x")[1]);
     let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
     let panel_width = parseInt(n_size.split("x")[0]);
-    let panel_height = parseInt(n_size.split("x")[1]);
 
     let subpanel_x = 0;
     let subpanel_y = 0;
@@ -93,7 +76,6 @@ export function generateIcon(element, suffix="") {
       let row_covered_size = 0;
       for(let c=0; c<zone_cols; c++) {
         let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][index]["Tamanio"];
-        let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
         row_covered_size += subpanel_width;
         index++;
@@ -113,7 +95,6 @@ export function generateIcon(element, suffix="") {
         if(content_value !== null && content_value !== undefined){
           let valueData =JSON.parse(content_value);
           content_value = valueData.value;
-          //console.log(content_value);
           let isGraphic=false;
           if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
             if(parseInt(valueData.type)==1){
@@ -129,12 +110,6 @@ export function generateIcon(element, suffix="") {
             }else{
               auxBase64=availablePictos["0"].base64
             }
-            
-            //FIX ajuste iconos paneles en el mapa
-            // subpanel_width = subpanel_width - 20
-            // subpanel_height = subpanel_height - 20
-            // subpanel_x = subpanel_x + 1
-            // subpanel_y = subpanel_y + 2
             
             let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
             im.attr("id", element.id + suffix + ":" + value_to_find);
@@ -204,37 +179,11 @@ export function generateIcon(element, suffix="") {
 
 export function getElementIcon(element, suffix="") {
 
-  let elem_icon = "";
+  let iconName = "icon.svg";
   let width = 0;
   let height = 0;
-  
-  let elementType = element.elementType.id;
-  let elementState = "";
-  
-  if (document.getElementById(element.id) != null) {
-    elementState = parseInt(document.getElementById(element.id).getAttribute("state"));
-  } else {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
-  
-  // icon based on status
-  if (typeof staticsIcons[elementType] != "undefined") {
-    elem_icon = staticsIcons[elementType]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  } else {
-    elem_icon = staticsIcons[elementTypeMap.ELEMENT_TYPE_33_ETD]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  }
+  let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
 
-  if (typeof elem_icon != "undefined") {
-    width = elem_icon.width;
-    height = elem_icon.height;
-    elem_icon = elem_icon.icon;
-  } else {
-    elem_icon = "";
-  }
   // search in the values for an id greater than 1001
   if(parseInt(element.id.split(":")[1]) === 30) {
     for(let i=0; i<element.elementValues.length; i++) {
@@ -289,18 +238,12 @@ export function getElementIcon(element, suffix="") {
         }
       }
     }
-  
-     // changes the color based on the status
-    let elementState;
-    if(element.elementTypeState && element.elementTypeState.id) {
-      elementState = getTrimId(element.elementTypeState.id);
-    }
-    let color = ICON_COLOR[elementState];
+
     if(Snap.select("#"+element.id + suffix +":stroke0") && Snap.select("#"+element.id + suffix +":stroke0").node && Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke){
       Snap.select("#"+element.id + suffix +":stroke0").node.attributes.stroke.value=color;
     }
   }
-  return { icon: elem_icon, width: width, height: height };
+  return { icon: iconName, width: width, height: height };
 }
 
 export function updateElementIcon(element) {
@@ -320,11 +263,30 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
+export function getElementSVG(element, width, height, suffix="") {
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
   } 
   let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + generateIcon(element, suffix) + '</g>';
   return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
+}
+
+
+function getLinesOfText(panelType, zone, subPanel) {
+  let panelConfig = JSON.parse(panelData[panelType]["panel"]);
+  let nLines = 0;
+  for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
+    let n_zones = panelConfig["Subpaneles"][nsubpanel]["NumZonas"];
+    let zone_cols = parseInt(n_zones.split("x")[0]);
+    let zone_rows = parseInt(n_zones.split("x")[1]);
+    for(let r=0; r<zone_rows; r++) {
+      for(let c=0; c<zone_cols; c++) {
+        if((zone == r) && (subPanel == c) && (panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["Tipo"] == "Texto")) {
+          nLines = panelConfig["Subpaneles"][nsubpanel]["Zonas"][r+c]["NumLineas"];
+        }
+      }
+    }
+  }
+  return parseInt(nLines);
 }

@@ -176,7 +176,7 @@ export default class Map {
               }
             }
 
-            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
 
             // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
             tmpIcon = tmpIcon.replace(/#/g, "%23");
@@ -320,8 +320,8 @@ export default class Map {
                   }
                 }
 
-                //let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "", mapStates[element.id], mapElementValues);
-                let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+                //let tmpIcon = iconGenerator.getElementSVG(element, mapElement.width, mapElement.height, "");
+                let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
                 
                 // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
                 tmpIcon = tmpIcon.replace(/#/g, "%23");
@@ -561,7 +561,7 @@ export default class Map {
               }
             }
 
-            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
             
             // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
             tmpIcon = tmpIcon.replace(/#/g, "%23");
@@ -1091,7 +1091,7 @@ export default class Map {
                   }
 
 
-                  let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "", mapStates[element.id], mapElementValues);
+                  let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
 
                   // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
                   tmpIcon = tmpIcon.replace(/#/g, "%23");

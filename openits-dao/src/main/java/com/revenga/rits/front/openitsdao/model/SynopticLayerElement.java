@@ -20,8 +20,6 @@ public class SynopticLayerElement implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	private Boolean alarms;
-
 	@Column(name="element_id")
 	private String elementId;
 
@@ -31,8 +29,6 @@ public class SynopticLayerElement implements Serializable {
 	private Boolean horizontalFlip;
 
 	private String label;
-
-	private Boolean measures;
 
 	private Integer width;
 
@@ -60,14 +56,6 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Boolean getAlarms() {
-		return this.alarms;
-	}
-
-	public void setAlarms(Boolean alarms) {
-		this.alarms = alarms;
 	}
 
 	public String getElementId() {
@@ -100,14 +88,6 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Boolean getMeasures() {
-		return this.measures;
-	}
-
-	public void setMeasures(Boolean measures) {
-		this.measures = measures;
 	}
 
 	public Integer getWidth() {

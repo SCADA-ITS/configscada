@@ -1,25 +1,18 @@
-import { staticsIcons } from "../icons/synopticJson.js";
+import * as svgPatterns from "../SVG_ELEMENT_TYPE_PATTERN.js";
+import {ELEMENT_TYPE} from "../GLOBAL_PROPERTIES.js";
+
+const ELMENT_TYPE_STATE_UI_COLOR = "color";
+const ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR = "svgPatternVar";
+const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM = "graphic_param";
 
 
-import * as elementTypeMap from "./elementTypeMap.js";
-import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
-
-
-export function generateIcon(element, suffix="") {
+export function generateIcon(element, suffix="", customGraphicEquipment) {
   let elementId= element.id+suffix;
   let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
   let elementAlias = element.alias;
-  let elementState = "";
-  if(element.elementTypeState && element.elementTypeState.id) {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
-  let color = ICON_COLOR[elementState];
-  // override generic color with ElementType color if exist
-  if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
-    color = ELEMENT_TYPE.values[element.elementType.id].color[elementState];
-  }
-  //svg icon String
-  let iconStr = ELEMENT_TYPE.values[element.elementType.id].svgRaw;
+  
+  let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
+  let iconPattern = svgPatterns[customGraphicEquipment[ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR]];
   let params={
     "elementId": elementId,
     "color": color,
@@ -27,61 +20,24 @@ export function generateIcon(element, suffix="") {
     "elementTypeAlias": elementTypeAlias
   };
   //param values
-  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
-    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
-      let key = Object.keys(item)[0];
-      let tempValue = element.elementValues.find(
-        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-      );
-      if(tempValue){
-        params[key]=tempValue.value;
-      }
-    });
-  }
+  element.elementValues.forEach(item => {
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM]){
+      let key = item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM];
+      params[key]=item.value;
+    }
+  });
 
-  return prepareStr(iconStr, params);
+  return prepareStr(iconPattern, params);
 }
 
 export function getElementIcon(element, suffix="") {
-
-  let elem_icon = "";
+  let iconName = "icon.svg";
   let width = 0;
   let height = 0;
+  let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
   
-  let elementType = element.elementType.id;
-  let elementState = "";
-  
-  if (document.getElementById(element.id) != null) {
-    elementState = parseInt(document.getElementById(element.id).getAttribute("state"));
-  } else {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
-  
-  // icon based on status
-  if (typeof staticsIcons[elementType] != "undefined") {
-    elem_icon = staticsIcons[elementType]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  } else {
-    elem_icon = staticsIcons[elementTypeMap.ELEMENT_TYPE_33_ETD]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  }
-
-  if (typeof elem_icon != "undefined") {
-    width = elem_icon.width;
-    height = elem_icon.height;
-    elem_icon = elem_icon.icon;
-  } else {
-    elem_icon = "";
-  }
   // changes the color based on the status
-  if (element.elementTypeState && element.elementTypeState.id) {
-    let color = ICON_COLOR[getTrimId(element.elementTypeState.id)];
-    // override generic color with ElementType color if exist
-    if(typeof ELEMENT_TYPE.values[element.elementType.id].color != 'undefined' && ELEMENT_TYPE.values[element.elementType.id].color){
-      color = ELEMENT_TYPE.values[element.elementType.id].color[getTrimId(element.elementTypeState.id)];
-    }
+  if (color) {
     if(document.getElementById(element.id + suffix + ":IconBackground") != null){
       document.getElementById(element.id + suffix + ":IconBackground").style["stroke"] = color;
     }
@@ -102,30 +58,22 @@ export function getElementIcon(element, suffix="") {
 
   // change params
   let params;
-  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
-    params={};
-    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
-      let key = Object.keys(item)[0];
-      let tempValue;
-      if(element.elementValues){
-        tempValue = element.elementValues.find(
-          (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-        );        
+  element.elementValues.forEach(item => {
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM]){
+      if(params===undefined){
+        params={};
       }
-      if(tempValue != undefined && tempValue){
-        params[key]=tempValue.value; 
-      }else{
-        params[key]=null;
-      }
+      let key = item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM];
+      params[key]=item.value;
       if(document.getElementById(element.id + suffix + ":Value") != null){
         document.getElementById(element.id + suffix + ":Value").innerHTML = params[key];
       }
-    });
-  }
+    }
+  });
 
   // specific case
   if(element.elementType.id === ELEMENT_TYPE.ID_8_BAR){
-    if (typeof params != 'undefined' && params && params["BAR_COMMAND_FOR_BARRIER"]
+    if (typeof params != undefined && params && params["BAR_COMMAND_FOR_BARRIER"]
       && document.getElementById(element.id + suffix + "g3856")!=null) {
       if (params["BAR_COMMAND_FOR_BARRIER"] == "1") {
         document.getElementById(element.id + suffix + "g3856").setAttribute("transform", "rotate(0,0,0)");
@@ -220,7 +168,7 @@ export function getElementIcon(element, suffix="") {
     }
   }
   
-  return { icon: elem_icon, width: width, height: height };
+  return { icon: iconName, width: width, height: height };
 }
 
 export function updateElementIcon(element) {
@@ -240,7 +188,7 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
+export function getElementSVG(element, width, height, suffix="") {
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);

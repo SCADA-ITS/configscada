@@ -151,15 +151,15 @@ public class SynopticBO extends GenericBO {
 					
 					for (SynopticLayerElement synopticLayerElement : synopticLayer.getSynopticLayerElements()) {
 						
-						if (synopticLayerElement.getMeasures() && synopticLayerElement.getAlarms()) {
+						if (synopticLayerElement.getCustomGraphicEquipment()!=null && synopticLayerElement.getCustomGraphicEquipment().getMeasures() && synopticLayerElement.getCustomGraphicEquipment().getAlarms()) {
 						
 							elementsWithStatesMeasuresAlarms.add(synopticLayerElement.getElementId());
 						}
-						else if(synopticLayerElement.getMeasures()){
+						else if(synopticLayerElement.getCustomGraphicEquipment()!=null && synopticLayerElement.getCustomGraphicEquipment().getMeasures()){
 							
 							elementsWithStatesMeasures.add(synopticLayerElement.getElementId());
 						}
-						else if(synopticLayerElement.getAlarms()){
+						else if(synopticLayerElement.getCustomGraphicEquipment()!=null && synopticLayerElement.getCustomGraphicEquipment().getAlarms()){
 							
 							elementsWithStatesAlarms.add(synopticLayerElement.getElementId());
 						}

@@ -1,54 +1,31 @@
-import { staticsIcons } from "../icons/synopticJson.js";
+import {ELEMENT_TYPE} from "../GLOBAL_PROPERTIES.js";
 
-
-import * as elementTypeMap from "./elementTypeMap.js";
-import {ELEMENT_TYPE, ICON_COLOR} from "../data/GLOBAL_PROPERTIES.js";
-
+const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE = "graphic_param_table";
+const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_LABEL = "graphic_param_label";
+const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_COLOR = "graphic_param_color";
 
 export function generateIcon(element, suffix="") {
-  //DEPRECATED
-  //Temporalmente se asignan aqui los "values" (son comunes para todos los equipos), esto deberá ir codificado dentro de Entities.ElementTypeUI
-  let values = [
-    {name: "etd_intensity", label: "I (V/h)"},
-    {name: "etd_speed", label: "V (K/h)"},
-    {name: "etd_occupancy", label: "O (%)"},
-    {name: "etd_veh_length_1_percent", label: "C (%L)"}
-  ];
-  // changes the color based on the status
-  let color = "";
-  //let elementState = element.state;
-  let elementState;
-  if(element.elementTypeState && element.elementTypeState.id) {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
-  
-  let params={};
-  //param values
-  // console.warn(element);
-  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
-    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
-      let key = Object.keys(item)[0];
-      let tempValue = element.elementValues.find(
-        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-      );
-      if(tempValue){
-        params[key]=tempValue.value;
+  let tableRows = new Map();
+  let color= "purple";
+  element.elementValues.forEach(item => {
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE]){
+      tableRows.set(parseInt(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE]), {value: item.value, label: item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_LABEL]})
+    }
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_COLOR]){
+      if(getTrimId(element.elementTypeState.id)!=2){
+        if (item.value == 1) {
+          color = "white";
+        } else if (item.value == 2) {
+          color = "green";    
+        } else if (item.value == 3) {
+          color = "gold";
+        } else if (item.value == 4) {
+          color = "red";
+        }
       }
-    });
-  }
-
-  if(typeof elementState != 'undefined' && elementState == 2) {
-      color = "purple";
-  } else if (params["SERVICE_LEVEL"] == 1) {
-    color = "white";
-  } else if (params["SERVICE_LEVEL"] == 2) {
-    color = "green";    
-  } else if (params["SERVICE_LEVEL"] == 3) {
-    color = "gold";
-  } else if (params["SERVICE_LEVEL"] == 4) {
-    color = "red";
-  }
-
+    }
+  });
+  
   let etd_str =
     '<g inkscape:label ="Capa 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-268.68957)"> ' +
     '<rect id="'+element.id +':fill0" stroke="black" style="stroke-width:0.2" fill="' + color + '" width="34.228191" height="5.6456451" x="0.041112646" y="268.73068" ry="0" />' +
@@ -57,7 +34,7 @@ export function generateIcon(element, suffix="") {
     element.description +
     "</tspan></text>";
 
-  for (let i = 0; i < values.length; i++) {
+  for (let i = 0; i < tableRows.size; i++) {
     etd_str +=
       '<rect stroke="black" style="stroke-width:0.2" fill="lightgray" id="rect4066-6-5-93-0" width="34.228191" height="5.6456451" x="0.041112646" y="' +
       (274.66467 + 6 * i) +
@@ -66,7 +43,7 @@ export function generateIcon(element, suffix="") {
       '<tspan sodipodi:role="line" x="7.465615" y="' +
       (277.66467 + 6 * i) +
       '" fill="black" style="font-size:3.85567474px;line-height:2.62886882px;text-align:center;text-anchor:middle;stroke-width:0.26288685" id="tspan4072-0-0-8">' +
-      values[i].label +
+      i18n.t(tableRows.get(i).label) +
       "</tspan></text>" +
       '<text fill="black" xml:space="preserve" style="font-style:normal;font-weight:normal;font-size:10.51547241px;line-height:5.27088261px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill-opacity:1;stroke-width:0.26288685" x="' +
       13.086432 +
@@ -77,10 +54,9 @@ export function generateIcon(element, suffix="") {
       '" y="' +
       (277.66467 + 6 * i) +
       '" fill="black" style="font-size:3.85567474px;line-height:2.62886858px;text-align:center;text-anchor:middle;stroke-width:0.26288685" id="' +
-      element.id +
-      ":" +
-      values[i].name +
-      '">' +
+      element.id +":" + i +
+      '">' + 
+      tableRows.get(i).value +
       "</tspan></text>";
   }
 
@@ -90,82 +66,42 @@ export function generateIcon(element, suffix="") {
 }
 
 export function getElementIcon(element, suffix="") {
-
-  let elem_icon = "";
+  
+  let iconName = "icon.svg";
   let width = 0;
   let height = 0;
-  
-  let elementType = element.elementType.id;
-  let elementState = "";
-  let color = "";
-  if(element.elementTypeState && element.elementTypeState.id) {
-    elementState = getTrimId(element.elementTypeState.id);
-  }
-  
-  
-  // icon based on status
-  if (typeof staticsIcons[elementType] != "undefined") {
-    elem_icon = staticsIcons[elementType]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  } else {
-    elem_icon = staticsIcons[elementTypeMap.ELEMENT_TYPE_33_ETD]["state"].find(
-      (ic) => ic.state === elementState
-    );
-  }
+  let tableRows = new Map();
+  let color= "purple";
 
-  if (typeof elem_icon != "undefined") {
-    width = elem_icon.width;
-    height = elem_icon.height;
-    elem_icon = elem_icon.icon;
-  } else {
-    elem_icon = "";
-  }
-
-  
-  
-  let params={};
-  //param values
-  // console.warn(element);
-  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeParams){
-    ELEMENT_TYPE.values[element.elementType.id].elementTypeParams.forEach(item => {
-      let key = Object.keys(item)[0];
-      let tempValue = element.elementValues.find(
-        (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
-      );
-      if(tempValue){
-        params[key]=tempValue.value;
+  element.elementValues.forEach(item => {
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE]){
+      tableRows.set(parseInt(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE]), {value: item.value, label: item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_LABEL]})
+    }
+    if(item.elementTypeParam[ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_COLOR]){
+      if(getTrimId(element.elementTypeState.id)!=2){
+        if (item.value == 1) {
+          color = "white";
+        } else if (item.value == 2) {
+          color = "green";    
+        } else if (item.value == 3) {
+          color = "gold";
+        } else if (item.value == 4) {
+          color = "red";
+        }
       }
-    });
-  }
-
-  if(typeof elementState != 'undefined' && elementState == 2) {
-      color = "purple";
-  } else if (params["SERVICE_LEVEL"] == 1) {
-    color = "white";
-  } else if (params["SERVICE_LEVEL"] == 2) {
-    color = "green";    
-  } else if (params["SERVICE_LEVEL"] == 3) {
-    color = "gold";
-  } else if (params["SERVICE_LEVEL"] == 4) {
-    color = "red";
-  }
+    }
+  });
+  
   if(Snap.select("#"+element.id + ":fill0") && Snap.select("#"+element.id + ":fill0").node && Snap.select("#"+element.id +":fill0").node.attributes.fill){
     Snap.select("#"+element.id + ":fill0").node.attributes.fill.value=color;
   }
 
-  for (let i = 0; i < element.elementValues.length; i++) {
-    let ev = element.elementValues[i];
-    if (
-      document.getElementById(
-        element.id + suffix + ":etd_" + ev.elementTypeParam.alias
-      ) != null
-    ) {
-      let domObj = element.id + suffix + ":etd_" + ev.elementTypeParam.alias;
-      document.getElementById(domObj).innerHTML = ev.value;
+  for (let i = 0; i < tableRows.size ; i++) {
+    if ( document.getElementById(element.id + suffix +":"+ i) != null) {
+      document.getElementById(element.id + suffix +":"+ i).innerHTML = tableRows.get(i).value;
     }
   }
-  return { icon: elem_icon, width: width, height: height };
+  return { icon: iconName, width: width, height: height };
 }
 
 export function updateElementIcon(element) {
@@ -185,7 +121,7 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="", state="", values=[]) {
+export function getElementSVG(element, width, height, suffix="") {
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
