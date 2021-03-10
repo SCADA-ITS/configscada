@@ -533,7 +533,7 @@ export default class IncidentReportModule extends GenericModule {
 										{
 											height: 50,
 											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT")}</span></div>
+											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT_ID")}</span></div>
 													   <div class="value">${util.getSimpleId(self.incidentReport.id)}</div>`
 										},
 										{
