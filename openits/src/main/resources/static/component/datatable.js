@@ -68,6 +68,8 @@ export default class DataTable {
 			sort: undefined
 		};
 		this.filteredFields = {};
+		this.rowsSelected = [];
+		this.disabledUnselectEvent = false;
 	}
 
 	getView() {
@@ -92,7 +94,8 @@ export default class DataTable {
 		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 
-
+		console.log(metadata)
+		console.log(data)
 		if (metadata != undefined) {
 
 			datatable.id = "dt-" + this.uid;
@@ -707,28 +710,30 @@ export default class DataTable {
 		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
 		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
+		let resultSelRows = this.getGridOptions(GridOptions.SHOW_SELECTED);
+		console.log(resultSelRows)
 
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let resultFilter = undefined;
 		let showLegend = false;
 
-		if (Array.isArray(metadata.gridFields) &&  metadata.gridFields.length > 0) {
-			
-			let gridFieldsWithIcons = undefined;		
+		if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
+
+			let gridFieldsWithIcons = undefined;
 			gridFieldsWithIcons = metadata.gridFields.filter(e => (Array.isArray(e.gridFieldIcons) && e.gridFieldIcons.length > 0));
-			
-			if (Array.isArray(gridFieldsWithIcons) &&  gridFieldsWithIcons.length > 0) {
-			
+
+			if (Array.isArray(gridFieldsWithIcons) && gridFieldsWithIcons.length > 0) {
+
 				for (let gridFieldItem = 0; !showLegend && gridFieldItem < gridFieldsWithIcons.length; gridFieldItem++) {
-					
+
 					let gridField = gridFieldsWithIcons[gridFieldItem];
-					
+
 					showLegend |= (gridField.gridFieldIcons.find(e => e.icon) != undefined);
 				}
 			}
-			
-			resultFilter = metadata.gridFields.find(e => e.filtered === true);	
+
+			resultFilter = metadata.gridFields.find(e => e.filtered === true);
 		}
 
 		let toolbar = {
@@ -808,6 +813,20 @@ export default class DataTable {
 		toolbar.elements.push({});
 		toolbar.elements.push({ minWidth: 4 });
 
+		toolbar.elements.push({
+			id: "tb_ws_status-" + this.uid,
+			width: 1,
+			view: "label"
+		});
+
+		if (resultSelRows) {
+
+			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
+
+			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/", value: "Ninguna fila seleccionada", css: "sel_label_selected", width: 36, height: 13, tooltip: true });
+
+		}
+
 		if (resultSearch) {
 
 			searchBar.width = 300;
@@ -869,11 +888,67 @@ export default class DataTable {
 		}
 	}
 
+	selectDatatable() {
+
+		let self = this;
+		let datatable = $$("dt-" + this.uid);
+		let rowsSelected = this.rowsSelected;
+		let label = $$("lb-sel" + this.uid);
+		const Selected = { ZERO: 0, ONE: 1 }
+
+		datatable.attachEvent("onAfterSelect", function(selection, preserve) {
+
+			if (preserve) {
+
+				rowsSelected.push(selection.id);
+
+			} else {
+
+				rowsSelected.length = 0;
+				rowsSelected.push(selection.id);
+			}
+
+		});
+
+		datatable.attachEvent("onBeforeUnSelect", function(selection) {
+
+			if (!self.disabledUnselectEvent && rowsSelected != undefined && rowsSelected.length > 0) {
+
+				let deselection = rowsSelected.findIndex(e => e === selection.id);
+				rowsSelected.splice(deselection, 1);
+			}
+
+		});
+
+		datatable.attachEvent("onAfterRender", function() {
+
+			if (label && label != undefined) {
+
+				label.data.label = rowsSelected.length + "/" + datatable.count();
+
+				if (rowsSelected.length === Selected.ZERO) {
+
+					label.data.value = "Ninguna fila seleccionada";
+
+				} else if (rowsSelected.length === Selected.ONE) {
+
+					label.data.value = rowsSelected.length + " fila seleccionada de " + datatable.count();
+
+				} else {
+
+					label.data.value = rowsSelected.length + " filas seleccionadas de " + datatable.count();
+				}
+
+				label.refresh();
+			}
+		});
+
+	}
+
 	sortDatatable(gridFieldId, order) {
 
 		let dataTable = $$("dt-" + this.uid);
 		let metadata = this.metadata;
-		//		console.log(dataTable.config.columns)
 
 		if (gridFieldId && order) {
 
@@ -1042,6 +1117,8 @@ export default class DataTable {
 			grid.refreshColumns();
 
 			grid.clearAll();
+
+			this.rowsSelected.length = 0;
 		}
 	}
 
@@ -1051,6 +1128,8 @@ export default class DataTable {
 		let anyChange = false;
 
 		if (dataTable && items) {
+
+			this.disabledUnselectEvent = true;
 
 			if (Array.isArray(items) && items.length > 0) {
 
@@ -1077,8 +1156,12 @@ export default class DataTable {
 				//dataTable.refresh();
 				this.restoreFilters();
 				this.restoreSort();
+
 				dataTable.refreshColumns();
+				this.restoreSelected();
 			}
+
+			this.disabledUnselectEvent = false;
 		}
 	}
 
@@ -1087,7 +1170,10 @@ export default class DataTable {
 		let dataTable = $$("dt-" + this.uid);
 		let anyChange = false;
 
+
 		if (dataTable && items) {
+
+			this.disabledUnselectEvent = true;
 
 			if (Array.isArray(items) && items.length > 0) {
 
@@ -1121,7 +1207,11 @@ export default class DataTable {
 				this.restoreFilters();
 				this.restoreSort();
 				dataTable.refreshColumns();
+				this.restoreSelected();
+
 			}
+
+			this.disabledUnselectEvent = false;
 		}
 	}
 
@@ -1132,6 +1222,8 @@ export default class DataTable {
 		let anyChange = false;
 
 		if (dataTable && items) {
+
+			this.disabledUnselectEvent = true;
 
 			if (Array.isArray(items) && items.length > 0) {
 
@@ -1162,7 +1254,22 @@ export default class DataTable {
 				this.restoreFilters();
 				this.restoreSort();
 				dataTable.refreshColumns();
+				this.restoreSelected();
 			}
+
+			this.disabledUnselectEvent = false;
+		}
+	}
+
+	restoreSelected() {
+
+		let grid = $$("dt-" + this.uid);
+		let rowsSelected = this.rowsSelected;
+
+		if (rowsSelected != undefined && rowsSelected.length > 0) {
+
+			rowsSelected.forEach(e => grid.select(e, true));
+
 		}
 	}
 
@@ -1501,7 +1608,9 @@ export default class DataTable {
 		datatable.attachEvent("onAfterFilter", function() {
 
 			self.restoreSort();
+
 		});
+
 	}
 
 
@@ -1565,51 +1674,51 @@ export default class DataTable {
 			listButton.attachEvent("onItemClick", function(id, e) {
 
 				iconData.length = 0;
-				
+
 				if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
-					
+
 					for (let gridField of metadata.gridFields) {
 
 						if (gridField.gridFieldIcons.length > 0) {
-	
+
 							gridField.gridFieldIcons.forEach(e => {
-								
+
 								if (e.icon) {
-								
+
 									let icon = "<img class='table-field-icons' src=" + e.icon + "/>";
 									let labelValue = !e.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(e.labelValue);
-		
+
 									let idxIcon = iconData.findIndex(i => i.icon === icon);
-		
+
 									if (idxIcon !== -1) {
-		
+
 										labelValue = iconData[idxIcon].labelValue + ", " + labelValue;
 										iconData.splice(idxIcon, 1);
 									}
-		
+
 									if (maxLengthLabel < labelValue.length) {
-		
+
 										maxLengthLabel = labelValue.length;
 									}
-		
-									iconData.push({ labelValue, icon });	
+
+									iconData.push({ labelValue, icon });
 								}
 							});
 						}
 					}
-					
+
 					let lessThanMax = maxLengthLabel * FONT_SIZE < MAX_WIDTH_COL_LABEL;
 					let greatterThanMin = maxLengthLabel * FONT_SIZE > MIN_WIDTH_COL_LABEL;
-	
+
 					if (lessThanMax && greatterThanMin) {
-	
+
 						widthColLabel = maxLengthLabel * FONT_SIZE;
 					}
 					else {
-	
+
 						widthColLabel = lessThanMax ? MIN_WIDTH_COL_LABEL : MAX_WIDTH_COL_LABEL;
 					}
-	
+
 					let body = {
 						view: "datatable",
 						header: false,
@@ -1619,19 +1728,20 @@ export default class DataTable {
 						],
 						data: iconData
 					};
-	
+
 					let winHeight = COL_HEIGHT * iconData.length + 60;
-	
-					util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body, 
-										winHeight < MAX_WIN_HEIGHT ? winHeight : MAX_WIN_HEIGHT, 
-										widthColLabel + WIDTH_COL_ICON + 20, false);
-				} 
+
+					util.ui.loadWindow(i18n.t("LBL_TABLE_LEGEND"), body,
+						winHeight < MAX_WIN_HEIGHT ? winHeight : MAX_WIN_HEIGHT,
+						widthColLabel + WIDTH_COL_ICON + 20, false);
+				}
 			});
 		}
 	}
 
 	callbacks() {
 
+		this.selectDatatable();
 		this.datatableCapture();
 		this.search_callback();
 		this.select_all_callback();
@@ -1653,6 +1763,7 @@ export default class DataTable {
 		this.clickShowFilters();
 		this.openIconList();
 
+		this.restoreSelected();
 		this.sortDatatable();
 		this.filterDatatable();
 	}
@@ -1867,6 +1978,7 @@ export default class DataTable {
 
 		}
 	}
+
 
 	main_toolbar_callback() {
 
@@ -2116,7 +2228,7 @@ export default class DataTable {
 							let gridCommand = metadata.gridCommands.find(gridCmd => {
 								return gridCmd.id === cmd.id
 							});
-
+							console.log(gridCommand)
 							self.open_module(gridCommand);
 						});
 					}
@@ -2275,7 +2387,8 @@ export default class DataTable {
 }
 
 Object.defineProperty(DataTable, 'EventTypes', {
-	value: {}
+	value: {
+	}
 });
 
 
@@ -2292,3 +2405,6 @@ Object.defineProperty(DataTable.EventTypes, 'ON_ITEM_DBL_CLIC', {
 	enumerable: true,
 	configurable: false
 });
+
+
+

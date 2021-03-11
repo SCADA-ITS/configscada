@@ -56,21 +56,34 @@ export default class I18n {
 		return this.localeCode;
 	}
 	
-	t(label) {
+	t(label, values) {
 		
 		let translation;
+		let fields = undefined;
+		
+		if(values != undefined && Array.isArray(values)){
+			
+			fields = values.join();
+		}
 		 
 		if (this.localeId != undefined && label != undefined && label != "") {
-		
-			if (this.labels != undefined) {
+			
+			if (this.labels != undefined && !fields) {
 				
 				translation = this.labels[label];
 			}
 			
 			if (translation == undefined ) {
 				
-				let translationResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`);
+				let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
 				
+				if (fields) {
+					
+					translationUrl = translationUrl + `/${fields}`;	
+				}
+				
+				let translationResponse = webix.ajax().sync().get(translationUrl); 
+								
 				if (translationResponse && translationResponse.responseText) {
 							
 					let translationJson = JSON.parse(translationResponse.responseText);
@@ -79,10 +92,13 @@ export default class I18n {
 						
 						translation = translationJson.translation;
 						
-						this.labels[label] = translation;
+						if (!fields) {
+						
+							this.labels[label] = translation;	
+						}
 					}
 				}
-			}
+			}				
 		}
 		
 		return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");
