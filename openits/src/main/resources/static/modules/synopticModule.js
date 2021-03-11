@@ -197,27 +197,22 @@ export default class SynopticModule extends GenericModule{
             try {
               let elementSvg = document.getElementById(layerElement.elementId);
               if(elementSvg.attributes.width != undefined) {
-                elementSvg.setAttribute("width", elementSvg.getAttribute("width") * ratioWidth);
+                elementSvg.setAttribute("width", parseFloat(elementSvg.getAttribute("width") * ratioWidth) || 0);
               }
               if(elementSvg.attributes.height != undefined) {
-                elementSvg.setAttribute("height", elementSvg.getAttribute("height") * ratioHeight);
+                elementSvg.setAttribute("height", parseFloat(elementSvg.getAttribute("height") * ratioHeight) || 0);
               }
               if(elementSvg.attributes.x != undefined) {
-                elementSvg.setAttribute("x", elementSvg.getAttribute("x") * ratioWidth);
+                elementSvg.setAttribute("x", parseFloat(elementSvg.getAttribute("x") * ratioWidth) || 0);
               }
               if(elementSvg.attributes.y != undefined) {
-                elementSvg.setAttribute("y", elementSvg.getAttribute("y") * ratioHeight);
+                elementSvg.setAttribute("y", parseFloat(elementSvg.getAttribute("y") * ratioHeight) || 0);
               }
               if(elementSvg.attributes.transform != undefined) {
-                if(elementSvg.attributes.class.value=="capa_mapa"){
-                  elementSvg.transform.baseVal[0].matrix["e"] = elementSvg.transform.baseVal[0].matrix["e"] * ratioWidth;
-                  elementSvg.transform.baseVal[0].matrix["f"] = elementSvg.transform.baseVal[0].matrix["f"] * ratioHeight;
-                }else if(elementSvg.attributes.class.value=="svg_icon"){
-                  elementSvg.transform.baseVal[0].matrix["e"] = parseFloat(elementSvg.transform.baseVal[0].matrix["e"] * ratioWidth) || 0;
-                  elementSvg.transform.baseVal[0].matrix["f"] = parseFloat(elementSvg.transform.baseVal[0].matrix["f"] * ratioHeight) || 0;
-                  elementSvg.transform.baseVal[0].matrix["a"] = parseFloat(elementSvg.transform.baseVal[0].matrix["a"] * ratioWidth) || 0;
-                  elementSvg.transform.baseVal[0].matrix["d"] = parseFloat(elementSvg.transform.baseVal[0].matrix["d"] * ratioHeight) || 0;
-                }
+                elementSvg.transform.baseVal[0].matrix["e"] = parseFloat(elementSvg.transform.baseVal[0].matrix["e"] * ratioWidth) || 0;
+                elementSvg.transform.baseVal[0].matrix["f"] = parseFloat(elementSvg.transform.baseVal[0].matrix["f"] * ratioHeight) || 0;
+                elementSvg.transform.baseVal[0].matrix["a"] = parseFloat(elementSvg.transform.baseVal[0].matrix["a"] * ratioWidth) || 0;
+                elementSvg.transform.baseVal[0].matrix["d"] = parseFloat(elementSvg.transform.baseVal[0].matrix["d"] * ratioHeight) || 0;
               }
             } catch (elemenError) {
               console.error("Fallo al reescalar el elemento: "+ layerElement.elementId, elemenError);

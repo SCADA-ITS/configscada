@@ -6,7 +6,7 @@ const ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR = "svgPatternVar";
 const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM = "graphic_param";
 
 
-export function generateIcon(element, suffix="", customGraphicEquipment) {
+export function generateIcon(element, suffix="", customGraphicEquipment, snapDiv) {
   let elementId= element.id+suffix;
   let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
   let elementAlias = element.alias;
@@ -27,7 +27,10 @@ export function generateIcon(element, suffix="", customGraphicEquipment) {
     }
   });
 
-  return prepareStr(iconPattern, params);
+  let pictoStr = prepareStr(iconPattern, params);
+  let snapIcon = Snap.parse(pictoStr);
+  let el = snapDiv.group().append(snapIcon);
+  return el;
 }
 
 export function getElementIcon(element, suffix="") {

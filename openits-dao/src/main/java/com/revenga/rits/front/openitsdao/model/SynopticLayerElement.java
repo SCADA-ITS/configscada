@@ -23,14 +23,14 @@ public class SynopticLayerElement implements Serializable {
 	@Column(name="element_id")
 	private String elementId;
 
-	private Integer height;
+	private Float height;
 
 	@Column(name="horizontal_flip")
 	private Boolean horizontalFlip;
 
 	private String label;
 
-	private Integer width;
+	private Float width;
 
 	private Integer x;
 
@@ -66,11 +66,11 @@ public class SynopticLayerElement implements Serializable {
 		this.elementId = elementId;
 	}
 
-	public Integer getHeight() {
+	public Float getHeight() {
 		return this.height;
 	}
 
-	public void setHeight(Integer height) {
+	public void setHeight(Float height) {
 		this.height = height;
 	}
 
@@ -90,11 +90,11 @@ public class SynopticLayerElement implements Serializable {
 		this.label = label;
 	}
 
-	public Integer getWidth() {
+	public Float getWidth() {
 		return this.width;
 	}
 
-	public void setWidth(Integer width) {
+	public void setWidth(Float width) {
 		this.width = width;
 	}
 
