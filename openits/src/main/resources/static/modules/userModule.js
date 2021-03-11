@@ -23,15 +23,15 @@ export default class UserModule extends GenericModule {
 
 		let self = this;
 
-		if (this.moduleAction.id === this.config.moduleAction.create) {
+		if (this.moduleAction.id === this.config.moduleAction.add) {
 
 			add();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.update) {
+		else if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			edit();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.delete) {
+		else if (this.moduleAction.id === this.config.moduleAction.remove) {
 
 			remove();
 		}

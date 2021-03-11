@@ -1,8 +1,8 @@
 {
 	"moduleAction": {
-	    "add": 100101,
-		"edit": 100102,
-		"remove": 100103
+	    "add": 101201,
+		"edit": 101202,
+		"remove": 101203
 	},
 	"actionEndpoints": {
 		"add": "users/createRole",
