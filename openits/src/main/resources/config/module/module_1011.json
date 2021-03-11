@@ -1,0 +1,16 @@
+{
+	"moduleAction": {
+	    "add": 100001,
+		"edit": 100002,
+		"remove": 100003,
+		"lock": 100004
+	},
+	"actionEndpoints": {
+		"add": "users/create",
+		"edit": "users/update",
+		"remove": "users/delete/${id}"
+	},
+	"restEndpoints": {
+		"user": "users/${id}"
+	}
+}

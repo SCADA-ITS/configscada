@@ -1,0 +1,15 @@
+{
+	"moduleAction": {
+	    "add": 100101,
+		"edit": 100102,
+		"remove": 100103
+	},
+	"actionEndpoints": {
+		"add": "users/createRole",
+		"edit": "users/updateRole",
+		"remove": "users/deleteRole/${id}"
+	},
+	"restEndpoints": {
+		"user": "users/role/${id}"
+	}
+}

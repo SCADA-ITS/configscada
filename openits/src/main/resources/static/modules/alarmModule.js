@@ -19,6 +19,11 @@ export default class AlarmModule extends GenericModule {
 	getView() {
 
 		let view = undefined;
+		
+		if (this.moduleAction.id === this.config.moduleAction.view) {
+
+			view = {};
+		}
 
 		return view;
 	}
