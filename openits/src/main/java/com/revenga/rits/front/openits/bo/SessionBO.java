@@ -25,7 +25,6 @@ import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.UserSessionUI;
-import com.revenga.rits.front.openits.util.ConversionUtil;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -333,5 +332,23 @@ public class SessionBO extends GenericBO {
 	public Map<String, Object> getItem(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getUserId(HttpSession httpSession) {
+
+		String userId = null;
+
+		if (httpSession != null && httpSession.getId() != null) {
+
+			UserSessionUI userSession = this.sessions.get(httpSession.getId());
+
+			if (userSession != null && userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+
+				userId = userSession.getUserId();
+
+			}
+		}
+
+		return userId;
 	}
 }

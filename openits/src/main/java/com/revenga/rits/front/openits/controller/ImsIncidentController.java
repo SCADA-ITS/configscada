@@ -103,7 +103,7 @@ public class ImsIncidentController {
 	
 	@PostMapping(value = "/reports/{id}/confirm")
 	@ApiOperation(value = "Confirm Incident Report", notes = "Confirm Incident Report")
-	public ResponseEntity<Object> confirmIncidentReport(@ApiParam(
+	public ResponseEntity<Boolean> confirmIncidentReport(@ApiParam(
 			name = "id",
 			type = "String",
 			value = "Incident report id",
@@ -115,7 +115,7 @@ public class ImsIncidentController {
 	
 	@PostMapping(value = "/reports/{id}/forward")
 	@ApiOperation(value = "Forward Incident Report", notes = "Forward Incident Report")
-	public ResponseEntity<Object> forwardIncidentReport(@ApiParam(
+	public ResponseEntity<Boolean> forwardIncidentReport(@ApiParam(
 			name = "id",
 			type = "String",
 			value = "Incident report id",
@@ -370,6 +370,26 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsIncidentTypeBO.getItem(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/add_log_incident_report")
+	@ApiOperation(value = "Add log in incident report", notes = "Add log in incident report")
+	public ResponseEntity<Boolean> addLogIncidentReport(@RequestBody Object incidentReportLogs) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.addLog(incidentReportLogs), HttpStatus.OK);
+	}
+
+
+	@PostMapping(value = "/delete_log_incident_report/{id}")
+	@ApiOperation(value = "Delete log incident report", notes = "Delete log incident report")
+	public ResponseEntity<Boolean> deleteLogIncidentReport(@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Incident report log id",
+			example = "ImsIncidentReportLog:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.deleteLog(id), HttpStatus.OK);
 	}
 
 }
