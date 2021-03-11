@@ -4,6 +4,8 @@ import SearchDialogBox from "../component/searchDialogBox.js";
 //import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
+
+
 export default class IncidentReportModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -19,6 +21,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.disconnectStomp = true;
 		this.closed = false;
 		
+
 		this.config = module.config;
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
@@ -1349,8 +1352,457 @@ export default class IncidentReportModule extends GenericModule {
 										on: {
 
 											onItemClick() {
+												
+												let incidentTypeId = self.incidentReport.incidentType.id;
+												let incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", incidentTypeId);
+												let windowId = webix.uid();
+												let filePanelViewList = [];
+												let fileDownloadList = [];
+												let panelHiddenList = [];
+												let panelViewList = [];
+												
+												const getDocumentsTypeWindowsHeader = () => {
 
-												util.ui.notImplementedMessage();
+													let viewHeader = {
+														borderless: true,
+														rows: [
+															{ height: 20 },
+															{
+																cols: [
+																	{width: 10},
+																	{
+																		borderless: true,
+																		height: 60,
+																		width: 50,
+																		template: function() {
+																			let headerIcon = "icons8-regular-file-64.png";
+																			return `<image height="80%" src="img/${headerIcon}" />`;
+																		}
+																	},
+																	{width: 10},
+																	{
+																		view:"label", 
+																		label: `<div class="title"><span class="section-text" style="font-size: large;">${i18n.t("LBL_IMS_INCIDENTS_FILES")}</span></div>`, 
+																		width: 300,
+																		align:"left"
+																	},
+																	{gravity: 5},
+																	{
+																		rows:[
+																			{height: 10},
+																			{
+																				id: windowId + "_search",
+																				view: "search",
+																				placeholder: i18n.t("LBL_SEARCH"),
+																				name: "plan",
+																				icon: "webix_input_icon wxi-search",
+																				width: 400,
+																				height: 40,
+																				align:"right",
+																				on: {
+																					onKeyPress(code,code2){
+
+																						let value = $$(windowId + "_search").getValue();
+																						if(code === 8){
+																							value = value.slice(0, -1);
+																						} else {
+																							value = value + code2.key;
+																						}
+																						value = value.toLowerCase();
+
+																						panelViewList.forEach(e=>{
+																							let control = true;
+																							
+																							if(control){
+																								if(e.alias.toLowerCase().search(value) !== -1){
+																									control = false;
+																								}
+																							}
+																							if(control){
+																								if(e.description.toLowerCase().search(value) !== -1){
+																									control = false;
+																								}
+																							}
+																							if(control){
+																								if(e.documentUrl.toLowerCase().search(value) !== -1){
+																									control = false;
+																								}
+																							}
+
+																							if(control === true){
+																								panelHiddenList.push(e.id);
+																								$$(e.id + "_absPanel").hide();
+																							} else {
+																								panelHiddenList = panelHiddenList.filter((value) => { 
+																									return value !== e.id;
+																								});
+																								$$(e.id + "_absPanel").show();
+																							}
+																						});
+
+																					}
+																				}
+																			},
+																			{height: 10}
+																		]
+																	}
+																]
+
+															}
+														]
+													};
+									
+													return viewHeader;
+												}
+
+												const drawpanel = (id,selected) => {
+													let v_selected =   { "background": "#94bbf2ff" };
+													let v_unSelected = { "background": "#ffffff" };
+													let body = {
+														view:"panel", 
+														top: 30, 
+														left:20, 
+														id: id + "_Panel", 
+														width:130, 
+														height: 100,  
+														type: "line", 
+														body: { 
+															id: id + "_PanelTemplate", 
+															css: selected ? v_selected : v_unSelected, 
+															template: "<div></div>" }
+													};
+													return body;
+												}
+
+												const drawsquare = (id,selected) => {
+													let v_selected =   { "background": "#94bbf2ff" };
+													let v_unSelected = { "background": "#ffffff" };
+													let body = {
+														borderless: true,
+														height: 60,
+														width: 50,
+														top: 55,
+														left: 55,
+														id: id + "_Square",
+														css: selected ? v_selected : v_unSelected,
+														template: function() {
+															let headerIcon = "pdf-file-2614.png";
+															return `<image height="90%" src="img/${headerIcon}" />`;
+														}
+													};
+													return body;
+												}
+
+												const getDocumentsTypeWindowsContent = () => {
+
+													let body = [
+														{height: 6},
+														{ 	
+															space: "line",
+															cols: [
+																{ width: 30 },
+																{
+																	view: "scrollview",
+																	width: document.documentElement.clientWidth - 900,
+																	scroll:"x", 
+																	height:200,
+																	body:{
+																		cols: filePanelViewList
+																	}
+																},
+																{ width: 20 }
+															]
+														},
+														{height: 6}
+													]
+													return body;
+
+												}
+
+												const downloadFileAction = (fileDownloadList,panelHiddenList,panelViewList,incidentType) => {
+													fileDownloadList.forEach(element =>{
+
+														if(!panelHiddenList.includes(element)){
+															let docToDownload = panelViewList.find(e=> e.id === element ).documentUrl;
+															window.open('resources/ims/ims_type_document/' + incidentType.id.split(":")[1] + "/" + docToDownload.replace(" ","%20"),'_blank' );
+														}
+
+													});
+												}
+
+												const getDocumentsTypeFooterBody = () => {
+
+													let body = [					
+														{
+															height: 250,
+															rows:[
+																{
+																	cols: [
+																		{																			
+																			view:"label", 
+																			label: `<div class="title"><i style="color:#d1d5d9;; font-size: 2em;" class="mdi mdi-view-headline"></i></div>`, 
+																			align:"left",
+																			height: 50,
+																			width: 40 
+																		},
+																		{   
+																			view:"label", 
+																			label: `<div class="title"><span class="section-text" style="color:#8e9aaa; font-size: medium;">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span></div>`, 
+																			align:"left",
+																			height: 50
+																		},
+																		{}
+																	]
+																},
+																{
+																	height: 60,
+																	cols:[
+																		{
+																			width: 40
+																		},
+																		{
+																			width: 80,
+																			rows: [
+																				{
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="color:#8e9aaa; font-size: small;">${i18n.t("LBL_NAME")}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				
+																				},
+																				{
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="color:#8e9aaa; font-size: small;">${i18n.t("LBL_TASK")}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				
+																				},
+																				/*
+																				{
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="color:#8e9aaa; font-size: small;">${i18n.t("LBL_SIZE")}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				}
+																				*/
+																			]
+																		},
+																		{
+																			rows: [
+																				{
+																					id: windowId + "_labelFooterName",
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="font-size: small;">${incidentType.incidentTypeDocuments[0].documentUrl}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				
+																				},
+																				{
+																					id: windowId + "_labelFooterTask",
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="font-size: small;">${incidentType.incidentTypeDocuments[0].alias}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				
+																				},
+																				/*
+																				{
+																					view:"label", 
+																					label: `<div class="title"><span class="section-text" style="font-size: small;">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span></div>`, 
+																					align:"left",
+																					height: 20
+																				}
+																				*/
+																			]
+																		}
+																	]
+																},
+																{
+																	height: 10
+																},
+																{
+																	height: 110,
+																	cols:[
+																		{	
+																			id: windowId + "_labelFooterDescription",
+																			borderless: true,
+																			template: `<div style="background: #edf0f7ff; padding: 10px;"><p >${incidentType.incidentTypeDocuments[0].description}</p></div>`, 
+																			
+																		},
+																		{
+																			width: 40
+																		},
+																		{
+																			width: 250,
+																			rows:[
+																				{},
+																				{ 
+																					view: "button", 
+																					css: "dialog-download",
+																					width: 250, 
+																					label: i18n.t("LBL_DOWNLOAD"),
+																					type:"icon",
+																					icon: "webix_icon wxi-download",
+																					on: {
+																						onItemClick() {
+																							downloadFileAction(fileDownloadList,panelHiddenList,panelViewList,incidentType);
+																						}
+																					}
+																				}
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													];
+
+													return body;
+												}
+											
+												const getDocumentBody = () => {
+
+													let body = [
+														{
+															cols:[
+																{
+																	width: 30
+																},
+																
+																	getDocumentsTypeWindowsHeader()
+																,
+																{
+																	width: 20
+																}
+															]
+														},
+														{ height: 6 },
+														{
+															type:"line",
+															rows: getDocumentsTypeWindowsContent()
+														},
+														{ height: 6 },
+														{
+															cols: [
+																{ width: 30 },
+																{
+																	rows: getDocumentsTypeFooterBody()
+																},
+																{
+																	width: 20
+																}
+															]
+														}
+													]
+													return body;
+
+												}
+
+												if (incidentType.incidentTypeDocuments.length > 0) {
+													let counter = 0;
+													incidentType.incidentTypeDocuments.map(e =>{
+														
+														let panelId = "panelDocType" + webix.uid();
+														counter === 0 ? fileDownloadList.push(panelId) : null;
+
+														panelViewList.push({ id: panelId, alias: e.alias, description: e.description, documentUrl: e.documentUrl });
+														filePanelViewList.push(
+															{    
+																id: panelId + "_absPanel",           
+																view:"abslayout",
+																css: { "font-size": "x-small;" },
+																hidden: false,
+																width:200, height:200, borderless: true,
+																cells:[
+																	drawpanel(panelId,counter === 0 ? true : false),
+																	drawsquare(panelId,counter === 0 ? true : false),
+																	{
+																		view:"checkbox", top: 25, left:120, id: panelId + "_Check", width:40, height: 40, css: "dialog-download",
+																		data: { alias: e.alias, description: e.description, documentUrl: e.documentUrl },
+																		value: counter === 0 ? 1 : 0,
+
+																		click: (id) => {
+
+																			if($$(id.split("_")[0] + "_Check").data.value === 1){
+
+																				fileDownloadList.push(id.split("_")[0]);
+																				$$(windowId + "_labelFooterName").setValue(`<div class="title"><span class="section-text" style="font-size: small;">${$$(id.split("_")[0] + "_Check").data.data.documentUrl}</span></div>`);
+																				$$(windowId + "_labelFooterTask").setValue(`<div class="title"><span class="section-text" style="font-size: small;">${$$(id.split("_")[0] + "_Check").data.data.alias}</span></div>`);
+
+																				let description = {																		
+																					id: windowId + "_labelFooterDescription",
+																					borderless: true,
+																					template: `<div style="background: #edf0f7ff; padding: 10px;"><p >${$$(id.split("_")[0] + "_Check").data.data.description}</p></div>`, 
+																					
+																				}
+
+																				webix.ui( description, $$(windowId + "_labelFooterDescription"));
+																				webix.ui( drawpanel(id.split("_")[0],true), $$(id.split("_")[0] + "_Panel"));
+																				webix.ui( drawsquare(id.split("_")[0],true), $$(id.split("_")[0] + "_Square"));
+																			} 
+
+																			if($$(id.split("_")[0] + "_Check").data.value === 0){
+
+																				fileDownloadList = fileDownloadList.filter((value) => { 
+																					return value !== id.split("_")[0];
+																				});
+
+																				webix.ui( drawpanel(id.split("_")[0],false), $$(id.split("_")[0] + "_Panel"));
+																				webix.ui( drawsquare(id.split("_")[0],false), $$(id.split("_")[0] + "_Square"));
+
+																			}
+																		}
+																	},
+																	{
+																		view:"label", 
+																		label: `<div class="title"><span class="section-text" style="font-size: x-small;">${e.documentUrl}</span></div>`, 
+																		align:"left",
+																		height: 30,
+																		width: 160,
+																		top: 125,
+																		left: 30
+																	},
+																	{
+																		view:"label", 
+																		label: `<div class="title"><span class="section-text" style="font-size: x-small;">${e.alias}</span></div>`, 
+																		align:"left",
+																		height: 30,
+																		width: 160,
+																		top: 145,
+																		left: 30,
+																	},
+																	/*
+																	{
+																		view:"label", 
+																		label: `<div class="title"><span class="section-text" style="font-size: x-small; color:#8e9aaa;">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`, 
+																		align:"left",
+																		height: 30,
+																		width: 100,
+																		top: 165,
+																		left: 30,
+																	}
+																	*/
+																]
+															}
+														);
+														counter =+ 1;
+													});
+												}
+
+												let h = document.documentElement.clientHeight ;
+												let w =  document.documentElement.clientWidth - 850;
+
+												let body = {
+													rows: getDocumentBody()
+												};
+												
+												util.ui.loadWindow(
+													i18n.t("LBL_ICNCIDENT_DOCUMENT_TYPE {INCIDENT_TYPE}") + " " + incidentType.alias,
+													body,
+													h,
+													w
+												);
+
 											}
 										}
 									},
@@ -1675,6 +2127,10 @@ export default class IncidentReportModule extends GenericModule {
 					self.closed = true;
 					self.refresh();
 				}
+
+
+
+
 			}
 		}
 
