@@ -961,7 +961,7 @@ export default class DataTable {
 			if (gridField) {
 
 				dataTable.markSorting(gridField.sourceField, order);
-				dataTable.sort(gridField.sourceField, order);
+				dataTable.sort(gridField.sourceField, order, dataTable.getColumnConfig(gridField.sourceField).sort);
 			}
 
 		} else {
@@ -979,7 +979,7 @@ export default class DataTable {
 					let resultOrd = this.getGridOptions(GridOptions.SORT_FIELD_ORDER);
 
 					dataTable.markSorting(gridField.sourceField, resultOrd);
-					dataTable.sort(gridField.sourceField, resultOrd);
+					dataTable.sort(gridField.sourceField, resultOrd, dataTable.getColumnConfig(gridField.sourceField).sort);
 				}
 			}
 		}
@@ -1155,10 +1155,10 @@ export default class DataTable {
 
 				//dataTable.refresh();
 				this.restoreFilters();
-				this.restoreSort();
 
 				dataTable.refreshColumns();
 				this.restoreSelected();
+				this.restoreSort();
 			}
 
 			this.disabledUnselectEvent = false;
@@ -1279,7 +1279,7 @@ export default class DataTable {
 
 		if (this.sortedByField.field != undefined && this.sortedByField.sort != undefined) {
 
-			grid.sort(this.sortedByField.field, this.sortedByField.sort);
+			grid.sort(this.sortedByField.field, this.sortedByField.sort, grid.getColumnConfig(this.sortedByField.field).sort);
 		}
 	}
 
