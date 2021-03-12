@@ -253,6 +253,9 @@ export default class IncidentReportModule extends GenericModule {
 					});
 				}
 
+
+				this.incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", this.incidentReport.incidentType.id);
+
 				this.drawComponents();
 
 				if (this.dtTasks) {
@@ -1349,12 +1352,12 @@ export default class IncidentReportModule extends GenericModule {
 										tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
 										type: "icon",
 										icon: "mdi mdi-file-document-multiple-outline",
+										disabled: self.incidentType.incidentTypeDocuments !== undefined && self.incidentType.incidentTypeDocuments.length > 0 ? false : true,
 										on: {
 
 											onItemClick() {
 												
-												let incidentTypeId = self.incidentReport.incidentType.id;
-												let incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", incidentTypeId);
+												let incidentType = self.incidentType;
 												let windowId = webix.uid();
 												let filePanelViewList = [];
 												let fileDownloadList = [];
@@ -1797,7 +1800,7 @@ export default class IncidentReportModule extends GenericModule {
 												};
 												
 												util.ui.loadWindow(
-													i18n.t("LBL_ICNCIDENT_DOCUMENT_TYPE {INCIDENT_TYPE}") + " " + incidentType.alias,
+													i18n.t("LBL_ICNCIDENT_DOCUMENT_TYPE") + " " + incidentType.alias,
 													body,
 													h,
 													w
