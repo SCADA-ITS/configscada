@@ -1,7 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
-//import { EventTypes } from "../component/datatable.js";
 import { util } from "../lib/util.js";
 
 
@@ -442,7 +441,6 @@ export default class IncidentReportModule extends GenericModule {
 
 									steps += `<li style="width: ${100 / self.incidentReport.sequenceOfStates.length}% !important" `;
 									if (e.state.id === self.incidentReport.incidentState.id) {
-										//if (e.state.id === 	"ImsIncidentState:2") {
 
 										labelNoCss = true;
 										steps += `class="current">`;
@@ -1364,6 +1362,13 @@ export default class IncidentReportModule extends GenericModule {
 												let panelHiddenList = [];
 												let panelViewList = [];
 												
+												function getDocumentName(documentUrl) {
+													
+														let documentNameAux = documentUrl.split("/");
+														let documentName = documentNameAux[documentNameAux.length - 1];
+														return documentName;
+												} 
+												
 												const getDocumentsTypeWindowsHeader = () => {
 
 													let viewHeader = {
@@ -1378,7 +1383,7 @@ export default class IncidentReportModule extends GenericModule {
 																		height: 60,
 																		width: 50,
 																		template: function() {
-																			let headerIcon = "icons8-regular-file-64.png";
+																			let headerIcon = "regular-file-64.png";
 																			return `<image height="80%" src="img/${headerIcon}" />`;
 																		}
 																	},
@@ -1427,7 +1432,7 @@ export default class IncidentReportModule extends GenericModule {
 																								}
 																							}
 																							if(control){
-																								if(e.documentUrl.toLowerCase().search(value) !== -1){
+																								if(getDocumentName(e.documentUrl).toLowerCase().search(value) !== -1){
 																									control = false;
 																								}
 																							}
@@ -1489,7 +1494,7 @@ export default class IncidentReportModule extends GenericModule {
 														id: id + "_Square",
 														css: selected ? v_selected : v_unSelected,
 														template: function() {
-															let headerIcon = "pdf-file-2614.png";
+															let headerIcon = "regular-file-64.png";
 															return `<image height="90%" src="img/${headerIcon}" />`;
 														}
 													};
@@ -1522,12 +1527,12 @@ export default class IncidentReportModule extends GenericModule {
 
 												}
 
-												const downloadFileAction = (fileDownloadList,panelHiddenList,panelViewList,incidentType) => {
+												const downloadFileAction = (fileDownloadList, panelHiddenList, panelViewList) => {
 													fileDownloadList.forEach(element =>{
 
 														if(!panelHiddenList.includes(element)){
 															let docToDownload = panelViewList.find(e=> e.id === element ).documentUrl;
-															window.open('resources/ims/ims_type_document/' + incidentType.id.split(":")[1] + "/" + docToDownload.replace(" ","%20"),'_blank' );
+															window.open(docToDownload.replace(" ","%20"),'_blank' );
 														}
 
 													});
@@ -1580,14 +1585,6 @@ export default class IncidentReportModule extends GenericModule {
 																					height: 20
 																				
 																				},
-																				/*
-																				{
-																					view:"label", 
-																					label: `<div class="title"><span class="section-text" style="color:#8e9aaa; font-size: small;">${i18n.t("LBL_SIZE")}</span></div>`, 
-																					align:"left",
-																					height: 20
-																				}
-																				*/
 																			]
 																		},
 																		{
@@ -1595,7 +1592,7 @@ export default class IncidentReportModule extends GenericModule {
 																				{
 																					id: windowId + "_labelFooterName",
 																					view:"label", 
-																					label: `<div class="title"><span class="section-text" style="font-size: small;">${incidentType.incidentTypeDocuments[0].documentUrl}</span></div>`, 
+																					label: `<div class="title"><span class="section-text" style="font-size: small;">${getDocumentName(incidentType.incidentTypeDocuments[0].documentUrl)}</span></div>`, 
 																					align:"left",
 																					height: 20
 																				
@@ -1607,15 +1604,7 @@ export default class IncidentReportModule extends GenericModule {
 																					align:"left",
 																					height: 20
 																				
-																				},
-																				/*
-																				{
-																					view:"label", 
-																					label: `<div class="title"><span class="section-text" style="font-size: small;">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span></div>`, 
-																					align:"left",
-																					height: 20
 																				}
-																				*/
 																			]
 																		}
 																	]
@@ -1648,7 +1637,7 @@ export default class IncidentReportModule extends GenericModule {
 																					icon: "webix_icon wxi-download",
 																					on: {
 																						onItemClick() {
-																							downloadFileAction(fileDownloadList,panelHiddenList,panelViewList,incidentType);
+																							downloadFileAction(fileDownloadList, panelHiddenList, panelViewList);
 																						}
 																					}
 																				}
@@ -1707,8 +1696,8 @@ export default class IncidentReportModule extends GenericModule {
 														
 														let panelId = "panelDocType" + webix.uid();
 														counter === 0 ? fileDownloadList.push(panelId) : null;
-
-														panelViewList.push({ id: panelId, alias: e.alias, description: e.description, documentUrl: e.documentUrl });
+														
+														panelViewList.push({ id: panelId, alias: e.alias, description: e.description, documentUrl: e.documentUrl});
 														filePanelViewList.push(
 															{    
 																id: panelId + "_absPanel",           
@@ -1721,7 +1710,7 @@ export default class IncidentReportModule extends GenericModule {
 																	drawsquare(panelId,counter === 0 ? true : false),
 																	{
 																		view:"checkbox", top: 25, left:120, id: panelId + "_Check", width:40, height: 40, css: "dialog-download",
-																		data: { alias: e.alias, description: e.description, documentUrl: e.documentUrl },
+																		data: { alias: e.alias, description: e.description, documentName: getDocumentName(e.documentUrl) },
 																		value: counter === 0 ? 1 : 0,
 
 																		click: (id) => {
@@ -1729,7 +1718,7 @@ export default class IncidentReportModule extends GenericModule {
 																			if($$(id.split("_")[0] + "_Check").data.value === 1){
 
 																				fileDownloadList.push(id.split("_")[0]);
-																				$$(windowId + "_labelFooterName").setValue(`<div class="title"><span class="section-text" style="font-size: small;">${$$(id.split("_")[0] + "_Check").data.data.documentUrl}</span></div>`);
+																				$$(windowId + "_labelFooterName").setValue(`<div class="title"><span class="section-text" style="font-size: small;">${$$(id.split("_")[0] + "_Check").data.data.documentName}</span></div>`);
 																				$$(windowId + "_labelFooterTask").setValue(`<div class="title"><span class="section-text" style="font-size: small;">${$$(id.split("_")[0] + "_Check").data.data.alias}</span></div>`);
 
 																				let description = {																		
@@ -1758,7 +1747,7 @@ export default class IncidentReportModule extends GenericModule {
 																	},
 																	{
 																		view:"label", 
-																		label: `<div class="title"><span class="section-text" style="font-size: x-small;">${e.documentUrl}</span></div>`, 
+																		label: `<div class="title"><span class="section-text" style="font-size: x-small;">${getDocumentName(e.documentUrl)}</span></div>`, 
 																		align:"left",
 																		height: 30,
 																		width: 160,
@@ -1773,18 +1762,7 @@ export default class IncidentReportModule extends GenericModule {
 																		width: 160,
 																		top: 145,
 																		left: 30,
-																	},
-																	/*
-																	{
-																		view:"label", 
-																		label: `<div class="title"><span class="section-text" style="font-size: x-small; color:#8e9aaa;">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`, 
-																		align:"left",
-																		height: 30,
-																		width: 100,
-																		top: 165,
-																		left: 30,
 																	}
-																	*/
 																]
 															}
 														);
