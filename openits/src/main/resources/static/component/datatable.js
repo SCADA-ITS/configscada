@@ -875,13 +875,20 @@ export default class DataTable {
 						on: {
 							onMenuItemClick: function(id) {
 
+								
 								let gridCommand = metadata.gridCommands.find(e => {
 									return e.id === this.getItem(id).id
 								});
-
-								self.open_module(gridCommand);
+								
+								if (gridCommand) {
+								
+									if (!self.command_exec_callback(gridCommand)) {
+											self.open_module(gridCommand);		
+									}	
+								}
 							}
 						}
+						
 					}).attachTo(this);
 				};
 			}
@@ -1870,7 +1877,7 @@ export default class DataTable {
 
 		let viewTypeId = undefined;
 
-		if (gridCommand) {
+		if (gridCommand && gridCommand.moduleAction) {
 
 			let module = this.find_module(gridCommand.moduleAction.id);
 			let selectedPks = this.getSelectedIds();
@@ -2010,22 +2017,6 @@ export default class DataTable {
 				}
 			});
 		}
-
-		//						let self = this;
-		//						let segInstance = $$("seg-" + this.uid);
-		//						
-		//				
-		//						if (segInstance) {
-		//				
-		//							segInstance.attachEvent("onChange", function(newv, oldv) {
-		//								if (newv === "seg-basic-" + self.uid) {
-		//									self.change_view("hide");
-		//								}
-		//								else if (newv === "seg-details-" + self.uid) {
-		//									self.change_view("show");
-		//								}
-		//							});
-		//						}
 	}
 
 	select_all_callback() {
@@ -2206,13 +2197,34 @@ export default class DataTable {
 			});
 		}
 	}
+	
+	command_exec_callback(gridCommand) {
+		
+		let cmdCallback;
+		
+		if (this.events && this.events[DataTable.EventTypes.ON_COMMAND_EXEC] && 
+		    Array.isArray(this.events[DataTable.EventTypes.ON_COMMAND_EXEC]) && 
+			this.events[DataTable.EventTypes.ON_COMMAND_EXEC].length > 0) {
+			
+			let cmdCallbacks = this.events[DataTable.EventTypes.ON_COMMAND_EXEC];
+			
+			cmdCallback = cmdCallbacks.find(cmdCall => cmdCall.commandId === gridCommand.id);
+			
+			if (cmdCallback) {
+			
+				cmdCallback.function(this.getSelectedIds());
+			}
+		}															
+				
+		return cmdCallback != undefined;
+	}
 
 	other_commands_callback() {
 
 		let self = this;
 		let grid = $$("dt-" + this.uid);
 		let metadata = this.metadata;
-
+		
 		if (grid) {
 
 			if (metadata.gridCommands && metadata.gridCommands.length > 0) {
@@ -2225,11 +2237,12 @@ export default class DataTable {
 
 						buttonAction.attachEvent("onItemClick", function(id, e) {
 
-							let gridCommand = metadata.gridCommands.find(gridCmd => {
-								return gridCmd.id === cmd.id
-							});
-							console.log(gridCommand)
-							self.open_module(gridCommand);
+							if (!self.command_exec_callback(cmd)) {
+								
+								let gridCommand = metadata.gridCommands.find(gridCmd => gridCmd.id === cmd.id);
+								
+								self.open_module(gridCommand);
+							}
 						});
 					}
 				});
@@ -2406,5 +2419,9 @@ Object.defineProperty(DataTable.EventTypes, 'ON_ITEM_DBL_CLIC', {
 	configurable: false
 });
 
-
-
+Object.defineProperty(DataTable.EventTypes, 'ON_COMMAND_EXEC', {
+	value: 3,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
