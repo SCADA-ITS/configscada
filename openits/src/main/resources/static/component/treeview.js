@@ -19,6 +19,14 @@ const DefProperties = {
 	FOLDER: {
 		name: "folder",
 		value: false
+	},
+	IMAGE: {
+		name: "image",
+		value: "img/not_found_50.png"
+	},
+	DISABLED: {
+		name: "disabled",
+		value: false
 	}
 };
 
@@ -74,11 +82,16 @@ export default class TreeView {
 		
 		let getItemProps = function(item, prop) {
 	
-			let propValue = prop.value;
+			let propValue = undefined
 	
 			if (item && item.props) {
 	
 				propValue = item.props[prop.name];
+			}
+			
+			if (!propValue) {
+				
+				propValue = prop.value; 
 			}
 			
 			return propValue;
@@ -183,7 +196,7 @@ export default class TreeView {
 			
 		tbActionView.elements.push({ width: 4 });
 		
-		let translate = function(data) {
+		let applyProperties = function(data) {
 			
 			if (Array.isArray(data) && data.length > 0) {
 				
@@ -200,8 +213,11 @@ export default class TreeView {
 					
 					if (item.data && Array.isArray(item.data) && item.data.length > 0) {
 					
-						item.data = translate(item.data);	
+						item.data = applyProperties(item.data);	
 					}
+					
+					item.image = getItemProps(item, DefProperties.IMAGE); 
+					item.disabled = getItemProps(item, DefProperties.DISABLED);
 
 					return item;
 				});
@@ -210,9 +226,7 @@ export default class TreeView {
 	
 		let drawTree = function() {
 			
-			let multiSelect = getTreeOptions(GridOptions.MULTISELECT);
-			
-			let data = translate(self.data);
+			let data = applyProperties(self.data);
 			
 			let treeView = {
 				id: "tree-" + self.uid,
@@ -221,32 +235,40 @@ export default class TreeView {
 				template: function(obj, common) {
 					
 					let value = obj.value;
-					let image = obj.image;
-									
-					if (image == undefined) {
-						image = "img/not_found_50.png";
-					}
 					
-//					let nodeValue = `<div>	
-//						<img class="table-field-icons" src="${image}" 
-//							 onerror="this.onerror=null; this.style.display = 'none'"/>
-//						<span>${value}</span>
-//					</div>`;
-
+					
+					obj.disabled = getTreeOptions(GridOptions.DISABLED);
+									
 					let fontWeight = 500;
 					let letterSpacing = "0.2px";
-					
+					let opacity = 1;
 					if (obj.$level > 1) {
 						
 						fontWeight = 100;
 						letterSpacing = "0px";
 					}
+					
+					if (obj.disabled) {
+						
+						opacity = 0.5;
+					}
 
-					let nodeValue = `<div>	
-						<img src="${image}" 
-							 onerror="this.onerror=null; this.style.display = 'none'"/>
-						<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing};">${value}</span>
-					</div>`;
+					let nodeValue = undefined;
+					
+					if (obj.image) {
+						
+						nodeValue = `<div>	
+										<img src="${obj.image}" 
+											 onerror="this.onerror=null; this.style.display = 'none'"/>
+										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
+									</div>`;	
+					}
+					else {
+						
+						nodeValue = `<div>	
+										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
+									</div>`;
+					}
 					
 					if (multiSelect) {
 						

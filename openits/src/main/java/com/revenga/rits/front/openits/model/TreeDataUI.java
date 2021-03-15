@@ -21,20 +21,21 @@ public class TreeDataUI implements Serializable {
 	
 	public static final String PROP_TRANSLATE = "translate";
 	public static final String PROP_FOLDER = "folder";
+	public static final String PROP_IMAGE = "image";
+	public static final boolean PROP_DISABLE = false;
 	
 	private String id;
-	private String image;
 	private String value;
+	private boolean disabled;
 	private List<TreeDataUI> data;
 	private Map<String, Object> params;
 	private Map<String, Object> props;
 	
-	public TreeDataUI(String id, String value, String image) {
+	public TreeDataUI(String id, String value) {
 		super();
 		
 		this.id = id;
 		this.value = value;
-		this.image = image;
 	}
 	
 	public void addItem(TreeDataUI item) {

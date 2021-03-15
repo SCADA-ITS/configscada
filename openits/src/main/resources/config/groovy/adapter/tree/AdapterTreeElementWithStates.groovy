@@ -72,9 +72,11 @@ public class AdapterTreeElementWithStates {
 							}
 													
 							TreeDataUI item = new TreeDataUI((String) entity.get(FIELD_ELEMENT_ID),
-									(String) entity.get(FIELD_ELEMENT_ALIAS), elementTypeStateImage);
+									(String) entity.get(FIELD_ELEMENT_ALIAS));
 									
-							addParameter(tree, item, TREE_PARAM_STATE_IMAGE, elementTypeStateImage);
+							//addParameter(tree, item, TREE_PARAM_STATE_IMAGE, elementTypeStateImage);
+							
+							item.addProperty(TreeDataUI.PROP_IMAGE, elementTypeStateImage);
 														
 							node.addItem(item);
 							 
@@ -109,9 +111,10 @@ public class AdapterTreeElementWithStates {
 			
 			if (node == null) {
 		
-				node = new TreeDataUI(elementTypeId, elementTypeValue, elementTypeImage);
+				node = new TreeDataUI(elementTypeId, elementTypeValue);
 				
 				node.addProperty(TreeDataUI.PROP_TRANSLATE, true);
+				node.addProperty(TreeDataUI.PROP_IMAGE, elementTypeImage);
 				node.addProperty(TreeDataUI.PROP_FOLDER, true);
 				
 				elementTypeNodes.put(elementTypeId, node);
