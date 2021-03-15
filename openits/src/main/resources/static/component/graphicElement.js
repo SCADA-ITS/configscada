@@ -3,8 +3,10 @@ import { util } from "../lib/util.js"
 
 import {ELEMENT_TYPE, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
-const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
 const ELEMENT_REST_ENDPOINT = appConfig.restUrl + "elements/";
+
+const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
+const SYNOPTIC_CTRL_CLICKED_IDS = "ctrl.clicked.ids";
 
 export default class synopticElement {
   constructor(element) {
@@ -143,8 +145,22 @@ export default class synopticElement {
       } else {
         let elementId = this.element.id;
         let elementType = this.element.elementType.id;
-        el.click(function (e) {
+        el.click(function (event) {
           try {
+            if (event.ctrlKey) {
+              let ctrlClickedIds = webix.storage.session.get(SYNOPTIC_CTRL_CLICKED_IDS);
+              if(!ctrlClickedIds){
+                ctrlClickedIds = [];
+              }
+              if(ctrlClickedIds.includes(elementId)){
+                ctrlClickedIds.splice(ctrlClickedIds.indexOf(elementId),1);
+              }else{
+                ctrlClickedIds.push(elementId);
+              }
+              webix.storage.session.put(SYNOPTIC_CTRL_CLICKED_IDS, ctrlClickedIds);
+            }else{
+              webix.storage.session.remove(SYNOPTIC_CTRL_CLICKED_IDS);
+            }
             let elementWindow = new ElementWindow(elementId,elementType);
             if ($$("win" + elementId) != null){
               $$("win" + elementId).destructor();
