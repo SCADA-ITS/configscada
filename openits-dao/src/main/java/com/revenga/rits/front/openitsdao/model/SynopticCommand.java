@@ -1,7 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,6 +33,9 @@ public class SynopticCommand implements Serializable {
 
 	@Column(name="default")
 	private Boolean default_;
+
+	@Column(name="command_type")
+	private String commandType;
 
 	private String icon;
 
@@ -53,6 +67,11 @@ public class SynopticCommand implements Serializable {
 	@JoinColumn(name="view_type_id")
 	private ViewType viewType;
 
+	//bi-directional many-to-one association to SynopticLayerElement
+	@OneToMany(mappedBy="synopticCommand")
+	private List<SynopticLayerElementCommand> synopticLayerElementCommand;
+
+
 	public SynopticCommand() {
 	}
 
@@ -62,6 +81,14 @@ public class SynopticCommand implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCommandType() {
+		return commandType;
+	}
+
+	public void setCommandType(String commandType) {
+		this.commandType = commandType;
 	}
 
 	public Boolean getDefault_() {
@@ -150,5 +177,13 @@ public class SynopticCommand implements Serializable {
 
 	public void setItemRequired(Boolean itemRequired) {
 		this.itemRequired = itemRequired;
+	}
+
+	public List<SynopticLayerElementCommand> getSynopticLayerElementCommand() {
+		return synopticLayerElementCommand;
+	}
+
+	public void setSynopticLayerElementCommand(List<SynopticLayerElementCommand> synopticLayerElementCommand) {
+		this.synopticLayerElementCommand = synopticLayerElementCommand;
 	}
 }

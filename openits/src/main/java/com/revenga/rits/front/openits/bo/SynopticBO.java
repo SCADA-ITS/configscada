@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.SynopticUI;
@@ -17,6 +13,10 @@ import com.revenga.rits.front.openitsdao.model.Synoptic;
 import com.revenga.rits.front.openitsdao.model.SynopticLayer;
 import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
 import com.revenga.rits.front.openitsdao.service.SynopticService;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SynopticBO extends GenericBO {

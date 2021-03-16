@@ -1,7 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -42,6 +53,10 @@ public class SynopticLayerElement implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="layer_id")
 	private SynopticLayer synopticLayer;
+
+	// bi-directional many-to-one association to SynopticLayerElement
+	@OneToMany(mappedBy="synopticLayerElement")
+	private List<SynopticLayerElementCommand> synopticLayerElementCommand;
 
 	public SynopticLayerElement() {
 	}
@@ -108,6 +123,14 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setSynopticLayer(SynopticLayer synopticLayer) {
 		this.synopticLayer = synopticLayer;
+	}
+
+	public List<SynopticLayerElementCommand> getSynopticLayerElementCommand() {
+		return synopticLayerElementCommand;
+	}
+
+	public void setSynopticLayerElementCommand(List<SynopticLayerElementCommand> synopticLayerElementCommand) {
+		this.synopticLayerElementCommand = synopticLayerElementCommand;
 	}
 
 }
