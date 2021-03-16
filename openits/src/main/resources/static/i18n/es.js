@@ -1496,6 +1496,9 @@ var i18_es = {
     "CommandElementType:2:36": "SEÑALIZAR",
     "CommandElementType:3:36": "APAGAR",
     
+    "CommandElementType:1:52": "DESCARTAR INCIDENCIA",
+    "CommandElementType:2:52": "CERRAR INCIDENCIA",
+    
     "CommandElementType:1:53": "SEÑALIZAR",
     "CommandElementType:2:53": "APAGAR",
 
@@ -1759,6 +1762,7 @@ var i18_es = {
     "AlarmConfig:82" : "ALARMA GE NIVEL COMBUSTIBLE RESERVADO",
     "AlarmConfig:85" : "ALARMA DETECTOR DAI SIN CONEXION",
     "AlarmConfig:86" : "ALARMA DAI INCIDENCIA",
+    "AlarmConfig:87" : "ALARMA MEGAFONIA EMERGENCIA",
 
     "AlarmConfig:83" : "ALARMA DEP&Oacute;SITO_DIESEL SIN CONEXI&Oacute;N",
     "AlarmConfig:84" : "ALARMA DEP&Oacute;SITO_DIESEL NIVEL BAJO",

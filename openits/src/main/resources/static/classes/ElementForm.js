@@ -960,6 +960,10 @@ export default class TabForm {
 								// 	console.warn(data);
 								// }
 								let elementId=this.id;
+								if(this.parentId !== null && this.parentId !== undefined)
+								{
+									elementId = elementId.split("_")[1];
+								}
 								$$(this.commands).addView({
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
