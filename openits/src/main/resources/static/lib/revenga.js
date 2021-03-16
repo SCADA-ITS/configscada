@@ -96,6 +96,19 @@ function getTrimId(complexId) {
   return result;
 }
 
+function findModuleByIdAction(moduleActionId) {
+  let moduleFound = undefined;
+		let modules = window.em.getAll(EntityType.MODULE);
+		if (modules && modules.length > 0) {
+			modules.forEach(module => {
+				if (!moduleFound && module.moduleActions.find(moduleAction => moduleAction.id === moduleActionId)) {
+					moduleFound = module;
+				}
+			});
+		}
+		return moduleFound;
+}
+
 //Deprecated
 function auditMutation(auditLog) {
   let auditMutation = webix.proxy("GraphQL",

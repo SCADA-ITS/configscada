@@ -4,7 +4,7 @@ const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_TABLE = "graphic_param_table";
 const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_LABEL = "graphic_param_label";
 const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM_COLOR = "graphic_param_color";
 
-export function generateIcon(element, suffix="", customGraphicEquipment, snapDiv) {
+export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   let tableRows = new Map();
   let color= "purple";
   element.elementValues.forEach(item => {

@@ -1,33 +1,35 @@
-import ElementWindow from "../classes/ElementWindow.js";
 import { util } from "../lib/util.js"
-
-import {ELEMENT_TYPE, HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
+import {HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
 const ELEMENT_REST_ENDPOINT = appConfig.restUrl + "elements/";
 
-const SYNOPTIC_TUNNEL_RIOVERDE_ID = 900;
-const SYNOPTIC_CTRL_CLICKED_IDS = "ctrl.clicked.ids";
-
-export default class synopticElement {
-  constructor(element) {
+export default class GraphicElement {
+  
+  constructor(element, graphicElementConfig) {
     this.element = element;
+    this.graphicElementConfig = graphicElementConfig;
+  }
+
+  addEvents(el){
+    this.addOnClickEvent(el);
+    this.addOnDblClickEvent(el);
   }
 
   paintIcon(elementUiConfig, snapDiv, ratioWidth, ratioHeight, suffix) {
     try {
       this.elementUiConfig = elementUiConfig;
-      if(this.elementUiConfig.customGraphicEquipment){
-        import(this.elementUiConfig.customGraphicEquipment.jsDrawFile).then(drawFile =>{
-          let el = drawFile.generateIcon(this.element, suffix, this.elementUiConfig.customGraphicEquipment, snapDiv);
-          let scale_x = this.elementUiConfig.width * ratioWidth;
-          let scale_y = this.elementUiConfig.height * ratioHeight;
+      if(this.elementUiConfig.graphicIcon){
+        import(this.elementUiConfig.graphicIcon.jsDrawFile).then(drawFile =>{
+          let el = drawFile.generateIcon(this.element, suffix, this.elementUiConfig.graphicIcon, snapDiv);
+          let scale_x = this.elementUiConfig.graphicIcon.width * ratioWidth;
+          let scale_y = this.elementUiConfig.graphicIcon.height * ratioHeight;
           if (el != null) {
-            el.transform("translate(" + (this.elementUiConfig.x * ratioWidth) + "," + ((HEIGHT_RESOLUTION - this.elementUiConfig.y - this.elementUiConfig.height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
+            el.transform("translate(" + (this.elementUiConfig.x * ratioWidth) + "," + ((HEIGHT_RESOLUTION - this.elementUiConfig.y - this.elementUiConfig.graphicIcon.height) * ratioHeight) + "), scale(" + scale_x + "," + scale_y + ")");
             el.attr({ id: this.element.id });
           }            
           drawFile.getElementIcon(this.element, suffix);
           if(el){
-            this.addOnClickEvent(el);
+            this.addEvents(el);
           }
         });
       }else{
@@ -41,8 +43,8 @@ export default class synopticElement {
 
   getElementSVG(width, height, suffix=""){
     let elementSVG = "";
-    if(this.elementUiConfig.customGraphicEquipment){
-      import(this.elementUiConfig.customGraphicEquipment.jsDrawFile).then(drawFile =>{
+    if(this.elementUiConfig.graphicIcon){
+      import(this.elementUiConfig.graphicIcon.jsDrawFile).then(drawFile =>{
         elementSVG = drawFile.getElementSVG(this.element, width, height, suffix);
       });
     }else{
@@ -53,8 +55,8 @@ export default class synopticElement {
 
   getElementIcon(suffix=""){
     let result; 
-    if(this.elementUiConfig.customGraphicEquipment){
-      import(this.elementUiConfig.customGraphicEquipment.jsDrawFile).then(drawFile =>{
+    if(this.elementUiConfig.graphicIcon){
+      import(this.elementUiConfig.graphicIcon.jsDrawFile).then(drawFile =>{
         result = drawFile.getElementIcon(this.element, suffix);
       });
     }else{
@@ -131,67 +133,27 @@ export default class synopticElement {
   }
 
   addOnClickEvent(el){
-    if (el != null) {
-      if(this.element.elementType.id == ELEMENT_TYPE.ID_7_ZONE) {
-        el.click(function (e) {
-          //TODO Deprecated, quedarse con la parte del catch correctamente recuperado el idModule
-          try {
-            $$("syn0").show();  
-          } catch (error) {
-            let module = window.em.getByField(EntityType.MODULE, "id", SYNOPTIC_TUNNEL_RIOVERDE_ID);
-            util.module.open(module, null, null, null, null);	
-          }
-        });
-      } else {
-        let elementId = this.element.id;
-        let elementType = this.element.elementType.id;
-        el.click(function (event) {
-          try {
-            if (event.ctrlKey) {
-              let ctrlClickedIds = webix.storage.session.get(SYNOPTIC_CTRL_CLICKED_IDS);
-              if(!ctrlClickedIds){
-                ctrlClickedIds = [];
-              }
-              if(ctrlClickedIds.includes(elementId)){
-                ctrlClickedIds.splice(ctrlClickedIds.indexOf(elementId),1);
-              }else{
-                ctrlClickedIds.push(elementId);
-              }
-              webix.storage.session.put(SYNOPTIC_CTRL_CLICKED_IDS, ctrlClickedIds);
-            }else{
-              webix.storage.session.remove(SYNOPTIC_CTRL_CLICKED_IDS);
-            }
-            let elementWindow = new ElementWindow(elementId,elementType);
-            if ($$("win" + elementId) != null){
-              $$("win" + elementId).destructor();
-            }
+    if (this.graphicElementConfig.moduleAction && el) {
+      
+      el.click((event) => {
+        try {
+          let module = findModuleByIdAction(this.graphicElementConfig.moduleAction.id);
+          let args = {};
+          args.parentId = this.element.id;
+          args.parentType = this.element.elementType.id;
+          util.module.open(module, this.graphicElementConfig.moduleAction, (this.graphicElementConfig.viewType)?this.graphicElementConfig.viewType.id:undefined, null, args);
+        } catch (e) {
+          console.error(e);
+        }
+      });
 
-            webix.ui({
-              id: "win" + elementId,
-              view: "window",
-              move: true,
-              close: true,
-              position: "right",
-              body: elementWindow.getComponent(),
-              on: {
-                onDestruct: function(obj){
-                  //elementForm.disconnect();
-                },
-                onHide: function(obj){
-                  //elementForm.disconnect();
-                  $$("win" + elementId).destructor();
-                },
-                onShow: function(obj){
-                  elementWindow.loadData();
-                }
-              }                            
-            }).show();
-          } catch (e) {
-            console.error(e);
-          }
-        });
-      }
     }
+  }
+
+  addOnDblClickEvent(el){
+    // el.dblclick((event) => {
+      
+    // });
   }
 
 }

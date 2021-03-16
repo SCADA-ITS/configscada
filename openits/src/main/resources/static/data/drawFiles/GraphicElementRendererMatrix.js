@@ -5,7 +5,7 @@ import { availablePictos } from "../pmvpicto.js";
 
 const ELMENT_TYPE_STATE_UI_COLOR = "color";
 
-export function generateIcon(element, suffix="", customGraphicEquipment, snapDiv) {
+export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   let panelConfig = element.elementValues.find((ic) =>
       elementTypeMap.getElementTypeParam(ic.id) == elementTypeMap.PANEL_MANAGER_CONFIG
   );

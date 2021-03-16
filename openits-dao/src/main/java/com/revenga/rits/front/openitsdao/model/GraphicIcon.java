@@ -7,18 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 /**
- * The persistent class for the custom_graphic_equipments database table.
+ * The persistent class for the graphic_icons database table.
  * 
  */
 @Entity
-@Table(name="custom_graphic_equipments")
-@NamedQuery(name="CustomGraphicEquipment.findAll", query="SELECT g FROM CustomGraphicEquipment g")
-public class CustomGraphicEquipment implements Serializable {
+@Table(name="graphic_icons")
+@NamedQuery(name="GraphicIcon.findAll", query="SELECT g FROM GraphicIcon g")
+public class GraphicIcon implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,21 +31,31 @@ public class CustomGraphicEquipment implements Serializable {
 
 	private String description;
 
-	private Integer height;
+	private Float height;
 
 	@Column(name="js_draw_file")
 	private String jsDrawFile;
 
 	private Boolean measures;
 
+	//bi-directional many-to-one association to ModuleAction
+	@ManyToOne
+	@JoinColumn(name="module_action_id")
+	private ModuleAction moduleAction;
+
 	private String name;
 
 	@Column(name="svg_pattern_var")
 	private String svgPatternVar;
 
-	private Integer width;
+	//uni-directional many-to-one association to ViewType
+	@ManyToOne
+	@JoinColumn(name="view_type_id")
+	private ViewType viewType;
 
-	public CustomGraphicEquipment() {
+	private Float width;
+
+	public GraphicIcon() {
 	}
 
 	public Integer getId() {
@@ -70,11 +82,11 @@ public class CustomGraphicEquipment implements Serializable {
 		this.description = description;
 	}
 
-	public Integer getHeight() {
+	public Float getHeight() {
 		return height;
 	}
 
-	public void setHeight(Integer height) {
+	public void setHeight(Float height) {
 		this.height = height;
 	}
 
@@ -94,6 +106,14 @@ public class CustomGraphicEquipment implements Serializable {
 		this.measures = measures;
 	}
 
+	public ModuleAction getModuleAction() {
+		return this.moduleAction;
+	}
+
+	public void setModuleAction(ModuleAction moduleAction) {
+		this.moduleAction = moduleAction;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -110,11 +130,19 @@ public class CustomGraphicEquipment implements Serializable {
 		this.svgPatternVar = svgPatternVar;
 	}
 
-	public Integer getWidth() {
+	public ViewType getViewType() {
+		return this.viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
+
+	public Float getWidth() {
 		return width;
 	}
 
-	public void setWidth(Integer width) {
+	public void setWidth(Float width) {
 		this.width = width;
 	}
 	

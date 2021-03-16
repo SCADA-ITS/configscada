@@ -23,23 +23,19 @@ public class SynopticLayerElement implements Serializable {
 	@Column(name="element_id")
 	private String elementId;
 
-	private Float height;
-
 	@Column(name="horizontal_flip")
 	private Boolean horizontalFlip;
 
 	private String label;
 
-	private Float width;
-
 	private Integer x;
 
 	private Integer y;
 
-	//uni-directional many-to-one association to CustomGraphicEquipment
+	//uni-directional many-to-one association to GraphicIcon
 	@ManyToOne
-	@JoinColumn(name="custom_graphic_equipment_id")
-	private CustomGraphicEquipment customGraphicEquipment;
+	@JoinColumn(name="graphic_icon_id")
+	private GraphicIcon graphicIcon;
 
 	//bi-directional many-to-one association to SynopticLayer
 	@JsonIgnore
@@ -66,14 +62,6 @@ public class SynopticLayerElement implements Serializable {
 		this.elementId = elementId;
 	}
 
-	public Float getHeight() {
-		return this.height;
-	}
-
-	public void setHeight(Float height) {
-		this.height = height;
-	}
-
 	public Boolean getHorizontalFlip() {
 		return this.horizontalFlip;
 	}
@@ -88,14 +76,6 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Float getWidth() {
-		return this.width;
-	}
-
-	public void setWidth(Float width) {
-		this.width = width;
 	}
 
 	public Integer getX() {
@@ -114,12 +94,12 @@ public class SynopticLayerElement implements Serializable {
 		this.y = y;
 	}
 
-	public CustomGraphicEquipment getCustomGraphicEquipment() {
-		return this.customGraphicEquipment;
+	public GraphicIcon getGraphicIcon() {
+		return this.graphicIcon;
 	}
 
-	public void setCustomGraphicEquipment(CustomGraphicEquipment customGraphicEquipment) {
-		this.customGraphicEquipment = customGraphicEquipment;
+	public void setGraphicIcon(GraphicIcon graphicIcon) {
+		this.graphicIcon = graphicIcon;
 	}
 
 	public SynopticLayer getSynopticLayer() {

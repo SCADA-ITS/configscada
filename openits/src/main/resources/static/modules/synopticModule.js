@@ -1,5 +1,5 @@
 import GenericModule from "./genericModule.js";
-import SynopticElement from "../component/graphicElement.js";
+import SynopticGraphicElement from "../component/synopticGraphicElement.js";
 import {WIDTH_RESOLUTION, HEIGHT_RESOLUTION, ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
 import { util } from "../lib/util.js";
 
@@ -151,7 +151,7 @@ export default class SynopticModule extends GenericModule{
         layer.synopticLayerElements.forEach(layerElement => {
           try {
             let elementData = this.synopticConf.data.find(item => item.id === layerElement.elementId);
-            let synopticElement = new SynopticElement(elementData);
+            let synopticElement = new SynopticGraphicElement(elementData, layerElement, this.synopticConf);
             synopticElement.paintIcon(layerElement, this.snapMainCanvas,  ratioWidth,  ratioHeight);
             this.elementsMap.set(synopticElement.element.id, synopticElement);
           } catch (elemenError) {
@@ -225,6 +225,28 @@ export default class SynopticModule extends GenericModule{
     }
   }
 
+  getSelectedIds() {
+		
+    let selectedIds = [];
+
+		if (this.elementsMap) {
+    
+      for (let [key, value] of this.elementsMap) {
+    
+        if(value.isCtrlClicked){
+    
+          selectedIds.push(key);
+     
+        }
+     
+      }
+		
+    }
+		
+    return selectedIds;
+
+	}
+
   connect_ws() {
 
 		let on_message = (message) => {
@@ -255,14 +277,6 @@ export default class SynopticModule extends GenericModule{
             }
           } catch (error) {
             console.warn(error);
-            console.warn("Retrying with GraphQL");
-            if(typeof element != 'undefined' && this.elementsMap && this.elementsMap.get(element.id)){
-              this.elementsMap.get(element.id).errorPaint();
-            }else{
-              let synopticElement = new SynopticElement(element);
-              synopticElement.errorPaint();
-              this.elementsMap.set(element.id, synopticElement);
-            }
           }
         });
       } catch (err) {

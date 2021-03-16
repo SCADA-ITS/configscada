@@ -33,6 +33,10 @@ public class Synoptic implements Serializable {
 
 	private String name;
 
+	//bi-directional many-to-one association to SynopticCommand
+	@OneToMany(mappedBy="synoptic")
+	private List<SynopticCommand> synopticCommands;
+
 	//bi-directional many-to-one association to SynopticLayerRelationship
 	@OneToMany(mappedBy="synoptic")
 	private List<SynopticLayerRelationship> synopticLayerRelationships;
@@ -100,6 +104,14 @@ public class Synoptic implements Serializable {
 		this.name = name;
 	}
 
+	public List<SynopticCommand> getSynopticCommands() {
+		return this.synopticCommands;
+	}
+
+	public void setSynopticCommands(List<SynopticCommand> synopticCommands) {
+		this.synopticCommands = synopticCommands;
+	}
+
 	public List<SynopticLayerRelationship> getSynopticLayerRelationships() {
 		return this.synopticLayerRelationships;
 	}
@@ -107,6 +119,7 @@ public class Synoptic implements Serializable {
 	public void setSynopticLayerRelationships(List<SynopticLayerRelationship> synopticLayerRelationships) {
 		this.synopticLayerRelationships = synopticLayerRelationships;
 	}
+	
 
 	public SynopticLayerRelationship addSynopticLayerRelationship(SynopticLayerRelationship synopticLayerRelationship) {
 		getSynopticLayerRelationships().add(synopticLayerRelationship);

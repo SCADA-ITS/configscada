@@ -123,7 +123,7 @@ public class MapBO extends GenericBO {
 					
 					for (MapLayerElement mapLayerElement : mapLayer.getMapLayerElements()) {
 						
-						if (mapLayerElement.getCustomGraphicEquipment() != null) {
+						if (mapLayerElement.getGraphicIcon() != null) {
 						
 							elementsWithStatesMeasuresAlarms.add(mapLayerElement.getElementId());
 						}

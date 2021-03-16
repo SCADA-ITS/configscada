@@ -1,6 +1,6 @@
 const ELMENT_TYPE_STATE_UI_ICON = "icon_synoptic";
 
-export function generateIcon(element, suffix="", customGraphicEquipment, snapDiv) {
+export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   let elem_icon = element.elementTypeState[ELMENT_TYPE_STATE_UI_ICON];
   let el = snapDiv.image("./img/" + elem_icon,0,0,1,1)
   return el;

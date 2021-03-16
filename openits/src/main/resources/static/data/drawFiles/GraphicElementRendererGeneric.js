@@ -6,13 +6,13 @@ const ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR = "svgPatternVar";
 const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM = "graphic_param";
 
 
-export function generateIcon(element, suffix="", customGraphicEquipment, snapDiv) {
+export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   let elementId= element.id+suffix;
   let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
   let elementAlias = element.alias;
   
   let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
-  let iconPattern = svgPatterns[customGraphicEquipment[ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR]];
+  let iconPattern = svgPatterns[graphicIcon[ELMENT_TYPE_STATE_UI_SVG_PATTERN_VAR]];
   let params={
     "elementId": elementId,
     "color": color,
