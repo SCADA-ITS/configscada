@@ -1181,7 +1181,7 @@
       list-style-type: none;
       width: 20%;
       float: left;
-      font-size: 14px;
+      font-size: 13px !important;
       position: relative;
       text-align: center;
       text-transform: uppercase;
