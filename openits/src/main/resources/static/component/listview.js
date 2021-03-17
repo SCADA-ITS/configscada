@@ -1,11 +1,17 @@
+const DefaultOptionValues = { 
+	1: true,
+	2: true,
+	3: 66
+};
+
 export default class ListView {
 
-	constructor(title, data, onSelect) {
+	constructor(data, options, events) {
 
 		this.uid = webix.uid();
-		this.title = title;
 		this.data = data;
-		this.onSelect = onSelect;
+		this.options = options;
+		this.events = events;
 	}
 
 	getView() {
@@ -18,6 +24,7 @@ export default class ListView {
 				{ height: 6 },
 				{
 					view: "toolbar",
+					hidden: !getOptions(ListView.Options.SEARCH),
 					elements: [
 						{ width: 4 },
 						{
@@ -65,27 +72,41 @@ export default class ListView {
 
 						template: function(obj) {
 
-							let image = obj.image;
-
-							if (image == undefined) {
-								image = "not_found_50.png";
+							let html = "";
+							let marginTop = 0;
+							
+							if (getOptions(ListView.Options.ICON)) {
+								
+								let image = obj.image;
+								
+								if (image == undefined) {
+									image = "not_found_50.png";
+								}
+								
+								html = `<image class="list-photo" src="img/${image}" />`;
 							}
-
-							return `<image class="list-photo" src="img/${image}" />
-									<div class="text">
+							
+							if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
+								
+								marginTop = Math.round((getOptions(ListView.Options.ROW_HEIGHT) - DefaultOptionValues[ListView.Options.ROW_HEIGHT]) / 2); 
+							}
+							
+							html += `<div class="text" style="margin-top: ${marginTop}px">
 								  		<span class="list-first-line">${obj.alias} </span>
 								  		<span class="list-second-line">${obj.description} </span>
-									</div>`
+									</div>`; 
+
+							return html;
 						},
-						height: 66
+						height: getOptions(ListView.Options.ROW_HEIGHT)
 					},
 					data: self.data,
 					on: {
 						onSelectChange: function() {
-
-							if (self.onSelect) {
-
-								self.onSelect(this.getSelectedId(true));
+							
+							if (self.events && self.events[ListView.EventTypes.ON_SELECT_ROW]) {
+								
+								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true));
 							}
 						}
 					}
@@ -93,6 +114,23 @@ export default class ListView {
 			}
 
 			return list;
+		}
+		
+		function getOptions(option) {
+			
+			let value = undefined;
+			
+			if (self.options) {
+			
+				value = self.options[option];
+			}
+			
+			if (value === undefined) {
+					
+				value = DefaultOptionValues[option];
+			}
+			
+			return value;
 		}
 
 		return view;
@@ -109,3 +147,42 @@ export default class ListView {
 		}		
 	}
 }
+
+Object.defineProperty(ListView, 'EventTypes', {
+	value: {}
+});
+
+
+Object.defineProperty(ListView.EventTypes, 'ON_SELECT_ROW', {
+	value: 1,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+
+Object.defineProperty(ListView, 'Options', {
+	value: {}
+});
+
+
+Object.defineProperty(ListView.Options, 'ICON', {
+	value: 1,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.Options, 'SEARCH', {
+	value: 2,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.Options, 'ROW_HEIGHT', {
+	value: 3,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});

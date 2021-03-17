@@ -67,8 +67,8 @@ public class LocationBO extends GenericBO {
 		
 		List<Map<String, Object>> locations = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH, new Object[] { alarmTypeId });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH).getFieldId(), locations);
+		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH).getFieldId(), locations));
 	}
 	
 	public List<Map<String, Object>> replaceLocations(List<Map<String, Object>> elements) {

@@ -293,8 +293,12 @@ export default class AlarmMonitorModule extends GenericModule {
 						description: i18n.t("LBL_ELEMENT_TYPE_ALL_DESCRIPTION"),
 						image: null
 					});
+					
+					let events = {};
 
-					self.listView = new ListView(i18n.t("LBL_EQUIPMENT_TYPE_SEARCH"), elementTypeView, onSelect);
+					events[ListView.EventTypes.ON_SELECT_ROW] = onSelect;
+					
+					self.listView = new ListView(elementTypeView, null, events);
 
 					viewListEquipments = self.listView.getView();
 				}
