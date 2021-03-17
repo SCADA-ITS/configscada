@@ -27,8 +27,8 @@ export default class SynopticGraphicElement extends GraphicElement {
   addOnDblClickEvent(el){
     if(el && this.parentSynoptic.metadata.synopticCommands){
       el.dblclick((event) => {
-        let defaultCommand = this.parentSynoptic.metadata.synopticCommands.find(gridCommand => {
-          return gridCommand.default_ === true
+        let defaultCommand = this.parentSynoptic.metadata.synopticCommands.find(synopticCommand => {
+          return synopticCommand.default_ === true
         });
         let module = findModuleByIdAction(defaultCommand.moduleAction.id);
         let args = {};

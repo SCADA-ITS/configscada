@@ -1,7 +1,6 @@
 import { util } from "../lib/util.js"
 import {HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
-const ELEMENT_REST_ENDPOINT = appConfig.restUrl + "elements/";
 
 export default class GraphicElement {
   
@@ -88,24 +87,6 @@ export default class GraphicElement {
       console.log("ERROR: ")
       console.log(e);
     }  
-  }
-
-  errorPaint(elementId){
-    if(typeof this.element === 'undefined' || !this.element || typeof this.element.id === 'undefined'){
-      this.element={id:elementId};
-    }
-    let response = webix.ajax().sync().get(ELEMENT_REST_ENDPOINT + this.element.id);
-    this.element = JSON.parse(response.responseText);
-    if (document.getElementById(this.element.id) != null) {
-      let el = document.getElementById(this.element.id);
-      if (el != null && this.element.elementTypeState && this.element.elementTypeState.id) {
-        el.setAttribute("state", getTrimId(this.element.elementTypeState.id));
-      }
-      // check if the element exists
-      let elem_icon = this.getElementIcon("").icon;
-      // replace the icon
-      document.getElementById(this.element.id).setAttribute("href", "./img/" + elem_icon);
-    }
   }
 
   updateElement(element){
