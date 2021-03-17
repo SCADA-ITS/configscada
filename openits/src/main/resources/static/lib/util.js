@@ -145,12 +145,12 @@ export let util = {
 					view: "toolbar",
 					css: "default-window-head",
 					//height: 35,
-					elements: [
+					cols: [
 						{ 
 							
 							view: "label", 
 							//css: "notification-center-title", 
-							template: i18n.t(label)},
+							label: i18n.t(label)},
 						{
 							view: "icon",
 							//css: "notification-center-close-btn",
@@ -556,7 +556,7 @@ export let util = {
 				elements: [
 					{ 
 						view: "label", 
-						template: title
+						label: title
 					},
 					{
 						view: "icon",
@@ -594,6 +594,24 @@ export let util = {
 			}).show();
 			
 			return winId;
+		},
+		
+		setWindowTitle(winId, title) {
+			
+			if ($$(winId)) {
+				
+				let head = $$(winId).getHead();
+				
+				if (head) {
+				
+					let titleView = head.queryView({ view:"label" });
+						
+					if (titleView) {
+					
+						titleView.setHTML(`<div>${title}</div>`);
+					}
+				}
+			}
 		}
 	},
 

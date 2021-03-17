@@ -254,6 +254,13 @@ export default class IncidentReportModule extends GenericModule {
 
 
 				this.incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", this.incidentReport.incidentType.id);
+				
+				let container = $$(this.args.containerId);
+
+				if (container) {
+				
+					util.ui.setWindowTitle(container, i18n.t("LBL_INCIDENT_REPORT") + " [" + util.getSimpleId(this.incidentReport.id) + "]" + " - " + this.incidentReport.incidentType.alias);
+				}
 
 				this.drawComponents();
 
