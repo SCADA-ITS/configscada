@@ -2,6 +2,7 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,29 +15,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * The persistent class for the synoptic_layer_element_commands database table.
+ * The persistent class for the synoptic_element_type_commands database table.
  * 
  */
 @Entity
-@Table(name="synoptic_layer_element_commands")
-@NamedQuery(name="SynopticLayerElementCommand.findAll", query="SELECT s FROM SynopticLayerElementCommand s")
-public class SynopticLayerElementCommand implements Serializable {
+@Table(name="synoptic_element_type_commands")
+@NamedQuery(name="SynopticElementTypeCommand.findAll", query="SELECT s FROM SynopticElementTypeCommand s")
+public class SynopticElementTypeCommand implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@JsonIgnore
-	@ManyToOne
-	private SynopticLayerElement synopticLayerElement;
+	@Column(name="element_type")
+	private String elementType;
 	
+	//uni-directional many-to-one association to SynopticCommand
 	@JsonIgnore
 	@ManyToOne
 	private SynopticCommand synopticCommand;
+
+	//uni-directional many-to-one association to ModuleAction
+	@ManyToOne
+	private ModuleAction moduleAction;
 	
 
-	public SynopticLayerElementCommand() {
+	public SynopticElementTypeCommand() {
 	}
 
 	public Integer getId() {
@@ -47,12 +52,12 @@ public class SynopticLayerElementCommand implements Serializable {
 		this.id = id;
 	}
 
-	public SynopticLayerElement getSynopticLayerElement() {
-		return synopticLayerElement;
+	public String getElementType() {
+		return elementType;
 	}
 
-	public void setSynopticLayerElement(SynopticLayerElement synopticLayerElement) {
-		this.synopticLayerElement = synopticLayerElement;
+	public void setElementType(String elementType) {
+		this.elementType = elementType;
 	}
 
 	public SynopticCommand getSynopticCommand() {
@@ -61,6 +66,14 @@ public class SynopticLayerElementCommand implements Serializable {
 
 	public void setSynopticCommand(SynopticCommand synopticCommand) {
 		this.synopticCommand = synopticCommand;
+	}
+
+	public ModuleAction getModuleAction() {
+		return moduleAction;
+	}
+
+	public void setModuleAction(ModuleAction moduleAction) {
+		this.moduleAction = moduleAction;
 	}
 
 }

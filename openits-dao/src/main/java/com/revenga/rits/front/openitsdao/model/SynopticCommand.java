@@ -34,8 +34,10 @@ public class SynopticCommand implements Serializable {
 	@Column(name="default")
 	private Boolean default_;
 
-	@Column(name="command_type")
-	private String commandType;
+	@ManyToOne
+	private SynopticCommandGroup commandGroup;
+
+	private Boolean context;
 
 	private String icon;
 
@@ -67,9 +69,9 @@ public class SynopticCommand implements Serializable {
 	@JoinColumn(name="view_type_id")
 	private ViewType viewType;
 
-	//bi-directional many-to-one association to SynopticLayerElement
+	//bi-directional many-to-one association to SynopticElementTypeCommand
 	@OneToMany(mappedBy="synopticCommand")
-	private List<SynopticLayerElementCommand> synopticLayerElementCommand;
+	private List<SynopticElementTypeCommand> synopticElementTypeCommand;
 
 
 	public SynopticCommand() {
@@ -83,12 +85,20 @@ public class SynopticCommand implements Serializable {
 		this.id = id;
 	}
 
-	public String getCommandType() {
-		return commandType;
+	public SynopticCommandGroup getCommandType() {
+		return commandGroup;
 	}
 
-	public void setCommandType(String commandType) {
-		this.commandType = commandType;
+	public void setCommandType(SynopticCommandGroup commandType) {
+		this.commandGroup = commandType;
+	}
+
+	public Boolean getContext() {
+		return this.context;
+	}
+
+	public void setContext(Boolean context) {
+		this.context = context;
 	}
 
 	public Boolean getDefault_() {
@@ -179,11 +189,11 @@ public class SynopticCommand implements Serializable {
 		this.itemRequired = itemRequired;
 	}
 
-	public List<SynopticLayerElementCommand> getSynopticLayerElementCommand() {
-		return synopticLayerElementCommand;
+	public List<SynopticElementTypeCommand> getSynopticElementTypeCommand() {
+		return synopticElementTypeCommand;
 	}
 
-	public void setSynopticLayerElementCommand(List<SynopticLayerElementCommand> synopticLayerElementCommand) {
-		this.synopticLayerElementCommand = synopticLayerElementCommand;
+	public void setSynopticElementTypeCommand(List<SynopticElementTypeCommand> synopticElementTypeCommand) {
+		this.synopticElementTypeCommand = synopticElementTypeCommand;
 	}
 }
