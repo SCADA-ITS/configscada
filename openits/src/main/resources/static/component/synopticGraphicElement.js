@@ -3,10 +3,11 @@ import { util } from "../lib/util.js"
 
 export default class SynopticGraphicElement extends GraphicElement {
 
-  constructor(element, synopticLayerElement, parentSynoptic) {
+  constructor(element, synopticLayerElement, parentSynoptic, parentContext) {
     super(element, synopticLayerElement.graphicIcon);
 
     this.parentSynoptic = parentSynoptic;
+    this.parentContext = parentContext;
     this.isCtrlClicked = false;
   }
 
@@ -19,7 +20,8 @@ export default class SynopticGraphicElement extends GraphicElement {
           this.isCtrlClicked = true;
         }
       } else {
-        this.isCtrlClicked = false;
+        this.parentContext.resetSelectedIds();
+        this.isCtrlClicked = true;
       }
     });
   }

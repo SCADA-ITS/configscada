@@ -136,7 +136,7 @@ export default class SynopticModule extends GenericModule{
   
         this.loadData();
         this.doResponsive();
-        // this.drawContextButtonAction();
+        this.drawContextButtonAction();
 
         document.getElementById(this.synopticDivId + "spinner").style.display = "none";
       });
@@ -174,7 +174,7 @@ export default class SynopticModule extends GenericModule{
           try {
   
             let elementData = this.synopticConf.data.find(item => item.id === layerElement.elementId);
-            let synopticElement = new SynopticGraphicElement(elementData, layerElement, this.synopticConf);
+            let synopticElement = new SynopticGraphicElement(elementData, layerElement, this.synopticConf, this);
   
             synopticElement.paintIcon(layerElement, this.snapMainCanvas,  ratioWidth,  ratioHeight);
   
@@ -299,23 +299,32 @@ export default class SynopticModule extends GenericModule{
 		
     let selectedIds = [];
 
-		if (this.elementsMap) {
-    
+		if (this.elementsMap) { 
       for (let [key, value] of this.elementsMap) {
-    
         if(value.isCtrlClicked){
     
           selectedIds.push(key);
      
         }
-     
       }
-		
     }
-		console.warn(selectedIds);
+    console.warn(selectedIds);
     return selectedIds;
-
 	}
+
+  resetSelectedIds(){
+    
+    if (this.elementsMap) {
+      for (let [key, value] of this.elementsMap) {
+        if(value.isCtrlClicked){
+          
+          this.elementsMap.get(key).isCtrlClicked = false;
+     
+        }
+      }
+    }
+
+  }
 
   doAction() {
     
@@ -330,7 +339,14 @@ export default class SynopticModule extends GenericModule{
 
   }
 
-  
+  drawContextButtonAction() {
+
+    let contextMenu = new ContextMenu(this.uid, this.synopticConf.metadata.synopticCommands, this);
+    let contextMenuComponent = contextMenu.getComponent();
+    contextMenuComponent.master = this.synopticDivId + "SVG";
+    webix.ui(contextMenuComponent);
+
+	}
 
   connect_ws() {
 
