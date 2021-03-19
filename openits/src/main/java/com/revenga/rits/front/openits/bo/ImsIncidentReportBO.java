@@ -605,12 +605,16 @@ public class ImsIncidentReportBO extends GenericBO {
 		return res;
 	}
 
-	public Boolean deleteLog(Object input) {
+	public Boolean deleteLog(String id) {
+
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("incidentReportLogId", id);
 
 		Boolean res = false;
-
+		
 		Map<String, Object> deleteLog = voDataSourceAdapter
-				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_LOG_INCIDENT_INCIDENT_REPORT, (Map<String, Object>) input);
+				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_LOG_INCIDENT_INCIDENT_REPORT, input);
 
 		res = checkMapIsBoolean(deleteLog);
 

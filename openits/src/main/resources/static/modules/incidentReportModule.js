@@ -1,6 +1,7 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
+import InputDialogBox from "../component/inputDialogBox.js";
 import { util } from "../lib/util.js";
 
 
@@ -19,7 +20,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.requestReport = true;
 		this.disconnectStomp = true;
 		this.closed = false;
-		
+		this.dtLogs = undefined;
 
 		this.config = module.config;
 
@@ -263,6 +264,10 @@ export default class IncidentReportModule extends GenericModule {
 				}
 
 				this.drawComponents();
+
+				if (this.dtLogs) {
+					this.dtLogs.callbacks();
+				}
 
 				if (this.dtTasks) {
 
@@ -887,56 +892,11 @@ export default class IncidentReportModule extends GenericModule {
 
 					if (self.currentSequenceOfState) {
 
-						const defaultGridOptionValues = [
-							{ gridOption: { id: 1 }, value: "true" },
-							{ gridOption: { id: 2 }, value: "true" },
-							{ gridOption: { id: 3 }, value: undefined },
-							{ gridOption: { id: 4 }, value: undefined },
-							{ gridOption: { id: 5 }, value: undefined },
-							{ gridOption: { id: 6 }, value: undefined },
-							{ gridOption: { id: 7 }, value: "false" },
-							{ gridOption: { id: 8 }, value: "false" },
-							{ gridOption: { id: 9 }, value: "true" },
-							{ gridOption: { id: 10 }, value: "true" },
-							{ gridOption: { id: 11 }, value: "true" },
-							{ gridOption: { id: 12 }, value: "true" },
-							{ gridOption: { id: 13 }, value: "true" },
-							{ gridOption: { id: 14 }, value: "false" },
-							{ gridOption: { id: 15 }, value: "false" },
-							{ gridOption: { id: 16 }, value: "img/grid/default.png" }
-						];
+						let tableLogs = self.getTableLogs();
 
-						let metadata = {
-							filter: true,
-							label: "LBL_LOGS",
-							visible: true,
-							gridOptionValues: defaultGridOptionValues,
-							gridFields: [
-								{
-									extended: false,
-									filtered: false,
-									isEpochMilli: false,
-									isPk: false,
-									label: "LBL_COLUMN",
-									labelTooltip: "LBL_COLUMN",
-									needsTranslation: false,
-									parameterized: false,
-									position: 1,
-									required: true,
-									sourceField: "id",
-									visible: true,
-									widthPx: 300,
-									gridFieldDataType: {
-										id: 1,
-										name: "string"
-									}
-								}
-							]
-						};
+						self.dtLogs = tableLogs;
 
-						let dtLogs = new DataTable(null, null, metadata, []);
-
-						return dtLogs.getView();
+						return tableLogs.getView();
 					}
 				}
 
@@ -1883,6 +1843,382 @@ export default class IncidentReportModule extends GenericModule {
 		}
 
 		webix.ui(viewMain, $$(this.uid));
+	}
+
+	getTableLogs = () => {
+		console.log(this);
+		let incidentReportId = this.incidentReportId;
+		
+		let addLogIncidentReportEndPoint = this.config.actionEndpoints.addLogIncidentReport;
+		let deleteLogIncidentReportEndPoint = this.config.actionEndpoints.deleteLogIncidentReport;
+
+		const defaultGridOptionValues = [
+			{ gridOption: { id: 1 }, value: "true" },
+			{ gridOption: { id: 2 }, value: "true" },
+			{ gridOption: { id: 3 }, value: undefined },
+			{ gridOption: { id: 4 }, value: undefined },
+			{ gridOption: { id: 5 }, value: undefined },
+			{ gridOption: { id: 6 }, value: undefined },
+			{ gridOption: { id: 7 }, value: "false" },
+			{ gridOption: { id: 8 }, value: "false" },
+			{ gridOption: { id: 9 }, value: "true" },
+			{ gridOption: { id: 10 }, value: "true" },
+			{ gridOption: { id: 11 }, value: "true" },
+			{ gridOption: { id: 12 }, value: "true" },
+			{ gridOption: { id: 13 }, value: "true" },
+			{ gridOption: { id: 14 }, value: "false" },
+			{ gridOption: { id: 15 }, value: "false" },
+			{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+		];
+
+		let metadata = {
+			filter: true,
+			label: "LBL_LOGS",
+			visible: true,
+			gridOptionValues: defaultGridOptionValues,
+			gridCommands:[
+				{
+					id: 1,
+					value: "LBL_ADD",
+					icon: "wxi-plus",
+					default_: true,
+					label: "LBL_CMD_ADD",
+					//showText: true,
+					position: 1
+				},
+				{
+					id: 2,
+					value: "LBL_DELETE",
+					icon: "wxi-trash",
+					label: "LBL_CMD_DELETE",
+					default_: false,
+					//showText: true,
+					position: 2,
+					multiselect: true,
+					itemSelected: true
+				}
+			],
+			gridFields: [
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_ID",
+					labelTooltip: "LBL_ID",
+					needsTranslation: false,
+					parameterized: false,
+					position: 1,
+					required: true,
+					sourceField: "id",
+					visible: false,
+					widthPx: 300,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: true,
+					isPk: false,
+					label: "LBL_TIME_STAMP",
+					needsTranslation: false,
+					parameterized: false,
+					position: 2,
+					//required: true,
+					sourceField: "incidentLogTime",
+					visible: true,
+					widthPx: 200,
+					gridFieldDataType: {
+						id: 4,
+						name: "date"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_LEVEL",
+					labelTooltip: "LBL_LEVEL",
+					needsTranslation: false,
+					parameterized: false,
+					position: 3,
+					//required: true,
+					sourceField: "incidentLogLevel",
+					visible: false,
+					widthPx: 200,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_ID",
+					labelTooltip: "LBL_ID",
+					needsTranslation: false,
+					parameterized: false,
+					position: 1,
+					required: true,
+					sourceField: "incidentLogSubtypeId",
+					visible: false,
+					widthPx: 300,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_LOG_SUBTYPE",
+					labelTooltip: "LBL_LOG_SUBTYPE",
+					needsTranslation: true,
+					parameterized: false,
+					position: 4,
+					required: true,
+					sourceField: "incidentLogSubtype",
+					visible: true,
+					widthPx: 200,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_USER",
+					labelTooltip: "LBL_USER",
+					needsTranslation: false,
+					parameterized: false,
+					position: 5,
+					required: true,
+					sourceField: "incidentLogUser",
+					visible: true,
+					widthPx: 150,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LOG_IMS_PARAM_1_STATE",
+					labelTooltip: "LOG_IMS_PARAM_1_STATE",
+					needsTranslation: true,
+					parameterized: false,
+					position: 6,
+					required: true,
+					sourceField: "incidentLogValueState",
+					visible: true,
+					widthPx: 210,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LOG_IMS_PARAM_ARG1",
+					labelTooltip: "LOG_IMS_PARAM_ARG1",
+					needsTranslation: false,
+					parameterized: false,
+					position: 7,
+					required: true,
+					sourceField: "incidentLogValueArg1",
+					visible: true,
+					widthPx: 210,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				},
+				{
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LOG_IMS_PARAM_ARG2",
+					labelTooltip: "LOG_IMS_PARAM_ARG2",
+					needsTranslation: false,
+					parameterized: false,
+					position: 8,
+					required: true,
+					sourceField: "incidentLogValueArg2",
+					visible: true,
+					widthPx: 210,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},									
+					gridFieldIcons: [
+					]
+				}
+			]
+		};
+
+		let data = [];
+		let logList = this.incidentReport.incidentLogs !== undefined ? this.incidentReport.incidentLogs : undefined; 
+		if (logList !== undefined && Array.isArray(logList) && logList.length) {
+
+			logList.forEach(element => {
+
+				let row = {};
+				row["id"] = element.id;
+				row["incidentLogTime"]  = element.time;
+				row["incidentLogLevel"] = element.level;
+				row["incidentLogSubtypeId"] = element.logSubtype.id
+				row["incidentLogSubtype"] = element.logSubtype.labelAlias;
+				row["incidentLogUser"] = element.user.name;
+
+				row["incidentLogValueState"] = null;
+				row["incidentLogValueArg1"]  = null;
+				row["incidentLogValueArg2"]  = null;
+
+				element.incidentReportLogValues.forEach(e => {
+					e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE ? row["incidentLogValueState"] = e.value : null;
+					e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1  ? row["incidentLogValueArg1"]  = e.value : null;
+					e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG2  ? row["incidentLogValueArg2"]  = e.value : null;
+				});
+
+				data.push(row);
+
+			});
+			
+		}
+
+		let events = {};
+		events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+		events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+			commandId: 1,
+			function: () => {
+
+				(new InputDialogBox(i18n.t("LBL_DIALOG_CREATE_LOG"), i18n.t("LBL_DIALOG_CREATE_LOG_TEXT"), function(comments) {
+
+					let userData = util.user.auth();
+					
+					let body = {
+								"incidentReportLogs":
+									[
+										{
+											"incidentReportId": incidentReportId,
+											"incidentReportLogValues": [
+												{
+													"logTypeParamId": "LogTypeParam:1:1",
+													"value": "LBL_IMS_INCIDENT_STATE_INITIAL"
+												},
+												{
+													"logTypeParamId": "LogTypeParam:1:2",
+													"value": comments
+												}
+											],
+											"level": "INFO",
+											"logSubtypeId": "LogSubtype:17",
+											"userId": userData.id
+										}
+									]
+								};
+					
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, body).then(function(data) {
+						//console.log(data);
+					});
+					
+				})).show();
+
+			}
+		});
+		
+		events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+			commandId: 2,
+			function: () => {
+
+				let rowsSelected = this.dtLogs.rowsSelected;
+				if(!this.dtLogs.rowsSelected.length>0){
+					webix.alert({
+						title: i18n.t("LBL_INCIDENT_LOG_NOT_SELECTED"),
+						ok: i18n.t("LBL_YES"),
+						text: i18n.t("LBL_INCIDENT_LOG_NOT_SELECTED_DESCRIPTION"),
+						type:"alert-warning",
+						width: 600
+					});	
+				} else {
+					let control = false;
+					this.dtLogs.rowsSelected.forEach(e => {
+						let row = this.dtLogs.data.find(dato => dato.id === e);
+						row.incidentLogSubtypeId !== INCIDENTS_LOGS_MANUAL_SUBTYPE ? control = true : null;
+					});
+
+					if(!control) {
+
+						webix.confirm({
+							title: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM"),
+							ok: i18n.t("LBL_YES"),
+							cancel: i18n.t("LBL_NO"),
+							text: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"),
+							width: 600
+						}).then(() => {
+
+							rowsSelected.forEach(e => {
+								
+								let endpoint = util.fillTemplate(deleteLogIncidentReportEndPoint, {
+									id: e
+								});
+			
+								this.restAction(endpoint);	
+							});
+										
+						});
+
+					} else {
+						webix.alert({
+							title: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR"),
+							ok: i18n.t("LBL_YES"),
+							text: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"),
+							type:"alert-warning",
+							width: 600
+						});	
+					}
+				}
+
+			}
+		});
+
+		let dtLogs = new DataTable(null, null, metadata, data, events);
+		return dtLogs;
+
 	}
 
 	restAction(endpoint) {
