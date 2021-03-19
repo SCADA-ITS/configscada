@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ImsExtIncidentBO;
 import com.revenga.rits.front.openits.bo.ImsExtIncidentTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentGroupBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentLevelBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentReportBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentStateBO;
@@ -57,7 +58,9 @@ public class ImsIncidentController {
 	@Autowired
 	ImsExtIncidentTypeBO imsExtIncidentTypeBO;
 	
-
+	@Autowired
+	ImsIncidentGroupBO imsIncidentGroupBO;
+	
 	@Autowired
 	ImsIncidentTypeBO imsIncidentTypeBO;	
 	
@@ -350,6 +353,26 @@ public class ImsIncidentController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(imsExtIncidentTypeBO.getItem(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/imsIncidentGroups")
+	@ApiOperation(value = "Get incident groups", notes = "Get all incident groups")
+	public ResponseEntity<Object> getImsIncidentGroups() {
+		
+		return new ResponseEntity<>(imsIncidentGroupBO.getList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/imsIncidentGroups/{id}")
+	@ApiOperation(value = "Get incident group by id", notes = "Get incident group by id")
+	public ResponseEntity<Object> getImsIncidentGroup(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "IncidentGroup by id",
+			example = "ImsIncidentGroup:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentGroupBO.getItem(id), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/imsIncidentTypes")

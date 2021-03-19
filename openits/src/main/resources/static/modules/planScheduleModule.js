@@ -493,13 +493,14 @@ export default class PlanScheduleModule extends GenericModule {
 
 			let viewToolbarActions = {
 				view: "toolbar",
-				height: 50,
+				height: 45,
 				borderless: true,
 				elements: [
 					{ 
 						view: "button",
 						css: "dialog-cancel", 
-						width: 150, 
+						width: 130,
+						height: 35,
 						label: i18n.t("LBL_CANCEL"),
 						on: {
 							onItemClick() {
@@ -517,7 +518,8 @@ export default class PlanScheduleModule extends GenericModule {
 					{ 
 						view: "button", 
 						css: "dialog-accept",
-						width: 150, 
+						width: 130,
+						height: 35,
 						label: i18n.t("LBL_ACCEPT"),
 						on: {
 							onItemClick() {

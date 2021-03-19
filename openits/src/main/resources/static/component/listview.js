@@ -20,13 +20,14 @@ export default class ListView {
 
 		let view = {
 			id: "listview-" + this.uid,
+			borderless: true,
 			rows: [
-				{ height: 6 },
+				//{ height: 6 },
 				{
 					view: "toolbar",
 					hidden: !getOptions(ListView.Options.SEARCH),
 					elements: [
-						{ width: 4 },
+						//{ width: 4 },
 						{
 							view: "search",
 							id: "txtSearch-" + this.uid,
@@ -50,11 +51,11 @@ export default class ListView {
 								}
 							}
 						},
-						{ width: 4 }
+						//{ width: 4 }
 					]
 				},
-				getList(),
-				{ height: 6 }
+				getList()
+				//{ height: 6 }
 			]
 		};
 

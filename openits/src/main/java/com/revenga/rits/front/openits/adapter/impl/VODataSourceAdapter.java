@@ -107,11 +107,10 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ROLE = getPropertyInt("get_role");
 	public static final int DATA_SOURCE_GET_SYSTEM_PERMISSIONS = getPropertyInt("get_system_permissions");
 	public static final int DATA_SOURCE_GET_SYSTEM_PERMISSION = getPropertyInt("get_system_permission");
-	public static final int DATA_SOURCE_GET_INCIDENTS = getPropertyInt("get_incidents");
-	public static final int DATA_SOURCE_GET_INCIDENT = getPropertyInt("get_incident");
+	public static final int DATA_SOURCE_GET_INCIDENT_GROUPS = getPropertyInt("get_incident_groups");
+	public static final int DATA_SOURCE_GET_INCIDENT_GROUP = getPropertyInt("get_incident_group");
 	public static final int DATA_SOURCE_GET_INCIDENT_REPORTS = getPropertyInt("get_incident_reports");
 	public static final int DATA_SOURCE_GET_INCIDENT_REPORT = getPropertyInt("get_incident_report");
-	public static final int DATA_SOURCE_GET_INCIDENT_BY_TYPE = getPropertyInt("get_incident_by_type");
 	public static final int DATA_SOURCE_GET_INCIDENT_TYPES = getPropertyInt("get_incident_types");
 	public static final int DATA_SOURCE_GET_INCIDENT_TYPE = getPropertyInt("get_incident_type");
 	public static final int DATA_SOURCE_GET_INCIDENT_TYPE_STATES = getPropertyInt("get_incident_type_states");

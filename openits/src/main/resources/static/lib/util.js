@@ -636,13 +636,7 @@ export let util = {
 
 		if (userData) {
 
-			let language = userData.language;
-			let country = userData.country;
-
-			if (language && country) {
-
-				date = new Date(ts * 1000).toLocaleString(language + "-" + country, FORMAT_NUMERIC_DATES);
-			}
+			date = new Date(ts * 1000).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 		}
 
 		return date;
@@ -660,13 +654,7 @@ export let util = {
 
 		if (userData) {
 
-			let language = userData.language;
-			let country = userData.country;
-
-			if (language && country) {
-
-				date = new Date(ts * 1000).toLocaleDateString(language + "-" + country);
-			}
+			date = new Date(ts * 1000).toLocaleDateString(i18n.getLocale());
 		}
 
 		return date;
@@ -684,13 +672,7 @@ export let util = {
 
 		if (userData) {
 
-			let language = userData.language;
-			let country = userData.country;
-
-			if (language && country) {
-
-				date = new Date(ts * 1000).toLocaleTimeString(language + "-" + country);
-			}
+			date = new Date(ts * 1000).toLocaleTimeString(i18n.getLocale());
 		}
 
 		return date;

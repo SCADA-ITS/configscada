@@ -30,7 +30,8 @@ const GridOptions = {
 	REFRESH_BUTTON: 20,
 	ROW_ADJUSTEMENT: 21,
 	HEADER_ROW_HEIGHT: 22,
-	SHOW_SELECTED: 23
+	SHOW_SELECTED: 23,
+	SHOW_HEADER: 24
 
 };
 
@@ -41,7 +42,7 @@ const RowAdjustement = {
 	CUSTOM: "custom"
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 23: true };
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 23: true, 24: true };
 
 const _TRUE = "true";
 const _FALSE = "false";
@@ -93,6 +94,7 @@ export default class DataTable {
 		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
 		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
+		let showHeader = this.getGridOptions(GridOptions.SHOW_HEADER);
 
 		console.log(metadata)
 		console.log(data)
@@ -100,6 +102,7 @@ export default class DataTable {
 
 			datatable.id = "dt-" + this.uid;
 			datatable.view = "datatable";
+			datatable.header = showHeader;
 			datatable.css = "rows";
 			datatable.select = "row";
 			datatable.tooltip = true;

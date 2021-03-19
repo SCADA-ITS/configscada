@@ -1,4 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
+import DataTable from "../component/datatable.js";
+import ListView from "../component/listview.js";
 import { util } from "../lib/util.js";
 
 export default class IncidentWizardModule extends GenericModule {
@@ -12,6 +14,9 @@ export default class IncidentWizardModule extends GenericModule {
 		this.config = module.config;
 		
 		this.steps = undefined;
+		
+		this.listViewStrechs = undefined;
+		this.dtLocations = undefined;
 	}
 
 	getView() {
@@ -120,12 +125,13 @@ export default class IncidentWizardModule extends GenericModule {
 							cols: [
 								{
 									view: "template",
+									width: 500,
 									borderless: true,
 									css: { "background": "transparent" },
 									template: function() {
 										return `<div class="text">
-											  		<span class="list-first-line">${i18n.t(step.headerLabel)} </span>
-											  		<span class="list-second-line">${i18n.t(step.headerLabelDescription)} </span>
+											  		<span class="header-wizard-first-line">${i18n.t(step.headerLabel)} </span>
+											  		<span class="header-wizard-second-line">${i18n.t("LBL_STEP") + " " + step.position + " " + i18n.t("LBL_OF") + " " + self.steps.length + ": " + i18n.t(step.headerLabelDescription)} </span>
 												</div>`;
 									}
 								},
@@ -136,7 +142,7 @@ export default class IncidentWizardModule extends GenericModule {
 									css: { "background": "transparent" },
 									template: function() {
 										return `<div class="text">
-											  		<span class="list-first-line">${i18n.t("LBL_STEP") + " " + step.position} </span>
+											  		<span class="header-wizard-step">${i18n.t("LBL_STEP") + " " + step.position} </span>
 												</div>`;
 									}
 								},
@@ -211,6 +217,160 @@ export default class IncidentWizardModule extends GenericModule {
 				
 				let step = getStep(position);
 				
+				let getViewStretchs = function() {
+					
+					let viewStretchs = {};
+					let stretchs = window.em.getAll(EntityType.STRETCH);
+					
+					if (Array.isArray(stretchs) && stretchs.length > 0) {
+												
+						let stretchView = stretchs.map(e => {
+		
+							return {
+								id: e.id,
+								alias: e.alias,
+								description: e.description
+							};
+						});
+						
+						let options = {};
+						let events = {};
+						
+						options[ListView.Options.ICON] = false;
+						options[ListView.Options.ROW_HEIGHT] = 41;
+						
+						events[ListView.EventTypes.ON_SELECT_ROW] = function(data) {
+							
+							webix.extend($$("view-locations-" + self.uid), webix.ProgressBar);
+							
+							$$("view-locations-" + self.uid).showProgress({
+								type: "bottom",
+								hide: false
+							}); 
+							
+							self.dtLocations.clear();
+							
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.locationsByStretch, { id: data })).then(function(dat) {
+							
+								if (dat != null) {
+							
+									let locations = dat.json();
+									
+									if (Array.isArray(locations) && locations.length > 0) {
+										
+										let dataLocations = locations.map(e => {
+											
+											return {
+												id: e.id,
+												alias: e.alias
+											}
+										});
+										
+										self.dtLocations.add(dataLocations);
+									}
+									
+									$$("view-locations-" + self.uid).hideProgress();
+								}	
+							});
+						};
+						
+						self.listViewStrechs = new ListView(stretchView, options, events);
+						
+						viewStretchs = {
+							id: "view-stretchs-" + self.uid,
+							width: 250,
+							rows: [
+								{
+									view: "label",
+									borderless: true,
+									height: 23,
+									css: "headers",
+									label: i18n.t("LBL_STRETCHS")
+								},
+								{ 
+									borderless: false,
+									cols: [
+										{ width: 1, borderless: false },
+										{
+											rows: [
+												{ height: 1, borderless: false },
+												self.listViewStrechs.getView(),
+												{ height: 2, borderless: false }
+											]
+										},
+										{ width: 1, borderless: false }
+									]
+								},
+								{ height: 1, borderless: false }
+							]
+						};
+					}
+					
+					return viewStretchs;
+				}
+				
+				let getViewLocations = function() {
+					
+					let viewLocations = {};
+					
+					const defaultGridOptionValues = [
+						{ gridOption: { id: 1 }, value: "false" },
+						{ gridOption: { id: 2 }, value: "false" },
+						{ gridOption: { id: 3 }, value: "2" },
+						{ gridOption: { id: 4 }, value: "asc" },
+						{ gridOption: { id: 7 }, value: "false" },
+						{ gridOption: { id: 8 }, value: "false" },
+						{ gridOption: { id: 10 }, value: "true" },
+						{ gridOption: { id: 11 }, value: "false" },
+						{ gridOption: { id: 12 }, value: "false" },
+						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+						{ gridOption: { id: 21 }, value: "auto" },
+						{ gridOption: { id: 22 }, value: "0" },
+						{ gridOption: { id: 23 }, value: "false" },
+						{ gridOption: { id: 24 }, value: "false" }
+					];
+					
+					let metadata = {
+						filter: true,
+						label: "LBL_LOCATIONS",
+						visible: true,
+						gridOptionValues: defaultGridOptionValues,
+						gridFields: [
+							{ id: 1, isPk: true, position: 1, required: true, sourceField: "id", visible: false, widthPx: 1, gridFieldDataType: { id: 1, name: "string" } },
+							{ id: 2, isPk: false, position: 2, required: true, sourceField: "alias", visible: true, widthPx: 200, gridFieldDataType: { id: 1, name: "string" } }
+						]
+					};
+					
+					self.dtLocations = new DataTable(null, null, metadata, [], null);
+					
+					viewLocations = {
+						id: "view-locations-" + self.uid,
+						rows: [
+							{
+								view: "label",
+								borderless: true,
+								height: 23,
+								css: "headers",
+								label: i18n.t("LBL_LOCATIONS")
+							},
+							{ height: 5 },
+							{ 
+								borderless: false,
+								cols: [
+									{ width: 1, borderless: false },
+									{
+										rows: self.dtLocations.getView()
+									},
+									{ width: 1, borderless: false }
+								]
+							},
+							{ height: 1, borderless: false }
+						]
+					};
+					
+					return viewLocations;
+				}
+				
 				let drawStepStretchAndLocation = function() {
 			
 					let viewStepStretchAndLocation = {
@@ -218,19 +378,32 @@ export default class IncidentWizardModule extends GenericModule {
 						rows: [
 							{
 								cols: [
-									{ width: 48 },
+									{ width: 45 },
 									{
 										rows: [
+											{ height: 15 },
 											{
 												view: "label",
-												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
-											}			
+												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted" style="font-size: 26px;"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
+											},
+											{ height: 17 },
+											{
+												cols: [
+													getViewStretchs(),
+													{ width : 25 },
+													{
+														rows: [
+															getViewLocations(),		
+														]
+													}
+													
+												]
+											}
 										]
 									},
-									{ width: 48 }
+									{ width: 45 }
 								]
-							},
-							{}
+							}
 						]
 					};
 					
@@ -244,19 +417,21 @@ export default class IncidentWizardModule extends GenericModule {
 						rows: [
 							{
 								cols: [
-									{ width: 48 },
+									{ width: 45 },
 									{
 										rows: [
+											{ height: 15 },
 											{
 												view: "label",
-												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
-											}			
+												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted" style="font-size: 26px;"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
+											},
+											{ height: 17 },
+											{}
 										]
 									},
-									{ width: 48 }
+									{ width: 45 }
 								]
-							},
-							{}
+							}
 						]
 					};
 					
@@ -270,19 +445,21 @@ export default class IncidentWizardModule extends GenericModule {
 						rows: [
 							{
 								cols: [
-									{ width: 48 },
+									{ width: 45 },
 									{
 										rows: [
+											{ height: 15 },
 											{
 												view: "label",
-												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
-											}			
+												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted" style="font-size: 26px;"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
+											},
+											{ height: 17 },
+											{}		
 										]
 									},
-									{ width: 48 }
+									{ width: 45 }
 								]
-							},
-							{}
+							}
 						]
 					};
 					
@@ -303,61 +480,78 @@ export default class IncidentWizardModule extends GenericModule {
 					firstStep = (step.position === 1);
 					lastStep = (!firstStep && step.position === self.steps.length);   
 				}
+				
+				let viewToolbarActionsButtons = [
+					{ width: 18 },
+					{ 
+						view: "button",
+						css: "dialog-cancel", 
+						width: 130,
+						height: 35,
+						label: i18n.t("LBL_CANCEL"),
+						on: {
+							onItemClick() {
+							
+								let container = $$(self.args.containerId);
+
+								if (container) {
+
+									container.close();
+								}
+							}
+						}
+					},
+					{},
+					{ 
+						view: "button", 
+						css: !lastStep ? "dialog-accept" : "dialog-finish",
+						width: 130,
+						height: 35,
+						label: !lastStep ? i18n.t("LBL_NEXT") : i18n.t("LBL_FINALIZE"),
+						on: {
+							onItemClick() {
+
+								if (!lastStep) {
+								
+									let next = $$(self.uid).getChildViews()[step.position]; 
+									
+									if (next) {
+										
+										next.show();
+										
+										setCurrentStep(step.position + 1);
+									}
+								}
+							}
+						}
+					},
+					{ width: 18 }
+				];
 								
 				let viewToolbarActions = {
-					view: "toolbar",
-					height: 50,
-					borderless: true,
-					elements: [
-						{ 
-							view: "button",
-							css: "dialog-cancel", 
-							width: 150, 
-							label: i18n.t("LBL_CANCEL"),
-							on: {
-								onItemClick() {
-								
-									let container = $$(self.args.containerId);
-
-									if (container) {
-	
-										container.close();
-									}
-								}
-							}
-						},
-						{},
-						{ 
-							view: "button", 
-							css: "dialog-accept",
-							width: 150, 
-							label: !lastStep ? i18n.t("LBL_NEXT") : i18n.t("LBL_FINALIZE"),
-							on: {
-								onItemClick() {
-
-									if (!lastStep) {
-									
-										let next = $$(self.uid).getChildViews()[step.position]; 
-										
-										if (next) {
-											
-											next.show();
-											
-											setCurrentStep(step.position + 1);
-										}
-									}
-								}
-							}
+					cols: [
+						{
+							rows: [
+								{ height: 10},
+								{
+									view: "toolbar",
+									height: 45,
+									borderless: true,
+									elements: viewToolbarActionsButtons
+								},
+								{ height: 10}
+							]
 						}
 					]
 				};
 				
 				if (!firstStep) {
 					
-					viewToolbarActions.elements.splice(2, 0, { 
+					viewToolbarActionsButtons.splice(3, 0, { 
 						view: "button", 
-						css: "dialog-accept",
-						width: 150, 
+						css: "dialog-previous",
+						width: 130,
+						height: 35,
 						label: i18n.t("LBL_PREVIOUS"),
 						on: {
 							onItemClick() {
@@ -382,6 +576,7 @@ export default class IncidentWizardModule extends GenericModule {
 					stepContent.push(drawHeader(e.position));
 					stepContent.push(drawProgressBar(e.position));
 					stepContent.push(drawContent(e.position));
+					stepContent.push({ rows: [{ height: 35 }] });
 					stepContent.push(drawToolbarActions(e.position));
 			
 					multiView.cells.push({rows: stepContent }); 	
@@ -446,7 +641,11 @@ export default class IncidentWizardModule extends GenericModule {
 		
 		if (viewMain) {
 		
-			webix.ui(viewMain, $$(this.uid));	
+			webix.ui(viewMain, $$(this.uid));
+			
+			if (self.dtLocations) {
+				self.dtLocations.callbacks();
+			}	
 		}
 		
 		$$("loading-" + this.uid).hide();

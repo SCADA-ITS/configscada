@@ -10,7 +10,7 @@
 		
 	},
 	"restEndpoints": {
-		
+		"locationsByStretch": "locations/locations/stretch/${id}"
 	},
 	"steps": {
 		"fromMap": [
