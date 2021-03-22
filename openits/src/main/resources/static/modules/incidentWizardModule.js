@@ -17,6 +17,8 @@ export default class IncidentWizardModule extends GenericModule {
 		
 		this.listViewStrechs = undefined;
 		this.dtLocations = undefined;
+		this.listViewIncidentGroups = undefined;
+		this.dtIncidentTypes = undefined;
 	}
 
 	getView() {
@@ -371,6 +373,158 @@ export default class IncidentWizardModule extends GenericModule {
 					return viewLocations;
 				}
 				
+				let getViewIncidentGroups = function() {
+					
+					let viewIncidentGroups = {};
+					let incidentGroups = window.em.getAll(EntityType.IMS_INCIDENT_GROUP);
+					
+					if (Array.isArray(incidentGroups) && incidentGroups.length > 0) {
+												
+						let incidentGroupView = incidentGroups.map(e => {
+		
+							return {
+								id: e.id,
+								alias: e.alias,
+								description: e.description
+							};
+						});
+						
+						let options = {};
+						let events = {};
+						
+						options[ListView.Options.ICON] = false;
+						options[ListView.Options.ROW_HEIGHT] = 41;
+						
+						events[ListView.EventTypes.ON_SELECT_ROW] = function(data) {
+							
+							webix.extend($$("view-incident-types-" + self.uid), webix.ProgressBar);
+							
+							$$("view-incident-types-" + self.uid).showProgress({
+								type: "bottom",
+								hide: false
+							}); 
+							
+							self.dtIncidentTypes.clear();
+							
+							let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
+							
+							let incidentTypesByGroup = incidentTypes.filter(e => e.incidentGroup.id === data[0] );
+							
+							if (Array.isArray(incidentTypesByGroup) && incidentTypesByGroup.length > 0) {
+								
+								let dataIncidentTypes = incidentTypesByGroup.map(e => {
+											
+									return {
+										id: e.id,
+										alias: e.alias,
+										description: e.description
+									}
+								});
+								
+								self.dtIncidentTypes.add(dataIncidentTypes);
+							}
+							
+							$$("view-incident-types-" + self.uid).hideProgress();
+						};
+						
+						self.listViewIncidentGroups = new ListView(incidentGroupView, options, events);
+						
+						viewIncidentGroups = {
+							id: "view-incident-groups-" + self.uid,
+							width: 250,
+							rows: [
+								{
+									view: "label",
+									borderless: true,
+									height: 23,
+									css: "headers",
+									label: i18n.t("LBL_INCIDENT_GROUPS")
+								},
+								{ 
+									borderless: false,
+									cols: [
+										{ width: 1, borderless: false },
+										{
+											rows: [
+												{ height: 1, borderless: false },
+												self.listViewIncidentGroups.getView(),
+												{ height: 2, borderless: false }
+											]
+										},
+										{ width: 1, borderless: false }
+									]
+								},
+								{ height: 1, borderless: false }
+							]
+						};
+					}
+					
+					return viewIncidentGroups;
+				}
+				
+				let getViewIncidentTypes = function() {
+					
+					let viewIncidentTypes = {};
+					
+					const defaultGridOptionValues = [
+						{ gridOption: { id: 1 }, value: "false" },
+						{ gridOption: { id: 2 }, value: "false" },
+						{ gridOption: { id: 3 }, value: "2" },
+						{ gridOption: { id: 4 }, value: "asc" },
+						{ gridOption: { id: 7 }, value: "false" },
+						{ gridOption: { id: 8 }, value: "false" },
+						{ gridOption: { id: 10 }, value: "true" },
+						{ gridOption: { id: 11 }, value: "false" },
+						{ gridOption: { id: 12 }, value: "false" },
+						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+						{ gridOption: { id: 21 }, value: "auto" },
+						{ gridOption: { id: 22 }, value: "0" },
+						{ gridOption: { id: 23 }, value: "false" },
+						{ gridOption: { id: 24 }, value: "false" }
+					];
+					
+					let metadata = {
+						filter: true,
+						label: "LBL_INCIDENT_TYPES",
+						visible: true,
+						gridOptionValues: defaultGridOptionValues,
+						gridFields: [
+							{ id: 1, isPk: true, position: 1, required: true, sourceField: "id", visible: false, widthPx: 1, gridFieldDataType: { id: 1, name: "string" } },
+							{ id: 2, isPk: false, position: 2, required: true, sourceField: "alias", visible: true, widthPx: 150, gridFieldDataType: { id: 1, name: "string" } },
+							{ id: 3, isPk: false, position: 3, required: true, sourceField: "description", visible: true, widthPx: 300, gridFieldDataType: { id: 1, name: "string" } }
+						]
+					};
+					
+					self.dtIncidentTypes = new DataTable(null, null, metadata, [], null);
+					
+					viewIncidentTypes = {
+						id: "view-incident-types-" + self.uid,
+						rows: [
+							{
+								view: "label",
+								borderless: true,
+								height: 23,
+								css: "headers",
+								label: i18n.t("LBL_INCIDENT_TYPES")
+							},
+							{ height: 5 },
+							{ 
+								borderless: false,
+								cols: [
+									{ width: 1, borderless: false },
+									{
+										rows: self.dtIncidentTypes.getView()
+									},
+									{ width: 1, borderless: false }
+								]
+							},
+							{ height: 1, borderless: false }
+						]
+					};
+					
+					return viewIncidentTypes;
+				}
+				
 				let drawStepStretchAndLocation = function() {
 			
 					let viewStepStretchAndLocation = {
@@ -426,7 +580,18 @@ export default class IncidentWizardModule extends GenericModule {
 												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted" style="font-size: 26px;"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
 											},
 											{ height: 17 },
-											{}
+											{
+												cols: [
+													getViewIncidentGroups(),
+													{ width : 25 },
+													{
+														rows: [
+															getViewIncidentTypes(),		
+														]
+													}
+													
+												]
+											}
 										]
 									},
 									{ width: 45 }
@@ -646,6 +811,10 @@ export default class IncidentWizardModule extends GenericModule {
 			if (self.dtLocations) {
 				self.dtLocations.callbacks();
 			}	
+			
+			if (self.dtIncidentTypes) {
+				self.dtIncidentTypes.callbacks();
+			}
 		}
 		
 		$$("loading-" + this.uid).hide();

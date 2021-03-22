@@ -324,7 +324,7 @@ export default class DataTable {
 
 									return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
 
-								} else if (field.gridFieldIcons.length > 0) {
+								} else if (Array.isArray(field.gridFieldIcons) && field.gridFieldIcons.length > 0) {
 
 									let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
 
