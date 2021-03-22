@@ -263,6 +263,16 @@ export default class DataTable {
 									showValue = (field.gridFieldIcons[0].showValue == true);
 									value = obj[field.sourceField];
 
+//									let gridFieldIcon;
+//									let fieldsWithIcons = field.gridFieldIcons.filter(e => (e.value));
+//
+//									if (fieldsWithIcons.length > 0) {
+//
+//										let lang = obj[field.sourceField].substr(obj[field.sourceField].indexOf(':') + 1, 2);
+//
+//										gridFieldIcon = field.gridFieldIcons.find(e => e.value === lang);
+//									}
+
 									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
 
 									if (gridFieldIcon) {
@@ -885,9 +895,7 @@ export default class DataTable {
 								
 								if (gridCommand) {
 								
-									if (!self.command_exec_callback(gridCommand)) {
-											self.open_module(gridCommand);		
-									}	
+									self.open_module(gridCommand);
 								}
 							}
 						}
@@ -1876,13 +1884,12 @@ export default class DataTable {
 	open_module(gridCommand) {
 
 		let args = {};
-		let obj = this;
+		let self = this;
 
 		let viewTypeId = undefined;
 
-		if (gridCommand && gridCommand.moduleAction) {
+		if (gridCommand) {
 
-			let module = this.find_module(gridCommand.moduleAction.id);
 			let selectedPks = this.getSelectedIds();
 
 			if (gridCommand.viewType) {
@@ -1902,7 +1909,7 @@ export default class DataTable {
 				}
 
 				args.callbacks = [];
-				args.callbacks.push(function() { obj.refresh(obj) });
+				args.callbacks.push(function() { self.refresh(self) });
 			}
 
 			// Any selected?
@@ -1922,7 +1929,15 @@ export default class DataTable {
 				else {
 
 					args.selectedPks = selectedPks;
-					util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
+					
+					if (!self.command_exec_callback(gridCommand)) {
+					
+						if (gridCommand.moduleAction) {
+						
+							let module = this.find_module(gridCommand.moduleAction.id);
+							util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);	
+						}
+					}
 				}
 			}
 			// No rows selected
@@ -1938,8 +1953,15 @@ export default class DataTable {
 				}
 				// No required select rows
 				else {
-
-					util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
+					
+					if (!self.command_exec_callback(gridCommand)) {
+					
+						if (gridCommand.moduleAction) {
+						
+							let module = this.find_module(gridCommand.moduleAction.id);
+							util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
+						}
+					}
 				}
 			}
 		}
@@ -2240,12 +2262,7 @@ export default class DataTable {
 
 						buttonAction.attachEvent("onItemClick", function(id, e) {
 
-							if (!self.command_exec_callback(cmd)) {
-								
-								let gridCommand = metadata.gridCommands.find(gridCmd => gridCmd.id === cmd.id);
-								
-								self.open_module(gridCommand);
-							}
+							self.open_module(cmd);
 						});
 					}
 				});
