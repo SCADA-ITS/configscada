@@ -2073,7 +2073,7 @@ export default class IncidentReportModule extends GenericModule {
 					isPk: false,
 					label: "LOG_IMS_PARAM_ARG2",
 					labelTooltip: "LOG_IMS_PARAM_ARG2",
-					needsTranslation: false,
+					needsTranslation: true,
 					parameterized: false,
 					position: 8,
 					required: true,
