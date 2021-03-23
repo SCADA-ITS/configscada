@@ -137,13 +137,35 @@ export default class ListView {
 		return view;
 	}
 	
+	getSelectedId() {
+		
+		let list = $$("list-" + this.uid);
+		let selectedId = undefined;
+		
+		if (list) {
+			
+			selectedId = list.getSelectedId();
+		}
+		
+		return selectedId;
+		
+	}
+	
 	select(id) {
 		
 		let list = $$("list-" + this.uid);
 		
 		if (list) {
 			
-			list.select(id);
+			if (id) {
+				
+				list.select(id);	
+			}
+			else {
+				
+				list.unselectAll();
+			}
+			
 			list.refresh();
 		}		
 	}

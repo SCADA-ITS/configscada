@@ -1,7 +1,7 @@
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 
-const GridOptions = {
+const TreeOptions = {
 	ICON: 1,
 	MULTISELECT: 2,
 	SORTED: 3,
@@ -127,7 +127,7 @@ export default class TreeView {
 			]
 		};
 		
-		let multiSelect = getTreeOptions(GridOptions.MULTISELECT);
+		let multiSelect = getTreeOptions(TreeOptions.MULTISELECT);
 		
 		if (multiSelect) {
 			
@@ -138,7 +138,7 @@ export default class TreeView {
 				value: i18n.t("LBL_SELECT_ALL"), 
 				tooltip: true,
 				on: {
-					onItemClick: function(id, e) {
+					onItemClick: function() {
 						
 						$$("tree-" + self.uid).checkAll();				
 					}
@@ -152,7 +152,7 @@ export default class TreeView {
 				value: i18n.t("LBL_UNSELECT_ALL"), 
 				tooltip: true,
 				on: {
-					onItemClick: function(id, e) {
+					onItemClick: function() {
 						
 						$$("tree-" + self.uid).uncheckAll();				
 					}
@@ -170,7 +170,7 @@ export default class TreeView {
 			value: i18n.t("LBL_EXPAND_ALL"), 
 			tooltip: true,
 			on: {
-				onItemClick: function(id, e) {
+				onItemClick: function() {
 					
 					$$("tree-" + self.uid).openAll();				
 				}
@@ -184,7 +184,7 @@ export default class TreeView {
 			value: i18n.t("LBL_COLLAPSE_ALL"), 
 			tooltip: true,
 			on: {
-				onItemClick: function(id, e) {
+				onItemClick: function() {
 					
 					$$("tree-" + self.uid).closeAll();				
 				}
@@ -231,13 +231,15 @@ export default class TreeView {
 			let treeView = {
 				id: "tree-" + self.uid,
 				view: "tree",
+				css:  multiSelect ? "tree-view-multi" : "tree-view-single",
+				select: !multiSelect,
 				threeState: multiSelect,
 				template: function(obj, common) {
 					
 					let value = obj.value;
 					
 					
-					obj.disabled = getTreeOptions(GridOptions.DISABLED);
+					obj.disabled = getTreeOptions(TreeOptions.DISABLED);
 									
 					let fontWeight = 500;
 					let letterSpacing = "0.2px";
@@ -257,7 +259,9 @@ export default class TreeView {
 					
 					if (obj.image) {
 						
-						nodeValue = `<div>	
+						
+						
+						nodeValue = `<div style="margin-left: 30px;">	
 										<img src="${obj.image}" 
 											 onerror="this.onerror=null; this.style.display = 'none'"/>
 										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
@@ -265,7 +269,7 @@ export default class TreeView {
 					}
 					else {
 						
-						nodeValue = `<div>	
+						nodeValue = `<div style="margin-left: 30px;">
 										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
 									</div>`;
 					}
@@ -284,6 +288,64 @@ export default class TreeView {
 					onAfterLoad: function() {
 						
 						this.sort("#value#", "asc");
+					},
+					onItemClick: function(id) {
+					    
+						let item = this.getItem(id);
+						
+						if (item && !multiSelect) {
+							
+							let selectedItem = item.props && !item.props.folder;
+						
+							if (self.events) {
+							
+								// Item selected
+								if (selectedItem && self.events[TreeView.EventTypes.ON_SELECT_ITEM]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item.id);
+								}
+								// Folder selected
+								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_NODE])(item.id);
+								}
+							}
+						}
+					},
+					onItemDblClick: function(id) {
+					    
+						let item = this.getItem(id);
+						
+						if (item && !multiSelect) {
+							
+							let selectedItem = item.props && !item.props.folder;
+						
+							if (self.events) {
+							
+								// Item selected
+								if (selectedItem && self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC])(item.id);
+								}
+							}
+						}
+					},
+					onItemCheck: function(id) {
+						
+						let item = this.getItem(id);
+						
+						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
+									
+							let checkedList = this.getChecked();
+							let checkedItems = [];
+							
+							if (Array.isArray(checkedList) && checkedList.length > 0) {
+								
+								checkedItems = checkedList.filter(e => this.getItem(e).props && !this.getItem(e).props.folder);
+							}
+							
+							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedItems);
+						}
 					}
 				}
 			};
@@ -304,27 +366,50 @@ export default class TreeView {
 			
 		return view;
 	}
+	
+	getChecked() {
+		
+		let tree = $$("treeview-" + this.uid);
+		let checkedItems = [];
+		
+		if (tree) {
+			
+			let multiSelect = getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (multiSelect) {
+				
+				let checkedList = tree.getChecked();
+				
+				if (Array.isArray(checkedList) && checkedList.length > 0) {
+				
+					checkedItems = checkedList.filter(e => tree.getItem(e).props && !tree.getItem(e).props.folder);	
+				}
+			}
+		}
+		
+		return checkedItems;
+	}
 }
 
 Object.defineProperty(TreeView, 'EventTypes', {
     value: {}
 });
 
-Object.defineProperty(TreeView.EventTypes, "ON_CHANGE_TEXT", {
+Object.defineProperty(TreeView.EventTypes, "ON_CHECK_ITEM", {
     value: 1,
     writable : false,
     enumerable : true,
     configurable : false
 });
 
-Object.defineProperty(TreeView.EventTypes, "ON_CHECK_ITEM", {
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ITEM", {
     value: 2,
     writable : false,
     enumerable : true,
     configurable : false
 });
 
-Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ITEM", {
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_FOLDER", {
     value: 3,
     writable : false,
     enumerable : true,

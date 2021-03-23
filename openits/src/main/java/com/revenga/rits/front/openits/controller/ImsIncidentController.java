@@ -395,6 +395,19 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentTypeBO.getItem(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/stretch/{id}")
+	@ApiOperation(value = "Get incident types by stretch id", notes = "Get incident types by stretch id")
+	public ResponseEntity<Object> getImsIncidentTypesByStretchId(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Stretch by id",
+			example = "Stretch:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(imsIncidentTypeBO.getListByStretch(id), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/add_log_incident_report")
 	@ApiOperation(value = "Add log in incident report", notes = "Add log in incident report")
 	public ResponseEntity<Boolean> addLogIncidentReport(@RequestBody Object incidentReportLogs) {

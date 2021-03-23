@@ -19,6 +19,13 @@ export default class IncidentWizardModule extends GenericModule {
 		this.dtLocations = undefined;
 		this.listViewIncidentGroups = undefined;
 		this.dtIncidentTypes = undefined;
+		
+		this.incidentData = {
+			stretchId: undefined,
+			locationId: undefined,
+			incidentGroupId: undefined,
+			incidentTypeId: undefined
+		}
 	}
 
 	getView() {
@@ -35,12 +42,12 @@ export default class IncidentWizardModule extends GenericModule {
 								{
 									id: this.uid,
 									rows: [],
-									hidden: false
+									hidden: true
 								},
 								{
 									id: "loading-" + this.uid,
 									rows: [getViewDrawNoData()],
-									hidden: true
+									hidden: false
 								},
 								{ width: 6 }
 							]
@@ -103,6 +110,117 @@ export default class IncidentWizardModule extends GenericModule {
 			}
 			
 			return !newStep ? currentStep : newStep;
+		}
+		
+		let resetFromStep = function(step) {
+			
+			let resetStepStretchAndLocation = function() {
+				
+				self.incidentData.stretchId = undefined;
+				self.incidentData.locationId = undefined;
+				
+				self.listViewStrechs.select()
+				self.dtLocations.clear();
+			}
+			
+			let resetStepIncidentType = function() {
+				
+				self.incidentData.incidentGroupId = undefined;
+				self.incidentData.incidentTypeId = undefined;
+				
+				self.listViewIncidentGroups.select()
+				self.dtIncidentTypes.clear();
+			}
+			
+			let resetStepSummary = function() {
+				
+			}
+			
+			if (step) {
+			
+				let stepsToReset = self.steps.filter(e => e.position > step.position);
+			
+				if (Array.isArray(stepsToReset) && stepsToReset.length > 0) {
+					
+					stepsToReset.forEach(e => {
+						
+						eval(e.resetFunction)();
+						
+						e.valid = false;
+						
+						$$("button-next-" + e.position + "-" + self.uid).disable();
+					});
+				}	
+			}
+		}
+		
+		let validateStep = function(step) {
+			
+			let valid = false;
+			let summaryIncidentType = $$("summary-incident-" + self.uid);
+			let summaryLocation = $$("summary-location-" + self.uid);
+			let summaryStretch = $$("summary-stretch-" + self.uid);
+			let summaryUser = $$("summary-user-" + self.uid);
+			
+			let validateStepStretchAndLocation = function() {
+				
+				
+				
+				self.incidentData.stretchId = self.listViewStrechs.getSelectedId();
+				self.incidentData.locationId = self.dtLocations.getSelectedIds()[0];
+				
+				valid = self.incidentData.stretchId && self.incidentData.locationId;
+			}
+			
+			let validateStepIncidentType = function() {
+				
+				self.incidentData.incidentGroupId = self.listViewIncidentGroups.getSelectedId();
+				self.incidentData.incidentTypeId = self.dtIncidentTypes.getSelectedIds()[0];
+				
+				valid = self.incidentData.incidentGroupId && self.incidentData.incidentTypeId;
+			}
+			
+			let validateStepSummary = function() {
+				
+			}
+			
+			if (step) {
+			
+				eval(step.validateFunction)();
+				
+				step.valid = valid;
+				
+				if (valid) {
+					
+					if (summaryIncidentType) {
+					
+						summaryIncidentType.setValues({ incidentTypeId: self.incidentData.incidentTypeId });
+					}
+					
+					if (summaryLocation) {
+						
+						summaryLocation.setValues({ locationId: self.incidentData.locationId });
+					}
+					
+					if (summaryStretch) {
+						
+						summaryStretch.setValues({ stretchId: self.incidentData.stretchId });
+					}
+					
+					if (summaryUser) {
+						
+						//summaryStretch.setValues({ stretchId: self.incidentData.stretchId });
+					}
+					
+					$$("button-next-" + step.position + "-" + self.uid).enable();
+				}
+				else {
+					
+					$$("button-next-" + step.position + "-" + self.uid).disable();
+				}
+				
+				resetFromStep(step);
+			}			
 		}
 		
 		let drawMain = function() {
@@ -274,6 +392,8 @@ export default class IncidentWizardModule extends GenericModule {
 									$$("view-locations-" + self.uid).hideProgress();
 								}	
 							});
+							
+							validateStep(getCurrentStep());
 						};
 						
 						self.listViewStrechs = new ListView(stretchView, options, events);
@@ -343,7 +463,18 @@ export default class IncidentWizardModule extends GenericModule {
 						]
 					};
 					
-					self.dtLocations = new DataTable(null, null, metadata, [], null);
+					let events = {};
+
+					events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
+
+						if (Array.isArray(rows) && rows.length > 0) {
+
+							validateStep(getCurrentStep());
+
+						}
+					};
+					
+					self.dtLocations = new DataTable(null, null, metadata, [], events);
 					
 					viewLocations = {
 						id: "view-locations-" + self.uid,
@@ -399,32 +530,53 @@ export default class IncidentWizardModule extends GenericModule {
 							
 							webix.extend($$("view-incident-types-" + self.uid), webix.ProgressBar);
 							
-							$$("view-incident-types-" + self.uid).showProgress({
-								type: "bottom",
-								hide: false
-							}); 
-							
 							self.dtIncidentTypes.clear();
 							
-							let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
-							
-							let incidentTypesByGroup = incidentTypes.filter(e => e.incidentGroup.id === data[0] );
-							
-							if (Array.isArray(incidentTypesByGroup) && incidentTypesByGroup.length > 0) {
+							if (Array.isArray(data) && data.length > 0) {
 								
-								let dataIncidentTypes = incidentTypesByGroup.map(e => {
-											
-									return {
-										id: e.id,
-										alias: e.alias,
-										description: e.description
-									}
+								$$("view-incident-types-" + self.uid).showProgress({
+									type: "bottom",
+									hide: false
 								});
 								
-								self.dtIncidentTypes.add(dataIncidentTypes);
+								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentTypesByStretch, { id: self.incidentData.stretchId })).then(function(dat) {
+							
+									if (dat != null) {
+								
+										let incidentTypesByStretch = dat.json();
+										
+										if (Array.isArray(incidentTypesByStretch) && incidentTypesByStretch.length > 0) {
+											
+											let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
+								
+											let incidentTypesByGroup = incidentTypes.filter(e => e.incidentGroup.id === data[0] );
+											
+											if (Array.isArray(incidentTypesByGroup) && incidentTypesByGroup.length > 0) {
+												
+												let incidentTypesByGroupFiltered = incidentTypesByGroup.filter(itByGroup => {
+													
+													return (incidentTypesByStretch.find(itByStretch => itByStretch.id === itByGroup.id) != undefined);
+												});
+												
+												let dataIncidentTypes = incidentTypesByGroupFiltered.map(e => {
+															
+													return {
+														id: e.id,
+														alias: e.alias,
+														description: e.description
+													}
+												});
+												
+												self.dtIncidentTypes.add(dataIncidentTypes);
+											}
+										}
+									}
+									
+									$$("view-incident-types-" + self.uid).hideProgress();	
+								});
 							}
 							
-							$$("view-incident-types-" + self.uid).hideProgress();
+							validateStep(getCurrentStep());
 						};
 						
 						self.listViewIncidentGroups = new ListView(incidentGroupView, options, events);
@@ -495,7 +647,18 @@ export default class IncidentWizardModule extends GenericModule {
 						]
 					};
 					
-					self.dtIncidentTypes = new DataTable(null, null, metadata, [], null);
+					let events = {};
+
+					events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
+
+						if (Array.isArray(rows) && rows.length > 0) {
+
+							validateStep(getCurrentStep());
+
+						}
+					};
+					
+					self.dtIncidentTypes = new DataTable(null, null, metadata, [], events);
 					
 					viewIncidentTypes = {
 						id: "view-incident-types-" + self.uid,
@@ -525,6 +688,76 @@ export default class IncidentWizardModule extends GenericModule {
 					return viewIncidentTypes;
 				}
 				
+				let getViewSummary = function() {
+					
+					let viewSummary = {};
+					
+					viewSummary = {
+						cols: [
+							{ width: 1, borderless: false, css: { "border-left": "transparent !important"} },
+							{
+								rows: [
+									{ height: 1, borderless: false, css: { "border-bottom": "transparent !important"} },
+									{
+										cols: [
+											{ width: 30, borderless: true },
+											{
+												id: "summary-" + self.uid,
+												css: "ims-incident-report-tab-details",
+										    	rows: [
+													{ height: 30, borderless: true },
+													{
+														id : "summary-incident-" + self.uid,
+														height: 50,
+														borderless: true,
+														template: function(obj) { 
+															return `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
+																   <div class="value">${obj.incidentTypeId ? obj.incidentTypeId : ''}</div>`
+														}
+													},
+													{
+														id : "summary-location-" + self.uid,
+														height: 50,
+														borderless: true,
+														template: function(obj) { 
+															return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
+																   <div class="value">${obj.locationId ? obj.locationId : ''}</div>`
+														}
+													},
+													{
+														id : "summary-stretch-" + self.uid,
+														height: 50,
+														borderless: true,
+														template: function(obj) { 
+															return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
+																   <div class="value">${obj.stretchId ? obj.stretchId : ''}</div>`
+														}
+													},
+													{
+														id : "summary-user-" + self.uid,
+														height: 50,
+														borderless: true,
+														template: function(obj) { 
+															return `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
+																   <div class="value"></div>`
+														}
+													},
+													{}
+												]
+											},
+											{ width: 30, borderless: true }							
+										]
+									},
+									{ height: 1, borderless: false, css: { "border-bottom": "transparent !important"}}
+								]
+							},
+							{ width: 1, borderless: false, css: { "border-right": "transparent !important"} }
+						]
+				    }
+					
+					return viewSummary;	
+				}
+				
 				let drawStepStretchAndLocation = function() {
 			
 					let viewStepStretchAndLocation = {
@@ -550,7 +783,6 @@ export default class IncidentWizardModule extends GenericModule {
 															getViewLocations(),		
 														]
 													}
-													
 												]
 											}
 										]
@@ -619,7 +851,7 @@ export default class IncidentWizardModule extends GenericModule {
 												label: `<span class="ico webix_icon mdi mdi-format-list-bulleted" style="font-size: 26px;"></span><span class="grid-title">${i18n.t(step.stepLabel)}</span>`
 											},
 											{ height: 17 },
-											{}		
+											getViewSummary()	
 										]
 									},
 									{ width: 45 }
@@ -649,6 +881,7 @@ export default class IncidentWizardModule extends GenericModule {
 				let viewToolbarActionsButtons = [
 					{ width: 18 },
 					{ 
+						id: "button-cancel-" + position + "-" + self.uid,
 						view: "button",
 						css: "dialog-cancel", 
 						width: 130,
@@ -667,8 +900,10 @@ export default class IncidentWizardModule extends GenericModule {
 						}
 					},
 					{},
-					{ 
+					{
+						id: "button-next-" + position + "-" + self.uid,
 						view: "button", 
+						disabled: true,
 						css: !lastStep ? "dialog-accept" : "dialog-finish",
 						width: 130,
 						height: 35,
@@ -713,6 +948,7 @@ export default class IncidentWizardModule extends GenericModule {
 				if (!firstStep) {
 					
 					viewToolbarActionsButtons.splice(3, 0, { 
+						id: "button-previous-" + position + "-" + self.uid,
 						view: "button", 
 						css: "dialog-previous",
 						width: 130,
@@ -804,9 +1040,14 @@ export default class IncidentWizardModule extends GenericModule {
 			viewMain = fromAlarms();
 		}
 		
-		if (viewMain) {
+		setTimeout(function() {
+			
+			$$("loading-" + self.uid).hide();
+			$$(self.uid).show();
+			
+			if (viewMain) {
 		
-			webix.ui(viewMain, $$(this.uid));
+			webix.ui(viewMain, $$(self.uid));
 			
 			if (self.dtLocations) {
 				self.dtLocations.callbacks();
@@ -816,8 +1057,7 @@ export default class IncidentWizardModule extends GenericModule {
 				self.dtIncidentTypes.callbacks();
 			}
 		}
-		
-		$$("loading-" + this.uid).hide();
-		$$(this.uid).show();
+				
+		}, 500);
 	}
 }	

@@ -101,6 +101,7 @@ export default class DataTable {
 		let resultSearch = this.getGridOptions(GridOptions.SEARCH);
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let showHeader = this.getGridOptions(GridOptions.SHOW_HEADER);
+		let columnsWithFilters = this.metadata.gridFields.filter(e => (e.filtered));
 
 		console.log(metadata)
 		console.log(data)
@@ -136,29 +137,29 @@ export default class DataTable {
 
 					// Paint header and filters headers
 					col.header = [];
+					
+					if (field.label) {
+
+						if (field.headerVertical) {
+
+							col.header.push({
+								text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
+								rotate: true,
+								css: { "font-size": "14px", "text-align": "center" }
+							});
+
+						} else {
+
+							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+						}
+
+					}
+					else {
+
+						col.header.push(`<div></div>`);
+					}
 
 					if (field.filtered) {
-
-						if (field.label) {
-
-							if (field.headerVertical) {
-
-								col.header.push({
-									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
-									rotate: true,
-									css: { "font-size": "14px" }
-								});
-
-							} else {
-
-								col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
-							}
-
-						}
-						else {
-
-							col.header.push(`<div></div>`);
-						}
 
 						if (field.parameterized) {
 							col.header.push({ content: "selectFilter" });
@@ -185,28 +186,10 @@ export default class DataTable {
 						}
 					}
 					else {
-
-						//col.header = i18n.t(field.label);
-
-						if (field.label) {
-
-							if (field.headerVertical) {
-
-								col.header.push({
-									text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`,
-									rotate: true,
-									css: { "font-size": "14px" }
-								});
-
-							} else {
-
-								col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
-							}
-
-						}
-						else {
-
-							col.header.push(`<div></div>`);
+						
+						if (Array.isArray(columnsWithFilters) && columnsWithFilters.length > 0) {
+							
+							col.header.push(`<div></div>`);		
 						}
 					}
 
@@ -268,16 +251,6 @@ export default class DataTable {
 									avatar = (field.gridFieldIcons[0].avatar == true);
 									showValue = (field.gridFieldIcons[0].showValue == true);
 									value = obj[field.sourceField];
-
-//									let gridFieldIcon;
-//									let fieldsWithIcons = field.gridFieldIcons.filter(e => (e.value));
-//
-//									if (fieldsWithIcons.length > 0) {
-//
-//										let lang = obj[field.sourceField].substr(obj[field.sourceField].indexOf(':') + 1, 2);
-//
-//										gridFieldIcon = field.gridFieldIcons.find(e => e.value === lang);
-//									}
 
 									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
 
@@ -348,11 +321,6 @@ export default class DataTable {
 									return data[field.sourceField];
 								}
 							};
-
-							//							if (field.isEpochMilli) {
-							//
-							//								value = util.toLocaleString(value / 1000);
-							//							}
 
 							if (icon || badgeColor || avatar) {
 
@@ -1382,7 +1350,7 @@ export default class DataTable {
 
 						visible = false;
 						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 						if (columnVertical && columnVertical.length > 0) {
 
@@ -1400,7 +1368,7 @@ export default class DataTable {
 
 						visible = true;
 						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "0px solid var(--blue-strong)";
+						header[0].style.borderBottom = "1px solid var(--blue-strong)";
 						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 
 					}
@@ -1537,42 +1505,13 @@ export default class DataTable {
 
 				if (resultFilters) {
 
-					if (columnFilterFalse && columnFilterFalse.length > 0) {
-
-						columnFilterFalse.forEach(item => {
-
-							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-
-							if (pad) {
-
-								pad.header[0].css = { "padding-bottom": "85px !important" };
-							}
-
-						});
-					}
-
 					datatable.config.headerRowHeight = ExtendedHeader.TRUE;
 
 				} else {
-					if (columnFilterFalse && columnFilterFalse.length > 0) {
-
-						columnFilterFalse.forEach(item => {
-
-							let pad = datatable.config.columns.find(e => e.id === item.sourceField);
-
-							if (pad) {
-
-								pad.header[0].css = { "padding-bottom": "85px !important" };
-							}
-
-
-						});
-					}
 
 					datatable.config.headerRowHeight = ExtendedHeader.FALSE;
 					header[0].style.borderBottom = "1px solid var(--blue-strong)";
-					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
-
+					lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
 				}
 
 			}

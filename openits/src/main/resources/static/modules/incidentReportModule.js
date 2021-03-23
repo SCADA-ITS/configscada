@@ -502,8 +502,10 @@ export default class IncidentReportModule extends GenericModule {
 				//					optionWidth: 283
 				//				},
 				animate: false,
+				borderless: true,
 				cells: [],
 				tabbar: {
+					tabMargin: 6,
 					on: {
 						onBeforeTabClick: function(id) {
 							return $$(id).isEnabled();

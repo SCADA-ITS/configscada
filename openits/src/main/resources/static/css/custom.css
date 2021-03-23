@@ -33,6 +33,7 @@
   --blue-mid2-opacity-9: rgba(86 126 186 / 0.9);
   
   --blue-headers: rgb(71, 84, 102);
+  --blue-headers-not-sel: rgba(146 171 207 / 0.3);
   
   --blue-soft: rgb(146, 171, 207);
   --blue-soft-opacity-0-7: rgba(146 171 207 / 0.07);
@@ -1329,6 +1330,7 @@
 	border-radius: 4px;
 	border-width: 0px;
     background: transparent;
+    border: 1px solid rgba(81 150 254 / 0.13);
 }
 
 .panel-action .tb-buttons .webix_secondary .webix_button:hover,
@@ -1446,39 +1448,57 @@
 }
 
 .secondary-tab  {
-	border-width: 1px;
+	border-width: 0px;
 	border-color: var(--blue-soft-opacity-2);
 	margin-top: -2px !important;
 }
 
+.secondary-tab .webix_el_tabbar {
+	height: 32px;
+	box-shadow: inset 0 -3px var(--blue-headers);
+	border-width: 0px !important;
+}
+
 .secondary-tab .webix_all_tabs .webix_item_tab{
 	color: var(--blue-mid);
-	font-weight: 100;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
+	font-weight: 500;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .secondary-tab .webix_all_tabs .webix_tab_filler {
     border: none;
-    background-color: var(--blue-soft-opacity-2);
-    border-top: 1px solid var(--blue-soft-opacity-2);
+    background-color: transparent;
 }
 
-.secondary-tab .webix_all_tabs .webix_item_tab.webix_selected {
+/*.secondary-tab .webix_all_tabs .webix_item_tab.webix_selected {
     color: white;
     font-weight: 500;
     background-color: var(--blue-headers);
     box-shadow: inset 0 -2px var(--blue-soft);
     border-top: 1px solid var(--blue-soft-opacity-2);
+}*/
+
+.secondary-tab .webix_all_tabs .webix_item_tab.webix_selected {
+	width: 283px !important;
+    background-color: var(--blue-headers);
+    color: white;
+    box-shadow: none;
 }
  
-.secondary-tab .webix_item_tab:not(.webix_selected) {
+/*.secondary-tab .webix_item_tab:not(.webix_selected) {
 	color: var(--blue-soft);
     font-weight: 100;
     background-color: var(--blue-soft-opacity-2);
     border-top: 1px solid var(--blue-soft-opacity-2);
-}   
- 
+}*/
+
+.secondary-tab .webix_item_tab:not(.webix_selected) {
+	width: 283px !important;
+    background-color: var(--blue-headers-not-sel);
+    color: #92abcf;
+    
+}
 
 .secondary-tab .webix_item_tab:not(.webix_selected):hover {
 	color: white;
@@ -1712,23 +1732,37 @@
 }
 */
 
-.webix_tree_open, .webix_tree_close {
+.tree-view-multi .webix_tree_open, 
+.tree-view-multi .webix_tree_close,
+.tree-view-single .webix_tree_open, 
+.tree-view-single .webix_tree_close {
 	font-size: 32px;
 } 
 
-.webix_tree_checkbox {
+.tree-view-multi .webix_tree_checkbox {
     margin: 0px 5px 10px;
 }
 
-.webix_tree_item img {
+.tree-view-single .webix_tree_item {
+ 	height: 32px; 
+}
+
+
+.tree-view-multi .webix_tree_item img,
+.tree-view-single .webix_tree_item img {
     vertical-align: -3px;
     width: 24px;
     height: 24px;
 }
 
-.webix_tree_item span {
+.tree-view-multi .webix_tree_item span,
+.tree-view-single .webix_tree_item span {
 	vertical-align: 4px;
 	font-size: 14px;
+}
+
+.tree-view-single .webix_tree_item.webix_selected div {
+	background: var(--blue-soft-opacity-1) !important;
 }
 
 .headers .webix_el_box{

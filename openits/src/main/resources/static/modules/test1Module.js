@@ -89,7 +89,14 @@ export default class Test1Module extends GenericModule {
 
 		function drawComponents(metadata, data) {
 
-			let treeView = new TreeView(metadata, data, null);
+			let events = {};
+			
+			events[TreeView.EventTypes.ON_CHECK_ITEM] = function(items) {
+
+				console.log(items.join());
+			};
+
+			let treeView = new TreeView(metadata, data, events);
 
 			let viewMain = {
 				id: self.uid,

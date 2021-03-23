@@ -10,7 +10,8 @@
 		
 	},
 	"restEndpoints": {
-		"locationsByStretch": "locations/locations/stretch/${id}"
+		"locationsByStretch": "locations/locations/stretch/${id}",
+		"incidentTypesByStretch": "incidents/stretch/${id}"
 	},
 	"steps": {
 		"fromMap": [

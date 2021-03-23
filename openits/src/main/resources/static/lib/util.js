@@ -191,14 +191,14 @@ export let util = {
 				});
 			}
 
-			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
-
-				lazyClass.runOne(module.jsMethodCallbacks)
-			}
-
 			if ($$(win_id)) {
 
 				$$(win_id).show();
+			}
+			
+			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
+
+				lazyClass.runOne(module.jsMethodCallbacks)
 			}
 		},
 
