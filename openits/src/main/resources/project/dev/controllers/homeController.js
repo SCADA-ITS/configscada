@@ -32,17 +32,17 @@ window.i18n = new I18n(userData.locale);
 window.splashScreen = new SplashScreen(null);
 
 window.onload = function() {
-	
+
 	//$$("splashScreen").refresh();
-	
+
 	$.ajaxSetup({
-        statusCode: {
-            401: function(){
-                    window.location = "./login.html";
-                }
-        }
-    });
-	
+		statusCode: {
+			401: function() {
+				window.location = "./login.html";
+			}
+		}
+	});
+
 	webix.delay(function() {
 
 		initialize();
@@ -50,19 +50,20 @@ window.onload = function() {
 }
 
 function initialize() {
-    
+
 	window.alarmControlPanel = undefined;
 	window.notificationControlPanel = undefined;
 	window.userControlPanel = undefined;
 	window.serverTime = undefined;
-	
+
 	window.em = new EntitiesManager();
+
 	window.stompClient = undefined;
-	
+
 	var mainTab = new MainTab();
 	var mainToolbar = new MainToolbar();
 	var menuToolbar = new MenuToolbar();
-	
+
 	let main_footer = {
 		view: "toolbar",
 		css: "main-footer",
@@ -85,10 +86,10 @@ function initialize() {
 		],
 		borderless: 0
 	};
-	
+
 	let main_screen = {
 		type: "space",
-	
+
 		cols: [
 			//{ view: "template", role: "placeholder", borderless: 1, width: 10 },
 			{ width: 0.1 },
@@ -107,21 +108,21 @@ function initialize() {
 			{ width: 0.1 }
 		],
 		borderless: 0
-	
+
 	};
-	
+
 	//splashScreen.hide();
 	//window.splashScreen.hide();
-	
+
 	$$("splashScreen").hide();
-	
+
 	webix.ui(main_screen);
 	mainTab.attachOnBeforeTabClose();
-	
+
 	window.sm = new ServiceManager();
-	
+
 	autoloadModules();
-	
+
 	function autoloadModules() {
 
 		let module = window.em.getAll(EntityType.MODULE);
@@ -135,4 +136,5 @@ function initialize() {
 			}
 		}
 	}
+	util.module.checkSytemPermision(window.em.getAll(EntityType.MODULE), userData);
 }

@@ -71,6 +71,12 @@ export default class DataTable {
 		this.filteredFields = {};
 		this.rowsSelected = [];
 		this.disabledUnselectEvent = false;
+		
+		if (this.metadata.gridCommands != undefined && this.metadata.gridCommands != null && Array.isArray(this.metadata.gridCommands)){
+			
+			this.metadata.gridCommands = this.metadata.gridCommands.filter(item => item.moduleAction == undefined || item.moduleAction == null ||
+				util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), item.moduleAction.id));
+		}
 	}
 
 	getView() {

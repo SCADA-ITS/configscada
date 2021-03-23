@@ -1,10 +1,16 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.revenga.rits.front.openitsdao.model.Module;
 
 
 /**
@@ -34,6 +40,8 @@ public class ModuleAction implements Serializable {
 
 	private Boolean visible;
 
+	private String systemPermissionId;
+	
 	public ModuleAction() {
 	}
 
@@ -85,4 +93,11 @@ public class ModuleAction implements Serializable {
 		this.module = module;
 	}
 
+	public String getSystemPermissionId() {
+		return this.systemPermissionId;
+	}
+
+	public void setSystemPermissionId(String systemPermissionId) {
+		this.systemPermissionId = systemPermissionId;
+	}
 }

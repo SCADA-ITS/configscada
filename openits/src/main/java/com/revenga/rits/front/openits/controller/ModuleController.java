@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.ModuleBO;
-import com.revenga.rits.front.openitsdao.model.Module;
-import com.revenga.rits.front.openitsdao.service.ModuleService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
