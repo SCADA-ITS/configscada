@@ -1934,7 +1934,7 @@ export default class IncidentReportModule extends GenericModule {
 					//required: true,
 					sourceField: "incidentLogTime",
 					visible: true,
-					widthPx: 200,
+					widthPx: 180,
 					gridFieldDataType: {
 						id: 4,
 						name: "date"
@@ -1997,7 +1997,7 @@ export default class IncidentReportModule extends GenericModule {
 					required: true,
 					sourceField: "incidentLogSubtype",
 					visible: true,
-					widthPx: 200,
+					widthPx: 120,
 					gridFieldDataType: {
 						id: 1,
 						name: "string"
@@ -2018,7 +2018,7 @@ export default class IncidentReportModule extends GenericModule {
 					required: true,
 					sourceField: "incidentLogUser",
 					visible: true,
-					widthPx: 150,
+					widthPx: 100,
 					gridFieldDataType: {
 						id: 1,
 						name: "string"
@@ -2039,7 +2039,7 @@ export default class IncidentReportModule extends GenericModule {
 					required: true,
 					sourceField: "incidentLogValueState",
 					visible: true,
-					widthPx: 210,
+					widthPx: 100,
 					gridFieldDataType: {
 						id: 1,
 						name: "string"
@@ -2060,7 +2060,7 @@ export default class IncidentReportModule extends GenericModule {
 					required: true,
 					sourceField: "incidentLogValueArg1",
 					visible: true,
-					widthPx: 210,
+					widthPx: 600,
 					gridFieldDataType: {
 						id: 1,
 						name: "string"
@@ -2081,7 +2081,7 @@ export default class IncidentReportModule extends GenericModule {
 					required: true,
 					sourceField: "incidentLogValueArg2",
 					visible: true,
-					widthPx: 210,
+					widthPx: 150,
 					gridFieldDataType: {
 						id: 1,
 						name: "string"
