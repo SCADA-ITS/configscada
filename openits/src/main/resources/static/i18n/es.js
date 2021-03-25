@@ -1772,6 +1772,18 @@ var i18_es = {
     "AlarmConfig:703": "ALARMA METEO VIENTOS FUERTES",
     "AlarmConfig:704": "ALARMA METEO BAJA TEMPERATURA",
     
+    "AlarmConfig:1301": "ALARMA VEHICULO SENTIDO CONTRARIO",
+    "AlarmConfig:1302": "ALARMA OBJETO EN ARCEN IZQUIERDO",
+    "AlarmConfig:1303": "ALARMA OBJETO EN ARCEN DERECHO",
+    "AlarmConfig:1304": "ALARMA VEHICULO EN ARCEN IZQUIERDO",
+    "AlarmConfig:1305": "ALARMA VEHICULO EN ARCEN DERECHO",
+    "AlarmConfig:1306": "ALARMA OBJETO EN CARRIL IZQUIERDO",
+    "AlarmConfig:1307": "ALARMA OBJETO EN CARRIL DERECHO",
+    "AlarmConfig:1308": "ALARMA VEHICULO EN CARRIL IZQUIERDO",
+    "AlarmConfig:1309": "ALARMA VEHICULO EN CARRIL DERECHO",
+    "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",
+    
+    
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
     "AlarmType:3": "Notificacion",
