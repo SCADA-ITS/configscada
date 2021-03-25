@@ -7,7 +7,7 @@
 		"fromAlarms": 101305
 	},
 	"actionEndpoints": {
-		
+		"create": "incidents/reports/create"
 	},
 	"restEndpoints": {
 		"locationsByStretch": "locations/locations/stretch/${id}",

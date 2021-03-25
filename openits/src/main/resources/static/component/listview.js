@@ -148,7 +148,19 @@ export default class ListView {
 		}
 		
 		return selectedId;
+	}
+	
+	getSelectedItems() {
 		
+		let list = $$("list-" + this.uid);
+		let selectedItems = [];
+		
+		if (list != undefined) {
+
+			selectedItems = list.getSelectedItem(true);
+		}
+
+		return selectedItems;
 	}
 	
 	select(id) {

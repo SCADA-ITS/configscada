@@ -432,9 +432,15 @@ public class ImsIncidentReportBO extends GenericBO {
 				incidentReport);
 	}
 
-	public Object create(Object report) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object create(Object input) {
+		
+		Boolean res = false;
+	    
+	    Map<String, Object> createIncidentReport = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_REPORT, (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(createIncidentReport);
+
+	    return res;
 	}
 
 	public Boolean confirm(String id) {

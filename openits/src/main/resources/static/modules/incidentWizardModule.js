@@ -1,6 +1,7 @@
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
+import InputDialogBox from "../component/inputDialogBox.js";
 import { util } from "../lib/util.js";
 
 export default class IncidentWizardModule extends GenericModule {
@@ -22,9 +23,16 @@ export default class IncidentWizardModule extends GenericModule {
 		
 		this.incidentData = {
 			stretchId: undefined,
+			stretch: undefined,
 			locationId: undefined,
+			location: undefined,
 			incidentGroupId: undefined,
-			incidentTypeId: undefined
+			incidentGroup: undefined,
+			incidentTypeId: undefined,
+			incidentType: undefined,
+			incidentTypeDesc: undefined,
+			userId: undefined,
+			user: undefined
 		}
 	}
 
@@ -107,9 +115,42 @@ export default class IncidentWizardModule extends GenericModule {
 				
 				newStep = getStep(position);
 				newStep.active = true;	
+				
+				if (position === self.steps.length) {
+					
+					$$("button-next-" + position + "-" + self.uid).enable();	
+				}
 			}
 			
 			return !newStep ? currentStep : newStep;
+		}
+		
+		let createIncident = function() {
+			
+			webix.confirm({
+				title: i18n.t("LBL_DIALOG_CREATE_INCIDENT"),
+				ok: i18n.t("LBL_YES"),
+				cancel: i18n.t("LBL_NO"),
+				text: i18n.t("LBL_ARE_YOU_SURE_CREATE_INCIDENT"),
+				width: 600
+			}).then(function() {
+	
+				let body = {
+					incidentTypeId: self.incidentData.incidentTypeId,
+					locationId: self.incidentData.locationId
+				};
+
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.create, body).then(function(data) {
+					console.log(data);
+					
+					let container = $$(self.args.containerId);
+
+					if (container) {
+
+						container.close();
+					}
+				});											
+			});
 		}
 		
 		let resetFromStep = function(step) {
@@ -117,18 +158,25 @@ export default class IncidentWizardModule extends GenericModule {
 			let resetStepStretchAndLocation = function() {
 				
 				self.incidentData.stretchId = undefined;
+				self.incidentData.stretch = undefined;
 				self.incidentData.locationId = undefined;
+				self.incidentData.location = undefined;
 				
-				self.listViewStrechs.select()
+				self.listViewStrechs.select();
 				self.dtLocations.clear();
 			}
 			
 			let resetStepIncidentType = function() {
 				
 				self.incidentData.incidentGroupId = undefined;
+				self.incidentData.incidentGroup = undefined;
 				self.incidentData.incidentTypeId = undefined;
+				self.incidentData.incidentType = undefined;
+				self.incidentData.incidentTypeDesc = undefined;
+				self.incidentData.userId = undefined;
+				self.incidentData.user = undefined;
 				
-				self.listViewIncidentGroups.select()
+				self.listViewIncidentGroups.select();
 				self.dtIncidentTypes.clear();
 			}
 			
@@ -164,18 +212,45 @@ export default class IncidentWizardModule extends GenericModule {
 			
 			let validateStepStretchAndLocation = function() {
 				
+				let stretchsSelected = self.listViewStrechs.getSelectedItems();
 				
+				if (Array.isArray(stretchsSelected) && stretchsSelected.length > 0) {
+
+					self.incidentData.stretchId = stretchsSelected[0]["id"];
+					self.incidentData.stretch = stretchsSelected[0]["alias"];
+				}
 				
-				self.incidentData.stretchId = self.listViewStrechs.getSelectedId();
-				self.incidentData.locationId = self.dtLocations.getSelectedIds()[0];
+				let locationsSelected = self.dtLocations.getSelectedItems();
+				
+				if (Array.isArray(locationsSelected) && locationsSelected.length > 0) {
+				
+					self.incidentData.locationId = locationsSelected[0]["id"];
+					self.incidentData.location = locationsSelected[0]["alias"];	
+				}
 				
 				valid = self.incidentData.stretchId && self.incidentData.locationId;
 			}
 			
 			let validateStepIncidentType = function() {
 				
-				self.incidentData.incidentGroupId = self.listViewIncidentGroups.getSelectedId();
-				self.incidentData.incidentTypeId = self.dtIncidentTypes.getSelectedIds()[0];
+				let incidentGroupsSelected = self.listViewIncidentGroups.getSelectedItems();
+				
+				if (Array.isArray(incidentGroupsSelected) && incidentGroupsSelected.length > 0) {
+				
+					self.incidentData.incidentGroupId = incidentGroupsSelected[0]["id"];
+					self.incidentData.incidentGroup = incidentGroupsSelected[0]["alias"];
+				}
+				
+				let incidentTypesSelected = self.dtIncidentTypes.getSelectedItems();
+				
+				if (Array.isArray(incidentTypesSelected) && incidentTypesSelected.length > 0) {
+				
+					self.incidentData.incidentTypeId = incidentTypesSelected[0]["id"];
+					self.incidentData.incidentType = incidentTypesSelected[0]["alias"];
+					self.incidentData.incidentTypeDesc = incidentTypesSelected[0]["description"];
+					self.incidentData.userId = incidentTypesSelected[0]["userId"];
+					self.incidentData.user = incidentTypesSelected[0]["user"];
+				}
 				
 				valid = self.incidentData.incidentGroupId && self.incidentData.incidentTypeId;
 			}
@@ -194,22 +269,22 @@ export default class IncidentWizardModule extends GenericModule {
 					
 					if (summaryIncidentType) {
 					
-						summaryIncidentType.setValues({ incidentTypeId: self.incidentData.incidentTypeId });
+						summaryIncidentType.setValues({ incidentType: self.incidentData.incidentType, incidentTypeDesc: self.incidentData.incidentTypeDesc });
 					}
 					
 					if (summaryLocation) {
 						
-						summaryLocation.setValues({ locationId: self.incidentData.locationId });
+						summaryLocation.setValues({ location: self.incidentData.location });
 					}
 					
 					if (summaryStretch) {
 						
-						summaryStretch.setValues({ stretchId: self.incidentData.stretchId });
+						summaryStretch.setValues({ stretch: self.incidentData.stretch });
 					}
 					
 					if (summaryUser) {
 						
-						//summaryStretch.setValues({ stretchId: self.incidentData.stretchId });
+						summaryUser.setValues({ user: self.incidentData.user });
 					}
 					
 					$$("button-next-" + step.position + "-" + self.uid).enable();
@@ -344,7 +419,7 @@ export default class IncidentWizardModule extends GenericModule {
 					
 					if (Array.isArray(stretchs) && stretchs.length > 0) {
 												
-						let stretchView = stretchs.map(e => {
+						let stretchData = stretchs.map(e => {
 		
 							return {
 								id: e.id,
@@ -396,7 +471,7 @@ export default class IncidentWizardModule extends GenericModule {
 							validateStep(getCurrentStep());
 						};
 						
-						self.listViewStrechs = new ListView(stretchView, options, events);
+						self.listViewStrechs = new ListView(stretchData, options, events);
 						
 						viewStretchs = {
 							id: "view-stretchs-" + self.uid,
@@ -470,7 +545,6 @@ export default class IncidentWizardModule extends GenericModule {
 						if (Array.isArray(rows) && rows.length > 0) {
 
 							validateStep(getCurrentStep());
-
 						}
 					};
 					
@@ -511,7 +585,7 @@ export default class IncidentWizardModule extends GenericModule {
 					
 					if (Array.isArray(incidentGroups) && incidentGroups.length > 0) {
 												
-						let incidentGroupView = incidentGroups.map(e => {
+						let incidentGroupData = incidentGroups.map(e => {
 		
 							return {
 								id: e.id,
@@ -563,7 +637,9 @@ export default class IncidentWizardModule extends GenericModule {
 													return {
 														id: e.id,
 														alias: e.alias,
-														description: e.description
+														description: e.description,
+														userId: e.defaultUser.id,
+														user: e.defaultUser.name,
 													}
 												});
 												
@@ -579,7 +655,7 @@ export default class IncidentWizardModule extends GenericModule {
 							validateStep(getCurrentStep());
 						};
 						
-						self.listViewIncidentGroups = new ListView(incidentGroupView, options, events);
+						self.listViewIncidentGroups = new ListView(incidentGroupData, options, events);
 						
 						viewIncidentGroups = {
 							id: "view-incident-groups-" + self.uid,
@@ -643,7 +719,9 @@ export default class IncidentWizardModule extends GenericModule {
 						gridFields: [
 							{ id: 1, isPk: true, position: 1, required: true, sourceField: "id", visible: false, widthPx: 1, gridFieldDataType: { id: 1, name: "string" } },
 							{ id: 2, isPk: false, position: 2, required: true, sourceField: "alias", visible: true, widthPx: 150, gridFieldDataType: { id: 1, name: "string" } },
-							{ id: 3, isPk: false, position: 3, required: true, sourceField: "description", visible: true, widthPx: 300, gridFieldDataType: { id: 1, name: "string" } }
+							{ id: 3, isPk: false, position: 3, required: true, sourceField: "description", visible: true, widthPx: 300, gridFieldDataType: { id: 1, name: "string" } },
+							{ id: 4, isPk: false, position: 4, required: true, sourceField: "userId", visible: false, widthPx: 300, gridFieldDataType: { id: 1, name: "string" } },
+							{ id: 5, isPk: false, position: 5, required: true, sourceField: "user", visible: false, widthPx: 300, gridFieldDataType: { id: 1, name: "string" } }
 						]
 					};
 					
@@ -712,7 +790,7 @@ export default class IncidentWizardModule extends GenericModule {
 														borderless: true,
 														template: function(obj) { 
 															return `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
-																   <div class="value">${obj.incidentTypeId ? obj.incidentTypeId : ''}</div>`
+																   <div class="value" style="max-width: 450px;">${(obj.incidentType && obj.incidentTypeDesc) ? obj.incidentType + ' - ' + obj.incidentTypeDesc : ''}</div>`
 														}
 													},
 													{
@@ -721,7 +799,7 @@ export default class IncidentWizardModule extends GenericModule {
 														borderless: true,
 														template: function(obj) { 
 															return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
-																   <div class="value">${obj.locationId ? obj.locationId : ''}</div>`
+																   <div class="value" style="max-width: 450px;">${obj.location ? obj.location : ''}</div>`
 														}
 													},
 													{
@@ -730,7 +808,7 @@ export default class IncidentWizardModule extends GenericModule {
 														borderless: true,
 														template: function(obj) { 
 															return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
-																   <div class="value">${obj.stretchId ? obj.stretchId : ''}</div>`
+																   <div class="value" style="max-width: 450px;">${obj.stretch ? obj.stretch : ''}</div>`
 														}
 													},
 													{
@@ -739,7 +817,7 @@ export default class IncidentWizardModule extends GenericModule {
 														borderless: true,
 														template: function(obj) { 
 															return `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
-																   <div class="value"></div>`
+																   <div class="value" style="max-width: 450px;">${obj.user ? obj.user : ''}</div>`
 														}
 													},
 													{}
@@ -903,7 +981,7 @@ export default class IncidentWizardModule extends GenericModule {
 					{
 						id: "button-next-" + position + "-" + self.uid,
 						view: "button", 
-						disabled: true,
+						disabled: !lastStep,
 						css: !lastStep ? "dialog-accept" : "dialog-finish",
 						width: 130,
 						height: 35,
@@ -921,6 +999,10 @@ export default class IncidentWizardModule extends GenericModule {
 										
 										setCurrentStep(step.position + 1);
 									}
+								}
+								else {
+									
+									createIncident();
 								}
 							}
 						}
