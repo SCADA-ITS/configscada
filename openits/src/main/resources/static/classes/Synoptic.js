@@ -91,7 +91,7 @@ export default class Synoptic {
                 if(this.elementsMap.get(element.id)!=null){
                   document.getElementById(element.id).remove();
                   this.elementsMap.get(element.id).paintIcon(this.elementsMap.get(element.id).synopticConf, this.elementsMap.get(element.id).snapDiv,  this.elementsMap.get(element.id).ratioWidth,  this.elementsMap.get(element.id).ratioHeight);  
-                  if($$("element_tree"+this.elementsMap.get(element.id).synopticConf.id).getChecked().includes(element.id)){
+                  if($$("element_tree"+this.synopticDiv).getChecked().includes(element.id)){
                     let checkedElement = document.getElementById(element.id);
                     if(checkedElement != null) {
                       checkedElement.style.opacity = 1;
