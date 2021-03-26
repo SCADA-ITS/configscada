@@ -175,11 +175,42 @@ export default class ListView {
 			}
 			else {
 				
-				list.unselectAll();
+				list.selectAll();
 			}
 			
 			list.refresh();
 		}		
+	}
+	
+	selectByIndex(idx) {
+		
+		let list = $$("list-" + this.uid);
+		
+		if (list && idx > -1) {
+			
+			this.select(list.getIdByIndex(idx));
+				
+			list.refresh();
+		}		
+	}
+	
+	unselect(id) {
+		
+		let list = $$("list-" + this.uid);
+		
+		if (list) {
+			
+			if (id) {
+				
+				list.unselect(id);	
+			}
+			else {
+				
+				list.unselectAll();
+			}
+			
+			list.refresh();
+		}	
 	}
 }
 

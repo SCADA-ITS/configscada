@@ -349,8 +349,8 @@ export default class DataTable {
 									}
 
 									if (balloon) {
-
-										return `<div><span class="table-badge" style="background: ${balloon.color + '3b'}; color: ${balloon.color + 'a0'};">${value}</span></div>`;
+										
+										return `<div><span class="table-badge" style="background: ${balloon.color + 'a0'}; color: white;">${value}</span></div>`;
 
 									} else {
 
@@ -808,10 +808,21 @@ export default class DataTable {
 
 		if (resultSelRows) {
 
-			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
-
-			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/", value: "Ninguna fila seleccionada", css: "sel_label_selected", width: 36, height: 13, tooltip: true });
-
+//			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
+//			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/", value: "Ninguna fila seleccionada", css: "sel_label_selected", width: 36, height: 13, tooltip: true });
+			
+//			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
+//			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/10000", value: "Ninguna fila seleccionada", css: "sel_label_selected", height: 13, tooltip: true });
+			
+			toolbar.elements.push(
+				{ 
+					id: "template-sel-" + this.uid,
+					borderless: true,
+					template: function(obj) { 
+						return `<div class="sel_label"><span>${i18n.t("LBL_SEL")}</span><span class="sel_label_text">${" " + obj.selected + "/" + obj.total}</span></div>`;
+					}
+				}
+			);
 		}
 
 		if (resultSearch) {
@@ -885,7 +896,7 @@ export default class DataTable {
 		let self = this;
 		let datatable = $$("dt-" + this.uid);
 		let rowsSelected = this.rowsSelected;
-		let label = $$("lb-sel" + this.uid);
+		let labelSelected = $$("template-sel-" + this.uid);
 		const Selected = { ZERO: 0, ONE: 1 }
 
 		datatable.attachEvent("onAfterSelect", function(selection, preserve) {
@@ -914,24 +925,9 @@ export default class DataTable {
 
 		datatable.attachEvent("onAfterRender", function() {
 
-			if (label && label != undefined) {
-
-				label.data.label = rowsSelected.length + "/" + datatable.count();
-
-				if (rowsSelected.length === Selected.ZERO) {
-
-					label.data.value = "Ninguna fila seleccionada";
-
-				} else if (rowsSelected.length === Selected.ONE) {
-
-					label.data.value = rowsSelected.length + " fila seleccionada de " + datatable.count();
-
-				} else {
-
-					label.data.value = rowsSelected.length + " filas seleccionadas de " + datatable.count();
-				}
-
-				label.refresh();
+			if (labelSelected) {
+				
+				labelSelected.setValues({ selected: rowsSelected.length, total: datatable.count() });
 			}
 		});
 
@@ -1777,6 +1773,7 @@ export default class DataTable {
 
 	search_callback() {
 
+		let self = this;
 		let grid = $$("dt-" + this.uid);
 		let txtSearch = $$("txtSearch-" + this.uid);
 
@@ -1803,6 +1800,8 @@ export default class DataTable {
 
 					return res;
 				});
+				
+				self.restoreSort();
 			});
 		}
 	}

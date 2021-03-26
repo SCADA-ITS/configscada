@@ -927,7 +927,26 @@ export default class IncidentReportModule extends GenericModule {
 									{ height: 20 },
 									{
 										view: "button",
-										css: (function() {
+//										css: (function() {
+//
+//											if (!self.closed && self.incidentReport.confirm === true) {
+//
+//												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+//
+//													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt);
+//
+//													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length) {
+//
+//														return "action-button-dis";
+//													}
+//												}
+//											}
+//
+//											return "action-button";
+//
+//										})(),
+										css: "action-button",
+										disabled: (function() {
 
 											if (!self.closed && self.incidentReport.confirm === true) {
 
@@ -937,12 +956,12 @@ export default class IncidentReportModule extends GenericModule {
 
 													if (tasksCompleted.length < self.currentSequenceOfState.taskStates.length) {
 
-														return "action-button-dis";
+														return true;
 													}
 												}
 											}
 
-											return "action-button";
+											return false;
 
 										})(),
 										height: 50,

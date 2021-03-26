@@ -1550,6 +1550,12 @@
   background-color: var(--blue-mid-opacity-7);
 }
 
+.webix_view.webix_control .webix_disabled_box .webix_button {
+    color: white;
+    text-shadow: none;
+    opacity: 0.6;
+}
+
 .dialog-accept .webix_button{
 	width: 100% !important;
     border-radius: 4px;
@@ -1618,17 +1624,16 @@
     background: rgba(255 152 0 / 0.9) !important;
 }
 
-.sel_label .webix_el_box {
+.sel_label {
 	font-size: 13px !important;
 	font-weight: 500 !important;
 	color: #4f4f4f !important;
+	text-align: right;
+	padding-top: 12px;
 }
 
-.sel_label_selected .webix_el_box {
-	font-size: 11px !important;
-	font-weight: 500 !important;
-	color: #757474 !important;
-	margin: 1px 0 1px 6px !important;
+.sel_label_text {
+	font-weight: 100 !important;
 }
 
 .filter_icon_selected .webix_icon.wxi-filter {
@@ -1809,5 +1814,10 @@
 	white-space: nowrap;
 	overflow: hidden;
 	padding-right: 10px;
-	padding-top: 15px;
+	padding-top: 17px;
+}
+
+.content-wizard-label{
+	vertical-align: 9px;
+	padding-left: 20px;	
 }
