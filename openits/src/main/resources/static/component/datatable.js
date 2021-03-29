@@ -1255,9 +1255,19 @@ export default class DataTable {
 		let rowsSelected = this.rowsSelected;
 
 		if (rowsSelected != undefined && rowsSelected.length > 0) {
-
-			rowsSelected.forEach(e => grid.select(e, true));
-
+			
+			for (let i = rowsSelected.length - 1; i >= 0; i--) {
+				
+				let rowSelected = rowsSelected[i];
+				
+				if (grid.getItem(rowSelected)) {
+					
+					grid.select(rowSelected, true);
+				}
+				else {
+					rowsSelected.splice(rowsSelected, 1);
+				}
+			}
 		}
 	}
 
