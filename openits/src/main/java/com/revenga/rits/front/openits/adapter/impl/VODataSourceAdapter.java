@@ -202,6 +202,8 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT = getPropertyInt("send_finalize_task_incident_report");
 	public static final int DATA_SOURCE_SEND_EXECUTE_TASK_PLAN_INCIDENT_REPORT = getPropertyInt("send_execute_task_plan_incident_report");
 	
+	public static final int DATA_SOURCE_GET_SYSTEM_PARAMS = getPropertyInt("get_system_params");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {

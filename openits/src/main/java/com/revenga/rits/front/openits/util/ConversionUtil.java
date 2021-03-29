@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,7 +17,7 @@ public class ConversionUtil {
 		throw new IllegalStateException(this.getClass().getSimpleName());
 	}
 	
-	public static Map<String, Object> clone(Map<String, Object> original) throws JsonMappingException, JsonProcessingException {
+	public static Map<String, Object> clone(Map<String, Object> original) throws JsonProcessingException {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		

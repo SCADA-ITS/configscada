@@ -183,7 +183,7 @@ export default class IncidentWizardModule extends GenericModule {
 				
 				let viewSteps = {
 					rows: [
-						{ height: 20 },
+						{ height: 5 },
 						{
 							height: 66,
 							css: { "margin-top": "-24px" },
@@ -352,7 +352,7 @@ export default class IncidentWizardModule extends GenericModule {
 					stepContent.push(drawHeader(e.position));
 					stepContent.push(drawProgressBar(e.position));
 					stepContent.push(self.drawContent.draw(e.position));
-					stepContent.push({ rows: [{ height: 35 }] });
+					stepContent.push({ rows: [{ height: 20 }] });
 					stepContent.push(drawToolbarActions(e.position));
 			
 					multiView.cells.push({rows: stepContent }); 	
