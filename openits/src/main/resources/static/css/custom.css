@@ -1821,3 +1821,66 @@
 	vertical-align: 9px;
 	padding-left: 20px;	
 }
+
+
+.alarm-view-title-label {
+	font-family: HelveticaNeue-Medium;
+	font-size: 13px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #333435;
+  }
+
+.alarm-view-rectangle-back {
+	margin: 10px 25px 22px 14px;
+	padding: 6px 0 6px 6px;
+	border-radius: 4px;
+	background-color: rgba(198, 211, 231, 0.3);
+}
+
+.alarm-view-comments {
+	font-family: Roboto;
+	font-size: 12px;
+	font-weight: 300;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: 1.17;
+	letter-spacing: normal;
+	color: #475269;
+}
+
+.alarm-view-header-details-text {
+	font-family: Roboto;
+	font-size: 16px;
+	font-weight: 500;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #92abcf;
+}
+
+.alarm-view-text {
+	font-family: Roboto;
+	font-size: 13px;
+	font-weight: 300;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #0f1724;
+}
+
+.alarm-view-user_label {
+	font-family: Roboto;
+	font-size: 12px;
+	font-weight: 300;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #0f1724;
+}
