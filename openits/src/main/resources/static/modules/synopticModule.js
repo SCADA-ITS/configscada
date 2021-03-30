@@ -2,6 +2,7 @@ import GenericModule from "./genericModule.js";
 import SynopticGraphicElement from "../component/synopticGraphicElement.js";
 import {WIDTH_RESOLUTION, HEIGHT_RESOLUTION, ELEMENT_TYPE} from "../data/GLOBAL_PROPERTIES.js";
 import ContextMenu from "../component/contextMenu.js";
+import CommandsComponent from "../component/commandsComponent.js";
 import { util } from "../lib/util.js";
 
 const SYNOPTIC_REST_ENDPOINT = appConfig.restUrl + "synoptics/";
@@ -41,59 +42,7 @@ export default class SynopticModule extends GenericModule{
       cols: [
         {
           header: i18n.t(this.synopticConf.metadata.name),
-          body: {
-            view:"tree",
-            width:220,
-            id:this.treeId,
-            template:"{common.icon()} {common.checkbox()} &nbsp; "+i18n.t("#value#"),
-            on:{
-              onItemCheck: (id,state)=>{
-                //Layer
-                let snapItem = Snap("#"+id);
-                if(snapItem != undefined){
-                  snapItem.attr({visibility: (state)?"visible":"hidden"}); 
-                }
-                //child elements
-                let layer = this.synopticConf.metadata.synopticLayers.find(item => item.name === id);
-                layer.synopticLayerElements.forEach(element => {
-                  snapItem = document.getElementById(element.elementId);
-                  if(snapItem != undefined){
-                    snapItem.style.visibility=(state)?"visible":"hidden"; 
-                  }
-                });
-              }
-            },
-            url: ()=>{
-              let recursiveTreeNode = (treeNode, layerHierarchy, layer) =>{
-                treeNode.forEach(node => {
-                  if(node.internal_id===layerHierarchy.parent_layer_id){
-                    if(!node.data){
-                      node.data=[];
-                    }
-                    node.data.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
-                  }else{
-                    if(node.data != undefined){
-                      recursiveTreeNode(node.data, layerHierarchy, layer);
-                    }
-                  }
-                });  
-              }
-
-              let treeData=[];
-              this.synopticConf.metadata.synopticLayerRelationships.forEach(layerHierarchy => {
-                let layer = this.synopticConf.metadata.synopticLayers.find(item => item.id === layerHierarchy.child_layer_id);
-                if(layerHierarchy.parent_layer_id == undefined){
-                  treeData.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
-                }else{
-                  recursiveTreeNode(treeData, layerHierarchy, layer);
-                }
-              });
-              return treeData;
-            },
-            ready: function(){
-              this.checkAll()
-            }
-          }
+          body: this.getViewTree()
         },
         { view:"resizer" },
         {
@@ -198,6 +147,76 @@ export default class SynopticModule extends GenericModule{
   
     this.connect_ws();
 
+  }
+
+  getViewTree(){
+
+    let tree = {
+      view:"tree",
+      width:220,
+      id:this.treeId,
+      template:"{common.icon()} {common.checkbox()} &nbsp; "+i18n.t("#value#"),
+      on:{
+        onItemCheck: (id,state)=>{
+          //Layer
+          let snapItem = Snap("#"+id);
+          if(snapItem != undefined){
+            snapItem.attr({visibility: (state)?"visible":"hidden"}); 
+          }
+          //child elements
+          let layer = this.synopticConf.metadata.synopticLayers.find(item => item.name === id);
+          layer.synopticLayerElements.forEach(element => {
+            snapItem = document.getElementById(element.elementId);
+            if(snapItem != undefined){
+              snapItem.style.visibility=(state)?"visible":"hidden"; 
+            }
+          });
+        }
+      },
+      url: ()=>{
+        let recursiveTreeNode = (treeNode, layerHierarchy, layer) =>{
+          treeNode.forEach(node => {
+            if(node.internal_id===layerHierarchy.parent_layer_id){
+              if(!node.data){
+                node.data=[];
+              }
+              node.data.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
+            }else{
+              if(node.data != undefined){
+                recursiveTreeNode(node.data, layerHierarchy, layer);
+              }
+            }
+          });  
+        }
+
+        let treeData=[];
+        this.synopticConf.metadata.synopticLayerRelationships.forEach(layerHierarchy => {
+          let layer = this.synopticConf.metadata.synopticLayers.find(item => item.id === layerHierarchy.child_layer_id);
+          if(layerHierarchy.parent_layer_id == undefined){
+            treeData.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
+          }else{
+            recursiveTreeNode(treeData, layerHierarchy, layer);
+          }
+        });
+        return treeData;
+      },
+      ready: function(){
+        this.checkAll()
+      }
+    };
+    
+    let commandsMenu = new CommandsComponent(this.uid, this.synopticConf.metadata.synopticCommands, this);
+
+    let viewTree = {
+      padding:10,
+      css: "panel-action",
+      rows: [
+        tree,
+        commandsMenu.getComponent()
+      ]
+    };
+
+    return viewTree;
   }
 
   doResponsive(){

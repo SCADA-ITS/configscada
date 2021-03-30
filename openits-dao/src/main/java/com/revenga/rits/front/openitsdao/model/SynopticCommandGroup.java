@@ -28,6 +28,8 @@ public class SynopticCommandGroup implements Serializable {
 
 	private String label;
 
+	private Integer position;
+
 	public SynopticCommandGroup() {
 	}
 
@@ -55,4 +57,11 @@ public class SynopticCommandGroup implements Serializable {
 		this.label = label;
 	}
 
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
 }

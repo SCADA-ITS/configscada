@@ -11,7 +11,9 @@ export default class ContextMenu {
         this.ctxMenuData = [];
 
         this.commands.forEach(cmd => {
-            this.ctxMenuData.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+			if(cmd.context === undefined || cmd.context){
+				this.ctxMenuData.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+			}
         });
 
     }

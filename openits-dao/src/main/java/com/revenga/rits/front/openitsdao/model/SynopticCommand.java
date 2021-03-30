@@ -85,12 +85,12 @@ public class SynopticCommand implements Serializable {
 		this.id = id;
 	}
 
-	public SynopticCommandGroup getCommandType() {
+	public SynopticCommandGroup getCommandGroup() {
 		return commandGroup;
 	}
 
-	public void setCommandType(SynopticCommandGroup commandType) {
-		this.commandGroup = commandType;
+	public void setCommandGroup(SynopticCommandGroup commandGroup) {
+		this.commandGroup = commandGroup;
 	}
 
 	public Boolean getContext() {
