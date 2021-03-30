@@ -112,6 +112,7 @@ export default class Map {
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_32_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_35_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_36_PMV ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_38_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_69_PMV) {
           throw "DMSETDException";
         }
@@ -145,6 +146,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
 
               total_width = 0;
@@ -288,6 +290,7 @@ export default class Map {
                   || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
+                  || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
 
 
@@ -530,6 +533,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
            
               total_width = 0;
@@ -1059,6 +1063,7 @@ export default class Map {
                     || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
+                    || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
                 
                     total_width = 0;
