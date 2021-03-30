@@ -12,7 +12,7 @@ export let panelData = {
     "ElementType:28": {
         "scala": 2.4,
         "scala_List": 4,
-        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x2\",\"Tamanio\":\"32x64\",\"Zonas\":[{\"Tamanio\":\"32x32\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"32x32\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"32\"}]},{\"NumZonas\":\"1x1\",\"Tamanio\":\"160x64\",\"Zonas\":[{\"Tamanio\":\"160x64\",\"Tipo\":\"Texto\",\"NumLineas\":\"3\",\"TamLineas\":\"160\"}]}]}",
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x2\",\"Tamanio\":\"32x64\",\"Zonas\":[{\"Tamanio\":\"32x32\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"32x32\",\"Tipo\":\"Texto\",\"NumLineas\":\"1\",\"TamLineas\":\"32\"}]},{\"NumZonas\":\"1x1\",\"Tamanio\":\"160x64\",\"Zonas\":[{\"Tamanio\":\"160x64\",\"Tipo\":\"Texto\",\"NumLineas\":\"3\",\"TamLineas\":\"135\"}]}]}",
     },
     "ElementType:29": {
         "scala": 5,
@@ -22,7 +22,7 @@ export let panelData = {
     "ElementType:30": {
         "scala": 5,
         "scala_List": 4,
-        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"128x64\",\"Zonas\":[{\"Tamanio\":\"128x64\",\"Tipo\":\"Dual\",\"NumLineas\":\"3\",\"TamLineas\":\"15\"}]}]}",
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"128x64\",\"Zonas\":[{\"Tamanio\":\"128x64\",\"Tipo\":\"Dual\",\"NumLineas\":\"3\",\"TamLineas\":\"110\"}]}]}",
     },
     "ElementType:31": {
         "scala": 5,
@@ -43,6 +43,11 @@ export let panelData = {
         "scala": 3.3,
         "scala_List": 4,
         "panel": "{\"Subpaneles\":[{\"NumZonas\":\"2x1\",\"Tamanio\":\"192x64\",\"Zonas\":[{\"Tamanio\":\"64x64\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"128x64\",\"Tipo\":\"Texto\",\"NumLineas\":\"3\",\"TamLineas\":\"15\"}]}]}",
+    },
+    "ElementType:38": {
+        "scala": 3.3,
+        "scala_List": 4,
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"240x72\",\"Zonas\":[{\"Tamanio\":\"240x72\",\"Tipo\":\"Texto\",\"NumLineas\":\"2\",\"TamLineas\":\"240\"}]}]}",
     },
     "ElementType:69": {
         "scala": 3.3,

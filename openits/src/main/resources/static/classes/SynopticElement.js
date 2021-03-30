@@ -270,6 +270,7 @@ function getIconWidth(elementType, height) {
   switch(elementType) {
     case "10":
     case "36":
+    case "38":
       ratio = height / 24;
       width = 76 * ratio;
       break;

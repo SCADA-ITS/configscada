@@ -488,8 +488,9 @@ export let SVG_16_PA_ZONE =
     <g
        id="g1858"
        transform="translate(-92.528572,121.25477)"
-       style="stroke:#ff0000;stroke-opacity:1">
-      <rect
+       style="stroke:#ff0000;stroke-opacity:1">` +
+      '<title>' + REGEX_PATTERN_INIT + 'PA_ZONE_TEXT' + REGEX_PATTERN_END + '</title>' + 
+      `<rect
          ry="0.83424193"
          y="167.27856"
          x="92.528572"

@@ -33,6 +33,7 @@ export const ELEMENT_TYPE_33_ETD = "33";
 export const ELEMENT_TYPE_34_CABIN_SCN = "34";
 export const ELEMENT_TYPE_35_PMV = "35";
 export const ELEMENT_TYPE_36_PMV = "36";
+export const ELEMENT_TYPE_38_PMV = "38";
 export const ELEMENT_TYPE_41_CABIN_ATC = "41";
 export const ELEMENT_TYPE_42_CABIN_NRL = "42";
 export const ELEMENT_TYPE_43_CABIN_NRS = "43";
@@ -212,6 +213,7 @@ export const COMMAND_TYPE_MATRIX_PANEL_TEMP = "2:31";
 export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT = "2:35";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT = "2:36";
+export const COMMAND_TYPE_MATRIX_PANEL_DGT_TXT = "2:38";
 export const COMMAND_TYPE_PMV_WEIGHT_LIMIT = "2:69";
 
 export const PANEL_MANAGER_CONFIG = "5:1";
@@ -351,6 +353,7 @@ export function getElementTypeName(elementTypeIdString) {
     case ELEMENT_TYPE_25_CABIN:
     case ELEMENT_TYPE_35_PMV:
     case ELEMENT_TYPE_36_PMV:
+    case ELEMENT_TYPE_38_PMV:
     case ELEMENT_TYPE_34_CABIN_SCN:
     case ELEMENT_TYPE_41_CABIN_ATC:
     case ELEMENT_TYPE_43_CABIN_NRS:

@@ -37,6 +37,7 @@ export const ELEMENT_TYPE = {
   ID_34_CABIN_SCN : "ElementType:34",
   ID_35_PMV : "ElementType:35",
   ID_36_PMV : "ElementType:36",
+  ID_38_PMV : "ElementType:38",
   ID_41_CABIN_ATC : "ElementType:41",
   ID_42_CABIN_NRL : "ElementType:42",
   ID_43_CABIN_NRS : "ElementType:43",
@@ -143,6 +144,7 @@ export const ELEMENT_TYPE = {
     "ElementType:15" :{ id: "ElementType:15", uiType: UI_ELEMENT_TYPE_GENERIC, value: 15, scale_x: 28, scale_y: 28, svgRaw:SVG_15_FIRE_DET},
     "ElementType:16" :{ id: "ElementType:16", uiType: UI_ELEMENT_TYPE_GENERIC, value: 16, scale_x: 28, scale_y: 28,svgRaw:SVG_16_PA_ZONE,
     	elementTypeParams:[
+    		{PA_ZONE_TEXT: "1003:2"},
             {PA_ZONE_PLAYING: "1004:2"}
           ]},
   
@@ -184,6 +186,7 @@ export const ELEMENT_TYPE = {
     "ElementType:34" :{ id: "ElementType:34", uiType: UI_ELEMENT_TYPE_GENERIC, value: 34, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:35" :{ id: "ElementType:35", uiType: UI_ELEMENT_TYPE_MATRIX, value: 35, scale_x: 28, scale_y: 28},
     "ElementType:36" :{ id: "ElementType:36", uiType: UI_ELEMENT_TYPE_MATRIX, value: 36, scale_x: 220, scale_y: 52},
+    "ElementType:38" :{ id: "ElementType:38", uiType: UI_ELEMENT_TYPE_MATRIX, value: 38, scale_x: 28, scale_y: 28},
     "ElementType:41" :{ id: "ElementType:41", uiType: UI_ELEMENT_TYPE_GENERIC, value: 41, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:42" :{ id: "ElementType:42", uiType: UI_ELEMENT_TYPE_GENERIC, value: 42, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:43" :{ id: "ElementType:43", uiType: UI_ELEMENT_TYPE_GENERIC, value: 43, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
