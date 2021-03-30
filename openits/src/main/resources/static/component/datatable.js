@@ -235,62 +235,64 @@ export default class DataTable {
 								value = obj[field.sourceField].value;
 								state = obj[field.sourceField].state;
 							}
-							else if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value) {
-
-								value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-							}
 							else {
+								
+								if (field.replacementFunction) {
 
-								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
-
-									badgeColor = (field.gridFieldIcons[0].badgeColor == true);
-									avatar = (field.gridFieldIcons[0].avatar == true);
-									showValue = (field.gridFieldIcons[0].showValue == true);
-									value = obj[field.sourceField];
-
-									let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
-
-									if (gridFieldIcon) {
-
-										icon = gridFieldIcon.icon;
-										showValue = (gridFieldIcon.showValue == true);
-										value = gridFieldIcon.value;
+									if (eval("util.datatable." + field.replacementFunction)) {
+										
+										value = eval("util.datatable." + field.replacementFunction)(obj[field.sourceField]);
 									}
 								}
-								else if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
+								
+								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value) {
 
-
-									let gridFieldReference = field.gridFieldReferences[0];
-
-									let refField = metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
-
-
-									if (refField != undefined) {
-
-										value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, obj[refField[0].sourceField]);
-
-										value = value[gridFieldReference.emFieldReturned];
-
-										if (field.needsTranslation) {
-
-											value = i18n.t(value);
-
-											obj[field.sourceField] = value;
-										}
-									}
+									value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 								}
 								else {
-
-									value = obj[field.sourceField];
+	
+									if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+	
+										badgeColor = (field.gridFieldIcons[0].badgeColor == true);
+										avatar = (field.gridFieldIcons[0].avatar == true);
+										showValue = (field.gridFieldIcons[0].showValue == true);
+										value = obj[field.sourceField];
+	
+										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
+	
+										if (gridFieldIcon) {
+	
+											icon = gridFieldIcon.icon;
+											showValue = (gridFieldIcon.showValue == true);
+										}
+									}
+									else if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
+	
+	
+										let gridFieldReference = field.gridFieldReferences[0];
+	
+										let refField = metadata.gridFields.filter(e => e.id == gridFieldReference.refFieldId);
+	
+	
+										if (refField != undefined) {
+	
+											value = window.em.getByField(EntityType[gridFieldReference.emId], gridFieldReference.emField, obj[refField[0].sourceField]);
+	
+											value = value[gridFieldReference.emFieldReturned];
+	
+											if (field.needsTranslation) {
+	
+												value = i18n.t(value);
+	
+												obj[field.sourceField] = value;
+											}
+										}
+									}
+									else {
+	
+										value = obj[field.sourceField];
+									}
 								}
-							}
-
-							if (field.replacementFunction) {
-
-								if (eval("util.datatable." + field.replacementFunction)) {
-									value = eval("util.datatable." + field.replacementFunction)(obj[field.sourceField]);
-								}
-
 							}
 
 							col.tooltip = function(data) {
