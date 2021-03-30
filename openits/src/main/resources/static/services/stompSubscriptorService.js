@@ -27,8 +27,14 @@ class Subscriptor {
 		}
 
 		this.clients.push({
+			// id: Client id
 			id: id,
+			// callback: function to execute. Argument item received by subscriptor
 			callback: callback,
+			// Inclusive OR filtered fields to evaluate. 
+			// Any value in values matchs with target field value
+			// Example:
+			// fields: [ {"target": "targetElement.id", "values": ["Element:3:2", "Element:3:1"] ]
 			fields: fields
 		});
 
@@ -74,25 +80,14 @@ class Subscriptor {
 						}
 						else {
 	
-							if (typeof e.fields === 'object') {
-	
-								let fields = Object.keys(e.fields);
-	
-								if (fields.length > 0) {
-	
-									let match = true;
-	
-									for (let i = 0; match && i < fields.length; i++) {
-										
-										let field = fields[i];
-	
-										match &= (be[field] === fields);
-									}
-	
-									if (match) {
-	
-										e.callback(be);
-									}
+							if (Array.isArray(e.fields) && e.fields.length > 0) {
+								
+								// Any field match with value.
+								let match = e.fields.find(field => field.values.find(fieldValue => eval("be." + field.target) === fieldValue));
+								
+								if (match) {
+		
+									e.callback(be);
 								}
 							}
 						}

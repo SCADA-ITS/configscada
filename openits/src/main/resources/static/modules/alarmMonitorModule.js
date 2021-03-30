@@ -26,7 +26,6 @@ export default class AlarmMonitorModule extends GenericModule {
 
 		this.elementTypeIdSelected = ELEMENT_TYPE_ALL;
 
-		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
 		this.config = module.config;
 	}
 
@@ -98,6 +97,8 @@ export default class AlarmMonitorModule extends GenericModule {
 						let flattenedData = [];
 
 						if (data.length > 0) {
+							
+							data = filterElements(data);
 
 							flattenedData = eval("adapter." + self.config.adapter)(data, null);
 						}
@@ -110,6 +111,11 @@ export default class AlarmMonitorModule extends GenericModule {
 					initDataTables();
 
 					initListView();
+					
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+					
+						fillDatatables();	
+					}
 					
 					connectWS();
 
@@ -128,6 +134,16 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				}
 			});
+		}
+		
+		function filterElements(data) {
+		
+			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+				
+				return data.filter(e => self.args.selectedPks.indexOf(e.targetElement.id) !== -1);
+			}
+			
+			return data;
 		}
 		
 		function isMuted(data) {
@@ -170,35 +186,133 @@ export default class AlarmMonitorModule extends GenericModule {
 				self.listView.select(ELEMENT_TYPE_ALL);
 			}
 		}
+		
+		function fillDatatables(elementTypeArray) {
+			
+			let elementTypeId;
+			
+			if (Array.isArray(elementTypeArray) && elementTypeArray.length == 1) {
+				
+				elementTypeId = elementTypeArray[0];
+			}
+			
+			self.elementTypeIdSelected = elementTypeId;
+
+			if (self.dtNoRecognized) {
+
+				self.dtNoRecognized.clear();
+				
+				let noRecognizedAlarms = self.dcNoRecognized;
+				
+				if (self.filterAlarmType) {
+					
+					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+					
+						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+								return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+						});	
+					}
+					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+						
+						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+								return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+						});
+					}
+				}
+				
+				if (!self.elementTypeIdSelected || self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
+
+					self.dtNoRecognized.add(noRecognizedAlarms);
+				}
+				else {
+
+					self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
+						return (e.targetElementTypeId == self.elementTypeIdSelected);
+					}));
+				}	
+			}
+
+			if (self.dtRecognized) {
+
+				self.dtRecognized.clear();
+				
+				let recognizedAlarms = self.dcRecognized;
+				
+				if (self.filterAlarmType) {
+					
+					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+					
+						recognizedAlarms = recognizedAlarms.filter(e => {
+								return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+						});	
+					}
+					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+						
+						recognizedAlarms = recognizedAlarms.filter(e => {
+								return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+						});
+					}
+				}
+
+				if (!self.elementTypeIdSelected || self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
+
+					self.dtRecognized.add(recognizedAlarms);
+				}
+				else {
+
+					self.dtRecognized.add(recognizedAlarms.filter(e => {
+						return (e.targetElementTypeId == self.elementTypeIdSelected);
+					}));
+				}
+			}
+		}
 
 		function drawComponents() {
 
 			let viewMain = {
 				id: self.uid,
-				cols: [
-					{
-						header: i18n.t("LBL_EQUIPMENT_TYPES"),
-						body: {
-							width: 300,
-							rows: [
-								{
-									cols: [
-										getViewListEquipments()
-									]
-								}
+				cols: []
+			};
+			
+			let viewMainListEquipments = {
+				id: "view-main-list-equipments-" + self.uid,
+				header: i18n.t("LBL_EQUIPMENT_TYPES"),
+				body: {
+					width: 300,
+					rows: [
+						{
+							cols: [
+								getViewListEquipments()
 							]
 						}
-					},
-					{ view: "resizer" },
-					{
-						body: getViewContent()
-					},
-					{
-						header: i18n.t("LBL_ALARMS_ACTION_PANEL"),
-						body: getViewActionPanel()
-					}
-				]
+					]
+				}
+			}; 
+			
+			let viewMainResizer = { 
+				id: "view-main-resizer-" + self.uid,
+				view: "resizer" 
 			};
+			
+			let viewMainContent = {
+				id: "view-main-content-" + self.uid,
+				body: getViewContent()
+			};
+			
+			let viewMainActionPanel = {
+				id: "view-main-action-panel-" + self.uid,
+				header: i18n.t("LBL_ALARMS_ACTION_PANEL"),
+				body: getViewActionPanel()
+			};
+			
+			if (!self.moduleAction) {
+				
+				viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent, viewMainActionPanel];
+			}
+			else {
+				
+				viewMain.cols = [viewMainContent];
+			}
 
 			function getViewListEquipments() {
 
@@ -296,7 +410,7 @@ export default class AlarmMonitorModule extends GenericModule {
 					
 					let events = {};
 
-					events[ListView.EventTypes.ON_SELECT_ROW] = onSelect;
+					events[ListView.EventTypes.ON_SELECT_ROW] = fillDatatables;
 					
 					self.listView = new ListView(elementTypeView, null, events);
 
@@ -309,84 +423,84 @@ export default class AlarmMonitorModule extends GenericModule {
 					
 					elementTypeArray.push(self.elementTypeIdSelected);
 					
-					onSelect(elementTypeArray);
+					fillDatatables(elementTypeArray);
 				}
 
-				function onSelect(data) {
-
-					if (Array.isArray(data) && data.length > 0) {
-
-						self.elementTypeIdSelected = data[0];
-
-						if (self.dtNoRecognized) {
-
-							self.dtNoRecognized.clear();
-							
-							let noRecognizedAlarms = self.dcNoRecognized;
-							
-							if (self.filterAlarmType) {
-								
-								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-								
-									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-									});	
-								}
-								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-									
-									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-									});
-								}
-							}
-							
-							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-
-								self.dtNoRecognized.add(noRecognizedAlarms);
-							}
-							else {
-
-								self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
-									return (e.targetElementTypeId == self.elementTypeIdSelected);
-								}));
-							}	
-						}
-
-						if (self.dtRecognized) {
-
-							self.dtRecognized.clear();
-							
-							let recognizedAlarms = self.dcRecognized;
-							
-							if (self.filterAlarmType) {
-								
-								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-								
-									recognizedAlarms = recognizedAlarms.filter(e => {
-											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-									});	
-								}
-								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-									
-									recognizedAlarms = recognizedAlarms.filter(e => {
-											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-									});
-								}
-							}
-
-							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-
-								self.dtRecognized.add(recognizedAlarms);
-							}
-							else {
-
-								self.dtRecognized.add(recognizedAlarms.filter(e => {
-									return (e.targetElementTypeId == self.elementTypeIdSelected);
-								}));
-							}
-						}
-					}
-				}
+//				function onSelect(data) {
+//
+//					if (Array.isArray(data) && data.length > 0) {
+//
+//						self.elementTypeIdSelected = data[0];
+//
+//						if (self.dtNoRecognized) {
+//
+//							self.dtNoRecognized.clear();
+//							
+//							let noRecognizedAlarms = self.dcNoRecognized;
+//							
+//							if (self.filterAlarmType) {
+//								
+//								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+//								
+//									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+//											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+//									});	
+//								}
+//								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+//									
+//									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
+//											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+//									});
+//								}
+//							}
+//							
+//							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
+//
+//								self.dtNoRecognized.add(noRecognizedAlarms);
+//							}
+//							else {
+//
+//								self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
+//									return (e.targetElementTypeId == self.elementTypeIdSelected);
+//								}));
+//							}	
+//						}
+//
+//						if (self.dtRecognized) {
+//
+//							self.dtRecognized.clear();
+//							
+//							let recognizedAlarms = self.dcRecognized;
+//							
+//							if (self.filterAlarmType) {
+//								
+//								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
+//								
+//									recognizedAlarms = recognizedAlarms.filter(e => {
+//											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+//									});	
+//								}
+//								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
+//									
+//									recognizedAlarms = recognizedAlarms.filter(e => {
+//											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+//									});
+//								}
+//							}
+//
+//							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
+//
+//								self.dtRecognized.add(recognizedAlarms);
+//							}
+//							else {
+//
+//								self.dtRecognized.add(recognizedAlarms.filter(e => {
+//									return (e.targetElementTypeId == self.elementTypeIdSelected);
+//								}));
+//							}
+//						}
+//					}
+//				}
 				
 				view.rows.push(viewListEquipments);
 
@@ -842,13 +956,30 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			if (stompSubscriptorService) {
 
-				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage);
+				let fields = undefined;
+				
+				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+					
+					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+						
+						fields = [];
+						
+						fields.push({
+							target: "targetElement.id",
+							values: []
+						});
+						
+						self.args.selectedPks.forEach(e => fields[0].values.push(e));
+					}
+				}
+
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage, fields);
 			}
 			
 			let updateStats = function() {
-		
+				
 				let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-		
+	
 				if (alarmService) {
 				
 					let stats = alarmService.getData().stats;
@@ -870,7 +1001,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							$$("action-panel-alarm-stat-muted-" + self.uid).setValue(stats.mutedAlarms);	
 						}
 					}
-				}
+				}	
 			};
 			
 			let updateLevelStats = function() {
@@ -957,9 +1088,12 @@ export default class AlarmMonitorModule extends GenericModule {
 				updateLevelStatsInfo();
 			}
 			
-			updateStats();
+			if ($$("view-main-action-panel-" + self.uid)) {
 			
-			updateLevelStats();
+				updateStats();
+			
+				updateLevelStats();	
+			}
 
 			function onMessage(be) {
 
@@ -971,9 +1105,12 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					updateDataTables(flattenedData, changes);
 					
-					updateStats();
+					if ($$("view-main-action-panel-" + self.uid)) {
 					
-					updateLevelStats();
+						updateStats();
+						
+						updateLevelStats();	
+					}
 				}
 
 				function updateDataTables(data, changes) {

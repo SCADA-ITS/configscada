@@ -103,8 +103,6 @@ export default class DataTable {
 		let showHeader = this.getGridOptions(GridOptions.SHOW_HEADER);
 		let columnsWithFilters = this.metadata.gridFields.filter(e => (e.filtered));
 
-		console.log(metadata)
-		console.log(data)
 		if (metadata != undefined) {
 
 			datatable.id = "dt-" + this.uid;
@@ -118,8 +116,6 @@ export default class DataTable {
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
 			datatable.select = resultSelect;
-			//			console.log(metadata)
-			//			console.log(data)
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
@@ -698,8 +694,6 @@ export default class DataTable {
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
 		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
 		let resultSelRows = this.getGridOptions(GridOptions.SHOW_SELECTED);
-		console.log(resultSelRows)
-
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let resultFilter = undefined;
@@ -798,7 +792,7 @@ export default class DataTable {
 		}
 
 		toolbar.elements.push({});
-		toolbar.elements.push({ minWidth: 4 });
+		//toolbar.elements.push({ minWidth: 4 });
 
 		toolbar.elements.push({
 			id: "tb_ws_status-" + this.uid,
@@ -818,6 +812,7 @@ export default class DataTable {
 				{ 
 					id: "template-sel-" + this.uid,
 					borderless: true,
+					minWidth: 120,
 					template: function(obj) { 
 						return `<div class="sel_label"><span>${i18n.t("LBL_SEL")}</span><span class="sel_label_text">${" " + obj.selected + "/" + obj.total}</span></div>`;
 					}
@@ -1863,10 +1858,14 @@ export default class DataTable {
 					console.error(error);
 					args = {};
 				}
-
-				args.callbacks = [];
-				args.callbacks.push(function() { self.refresh(self) });
 			}
+			
+			if (!args.callbacks) {
+				
+				args.callbacks = [];
+			}
+
+			args.callbacks.push(function() { self.refresh(self) });
 
 			// Any selected?
 			if (selectedPks.length > 0) {

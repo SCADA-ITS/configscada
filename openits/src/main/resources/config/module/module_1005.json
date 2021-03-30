@@ -1,5 +1,7 @@
 {
-	"moduleAction": {},
+	"moduleAction": {
+	    "elements": 100501
+	},
 	"adapter": "ws.alarm.getList",
 	"restEndpoint": "alarms",
 	"topic": "/topic/alarm.>",
