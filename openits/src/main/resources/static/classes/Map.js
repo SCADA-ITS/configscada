@@ -33,12 +33,9 @@ var graphSynoptic = webix.proxy(
       alias
       description
       elementTypeState { id }
-      icon
       childs{
         id
         alias
-        positionX
-        positionY
         elementTypeState { id }
         elementType {
           id
