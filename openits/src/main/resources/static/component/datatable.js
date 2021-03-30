@@ -69,7 +69,7 @@ export default class DataTable {
 			sort: undefined
 		};
 		this.filteredFields = {};
-		this.rowsSelected = [];
+		this.rowsSelected = new Set();
 		this.disabledUnselectEvent = false;
 		
 		if (this.metadata.gridCommands != undefined && this.metadata.gridCommands != null && Array.isArray(this.metadata.gridCommands)){
@@ -903,22 +903,24 @@ export default class DataTable {
 
 			if (preserve) {
 
-				rowsSelected.push(selection.id);
+				if (!rowsSelected.has(selection.id)) {
+				
+					rowsSelected.add(selection.id);	
+				}
 
 			} else {
 
-				rowsSelected.length = 0;
-				rowsSelected.push(selection.id);
+				rowsSelected.clear();
+				rowsSelected.add(selection.id);
 			}
 
 		});
 
 		datatable.attachEvent("onBeforeUnSelect", function(selection) {
 
-			if (!self.disabledUnselectEvent && rowsSelected != undefined && rowsSelected.length > 0) {
-
-				let deselection = rowsSelected.findIndex(e => e === selection.id);
-				rowsSelected.splice(deselection, 1);
+			if (!self.disabledUnselectEvent && rowsSelected.size > 0) {;
+				
+				rowsSelected.delete(selection.id);
 			}
 
 		});
@@ -927,7 +929,7 @@ export default class DataTable {
 
 			if (labelSelected) {
 				
-				labelSelected.setValues({ selected: rowsSelected.length, total: datatable.count() });
+				labelSelected.setValues({ selected: rowsSelected.size, total: datatable.count() });
 			}
 		});
 
@@ -1106,7 +1108,7 @@ export default class DataTable {
 
 			grid.clearAll();
 
-			this.rowsSelected.length = 0;
+			this.rowsSelected.clear();
 		}
 	}
 
@@ -1252,22 +1254,22 @@ export default class DataTable {
 	restoreSelected() {
 
 		let grid = $$("dt-" + this.uid);
-		let rowsSelected = this.rowsSelected;
-
-		if (rowsSelected != undefined && rowsSelected.length > 0) {
+		let self = this;
+		
+		if (this.rowsSelected.size > 0) {
 			
-			for (let i = rowsSelected.length - 1; i >= 0; i--) {
-				
-				let rowSelected = rowsSelected[i];
+			let rowsSelectedCopy = new Set(this.rowsSelected);
+		
+			rowsSelectedCopy.forEach(rowSelected => {
 				
 				if (grid.getItem(rowSelected)) {
-					
+						
 					grid.select(rowSelected, true);
 				}
 				else {
-					rowsSelected.splice(rowsSelected, 1);
+					self.rowsSelected.delete(rowSelected);
 				}
-			}
+			});	
 		}
 	}
 
