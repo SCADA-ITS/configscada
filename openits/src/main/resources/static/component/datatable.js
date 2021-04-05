@@ -784,7 +784,7 @@ export default class DataTable {
 
 				if (cmd.showText) {
 
-					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, css: "grid-button-text", width: 150, label: i18n.t(cmd.label), tooltip: i18n.t(cmd.label) });
+					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, css: "grid-button-text", width: 120, label: i18n.t(cmd.label), tooltip: i18n.t(cmd.label) });
 
 				} else {
 
