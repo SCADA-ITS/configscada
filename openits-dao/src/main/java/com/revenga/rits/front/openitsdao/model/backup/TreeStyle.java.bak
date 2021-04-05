@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 
@@ -11,13 +11,13 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the custom_graphic_equipments database table.
+ * The persistent class for the tree_styles database table.
  * 
  */
 @Entity
-@Table(name="custom_graphic_equipments")
-@NamedQuery(name="CustomGraphicEquipment.findAll", query="SELECT g FROM CustomGraphicEquipment g")
-public class CustomGraphicEquipment implements Serializable {
+@Table(name="tree_styles")
+@NamedQuery(name="TreeStyle.findAll", query="SELECT t FROM TreeStyle t")
+public class TreeStyle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,10 +25,14 @@ public class CustomGraphicEquipment implements Serializable {
 	private Integer id;
 
 	private String description;
+	
+	private Boolean enabled;
 
 	private String name;
 
-	public CustomGraphicEquipment() {
+	private Boolean visible;
+
+	public TreeStyle() {
 	}
 
 	public Integer getId() {
@@ -40,18 +44,35 @@ public class CustomGraphicEquipment implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -30,6 +30,12 @@ public class GridCommand implements Serializable {
 	private Boolean multiselect;
 
 	private Integer position;
+	
+	@Column(name="show_text")
+	private Boolean showText;
+	
+	@Column(name="item_required")
+	private Boolean itemRequired;
 
 	//bi-directional many-to-one association to Grid
 	@JsonIgnore
@@ -39,6 +45,8 @@ public class GridCommand implements Serializable {
 	//uni-directional many-to-one association to ModuleAction
 	@ManyToOne
 	private ModuleAction moduleAction;
+	
+	private String args;
 	
 	//uni-directional many-to-one association to ViewType
 	@ManyToOne
@@ -112,11 +120,35 @@ public class GridCommand implements Serializable {
 		this.moduleAction = moduleAction;
 	}
 	
+	public String getArgs() {
+		return this.args;
+	}
+
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
 	public ViewType getViewType() {
 		return this.viewType;
 	}
 
 	public void setViewType(ViewType viewType) {
 		this.viewType = viewType;
+	}
+
+	public Boolean getShowText() {
+		return this.showText;
+	}
+
+	public void setShowText(Boolean showText) {
+		this.showText = showText;
+	}
+
+	public Boolean getItemRequired() {
+		return this.itemRequired;
+	}
+
+	public void setItemRequired(Boolean itemRequired) {
+		this.itemRequired = itemRequired;
 	}
 }

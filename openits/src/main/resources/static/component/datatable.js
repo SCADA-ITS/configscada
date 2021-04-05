@@ -860,10 +860,10 @@ export default class DataTable {
 						template: (obj) => {
 
 							if (!obj.default) {
-								return `<span class = 'webix_icon ${obj.icon}'></span> ${obj.value}`;
+								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
 							}
 							else {
-								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='font-weight: 500;'>${obj.value}</span>`;
+								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
 							}
 
 						},

@@ -208,4 +208,9 @@ export default class EntitiesManager {
 			}
 		}
 	}
+	
+	update(em_type) {
+		
+		assign(this, em_type.id);
+	}
 }

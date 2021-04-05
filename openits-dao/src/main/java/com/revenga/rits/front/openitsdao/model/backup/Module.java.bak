@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -43,6 +43,8 @@ public class Module implements Serializable {
 	private ViewType viewType;
 
 	private Boolean visible;
+	
+	private Boolean autoload;
 
 	@Column(name="wss_topic")
 	private String wssTopic;
@@ -227,5 +229,13 @@ public class Module implements Serializable {
 
 	public void setViewType(ViewType viewType) {
 		this.viewType = viewType;
+	}
+
+	public Boolean getAutoload() {
+		return this.autoload;
+	}
+
+	public void setAutoload(Boolean autoload) {
+		this.autoload = autoload;
 	}
 }

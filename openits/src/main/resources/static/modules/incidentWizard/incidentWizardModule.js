@@ -422,22 +422,22 @@ export default class IncidentWizardModule extends GenericModule {
 			
 			if (viewMain) {
 		
-			webix.ui(viewMain, $$(self.uid));
-			
-			if (self.dtLocations) {
-				self.dtLocations.callbacks();
-			}	
-			
-			if (self.dtIncidentTypes) {
-				self.dtIncidentTypes.callbacks();
-			}
-			
-			if (self.listViewStrechs) {
+				webix.ui(viewMain, $$(self.uid));
 				
-				self.listViewStrechs.selectByIndex(0);	
+				if (self.dtLocations) {
+					self.dtLocations.callbacks();
+				}	
+				
+				if (self.dtIncidentTypes) {
+					self.dtIncidentTypes.callbacks();
+				}
+				
+				if (self.listViewStrechs) {
+					
+					self.listViewStrechs.selectByIndex(0);	
+				}
+				
 			}
-			
-		}
 				
 		}, 500);
 	}

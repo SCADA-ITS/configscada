@@ -1,0 +1,102 @@
+package com.revenga.rits.front.openitsdao.model.backup;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+/**
+ * The persistent class for the tree_filter_params database table.
+ * 
+ */
+@Entity
+@Table(name="tree_filter_params")
+@NamedQuery(name="TreeFilterParam.findAll", query="SELECT t FROM TreeFilterParam t")
+public class TreeFilterParam implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
+
+	private String func;
+	
+	private String operator;
+	
+	private String value1;
+	
+	private String value2;
+
+	//bi-directional many-to-one association to Tree
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="tree_id")
+	private Tree tree;
+	
+	//bi-directional many-to-one association to Tree
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="tree_param_id")
+	private TreeParam treeParam;
+
+	public TreeFilterParam() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFunc() {
+		return func;
+	}
+
+	public void setFunc(String func) {
+		this.func = func;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getValue1() {
+		return value1;
+	}
+
+	public void setValue1(String value1) {
+		this.value1 = value1;
+	}
+
+	public String getValue2() {
+		return value2;
+	}
+
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+	public Tree getTree() {
+		return tree;
+	}
+
+	public void setTree(Tree tree) {
+		this.tree = tree;
+	}
+
+	public TreeParam getTreeParam() {
+		return treeParam;
+	}
+
+	public void setTreeParam(TreeParam treeParam) {
+		this.treeParam = treeParam;
+	}
+
+}

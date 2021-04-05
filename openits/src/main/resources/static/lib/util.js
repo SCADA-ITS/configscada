@@ -16,7 +16,8 @@ const WindowParam = Object.freeze({
 	COLOR: 11,
 	LABEL: 12,
 	RESIZABLE: 13,
-	EXTERNALIZABLE: 14
+	EXTERNALIZABLE: 14,
+	MODAL: 15
 });
 
 export let util = {
@@ -48,6 +49,7 @@ export let util = {
 			let externalizable = true;
 			let height = 768;
 			let width = 1280;
+			let modal = false;
 			let win_id = "win_" + module.id + "_" + webix.uid();
 
 			let lazyClass;
@@ -64,6 +66,7 @@ export let util = {
 					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
 					height = module.windowValues.find(e => e.windowParam.id === WindowParam.HEIGHT).value;
 					width = module.windowValues.find(e => e.windowParam.id === WindowParam.WIDTH).value;
+					modal = module.windowValues.find(e => e.windowParam.id === WindowParam.MODAL).value === 'true';
 				}
 				catch {
 
@@ -170,6 +173,7 @@ export let util = {
 					view: "window",
 					id: win_id,
 					move: true,
+					modal: modal,
 					css: "default-window",
 					head: head,
 					height: height,

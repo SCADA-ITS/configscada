@@ -1,8 +1,16 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -19,29 +27,31 @@ public class Tree implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="adapter_id")
-	private Integer adapterId;
-
-	@Column(name="cmd_buttons")
-	private Boolean cmdButtons;
-
 	private Boolean enabled;
 
-	private String icon;
-
 	private String label;
-
-	private Boolean multiselect;
-
-	private Boolean search;
-
-	private Boolean sorted;
 
 	private Boolean visible;
 
 	//bi-directional many-to-one association to TreeCommand
 	@OneToMany(mappedBy="tree")
 	private List<TreeCommand> treeCommands;
+	
+	//bi-directional many-to-one association to TreeFilter
+	@OneToMany(mappedBy="tree")
+	private List<TreeFilter> treeFilters;
+	
+	//bi-directional many-to-one association to TreeParam
+	@OneToMany(mappedBy="tree")
+	private List<TreeParam> treeParams;
+	
+	//bi-directional many-to-one association to TreeOptionValue
+	@OneToMany(mappedBy="tree")
+	private List<TreeOptionValue> treeOptionValues;
+	
+	//uni-directional many-to-one association to Adapter
+	@ManyToOne
+	private Adapter adapter;
 
 	public Tree() {
 	}
@@ -54,22 +64,6 @@ public class Tree implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getAdapterId() {
-		return this.adapterId;
-	}
-
-	public void setAdapterId(Integer adapterId) {
-		this.adapterId = adapterId;
-	}
-
-	public Boolean getCmdButtons() {
-		return this.cmdButtons;
-	}
-
-	public void setCmdButtons(Boolean cmdButtons) {
-		this.cmdButtons = cmdButtons;
-	}
-
 	public Boolean getEnabled() {
 		return this.enabled;
 	}
@@ -78,44 +72,12 @@ public class Tree implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public String getIcon() {
-		return this.icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
 	public String getLabel() {
 		return this.label;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Boolean getMultiselect() {
-		return this.multiselect;
-	}
-
-	public void setMultiselect(Boolean multiselect) {
-		this.multiselect = multiselect;
-	}
-
-	public Boolean getSearch() {
-		return this.search;
-	}
-
-	public void setSearch(Boolean search) {
-		this.search = search;
-	}
-
-	public Boolean getSorted() {
-		return this.sorted;
-	}
-
-	public void setSorted(Boolean sorted) {
-		this.sorted = sorted;
 	}
 
 	public Boolean getVisible() {
@@ -146,6 +108,80 @@ public class Tree implements Serializable {
 		treeCommand.setTree(null);
 
 		return treeCommand;
+	}
+	
+	public List<TreeFilter> getTreeFilters() {
+		return this.treeFilters;
+	}
+
+	public void setTreeFilters(List<TreeFilter> treeFilters) {
+		this.treeFilters = treeFilters;
+	}
+
+	public TreeFilter addTreeFilter(TreeFilter treeFilter) {
+		getTreeFilters().add(treeFilter);
+		treeFilter.setTree(this);
+
+		return treeFilter;
+	}
+
+	public TreeFilter removeTreeFilter(TreeFilter treeFilter) {
+		getTreeFilters().remove(treeFilter);
+		treeFilter.setTree(null);
+
+		return treeFilter;
+	}
+	
+	public List<TreeParam> getTreeParams() {
+		return this.treeParams;
+	}
+
+	public void setTreeParams(List<TreeParam> treeParams) {
+		this.treeParams = treeParams;
+	}
+
+	public TreeParam addTreeParam(TreeParam treeParam) {
+		getTreeParams().add(treeParam);
+		treeParam.setTree(this);
+
+		return treeParam;
+	}
+
+	public TreeParam removeTreeParam(TreeParam treeParam) {
+		getTreeParams().remove(treeParam);
+		treeParam.setTree(null);
+
+		return treeParam;
+	}
+	
+	public List<TreeOptionValue> getTreeOptionValues() {
+		return this.treeOptionValues;
+	}
+
+	public void setTreeOptionValues(List<TreeOptionValue> treeOptionValues) {
+		this.treeOptionValues = treeOptionValues;
+	}
+	
+	public TreeOptionValue addTreeOptionValue(TreeOptionValue treeOptionValue) {
+		getTreeOptionValues().add(treeOptionValue);
+		treeOptionValue.setTree(this);
+
+		return treeOptionValue;
+	}
+
+	public TreeOptionValue removeTreeOptionValue(TreeOptionValue treeOptionValue) {
+		getTreeOptionValues().remove(treeOptionValue);
+		treeOptionValue.setTree(null);
+
+		return treeOptionValue;
+	}
+	
+	public Adapter getAdapter() {
+		return this.adapter;
+	}
+
+	public void setAdapter(Adapter adapter) {
+		this.adapter = adapter;
 	}
 
 }

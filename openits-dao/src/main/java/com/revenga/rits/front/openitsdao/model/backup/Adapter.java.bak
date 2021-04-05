@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 import javax.persistence.*;

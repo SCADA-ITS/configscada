@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -33,10 +33,10 @@ public class MapLayerElementZoom implements Serializable {
 	@Column(name="zoom_upper")
 	private Integer zoomUpper;
 
-	//bi-directional many-to-one association to CustomGraphicEquipment
+	//bi-directional many-to-one association to GraphicIcon
 	@ManyToOne
-	@JoinColumn(name="custom_graphic_equipment_id")
-	private CustomGraphicEquipment customGraphicEquipment;
+	@JoinColumn(name="graphic_icon_id")
+	private GraphicIcon graphicIcon;
 
 	//bi-directional many-to-one association to MapLayerElement
 	@JsonIgnore
@@ -95,12 +95,12 @@ public class MapLayerElementZoom implements Serializable {
 		this.zoomUpper = zoomUpper;
 	}
 
-	public CustomGraphicEquipment getCustomGraphicEquipment() {
-		return this.customGraphicEquipment;
+	public GraphicIcon getGraphicIcon() {
+		return this.graphicIcon;
 	}
 
-	public void setCustomGraphicEquipment(CustomGraphicEquipment customGraphicEquipment) {
-		this.customGraphicEquipment = customGraphicEquipment;
+	public void setGraphicIcon(GraphicIcon graphicIcon) {
+		this.graphicIcon = graphicIcon;
 	}
 
 	public MapLayerElement getMapLayerElement() {

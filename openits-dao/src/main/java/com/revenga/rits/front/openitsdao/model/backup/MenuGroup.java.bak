@@ -1,4 +1,4 @@
-package com.revenga.rits.front.openitsdao.model;
+package com.revenga.rits.front.openitsdao.model.backup;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -30,6 +30,8 @@ public class MenuGroup implements Serializable {
 	private String name;
 
 	private Boolean visible;
+	
+	private Integer position;
 
 	//bi-directional many-to-one association to MenuItem
 	@OneToMany(mappedBy="menuGroup")
@@ -93,6 +95,14 @@ public class MenuGroup implements Serializable {
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
 	}
+	
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
 
 	public List<MenuItem> getMenuItems() {
 		return this.menuItems;
@@ -115,5 +125,7 @@ public class MenuGroup implements Serializable {
 
 		return menuItem;
 	}
+
+	
 
 }
