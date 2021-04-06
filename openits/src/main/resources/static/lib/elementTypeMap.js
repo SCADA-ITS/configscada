@@ -304,6 +304,7 @@ export function getElementTypeParam(elementParamIdString) {
 }
 
 export function getElementParamTypeIdi18(elementValueid) {
+	console.log("Jony elementtype: " + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_ID]);
 	let ret = "ElementTypeParam:" + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_ID] + ":" + elementValueid.split(":")[POSITION_OF_PARAM_TYPE_ID] + ":" + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_PARAM_ID]; 
 	return ret;
 }

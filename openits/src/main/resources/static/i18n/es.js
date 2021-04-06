@@ -527,6 +527,10 @@ var i18_es = {
     "ElementTypeParam:16:2:1002.description": "Mensajes descripcion",
     "ElementTypeParam:16:2:1004.alias": "Tipo mensaje",
     "ElementTypeParam:16:2:1004.description": "Tipo mensaje",
+    
+    //Mensajes Megafonia
+    "[0005ALERTACASTELLANO3]": "¡Alerta!¡Alerta! Prueba de megafonía para evuación en tunel. Se requiere una evacuación inminente.",
+    "[0006TESTCASTELLANO5]": "¡Alerta!¡Alerta! Esto es una prueba de megafonía de texto en Castellano. Repito. Esto es una prueba.",
 
     "ElementTypeParam:16:2:1.alias": "status",
     "ElementTypeParam:16:2:1.description": "status",
@@ -1675,8 +1679,8 @@ var i18_es = {
     "AlarmConfig:156": "ALARMA CONTROLADORA PMV ADVERTENCIA DE TEMPERATURA",
     "AlarmConfig:157": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",
     "AlarmConfig:158": "ALARMA CONTROLADORA PMV ADVERTENCIA DE TEMPERATURA",
-    "AlarmConfig:159": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",
-    */
+    "AlarmConfig:159": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",*/
+   
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",

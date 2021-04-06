@@ -153,7 +153,11 @@ export default class TabForm {
 					}
 
 				},tooltip:function(obj){  
-						return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
+						if (obj.tooltiplab.split(":")[elementTypeMap.POSITION_OF_ELEMENT_TYPE_ID] == elementTypeMap.ELEMENT_TYPE_16_PA_ZONE){
+							return $.i18n(obj.measure);
+						}else{
+							return $.i18n(elementTypeMap.getElementParamTypeIdi18(obj.tooltiplab) + ".description");
+						}
 					}
 				}
 			],

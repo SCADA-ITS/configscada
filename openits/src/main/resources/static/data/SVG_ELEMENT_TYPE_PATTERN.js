@@ -485,9 +485,6 @@ export let SVG_16_PA_ZONE =
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-288.53332)">
-     <title 
-     id="`+ REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':title"' +
-     `>HOLA</title>
     <g
        id="g1858"
        transform="translate(-92.528572,121.25477)"
@@ -532,7 +529,7 @@ export let SVG_16_PA_ZONE =
        style="font-style:normal;font-weight:normal;font-size:2.11666656px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="-1.7953866"
        y="299.92926"
-       id="` + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':Text"' + `><tspan
+       id="` + REGEX_PATTERN_INIT+'elementId'+REGEX_PATTERN_END + ':Value"' + `><tspan
          sodipodi:role="line"
          id="tspan4537"
          x="-1.7953866"

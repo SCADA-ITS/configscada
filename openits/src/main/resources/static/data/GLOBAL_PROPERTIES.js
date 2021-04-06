@@ -145,9 +145,6 @@ export const ELEMENT_TYPE = {
     "ElementType:16" :{ id: "ElementType:16", uiType: UI_ELEMENT_TYPE_GENERIC, value: 16, scale_x: 28, scale_y: 28,svgRaw:SVG_16_PA_ZONE,
     	elementTypeParams:[
     		{PA_ZONE_PLAYING: "1004:2"}
-          ],
-        elementTypeTitle:[
-            {PA_ZONE_TEXT: "1003:2"}
           ]},
   
     "ElementType:17" :{ id: "ElementType:17", uiType: UI_ELEMENT_TYPE_GENERIC, value: 17, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_17_ANEM_EXT,
