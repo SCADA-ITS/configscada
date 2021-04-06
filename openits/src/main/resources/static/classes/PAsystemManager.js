@@ -1,5 +1,8 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 
+const PARAM_MESSAGE_ID = "1001";
+const PARAM_MESSAGE_TEXT = "1002";
+
 export default class PAsystemManager {
 	constructor(id, idType, typeCommand,scale,values,orderId) {
 		this.id=id;
@@ -45,7 +48,6 @@ export default class PAsystemManager {
 					elementTypeParam {
 						id 
 						alias  
-						representation
 						graphics {id alias graphicType graphicValues {id value}}
 					}
 				}
@@ -168,22 +170,33 @@ export default class PAsystemManager {
 			
 			
 		this.graphqlEType.load().then(dataElement => {
+				this.messages = [];
+				let contador = 0;
 				dataElement.elementTypeParams.forEach(element => {
 					if(element.graphics !== null) {
-						this.messages = [];
 						element.graphics.forEach(item => 
 						{
-							this.messages.push({
-								id_messages: item.graphicValues[0].value,
-								messages: item.alias
-			                });
+							item.graphicValues.forEach(graphic =>
+							{
+								if(graphic.id.split(":")[6] == PARAM_MESSAGE_ID){
+									this.messages.push({
+										id_messages: graphic.value,
+										messages: item.alias
+					                });
+								}else if(graphic.id.split(":")[6] == PARAM_MESSAGE_TEXT){
+									this.messages[contador] = {
+										id_messages: this.messages[contador].id_messages,
+										messages: this.messages[contador].messages,
+										tooltip: graphic.value
+									}
+									contador = contador + 1;
+								}
+							});
 						});
 						
-					}
-						
-				
+					}									
 			});
-				
+			
 				var  grid1 = {   
 						id: "table_zones",
 						view:"datatable",
@@ -199,10 +212,11 @@ export default class PAsystemManager {
 				var  grid2 = {  
 						id: "table_messages",
 						view:"datatable",
+						tooltip: true,
 						   columns:[
 						    { id:"check_messages", header:{ content:"masterCheckbox" }, checkValue:'on', uncheckValue:'off', template:"{common.checkbox()}", width:40},
 						    { id:"id_messages",	sort:"string", header:"id",width:50},
-						    { id:"messages",	sort:"string", header:"Mensajes",width:200}
+						    { id:"messages",	sort:"string", header:"Mensajes", width:200, tooltip:function (obj) {return obj.tooltip}}
 						  ],
 						  autoheight:true,
 						  autowidth:true,  

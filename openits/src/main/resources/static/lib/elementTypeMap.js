@@ -77,6 +77,7 @@ export const ELEMENT_TYPE_MEASURE = 2;
 export const ELEMENT_TYPE_STATIC = 1;
 
 //  elementTypeParamId : paramTypeId
+export const PA_ZONE_TEXT = "1003:2";
 export const PA_ZONE_PLAYING = "1004:2";
 export const BAR_COMMAND_FOR_BARRIER = "1:2";
 export const FAN_COMMAND_FOR_FAN = "1:2";

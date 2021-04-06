@@ -455,6 +455,29 @@ function updateIcon(element, suffix="") {
       }
     });
   }
+  
+  // change title
+  let titles;
+  if(ELEMENT_TYPE.values[element.elementType.id].elementTypeTitle){
+    titles={};
+    ELEMENT_TYPE.values[element.elementType.id].elementTypeTitle.forEach(item => {
+      let key = Object.keys(item)[0];
+      let tempValue;
+      if(element.elementValues){
+        tempValue = element.elementValues.find(
+          (elemValue) => elementTypeMap.getElementTypeParam(elemValue.id) == item[key]
+        );        
+      }
+      if(tempValue != undefined && tempValue){
+        titles[key]=tempValue.value; 
+      }else{
+        titles[key]=null;
+      }
+      if(document.getElementById(element.id + suffix + ":title") != null){
+        document.getElementById(element.id + suffix + ":title").innerHTML = titles[key];
+      }
+    });
+  }
 
   // specific case
   if(element.elementType.id === ELEMENT_TYPE.ID_8_BAR){
