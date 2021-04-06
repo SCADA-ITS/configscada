@@ -4,17 +4,20 @@
 		"recognize": 100802,
 		"deactivate": 100803,
 		"mute": 100804,
-		"unmute": 100805
+		"unmute": 100805,
+		"createMuteAlarm": 100806
 	},
 	"actionEndpoints": {
 		"recognize": "alarms/send_recognize_alarm",
 		"deactivate": "alarms/send_deactivation_alarm",
-		"mute": "alarms/send_alarm_muted_actions"
+		"mute": "alarms/send_alarm_muted_actions",
+		"unmute": "alarms/send_alarm_muted_actions"
 	},
 	"restEndpoints": {
 		"alarms": "alarms",
 		"alarmsArray": "alarms",
-		"alarm": "alarms/${id}"
+		"alarm": "alarms/${id}",
+		"alarmMuted": "alarms/alarm_muted/${id}"
 	},
 	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
 	"alarmTypeManual": [ "AlarmType:4" ],
