@@ -101,6 +101,9 @@ export default class GraphicElement {
               let thisElementValuePosition = this.element.elementValues.findIndex(
                 (item) => item.id === element[i][j].id
               );
+             if(this.element[i][thisElementValuePosition] == undefined){
+              this.element[i][thisElementValuePosition] = {};
+             }
               Object.assign(this.element[i][thisElementValuePosition], element[i][j]);
             }
           }else{

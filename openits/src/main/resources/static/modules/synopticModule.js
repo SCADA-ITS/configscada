@@ -454,10 +454,37 @@ export default class SynopticModule extends GenericModule{
 	
   }
 
+  close_intervals() {
+	
+    if (window.synopticService && window.synopticService.synopticIntevals && window.synopticService.synopticIntevals[this.synopticDivId + "SVG"]) {
+      
+      for(let element in window.synopticService.synopticIntevals[this.synopticDivId + "SVG"]) {
+      
+        delete window.synopticService.synopticIntevals[this.synopticDivId + "SVG"][element];
+        let isRunningOut = false;
+        for(let synoptic in window.synopticService.synopticIntevals) {
+          if(window.synopticService.synopticIntevals[synoptic][element]){
+            isRunningOut = true;
+          }
+        }
+
+        if(!isRunningOut){
+          clearInterval(window.synopticService.elementIntevals[element]);
+          delete window.synopticService.elementIntevals[element];
+        }
+        
+      }
+      
+      delete window.synopticService.synopticIntevals[this.synopticDivId + "SVG"];
+
+    }
+	
+  }
+
   on_destroy(){
 
-    this.disconnect_ws()
-
+    this.disconnect_ws();
+    this.close_intervals();
   }
 
   on_show(){

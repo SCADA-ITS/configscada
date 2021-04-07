@@ -5,6 +5,8 @@ import { availablePictos } from "../pmvpicto.js";
 
 const ELMENT_TYPE_STATE_UI_COLOR = "color";
 
+const ALTERNANCE_TIME = 3000;
+
 export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   let panelConfig = element.elementValues.find((ic) =>
       elementTypeMap.getElementTypeParam(ic.id) == elementTypeMap.PANEL_MANAGER_CONFIG
@@ -92,9 +94,18 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
         // find the element with that value
         let value_to_find = 1001 + n_elements;
         let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
-        if(content_value !== null && content_value !== undefined){
+        
+        if(content_value !== null && content_value !== undefined 
+          && JSON.parse(content_value).value != undefined){
           let valueData =JSON.parse(content_value);
-          content_value = valueData.value;
+          content_value = valueData.value[0];
+          let contentValues;
+          if(Array.isArray(valueData.value) && valueData.value.length > 1){
+            contentValues = [];
+            for (let index = 0; index < valueData.value.length; index++) {
+              contentValues[index] = valueData.value[index];
+            }
+          }
           let isGraphic=false;
           if(panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tipo"] == "Dual"){
             if(parseInt(valueData.type)==1){
@@ -110,6 +121,36 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
             }else{
               auxBase64=availablePictos["0"].base64
             }
+
+            function changeImgInterval(snapItem, iterator){
+              let nextIterator=iterator+1;
+              if(!contentValues[nextIterator]){
+                nextIterator = 0;
+              }
+              if(snapItem.node.href.baseVal == "data:image/png;base64,"+availablePictos[contentValues[iterator]].base64){
+                snapItem.node.href.baseVal = "data:image/png;base64," + availablePictos[contentValues[nextIterator]].base64;
+              }else{
+                changeImgInterval(snapItem, nextIterator);
+              }
+            }
+
+            if(contentValues){
+              
+              initSynopticService();
+
+              if(!window.synopticService.synopticIntevals[snapDiv.node.id]){
+                window.synopticService.synopticIntevals[snapDiv.node.id] = {};
+              }
+              if(!window.synopticService.synopticIntevals[snapDiv.node.id][element.id + suffix + ":" + value_to_find]){
+                window.synopticService.synopticIntevals[snapDiv.node.id][element.id + suffix + ":" + value_to_find] = true;
+              }
+              if(!window.synopticService.elementIntevals[element.id + suffix + ":" + value_to_find]){
+                window.synopticService.elementIntevals[element.id + suffix + ":" + value_to_find] = setInterval( function alternancePanel(){
+                  changeImgInterval(Snap.select("#"+element.id + suffix + ":" + value_to_find), 0);
+                }, ALTERNANCE_TIME);
+              }
+            
+            }
             
             let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
             im.attr("id", element.id + suffix + ":" + value_to_find);
@@ -120,8 +161,9 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
               im.attr("preserveAspectRatio", "none");
             }
           } else {
-            if(content_value != null) {
-              let all_lines = content_value.split(":$");
+
+            function drawTxtLines(txt){
+              let all_lines = txt.split(":$");
               let g1 = s.group();
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
@@ -132,6 +174,70 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
                 r1.attr("font-family", "'VT323', monospace")
                 r1.attr("font-size", "10px");
               });
+            }
+
+            if(contentValues){
+              drawTxtLines(content_value);
+              
+              function changeTxtInterval(snapItem, iterator){
+                let nextIterator=iterator+1;
+                let lines = 0;
+                let splitCompate;
+                let comparelines = 0;
+
+                if(!contentValues[nextIterator]){
+                  nextIterator = 0;
+                }
+                if(snapItem.children() && snapItem.children().length){
+                  lines = snapItem.children().length;
+                }
+                if(contentValues[iterator]){
+                  splitCompate = contentValues[iterator].split(":$");
+                  if(splitCompate && splitCompate.length){
+                    comparelines = splitCompate.length
+                  }
+                }
+
+                if(lines===comparelines){
+                  let compareEquals = true;
+                  for (let index = 0; index < lines; index++) {
+                    if(snapItem.children()[index].node.innerHTML != splitCompate[index]){
+                      compareEquals = false;
+                    }
+                  }
+                  if(compareEquals){
+                    for (let index = 0; index < lines; index++) {
+                      if(contentValues[nextIterator] && contentValues[nextIterator].split(":$") && contentValues[nextIterator].split(":$")[index] ){
+                        snapItem.children()[index].node.innerHTML=contentValues[nextIterator].split(":$")[index];
+                      }else{
+                        snapItem.children()[index].node.innerHTML="";
+                      }
+                    }
+                  }else{
+                    changeTxtInterval(snapItem, nextIterator);
+                  }
+                }else{
+                  changeTxtInterval(snapItem, nextIterator);
+                }
+
+              }
+
+              initSynopticService();
+
+              if(!window.synopticService.synopticIntevals[snapDiv.node.id]){
+                window.synopticService.synopticIntevals[snapDiv.node.id] = {};
+              }
+              if(!window.synopticService.synopticIntevals[snapDiv.node.id][element.id + suffix + ":" + value_to_find]){
+                window.synopticService.synopticIntevals[snapDiv.node.id][element.id + suffix + ":" + value_to_find] = true;
+              }
+              if(!window.synopticService.elementIntevals[element.id + suffix + ":" + value_to_find]){
+                window.synopticService.elementIntevals[element.id + suffix + ":" + value_to_find] = setInterval( function alternancePanel(){
+                  changeTxtInterval(Snap.select("#"+element.id + suffix + ":" + value_to_find), 0);
+                }, ALTERNANCE_TIME);
+              }
+ 
+            } else if(content_value != null) {
+              drawTxtLines(content_value);
             } else {
               // if there is no text, we create the placeholder based on the panel configuration
               let nLines = getLinesOfText("ElementType:" + elementTypeMap.getElementType(element.id), r, c);
@@ -187,56 +293,147 @@ export function getElementIcon(element, suffix="") {
   let color = element.elementTypeState[ELMENT_TYPE_STATE_UI_COLOR];
 
   // search in the values for an id greater than 1001
-  if(parseInt(element.id.split(":")[1]) === 30) {
-    for(let i=0; i<element.elementValues.length; i++) {
-      let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
-      if((elementTypeParam > 1000) && (elementTypeParam < 2000) && (parseInt(element.elementValues[i].id.split(":")[4]) === 2 )){
-        let picToShow = element.elementValues.find(
-          (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"
-        );
-  
-        let subpanelType = "";
-        if(picToShow !== undefined){
-          try{ 
-            let valueData =JSON.parse(picToShow.value);
-            if(valueData){
-              subpanelType = valueData.type === "1" ? "graphical" : "text";
-              picToShow = valueData;
-            }
-          } catch(e){console.log(e);}
+  for(let i=0; i<element.elementValues.length; i++) {
+    let elementTypeParam = parseInt(elementTypeMap.getElementTypeParam(element.elementValues[i].id));
+    if((elementTypeParam > 1000) && (elementTypeParam < 2000) && (parseInt(element.elementValues[i].id.split(":")[4]) === 2 )){
+      let picToShow = element.elementValues.find(
+        (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"
+      );
+
+      let subpanelType = "";
+      let contentValues;
+
+      if(picToShow !== undefined){
+        try{ 
+          let valueData =JSON.parse(picToShow.value);
+          if(valueData){
+            subpanelType = valueData.type === "1" ? "graphical" : "text";
+            picToShow = valueData;
+          }
+        } catch(e){console.log(e);}
+
+        if(Array.isArray(picToShow.value) && picToShow.value.length > 1){
+          contentValues = [];
+          for (let index = 0; index < picToShow.value.length; index++) {
+            contentValues[index] = picToShow.value[index];
+          }
+        }
+
+        //Clear previus interval if exists
+        initSynopticService();
+        if(window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam]){
+          clearInterval(window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam]);
+          delete window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam];
+        }
+        
+        if(subpanelType == "graphical") {
           
-          if(subpanelType == "graphical") {
-            if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-              if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
-                document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value].base64);
-              } else {
-                document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
-              }
-            } 
-            else {
-                if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-                  document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
-                }
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if (availablePictos[picToShow.value[0]] && typeof availablePictos[picToShow.value[0]].base64 != "undefined") {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos[picToShow.value[0]].base64);
+            } else {
+              document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href", "data:image/png;base64," + availablePictos["undefined"].base64);
             }
-          } else if(subpanelType == "text") {  // text
-            if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
-              if(picToShow.value != null) {
-                let all_lines = null;
-                all_lines = picToShow.value.split(":$");
-                all_lines.forEach((item, i) => { 
-                  if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
-                    document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
-                  }
-                });
-              } else if(typeof picToShow.value == 'undefined' || picToShow.value == null) {
-                // clean the panel if no data is received
-                for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
-                  document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
-                }
+          } else {
+              if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+                document.getElementById(element.id + suffix + ":" + elementTypeParam).setAttribute("href","data:image/png;base64," + availablePictos["undefined"].base64);
               }
+          }
+
+          if(contentValues){
             
+            function changeImgInterval(snapItem, iterator){
+              let nextIterator=iterator+1;
+              if(!contentValues[nextIterator]){
+                nextIterator = 0;
+              }
+              if(snapItem.node.href.baseVal == "data:image/png;base64,"+availablePictos[contentValues[iterator]].base64){
+                snapItem.node.href.baseVal = "data:image/png;base64," + availablePictos[contentValues[nextIterator]].base64;
+              }else{
+                changeImgInterval(snapItem, nextIterator);
+              }
+            }
+                
+            if(!window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam]){
+              window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam] = setInterval( function alternancePanel(){
+                changeImgInterval(Snap.select("#"+element.id + suffix + ":" + elementTypeParam), 0);
+              }, ALTERNANCE_TIME);
+            }
+            
+          }
+
+        } else if(subpanelType == "text") {  // text
+          
+          if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
+            if(picToShow.value[0] != null) {
+              let all_lines = null;
+              all_lines = picToShow.value[0].split(":$");
+              all_lines.forEach((item, i) => { 
+                if (document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)) != null) {
+                  document.getElementById(element.id + suffix + ":" + elementTypeParam + ":Line" + (i + 1)).textContent = item;
+                }
+              });
+            } else if(typeof picToShow.value[0] == 'undefined' || picToShow.value[0] == null) {
+              // clean the panel if no data is received
+              for(let i=0; i<document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]').length; i++) {
+                document.querySelectorAll('[id^="' + element.id + suffix + ':' + elementTypeParam + ':Line"]')[i].textContent = "";
+              }
             }
           }
+
+          if(contentValues){
+            
+            function changeTxtInterval(snapItem, iterator){
+              let nextIterator=iterator+1;
+              let lines = 0;
+              let splitCompate;
+              let comparelines = 0;
+
+              if(!contentValues[nextIterator]){
+                nextIterator = 0;
+              }
+              if(snapItem.children() && snapItem.children().length){
+                lines = snapItem.children().length;
+              }
+              if(contentValues[iterator]){
+                splitCompate = contentValues[iterator].split(":$");
+                if(splitCompate && splitCompate.length){
+                  comparelines = splitCompate.length
+                }
+              }
+             
+              if(lines===comparelines){
+                let compareEquals = true;
+                for (let index = 0; index < lines; index++) {
+                  if(snapItem.children()[index].node.innerHTML != splitCompate[index]){
+                    compareEquals = false;
+                  }
+                }
+                if(compareEquals){
+                  for (let index = 0; index < lines; index++) {
+                    if(contentValues[nextIterator] && contentValues[nextIterator].split(":$") && contentValues[nextIterator].split(":$")[index] ){
+                      snapItem.children()[index].node.innerHTML=contentValues[nextIterator].split(":$")[index];
+                    }else{
+                      snapItem.children()[index].node.innerHTML="";
+                    }
+                  }
+                }else{
+                  changeTxtInterval(snapItem, nextIterator);
+                }
+              }else{
+                changeTxtInterval(snapItem, nextIterator);
+              }
+
+            }
+
+            if(!window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam]){
+              window.synopticService.elementIntevals[element.id + suffix + ":" + elementTypeParam] = setInterval( function alternancePanel(){
+                changeTxtInterval(Snap.select("#"+element.id + suffix + ":" + elementTypeParam), 0);
+              }, ALTERNANCE_TIME);
+            }
+
+          }
+
         }
       }
     }
@@ -291,4 +488,16 @@ function getLinesOfText(panelType, zone, subPanel) {
     }
   }
   return parseInt(nLines);
+}
+
+function initSynopticService(){
+  if(!window.synopticService){
+    window.synopticService = {};
+  }
+  if(!window.synopticService.elementIntevals){
+    window.synopticService.elementIntevals = {};
+  }
+  if(!window.synopticService.synopticIntevals){
+    window.synopticService.synopticIntevals = {};
+  }
 }
