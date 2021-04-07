@@ -67,7 +67,7 @@ class AdapterGridGeneric {
 				
 				Object value = entry.getValue();
 				
-				boolean primitiveValue = (value instanceof String || value instanceof Boolean || value instanceof Integer || value instanceof Double || value instanceof Float);
+				boolean primitiveValue = (value instanceof String || value instanceof Long || value instanceof Boolean || value instanceof Integer || value instanceof Double || value instanceof Float);
 				
 				if (primitiveValue) {
 					
