@@ -1345,8 +1345,11 @@ export default class DataTable {
 
 				if (datatable && filtered) {
 
-					let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
-					let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+//					let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
+//					let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+
+					let header = datatable.getNode().getElementsByClassName('webix_ss_header');
+					let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
 
 					if (visible) {
 
@@ -1396,8 +1399,11 @@ export default class DataTable {
 
 		if (columnFilterTrue && columnFilterTrue.length > 0) {
 
-			let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
-			let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+//			let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
+//			let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
+			let header = datatable.getNode().getElementsByClassName('webix_ss_header');
+			let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
+
 			let columnFilterFalse = this.metadata.gridFields.filter(e => e.filtered === false);
 
 			if (columnVertical && columnVertical.length > 0) {

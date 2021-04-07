@@ -6,6 +6,7 @@
 		
 	},
 	"restEndpoints": {
-		
+		"element": "elements/${id}",
+		"equipmentViewer": "equip_viewer/${id}"
 	}
 }

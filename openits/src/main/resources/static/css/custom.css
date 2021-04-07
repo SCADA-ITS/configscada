@@ -1161,21 +1161,22 @@
 .ims-incident-report-tab-details .ico {
 	float: left;
     padding-left: 0px;
-    font-size: 30px;
+    font-size: 24px;
+    margin-top: -2px;
 }
 
 .ims-incident-report-tab-details .field {
 	font-weight: 500;
     float: left;
     padding-left: 20px;
-    font-size: 16px;
+    font-size: 13px;
     padding-top: 3px;
 }
 
 .ims-incident-report-tab-details .value {
 	position: absolute;
     padding-left: 375px;
-    font-size: 16px;
+    font-size: 13px;
     padding-top: 4px;
 }
 

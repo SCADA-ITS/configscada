@@ -1,8 +1,19 @@
 import GenericModule from "../../modules/genericModule.js";
+import EquipmentViewerTreeHierarchy from "./equipmentViewerTreeHierarchy.js";
+import EquipmentViewerContent  from "./equipmentViewerContent.js";
 import { util } from "../../lib/util.js";
 
 export default class EquipmentViewerModule extends GenericModule {
 	
+	static get DEFAULT_EQUIPMENT_VIEWER() { 
+		
+			return {
+				
+				showInfoTab: true,
+				showChilds: false	
+			} 
+	} 
+
 	constructor(module, moduleAction, args) {
 
 		super(module, moduleAction, args);
@@ -10,6 +21,11 @@ export default class EquipmentViewerModule extends GenericModule {
 		this.uid = webix.uid();
 
 		this.config = module.config;
+
+		this.element = undefined;		
+		this.equipmentViewer = EquipmentViewerModule.DEFAULT_EQUIPMENT_VIEWER;
+		this.equipmentViewerTreeHierarchy = undefined;
+		this.equipmentViewerContent = undefined;
 	}
 
 	getView() {
@@ -62,34 +78,88 @@ export default class EquipmentViewerModule extends GenericModule {
 
 		let self = this;
 		
-		let viewMain = undefined;
-		
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
-
-		if (this.moduleAction.id === this.config.moduleAction.view) {
-
-			viewMain = moduleActionView();
-		}
 		
-		setTimeout(function() {
-			
-			$$("loading-" + self.uid).hide();
-			$$(self.uid).show();
-			
-			if (viewMain) {
+		loadElementData();
 		
-				webix.ui(viewMain, $$(self.uid));
-			}
+		function loadElementData() {
 				
-		}, 500);
+			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
 		
-		function moduleActionView() {
-			
-			return drawMain();
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: self.args.selectedPks[0] })).then(function(dat) {
+				
+					if (dat != null) {
+					
+						let element = dat.json();
+						
+						loadEquipmentViewerData(element);	
+					}	
+				});
+			}
 		}
 		
-		function drawMain() {
+		function loadEquipmentViewerData(element) {
+			
+			if (element && element.elementType && element.elementType.id) {
+			
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: element.elementType.id })).then(function(dat) {
+				
+					if (dat != null) {
+						
+						let equipmentViewer = dat.json();
+						
+						load(element, equipmentViewer);
+							
+					}	
+				});	
+			}
+		}
+		
+		function load(element, equipmentViewer) {
+			
+			let view = {};
+			
+			self.element = element;
+			
+			if (equipmentViewer) {
+			
+				self.equipmentViewer = equipmentViewer;	
+			}		
+		
+			if (self.element) {
+			
+				if (self.moduleAction.id === self.config.moduleAction.view) {
+	
+					view = moduleActionView(self.element);
+				}
+				
+				$$("loading-" + self.uid).hide();
+				$$(self.uid).show();
+				
+				webix.ui(view, $$(self.uid));
+				
+				if (self.element) {
+					
+					if (self.equipmentViewerTreeHierarchy) {
+					
+						self.equipmentViewerTreeHierarchy.select(self.element);
+					}
+					
+					if (self.equipmentViewerContent) {
+						
+						self.equipmentViewerContent.loadData();
+					}	
+				}
+			}
+		}
+
+		function moduleActionView(element) {
+			
+			return drawMain(element);
+		}
+		
+		function drawMain(element) {
 			
 			let viewMain = {
 				id: self.uid,
@@ -98,52 +168,95 @@ export default class EquipmentViewerModule extends GenericModule {
 			
 			let viewMainTreeHierarchy = {
 				id: "view-main-tree-hierarchy-" + self.uid,
+				hidden: !self.equipmentViewer.showChilds,
 				header: i18n.t("LBL_EQUIPMENT_HIERARCHY"),
 				body: {
 					width: 300,
-					rows: [
-						{
-							cols: [
-								getViewTreeHierarchy()
-							]
-						}
-					]
+					rows: [getViewTreeHierarchy(element)]
 				}
-			}; 
+			};
 			
 			let viewMainResizer = { 
 				id: "view-main-resizer-" + self.uid,
+				hidden: !self.equipmentViewer.showChilds,
 				view: "resizer" 
 			};
 			
 			let viewMainContent = {
 				id: "view-main-content-" + self.uid,
-				body: getViewContent()
+				body: getViewContent(element)
 			};
 			
 			let viewMainActionPanel = {
 				id: "view-main-action-panel-" + self.uid,
 				header: i18n.t("LBL_EQUIPMENT_ACTION_PANEL"),
-				body: getViewActionPanel()
+				body: getViewActionPanel(element)
 			};
 			
 			viewMain.cols = [viewMainTreeHierarchy, viewMainResizer, viewMainContent, viewMainActionPanel];
 			
-			function getViewTreeHierarchy() {
+			function getElementFromElementId(elementId) {
+				
+				if (self.element) {
+					
+					if (self.element.id === elementId) {
+						
+						return self.element;
+					}
+					else {
+						
+						if (Array.isArray(self.element.childs) && self.element.childs.length > 0) {
+							
+							return self.element.childs.find(child => child.id === elementId);
+						}
+					}
+				}
+			}
+			
+			function onSelectElement(elementId) {
+				
+				webix.ui(getViewContent(getElementFromElementId(elementId)), $$("view-main-content-" + self.uid));
+				webix.ui(getViewActionPanel(getElementFromElementId(elementId)), $$("viewActionPanel-" + self.uid));
+			}
+			
+			function getViewTreeHierarchy(element) {
 				
 				let view = {};
+				
+				self.equipmentViewerTreeHierarchy = new EquipmentViewerTreeHierarchy(self, element, onSelectElement);
+				
+				view = self.equipmentViewerTreeHierarchy.getView();
 				
 				return view;
 			}
 			
-			function getViewContent() {
+			function getViewContent(element) {
 				
 				let view = {};
+				
+				self.equipmentViewerContent = new EquipmentViewerContent(self, element);
+				
+				view = self.equipmentViewerContent.getView();
+
+//				view = {
+//					borderless: true,
+//					rows: [
+//						{height: 6},
+//						{
+//							cols: [
+//								{width: 6},
+//								self.equipmentViewerContent.getView(),		
+//								{width: 6}
+//							]
+//						},
+//						{height: 6}
+//					]
+//				}
 				
 				return view;
 			}
 			
-			function getViewActionPanel() {
+			function getViewActionPanel(element) {
 				
 				let view = {};
 				

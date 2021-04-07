@@ -1,7 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -17,6 +28,8 @@ public class EquipViewerTab implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	
+	private String alias;
 
 	private String description;
 
@@ -27,13 +40,12 @@ public class EquipViewerTab implements Serializable {
 	@Column(name="module_action_id")
 	private Integer moduleActionId;
 
-	private String name;
-
 	private Integer position;
 
 	private Boolean visible;
 
 	//bi-directional many-to-one association to EquipViewer
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="equip_viewer_id")
 	private EquipViewer equipViewer;
@@ -47,6 +59,14 @@ public class EquipViewerTab implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getAlias() {
+		return this.alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getDescription() {
@@ -79,14 +99,6 @@ public class EquipViewerTab implements Serializable {
 
 	public void setModuleActionId(Integer moduleActionId) {
 		this.moduleActionId = moduleActionId;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Integer getPosition() {

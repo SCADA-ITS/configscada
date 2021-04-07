@@ -1,6 +1,15 @@
 export default class EquipmentViewerInfo {
 	
-	constructor() {
+	constructor(parent, element) {
 
+		this.parent = parent;
+		this.element = element;
+	}
+	
+	getView() {
+		
+		let view = {};
+		
+		return view;
 	}
 }	

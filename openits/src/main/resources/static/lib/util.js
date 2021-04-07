@@ -34,8 +34,30 @@ export let util = {
 			return module.windowValues.find(e => e.windowParam.id === param).value;
 		},
 
-		loadInCustom(module, moduleAction, mod, args, view) {
+		loadInCustom(module, moduleAction, mod, args, drawCallback) {
 
+			let viewModule;
+			let lazyClass;
+			
+			if (drawCallback) {
+			
+				lazyClass = new mod.default(module, moduleAction, args);
+				
+				if (module.jsMethodDraw) {
+					
+					viewModule = lazyClass.runOne(module.jsMethodDraw);
+					
+					if (viewModule) {
+						
+						drawCallback(viewModule);
+					}
+					
+					if(module.jsMethodCallbacks) {
+	
+						lazyClass.runOne(module.jsMethodCallbacks);
+					}	
+				}
+			}
 		},
 
 		loadInWindow(module, moduleAction, mod, args) {
@@ -351,17 +373,19 @@ export let util = {
 			}
 		},
 
-		open(module, moduleAction, viewTypeId, customView, args) {
+		open(module, moduleAction, viewTypeId, drawCallback, args) {
 
 			try {
 
 				const lazy = async _ => {
 
-					const mod = await import(module.jsFile);
+					let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
+					
+					const mod = await import(jsFile);
 
-					if (viewTypeId === VIEW_TYPE_CUSTOM && customView) {
+					if (viewTypeId === VIEW_TYPE_CUSTOM && drawCallback) {
 
-						util.module.loadInCustom(module, moduleAction, mod, args, customView);
+						util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
 					}
 					else if (!viewTypeId && module.viewType) {
 
@@ -397,6 +421,26 @@ export let util = {
 
 				console.log(error);
 			}
+		},
+		
+		getFromModuleAction(moduleActionId) {
+			
+			let modules = window.em.getAll(EntityType.MODULE);
+			
+			if (Array.isArray(modules) && modules.length > 0) {
+			
+				return modules.find(module => {
+				
+					if (Array.isArray(module.moduleActions) && module.moduleActions.length > 0) {
+						
+						 return (module.moduleActions.findIndex(moduleAction => moduleAction.id === moduleActionId) !== -1);
+					}
+					
+					return false;
+				});
+			}
+			
+			
 		},
 
 		checkSytemPermision(modules, userData) {

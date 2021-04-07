@@ -13,17 +13,17 @@ import com.revenga.rits.front.openitsdao.service.EquipViewerService;
 public class EquipViewerServiceImpl implements EquipViewerService {
 
 	@Autowired
-	EquipViewerRepository EquipViewerRepository;
+	EquipViewerRepository equipViewerRepository;
 	
 	@Override
 	public List<EquipViewer> getAll() {
 
-		return EquipViewerRepository.findAll();
+		return equipViewerRepository.findAll();
 	}
 
 	@Override
 	public EquipViewer getById(String id) {
 		
-		return EquipViewerRepository.findById(id);
+		return equipViewerRepository.findById(id);
 	}
 }

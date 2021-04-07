@@ -6,11 +6,11 @@ const TreeOptions = {
 	MULTISELECT: 2,
 	SORTED: 3,
 	CMD_BUTTONS: 4,
-	SEARCH: 5
-
+	SEARCH: 5,
+	EXPAND_ALL: 6
 };
 
-const DefOptionValues = { 2: true, 3: true, 4: true, 5: true };
+const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false };
 const DefProperties = {
 	TRANSLATE: {
 		name: "translate",
@@ -48,37 +48,6 @@ export default class TreeView {
 
 		let self = this;
 		let view;
-		
-		let getTreeOptions = function(option) {
-	
-			let metadata = self.metadata;
-			let optionValue = undefined;
-	
-			if (metadata) {
-	
-				optionValue = metadata.treeOptionValues.find(e => e.treeOption.id === option);
-				
-				if (optionValue) {
-	
-					if (optionValue.value === _TRUE) {
-	
-						return true;
-	
-					} else if (optionValue.value === _FALSE) {
-	
-						return false;
-	
-					} else {
-	
-						return optionValue.value;
-					}
-				}
-				else {
-		
-					return DefOptionValues[option];
-				}
-			}
-		}
 		
 		let getItemProps = function(item, prop) {
 	
@@ -127,7 +96,7 @@ export default class TreeView {
 			]
 		};
 		
-		let multiSelect = getTreeOptions(TreeOptions.MULTISELECT);
+		let multiSelect = self.getTreeOptions(TreeOptions.MULTISELECT);
 		
 		if (multiSelect) {
 			
@@ -231,6 +200,7 @@ export default class TreeView {
 			let treeView = {
 				id: "tree-" + self.uid,
 				view: "tree",
+				borderless: true,
 				css:  multiSelect ? "tree-view-multi" : "tree-view-single",
 				select: !multiSelect,
 				threeState: multiSelect,
@@ -239,7 +209,7 @@ export default class TreeView {
 					let value = obj.value;
 					
 					
-					obj.disabled = getTreeOptions(TreeOptions.DISABLED);
+					obj.disabled = self.getTreeOptions(TreeOptions.DISABLED);
 									
 					let fontWeight = 500;
 					let letterSpacing = "0.2px";
@@ -288,8 +258,15 @@ export default class TreeView {
 					onAfterLoad: function() {
 						
 						this.sort("#value#", "asc");
+											
+						let expandAll = self.getTreeOptions(TreeOptions.EXPAND_ALL);
+						
+						if (expandAll) {
+							
+							this.openAll();
+						}
 					},
-					onItemClick: function(id) {
+					onAfterSelect: function(id) {
 					    
 						let item = this.getItem(id);
 						
@@ -307,7 +284,7 @@ export default class TreeView {
 								// Folder selected
 								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_NODE])(item.id);
+									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item.id);
 								}
 							}
 						}
@@ -355,26 +332,69 @@ export default class TreeView {
 		
 		view = {
 			id: "treeview-" + this.uid,
-			rows: [
-				{ height: 6 },
-				searchView,
-				tbActionView,
-				drawTree(),
-				{ height: 6 }
-			]
+			rows: []
 		};
+		
+		view.rows.push({ height: 6 });
+		
+		if (self.getTreeOptions(TreeOptions.SEARCH)) {
+			
+			view.rows.push(searchView);		
+		}
+		
+		if (self.getTreeOptions(TreeOptions.CMD_BUTTONS)) {
+		
+			view.rows.push(tbActionView);		
+		}
+		
+		view.rows.push(drawTree());
+		view.rows.push({ height: 6 });
 			
 		return view;
 	}
 	
+	getTreeOptions(option) {
+	
+		let metadata = this.metadata;
+		let optionValue = undefined;
+
+		if (metadata) {
+
+			if (Array.isArray(metadata.treeOptionValues) && metadata.treeOptionValues.length > 0) {
+			
+				optionValue = metadata.treeOptionValues.find(e => e.treeOption.id === option);	
+			}
+			
+			if (optionValue) {
+
+				if (optionValue.value === _TRUE) {
+
+					return true;
+
+				} else if (optionValue.value === _FALSE) {
+
+					return false;
+
+				} else {
+
+					return optionValue.value;
+				}
+			}
+			else {
+	
+				return DefOptionValues[option];
+			}
+		}
+	}
+	
 	getChecked() {
 		
-		let tree = $$("treeview-" + this.uid);
+		let tree = $$("tree-" + this.uid);
 		let checkedItems = [];
 		
 		if (tree) {
 			
-			let multiSelect = getTreeOptions(TreeOptions.MULTISELECT);
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
 			
 			if (multiSelect) {
 				
@@ -388,6 +408,21 @@ export default class TreeView {
 		}
 		
 		return checkedItems;
+	}
+	
+	select(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (!multiSelect) {
+				
+				tree.select(id);
+			}
+		}
 	}
 }
 

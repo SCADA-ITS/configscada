@@ -103,11 +103,11 @@ export default class ListView {
 					},
 					data: self.data,
 					on: {
-						onSelectChange: function() {
+						onAfterSelect: function() {
 							
 							if (self.events && self.events[ListView.EventTypes.ON_SELECT_ROW]) {
-								
-								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true));
+
+								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true), this);
 							}
 						}
 					}

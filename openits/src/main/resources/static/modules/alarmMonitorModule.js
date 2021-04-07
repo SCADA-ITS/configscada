@@ -187,9 +187,14 @@ export default class AlarmMonitorModule extends GenericModule {
 			}
 		}
 		
-		function fillDatatables(elementTypeArray) {
+		function fillDatatables(elementTypeArray, listView) {
 			
 			let elementTypeId;
+			
+			if (listView) {
+			
+				listView.disable();	
+			}
 			
 			if (Array.isArray(elementTypeArray) && elementTypeArray.length == 1) {
 				
@@ -264,6 +269,11 @@ export default class AlarmMonitorModule extends GenericModule {
 						return (e.targetElementTypeId == self.elementTypeIdSelected);
 					}));
 				}
+			}
+			
+			if (listView) {
+			
+				listView.enable();	
 			}
 		}
 
@@ -572,8 +582,47 @@ export default class AlarmMonitorModule extends GenericModule {
 						let dat = JSON.parse(response.responseText);
 
 						let metadata = dat.metadata;
-
+						
+						filterMetadata(metadata);
+						
 						return new DataTable(gridId, null, metadata, [], null);
+					}
+				}
+				
+				function filterMetadata(metadata) {
+					
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+						
+						if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+							
+							metadata.gridCommands = metadata.gridCommands.map(e => {
+								
+								e.showText = false;
+								
+								return e;
+							});	
+						}							
+
+						if (self.args.selectedPks.length === 1) {
+							
+							if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
+								
+								// Remove fields config in moduleAction like ignoreSourceFields
+								metadata.gridFields = metadata.gridFields.filter(e => 
+									
+									self.config.moduleAction[self.moduleAction.id].ignoreSourceFields.findIndex(sf => sf === e.sourceField) === -1
+								);	
+							}
+							
+							if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+								
+								// Remove commands config in moduleAction like ignoreCommandModuleActions
+								metadata.gridCommands = metadata.gridCommands.filter(e => 
+									
+									self.config.moduleAction[self.moduleAction.id].ignoreCommandModuleActions.findIndex(sf => sf === e.moduleAction.id) === -1
+								);	
+							}
+						}
 					}
 				}
 

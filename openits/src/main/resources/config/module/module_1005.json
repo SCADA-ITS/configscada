@@ -1,6 +1,10 @@
 {
 	"moduleAction": {
-	    "elements": 100501
+	    "elements": 100501,
+	    "100501": {
+	    	"ignoreSourceFields": ["targetElementTypeId", "targetElementTypeAlias", "targetElementId", "targetElementAlias"],
+	    	"ignoreCommandModuleActions": [100501]
+	    }
 	},
 	"adapter": "ws.alarm.getList",
 	"restEndpoint": "alarms",

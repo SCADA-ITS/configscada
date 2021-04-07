@@ -13,18 +13,17 @@ import com.revenga.rits.front.openitsdao.service.EquipViewerService;
 public class EquipmentViewerBO extends GenericBO {
 	
 	@Autowired
-	EquipViewerService EquipViewerService;
+	EquipViewerService equipViewerService;
 	
 	public List<EquipViewer> getEquipViewers() {
 		
-		return EquipViewerService.getAll();
+		return equipViewerService.getAll();
 	}
 	
 	public EquipViewer getEquipViewer(String id) {
-		
-		return EquipViewerService.getById(id);
-	}
 	
+		return equipViewerService.getById(id);
+	}
 
 	@Override
 	public List<Map<String, Object>> getList() {
