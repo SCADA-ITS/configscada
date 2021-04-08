@@ -31,6 +31,8 @@ export default class UserModule extends GenericModule {
 		this.userPermissions = [];
 
 		this.rolPermissions = [];
+
+		this.userSystem = false;
 	}
 
 
@@ -38,7 +40,24 @@ export default class UserModule extends GenericModule {
 
 		let view = undefined;
 
-		if (this.moduleAction.id === this.config.moduleAction.add || this.moduleAction.id === this.config.moduleAction.edit) {
+		if (this.args.selectedPks != undefined) {
+
+			if (this.args.selectedPks[0] === this.config.systemUser) {
+
+				this.userSystem = true;
+			}
+		}
+
+
+		if (this.userSystem && this.moduleAction.id === this.config.moduleAction.edit) {
+
+			webix.alert({
+				title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
+				text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
+				type: "alert-error",
+				width: 600
+			});
+		} else if (this.moduleAction.id === this.config.moduleAction.add || this.moduleAction.id === this.config.moduleAction.edit) {
 
 			view = {
 				css: "custom_window",
@@ -171,18 +190,31 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				webix.confirm({
-					title: i18n.t("LBL_CONFIRM_DELETE_USER"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"),
-					width: 600
-				}).then(function() {
-					self.args.selectedPks.forEach(e => {
-						webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
-						self.args.callbacks[0]();
+				if (self.args.selectedPks[0] === self.config.systemUser) {
+
+					webix.alert({
+						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
+						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
+						type: "alert-error",
+						width: 600
 					});
-				});
+				} else {
+
+					webix.confirm({
+						title: i18n.t("LBL_CONFIRM_DELETE_USER"),
+						ok: i18n.t("LBL_YES"),
+						cancel: i18n.t("LBL_NO"),
+						text: i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"),
+						width: 600
+					}).then(function() {
+						self.args.selectedPks.forEach(e => {
+							webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
+							self.args.callbacks[0]();
+						});
+					});
+
+				}
+
 			}
 		};
 
@@ -193,114 +225,125 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let timeService = window.sm.getService(Services.TIME_SERVICE);
-				let users = [];
-				let actualDate = new Date(timeService.getDateTime() * 1000);
-				let action = -1;
-				let isDiffActions = false;
-
-				for (let i = 0; !isDiffActions && i < self.args.selectedPks.length; i++) {
-
-					let currentAction = -1;
-					let response = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[i] }));
-					let responseUser = JSON.parse(response.responseText);
-
-					currentAction = (responseUser.lockedUntil && actualDate < responseUser.lockedUntil) ? UNLOCK_ACTION : LOCK_ACTION;
-
-					// Establece la acción de trabajo
-					if (i === 0) {
-
-						action = currentAction;
-					}
-					else {
-
-						isDiffActions = (currentAction !== action);
-					}
-
-					users.push(responseUser);
-				}
-
-				if (!isDiffActions) {
-
-					if (action === LOCK_ACTION) {
-
-						lockUsers(users);
-					}
-					else {
-						
-						webix.confirm({
-							title: i18n.t("LBL_CONFIRM_UNLOCK_USER"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"),
-							width: 600
-						}).then(function() {
-							
-							unlockUsers(users);
-						});
-					}
-				}
-				else {
+				if (self.args.selectedPks[0] === self.config.systemUser) {
 
 					webix.alert({
-						title: i18n.t("LBL_INCOMPATIBLE_SELECTION"),
-						text: i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"),
+						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
+						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
 						type: "alert-error",
 						width: 600
 					});
-				}
+				} else {
 
-				function lockUsers(users) {
+					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					let users = [];
+					let actualDate = new Date(timeService.getDateTime() * 1000);
+					let action = -1;
+					let isDiffActions = false;
 
-					new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), false,
+					for (let i = 0; !isDiffActions && i < self.args.selectedPks.length; i++) {
 
-						function(date) {
+						let currentAction = -1;
+						let response = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[i] }));
+						let responseUser = JSON.parse(response.responseText);
 
-							return (Math.floor(date) < Math.floor(new Date()));
-						},
-						function(dates) {
+						currentAction = (responseUser.lockedUntil && actualDate < responseUser.lockedUntil) ? UNLOCK_ACTION : LOCK_ACTION;
 
-							let itemsReponse = 0;
-							let usersToUpdate = adapterUserToUpdate(users);
+						// Establece la acción de trabajo
+						if (i === 0) {
 
-							usersToUpdate.forEach(user => {
+							action = currentAction;
+						}
+						else {
 
-								user.user.lockedUntil = dates.from.getTime();
+							isDiffActions = (currentAction !== action);
+						}
 
-								webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user)
-									.then(function(data) {
+						users.push(responseUser);
+					}
 
-										shouldRefresh();
-									},
-										function(response) {
+					if (!isDiffActions) {
+
+						if (action === LOCK_ACTION) {
+
+							lockUsers(users);
+						}
+						else {
+
+							webix.confirm({
+								title: i18n.t("LBL_CONFIRM_UNLOCK_USER"),
+								ok: i18n.t("LBL_YES"),
+								cancel: i18n.t("LBL_NO"),
+								text: i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"),
+								width: 600
+							}).then(function() {
+
+								unlockUsers(users);
+							});
+						}
+					}
+					else {
+
+						webix.alert({
+							title: i18n.t("LBL_INCOMPATIBLE_SELECTION"),
+							text: i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"),
+							type: "alert-error",
+							width: 600
+						});
+					}
+
+					function lockUsers(users) {
+
+						new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), false,
+
+							function(date) {
+
+								return (Math.floor(date) < Math.floor(new Date()));
+							},
+							function(dates) {
+
+								let itemsReponse = 0;
+								let usersToUpdate = adapterUserToUpdate(users);
+
+								usersToUpdate.forEach(user => {
+
+									user.user.lockedUntil = dates.from.getTime();
+
+									webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user)
+										.then(function(data) {
 
 											shouldRefresh();
-										});
-							});
+										},
+											function(response) {
 
-							function shouldRefresh() {
+												shouldRefresh();
+											});
+								});
 
-								if (users.length === ++itemsReponse) {
+								function shouldRefresh() {
 
-									self.args.callbacks[0]();
+									if (users.length === ++itemsReponse) {
+
+										self.args.callbacks[0]();
+									}
 								}
-							}
-						}).show();
-				}
+							}).show();
+					}
 
-				function unlockUsers(users) {
+					function unlockUsers(users) {
 
-					let usersToUpdate = adapterUserToUpdate(users);
+						let usersToUpdate = adapterUserToUpdate(users);
 
-					usersToUpdate.forEach(user => {
+						usersToUpdate.forEach(user => {
 
-						user.user.lockedUntil = timeService.getDateTime() * 1000;
+							user.user.lockedUntil = timeService.getDateTime() * 1000;
 
-						webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user).then(function(data) {
+							webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user).then(function(data) {
 
-							self.args.callbacks[0]();
+								self.args.callbacks[0]();
+							});
 						});
-					});
+					}
 				}
 			}
 		}
@@ -605,6 +648,7 @@ export default class UserModule extends GenericModule {
 							{ gridOption: { id: 8 }, value: "false" },
 							{ gridOption: { id: 9 }, value: "true" },
 							{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+							{ gridOption: { id: 21 }, value: "custom" },
 							{ gridOption: { id: 23 }, value: "false" }
 						];
 
@@ -667,6 +711,7 @@ export default class UserModule extends GenericModule {
 									visible: true,
 									widthPx: 215,
 									fillspace: true,
+									adjust: true,
 									gridFieldDataType: {
 										id: 1,
 										name: "string"
@@ -686,7 +731,7 @@ export default class UserModule extends GenericModule {
 									required: true,
 									sourceField: "inherited",
 									visible: true,
-									widthPx: 245,
+									widthPx: 185,
 									gridFieldDataType: {
 										id: 1,
 										name: "string"
@@ -775,13 +820,15 @@ export default class UserModule extends GenericModule {
 
 									self.dtPermissions.rowsSelected.forEach(e => {
 
-										if (userPermissions.find(item => item.id === e)) {
-											userPermissions.splice(userPermissions.indexOf(e), 1);
+										let permToFind = userPermissions.find(item => item.id === e);
+
+										if (permToFind) {
+
+											userPermissions.splice(userPermissions.indexOf(permToFind), 1);
+											toDelete.push({ id: permToFind.id })
 										}
-
-										toDelete.push({ id: e });
 									});
-
+									
 									self.dtPermissions.delete(toDelete);
 								}
 							}
@@ -840,108 +887,103 @@ export default class UserModule extends GenericModule {
 				const FALSE = 0;
 
 				let buttons = {
+					view: "toolbar",
 					id: "buttons-" + self.uid,
-					align: "center",
-					rows: [
-						{ height: 10 },
+					height: 45,
+					borderless: true,
+					elements: [
 						{
-							cols: [
-								{ width: 12 },
-								{
-									view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 35, css: "dialog-cancel",
-									click:
-										function() {
-											$$(self.args.containerId).close();
-										}
-								},
-								{},
-								{
-									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 35, css: "dialog-accept",
-									click:
-										function() {
+							view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 35, css: "dialog-cancel",
+							click:
+								function() {
+									$$(self.args.containerId).close();
+								}
+						},
+						{},
+						{
+							view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 35, css: "dialog-accept",
+							click:
+								function() {
 
-											let values = $$(form.id).getValues();
+									let values = $$(form.id).getValues();
 
-											if (values.password === values.confirmPass) {
+									if (values.password === values.confirmPass) {
 
-												let validation = $$(form.id).validate({ disabled: true });
+										let validation = $$(form.id).validate({ disabled: true });
 
-												if (validation) {
+										if (validation) {
 
-													let permissionsIds = [];
+											let permissionsIds = [];
 
-													if (values.allowMultipleSessions === TRUE) {
+											if (values.allowMultipleSessions === TRUE) {
 
-														values.allowMultipleSessions = true;
+												values.allowMultipleSessions = true;
 
-													} else if (values.allowMultipleSessions === FALSE) {
+											} else if (values.allowMultipleSessions === FALSE) {
 
-														values.allowMultipleSessions = false;
-													}
+												values.allowMultipleSessions = false;
+											}
 
-													self.userPermissions.forEach(permission => {
+											self.userPermissions.forEach(permission => {
 
-														let rolOperator = undefined;
+												let rolOperator = undefined;
 
-														if (self.rolPermissions[0].rolePermissions) {
+												if (self.rolPermissions[0].rolePermissions) {
 
-															rolOperator = self.rolPermissions[0].rolePermissions;
-														} else {
-
-															rolOperator = self.rolPermissions;
-														}
-
-														let repeatPermissions = rolOperator.find(e => e.id === permission.id);
-
-														if (repeatPermissions) {
-
-															self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
-														} else {
-
-															permissionsIds.push(permission.id);
-														}
-													});
-
-													let body = adapterUserToUpdate(values);
-													body[0].user.userPermissionIds = permissionsIds;
-
-													if (self.moduleAction.id === self.config.moduleAction.add) {
-
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
-															$$(self.args.containerId).close();
-															self.args.callbacks[0]();
-														});
-
-													} else if (self.moduleAction.id === self.config.moduleAction.edit) {
-
-														body[0].user.id = self.oldUser.id;
-
-														webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
-															$$(self.args.containerId).close();
-															self.args.callbacks[0]();
-														});
-													}
+													rolOperator = self.rolPermissions[0].rolePermissions;
 												} else {
-													webix.alert({
-														title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
-														text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
-														type: "alert-error",
-														width: 600
-													});
+
+													rolOperator = self.rolPermissions;
 												}
-											} else {
-												webix.alert({
-													title: i18n.t("LBL_PASSWORDS_DO_NOT_MATCH"),
-													text: i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"),
-													type: "alert-error",
-													width: 600
+
+												let repeatPermissions = rolOperator.find(e => e.id === permission.id);
+
+												if (repeatPermissions) {
+
+													self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
+												} else {
+
+													permissionsIds.push(permission.id);
+												}
+											});
+
+											let body = adapterUserToUpdate(values);
+											body[0].user.userPermissionIds = permissionsIds;
+
+											if (self.moduleAction.id === self.config.moduleAction.add) {
+
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
+													$$(self.args.containerId).close();
+													self.args.callbacks[0]();
 												});
 
+											} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+
+												body[0].user.id = self.oldUser.id;
+
+												webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
+													$$(self.args.containerId).close();
+													self.args.callbacks[0]();
+												});
 											}
+										} else {
+											webix.alert({
+												title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
+												text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
+												type: "alert-error",
+												width: 600
+											});
 										}
-								},
-								{ width: 12 }
-							]
+									} else {
+										webix.alert({
+											title: i18n.t("LBL_PASSWORDS_DO_NOT_MATCH"),
+											text: i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"),
+											type: "alert-error",
+											width: 600
+										});
+
+									}
+								}
 						}
 					]
 				}
@@ -1003,7 +1045,7 @@ export default class UserModule extends GenericModule {
 
 				self.dtPermissions.clear();
 				self.dtPermissions.add(permissionsToAdd);
-			}		 
+			}
 		}
 
 		function drawFromEdit() {
