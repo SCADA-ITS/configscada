@@ -11,5 +11,6 @@
 	},
 	"restEndpoints": {
 		"user": "users/role/${id}"
-	}
+	},
+	"systemRole": "Role:1000" 
 }

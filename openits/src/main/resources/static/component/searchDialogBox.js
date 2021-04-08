@@ -33,9 +33,12 @@ export default class SearchDialogBox {
 			
 				if (self.onAccept && Array.isArray(selectedIds) && selectedIds.length > 0) {
 									
-					self.onAccept(selectedIds);
+					let res = self.onAccept(selectedIds);
 					
-					$$(self.containerId).close();
+					if (res === undefined || res === true) {
+					
+						$$(self.containerId).close();	
+					}
 				}
 				else {
 					
@@ -90,33 +93,37 @@ export default class SearchDialogBox {
 	
 					return window.em.getAll(em_type);
 				};
+				
+				let entities;
 	
 				if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
 						
-					let entities = getFromEntitiesManager(EntityType[dialogEntity.endpoint]);
-					
-					if (Array.isArray(entities) && entities.length > 0) {
-						
-						return entities.map(function(e) {
-							
-							let output = {};
-							
-							output.id = e[dialogEntity.pkField];
-							
-							dialogEntity.fields.forEach(field => {
-								
-								let fieldName = getFieldName(field); 
-								
-								output[fieldName] = e[fieldName];
-							});
-							
-							return output;
-						});
-					}
+					entities = getFromEntitiesManager(EntityType[dialogEntity.endpoint]);
 				}
 				else if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
 					
-					// TODO
+					let response = webix.ajax().sync().get(appConfig.restUrl + dialogEntity.endpoint);
+
+					entities = JSON.parse(response.responseText);
+				}
+				
+				if (Array.isArray(entities) && entities.length > 0) {
+						
+					return entities.map(function(e) {
+						
+						let output = {};
+						
+						output.id = e[dialogEntity.pkField];
+						
+						dialogEntity.fields.forEach(field => {
+							
+							let fieldName = getFieldName(field); 
+							
+							output[fieldName] = e[fieldName];
+						});
+
+						return output;
+					});
 				}
 			};
 			
@@ -316,8 +323,29 @@ export default class SearchDialogBox {
 }
 
 Object.defineProperty(SearchDialogBox, 'USERS', {
-    value: { id: 1, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 },
-    writable : false,
-    enumerable : true,
-    configurable : false
+	value: { id: 1, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 },
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(SearchDialogBox, 'LOCALES', {
+	value: { id: 2, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "i18n/locales", pkField: "id", fields: ["code=LBL_LOCALE_CODE", "name=LBL_LOCALE_NAME"], height: 600, width: 800 },
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(SearchDialogBox, 'ROLES', {
+	value: { id: 3, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/roles", pkField: "id", fields: ["alias=LBL_ROLE", "description=LBL_ROLE_DESCRIPTION"], height: 600, width: 800 },
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
+	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "description=LBL_LABEL_PERMISSION_DESCRIPTION"], height: 600, width: 800},
+	writable: false,
+	enumerable: true,
+	configurable: false
 });

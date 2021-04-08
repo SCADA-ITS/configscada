@@ -1,6 +1,8 @@
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 
+const EMPTY_ICON = "./img/grid/empty.png"; 
+
 const DataType = {
 	STRING: { value: 1, filter: "textFilter", sort: "string" },
 	INT: { value: 2, filter: "numberFilter", sort: "decimal" },
@@ -245,7 +247,7 @@ export default class DataTable {
 									}
 								}
 								
-								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value) {
+								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value && value === "") {
 
 									value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 								}
@@ -256,9 +258,13 @@ export default class DataTable {
 										badgeColor = (field.gridFieldIcons[0].badgeColor == true);
 										avatar = (field.gridFieldIcons[0].avatar == true);
 										showValue = (field.gridFieldIcons[0].showValue == true);
-										value = obj[field.sourceField];
-	
-										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == obj[field.sourceField]);
+										
+										if (value === "") {
+										
+											value = obj[field.sourceField];	
+										}
+										
+										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == value);
 	
 										if (gridFieldIcon) {
 	
@@ -290,33 +296,40 @@ export default class DataTable {
 									}
 									else {
 	
-										value = obj[field.sourceField];
+										if (value === "") {
+											
+											value = obj[field.sourceField];	
+										}
 									}
 								}
 							}
 
 							col.tooltip = function(data) {
 
-								if (field.gridFieldDataType.id === DataType.DATE.value) {
-
-									return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
-
-								} else if (Array.isArray(field.gridFieldIcons) && field.gridFieldIcons.length > 0) {
-
-									let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
-
-									if (label != undefined) {
-										//let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
-										return !label.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(label.labelValue);
-
-									} else {
-
+								if (data[field.sourceField]) {
+									
+									if (field.gridFieldDataType.id === DataType.DATE.value) {
+	
+										
+										return data[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_STRING_DATES);
+	
+									} else if (Array.isArray(field.gridFieldIcons) && field.gridFieldIcons.length > 0) {
+	
+										let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
+	
+										if (label != undefined) {
+											//let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
+											return !label.labelValue ? i18n.t("LBL_UNKNOWN") : i18n.t(label.labelValue);
+	
+										} else {
+	
+											return data[field.sourceField];
+										}
+									}
+									else {
+	
 										return data[field.sourceField];
 									}
-								}
-								else {
-
-									return data[field.sourceField];
 								}
 							};
 
@@ -430,14 +443,28 @@ export default class DataTable {
 								}
 							}
 							else {
-								return `<span></span>`;
+								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+									
+									return `<img class="table-field-icons" src="${EMPTY_ICON}" />`;
+								}
+								else {
+								
+									return `<span class="table-row-text">-</span>`;	
+								}
 							}
 						}
 						else {
 
 							if (value === '') {
-								return `<span class="table-row-text">-</span>`;
-								//return `<div><span class="table-badge" style="background: ${'#607d8b3b'}; color: ${'#607d8ba0'};">${i18n.t('LBL_NO_AVAILABLE')}</span></div>`;
+								
+								if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+									
+									return `<img class="table-field-icons" src="${EMPTY_ICON}" />`;
+								}
+								else {
+								
+									return `<span class="table-row-text">-</span>`;	
+								}
 							}
 							else {
 
@@ -582,7 +609,17 @@ export default class DataTable {
 
 					data.forEach(item => {
 
-						item[field.sourceField] = new Date(item[field.sourceField]);
+						if(field.sourceField != undefined){
+						
+						}
+						if (item[field.sourceField]) {
+						
+							item[field.sourceField] = new Date(item[field.sourceField]);	
+						}
+						else {
+							
+							item[field.sourceField] = null;
+						}
 					});
 				}
 			}
@@ -1800,7 +1837,7 @@ export default class DataTable {
 
 					let res = false;
 					grid.config.columns.forEach(col => {
-						if (col.id != undefined) {
+						if (col.id != undefined && obj[col.id]) {
 
 							if (col.sort === DataType.DATE.sort) {
 

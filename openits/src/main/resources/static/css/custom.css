@@ -1885,3 +1885,52 @@
 	letter-spacing: normal;
 	color: #0f1724;
 }
+
+.userrole-header-icon {
+	width: 100px !important;
+	padding: 10px 30px;
+}
+
+.userrole-header-icon img {
+	width: 32px !important;
+	height: 32px !important;
+}
+
+.userrole-header-label {
+	padding-top: 17px;
+	margin-bottom: 20px;
+	font-size: 16px;
+	font-weight: 500;
+	font-family: Roboto;
+}
+
+.user-form {
+	width: 724px !important;
+	height: 375px !important;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
+	margin: 6px 0px;
+	font-size: 13px;
+	padding-bottom: 12px;
+}
+
+.user-form .webix_inp_label{
+	color: #0f1724;
+	font-size: 13px ;
+	padding-left: 75px ;
+}
+
+.role-form{
+	width: 724px !important;
+	height: 325px !important;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
+	margin: 6px 0px;
+
+	
+}
+
+.role-form .webix_inp_label {
+	color: #0f1724;
+	font-size: 13px ;
+	padding-left: 75px;
+}
+

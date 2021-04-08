@@ -749,8 +749,31 @@ export let util = {
 		concatTest(value) {
 
 			return "This is a test with " + value;
+		},
+		
+		dateExpired(data) {
+			
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			let actualTimeMs = timeService.getDateTime() * 1000;
+			
+			//return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 1 : 0;		
+			return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 0 : 1;		
+		},
+		
+		clearDateExpired(data) {
+			
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			let actualTimeMs = timeService.getDateTime() * 1000;
+			
+			if (data instanceof Date) {
+			
+				return (actualTimeMs > data.getTime() ? null : data.toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES));	
+			}
+			else {
+			
+				return (actualTimeMs > data ? null : data);
+			}
 		}
-
 	},
 
 	toLocaleString(ts) {
