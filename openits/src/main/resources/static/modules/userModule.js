@@ -136,14 +136,14 @@ export default class UserModule extends GenericModule {
 		function add() {
 
 			$$("loading-" + self.uid).show();
-			
+
 			let container = $$(self.args.containerId);
 
 			if (container) {
-			
+
 				util.ui.setWindowTitle(container, i18n.t("LBL_USER_ADD"));
 			}
-			
+
 			drawComponents();
 		};
 
@@ -172,14 +172,14 @@ export default class UserModule extends GenericModule {
 						self.userPermissions.push(e)
 					});
 				}
-				
+
 				let container = $$(self.args.containerId);
 
 				if (container) {
-				
+
 					util.ui.setWindowTitle(container, i18n.t("LBL_USER_EDIT") + " [" + util.getSimpleId(self.oldUser.id) + "]" + " - " + self.oldUser.name);
 				}
-				
+
 				drawComponents();
 				setVal(self.oldUser);
 			}
@@ -828,7 +828,7 @@ export default class UserModule extends GenericModule {
 											toDelete.push({ id: permToFind.id })
 										}
 									});
-									
+
 									self.dtPermissions.delete(toDelete);
 								}
 							}
@@ -887,103 +887,108 @@ export default class UserModule extends GenericModule {
 				const FALSE = 0;
 
 				let buttons = {
-					view: "toolbar",
 					id: "buttons-" + self.uid,
-					height: 45,
 					borderless: true,
-					elements: [
+					rows: [
+						{ height: 10 },
 						{
-							view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 35, css: "dialog-cancel",
-							click:
-								function() {
-									$$(self.args.containerId).close();
-								}
-						},
-						{},
-						{
-							view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 35, css: "dialog-accept",
-							click:
-								function() {
-
-									let values = $$(form.id).getValues();
-
-									if (values.password === values.confirmPass) {
-
-										let validation = $$(form.id).validate({ disabled: true });
-
-										if (validation) {
-
-											let permissionsIds = [];
-
-											if (values.allowMultipleSessions === TRUE) {
-
-												values.allowMultipleSessions = true;
-
-											} else if (values.allowMultipleSessions === FALSE) {
-
-												values.allowMultipleSessions = false;
-											}
-
-											self.userPermissions.forEach(permission => {
-
-												let rolOperator = undefined;
-
-												if (self.rolPermissions[0].rolePermissions) {
-
-													rolOperator = self.rolPermissions[0].rolePermissions;
-												} else {
-
-													rolOperator = self.rolPermissions;
-												}
-
-												let repeatPermissions = rolOperator.find(e => e.id === permission.id);
-
-												if (repeatPermissions) {
-
-													self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
-												} else {
-
-													permissionsIds.push(permission.id);
-												}
-											});
-
-											let body = adapterUserToUpdate(values);
-											body[0].user.userPermissionIds = permissionsIds;
-
-											if (self.moduleAction.id === self.config.moduleAction.add) {
-
-												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
-													$$(self.args.containerId).close();
-													self.args.callbacks[0]();
-												});
-
-											} else if (self.moduleAction.id === self.config.moduleAction.edit) {
-
-												body[0].user.id = self.oldUser.id;
-
-												webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
-													$$(self.args.containerId).close();
-													self.args.callbacks[0]();
-												});
-											}
-										} else {
-											webix.alert({
-												title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
-												text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
-												type: "alert-error",
-												width: 600
-											});
+							cols: [
+								{ width: 15 },
+								{
+									view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 41, css: "dialog-cancel",
+									click:
+										function() {
+											$$(self.args.containerId).close();
 										}
-									} else {
-										webix.alert({
-											title: i18n.t("LBL_PASSWORDS_DO_NOT_MATCH"),
-											text: i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"),
-											type: "alert-error",
-											width: 600
-										});
+								},
+								{},
+								{
+									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 41, css: "dialog-accept",
+									click:
+										function() {
 
-									}
-								}
+											let values = $$(form.id).getValues();
+
+											if (values.password === values.confirmPass) {
+
+												let validation = $$(form.id).validate({ disabled: true });
+
+												if (validation) {
+
+													let permissionsIds = [];
+
+													if (values.allowMultipleSessions === TRUE) {
+
+														values.allowMultipleSessions = true;
+
+													} else if (values.allowMultipleSessions === FALSE) {
+
+														values.allowMultipleSessions = false;
+													}
+
+													self.userPermissions.forEach(permission => {
+
+														let rolOperator = undefined;
+
+														if (self.rolPermissions[0].rolePermissions) {
+
+															rolOperator = self.rolPermissions[0].rolePermissions;
+														} else {
+
+															rolOperator = self.rolPermissions;
+														}
+
+														let repeatPermissions = rolOperator.find(e => e.id === permission.id);
+
+														if (repeatPermissions) {
+
+															self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
+														} else {
+
+															permissionsIds.push(permission.id);
+														}
+													});
+
+													let body = adapterUserToUpdate(values);
+													body[0].user.userPermissionIds = permissionsIds;
+
+													if (self.moduleAction.id === self.config.moduleAction.add) {
+
+														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
+															$$(self.args.containerId).close();
+															self.args.callbacks[0]();
+														});
+
+													} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+
+														body[0].user.id = self.oldUser.id;
+
+														webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
+															$$(self.args.containerId).close();
+															self.args.callbacks[0]();
+														});
+													}
+												} else {
+													webix.alert({
+														title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
+														text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
+														type: "alert-error",
+														width: 600
+													});
+												}
+											} else {
+												webix.alert({
+													title: i18n.t("LBL_PASSWORDS_DO_NOT_MATCH"),
+													text: i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"),
+													type: "alert-error",
+													width: 600
+												});
+
+											}
+										}
+								},
+								{ width: 15 }
+							]
 						}
 					]
 				}

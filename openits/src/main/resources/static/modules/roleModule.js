@@ -138,7 +138,7 @@ export default class RoleModule extends GenericModule {
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
 				if ($$("loading-" + self.uid)) {
-					
+
 					$$("loading-" + self.uid).show();
 					$$(self.uid).hide();
 
@@ -164,7 +164,7 @@ export default class RoleModule extends GenericModule {
 				}
 			}
 		};
-		
+
 
 		function remove() {
 
@@ -397,7 +397,7 @@ export default class RoleModule extends GenericModule {
 									sourceField: "labelDescription",
 									visible: true,
 									fillspace: true,
-									widthPx: 275,
+									widthPx: 400,
 									gridFieldDataType: {
 										id: 1,
 										name: "string"
@@ -452,7 +452,7 @@ export default class RoleModule extends GenericModule {
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: 2,
 							function: () => {
-								
+
 								let selectPermissions = self.selectPermissions;
 								let permToDelete = [];
 								let rolPermissions = self.rolPermissions;
@@ -473,7 +473,7 @@ export default class RoleModule extends GenericModule {
 								});
 
 								self.dtPermissions.delete(permToDelete);
-								self.dtPermissions.rowsSelected.length = 0;					
+								self.dtPermissions.rowsSelected.length = 0;
 							}
 						});
 
@@ -517,14 +517,14 @@ export default class RoleModule extends GenericModule {
 
 				let buttons = {
 					id: "buttons-" + self.uid,
-					align: "center",
+					borderless: true,
 					rows: [
-						{ height: 15 },
+						{ height: 14 },
 						{
 							cols: [
-								{ width: 12 },
+								{width: 15},
 								{
-									view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 35, css: "dialog-cancel",
+									view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 41, css: "dialog-cancel",
 									click:
 										function() {
 											$$(self.args.containerId).close();
@@ -532,7 +532,7 @@ export default class RoleModule extends GenericModule {
 								},
 								{},
 								{
-									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 35, css: "dialog-accept",
+									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 41, css: "dialog-accept",
 									click:
 										function() {
 
@@ -568,7 +568,7 @@ export default class RoleModule extends GenericModule {
 											}
 										}
 								},
-								{ width: 12 },
+								{width: 15}
 							]
 						}
 					]
