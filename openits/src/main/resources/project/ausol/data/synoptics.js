@@ -297,9 +297,16 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible",
 				"tittle": "RIO VERDE"
+			},
+			"PMVs": {
+				"items": ["Element:36:3"],
+				"translation_key": "",
+				"visibility": "visible",
+				"tittle": "PMVs"					
 			}
 		},
 		"Element:7:1": { "x": 1091, "y": 607, "width": 60, "height": 60 },
+		"Element:36:3": { "x":1100, "y": 280, "width": 340, "height": 80 },
 	},
 	{
 		"id":"synopticGlobal",
