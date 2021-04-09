@@ -21,6 +21,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.disconnectStomp = true;
 		this.closed = false;
 		this.dtLogs = undefined;
+		this.selectedTabId = undefined;
 
 		this.config = module.config;
 
@@ -321,20 +322,31 @@ export default class IncidentReportModule extends GenericModule {
 		let tabLogs = $$("tab-logs-" + this.uid);
 
 		if (this.incidentReport && tabViewContent) {
+			
+			if (this.selectedTabId) {
+				
+				if (tabViewContent.getTabbar().getOption(this.selectedTabId)) {
+					
+					tabViewContent.getTabbar().setValue(this.selectedTabId);	
+				}
+				else {
+					
+					tabViewContent.getTabbar().setValue(tabDetails.config.id);
+				}
+			}
+			else {
+				
+				tabViewContent.getTabbar().setValue(tabDetails.config.id);
+			}
 
 			if (this.incidentReport.confirm) {
-
-				if (tabTaskBoard) {
-
+				
+				if (!this.selectedTabId && tabTaskBoard) {
+					
 					tabViewContent.getTabbar().setValue(tabTaskBoard.config.id);
 				}
 			}
 			else {
-
-				if (tabDetails) {
-
-					tabViewContent.getTabbar().setValue(tabDetails.config.id);
-				}
 
 				if (tabTaskBoard) {
 
@@ -508,6 +520,9 @@ export default class IncidentReportModule extends GenericModule {
 					tabMargin: 6,
 					on: {
 						onBeforeTabClick: function(id) {
+							
+							self.selectedTabId = id;
+							
 							return $$(id).isEnabled();
 						}
 					}
@@ -2187,53 +2202,42 @@ export default class IncidentReportModule extends GenericModule {
 			function: () => {
 
 				let rowsSelected = this.dtLogs.rowsSelected;
-				if(!this.dtLogs.rowsSelected.length>0){
-					webix.alert({
-						title: i18n.t("LBL_INCIDENT_LOG_NOT_SELECTED"),
+				let control = false;
+				this.dtLogs.rowsSelected.forEach(e => {
+					let row = this.dtLogs.data.find(dato => dato.id === e);
+					row.incidentLogSubtypeId !== INCIDENTS_LOGS_MANUAL_SUBTYPE ? control = true : null;
+				});
+
+				if(!control) {
+
+					webix.confirm({
+						title: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM"),
 						ok: i18n.t("LBL_YES"),
-						text: i18n.t("LBL_INCIDENT_LOG_NOT_SELECTED_DESCRIPTION"),
+						cancel: i18n.t("LBL_NO"),
+						text: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"),
+						width: 600
+					}).then(() => {
+
+						rowsSelected.forEach(e => {
+							
+							let endpoint = util.fillTemplate(deleteLogIncidentReportEndPoint, {
+								id: e
+							});
+		
+							this.restAction(endpoint);	
+						});
+									
+					});
+
+				} else {
+					webix.alert({
+						title: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR"),
+						ok: i18n.t("LBL_YES"),
+						text: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"),
 						type:"alert-warning",
 						width: 600
 					});	
-				} else {
-					let control = false;
-					this.dtLogs.rowsSelected.forEach(e => {
-						let row = this.dtLogs.data.find(dato => dato.id === e);
-						row.incidentLogSubtypeId !== INCIDENTS_LOGS_MANUAL_SUBTYPE ? control = true : null;
-					});
-
-					if(!control) {
-
-						webix.confirm({
-							title: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"),
-							width: 600
-						}).then(() => {
-
-							rowsSelected.forEach(e => {
-								
-								let endpoint = util.fillTemplate(deleteLogIncidentReportEndPoint, {
-									id: e
-								});
-			
-								this.restAction(endpoint);	
-							});
-										
-						});
-
-					} else {
-						webix.alert({
-							title: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR"),
-							ok: i18n.t("LBL_YES"),
-							text: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"),
-							type:"alert-warning",
-							width: 600
-						});	
-					}
 				}
-
 			}
 		});
 
