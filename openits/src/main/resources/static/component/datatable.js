@@ -44,16 +44,13 @@ const RowAdjustement = {
 	CUSTOM: "custom"
 };
 
-const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 23: true, 24: true };
+const DefOptionValues = { 1: true, 2: true, 7: true, 8: true, 9: false, 10: true, 11: true, 12: true, 13: true, 14: false, 15: false, 17: true, 20: true, 21: RowAdjustement.CUSTOM, 22: 34, 23: true, 24: true };
 
 const _TRUE = "true";
 const _FALSE = "false";
 
-const ExtendedHeader = {
-	TRUE: 42,
-	FALSE: 21,
-	CLOSE: 0
-};
+const DEFAULT_HEADER_HEIGHT = 38;
+const NO_HEADER_HEIGHT = 0;
 
 export default class DataTable {
 
@@ -73,6 +70,7 @@ export default class DataTable {
 		this.filteredFields = {};
 		this.rowsSelected = new Set();
 		this.disabledUnselectEvent = false;
+		this.filtersVisible = false;
 		
 		if (this.metadata.gridCommands != undefined && this.metadata.gridCommands != null && Array.isArray(this.metadata.gridCommands)){
 			
@@ -104,6 +102,7 @@ export default class DataTable {
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let showHeader = this.getGridOptions(GridOptions.SHOW_HEADER);
 		let columnsWithFilters = this.metadata.gridFields.filter(e => (e.filtered));
+		let resultHeaderRowHeight = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
 
 		if (metadata != undefined) {
 
@@ -118,6 +117,7 @@ export default class DataTable {
 			datatable.sort = resultSort;
 			datatable.filter = resultFilter;
 			datatable.select = resultSelect;
+			
 			if (metadata.gridFields.length > 0) {
 
 				datatable.columns = [];
@@ -148,38 +148,41 @@ export default class DataTable {
 
 						} else {
 
-							col.header.push(`<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`);
+							col.header.push({
+								height: DEFAULT_HEADER_HEIGHT,
+								text: `<div title="${i18n.t(field.labelTooltip)}">${i18n.t(field.label)}</div>`
+							});
 						}
 
 					}
 					else {
 
-						col.header.push(`<div></div>`);
+						col.header.push({ height: DEFAULT_HEADER_HEIGHT, text: `<div></div>` });
 					}
 
 					if (field.filtered) {
 
 						if (field.parameterized) {
-							col.header.push({ content: "selectFilter" });
+							col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: "selectFilter" });
 						}
 						else {
 							if (field.gridFieldDataType) {
 
 								if (field.gridFieldDataType.id === DataType.STRING.value) {
-									col.header.push({ content: DataType.STRING.filter });
+									col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: DataType.STRING.filter });
 								}
 								else if (field.gridFieldDataType.id === DataType.INT.value) {
-									col.header.push({ content: DataType.INT.filter });
+									col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: DataType.INT.filter });
 								}
 								else if (field.gridFieldDataType.id === DataType.DECIMAL.value) {
-									col.header.push({ content: DataType.DECIMAL.filter });
+									col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: DataType.DECIMAL.filter });
 								}
 								else if (field.gridFieldDataType.id === DataType.DATE.value) {
-									col.header.push({ content: DataType.DATE.filter });
+									col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: DataType.DATE.filter });
 								}
 							}
 							else {
-								col.header.push({ content: DataType.STRING.filter });
+								col.header.push({ height: DEFAULT_HEADER_HEIGHT, content: DataType.STRING.filter });
 							}
 						}
 					}
@@ -187,7 +190,7 @@ export default class DataTable {
 						
 						if (Array.isArray(columnsWithFilters) && columnsWithFilters.length > 0) {
 							
-							col.header.push(`<div></div>`);		
+							col.header.push({ height: DEFAULT_HEADER_HEIGHT, text: `<div></div>` });
 						}
 					}
 
@@ -679,6 +682,7 @@ export default class DataTable {
 
 		let toolbar = {
 			view: "toolbar",
+			height: 30,
 			id: "tbMain-" + this.uid,
 			borderless: true
 		}
@@ -758,6 +762,7 @@ export default class DataTable {
 
 		let toolbar = {
 			view: "toolbar",
+			height: 38,
 			id: "tbActions-" + this.uid,
 			borderless: true
 		}
@@ -1072,7 +1077,7 @@ export default class DataTable {
 
 			optionValue = metadata.gridOptionValues.find(e => e.gridOption.id === option);
 
-			if (optionValue) {
+			if (optionValue && optionValue.value) {
 
 				if (optionValue.value === _TRUE) {
 
@@ -1361,14 +1366,12 @@ export default class DataTable {
 
 	clickShowFilters() {
 
-		let self = this;
 		let showFiltersButton = $$("tb_btn-showfilters-" + this.uid);
 		let datatable = $$("dt-" + this.uid);
 		let resultFilters = this.getGridOptions(GridOptions.FILTER);
-		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
 		let filtered = this.metadata.gridFields.find(e => e.filtered === true && e.visible === true);
 
-		let visible = resultFilters;
+		self.filtersVisible = (resultFilters != undefined && resultFilters !== false);
 
 		if (showFiltersButton) {
 
@@ -1382,41 +1385,26 @@ export default class DataTable {
 
 				if (datatable && filtered) {
 
-//					let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
-//					let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
-
 					let header = datatable.getNode().getElementsByClassName('webix_ss_header');
 					let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
 
-					if (visible) {
+					showFiltersButton._contentobj.className = self.filtersVisible ? "webix_view webix_control webix_el_icon" : "webix_view webix_control webix_el_icon filter_icon_selected";
+					showFiltersButton.refresh();
 
-						showFiltersButton._contentobj.className = "webix_view webix_control webix_el_icon";
-						showFiltersButton.refresh();
+					datatable.config.headerRowHeight = self.filtersVisible ? NO_HEADER_HEIGHT : DEFAULT_HEADER_HEIGHT * 2;
+					
+					for (let column of datatable.config.columns) {
 
-						visible = false;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-
-						if (columnVertical && columnVertical.length > 0) {
-
-							datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
-
-						} else {
-
-							datatable.config.headerRowHeight = ExtendedHeader.FALSE;
-
+						if (column.header[1]) {
+							
+							column.header[1].height = self.filtersVisible ? NO_HEADER_HEIGHT: DEFAULT_HEADER_HEIGHT;	
 						}
-
-					} else {
-						showFiltersButton._contentobj.className = "webix_view webix_control webix_el_icon filter_icon_selected";
-						showFiltersButton.refresh();
-
-						visible = true;
-						datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-						header[0].style.borderBottom = "1px solid var(--blue-strong)";
-						lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-
 					}
+					
+					self.filtersVisible = !self.filtersVisible;
+					
+					header[0].style.borderBottom = "1px solid var(--blue-strong)";
+					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
 				}
 
 				datatable.refreshColumns();
@@ -1427,149 +1415,64 @@ export default class DataTable {
 
 	showFilters() {
 
-		let self = this;
 		let datatable = $$("dt-" + this.uid);
 		let resultFilters = this.getGridOptions(GridOptions.FILTER);
 		let resultVertical = this.getGridOptions(GridOptions.HEADER_ROW_HEIGHT);
-		let columnVertical = this.metadata.gridFields.filter(e => (e.headerVertical));
-		let columnFilterTrue = this.metadata.gridFields.filter(e => (e.filtered));
+		let hasColumnsWithVerticalHeader = (this.metadata.gridFields.findIndex(e => (e.headerVertical)) !== -1);
+		let hasColumnsWithFilters = (this.metadata.gridFields.findIndex(e => (e.filtered)) !== -1);
 
-		if (columnFilterTrue && columnFilterTrue.length > 0) {
+		let header = datatable.getNode().getElementsByClassName('webix_ss_header');
+		let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
+		
+		if (hasColumnsWithFilters) {
 
-//			let header = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_header');
-//			let lateral = document.querySelector('[view_id = dt-' + self.uid + ']').getElementsByClassName('webix_ss_vscroll_header');
-			let header = datatable.getNode().getElementsByClassName('webix_ss_header');
-			let lateral = datatable.getNode().getElementsByClassName('webix_ss_vscroll_header');
-
-			let columnFilterFalse = this.metadata.gridFields.filter(e => e.filtered === false);
-
-			if (columnVertical && columnVertical.length > 0) {
-
-				if (resultFilters) {
-
-					if (columnFilterFalse && columnFilterFalse.length > 0) {
-
-						if (!isNaN(parseInt(resultVertical))) {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].height = parseInt(resultVertical);
-
-								if (column.header[0].rotate && !column.header[1]) {
-									column.header[0].css = { "text-align": "center" };
-								}
-
-								if (!column.header[0].rotate && column.header[1]) {
-									column.header[0].css = { "padding-top": "20px" };
-
-								}
-							}
-
-							datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-
-						} else {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].autoheight = true;
-								if (column.header[0].rotate && !column.header[1]) {
-									column.header[0].css = { "text-align": "center" };
-								}
-
-								if (!column.header[0].rotate && column.header[1]) {
-									column.header[0].css = { "padding-top": "20px" };
-
-								}
-							}
-						}
-
-					} else {
-
-						if (!isNaN(parseInt(resultVertical))) {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].height = parseInt(resultVertical);
-							}
-
-						} else {
-							for (let column of datatable.config.columns) {
-
-								column.header[0].autoheight = true;
-							}
-						}
-					}
-
-				} else {
-
-					datatable.config.headerRowHeight = ExtendedHeader.CLOSE;
-					header[0].style.borderBottom = "1px solid var(--blue-strong)";
-					lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
-
-					if (columnFilterFalse && columnFilterFalse.length > 0) {
-
-						if (!isNaN(parseInt(resultVertical))) {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].height = parseInt(resultVertical);
-
-								if (column.header[0].rotate && !column.header[1]) {
-									column.header[0].css = { "text-align": "center" };
-								}
-							}
-
-						} else {
-
-							for (let column of datatable.config.columns) {
-								column.header[0].autoheight = true;
-
-								if (column.header[0].rotate) {
-									column.header[0].css = { "text-align": "center" };
-								}
-							}
-						}
-
-					} else {
-
-						if (!isNaN(parseInt(resultVertical))) {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].height = parseInt(resultVertical);
-							}
-
-						} else {
-
-							for (let column of datatable.config.columns) {
-
-								column.header[0].autoheight = true;
-							}
-						}
-					}
-				}
-
-			} else {
-
-				if (resultFilters) {
-
-					datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-
-				} else {
-
-					datatable.config.headerRowHeight = ExtendedHeader.FALSE;
-					header[0].style.borderBottom = "1px solid var(--blue-strong)";
-					lateral[0].style.borderBottom = "1px solid var(--blue-strong)";
-				}
-
-			}
+			makeColumnsWithFilters();
+			
 		} else {
 
-			if (columnVertical && columnVertical.length > 0) {
+			makeColumnsWithNoFilters();
+		}
+		
+		header[0].style.borderBottom = "1px solid var(--blue-strong)";
+		lateral[0].style.borderBottom = "0px solid var(--blue-strong)";
+
+		datatable.refreshColumns();
+		
+		function makeColumnsWithFilters() {
+			
+			datatable.config.headerRowHeight = resultFilters ? DEFAULT_HEADER_HEIGHT : NO_HEADER_HEIGHT;
+			
+			for (let column of datatable.config.columns) {
+					
+				if (!isNaN(parseInt(resultVertical))) {
+					
+					column.header[0].height = parseInt(resultVertical);
+				}
+				else {
+					
+					column.header[0].autoheight = true;
+				}
+
+				if (column.header[0].rotate) {
+					
+					column.header[0].css = { "text-align": "center" };
+				}
+					
+				if (column.header[1]) {
+						
+					column.header[1].height = resultFilters ? DEFAULT_HEADER_HEIGHT : NO_HEADER_HEIGHT;	
+				}
+			}
+		}
+		
+		function makeColumnsWithNoFilters() {
+			
+			if (hasColumnsWithVerticalHeader) {
 
 				if (!isNaN(parseInt(resultVertical))) {
 
 					datatable.config.headerRowHeight = parseInt(resultVertical);
+					
 					for (let column of datatable.config.columns) {
 
 						column.header[0].css = { "height": + parseInt(resultVertical) + "px !important", "line-height": + parseInt(resultVertical) + "px !important" };
@@ -1580,22 +1483,15 @@ export default class DataTable {
 					for (let column of datatable.config.columns) {
 
 						column.header[0].autoheight = true;
-
 					}
 				}
 
 			} else {
 
-				datatable.config.headerRowHeight = ExtendedHeader.TRUE;
-
+				datatable.config.headerRowHeight = DEFAULT_HEADER_HEIGHT;
 			}
 		}
-
-		datatable.refreshColumns();
 	}
-
-
-
 
 	datatableCapture() {
 		let self = this;
@@ -1817,8 +1713,18 @@ export default class DataTable {
 
 							grid.showColumn(e.sourceField);
 						}
+						
+						for (let column of grid.config.columns) {
+	
+							if (column.header[1]) {
+								
+								column.header[1].height = self.filtersVisible ? DEFAULT_HEADER_HEIGHT : NO_HEADER_HEIGHT;	
+							}
+						}
 					}
 				});
+				
+				grid.refreshColumns();
 			}
 		}
 	}

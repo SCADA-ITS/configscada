@@ -3,7 +3,7 @@ import { util } from "../../lib/util.js";
 
 export default class EquipmentViewerContent {
 	
-	constructor(parent, element) {
+	constructor(parent, element, equipmentViewer) {
 
 		this.parent = parent;
 		this.element = element;
@@ -12,7 +12,7 @@ export default class EquipmentViewerContent {
 		
 		this.equipmentViewerInfo = undefined;
 		
-		this.equipmentViewer = parent.equipmentViewer;
+		this.equipmentViewer = equipmentViewer;
 	}
 	
 	getView() {
@@ -21,6 +21,7 @@ export default class EquipmentViewerContent {
 		let view = {};
 		
 		view = {
+			id: "view-main-content-" + self.uid,
 			rows: [getViewHeader(), { height: 3 }, getViewTabs()]
 		}
 		
@@ -80,7 +81,7 @@ export default class EquipmentViewerContent {
 				}
 			};
 			
-			if (self.equipmentViewer.showInfoTab) {
+			if (!self.equipmentViewer || (self.equipmentViewer && self.equipmentViewer.showInfoTab)) {
 				
 				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element);
 				
@@ -100,7 +101,7 @@ export default class EquipmentViewerContent {
 		
 		let self = this;
 		
-		if (Array.isArray(self.equipmentViewer.equipViewerTabs) && self.equipmentViewer.equipViewerTabs.length > 0) {
+		if (self.equipmentViewer && Array.isArray(self.equipmentViewer.equipViewerTabs) && self.equipmentViewer.equipViewerTabs.length > 0) {
 			
 			self.equipmentViewer.equipViewerTabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 			

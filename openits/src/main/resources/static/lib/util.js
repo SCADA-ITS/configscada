@@ -741,6 +741,19 @@ export let util = {
 					}
 				}
 			}
+		},
+		
+		getViewDrawNoData() {
+
+			return {
+				view: "template",
+				template: function() {
+	
+					let icon = "<img src='img/loading.svg' align='center'>";
+	
+					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+				}
+			}
 		}
 	},
 
