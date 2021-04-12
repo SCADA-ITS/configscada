@@ -1,5 +1,5 @@
 import {SVG_3_DET,SVG_5_PA_SYSTEM, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_11_SOS, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_15_FIRE_DET, 
-  SVG_16_PA_ZONE,SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_25_CABIN, SVG_51_ETD, SVG_53_SEM_AA, SVG_54_ATC, 
+  SVG_16_PA_ZONE,SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_25_CABIN, SVG_51_ETD, SVG_52_SERVER_DAI,SVG_53_SEM_AA, SVG_54_ATC, 
   SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, 
   SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR, SVG_74_ERU, SVG_75_GE} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
@@ -46,6 +46,7 @@ export const ELEMENT_TYPE = {
   ID_46_CABIN_TOLL : "ElementType:46",
   ID_47_CABIN_TU : "ElementType:47",
   ID_51_ETD : "ElementType:51",
+  ID_52_SERVER_DAI : "ElementType:52",
   ID_53_SEM_AA : "ElementType:53",
   ID_54_ATC : "ElementType:54",
   ID_55_CT : "ElementType:55",
@@ -194,6 +195,7 @@ export const ELEMENT_TYPE = {
     "ElementType:46" :{ id: "ElementType:46", uiType: UI_ELEMENT_TYPE_GENERIC, value: 46, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_GENERIC, value: 47, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 20, scale_y: 20, svgRaw:SVG_51_ETD},
+    "ElementType:52" :{ id: "ElementType:52", uiType: UI_ELEMENT_TYPE_GENERIC, value: 52, scale_x: 150, scale_y: 150, svgRaw:SVG_52_SERVER_DAI},
     "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM_AA,
       elementTypeParams:[
         {SEM_AMBAR_AMBAR_STATUS: "1:2"}

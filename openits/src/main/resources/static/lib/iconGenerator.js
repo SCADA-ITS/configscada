@@ -119,6 +119,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL
     || elementType === elementTypeMap.ELEMENT_TYPE_47_CABIN_TU
     || elementType === elementTypeMap.ELEMENT_TYPE_51_ETD
+    || elementType === elementTypeMap.ELEMENT_TYPE_52_SERVER_DAI
     || elementType === elementTypeMap.ELEMENT_TYPE_53_SEM_AA
     || elementType === elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO
     || elementType === elementTypeMap.ELEMENT_TYPE_55_CT
@@ -246,7 +247,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_45_CABIN_TFA:
     case elementTypeMap.ELEMENT_TYPE_46_CABIN_TOLL:
     case elementTypeMap.ELEMENT_TYPE_47_CABIN_TU:
-    case elementTypeMap.ELEMENT_TYPE_51_ETD:     
+    case elementTypeMap.ELEMENT_TYPE_51_ETD:      
     case elementTypeMap.ELEMENT_TYPE_55_CT:
     case elementTypeMap.ELEMENT_TYPE_59_SMOKE_DETECTOR:    
     case elementTypeMap.ELEMENT_TYPE_65_SAI:
@@ -293,6 +294,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_3_DET:      
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
+    case elementTypeMap.ELEMENT_TYPE_52_SERVER_DAI:   
+        iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 1000) + ',' + (height / 1000) + ')">' + createIcon(element, suffix) + '</g>';
+        break; 
     case elementTypeMap.ELEMENT_TYPE_54_ETD_KINEO:   
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 18) + ',' + (height / 18) + ')">' + createIcon(element, suffix) + '</g>';
       break; 

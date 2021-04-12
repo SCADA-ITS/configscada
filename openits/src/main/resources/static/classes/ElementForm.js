@@ -32,14 +32,14 @@ export default class TabForm {
 				elementType {
 			        id
 			        alias
-					commandElementTypes{
+			    }
+				commandElements { 
+					id
+					alias
+					labelAlias
+					commandElementTypeParams{
 						id
 						alias
-						labelAlias
-						commandElementTypeParams{
-						  id
-						  alias
-						}
 					}
 				}
 				childs {
@@ -688,7 +688,7 @@ export default class TabForm {
 
 		this.graphql.load().then(data => {
 			this.data = data;
-			this.commadsList = this.data.elementType.commandElementTypes;
+			this.commadsList = this.data.commandElements;
 			if(this.synopticElement==undefined){
 				this.synopticElement = new SynopticElement(data);
 			}else{
@@ -862,34 +862,34 @@ export default class TabForm {
 			//COMMANDS
 			try {
 				if (checkUserPermission(RULE.COMMAND_ACTION)){
-					if(data.elementType.commandElementTypes){
+					if(data.commandElements){
 						this.commands = $$("component_"+this.id).addView({
 							view: "form",
 							id: "comandos" + this.id,
 							elements:[]
 						}, -1);
 		
-						for (let index = 0; index < data.elementType.commandElementTypes.length; index++) {
+						for (let index = 0; index < data.commandElements.length; index++) {
 	
 							if(
-								data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_C
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_64X64
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_B
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_192X64
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_TXT
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
-								|| data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_WEIGHT_LIMIT
+								data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_C
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_64X64
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_A_B
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_192X64
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_B_D
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_128X64
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_TXT
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_WEIGHT_LIMIT
 							){
 	
 								$$(this.commands).addView({
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
-									value: $.i18n(data.elementType.commandElementTypes[index].id),
+									value: $.i18n(data.commandElements[index].id),
 									click: function(){
 										let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
 										//if( $$("panelManager" + data.id)){
@@ -897,7 +897,7 @@ export default class TabForm {
 										if($$("panelManager" + idtype)){
 											$$("panelManager" + idtype).show();
 										}else{
-											let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.elementType.commandElementTypes[index]);
+											let panelMan = new PanelManager(data.id, data.elementType.id,elementTypeMap.PANELMANAGER_TYPE_PANEL,null,null);//data.commandElements[index]);
 											webix.ui({
 												id:"panelManager"+idtype,
 												view:"window",	
@@ -923,19 +923,19 @@ export default class TabForm {
 									}								
 								}, -1);
 							}
-							else if (data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_PLAY
-									 || data.elementType.commandElementTypes[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_STOP
+							else if (data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_PLAY
+									 || data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PA_SYSTEM_STOP
 									){
 									$$(this.commands).addView({
 										view: "button", 
 										id: "command"+index+"_"+ this.id, 
-										value: $.i18n(data.elementType.commandElementTypes[index].id),
+										value: $.i18n(data.commandElements[index].id),
 										click: function(){
 											let idtype = "ElementType:" + elementTypeMap.getElementType(data.id);
 											if($$("PAsystemManager" + idtype)){
 												$$("PAsystemManager" + idtype).show();
 											}else{
-												let paMan = new PAsystemManager(data.id, data.elementType.id,data.elementType.commandElementTypes[index].id,null,null);//data.elementType.commandElementTypes[index]);
+												let paMan = new PAsystemManager(data.id, data.elementType.id,data.commandElements[index].id,null,null);//data.commandElements[index]);
 												webix.ui({
 													id:"PAsystemManager"+idtype,
 													view:"window",	
@@ -974,7 +974,7 @@ export default class TabForm {
 								$$(this.commands).addView({
 									view: "button", 
 									id: "command"+index+"_"+ this.id, 
-									value: $.i18n(this.data.elementType.commandElementTypes[index].id),
+									value: $.i18n(this.data.commandElements[index].id),
 									click: () =>{
 										var sendCommand = `mutation  sendCommandElement($commands: [CommandElementVO!]!){
 											sendCommandElement(commands: $commands)  

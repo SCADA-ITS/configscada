@@ -103,8 +103,8 @@ var i18_es = {
     "ElementType:47.description": "ARMARIO_ELECTRICO_TU",
     "ElementType:51.alias": "ETD",
     "ElementType:51.description": "ETD",
-    "ElementType:52.alias": "DAI DETECTOR",
-    "ElementType:52.description": "DAI DETECTOR",
+    "ElementType:52.alias": "SERVIDOR DAI",
+    "ElementType:52.description": "SERVIDOR DAI",
     "ElementType:53.alias": "SEM_AMBAR_AMBAR",
     "ElementType:53.description": "SEM_AMBAR_AMBAR",
     "ElementType:54.alias": "ETD",
@@ -958,6 +958,12 @@ var i18_es = {
     "ElementTypeParam:51:1:3.alias": "PK",
     "ElementTypeParam:51:1:3.description": "PK",
     
+    "ElementTypeParam:52:1:1.alias": "PK",
+    "ElementTypeParam:52:1:1.description": "PK",
+    "ElementTypeParam:52:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
+    "ElementTypeParam:52:1:2.description": "Distancia entrada del t&uacute;nel (m)",
+    
+    
     "ElementTypeParam:53:1:1.alias": "PK",
     "ElementTypeParam:53:1:1.description": "PK",
     "ElementTypeParam:53:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
@@ -1438,6 +1444,10 @@ var i18_es = {
     "state.noconnected": "No conectado",
     "state.alarm": "Alarmado",
     
+    "CommandElementType:1:2": "DESCARTAR INCIDENCIA",
+    "CommandElementType:2:2": "CERRAR INCIDENCIA",
+    
+    
     "CommandElementType:1:5": "PARAR",
     "CommandElementType:2:5": "REPRODUCIR",
     
@@ -1500,8 +1510,7 @@ var i18_es = {
     "CommandElementType:2:36": "SEÑALIZAR",
     "CommandElementType:3:36": "APAGAR",
     
-    "CommandElementType:1:52": "DESCARTAR INCIDENCIA",
-    "CommandElementType:2:52": "CERRAR INCIDENCIA",
+
     
     "CommandElementType:1:53": "SEÑALIZAR",
     "CommandElementType:2:53": "APAGAR",
@@ -1764,7 +1773,7 @@ var i18_es = {
     "AlarmConfig:80" : "ALARMA GE GENERAL",
     "AlarmConfig:81" : "ALARMA GE MOTOR ENCENDIDO",
     "AlarmConfig:82" : "ALARMA GE NIVEL COMBUSTIBLE RESERVADO",
-    "AlarmConfig:85" : "ALARMA DETECTOR DAI SIN CONEXION",
+    "AlarmConfig:85" : "ALARMA SERVIDOR DAI SIN CONEXION",
     "AlarmConfig:86" : "ALARMA DAI INCIDENCIA",
     "AlarmConfig:87" : "ALARMA MEGAFONIA EMERGENCIA",
 

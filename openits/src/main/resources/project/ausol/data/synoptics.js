@@ -143,7 +143,12 @@ export let synopticData= [
 				"items": ["Element:67:1", "Element:67:2", "Element:67:3", "Element:67:4"],
 				"translation_key": "",
 				"visibility": "visible"
-			}
+			},
+			"DAI_SERVER": {
+				"items": ["Element:52:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 		},
 		
 		"Element:2:1":  { "x": 1400, "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-1CA" },
@@ -277,6 +282,9 @@ export let synopticData= [
 		"Element:67:2": { "x": 1715,   "y": 818, "width": 5, "height": 5,  "alias": "RV-SMF-RR-1MA" },
 		"Element:67:3": { "x": 40,   "y": 270, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2CA" },
 		"Element:67:4": { "x": 40,   "y": 420, "width": 5, "height": 5,  "alias": "RV-SMF-RR-2MA" },
+		
+		
+		"Element:52:1": { "x": 1278,   "y": 570, "width": 10, "height": 10,  "alias": "SERVER-DAI" },
 	},
 	{
 		"id":"synopticMetro",
