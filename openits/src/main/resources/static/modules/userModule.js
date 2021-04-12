@@ -53,7 +53,7 @@ export default class UserModule extends GenericModule {
 
 			webix.alert({
 				title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-				text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
+				text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
 				type: "alert-error",
 				width: 600
 			});
@@ -194,7 +194,7 @@ export default class UserModule extends GenericModule {
 
 					webix.alert({
 						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
+						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
 						type: "alert-error",
 						width: 600
 					});
@@ -229,7 +229,7 @@ export default class UserModule extends GenericModule {
 
 					webix.alert({
 						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
+						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
 						type: "alert-error",
 						width: 600
 					});

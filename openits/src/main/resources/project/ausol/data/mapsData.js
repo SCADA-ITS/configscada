@@ -23,5 +23,11 @@ export let mapsData = [
       width: 150,
       height: 54,
     },
+    "Element:36:3": {
+      lon: -4.869977,
+      lat: 36.520382,
+      width: 150,
+      height: 54,
+    },
   }
 ]
