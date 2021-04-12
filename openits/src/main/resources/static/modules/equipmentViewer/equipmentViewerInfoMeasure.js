@@ -336,7 +336,7 @@ export default class EquipmentViewerInfoMeasure {
 			return {
 				view: "segmented",
 				id: VIEW_INFO_MEASURE_SEGMENTED + "-" + self.uid,
-				css: "segment-custom",
+				css: "segment-custom-1",
 				value: "measure-group-0-" + self.uid,
 				options: [],
 			};

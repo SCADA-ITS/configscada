@@ -335,6 +335,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				
 				let alarmTypeSwitcher = {
 					view: "segmented",
+					css: "segment-custom-2",
 					value: "alarm-type-switcher-show-all-" + self.uid,
 					options: [
 						{
@@ -663,6 +664,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				let actionPanelSwitcher = {
 					view: "segmented",
+					css: "segment-custom-2",
 					value: "action-panel-switcher-show-all-" + self.uid,
 					options: [
 						{
