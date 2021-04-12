@@ -45,7 +45,7 @@ class MeasureItem {
 							icon = "not_found_50.png";
 						}
 						
-						res = `<image class="ims-incident-report-icon" src="../../img/${icon}" />
+						let res = `<image class="ims-incident-report-icon" src="../../img/${icon}" />
 									<div class="ims-incident-report-title">
 										${self.value}
 									</div>
@@ -53,7 +53,7 @@ class MeasureItem {
 										<span>${self.id}</span>
 									</div>`; 
 									
-						let res = `<div>
+						res = `<div>
 										<image src="../../img/${icon}" />
 										<div>${self.value}</div>
 										<div><span>${self.id}</span></div>
