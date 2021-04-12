@@ -288,7 +288,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				id: "view-main-list-equipments-" + self.uid,
 				header: i18n.t("LBL_EQUIPMENT_TYPES"),
 				body: {
-					width: 300,
+					width: 275,
 					rows: [
 						{
 							cols: [
@@ -436,82 +436,6 @@ export default class AlarmMonitorModule extends GenericModule {
 					
 					fillDatatables(elementTypeArray);
 				}
-
-//				function onSelect(data) {
-//
-//					if (Array.isArray(data) && data.length > 0) {
-//
-//						self.elementTypeIdSelected = data[0];
-//
-//						if (self.dtNoRecognized) {
-//
-//							self.dtNoRecognized.clear();
-//							
-//							let noRecognizedAlarms = self.dcNoRecognized;
-//							
-//							if (self.filterAlarmType) {
-//								
-//								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-//								
-//									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-//											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-//									});	
-//								}
-//								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-//									
-//									noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-//											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-//									});
-//								}
-//							}
-//							
-//							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-//
-//								self.dtNoRecognized.add(noRecognizedAlarms);
-//							}
-//							else {
-//
-//								self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
-//									return (e.targetElementTypeId == self.elementTypeIdSelected);
-//								}));
-//							}	
-//						}
-//
-//						if (self.dtRecognized) {
-//
-//							self.dtRecognized.clear();
-//							
-//							let recognizedAlarms = self.dcRecognized;
-//							
-//							if (self.filterAlarmType) {
-//								
-//								if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-//								
-//									recognizedAlarms = recognizedAlarms.filter(e => {
-//											return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-//									});	
-//								}
-//								else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-//									
-//									recognizedAlarms = recognizedAlarms.filter(e => {
-//											return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-//									});
-//								}
-//							}
-//
-//							if (self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-//
-//								self.dtRecognized.add(recognizedAlarms);
-//							}
-//							else {
-//
-//								self.dtRecognized.add(recognizedAlarms.filter(e => {
-//									return (e.targetElementTypeId == self.elementTypeIdSelected);
-//								}));
-//							}
-//						}
-//					}
-//				}
 				
 				view.rows.push(viewListEquipments);
 
@@ -947,7 +871,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				viewActionPanel = {
 
 					id: "viewActionPanel-" + self.uid,
-					width: 325,
+					width: 320,
 					css: "panel-action",
 					rows: [
 						{ height: 20 },
