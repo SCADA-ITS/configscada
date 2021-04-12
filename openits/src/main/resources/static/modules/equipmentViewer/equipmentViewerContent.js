@@ -46,10 +46,10 @@ export default class EquipmentViewerContent {
 							
 							let res = `<image class="ims-incident-report-icon" src="../img/${equipmentIcon}" />
 										<div class="ims-incident-report-title">
-											${self.element.alias}
+											${self.element.alias + ' - ' + self.element.description}
 										</div>
 										<div class="ims-incident-report-title">
-											<span class="ims-incident-badge" style="background: red; color: white;">${self.element.description}</span>
+											<span class="ims-incident-badge" style="background: red; color: white;">${self.element.id}</span>
 										</div>`; 
 							
 							return res;
@@ -83,7 +83,7 @@ export default class EquipmentViewerContent {
 			
 			if (!self.equipmentViewer || (self.equipmentViewer && self.equipmentViewer.showInfoTab)) {
 				
-				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element);
+				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element, self.equipmentViewer);
 				
 				viewTabs.cells.push({
 					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
@@ -95,6 +95,17 @@ export default class EquipmentViewerContent {
 		}
 		
 		return view;
+	}
+	
+	refresh() {
+		
+		// TODO: Refresh upper content???
+		
+		// Refresh measures
+		if (this.equipmentViewerInfo) {
+		
+			this.equipmentViewerInfo.refresh();	
+		}
 	}
 	
 	loadData() {

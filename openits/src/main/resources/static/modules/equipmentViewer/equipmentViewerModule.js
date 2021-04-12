@@ -26,6 +26,7 @@ export default class EquipmentViewerModule extends GenericModule {
 		this.equipmentViewer = EquipmentViewerModule.DEFAULT_EQUIPMENT_VIEWER;
 		this.equipmentViewerTreeHierarchy = undefined;
 		this.equipmentViewerContent = undefined;
+		this.containerWidth = 0;
 	}
 
 	getView() {
@@ -126,11 +127,67 @@ export default class EquipmentViewerModule extends GenericModule {
 			return drawMain(element);
 		}
 		
+		function calculateContainerWidth() {
+			
+			let viewMainTreeHierarchy = $$("view-main-tree-hierarchy-" + self.uid);
+			let viewMainActionPanel = $$("view-main-action-panel-" + self.uid);
+			let width = 0;
+			
+			let container = $$(self.args.containerId);
+
+			if (container) {
+				
+				width += container.config.width;
+			}
+			
+			if (viewMainTreeHierarchy) {
+				
+				width -= viewMainTreeHierarchy.$width;	
+			}
+			
+			if (viewMainActionPanel) {
+				
+				width -= viewMainActionPanel.$width;
+			}
+			
+			if (width > 0) {
+			
+				self.containerWidth = width;	
+			}
+		}
+		
 		function drawMain(element) {
+			
+			let container = $$(self.args.containerId);
+
+			if (container) {
+				
+				self.containerWidth += container.config.width;
+			}
 			
 			let viewMain = {
 				id: self.uid,
-				cols: []
+				cols: [],
+				on: {
+					onAfterCollapse() {
+						
+						if (self.equipmentViewerContent) {
+							
+							calculateContainerWidth();
+							
+							self.equipmentViewerContent.refresh();
+						}
+					},
+					onAfterExpand() {
+						
+						if (self.equipmentViewerContent) {
+							
+							calculateContainerWidth();
+							
+							self.equipmentViewerContent.refresh();
+						}
+					}
+				}
 			};
 			
 			let viewMainTreeHierarchy = {
@@ -141,6 +198,8 @@ export default class EquipmentViewerModule extends GenericModule {
 					rows: [getViewTreeHierarchy(element)]
 				}
 			};
+			
+			self.containerWidth -= viewMainTreeHierarchy.body.width;
 			
 			let viewMainResizer = { 
 				id: "view-main-resizer-" + self.uid,
@@ -155,18 +214,40 @@ export default class EquipmentViewerModule extends GenericModule {
 			
 			let viewMainActionPanel = {
 				header: i18n.t("LBL_EQUIPMENT_ACTION_PANEL"),
+				id: "view-main-action-panel-" + self.uid,
 				body: {
-					id: "view-main-action-panel-" + self.uid,
 					width: 300
-				} // getViewActionPanel(element)
+				}
 			};
+			
+			self.containerWidth -= viewMainActionPanel.body.width;
 			
 			let viewMainBody = {
 				id: "view-main-body-" + self.uid,
 				hidden: true,
 				rows: [
 					{
-						cols: [viewMainContent, viewMainActionPanel]
+						cols: [viewMainContent, viewMainActionPanel],
+						on: {
+							onAfterCollapse() {
+								
+								if (self.equipmentViewerContent) {
+									
+									calculateContainerWidth();
+									
+									self.equipmentViewerContent.refresh();
+								}
+							},
+							onAfterExpand() {
+								
+								if (self.equipmentViewerContent) {
+									
+									calculateContainerWidth();
+									
+									self.equipmentViewerContent.refresh();
+								}
+							}
+						}
 					}
 				]	
 			};
@@ -244,21 +325,6 @@ export default class EquipmentViewerModule extends GenericModule {
 				self.equipmentViewerContent = new EquipmentViewerContent(self, element, equipmentViewer);
 				
 				view = self.equipmentViewerContent.getView();
-
-//				view = {
-//					borderless: true,
-//					rows: [
-//						{height: 6},
-//						{
-//							cols: [
-//								{width: 6},
-//								self.equipmentViewerContent.getView(),		
-//								{width: 6}
-//							]
-//						},
-//						{height: 6}
-//					]
-//				}
 				
 				return view;
 			}
