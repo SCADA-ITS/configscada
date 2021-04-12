@@ -42,6 +42,7 @@ export const ELEMENT_TYPE_45_CABIN_TFA = "45";
 export const ELEMENT_TYPE_46_CABIN_TOLL = "46";
 export const ELEMENT_TYPE_47_CABIN_TU = "47";
 export const ELEMENT_TYPE_51_ETD = "51";
+export const ELEMENT_TYPE_52_SERVER_DAI = "52";
 export const ELEMENT_TYPE_53_SEM_AA = "53";
 export const ELEMENT_TYPE_54_ETD_KINEO = "54";
 export const ELEMENT_TYPE_55_CT = "55";
