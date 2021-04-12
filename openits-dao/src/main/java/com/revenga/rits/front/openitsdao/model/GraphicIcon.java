@@ -38,20 +38,10 @@ public class GraphicIcon implements Serializable {
 
 	private Boolean measures;
 
-	//bi-directional many-to-one association to ModuleAction
-	@ManyToOne
-	@JoinColumn(name="module_action_id")
-	private ModuleAction moduleAction;
-
 	private String name;
 
 	@Column(name="svg_pattern_var")
 	private String svgPatternVar;
-
-	//uni-directional many-to-one association to ViewType
-	@ManyToOne
-	@JoinColumn(name="view_type_id")
-	private ViewType viewType;
 
 	private Float width;
 
@@ -106,14 +96,6 @@ public class GraphicIcon implements Serializable {
 		this.measures = measures;
 	}
 
-	public ModuleAction getModuleAction() {
-		return this.moduleAction;
-	}
-
-	public void setModuleAction(ModuleAction moduleAction) {
-		this.moduleAction = moduleAction;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -128,14 +110,6 @@ public class GraphicIcon implements Serializable {
 
 	public void setSvgPatternVar(String svgPatternVar) {
 		this.svgPatternVar = svgPatternVar;
-	}
-
-	public ViewType getViewType() {
-		return this.viewType;
-	}
-
-	public void setViewType(ViewType viewType) {
-		this.viewType = viewType;
 	}
 
 	public Float getWidth() {

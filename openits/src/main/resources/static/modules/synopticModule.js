@@ -331,6 +331,20 @@ export default class SynopticModule extends GenericModule{
     return selectedIds;
 	}
 
+  getApplyAllIds(){
+    
+    let selectedIds = [];
+
+		if (this.elementsMap) { 
+      for (let [key, value] of this.elementsMap) {    
+          
+        selectedIds.push(key);
+      }
+    }
+    console.warn(selectedIds);
+    return selectedIds;
+  }
+
   resetSelectedIds(){
     
     if (this.elementsMap) {
@@ -338,7 +352,7 @@ export default class SynopticModule extends GenericModule{
         if(value.isCtrlClicked){
           
           this.elementsMap.get(key).isCtrlClicked = false;
-     
+          document.getElementById(key).classList.remove("synoptic-highlight");
         }
       }
     }

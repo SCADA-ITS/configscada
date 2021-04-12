@@ -81,12 +81,11 @@ export default class ContextMenu {
 
 		let args = {};
 		let obj = this;
-
 		let viewTypeId = undefined;
 
 		if (command && command.moduleAction) {
-
-			let module = findModuleByIdAction(command.moduleAction.id);
+			
+			let executeModule = false;
 			let selectedPks = this.parentContext.getSelectedIds();
 
 			if (command.viewType) {
@@ -109,8 +108,12 @@ export default class ContextMenu {
 				args.callbacks.push(function() { obj.refresh(obj) });
 			}
 
-			// Any selected?
-			if (selectedPks.length > 0) {
+			if (command.applyAll != undefined && command.applyAll){
+
+				args.selectedPks = this.parentContext.getApplyAllIds();
+				executeModule = true;
+
+			} else if (selectedPks.length > 0) {
 
 				// Multiselect not allowed with 2 o more selected
 				if (selectedPks.length > 1 && command.multiselect === false) {
@@ -126,7 +129,7 @@ export default class ContextMenu {
 				else {
 
 					args.selectedPks = selectedPks;
-					util.module.open(module, command.moduleAction, viewTypeId, null, args);
+					executeModule = true;
 				}
 			}
 			// No rows selected
@@ -142,10 +145,51 @@ export default class ContextMenu {
 				}
 				// No required select rows
 				else {
-
-					util.module.open(module, command.moduleAction, viewTypeId, null, args);
+					executeModule = true;
 				}
 			}
+
+			if(executeModule){
+
+				let typeCommands;
+
+				if(command.synopticElementTypeCommand != undefined && command.synopticElementTypeCommand.length > 0){
+					typeCommands = new Map();
+					command.synopticElementTypeCommand.forEach(typeCommand => {
+						let tmpCommand = {};
+						tmpCommand.moduleAction = typeCommand.moduleAction;
+						tmpCommand.args = webix.copy(args);
+						tmpCommand.args.selectedPks = [];
+						typeCommands.set(typeCommand.elementType, tmpCommand);
+					});
+				}
+
+				if(typeCommands != undefined){
+
+					let tmpSelectedPKs = [];
+
+					args.selectedPks.forEach(selectedPK => {
+						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPK).elementType.id;
+						if(typeCommands.get(elementType)){
+							typeCommands.get(elementType).args.selectedPks.push(selectedPK);
+						} else {
+							tmpSelectedPKs.push(selectedPK);
+						}
+					});
+
+					args.selectedPks = tmpSelectedPKs;
+
+					for (let [key, value] of typeCommands) { 
+						if(value.args.selectedPks && value.args.selectedPks.length > 0){
+							let module = findModuleByIdAction(value.moduleAction.id);
+							util.module.open(module, value.moduleAction, viewTypeId, null, value.args);
+						}   
+					}
+				}
+				let module = findModuleByIdAction(command.moduleAction.id);
+				util.module.open(module, command.moduleAction, viewTypeId, null, args);		
+			}
+
 		}
 	}
 

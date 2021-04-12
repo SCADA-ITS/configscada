@@ -117,27 +117,13 @@ export default class GraphicElement {
   }
 
   addOnClickEvent(el){
-    if (this.graphicElementConfig.moduleAction && el) {
-      
-      el.click((event) => {
-        try {
-          let module = findModuleByIdAction(this.graphicElementConfig.moduleAction.id);
-          let args = {};
-          args.parentId = this.element.id;
-          args.parentType = this.element.elementType.id;
-          util.module.open(module, this.graphicElementConfig.moduleAction, (this.graphicElementConfig.viewType)?this.graphicElementConfig.viewType.id:undefined, null, args);
-        } catch (e) {
-          console.error(e);
-        }
-      });
+    //Abstract
 
-    }
   }
 
   addOnDblClickEvent(el){
-    // el.dblclick((event) => {
-      
-    // });
+    //Abstract
+    
   }
 
 }
