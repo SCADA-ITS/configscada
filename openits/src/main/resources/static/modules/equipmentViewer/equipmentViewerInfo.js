@@ -19,12 +19,20 @@ export default class EquipmentViewerInfo {
 		
 		view = {
 			rows: [
-				{ height: 300 },
+				{},
 				this.equipmentViewerInfoMeasure.getView()
 			]
 		}
 		
 		return view;
+	}
+	
+	updateMeasures(elementValues) {
+
+		if (this.equipmentViewerInfoMeasure) {
+			
+			this.equipmentViewerInfoMeasure.updateMeasure(elementValues);
+		}
 	}
 	
 	refresh() {

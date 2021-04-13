@@ -1,5 +1,6 @@
 import EquipmentViewerInfo from "./equipmentViewerInfo.js";
 import { util } from "../../lib/util.js";
+import { adapter } from "../../lib/adapter.js";
 
 export default class EquipmentViewerContent {
 	
@@ -13,6 +14,13 @@ export default class EquipmentViewerContent {
 		this.equipmentViewerInfo = undefined;
 		
 		this.equipmentViewer = equipmentViewer;
+		this.idStompSubscriptor = undefined;
+		
+		if (element) {
+			
+			let allElementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+			this.elementType = allElementTypes.find(e => e.id === element.elementType.id);	
+		}
 	}
 	
 	getView() {
@@ -35,24 +43,42 @@ export default class EquipmentViewerContent {
 				height: 95,
 				cols: [
 					{
+						id:  "view-main-content-header-element-" + self.uid, 
 						width: 500,
-						template: function() {
-
-							let equipmentIcon = undefined;
-
-							if (equipmentIcon == undefined) {
-								equipmentIcon = "not_found_50.png";
-							}
+						template: function(data) {
 							
-							let res = `<image class="ims-incident-report-icon" src="../img/${equipmentIcon}" />
+							if (self.elementType) {
+								
+								let equipmentIcon = undefined;
+								
+								if (!equipmentIcon) {
+									equipmentIcon = "not_found_50.png";
+								}
+								
+								let elementTypeStateLabel = i18n.t(self.element.elementTypeState.labelAlias);
+								let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
+								
+								if (data && data.elementTypeState) {
+									
+									let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+								
+									if (elementTypeState) {
+										
+										elementTypeStateLabel = i18n.t(elementTypeState.labelAlias);
+										color = elementTypeState.color ? elementTypeState.color : "#000000";
+									}
+								}
+								
+								let res = `<image class="ims-incident-report-icon" src="../img/${equipmentIcon}" />
 										<div class="ims-incident-report-title">
 											${self.element.alias + ' - ' + self.element.description}
 										</div>
 										<div class="ims-incident-report-title">
-											<span class="ims-incident-badge" style="background: red; color: white;">${self.element.id}</span>
+											<span class="ims-incident-badge" style="background: ${color}; color: white;">${elementTypeStateLabel}</span>
 										</div>`; 
 							
-							return res;
+								return res;
+							}
 						}
 					},
 					{},
@@ -126,6 +152,18 @@ export default class EquipmentViewerContent {
 				}
 			});
 		}
+		
+		connectWS();
+
+		$$(self.uid).attachEvent("onDestruct", function() {
+
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+			if (stompSubscriptorService) {
+
+				stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+			}
+		});
 	
 		function addModule(module, moduleActionId, label) {
 			
@@ -151,6 +189,44 @@ export default class EquipmentViewerContent {
 					});	
 				}
 			}
-		}	
+		}
+		
+		function connectWS() {
+
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+			if (stompSubscriptorService) {
+				
+				let topic = self.parent.config.topic + "." + self.element.elementType.id + "." + self.element.id;
+
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessage);
+			}
+			
+			function onMessage(data) {
+
+				if (data) {
+					
+					if (data.elementTypeState) {
+						
+						let elementHeader = $$("view-main-content-header-element-" + self.uid);
+						
+						if (elementHeader) {
+							
+							elementHeader.setValues( { elementTypeState: data.elementTypeState });
+						}
+					}
+					
+					if (Array.isArray(data.alarms) && data.alarms.length > 0)  {
+						
+						// TODO: Update alarms
+					}
+					
+					if (Array.isArray(data.elementValues) && data.elementValues.length > 0) {
+
+						self.equipmentViewerInfo.updateMeasures(data.elementValues);
+					}
+				}
+			}
+		}
 	}
 }	

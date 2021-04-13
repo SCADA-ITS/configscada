@@ -70,7 +70,10 @@ export let adapter = {
 					});
 				}
 
-				update_callback(gridData);
+				if (update_callback) {
+				
+					update_callback(gridData);	
+				}
 			}
 		},
 

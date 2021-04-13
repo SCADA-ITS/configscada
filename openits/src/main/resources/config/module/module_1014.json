@@ -5,6 +5,8 @@
 	"actionEndpoints": {
 		
 	},
+	"topic": "/topic/element",
+	"adapter": "ws.element.getList",
 	"restEndpoints": {
 		"element": "elements/${id}",
 		"equipmentViewer": "equip_viewer/${id}"

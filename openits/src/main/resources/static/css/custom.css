@@ -1997,3 +1997,44 @@
 .webix_nav_panel .webix_nav_active {
   	background-color: #d8d8d8;
 }
+
+.measure-box {
+	border-radius: 6px;
+    box-shadow: 2px 4px 4px 0 rgb(213 215 218 / 75%);
+    border: solid 1px #c3c5c7;
+    background-color: var(--white);
+    margin-right: 4px;
+    height: 85px;
+}
+
+.measure-box .image {
+    position: absolute;
+    padding-top: 24px;
+    padding-left: 10px;
+    width: 36px;
+    height: 36px;
+}
+
+.measure-box .value {
+	position: absolute;
+    margin-top: 14px;
+    margin-left: 54px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.measure-box .desc {
+    position: absolute;
+    margin-top: 52px;
+    margin-left: 54px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}

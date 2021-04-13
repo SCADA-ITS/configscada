@@ -180,6 +180,12 @@ export default class SearchDialogBox {
 								
 						let fieldName = getFieldName(field);
 						let fieldLabel = getFieldLabel(field);
+						let needsTranslation = false;
+						
+						if (Array.isArray(dialogEntity.translate)) {
+							
+							needsTranslation = dialogEntity.translate.includes(fieldName);
+						}
 						
 						let adjust = (position + 1 >= dialogEntity.fields.length);
 						
@@ -189,7 +195,7 @@ export default class SearchDialogBox {
 							isEpochMilli: false,
 							isPk: false,
 							label: fieldLabel,
-							needsTranslation: false,
+							needsTranslation: needsTranslation,
 							parameterized: false,
 							position: ++position,
 							required: true,
@@ -344,7 +350,7 @@ Object.defineProperty(SearchDialogBox, 'ROLES', {
 });
 
 Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
-	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "description=LBL_LABEL_PERMISSION_DESCRIPTION"], height: 600, width: 800},
+	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "description=LBL_LABEL_PERMISSION_DESCRIPTION"], translate: ["labelAlias", "labelDescription"], height: 600, width: 800},
 	writable: false,
 	enumerable: true,
 	configurable: false

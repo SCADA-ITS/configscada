@@ -23,8 +23,17 @@ public class EquipViewer implements Serializable {
 	private String description;
 
 	private String icon;
+	
+	@Column(name="initial_tab")
+	private Integer initialTab;
 
 	private String label;
+	
+	@Column(name="measure_max_rows")
+	private Integer measureMaxRows;
+	
+	@Column(name="measure_width")
+	private Integer measureWidth;
 
 	private String name;
 
@@ -73,6 +82,14 @@ public class EquipViewer implements Serializable {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
+	
+	public Integer getInitialTab() {
+		return this.initialTab;
+	}
+
+	public void setInitialTab(Integer initialTab) {
+		this.initialTab = initialTab;
+	}
 
 	public String getLabel() {
 		return this.label;
@@ -80,6 +97,22 @@ public class EquipViewer implements Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	
+	public Integer getMeasureMaxRows() {
+		return this.measureMaxRows;
+	}
+
+	public void setMeasureMaxRows(Integer measureMaxRows) {
+		this.measureMaxRows = measureMaxRows;
+	}
+	
+	public Integer getMeasureWidth() {
+		return this.measureWidth;
+	}
+
+	public void setMeasureWidth(Integer measureWidth) {
+		this.measureWidth = measureWidth;
 	}
 
 	public String getName() {

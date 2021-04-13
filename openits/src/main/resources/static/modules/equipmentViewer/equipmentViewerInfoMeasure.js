@@ -3,9 +3,9 @@ import { util } from "../../lib/util.js";
 const MEASURE_ITEM_HEIGHT = 85;
 const MEASURE_ITEM_WIDTH = 175;
 
-const MEASURE_SEPARATOR = 10;
+const MEASURE_DEFAULT_ROWS = 2;
 
-const MAX_MEASURES_BY_PAGE = 10;
+const MEASURE_SEPARATOR = 16;
 
 const VIEW_INFO_MEASURE_SEGMENTED = "view-info-measure-segmented";
 const VIEW_INFO_MEASURE_SEGMENTED_ITEM = "view-measure-segmented-item";
@@ -15,56 +15,57 @@ const VIEW_INFO_MEASURE_CAROUSEL_ITEM = "view-info-measure-carousel-item";
 
 class MeasureItem {
 	
-	constructor(parent, id, label, image, value, position, format) {
+	constructor(parent, elementValue) {
 		
 		this.uid = parent.uid;
-		this.id = id;
-		this.label = label;
-		this.image = image;
-		this.value = value;
-		this.position = position;
-		this.format = format;
+		this.measureWidth = parent.measureWidth; 
+		this.elementValue = elementValue;
 	}
 	
 	getView() {
 		
 		let self = this;
+		let view = {};
 		
-		let view = {
-			id: "measureItem-" + self.id + "-" + self.uid,
-			borderless: true,
-			height: MEASURE_ITEM_HEIGHT,
-			cols: [
-				{
-					width: MEASURE_ITEM_WIDTH,
-					template: function() {
+		if (self.elementValue.elementTypeParam) {
+			
+			view = {
+				id: "measureItem-" + self.elementValue.elementTypeParam.id + "-" + self.uid,
+				css: { "padding-top": MEASURE_SEPARATOR + "px" },
+				borderless: true,
+				height: MEASURE_ITEM_HEIGHT,
+				width: self.measureWidth,
+				template: function(data) {
 
-						let icon = undefined;
-
-						if (self.image == undefined) {
-							icon = "not_found_50.png";
-						}
+					let elementValue = self.elementValue;
+					
+					if (data && data.value) {
 						
-						let res = `<image class="ims-incident-report-icon" src="../../img/${icon}" />
-									<div class="ims-incident-report-title">
-										${self.value}
-									</div>
-									<div class="list-second-line">
-										<span>${self.id}</span>
-									</div>`; 
-									
-						res = `<div>
-										<image src="../../img/${icon}" />
-										<div>${self.value}</div>
-										<div><span>${self.id}</span></div>
-								   </div>`;
-						
-						return res;
+						elementValue.value = data.value;
 					}
+					
+					let icon = undefined;
+					
+					if (!elementValue.elementTypeParam.image) {
+						icon = "not_found_50.png";
+					}
+					
+					let value = elementValue.value ? elementValue.value : '-';
+					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
+					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
+								
+					let res = `<div class="measure-box">
+									<image class="image" src="../../img/${icon}" />
+									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
+									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${label}">${label}</span></div>
+							   </div>`;
+					
+					return res;	
 				}
-			]
-		};
-		
+			};
+	
+		}
+				
 		return view;
 	}
 }
@@ -74,6 +75,7 @@ class MeasureGroup {
 	constructor(parent, id, label, containerWidth) {
 		
 		this.uid = parent.uid;
+		this.measureWidth = parent.measureWidth;
 		this.id = id;
 		this.label = label;
 		this.containerWidth = containerWidth;
@@ -105,10 +107,10 @@ class MeasureGroup {
 			viewGridMeasures = { id: VIEW_INFO_MEASURE_CAROUSEL_ITEM + "-" + this.id + "-" + this.uid};
 
 			this.measureItems.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-				
-			
-			let colsMeasures = Math.floor(this.containerWidth / (MEASURE_ITEM_WIDTH + MEASURE_SEPARATOR)) ;
+						
+			let colsMeasures = Math.floor(this.containerWidth / (this.measureWidth + MEASURE_SEPARATOR));
 			let rowsMeasures = Math.floor(this.measureItems.length / colsMeasures) + 1;
+			let marginLeft = Math.floor((this.containerWidth - colsMeasures * (this.measureWidth + MEASURE_SEPARATOR)) / 2); 
 			
 			let nextMeasureItem = 0;
 			
@@ -119,26 +121,30 @@ class MeasureGroup {
 					viewGridMeasures.rows = [];
 				}
 				
-				viewGridMeasures.rows.push({ height: 125, cols: [] });
+				viewGridMeasures.rows.push({ height: MEASURE_ITEM_HEIGHT + (MEASURE_SEPARATOR * 2), cols: [] });
 				
 				let idxCol = 0;
 				
-				viewGridMeasures.rows[idxRow].cols.push({ width: MEASURE_SEPARATOR });
+				viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft });
 				
 				for (idxCol = 0; nextMeasureItem < this.measureItems.length && idxCol < colsMeasures; idxCol++) {
 					
 					let measureItem = this.measureItems[nextMeasureItem++];
 					
+					if (idxCol > 0) {
+						
+						viewGridMeasures.rows[idxRow].cols.push({ width: MEASURE_SEPARATOR });	
+					}
+					
 					viewGridMeasures.rows[idxRow].cols.push(measureItem.getView());
-					viewGridMeasures.rows[idxRow].cols.push({ width: MEASURE_SEPARATOR });
 				}
-				
+
 				viewGridMeasures.rows[idxRow].cols.push({});
 			}
 			
 			if (viewGridMeasures.rows) {
 					
-				viewGridMeasures.rows.push({});
+				viewGridMeasures.rows.push({ height: 50 });
 			}
 		}
 		
@@ -155,6 +161,8 @@ export default class EquipmentViewerInfoMeasure {
 		this.element = element;
 		this.equipmentViewer = equipmentViewer;
 		this.measuresGroups = [];
+		this.measureWidth = MEASURE_ITEM_WIDTH;
+		this.measureMaxRows = MEASURE_DEFAULT_ROWS;
 	}
 	
 	getView() {
@@ -163,6 +171,13 @@ export default class EquipmentViewerInfoMeasure {
 		let view = {};
 		let viewSegmented;
 		let viewCarousel;
+		
+		this.measureWidth = MEASURE_ITEM_WIDTH;
+		
+		if (self.equipmentViewer && self.equipmentViewer.measureWidth) {
+		
+			this.measureWidth = self.equipmentViewer.measureWidth;
+		}
 				
 		if (self.equipmentViewer && self.equipmentViewer.equipViewerGrpMeasures && self.equipmentViewer.equipViewerGrpMeasures.length > 0) {
 						
@@ -274,7 +289,7 @@ export default class EquipmentViewerInfoMeasure {
 							putViewMeasure(equipViewerMeasure, elementValue);
 						}
 						
-						let measureItem = new MeasureItem(self, elementValue.elementTypeParam.id, i18n.t(elementValue.elementTypeParam.labelAlias), null, elementValue.value ,equipViewerMeasure.position, null);
+						let measureItem = new MeasureItem(self, elementValue);
 						
 						measureGroup.addMeasureItem(measureItem);
 					});
@@ -287,7 +302,8 @@ export default class EquipmentViewerInfoMeasure {
 		function getMeasuresGroupsFromElement() {
 			
 			let measureGroups = [];
-			let maxMeasuresPerPage = (Math.floor(self.parent.containerWidth / (MEASURE_ITEM_WIDTH + MEASURE_SEPARATOR))) * 2;
+			let rows = self.parent.measureMaxRows ? self.parent.measureMaxRows : MEASURE_DEFAULT_ROWS; 
+			let maxMeasuresPerPage = (Math.floor(self.parent.containerWidth / (self.measureWidth + MEASURE_SEPARATOR))) * rows;
 			
 			if (self.element.elementValues) {
 			
@@ -304,16 +320,12 @@ export default class EquipmentViewerInfoMeasure {
 						measureGroup = new MeasureGroup(self, groupNumber, i18n.t("LBL_GROUP_MEASURES") + " " + groupNumber, self.parent.containerWidth);
 					}
 					
-					if (measureByGroup > 0) {
-					
-						let measureItem = new MeasureItem(self, elementValue.elementTypeParam.id, i18n.t(elementValue.elementTypeParam.labelAlias), null, elementValue.value, MAX_MEASURES_BY_PAGE - measureByGroup, null);
+					let measureItem = new MeasureItem(self, elementValue);
 								
-						measureGroup.addMeasureItem(measureItem);
-						
-						measureByGroup--;
-					}
-					else {
-						
+					measureGroup.addMeasureItem(measureItem);
+					
+					if (!(--measureByGroup)) {
+					
 						measureGroups.push(measureGroup);
 						
 						measureByGroup = maxMeasuresPerPage;
@@ -359,13 +371,31 @@ export default class EquipmentViewerInfoMeasure {
 		return view;
 	}
 	
-	updateMeasure(id, value) {
-		
+	updateMeasure(elementValues) {
+
+		if (Array.isArray(elementValues) && elementValues.length > 0) {
+			
+			if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
+				
+				elementValues.forEach(elementValue => {
+					
+					let elementValueAux = this.element.elementValues.find(e => e.id === elementValue.id);
+					
+					if (elementValueAux && elementValueAux.elementTypeParam) {
+				
+						let measureItem = $$("measureItem-" + elementValueAux.elementTypeParam.id + "-" + this.uid);
+								
+						if (measureItem) {
+					
+							measureItem.setValues({ value: elementValue.value });
+						}		
+					}
+				});
+			}
+		}
 	}
 	
 	refresh() {
-		
-		//let equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(this.parent, this.element, this.equipmentViewer);
 		
 		let lastUID = this.uid;
 		

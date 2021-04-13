@@ -140,8 +140,8 @@ export default class StompSubscriptorService extends GenericModule {
 		let id = undefined;
 		let subscriptor = this.subscriptors.find(e => {
 
-			return (e.dataSource[DATASOURCE_PARAM_URL] === dataSource[DATASOURCE_PARAM_URL] &&
-				e.dataSource[DATASOURCE_PARAM_TOPIC] === dataSource[DATASOURCE_PARAM_TOPIC]);
+			return (e.dataSource.dataSourceValues[DATASOURCE_PARAM_URL].value === dataSource.dataSourceValues[DATASOURCE_PARAM_URL].value &&
+					e.dataSource.dataSourceValues[DATASOURCE_PARAM_TOPIC].value === dataSource.dataSourceValues[DATASOURCE_PARAM_TOPIC].value);
 		});
 
 		if (!subscriptor) {
