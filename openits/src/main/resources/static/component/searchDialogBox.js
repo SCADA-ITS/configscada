@@ -350,7 +350,7 @@ Object.defineProperty(SearchDialogBox, 'ROLES', {
 });
 
 Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
-	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "description=LBL_LABEL_PERMISSION_DESCRIPTION"], translate: ["labelAlias", "labelDescription"], height: 600, width: 800},
+	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "labelDescription=LBL_LABEL_PERMISSION_DESCRIPTION"], translate: ["labelAlias", "labelDescription"], height: 600, width: 800},
 	writable: false,
 	enumerable: true,
 	configurable: false
