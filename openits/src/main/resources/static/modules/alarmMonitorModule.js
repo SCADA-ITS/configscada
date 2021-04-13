@@ -85,6 +85,71 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
+			
+			function loadDataTables(load) {
+				
+				let gridIds = [self.config.gridNoRecognized, self.config.gridRecognized];
+				let dataGrids = {};
+				let respCount = 0;
+				
+				gridIds.forEach(gridId => {
+					
+					webix.ajax().get(appConfig.restUrl + "grids/" + gridId).then(function(dat) {
+
+						if (dat != null) {
+		
+							let data = dat.json();
+							let metadata = data.metadata;
+							
+							filterMetadata(metadata);
+							
+							dataGrids[gridId] = new DataTable(gridId, null, metadata, [], null);
+						}
+						
+						if (++respCount === gridIds.length) {
+							
+							load(dataGrids);
+						}
+					});
+				});
+				
+				function filterMetadata(metadata) {
+					
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+						
+						if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+							
+							metadata.gridCommands = metadata.gridCommands.map(e => {
+								
+								e.showText = false;
+								
+								return e;
+							});	
+						}							
+
+						if (self.args.selectedPks.length === 1) {
+							
+							if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
+								
+								// Remove fields config in moduleAction like ignoreSourceFields
+								metadata.gridFields = metadata.gridFields.filter(e => 
+									
+									self.config.moduleAction[self.moduleAction.id].ignoreSourceFields.findIndex(sf => sf === e.sourceField) === -1
+								);	
+							}
+							
+							if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+								
+								// Remove commands config in moduleAction like ignoreCommandModuleActions
+								metadata.gridCommands = metadata.gridCommands.filter(e => 
+									
+									self.config.moduleAction[self.moduleAction.id].ignoreCommandModuleActions.findIndex(sf => sf === e.moduleAction.id) === -1
+								);	
+							}
+						}
+					}
+				}
+			}
 
 			webix.ajax().get(appConfig.restUrl + this.config.restEndpoint).then(function(dat) {
 
@@ -105,33 +170,43 @@ export default class AlarmMonitorModule extends GenericModule {
 
 						loadDataCollections(flattenedData);
 					}
-
-					drawComponents();
-
-					initDataTables();
-
-					initListView();
 					
-					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+					loadDataTables(load);
 					
-						fillDatatables();	
-					}
-					
-					connectWS();
+					function load(dataGrids) {
+						
+						if (dataGrids && dataGrids[self.config.gridNoRecognized] && dataGrids[self.config.gridRecognized]) {
+							
+							self.dtNoRecognized = dataGrids[self.config.gridNoRecognized];
+							self.dtRecognized = dataGrids[self.config.gridRecognized];
+							
+							drawComponents();
 
-					$$(self.uid).attachEvent("onDestruct", function() {
-
-						let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
-						if (stompSubscriptorService) {
-
-							stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+							initDataTables();
+		
+							initListView();
+							
+							if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
+							
+								fillDatatables();	
+							}
+							
+							connectWS();
+		
+							$$(self.uid).attachEvent("onDestruct", function() {
+		
+								let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+		
+								if (stompSubscriptorService) {
+		
+									stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+								}
+							});
+		
+							$$("loading-" + self.uid).hide();
+							$$(self.uid).show();
 						}
-					});
-
-					$$("loading-" + self.uid).hide();
-					$$(self.uid).show();
-
+					}
 				}
 			});
 		}
@@ -448,9 +523,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				let viewDtNoRecognized = {};
 				let viewDtRecognized = {};
 
-				self.dtNoRecognized = loadDataTable(self.config.gridNoRecognized);
-				self.dtRecognized = loadDataTable(self.config.gridRecognized);
-
 				viewDtNoRecognized = {
 
 					id: "viewDtNoRecognized-" + self.uid,
@@ -497,59 +569,6 @@ export default class AlarmMonitorModule extends GenericModule {
 						{ height: 6 }
 					]
 				};
-
-				function loadDataTable(gridId) {
-
-					let response = webix.ajax().sync().get(appConfig.restUrl + "grids/" + gridId);
-
-					if (response != undefined) {
-
-						let dat = JSON.parse(response.responseText);
-
-						let metadata = dat.metadata;
-						
-						filterMetadata(metadata);
-						
-						return new DataTable(gridId, null, metadata, [], null);
-					}
-				}
-				
-				function filterMetadata(metadata) {
-					
-					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
-						
-						if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
-							
-							metadata.gridCommands = metadata.gridCommands.map(e => {
-								
-								e.showText = false;
-								
-								return e;
-							});	
-						}							
-
-						if (self.args.selectedPks.length === 1) {
-							
-							if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
-								
-								// Remove fields config in moduleAction like ignoreSourceFields
-								metadata.gridFields = metadata.gridFields.filter(e => 
-									
-									self.config.moduleAction[self.moduleAction.id].ignoreSourceFields.findIndex(sf => sf === e.sourceField) === -1
-								);	
-							}
-							
-							if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
-								
-								// Remove commands config in moduleAction like ignoreCommandModuleActions
-								metadata.gridCommands = metadata.gridCommands.filter(e => 
-									
-									self.config.moduleAction[self.moduleAction.id].ignoreCommandModuleActions.findIndex(sf => sf === e.moduleAction.id) === -1
-								);	
-							}
-						}
-					}
-				}
 
 				return viewContent;
 			}
