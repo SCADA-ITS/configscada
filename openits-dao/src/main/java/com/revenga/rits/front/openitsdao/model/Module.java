@@ -1,8 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -42,6 +52,8 @@ public class Module implements Serializable {
 	@JoinColumn(name="default_view_type_id")
 	private ViewType viewType;
 
+	private String defaultSystemPermissionId;
+	
 	private Boolean visible;
 	
 	private Boolean autoload;
@@ -237,5 +249,13 @@ public class Module implements Serializable {
 
 	public void setAutoload(Boolean autoload) {
 		this.autoload = autoload;
+	}
+
+	public String getDefaultSystemPermissionId() {
+		return defaultSystemPermissionId;
+	}
+
+	public void setDefaultSystemPermissionId(String defaultSystemPermissionId) {
+		this.defaultSystemPermissionId = defaultSystemPermissionId;
 	}
 }

@@ -60,6 +60,8 @@ function initialize() {
 
 	window.stompClient = undefined;
 
+	util.module.checkSytemPermision(window.em.getAll(EntityType.MODULE), userData);
+	
 	var mainTab = new MainTab();
 	var mainToolbar = new MainToolbar();
 	var menuToolbar = new MenuToolbar();
@@ -136,5 +138,5 @@ function initialize() {
 			}
 		}
 	}
-	util.module.checkSytemPermision(window.em.getAll(EntityType.MODULE), userData);
+
 }

@@ -38,24 +38,24 @@ export let util = {
 
 			let viewModule;
 			let lazyClass;
-			
+
 			if (drawCallback) {
-			
+
 				lazyClass = new mod.default(module, moduleAction, args);
-				
+
 				if (module.jsMethodDraw) {
-					
+
 					viewModule = lazyClass.runOne(module.jsMethodDraw);
-					
+
 					if (viewModule) {
-						
+
 						drawCallback(viewModule);
 					}
-					
-					if(module.jsMethodCallbacks) {
-	
+
+					if (module.jsMethodCallbacks) {
+
 						lazyClass.runOne(module.jsMethodCallbacks);
-					}	
+					}
 				}
 			}
 		},
@@ -221,7 +221,7 @@ export let util = {
 
 				$$(win_id).show();
 			}
-			
+
 			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
@@ -380,7 +380,7 @@ export let util = {
 				const lazy = async _ => {
 
 					let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
-					
+
 					const mod = await import(jsFile);
 
 					if (viewTypeId === VIEW_TYPE_CUSTOM && drawCallback) {
@@ -422,25 +422,25 @@ export let util = {
 				console.log(error);
 			}
 		},
-		
+
 		getFromModuleAction(moduleActionId) {
-			
+
 			let modules = window.em.getAll(EntityType.MODULE);
-			
+
 			if (Array.isArray(modules) && modules.length > 0) {
-			
+
 				return modules.find(module => {
-				
+
 					if (Array.isArray(module.moduleActions) && module.moduleActions.length > 0) {
-						
-						 return (module.moduleActions.findIndex(moduleAction => moduleAction.id === moduleActionId) !== -1);
+
+						return (module.moduleActions.findIndex(moduleAction => moduleAction.id === moduleActionId) !== -1);
 					}
-					
+
 					return false;
 				});
 			}
-			
-			
+
+
 		},
 
 		checkSytemPermision(modules, userData) {
@@ -470,6 +470,22 @@ export let util = {
 
 			for (let i = 0; i < modules.length; i++) {
 
+				// check default system permision
+				if (modules[i].defaultSystemPermissionId == null ||
+					modules[i].defaultSystemPermissionId == undefined) {
+
+					modules[i].isAllowed = true;
+
+				} else if (systemPermissionId.find(e => e === modules[i].defaultSystemPermissionId) != null) {
+
+					modules[i].isAllowed = true;
+
+				} else {
+
+					modules[i].isAllowed = false;
+				}
+
+				// check module action system permision
 				if (modules[i].moduleActions != undefined && modules[i].moduleActions != null) {
 
 					let moduleActions = modules[i].moduleActions;
@@ -508,19 +524,44 @@ export let util = {
 					moduleAction = modules[i].moduleActions.find(item => item.id == moduleActionId);
 				}
 			}
-			
-			if(moduleAction == undefined  || moduleAction == null){
-				
+
+			if (moduleAction == undefined || moduleAction == null) {
+
 				return false;
-			}
-			else if (moduleAction.isAllowed == undefined || moduleAction.isAllowed == null )
-			{
+
+			} else if (moduleAction.isAllowed == undefined || moduleAction.isAllowed == null) {
+
 				return true;
+
+			} else {
+
+				return moduleAction.isAllowed;
 			}
-			else{
+		},
+
+		isAllowedModule(modules, moduleId) {
+
+			let module = undefined;
+
+			if (modules != null && modules != undefined &&
+				moduleId != null && moduleId != undefined) {
+
+				module = modules.find(item => item.id == moduleId);
+
+			}
+			
+			if (module == undefined || module == null) {
+
+				return false;
+
+			} else if (module.isAllowed == undefined || module.isAllowed == null) {
 				
-				return moduleAction.isAllowed; 
-			} 
+				return true;
+
+			} else {
+
+				return module.isAllowed;
+			}
 		}
 	},
 
@@ -742,15 +783,15 @@ export let util = {
 				}
 			}
 		},
-		
+
 		getViewDrawNoData() {
 
 			return {
 				view: "template",
 				template: function() {
-	
+
 					let icon = "<img src='img/loading.svg' align='center'>";
-	
+
 					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
 				}
 			}
@@ -763,27 +804,27 @@ export let util = {
 
 			return "This is a test with " + value;
 		},
-		
+
 		dateExpired(data) {
-			
+
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			let actualTimeMs = timeService.getDateTime() * 1000;
-			
+
 			//return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 1 : 0;		
-			return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 0 : 1;		
+			return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data) ? 0 : 1;
 		},
-		
+
 		clearDateExpired(data) {
-			
+
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			let actualTimeMs = timeService.getDateTime() * 1000;
-			
+
 			if (data instanceof Date) {
-			
-				return (actualTimeMs > data.getTime() ? null : data.toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES));	
+
+				return (actualTimeMs > data.getTime() ? null : data.toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES));
 			}
 			else {
-			
+
 				return (actualTimeMs > data ? null : data);
 			}
 		}
