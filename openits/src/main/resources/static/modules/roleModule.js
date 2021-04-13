@@ -142,25 +142,36 @@ export default class RoleModule extends GenericModule {
 					$$("loading-" + self.uid).show();
 					$$(self.uid).hide();
 
-					let response = webix.ajax().sync().get(appConfig.restUrl + "users/role/" + self.args.selectedPks[0]);
-					self.oldPermissions = JSON.parse(response.responseText);
+					webix.ajax().get(appConfig.restUrl + "users/role/" + self.args.selectedPks[0]).then(function(data) {
 
-					if (self.oldPermissions.rolePermissions) {
+						if (data != null) {
 
-						self.oldPermissions.rolePermissions.forEach(e => {
-							self.rolPermissions.push(e.id);
-						});
-					}
+							self.oldPermissions = data.json();
 
-					let container = $$(self.args.containerId);
+							if (self.oldPermissions.rolePermissions) {
 
-					if (container) {
+								self.oldPermissions.rolePermissions.forEach(e => {
+									self.rolPermissions.push(e.id);
+								});
+							}
 
-						util.ui.setWindowTitle(container, i18n.t("LBL_ROLE_EDIT") + " [" + util.getSimpleId(self.oldPermissions.id) + "]" + " - " + self.oldPermissions.alias);
-					}
+							let container = $$(self.args.containerId);
 
-					drawComponents();
-					setVal();
+							if (container) {
+
+								util.ui.setWindowTitle(container, i18n.t("LBL_ROLE_EDIT") + " - " + self.oldPermissions.alias);
+							}
+
+
+							drawComponents();
+							setVal();
+														
+							if (self.dtPermissions) {
+
+								self.dtPermissions.callbacks();
+							}
+						}
+					});
 				}
 			}
 		};
@@ -522,7 +533,7 @@ export default class RoleModule extends GenericModule {
 						{ height: 14 },
 						{
 							cols: [
-								{width: 15},
+								{ width: 15 },
 								{
 									view: "button", value: i18n.t("LBL_CANCEL"), width: 130, height: 41, css: "dialog-cancel",
 									click:
@@ -568,7 +579,7 @@ export default class RoleModule extends GenericModule {
 											}
 										}
 								},
-								{width: 15}
+								{ width: 15 }
 							]
 						}
 					]
@@ -593,7 +604,7 @@ export default class RoleModule extends GenericModule {
 
 					row.id = responsePerm.id;
 					row.labelAlias = responsePerm.labelAlias;
-					row.description = responsePerm.description;
+					row.labelDescription = responsePerm.labelDescription;
 					row.inherited = resp.alias;
 
 					data.push(row);

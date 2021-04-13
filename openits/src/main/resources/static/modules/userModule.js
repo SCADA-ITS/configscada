@@ -155,33 +155,41 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let response = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[0] }));
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[0] })).then(function(data) {
 
-				self.oldUser = JSON.parse(response.responseText);
+					if (data != null) {
 
-				if (self.oldUser.role.rolePermissions) {
+						self.oldUser = data.json();
 
-					self.oldUser.role.rolePermissions.forEach(e => {
-						self.rolPermissions.push(e);
-					});
-				}
+						if (self.oldUser.role.rolePermissions) {
 
-				if (self.oldUser.userPermissions) {
+							self.oldUser.role.rolePermissions.forEach(e => {
+								self.rolPermissions.push(e);
+							});
+						}
 
-					self.oldUser.userPermissions.forEach(e => {
-						self.userPermissions.push(e)
-					});
-				}
+						if (self.oldUser.userPermissions) {
 
-				let container = $$(self.args.containerId);
+							self.oldUser.userPermissions.forEach(e => {
+								self.userPermissions.push(e)
+							});
+						}
 
-				if (container) {
+						let container = $$(self.args.containerId);
 
-					util.ui.setWindowTitle(container, i18n.t("LBL_USER_EDIT") + " [" + util.getSimpleId(self.oldUser.id) + "]" + " - " + self.oldUser.name);
-				}
+						if (container) {
+							util.ui.setWindowTitle(container, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
+						}
+	
+						drawComponents();
+						setVal(self.oldUser);
 
-				drawComponents();
-				setVal(self.oldUser);
+						if (self.dtPermissions) {
+
+							self.dtPermissions.callbacks();
+						}
+					}
+				});
 			}
 		};
 
@@ -584,7 +592,7 @@ export default class UserModule extends GenericModule {
 
 
 					function selectRole(selection) {
-
+						
 						if (Array.isArray(selection) && selection.length > 0) {
 
 							if (selection[0].id === self.config.systemRole) {
@@ -683,7 +691,7 @@ export default class UserModule extends GenericModule {
 									isPk: false,
 									label: "LBL_LABEL_ALIAS",
 									labelTooltip: "LBL_LABEL_ALIAS",
-									needsTranslation: false,
+									needsTranslation: true,
 									parameterized: false,
 									position: 2,
 									required: true,
@@ -703,7 +711,7 @@ export default class UserModule extends GenericModule {
 									isPk: false,
 									label: "LBL_LABEL_ALIAS_DESCRIPTION",
 									labelTooltip: "LBL_LABEL_ALIAS_DESCRIPTION",
-									needsTranslation: false,
+									needsTranslation: true,
 									parameterized: false,
 									position: 3,
 									required: true,
@@ -789,10 +797,10 @@ export default class UserModule extends GenericModule {
 								let permInherited = undefined;
 								let roles = undefined;
 
-								if (self.rolPermissions[0].rolePermissions) {
+								if (self.rolPermissions.length > 0 && self.rolPermissions[0].rolePermissions) {
 
 									roles = self.rolPermissions[0].rolePermissions;
-								} else {
+								} else if (self.rolPermissions.length > 0) {
 
 									roles = self.rolPermissions;
 								}
@@ -844,18 +852,24 @@ export default class UserModule extends GenericModule {
 
 						let userPermissions = self.userPermissions;
 						let rolPermissions = self.rolPermissions;
+						let repeatRolePermission = undefined;
 						let roles = undefined;
 
-						if (rolPermissions[0].rolePermissions) {
+						if (rolPermissions.length > 0 && rolPermissions[0].rolePermissions) {
 
 							roles = rolPermissions[0].rolePermissions;
-						} else {
+						} else if (rolPermissions.length > 0) {
 
 							roles = rolPermissions;
 						}
 
 						let repeatUserPermission = userPermissions.find(e => e.id === selection[0].id);
-						let repeatRolePermission = roles.find(e => e.id === selection[0].id);
+
+						if (roles != undefined) {
+
+							repeatRolePermission = roles.find(e => e.id === selection[0].id);
+						}
+
 
 						if (repeatRolePermission || repeatUserPermission) {
 
@@ -929,16 +943,20 @@ export default class UserModule extends GenericModule {
 													self.userPermissions.forEach(permission => {
 
 														let rolOperator = undefined;
+														let repeatPermissions = undefined;
 
-														if (self.rolPermissions[0].rolePermissions) {
+														if (self.rolPermissions.length > 0 && self.rolPermissions[0].rolePermissions) {
 
 															rolOperator = self.rolPermissions[0].rolePermissions;
-														} else {
+														} else if (self.rolPermissions.length > 0) {
 
 															rolOperator = self.rolPermissions;
 														}
 
-														let repeatPermissions = rolOperator.find(e => e.id === permission.id);
+														if (rolOperator != undefined) {
+
+															repeatPermissions = rolOperator.find(e => e.id === permission.id);
+														}
 
 														if (repeatPermissions) {
 
@@ -1009,10 +1027,18 @@ export default class UserModule extends GenericModule {
 			rolPermissions.length = 0;
 			rolPermissions.push(role);
 
-			role.rolePermissions.forEach(e => {
+			if (role.rolePermissions) {
 
-				rolePermissions.push(e.id);
-			});
+				role.rolePermissions.forEach(e => {
+
+					rolePermissions.push(e.id);
+				});
+
+				allPermissions = role.rolePermissions.concat(self.userPermissions);
+			} else {
+
+				allPermissions = self.userPermissions;
+			}
 
 			if (self.userPermissions.length > 0) {
 
@@ -1020,8 +1046,6 @@ export default class UserModule extends GenericModule {
 					userPermissions.push(e.id);
 				});
 			}
-
-			allPermissions = role.rolePermissions.concat(self.userPermissions);
 
 			let permissions = new Set(rolePermissions);
 
@@ -1035,6 +1059,10 @@ export default class UserModule extends GenericModule {
 				let perm = allPermissions.find(e => e.id === permission);
 
 				if (perm) {
+					
+					perm.labelAlias = i18n.t(perm.labelAlias);
+					perm.labelDescription = i18n.t(perm.labelDescription);
+					
 					permissionsToAdd.push(perm);
 				}
 
@@ -1047,7 +1075,7 @@ export default class UserModule extends GenericModule {
 			});
 
 			if (self.dtPermissions) {
-
+				
 				self.dtPermissions.clear();
 				self.dtPermissions.add(permissionsToAdd);
 			}
