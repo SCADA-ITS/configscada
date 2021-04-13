@@ -58,8 +58,7 @@ export default class SynopticGraphicElement extends GraphicElement {
         
         let module = findModuleByIdAction(command.moduleAction.id);
         let args = {};
-        args.parentId = this.element.id;
-        args.parentType = this.element.elementType.id;
+        args.selectedPks = [this.element.id];
         util.module.open(module, command.moduleAction, (command.viewType)?command.viewType.id:undefined, null, args);
       });
     }

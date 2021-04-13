@@ -13,8 +13,8 @@ export default class equipmentFormModule extends GenericModule{
 
     constructor(module, moduleAction, args) {
         super(module, moduleAction, args);
-        this.parentId = args.parentId;
-        this.parentType = args.parentType;
+        this.parentId = args.selectedPks[0];
+        this.parentType = window.em.getByField(EntityType.ELEMENT, "id", this.parentId).elementType.id;;
     }
 
     getView(){
