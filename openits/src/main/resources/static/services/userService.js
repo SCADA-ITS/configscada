@@ -1,4 +1,3 @@
-import {util} from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import UserControlPanel  from "../controllers/userControlPanel.js";
 
@@ -9,7 +8,9 @@ export default class UserService extends GenericModule {
 		super(module, null, null);
 		
 		this.module = module;
+		this.config = module.config;
 		this.mod = mod;
+		
 		this.userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		
 		this.users = {};
@@ -54,7 +55,7 @@ export default class UserService extends GenericModule {
 			
 			if (!window.userControlPanel) {
 
-				window.userControlPanel = new UserControlPanel();
+				window.userControlPanel = new UserControlPanel(this.config);
 			}
 			
 			$$("icon-user-service").attachEvent("onItemClick", function(id, e) {

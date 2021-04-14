@@ -13,6 +13,7 @@ export default class AlarmService extends GenericModule {
 		super(module, null, null);
 
 		this.module = module;
+		this.config = module.config;
 		this.mod = mod;
 
 		//this.recentAlarmCount = 0;
@@ -64,7 +65,7 @@ export default class AlarmService extends GenericModule {
 			
 			if (!window.alarmControlPanel) {
 
-				window.alarmControlPanel = new AlarmControlPanel();
+				window.alarmControlPanel = new AlarmControlPanel(this.config);
 			}
 
 			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {

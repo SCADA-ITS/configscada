@@ -17,5 +17,11 @@
 		"info": [ "AlarmLevel:1", "AlarmLevel:2" ] 
 	},
 	"alarmTypeAuto": [ "AlarmType:1", "AlarmType:2", "AlarmType:3" ],
-	"alarmTypeManual": [ "AlarmType:4" ]
+	"alarmTypeManual": [ "AlarmType:4" ],
+	"action": {
+		"newAlarm": 101303,
+		"alarmMuted": 1002,
+		"newIncident":101303,
+		"alarmConfig": 1002
+	}
 }

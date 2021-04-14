@@ -85,66 +85,66 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
-			
+
 			function loadDataTables(load) {
-				
+
 				let gridIds = [self.config.gridNoRecognized, self.config.gridRecognized];
 				let dataGrids = {};
 				let respCount = 0;
-				
+
 				gridIds.forEach(gridId => {
-					
+
 					webix.ajax().get(appConfig.restUrl + "grids/" + gridId).then(function(dat) {
 
 						if (dat != null) {
-		
+
 							let data = dat.json();
 							let metadata = data.metadata;
-							
+
 							filterMetadata(metadata);
-							
+
 							dataGrids[gridId] = new DataTable(gridId, null, metadata, [], null);
 						}
-						
+
 						if (++respCount === gridIds.length) {
-							
+
 							load(dataGrids);
 						}
 					});
 				});
-				
+
 				function filterMetadata(metadata) {
-					
+
 					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
-						
+
 						if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
-							
+
 							metadata.gridCommands = metadata.gridCommands.map(e => {
-								
+
 								e.showText = false;
-								
+
 								return e;
-							});	
-						}							
+							});
+						}
 
 						if (self.args.selectedPks.length === 1) {
-							
+
 							if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
-								
+
 								// Remove fields config in moduleAction like ignoreSourceFields
-								metadata.gridFields = metadata.gridFields.filter(e => 
-									
+								metadata.gridFields = metadata.gridFields.filter(e =>
+
 									self.config.moduleAction[self.moduleAction.id].ignoreSourceFields.findIndex(sf => sf === e.sourceField) === -1
-								);	
+								);
 							}
-							
+
 							if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
-								
+
 								// Remove commands config in moduleAction like ignoreCommandModuleActions
-								metadata.gridCommands = metadata.gridCommands.filter(e => 
-									
+								metadata.gridCommands = metadata.gridCommands.filter(e =>
+
 									self.config.moduleAction[self.moduleAction.id].ignoreCommandModuleActions.findIndex(sf => sf === e.moduleAction.id) === -1
-								);	
+								);
 							}
 						}
 					}
@@ -162,7 +162,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						let flattenedData = [];
 
 						if (data.length > 0) {
-							
+
 							data = filterElements(data);
 
 							flattenedData = eval("adapter." + self.config.adapter)(data, null);
@@ -170,39 +170,39 @@ export default class AlarmMonitorModule extends GenericModule {
 
 						loadDataCollections(flattenedData);
 					}
-					
+
 					loadDataTables(load);
-					
+
 					function load(dataGrids) {
-						
+
 						if (dataGrids && dataGrids[self.config.gridNoRecognized] && dataGrids[self.config.gridRecognized]) {
-							
+
 							self.dtNoRecognized = dataGrids[self.config.gridNoRecognized];
 							self.dtRecognized = dataGrids[self.config.gridRecognized];
-							
+
 							drawComponents();
 
 							initDataTables();
-		
+
 							initListView();
-							
+
 							if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
-							
-								fillDatatables();	
+
+								fillDatatables();
 							}
-							
+
 							connectWS();
-		
+
 							$$(self.uid).attachEvent("onDestruct", function() {
-		
+
 								let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-		
+
 								if (stompSubscriptorService) {
-		
+
 									stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 								}
 							});
-		
+
 							$$("loading-" + self.uid).hide();
 							$$(self.uid).show();
 						}
@@ -210,26 +210,26 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			});
 		}
-		
+
 		function filterElements(data) {
-		
+
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-				
+
 				return data.filter(e => self.args.selectedPks.indexOf(e.targetElement.id) !== -1);
 			}
-			
+
 			return data;
 		}
-		
+
 		function isMuted(data) {
-			
+
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			
+
 			return (data.mutedUntil && timeService.getDateTime() < (data.mutedUntil.getTime() / 1000));
 		}
-		
+
 		function loadDataCollections(data) {
-			
+
 			self.dcNoRecognized = data.filter(e => {
 
 				return !e.recognized && !isMuted(e);
@@ -261,45 +261,45 @@ export default class AlarmMonitorModule extends GenericModule {
 				self.listView.select(ELEMENT_TYPE_ALL);
 			}
 		}
-		
+
 		function fillDatatables(elementTypeArray, listView) {
-			
+
 			let elementTypeId;
-			
+
 			if (listView) {
-			
-				listView.disable();	
+
+				listView.disable();
 			}
-			
+
 			if (Array.isArray(elementTypeArray) && elementTypeArray.length == 1) {
-				
+
 				elementTypeId = elementTypeArray[0];
 			}
-			
+
 			self.elementTypeIdSelected = elementTypeId;
 
 			if (self.dtNoRecognized) {
 
 				self.dtNoRecognized.clear();
-				
+
 				let noRecognizedAlarms = self.dcNoRecognized;
-				
+
 				if (self.filterAlarmType) {
-					
+
 					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-					
+
 						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-								return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-						});	
+							return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+						});
 					}
 					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-						
+
 						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-								return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+							return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
 						});
 					}
 				}
-				
+
 				if (!self.elementTypeIdSelected || self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
 
 					self.dtNoRecognized.add(noRecognizedAlarms);
@@ -309,27 +309,27 @@ export default class AlarmMonitorModule extends GenericModule {
 					self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
 						return (e.targetElementTypeId == self.elementTypeIdSelected);
 					}));
-				}	
+				}
 			}
 
 			if (self.dtRecognized) {
 
 				self.dtRecognized.clear();
-				
+
 				let recognizedAlarms = self.dcRecognized;
-				
+
 				if (self.filterAlarmType) {
-					
+
 					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-					
+
 						recognizedAlarms = recognizedAlarms.filter(e => {
-								return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-						});	
+							return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
+						});
 					}
 					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-						
+
 						recognizedAlarms = recognizedAlarms.filter(e => {
-								return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
+							return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
 						});
 					}
 				}
@@ -345,10 +345,10 @@ export default class AlarmMonitorModule extends GenericModule {
 					}));
 				}
 			}
-			
+
 			if (listView) {
-			
-				listView.enable();	
+
+				listView.enable();
 			}
 		}
 
@@ -358,7 +358,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				id: self.uid,
 				cols: []
 			};
-			
+
 			let viewMainListEquipments = {
 				id: "view-main-list-equipments-" + self.uid,
 				header: i18n.t("LBL_EQUIPMENT_TYPES"),
@@ -372,42 +372,42 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 					]
 				}
-			}; 
-			
-			let viewMainResizer = { 
-				id: "view-main-resizer-" + self.uid,
-				view: "resizer" 
 			};
-			
+
+			let viewMainResizer = {
+				id: "view-main-resizer-" + self.uid,
+				view: "resizer"
+			};
+
 			let viewMainContent = {
 				id: "view-main-content-" + self.uid,
 				body: getViewContent()
 			};
-			
+
 			let viewMainActionPanel = {
 				id: "view-main-action-panel-" + self.uid,
 				header: i18n.t("LBL_ALARMS_ACTION_PANEL"),
 				body: getViewActionPanel()
 			};
-			
+
 			if (!self.moduleAction) {
-				
+
 				viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent, viewMainActionPanel];
 			}
 			else {
-				
+
 				viewMain.cols = [viewMainContent];
 			}
 
 			function getViewListEquipments() {
 
 				let view = {};
-				
+
 				let viewListEquipments = {};
 				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
 				let elementTypesFiltered = undefined;
 				let elementTypeView = [];
-				
+
 				let alarmTypeSwitcher = {
 					view: "segmented",
 					css: "segment-custom-2",
@@ -446,7 +446,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 							if (newv === "alarm-type-switcher-show-all-" + self.uid) {
 
-								self.filterAlarmType = undefined; 
+								self.filterAlarmType = undefined;
 								onSelectAlarmType();
 							}
 							else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
@@ -457,14 +457,14 @@ export default class AlarmMonitorModule extends GenericModule {
 							else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
 
 								self.filterAlarmType = ALARM_TYPE_MANUAL;
-								onSelectAlarmType();	
+								onSelectAlarmType();
 							}
 						}
 					}
 				};
-				
+
 				view.rows = [];
-				
+
 				view.rows.push(alarmTypeSwitcher);
 
 				elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid);
@@ -493,25 +493,25 @@ export default class AlarmMonitorModule extends GenericModule {
 						description: i18n.t("LBL_ELEMENT_TYPE_ALL_DESCRIPTION"),
 						image: null
 					});
-					
+
 					let events = {};
 
 					events[ListView.EventTypes.ON_SELECT_ROW] = fillDatatables;
-					
+
 					self.listView = new ListView(elementTypeView, null, events);
 
 					viewListEquipments = self.listView.getView();
 				}
-				
+
 				function onSelectAlarmType() {
-					
+
 					let elementTypeArray = [];
-					
+
 					elementTypeArray.push(self.elementTypeIdSelected);
-					
+
 					fillDatatables(elementTypeArray);
 				}
-				
+
 				view.rows.push(viewListEquipments);
 
 				return view;
@@ -699,7 +699,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						}
 					]
 				}
-				
+
 				let actionPanelAlarmLevelStats = {
 					rows: [
 						{
@@ -707,7 +707,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{
 									view: "toolbar",
-									css: { "background":"rgba(236 108 108 / 0.2) !important" },
+									css: { "background": "rgba(236 108 108 / 0.2) !important" },
 									height: 38,
 									elements: [
 										{
@@ -740,7 +740,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{
 									view: "toolbar",
-									css: { "background":"rgba(239 132 74 / 0.2) !important" },
+									css: { "background": "rgba(239 132 74 / 0.2) !important" },
 									height: 38,
 									elements: [
 										{
@@ -761,7 +761,7 @@ export default class AlarmMonitorModule extends GenericModule {
 											id: "alarm-level-stats-warning-" + self.uid,
 											label: `<div><span style="color: rgba(239 132 74 / 0.9); padding-right: 10px;">-</span></div>`,
 											borderless: true
-										}		
+										}
 									],
 									borderless: true
 								}
@@ -773,7 +773,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{
 									view: "toolbar",
-									css: { "background":"rgba(117 140 168 / 0.2) !important" },
+									css: { "background": "rgba(117 140 168 / 0.2) !important" },
 									height: 38,
 									elements: [
 										{
@@ -794,7 +794,7 @@ export default class AlarmMonitorModule extends GenericModule {
 											id: "alarm-level-stats-info-" + self.uid,
 											label: `<div><span style="color: rgba(117 140 168 / 0.9); padding-right: 10px;">-</span></div>`,
 											borderless: true
-										}		
+										}
 									],
 									borderless: true
 								}
@@ -822,7 +822,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											util.ui.notImplementedMessage();
+											self.newAlarm();
 										}
 									}
 								},
@@ -838,7 +838,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											util.ui.notImplementedMessage();
+											self.newIncident();
 										}
 									}
 								}
@@ -861,7 +861,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											util.ui.notImplementedMessage();
+											self.alarmMuted();
 										}
 									}
 								},
@@ -877,7 +877,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											util.ui.notImplementedMessage();
+											self.alarmConfig();
 										}
 									}
 								}
@@ -928,7 +928,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						{
 							cols: [
 								{ width: marginActionPanel },
-								actionPanelActions,		
+								actionPanelActions,
 								{ width: marginActionPanel }
 							]
 						},
@@ -951,142 +951,142 @@ export default class AlarmMonitorModule extends GenericModule {
 			if (stompSubscriptorService) {
 
 				let fields = undefined;
-				
+
 				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
-					
+
 					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-						
+
 						fields = [];
-						
+
 						fields.push({
 							target: "targetElement.id",
 							values: []
 						});
-						
+
 						self.args.selectedPks.forEach(e => fields[0].values.push(e));
 					}
 				}
 
 				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage, fields);
 			}
-			
+
 			let updateStats = function() {
-				
+
 				let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-	
+
 				if (alarmService) {
-				
+
 					let stats = alarmService.getData().stats;
-		
+
 					if (stats) {
-						
+
 						if (stats.activeAlarms) {
-							
+
 							$$("action-panel-alarm-stat-active-" + self.uid).setValue(stats.activeAlarms);
 						}
-						
+
 						if (stats.noRecognizedAlarms) {
-						
-							$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);	
+
+							$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
 						}
-						
+
 						if (stats.mutedAlarms) {
-						
-							$$("action-panel-alarm-stat-muted-" + self.uid).setValue(stats.mutedAlarms);	
+
+							$$("action-panel-alarm-stat-muted-" + self.uid).setValue(stats.mutedAlarms);
 						}
 					}
-				}	
+				}
 			};
-			
+
 			let updateLevelStats = function() {
-				
+
 				function updateLevelStatsCritical() {
-					
+
 					let levelBadge = $$("alarm-level-stats-critical-" + self.uid);
-					
+
 					if (levelBadge) {
-						
+
 						let criticalAlarms = [];
-						
+
 						criticalAlarms = self.dcNoRecognized.filter(alarm => {
-							
-							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1);
 						});
-						
+
 						criticalAlarms.push(...self.dcRecognized.filter(alarm => {
-							
-							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.critical.indexOf(alarm.alarmLevelId) > -1);
 						}));
-						
+
 						if (Array.isArray(criticalAlarms)) {
-							
+
 							levelBadge.setHTML(`<div><span style="color: rgba(236 108 108 / 0.9); padding-right: 10px;">${criticalAlarms.length}</span></div>`);
 						}
 					}
 				}
-				
+
 				function updateLevelStatsWarning() {
-					
+
 					let levelBadge = $$("alarm-level-stats-warning-" + self.uid);
-					
+
 					if (levelBadge) {
-						
+
 						let warningAlarms = [];
-						
+
 						warningAlarms = self.dcNoRecognized.filter(alarm => {
-							
-							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1);
 						});
-						
+
 						warningAlarms.push(...self.dcRecognized.filter(alarm => {
-							
-							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.warn.indexOf(alarm.alarmLevelId) > -1);
 						}));
-						
+
 						if (Array.isArray(warningAlarms)) {
-							
+
 							levelBadge.setHTML(`<div><span style="color: rgba(239 132 74 / 0.9);; padding-right: 10px;">${warningAlarms.length}</span></div>`);
 						}
 					}
 				}
-				
+
 				function updateLevelStatsInfo() {
-					
+
 					let levelBadge = $$("alarm-level-stats-info-" + self.uid);
-					
+
 					if (levelBadge) {
-						
+
 						let infoAlarms = [];
-						
+
 						infoAlarms = self.dcNoRecognized.filter(alarm => {
-							
-							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1);
 						});
-						
+
 						infoAlarms.push(...self.dcRecognized.filter(alarm => {
-							
-							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1); 
+
+							return (self.config.levels.info.indexOf(alarm.alarmLevelId) > -1);
 						}));
-						
+
 						if (Array.isArray(infoAlarms)) {
-							
+
 							levelBadge.setHTML(`<div><span style="color: rgba(117 140 168 / 0.9); padding-right: 10px;">${infoAlarms.length}</span></div>`);
 						}
 					}
 				}
-				
+
 				updateLevelStatsCritical();
-				
+
 				updateLevelStatsWarning();
-				
+
 				updateLevelStatsInfo();
 			}
-			
+
 			if ($$("view-main-action-panel-" + self.uid)) {
-			
+
 				updateStats();
-			
-				updateLevelStats();	
+
+				updateLevelStats();
 			}
 
 			function onMessage(be) {
@@ -1098,12 +1098,12 @@ export default class AlarmMonitorModule extends GenericModule {
 					let changes = updateDataSources(flattenedData);
 
 					updateDataTables(flattenedData, changes);
-					
+
 					if ($$("view-main-action-panel-" + self.uid)) {
-					
+
 						updateStats();
-						
-						updateLevelStats();	
+
+						updateLevelStats();
 					}
 				}
 
@@ -1296,6 +1296,92 @@ export default class AlarmMonitorModule extends GenericModule {
 					return changes;
 				}
 			}
+		}
+	}
+
+	newAlarm() {
+
+		if (this.config != null && this.config != undefined &&
+			this.config.action != null && this.config.action != undefined &&
+			this.config.action.newAlarm != null && this.config.action.newAlarm != undefined) {
+
+			let module = util.module.getFromModuleAction(this.config.action.newAlarm);
+			if (module) {
+
+				let moduleAction = { id: this.config.action.newAlarm };
+
+				let args = { selectedPks: [] };
+
+				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+
+			}
+
+		} else {
+
+			util.ui.notImplementedMessage();
+		}
+	}
+
+	alarmMuted() {
+
+		if (this.config != null && this.config != undefined &&
+			this.config.action != null && this.config.action != undefined &&
+			this.config.action.alarmMuted != null && this.config.action.alarmMuted != undefined) {
+
+			let module = window.em.getByField(EntityType.MODULE, "id", this.config.action.alarmMuted);
+
+			if (module) {
+
+				util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
+
+			}
+
+		} else {
+
+			util.ui.notImplementedMessage();
+		}
+	}
+
+	newIncident() {
+
+		if (this.config != null && this.config != undefined &&
+			this.config.action != null && this.config.action != undefined &&
+			this.config.action.newIncident != null && this.config.action.newIncident != undefined) {
+
+			let module = util.module.getFromModuleAction(this.config.action.newIncident);
+			if (module) {
+
+				let moduleAction = { id: this.config.action.newIncident };
+
+				let args = { selectedPks: [] };
+
+				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+
+			}
+
+		} else {
+
+			util.ui.notImplementedMessage();
+		}
+	}
+
+	alarmConfig() {
+
+		if (this.config != null && this.config != undefined &&
+			this.config.action != null && this.config.action != undefined &&
+			this.config.action.alarmConfig != null && this.config.action.alarmConfig != undefined) {
+
+			let module = window.em.getByField(EntityType.MODULE, "id", this.config.action.alarmConfig);
+
+			if (module) {
+
+				util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
+
+			}
+
+		} else {
+
+			util.ui.notImplementedMessage();
 		}
 	}
 }
