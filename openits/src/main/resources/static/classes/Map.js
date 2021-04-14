@@ -175,19 +175,30 @@ export default class Map {
               }
             }
 
-            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
-
-            // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
-            tmpIcon = tmpIcon.replace(/#/g, "%23");
-
-            // update the icon cache
-            mapIcons[element.id] = tmpIcon;
+            let srcIcon;
+            let scaleIcon;
+            
+            if(element.elementType.id === "ElementType:1"){
+              srcIcon = "./img/meteo_"+getTrimId(element.elementTypeState.id)+".svg";
+              scaleIcon = 0.008;
+              mapIcons[element.id] = srcIcon;
+            }else if(element.elementType.id === "ElementType:2"){
+              srcIcon = "./img/cam_"+getTrimId(element.elementTypeState.id)+".svg";
+              scaleIcon = 0.008;
+              mapIcons[element.id] = srcIcon;
+            }else{
+              let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
+              tmpIcon = tmpIcon.replace(/#/g, "%23");
+              srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
+              scaleIcon = mapElement.height / total_height; 
+              mapIcons[element.id] = tmpIcon;
+            }
 
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
                 opacity: 1,
-                src: "data:image/svg+xml;utf8," + tmpIcon,
-                scale: mapElement.height / total_height,
+                src: srcIcon,
+                scale: scaleIcon
               }),
             });
 
@@ -351,11 +362,28 @@ export default class Map {
                   opacity = 1;
                 }
 
+                let srcIcon;
+                let scaleIcon;
+                
+                if(element.elementType.id === "ElementType:1"){
+                  srcIcon = "./img/meteo_"+getTrimId(element.elementTypeState.id)+".svg";
+                  scaleIcon = 0.008;
+                  mapIcons[element.id] = srcIcon;
+                }else if(element.elementType.id === "ElementType:2"){
+                  srcIcon = "./img/cam_"+getTrimId(element.elementTypeState.id)+".svg";
+                  scaleIcon = 0.008;
+                  mapIcons[element.id] = srcIcon;
+                }else{
+                  srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
+                  scaleIcon = mapElement.height / total_height; 
+                  mapIcons[element.id] = tmpIcon;
+                }
+    
                 let workingStyle = new ol.style.Style({
                   image: new ol.style.Icon({
-                    opacity: opacity,
-                    src: "data:image/svg+xml;utf8," + tmpIcon,
-                    scale: mapElement.height / total_height,
+                    opacity: 1,
+                    src: srcIcon,
+                    scale: scaleIcon
                   }),
                 });
 
@@ -562,25 +590,34 @@ export default class Map {
               }
             }
 
-            let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
-            
-            // Fix for OpenLayers not reading the colors. The # character is not allowed, so it has to be replaced by %23
-            tmpIcon = tmpIcon.replace(/#/g, "%23");
-
-
-
-            // update the icon cache
-            mapIcons[element.id] = tmpIcon;
-
             let canvas = document.createElement("canvas");
             // get canvas context for drawing on canvas
             let context = canvas.getContext("2d");
 
+            let srcIcon;
+            let scaleIcon;
+            
+            if(element.elementType.id === "ElementType:1"){
+              srcIcon = "./img/meteo_"+getTrimId(element.elementTypeState.id)+".svg";
+              scaleIcon = 0.008;
+              mapIcons[element.id] = srcIcon;
+            }else if(element.elementType.id === "ElementType:2"){
+              srcIcon = "./img/cam_"+getTrimId(element.elementTypeState.id)+".svg";
+              scaleIcon = 0.008;
+              mapIcons[element.id] = srcIcon;
+            }else{
+              let tmpIcon = iconGenerator.getElementSVG(element, total_width, total_height, "");
+              tmpIcon = tmpIcon.replace(/#/g, "%23");
+              srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
+              scaleIcon = mapElement.height / total_height; 
+              mapIcons[element.id] = tmpIcon;
+            }
+
             let workingStyle = new ol.style.Style({
               image: new ol.style.Icon({
                 opacity: 1,
-                src: "data:image/svg+xml;utf8," + tmpIcon,
-                scale: mapElement.height / total_height,
+                src: srcIcon,
+                scale: scaleIcon
               }),
             });
 
@@ -886,12 +923,26 @@ export default class Map {
         
         let feature = e.target.getFeatures().array_[0];
         let element_id = feature.id_;
+
+        let srcIcon;
+        let scaleIcon;
+        
+        if(elementTypeMap.getElementType(element_id) == "1"){
+          srcIcon = mapIcons[element_id];
+          scaleIcon = 0.010;
+        }else if(elementTypeMap.getElementType(element_id) == "2"){
+          srcIcon = mapIcons[element_id];
+          scaleIcon = 0.010;
+        }else{
+          srcIcon = "data:image/svg+xml;utf8," + mapIcons[element_id];
+          scaleIcon = 1.25;  
+        }
         
         let zTopStyle = new ol.style.Style({
           image: new ol.style.Icon({
             opacity: 1,
-            scale: 1.25,
-            src: "data:image/svg+xml;utf8," + mapIcons[element_id],
+            scale: scaleIcon,
+            src: srcIcon,
           }),
           zIndex: 100,
         });
@@ -1104,12 +1155,26 @@ export default class Map {
                   let canvas = document.createElement("canvas");
                   // get canvas context for drawing on canvas
                   let context = canvas.getContext("2d");
+
+                  let srcIcon;
+                  let scaleIcon;
+                  
+                  if(element.elementType.id === "ElementType:1"){
+                    srcIcon = "./img/meteo_"+getTrimId(element.elementTypeState.id)+".svg";
+                    scaleIcon = 0.008;
+                  }else if(element.elementType.id === "ElementType:2"){
+                    srcIcon = "./img/cam_"+getTrimId(element.elementTypeState.id)+".svg";
+                    scaleIcon = 0.008;
+                  }else{
+                    srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
+                    scaleIcon = mapElement.height / total_height;  
+                  }
                 
                   let workingStyle = new ol.style.Style({
                     image: new ol.style.Icon({
                       opacity: 1,
-                      src: "data:image/svg+xml;utf8," + tmpIcon,
-                      scale: mapElement.height / total_height,
+                      src: srcIcon,
+                      scale: scaleIcon
                     }),
                   });
 
