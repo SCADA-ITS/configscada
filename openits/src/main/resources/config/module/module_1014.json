@@ -10,5 +10,13 @@
 	"restEndpoints": {
 		"element": "elements/${id}",
 		"equipmentViewer": "equip_viewer/${id}"
+	},
+	"paramType": {
+		"config": "ParamType:1",
+		"measure": "ParamType:2"
+	},
+	"stateValue": {
+		"default": "ElementValueState:2",
+		"initialized": "ElementValueState:1"
 	}
 }

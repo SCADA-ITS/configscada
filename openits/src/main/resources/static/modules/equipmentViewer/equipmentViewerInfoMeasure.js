@@ -6,6 +6,7 @@ const MEASURE_ITEM_WIDTH = 175;
 const MEASURE_DEFAULT_ROWS = 2;
 
 const MEASURE_SEPARATOR = 16;
+const MEASURE_MARGINS = 40;
 
 const VIEW_INFO_MEASURE_SEGMENTED = "view-info-measure-segmented";
 const VIEW_INFO_MEASURE_SEGMENTED_ITEM = "view-measure-segmented-item";
@@ -17,6 +18,7 @@ class MeasureItem {
 	
 	constructor(parent, elementValue) {
 		
+		this.parent = parent;
 		this.uid = parent.uid;
 		this.measureWidth = parent.measureWidth; 
 		this.elementValue = elementValue;
@@ -39,9 +41,35 @@ class MeasureItem {
 
 					let elementValue = self.elementValue;
 					
-					if (data && data.value) {
+					let stateValueId = self.parent.parent.config.stateValue.default;
+					let stateValueLabel = i18n.t("LBL_UNKNOWN");
+					
+					if (data && data.elementValue) {
 						
-						elementValue.value = data.value;
+						elementValue.value = data.elementValue.value;
+						
+						if (data.elementValue.elementValueState) {
+						
+							stateValueId = data.elementValue.elementValueState.id;	
+						}
+						else {
+							
+							stateValueId = self.parent.parent.config.stateValue.default;
+						}
+					}
+					else {
+						
+						if (elementValue.elementValueState) {
+							
+							stateValueId = elementValue.elementValueState.id;
+						}
+					} 
+					
+					let stateValue = window.em.getByField(EntityType.ELEMENT_VALUE_STATE, "id", stateValueId);
+					
+					if (stateValue) {
+						
+						stateValueLabel = i18n.t(stateValue.labelAlias);
 					}
 					
 					let icon = undefined;
@@ -53,11 +81,14 @@ class MeasureItem {
 					let value = elementValue.value ? elementValue.value : '-';
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
+					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
 								
 					let res = `<div class="measure-box">
 									<image class="image" src="../../img/${icon}" />
 									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
 									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${label}">${label}</span></div>
+									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="../../img/state/${iconElementValueState}" 
+													title="${stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
 							   </div>`;
 					
 					return res;	
@@ -252,11 +283,11 @@ export default class EquipmentViewerInfoMeasure {
 				{ height: 10},
 				{ 
 					cols: [
-						{ width: 10 },
+						{ width: 1 },
 						{ 
 							rows: [viewSegmented, { height: 10 }, viewCarousel, { height: 10 }]
 						},		
-						{ width: 10 }
+						{ width: 1 }
 					]
 				},
 				{ height: 10}
@@ -303,21 +334,29 @@ export default class EquipmentViewerInfoMeasure {
 			
 			let measureGroups = [];
 			let rows = self.parent.measureMaxRows ? self.parent.measureMaxRows : MEASURE_DEFAULT_ROWS; 
-			let maxMeasuresPerPage = (Math.floor(self.parent.containerWidth / (self.measureWidth + MEASURE_SEPARATOR))) * rows;
+			let maxMeasuresPerPage = (Math.floor((self.parent.containerWidth - MEASURE_MARGINS) / (self.measureWidth + MEASURE_SEPARATOR))) * rows;
+			let elementValues = self.element.elementValues; 
 			
-			if (self.element.elementValues) {
+			if (elementValues) {
 			
 				let measureByGroup = maxMeasuresPerPage;
 				let groupNumber = 0;
 				let measureGroup;
 				
-				self.element.elementValues.forEach(elementValue => {
+				if (self.equipmentViewer && self.equipmentViewer.measureOnly) {
+				
+					elementValues = elementValues.filter(e => e.elementTypeParam.paramType.id === self.parent.config.paramType.measure);	
+				}
+				
+				elementValues.sort((a, b) => (i18n.t(a.elementTypeParam.labelAlias) > i18n.t(b.elementTypeParam.labelAlias)) ? 1 : ((i18n.t(b.elementTypeParam.labelAlias) > i18n.t(a.elementTypeParam.labelAlias)) ? -1 : 0));
+				
+				elementValues.forEach(elementValue => {
 					
 					if (measureByGroup === maxMeasuresPerPage) {
 						
 						groupNumber++;
 						
-						measureGroup = new MeasureGroup(self, groupNumber, i18n.t("LBL_GROUP_MEASURES") + " " + groupNumber, self.parent.containerWidth);
+						measureGroup = new MeasureGroup(self, groupNumber, i18n.t("LBL_GROUP_MEASURES") + " " + groupNumber, self.parent.containerWidth - MEASURE_MARGINS);
 					}
 					
 					let measureItem = new MeasureItem(self, elementValue);
@@ -387,7 +426,7 @@ export default class EquipmentViewerInfoMeasure {
 								
 						if (measureItem) {
 					
-							measureItem.setValues({ value: elementValue.value });
+							measureItem.setValues({ elementValue: elementValue });
 						}		
 					}
 				});

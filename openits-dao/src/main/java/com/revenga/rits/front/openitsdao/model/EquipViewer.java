@@ -32,10 +32,16 @@ public class EquipViewer implements Serializable {
 	@Column(name="measure_max_rows")
 	private Integer measureMaxRows;
 	
+	@Column(name="measure_only")
+	private Boolean measureOnly;
+	
 	@Column(name="measure_width")
 	private Integer measureWidth;
 
 	private String name;
+	
+	@Column(name="show_actions")
+	private Boolean showActions;
 
 	@Column(name="show_childs")
 	private Boolean showChilds;
@@ -107,6 +113,14 @@ public class EquipViewer implements Serializable {
 		this.measureMaxRows = measureMaxRows;
 	}
 	
+	public Boolean getMeasureOnly() {
+		return measureOnly;
+	}
+
+	public void setMeasureOnly(Boolean measureOnly) {
+		this.measureOnly = measureOnly;
+	}
+
 	public Integer getMeasureWidth() {
 		return this.measureWidth;
 	}
@@ -121,6 +135,14 @@ public class EquipViewer implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getShowActions() {
+		return showActions;
+	}
+
+	public void setShowActions(Boolean showActions) {
+		this.showActions = showActions;
 	}
 
 	public Boolean getShowChilds() {

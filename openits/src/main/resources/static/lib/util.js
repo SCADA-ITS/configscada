@@ -205,10 +205,10 @@ export let util = {
 							viewModule
 						]
 					},
-					position: function(state) {
-						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
-						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
-					},
+//					position: function(state) {
+//						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
+//						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
+//					},
 					on: {
 						onBeforeShow: function() {
 
@@ -226,6 +226,8 @@ export let util = {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
+			
+			return win_id;
 		},
 
 		loadInTab(module, moduleAction, mod, args) {
@@ -397,7 +399,9 @@ export let util = {
 						else if (module.viewType.id === VIEW_TYPE_WINDOW ||
 							viewTypeId === VIEW_TYPE_WINDOW) {
 
-							util.module.loadInWindow(module, moduleAction, mod, args);
+							let winId = util.module.loadInWindow(module, moduleAction, mod, args);
+							
+							util.ui.centerWindow(winId);
 						}
 					}
 					else {
@@ -408,7 +412,9 @@ export let util = {
 						}
 						else if (viewTypeId === VIEW_TYPE_WINDOW) {
 
-							util.module.loadInWindow(module, moduleAction, mod, args);
+							let winId = util.module.loadInWindow(module, moduleAction, mod, args);
+							
+							util.ui.centerWindow(winId);
 						}
 
 
@@ -768,9 +774,11 @@ export let util = {
 
 		setWindowTitle(winId, title) {
 
-			if ($$(winId)) {
-
-				let head = $$(winId).getHead();
+			let win = $$(winId);
+			
+			if (win && win.config.view === "window") {
+				
+				let head = win.getHead();
 
 				if (head) {
 
@@ -781,6 +789,45 @@ export let util = {
 						titleView.setHTML(`<div>${title}</div>`);
 					}
 				}
+			}
+		},
+		
+		resizeWindow(winId, width, height) {
+			
+			let win = $$(winId);
+			
+			if (win && win.config.view === "window") {
+				
+				let prevWidth = win.config.width;
+				let prevHeight = win.config.height;
+				
+
+				win.config.width = width ? width : win.config.width;
+				win.config.height = height ? height : win.config.height;
+				
+				if (prevWidth != win.config.width || prevHeight != win.config.height) {
+				
+					win.resize();	
+				}
+			}
+		},
+		
+		centerWindow(winId) {
+			
+			let win = $$(winId);
+			
+			if (win && win.config.view === "window") {
+				
+				let x = (document.documentElement.clientWidth / 2) - (win.config.width / 2);
+				let y = (document.documentElement.clientHeight / 2) - (win.config.height / 2);
+				
+				console.log("window.width="+ win.config.width);
+				console.log("window.heaight="+ win.config.height);
+				
+				console.log("x="+ x);
+				console.log("y="+ y);
+				 
+				win.setPosition(Math.floor(x), Math.floor(y));
 			}
 		},
 

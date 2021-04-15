@@ -3,6 +3,9 @@ import EquipmentViewerTreeHierarchy from "./equipmentViewerTreeHierarchy.js";
 import EquipmentViewerContent  from "./equipmentViewerContent.js";
 import { util } from "../../lib/util.js";
 
+const TREE_PANEL_WIDTH = 275;
+const ACTION_PANEL_WIDTH = 300;
+
 export default class EquipmentViewerModule extends GenericModule {
 	
 	static get DEFAULT_EQUIPMENT_VIEWER() { 
@@ -10,7 +13,8 @@ export default class EquipmentViewerModule extends GenericModule {
 		return {
 				
 			showInfoTab: true,
-			showChilds: false	
+			showActions: true,
+			showChilds: true	
 		} 
 	} 
 
@@ -27,6 +31,7 @@ export default class EquipmentViewerModule extends GenericModule {
 		this.equipmentViewerTreeHierarchy = undefined;
 		this.equipmentViewerContent = undefined;
 		this.containerWidth = 0;
+		this.firstRequest = false;
 	}
 
 	getView() {
@@ -71,17 +76,58 @@ export default class EquipmentViewerModule extends GenericModule {
 		
 		loadElementData();
 		
+		function adjustWindow(element) {
+			
+			if (self.equipmentViewer && element) {
+				
+				let container = $$(self.args.containerId);
+
+				if (container) {
+			
+					let prevWindowWidth = container.config.width;
+					let newWindowWidth = prevWindowWidth; 
+					
+					let viewMainTreeHierarchyHidden = !self.equipmentViewer.showChilds || !(Array.isArray(element.childs) && element.childs.length > 0);
+					let viewMainActionPanelHidden = !self.equipmentViewer.showActions;
+					
+					newWindowWidth -= viewMainTreeHierarchyHidden ? TREE_PANEL_WIDTH : 0;
+					newWindowWidth -= viewMainActionPanelHidden ? ACTION_PANEL_WIDTH : 0;
+				
+					util.ui.resizeWindow(self.args.containerId, newWindowWidth);
+					util.ui.centerWindow(self.args.containerId);
+				}
+			}
+		}
+		
 		function loadElementData() {
 				
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
 		
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: self.args.selectedPks[0] })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: self.args.selectedPks[0] })).then(function(elementResponse) {
 				
-					if (dat != null) {
+					if (elementResponse != null) {
 					
-						let element = dat.json();
+						let element = elementResponse.json();
 						
-						load(element);	
+						if (element) {
+							
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: element.elementType.id })).then(function(equipmentViewerResponse) {
+								
+								if (equipmentViewerResponse) {
+								
+									let equipmentViewer = equipmentViewerResponse.json();
+								
+									if (equipmentViewer) {
+										
+										self.equipmentViewer = equipmentViewer;
+									}
+									
+									adjustWindow(element);
+									
+									load(element);	
+								} 
+							});	
+						}
 					}	
 				});
 			}
@@ -127,11 +173,12 @@ export default class EquipmentViewerModule extends GenericModule {
 			return drawMain(element);
 		}
 		
-		function calculateContainerWidth() {
+		function calculateContainerWidth(element) {
 			
 			let viewMainTreeHierarchy = $$("view-main-tree-hierarchy-" + self.uid);
 			let viewMainActionPanel = $$("view-main-action-panel-" + self.uid);
 			let width = 0;
+			let showViewMainTreeHierarchy = (Array.isArray(element.childs) && element.childs.length > 0);
 			
 			let container = $$(self.args.containerId);
 
@@ -140,12 +187,12 @@ export default class EquipmentViewerModule extends GenericModule {
 				width += container.config.width;
 			}
 			
-			if (viewMainTreeHierarchy) {
+			if (viewMainTreeHierarchy && showViewMainTreeHierarchy) {
 				
 				width -= viewMainTreeHierarchy.$width;	
 			}
 			
-			if (viewMainActionPanel) {
+			if (viewMainActionPanel ) {
 				
 				width -= viewMainActionPanel.$width;
 			}
@@ -173,7 +220,7 @@ export default class EquipmentViewerModule extends GenericModule {
 						
 						if (self.equipmentViewerContent) {
 							
-							calculateContainerWidth();
+							calculateContainerWidth(element);
 							
 							self.equipmentViewerContent.refresh();
 						}
@@ -182,7 +229,7 @@ export default class EquipmentViewerModule extends GenericModule {
 						
 						if (self.equipmentViewerContent) {
 							
-							calculateContainerWidth();
+							calculateContainerWidth(element);
 							
 							self.equipmentViewerContent.refresh();
 						}
@@ -190,16 +237,29 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 			};
 			
+			let viewMainTreeHierarchyHidden = true;
+			let viewMainActionPanelHidden = false;
+			
+			if (self.equipmentViewer) {
+				
+				viewMainTreeHierarchyHidden = !self.equipmentViewer.showChilds || !(Array.isArray(element.childs) && element.childs.length > 0);
+				viewMainActionPanelHidden = !self.equipmentViewer.showActions;	
+			}
+
 			let viewMainTreeHierarchy = {
 				id: "view-main-tree-hierarchy-" + self.uid,
+				hidden: viewMainTreeHierarchyHidden,
 				header: i18n.t("LBL_EQUIPMENT_HIERARCHY"),
 				body: {
-					width: 300,
+					width: TREE_PANEL_WIDTH,
 					rows: [getViewTreeHierarchy(element)]
 				}
 			};
-			
-			self.containerWidth -= viewMainTreeHierarchy.body.width;
+					
+			if (!viewMainTreeHierarchyHidden) {
+				
+				self.containerWidth -= viewMainTreeHierarchy.body.width;	
+			}
 			
 			let viewMainResizer = { 
 				id: "view-main-resizer-" + self.uid,
@@ -209,18 +269,22 @@ export default class EquipmentViewerModule extends GenericModule {
 			let viewMainContent = {
 				body: {
 					id: "view-main-content-" + self.uid
-				} // getViewContent(element)
-			};
-			
-			let viewMainActionPanel = {
-				header: i18n.t("LBL_EQUIPMENT_ACTION_PANEL"),
-				id: "view-main-action-panel-" + self.uid,
-				body: {
-					width: 300
 				}
 			};
 			
-			self.containerWidth -= viewMainActionPanel.body.width;
+			let viewMainActionPanel = {
+				header: i18n.t("LBL_EQUIPMENT_INFO"),
+				hidden: viewMainActionPanelHidden,
+				id: "view-main-action-panel-" + self.uid,
+				body: {
+					width: ACTION_PANEL_WIDTH
+				}
+			};
+			
+			if (!viewMainActionPanelHidden) {
+				
+				self.containerWidth -= viewMainActionPanel.body.width;	
+			}
 			
 			let viewMainBody = {
 				id: "view-main-body-" + self.uid,
@@ -233,7 +297,7 @@ export default class EquipmentViewerModule extends GenericModule {
 								
 								if (self.equipmentViewerContent) {
 									
-									calculateContainerWidth();
+									calculateContainerWidth(element);
 									
 									self.equipmentViewerContent.refresh();
 								}
@@ -242,7 +306,7 @@ export default class EquipmentViewerModule extends GenericModule {
 								
 								if (self.equipmentViewerContent) {
 									
-									calculateContainerWidth();
+									calculateContainerWidth(element);
 									
 									self.equipmentViewerContent.refresh();
 								}
@@ -285,26 +349,39 @@ export default class EquipmentViewerModule extends GenericModule {
 				
 				let elem = getElementFromElementId(elementId);
 				
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: elem.elementType.id })).then(function(dat) {
+				if (!self.firstRequest) {
+					self.firstRequest = !self.firstRequest;
+					
+					doSelect(self.equipmentViewer);	
+				}
+				else {
+					
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: elem.elementType.id })).then(function(dat) {
 				
-					if (dat != null) {
-						
-						let equipmentViewer = dat.json();
-						
-						$$("view-main-body-" + self.uid).show();
-						
-						webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
-						webix.ui(getViewActionPanel(elem, equipmentViewer), $$("viewActionPanel-" + self.uid));
-						
-						if (self.equipmentViewerContent) {
-								
-							self.equipmentViewerContent.loadData();
-						}
-						
-						
-						$$("view-main-loading-" + self.uid).hide();
-					}	
-				});	
+						if (dat != null) {
+							
+							let equipmentViewer = dat.json();
+							
+							doSelect(equipmentViewer);
+						}	
+					});
+				}
+				
+				function doSelect(equipmentViewer) {
+				
+					$$("view-main-body-" + self.uid).show();
+					
+					webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
+					webix.ui(getViewActionPanel(elem, equipmentViewer), $$("viewActionPanel-" + self.uid));
+					
+					if (self.equipmentViewerContent) {
+							
+						self.equipmentViewerContent.loadData();
+					}
+					
+					
+					$$("view-main-loading-" + self.uid).hide();	
+				}
 			}
 			
 			function getViewTreeHierarchy(element) {
