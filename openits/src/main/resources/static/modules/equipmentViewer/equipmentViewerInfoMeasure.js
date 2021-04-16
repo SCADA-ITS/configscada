@@ -7,12 +7,16 @@ const MEASURE_DEFAULT_ROWS = 2;
 
 const MEASURE_SEPARATOR = 16;
 const MEASURE_MARGINS = 40;
+const MEASURE_MIN_MARGIN_LEFT = 30;
 
 const VIEW_INFO_MEASURE_SEGMENTED = "view-info-measure-segmented";
 const VIEW_INFO_MEASURE_SEGMENTED_ITEM = "view-measure-segmented-item";
 
 const VIEW_INFO_MEASURE_CAROUSEL = "view-info-measure-carousel";
 const VIEW_INFO_MEASURE_CAROUSEL_ITEM = "view-info-measure-carousel-item";
+
+const VIEW_INFO_MEASURE_MULTIVIEW = "view-info-measure-multiview";
+const VIEW_INFO_MEASURE_MULTIVIEW_ITEM = "view-info-measure-multiview-item";
 
 class MeasureItem {
 	
@@ -106,6 +110,7 @@ class MeasureGroup {
 	constructor(parent, id, label, containerWidth) {
 		
 		this.uid = parent.uid;
+		this.parent = parent;
 		this.measureWidth = parent.measureWidth;
 		this.id = id;
 		this.label = label;
@@ -131,55 +136,80 @@ class MeasureGroup {
 	
 	getView() {
 		
-		let viewGridMeasures = {};
+		let self = this;
+		let viewCarousel = {};
 		
 		if (this.measureItems) {
 			
-			viewGridMeasures = { id: VIEW_INFO_MEASURE_CAROUSEL_ITEM + "-" + this.id + "-" + this.uid};
-
 			this.measureItems.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 						
-			let colsMeasures = Math.floor(this.containerWidth / (this.measureWidth + MEASURE_SEPARATOR));
-			let rowsMeasures = Math.floor(this.measureItems.length / colsMeasures) + 1;
-			let marginLeft = Math.floor((this.containerWidth - colsMeasures * (this.measureWidth + MEASURE_SEPARATOR)) / 2); 
+			let colsMeasures = Math.floor((this.containerWidth - 20 - (MEASURE_MIN_MARGIN_LEFT * 2)) / (this.measureWidth + MEASURE_SEPARATOR));
+			let rowsPerPage = this.parent.measureMaxRows ? this.parent.measureMaxRows : MEASURE_DEFAULT_ROWS;
+			let measuresPerPage = rowsPerPage * colsMeasures;
+			let measuresCount = this.measureItems.length; 
+			let marginLeft = Math.floor((this.containerWidth - 20 - (colsMeasures * (this.measureWidth)) - ((colsMeasures - 1) * MEASURE_SEPARATOR)) / 2); 
 			
 			let nextMeasureItem = 0;
 			
-			for (let idxRow = 0; nextMeasureItem < this.measureItems.length && idxRow < rowsMeasures; idxRow++) {
+			viewCarousel = getViewCarousel();
+			let idxPage = 0;
+		
+			while (nextMeasureItem < measuresCount) {
 				
-				if (!viewGridMeasures.rows) {
-					
-					viewGridMeasures.rows = [];
-				}
+				let idxMeasurePage = 0;
+				let idxRow = -1;
 				
-				viewGridMeasures.rows.push({ height: MEASURE_ITEM_HEIGHT + (MEASURE_SEPARATOR * 2), cols: [] });
+				let viewGridMeasures = { 
+					id: VIEW_INFO_MEASURE_CAROUSEL_ITEM + "-" + this.id + "-" + (++idxPage) + "-" + this.uid,
+					rows: []
+				};
 				
-				let idxCol = 0;
-				
-				viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft });
-				
-				for (idxCol = 0; nextMeasureItem < this.measureItems.length && idxCol < colsMeasures; idxCol++) {
+				while (idxMeasurePage++ < measuresPerPage && nextMeasureItem < measuresCount) {
+									
+					if (!(nextMeasureItem % colsMeasures)) {
+						
+						viewGridMeasures.rows.push({ height: MEASURE_ITEM_HEIGHT + (MEASURE_SEPARATOR * 2), cols: [] });
+						
+						idxRow = viewGridMeasures.rows.length - 1;
+						
+						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft });
+					}
 					
 					let measureItem = this.measureItems[nextMeasureItem++];
 					
-					if (idxCol > 0) {
-						
-						viewGridMeasures.rows[idxRow].cols.push({ width: MEASURE_SEPARATOR });	
-					}
-					
 					viewGridMeasures.rows[idxRow].cols.push(measureItem.getView());
-				}
-
-				viewGridMeasures.rows[idxRow].cols.push({});
-			}
-			
-			if (viewGridMeasures.rows) {
 					
+					if (!(nextMeasureItem % colsMeasures)) {
+						
+						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft + (MEASURE_SEPARATOR / 2) });
+					}
+					else {
+						
+						viewGridMeasures.rows[idxRow].cols.push({ width: MEASURE_SEPARATOR });
+					}
+				}
+				
 				viewGridMeasures.rows.push({ height: 50 });
+				
+				viewCarousel.cols.push(viewGridMeasures);
 			}
 		}
 		
-		return viewGridMeasures;
+		function getViewCarousel() {
+		
+			return {
+				view: "carousel",
+			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
+				navigation:{
+				    type: "side",
+				    items: true,
+				    buttons: false
+				},
+			    cols: []
+			};
+		}
+		
+		return viewCarousel;
 	}
 }
 
@@ -201,7 +231,7 @@ export default class EquipmentViewerInfoMeasure {
 		let self = this;
 		let view = {};
 		let viewSegmented;
-		let viewCarousel;
+		let viewMultiview;
 		
 		this.measureWidth = MEASURE_ITEM_WIDTH;
 		
@@ -222,7 +252,7 @@ export default class EquipmentViewerInfoMeasure {
 		if (self.measuresGroups) {
 			
 			viewSegmented = getViewSegmented();
-			viewCarousel = getViewCarousel();
+			viewMultiview = getViewMultiview();
 			
 			let firstSelected = false;
 			
@@ -241,7 +271,7 @@ export default class EquipmentViewerInfoMeasure {
 					value: measureGroup.label
 				});
 				
-				viewCarousel.cols.push(measureGroup.getView());
+				viewMultiview.cells.push(measureGroup.getView());
 			});
 			
 			viewSegmented.tooltip = function(obj) {
@@ -261,20 +291,6 @@ export default class EquipmentViewerInfoMeasure {
 					}
 				}
 			};
-			
-			viewCarousel.on = {
-				
-				onShow(id) {
-					
-					let viewInfoMeasureSegmented = VIEW_INFO_MEASURE_SEGMENTED + "-" + self.uid;
-					let viewInfoMeasureSegmentedItem = id.replace(VIEW_INFO_MEASURE_CAROUSEL_ITEM, VIEW_INFO_MEASURE_SEGMENTED_ITEM);
-					
-					if ($$(viewInfoMeasureSegmented)) {
-						
-						$$(viewInfoMeasureSegmented).setValue(viewInfoMeasureSegmentedItem);
-					}
-				}
-			}
 		}
 		
 		view = {
@@ -285,7 +301,7 @@ export default class EquipmentViewerInfoMeasure {
 					cols: [
 						{ width: 1 },
 						{ 
-							rows: [viewSegmented, { height: 10 }, viewCarousel, { height: 10 }]
+							rows: [viewSegmented, { height: 10 }, viewMultiview, { height: 10 }]
 						},		
 						{ width: 1 }
 					]
@@ -317,32 +333,29 @@ export default class EquipmentViewerInfoMeasure {
 								(ev.elementTypeParam && ev.elementTypeParam.id === equipViewerMeasure.voEntity.id)
 							);
 							
-							putViewMeasure(equipViewerMeasure, elementValue);
+							if (elementValue) {
+						
+								let measureItem = new MeasureItem(self, elementValue);
+						
+								measureGroup.addMeasureItem(measureItem);		
+							}
 						}
-						
-						let measureItem = new MeasureItem(self, elementValue);
-						
-						measureGroup.addMeasureItem(measureItem);
 					});
 				}
 				
 				measureGroups.push(measureGroup);
 			});
+			
+			return measureGroups;
 		}
 		
 		function getMeasuresGroupsFromElement() {
 			
 			let measureGroups = [];
-			let rows = self.parent.measureMaxRows ? self.parent.measureMaxRows : MEASURE_DEFAULT_ROWS; 
-			let maxMeasuresPerPage = (Math.floor((self.parent.containerWidth - MEASURE_MARGINS) / (self.measureWidth + MEASURE_SEPARATOR))) * rows;
 			let elementValues = self.element.elementValues; 
 			
-			if (elementValues) {
+			if (Array.isArray(elementValues) && elementValues.length > 0) {
 			
-				let measureByGroup = maxMeasuresPerPage;
-				let groupNumber = 0;
-				let measureGroup;
-				
 				if (self.equipmentViewer && self.equipmentViewer.measureOnly) {
 				
 					elementValues = elementValues.filter(e => e.elementTypeParam.paramType.id === self.parent.config.paramType.measure);	
@@ -350,33 +363,16 @@ export default class EquipmentViewerInfoMeasure {
 				
 				elementValues.sort((a, b) => (i18n.t(a.elementTypeParam.labelAlias) > i18n.t(b.elementTypeParam.labelAlias)) ? 1 : ((i18n.t(b.elementTypeParam.labelAlias) > i18n.t(a.elementTypeParam.labelAlias)) ? -1 : 0));
 				
+				let measureGroup = new MeasureGroup(self, 1, i18n.t("LBL_MEASURES"), self.parent.containerWidth - MEASURE_MARGINS);
+				
 				elementValues.forEach(elementValue => {
-					
-					if (measureByGroup === maxMeasuresPerPage) {
-						
-						groupNumber++;
-						
-						measureGroup = new MeasureGroup(self, groupNumber, i18n.t("LBL_GROUP_MEASURES") + " " + groupNumber, self.parent.containerWidth - MEASURE_MARGINS);
-					}
 					
 					let measureItem = new MeasureItem(self, elementValue);
 								
 					measureGroup.addMeasureItem(measureItem);
-					
-					if (!(--measureByGroup)) {
-					
-						measureGroups.push(measureGroup);
-						
-						measureByGroup = maxMeasuresPerPage;
-						
-						measureGroup = null;
-					}
 				});	
 				
-				if (measureGroup) {
-					
-					measureGroups.push(measureGroup);
-				}	
+				measureGroups.push(measureGroup);
 			}
 
 			return measureGroups;
@@ -393,17 +389,12 @@ export default class EquipmentViewerInfoMeasure {
 			};
 		}
 		
-		function getViewCarousel() {
+		function getViewMultiview() {
 		
 			return {
-				view: "carousel",
-			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.uid,
-				navigation:{
-				    type: "side",
-				    items: true,
-				    buttons: false
-				},
-			    cols: []
+				view: "multiview",
+			    id: VIEW_INFO_MEASURE_MULTIVIEW + "-" + self.uid,
+			    cells: []
 			};
 		}
 		
