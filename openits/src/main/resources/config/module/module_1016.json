@@ -1,0 +1,18 @@
+{
+	"moduleAction": {
+		"mute": 101601,
+		"unmute": 101602,
+		"createMuteAlarm": 101603,
+		"muteModalAction": 101604
+	},
+	"actionEndpoints": {
+		"mute": "alarms/send_alarm_muted_actions",
+		"unmute": "alarms/send_alarm_muted_actions"
+	},
+	"restEndpoints": {
+		"alarmMuted": "alarms/alarm_muted/${id}",
+		"alarmsArray": "alarms"
+	},
+	"treeElementType": "1",
+	"gridAlarmsConfig": "1011"
+}

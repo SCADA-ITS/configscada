@@ -20,7 +20,7 @@
 	"alarmTypeManual": [ "AlarmType:4" ],
 	"action": {
 		"newAlarm": 101303,
-		"alarmMuted": 1002,
+		"alarmMuted": 1015,
 		"newIncident":101303,
 		"alarmConfig": 1002
 	}

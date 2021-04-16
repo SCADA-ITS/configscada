@@ -1,6 +1,5 @@
 import GenericModule from "../modules/genericModule.js";
 import InputDialogBox from "../component/inputDialogBox.js";
-import CalendarDialogBox from "../component/calendarDialogBox.js";
 import { util } from "../lib/util.js";
 
 export default class AlarmModule extends GenericModule {
@@ -55,7 +54,6 @@ export default class AlarmModule extends GenericModule {
 		return view;
 	}
 
-
 	loadData() {
 
 		let self = this;
@@ -72,14 +70,6 @@ export default class AlarmModule extends GenericModule {
 		else if (this.moduleAction.id === this.config.moduleAction.deactivate) {
 
 			deactivate();
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.mute) {
-
-			mute(true);
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.unmute) {
-
-			mute(false);
 		}
 
 		function recognize() {
@@ -200,120 +190,6 @@ export default class AlarmModule extends GenericModule {
 			}
 		}
 
-		function mute(action) {
-
-			let title;
-			let text;
-			
-			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-
-				title = action ? i18n.t("LBL_DIALOG_MUTE_ALARMS") : i18n.t("LBL_DIALOG_UNMUTE_ALARMS");
-				text = action ? i18n.t("LBL_ARE_YOU_SURE_MUTE") : i18n.t("LBL_ARE_YOU_SURE_UNMUTE");
-				
-				if(action === true){
-
-					(new CalendarDialogBox(title, text, false, 
-					
-						function(date) {
-							
-							return (Math.floor(date) < Math.floor(new Date()));
-						},
-						function(dates) {
-							
-							webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.alarmsArray, JSON.stringify(self.args.selectedPks)).then(function(data) {
-							
-								let responseAlarms = data.json();
-								
-								if (Array.isArray(responseAlarms) && responseAlarms.length > 0) {
-									
-									let mutedAlarms = [];
-									
-									responseAlarms.forEach(alarm => {
-										
-										mutedAlarms.push({
-											
-											alarmConfigId: alarm.alarmConfig.id,
-											mutedUntil: dates.from.getTime(),
-											elementId: alarm.targetElement.id,
-											enable: true
-										});
-									});
-									
-									if (Array.isArray(mutedAlarms) && mutedAlarms.length > 0) {
-										
-										let body = {
-										
-											alarmMuteds: mutedAlarms							
-										};
-										
-										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.mute, body).then(function(data) {
-											console.log(data);
-										});									
-									} 
-								}
-							});					
-						}
-					)).show();
-
-				}
-
-				if(action === false){
-
-					webix.confirm({
-						title: i18n.t("LBL_ALARM_CONFIRM_CONFIRM"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: i18n.t("LBL_ALARM_CONFIRM_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function() {
-
-						if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-
-							let mutedAlarms = [];
-							
-							self.args.selectedPks.forEach(e => {
-
-								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmMuted, { id: e })).then(function(dat) {
-
-									if (dat != null) {
-										
-										let responseAlarms = dat.json();
-									
-										mutedAlarms.push({
-											
-											alarmConfigId: responseAlarms.alarmConfig.id,
-											mutedUntil: responseAlarms.mutedUntil,
-											elementId: responseAlarms.element.id,
-											enable: false
-
-										});
-
-										if (Array.isArray(mutedAlarms) && mutedAlarms.length > 0) {
-															
-											let body = {
-											
-												alarmMuteds: mutedAlarms							
-											};
-											
-											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.unmute, body).then(function(data) {
-												console.log(data);
-											});									
-										} 
-	
-									}
-	
-								});
-	
-							});
-	
-						}
-						
-					});
-
-				}
-				
-			}
-		}
 	}
 
 	refresh() {
@@ -339,6 +215,7 @@ export default class AlarmModule extends GenericModule {
 	
 				}, function(response) { util.ajax.handleError(response); });
 			}
+
 		}
 		else {
 
