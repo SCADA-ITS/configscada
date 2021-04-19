@@ -166,6 +166,16 @@ export default class EquipmentViewerInfo {
 		}
 	}
 	
+	updateState(elementTypeState) {
+
+		let viewMainInfoImage = $$("view-main-info-image-" + this.uid);
+		
+		if (viewMainInfoImage) {
+			
+			viewMainInfoImage.setValues( { elementTypeState: elementTypeState });
+		}		
+	}
+	
 	refresh() {
 		
 		if (this.equipmentViewerInfoMeasure) {

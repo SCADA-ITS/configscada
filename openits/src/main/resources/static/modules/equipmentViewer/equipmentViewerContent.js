@@ -159,7 +159,7 @@ export default class EquipmentViewerContent {
 						{
 							id:  "view-main-content-header-buttons-" + self.uid,
 							view: "toolbar",
-							height: 80,
+							height: 70,
 							borderless: true, 
 							css: "equip-viewer-header-actions",
 							elements: [
@@ -371,6 +371,11 @@ export default class EquipmentViewerContent {
 						if (elementStateBar) {
 							
 							elementStateBar.setValues( { elementTypeState: data.elementTypeState });
+						}
+						
+						if (self.equipmentViewerInfo) {
+							
+							self.equipmentViewerInfo.updateState(data.elementTypeState);
 						}
 					}
 					

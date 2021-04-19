@@ -1,6 +1,7 @@
 {
 	"moduleAction": {
-	    "view": 101401
+	    "view": 101401,
+	    "viewFromAlarm": 101402
 	},
 	"actionEndpoints": {
 		
@@ -9,6 +10,7 @@
 	"adapter": "ws.element.getList",
 	"restEndpoints": {
 		"element": "elements/${id}",
+		"alarm": "alarms/${id}",
 		"equipmentViewer": "equip_viewer/${id}"
 	},
 	"paramType": {

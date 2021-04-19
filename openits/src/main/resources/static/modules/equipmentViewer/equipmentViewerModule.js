@@ -71,7 +71,7 @@ export default class EquipmentViewerModule extends GenericModule {
 		
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
-		
+
 		loadElementData();
 		
 		function adjustWindow(element) {
@@ -98,34 +98,57 @@ export default class EquipmentViewerModule extends GenericModule {
 		function loadElementData() {
 				
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
-		
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: self.args.selectedPks[0] })).then(function(elementResponse) {
 				
-					if (elementResponse != null) {
+				if (self.moduleAction.id === self.config.moduleAction.view) {
 					
-						let element = elementResponse.json();
+					requestEquipment(self.args.selectedPks[0]);
+				}
+				else if (self.moduleAction.id === self.config.moduleAction.viewFromAlarm) {
+	
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarm, { id: self.args.selectedPks[0] })).then(function(alarmResponse) {
 						
-						if (element) {
+						if (alarmResponse != null) {
+						
+							let alarm = alarmResponse.json();
 							
-							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: element.elementType.id })).then(function(equipmentViewerResponse) {
+							if (alarm) {
 								
-								if (equipmentViewerResponse) {
-								
-									let equipmentViewer = equipmentViewerResponse.json();
-								
-									if (equipmentViewer) {
-										
-										self.equipmentViewer = equipmentViewer;
-									}
-									
-									adjustWindow(element);
-									
-									load(element);	
-								} 
-							});	
+								requestEquipment(alarm.targetElement.id)
+							}
 						}
-					}	
-				});
+					});
+				}
+				
+				function requestEquipment(elementId) {
+				
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
+				
+						if (elementResponse != null) {
+						
+							let element = elementResponse.json();
+							
+							if (element) {
+								
+								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: element.elementType.id })).then(function(equipmentViewerResponse) {
+									
+									if (equipmentViewerResponse) {
+									
+										let equipmentViewer = equipmentViewerResponse.json();
+									
+										if (equipmentViewer) {
+											
+											self.equipmentViewer = equipmentViewer;
+										}
+										
+										adjustWindow(element);
+										
+										load(element);	
+									} 
+								});	
+							}
+						}	
+					});	
+				}
 			}
 		}
 		
@@ -143,11 +166,8 @@ export default class EquipmentViewerModule extends GenericModule {
 				
 					util.ui.setWindowTitle(container, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias);
 				}
-			
-				if (self.moduleAction.id === self.config.moduleAction.view) {
-	
-					view = moduleActionView(self.element);
-				}
+				
+				view = drawMain(self.element);
 				
 				$$("loading-" + self.uid).hide();
 				$$(self.uid).show();
@@ -163,12 +183,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 			}
 		}
-
-		function moduleActionView(element) {
-			
-			return drawMain(element);
-		}
-		
+	
 		function calculateContainerWidth(element) {
 			
 			let viewMainTreeHierarchy = $$("view-main-tree-hierarchy-" + self.uid);
@@ -382,7 +397,5 @@ export default class EquipmentViewerModule extends GenericModule {
 			
 			return viewMain;
 		}
-		
-		
 	}
 }	
