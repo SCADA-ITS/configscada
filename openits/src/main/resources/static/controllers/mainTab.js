@@ -15,8 +15,12 @@ export default class MainTab {
 			id: MAIN_TAB_ID,
 			tabbar: {
 				optionWidth: 283,
-				close: true
+				close: true,
+				multiview: true
 			},
+			multiview: {
+				keepViews:true
+	        },
 			animate: false,
 			cells: [{ id: "tab2remove" }]
 		};
