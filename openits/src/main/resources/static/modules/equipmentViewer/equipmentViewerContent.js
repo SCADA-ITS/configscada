@@ -15,6 +15,7 @@ export default class EquipmentViewerContent {
 		
 		this.equipmentViewer = equipmentViewer;
 		this.idStompSubscriptor = undefined;
+		this.currentElementTypeState = element.elementTypeState;
 		
 		if (element) {
 			
@@ -64,13 +65,12 @@ export default class EquipmentViewerContent {
 								borderless: true,
 								cols: [
 									getViewHeaderElement(),
-									getViewHeaderDate()
+									getViewHeaderButtons()
 								]
 							}	
 						]
 					}
 				]
-				
 			};
 			
 			function getViewHeaderBarState() {
@@ -103,71 +103,122 @@ export default class EquipmentViewerContent {
 			function getViewHeaderElement() {
 				
 				let viewHeaderElement = {
-					id:  "view-main-content-header-element-" + self.uid, 
-					borderless: true,
-					template: function(data) {
-						
-						if (self.elementType) {
-							
-							let equipmentIcon = undefined;
-							
-							if (!equipmentIcon) {
-								equipmentIcon = "not_found_50.png";
-							}
-							
-							let elementTypeStateLabel = i18n.t(self.element.elementTypeState.labelAlias);
-							let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
-							
-							if (data && data.elementTypeState) {
+					rows: [
+						{},
+						{
+							id:  "view-main-content-header-element-" + self.uid,
+							height: 86, 
+							borderless: true,
+							template: function(data) {
 								
-								let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
-							
-								if (elementTypeState) {
+								if (self.elementType) {
 									
-									elementTypeStateLabel = i18n.t(elementTypeState.labelAlias);
-									color = elementTypeState.color ? elementTypeState.color : "#000000";
+									let equipmentIcon = self.elementType.elementTypePhoto;
+																		
+									if (data && data.elementTypeState) {
+										
+										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+									
+										if (elementTypeState) {
+											
+											self.currentElementTypeState = elementTypeState; 
+										}
+									}
+									
+									let elementTypeStateLabel = i18n.t(self.currentElementTypeState.labelAlias);
+									let color = self.currentElementTypeState.color ? self.currentElementTypeState.color : "#000000";
+									
+									let timeService = window.sm.getService(Services.TIME_SERVICE);
+									
+									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+											<div class="ims-incident-report-title">
+												${self.element.alias + ' - ' + self.element.description}
+											</div>
+											<div class="equip-viewer-header">
+												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
+												<span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
+												<span class="clock-text">${util.toLocaleString(timeService.getDateTime())}</span>
+											</div>`;
+								
+									return res;
 								}
 							}
-							
-							let res = `<image class="ims-incident-report-icon" src="../img/${equipmentIcon}" />
-									<div class="ims-incident-report-title">
-										${self.element.alias + ' - ' + self.element.description}
-									</div>
-									<div class="ims-incident-report-title">
-										<span class="ims-incident-badge" style="background: ${color}; color: white;">${elementTypeStateLabel}</span>
-									</div>`; 
-						
-							return res;
-						}
-					}
+						},
+						{}
+					]
 				};
 				
 				return viewHeaderElement;
 			}
 			
-			function getViewHeaderDate() {
+			function getViewHeaderButtons() {
 				
-				let viewHeaderDate = {
-					id:  "view-main-content-header-date-" + self.uid, 
-					width: 300,
-					borderless: true,
-					template: function(data) {
-						
-						let timeService = window.sm.getService(Services.TIME_SERVICE);
-						
-						if (timeService) {
-							
-							return `<div class='equip-viewer-header-date'> 
-										<span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
-										<span class="clock-text">${util.toLocaleString(timeService.getDateTime())}</span>
-									</div>`;	
-						}
-					
-						return res;
-					}
+				let viewHeaderButtons = {
+					rows: [
+						{},
+						{
+							id:  "view-main-content-header-buttons-" + self.uid,
+							view: "toolbar",
+							height: 80,
+							borderless: true, 
+							css: "equip-viewer-header-actions",
+							elements: [
+								{},
+								{
+									view: "button",
+									width: 135,
+									label: i18n.t("LBL_EQUIP_VIEWER_PROPERTIES"),
+									tooltip: i18n.t("LBL_EQUIP_VIEWER_PROPERTIES_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi mdi-information",
+									on: {
+		
+										onItemClick() {
+		
+											util.ui.notImplementedMessage();
+										}
+									}
+								},
+								{
+									view: "button",
+									width: 135,
+									hidden: !self.element.location,
+									label: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP"),
+									tooltip: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi mdi-map-marker",
+									on: {
+		
+										onItemClick() {
+		
+											util.ui.notImplementedMessage();
+										}
+									}
+								},
+								{
+									view: "button",
+									width: 135,
+									hidden: !(self.element.commandElements && self.element.commandElements.length > 0),
+									label: i18n.t("LBL_EQUIP_VIEWER_COMMANDS"),
+									tooltip: i18n.t("LBL_EQUIP_VIEWER_COMMANDS_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi mdi-cog",
+									on: {
+		
+										onItemClick() {
+		
+											util.ui.notImplementedMessage();
+										}
+									}
+								},
+								{ width: 20 }
+							]	
+						},
+						{}
+					]
 				};
 				
-				return viewHeaderDate;
+				return viewHeaderButtons;
 			}
 			
 			return viewHeader;	
@@ -188,21 +239,6 @@ export default class EquipmentViewerContent {
 					tabMargin: 6
 				}
 			};
-			
-//			let tabsConfigured = self.equipmentViewer && (Array.isArray(self.equipmentViewer.equipViewerTabs) && self.equipmentViewer.equipViewerTabs.length > 0);
-//			
-//			if (!self.equipmentViewer || // Not exist config 
-//				(self.equipmentViewer && self.equipmentViewer.showInfoTab) || // Configured as not show 
-//				!tabsConfigured // Tabs not configured
-//			   ) {
-//				
-//				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element, self.equipmentViewer);
-//				
-//				viewTabs.cells.push({
-//					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
-//					body: self.equipmentViewerInfo.getView()
-//				});
-//			}
 			
 			return viewTabs;
 		}
@@ -316,21 +352,20 @@ export default class EquipmentViewerContent {
 
 				if (data) {
 					
-					let dateHeader = $$("view-main-content-header-date-" + self.uid);
+					let elementHeader = $$("view-main-content-header-element-" + self.uid);
 					
-					if (dateHeader) {
-						
-						dateHeader.setValues( { update: true });
+					if (elementHeader) {
+							
+						elementHeader.setValues( {} );	
 					}
 					
 					if (data.elementTypeState) {
 						
-						let elementHeader = $$("view-main-content-header-element-" + self.uid);
 						let elementStateBar = $$("view-main-content-header-bar-state-" + self.uid);
 						
 						if (elementHeader) {
 							
-							elementHeader.setValues( { elementTypeState: data.elementTypeState });
+							elementHeader.setValues( { elementTypeState: data.elementTypeState });	
 						}
 						
 						if (elementStateBar) {

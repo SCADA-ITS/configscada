@@ -1,7 +1,7 @@
 import { util } from "../../lib/util.js";
 
 const MEASURE_ITEM_HEIGHT = 85;
-const MEASURE_ITEM_WIDTH = 175;
+const MEASURE_ITEM_WIDTH = 200;
 
 const MEASURE_DEFAULT_ROWS = 2;
 
@@ -41,12 +41,14 @@ class MeasureItem {
 				borderless: true,
 				height: MEASURE_ITEM_HEIGHT,
 				width: self.measureWidth,
+				currentValue: undefined,
 				template: function(data) {
 
 					let elementValue = self.elementValue;
 					
-					let stateValueId = self.parent.parent.config.stateValue.default;
+					let stateValueId = self.parent.parent.config.stateValue.online;
 					let stateValueLabel = i18n.t("LBL_UNKNOWN");
+					let stateValueBackColor = "white";
 					
 					if (data && data.elementValue) {
 						
@@ -58,7 +60,7 @@ class MeasureItem {
 						}
 						else {
 							
-							stateValueId = self.parent.parent.config.stateValue.default;
+							stateValueId = self.parent.parent.config.stateValue.online;
 						}
 					}
 					else {
@@ -69,11 +71,14 @@ class MeasureItem {
 						}
 					} 
 					
+					
+					
 					let stateValue = window.em.getByField(EntityType.ELEMENT_VALUE_STATE, "id", stateValueId);
 					
 					if (stateValue) {
 						
 						stateValueLabel = i18n.t(stateValue.labelAlias);
+						stateValueBackColor = stateValue.color ? stateValue.color : "white";
 					}
 					
 					let icon = undefined;
@@ -86,8 +91,10 @@ class MeasureItem {
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
 					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
+					
+					this.currentValue = value;
 								
-					let res = `<div class="measure-box">
+					let res = `<div class="measure-box" style="background: ${stateValueBackColor}">
 									<image class="image" src="../../img/${icon}" />
 									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
 									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${label}">${label}</span></div>
@@ -181,7 +188,7 @@ class MeasureGroup {
 					
 					if (!(nextMeasureItem % colsMeasures)) {
 						
-						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft + (MEASURE_SEPARATOR / 2) });
+						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft + (MEASURE_SEPARATOR / 2) + 1 });
 					}
 					else {
 						
@@ -417,7 +424,10 @@ export default class EquipmentViewerInfoMeasure {
 								
 						if (measureItem) {
 					
-							measureItem.setValues({ elementValue: elementValue });
+							if (measureItem.config.currentValue != elementValue.value) {
+								
+								measureItem.setValues({ elementValue: elementValue });	
+							}
 						}		
 					}
 				});

@@ -16,7 +16,9 @@
 		"measure": "ParamType:2"
 	},
 	"stateValue": {
-		"default": "ElementValueState:2",
-		"initialized": "ElementValueState:1"
+		"initialized": "ElementValueState:1",
+		"online": "ElementValueState:2",
+		"alerted": "ElementValueState:3",
+		"offline": "ElementValueState:4"
 	}
 }

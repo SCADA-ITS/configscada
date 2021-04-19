@@ -60,12 +60,8 @@ export default class EquipmentViewerInfo {
 								
 								if (self.elementType) {
 									
-									let equipmentIcon = undefined;
-									
-									if (!equipmentIcon) {
-										equipmentIcon = "not_found_50.png";
-									}
-									
+									let equipmentIcon = self.elementType.elementTypePhoto;
+																	
 									let elementTypeStateLabel = i18n.t(self.element.elementTypeState.labelAlias);
 									let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
 									
@@ -81,7 +77,7 @@ export default class EquipmentViewerInfo {
 									}
 									
 									let res = `<div class="equip-viewer-info-image">
-													<image class="image" src="../img/${equipmentIcon}" />
+													<image class="image" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
 													<div style="background: ${color}" class="shadow"></div>
 											   <div>`; 
 								
@@ -108,10 +104,19 @@ export default class EquipmentViewerInfo {
 							borderless: true,
 							template: function(data) {
 								
+								let labelType = i18n.t("LBL_ELEMENT_TYPE");
+								let labelTypeValue = i18n.t(self.element.elementType.labelAlias);
+								
+								if (self.element.elementSubtype) {
+									
+									labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
+									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelAlias) + ")";
+								}
+								
 								return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-grid"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_TYPE")}</span>
-											<span class="value">${i18n.t(self.element.elementType.labelAlias)}</span>
+											<span class="title">${labelType}</span>
+											<span class="value">${labelTypeValue}</span>
 										</div>`;	
 							}
 						},	

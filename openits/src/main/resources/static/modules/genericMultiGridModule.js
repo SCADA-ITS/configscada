@@ -155,10 +155,7 @@ export default class GenericMultiGridModule extends GenericModule {
 	
 						let elementTypePhoto = obj.elementTypePhoto;
 	
-						if (elementTypePhoto == undefined) {
-							elementTypePhoto = "not_found_50.png";
-						}
-						return `<image class="list-photo" src="img/${elementTypePhoto}" />
+						return `<image class="list-photo" src="img/${elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
 								<div class="text">
 							  		<span class="list-first-line">${obj.labelAlias} </span>
 							  		<span class="list-second-line">${obj.labelDescription} </span>

@@ -79,12 +79,8 @@ export default class ListView {
 							if (getOptions(ListView.Options.ICON)) {
 								
 								let image = obj.image;
-								
-								if (image == undefined) {
-									image = "not_found_50.png";
-								}
-								
-								html = `<image class="list-photo" src="img/${image}" />`;
+																
+								html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
 							}
 							
 							if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {

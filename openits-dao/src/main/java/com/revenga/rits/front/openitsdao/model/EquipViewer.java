@@ -48,6 +48,10 @@ public class EquipViewer implements Serializable {
 
 	@Column(name="show_info_tab")
 	private Boolean showInfoTab;
+	
+	//bi-directional many-to-one association to EquipViewerConfig
+	@OneToMany(mappedBy="equipViewer")
+	private List<EquipViewerConfig> equipViewerConfigs;
 
 	//bi-directional many-to-one association to EquipViewerGrpMeasure
 	@OneToMany(mappedBy="equipViewer")
@@ -159,6 +163,28 @@ public class EquipViewer implements Serializable {
 
 	public void setShowInfoTab(Boolean showInfoTab) {
 		this.showInfoTab = showInfoTab;
+	}
+	
+	public List<EquipViewerConfig> getEquipViewerConfigs() {
+		return this.equipViewerConfigs;
+	}
+
+	public void setEquipViewerConfigs(List<EquipViewerConfig> equipViewerConfigs) {
+		this.equipViewerConfigs = equipViewerConfigs;
+	}
+
+	public EquipViewerConfig addEquipViewerConfig(EquipViewerConfig equipViewerConfig) {
+		getEquipViewerConfigs().add(equipViewerConfig);
+		equipViewerConfig.setEquipViewer(this);
+
+		return equipViewerConfig;
+	}
+
+	public EquipViewerConfig removeEquipViewerConfig(EquipViewerConfig equipViewerConfig) {
+		getEquipViewerConfigs().remove(equipViewerConfig);
+		equipViewerConfig.setEquipViewer(null);
+
+		return equipViewerConfig;
 	}
 
 	public List<EquipViewerGrpMeasure> getEquipViewerGrpMeasures() {

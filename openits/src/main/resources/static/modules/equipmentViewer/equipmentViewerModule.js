@@ -4,7 +4,6 @@ import EquipmentViewerContent  from "./equipmentViewerContent.js";
 import { util } from "../../lib/util.js";
 
 const TREE_PANEL_WIDTH = 275;
-const ACTION_PANEL_WIDTH = 300;
 
 export default class EquipmentViewerModule extends GenericModule {
 	
@@ -13,7 +12,6 @@ export default class EquipmentViewerModule extends GenericModule {
 		return {
 				
 			showInfoTab: true,
-			showActions: true,
 			showChilds: true	
 		} 
 	} 
@@ -84,14 +82,12 @@ export default class EquipmentViewerModule extends GenericModule {
 
 				if (container) {
 			
-					let prevWindowWidth = container.config.width;
+					let prevWindowWidth = container.$width;
 					let newWindowWidth = prevWindowWidth; 
 					
 					let viewMainTreeHierarchyHidden = !self.equipmentViewer.showChilds || !(Array.isArray(element.childs) && element.childs.length > 0);
-					let viewMainActionPanelHidden = !self.equipmentViewer.showActions;
 					
 					newWindowWidth -= viewMainTreeHierarchyHidden ? TREE_PANEL_WIDTH : 0;
-					newWindowWidth -= viewMainActionPanelHidden ? ACTION_PANEL_WIDTH : 0;
 				
 					util.ui.resizeWindow(self.args.containerId, newWindowWidth);
 					util.ui.centerWindow(self.args.containerId);
@@ -176,7 +172,6 @@ export default class EquipmentViewerModule extends GenericModule {
 		function calculateContainerWidth(element) {
 			
 			let viewMainTreeHierarchy = $$("view-main-tree-hierarchy-" + self.uid);
-			let viewMainActionPanel = $$("view-main-action-panel-" + self.uid);
 			let width = 0;
 			let showViewMainTreeHierarchy = (Array.isArray(element.childs) && element.childs.length > 0);
 			
@@ -184,17 +179,12 @@ export default class EquipmentViewerModule extends GenericModule {
 
 			if (container) {
 				
-				width += container.config.width;
+				width += container.$width;
 			}
 			
 			if (viewMainTreeHierarchy && showViewMainTreeHierarchy) {
 				
 				width -= viewMainTreeHierarchy.$width;	
-			}
-			
-			if (viewMainActionPanel ) {
-				
-				width -= viewMainActionPanel.$width;
 			}
 			
 			if (width > 0) {
@@ -209,7 +199,7 @@ export default class EquipmentViewerModule extends GenericModule {
 
 			if (container) {
 				
-				self.containerWidth += container.config.width;
+				self.containerWidth += container.$width;
 			}
 			
 			let viewMain = {
@@ -238,12 +228,10 @@ export default class EquipmentViewerModule extends GenericModule {
 			};
 			
 			let viewMainTreeHierarchyHidden = true;
-			let viewMainActionPanelHidden = false;
 			
 			if (self.equipmentViewer) {
 				
 				viewMainTreeHierarchyHidden = !self.equipmentViewer.showChilds || !(Array.isArray(element.childs) && element.childs.length > 0);
-				viewMainActionPanelHidden = !self.equipmentViewer.showActions;	
 			}
 
 			let viewMainTreeHierarchy = {
@@ -263,6 +251,7 @@ export default class EquipmentViewerModule extends GenericModule {
 			
 			let viewMainResizer = { 
 				id: "view-main-resizer-" + self.uid,
+				hidden: viewMainTreeHierarchyHidden,
 				view: "resizer" 
 			};
 			
@@ -272,26 +261,12 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 			};
 			
-			let viewMainActionPanel = {
-				header: i18n.t("LBL_EQUIPMENT_INFO"),
-				hidden: viewMainActionPanelHidden,
-				id: "view-main-action-panel-" + self.uid,
-				body: {
-					width: ACTION_PANEL_WIDTH
-				}
-			};
-			
-			if (!viewMainActionPanelHidden) {
-				
-				self.containerWidth -= viewMainActionPanel.body.width;	
-			}
-			
 			let viewMainBody = {
 				id: "view-main-body-" + self.uid,
 				hidden: true,
 				rows: [
 					{
-						cols: [viewMainContent, viewMainActionPanel],
+						cols: [viewMainContent],
 						on: {
 							onAfterCollapse() {
 								
@@ -372,7 +347,6 @@ export default class EquipmentViewerModule extends GenericModule {
 					$$("view-main-body-" + self.uid).show();
 					
 					webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
-					webix.ui(getViewActionPanel(elem, equipmentViewer), $$("viewActionPanel-" + self.uid));
 					
 					if (self.equipmentViewerContent) {
 							
@@ -402,23 +376,6 @@ export default class EquipmentViewerModule extends GenericModule {
 				self.equipmentViewerContent = new EquipmentViewerContent(self, element, equipmentViewer);
 				
 				view = self.equipmentViewerContent.getView();
-				
-				return view;
-			}
-			
-			function getViewActionPanel(element, equipmentViewer) {
-				
-				let view = {};
-				
-				view = {
-
-					id: "viewActionPanel-" + self.uid,
-					width: 300,
-					css: "panel-action",
-					rows: [
-						{}
-					]
-				}
 				
 				return view;
 			}

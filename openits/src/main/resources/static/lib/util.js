@@ -335,7 +335,7 @@ export let util = {
 					args = {};
 				}
 
-				args.containerId = tab_id;
+				args.containerId = tab_id.replace("tab", "tab_body");
 
 				lazyClass = new mod.default(module, moduleAction, args);
 
