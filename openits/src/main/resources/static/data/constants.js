@@ -99,5 +99,5 @@ const INCIDENTS_LOGS_VALUE_STATE = "LogTypeParam:1:1";
 const INCIDENTS_LOGS_VALUE_ARG1 = "LogTypeParam:1:2";
 const INCIDENTS_LOGS_VALUE_ARG2 = "LogTypeParam:1:3";
 
-const INCIDENTS_LOGS_MANUAL_SUBTYPE = "LogSubtype:17";
+
 

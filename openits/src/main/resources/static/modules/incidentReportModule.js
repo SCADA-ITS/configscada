@@ -1882,7 +1882,7 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 	getTableLogs = () => {
-		console.log(this);
+		
 		let incidentReportId = this.incidentReportId;
 		
 		let addLogIncidentReportEndPoint = this.config.actionEndpoints.addLogIncidentReport;
@@ -2162,37 +2162,106 @@ export default class IncidentReportModule extends GenericModule {
 			commandId: 1,
 			function: () => {
 
-				(new InputDialogBox(i18n.t("LBL_DIALOG_CREATE_LOG"), i18n.t("LBL_DIALOG_CREATE_LOG_TEXT"), function(comments) {
+				let title = i18n.t("LBL_DIALOG_CREATE_LOG");
+				let text = i18n.t("LBL_DIALOG_CREATE_LOG_TEXT");
+				let userData = util.user.auth();
+				let logType = window.em.getByField(EntityType.LOG_TYPE, "id", this.config.logIncidentTypeManual);
 
-					let userData = util.user.auth();
-					
-					let body = {
-								"incidentReportLogs":
-									[
-										{
-											"incidentReportId": incidentReportId,
-											"incidentReportLogValues": [
-												{
-													"logTypeParamId": "LogTypeParam:1:1",
-													"value": "LBL_IMS_INCIDENT_STATE_INITIAL"
-												},
-												{
-													"logTypeParamId": "LogTypeParam:1:2",
-													"value": comments
-												}
-											],
-											"level": "INFO",
-											"logSubtypeId": "LogSubtype:17",
-											"userId": userData.id
+				let options = []
+				this.config.logIncidentSubTypes.forEach(e=>{
+					let subType = logType.logSubtypes.find(element => element.id === e);
+					options.push({ id: subType.id, value: i18n.t(subType.labelAlias) });
+				});
+
+				let body = {
+					view: "window",
+					modal: true,
+					height: 350,
+					width: 600,
+					css: "dialog-input-custom",
+					head: title,
+					position: "center",
+					body: {
+						rows: [
+							{
+								view:"combo", 
+								id: "combo-dialog-" + self.uid, 
+								label: i18n.t('LBL_INCIDENTREPORT_LOG_SUBTYPE'),
+								labelWidth:100,
+								value:options[0], 
+								options:options
+							},
+							{ height: 10 },
+							{ template: text, borderless: true },
+							{ 
+								view: "textarea", 
+								id: "txt-dialog-" + self.uid, 
+								height: 80,
+								placeholder: i18n.t("LBL_COMMENTS_HERE_OPTIONAL") 
+							},
+							{},
+							{
+								cols: [
+									{},
+									{
+										view: "button", 
+										value: i18n.t("LBL_NO"),
+										width: 100, 
+										click: function() {
+											
+											const window = this.getTopParentView();
+											window.close();
 										}
-									]
-								};
-					
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, body).then(function(data) {
-						//console.log(data);
-					});
-					
-				})).show();
+									},
+									{ width: 5 },
+									{
+										view: "button", 
+										value: i18n.t("LBL_YES"),
+										width: 100, 
+										click: function() {
+											
+											const window = this.getTopParentView();
+											const logComment = $$("txt-dialog-" + self.uid).getValue();
+											const logType = $$("combo-dialog-" + self.uid).getValue(); 
+
+											let mutationBody = {
+												"incidentReportLogs":
+													[
+														{
+															"incidentReportId": incidentReportId,
+															"incidentReportLogValues": [
+																{
+																	"logTypeParamId": "LogTypeParam:1:1",
+																	"value": "LBL_IMS_INCIDENT_STATE_INITIAL"
+																},
+																{
+																	"logTypeParamId": "LogTypeParam:1:2",
+																	"value": logComment
+																}
+															],
+															"level": "INFO",
+															"logSubtypeId": logType,
+															"userId": userData.id
+														}
+													]
+												};
+									
+											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody).then(function(data) {
+												//console.log(data);
+											});
+											
+											window.close();
+										}
+									},
+									{}
+								]
+							}
+						],
+						type: "form"
+					}
+				}
+
+				webix.ui(body).show();
 
 			}
 		});
@@ -2205,8 +2274,9 @@ export default class IncidentReportModule extends GenericModule {
 				let control = false;
 				this.dtLogs.rowsSelected.forEach(e => {
 					let row = this.dtLogs.data.find(dato => dato.id === e);
-					row.incidentLogSubtypeId !== INCIDENTS_LOGS_MANUAL_SUBTYPE ? control = true : null;
-				});
+					console.log(this.config.logIncidentSubTypes.includes(row.incidentLogSubtypeId));
+					!this.config.logIncidentSubTypes.includes(row.incidentLogSubtypeId) ? control = true : null;
+				});			
 
 				if(!control) {
 

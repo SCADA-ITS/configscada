@@ -18,5 +18,7 @@
 	"infoFields": [
 		{ "position": 1, "icon": "", "label": "", "objField": "" },
 		{ "position": 2, "icon": "", "label": "", "objField": "" }	 
-	]
+	],
+	"logIncidentTypeManual": "LogType:1",
+	"logIncidentSubTypes":["LogSubtype:17"]
 }
