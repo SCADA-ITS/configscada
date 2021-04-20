@@ -600,7 +600,7 @@ export let synopticData= [
 				"visibility": "hidden"
 			},
 			"TFA": {
-				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:7", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39", "Element:45:40"],
+				"items": ["Element:45:1", "Element:45:2", "Element:45:3", "Element:45:4", "Element:45:5", "Element:45:6", "Element:45:8", "Element:45:9", "Element:45:10", "Element:45:11", "Element:45:12", "Element:45:13", "Element:45:14", "Element:45:15", "Element:45:16", "Element:45:17", "Element:45:18", "Element:45:19", "Element:45:20", "Element:45:21", "Element:45:22", "Element:45:23", "Element:45:24", "Element:45:25", "Element:45:26", "Element:45:27", "Element:45:28", "Element:45:29", "Element:45:30", "Element:45:31", "Element:45:32", "Element:45:33", "Element:45:34", "Element:45:35", "Element:45:36", "Element:45:37", "Element:45:38", "Element:45:39", "Element:45:40"],
 				"translation_key": "",
 				"visibility": "hidden"
 			},
@@ -798,7 +798,6 @@ export let synopticData= [
 		"Element:45:10": { "x": 1726, "y": 555,    "width": 34, "height": 34, "alias": "RNRJS23P"  },
 		"Element:45:9": { "x": 1726, "y": 518,    "width": 34, "height": 34, "alias": "RNRJS22P"  },
 		"Element:45:8": { "x": 1726, "y": 482,    "width": 34, "height": 34, "alias": "SCJS04P"  },
-		"Element:45:7": { "x": 1726, "y": 445,    "width": 34, "height": 34, "alias": "RNRJS19P"  },
 		"Element:45:1": { "x": 1726, "y": 226,    "width": 34, "height": 34, "alias": "RNRKD01L"  },
 		"Element:45:2": { "x": 1726, "y": 190,    "width": 34, "height": 34, "alias": "RNRKD03L"  },
 		"Element:45:3": { "x": 1726, "y": 153,    "width": 34, "height": 34, "alias": "RNRKD08L"  },
