@@ -2188,13 +2188,16 @@ export default class IncidentReportModule extends GenericModule {
 				let title = i18n.t("LBL_DIALOG_CREATE_LOG");
 				let text = i18n.t("LBL_DIALOG_CREATE_LOG_TEXT");
 				let userData = util.user.auth();
-				let logType = window.em.getByField(EntityType.LOG_TYPE, "id", this.config.logIncidentTypeManual);
+				let logType = window.em.getByField(EntityType.LOG_TYPE, "id", this.config.logIncidentType);
 
 				let options = []
 				this.config.logIncidentSubTypes.forEach(e=>{
 					let subType = logType.logSubtypes.find(element => element.id === e);
 					options.push({ id: subType.id, value: i18n.t(subType.labelAlias) });
 				});
+
+				let iReportLogValuesParamIdState = this.config.iReportLogValuesParamIdState;
+				let iReportLogValuesParamIdComment = this.config.iReportLogValuesParamIdComment;
 
 				let body = {
 					view: "window",
@@ -2254,11 +2257,11 @@ export default class IncidentReportModule extends GenericModule {
 															"incidentReportId": incidentReportId,
 															"incidentReportLogValues": [
 																{
-																	"logTypeParamId": "LogTypeParam:1:1",
+																	"logTypeParamId": iReportLogValuesParamIdState,
 																	"value": "LBL_IMS_INCIDENT_STATE_INITIAL"
 																},
 																{
-																	"logTypeParamId": "LogTypeParam:1:2",
+																	"logTypeParamId": iReportLogValuesParamIdComment,
 																	"value": logComment
 																}
 															],
