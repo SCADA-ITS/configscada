@@ -1,39 +1,25 @@
 import { util } from "../lib/util.js"
-import MainTab from "./mainTab.js";
-import MainToolbar from "./mainToolbar.js";
-import MenuToolbar from "./menuToolbar.js";
+import MainTab from "../component/general/mainTab.js";
+import MainToolbar from "../component/general/mainToolbar.js";
+import MenuToolbar from "../component/general/menuToolbar.js";
 import I18n from "../managers/i18n.js";
 import EntitiesManager from "../managers/entitiesManager.js";
+import WindowManager from "../managers/windowManager.js";
 import ServiceManager from "../managers/serviceManager.js";
-import SplashScreen from "./splashScreen.js";
-
-const WELCOME_SCREEN_MODULE_ID = 1;
-
-//var isLogin = webix.storage.session.get("loginSession");
-
-//if (!isLogin) {
-//	
-//}
+import SplashScreen from "../component/general/splashScreen.js";
 
 var userData = util.user.auth();
 
 if (!userData) {
 	window.location = "./login.html";
 }
-
 document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
 
-//var language = webix.storage.session.get("app_user_language");
-//var country = webix.storage.session.get("app_user_country");
 window.i18n = new I18n(userData.locale);
-//window.splashScreen = new SplashScreen(initialize);
-//window.splashScreen.show();
 
 window.splashScreen = new SplashScreen(null);
 
 window.onload = function() {
-
-	//$$("splashScreen").refresh();
 
 	$.ajaxSetup({
 		statusCode: {
@@ -57,6 +43,7 @@ function initialize() {
 	window.serverTime = undefined;
 
 	window.em = new EntitiesManager();
+	window.wm = new WindowManager();
 
 	window.stompClient = undefined;
 
@@ -113,9 +100,6 @@ function initialize() {
 
 	};
 
-	//splashScreen.hide();
-	//window.splashScreen.hide();
-
 	$$("splashScreen").hide();
 
 	webix.ui(main_screen);
@@ -127,16 +111,17 @@ function initialize() {
 
 	function autoloadModules() {
 
-		let module = window.em.getAll(EntityType.MODULE);
+		let modules = window.em.getAll(EntityType.MODULE);
 
-		for (let i = 0; i < module.length; i++) {
-
-			if (module[i].autoload && module[i].moduleType.id != MODULE_TYPE_SERVICE) {
-
-				util.module.open(module[i], null, null, null, null);
-
-			}
-		}
+		if (Array.isArray(modules) && modules.length > 0) {
+			
+			modules.forEach(module => {
+				
+				if (module.autoload && module.moduleType.id != MODULE_TYPE_SERVICE) {
+	
+					util.module.open(module);					
+				}
+			});
+		}		
 	}
-
 }

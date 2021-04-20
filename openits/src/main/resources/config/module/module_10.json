@@ -1,7 +1,17 @@
 {
-	"action": {
-		"settings": 101102,
-		"changePassword": 101102,
-		"recognizeAll": 100802
+	"module": {
+		"user": {
+			"id": 1011,
+			"action": {
+				"settings": 101102,
+				"changePassword": 101102
+			}
+		},
+		"alarm": {
+			"id": 1008,
+			"action": {
+				"recognizeAll": 100802
+			}
+		}
 	}
 }

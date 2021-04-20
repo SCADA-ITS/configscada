@@ -1,5 +1,5 @@
 import GenericModule from "../modules/genericModule.js";
-import UserControlPanel  from "../controllers/userControlPanel.js";
+import UserControlPanel  from "../component/general/userControlPanel.js";
 
 export default class UserService extends GenericModule {
 	

@@ -1,6 +1,6 @@
 import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
-import AlarmControlPanel from "../controllers/alarmControlPanel.js";
+import AlarmControlPanel from "../component/general/alarmControlPanel.js";
 import Notification from "../component/notification.js";
 import { NotificationType } from "../component/notification.js";
 

@@ -1,6 +1,13 @@
 {
-	"action": {
-		"recognizeAll": 100802,
-		"alarmMonitor": 100501
+	"module": {
+		"alarmMonitor": {
+			"id": 1005
+		},
+		"alarm": {
+			"id": 1008,
+			"action": {
+				"recognizeAll": 100802
+			}
+		}
 	}
 }

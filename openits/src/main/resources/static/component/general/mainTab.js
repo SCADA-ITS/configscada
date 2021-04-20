@@ -1,5 +1,3 @@
-//const MAIN_TAB_ID = "tabs";
-
 export default class MainTab {
 
 	constructor() {

@@ -72,7 +72,7 @@ export let util = {
 			let height = 768;
 			let width = 1280;
 			let modal = false;
-			let win_id = "win_" + module.id + "_" + webix.uid();
+			let winId = "win_" + module.id + "_" + webix.uid();
 
 			let lazyClass;
 
@@ -93,6 +93,14 @@ export let util = {
 				catch {
 
 				}
+			}
+			
+			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
+			
+			if (moduleOpenedId && !allowMultipleInstances) {
+
+				window.wm.activateWindow(moduleOpenedId);
+				return;
 			}
 
 			// TODO: Remove this block in future
@@ -157,7 +165,7 @@ export let util = {
 					args = {};
 				}
 
-				args.containerId = win_id;
+				args.containerId = winId;
 
 				lazyClass = new mod.default(module, moduleAction, args);
 
@@ -183,7 +191,7 @@ export let util = {
 							icon: "mdi mdi-close",
 							on: {
 								onItemClick: function(id) {
-									$$(win_id).close();
+									$$(winId).close();
 								}
 							}
 						}
@@ -193,7 +201,7 @@ export let util = {
 
 				webix.ui({
 					view: "window",
-					id: win_id,
+					id: winId,
 					move: true,
 					modal: modal,
 					css: "default-window",
@@ -211,15 +219,20 @@ export let util = {
 //					},
 					on: {
 						onBeforeShow: function() {
-
+								
+							window.wm.add(winId);
+						},
+						onDestruct: function() {
+							
+							window.wm.delete(winId);
 						}
 					}
 				});
 			}
 
-			if ($$(win_id)) {
+			if ($$(winId)) {
 
-				$$(win_id).show();
+				$$(winId).show();
 			}
 
 			if (module.jsMethodCallbacks && module.jsMethodCallbacks !== "DEPRECATED" && lazyClass) {
@@ -227,7 +240,7 @@ export let util = {
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
 			
-			return win_id;
+			return winId;
 		},
 
 		loadInTab(module, moduleAction, mod, args) {
@@ -259,15 +272,17 @@ export let util = {
 				}
 			}
 
-			let tab_body_id = "tab_body_" + module.id;
+//			let tab_body_id = "tab_body_" + module.id;
+//
+//			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+//
+//			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
 
-			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
 
-			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
+			if (moduleOpenedId && !allowMultipleInstances) {
 
-			if (moduleOpened && !allowMultipleInstances) {
-
-				$$(MAIN_TAB_ID).getTabbar().setValue(moduleOpened.config.id);
+				$$(MAIN_TAB_ID).getTabbar().setValue(moduleOpenedId);
 
 				return;
 			}
@@ -373,6 +388,31 @@ export let util = {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
+		},
+		
+		getModuleOpenedId(moduleId) {
+			
+			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+			let winItems = Array.from(window.wm.getAll());
+			
+			if (tabItems) {
+				
+				let tabBodyId = "tab_body_" + moduleId;
+				let tabBody = tabItems.find(e => e.config.id.indexOf(tabBodyId) !== -1);
+				
+				if (tabBody) {
+				
+					return tabBody.config.id;	
+				}
+			}
+			
+			if (winItems) {
+				
+				let winId = "win_" + moduleId;
+				return winItems.find(e => e.indexOf(winId) !== -1);	
+			}
+			
+			return undefined;
 		},
 
 		open(module, moduleAction, viewTypeId, drawCallback, args) {
@@ -764,7 +804,18 @@ export let util = {
 				},
 				on: {
 					onBeforeShow: function() {
-
+						
+						if (!modal) {
+							
+							window.wm.add(winId);	
+						}	
+					},
+					onDestruct: function() {
+						
+						if (!modal) {
+						
+							window.wm.delete(winId);	
+						}
 					}
 				}
 			}).show();

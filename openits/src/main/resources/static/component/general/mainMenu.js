@@ -1,5 +1,4 @@
-//import ModuleLoader from "./moduleLoader.js";
-import { util } from "../lib/util.js";
+import { util } from "../../lib/util.js";
 
 export default class MainMenu {
 

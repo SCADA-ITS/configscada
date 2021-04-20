@@ -1,9 +1,10 @@
-import { util } from "../lib/util.js";
+import { util } from "../../lib/util.js";
+import GenericControlPanel from "./genericControlPanel.js";
 
-export default class AlarmControlPanel {
+export default class AlarmControlPanel extends GenericControlPanel {
 
 	constructor(config) {
-		this.config = config;
+		super(config);
 		this.mainView = this.createView();
 	}
 
@@ -95,7 +96,8 @@ export default class AlarmControlPanel {
 
 						onItemClick() {
 
-							self.recognizeAll();
+							self.doAction(self.config.module.alarm.id, self.config.module.alarm.action.recognizeAll);
+							self.hide();
 						}
 					}
 				},
@@ -111,7 +113,8 @@ export default class AlarmControlPanel {
 
 						onItemClick() {
 
-							self.alarmMonitor();
+							self.openModule(self.config.module.alarmMonitor.id);
+							self.hide();
 						}
 					}
 				},
@@ -338,51 +341,5 @@ export default class AlarmControlPanel {
 			}
 		}
 
-	}
-
-	recognizeAll() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.recognizeAll != null && this.config.action.recognizeAll != undefined) {
-
-			let module = util.module.getFromModuleAction(this.config.action.recognizeAll);
-			if (module) {
-
-				let moduleAction = { id: this.config.action.recognizeAll };
-
-				let args = { selectedPks: [] };
-
-				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
-		}
-	}
-
-	alarmMonitor() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.alarmMonitor != null && this.config.action.alarmMonitor != undefined) {
-
-			let module = util.module.getFromModuleAction(this.config.action.alarmMonitor);
-			if (module) {
-
-				let moduleAction = { id: this.config.action.alarmMonitor };
-
-				let args = { selectedPks: [] };
-
-				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
-		}
 	}
 }
