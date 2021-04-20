@@ -39,19 +39,20 @@ export default class SynopticModule extends GenericModule{
   getView(){
 
     return {
+	
       cols: [
-        {
-          header: i18n.t(this.synopticConf.metadata.name),
-          body: this.getViewTree()
-        },
-        { view:"resizer" },
         {
           view: "template",
           id: this.synopticDivId,
           url: () => {
             this.init();
           }
-        }
+        },
+        { view:"resizer" },
+        {
+          header: i18n.t(this.synopticConf.metadata.name),
+          body: this.getViewTree()
+        },
       ],
       on: {
         onDestruct: (obj) => {
