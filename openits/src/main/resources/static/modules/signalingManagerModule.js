@@ -16,6 +16,7 @@ export default class signalingManagerModule extends GenericModule {
 		this.elementTypeIdSelected = undefined;
 		this.config = module.config;
 		this.mapElements = undefined;
+		this.mapCommandModule = undefined;
 	}
 
 	getView() {
@@ -87,10 +88,8 @@ export default class signalingManagerModule extends GenericModule {
 
 			drawComponents();
 
-			//initSignalingModule();
-
-			//initListView();
-
+			initListView();
+			
 			$$("loading-" + self.uid).hide();
 			$$(self.uid).show();
 		}
@@ -105,6 +104,7 @@ export default class signalingManagerModule extends GenericModule {
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
 				self.mapElements = new Map();
+				self.mapCommandModule = new Map();
 
 				self.args.selectedPks.forEach(id => {
 
@@ -116,7 +116,7 @@ export default class signalingManagerModule extends GenericModule {
 
 						if (elementType) {
 
-							if (element.elementSubtype && element.elementSubtype.id &&
+							if (element.elementSubtype && element.elementSubtype.id && element.elementSubtype.commandModule &&
 								elementType.elementSubtypes && elementType.elementSubtypes.length > 0) {
 
 								let elementSubtype = elementType.elementSubtypes.find(e => e.id === element.elementSubtype.id);
@@ -130,15 +130,16 @@ export default class signalingManagerModule extends GenericModule {
 										listElement = [];
 
 										self.mapElements.set(element.elementSubtype.id, listElement);
+										self.mapCommandModule.set(element.elementSubtype.id, element.elementSubtype.commandModule);
+
+										elementTypeView.push({
+											id: element.elementSubtype.id,
+											alias: i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
+											description: i18n.t(elementSubtype.labelDescription),
+											image: elementType.elementTypePhoto
+										});
 									}
 									listElement.push(id);
-
-									elementTypeView.push({
-										id: element.elementSubtype.id,
-										alias: i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
-										description: i18n.t(elementSubtype.labelDescription),
-										image: elementType.elementTypePhoto
-									});
 								}
 
 							} else if (element.elementType.commandModule) {
@@ -150,15 +151,16 @@ export default class signalingManagerModule extends GenericModule {
 									listElement = [];
 
 									self.mapElements.set(element.elementType.id, listElement);
+									self.mapCommandModule.set(element.elementType.id, element.elementType.commandModule);
+
+									elementTypeView.push({
+										id: element.elementType.id,
+										alias: i18n.t(elementType.labelAlias),
+										description: i18n.t(elementType.labelDescription),
+										image: elementType.elementTypePhoto
+									});
 								}
 								listElement.push(id);
-
-								elementTypeView.push({
-									id: element.elementType.id,
-									alias: i18n.t(elementType.labelAlias),
-									description: i18n.t(elementType.labelDescription),
-									image: elementType.elementTypePhoto
-								});
 							}
 						}
 					}
@@ -176,7 +178,7 @@ export default class signalingManagerModule extends GenericModule {
 
 				let events = {};
 
-				//events[ListView.EventTypes.ON_SELECT_ROW] = fillSignalingModule;
+				events[ListView.EventTypes.ON_SELECT_ROW] = fillData;
 
 				self.listViewElementType = new ListView(elementTypeView, null, events);
 
@@ -193,22 +195,48 @@ export default class signalingManagerModule extends GenericModule {
 		function getViewListElements() {
 
 			let view = {};
+			let viewListElements = {};
+			let elementsView = [];
+			view.rows = [];
+
+			if (self.elementTypeIdSelected && self.mapElements) {
+
+				let elementList = self.mapElements.get(self.elementTypeIdSelected);
+
+				if (elementList && elementList.length > 0) {
+
+					elementList.forEach(id => {
+
+						let element = window.em.getByField(EntityType.ELEMENT, "id", id);
+
+						if (element) {
+
+							elementsView.push({
+								id: element.id,
+								alias: element.alias,
+								description: element.description
+							});
+						}
+					});
+				}
+				elementsView.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+
+				let options = {};
+
+				options[ListView.Options.ICON] = false;
+				options[ListView.Options.SEARCH] = false;
+
+				let listView = new ListView(elementsView, options, null);
+
+				viewListElements = listView.getView();
+			}
+
+			view.rows.push(viewListElements);
 
 			return view;
 		}
-		
-		function initSignalingModule() {
 
-		}
-
-		function initListView() {
-
-			if (self.listViewElementType && this.mapElements && this.mapElements.size > 0) {
-
-				self.listView.selectByIndex(0);
-			}
-		}
-		function fillSignalingModule(elementTypeArray, listView) {
+		function fillData(elementTypeArray, listView) {
 
 			let elementTypeId;
 
@@ -224,10 +252,78 @@ export default class signalingManagerModule extends GenericModule {
 
 			self.elementTypeIdSelected = elementTypeId;
 
+			fillViewSignalingModule();
+
+			fillViewListElements();
 
 			if (listView) {
 
 				listView.enable();
+			}
+		}
+
+		function fillViewListElements() {
+
+			let content = $$("view-list-element-" + self.uid);
+			
+			if (content) {
+
+				let viewContent = {
+
+					id: "view-list-element-" + self.uid,
+					cols: [getViewListElements()]
+				};
+
+				webix.ui(viewContent, $$("view-list-element-" + self.uid));
+			}
+		}
+
+		function fillViewSignalingModule() {
+
+			if (self.elementTypeIdSelected && self.mapCommandModule && self.mapElements) {
+
+				let moduleActionId = parseInt(self.mapCommandModule.get(self.elementTypeIdSelected));
+				let elementIds = self.mapElements.get(self.elementTypeIdSelected);
+
+				if (moduleActionId && elementIds) {
+
+					let module = util.module.getFromModuleAction(moduleActionId);
+
+					if (module) {
+
+						let moduleAction = { id: moduleActionId };
+						let args = { selectedPks: elementIds };
+
+						util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
+
+						function drawContent(view) {
+
+							let content = $$("view-main-content-signaling-module-" + self.uid);
+
+							if (content) {
+
+								let viewContent = {
+									rows: [
+										{
+											id: "view-main-content-signaling-module-" + self.uid,
+											cols: [view]
+										}
+									]
+								};
+
+								webix.ui(viewContent, $$("view-main-content-signaling-module-" + self.uid));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		function initListView() {
+
+			if (self.listViewElementType && self.mapElements && self.mapElements.size > 0) {
+
+				self.listViewElementType.selectByIndex(0);
 			}
 		}
 
@@ -246,12 +342,22 @@ export default class signalingManagerModule extends GenericModule {
 
 					rows: [
 						{
-							height: 300,
+							height: 310,
 							cols: [
 								getViewListElementTypes()
 							]
 						},
-						{}
+						{
+							view: "label",
+							label: i18n.t("LBL_LIST_EQUIPMENTS"),
+						},
+						{
+							id: "view-list-element-" + self.uid,
+							cols: [
+								getViewListElements()
+							]
+						}
+
 					]
 				}
 			};
@@ -263,60 +369,18 @@ export default class signalingManagerModule extends GenericModule {
 
 			let viewMainContent = {
 				id: "view-main-content-" + self.uid,
-				body: getViewContent()
-			};
-
-
-			let module = window.em.getByField(EntityType.MODULE, "id", 901);
-
-			if (module) {
-
-				addModule(module, null);
-			}
-
-			viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent];
-
-			function getViewContent() {
-
-				let viewContent = {};
-
-				viewContent = {
+				body: {
 					rows: [
 						{
 							id: "view-main-content-signaling-module-" + self.uid,
 						}
 					]
-				};
-
-				return viewContent;
-			}
-
-			function addModule(module, moduleActionId) {
-
-				let moduleAction = { id: moduleActionId };
-				let args = { selectedPks: [] };
-
-				util.module.open(module, null, VIEW_TYPE_CUSTOM, drawContent, args);
-
-				function drawContent(view) {
-
-					let content = $$("view-main-content-signaling-module-" + self.uid);
-
-					if (content) {
-
-						let viewContent = {
-							rows: [
-								{
-									id: "view-main-content-signaling-module-" + self.uid,
-									cols: [view]
-								}
-							]
-						};
-
-						webix.ui(viewContent, $$("view-main-content-signaling-module-" + self.uid));
-					}
 				}
-			}
+			};
+
+
+			viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent];
+
 
 			webix.ui(viewMain, $$(self.uid));
 		}
