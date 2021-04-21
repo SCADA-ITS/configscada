@@ -408,64 +408,64 @@ export default class AlarmMonitorModule extends GenericModule {
 				let elementTypesFiltered = undefined;
 				let elementTypeView = [];
 
-				let alarmTypeSwitcher = {
-					view: "segmented",
-					css: "segment-custom-2",
-					value: "alarm-type-switcher-show-all-" + self.uid,
-					options: [
-						{
-							id: "alarm-type-switcher-show-all-" + self.uid,
-							value: i18n.t("LBL_ALL")
-						},
-						{
-							id: "alarm-type-switcher-show-auto-" + self.uid,
-							value: i18n.t("LBL_AUTO")
-						},
-						{
-							id: "alarm-type-switcher-show-manual-" + self.uid,
-							value: i18n.t("LBL_MANUAL")
-						}
-					],
-					tooltip: function(obj) {
-
-						if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
-						}
-						else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
-						}
-						else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
-						}
-					},
-					on: {
-						onChange(newv, oldv) {
-
-							if (newv === "alarm-type-switcher-show-all-" + self.uid) {
-
-								self.filterAlarmType = undefined;
-								onSelectAlarmType();
-							}
-							else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
-
-								self.filterAlarmType = ALARM_TYPE_AUTO;
-								onSelectAlarmType();
-							}
-							else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
-
-								self.filterAlarmType = ALARM_TYPE_MANUAL;
-								onSelectAlarmType();
-							}
-						}
-					}
-				};
+//				let alarmTypeSwitcher = {
+//					view: "segmented",
+//					css: "segment-custom-2",
+//					value: "alarm-type-switcher-show-all-" + self.uid,
+//					options: [
+//						{
+//							id: "alarm-type-switcher-show-all-" + self.uid,
+//							value: i18n.t("LBL_ALL")
+//						},
+//						{
+//							id: "alarm-type-switcher-show-auto-" + self.uid,
+//							value: i18n.t("LBL_AUTO")
+//						},
+//						{
+//							id: "alarm-type-switcher-show-manual-" + self.uid,
+//							value: i18n.t("LBL_MANUAL")
+//						}
+//					],
+//					tooltip: function(obj) {
+//
+//						if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
+//						}
+//						else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
+//						}
+//						else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
+//						}
+//					},
+//					on: {
+//						onChange(newv, oldv) {
+//
+//							if (newv === "alarm-type-switcher-show-all-" + self.uid) {
+//
+//								self.filterAlarmType = undefined;
+//								onSelectAlarmType();
+//							}
+//							else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
+//
+//								self.filterAlarmType = ALARM_TYPE_AUTO;
+//								onSelectAlarmType();
+//							}
+//							else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
+//
+//								self.filterAlarmType = ALARM_TYPE_MANUAL;
+//								onSelectAlarmType();
+//							}
+//						}
+//					}
+//				};
 
 				view.rows = [];
 
-				view.rows.push(alarmTypeSwitcher);
+//				view.rows.push(alarmTypeSwitcher);
 
 				elementTypesFiltered = elementTypes.filter(e => e.visible === true && e.grid);
 
@@ -503,14 +503,14 @@ export default class AlarmMonitorModule extends GenericModule {
 					viewListEquipments = self.listView.getView();
 				}
 
-				function onSelectAlarmType() {
-
-					let elementTypeArray = [];
-
-					elementTypeArray.push(self.elementTypeIdSelected);
-
-					fillDatatables(elementTypeArray);
-				}
+//				function onSelectAlarmType() {
+//
+//					let elementTypeArray = [];
+//
+//					elementTypeArray.push(self.elementTypeIdSelected);
+//
+//					fillDatatables(elementTypeArray);
+//				}
 
 				view.rows.push(viewListEquipments);
 
@@ -520,8 +520,11 @@ export default class AlarmMonitorModule extends GenericModule {
 			function getViewContent() {
 
 				let viewContent = {};
+				let viewContentToolbar = {};
 				let viewDtNoRecognized = {};
 				let viewDtRecognized = {};
+				
+				viewContentToolbar = getContentToolbar();
 
 				viewDtNoRecognized = {
 
@@ -551,6 +554,14 @@ export default class AlarmMonitorModule extends GenericModule {
 						{
 							cols: [
 								{ width: 6 },
+								viewContentToolbar,
+								{ width: 6 }
+							]	
+						},
+						{ height: 12 },
+						{
+							cols: [
+								{ width: 6 },
 								{ id: "viewDtNoRecognizedSpace-" + self.uid, height: 1, hidden: true },
 								viewDtNoRecognized,
 								{ width: 6 }
@@ -569,6 +580,162 @@ export default class AlarmMonitorModule extends GenericModule {
 						{ height: 6 }
 					]
 				};
+				
+				function getContentToolbar() {
+					
+					let viewContentToolbar = {
+						
+						id: "viewContentToolbar-" + self.uid,
+						view: "toolbar",
+						height: 28,
+						elements: [],
+						borderless: true
+					}
+					
+					let alarmTypeSwitcher = {
+							
+						view: "segmented",
+						css: "segment-custom-2",
+						value: "alarm-type-switcher-show-all-" + self.uid,
+						width: 250,
+						options: [
+							{
+								id: "alarm-type-switcher-show-all-" + self.uid,
+								value: i18n.t("LBL_ALL")
+							},
+							{
+								id: "alarm-type-switcher-show-auto-" + self.uid,
+								value: i18n.t("LBL_AUTO")
+							},
+							{
+								id: "alarm-type-switcher-show-manual-" + self.uid,
+								value: i18n.t("LBL_MANUAL")
+							}
+						],
+						tooltip: function(obj) {
+	
+							if (obj.id === "alarm-type-switcher-show-all-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_ALL_ALARM_TYPES");
+							}
+							else if (obj.id === "alarm-type-switcher-show-auto-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_ALARM_TYPE_AUTO");
+							}
+							else if (obj.id === "alarm-type-switcher-show-manual-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_ALARM_TYPE_MANUAL");
+							}
+						},
+						on: {
+							onChange(newv, oldv) {
+	
+								if (newv === "alarm-type-switcher-show-all-" + self.uid) {
+	
+									self.filterAlarmType = undefined;
+								}
+								else if (newv === "alarm-type-switcher-show-auto-" + self.uid) {
+	
+									self.filterAlarmType = ALARM_TYPE_AUTO;
+								}
+								else if (newv === "alarm-type-switcher-show-manual-" + self.uid) {
+	
+									self.filterAlarmType = ALARM_TYPE_MANUAL;
+								}
+								
+								onSelectAlarmType();
+							}
+						}
+					};
+					
+					let actionPanelSwitcher = {
+						view: "segmented",
+						css: "segment-custom-2",
+						value: "action-panel-switcher-show-all-" + self.uid,
+						width: 200,
+						options: [
+							{
+								id: "action-panel-switcher-show-all-" + self.uid,
+								value: "<span class='ico webix_icon mdi mdi-dock-window'></span>",
+							},
+							{
+								id: "action-panel-switcher-show-top-" + self.uid,
+								value: "<span class='ico webix_icon mdi mdi-dock-top'></span>",
+							},
+							{
+								id: "action-panel-switcher-show-bottom-" + self.uid,
+								value: "<span class='ico webix_icon mdi mdi-dock-bottom'></span>",
+							}
+						],
+						tooltip: function(obj) {
+	
+							if (obj.id === "action-panel-switcher-show-all-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_ALL_PANELS");
+							}
+							else if (obj.id === "action-panel-switcher-show-top-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_NO_RECOGNIZED_PANEL");
+							}
+							else if (obj.id === "action-panel-switcher-show-bottom-" + self.uid) {
+	
+								return i18n.t("LBL_SHOW_RECOGNIZED_PANEL");
+							}
+						},
+						on: {
+							onChange(newv, oldv) {
+	
+								if (newv === "action-panel-switcher-show-all-" + self.uid) {
+									$$("viewDtNoRecognized-" + self.uid).show();
+									$$("viewDtRecognized-" + self.uid).show();
+									$$("viewDtNoRecognizedSpace-" + self.uid).hide();
+									$$("viewDtRecognizedSpace-" + self.uid).hide();
+									$$("resizer-dt-" + self.uid).show();
+									//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
+									$$("viewDtNoRecognized-" + self.uid).adjust();
+									//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
+									$$("viewDtRecognized-" + self.uid).adjust();
+								}
+								else if (newv === "action-panel-switcher-show-top-" + self.uid) {
+	
+									$$("viewDtNoRecognized-" + self.uid).show();
+									$$("viewDtRecognized-" + self.uid).hide();
+									$$("viewDtNoRecognizedSpace-" + self.uid).hide();
+									$$("viewDtRecognizedSpace-" + self.uid).show();
+									$$("resizer-dt-" + self.uid).hide();
+									//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height; 
+									$$("viewDtNoRecognized-" + self.uid).adjust();
+								}
+								else if (newv === "action-panel-switcher-show-bottom-" + self.uid) {
+	
+									$$("viewDtNoRecognized-" + self.uid).hide();
+									$$("viewDtRecognized-" + self.uid).show();
+									$$("viewDtNoRecognizedSpace-" + self.uid).show();
+									$$("viewDtRecognizedSpace-" + self.uid).hide();
+									$$("resizer-dt-" + self.uid).hide();
+									//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height; 
+									$$("viewDtRecognized-" + self.uid).adjust();
+								}
+							}
+						}
+					};
+					
+					viewContentToolbar.elements.push(alarmTypeSwitcher);
+					viewContentToolbar.elements.push({});
+					viewContentToolbar.elements.push(actionPanelSwitcher);
+					
+					function onSelectAlarmType() {
+
+						let elementTypeArray = [];
+	
+						elementTypeArray.push(self.elementTypeIdSelected);
+	
+						fillDatatables(elementTypeArray);
+					}
+					
+					
+					return viewContentToolbar;
+				}
 
 				return viewContent;
 			}
@@ -604,77 +771,151 @@ export default class AlarmMonitorModule extends GenericModule {
 					}
 					return color;
 				}
+				
+				function newAlarm() {
 
-				let actionPanelSwitcher = {
-					view: "segmented",
-					css: "segment-custom-2",
-					value: "action-panel-switcher-show-all-" + self.uid,
-					options: [
-						{
-							id: "action-panel-switcher-show-all-" + self.uid,
-							value: "<span class='ico webix_icon mdi mdi-dock-window'></span>",
-						},
-						{
-							id: "action-panel-switcher-show-top-" + self.uid,
-							value: "<span class='ico webix_icon mdi mdi-dock-top'></span>",
-						},
-						{
-							id: "action-panel-switcher-show-bottom-" + self.uid,
-							value: "<span class='ico webix_icon mdi mdi-dock-bottom'></span>",
+					if (self.config && self.config.action && self.config.action.newAlarm) {
+			
+						let module = util.module.getFromModuleAction(self.config.action.newAlarm);
+						if (module) {
+			
+							let moduleAction = { id: self.config.action.newAlarm };
+			
+							let args = { selectedPks: [] };
+			
+							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
 						}
-					],
-					tooltip: function(obj) {
-
-						if (obj.id === "action-panel-switcher-show-all-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_ALL_PANELS");
-						}
-						else if (obj.id === "action-panel-switcher-show-top-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_NO_RECOGNIZED_PANEL");
-						}
-						else if (obj.id === "action-panel-switcher-show-bottom-" + self.uid) {
-
-							return i18n.t("LBL_SHOW_RECOGNIZED_PANEL");
-						}
-					},
-					on: {
-						onChange(newv, oldv) {
-
-							if (newv === "action-panel-switcher-show-all-" + self.uid) {
-								$$("viewDtNoRecognized-" + self.uid).show();
-								$$("viewDtRecognized-" + self.uid).show();
-								$$("viewDtNoRecognizedSpace-" + self.uid).hide();
-								$$("viewDtRecognizedSpace-" + self.uid).hide();
-								$$("resizer-dt-" + self.uid).show();
-								//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
-								$$("viewDtNoRecognized-" + self.uid).adjust();
-								//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
-								$$("viewDtRecognized-" + self.uid).adjust();
-							}
-							else if (newv === "action-panel-switcher-show-top-" + self.uid) {
-
-								$$("viewDtNoRecognized-" + self.uid).show();
-								$$("viewDtRecognized-" + self.uid).hide();
-								$$("viewDtNoRecognizedSpace-" + self.uid).hide();
-								$$("viewDtRecognizedSpace-" + self.uid).show();
-								$$("resizer-dt-" + self.uid).hide();
-								//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height; 
-								$$("viewDtNoRecognized-" + self.uid).adjust();
-							}
-							else if (newv === "action-panel-switcher-show-bottom-" + self.uid) {
-
-								$$("viewDtNoRecognized-" + self.uid).hide();
-								$$("viewDtRecognized-" + self.uid).show();
-								$$("viewDtNoRecognizedSpace-" + self.uid).show();
-								$$("viewDtRecognizedSpace-" + self.uid).hide();
-								$$("resizer-dt-" + self.uid).hide();
-								//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height; 
-								$$("viewDtRecognized-" + self.uid).adjust();
-							}
-						}
+			
+					} else {
+			
+						util.ui.notImplementedMessage();
 					}
-				};
+				}
+			
+				function alarmMuted() {
+			
+					if (self.config && self.config.action && self.config.action.alarmMuted) {
+						
+						let module = window.em.getByField(EntityType.MODULE, "id", self.config.action.alarmMuted);
+			
+						if (module) {
+			
+							util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
+						}
+			
+					} else {
+			
+						util.ui.notImplementedMessage();
+					}
+				}
+			
+				function newIncident() {
+			
+					if (self.config && self.config.action && self.config.action.newIncident) {
+			
+						let module = util.module.getFromModuleAction(self.config.action.newIncident);
+						if (module) {
+			
+							let moduleAction = { id: self.config.action.newIncident };
+			
+							let args = { selectedPks: [] };
+			
+							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+						}
+			
+					} else {
+			
+						util.ui.notImplementedMessage();
+					}
+				}
+			
+				function alarmConfig() {
+			
+					if (self.config && self.config.action && self.config.action.alarmConfig) {
+			
+						let module = window.em.getByField(EntityType.MODULE, "id", self.config.action.alarmConfig);
+			
+						if (module) {
+			
+							util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
+						}
+			
+					} else {
+			
+						util.ui.notImplementedMessage();
+					}
+				}
+
+//				let actionPanelSwitcher = {
+//					view: "segmented",
+//					css: "segment-custom-2",
+//					value: "action-panel-switcher-show-all-" + self.uid,
+//					options: [
+//						{
+//							id: "action-panel-switcher-show-all-" + self.uid,
+//							value: "<span class='ico webix_icon mdi mdi-dock-window'></span>",
+//						},
+//						{
+//							id: "action-panel-switcher-show-top-" + self.uid,
+//							value: "<span class='ico webix_icon mdi mdi-dock-top'></span>",
+//						},
+//						{
+//							id: "action-panel-switcher-show-bottom-" + self.uid,
+//							value: "<span class='ico webix_icon mdi mdi-dock-bottom'></span>",
+//						}
+//					],
+//					tooltip: function(obj) {
+//
+//						if (obj.id === "action-panel-switcher-show-all-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_ALL_PANELS");
+//						}
+//						else if (obj.id === "action-panel-switcher-show-top-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_NO_RECOGNIZED_PANEL");
+//						}
+//						else if (obj.id === "action-panel-switcher-show-bottom-" + self.uid) {
+//
+//							return i18n.t("LBL_SHOW_RECOGNIZED_PANEL");
+//						}
+//					},
+//					on: {
+//						onChange(newv, oldv) {
+//
+//							if (newv === "action-panel-switcher-show-all-" + self.uid) {
+//								$$("viewDtNoRecognized-" + self.uid).show();
+//								$$("viewDtRecognized-" + self.uid).show();
+//								$$("viewDtNoRecognizedSpace-" + self.uid).hide();
+//								$$("viewDtRecognizedSpace-" + self.uid).hide();
+//								$$("resizer-dt-" + self.uid).show();
+//								//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
+//								$$("viewDtNoRecognized-" + self.uid).adjust();
+//								//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height / 2; 
+//								$$("viewDtRecognized-" + self.uid).adjust();
+//							}
+//							else if (newv === "action-panel-switcher-show-top-" + self.uid) {
+//
+//								$$("viewDtNoRecognized-" + self.uid).show();
+//								$$("viewDtRecognized-" + self.uid).hide();
+//								$$("viewDtNoRecognizedSpace-" + self.uid).hide();
+//								$$("viewDtRecognizedSpace-" + self.uid).show();
+//								$$("resizer-dt-" + self.uid).hide();
+//								//								$$("viewDtNoRecognized-" + self.uid).config.height = self.uid.config.height; 
+//								$$("viewDtNoRecognized-" + self.uid).adjust();
+//							}
+//							else if (newv === "action-panel-switcher-show-bottom-" + self.uid) {
+//
+//								$$("viewDtNoRecognized-" + self.uid).hide();
+//								$$("viewDtRecognized-" + self.uid).show();
+//								$$("viewDtNoRecognizedSpace-" + self.uid).show();
+//								$$("viewDtRecognizedSpace-" + self.uid).hide();
+//								$$("resizer-dt-" + self.uid).hide();
+//								//								$$("viewDtRecognized-" + self.uid).config.height = self.uid.config.height; 
+//								$$("viewDtRecognized-" + self.uid).adjust();
+//							}
+//						}
+//					}
+//				};
 
 				let actionPanelAlarmStats = {
 
@@ -822,7 +1063,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											self.newAlarm();
+											newAlarm();
 										}
 									}
 								},
@@ -838,7 +1079,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											self.newIncident();
+											newIncident();
 										}
 									}
 								}
@@ -861,7 +1102,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											self.alarmMuted();
+											alarmMuted();
 										}
 									}
 								},
@@ -877,7 +1118,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 										onItemClick() {
 
-											self.alarmConfig();
+											alarmConfig();
 										}
 									}
 								}
@@ -894,14 +1135,14 @@ export default class AlarmMonitorModule extends GenericModule {
 					css: "panel-action",
 					rows: [
 						{ height: 20 },
-						{
-							cols: [
-								{ width: marginActionPanel },
-								actionPanelSwitcher,
-								{ width: marginActionPanel }
-							]
-						},
-						{ height: 30 },
+//						{
+//							cols: [
+//								{ width: marginActionPanel },
+//								actionPanelSwitcher,
+//								{ width: marginActionPanel }
+//							]
+//						},
+//						{ height: 30 },
 						{
 							cols: [
 								{ width: marginActionPanel },
@@ -1296,92 +1537,6 @@ export default class AlarmMonitorModule extends GenericModule {
 					return changes;
 				}
 			}
-		}
-	}
-
-	newAlarm() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.newAlarm != null && this.config.action.newAlarm != undefined) {
-
-			let module = util.module.getFromModuleAction(this.config.action.newAlarm);
-			if (module) {
-
-				let moduleAction = { id: this.config.action.newAlarm };
-
-				let args = { selectedPks: [] };
-
-				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
-		}
-	}
-
-	alarmMuted() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.alarmMuted != null && this.config.action.alarmMuted != undefined) {
-
-			let module = window.em.getByField(EntityType.MODULE, "id", this.config.action.alarmMuted);
-
-			if (module) {
-
-				util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
-		}
-	}
-
-	newIncident() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.newIncident != null && this.config.action.newIncident != undefined) {
-
-			let module = util.module.getFromModuleAction(this.config.action.newIncident);
-			if (module) {
-
-				let moduleAction = { id: this.config.action.newIncident };
-
-				let args = { selectedPks: [] };
-
-				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
-		}
-	}
-
-	alarmConfig() {
-
-		if (this.config != null && this.config != undefined &&
-			this.config.action != null && this.config.action != undefined &&
-			this.config.action.alarmConfig != null && this.config.action.alarmConfig != undefined) {
-
-			let module = window.em.getByField(EntityType.MODULE, "id", this.config.action.alarmConfig);
-
-			if (module) {
-
-				util.module.open(module, null, VIEW_TYPE_WINDOW, null, null);
-
-			}
-
-		} else {
-
-			util.ui.notImplementedMessage();
 		}
 	}
 }
