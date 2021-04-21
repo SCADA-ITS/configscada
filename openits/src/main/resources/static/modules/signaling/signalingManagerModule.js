@@ -15,6 +15,7 @@ export default class signalingManagerModule extends GenericModule {
 		this.config = module.config;
 		this.mapElements = undefined;
 		this.mapCommandModule = undefined;
+		this.useDefaultModue = false;
 	}
 
 	getView() {
@@ -149,7 +150,7 @@ export default class signalingManagerModule extends GenericModule {
 									let alias = undefined;
 									let commandModule = undefined;
 
-									if (element.elementType.commandModule){
+									if (element.elementType.commandModule) {
 
 										alias = i18n.t(elementType.labelAlias);
 										commandModule = element.elementType.commandModule;
@@ -157,6 +158,7 @@ export default class signalingManagerModule extends GenericModule {
 									} else {
 										alias = "(*) " + i18n.t(elementType.labelAlias);
 										commandModule = self.config.defaultSignalingModuleAction;
+										self.useDefaultModue = true;
 									}
 
 									listElement = [];
@@ -201,8 +203,6 @@ export default class signalingManagerModule extends GenericModule {
 			}
 
 			view.rows.push(viewListElementType);
-
-			console.log(self.mapElements);
 
 			return view;
 		}
@@ -355,32 +355,48 @@ export default class signalingManagerModule extends GenericModule {
 				header: i18n.t("LBL_EQUIPMENT_TYPES"),
 				body: {
 					width: 350,
-
 					rows: [
-						{
-							height: 260,
-							cols: [
-								getViewListElementTypes()
-							]
-						},
-						{
-							view: "label",
-							label: "(*) " + i18n.t("LBL_DEFAULT_SIGNALING_MODULE"),
-						},
-						{
-							view: "label",
-							label: i18n.t("LBL_LIST_EQUIPMENTS"),
-						},
-						{
-							id: "view-list-element-" + self.uid,
-							cols: [
-								getViewListElements()
-							]
-						}
 
 					]
 				}
 			};
+
+
+			let viewListElementTypes = {
+
+				height: 260,
+				cols: [
+					getViewListElementTypes()
+				]
+			}
+
+			let viewLabelDefaulSigalingModule = {
+
+				view: "label",
+				label: "(*) " + i18n.t("LBL_DEFAULT_SIGNALING_MODULE"),
+			}
+
+			let viewLabelListEqupments = {
+
+				view: "label",
+				label: i18n.t("LBL_LIST_EQUIPMENTS"),
+			}
+
+			let viewListElements = {
+
+				id: "view-list-element-" + self.uid,
+				cols: [
+					getViewListElements()
+				]
+			}
+
+			if (self.useDefaultModue) {
+				
+				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelDefaulSigalingModule, viewLabelListEqupments, viewListElements];
+			
+			} else {
+				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEqupments, viewListElements];
+			}
 
 			let viewMainResizer = {
 				id: "view-main-resizer-" + self.uid,
