@@ -583,7 +583,7 @@ export default class IncidentReportModule extends GenericModule {
 							fieldUser: self.incidentReport.currentUser.name !== undefined && self.incidentReport.currentUser.name !== null ? self.incidentReport.currentUser.name : "-" ,
 							fieldGenerateAt: self.incidentReport.generatedAt !== undefined && self.incidentReport.generatedAt !== null ? util.toLocaleString(self.incidentReport.generatedAt / 1000) : "-",
 							fieldLastUpdated: self.incidentReport.lastUpdate !== undefined && self.incidentReport.lastUpdate !== null ? util.toLocaleString(self.incidentReport.lastUpdate / 1000) : "-",
-							fieldValidUntil: "-",  //sin campo en graph 
+							fieldValidUntil: self.incidentReport.validForMin !== undefined && self.incidentReport.validForMin !== null ? util.toLocaleString(self.incidentReport.validForMin / 1000) : "-",
 							fieldCause: self.incidentReport.incidentTypeCause !== undefined && self.incidentReport.incidentTypeCause !== null ? self.incidentReport.incidentTypeCause.alias : "-",
 							fieldRoad: self.incidentReport.affectionStretch.road.alias !== undefined && self.incidentReport.affectionStretch.road.alias !== null ? self.incidentReport.affectionStretch.road.alias : "-",
 							fieldGroup: self.incidentReport.incidentType.incidentGroup.labelAlias !== undefined && self.incidentReport.incidentType.incidentGroup.labelAlias !== null ? i18n.t(self.incidentReport.incidentType.incidentGroup.labelAlias) : "-",
@@ -591,9 +591,14 @@ export default class IncidentReportModule extends GenericModule {
 
 						objField.forEach(e => {
 
-							if(e.objField !== "fieldCause") {
+							if(e.objField === "fieldCause") {
 								//logica #982
-
+								body.push({
+									height: 50,
+									borderless: true,
+									template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>
+											<div class="value">${fieldsValues[e.objField]}</div>`
+								});
 							} else {
 								body.push({
 									height: 50,
