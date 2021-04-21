@@ -1,8 +1,6 @@
-import GenericModule from "../modules/genericModule.js";
-import ListView from "../component/listview.js";
-import { util } from "../../lib/util.js";
-
-
+import GenericModule from "../../modules/genericModule.js";
+import ListView from "../../component/listview.js";
+import { util } from "../../../lib/util.js";
 
 
 export default class signalingManagerModule extends GenericModule {
@@ -89,7 +87,7 @@ export default class signalingManagerModule extends GenericModule {
 			drawComponents();
 
 			initListView();
-			
+
 			$$("loading-" + self.uid).hide();
 			$$(self.uid).show();
 		}
@@ -142,20 +140,33 @@ export default class signalingManagerModule extends GenericModule {
 									listElement.push(id);
 								}
 
-							} else if (element.elementType.commandModule) {
+							} else {
 
 								let listElement = self.mapElements.get(element.elementType.id);
 
 								if (!listElement) {
 
+									let alias = undefined;
+									let commandModule = undefined;
+
+									if (element.elementType.commandModule){
+
+										alias = i18n.t(elementType.labelAlias);
+										commandModule = element.elementType.commandModule;
+
+									} else {
+										alias = "(*) " + i18n.t(elementType.labelAlias);
+										commandModule = self.config.defaultSignalingModuleAction;
+									}
+
 									listElement = [];
 
 									self.mapElements.set(element.elementType.id, listElement);
-									self.mapCommandModule.set(element.elementType.id, element.elementType.commandModule);
+									self.mapCommandModule.set(element.elementType.id, commandModule);
 
 									elementTypeView.push({
 										id: element.elementType.id,
-										alias: i18n.t(elementType.labelAlias),
+										alias: alias,
 										description: i18n.t(elementType.labelDescription),
 										image: elementType.elementTypePhoto
 									});
@@ -180,7 +191,11 @@ export default class signalingManagerModule extends GenericModule {
 
 				events[ListView.EventTypes.ON_SELECT_ROW] = fillData;
 
-				self.listViewElementType = new ListView(elementTypeView, null, events);
+				let options = {};
+
+				options[ListView.Options.SEARCH] = false;
+
+				self.listViewElementType = new ListView(elementTypeView, options, events);
 
 				viewListElementType = self.listViewElementType.getView();
 			}
@@ -225,6 +240,7 @@ export default class signalingManagerModule extends GenericModule {
 
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.SEARCH] = false;
+				options[ListView.Options.ROW_HEIGHT] = 35;
 
 				let listView = new ListView(elementsView, options, null);
 
@@ -265,7 +281,7 @@ export default class signalingManagerModule extends GenericModule {
 		function fillViewListElements() {
 
 			let content = $$("view-list-element-" + self.uid);
-			
+
 			if (content) {
 
 				let viewContent = {
@@ -342,10 +358,14 @@ export default class signalingManagerModule extends GenericModule {
 
 					rows: [
 						{
-							height: 310,
+							height: 260,
 							cols: [
 								getViewListElementTypes()
 							]
+						},
+						{
+							view: "label",
+							label: "(*) " + i18n.t("LBL_DEFAULT_SIGNALING_MODULE"),
 						},
 						{
 							view: "label",
