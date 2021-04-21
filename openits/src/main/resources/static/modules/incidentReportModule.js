@@ -532,8 +532,8 @@ export default class IncidentReportModule extends GenericModule {
 			let tasks = self.currentSequenceOfState.taskStates;
 
 			contentTabs.cells.push({
-				header: i18n.t("LBL_DETAILS"),
-				body: getTabDetails()
+				header: i18n.t("LBL_INFO"),
+				body: getTabInfo()
 			});
 
 			if (Array.isArray(tasks) && tasks.length) {
@@ -565,7 +565,51 @@ export default class IncidentReportModule extends GenericModule {
 
 			};
 
-			function getTabDetails() {
+			function getTabInfo() {
+
+				const getConfigRows = () => {
+
+					let body = []
+
+					if(self.config.infoFields !== undefined && self.config.infoFields.length > 0  ) {
+
+						let objField = self.config.infoFields.sort((a,b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+						const fieldsValues = {
+							fieldId: util.getSimpleId(self.incidentReport.id),
+							fieldType: self.incidentReport.incidentType.alias + "-" + self.incidentReport.incidentType.description,
+							fieldLocation: self.incidentReport.location.alias !== undefined && self.incidentReport.location.alias !== null ? self.incidentReport.location.alias : "-",
+							fieldStretch: self.incidentReport.affectionStretch.alias !== undefined && self.incidentReport.affectionStretch.alias !== null ? self.incidentReport.affectionStretch.alias : "-",
+							fieldUser: self.incidentReport.currentUser.name !== undefined && self.incidentReport.currentUser.name !== null ? self.incidentReport.currentUser.name : "-" ,
+							fieldGenerateAt: self.incidentReport.generatedAt !== undefined && self.incidentReport.generatedAt !== null ? util.toLocaleString(self.incidentReport.generatedAt / 1000) : "-",
+							fieldLastUpdated: self.incidentReport.lastUpdate !== undefined && self.incidentReport.lastUpdate !== null ? util.toLocaleString(self.incidentReport.lastUpdate / 1000) : "-",
+							fieldValidUntil: "-",  //sin campo en graph 
+							fieldCause: self.incidentReport.incidentTypeCause !== undefined && self.incidentReport.incidentTypeCause !== null ? self.incidentReport.incidentTypeCause.alias : "-",
+							fieldRoad: self.incidentReport.affectionStretch.road.alias !== undefined && self.incidentReport.affectionStretch.road.alias !== null ? self.incidentReport.affectionStretch.road.alias : "-",
+							fieldGroup: self.incidentReport.incidentType.incidentGroup.labelAlias !== undefined && self.incidentReport.incidentType.incidentGroup.labelAlias !== null ? i18n.t(self.incidentReport.incidentType.incidentGroup.labelAlias) : "-",
+						}
+
+						objField.forEach(e => {
+
+							if(e.objField !== "fieldCause") {
+								//logica #982
+
+							} else {
+								body.push({
+									height: 50,
+									borderless: true,
+									template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>
+											<div class="value">${fieldsValues[e.objField]}</div>`
+								});
+							}
+
+						});
+
+					}
+
+					return body
+
+				}
 
 				let tabDetails = {
 					id: "tab-details-" + self.uid,
@@ -578,56 +622,7 @@ export default class IncidentReportModule extends GenericModule {
 								{ width: 40 },
 								{
 									borderless: true,
-									rows: [
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-identifier"></span><span class="field">${i18n.t("LBL_INCIDENT_REPORT_ID")}</span></div>
-													   <div class="value">${util.getSimpleId(self.incidentReport.id)}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
-													   <div class="value">${self.incidentReport.incidentType.alias} - ${self.incidentReport.incidentType.description}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
-													   <div class="value">${self.incidentReport.location.alias}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
-													   <div class="value">${self.incidentReport.affectionStretch.alias}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
-													   <div class="value">${self.incidentReport.currentUser.name}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-clock-time-three-outline"></span><span class="field">${i18n.t("LBL_INCIDENT_CREATED")}</span></div>
-													   <div class="value">${util.toLocaleString(self.incidentReport.generatedAt / 1000)}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-refresh"></span><span class="field">${i18n.t("LBL_INCIDENT_LAST_UPDATED")}</span></div>
-													   <div class="value">-</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-calendar"></span><span class="field">${i18n.t("LBL_INCIDENT_VALID_UNTIL")}</span></div>
-													   <div class="value">-</div>`
-										}
-									]
+									rows: getConfigRows()
 								},
 								{ width: 40 }
 							]
