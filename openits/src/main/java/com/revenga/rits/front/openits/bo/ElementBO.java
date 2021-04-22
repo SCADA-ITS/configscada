@@ -29,7 +29,7 @@ public class ElementBO extends GenericBO {
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), elements);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS).getFieldId(), elements);
 	}
 
 	@Override
@@ -47,7 +47,16 @@ public class ElementBO extends GenericBO {
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, new Object[] { ids });
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), elements);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY).getFieldId(), elements);
+	}
+	
+	public List<Map<String, Object>> getHierarchies() {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES, null);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES).getFieldId(), elements);
 	}
 	
 	public Map<String, Object> createElement(Object input) {

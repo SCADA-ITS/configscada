@@ -22,11 +22,12 @@ public class TreeDataUI implements Serializable {
 	public static final String PROP_TRANSLATE = "translate";
 	public static final String PROP_FOLDER = "folder";
 	public static final String PROP_IMAGE = "image";
-	public static final boolean PROP_DISABLE = false;
+	public static final String PROP_DISABLED = "disabled";
+	public static final String PROP_VALUE_AUX = "valueAux";
+	public static final String PROP_VALUE_AUX_TRANSLATE = "valueAuxTranslate";
 	
 	private String id;
 	private String value;
-	private boolean disabled;
 	private List<TreeDataUI> data;
 	private Map<String, Object> params;
 	private Map<String, Object> props;

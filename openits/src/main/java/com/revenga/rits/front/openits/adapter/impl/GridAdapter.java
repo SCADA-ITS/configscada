@@ -43,6 +43,9 @@ public class GridAdapter {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	GroovyManager groovyManager;
+	
 //	private Integer dataSourceTypeGraphql;
 	
 	@PostConstruct
@@ -104,14 +107,14 @@ public class GridAdapter {
 							// TODO: Load from groovy file here
 							String groovyFile = adapterDataSource.getValue();
 							
-							GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
+							GroovyObject groovyObj = groovyManager.getGroovyObject(groovyFile);
 							
 							if (groovyObj != null) {
 								
 								@SuppressWarnings("unchecked")
 								List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
 										METHOD_TO_GRID_DATA,
-										new Object[] { vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+										new Object[] { dataSourceGraphQL.getFieldId(), items });
 								
 								if (gridData != null) {
 									

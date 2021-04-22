@@ -27,6 +27,14 @@ const DefProperties = {
 	DISABLED: {
 		name: "disabled",
 		value: false
+	},
+	VALUE_AUX: {
+		name: "valueAux",
+		value: undefined,
+	},
+	VALUE_AUX_TRANSLATE: {
+		name: "valueAuxTranslate",
+		value: false
 	}
 };
 
@@ -207,7 +215,13 @@ export default class TreeView {
 				template: function(obj, common) {
 					
 					let value = obj.value;
+					let valueAux = getItemProps(obj, DefProperties.VALUE_AUX);
+					let valueAuxTranslate = getItemProps(obj, DefProperties.VALUE_AUX_TRANSLATE);
 					
+					if (valueAux && valueAuxTranslate) {
+						
+						valueAux = i18n.t(valueAux);
+					}
 					
 					obj.disabled = self.getTreeOptions(TreeOptions.DISABLED);
 									
@@ -224,6 +238,11 @@ export default class TreeView {
 						
 						opacity = 0.5;
 					}
+					
+					if (valueAux) {
+						
+						value = value + " (" + valueAux + ")";
+					}
 
 					let nodeValue = undefined;
 					
@@ -232,8 +251,7 @@ export default class TreeView {
 						
 						
 						nodeValue = `<div style="margin-left: 30px;">	
-										<img src="${obj.image}" 
-											 onerror="this.onerror=null; this.style.display = 'none'"/>
+										<img src="img/${obj.image}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
 									</div>`;	
 					}

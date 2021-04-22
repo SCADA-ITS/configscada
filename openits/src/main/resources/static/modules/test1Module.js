@@ -71,7 +71,7 @@ export default class Test1Module extends GenericModule {
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
 
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate("trees/${id}", { id: "1" })).then(function(dat) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate("trees/${id}", { id: "2" })).then(function(dat) {
 
 				if (dat != null) {
 

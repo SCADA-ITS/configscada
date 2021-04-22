@@ -203,6 +203,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_SEND_EXECUTE_TASK_PLAN_INCIDENT_REPORT = getPropertyInt("send_execute_task_plan_incident_report");
 	
 	public static final int DATA_SOURCE_GET_SYSTEM_PARAMS = getPropertyInt("get_system_params");
+	public static final int DATA_SOURCE_GET_HIERARCHIES = getPropertyInt("get_hierarchies");
 	
 	private static int getPropertyInt(final String prop) {
 		
@@ -248,7 +249,7 @@ public class VODataSourceAdapter {
 
 			if (params == null) {
 				
-				list = (List<Map<String, Object>>) cacheManager.getEntityCached(dataSourceId);
+				list = (List<Map<String, Object>>) cacheManager.getEntitiesCached(dataSourceId);
 			}
 			
 			if (list == null) {

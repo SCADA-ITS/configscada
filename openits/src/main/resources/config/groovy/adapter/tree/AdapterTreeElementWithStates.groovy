@@ -1,18 +1,23 @@
+package config.groovy.adapter.tree;
+
+import config.groovy.adapter.tree.AdapterTree;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.revenga.rits.front.openits.model.TreeDataUI;
-import com.revenga.rits.front.openitsdao.model.Tree;
-import com.revenga.rits.front.openitsdao.model.TreeParam;
 
-public class AdapterTreeElementWithStates {
+public class AdapterTreeElementWithStates extends AdapterTree{
 	
 	static final String FIELD_ELEMENT_TYPE = "elementType";
 	static final String FIELD_ELEMENT_TYPE_ID = "id";
@@ -30,17 +35,15 @@ public class AdapterTreeElementWithStates {
 	static final String TREE_FIELD_VALUE = "value";
 	static final String TREE_FIELD_IMAGE = "image";
 	static final String TREE_FIELD_DATA = "data";
-	
-	static final String TREE_PARAM_STATE_IMAGE = "state_image";
 
-	org.apache.logging.log4j.Logger log;
-	
-	public AdapterTreeElementWithStates(org.apache.logging.log4j.Logger log) {
+	public AdapterTreeElementWithStates(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
-		this.log = log;
+		super(cacheManager, vo2uiAdapter, log);
 	}
 	
-	List<TreeDataUI> toTreeData(Tree tree, VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TreeDataUI> toTreeData(String fieldId, List<Map<String, Object>> entities) {
 		
 		List<TreeDataUI> data = null;
 		Map<String, TreeDataUI> elementTypeNodes = new HashMap<>();
@@ -73,8 +76,6 @@ public class AdapterTreeElementWithStates {
 													
 							TreeDataUI item = new TreeDataUI((String) entity.get(FIELD_ELEMENT_ID),
 									(String) entity.get(FIELD_ELEMENT_ALIAS));
-									
-							//addParameter(tree, item, TREE_PARAM_STATE_IMAGE, elementTypeStateImage);
 							
 							item.addProperty(TreeDataUI.PROP_IMAGE, elementTypeStateImage);
 														
@@ -95,6 +96,7 @@ public class AdapterTreeElementWithStates {
 		return data;
 	}
 	
+	@SuppressWarnings("unchecked")
 	TreeDataUI getNode(Object value, Map<String, TreeDataUI> elementTypeNodes) {
 		
 		TreeDataUI node = null;
@@ -104,7 +106,20 @@ public class AdapterTreeElementWithStates {
 			Map<String, Object> elementType = (Map<String, Object>) value;
 			
 			String elementTypeId = (String) elementType.get(FIELD_ELEMENT_TYPE_ID);
-			String elementTypeValue = (String) elementType.get(FIELD_ELEMENT_TYPE_LABEL_ALIAS);
+			String elementTypeValue = null;
+			
+			if (!StringUtils.isEmpty(elementTypeId)) {
+			
+				Object entityTypeObj = cacheManager.getEntity(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES, FIELD_ELEMENT_TYPE_ID, elementTypeId);
+				
+				if (entityTypeObj != null && entityTypeObj instanceof Map) {
+				
+					Map<String, Object> entityType = (Map<String, Object>) entityTypeObj;
+					
+					elementTypeValue = (String) entityType.get(FIELD_ELEMENT_TYPE_LABEL_ALIAS);
+				}
+			}
+			
 			String elementTypeImage = (String) elementType.get(FIELD_ELEMENT_TYPE_TREE_IMAGE);
 			
 			node = elementTypeNodes.get(elementTypeId);
@@ -123,25 +138,4 @@ public class AdapterTreeElementWithStates {
 		
 		return node;
 	}
-	
-	void addParameter(final Tree tree, TreeDataUI node, final String treeParamName, final Object value) {
-
-		if (tree != null && treeParamName != null) {
-		
-			if (!CollectionUtils.isEmpty(tree.getTreeParams())) {
-			
-				for (TreeParam treeParam : tree.getTreeParams()) {
-				
-					if (treeParam.getName().equals(treeParamName)) {
-					
-						node.addParam(treeParamName, value);
-						
-						break;
-					}
-				}
-			}
-		}
-		
-	}
-	
 }

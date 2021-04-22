@@ -1,8 +1,13 @@
+package config.groovy.adapter.grid;
+
+import config.groovy.adapter.grid.AdapterGrid;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -10,16 +15,15 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-class AdapterGridGeneric {
-
-	org.apache.logging.log4j.Logger log;
+class AdapterGridGeneric extends AdapterGrid{
 	
-	AdapterGridGeneric(org.apache.logging.log4j.Logger log) {
+	public AdapterGridGeneric(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
-		this.log = log;
+		super(cacheManager, vo2uiAdapter, log);
 	}
 	
-	List<Map<String, Object>> toGridData(VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
+	@Override
+	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) {
 		
 		List<Map<String, Object>> data = new ArrayList<>();
 		

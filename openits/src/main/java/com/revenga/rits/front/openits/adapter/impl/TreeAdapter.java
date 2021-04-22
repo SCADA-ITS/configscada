@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.revenga.rits.front.openits.model.TreeDataUI;
 import com.revenga.rits.front.openits.model.TreeUI;
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.AdapterDataSource;
 import com.revenga.rits.front.openitsdao.model.DataSource;
@@ -38,6 +39,11 @@ public class TreeAdapter {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	GroovyManager groovyManager;
+
+	@Autowired 
+	CacheManager cacheManager;
 	
 	@PostConstruct
 	private void initialize() {
@@ -80,25 +86,28 @@ public class TreeAdapter {
 						List<Map<String, Object>> items = voDataSourceAdapter.getList(dataSourceGraphQL.getId(), null);
 						
 						if (!CollectionUtils.isEmpty(items)) {
-														
+							
+							// TODO: Load from groovy file here
 							String groovyFile = adapterDataSource.getValue();
 							
-							GroovyObject groovyObj = GroovyManager.getInstance().getGroovyObject(groovyFile);
+							GroovyObject groovyObj = groovyManager.getGroovyObject(groovyFile);
 							
 							if (groovyObj != null) {
 								
 								@SuppressWarnings("unchecked")
 								List<TreeDataUI> treeData = (List<TreeDataUI>) groovyObj.invokeMethod(
 										METHOD_TO_TREE_DATA,
-										new Object[] { tree, vo2uiAdapter, dataSourceGraphQL.getFieldId(), items });
+										new Object[] { dataSourceGraphQL.getFieldId(), items });
 								
 								if (treeData != null) {
 									
 									treeUI.setData(treeData);		
 								}
 							}
+							// TODO: Test groovy from class here
 							
-//							treeUI.setData((new AdapterTreeElementWithStates(log)).toTreeData(vo2uiAdapter, dataSourceGraphQL.getFieldId(), items));
+//							treeUI.setData((new AdapterTreeElementHierarchy(cacheManager, vo2uiAdapter, log).toTreeData(dataSourceGraphQL.getFieldId(), items)));
+							
 						}
 					}
 				}

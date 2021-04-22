@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -26,6 +27,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.scheduler.ScheduledEntitiesResositoryJob;
 import com.revenga.rits.front.openits.util.ConfigProperty;
@@ -51,6 +53,9 @@ public class CacheManager {
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
+	
+	@Autowired 
+	VO2UIAdapter vo2uiAdapter;
 	
 	@Autowired
 	VoEntityService voEntityService;
@@ -172,11 +177,47 @@ public class CacheManager {
 		}
 	}
 	
-	public Object getEntityCached(Integer entityId) {
+	public Object getEntitiesCached(Integer entityId) {
 		
 		return entitiesCached.get(entityId);
 	}
 	
+	public Object getEntities(Integer entityId) {
+		
+		List<Map<String, Object>> listEntities = null;
+		
+		listEntities = voDataSourceAdapter.getList(entityId, null);
+		
+		listEntities = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(entityId).getFieldId(), listEntities);
+		
+		return listEntities;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object getEntity(Integer entityId, String field, Object value) {
+		
+		Object entities = null;
+		
+		List<Map<String, Object>> listEntities = (List<Map<String, Object>>) getEntitiesCached(entityId);
+		
+		if (CollectionUtils.isEmpty(listEntities)) {
+			
+			listEntities = voDataSourceAdapter.getList(entityId, null);
+			
+			listEntities = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+					.getById(entityId).getFieldId(), listEntities);
+		}
+		
+		if (!CollectionUtils.isEmpty(listEntities)) {
+			
+			entities = listEntities.stream().filter(e -> e.get(field).equals(value)).findFirst().orElse(null);
+		}
+		
+		return entities;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void updateEntitiesRepository() {
 		
 		Instant instant = Instant.now();
@@ -206,7 +247,10 @@ public class CacheManager {
 								
 								if (data instanceof List<?>) {
 									
-									List<?> list = (List<?>) data;
+									List<?> list = null;
+									
+									list = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+											.getById(entityId).getFieldId(), (List<Map<String, Object>>) data);
 									
 									entitiesCached.put(entityId, list);
 									

@@ -18,27 +18,39 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.core.util.FileUtils;
 import org.codehaus.groovy.control.CompilationFailedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+import com.revenga.rits.front.openits.service.CacheManager;
 
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
+@Service
 public class GroovyManager {
 	
 	Map<String, Pair<GroovyObject, Long>> groovyInstances;
+	
+	@Autowired
+	VO2UIAdapter vo2uiAdapter;
+	
+	@Autowired
+	CacheManager cacheManager;
 
-	private static GroovyManager instance;
-
-	public static GroovyManager getInstance() {
-
-		if (instance == null) {
-
-			instance = new GroovyManager();
-		}
-
-		return instance;
-	}
+//	private static GroovyManager instance;
+//
+//	public static GroovyManager getInstance() {
+//
+//		if (instance == null) {
+//
+//			instance = new GroovyManager();
+//		}
+//
+//		return instance;
+//	}
 
 	private GroovyManager() {
 		
@@ -104,8 +116,8 @@ public class GroovyManager {
 			Class<?> groovy = classLoader
 					.parseClass(FileUtils.fileFromUri(getClass().getClassLoader().getResource(groovyFile).toURI()));
 
-			groovyObject = (GroovyObject) groovy.getDeclaredConstructor(org.apache.logging.log4j.Logger.class)
-					.newInstance(log);
+			groovyObject = (GroovyObject) groovy.getDeclaredConstructor(CacheManager.class, VO2UIAdapter.class, org.apache.logging.log4j.Logger.class)
+					.newInstance(cacheManager, vo2uiAdapter, log);
 			
 			if (groovyObject != null) {
 			

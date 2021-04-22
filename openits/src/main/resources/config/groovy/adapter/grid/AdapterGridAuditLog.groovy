@@ -1,14 +1,19 @@
+package config.groovy.adapter.grid;
+
+import config.groovy.adapter.grid.AdapterGrid;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.revenga.rits.front.openits.service.CacheManager;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-class AdapterGridAuditLog {
+class AdapterGridAuditLog extends AdapterGrid{
 
 	static final String FIELD_ID = "id";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -23,14 +28,13 @@ class AdapterGridAuditLog {
 	static final String FIELD_LOG_SUBTYPE_LABEL_ALIAS = "logSubtypeLabelAlias";
 	static final String FIELD_USER_NAME = "userName";
 
-	org.apache.logging.log4j.Logger log;
-
-	public AdapterGridAuditLog(org.apache.logging.log4j.Logger log) {
-
-		this.log = log;
+	public AdapterGridAuditLog(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
+		
+		super(cacheManager, vo2uiAdapter, log);
 	}
 
-	List<Map<String, Object>> toGridData(VO2UIAdapter vo2uiAdapter, String fieldId, List<Map<String, Object>> entities) {
+	@Override
+	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) {
 
 		List<Map<String, Object>> data = new ArrayList<>();
 

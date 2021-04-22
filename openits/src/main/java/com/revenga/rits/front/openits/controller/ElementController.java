@@ -59,6 +59,13 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getItem(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/hierarchy")
+	@ApiOperation(value = "Get hierarchies", notes = "Get hierarchies")
+	public ResponseEntity<Object> getHierarchies() {
+		
+		return new ResponseEntity<>(elementBO.getHierarchies(), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/createElement")
 	@ApiOperation(value = "Create Element", notes = "Create Element")
 	public ResponseEntity<Object> createElement(@RequestBody Object element) {
@@ -103,5 +110,4 @@ public class ElementController {
 		
 		return new ResponseEntity<>(elementBO.sendCommandElement(commands), HttpStatus.OK);
 	}
-	
 }
