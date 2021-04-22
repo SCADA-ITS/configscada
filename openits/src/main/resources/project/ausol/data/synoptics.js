@@ -700,7 +700,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "CT MAP RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "CUARTOS-TECNICOS-BOCA-RIO-VERDE_v0.14.svg",
+			"BASE_LAYER": "CUARTOS-TECNICOS-BOCA-RIO-VERDE_v0.18.svg",
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -709,11 +709,14 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"CT" : {
-				"items": ["Element:55:1"],
+				"items": ["Element:55:1","Element:55:3","Element:55:4","Element:55:5"],
 				"translation_key": "",
 				"visibility": "visible"
 			}
 		},
-		"Element:55:1": { "x": 925,   "y": 110, "width": 100, "height": 80,  "alias": "RV-CT-ITS-1" },
+		"Element:55:1": { "x": 915,   "y": 150, "width": 100, "height": 80,  "alias": "RV-CT-ITS-1" },
+		"Element:55:3": { "x": 730,   "y": 150, "width": 100, "height": 80,  "alias": "RV-CT-CUARTO_BT" },
+		"Element:55:4": { "x": 680,   "y": 530, "width": 100, "height": 80,  "alias": "RV-CT-GRUPO_PRESION" },
+		"Element:55:5": { "x": 1170,   "y": 530, "width": 100, "height": 80,  "alias": "RV-CT-CUARTO_CGBT" },
 	}
 ];
