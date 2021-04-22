@@ -169,7 +169,7 @@ export default class AlarmMutedModule extends GenericModule {
 			let h = document.documentElement.clientHeight - 200;
 			let w = document.documentElement.clientWidth - 675;
 			util.ui.loadWindow(
-				"LBL_CREATE_MUTE_ALARMS",
+				i18n.t("LBL_CREATE_MUTE_ALARMS"),
 				view,
 				h,
 				w
