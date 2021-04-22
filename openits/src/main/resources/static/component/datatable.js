@@ -33,8 +33,8 @@ const GridOptions = {
 	ROW_ADJUSTEMENT: 21,
 	HEADER_ROW_HEIGHT: 22,
 	SHOW_SELECTED: 23,
-	SHOW_HEADER: 24
-
+	SHOW_HEADER: 24,
+	SHOW_PRINT_EXPORT: 25
 };
 
 const RowAdjustement = {
@@ -737,6 +737,7 @@ export default class DataTable {
 		let resultRefresh = this.getGridOptions(GridOptions.REFRESH_BUTTON);
 		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
 		let resultSelRows = this.getGridOptions(GridOptions.SHOW_SELECTED);
+		let resultPrintExport = this.getGridOptions(GridOptions.SHOW_PRINT_EXPORT);
 
 		let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
 		let resultFilter = undefined;
@@ -802,9 +803,13 @@ export default class DataTable {
 
 			}
 
+			if(resultPrintExport){
+				
 			toolbar.elements.push({ id: "tb_btn-print-" + this.uid, view: "icon", icon: "mdi mdi-printer", value: i18n.t("LBL_TABLE_PRINT"), tooltip: true });
 			toolbar.elements.push({ id: "tb_btn-export-pdf-" + this.uid, view: "icon", icon: "mdi mdi-file-pdf-box", value: i18n.t("LBL_TABLE_EXPORT_PDF"), tooltip: true });
-			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });
+			toolbar.elements.push({ id: "tb_btn-export-xls-" + this.uid, view: "icon", icon: "mdi mdi-file-excel", value: i18n.t("LBL_TABLE_EXPORT_XLS"), tooltip: true });	
+			}
+			
 
 			if (resultSegmented) {
 

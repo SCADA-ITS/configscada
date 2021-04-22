@@ -1,6 +1,8 @@
 import GenericModule from "../modules/genericModule.js";
 import { util } from "../lib/util.js";
 import CronUi from "../component/CronUi.js";
+import SearchDialogBox from "../component/searchDialogBox.js";
+
 
 export default class PlanScheduleModule extends GenericModule {
 
@@ -13,6 +15,8 @@ export default class PlanScheduleModule extends GenericModule {
 		this.requestReport = true;
 		this.disconnectStomp = true;
 		this.closed = false;
+		this.form = {};
+		this.newPlan = null;
 
 		//this.config = JSON.parse(module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_CUSTOM_WINDOW_CONFIG).value);
 		this.config = module.config;
@@ -260,13 +264,14 @@ export default class PlanScheduleModule extends GenericModule {
 	drawComponents() {
 
 		let self = this;
+		let newPlan = self.newPlan;
 
 		let viewMain = {
 			id: this.uid,
 			cols: [
 				{
 					rows: [
-						//getViewHeader(),
+						getViewHeader(),
 						{ height: 20 },
 						getViewContent(),
 						{ height: 20 },
@@ -277,72 +282,111 @@ export default class PlanScheduleModule extends GenericModule {
 			]
 		};
 
+
 		function getViewHeader() {
 
-			if (self.moduleAction.id === self.config.moduleAction.edit) {
-			
-				let viewHeader = {
-
-					id: "viewHeader-" + self.uid,
-					borderless: true,
-					rows: [
-						{
-							id: "view-bar-color-level-" + self.uid,
-							height: 15,
-						},
-						{
-							id: "view-header-info-" + self.uid,
-							height: 80,
-							template: function() {
-
-								let incidentIcon = self.planSchedule.icon;
-
-								if (incidentIcon == undefined) {
-									incidentIcon = "not_found_50.png";
-								}
-								return `<image class="ims-incident-report-icon" src="img/${incidentIcon}" />
-										<div class="ims-incident-report-title">
-											${self.planSchedule.alias} ${self.planSchedule.description}
-										</div>`;
-							}
-						}
-					]
-				};
-
-				return viewHeader;
-			}
+			let header = {};
+			let label = undefined;
+			let description = undefined;
 
 			if (self.moduleAction.id === self.config.moduleAction.add) {
+				label = "LBL_NEW_PLANSCHEDULE";
+				description = "LBL_NEW_PLANSCHEDULE_DESCRIPTION";
 
-				let viewHeader = {
-
-					id: "viewHeader-" + self.uid,
-					borderless: true,
-					rows: [
-						{
-							id: "view-bar-color-level-" + self.uid,
-							height: 15,
-							//css: { "background": self.incidentReport.incidentLevel.color }
-						},
-						{
-							id: "view-header-info-" + self.uid,
-							height: 80,
-							template: function() {
-	
-								return `<image class="ims-incident-report-icon" src="img/not_found_50.png" />
-										<div class="ims-incident-report-title">
-											${$.i18n("LBL_NEW_PLANSCHEDULE")}
-										</div>`;
-							}
-						}
-					]
-				};
-	
-				return viewHeader;
-
+			} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+				label = "LBL_EDIT_PLANSCHEDULE";
+				description = "LBL_EDIT_PLANSCHEDULE_DESCRIPTION";
 			}
 
-		}
+			header = {
+
+				id: "viewHeader-" + self.uid,
+				cols: [
+					{
+						view: "label",
+						label: "<img src='../img/grid/sheduler.png' class='grid-icon'/>",
+						height: 75,
+						css: "userrole-header-icon"
+					},
+					{
+						view: "label",
+						height: 75,
+						id: "label-bottom-" + self.uid,
+						template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
+						css: "userrole-header-label"
+					}
+				]
+			};
+
+			return header;
+		};
+
+		//		function getViewHeader() {
+		//
+		//			if (self.moduleAction.id === self.config.moduleAction.edit) {
+		//			
+		//				let viewHeader = {
+		//
+		//					id: "viewHeader-" + self.uid,
+		//					borderless: true,
+		//					rows: [
+		//						{
+		//							id: "view-bar-color-level-" + self.uid,
+		//							height: 15,
+		//						},
+		//						{
+		//							id: "view-header-info-" + self.uid,
+		//							height: 80,
+		//							template: function() {
+		//
+		//								let incidentIcon = self.planSchedule.icon;
+		//
+		//								if (incidentIcon == undefined) {
+		//									incidentIcon = "not_found_50.png";
+		//								}
+		//								return `<image class="ims-incident-report-icon" src="img/${incidentIcon}" />
+		//										<div class="ims-incident-report-title">
+		//											${self.planSchedule.alias} ${self.planSchedule.description}
+		//										</div>`;
+		//							}
+		//						}
+		//					]
+		//				};
+		//
+		//				return viewHeader;
+		//			}
+		//
+		//			if (self.moduleAction.id === self.config.moduleAction.add) {
+		//
+		//				let viewHeader = {
+		//
+		//					id: "viewHeader-" + self.uid,
+		//					borderless: true,
+		//					rows: [
+		//						{
+		//							id: "view-bar-color-level-" + self.uid,
+		//							height: 15,
+		//							//css: { "background": self.incidentReport.incidentLevel.color }
+		//						},
+		//						{
+		//							id: "view-header-info-" + self.uid,
+		//							height: 80,
+		//							template: function() {
+		//	
+		//								return `<image class="ims-incident-report-icon" src="img/not_found_50.png" />
+		//										<div class="ims-incident-report-title">
+		//											${$.i18n("LBL_NEW_PLANSCHEDULE")}
+		//										</div>`;
+		//							}
+		//						}
+		//					]
+		//				};
+		//	
+		//				return viewHeader;
+		//
+		//			}
+		//
+		//		}
 
 
 		function getViewContent() {
@@ -350,6 +394,7 @@ export default class PlanScheduleModule extends GenericModule {
 			let viewContent = {
 
 				id: "viewContent-" + self.uid,
+				css: "plan-form",
 				rows: [
 					{
 						cols: [
@@ -364,10 +409,25 @@ export default class PlanScheduleModule extends GenericModule {
 			};
 
 			function getPlanScheduleForm(type) {
-				
+
+			let cronExpressionDesc = undefined;
+			
+				if (self.planSchedule && self.planSchedule != undefined ) {
+
+					let translate = prettyCron.toString(self.planSchedule.cronExpression, true);
+
+					if (translate != undefined) {
+
+						cronExpressionDesc = translate;
+					}
+				}
+
+
 				let form = {
 					view: "form",
 					id: "form-edit-core-" + self.uid,
+					elementsConfig: { labelAlign: "left" },
+					css: { "padding-left": "0px !important" },
 					elements: [
 						{
 							view: "text",
@@ -375,7 +435,7 @@ export default class PlanScheduleModule extends GenericModule {
 							name: "alias",
 							value: type === "edit" ? self.planSchedule.alias : "",
 							required: true,
-							labelWidth: 200, 
+							labelWidth: 200
 						},
 						{
 							view: "text",
@@ -383,52 +443,114 @@ export default class PlanScheduleModule extends GenericModule {
 							name: "description",
 							value: type === "edit" ? self.planSchedule.description : "",
 							required: true,
-							labelWidth: 200, 
-						},		
+							labelWidth: 200
+						},
 						{
-							view: "text",
-							label: i18n.t("LBL_PLAN_CRON") ,
-							name: "cronExpression",
-							value: type === "edit" ? self.planSchedule.cronExpression : "",
-							required: true,
-							labelWidth: 200, 
-							on: {
-								"onFocus": (id)=>{
-									let popupid = "cronUiPopup" + self.uid;
-									let cron = new CronUi(id,popupid);
-									webix.ui({
-										id:popupid,
-										view:"popup",	
-										position:"center",
-										close: true,
-										width: 800,
-										body: cron.getComponent(),
-										on: {
-											onHide: (obj)=>{
-												$$(popupid).getChildViews()[0].destructor();
-												$$(popupid).destructor();
-												$$(id).enable();
-											},
-											onShow: (obj)=>{
-												cron.loadData();
-												$$(id).disable();
-											}
-										}
-									}).show();
+							cols: [
+								{
+									view: "text",
+									label: i18n.t("LBL_PLAN_CRON"),
+									name: "cronExpressionDescription",
+									id: "cronExpressionDescription",
+									value: type === "edit" ? cronExpressionDesc : "",
+									required: true,
+									labelWidth: 200,
+									disabled: true
 								}
-							} 
-						},			
+								,
+								{
+									view: "text",
+									label: i18n.t("LBL_PLAN_CRON"),
+									name: "cronExpression",
+									id: "cronExpression",
+									value: type === "edit" ? self.planSchedule.cronExpression : "",
+									required: true,
+									labelWidth: 200,
+									hidden: true
+								},
+								{
+									view: "icon", icon: "wxi-search",
+									on: {
+										onItemClick: () => {
+
+											let popupid = "cronUiPopup" + self.uid;
+											let box = $$("form-edit-core-" + self.uid);
+											let cron = new CronUi(box.config.id, popupid);
+
+											cron.getComponent();
+
+											//											webix.ui({
+											//												id: popupid,
+											//												view: "popup",
+											//												position: "center",
+											//												close: true,
+											//												width: 800,
+											//												body: cron.getComponent()
+											////												on: {
+											////													onHide: (obj) => {
+											////														$$(popupid).getChildViews()[0].destructor();
+											////														$$(popupid).destructor();
+											////														$$(id).enable();
+											////													},
+											////													onShow: (obj) => {
+											////														cron.loadData();
+											////														$$(id).disable();
+											////													}
+											////												}
+											//											}).show();
+
+										}
+									}
+								}
+							]
+
+						},
 						{
-							view: "combo",
-							label: i18n.t("LBL_PLAN"),
-							name: "plan",
-							value: type === "edit" ? self.planSchedule.plan.id : "",
-							required: true,
-							labelWidth: 200, 
-							options: self.planList
-						}													
-					]
+							cols: [
+								{
+									view: "text",
+									label: i18n.t("LBL_PLAN_ID"),
+									name: "planId",
+									value: type === "edit" ? self.planSchedule.plan.id : "",
+									hidden: true,
+									disabled: true,
+									required: true
+								},
+								{
+									view: "text",
+									label: i18n.t("LBL_PLAN"),
+									name: "plan",
+									value: type === "edit" ? self.planSchedule.plan.id : "",
+									required: true,
+									labelWidth: 200,
+									disabled: true
+									//options: self.planList
+								},
+								{
+									view: "icon", icon: "wxi-search",
+									on: {
+										onItemClick: function() {
+
+											newPlan = $$(form.id).getValues();
+											let dialogBox = new SearchDialogBox("LBL_SELECT_PLAN", SearchDialogBox.PLANS, selectPlan);
+											dialogBox.show();
+										}
+									}
+								}
+							]
+
+						}
+					],
+					rules: {
+						"alias": webix.rules.isNotEmpty,
+						"description": webix.rules.isNotEmpty,
+						"cronExpression": webix.rules.isNotEmpty,
+						"planId": webix.rules.isNotEmpty,
+						"plan": webix.rules.isNotEmpty
+					}
 				}
+
+				self.form = form;
 				return form;
 			}
 
@@ -442,17 +564,17 @@ export default class PlanScheduleModule extends GenericModule {
 						{ height: 40 },
 						{
 							cols: [
-								{ width: 40 },
+								{ width: 60 },
 								{
 									borderless: true,
 									rows: [
 										getPlanScheduleForm("edit")
 									]
 								},
-								{ width: 40 }
+								{ width: 60 }
 							]
 						},
-						{}
+						{ height: 40 }
 					]
 				};
 
@@ -469,17 +591,17 @@ export default class PlanScheduleModule extends GenericModule {
 						{ height: 40 },
 						{
 							cols: [
-								{ width: 40 },
+								{ width: 60 },
 								{
 									borderless: true,
 									rows: [
 										getPlanScheduleForm("add")
 									]
 								},
-								{ width: 40 }
+								{ width: 60 }
 							]
 						},
-						{}
+						{ height: 40 }
 					]
 				};
 
@@ -488,90 +610,124 @@ export default class PlanScheduleModule extends GenericModule {
 
 			return viewContent;
 		}
-		
+
+
+		function selectPlan(selection) {
+
+			newPlan.plan = selection[0].alias;
+			newPlan.planId = selection[0].id;
+
+			self.newPlan = newPlan;
+			self.setValues();
+		}
+
+
 		function getToolbarActions() {
 
 			let viewToolbarActions = {
-				view: "toolbar",
+				//view: "toolbar",
 				height: 45,
 				borderless: true,
-				elements: [
-					{ 
-						view: "button",
-						css: "dialog-cancel", 
-						width: 130,
-						height: 35,
-						label: i18n.t("LBL_CANCEL"),
-						on: {
-							onItemClick() {
-							
-								let container = $$(self.args.containerId);
+				rows: [
+					{
+						cols: [
+							{ width: 20 },
+							{
+								view: "button",
+								css: "dialog-cancel",
+								width: 130,
+								height: 41,
+								label: i18n.t("LBL_CANCEL"),
+								on: {
+									onItemClick() {
 
-								if (container) {
+										let container = $$(self.args.containerId);
 
-									container.close();
+										if (container) {
+
+											container.close();
+										}
+									}
 								}
-							}
-						}
+							},
+							{},
+							{
+								view: "button",
+								css: "dialog-accept",
+								width: 130,
+								height: 41,
+								label: i18n.t("LBL_ACCEPT"),
+								on: {
+									onItemClick() {
+
+										let data = $$("form-edit-core-" + self.uid).getValues();
+										let formValidate = $$("form-edit-core-" + self.uid).validate({ disabled: true });
+										const CONTENT_TYPE_JSON = { "Content-type": "application/json" };
+
+										if (formValidate) {
+
+											if (self.moduleAction.id === self.config.moduleAction.add) {
+
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.save, {
+													planSchedules: [
+														{
+															alias: data.alias,
+															description: data.description,
+															action: "START",
+															planId: data.planId,
+															cronExpression: data.cronExpression
+														}
+													]
+
+												}).then(function(data2) {
+													let container = $$(self.args.containerId);
+
+													if (container) {
+
+														container.close();
+													}
+												});
+											}
+
+											if (self.moduleAction.id === self.config.moduleAction.edit) {
+
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.save, {
+													planSchedules: [
+														{
+															id: self.planSchedule.id,
+															alias: data.alias,
+															description: data.description,
+															action: "RESET",
+															planId: data.planId,
+															cronExpression: data.cronExpression
+														}
+													]
+												}).then(function(data2) {
+													let container = $$(self.args.containerId);
+
+													if (container) {
+
+														container.close();
+													}
+												});
+											}
+
+										} else {
+
+											webix.alert({
+												title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
+												text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
+												type: "alert-error",
+												width: 600
+											});
+										}
+									}
+								}
+							},
+							{ width: 20 }
+						]
 					},
-					{},
-					{ 
-						view: "button", 
-						css: "dialog-accept",
-						width: 130,
-						height: 35,
-						label: i18n.t("LBL_ACCEPT"),
-						on: {
-							onItemClick() {
-								
-								let data = $$("form-edit-core-" + self.uid).getValues();
-											
-								const CONTENT_TYPE_JSON = {"Content-type": "application/json"};
-								if(self.moduleAction.id === self.config.moduleAction.add) {
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.save, {
-										planSchedules: [
-											{ 
-												alias: data.alias,
-												description: data.description,
-												action: "START",
-												planId: data.plan,
-												cronExpression: data.cronExpression
-											}
-										]
-									}).then(function(data2) {
-										let container = $$(self.args.containerId);
-
-										if (container) {
-
-											container.close();
-										}
-									});
-								}
-								if(self.moduleAction.id === self.config.moduleAction.edit) {
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.save, {
-										planSchedules: [
-											{  
-												id: self.planSchedule.id,
-												alias: data.alias,
-												description: data.description,
-												action: "RESET",
-												planId: data.plan,
-												cronExpression: data.cronExpression
-											}
-										]
-									}).then(function(data2) {
-										let container = $$(self.args.containerId);
-
-										if (container) {
-
-											container.close();
-										}
-									});
-								}
-
-							}
-						}
-					}
+					{}
 				]
 			};
 
@@ -580,6 +736,17 @@ export default class PlanScheduleModule extends GenericModule {
 
 		webix.ui(viewMain, $$(this.uid));
 	}
+
+
+	setValues() {
+
+		let self = this;
+		let form = self.form;
+		let newPlan = self.newPlan;
+
+		$$(form.id).setValues(newPlan);
+	}
+
 
 	restAction(endpoint) {
 

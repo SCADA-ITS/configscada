@@ -1556,6 +1556,10 @@
 }
 */
 
+.cronui-tab {
+	width: 120px !important;
+}
+
 .webix_accordionitem .webix_accordionitem_header {
 	background-color: var(--blue-mid-opacity-7);
 	color: white;
@@ -1616,6 +1620,10 @@
 
 .dialog-accept .webix_button:hover{
     background: rgba(78 154 6 / 0.9) !important;
+}
+
+.dialog-accept .webix_button .webix_icon_btn{
+	color: white;
 }
 
 .dialog-cancel .webix_button{
@@ -1799,19 +1807,22 @@
 
 
 .alarm-view-title-label {
-	font-family: HelveticaNeue-Medium;
+	/*font-family: HelveticaNeue-Medium;*/
+	font-family: Roboto;
 	font-size: 13px;
 	font-weight: 500;
 	font-stretch: normal;
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	color: #333435;
+	/*color: #333435;*/
+	color: var(--blue-strong);
   }
 
 .alarm-view-rectangle-back {
-	margin: 10px 25px 22px 14px;
-	padding: 6px 0 6px 6px;
+	/*margin: 10px 25px 22px 14px;*/
+	border: none;
+	/*padding: 6px 0 6px 6px;*/
 	border-radius: 4px;
 	background-color: rgba(198, 211, 231, 0.3);
 }
@@ -1824,18 +1835,21 @@
 	font-style: normal;
 	line-height: 1.17;
 	letter-spacing: normal;
-	color: #475269;
+	/*color: #475269;*/
+	color:var(--blue-mid);
+	padding: 7px 5px;
 }
 
 .alarm-view-header-details-text {
 	font-family: Roboto;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 500;
 	font-stretch: normal;
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	color: #92abcf;
+	/*color: #92abcf;*/
+	color: var(--blue-strong);
 }
 
 .alarm-view-text {
@@ -1846,7 +1860,8 @@
 	font-style: normal;
 	line-height: normal;
 	letter-spacing: normal;
-	color: #0f1724;
+	/*color: #0f1724;*/
+	color:  var(--blue-strong);
 }
 
 .alarm-view-user_label {
@@ -1858,6 +1873,27 @@
 	line-height: normal;
 	letter-spacing: normal;
 	color: #0f1724;
+}
+
+.alarm-borders{
+	width: 742px !important;	
+	border-left: 1px solid #e2e2e2; 
+	border-right: 1px solid #e2e2e2; 
+
+}
+
+.alarm-borders-top {
+	width: 742px !important;	
+	border-top: 1px solid #e2e2e2; 
+	border-left: 1px solid #e2e2e2; 
+	border-right: 1px solid #e2e2e2; 
+}
+
+.alarm-borders-bottom {
+	width: 742px !important;	
+	border-bottom: 1px solid #e2e2e2; 
+	border-left: 1px solid #e2e2e2; 
+	border-right: 1px solid #e2e2e2; 
 }
 
 .userrole-header-icon {
@@ -1898,14 +1934,24 @@
 	height: 325px !important;
 	border: 1px solid var(--blue-mid-opacity-3) !important;
 	margin: 6px 0px;
-
-	
 }
 
 .role-form .webix_inp_label {
 	color: #0f1724;
 	font-size: 13px ;
 	padding-left: 75px;
+}
+
+.plan-form{
+	width: 724px !important;
+	height: 290px !important;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
+	margin: 6px 0px;
+}
+
+.plan-form .webix_inp_label {
+	color: #0f1724;
+	font-size: 13px ;
 }
 
 .webix_nav_panel {

@@ -925,7 +925,26 @@ export let util = {
 
 				return (actualTimeMs > data ? null : data);
 			}
+		},
+		cronDescription(cronExpression) {
+
+		let translate = prettyCron.toString(cronExpression, true);
+
+		if (translate != undefined) {
+
+			return translate;
 		}
+
+	},
+		getNextExec(cronExpression) {
+
+		let nextDate = moment(prettyCron.getNextDate(cronExpression, true)).format("DD/MM/YYYY HH:mm:ss");
+
+		if (nextDate != undefined) {
+
+			return nextDate
+		}
+	}
 	},
 
 	toLocaleString(ts) {

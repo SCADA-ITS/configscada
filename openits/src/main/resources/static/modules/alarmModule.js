@@ -1,5 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
 import InputDialogBox from "../component/inputDialogBox.js";
+import CalendarDialogBox from "../component/calendarDialogBox.js";
 import { util } from "../lib/util.js";
 
 export default class AlarmModule extends GenericModule {
@@ -281,16 +282,19 @@ export default class AlarmModule extends GenericModule {
 
 	drawComponents = () => {
 
-		const getAlarmRecognizedIcon = (alarm) => {
-			
-			const NO_RECOGNIZED = "LBL_NO" ;
-			const YES_RECOGNIZED = "LBL_YES" ;
+		let self = this;
+		let alarmWindow = $$(self.args.containerId);
 
-			let recognize = alarm.recognized !== undefined && alarm.recognized !== null ? true : false ;
-			let icon = recognize ? "./img/grid/bell_recognized.png" : "./img/grid/bell_no_recognized.png" ;
-			let vlabel = recognize ? YES_RECOGNIZED : NO_RECOGNIZED ;
-			let user = alarm.recognizedUser !== undefined && alarm.recognizedUser !== null ? alarm.recognizedUser : null ;
-			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "" ;
+		const getAlarmRecognizedIcon = (alarm) => {
+
+			const NO_RECOGNIZED = "LBL_NO";
+			const YES_RECOGNIZED = "LBL_YES";
+
+			let recognize = alarm.recognized !== undefined && alarm.recognized !== null ? true : false;
+			let icon = recognize ? "./img/grid/bell_recognized.png" : "./img/grid/bell_no_recognized.png";
+			let vlabel = recognize ? YES_RECOGNIZED : NO_RECOGNIZED;
+			let user = alarm.recognizedUser !== undefined && alarm.recognizedUser !== null ? alarm.recognizedUser : null;
+			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "";
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 
 			let view = {
@@ -374,9 +378,9 @@ export default class AlarmModule extends GenericModule {
 					},
 					{
 						width: 130,
-						view:"label", 
-						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`, 
-						align:"left",
+						view: "label",
+						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`,
+						align: "left",
 						height: 27
 					},
 					{}
@@ -420,258 +424,561 @@ export default class AlarmModule extends GenericModule {
 			return view;
 		}
 
+		//		let viewMain = {
+		//			id: this.uid,
+		//			cols: [
+		//				{
+		//					//height: 250,
+		//					rows: [
+		//						{
+		//			
+		//							cols: [
+		//								{																			
+		//									view:"label", 
+		//									label: `<div class="title"><i style="color:#92abcf; font-size: 2em;" class="mdi mdi-view-headline"></i></div>`, 
+		//									align:"center",
+		//									height: 50,
+		//									width: 56 
+		//								},
+		//								{   
+		//									view:"label", 
+		//									css: "alarm-view-header-details-text",
+		//									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`, 
+		//									align:"left",
+		//									height: 50
+		//								},
+		//								{}
+		//							]
+		//						},
+		//						{ height: 20 },
+		//						{
+		//							cols:[
+		//								{
+		//									width: 56
+		//								},
+		//								{
+		//									width: 194,
+		//									rows: [
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_ACTIVATION")}</span></div>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_RECOGNIZED")}</span></div>`, 
+		//											align:"left",
+		//											height: 27
+		//										},
+		//									]
+		//								},
+		//								{
+		//									rows: [
+		//										{
+		//											view:"label", 
+		//											label: `<span class="alarm-view-text">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES) }</span>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											label: `<span class="alarm-view-text">${this.alarmConfigLabelAlias}</span>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											label: `<span class="alarm-view-text">${this.targetElementTypeAlias}</span>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											label: `<span class="alarm-view-text">${this.targetElementAlias}</span>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											label: `<span class="alarm-view-text">${i18n.t(this.alarmLevelAlias)}</span>`, 
+		//											align:"left",
+		//											height: 20
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										getAlarmRecognizedIcon(this.alarm)
+		//									]
+		//								},
+		//								{}
+		//							]
+		//						},
+		//						{ height: 20 },
+		//						{
+		//							height: 45,
+		//							cols:[
+		//								{
+		//									width: 56
+		//								},
+		//								{
+		//									cols:[
+		//										{
+		//											css: "alarm-view-rectangle-back",
+		//											template: `<div class="alarm-view-comments">${this.alarm.recognizedComments}</div>`, 
+		//											hidden: this.alarm.recognizedComments !== undefined && this.alarm.recognizedComments !== null ? false : true ,
+		//										},
+		//										{
+		//											width: 20
+		//										}
+		//									]
+		//								}
+		//							]
+		//						},
+		//						{ height: 10 },
+		//						{
+		//							cols:[
+		//								{
+		//									width: 56
+		//								},
+		//								{
+		//									width: 194,
+		//									rows: [
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`, 
+		//											align:"left",
+		//											height: 27
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
+		//											align:"left",
+		//											height: 27
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//										{
+		//											view:"label", 
+		//											css:"alarm-view-title-label",
+		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_STATE")}</span></div>`, 
+		//											align:"left",
+		//											height: 27
+		//										},
+		//										{
+		//											height: 10
+		//										},
+		//									]
+		//								},
+		//								{
+		//									rows: [
+		//										getAlarmLevelIcon(this.alarmLevelId),
+		//										{
+		//											height: 10
+		//										},
+		//										getAlarmTypeIcon(this.alarmLevelId),
+		//										{
+		//											height: 10
+		//										},
+		//										getAlarmDeactivationIcon(this.alarm),
+		//										{
+		//											height: 10
+		//										}
+		//									]
+		//								},
+		//								{}
+		//							]
+		//						},
+		//						{ height: 20 },
+		//						{
+		//							height: 45,
+		//							cols:[
+		//								{
+		//									width: 56
+		//								},
+		//								{
+		//									cols:[
+		//										{
+		//											css: "alarm-view-rectangle-back",
+		//											template: `<div class="alarm-view-comments">${this.alarm.deactivationComments}</div>`, 	
+		//											hidden: this.alarm.deactivationComments !== undefined && this.alarm.deactivationComments !== null ? false : true ,	
+		//										},
+		//										{
+		//											width: 20
+		//										}
+		//									]
+		//								}
+		//							]
+		//						},
+		//						{ height: 10 },
+		//						{ width: 680 }
+		//					]
+		//				},
+		//			]
+		//		};
+
+
+		function paintFieldRecognizedComments(alarm) {
+
+			const LABEL_PREFIX = "LBL_";
+			let recognizedComments = {};
+
+			let label = alarm.recognizedComments ? (alarm.recognizedComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.recognizedComments) : alarm.recognizedComments) : undefined;
+
+			recognizedComments = {
+				css: "alarm-borders",
+				hidden: !label,
+				rows: [
+					{ height: 5 },
+					{
+						cols: [
+							{ width: 42 },
+							{
+								height: 55,
+								width: 626,
+								css: "alarm-view-rectangle-back",
+								template: `<div class="alarm-view-comments">${label}</div>`
+							},
+							{ width: 42 }
+						]
+					}
+				]
+			};
+
+			return recognizedComments;
+		}
+
+
+		function paintFieldDesactivationComments(alarm) {
+
+			const LABEL_PREFIX = "LBL_";
+			let deactivationComments = {};
+
+			let label = alarm.deactivationComments ? (alarm.deactivationComments.startsWith(LABEL_PREFIX) ? i18n.t(alarm.deactivationComments) : alarm.deactivationComments) : undefined;
+
+
+			deactivationComments = {
+				css: "alarm-borders-bottom",
+				hidden: !label,
+				rows: [
+					{ height: 5 },
+					{
+						cols: [
+							{ width: 42 },
+							{
+								height: 55,
+								width: 626,
+								css: "alarm-view-rectangle-back",
+								template: `<div class="alarm-view-comments">${label}</div>`
+							},
+							{ width: 42 }
+						]
+					},
+					{ height: 5 }
+				]
+			};
+
+			return deactivationComments;
+		}
+
+
+		function windowHeight(alarm) {
+
+			let customHeight = undefined;
+
+			if (alarm.recognizedComments && alarm.deactivationComments) {
+
+				customHeight = 645;
+
+			} else if (alarm.recognizedComments || alarm.deactivationComments) {
+
+				customHeight = 585;
+
+			} else {
+
+				customHeight = 520;
+			}
+
+			alarmWindow.config.height = customHeight + 50;
+			return customHeight;
+		}
+
+
+		function cssClassToBottom(alarm) {
+
+			if (alarm.deactivationComments) {
+
+				return "alarm-borders";
+
+			} else {
+
+				return "alarm-borders-bottom";
+			}
+		}
+
+
 		let viewMain = {
 			id: this.uid,
 			cols: [
 				{
-					//height: 250,
+					width: 744,
+					height: windowHeight(this.alarm),
 					rows: [
 						{
 							cols: [
-								{																			
-									view:"label", 
-									label: `<div class="title"><i style="color:#92abcf; font-size: 2em;" class="mdi mdi-view-headline"></i></div>`, 
-									align:"center",
+								{
+									view: "label",
+									label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-view-headline"></i></div>`,
+									align: "center",
 									height: 50,
-									width: 56 
+									width: 56
 								},
-								{   
-									view:"label", 
+								{
+									view: "label",
 									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`, 
-									align:"left",
+									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`,
+									align: "left",
 									height: 50
 								},
 								{}
 							]
-						},
-						{ height: 20 },
+						}
+						,
 						{
-							cols:[
-								{
-									width: 56
-								},
+							css: "alarm-borders-top",
+							cols: [
+								{ width: 42 },
 								{
 									width: 194,
 									rows: [
+										{ height: 16 },
 										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_ACTIVATION")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_ACTIVATION")}</span></div>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_RECOGNIZED")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_RECOGNIZED")}</span></div>`,
+											align: "left",
 											height: 27
 										},
 									]
 								},
 								{
 									rows: [
+										{ height: 16 },
 										{
-											view:"label", 
-											label: `<span class="alarm-view-text">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES) }</span>`, 
-											align:"left",
+											view: "label",
+											label: `<span class="alarm-view-text">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES)}</span>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											label: `<span class="alarm-view-text">${this.alarmConfigLabelAlias}</span>`, 
-											align:"left",
+											view: "label",
+											label: `<span class="alarm-view-text">${this.alarmConfigLabelAlias}</span>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											label: `<span class="alarm-view-text">${this.targetElementTypeAlias}</span>`, 
-											align:"left",
+											view: "label",
+											label: `<span class="alarm-view-text">${this.targetElementTypeAlias}</span>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											label: `<span class="alarm-view-text">${this.targetElementAlias}</span>`, 
-											align:"left",
+											view: "label",
+											label: `<span class="alarm-view-text">${this.targetElementAlias}</span>`,
+											align: "left",
 											height: 20
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											label: `<span class="alarm-view-text">${i18n.t(this.alarmLevelAlias)}</span>`, 
-											align:"left",
+											view: "label",
+											label: `<span class="alarm-view-text">${i18n.t(this.alarmLevelAlias)}</span>`,
+											align: "left",
 											height: 20
 										},
-										{
-											height: 10
-										},
+										{ height: 24 },
 										getAlarmRecognizedIcon(this.alarm)
 									]
-								},
-								{}
-							]
-						},
-						{ height: 20 },
-						{
-							height: 45,
-							cols:[
-								{
-									width: 56
-								},
-								{
-									cols:[
-										{
-											css: "alarm-view-rectangle-back",
-											template: `<div class="alarm-view-comments">${this.alarm.recognizedComments}</div>`, 
-											hidden: this.alarm.recognizedComments !== undefined && this.alarm.recognizedComments !== null ? false : true ,
-										},
-										{
-											width: 20
-										}
-									]
 								}
 							]
 						},
-						{ height: 10 },
+						paintFieldRecognizedComments(this.alarm),
 						{
-							cols:[
-								{
-									width: 56
-								},
+							css: cssClassToBottom(this.alarm),
+							height: 155,
+							cols: [
+								{ width: 42 },
 								{
 									width: 194,
 									rows: [
+										{ height: 24 },
 										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`,
+											align: "left",
 											height: 27
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
+											view: "label",
+											css: "alarm-view-title-label",
 											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
-											align:"left",
+											align: "left",
 											height: 27
 										},
+										{ height: 24 },
 										{
-											height: 10
-										},
-										{
-											view:"label", 
-											css:"alarm-view-title-label",
-											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_STATE")}</span></div>`, 
-											align:"left",
+											view: "label",
+											css: "alarm-view-title-label",
+											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_STATE")}</span></div>`,
+											align: "left",
 											height: 27
 										},
-										{
-											height: 10
-										},
+
 									]
 								},
 								{
 									rows: [
+										{ height: 24 },
 										getAlarmLevelIcon(this.alarmLevelId),
-										{
-											height: 10
-										},
+										{ height: 24 },
 										getAlarmTypeIcon(this.alarmLevelId),
-										{
-											height: 10
-										},
-										getAlarmDeactivationIcon(this.alarm),
-										{
-											height: 10
-										}
-									]
-								},
-								{}
-							]
-						},
-						{ height: 20 },
-						{
-							height: 45,
-							cols:[
-								{
-									width: 56
-								},
-								{
-									cols:[
-										{
-											css: "alarm-view-rectangle-back",
-											template: `<div class="alarm-view-comments">${this.alarm.deactivationComments}</div>`, 	
-											hidden: this.alarm.deactivationComments !== undefined && this.alarm.deactivationComments !== null ? false : true ,	
-										},
-										{
-											width: 20
-										}
+										{ height: 24 },
+										getAlarmDeactivationIcon(this.alarm)
 									]
 								}
 							]
 						},
-						{ height: 10 },
-						{ width: 680 }
+						paintFieldDesactivationComments(this.alarm),
+						{ height: 20 },
+						{
+							cols: [
+								{ width: 600 },
+								{
+									view: "button",
+									css: "dialog-cancel",
+									height: 41,
+									width: 130,
+									label: i18n.t("LBL_CLOSE"),
+									on: {
+
+										onItemClick() {
+
+											$$(alarmWindow).close();
+										}
+									}
+								},
+								{}
+							]
+						}
 					]
-				},
+				}
 			]
 		};
 
