@@ -438,26 +438,6 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
-			"PULSADOR" : {
-				"items": ["Element:58:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"SMOKE_DETECTOR" : {
-				"items": ["Element:59:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"SIRENA" : {
-				"items": ["Element:60:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"FIRE_DET_CT" : {
-				"items": ["Element:61:1"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
 			"SAI" : {
 				"items": ["Element:65:1"],
 				"translation_key": "",
@@ -485,14 +465,7 @@ export let synopticData= [
 		"Element:56:3": { "x": 820,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CSV" },
 		"Element:56:4": { "x": 620,   "y": 15, "width": 130, "height": 200,  "alias": "RV-CGBT" },
 
-		"Element:58:1": { "x": 1640,   "y": -15, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 
-		"Element:59:1": { "x": 150,   "y": 700, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
-
-		"Element:60:1": { "x": 900,   "y": 100, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
-
-		"Element:61:1": { "x": 150,   "y": 200, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
-		
 		"Element:65:1": { "x": 1640,   "y": 475, "width": 120, "height": 120,  "alias": "RV-SAI-1" },
 
 		"Element:70:1": { "x": 1640,   "y": 675, "width": 22, "height": 27,  "alias": "RV-ANALIZADOR_RED-1" },
@@ -718,5 +691,118 @@ export let synopticData= [
 		"Element:55:3": { "x": 730,   "y": 150, "width": 100, "height": 80,  "alias": "RV-CT-CUARTO_BT" },
 		"Element:55:4": { "x": 680,   "y": 530, "width": 100, "height": 80,  "alias": "RV-CT-GRUPO_PRESION" },
 		"Element:55:5": { "x": 1170,   "y": 530, "width": 100, "height": 80,  "alias": "RV-CT-CUARTO_CGBT" },
-	}
+	},
+	{
+		"id":"synopticCT_BT",
+		"parentId":"Element:55:3",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "CT-1_v0.1.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"PULSADOR" : {
+				"items": ["Element:58:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SMOKE_DETECTOR" : {
+				"items": ["Element:59:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+
+		"Element:58:1": { "x": 155,   "y": -20, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
+
+		"Element:59:1": { "x": 550,   "y": 790, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },		
+	},
+	{
+		"id":"synopticCT_GRUPO_PRESION",
+		"parentId":"Element:55:4",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "CT UNIFILAR GRUPO PCI_v0.1.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"PULSADOR" : {
+				"items": ["Element:58:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SMOKE_DETECTOR" : {
+				"items": ["Element:59:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SIRENA" : {
+				"items": ["Element:60:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+
+		"Element:58:2": { "x": 155,   "y": -20, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
+
+		"Element:59:2": { "x": 550,   "y": 790, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
+
+		"Element:60:1": { "x": 1500,   "y": 90, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
+		
+	},
+	{
+		"id":"synopticCT_CGBT",
+		"parentId":"Element:55:5",
+		"ExclusiveLayers": false,
+		"tittle": "RIO VERDE",
+		"BaseLayers": {
+			"BASE_LAYER": "CT-3_v0.1.svg"
+		},
+		"Layers": {
+			"BASE_LAYER": {
+				"items": [],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"PULSADOR" : {
+				"items": ["Element:58:3"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SMOKE_DETECTOR" : {
+				"items": ["Element:59:3"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"SIRENA" : {
+				"items": ["Element:60:2"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
+			"FIRE_DET_CT" : {
+				"items": ["Element:61:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			}
+		},
+
+		"Element:58:3": { "x": 155,   "y": -20, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-3" },
+
+		"Element:59:3": { "x": 550,   "y": 790, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-3" },
+
+		"Element:60:2": { "x": 1500,   "y": 90, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-2" },
+
+		"Element:61:1": { "x": 1700,   "y": 500, "width": 100, "height": 100,  "alias": "RV-CT-FIRE-DET-1" },
+		
+	},
 ];
