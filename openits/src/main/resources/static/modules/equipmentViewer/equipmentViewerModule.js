@@ -252,7 +252,14 @@ export default class EquipmentViewerModule extends GenericModule {
 			let viewMainTreeHierarchy = {
 				id: "view-main-tree-hierarchy-" + self.uid,
 				hidden: viewMainTreeHierarchyHidden,
-				header: i18n.t("LBL_EQUIPMENT_HIERARCHY"),
+				//header: i18n.t("LBL_EQUIPMENT_HIERARCHY"),
+				header: function() {
+					
+					return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t("LBL_COMPOSITION")}</span>
+							</div>`;
+				},
 				body: {
 					width: TREE_PANEL_WIDTH,
 					rows: [getViewTreeHierarchy(element)]

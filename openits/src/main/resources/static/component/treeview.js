@@ -287,6 +287,7 @@ export default class TreeView {
 					onAfterSelect: function(id) {
 					    
 						let item = this.getItem(id);
+						let currentContext = this;
 						
 						if (item && !multiSelect) {
 							
@@ -297,7 +298,10 @@ export default class TreeView {
 								// Item selected
 								if (selectedItem && self.events[TreeView.EventTypes.ON_SELECT_ITEM]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item.id);
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item.id, function(value) {
+									
+										self.enable(value, currentContext);
+									});
 								}
 								// Folder selected
 								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
@@ -426,6 +430,23 @@ export default class TreeView {
 		}
 		
 		return checkedItems;
+	}
+	
+	enable(value, context) {
+		
+		let tree = context ? context : $$("tree-" + this.uid);
+			
+		if (tree) {
+			
+			if (value) {
+									
+				tree.enable();
+			} 
+			else {
+				
+				tree.disable();
+			}	
+		}
 	}
 	
 	select(id) {

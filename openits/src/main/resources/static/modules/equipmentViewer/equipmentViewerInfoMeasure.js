@@ -206,6 +206,7 @@ class MeasureGroup {
 		
 			return {
 				view: "carousel",
+				borderless: true,
 			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
 				navigation:{
 				    type: "side",
@@ -304,10 +305,10 @@ export default class EquipmentViewerInfoMeasure {
 			id: "equipmentViewerInfoMeasure-main-" + self.uid,
 			rows: [
 				{ height: 10},
-				{ 
+				{
 					cols: [
 						{ width: 1 },
-						{ 
+						{
 							rows: [viewSegmented, { height: 10 }, viewMultiview, { height: 10 }]
 						},		
 						{ width: 1 }

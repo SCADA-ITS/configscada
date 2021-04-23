@@ -101,9 +101,14 @@ export default class ListView {
 					on: {
 						onAfterSelect: function() {
 							
+							let currentContext = this;
+							
 							if (self.events && self.events[ListView.EventTypes.ON_SELECT_ROW]) {
 
-								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true), this);
+								eval(self.events[ListView.EventTypes.ON_SELECT_ROW])(this.getSelectedId(true), function(value) {
+									
+									self.enable(value, currentContext);
+								});
 							}
 						}
 					}
@@ -157,6 +162,23 @@ export default class ListView {
 		}
 
 		return selectedItems;
+	}
+	
+	enable(value, context) {
+		
+		let list = context ? context : $$("list-" + this.uid);
+		
+		if (list) {
+			
+			if (value) {
+									
+				list.enable();
+			} 
+			else {
+				
+				list.disable();
+			}	
+		}
 	}
 	
 	select(id) {

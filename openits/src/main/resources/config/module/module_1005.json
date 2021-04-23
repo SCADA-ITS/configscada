@@ -3,11 +3,16 @@
 	    "elements": 100501,
 	    "100501": {
 	    	"ignoreSourceFields": ["targetElementTypeId", "targetElementTypeAlias", "targetElementId", "targetElementAlias"],
-	    	"ignoreCommandModuleActions": [100501]
+	    	"ignoreCommandModuleActions": [101402]
 	    }
 	},
 	"adapter": "ws.alarm.getList",
 	"restEndpoint": "alarms",
+	"restEndpoints": {
+		"alarms": "alarms",
+		"tree": "trees/${id}",
+		"grid": "grids/${id}"
+	},
 	"topic": "/topic/alarm.>",
 	"gridNoRecognized": 1004,
 	"gridRecognized": 1005,

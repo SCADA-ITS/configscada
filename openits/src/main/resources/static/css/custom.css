@@ -1561,42 +1561,44 @@
 }
 
 .webix_accordionitem .webix_accordionitem_header {
-	background-color: var(--blue-mid-opacity-7);
-	color: white;
-	height: 23px !important;
+	background-color: var(--blue-soft-opacity-1);
 }
 
 .webix_accordionitem_label {
-    padding-left: 12px;
-    margin-top: -10px;
-    font-size: 14px;
-    font-weight: 500;
+    font-weight: lighter;
+    color: var(--blue-text-default);
 }
 
 .webix_accordionitem .webix_accordionitem_header .webix_accordionitem_button{
-	color: white;
-	margin-top: -10px;
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem .webix_accordionitem_header:hover,
 .webix_accordionitem .webix_accordionitem_header:focus {
-	background-color: var(--blue-mid-opacity-7);
+	background-color: var(--blue-soft-opacity-2);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header, .webix_accordionitem.collapsed .webix_accordionitem_header {
-	color: white;
-	background: var(--blue-mid-opacity-7);
+	background: var(--blue-soft-opacity-1);
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header .webix_accordionitem_button, .webix_accordionitem.collapsed .webix_accordionitem_header .webix_accordionitem_button {
-	color: white;
+	color: var(--blue-text-default);
 }
 
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header:hover,
 .webix_accordionitem.collapsed .webix_accordionitem_header:hover,
 .webix_accordionitem.horizontal.collapsed .webix_accordionitem_header:focus,
 .webix_accordionitem.collapsed .webix_accordionitem_header:focus {
-  background-color: var(--blue-mid-opacity-7);
+  background-color: var(--blue-soft-opacity-2);
+  color: var(--blue-text-default);
+}
+
+.webix_accordionitem.horizontal.collapsed .webix_accordionitem_header .webix_accordionitem_label .webix_icon, 
+.webix_accordionitem.collapsed .webix_accordionitem_header .webix_accordionitem_label .webix_icon {
+    color: var(--blue-text-default);
 }
 
 .webix_view.webix_control .webix_disabled_box .webix_button {

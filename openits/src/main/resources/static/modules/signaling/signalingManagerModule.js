@@ -252,13 +252,13 @@ export default class signalingManagerModule extends GenericModule {
 			return view;
 		}
 
-		function fillData(elementTypeArray, listView) {
+		function fillData(elementTypeArray, callbackEnable) {
 
 			let elementTypeId;
 
-			if (listView) {
+			if (callbackEnable) {
 
-				listView.disable();
+				callbackEnable(false);
 			}
 
 			if (Array.isArray(elementTypeArray) && elementTypeArray.length == 1) {
@@ -272,9 +272,9 @@ export default class signalingManagerModule extends GenericModule {
 
 			fillViewListElements();
 
-			if (listView) {
+			if (callbackEnable) {
 
-				listView.enable();
+				callbackEnable(true);
 			}
 		}
 

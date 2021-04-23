@@ -38,11 +38,11 @@ export default class IncidentWizardDrawContent {
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.ROW_HEIGHT] = 41;
 				
-				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, listView) {
+				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 					
-					if (listView) {
+					if (callbackEnable) {
 					
-						listView.disable();
+						callbackEnable(false);
 					}
 					
 					webix.extend($$("view-locations-" + parent.uid), webix.ProgressBar);
@@ -76,9 +76,9 @@ export default class IncidentWizardDrawContent {
 							$$("view-locations-" + parent.uid).hideProgress();
 						}	
 						
-						if (listView) {
+						if (callbackEnable) {
 					
-							listView.enable();	
+							callbackEnable(true);
 						}
 					});
 					
@@ -214,11 +214,11 @@ export default class IncidentWizardDrawContent {
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.ROW_HEIGHT] = 41;
 				
-				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, listView) {
+				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 					
-					if (listView) {
+					if (callbackEnable) {
 					
-						listView.disable();	
+						callbackEnable(false);	
 					}
 					
 					webix.extend($$("view-incident-types-" + parent.uid), webix.ProgressBar);
@@ -273,9 +273,9 @@ export default class IncidentWizardDrawContent {
 							
 							$$("view-incident-types-" + parent.uid).hideProgress();
 							
-							if (listView) {
+							if (callbackEnable) {
 					
-								listView.enable();	
+								callbackEnable(true);	
 							}	
 						});
 					}
