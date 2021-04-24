@@ -20,12 +20,8 @@ public class MapLayerElementZoom implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	private Integer height;
-
 	@Column(name="horizontal_flip")
 	private Boolean horizontalFlip;
-
-	private Integer width;
 
 	@Column(name="zoom_lower")
 	private Integer zoomLower;
@@ -37,6 +33,10 @@ public class MapLayerElementZoom implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="graphic_icon_id")
 	private GraphicIcon graphicIcon;
+
+	private Float latitude;
+
+	private Float longitude;
 
 	//bi-directional many-to-one association to MapLayerElement
 	@JsonIgnore
@@ -55,28 +55,12 @@ public class MapLayerElementZoom implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getHeight() {
-		return this.height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
 	public Boolean getHorizontalFlip() {
 		return this.horizontalFlip;
 	}
 
 	public void setHorizontalFlip(Boolean horizontalFlip) {
 		this.horizontalFlip = horizontalFlip;
-	}
-
-	public Integer getWidth() {
-		return this.width;
-	}
-
-	public void setWidth(Integer width) {
-		this.width = width;
 	}
 
 	public Integer getZoomLower() {
@@ -101,6 +85,22 @@ public class MapLayerElementZoom implements Serializable {
 
 	public void setGraphicIcon(GraphicIcon graphicIcon) {
 		this.graphicIcon = graphicIcon;
+	}
+	
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
 
 	public MapLayerElement getMapLayerElement() {

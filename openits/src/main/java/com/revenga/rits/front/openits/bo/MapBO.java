@@ -35,7 +35,7 @@ public class MapBO extends GenericBO {
 	public List<MapUI> getMaps() {
 		
 		List<com.revenga.rits.front.openitsdao.model.Map> maps = mapService.getAll();
-		List<MapUI> mapUIs = null;
+		List<MapUI> mapUIs = null; 
 		
 		if (!CollectionUtils.isEmpty(maps)) {
 			
@@ -75,45 +75,76 @@ public class MapBO extends GenericBO {
 	}
 	
 	private List<Map<String, Object>> getData(com.revenga.rits.front.openitsdao.model.Map map) {
-		 
+
 		Set<String> elementsWithStates = new HashSet<>();
+		Set<String> elementsWithStatesMeasures = new HashSet<>();
+		Set<String> elementsWithStatesAlarms = new HashSet<>();
 		Set<String> elementsWithStatesMeasuresAlarms = new HashSet<>();
 		List<Map<String, Object>> elements = new ArrayList<>();
 
-		getElementIds(map, elementsWithStates, elementsWithStatesMeasuresAlarms);
+		getElementIds(map, elementsWithStates, elementsWithStatesMeasures, elementsWithStatesAlarms, elementsWithStatesMeasuresAlarms);
 		
 		if (!CollectionUtils.isEmpty(elementsWithStates)) {
 			
 			elements.addAll(getElementsStates(List.copyOf(elementsWithStates)));
 		}
 		
+		if (!CollectionUtils.isEmpty(elementsWithStatesMeasures)) {
+			
+			elements.addAll(getElementsStatesMeasures(List.copyOf(elementsWithStatesMeasures)));
+		}
+
+		if (!CollectionUtils.isEmpty(elementsWithStatesAlarms)) {
+			
+			elements.addAll(getElementsStatesAlarms(List.copyOf(elementsWithStatesAlarms)));
+		}
+
 		if (!CollectionUtils.isEmpty(elementsWithStatesMeasuresAlarms)) {
 			
 			elements.addAll(getElementsStatesMeasuresAlarms(List.copyOf(elementsWithStatesMeasuresAlarms)));
 		}
 		
 		return elements;
+		
 	}
-	
+
 	private List<Map<String, Object>> getElementsStates(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP, new Object[] { ids });
 		
-		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP).getFieldId(), elements));
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP).getFieldId(), elements);
 	}
 	
+	private List<Map<String, Object>> getElementsStatesMeasures(List<String> ids) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP).getFieldId(), elements);
+	}
+
+	private List<Map<String, Object>> getElementsStatesAlarms(List<String> ids) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP, new Object[] { ids });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP).getFieldId(), elements);
+	}
+
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
 		
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP, new Object[] { ids });
 		
-		return locationBO.replaceLocations(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP).getFieldId(), elements));
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP).getFieldId(), elements);
 	}
 	
-	private void getElementIds(com.revenga.rits.front.openitsdao.model.Map map, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasuresAlarms) {
+	private void getElementIds(com.revenga.rits.front.openitsdao.model.Map map, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasures, Set<String> elementsWithStatesAlarms, Set<String> elementsWithStatesMeasuresAlarms) {
 		
 		if (map != null && !CollectionUtils.isEmpty(map.getMapLayers())) {
 				
@@ -123,11 +154,19 @@ public class MapBO extends GenericBO {
 					
 					for (MapLayerElement mapLayerElement : mapLayer.getMapLayerElements()) {
 						
-						if (mapLayerElement.getGraphicIcon() != null) {
+						if (mapLayerElement.getGraphicIcon() !=null && mapLayerElement.getGraphicIcon().getMeasures() && mapLayerElement.getGraphicIcon().getAlarms()) {
 						
 							elementsWithStatesMeasuresAlarms.add(mapLayerElement.getElementId());
 						}
-						else {
+						else if(mapLayerElement.getGraphicIcon() !=null && mapLayerElement.getGraphicIcon().getMeasures()){
+							
+							elementsWithStatesMeasures.add(mapLayerElement.getElementId());
+						}
+						else if(mapLayerElement.getGraphicIcon() !=null && mapLayerElement.getGraphicIcon().getAlarms()){
+							
+							elementsWithStatesAlarms.add(mapLayerElement.getElementId());
+						}
+						else{
 							
 							elementsWithStates.add(mapLayerElement.getElementId());
 						}

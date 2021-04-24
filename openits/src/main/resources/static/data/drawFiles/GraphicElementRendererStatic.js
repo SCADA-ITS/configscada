@@ -36,8 +36,7 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="") {
-  let iconStr = '<image xlink:href="./img/' + element.elementTypeState[ELMENT_TYPE_STATE_UI_ICON] + '" id="' + element.id + suffix + '" width="' + width + '" height="' + height + '"></image>';
-  elementSVG = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
-  return elementSVG;
+export function getElementSVG(element) {
+  let result = './img/' + element.elementTypeState[ELMENT_TYPE_STATE_UI_ICON];
+  return result;
 }

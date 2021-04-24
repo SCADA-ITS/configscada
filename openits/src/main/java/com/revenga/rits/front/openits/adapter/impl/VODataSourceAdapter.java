@@ -62,6 +62,8 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC = getPropertyInt("get_elements_array_states_alarms_synoptic");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC = getPropertyInt("get_elements_array_states_measures_alarms_synoptic");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP = getPropertyInt("get_elements_array_states_map");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP = getPropertyInt("get_elements_array_states_measures_map");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP = getPropertyInt("get_elements_array_states_alarms_map");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP = getPropertyInt("get_elements_array_states_measures_alarms_map");
 	public static final int DATA_SOURCE_GET_ELEMENT = getPropertyInt("get_element");
 	public static final int DATA_SOURCE_GET_ELEMENT_TYPES = getPropertyInt("get_element_types");

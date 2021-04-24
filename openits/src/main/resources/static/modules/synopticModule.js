@@ -192,7 +192,7 @@ export default class SynopticModule extends GenericModule{
 
         let treeData=[];
         this.synopticConf.metadata.synopticLayerRelationships.forEach(layerHierarchy => {
-          let layer = this.synopticConf.metadata.synopticLayers.find(item => item.id === layerHierarchy.child_layer_id);
+          let layer = this.synopticConf.metadata.synopticLayers.find(item => item.id === layerHierarchy.childLayerId);
           if(layerHierarchy.parent_layer_id == undefined){
             treeData.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
           }else{
@@ -357,19 +357,6 @@ export default class SynopticModule extends GenericModule{
         }
       }
     }
-
-  }
-
-  doAction() {
-    
-    let defaultCommand = this.synopticConf.metadata.synopticCommands.find(synopticCommand => {return synopticCommand.default_ === true});
-
-    let module = findModuleByIdAction(defaultCommand.moduleAction.id);
-
-    let args = {};
-    args.selectedPks = this.getSelectedIds();
-		
-    util.module.open(module, defaultCommand.moduleAction, (defaultCommand.viewType)?defaultCommand.viewType.id:undefined, null, args);
 
   }
 

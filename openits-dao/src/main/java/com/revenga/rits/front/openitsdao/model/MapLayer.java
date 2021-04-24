@@ -22,6 +22,9 @@ public class MapLayer implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
+	@Column(name="base_layer")
+	private String baseLayer;
+
 	private String description;
 
 	private String icon;
@@ -50,6 +53,14 @@ public class MapLayer implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getBaseLayer() {
+		return this.baseLayer;
+	}
+
+	public void setBaseLayer(String baseLayer) {
+		this.baseLayer = baseLayer;
 	}
 
 	public String getDescription() {

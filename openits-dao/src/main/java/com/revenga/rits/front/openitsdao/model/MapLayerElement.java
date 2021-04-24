@@ -25,14 +25,14 @@ public class MapLayerElement implements Serializable {
 	@Column(name="element_id")
 	private String elementId;
 
-	private Integer height;
-
 	@Column(name="horizontal_flip")
 	private Boolean horizontalFlip;
 
 	private String label;
 
-	private Integer width;
+	private Float latitude;
+
+	private Float longitude;
 
 	//bi-directional many-to-one association to MapLayerElementZoom
 	@OneToMany(mappedBy="mapLayerElement")
@@ -68,14 +68,6 @@ public class MapLayerElement implements Serializable {
 		this.elementId = elementId;
 	}
 
-	public Integer getHeight() {
-		return this.height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
 	public Boolean getHorizontalFlip() {
 		return this.horizontalFlip;
 	}
@@ -92,12 +84,20 @@ public class MapLayerElement implements Serializable {
 		this.label = label;
 	}
 
-	public Integer getWidth() {
-		return this.width;
+	public Float getLatitude() {
+		return latitude;
 	}
 
-	public void setWidth(Integer width) {
-		this.width = width;
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
 	}
 
 	public List<MapLayerElementZoom> getMapLayerElementZooms() {

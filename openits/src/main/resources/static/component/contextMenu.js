@@ -10,11 +10,13 @@ export default class ContextMenu {
         this.events = events;
         this.ctxMenuData = [];
 
-        this.commands.forEach(cmd => {
-			if(cmd.context === undefined || cmd.context){
-				this.ctxMenuData.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
-			}
-        });
+		if(this.commands){
+			this.commands.forEach(cmd => {
+				if(cmd.context === undefined || cmd.context){
+					this.ctxMenuData.push({ commandId: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+				}
+			});
+		}
 
     }
 

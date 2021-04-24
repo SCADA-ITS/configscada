@@ -14,22 +14,24 @@ export default class CommandsComponent {
         this.commandGroups = [];
         this.commandsGrpMap = new Map();
 
-        this.commands.forEach(cmd => {
-			let tempCommandGrpId;
-			if(cmd.commandGroup){
-				tempCommandGrpId = cmd.commandGroup.id;
-				this.commandGroups[cmd.commandGroup.position]=cmd.commandGroup;
-			}else{
-				this.commandGroups[undefined]=true;
-			}
-			let tempCommands = this.commandsGrpMap.get(tempCommandGrpId);
-			if(!tempCommands){
-				tempCommands = [];
-			}
-			tempCommands[cmd.position]=cmd;
-			this.commandsGrpMap.set(tempCommandGrpId, tempCommands);
-        });
-
+		if(this.commands){
+			this.commands.forEach(cmd => {
+				let tempCommandGrpId;
+				if(cmd.commandGroup){
+					tempCommandGrpId = cmd.commandGroup.id;
+					this.commandGroups[cmd.commandGroup.position]=cmd.commandGroup;
+				}else{
+					this.commandGroups[undefined]=true;
+				}
+				let tempCommands = this.commandsGrpMap.get(tempCommandGrpId);
+				if(!tempCommands){
+					tempCommands = [];
+				}
+				tempCommands[cmd.position]=cmd;
+				this.commandsGrpMap.set(tempCommandGrpId, tempCommands);
+			});
+		}
+        
     }
 
     getComponent() {

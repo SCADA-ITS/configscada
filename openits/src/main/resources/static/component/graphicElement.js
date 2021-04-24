@@ -4,9 +4,9 @@ import {HEIGHT_RESOLUTION} from "../data/GLOBAL_PROPERTIES.js";
 
 export default class GraphicElement {
   
-  constructor(element, graphicElementConfig) {
+  constructor(element, graphicIcon) {
     this.element = element;
-    this.graphicElementConfig = graphicElementConfig;
+    this.graphicIcon = graphicIcon;
   }
 
   addEvents(el){
@@ -40,12 +40,11 @@ export default class GraphicElement {
     }
   }
 
-  getElementSVG(width, height, suffix=""){
+  async paintOnMap(suffix=""){
     let elementSVG = "";
-    if(this.elementUiConfig.graphicIcon){
-      import(this.elementUiConfig.graphicIcon.jsDrawFile).then(drawFile =>{
-        elementSVG = drawFile.getElementSVG(this.element, width, height, suffix);
-      });
+    if(this.graphicIcon){
+      let drawFile = await import(this.graphicIcon.jsDrawFile);
+      elementSVG = drawFile.getElementSVG(this.element);
     }else{
       webix.message({type:"error", text:"Es necesario asignar un recurso grafico al elemento: "+this.element.id});
     }
@@ -54,8 +53,8 @@ export default class GraphicElement {
 
   getElementIcon(suffix=""){
     let result; 
-    if(this.elementUiConfig.graphicIcon){
-      import(this.elementUiConfig.graphicIcon.jsDrawFile).then(drawFile =>{
+    if(this.graphicIcon){
+      import(this.graphicIcon.jsDrawFile).then(drawFile =>{
         result = drawFile.getElementIcon(this.element, suffix);
       });
     }else{

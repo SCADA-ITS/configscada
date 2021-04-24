@@ -23,8 +23,8 @@ public class SynopticLayerRelationship implements Serializable {
 	@Column(name="parent_layer_id")
 	private Integer parent_layer_id;
 
-	//@Column(name="child_layer_id")
-	private Integer child_layer_id;
+	@Column(name="child_layer_id")
+	private Integer childLayerId;
 
 	//bi-directional many-to-one association to Synoptic
 	@JsonIgnore
@@ -50,12 +50,12 @@ public class SynopticLayerRelationship implements Serializable {
 		this.parent_layer_id = parent_layer_id;
 	}
 
-	public Integer getChild_layer_id() {
-		return child_layer_id;
+	public Integer getChildLayerId() {
+		return childLayerId;
 	}
 
-	public void setChild_layer_id(Integer child_layer_id) {
-		this.child_layer_id = child_layer_id;
+	public void setChildLayerId(Integer childLayerId) {
+		this.childLayerId = childLayerId;
 	}
 
 	public Synoptic getSynoptic() {

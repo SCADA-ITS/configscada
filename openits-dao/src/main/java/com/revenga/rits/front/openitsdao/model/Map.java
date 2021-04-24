@@ -19,19 +19,19 @@ public class Map implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="base_map_url")
-	private String baseMapUrl;
-
 	private String description;
-
-	@Column(name="exclusive_layers")
-	private Boolean exclusiveLayers;
 
 	private String icon;
 
 	private String label;
 
 	private String name;
+
+	private Float latitude;
+
+	private Float longitude;
+
+	private Integer zoom;
 
 	//bi-directional many-to-one association to MapLayerRelationship
 	@OneToMany(mappedBy="map")
@@ -52,28 +52,12 @@ public class Map implements Serializable {
 		this.id = id;
 	}
 
-	public String getBaseMapUrl() {
-		return this.baseMapUrl;
-	}
-
-	public void setBaseMapUrl(String baseMapUrl) {
-		this.baseMapUrl = baseMapUrl;
-	}
-
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Boolean getExclusiveLayers() {
-		return this.exclusiveLayers;
-	}
-
-	public void setExclusiveLayers(Boolean exclusiveLayers) {
-		this.exclusiveLayers = exclusiveLayers;
 	}
 
 	public String getIcon() {
@@ -142,6 +126,30 @@ public class Map implements Serializable {
 		mapLayer.setMap(null);
 
 		return mapLayer;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Float latitude) {
+		this.latitude = latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Float longitude) {
+		this.longitude = longitude;
+	}
+
+	public Integer getZoom() {
+		return zoom;
+	}
+
+	public void setZoom(Integer zoom) {
+		this.zoom = zoom;
 	}
 
 }
