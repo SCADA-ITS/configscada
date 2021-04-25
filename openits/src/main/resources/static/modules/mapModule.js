@@ -82,7 +82,8 @@ export default class MapModule extends GenericModule{
         view: new ol.View({ 
             center: ol.proj.fromLonLat([this.mapConf.metadata.longitude, this.mapConf.metadata.latitude]), 
             zoom: this.mapConf.metadata.zoom
-          })
+          }),
+        interactions : ol.interaction.defaults({doubleClickZoom : false})
       });
 
       this.addClickEvents();
