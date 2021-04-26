@@ -109,6 +109,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
+    || elementType === elementTypeMap.ELEMENT_TYPE_22_VALVULA
     || elementType === elementTypeMap.ELEMENT_TYPE_25_CABIN
     || elementType === elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN
     || elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC
@@ -294,6 +295,9 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_3_DET:      
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
+    case elementTypeMap.ELEMENT_TYPE_22_VALVULA:
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+      break;
     case elementTypeMap.ELEMENT_TYPE_52_SERVER_DAI:   
         iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 1000) + ',' + (height / 1000) + ')">' + createIcon(element, suffix) + '</g>';
         break; 
@@ -563,5 +567,23 @@ function updateIcon(element, suffix="") {
         } 
       } 
     }
-  } 
+  } else if(element.elementType.id === ELEMENT_TYPE.ID_22_VALVULA){
+    console.log(params)
+    if (params != undefined && params && params["VALVULA_STATE"]) {
+      if (params["VALVULA_STATE"]=="false") {
+        let valvula = document.getElementById(element.id + suffix);       
+        let close = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        close.setAttribute("id", "close");
+        close.setAttribute("transform", "matrix(0.69013995,0.72367593,-0.79066728,0.61224607,0,0)");
+        close.setAttribute("style", "fill:#ff0000;stroke:#000000;stroke-width:0.230433;stroke-linecap:square");
+        close.setAttribute("width", "78.0597");
+        close.setAttribute("height", "7.4624028");
+        close.setAttribute("x", "5.7004442");
+        close.setAttribute("y", "-4.6259723");
+
+        valvula.appendChild(close);
+        
+      }
+    }
+  }
 }

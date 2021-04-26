@@ -1,5 +1,5 @@
 import {SVG_3_DET,SVG_5_PA_SYSTEM, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_11_SOS, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_15_FIRE_DET, 
-  SVG_16_PA_ZONE,SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_25_CABIN, SVG_51_ETD, SVG_52_SERVER_DAI,SVG_53_SEM_AA, SVG_54_ATC, 
+  SVG_16_PA_ZONE,SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_22_VALVULA, SVG_25_CABIN, SVG_51_ETD, SVG_52_SERVER_DAI,SVG_53_SEM_AA, SVG_54_ATC, 
   SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, 
   SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR, SVG_74_ERU, SVG_75_GE} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
@@ -24,6 +24,7 @@ export const ELEMENT_TYPE = {
   ID_19_CO : "ElementType:19",
   ID_20_NO : "ElementType:20",
   ID_21_OPAC : "ElementType:21",
+  ID_22_VALVULA : "ElementType:22",
   ID_24_PMV_A_C : "ElementType:24",
   ID_25_CABIN : "ElementType:25",
   ID_26_PMV_64X64 : "ElementType:26",
@@ -171,6 +172,11 @@ export const ELEMENT_TYPE = {
     "ElementType:21" :{ id: "ElementType:21", uiType: UI_ELEMENT_TYPE_GENERIC, value: 21, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_21_OPAC,
       elementTypeParams:[
         {OPAC_CONCENTRATION: "1:2"}
+      ]
+    },
+    "ElementType:22" :{ id: "ElementType:22", uiType: UI_ELEMENT_TYPE_GENERIC, value: 22, scale_x: 100, scale_y: 100, svgRaw:SVG_22_VALVULA,
+      elementTypeParams:[
+        {VALVULA_STATE: "1:2"}
       ]
     },
     "ElementType:24" :{ id: "ElementType:24", uiType: UI_ELEMENT_TYPE_MATRIX, value: 24, scale_x: 28, scale_y: 28},

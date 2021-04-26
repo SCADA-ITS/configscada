@@ -736,6 +736,12 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"VALVULAS" : {
+				"items": ["Element:22:1", "Element:22:2", "Element:22:3", "Element:22:4", 
+				          "Element:22:5", "Element:22:6", "Element:22:7", "Element:22:8"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 			"PULSADOR" : {
 				"items": ["Element:58:2"],
 				"translation_key": "",
@@ -752,6 +758,15 @@ export let synopticData= [
 				"visibility": "visible"
 			}
 		},
+		"Element:22:1": { "x": 585,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VC-1MA" },
+		"Element:22:2": { "x": 735,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VM-1MA" },
+		"Element:22:3": { "x": 585,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VC-1CA" },
+		"Element:22:4": { "x": 735,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VM-1CA" },
+		"Element:22:5": { "x": 1083,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VC-2MA" },
+		"Element:22:6": { "x": 1233,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VM-2MA" },
+		"Element:22:7": { "x": 1083,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VC-2CA" },
+		"Element:22:8": { "x": 1233,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VM-2CA" },
+
 
 		"Element:58:2": { "x": 155,   "y": -20, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 

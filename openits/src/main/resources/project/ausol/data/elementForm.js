@@ -270,14 +270,16 @@ export let columnsElementFormList = {
 		"width": 540,
 		"options": {}
 	},
-
 	"ElementType:22": {
-		"rows":[ 
-			{value: "ElementTypeParam:22:1:1", type:"string"},
-			{value: "ElementTypeParam:22:1:2", type:"string"}
+		"rows":[
+			{value: "ElementTypeParam:22:1:1", type:"string"}, 
+			{value: "ElementTypeParam:22:1:2", type:"string"},
+			{value: "ElementTypeParam:22:1:3", type:"string"}, 
+			{value: "ElementTypeParam:22:1:4", type:"string"},
+			{value: "ElementTypeParam:22:2:1", type:"string"},
 		],
-		"rowCounts": 2,
-		"scroll": false,  
+		"rowCounts": 5,
+		"scroll": true,  
 		"width": 540,
 		"options": {}
 	},

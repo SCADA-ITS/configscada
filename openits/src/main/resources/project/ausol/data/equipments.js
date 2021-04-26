@@ -15,6 +15,7 @@ export let optionElementType = [
 	{id:"ElementType:19", value: $.i18n("ElementType:19.alias")},
 	{id:"ElementType:20", value: $.i18n("ElementType:20.alias")},
 	{id:"ElementType:21", value: $.i18n("ElementType:21.alias")},
+	{id:"ElementType:22", value: $.i18n("ElementType:22.alias")},
 	{id:"ElementType:26", value: $.i18n("ElementType:26.alias")},
 	{id:"ElementType:51", value: $.i18n("ElementType:51.alias")},
 	{id:"ElementType:53", value: $.i18n("ElementType:53.alias")},
@@ -320,6 +321,20 @@ export let columnsElementList = {
 			"alias",
 			"state",
 			"ElementTypeParam:21:2:1"
+		]
+	},
+	"ElementType:22": { 
+		1:[
+			"alias",
+			"ElementTypeParam:22:1:1",
+			"ElementTypeParam:22:1:2",
+			"ElementTypeParam:22:1:3",
+			"ElementTypeParam:22:1:4"
+		],
+		2:[
+			"alias",
+			"state",
+			"ElementTypeParam:22:2:1"
 		]
 	},
 	"ElementType:26": { 
@@ -1516,6 +1531,12 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:22:1:2": {
 				"header": [ $.i18n("ElementTypeParam:22:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+			"ElementTypeParam:22:1:3": {
+				"header": [ $.i18n("ElementTypeParam:22:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
+			},
+            "ElementTypeParam:22:1:4": {
+				"header": [ $.i18n("ElementTypeParam:22:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
              
 		},
@@ -1531,9 +1552,6 @@ export let columnsElementConfig = {
             "ElementTypeParam:22:2:1": { //"opac_concentration
 				"header": [ $.i18n("ElementTypeParam:22:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			},
-            "ElementTypeParam:22:2:2": { //"status
-				"header": [ $.i18n("ElementTypeParam:22:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			}
 		}
 	},
 	"ElementType:23": {

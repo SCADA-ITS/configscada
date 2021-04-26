@@ -18,7 +18,7 @@ export const ELEMENT_TYPE_18_ANEM_INT = "18";
 export const ELEMENT_TYPE_19_CO = "19";
 export const ELEMENT_TYPE_20_NO = "20";
 export const ELEMENT_TYPE_21_OPAC = "21";
-export const ELEMENT_TYPE_22_ETD_MODBUS = "22";
+export const ELEMENT_TYPE_22_VALVULA = "22";
 export const ELEMENT_TYPE_23_ETD_DETECTOR = "23";
 export const ELEMENT_TYPE_24_PMV_A_C = "24";
 export const ELEMENT_TYPE_25_CABIN = "25";
@@ -89,6 +89,7 @@ export const ANEM_EXT_WIND_SPEED = "1:2";
 export const CO_CONCENTRATION = "1:2";
 export const NO_CONCENTRATION = "1:2";
 export const OPAC_CONCENTRATION = "1:2";
+export const VALVULA_STATE = "1:2";
 export const SEM_STATUS = "1:2";
 export const ETD_DATE = "1:2";
 export const ETD_INTEGRATION_PERIOD = "2:2";
@@ -305,7 +306,6 @@ export function getElementTypeParam(elementParamIdString) {
 }
 
 export function getElementParamTypeIdi18(elementValueid) {
-	console.log("Jony elementtype: " + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_ID]);
 	let ret = "ElementTypeParam:" + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_ID] + ":" + elementValueid.split(":")[POSITION_OF_PARAM_TYPE_ID] + ":" + elementValueid.split(":")[POSITION_OF_ELEMENT_TYPE_PARAM_ID]; 
 	return ret;
 }
