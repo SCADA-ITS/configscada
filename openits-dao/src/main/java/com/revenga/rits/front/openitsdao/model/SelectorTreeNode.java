@@ -30,7 +30,9 @@ public class SelectorTreeNode implements Serializable {
 	private Boolean enabled;
 
 	private String label;
-
+	
+	private String image;
+	
 	private Boolean visible;
 
 	// bi-directional many-to-one association to Tree
@@ -90,6 +92,14 @@ public class SelectorTreeNode implements Serializable {
 
 	public void setModuleId(Integer moduleId) {
 		this.moduleId = moduleId;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

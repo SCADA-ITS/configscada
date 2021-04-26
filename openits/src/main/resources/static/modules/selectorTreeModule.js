@@ -144,6 +144,7 @@ export default class treeSectModule extends GenericModule {
 
 					if (treeNode) {
 
+						console.log(treeNode);
 						let treeData = {};
 						treeData.id = treeNode.id;
 						treeData.value = treeNode.label;
@@ -151,6 +152,11 @@ export default class treeSectModule extends GenericModule {
 						treeData.data = [];
 						treeData.props.folder = false;
 						treeData.props.translate = true;
+
+						if (treeNode.image) {
+
+							treeData.props.image = treeNode.image;
+						}
 
 						return treeData;
 					}
