@@ -29,6 +29,9 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.listView = undefined;
 		this.treeView = undefined;
 		
+		this.lastSelectedListView = [ELEMENT_TYPE_ALL];
+		this.lastSelectedTreeView = [ELEMENT_ALL];
+		
 		this.treeElements = undefined;
 		
 		this.dtNoRecognized = undefined;
@@ -61,7 +64,7 @@ export default class AlarmMonitorModule extends GenericModule {
 								},
 								{
 									id: "loading-" + this.uid,
-									rows: [getViewDrawNoData()],
+									rows: [util.ui.getViewDrawNoData()],
 									hidden: true
 								},
 								{ width: 6 }
@@ -73,18 +76,18 @@ export default class AlarmMonitorModule extends GenericModule {
 			]
 		};
 
-		function getViewDrawNoData() {
-
-			return {
-				view: "template",
-				template: function() {
-
-					let icon = "<img src='img/loading.svg' align='center'>";
-
-					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-				}
-			}
-		}
+//		function getViewDrawNoData() {
+//
+//			return {
+//				view: "template",
+//				template: function() {
+//
+//					let icon = "<img src='img/loading.svg' align='center'>";
+//
+//					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+//				}
+//			}
+//		}
 
 		return view;
 	}
@@ -99,7 +102,7 @@ export default class AlarmMonitorModule extends GenericModule {
 			$$(this.uid).hide();
 
 			let promiseAlarms = webix.ajax().get(appConfig.restUrl + this.config.restEndpoints.alarms);
-			let promiseTreeElements = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: 2 }));
+			let promiseTreeElements = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: self.config.treeElements }));
 			let promiseGridNoRecognized = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridNoRecognized }));
 			let promiseGridRecognized = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridRecognized }));
 			 
@@ -210,9 +213,11 @@ export default class AlarmMonitorModule extends GenericModule {
 	
 						initListView();
 	
-						if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements) {
-	
-							fillGrids(self.elementIdsSelected);
+						if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && 
+							Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+
+							setMode(MODE_ELEMENTS, self.args.selectedPks);							
+							fillGrids(self.args.selectedPks);
 						}
 	
 						connectWS();
@@ -229,6 +234,9 @@ export default class AlarmMonitorModule extends GenericModule {
 	
 						$$("loading-" + self.uid).hide();
 						$$(self.uid).show();
+						
+						$$("loading-switcher-" + self.uid).hide();
+						$$("switcher-views-" + self.uid).show();
 					}
 				}
 			}
@@ -311,9 +319,26 @@ export default class AlarmMonitorModule extends GenericModule {
 
 		function initListView() {
 
-			if (self.listView) {
+			if (self.listView && self.treeView) {
 
-				self.listView.select(ELEMENT_TYPE_ALL);
+				self.treeView.unselect();
+				
+				setMode(MODE_TYPE, [ELEMENT_TYPE_ALL]);
+				
+				self.listView.select(self.lastSelectedListView[0]);
+			}
+		}
+		
+		function initTreeView() {
+
+			if (self.treeView && self.listView) {
+
+				self.listView.unselect();
+				
+				setMode(MODE_ELEMENTS, [ELEMENT_ALL]);
+				
+				self.treeView.select(self.lastSelectedTreeView[0]);
+				self.treeView.expand();
 			}
 		}
 		
@@ -471,88 +496,6 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			}
 		}
-		
-//		function fillDatatables(elementsArray, callbackEnable) {
-//
-//			let elementTypeId;
-//
-//			if (Array.isArray(elementsArray) && elementTypeArray.length > 0) {
-//
-//				elementTypeId = elementTypeArray[0];
-//			}
-//
-//			self.elementTypeIdSelected = elementTypeId;
-//
-//			if (self.dtNoRecognized) {
-//
-//				self.dtNoRecognized.clear();
-//
-//				let noRecognizedAlarms = self.dcNoRecognized;
-//
-//				if (self.filterAlarmType) {
-//
-//					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-//
-//						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-//							return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-//						});
-//					}
-//					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-//
-//						noRecognizedAlarms = noRecognizedAlarms.filter(e => {
-//							return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-//						});
-//					}
-//				}
-//
-//				if (!self.elementTypeIdSelected || self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-//
-//					self.dtNoRecognized.add(noRecognizedAlarms);
-//				}
-//				else {
-//
-//					self.dtNoRecognized.add(noRecognizedAlarms.filter(e => {
-//						return (e.targetElementTypeId == self.elementTypeIdSelected);
-//					}));
-//				}
-//			}
-//
-//			if (self.dtRecognized) {
-//
-//				self.dtRecognized.clear();
-//
-//				let recognizedAlarms = self.dcRecognized;
-//
-//				if (self.filterAlarmType) {
-//
-//					if (self.filterAlarmType === ALARM_TYPE_AUTO) {
-//
-//						recognizedAlarms = recognizedAlarms.filter(e => {
-//							return (self.config.alarmTypeAuto.indexOf(e.alarmType) !== -1)
-//						});
-//					}
-//					else if (self.filterAlarmType === ALARM_TYPE_MANUAL) {
-//
-//						recognizedAlarms = recognizedAlarms.filter(e => {
-//							return (self.config.alarmTypeManual.indexOf(e.alarmType) !== -1)
-//						});
-//					}
-//				}
-//
-//				if (!self.elementTypeIdSelected || self.elementTypeIdSelected === ELEMENT_TYPE_ALL) {
-//
-//					self.dtRecognized.add(recognizedAlarms);
-//				}
-//				else {
-//
-//					self.dtRecognized.add(recognizedAlarms.filter(e => {
-//						return (e.targetElementTypeId == self.elementTypeIdSelected);
-//					}));
-//				}
-//			}
-//
-//			
-//		}
 
 		function drawComponents() {
 
@@ -572,14 +515,18 @@ export default class AlarmMonitorModule extends GenericModule {
 							</div>`;
 				},
 				body: {
-					width: 275,
+					width: 325,
 					rows: [
-						getViewListEquipments(),
-						getViewTreeEquipments(),
 						{
-							height: 50,
-							hidden: true
-						}
+							id: "loading-switcher-" + self.uid,
+							hidden: false,
+							cols: [
+								util.ui.getViewDrawNoData(true)	
+							]
+						},
+						getSwitcherViews(),
+						{ height: 1, borderless: false },
+						getSwitcherButtons()
 					]
 				}
 			};
@@ -658,7 +605,12 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					events[ListView.EventTypes.ON_SELECT_ROW] = function(ids, callbackEnable) {
 						
-						fillGrids(ids, callbackEnable);
+						if (Array.isArray(ids) && ids.length >  0) {
+							
+							self.lastSelectedListView = ids; 
+							
+							fillGrids(ids, callbackEnable);	
+						}
 					};
 
 					self.listView = new ListView(elementTypeView, null, events);
@@ -677,7 +629,17 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				let events = {};
 
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(data) { console.log(data) };
+				events[TreeView.EventTypes.ON_SELECT_ANY] = function(ids, callbackEnable) { 
+					
+					if (Array.isArray(ids) && ids.length > 0) {
+						
+						self.lastSelectedTreeView = ids;
+						
+						let elementIds = ids.map(e => { return e.split("_")[1] });
+					
+						fillGrids(elementIds, callbackEnable);
+					}
+				};
 				
 				let root = [{
 				
@@ -694,6 +656,124 @@ export default class AlarmMonitorModule extends GenericModule {
 				view = self.treeView.getView();
 				view.hidden = true;
 
+				return view;
+			}
+			
+			function getSwitcherViews() {
+				
+				return {
+					id: "switcher-views-" + self.uid,
+					hidden: true,
+					cols: [
+						{
+							rows: [
+								getViewListEquipments(), 
+								getViewTreeEquipments()	
+							]
+						}
+					]
+				};
+			}
+			
+			function getSwitcherButtons() {
+				
+				let view = {
+					css: { "background-color": "var(--blue-soft-opacity-1)" },
+					height: 50,
+					cols: [
+						{ width: 10 },
+						{
+							rows: [
+								{ height: 5 },
+								{
+									view: "segmented",
+									css: "segment-custom-2",
+									value: "switcher-element-types-" + self.uid,
+									options: [
+											{
+												id: "switcher-element-types-" + self.uid,
+												value: `<div>
+															<span class='ico webix_icon mdi mdi-format-list-bulleted'></span>
+															<span>${i18n.t("LBL_LIST")}</span>
+														</div>`,
+											},
+											{
+												id: "switcher-element-hierarchy-" + self.uid,
+												value: `<div>
+															<span class='ico webix_icon mdi mdi-family-tree'></span>
+															<span>${i18n.t("LBL_TREE")}</span>
+														</div>`,
+											}
+									],
+									tooltip: function(obj) {
+				
+										if (obj.id === "switcher-element-types-" + self.uid) {
+				
+											return i18n.t("LBL_SELECTION_BY_TYPE");
+										}
+										else if (obj.id === "switcher-element-hierarchy-" + self.uid) {
+				
+											return i18n.t("LBL_SELECTION_BY_HIERARCHY");
+										}
+									},
+									on: {
+										onChange(newv, oldv) {
+				
+											console.log("init change => " + newv);
+											$$("loading-switcher-" + self.uid).show();
+											$$("switcher-views-" + self.uid).hide();
+												
+											webix.delay(function() {
+												
+												$$("loading-switcher-" + self.uid).hide();
+												$$("switcher-views-" + self.uid).show();
+													
+												if (newv === "switcher-element-types-" + self.uid) {
+					
+													$$("listview-" + self.listView.uid).show();
+													$$("treeview-" + self.treeView. uid).hide();
+													
+													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
+									
+														return `<div>
+																	<span class='ico webix_icon mdi mdi-view-headline'></span>
+																	<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
+																</div>`;
+													});
+													$$("view-main-list-equipments-" + self.uid).refresh();
+													
+													initListView();
+												}
+												else if (newv === "switcher-element-hierarchy-" + self.uid) {
+									
+													$$("listview-" + self.listView.uid).hide();
+													$$("treeview-" + self.treeView. uid).show();
+													
+													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
+									
+														return `<div>
+																	<span class='ico webix_icon mdi mdi-view-headline'></span>
+																	<span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
+																</div>`;
+													});
+													$$("view-main-list-equipments-" + self.uid).refresh();
+													 					
+													initTreeView();
+												}
+												
+												console.log("end change => " + newv);
+											});
+										}
+									}
+								},
+								{ height: 5 }	
+							]
+							
+						},
+						{ width: 10 }
+					]
+					
+				};
 				return view;
 			}
 

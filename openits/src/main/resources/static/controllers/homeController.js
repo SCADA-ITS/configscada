@@ -84,9 +84,37 @@ function initialize() {
 			{ width: 0.1 },
 			{
 				rows: [
-					mainToolbar.getView(),
-					menuToolbar.getView(),
-					{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
+					{
+						height: 80,
+						css: "head-color",
+						cols: [
+							{
+								rows: [
+									{},
+									mainToolbar.getView(),
+									menuToolbar.getView(),
+									{}
+								]
+							},
+							{
+								width: 400,
+								rows: [
+									{},
+									{
+										id: MAIN_TOOLBAR_ICONS_ID,
+										view: "toolbar",
+										//height: 42,
+										css: "head-color main-toolbar",
+										//padding: 3,
+										elements: [{}]
+									},									
+									{}
+								]
+							}
+						]
+					},
+					
+					//{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
 					mainTab.getView(),
 					/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
 					main_footer

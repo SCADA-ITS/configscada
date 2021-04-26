@@ -93,7 +93,7 @@ function runServices(service) {
 		return false;
 	}
 	
-	let toolbar = $$(MAIN_TOOLBAR_ID);
+	let toolbar = $$(MAIN_TOOLBAR_ICONS_ID);
 	
 	service.services.sort(function(a, b) {
 		

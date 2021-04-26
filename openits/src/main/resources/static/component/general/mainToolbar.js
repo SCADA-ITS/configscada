@@ -21,7 +21,9 @@ export default class MainToolbar {
 					width: 175
 				},
 				//this.mainMenu.getView(),
-				{ view: "template", css: "head-color main-toolbar", role: "placeholder", borderless: 1, minWidth: 500 }			]
+				//{ view: "template", css: "head-color main-toolbar", role: "placeholder", borderless: 1, minWidth: 500 }
+				{}			
+			]
 		};
 
 		return view;

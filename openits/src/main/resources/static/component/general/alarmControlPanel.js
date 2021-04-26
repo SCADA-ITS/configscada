@@ -288,12 +288,12 @@ export default class AlarmControlPanel extends GenericControlPanel {
 			},
 			position: function(state) {
 				state.left = document.documentElement.clientWidth - panelWidth - 20;
-				state.top = 96;
+				state.top = 88;
 			},
 			on: {
 				onBeforeShow: function() {
 
-					this.config.height = document.documentElement.clientHeight - 147;
+					this.config.height = document.documentElement.clientHeight - 137;
 					this.adjust();
 					self.updateData();
 				}

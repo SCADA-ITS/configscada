@@ -189,7 +189,8 @@ export default class ListView {
 			
 			if (id) {
 				
-				list.select(id);	
+				list.select(id);
+				list.showItem(id);	
 			}
 			else {
 				
@@ -206,9 +207,14 @@ export default class ListView {
 		
 		if (list && idx > -1) {
 			
-			this.select(list.getIdByIndex(idx));
+			let id = list.getIdByIndex(idx);
+			
+			if (id) {
 				
-			list.refresh();
+				this.select(list.getIdByIndex(idx));
+				list.showItem(id);	
+				list.refresh();	
+			}
 		}		
 	}
 	

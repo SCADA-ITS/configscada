@@ -1,5 +1,6 @@
 const MAIN_TAB_ID = "tabs";
 const MAIN_TOOLBAR_ID = "mainToolbar";
+const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
 
 const START_ON_MONDAY = true;
 

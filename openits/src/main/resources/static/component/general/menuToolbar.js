@@ -17,7 +17,7 @@ export default class MenuToolbar {
 			view: "toolbar",
 			height: 32,
 			elements: [
-				this.mainMenu.getView(),
+				this.mainMenu.getView()
 			]
 		};
 

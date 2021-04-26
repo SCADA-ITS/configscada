@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.revenga.rits.front.openits.service.CacheManager;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.revenga.rits.front.openits.model.TreeDataUI;
+import com.revenga.rits.front.openits.service.CacheManager;
+import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 public class AdapterTreeElementHierarchy extends AdapterTree{
 	
@@ -79,7 +78,7 @@ public class AdapterTreeElementHierarchy extends AdapterTree{
 			
 			if (isElementRoot) {
 				
-				TreeDataUI rootNode = new TreeDataUI(elementId, elementAlias);
+				TreeDataUI rootNode = new TreeDataUI(elementId + "_" + elementId, elementAlias);
 				
 				data.add(rootNode);
 				
@@ -110,9 +109,9 @@ public class AdapterTreeElementHierarchy extends AdapterTree{
 			node.addProperty(TreeDataUI.PROP_VALUE_AUX, elementType != null ? elementType.get(FIELD_ELEMENT_TYPE_LABEL_ALIAS): null);
 			node.addProperty(TreeDataUI.PROP_IMAGE, elementType != null ? elementType.get(FIELD_ELEMENT_TYPE_PHOTO): null);
 			
-			if (!StringUtils.isEmpty(parentElementId) && !StringUtils.isEmpty(childElementId) && node.getId().equals(parentElementId)) {
+			if (!StringUtils.isEmpty(parentElementId) && !StringUtils.isEmpty(childElementId) && node.getId().split("_")[1].equals(parentElementId)) {
 				
-				TreeDataUI childNode = new TreeDataUI(childElementId, childElementAlias);
+				TreeDataUI childNode = new TreeDataUI(parentElementId + "_" + childElementId, childElementAlias, parentElementId);
 				
 				node.addItem(childNode);
 				

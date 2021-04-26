@@ -27,6 +27,7 @@ public class TreeDataUI implements Serializable {
 	public static final String PROP_VALUE_AUX_TRANSLATE = "valueAuxTranslate";
 	
 	private String id;
+	private String parentId;
 	private String value;
 	private List<TreeDataUI> data;
 	private Map<String, Object> params;
@@ -36,7 +37,16 @@ public class TreeDataUI implements Serializable {
 		super();
 		
 		this.id = id;
+		this.parentId = null;
 		this.value = value;
+	}
+	
+	public TreeDataUI(String id, String value, String parentId) {
+		super();
+		
+		this.id = id;
+		this.value = value;
+		this.parentId = parentId;
 	}
 	
 	public void addItem(TreeDataUI item) {

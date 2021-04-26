@@ -871,26 +871,18 @@ export let util = {
 				
 				let x = (document.documentElement.clientWidth / 2) - (win.config.width / 2);
 				let y = (document.documentElement.clientHeight / 2) - (win.config.height / 2);
-				
-				console.log("window.width="+ win.config.width);
-				console.log("window.heaight="+ win.config.height);
-				
-				console.log("x="+ x);
-				console.log("y="+ y);
-				 
+							 
 				win.setPosition(Math.floor(x), Math.floor(y));
 			}
 		},
 
-		getViewDrawNoData() {
+		getViewDrawNoData(noText) {
 
 			return {
 				view: "template",
 				template: function() {
 
-					let icon = "<img src='img/loading.svg' align='center'>";
-
-					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+					return `<div class='empty-app-inner'><img src='img/loading.svg' align='center'><span class='empty-app-inner-text'>${(!noText ? i18n.t("LBL_LOADING_DATA") : "")}</span></div>`;
 				}
 			}
 		}

@@ -22,7 +22,7 @@ const DefProperties = {
 	},
 	IMAGE: {
 		name: "image",
-		value: "img/not_found_50.png"
+		value: "not_found_50.png"
 	},
 	DISABLED: {
 		name: "disabled",
@@ -72,6 +72,77 @@ export default class TreeView {
 			}
 			
 			return propValue;
+		}
+		
+		let getBranchItems = function(item, rootItem, branchItems) {
+			
+			let tree = $$("tree-" + self.uid);
+			
+			if (!branchItems) {
+				
+				branchItems = [];
+			}
+			
+			if (!rootItem) {
+				
+				rootItem = item;
+			}
+			
+			if (item) {
+				
+				let currentItem = item;
+				
+				while (currentItem) {
+					
+					branchItems.push(currentItem);
+					
+					let firstChildId = tree.getFirstChildId(currentItem.id);
+					
+					if (firstChildId) {
+						
+						getBranchItems(tree.getItem(firstChildId), rootItem, branchItems)
+					}
+					
+					let nextSiblingId = tree.getNextSiblingId(currentItem.id);
+					
+					if (nextSiblingId && rootItem !== currentItem) {
+						
+						currentItem = tree.getItem(nextSiblingId);
+					}
+					else {
+						
+						currentItem = undefined;
+					}
+				}
+			}
+			
+			function getFirstChild(id) {
+				
+				if (id) {
+					
+					let firstChildId = tree.getFirstChildId(id);
+					
+					if (firstChildId) {
+						
+						return tree.getItem(firstChildId);
+					}
+				}
+			}
+			
+			function getNextSibling(id) {
+				
+				if (id) {
+					
+					let nextSiblingId = tree.getNextSiblingId(id);
+					
+					if (nextSiblingId) {
+						
+						return tree.getItem(nextSiblingId);
+					}
+				}	
+			}
+			
+			return branchItems;
 		}
 		
 		let searchView = {
@@ -205,6 +276,13 @@ export default class TreeView {
 			
 			let data = applyProperties(self.data);
 			
+			let ids = data.map(e => {
+				return e.id
+			});
+			
+			console.log(ids.sort());
+			
+			
 			let treeView = {
 				id: "tree-" + self.uid,
 				view: "tree",
@@ -306,7 +384,18 @@ export default class TreeView {
 								// Folder selected
 								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item.id);
+									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item.id, function(value) {
+									
+										self.enable(value, currentContext);
+									});
+								}
+								// Any selected 
+								else if (self.events[TreeView.EventTypes.ON_SELECT_ANY]) {
+									
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ANY])(getBranchItems(item).map(item => item.id), function(value) {
+									
+										self.enable(value, currentContext);
+									});
 								}
 							}
 						}
@@ -370,7 +459,7 @@ export default class TreeView {
 		}
 		
 		view.rows.push(drawTree());
-		view.rows.push({ height: 6 });
+		// view.rows.push({ height: 6 });
 			
 		return view;
 	}
@@ -460,8 +549,64 @@ export default class TreeView {
 			if (!multiSelect) {
 				
 				tree.select(id);
+				tree.showItem(id);
 			}
 		}
+	}
+	
+	expand(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			if (id) {
+				
+				tree.open(id);
+				tree.showItem(id);	
+			}
+			else {
+				
+				tree.openAll();
+			}
+		}
+	}
+	
+	collapse(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			if (id) {
+				
+				tree.close(id);
+				tree.showItem(id);	
+			}
+			else {
+				
+				tree.closeAll();
+			}
+		}
+	}
+	
+	unselect(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			if (id) {
+				
+				tree.unselect(id);	
+			}
+			else {
+				
+				tree.unselectAll();
+			}
+			
+			tree.refresh();
+		}	
 	}
 }
 
@@ -483,15 +628,22 @@ Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ITEM", {
     configurable : false
 });
 
-Object.defineProperty(TreeView.EventTypes, "ON_SELECT_FOLDER", {
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_ANY", {
     value: 3,
     writable : false,
     enumerable : true,
     configurable : false
 });
 
-Object.defineProperty(TreeView.EventTypes, "ON_ITEM_DBL_CLIC", {
+Object.defineProperty(TreeView.EventTypes, "ON_SELECT_FOLDER", {
     value: 4,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.EventTypes, "ON_ITEM_DBL_CLIC", {
+    value: 5,
     writable : false,
     enumerable : true,
     configurable : false
