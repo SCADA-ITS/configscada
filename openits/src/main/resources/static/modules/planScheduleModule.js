@@ -476,8 +476,10 @@ export default class PlanScheduleModule extends GenericModule {
 											let popupid = "cronUiPopup" + self.uid;
 											let box = $$("form-edit-core-" + self.uid);
 											let cron = new CronUi(box.config.id, popupid);
+											
+											let cronExpression = (self.planSchedule != undefined) ? self.planSchedule.cronExpression : null;
 
-											cron.getComponent();
+											cron.getComponent(cronExpression);
 
 											//											webix.ui({
 											//												id: popupid,
@@ -520,7 +522,7 @@ export default class PlanScheduleModule extends GenericModule {
 									view: "text",
 									label: i18n.t("LBL_PLAN"),
 									name: "plan",
-									value: type === "edit" ? self.planSchedule.plan.id : "",
+									value: type === "edit" ? self.planSchedule.plan.alias : "",
 									required: true,
 									labelWidth: 200,
 									disabled: true
