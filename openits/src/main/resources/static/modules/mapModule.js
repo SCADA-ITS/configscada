@@ -39,16 +39,16 @@ export default class MapModule extends GenericModule{
     return {
       cols: [
         {
-          header: i18n.t(this.mapConf.metadata.name),
-          body: this.getViewTree()
-        },
-        { view:"resizer" },
-        {
           view: "template",
           id: this.mapDivId,
           url: () => {
             this.init();
           }
+        },
+        { view:"resizer" },
+        {
+          header: i18n.t(this.mapConf.metadata.name),
+          body: this.getViewTree()
         }
       ],
       on: {
@@ -112,32 +112,7 @@ export default class MapModule extends GenericModule{
 
             mapElement.paintOnMap("", workingFeature).then(response =>{
               
-              function loadImageCallback(url, callback, mapElement, workingFeature) {
-                var img = new Image();
-                img.src = url;
-                img.onload = function() {
-                  let iconWidth = mapElement.graphicIcon.width;
-                  let scaleIcon = iconWidth / this.width;
-                  callback(url, scaleIcon, workingFeature, mapElement.element.id); 
-                }
-              }
-              
-              function paintMarker(url, scaleIcon, workingFeature, id) {   
-                let workingStyle = new ol.style.Style({
-                  image: new ol.style.Icon({
-                    opacity: 1,
-                    src: url,
-                    scale: scaleIcon
-                  }),
-                });
-    
-                workingFeature.setStyle(workingStyle);
-                workingFeature.set('featureStyle', workingStyle);
-                // workingFeature.set("component", "Element");
-                workingFeature.setId(id);
-              }
-
-              loadImageCallback(response, paintMarker, mapElement, workingFeature)
+              this.loadImageCallback(response, this.paintMarker, mapElement, workingFeature)
             });
             // tmpIcon = tmpIcon.replace(/#/g, "%23");
             // let srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
@@ -275,7 +250,27 @@ export default class MapModule extends GenericModule{
         if(value.isCtrlClicked){
           
           this.elementsMap.get(key).isCtrlClicked = false;
-          document.getElementById(key).classList.remove("synoptic-highlight");
+          let layer = this.mapConf.metadata.mapLayers.find(item => {(item.mapLayerElements.find(layerElement => {layerElement.elementId == key})); return item});
+          let layerFeature;
+          this.map.getLayers().forEach(function(l) {
+            if(l.get("id") == "layer_"+layer.id) {
+              layerFeature = l;
+            }
+          });
+          let feature = layerFeature.getSource().getFeatureById(key);
+          let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
+          let iconWidth = this.elementsMap.get(key).graphicIcon.width;
+          let scaleIcon = iconWidth / feature.get("featureStyle").getImage().iconImage_.getImage().width;
+          let zTopStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+              opacity: 1,
+              scale: scaleIcon,
+              src: srcIcon,
+            }),
+            zIndex: 1,
+          });
+          feature.setStyle(zTopStyle);
+          feature.set('featureStyle', zTopStyle);
         }
       }
     }
@@ -293,57 +288,92 @@ export default class MapModule extends GenericModule{
 
   addClickEvents() {
 
-    // let singleClick = new ol.interaction.Select({
-    //   condition: ol.events.condition.singleClick
-    // });
+    this.addSingleClick();
+    this.addDoubleClick();
 
-    // singleClick.on("select", (e) => {
+  }
 
-    //   let feature = e.target.getFeatures().array_[0];
-    //   let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
-    //   let scaleIcon = 0.010;      
-    //   let zTopStyle = new ol.style.Style({
-    //     image: new ol.style.Icon({
-    //       opacity: 1,
-    //       scale: scaleIcon,
-    //       src: srcIcon,
-    //     }),
-    //     zIndex: 100,
-    //   });
+  addSingleClick() {
+    let singleClick = new ol.interaction.Select({
+      condition: ol.events.condition.singleClick
+    });
+
+    singleClick.on("select", (e) => {
+      //Get Feature
+      let featureId = e.target.getFeatures().array_[0].id_;
+      let layer = this.mapConf.metadata.mapLayers.find(item => {(item.mapLayerElements.find(layerElement => {layerElement.elementId == featureId})); return item});
+      let layerFeature;
+      this.map.getLayers().forEach(function(l) {
+        if(l.get("id") == "layer_"+layer.id) {
+          layerFeature = l;
+        }
+      });
+      let feature = layerFeature.getSource().getFeatureById(featureId);
+      e.target.getFeatures().clear();
+
+      let isCtrlClicked = ol.events.condition.platformModifierKeyOnly(e.mapBrowserEvent);
+      if (isCtrlClicked) {
+        if(this.elementsMap.get(featureId).isCtrlClicked){
+          this.elementsMap.get(featureId).isCtrlClicked = false;
+        } else {
+          this.elementsMap.get(featureId).isCtrlClicked = true;
+        }
+      } else {
+        this.resetSelectedIds();
+        this.elementsMap.get(featureId).isCtrlClicked = true;
+      }
       
-    //   feature.setStyle(zTopStyle);
-    //   feature.set('featureStyle', zTopStyle);
-    // });
-    // this.map.addInteraction(singleClick);
+      if(this.elementsMap.get(featureId).isCtrlClicked){
+        let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
+        let iconWidth = this.elementsMap.get(featureId).graphicIcon.width;
+        let scaleIcon = (iconWidth+10) / feature.get("featureStyle").getImage().iconImage_.getImage().width;
+        let zTopStyle = new ol.style.Style({
+          image: new ol.style.Icon({
+            opacity: 1,
+            scale: scaleIcon,
+            src: srcIcon,
+          }),
+          zIndex: 100,
+        });
+        feature.setStyle(zTopStyle);
+        feature.set('featureStyle', zTopStyle);
+      } else {
+        let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
+        let iconWidth = this.elementsMap.get(featureId).graphicIcon.width;
+        let scaleIcon = iconWidth / feature.get("featureStyle").getImage().iconImage_.getImage().width;
+        // let scaleIcon = feature.get("featureStyle").getImage().getScale();      
+        let zTopStyle = new ol.style.Style({
+          image: new ol.style.Icon({
+            opacity: 1,
+            scale: scaleIcon,
+            src: srcIcon,
+          }),
+          zIndex: 1,
+        });
+        feature.setStyle(zTopStyle);
+        feature.set('featureStyle', zTopStyle);
+      }
+      this.getSelectedIds();
+    });
+    this.map.addInteraction(singleClick);
+  }
 
-
+  addDoubleClick(){
     let doubleClick = new ol.interaction.Select({
       condition: ol.events.condition.doubleClick
     });
+    
     doubleClick.on("select", (e) => {
-      
-      let feature = e.target.getFeatures().array_[0];
-      let element_id = feature.id_;
-      let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
-      let scaleIcon = 0.016;          
-      let zTopStyle = new ol.style.Style({
-        image: new ol.style.Icon({
-          opacity: 1,
-          scale: scaleIcon,
-          src: srcIcon,
-        }),
-        zIndex: 100,
-      });
-      
-      feature.setStyle(zTopStyle);
-      feature.set('featureStyle', zTopStyle);
+      //GetFeature
+      let featureId = e.target.getFeatures().array_[0].id_;
+      e.target.getFeatures().clear();
 
-      if($$("winMap" + element_id) != null){
-        $$("winMap" + element_id).destructor();
+      if($$("winMap" + featureId) != null){
+        $$("winMap" + featureId).destructor();
       }
-      let elementWindow = new ElementWindow(element_id,"ElementType:" + element_id.split(":")[1]);
+      let elementWindow = new ElementWindow(featureId,"ElementType:" + featureId.split(":")[1]);
       webix.ui({
-        id: "winMap" + element_id,
+        id: "winMap" + featureId,
         view: "window",
         move: true,
         close: true,
@@ -364,55 +394,8 @@ export default class MapModule extends GenericModule{
       }).show();
 
     });
+
     this.map.addInteraction(doubleClick);
-
-
-    // var select = new ol.interaction.Select({
-    //   style: function (feature) {
-
-    //     let element_id = feature.id_;
-    //     let srcIcon = feature.get("featureStyle").getImage().iconImage_.getImage().src;
-    //     let scaleIcon = 0.022;          
-    //     let zTopStyle = new ol.style.Style({
-    //       image: new ol.style.Icon({
-    //         opacity: 1,
-    //         scale: scaleIcon,
-    //         src: srcIcon,
-    //       }),
-    //       zIndex: 100,
-    //     });
-        
-    //     if($$("winMap" + element_id) != null){
-    //       $$("winMap" + element_id).destructor();
-    //     }
-    //     let elementWindow = new ElementWindow(element_id,"ElementType:" + element_id.split(":")[1]);
-    //     webix.ui({
-    //       id: "winMap" + element_id,
-    //       view: "window",
-    //       move: true,
-    //       close: true,
-    //       position: "right",
-    //       body: elementWindow.getComponent(),
-    //       on: {
-    //         onDestruct: function(obj){
-    //           //elementForm.disconnect();
-    //         },
-    //         onHide: function(obj){
-    //           //elementForm.disconnect();
-    //           //$$("win" + elementId).destructor();
-    //         },
-    //         onShow: function(obj){
-    //           elementWindow.loadData();
-    //         }
-    //       }
-    //     }).show();
-
-    //     return zTopStyle;
-        
-    //   }
-    // });
-    // this.map.addInteraction(select);
-    
   }
 
   connect_ws() {
@@ -548,6 +531,30 @@ export default class MapModule extends GenericModule{
 
     }
 
+  }
+
+  loadImageCallback(url, callback, mapElement, workingFeature) {
+    var img = new Image();
+    img.src = url;
+    img.onload = function() {
+      let iconWidth = mapElement.graphicIcon.width;
+      let scaleIcon = iconWidth / this.width;
+      callback(url, scaleIcon, workingFeature, mapElement.element.id); 
+    }
+  }
+  
+  paintMarker(url, scaleIcon, workingFeature, id) {   
+    let workingStyle = new ol.style.Style({
+      image: new ol.style.Icon({
+        opacity: 1,
+        src: url,
+        scale: scaleIcon
+      }),
+    });
+
+    workingFeature.setStyle(workingStyle);
+    workingFeature.set('featureStyle', workingStyle);
+    workingFeature.setId(id);
   }
 
 }
