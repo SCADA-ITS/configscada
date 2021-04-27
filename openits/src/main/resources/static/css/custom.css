@@ -1926,7 +1926,7 @@
 }
 
 .user-form .webix_inp_label{
-	color: #0f1724;
+	color:  #475466 !important;
 	font-size: 13px ;
 	padding-left: 75px ;
 }
@@ -1939,7 +1939,7 @@
 }
 
 .role-form .webix_inp_label {
-	color: #0f1724;
+	color: #475466 !important;
 	font-size: 13px ;
 	padding-left: 75px;
 }
@@ -1952,7 +1952,7 @@
 }
 
 .plan-form .webix_inp_label {
-	color: #0f1724;
+	color: #475466 !important;
 	font-size: 13px ;
 }
 
@@ -2144,3 +2144,4 @@
 	font-size: 14px;
 	color: #475269; 
 }
+
