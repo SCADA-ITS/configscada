@@ -2135,3 +2135,12 @@
   	65% { color: rgb(76, 175, 80) }
   	100% { color: var(--blue-text-default) }
 }
+
+.file-manager-description.webix_el_label > div {
+	text-overflow: ellipsis;
+	max-width: 435px; 
+	overflow: hidden; 
+	white-space: nowrap; 
+	font-size: 14px;
+	color: #475269; 
+}

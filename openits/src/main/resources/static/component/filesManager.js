@@ -183,26 +183,26 @@ export default class FilesManager {
 						{
 							space: "line",
 							cols: [
-								{ 
-								type: "space",
-								width: 13, 
-								height: 174
+								{
+									type: "space",
+									width: 13,
+									height: 180
 								},
 								{
 									view: "scrollview",
 									width: 755,
 									//document.documentElement.clientWidth - 900,
-									scroll: "x",
-									height: 174,
+									scroll: "auto",
+									height: 180,
 									body: {
 										cols: filePanelViewList
 									}
 								}
 							]
 						}
-//						{	
-//						type: "space", 
-//						height: 10}
+						//						{	
+						//						type: "space", 
+						//						height: 10}
 					]
 				}
 			]
@@ -271,18 +271,26 @@ export default class FilesManager {
 									rows: [
 										{
 											id: windowId + "_labelFooterName",
-											//tooltip: getDocumentName(files[0].documentUrl),
+											tooltip:
+												function() {
+													return $$(windowId + "_labelFooterName").data.label;
+												},
 											view: "label",
-											label: `<div class="title"><span class="section-text" style="font-size: 14px; color: #475269">${getDocumentName(files[0].documentUrl)}</span></div>`,
+											css: "file-manager-description",
+											label: getDocumentName(files[0].documentUrl),
 											align: "left",
 											height: 17
 										},
-										{height: 10},
+										{ height: 10 },
 										{
 											id: windowId + "_labelFooterTask",
-											//tooltip: files[0].description,
+											tooltip:
+												function() {
+													return $$(windowId + "_labelFooterTask").data.label;
+												},
 											view: "label",
-											label: `<div class="title" style="max-width: 375px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="font-size: 14px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${files[0].description}</span></div>`,
+											css: "file-manager-description",
+											label: files[0].description,
 											align: "left",
 											height: 20
 										}
@@ -290,7 +298,7 @@ export default class FilesManager {
 								}
 							]
 						},
-						{ height: 10},
+						{ height: 10 },
 						{
 							cols: [
 								{ width: 13 },
@@ -300,7 +308,8 @@ export default class FilesManager {
 									css: { "background": "#edf0f7ff", "margin": "0px", "border-radius": "4px" },
 									width: 573,
 									height: 63,
-									template: `<div style="overflow-y: scroll"><p style="overflow-y: scroll; font-size: 12px; font-weight: 300; margin: 0px; padding: 5px">${files[0].description}</p></div>`,
+									scroll: "auto",
+									template: `<div><p style="font-size: 12px; font-weight: 300; margin: 0px; padding: 5px">${files[0].description}</p></div>`,
 
 								},
 								{ width: 34 },
@@ -311,7 +320,7 @@ export default class FilesManager {
 										{
 											view: "button",
 											height: 41,
-											css: "dialog-accept", 
+											css: "dialog-accept",
 											label: i18n.t("LBL_DOWNLOAD"),
 											type: "icon",
 											icon: "webix_icon wxi-download",
@@ -350,7 +359,7 @@ export default class FilesManager {
 				{
 					cols: [
 						{
-							tooltip:true,
+							tooltip: true,
 							rows: getDocumentsTypeFooterBody()
 						}
 					]
@@ -387,12 +396,13 @@ export default class FilesManager {
 
 										fileDownloadList.push(id.split("_")[0]);
 
-										$$(windowId + "_labelFooterName").setValue(`<div class="title"><span class="section-text" style="font-size: 14px; color: #475269">${$$(id.split("_")[0] + "_Check").data.data.alias}</span></div>`);
-										$$(windowId + "_labelFooterTask").setValue(`<div class="title" style= "max-width: 375px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="font-size: 14px; color: #475269">${$$(id.split("_")[0] + "_Check").data.data.description}</span></div>`);
+										$$(windowId + "_labelFooterName").setValue($$(id.split("_")[0] + "_Check").data.data.alias);
+										$$(windowId + "_labelFooterTask").setValue($$(id.split("_")[0] + "_Check").data.data.description);
 
 										let description = {
 											id: windowId + "_labelFooterDescription",
 											borderless: true,
+											scroll: "auto",
 											css: { "background": "#edf0f7ff", "margin": "0px", "border-radius": "4px" },
 											width: 573,
 											height: 63,
@@ -417,7 +427,8 @@ export default class FilesManager {
 							},
 							{
 								view: "label",
-								label: `<div class="title" style="font-size: 13px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="font-size: 13px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${e.file}</span></div>`,
+								tooltip: e.file,
+								label: `<div class="title" style="font-size: 13px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.file}</span></div>`,
 								align: "left",
 								height: 30,
 								width: 80,
@@ -426,7 +437,8 @@ export default class FilesManager {
 							},
 							{
 								view: "label",
-								label: `<div class="title" style="font-size: 13px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="font-size: 11px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${e.description}</span></div>`,
+								tooltip: e.description,
+								label: `<div class="title" style="font-size: 11px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.description}</span></div>`,
 								align: "left",
 								height: 30,
 								width: 80,
@@ -450,8 +462,8 @@ export default class FilesManager {
 				{
 					rows: [
 						{ height: 5 },
-						{	
-							tooltip:true,
+						{
+							tooltip: true,
 							css: { "height": "435px !important", "width": "778px !important", "border": "1px solid #e2e2e2" },
 							rows: getDocumentBody()
 						},
