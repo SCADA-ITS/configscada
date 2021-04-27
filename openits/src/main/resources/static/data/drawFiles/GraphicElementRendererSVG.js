@@ -7,6 +7,7 @@ const ELMENT_TYPE_PARAM_UI_GRAPHIC_PARAM = "graphic_param";
 
 
 export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
+  let result;
   let elementId= element.id+suffix;
   let elementTypeAlias = $.i18n(element.elementType.id + ".alias");
   let elementAlias = element.alias;
@@ -28,9 +29,14 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
   });
 
   let pictoStr = prepareStr(iconPattern, params);
-  let snapIcon = Snap.parse(pictoStr);
-  let el = snapDiv.group().append(snapIcon);
-  return el;
+  if(snapDiv){
+    let snapIcon = Snap.parse(pictoStr);
+    result = snapDiv.group().append(snapIcon);
+  }else {
+    result = pictoStr;
+  }
+  
+  return result;
 }
 
 export function getElementIcon(element, suffix="") {
@@ -191,11 +197,18 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="") {
+export function getElementSVG(element, suffix="", graphicIcon) {
+  //DEPRECATED
+  let width = graphicIcon.width;
+  let height = graphicIcon.height;
+  //FIN
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
   } 
-  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + generateIcon(element, suffix) + '</g>';
-  return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
+  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (0.12755102040816327) + ',' + (0.12755102040816327) + ')">' + generateIcon(element, suffix, graphicIcon) + '</g>';
+  let result = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
+  result = result.replace(/#/g, "%23");
+  result = "data:image/svg+xml;utf8," + result;
+  return result;
 }

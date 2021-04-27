@@ -33,6 +33,10 @@ public class Map implements Serializable {
 
 	private Integer zoom;
 
+	//bi-directional many-to-one association to MapCommand
+	@OneToMany(mappedBy="map")
+	private List<MapCommand> mapCommands;
+
 	//bi-directional many-to-one association to MapLayerRelationship
 	@OneToMany(mappedBy="map")
 	private List<MapLayerRelationship> mapLayerRelationships;
@@ -82,6 +86,14 @@ public class Map implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<MapCommand> getMapCommands() {
+		return mapCommands;
+	}
+
+	public void setMapCommands(List<MapCommand> mapCommands) {
+		this.mapCommands = mapCommands;
 	}
 
 	public List<MapLayerRelationship> getMapLayerRelationships() {

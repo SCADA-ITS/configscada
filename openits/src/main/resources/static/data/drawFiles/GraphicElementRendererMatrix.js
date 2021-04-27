@@ -8,6 +8,7 @@ const ELMENT_TYPE_STATE_UI_COLOR = "color";
 const ALTERNANCE_TIME = 3000;
 
 export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
+  let result;
   let panelConfig = element.elementValues.find((ic) =>
       elementTypeMap.getElementTypeParam(ic.id) == elementTypeMap.PANEL_MANAGER_CONFIG
   );
@@ -280,9 +281,14 @@ export function generateIcon(element, suffix="", graphicIcon, snapDiv) {
 
   s.clear();
 
-  let snapIcon = Snap.parse(retSVG);
-  let el = snapDiv.group().append(snapIcon);
-  return el;
+  if(snapDiv){
+    let snapIcon = Snap.parse(retSVG);
+    result = snapDiv.group().append(snapIcon);
+  }else {
+    result = retSVG;
+  }
+
+  return result;
 }
 
 export function getElementIcon(element, suffix="") {
@@ -462,13 +468,20 @@ export function updateElementState(element) {
   }
 }
 
-export function getElementSVG(element, width, height, suffix="") {
+export function getElementSVG(element, suffix="", graphicIcon) {
+  //DEPRECATED
+  let width = graphicIcon.width;
+  let height = graphicIcon.height;
+  //FIN
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
   } 
-  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + generateIcon(element, suffix) + '</g>';
-  return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
+  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '">' + generateIcon(element, suffix, graphicIcon) + '</g>';
+  let result = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
+  result = result.replace(/#/g, "%23");
+  result = "data:image/svg+xml;utf8," + result;
+  return result;
 }
 
 

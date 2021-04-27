@@ -44,7 +44,7 @@ export default class GraphicElement {
     let elementSVG = "";
     if(this.graphicIcon){
       let drawFile = await import(this.graphicIcon.jsDrawFile);
-      elementSVG = drawFile.getElementSVG(this.element);
+      elementSVG = drawFile.getElementSVG(this.element, suffix, this.graphicIcon);
     }else{
       webix.message({type:"error", text:"Es necesario asignar un recurso grafico al elemento: "+this.element.id});
     }

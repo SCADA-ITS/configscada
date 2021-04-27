@@ -250,7 +250,7 @@ export default class MapModule extends GenericModule{
         if(value.isCtrlClicked){
           
           this.elementsMap.get(key).isCtrlClicked = false;
-          let layer = this.mapConf.metadata.mapLayers.find(item => {(item.mapLayerElements.find(layerElement => {layerElement.elementId == key})); return item});
+          let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == key}))});
           let layerFeature;
           this.map.getLayers().forEach(function(l) {
             if(l.get("id") == "layer_"+layer.id) {
@@ -301,7 +301,7 @@ export default class MapModule extends GenericModule{
     singleClick.on("select", (e) => {
       //Get Feature
       let featureId = e.target.getFeatures().array_[0].id_;
-      let layer = this.mapConf.metadata.mapLayers.find(item => {(item.mapLayerElements.find(layerElement => {layerElement.elementId == featureId})); return item});
+      let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == featureId}))});
       let layerFeature;
       this.map.getLayers().forEach(function(l) {
         if(l.get("id") == "layer_"+layer.id) {
@@ -538,7 +538,11 @@ export default class MapModule extends GenericModule{
     img.src = url;
     img.onload = function() {
       let iconWidth = mapElement.graphicIcon.width;
-      let scaleIcon = iconWidth / this.width;
+      let scaleIcon = 1;
+      //DEPRECATED
+      if(this.width>500){
+        scaleIcon = iconWidth / this.width;
+      }
       callback(url, scaleIcon, workingFeature, mapElement.element.id); 
     }
   }
