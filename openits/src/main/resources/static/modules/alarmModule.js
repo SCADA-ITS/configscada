@@ -699,6 +699,7 @@ export default class AlarmModule extends GenericModule {
 							{
 								height: 55,
 								width: 626,
+								scroll: "auto",
 								css: "alarm-view-rectangle-back",
 								template: `<div class="alarm-view-comments">${label}</div>`
 							},
@@ -731,6 +732,7 @@ export default class AlarmModule extends GenericModule {
 							{
 								height: 55,
 								width: 626,
+								scroll: "auto",
 								css: "alarm-view-rectangle-back",
 								template: `<div class="alarm-view-comments">${label}</div>`
 							},

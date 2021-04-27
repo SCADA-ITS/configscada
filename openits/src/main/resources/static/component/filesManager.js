@@ -53,7 +53,7 @@ export default class FilesManager {
 									{ height: 5 },
 									{
 										view: "label",
-										label: `<div class="title"><span class="section-text" style="font-size: 14px;">${i18n.t("LBL_IMS_INCIDENTS_FILES")}</span></div>`,
+										label: `<div class="title"><span class="section-text" style="font-size: 14px; color: #475466">${i18n.t("LBL_IMS_INCIDENTS_FILES")}</span></div>`,
 										height: 20,
 										width: 200,
 										align: "left"
@@ -243,7 +243,7 @@ export default class FilesManager {
 								{ width: 11 },
 								{
 									view: "label",
-									label: `<div class="title"><span class="section-text" style="color:#475269; font-size: 14px;">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span></div>`,
+									label: `<div class="title"><span class="section-text" style="color:#475466; font-size: 14px;">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span></div>`,
 									align: "left",
 									height: 17
 								},
@@ -428,7 +428,7 @@ export default class FilesManager {
 							{
 								view: "label",
 								tooltip: e.file,
-								label: `<div class="title" style="font-size: 13px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.file}</span></div>`,
+								label: `<div class="title" style="font-size: 13px; color: #475466; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.file}</span></div>`,
 								align: "left",
 								height: 30,
 								width: 80,
@@ -438,7 +438,7 @@ export default class FilesManager {
 							{
 								view: "label",
 								tooltip: e.description,
-								label: `<div class="title" style="font-size: 11px; color: #475269; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.description}</span></div>`,
+								label: `<div class="title" style="font-size: 11px; color: #475466; max-width: 65px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span class="section-text" style="max-width: 65px">${e.description}</span></div>`,
 								align: "left",
 								height: 30,
 								width: 80,
