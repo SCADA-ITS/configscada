@@ -163,7 +163,7 @@ export default class treeSectModule extends GenericModule {
 				}
 			}
 
-			function fillNode(treeData, hierarchies) {
+			/*function fillNode(treeData, hierarchies) {
 
 				hierarchies.forEach(hierarchy => {
 
@@ -182,6 +182,7 @@ export default class treeSectModule extends GenericModule {
 					}
 				});
 			}
+
 
 			function getTreeViewData(nodes, hierarchies) {
 
@@ -210,6 +211,48 @@ export default class treeSectModule extends GenericModule {
 						}
 					});
 				}
+				return data;
+			}*/
+
+			function getTreeViewData(nodes, hierarchies) {
+
+				let data = [];
+
+				let childElements = [];
+				let mapNodes = new Map();
+
+				if (Array.isArray(nodes) && nodes.length > 0) {
+
+					nodes.forEach(node => {
+
+						let treeData = newTreeData(node.id);
+						mapNodes.set(node.id, treeData);
+					});
+				}
+
+				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
+
+					hierarchies.forEach(hierarchy => {
+
+						let parentElement = mapNodes.get(hierarchy.nodeParentId);
+						let childElement = mapNodes.get(hierarchy.nodeChildId);
+
+						parentElement.props.folder = true;
+						parentElement.data.push(childElement);
+
+						childElements.push(hierarchy.nodeChildId);
+					});
+				}
+
+				childElements.forEach(childElement => {
+
+					mapNodes.delete(childElement);
+				});
+
+				mapNodes.forEach(function(item, key, mapObj) {
+					data.push(item);
+				});
+
 				return data;
 			}
 
