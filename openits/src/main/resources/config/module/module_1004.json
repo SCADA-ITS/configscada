@@ -13,7 +13,8 @@
 		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}",
 		"assignUserIncidentReport": "incidents/reports/${id}/user/${userId}",
 		"addLogIncidentReport": "incidents/add_log_incident_report",
-		"deleteLogIncidentReport": "incidents/delete_log_incident_report/${id}"
+		"deleteLogIncidentReport": "incidents/delete_log_incident_report/${id}",
+		"assignCauseIncidentReport": "incidents/reports/${id}/cause/${causeId}"
 	},
 	"infoFields": [
 		{ "position": 1, "icon": "ico webix_icon mdi mdi-identifier", "label": "LBL_INCIDENT_REPORT_ID", "objField": "fieldId" },

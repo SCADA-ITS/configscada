@@ -159,6 +159,26 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentReportBO.assignUser(id, userId), HttpStatus.OK);
 	}
 	
+
+	@PostMapping(value = "/reports/{id}/cause/{causeId}")
+	@ApiOperation(value = "Assign cause Incident Report", notes = "Assing cause Incident Report")
+	public ResponseEntity<Object> assignCauseIncidentReport(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Incident report id",
+					example = "ImsIncidentReport:1",
+					required = true) @PathVariable String id,
+			@ApiParam(
+					name = "causeId",
+					type = "String",
+					value = "Cause id",
+					example = "ImsIncidentTypeCause:1:1",
+					required = true) @PathVariable String causeId) {
+		
+		return new ResponseEntity<>(imsIncidentReportBO.assignCause(id, causeId), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/reports/{id}/finalize_task/{taskId}")
 	@ApiOperation(value = "Finalize task Incident Report", notes = "Finalize task Incident Report")
 	public ResponseEntity<Object> finalizeTaskIncidentReport(

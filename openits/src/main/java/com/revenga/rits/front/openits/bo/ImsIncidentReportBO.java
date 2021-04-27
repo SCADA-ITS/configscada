@@ -67,6 +67,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	static final String FIELD_INCIDENT_TYPE_TASK_ID = "incidentTypeTaskId";
 	static final String FIELD_INCIDENT_TASK_PLAN_ID = "incidentTaskPlanId";
+	static final String FIELD_INCIDENT_TYPE = "incidentType";
 
 	static final String FIELD_SEQUENCE_OF_STATES = "sequenceOfStates";
 	static final String FIELD_STATE = "state";
@@ -77,6 +78,9 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_PLAN = "plan";
 
 	static final String LBL_IMS_INCIDENT_STATE_CANCELED = "LBL_IMS_INCIDENT_STATE_CANCELED";
+
+	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE_ID = "incidentTypeCauseId";
+	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE = "incidentTypeCause";
 
 	private Object getIncidentStateLabelAlias(final Map<String, Object> incidentReport) {
 
@@ -332,6 +336,55 @@ public class ImsIncidentReportBO extends GenericBO {
 		}
 		return null;
 	}
+
+	private Object getCauseAlias(final Map<String, Object> incidentReport, final String incidentTypeCauseId) {
+
+		if (incidentReport != null && incidentTypeCauseId != null
+			&& incidentReport.containsKey(FIELD_INCIDENT_TYPE)) {
+
+				Object objIncidentType = incidentReport.get(FIELD_INCIDENT_TYPE);
+
+				if (objIncidentType instanceof Map) {
+
+					Map<String, Object> incidentType = (Map<String, Object>) objIncidentType;
+
+					Object objIncidentTypeId = incidentType.get(FIELD_ID);
+
+					if (objIncidentTypeId != null) {
+					
+						Map<String, Object> incidentTypeReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE,new Object[] { (String) objIncidentTypeId  });
+						
+						Object objIncidentTypeCause = incidentTypeReport.get(FIELD_IMS_INCIDENT_TYPE_CAUSE);
+
+						if (objIncidentTypeCause instanceof List) {
+			
+							List<?> sequenceOfCauses = (List<?>) objIncidentTypeCause;
+			
+							for (Object objSequenceOfCauses : sequenceOfCauses) {
+			
+								if (objSequenceOfCauses instanceof Map) {
+
+									Map<String, Object> sequenceOfCause = (Map<String, Object>) objSequenceOfCauses;
+									Object objIncidentTypeCauseId = sequenceOfCause.get(FIELD_ID);
+
+									if (objIncidentTypeCauseId != null && incidentTypeCauseId
+											.equals((String) objIncidentTypeCauseId)) {
+									
+										return sequenceOfCause.get(FIELD_ALIAS);
+												
+									}
+								}
+						
+							}
+						}
+					
+					}
+				}
+			}
+		
+		return null;
+	}
+
 
 	private Boolean addLog(final Map<String, Object> incidentReport, final String incidentReportId,
 			final String logSubtypeId, final Object stateLabel, final Object arg1, final Object arg2) {
@@ -626,4 +679,30 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return res;
 	}
+
+	public Boolean assignCause(String id, String causeId) {
+
+		Boolean res = false;
+
+		Map<String, Object> input = new HashMap<>();
+
+		input.put(FIELD_INCIDENT_REPORT_ID, id);
+		input.put(FIELD_IMS_INCIDENT_TYPE_CAUSE_ID, causeId);
+
+		Map<String, Object> incidentReport = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_SEND_ASSING_CAUSE_INCIDENT_REPORT, input);
+
+		res = checkMapIsBoolean(incidentReport);
+
+		if (res) {
+
+			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
+					new Object[] { id });
+
+			addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_CAUSE, null,
+			getCauseAlias(incidentReport, causeId), null);
+		}
+		return res;
+	}
+		
 }
