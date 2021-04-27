@@ -101,16 +101,27 @@ export default class AlarmMonitorModule extends GenericModule {
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
 
-			let promiseAlarms = webix.ajax().get(appConfig.restUrl + this.config.restEndpoints.alarms);
-			let promiseTreeElements = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: self.config.treeElements }));
-			let promiseGridNoRecognized = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridNoRecognized }));
-			let promiseGridRecognized = webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridRecognized }));
-			 
-			webix.promise.all([promiseAlarms, promiseTreeElements, promiseGridNoRecognized, promiseGridRecognized]).then(function(responses) {
+			let promises = [];
 
-			    doOnLoadAlarms(responses[0]);
-				doOnLoadTreeElements(responses[1]);
-				doOnLoadGrids(responses[2], responses[3]);
+			promises.push(webix.ajax().get(appConfig.restUrl + this.config.restEndpoints.alarms));
+
+			if (self.config.treeElements) {
+				
+				promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: self.config.treeElements })));
+			}
+			promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridNoRecognized })));
+			promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridRecognized })));
+
+			webix.promise.all(promises).then(function(responses) {
+
+				let i = 0;
+				doOnLoadAlarms(responses[i++]);
+
+				if (self.config.treeElements) {
+					doOnLoadTreeElements(responses[i++]);
+
+				}
+				doOnLoadGrids(responses[i++], responses[i++]);
 			});
 			
 			function doOnLoadAlarms(response) {
@@ -504,6 +515,26 @@ export default class AlarmMonitorModule extends GenericModule {
 				cols: []
 			};
 
+			let rowsviewMainListEquipments = [];
+		
+			rowsviewMainListEquipments.push({
+				id: "loading-switcher-" + self.uid,
+				hidden: false,
+				cols: [
+					util.ui.getViewDrawNoData(true)
+				]
+			});
+				
+			if(self.treeElements){
+				
+				rowsviewMainListEquipments.push(getSwitcherViews());
+				rowsviewMainListEquipments.push({ height: 1, borderless: false });
+				rowsviewMainListEquipments.push(getSwitcherButtons());
+				
+			}else{
+				rowsviewMainListEquipments.push(getViewListEquipments());
+			}
+			
 			let viewMainListEquipments = {
 				id: "view-main-list-equipments-" + self.uid,
 				//header: i18n.t("LBL_EQUIPMENT_TYPES"),
@@ -516,18 +547,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				},
 				body: {
 					width: 325,
-					rows: [
-						{
-							id: "loading-switcher-" + self.uid,
-							hidden: false,
-							cols: [
-								util.ui.getViewDrawNoData(true)	
-							]
-						},
-						getSwitcherViews(),
-						{ height: 1, borderless: false },
-						getSwitcherButtons()
-					]
+					rows: rowsviewMainListEquipments
 				}
 			};
 
