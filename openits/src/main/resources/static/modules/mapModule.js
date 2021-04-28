@@ -368,30 +368,25 @@ export default class MapModule extends GenericModule{
       let featureId = e.target.getFeatures().array_[0].id_;
       e.target.getFeatures().clear();
 
-      if($$("winMap" + featureId) != null){
-        $$("winMap" + featureId).destructor();
-      }
-      let elementWindow = new ElementWindow(featureId,"ElementType:" + featureId.split(":")[1]);
-      webix.ui({
-        id: "winMap" + featureId,
-        view: "window",
-        move: true,
-        close: true,
-        position: "right",
-        body: elementWindow.getComponent(),
-        on: {
-          onDestruct: function(obj){
-            //elementForm.disconnect();
-          },
-          onHide: function(obj){
-            //elementForm.disconnect();
-            //$$("win" + elementId).destructor();
-          },
-          onShow: function(obj){
-            elementWindow.loadData();
+      let command ={};      
+      let defaultCommand = this.mapConf.metadata.mapCommands.find(mapCommand => {
+        return mapCommand.default_ === true
+      });
+      command.moduleAction = defaultCommand.moduleAction;
+      command.viewType = defaultCommand.viewType;
+      
+      if(defaultCommand.mapElementTypeCommand != undefined && defaultCommand.mapElementTypeCommand.length > 0){
+        defaultCommand.mapElementTypeCommand.forEach(typeCommand => {
+          if(typeCommand.elementType == this.elementsMap.get(featureId).element.elementType.id ){
+            command.moduleAction = typeCommand.moduleAction
           }
-        }
-      }).show();
+        });
+      }
+      
+      let module = findModuleByIdAction(command.moduleAction.id);
+      let args = {};
+      args.selectedPks = [this.elementsMap.get(featureId).element.id];
+      util.module.open(module, command.moduleAction, (command.viewType)?command.viewType.id:undefined, null, args);
 
     });
 
