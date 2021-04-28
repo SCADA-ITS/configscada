@@ -112,7 +112,7 @@ export default class MapModule extends GenericModule{
 
             mapElement.paintOnMap("", workingFeature).then(response =>{
               
-              this.loadImageCallback(response, this.paintMarker, mapElement, workingFeature)
+              this.loadImageCallback(response, this.paintMarker, mapElement, workingFeature);
             });
             // tmpIcon = tmpIcon.replace(/#/g, "%23");
             // let srcIcon = "data:image/svg+xml;utf8," + tmpIcon;
@@ -400,69 +400,65 @@ export default class MapModule extends GenericModule{
 
   connect_ws() {
 
-		// let on_message = (message) => {
+		let on_message = (message) => {
 
-    //   this.disconnectStomp = false;
+      this.disconnectStomp = false;
 
-    //   try {
+      try {
 
-    //     let obj = JSON.parse(JSON.parse(message.body));
-    //     obj.basicElementsVO.forEach((element) => {
+        let obj = JSON.parse(JSON.parse(message.body));
+        obj.basicElementsVO.forEach((element) => {
 
-    //       try {
+          try {
 
-    //         if(this.elementsMap && this.elementsMap.get(element.id)){
+            if(this.elementsMap && this.elementsMap.get(element.id)){
 
-    //           this.elementsMap.get(element.id).updateElement(element);
+              this.elementsMap.get(element.id).updateElement(element);
 
-    //           if(document.getElementById(this.mapDivId + "SVG") && document.getElementById(element.id)){
+              let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == element.id}))});
+              let layerFeature;
+              this.map.getLayers().forEach(function(l) {
+                if(l.get("id") == "layer_"+layer.id) {
+                  layerFeature = l;
+                }
+              });
+              let feature = layerFeature.getSource().getFeatureById(element.id);
+              this.elementsMap.get(element.id).paintOnMap("").then(response =>{
+                let srcIcon = response;
+                let scaleIcon = feature.get("featureStyle").getImage().getScale();
+                let opacity = feature.get("featureStyle").getImage().getOpacity();
+                let zIndex = feature.get("featureStyle").getZIndex();
+                let zTopStyle = new ol.style.Style({
+                  image: new ol.style.Icon({
+                    opacity: opacity,
+                    scale: scaleIcon,
+                    src: srcIcon,
+                  }),
+                  zIndex: zIndex,
+                });
+                feature.setStyle(zTopStyle);
+                feature.set('featureStyle', zTopStyle);
+              });
 
-    //             //Deprecated
-    //             // soporte para dual mezclado con visibility del arbol antiguo, bajar a mtx tanto aqui como en elementForm
-    //             if(this.elementsMap.get(element.id).element.elementType.id===ELEMENT_TYPE.ID_30_PMV_128X64){
+            }
 
-    //               document.getElementById(element.id).remove();
-    //               this.elementsMap.get(element.id).paintIcon(this.elementsMap.get(element.id).elementUiConfig, this.elementsMap.get(element.id).snapDiv,  this.elementsMap.get(element.id).ratioWidth,  this.elementsMap.get(element.id).ratioHeight);  
-    //               let checkedElement = document.getElementById(element.id);
+          } catch (error) {
 
-    //               if(checkedElement != null) {
+            console.warn(error);
 
-    //                 checkedElement.style.opacity = 1;
-    //                 checkedElement.setAttribute("visibility", "visible");
-
-    //               }
-
-    //             }else{
-
-    //               this.elementsMap.get(element.id).updatePaint();              
-
-    //             }
-
-    //           }else{
-
-    //             this.elementsStompMap.set(element.id, this.elementsMap.get(element.id).element);
-
-    //           }
-
-    //         }
-
-    //       } catch (error) {
-
-    //         console.warn(error);
-
-    //       }
+          }
     
-    //     });
+        });
     
-    //   } catch (err) {
+      } catch (err) {
     
-    //     console.error(err);
+        console.error(err);
     
-    //   }
+      }
 		
-    // }
+    }
 
-		// this.stompClient = util.stomp.connect(appConfig.stompUrl, MAP_WS_TOPIC, ()=>{}, on_message);
+		this.stompClient = util.stomp.connect(appConfig.stompUrl, MAP_WS_TOPIC, ()=>{}, on_message);
 	
   }
 
