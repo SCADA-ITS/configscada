@@ -4,6 +4,8 @@ import PanelManager from "../classes/PanelManager.js";
 import PAsystemManager from "../classes/PAsystemManager.js";
 import {RULE, ELEMENT_TYPE_PARAM} from "../data/GLOBAL_PROPERTIES.js";
 import SynopticElement from "../classes/SynopticElement.js";
+import { util } from "../lib/util.js"
+
 
 const ELEMENT_TYPE_UI_STRING="string";
 const ELEMENT_TYPE_UI_URL="url"
@@ -1010,7 +1012,7 @@ export default class TabForm {
 													}
 												]
 											};
-											auditMutation(auditLog);
+											auditMutation(auditLog, util.user.auth());
 										});
 									}
 								}, -1);

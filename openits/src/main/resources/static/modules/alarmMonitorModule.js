@@ -330,9 +330,12 @@ export default class AlarmMonitorModule extends GenericModule {
 
 		function initListView() {
 
-			if (self.listView && self.treeView) {
+			if (self.listView) {
 
-				self.treeView.unselect();
+				if(self.treeView){	
+								
+					self.treeView.unselect();
+				}
 				
 				setMode(MODE_TYPE, [ELEMENT_TYPE_ALL]);
 				
