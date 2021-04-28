@@ -3,6 +3,8 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the equip_viewer_measures database table.
@@ -23,6 +25,7 @@ public class EquipViewerMeasure implements Serializable {
 	private Boolean visible;
 
 	//bi-directional many-to-one association to EquipViewerGrpMeasure
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="equip_viewer_grp_measure_id")
 	private EquipViewerGrpMeasure equipViewerGrpMeasure;

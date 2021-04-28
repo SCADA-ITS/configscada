@@ -276,7 +276,7 @@ export default class EquipmentViewerInfoMeasure {
 					
 					id: VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid,
 					width: 150,
-					value: measureGroup.label
+					value: i18n.t(measureGroup.label)
 				});
 				
 				viewMultiview.cells.push(measureGroup.getView());

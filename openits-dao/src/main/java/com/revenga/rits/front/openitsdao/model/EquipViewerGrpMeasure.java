@@ -2,6 +2,9 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -32,6 +35,7 @@ public class EquipViewerGrpMeasure implements Serializable {
 	private Boolean visible;
 
 	//bi-directional many-to-one association to EquipViewer
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="equip_viewer_id")
 	private EquipViewer equipViewer;
