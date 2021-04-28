@@ -26,6 +26,9 @@ public class AdapterTreeElementHierarchyIterative extends AdapterTree{
 	static final String FIELD_ALIAS = "alias";
 	static final String FIELD_PARENT = "parent";
 	static final String FIELD_CHILD = "child";
+	
+	static final int PARENT_ID_IDX = 0;
+	static final int CHILD_ID_IDX = 1; 
 
 	public AdapterTreeElementHierarchyIterative(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 
@@ -138,7 +141,13 @@ public class AdapterTreeElementHierarchyIterative extends AdapterTree{
 					if(parentTreeData != null && childTreeData != null) {
 						
 						parentTreeData.addProperty(TreeDataUI.PROP_FOLDER, true);
-						parentTreeData.addItem(childTreeData);
+						
+						TreeDataUI newChild = new TreeDataUI(childTreeData);
+						
+						newChild.setId(parentTreeData.getId().split("_")[CHILD_ID_IDX] + "_" + childTreeData.getId().split("_")[CHILD_ID_IDX]);									
+						parentTreeData.addItem(newChild);
+											
+						mapNodes.put(childElementId, newChild)
 						childElements.add(childElementId);
 					}
 				}
