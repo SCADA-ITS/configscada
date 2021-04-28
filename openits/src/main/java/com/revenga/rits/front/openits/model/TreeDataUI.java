@@ -33,6 +33,33 @@ public class TreeDataUI implements Serializable {
 	private Map<String, Object> params;
 	private Map<String, Object> props;
 	
+	public TreeDataUI(TreeDataUI treeDataUI) {
+		
+		super();
+		
+		this.id = treeDataUI.getId();
+		this.value = treeDataUI.getValue();
+		this.parentId = treeDataUI.getParentId();
+		
+		if (treeDataUI.getData() != null) {
+			
+			for (TreeDataUI item : treeDataUI.getData()) {
+				
+				this.addItem(new TreeDataUI(item));
+			}
+		}
+		
+		if (treeDataUI.getParams() != null) {
+		
+			this.params = new HashMap<>(treeDataUI.getParams());
+		}
+		
+		if (treeDataUI.getProps() != null) {
+			
+			this.props = new HashMap<>(treeDataUI.getProps());
+		}
+	}
+
 	public TreeDataUI(String id, String value) {
 		super();
 		
