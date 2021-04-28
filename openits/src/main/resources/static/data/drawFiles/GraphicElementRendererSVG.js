@@ -201,12 +201,17 @@ export function getElementSVG(element, suffix="", graphicIcon) {
   //DEPRECATED
   let width = graphicIcon.width;
   let height = graphicIcon.height;
+  let scale = 0.12755102040816327;
+  if(element.elementType.id == "ElementType:83"){
+    scale = 1;
+  }
   //FIN
   let elementState = "";
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
   } 
-  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (0.12755102040816327) + ',' + (0.12755102040816327) + ')">' + generateIcon(element, suffix, graphicIcon) + '</g>';
+
+  let iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (scale) + ',' + (scale) + ')">' + generateIcon(element, suffix, graphicIcon) + '</g>';
   let result = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" version="1.1" width="' + width + 'px" height="' + height + 'px">' + iconStr + '</svg>';
   result = result.replace(/#/g, "%23");
   result = "data:image/svg+xml;utf8," + result;
