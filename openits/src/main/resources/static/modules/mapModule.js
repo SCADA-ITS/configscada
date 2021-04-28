@@ -48,7 +48,12 @@ export default class MapModule extends GenericModule{
         { view:"resizer" },
         {
           header: i18n.t(this.mapConf.metadata.name),
-          body: this.getViewTree()
+          body: this.getViewTree(),
+          on:{
+            onViewResize:()=>{
+              this.map.updateSize();
+            }
+          }
         }
       ],
       on: {
@@ -57,6 +62,16 @@ export default class MapModule extends GenericModule{
         },
         onViewShow: ()=>{
           this.on_show();
+        },
+        onAfterCollapse: (id) => {
+          if(this.map){
+            this.map.updateSize();
+          }
+        },
+        onAfterExpand: (id) => {
+          if(this.map){
+            this.map.updateSize();
+          }
         }
       }
     };
