@@ -1,6 +1,8 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import {availablePictos} from "../data/pmvpicto.js";
 import {panelData} from "../data/panelData.js";
+import { util } from "../lib/util.js"
+
 
 //const SCALE_ZONE = 5; //Escala de la zona de pictogramas por si la queremos mas grande o mas pequeña 
 const TOP_INIT = 5;
@@ -819,7 +821,7 @@ export default class PanelManager {
 										}
 									]
 								};
-								auditMutation(auditLog);
+								auditMutation(auditLog, util.user.auth());
 							});
 						}else{
 							if(!tamanio) {
@@ -1000,7 +1002,7 @@ export default class PanelManager {
 											}
 										]
 									};
-									auditMutation(auditLog);
+									auditMutation(auditLog, util.user.auth());
 								});
 							}
 						}else{

@@ -1,4 +1,5 @@
 import Order from "./Order.js";
+import { util } from "../lib/util.js"
 
 let optionPlanModeType = [
 	{id:1, value:"AUTO"},
@@ -339,7 +340,7 @@ export default class Plan {
             "logTypeParamId": "LogTypeParam:2:1"
           }
         };
-        auditMutation(auditLog);        
+        auditMutation(auditLog, util.user.auth());        
       });
   }
 

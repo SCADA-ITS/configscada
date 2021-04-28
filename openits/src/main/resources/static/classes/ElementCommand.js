@@ -1,6 +1,8 @@
 import * as elementTypeMap from "../lib/elementTypeMap.js";
 import { columnsElementFormList as colMetaData } from "../data/elementForm.js";
 import PanelManager from "../classes/PanelManager.js";
+import { util } from "../lib/util.js"
+
 
 var idtable = null;
 
@@ -293,7 +295,7 @@ export default class ElementCommand {
                               }
                             ]
                           };
-                          auditMutation(auditLog);
+                          auditMutation(auditLog, util.user.auth());
                         });
                     }
                   },
