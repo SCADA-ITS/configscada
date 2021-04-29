@@ -828,6 +828,7 @@ export default class Map {
     this.elementReady('[view_id="' + this.synopticDiv + '"]').then((c) => {
       let divToAdd = document.createElement("div");
       divToAdd.setAttribute("id", "map");
+      divToAdd.setAttribute("class", "ol-map");
       document
         .querySelector('[view_id="' + this.synopticDiv + '"]')
         .prepend(divToAdd);

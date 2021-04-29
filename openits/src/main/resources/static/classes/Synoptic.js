@@ -83,6 +83,9 @@ export default class Synoptic {
       let obj = JSON.parse(JSON.parse(message.body));
       obj.basicElementsVO.forEach((element) => {
         try {
+          if(element.elementTypeState){
+            element.elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+          }
           if(this.elementsMap && this.elementsMap.get(element.id)){
             this.elementsMap.get(element.id).updateElement(element);
             if(document.getElementById(this.synopticDiv + "SVG") && document.getElementById(element.id)){

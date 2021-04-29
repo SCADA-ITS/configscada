@@ -384,6 +384,9 @@ export default class SynopticModule extends GenericModule{
 
             if(this.elementsMap && this.elementsMap.get(element.id)){
 
+              if(element.elementTypeState){
+                element.elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+              }
               this.elementsMap.get(element.id).updateElement(element);
 
               if(document.getElementById(this.synopticDivId + "SVG") && document.getElementById(element.id)){
