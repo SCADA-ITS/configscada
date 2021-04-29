@@ -1,7 +1,8 @@
 {
 	"moduleAction": {
 	    "view": 101401,
-	    "viewFromAlarm": 101402
+	    "viewFromAlarm": 101402,
+	    "commandEquipments": 101701
 	},
 	"actionEndpoints": {
 		

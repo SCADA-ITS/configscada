@@ -353,6 +353,7 @@ export default class signalingManagerModule extends GenericModule {
 			let viewMainListEquipments = {
 				id: "view-main-list-equipments-" + self.uid,
 				header: i18n.t("LBL_EQUIPMENT_TYPES"),
+				hidden: (self.args.selectedPks.length === 1),
 				body: {
 					width: 350,
 					rows: [
@@ -391,9 +392,9 @@ export default class signalingManagerModule extends GenericModule {
 			}
 
 			if (self.useDefaultModue) {
-				
+
 				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelDefaulSigalingModule, viewLabelListEqupments, viewListElements];
-			
+
 			} else {
 				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEqupments, viewListElements];
 			}
@@ -414,8 +415,19 @@ export default class signalingManagerModule extends GenericModule {
 				}
 			};
 
-
 			viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent];
+
+			if (self.args.selectedPks.length === 1) {
+				
+				let container = $$(self.args.containerId);
+
+				if (container) {
+
+					let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
+					
+					util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);
+				}
+			}
 
 
 			webix.ui(viewMain, $$(self.uid));
