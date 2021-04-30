@@ -2159,3 +2159,9 @@
 	background: rgba(255,255,255,0.3);
 	box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
 }
+
+.cronui-resume{
+	width: 778px !important;
+	height: 130px !important;
+	border: 1px solid #dadee0;	
+}

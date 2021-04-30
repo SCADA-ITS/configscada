@@ -1,60 +1,26 @@
 import { util } from "../lib/util.js";
 
-
-var v_month = {
-	"1": "JAN",
-	"2": "FEB",
-	"3": "MAR",
-	"4": "APR",
-	"5": "MAY",
-	"6": "JUN",
-	"7": "JUL",
-	"8": "AUG",
-	"9": "SEP",
-	"10": "OCT",
-	"11": "NOV",
-	"12": "DEC"
-};
-
-var v_month2 = {
-	"JAN": { id: "1", value: $.i18n("cronUi.popup.month.1") },
-	"FEB": { id: "2", value: $.i18n("cronUi.popup.month.2") },
-	"MAR": { id: "3", value: $.i18n("cronUi.popup.month.3") },
-	"APR": { id: "4", value: $.i18n("cronUi.popup.month.4") },
-	"MAY": { id: "5", value: $.i18n("cronUi.popup.month.5") },
-	"JUN": { id: "6", value: $.i18n("cronUi.popup.month.6") },
-	"JUL": { id: "7", value: $.i18n("cronUi.popup.month.7") },
-	"AUG": { id: "8", value: $.i18n("cronUi.popup.month.8") },
-	"SEP": { id: "9", value: $.i18n("cronUi.popup.month.9") },
-	"OCT": { id: "10", value: $.i18n("cronUi.popup.month.10") },
-	"NOV": { id: "11", value: $.i18n("cronUi.popup.month.11") },
-	"DEC": { id: "12", value: $.i18n("cronUi.popup.month.12") }
-};
-
-var v_month3 = {
-	"JAN": "1",
-	"FEB": "2",
-	"MAR": "3",
-	"APR": "4",
-	"MAY": "5",
-	"JUN": "6",
-	"JUL": "7",
-	"AUG": "8",
-	"SEP": "9",
-	"OCT": "10",
-	"NOV": "11",
-	"DEC": "12"
-};
+var selectDays = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31th"]
 
 export default class CronUi {
+
 	constructor(input_id, popupId) {
 
-		var input = input_id;
-		this.input = input;
+		let input = input_id;
 		var popupId = popupId;
 
+		this.uid = webix.uid();
+		this.input = input;
 		this.cronWindow = undefined;
-		this.cronExpressionArr = ["*", "*", "*", "*", "*", "?", "*"];
+		this.windowLabel = undefined;
+		this.checkedSecs = [];
+		this.checkedMins = [];
+		this.checkedHours = [];
+		this.checkedDays = [];
+		this.checkedDaysWeek = [];
+		this.checkedMonths = [];
+		this.checkedYears = [];
+		this.editCron = [];
 	}
 
 	getComponent(cronExpression) {
@@ -62,10 +28,9 @@ export default class CronUi {
 		let self = this;
 
 		let genericForm = {
-			id: "win_body",
+			id: "win_body-" + self.uid,
 			rows: [
 				{ height: 10 },
-				//drawInputsHeader(),
 				getViewHeader(cronExpression),
 				{ height: 10 },
 				{
@@ -74,8 +39,8 @@ export default class CronUi {
 						{
 							rows: [
 								drawForm(),
-								drawCronDescription(),
-								drawButtons()
+								drawResume(),
+								drawButtons(cronExpression)
 							]
 						},
 						{ width: 6 }
@@ -84,13 +49,6 @@ export default class CronUi {
 			]
 		};
 
-		this.cronWindow = util.ui.loadWindow(
-			i18n.t("LBL_CRONUI_SELECTOR"),
-			genericForm,
-			500,
-			790,
-			true
-		);
 
 		function getViewHeader(cronExpression) {
 
@@ -99,17 +57,20 @@ export default class CronUi {
 			let description = undefined;
 
 			if (cronExpression === null) {
-				label = "LBL_NEW_CRON_EXPRESSION";
-				description = "LBL_NEW_CRON_EXPRESSION_DESCRIPTION";
+
+				label = "LBL_NEW_SCHEDULER";
+				description = "LBL_NEW_SCHEDULER_DESCRIPTION";
+				self.windowLabel = "LBL_NEW_SCHEDULER";
 
 			} else {
-				label = "LBL_EDIT_CRON_EXPRESSION";
-				description = "LBL_EDIT_CRON_EXPRESSION_DESCRIPTION";
+
+				label = "LBL_EDIT_SCHEDULER";
+				description = "LBL_EDIT_SCHEDULER_DESCRIPTION";
+				self.windowLabel = "LBL_EDIT_SCHEDULER";
 			}
 
 			header = {
-
-				id: "viewHeader-",
+				id: "viewHeader-" + self.uid,
 				cols: [
 					{
 						view: "label",
@@ -120,7 +81,7 @@ export default class CronUi {
 					{
 						view: "label",
 						height: 75,
-						id: "label-bottom",
+						id: "label-bottom" + self.uid,
 						template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
 						css: "userrole-header-label"
 					}
@@ -128,1367 +89,1628 @@ export default class CronUi {
 			};
 
 			return header;
-		};
-
-
-		//		function drawInputsHeader() {
-		//
-		//			let inputsHeader = {
-		//				view: "form",
-		//				id: "inputsHeader",
-		//				width: 0,
-		//				margin: 0,
-		//				css: { "border": "none" },
-		//				hidden: true,
-		//				elements: [
-		//					{
-		//						cols: [
-		//							{ view: "text", id: "inputsHeaderSeconds", name: "seconds", value: "*", disabled: true },
-		//							{ view: "text", id: "inputsHeaderMinutes", name: "minutes", value: "*", disabled: true },
-		//							{ view: "text", id: "inputsHeaderHours", name: "hours", value: "*", disabled: true },
-		//							{ view: "text", id: "inputsHeaderDays", name: "days", value: "*", disabled: true },
-		//							{ view: "text", id: "inputsHeaderMonths", name: "months", value: "*", disabled: true },
-		//							//{ view: "text", id: "inputsHeaderWeeks",   name: "weeks"},
-		//							{ view: "text", id: "inputsHeaderYears", name: "years", value: "*", disabled: true },
-		//						],
-		//					}
-		//				]
-		//			};
-		//
-		//			return inputsHeader;
-		//		}
-
-
-		function drawCronDescription() {
-
-			let cronDescription = {
-				view: "label",
-				id: "cronDescriptionId",
-				name: "cronDescription",
-				align: "center",
-				width: 700,
-				disabled: true,
-				label: `<div style="font-size: 15px; border: 1px solid #475269; border-radius: 4px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; max-width: 700px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Cron Expression Description</span></div>`
-				//				cols: [
-				//					{},
-				//					{
-				//						borderless: false,
-				//						view: "label",
-				//						template: `<div style="font-size: 13px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="font-size: 13px; text-align: center; color: #475269; max-width: 700px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">Cron Expression Description</span></div>`
-				//					},
-				//					{}
-				//				]
-
-			}
-
-			return cronDescription;
-		}
-
-
-		function setCronDescription(cronExpression) {
-
-			if (!cronExpression) {
-
-				let translate = prettyCron.toString(self.cronExpressionArr[0] + " " + self.cronExpressionArr[1] + " " + self.cronExpressionArr[2] + " " + self.cronExpressionArr[3] + " " + self.cronExpressionArr[4] + " " + self.cronExpressionArr[5] + " " + self.cronExpressionArr[6], true);
-
-				$$("cronDescriptionId").setValue(`<div style="font-size: 15px; border: 1px solid #475269; border-radius: 4px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; max-width: 700px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
-
-			} else {
-
-				let cronExpArr = cronExpression.split(" ");
-
-				//				$$("inputsHeaderSeconds").setValue(cronExpArr[0]);
-				//				$$("inputsHeaderMinutes").setValue(cronExpArr[1]);
-				//				$$("inputsHeaderHours").setValue(cronExpArr[2]);
-				//				$$("inputsHeaderDays").setValue(cronExpArr[3]);
-				//				$$("inputsHeaderMonths").setValue(cronExpArr[4]);
-				//				$$("inputsHeaderYears").setValue(cronExpArr[6]);
-
-
-				let translate = prettyCron.toString(cronExpArr[0] + " " + cronExpArr[1] + " " + cronExpArr[2] + " " + cronExpArr[3] + " " + cronExpArr[4] + " " + cronExpArr[6], true);
-
-				$$("cronDescriptionId").setValue(`<div style="font-size: 15px; border: 1px solid #475269; border-radius: 4px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; max-width: 700px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
-			}
 		}
 
 
 		function drawForm() {
 
-			let cronExpressionArr = self.cronExpressionArr;
-
 			let form = {
-				id: "tabview_CronUi",
+				id: "tabview_CronUi-" + self.uid,
 				view: "tabview",
 				css: "secondary-tab .cronui-tab",
 				width: 780,
 				tabbar: {
+					css: { "width": "780px !important" },
 					tabMargin: 6,
 					options: [
-
-						{ id: "cronUi_seconds", value: $.i18n("cronUi.popup.tab.seconds"), optionWidth: 130 },
-						{ id: "cronUi_minutes", value: $.i18n("cronUi.popup.tab.minutes"), width: 130 },
-						{ id: "cronUi_hours", value: $.i18n("cronUi.popup.tab.hours"), width: 130 },
-						{ id: "cronUi_days", value: $.i18n("cronUi.popup.tab.days"), width: 130 },
-						{ id: "cronUi_months", value: $.i18n("cronUi.popup.tab.months"), width: 130 },
-						//{ id:"cronUi_weeks",   value:$.i18n("cronUi.popup.tab.weeks"),   width:100 },
-						{ id: "cronUi_years", value: $.i18n("cronUi.popup.tab.years"), width: 130 },
-						//{ id:"cronUi_help",    value:$.i18n("cronUi.popup.tab.help"),    width:100 },
-
+						{ id: "cronUi_seconds-" + self.uid, value: $.i18n("cronUi.popup.tab.seconds") },
+						{ id: "cronUi_minutes-" + self.uid, value: $.i18n("cronUi.popup.tab.minutes") },
+						{ id: "cronUi_hours-" + self.uid, value: $.i18n("cronUi.popup.tab.hours") },
+						{ id: "cronUi_days-" + self.uid, value: $.i18n("cronUi.popup.tab.days") },
+						{ id: "cronUi_months-" + self.uid, value: $.i18n("cronUi.popup.tab.months") },
+						{ id: "cronUi_years-" + self.uid, value: $.i18n("cronUi.popup.tab.years") }
 					]
 				},
 				cells: [
 					{
 						view: "form",
-						id: "cronUi_seconds",
-						width: 0,
-						margin: 0,
+						id: "cronUi_seconds-" + self.uid,
 						elements: [
 							{
-								rows: [
+								cols: [
 									{
-										view: "checkbox",
-										id: "secondsOpt01",
-										labelRight: $.i18n("cronUi.popup.secondsOpt01"),
-										value: 1,
-										click:
-											function(id, event) {
-
-												if ($$("secondsOpt01").data.value === 1) {
-													//$$("inputsHeaderSeconds").setValue("*");
-													//$$("secondsOpt01").setValue(0);
-													$$("secondsOpt02").setValue(0);
-													$$("secondsOpt03").setValue(0);
-													$$("secondsOpt04").setValue(0);
-													setCronDescription();
-
-												} else if ($$("secondsOpt01").data.value === 0) {
-
-													$$("secondsOpt01").setValue(1);
-												}
-											}
-									},
-									{
-										cols: [
+										rows: [
+											{ height: 66 },
 											{
-												view: "checkbox",
-												id: "secondsOpt02",
-												labelRight: $.i18n("cronUi.popup.secondsOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("secondsOpt02_counter01").getValue();
-													let counter02 = $$("secondsOpt02_counter02").getValue();
-
-													if ($$("secondsOpt02").data.value === 1) {
-														//$$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
-														//$$("secondsOpt01").setValue(0);
-														$$("secondsOpt01").setValue(0);
-														$$("secondsOpt03").setValue(0);
-														$$("secondsOpt04").setValue(0);
-														cronExpressionArr[0] = counter02 + "/" + counter01;
-														setCronDescription();
-
-													} else if ($$("secondsOpt02").data.value === 0) {
-
-														$$("secondsOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter",
-												id: "secondsOpt02_counter01",
-												name: "",
-												value: 1,
-												min: 1,
-												max: 60,
-												click: function(id, event) {
-													let counter01 = $$("secondsOpt02_counter01").getValue();
-													let counter02 = $$("secondsOpt02_counter02").getValue();
-													//$$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[0] = counter02 + "/" + counter01;
-													setCronDescription();
-												}
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.secondsOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", id: "secondsOpt02_counter02", name: "",
-												click: function(id, event) {
-													let counter01 = $$("secondsOpt02_counter01").getValue();
-													let counter02 = $$("secondsOpt02_counter02").getValue();
-													//$$("inputsHeaderSeconds").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[0] = counter02 + "/" + counter01;
-													setCronDescription();
-
-												},
-												value: 0, min: 0, max: 59
-											},
-											{ gravity: 1 }
-										]
-									},
-									{
-										view: "checkbox",
-										id: "secondsOpt03",
-										labelRight: $.i18n("cronUi.popup.secondsOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("secondsOpt03").data.value === 1) {
-												let multi = $$("secondsOpt03_combo").getValue();
-												//$$("inputsHeaderSeconds").setValue(multi);
-												//$$("secondsOpt01").setValue(0);
-												$$("secondsOpt01").setValue(0);
-												$$("secondsOpt02").setValue(0);
-												$$("secondsOpt04").setValue(0);
-												cronExpressionArr[0] = multi;
-												setCronDescription();
-
-											} else if ($$("secondsOpt03").data.value === 0) {
-												$$("secondsOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "secondsOpt03_combo", name: "secondsOpt03_combo", value: "0", //placeholder:"Tags",
-												options: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"], //newValues: true
-												on: {
-													'onChange': function(obj) {
-														if ($$("secondsOpt03").data.value === 1) {
-															let multi = $$("secondsOpt03_combo").getValue();
-															//$$("inputsHeaderSeconds").setValue(multi);
-															cronExpressionArr[0] = multi;
-															setCronDescription();
-														}
-													}
-												}
-											},
-											{ gravity: 2 }
-										]
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "secondsOpt04",
-												//labelwidth: 200,
-												labelRight: $.i18n("cronUi.popup.secondsOpt04.01"),
-												//labelWidth: 0, 
-												value: 0,
-												click: function(id, event) {
-													if ($$("secondsOpt04").data.value === 1) {
-														let counter01 = $$("secondsOpt04_counter01").getValue();
-														let counter02 = $$("secondsOpt04_counter02").getValue();
-														//$$("inputsHeaderSeconds").setValue(counter01 + "-" + counter02);
-														//$$("secondsOpt01").setValue(0);
-														$$("secondsOpt01").setValue(0);
-														$$("secondsOpt02").setValue(0);
-														$$("secondsOpt03").setValue(0);
-														cronExpressionArr[0] = counter01 + "-" + counter02;
-														setCronDescription();
-
-													} else if ($$("secondsOpt04").data.value === 0) {
-														$$("secondsOpt04").setValue(1);
-													}
-												}
-											},
-
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.secondsOpt04.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-
-											{
-												view: "counter", name: "", id: "secondsOpt04_counter01",
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("secondsOpt04_counter01").getValue();
-													let counter02 = $$("secondsOpt04_counter02").getValue();
-													//$$("inputsHeaderSeconds").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[0] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												min: 0, max: 59
-											},
-											/*
-											{ 
-												view:"label", 
-												label: $.i18n("cronUi.popup.secondsOpt04.03"), 
-												//inputWidth:100, 
-												align:"left"
-											},
-											*/
-											{
-												view: "counter", name: "", id: "secondsOpt04_counter02",
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("secondsOpt04_counter01").getValue();
-													let counter02 = $$("secondsOpt04_counter02").getValue();
-													//$$("inputsHeaderSeconds").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[0] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												min: 0, max: 59
-											},
-											//{ gravity:1}
-										]
-									}
-								]
-							}
-						],
-					},
-					{
-						view: "form",
-						id: "cronUi_minutes",
-						width: 0,
-						margin: 0,
-						elements: [
-							{
-								rows: [
-									{
-										view: "checkbox",
-										id: "minsOpt01",
-										labelRight: $.i18n("cronUi.popup.minsOpt01"),
-										value: 1,
-										click: function(id, event) {
-											if ($$("minsOpt01").data.value === 1) {
-												//$$("inputsHeaderMinutes").setValue("*");
-												//$$("secondsOpt01").setValue(0);
-												$$("minsOpt02").setValue(0);
-												$$("minsOpt03").setValue(0);
-												$$("minsOpt04").setValue(0);
-												setCronDescription();
-
-											} else if ($$("minsOpt01").data.value === 0) {
-												$$("minsOpt01").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "minsOpt02",
-												labelRight: $.i18n("cronUi.popup.minsOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("minsOpt02_counter01").getValue();
-													let counter02 = $$("minsOpt02_counter02").getValue();
-
-													if ($$("minsOpt02").data.value === 1) {
-														//$$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
-														//$$("secondsOpt01").setValue(0);
-														$$("minsOpt01").setValue(0);
-														$$("minsOpt03").setValue(0);
-														$$("minsOpt04").setValue(0);
-														cronExpressionArr[1] = counter02 + "/" + counter01;
-														setCronDescription();
-													} else if ($$("minsOpt02").data.value === 0) {
-														$$("minsOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "minsOpt02_counter01", value: 1, min: 1, max: 60,
-												click: function(id, event) {
-													let counter01 = $$("minsOpt02_counter01").getValue();
-													let counter02 = $$("minsOpt02_counter02").getValue();
-													//$$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[1] = counter02 + "/" + counter01;
-													setCronDescription();
-												}
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.minsOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "minsOpt02_counter02", value: 0, min: 0, max: 59,
-												click: function(id, event) {
-													let counter01 = $$("minsOpt02_counter01").getValue();
-													let counter02 = $$("minsOpt02_counter02").getValue();
-													//$$("inputsHeaderMinutes").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[1] = counter02 + "/" + counter01;
-													setCronDescription();
-												}
-											},
-											{ gravity: 1 }
-										]
-									},
-									{
-										view: "checkbox",
-										id: "minsOpt03",
-										labelRight: $.i18n("cronUi.popup.minsOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("minsOpt03").data.value === 1) {
-												let multi = $$("minsOpt03_combo").getValue();
-												//$$("inputsHeaderMinutes").setValue(multi);
-
-												//$$("secondsOpt01").setValue(0);
-												$$("minsOpt01").setValue(0);
-												$$("minsOpt02").setValue(0);
-												$$("minsOpt04").setValue(0);
-												cronExpressionArr[1] = multi;
-												setCronDescription();
-											} else if ($$("minsOpt03").data.value === 0) {
-												$$("minsOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "minsOpt03_combo", name: "minsOpt03_combo", value: "0", //placeholder:"Tags",
-												options: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"], //newValues: true
-												on: {
-													'onChange': function(obj) {
-														if ($$("minsOpt03").data.value === 1) {
-															let multi = $$("minsOpt03_combo").getValue();
-															//$$("inputsHeaderMinutes").setValue(multi);
-															cronExpressionArr[1] = multi;
-															setCronDescription();
-														}
-													}
-												}
-											},
-											{ gravity: 2 }
-										]
-									},
-									{
-										cols: [
-
-											{
-												view: "checkbox",
-												id: "minsOpt04",
-												labelRight: $.i18n("cronUi.popup.minsOpt04.01"),
-												//labelWidth: 0, 
-												value: 0,
-												click: function(id, event) {
-													if ($$("minsOpt04").data.value === 1) {
-														let counter01 = $$("minsOpt04_counter01").getValue();
-														let counter02 = $$("minsOpt04_counter02").getValue();
-														//$$("inputsHeaderMinutes").setValue(counter01 + "-" + counter02);
-														//$$("secondsOpt01").setValue(0);
-														$$("minsOpt01").setValue(0);
-														$$("minsOpt02").setValue(0);
-														$$("minsOpt03").setValue(0);
-														cronExpressionArr[1] = counter01 + "-" + counter02;
-														setCronDescription();
-													} else if ($$("minsOpt04").data.value === 0) {
-														$$("minsOpt04").setValue(1);
-													}
-												}
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.minsOpt04.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", id: "minsOpt04_counter01", name: "", value: 0,
-												click: function(id, event) {
-													let counter01 = $$("minsOpt04_counter01").getValue();
-													let counter02 = $$("minsOpt04_counter02").getValue();
-													//$$("inputsHeaderMinutes").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[1] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												min: 0, max: 59
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.minsOpt04.03"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "minsOpt04_counter02",
-												click: function(id, event) {
-													let counter01 = $$("minsOpt04_counter01").getValue();
-													let counter02 = $$("minsOpt04_counter02").getValue();
-													//$$("inputsHeaderMinutes").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[1] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												value: 0, min: 0, max: 59
-											},
-											//{ gravity:1}
-										]
-									}
-								]
-							}
-						],
-					},
-					{
-						view: "form",
-						id: "cronUi_hours",
-						width: 0,
-						margin: 0,
-						elements: [
-							{
-								rows: [
-									{
-										view: "checkbox",
-										id: "hoursOpt01",
-										labelRight: $.i18n("cronUi.popup.hoursOpt01"),
-										value: 1,
-										click: function(id, event) {
-											if ($$("hoursOpt01").data.value === 1) {
-												//$$("inputsHeaderHours").setValue("*");
-												//$$("secondsOpt01").setValue(0);
-												$$("hoursOpt02").setValue(0);
-												$$("hoursOpt03").setValue(0);
-												$$("hoursOpt04").setValue(0);
-												setCronDescription();
-											} else if ($$("hoursOpt01").data.value === 0) {
-												$$("hoursOpt01").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "hoursOpt02",
-												labelRight: $.i18n("cronUi.popup.hoursOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("hoursOpt02_counter01").getValue();
-													let counter02 = $$("hoursOpt02_counter02").getValue();
-
-													if ($$("hoursOpt02").data.value === 1) {
-														//$$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
-														$$("hoursOpt01").setValue(0);
-														$$("hoursOpt03").setValue(0);
-														$$("hoursOpt04").setValue(0);
-														cronExpressionArr[2] = counter02 + "/" + counter01;
-														setCronDescription();
-													} else if ($$("hoursOpt02").data.value === 0) {
-														$$("hoursOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "hoursOpt02_counter01",
-												click: function(id, event) {
-													let counter01 = $$("hoursOpt02_counter01").getValue();
-													let counter02 = $$("hoursOpt02_counter02").getValue();
-													//$$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[2] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 1, min: 1, max: 24
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.hoursOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "hoursOpt02_counter02",
-												click: function(id, event) {
-													let counter01 = $$("hoursOpt02_counter01").getValue();
-													let counter02 = $$("hoursOpt02_counter02").getValue();
-													//$$("inputsHeaderHours").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[2] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 1, min: 0, max: 23
-											},
-											{ gravity: 1 }
-										]
-									},
-									{
-										view: "checkbox",
-										id: "hoursOpt03",
-										labelRight: $.i18n("cronUi.popup.hoursOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("hoursOpt03").data.value === 1) {
-												let multi = $$("hoursOpt03_combo").getValue();
-												//$$("inputsHeaderHours").setValue(multi);
-
-												//$$("secondsOpt01").setValue(0);
-												$$("hoursOpt01").setValue(0);
-												$$("hoursOpt02").setValue(0);
-												$$("hoursOpt04").setValue(0);
-												cronExpressionArr[2] = multi;
-												setCronDescription();
-											} else if ($$("hoursOpt03").data.value === 0) {
-												$$("hoursOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "hoursOpt03_combo", name: "hoursOpt03_combo", value: "0", placeholder: "Tags",
-												options: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"], //newValues: true
-												on: {
-													'onChange': function(obj) {
-														if ($$("hoursOpt03").data.value === 1) {
-															let multi = $$("hoursOpt03_combo").getValue();
-															//$$("inputsHeaderHours").setValue(multi);
-															cronExpressionArr[2] = multi;
-															setCronDescription();
-														}
-													}
-												}
-											},
-											{ gravity: 2 }
-										]
-									},
-									{
-										cols: [
-
-											{
-												view: "checkbox",
-												id: "hoursOpt04",
-												labelRight: $.i18n("cronUi.popup.hoursOpt04.01"),
-												//labelWidth: 0, 
-												value: 0,
-												click: function(id, event) {
-													if ($$("hoursOpt04").data.value === 1) {
-														let counter01 = $$("hoursOpt04_counter01").getValue();
-														let counter02 = $$("hoursOpt04_counter02").getValue();
-														//$$("inputsHeaderHours").setValue(counter01 + "-" + counter02);
-														//$$("secondsOpt01").setValue(0);
-														$$("hoursOpt01").setValue(0);
-														$$("hoursOpt02").setValue(0);
-														$$("hoursOpt03").setValue(0);
-														cronExpressionArr[2] = counter01 + "-" + counter02;
-														setCronDescription();
-													} else if ($$("hoursOpt04").data.value === 0) {
-														$$("hoursOpt04").setValue(1);
-													}
-												}
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.hoursOpt04.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "hoursOpt04_counter01",
-												click: function(id, event) {
-													let counter01 = $$("hoursOpt04_counter01").getValue();
-													let counter02 = $$("hoursOpt04_counter02").getValue();
-													//$$("inputsHeaderHours").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[2] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												value: 0, min: 0, max: 23
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.hoursOpt04.03"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "hoursOpt04_counter02",
-												click: function(id, event) {
-													let counter01 = $$("hoursOpt04_counter01").getValue();
-													let counter02 = $$("hoursOpt04_counter02").getValue();
-													//$$("inputsHeaderHours").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[2] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												value: 0, min: 0, max: 23
-											},
-											//{ gravity:1}
-										]
-									}
-								]
-							}
-						],
-					},
-					{
-						view: "form",
-						id: "cronUi_days",
-						width: 0,
-						margin: 0,
-						elements: [
-							{
-								rows: [
-									{
-										view: "checkbox",
-										id: "daysOpt01",
-										labelRight: $.i18n("cronUi.popup.daysOpt01"),
-										value: 1,
-										click: function(id, event) {
-											if ($$("daysOpt01").data.value === 1) {
-												//$$("inputsHeaderDays").setValue("*");
-												$$("daysOpt02").setValue(0);
-												$$("daysOpt03").setValue(0);
-												//$$("daysOpt04").setValue(0);
-												$$("daysOpt05").setValue(0);
-												setCronDescription();
-											} else if ($$("daysOpt01").data.value === 0) {
-												$$("daysOpt01").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "daysOpt02",
-												labelRight: $.i18n("cronUi.popup.daysOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("daysOpt02_counter01").getValue();
-													let counter02 = $$("daysOpt02_counter02").getValue();
-
-													if ($$("daysOpt02").data.value === 1) {
-														//$$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
-														//$$("secondsOpt01").setValue(0);
-														$$("daysOpt01").setValue(0);
-														$$("daysOpt03").setValue(0);
-														//$$("daysOpt04").setValue(0);
-														$$("daysOpt05").setValue(0);
-														cronExpressionArr[3] = counter02 + "/" + counter01;
-														setCronDescription();
-													} else if ($$("daysOpt02").data.value === 0) {
-														$$("daysOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "daysOpt02_counter01",
-												click: function(id, event) {
-													let counter01 = $$("daysOpt02_counter01").getValue();
-													let counter02 = $$("daysOpt02_counter02").getValue();
-													//$$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[3] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 1, min: 1, max: 31
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.daysOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "daysOpt02_counter02",
-												click: function(id, event) {
-													let counter01 = $$("daysOpt02_counter01").getValue();
-													let counter02 = $$("daysOpt02_counter02").getValue();
-													//$$("inputsHeaderDays").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[3] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 1, min: 1, max: 31
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.daysOpt02.03"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											//{ gravity:1}
-										]
-									},
-									{
-										view: "checkbox",
-										id: "daysOpt03",
-										labelRight: $.i18n("cronUi.popup.daysOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("daysOpt03").data.value === 1) {
-												let multi = $$("daysOpt03_combo").getValue();
-												//$$("inputsHeaderDays").setValue(multi);
-
-												//$$("secondsOpt01").setValue(0);
-												$$("daysOpt01").setValue(0);
-												$$("daysOpt02").setValue(0);
-												//$$("daysOpt04").setValue(0);
-												$$("daysOpt05").setValue(0);
-												cronExpressionArr[3] = multi;
-												setCronDescription();
-											} else if ($$("daysOpt03").data.value === 0) {
-												$$("daysOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "daysOpt03_combo", name: "daysOpt03_combo", value: "1", //placeholder:"Tags",
-												options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"], //newValues: true
-												on: {
-													'onChange': function(obj) {
-														if ($$("daysOpt03").data.value === 1) {
-															let multi = $$("daysOpt03_combo").getValue();
-															//$$("inputsHeaderDays").setValue(multi);
-															cronExpressionArr[3] = multi;
-															setCronDescription();
-														}
-													}
-												}
-											},
-											{ gravity: 2 }
-										]
-									},
-
-									/*
-									{
-										cols:[
-											{
-												view:"checkbox", 
-												id:"daysOpt04", 
-												labelRight:"Every",
-												//labelWidth: 0, 
-												value:0,
-												click: function(id,event){
-													if($$("daysOpt04").data.value === 1){
-														let counter01 = $$("daysOpt04_counter01").getValue();
-														let counter02 = $$("daysOpt04_counter02").getValue();                                            
-														$$("inputsHeaderDays").setValue(counter01 + "-" + counter02);
-														//$$("secondsOpt01").setValue(0);
-														$$("daysOpt01").setValue(0);
-														$$("daysOpt02").setValue(0);
-														$$("daysOpt03").setValue(0);
-														$$("daysOpt05").setValue(0);
-													}
-												}
-											},
-											{ view: "counter", name: "", id: "daysOpt04_counter01", 
-												click: function(id,event){
-													let counter01 = $$("daysOpt04_counter01").getValue();
-													let counter02 = $$("daysOpt04_counter02").getValue();
-													$$("inputsHeaderDays").setValue(counter01 + "-" + counter02);
-												},
-												value: 1, min: 1, max: 59},
-											{ 
-												view:"label", 
-												label: "day(s) starting on", 
-												//inputWidth:100, 
-												align:"left"
-											},
-											{
-												view:"combo", 
-												label: 'Combo',
-												value:"Sunday", 
-												id: "daysOpt04_counter02",
-												options:["Sunday", "Monday", "Tuesday","Wednesday","Thursday","Friday","Saturday"],
-												click: function(id,event){
-													let counter01 = $$("daysOpt04_counter01").getValue();
-													let counter02 = $$("daysOpt04_counter02").getValue();
-													$$("inputsHeaderDays").setValue(counter01 + "-" + counter02);
-												},
-											},
-											//{ view: "counter", name: "", value: 1, min: 1, max: 59},
-											//{ gravity:1}
-										]
-									},
-	*/
-
-									{
-										view: "checkbox",
-										id: "daysOpt05",
-										labelRight: $.i18n("cronUi.popup.daysOpt05"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("daysOpt05").data.value === 1) {
-												//$$("inputsHeaderDays").setValue("?");
-												//$$("secondsOpt01").setValue(0);
-												$$("daysOpt01").setValue(0);
-												$$("daysOpt02").setValue(0);
-												$$("daysOpt03").setValue(0);
-												//$$("daysOpt04").setValue(0);
-												cronExpressionArr[3] = "?";
-												setCronDescription();
-											} else if ($$("daysOpt05").data.value === 0) {
-												$$("daysOpt05").setValue(1);
-											}
-										}
-									}
-								]
-							}
-						],
-					},
-					{
-						view: "form",
-						id: "cronUi_months",
-						width: 0,
-						margin: 0,
-						elements: [
-							{
-								rows: [
-									{
-										view: "checkbox",
-										id: "monthsOpt01",
-										labelRight: $.i18n("cronUi.popup.monthsOpt01"),
-										value: 1,
-										click: function(id, event) {
-											if ($$("monthsOpt01").data.value === 1) {
-												//$$("inputsHeaderMonths").setValue("*");
-												//$$("secondsOpt01").setValue(0);
-												$$("monthsOpt02").setValue(0);
-												$$("monthsOpt03").setValue(0);
-												$$("monthsOpt04").setValue(0);
-												setCronDescription();
-											} else if ($$("monthsOpt01").data.value === 0) {
-												$$("monthsOpt01").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "monthsOpt02",
-												labelRight: $.i18n("cronUi.popup.monthsOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("monthsOpt02_counter01").getValue();
-													let counter02 = $$("monthsOpt02_counter02").getValue();
-
-													if ($$("monthsOpt02").data.value === 1) {
-														//$$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
-														//$$("secondsOpt01").setValue(0);
-														$$("monthsOpt01").setValue(0);
-														$$("monthsOpt03").setValue(0);
-														$$("monthsOpt04").setValue(0);
-														cronExpressionArr[4] = counter02 + "/" + counter01;
-														setCronDescription();
-													} else if ($$("monthsOpt02").data.value === 0) {
-														$$("monthsOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "monthsOpt02_counter01",
-												click: function(id, event) {
-													let counter01 = $$("monthsOpt02_counter01").getValue();
-													let counter02 = $$("monthsOpt02_counter02").getValue();
-													//$$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[4] = counter02 + "/" + counter01
-													setCronDescription();
-												},
-												value: 1, min: 1, max: 12
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.monthsOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "combo",
-												value: "1",//{id: "1",value: $.i18n("cronUi.popup.month.1")}, 
-												id: "monthsOpt02_counter02",
-												options: [
-													{ id: "1", value: $.i18n("cronUi.popup.month.1") },
-													{ id: "2", value: $.i18n("cronUi.popup.month.2") },
-													{ id: "3", value: $.i18n("cronUi.popup.month.3") },
-													{ id: "4", value: $.i18n("cronUi.popup.month.4") },
-													{ id: "5", value: $.i18n("cronUi.popup.month.5") },
-													{ id: "6", value: $.i18n("cronUi.popup.month.6") },
-													{ id: "7", value: $.i18n("cronUi.popup.month.7") },
-													{ id: "8", value: $.i18n("cronUi.popup.month.8") },
-													{ id: "9", value: $.i18n("cronUi.popup.month.9") },
-													{ id: "10", value: $.i18n("cronUi.popup.month.10") },
-													{ id: "11", value: $.i18n("cronUi.popup.month.11") },
-													{ id: "12", value: $.i18n("cronUi.popup.month.12") },
-												],
+												view: "radio",
+												id: "secondsOpt-" + self.uid,
+												width: 245,
+												value: "secondsOpt03",
+												vertical: true,
+												multiview: true,
 												on: {
 													onChange: function(newv, oldv) {
-														let counter01 = $$("monthsOpt02_counter01").getValue();
-														let counter02 = newv;//$$("monthsOpt02_counter02").getValue();
-														//$$("inputsHeaderMonths").setValue(counter02 + "/" + counter01);
-														cronExpressionArr[4] = counter02 + "/" + counter01
-														setCronDescription();
+														$$(newv).show();
+														calculateSeconds(newv);
 													}
 												}
-											},
-											{ gravity: 1 }
-										]
+												,
+												options: [
+													{ id: "secondsOpt01", value: i18n.t("LBL_EVERY_SECOND") },
+													{ id: "secondsOpt02", value: i18n.t("LBL_EVERY_X_SECOND") },
+													{ id: "secondsOpt03", value: i18n.t("LBL_SPECIFIC_SECOND") },
+													{ id: "secondsOpt04", value: i18n.t("LBL_EVERY_SECOND_BETWEEN") }
+												]
+											}]
 									},
 									{
-										view: "checkbox",
-										id: "monthsOpt03",
-										labelRight: $.i18n("cronUi.popup.monthsOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("monthsOpt03").data.value === 1) {
-												let multi = $$("monthsOpt03_combo").getValue().split(",");
-												let v_multi = "";
-												let contador = 1;
-												multi.forEach(ele => {
-													if (contador === multi.length) {
-														v_multi = v_multi + v_month[ele];
-													} else {
-														v_multi = v_multi + v_month[ele] + ",";
-													}
-													contador += 1;
-												});
-
-												//$$("inputsHeaderMonths").setValue(v_multi);
-
-
-												//$$("secondsOpt01").setValue(0);
-												$$("monthsOpt01").setValue(0);
-												$$("monthsOpt02").setValue(0);
-												$$("monthsOpt04").setValue(0);
-												cronExpressionArr[4] = multi;
-												setCronDescription();
-											} else if ($$("monthsOpt03").data.value === 0) {
-												$$("monthsOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "monthsOpt03_combo", name: "monthsOpt03_combo", value: "1", //placeholder:"Tags",
-												options: [
-													{ id: "1", value: $.i18n("cronUi.popup.month.1") },
-													{ id: "2", value: $.i18n("cronUi.popup.month.2") },
-													{ id: "3", value: $.i18n("cronUi.popup.month.3") },
-													{ id: "4", value: $.i18n("cronUi.popup.month.4") },
-													{ id: "5", value: $.i18n("cronUi.popup.month.5") },
-													{ id: "6", value: $.i18n("cronUi.popup.month.6") },
-													{ id: "7", value: $.i18n("cronUi.popup.month.7") },
-													{ id: "8", value: $.i18n("cronUi.popup.month.8") },
-													{ id: "9", value: $.i18n("cronUi.popup.month.9") },
-													{ id: "10", value: $.i18n("cronUi.popup.month.10") },
-													{ id: "11", value: $.i18n("cronUi.popup.month.11") },
-													{ id: "12", value: $.i18n("cronUi.popup.month.12") },
-												],
-												on: {
-													'onChange': function(obj) {
-														if ($$("monthsOpt03").data.value === 1) {
-															let multi = $$("monthsOpt03_combo").getValue().split(",");
-															let v_multi = "";
-															let contador = 1;
-															multi.forEach(ele => {
-																if (contador === multi.length) {
-																	v_multi = v_multi + v_month[ele];
-																} else {
-																	v_multi = v_multi + v_month[ele] + ",";
-																}
-																contador += 1;
-															});
-
-															//$$("inputsHeaderMonths").setValue(v_multi);
-															cronExpressionArr[4] = v_multi;
-															setCronDescription();
-														}
-													}
-												}
-											},
-											{ gravity: 2 }
-										]
-									},
-									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "monthsOpt04",
-												labelRight: $.i18n("cronUi.popup.monthsOpt04.01"),
-												//labelWidth: 0, 
-												value: 0,
-												click: function(id, event) {
-													if ($$("monthsOpt04").data.value === 1) {
-														let counter01 = $$("monthsOpt04_counter01").getValue();
-														let counter02 = $$("monthsOpt04_counter02").getValue();
-														//$$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
-														$$("monthsOpt01").setValue(0);
-														$$("monthsOpt02").setValue(0);
-														$$("monthsOpt03").setValue(0);
-														cronExpressionArr[4] = counter01 + "-" + counter02;
-														setCronDescription();
-													} else if ($$("monthsOpt04").data.value === 0) {
-														$$("monthsOpt04").setValue(1);
-													}
-												}
-											},
-											{
-												view: "combo",
-												id: "monthsOpt04_counter01",
-												value: "1",
-												on: {
-													'onChange': function(obj) {
-														let counter01 = $$("monthsOpt04_counter01").getValue();
-														let counter02 = $$("monthsOpt04_counter02").getValue();
-														//$$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
-														cronExpressionArr[4] = counter01 + "-" + counter02;
-														setCronDescription();
-													}
-												},
-												options: [
-													{ id: "1", value: $.i18n("cronUi.popup.month.1") },
-													{ id: "2", value: $.i18n("cronUi.popup.month.2") },
-													{ id: "3", value: $.i18n("cronUi.popup.month.3") },
-													{ id: "4", value: $.i18n("cronUi.popup.month.4") },
-													{ id: "5", value: $.i18n("cronUi.popup.month.5") },
-													{ id: "6", value: $.i18n("cronUi.popup.month.6") },
-													{ id: "7", value: $.i18n("cronUi.popup.month.7") },
-													{ id: "8", value: $.i18n("cronUi.popup.month.8") },
-													{ id: "9", value: $.i18n("cronUi.popup.month.9") },
-													{ id: "10", value: $.i18n("cronUi.popup.month.10") },
-													{ id: "11", value: $.i18n("cronUi.popup.month.11") },
-													{ id: "12", value: $.i18n("cronUi.popup.month.12") },
-												],
-											},
-											/*
-											{ 
-												view:"label", 
-												label: $.i18n("cronUi.popup.monthsOpt04.02"), 
-												//inputWidth:100, 
-												align:"left"
-											},
-											*/
-											{
-												view: "combo",
-												id: "monthsOpt04_counter02",
-												labelRight: $.i18n("cronUi.popup.monthsOpt04.02"),
-												value: "1",
-												on: {
-													'onChange': function(obj) {
-														let counter01 = $$("monthsOpt04_counter01").getValue();
-														let counter02 = $$("monthsOpt04_counter02").getValue();
-														//$$("inputsHeaderMonths").setValue(counter01 + "-" + counter02);
-														cronExpressionArr[4] = counter01 + "-" + counter02;
-														setCronDescription();
-													}
-												},
-												options: [
-													{ id: "1", value: $.i18n("cronUi.popup.month.1") },
-													{ id: "2", value: $.i18n("cronUi.popup.month.2") },
-													{ id: "3", value: $.i18n("cronUi.popup.month.3") },
-													{ id: "4", value: $.i18n("cronUi.popup.month.4") },
-													{ id: "5", value: $.i18n("cronUi.popup.month.5") },
-													{ id: "6", value: $.i18n("cronUi.popup.month.6") },
-													{ id: "7", value: $.i18n("cronUi.popup.month.7") },
-													{ id: "8", value: $.i18n("cronUi.popup.month.8") },
-													{ id: "9", value: $.i18n("cronUi.popup.month.9") },
-													{ id: "10", value: $.i18n("cronUi.popup.month.10") },
-													{ id: "11", value: $.i18n("cronUi.popup.month.11") },
-													{ id: "12", value: $.i18n("cronUi.popup.month.12") },
-												],
-											},
-											//{ view: "counter", name: "", value: 1, min: 1, max: 59},
-											//{ gravity:1}
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_seconds-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "secondsOpt03", view: "form", elements: drawMultiview("secondsOpt03") },
+											{ id: "secondsOpt01", view: "form", elements: drawMultiview("secondsOpt01") },
+											{ id: "secondsOpt02", view: "form", elements: drawMultiview("secondsOpt02") },
+											{ id: "secondsOpt04", view: "form", elements: drawMultiview("secondsOpt04") }
 										]
 									}
 								]
 							}
-						],
+						]
 					},
 					{
 						view: "form",
-						id: "cronUi_years",
-						width: 0,
-						margin: 0,
+						id: "cronUi_minutes-" + self.uid,
 						elements: [
 							{
-								rows: [
+								cols: [
 									{
-										view: "checkbox",
-										id: "yearsOpt01",
-										labelRight: $.i18n("cronUi.popup.yearsOpt01"),
-										value: 1,
-										click: function(id, event) {
-											if ($$("yearsOpt01").data.value === 1) {
-												//$$("inputsHeaderYears").setValue("*");
-												//$$("secondsOpt01").setValue(0);
-												$$("yearsOpt02").setValue(0);
-												$$("yearsOpt03").setValue(0);
-												$$("yearsOpt04").setValue(0);
-												setCronDescription();
-											} else if ($$("yearsOpt01").data.value === 0) {
-												$$("yearsOpt01").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
+										rows: [
+											{ height: 66 },
 											{
-												view: "checkbox",
-												id: "yearsOpt02",
-												labelRight: $.i18n("cronUi.popup.yearsOpt02.01"),
-												//labelWidth: 80,
-												value: 0,
-												click: function(id, event) {
-													let counter01 = $$("yearsOpt02_counter01").getValue();
-													let counter02 = $$("yearsOpt02_counter02").getValue();
-
-													if ($$("yearsOpt02").data.value === 1) {
-														//$$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
-														//$$("secondsOpt01").setValue(0);
-														$$("yearsOpt01").setValue(0);
-														$$("yearsOpt03").setValue(0);
-														$$("yearsOpt04").setValue(0);
-														cronExpressionArr[6] = counter02 + "/" + counter01;
-														setCronDescription();
-													} else if ($$("yearsOpt02").data.value === 0) {
-														$$("yearsOpt02").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "yearsOpt02_counter01",
-												click: function(id, event) {
-													let counter01 = $$("yearsOpt02_counter01").getValue();
-													let counter02 = $$("yearsOpt02_counter02").getValue();
-													//$$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[6] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 1, min: 1, max: 100
-											},
-											{
-												view: "label",
-												label: $.i18n("cronUi.popup.yearsOpt02.02"),
-												//inputWidth:100, 
-												align: "left"
-											},
-											{
-												view: "counter", name: "", id: "yearsOpt02_counter02",
-												click: function(id, event) {
-													let counter01 = $$("yearsOpt02_counter01").getValue();
-													let counter02 = $$("yearsOpt02_counter02").getValue();
-													//$$("inputsHeaderYears").setValue(counter02 + "/" + counter01);
-													cronExpressionArr[6] = counter02 + "/" + counter01;
-													setCronDescription();
-												},
-												value: 2020, min: 2020, max: 2100
-											},
-											{ gravity: 1 }
-										]
-									},
-									{
-										view: "checkbox",
-										id: "yearsOpt03",
-										labelRight: $.i18n("cronUi.popup.yearsOpt03"),
-										value: 0,
-										click: function(id, event) {
-											if ($$("yearsOpt03").data.value === 1) {
-												let multi = $$("yearsOpt03_combo").getValue();
-												//$$("inputsHeaderYears").setValue(multi);
-												$$("yearsOpt01").setValue(0);
-												$$("yearsOpt02").setValue(0);
-												$$("yearsOpt04").setValue(0);
-												cronExpressionArr[6] = multi;
-												setCronDescription();
-											} else if ($$("yearsOpt03").data.value === 0) {
-												$$("yearsOpt03").setValue(1);
-											}
-										}
-									},
-									{
-										cols: [
-											{},
-											{
-												view: "multicombo", id: "yearsOpt03_combo", name: "yearsOpt03_combo", value: "2020", //placeholder:"Tags",
-												options: ["2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040", "2041", "2042", "2043", "2044", "2045", "2046", "2047", "2048", "2049", "2050", "2051", "2052", "2053", "2054", "2055", "2056", "2057", "2058", "2059", "2060", "2061", "2062", "2063", "2064", "2065", "2066", "2067", "2068", "2069", "2070"],
+												view: "radio",
+												id: "minutesOpt-" + self.uid,
+												width: 245,
+												value: "minutesOpt03",
+												vertical: true,
+												multiview: true,
 												on: {
-													'onChange': function(obj) {
-														if ($$("yearsOpt03").data.value === 1) {
-															let multi = $$("yearsOpt03_combo").getValue();
-															//$$("inputsHeaderYears").setValue(multi);
-															cronExpressionArr[6] = multi;
-															setCronDescription();
-														}
+													onChange: function(newv, oldv) {
+														$$(newv).show();
+														calculateMinutes(newv);
 													}
 												}
-											},
-											{ gravity: 2 }
-										]
+												,
+												options: [
+													{ id: "minutesOpt01", value: i18n.t("LBL_EVERY_MINUTE") },
+													{ id: "minutesOpt02", value: i18n.t("LBL_EVERY_X_MINUTES") },
+													{ id: "minutesOpt03", value: i18n.t("LBL_SPECIFIC_MINUTE") },
+													{ id: "minutesOpt04", value: i18n.t("LBL_EVERY_MINUTE_BETWEEN") }
+												]
+											}]
 									},
 									{
-										cols: [
-											{
-												view: "checkbox",
-												id: "yearsOpt04",
-												labelRight: $.i18n("cronUi.popup.yearsOpt04.01"),
-												//labelWidth: 0, 
-												value: 0,
-												click: function(id, event) {
-													if ($$("yearsOpt04").data.value === 1) {
-														let counter01 = $$("yearsOpt04_counter01").getValue();
-														let counter02 = $$("yearsOpt04_counter02").getValue();
-														//$$("inputsHeaderYears").setValue(counter01 + "-" + counter02);
-														//$$("secondsOpt01").setValue(0);
-														$$("yearsOpt01").setValue(0);
-														$$("yearsOpt02").setValue(0);
-														$$("yearsOpt03").setValue(0);
-														cronExpressionArr[6] = counter01 + "-" + counter02;
-														setCronDescription();
-													} else if ($$("yearsOpt04").data.value === 0) {
-														$$("yearsOpt04").setValue(1);
-													}
-												}
-											},
-											{
-												view: "counter", name: "", id: "yearsOpt04_counter01",
-												click: function(id, event) {
-													let counter01 = $$("yearsOpt04_counter01").getValue();
-													let counter02 = $$("yearsOpt04_counter02").getValue();
-													//$$("inputsHeaderYears").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[6] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												value: 2020, min: 2020, max: 2100
-											},
-											/*
-											{ 
-												view:"label", 
-												label: $.i18n("cronUi.popup.yearsOpt04.02"), 
-												//inputWidth:100, 
-												align:"left"
-											},
-											*/
-											{
-												view: "counter", name: "", id: "yearsOpt04_counter02",
-												click: function(id, event) {
-													let counter01 = $$("yearsOpt04_counter01").getValue();
-													let counter02 = $$("yearsOpt04_counter02").getValue();
-													//$$("inputsHeaderYears").setValue(counter01 + "-" + counter02);
-													cronExpressionArr[6] = counter01 + "-" + counter02;
-													setCronDescription();
-												},
-												value: 2020, min: 2020, max: 2100
-											},
-											//{ view: "counter", name: "", value: 1, min: 1, max: 59},
-											//{ gravity:1}
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_minutes-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "minutesOpt03", view: "form", elements: drawMultiview("minutesOpt03") },
+											{ id: "minutesOpt01", view: "form", elements: drawMultiview("minutesOpt01") },
+											{ id: "minutesOpt02", view: "form", elements: drawMultiview("minutesOpt02") },
+											{ id: "minutesOpt04", view: "form", elements: drawMultiview("minutesOpt04") }
 										]
 									}
 								]
 							}
-						],
+						]
+					},
+					{
+						view: "form",
+						id: "cronUi_hours-" + self.uid,
+						elements: [
+							{
+								cols: [
+									{
+										rows: [
+											{ height: 66 },
+											{
+												view: "radio",
+												id: "hoursOpt-" + self.uid,
+												width: 245,
+												value: "hoursOpt03",
+												vertical: true,
+												multiview: true,
+												on: {
+													onChange: function(newv, oldv) {
+														$$(newv).show();
+														calculateHours(newv);
+													}
+												}
+												,
+												options: [
+													{ id: "hoursOpt01", value: i18n.t("LBL_EVERY_HOUR") },
+													{ id: "hoursOpt02", value: i18n.t("LBL_EVERY_X_HOURS") },
+													{ id: "hoursOpt03", value: i18n.t("LBL_SPECIFIC_HOUR") },
+													{ id: "hoursOpt04", value: i18n.t("LBL_EVERY_HOUR_BETWEEN") }
+												]
+											}]
+									},
+									{
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_hours-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "hoursOpt03", view: "form", elements: drawMultiview("hoursOpt03") },
+											{ id: "hoursOpt01", view: "form", elements: drawMultiview("hoursOpt01") },
+											{ id: "hoursOpt02", view: "form", elements: drawMultiview("hoursOpt02") },
+											{ id: "hoursOpt04", view: "form", elements: drawMultiview("hoursOpt04") }
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						view: "form",
+						id: "cronUi_days-" + self.uid,
+						elements: [
+							{
+								cols: [
+									{
+										rows: [
+											{ height: 50 },
+											{
+												view: "radio",
+												id: "daysOpt-" + self.uid,
+												width: 245,
+												value: "daysOpt03",
+												vertical: true,
+												multiview: true,
+												on: {
+													onChange: function(newv, oldv) {
+														$$(newv).show();
+														calculateDays(newv);
+													}
+												}
+												,
+												options: [
+													{ id: "daysOpt01", value: i18n.t("LBL_EVERY_DAY") },
+													{ id: "daysOpt02", value: i18n.t("LBL_EVERY_X_DAYS") },
+													{ id: "daysOpt04", value: i18n.t("LBL_EVERY_X_DAYS") },
+													{ id: "daysOpt05", value: i18n.t("LBL_SPECIFIC_DAY_WEEK") },
+													{ id: "daysOpt03", value: i18n.t("LBL_SPECIFIC_DAY_MONTH") }
+												]
+											}]
+									},
+									{
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_days-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "daysOpt03", view: "form", elements: drawDays("daysOpt03") },
+											{ id: "daysOpt01", view: "form", elements: drawDays("daysOpt01") },
+											{ id: "daysOpt02", view: "form", elements: drawDays("daysOpt02") },
+											{ id: "daysOpt05", view: "form", elements: drawDays("daysOpt05") },
+											{ id: "daysOpt04", view: "form", elements: drawDays("daysOpt04") }
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						view: "form",
+						id: "cronUi_months-" + self.uid,
+						elements: [
+							{
+								cols: [
+									{
+										rows: [
+											{ height: 66 },
+											{
+												view: "radio",
+												id: "monthsOpt-" + self.uid,
+												width: 245,
+												value: "monthsOpt03",
+												vertical: true,
+												multiview: true,
+												on: {
+													onChange: function(newv, oldv) {
+														$$(newv).show();
+														calculateMonths(newv);
+													}
+												}
+												,
+												options: [
+													{ id: "monthsOpt01", value: i18n.t("LBL_EVERY_MONTH") },
+													{ id: "monthsOpt02", value: i18n.t("LBL_EVERY_X_MONTHS") },
+													{ id: "monthsOpt03", value: i18n.t("LBL_SPECIFIC_MONTH") },
+													{ id: "monthsOpt04", value: i18n.t("LBL_EVERY_MONTH_BETWEEN") }
+												]
+											}]
+									},
+									{
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_months-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "monthsOpt03", view: "form", elements: drawMonths("monthsOpt03") },
+											{ id: "monthsOpt01", view: "form", elements: drawMonths("monthsOpt01") },
+											{ id: "monthsOpt02", view: "form", elements: drawMonths("monthsOpt02") },
+											{ id: "monthsOpt04", view: "form", elements: drawMonths("monthsOpt04") }
+										]
+									}
+								]
+							}
+						]
+					},
+					{
+						view: "form",
+						id: "cronUi_years-" + self.uid,
+						elements: [
+							{
+								cols: [
+									{
+										rows: [
+											{ height: 66 },
+											{
+												view: "radio",
+												id: "yearsOpt-" + self.uid,
+												width: 245,
+												value: "yearsOpt03",
+												vertical: true,
+												multiview: true,
+												on: {
+													onChange: function(newv, oldv) {
+														$$(newv).show();
+														calculateYears(newv);
+													}
+												}
+												,
+												options: [
+													{ id: "yearsOpt01", value: i18n.t("LBL_ANY_YEAR") },
+													{ id: "yearsOpt02", value: i18n.t("LBL_EVERY_X_YEARS") },
+													{ id: "yearsOpt03", value: i18n.t("LBL_SPECIFIC_YEAR") },
+													{ id: "yearsOpt04", value: i18n.t("LBL_EVERY_YEARS_BETWEEN") }
+												]
+											}]
+									},
+									{
+										view: "multiview",
+										height: 260,
+										width: 500,
+										id: "multi_years-" + self.uid,
+										animate: false,
+										scroll: "auto",
+										cells: [
+											{ id: "yearsOpt03", view: "form", elements: drawMonths("yearsOpt03") },
+											{ id: "yearsOpt01", view: "form", elements: drawMonths("yearsOpt01") },
+											{ id: "yearsOpt02", view: "form", elements: drawMonths("yearsOpt02") },
+											{ id: "yearsOpt04", view: "form", elements: drawMonths("yearsOpt04") }
+										]
+									}
+								]
+							}
+						]
 					}
 				]
 			};
 
 			return form;
+		}
 
+
+		function drawMultiview(id) {
+
+			let view = [{ rows: [{ cols: [] }] }];
+			const SECONDS_OPT01 = "secondsOpt01";
+			const SECONDS_OPT02 = "secondsOpt02";
+			const SECONDS_OPT03 = "secondsOpt03";
+			const SECONDS_OPT04 = "secondsOpt04";
+			const MINUTES_OPT01 = "minutesOpt01";
+			const MINUTES_OPT02 = "minutesOpt02";
+			const MINUTES_OPT03 = "minutesOpt03";
+			const MINUTES_OPT04 = "minutesOpt04";
+			const HOURS_OPT01 = "hoursOpt01";
+			const HOURS_OPT02 = "hoursOpt02";
+			const HOURS_OPT03 = "hoursOpt03";
+			const HOURS_OPT04 = "hoursOpt04";
+
+			if (id === SECONDS_OPT03 || id === MINUTES_OPT03 || id === HOURS_OPT03) {
+
+				let ids = (id === SECONDS_OPT03) ? SECONDS_OPT03 : (id === MINUTES_OPT03) ? MINUTES_OPT03 : HOURS_OPT03;
+
+				let row1 = [{ rows: [] }];
+				let row2 = [{ rows: [] }];
+				let row3 = [{ rows: [] }];
+				let row4 = [{ rows: [] }];
+				let row5 = [{ rows: [] }];
+				let row6 = [{ rows: [] }];
+				let rowHour = [{ rows: [] }];
+				let column1 = [];
+				let column2 = [];
+				let column3 = [];
+				let column4 = [];
+				let column5 = [];
+				let column6 = [];
+				let columnHour = [];
+
+				for (let i = 0; i <= 9; i++) {
+
+					let checkLabel = (i === 0) ? "00" : "0" + i;
+
+					let check = {
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: checkLabel,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column1.push(check);
+				}
+
+				for (let i = 10; i <= 19; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column2.push(check);
+				}
+
+				for (let i = 20; i <= 29; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column3.push(check);
+				}
+
+				for (let i = 30; i <= 39; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column4.push(check);
+				}
+
+				for (let i = 40; i <= 49; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column5.push(check);
+				}
+
+				for (let i = 50; i <= 59; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: ids + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(ids + "-" + i);
+						}
+					}
+
+					column6.push(check);
+				}
+
+				if (id === SECONDS_OPT03 || id === MINUTES_OPT03) {
+
+					row1 = [{ cols: column1 }];
+					row2 = [{ cols: column2 }];
+					row3 = [{ cols: column3 }];
+					row4 = [{ cols: column4 }];
+					row5 = [{ cols: column5 }];
+					row6 = [{ cols: column6 }];
+
+					view[0].rows[0] = row1[0];
+					view[0].rows[1] = row2[0];
+					view[0].rows[2] = row3[0];
+					view[0].rows[3] = row4[0];
+					view[0].rows[4] = row5[0];
+					view[0].rows[5] = row6[0];
+
+				} else if (id === HOURS_OPT03) {
+
+					for (let i = 20; i <= 23; i++) {
+
+						let check = {
+
+							view: "checkbox",
+							id: ids + "-" + i,
+							margin: 0,
+							padding: 0,
+							label: i,
+							value: 0,
+							width: 48,
+							labelWidth: 17,
+							click: function(id, event) {
+								timeSelector(ids + "-" + i);
+							}
+						}
+
+						columnHour.push(check);
+					}
+
+					row1 = [{ cols: column1 }];
+					row2 = [{ cols: column2 }];
+					rowHour = [{ cols: columnHour }];
+
+					view[0].rows[0] = row1[0];
+					view[0].rows[1] = row2[0];
+					view[0].rows[2] = rowHour[0];
+				}
+
+			} else if (id === SECONDS_OPT02 || id === MINUTES_OPT02 || id === HOURS_OPT02) {
+
+				let ids = (id === SECONDS_OPT02) ? SECONDS_OPT02 : (id === MINUTES_OPT02) ? MINUTES_OPT02 : HOURS_OPT02;
+				let label = (id === SECONDS_OPT02) ? "LBL_SECOND(S)_STARTING_AT_SECOND" : (id === MINUTES_OPT02) ? "LBL_MINUTE(S)_STARTING_AT_MINUTE" : "LBL_HOUR(S)_STARTING_AT_HOUR";
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t("LBL_EVERY"),
+									},
+									{
+										view: "counter",
+										id: ids + "_counter01",
+										name: "",
+										width: 105,
+										value: 1,
+										min: 1,
+										max: 60,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t(label),
+										width: 360,
+										align: "left"
+									},
+									{
+										view: "counter",
+										id: ids + "_counter02",
+										name: "",
+										width: 105,
+										value: 0,
+										min: 0,
+										max: 59,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}
+								]
+							}]
+					}
+				]
+
+			} else if (id === SECONDS_OPT04 || id === MINUTES_OPT04 || id === HOURS_OPT04) {
+
+				let ids = (id === SECONDS_OPT04) ? SECONDS_OPT04 : (id === MINUTES_OPT04) ? MINUTES_OPT04 : HOURS_OPT04;
+				let label1 = (id === SECONDS_OPT04) ? "LBL_EVERY_SECOND_BETWEEN_SECOND" : (id === MINUTES_OPT04) ? "LBL_EVERY_MINUTE_BETWEEN_MINUTE" : "LBL_EVERY_HOUR_BETWEEN_HOUR";
+				let label2 = (id === SECONDS_OPT04) ? "LBL_AND_SECOND" : (id === MINUTES_OPT04) ? "LBL_AND_MINUTE" : "LBL_AND_HOUR";
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t(label1)
+									},
+									{
+										view: "counter",
+										id: ids + "_counter01",
+										name: "",
+										width: 105,
+										value: 1,
+										min: 1,
+										max: 60,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t(label2),
+										width: 360,
+										align: "left"
+									},
+									{
+										view: "counter",
+										id: ids + "_counter02",
+										name: "",
+										width: 105,
+										value: 0,
+										min: 0,
+										max: 59,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}
+								]
+							}]
+					}
+				]
+			} else if (id === SECONDS_OPT01 || id === MINUTES_OPT01 || id === HOURS_OPT01) {
+
+				let label = (id === SECONDS_OPT01) ? "LBL_EVERY_SECOND" : (id === MINUTES_OPT01) ? "LBL_EVERY_MINUTE" : "LBL_EVERY_HOUR";
+
+				view = [
+					{
+						rows: [
+							{ height: 80 },
+							{
+								view: "label",
+								label: i18n.t(label)
+							}
+						]
+					}
+				]
+			}
+
+			return view;
+		}
+
+
+		function drawDays(id) {
+
+			let view = [{ rows: [{ cols: [] }] }];
+			const DAYS_OPT01 = "daysOpt01";
+			const DAYS_OPT02 = "daysOpt02";
+			const DAYS_OPT03 = "daysOpt03";
+			const DAYS_OPT04 = "daysOpt04";
+			const DAYS_OPT05 = "daysOpt05";
+
+			if (id === DAYS_OPT03) {
+
+				let row1 = [{ rows: [] }];
+				let row2 = [{ rows: [] }];
+				let row3 = [{ rows: [] }];
+				let row4 = [{ rows: [] }];
+
+				let column1 = [];
+				let column2 = [];
+				let column3 = [];
+				let column4 = [];
+
+				for (let i = 1; i <= 10; i++) {
+
+					let checkLabel = (i === 0) ? "00" : (i === 10) ? i : "0" + i;
+
+					let check = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: checkLabel,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column1.push(check);
+				}
+
+				for (let i = 11; i <= 20; i++) {
+
+					let check = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column2.push(check);
+				}
+
+				for (let i = 21; i <= 30; i++) {
+
+					let check = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 48,
+						labelWidth: 17,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column3.push(check);
+				}
+
+				let check31 = {
+					view: "checkbox",
+					id: id + "-" + 31,
+					margin: 0,
+					padding: 0,
+					label: 31,
+					value: 0,
+					width: 48,
+					labelWidth: 17,
+					click: function(id, event) {
+						timeSelector(id);
+					}
+				}
+
+				column4.push(check31);
+
+
+				row1 = [{ cols: column1 }];
+				row2 = [{ cols: column2 }];
+				row3 = [{ cols: column3 }];
+				row4 = [{ cols: column4 }];
+
+				view[0].rows[0] = row1[0];
+				view[0].rows[1] = row2[0];
+				view[0].rows[2] = row3[0];
+				view[0].rows[3] = row4[0];
+
+			} else if (id === DAYS_OPT02) {
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t("LBL_EVERY"),
+									},
+									{
+										view: "counter",
+										id: id + "_counter01",
+										name: "",
+										width: 105,
+										value: 1,
+										min: 1,
+										max: 7,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t("LBL_DAY(S)_STARTING_ON"),
+										width: 360,
+										align: "left"
+									},
+									{
+										view: "combo",
+										id: id + "_counter02",
+										name: "",
+										width: 105,
+										value: i18n.t("LBL_SUNDAY"),
+										options: [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")],
+										on:
+										{
+											onChange:
+												function(newv, oldv) {
+													timeSelector(id)
+												}
+										}
+									}
+								]
+							}]
+					}
+				]
+			}
+
+			else if (id === DAYS_OPT05) {
+
+				let daysOfWeek = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
+				let row1 = [{ rows: [] }];
+				let row2 = [{ rows: [] }];
+				let row3 = [{ rows: [] }];
+				let row4 = [{ rows: [] }];
+				let column1 = [];
+				let column2 = [];
+				let column3 = [];
+				let column4 = [];
+
+				for (let i = 0; i <= 1; i++) {
+
+					let days = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: daysOfWeek[i],
+						value: 0,
+						width: 225,
+						labelWidth: 150,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+					column1.push(days);
+				}
+
+				for (let i = 2; i <= 3; i++) {
+
+					let days = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: daysOfWeek[i],
+						value: 0,
+						width: 225,
+						labelWidth: 150,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+					column2.push(days);
+				}
+
+				for (let i = 4; i <= 5; i++) {
+
+					let days = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: daysOfWeek[i],
+						value: 0,
+						width: 225,
+						labelWidth: 150,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+					column3.push(days);
+				}
+
+				let day7 = {
+					view: "checkbox",
+					id: id + "-" + 6,
+					margin: 0,
+					padding: 0,
+					label: daysOfWeek[6],
+					value: 0,
+					width: 500,
+					labelWidth: 150,
+					click: function(id, event) {
+						timeSelector(id);
+					}
+				}
+
+				column4.push(day7);
+
+				row1 = [{ cols: column1 }];
+				row2 = [{ cols: column2 }];
+				row3 = [{ cols: column3 }];
+				row4 = [{ cols: column4 }];
+
+				view[0].rows[0] = row1[0];
+				view[0].rows[1] = row2[0];
+				view[0].rows[2] = row3[0];
+				view[0].rows[3] = row4[0];
+
+			} else if (id === DAYS_OPT04) {
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t("LBL_EVERY")
+									},
+									{
+										view: "counter",
+										id: id + "_counter01",
+										name: "",
+										width: 105,
+										value: 1,
+										min: 1,
+										max: 31,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t("LBL_DAYS_STARTING_ON"),
+										width: 200,
+										align: "left"
+									},
+									{
+										view: "combo",
+										id: id + "_counter02",
+										name: "",
+										width: 105,
+										value: "1st",
+										options: selectDays,
+										on: {
+											onChange:
+												function(newv, oldv) {
+													timeSelector(id)
+												}
+										}
+									},
+									{
+										view: "label",
+										label: i18n.t("LBL_OF_THE_MONTH"),
+										width: 160,
+										align: "left"
+									},
+								]
+							}]
+					}
+				]
+
+			} else if (id === DAYS_OPT01) {
+
+				view = [
+					{
+						rows: [
+							{ height: 80 },
+							{
+								view: "label",
+								label: i18n.t("LBL_EVERY_DAY")
+							}
+						]
+					}
+				]
+			}
+
+			return view;
+		}
+
+
+		function drawMonths(id) {
+
+			let view = [{ rows: [{ cols: [] }] }];
+
+			const MONTHS_OPT01 = "monthsOpt01";
+			const MONTHS_OPT02 = "monthsOpt02";
+			const MONTHS_OPT03 = "monthsOpt03";
+			const MONTHS_OPT04 = "monthsOpt04";
+			const YEARS_OPT01 = "yearsOpt01";
+			const YEARS_OPT02 = "yearsOpt02";
+			const YEARS_OPT03 = "yearsOpt03";
+			const YEARS_OPT04 = "yearsOpt04";
+
+			let monthsOfYear = [i18n.t("LBL_JANUARY"), i18n.t("LBL_FEBRUARY"), i18n.t("LBL_MARCH"), i18n.t("LBL_APRIL"), i18n.t("LBL_MAY"), i18n.t("LBL_JUNE"), i18n.t("LBL_JULY"), i18n.t("LBL_AUGUST"), i18n.t("LBL_SEPTEMBER"), i18n.t("LBL_OCTOBER"), i18n.t("LBL_NOVEMBER"), i18n.t("LBL_DECEMBER")];
+			let date = new Date().getFullYear();
+			let yearsArr = [];
+
+			for (let i = 1; i <= 50; i++) {
+
+				yearsArr.push((date + i).toString());
+			}
+
+			if (id === MONTHS_OPT03) {
+
+				let row1 = [{ rows: [] }];
+				let row2 = [{ rows: [] }];
+				let row3 = [{ rows: [] }];
+				let row4 = [{ rows: [] }];
+				let row5 = [{ rows: [] }];
+				let row6 = [{ rows: [] }];
+				let column1 = [];
+				let column2 = [];
+				let column3 = [];
+				let column4 = [];
+				let column5 = [];
+				let column6 = [];
+
+				for (let i = 0; i <= 1; i++) {
+
+					let check = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column1.push(check);
+				}
+
+				for (let i = 2; i <= 3; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column2.push(check);
+				}
+
+				for (let i = 4; i <= 5; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column3.push(check);
+				}
+
+				for (let i = 6; i <= 7; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column4.push(check);
+				}
+
+				for (let i = 8; i <= 9; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column5.push(check);
+				}
+
+				for (let i = 10; i <= 11; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: monthsOfYear[i],
+						value: 0,
+						width: 235,
+						labelWidth: 175,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column6.push(check);
+				}
+
+				row1 = [{ cols: column1 }];
+				row2 = [{ cols: column2 }];
+				row3 = [{ cols: column3 }];
+				row4 = [{ cols: column4 }];
+				row5 = [{ cols: column5 }];
+				row6 = [{ cols: column6 }];
+
+				view[0].rows[0] = row1[0];
+				view[0].rows[1] = row2[0];
+				view[0].rows[2] = row3[0];
+				view[0].rows[3] = row4[0];
+				view[0].rows[4] = row5[0];
+				view[0].rows[5] = row6[0];
+
+			} else if (id === MONTHS_OPT02 || id === YEARS_OPT02) {
+
+				let ids = (id === MONTHS_OPT02) ? MONTHS_OPT02 : YEARS_OPT02;
+				let label = (id === MONTHS_OPT02) ? "LBL_MONTH(S)_STARTING_IN" : "LBL_YEAR(S)_STARTING_IN";
+				let maxValue = (id === MONTHS_OPT02) ? 12 : 50;
+				let comboValue = (id === MONTHS_OPT02) ? monthsOfYear[0] : date;
+				let comboOptions = (id === MONTHS_OPT02) ? monthsOfYear : yearsArr;
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t("LBL_EVERY"),
+									},
+									{
+										view: "counter",
+										id: ids + "_counter01",
+										name: "",
+										width: 105,
+										value: 1,
+										min: 1,
+										max: maxValue,
+										click:
+											function(id, event) {
+												timeSelector(id)
+											}
+									}]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t(label),
+										width: 360,
+										align: "left"
+									},
+									{
+										view: "combo",
+										id: ids + "_counter02",
+										name: "",
+										width: 105,
+										value: comboValue,
+										options: comboOptions,
+										on: {
+											onChange:
+												function(newv, oldv) {
+													timeSelector(id)
+												}
+										}
+									}
+								]
+							}]
+					}
+				]
+
+			} else if (id === MONTHS_OPT04 || id === YEARS_OPT04) {
+
+				let ids = (id === MONTHS_OPT04) ? MONTHS_OPT04 : YEARS_OPT04;
+				let label = (id === MONTHS_OPT04) ? "LBL_EVERY_MONTH_BETWEEN" : "LBL_EVERY_YEAR_BETWEEN";
+				let comboValue = (id === MONTHS_OPT04) ? monthsOfYear[0] : date;
+				let comboOptions = (id === MONTHS_OPT04) ? monthsOfYear : yearsArr;
+
+				view = [
+					{
+						rows: [
+							{ height: 70 },
+							{
+								cols: [
+									{
+										view: "label",
+										width: 360,
+										label: i18n.t(label)
+									},
+									{
+										view: "combo",
+										id: ids + "_counter01",
+										name: "",
+										width: 105,
+										value: comboValue,
+										options: comboOptions,
+										on: {
+											onChange:
+												function(newv, oldv) {
+													timeSelector(id)
+												}
+										}
+									}
+								]
+							},
+							{
+								cols: [
+									{
+										view: "label",
+										label: i18n.t("LBL_AND"),
+										width: 360,
+										align: "left"
+									},
+									{
+										view: "combo",
+										id: ids + "_counter02",
+										name: "",
+										width: 105,
+										value: comboValue,
+										options: comboOptions,
+										on: {
+											onChange:
+												function(newv, oldv) {
+													timeSelector(id)
+												}
+										}
+									}
+								]
+							}]
+					}
+				]
+			}
+			else if (id === MONTHS_OPT01 || id === YEARS_OPT01) {
+
+				let label = (id === MONTHS_OPT01) ? "LBL_EVERY_MONTH" : "LBL_ANY_YEAR";
+
+				view = [
+					{
+						rows: [
+							{ height: 80 },
+							{
+								view: "label",
+								label: i18n.t(label)
+							}
+						]
+					}
+				]
+			} else if (id === YEARS_OPT03) {
+
+				let row1 = [{ rows: [] }];
+				let row2 = [{ rows: [] }];
+				let row3 = [{ rows: [] }];
+				let row4 = [{ rows: [] }];
+				let row5 = [{ rows: [] }];
+				let row6 = [{ rows: [] }];
+				let column1 = [];
+				let column2 = [];
+				let column3 = [];
+				let column4 = [];
+				let column5 = [];
+				let column6 = [];
+
+				for (let i = date + 1; i <= date + 6; i++) {
+
+					let check = {
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column1.push(check);
+				}
+
+				for (let i = date + 7; i <= date + 12; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column2.push(check);
+				}
+
+				for (let i = date + 13; i <= date + 18; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column3.push(check);
+				}
+
+				for (let i = date + 19; i <= date + 24; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column4.push(check);
+				}
+
+				for (let i = date + 25; i <= date + 30; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column5.push(check);
+				}
+
+				for (let i = date + 31; i <= date + 36; i++) {
+
+					let check = {
+
+						view: "checkbox",
+						id: id + "-" + i,
+						margin: 0,
+						padding: 0,
+						label: i,
+						value: 0,
+						width: 80,
+						labelWidth: 41,
+						click: function(id, event) {
+							timeSelector(id);
+						}
+					}
+
+					column6.push(check);
+				}
+
+				row1 = [{ cols: column1 }];
+				row2 = [{ cols: column2 }];
+				row3 = [{ cols: column3 }];
+				row4 = [{ cols: column4 }];
+				row5 = [{ cols: column5 }];
+				row6 = [{ cols: column6 }];
+
+				view[0].rows[0] = row1[0];
+				view[0].rows[1] = row2[0];
+				view[0].rows[2] = row3[0];
+				view[0].rows[3] = row4[0];
+				view[0].rows[4] = row5[0];
+				view[0].rows[5] = row6[0];
+			}
+
+			return view;
+		}
+
+
+		function drawResume(cronExpression) {
+
+			let resume = {
+				css: "cronui-resume",
+				cols: [
+					{ width: 25 },
+					{
+						width: 365,
+						rows: [
+							{ height: 15 },
+							{
+								height: 25,
+								view: "label",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_NEW_CRON_EXPRESSION")}</span></div>`
+							},
+							{
+								height: 25,
+								cols: [
+									{ width: 10 },
+									{
+										view: "label",
+										id: "CronUi-secs",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-mins",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-hours",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-daysM",
+										value: "?",
+										label: "?",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-months",
+										value: "*",
+										label: "*",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-daysW",
+										value: "*",
+										label: "*",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-years",
+										value: "*",
+										label: "*",
+										width: 52
+									}
+								]
+							},
+							{ height: 15 },
+							{
+								height: 25,
+								view: "label",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_CURRENT_CRON_EXPRESSION")}</span></div>`
+							},
+							{
+								height: 25,
+								cols: [
+									{ width: 10 },
+									{
+										view: "label",
+										id: "CronUi-secs-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-mins-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-hours-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-daysM-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-months-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-daysW-current",
+										value: "0",
+										label: "0",
+										width: 52
+									},
+									{
+										view: "label",
+										id: "CronUi-years-current",
+										value: "0",
+										label: "0",
+										width: 52
+									}
+								]
+							}
+						]
+					},
+					{
+						width: 365,
+						rows: [
+							{ height: 15 },
+							{
+								height: 26,
+								view: "label",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_NEW_SCHEDULE")}</span></div>`
+							},
+							{
+								height: 25,
+								view: "label",
+								id: "cronDescriptionId",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_NEW_SCHEDULER_DESCRIPTION")}</span></div>`
+							},
+							{ height: 15 },
+							{
+								height: 26,
+								view: "label",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_CURRENT_SCHEDULE_DESCRIPTION")}</span></div>`
+							},
+							{
+								height: 25,
+								view: "label",
+								id: "currentCronDescriptionId",
+								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_CURRENT_SCHEDULE_DESCRIPTION")}</span></div>`
+							}
+						]
+					},
+					{ width: 25 }
+				]
+			}
+
+			return resume;
 		}
 
 
@@ -1512,46 +1734,38 @@ export default class CronUi {
 							},
 							{},
 							{
+								view: "button", value: i18n.t("LBL_RESET"), width: 130, height: 41, css: "action-button",
+								click:
+									function() {
+
+										$$("CronUi-secs").setValue("0");
+										$$("CronUi-mins").setValue("0");
+										$$("CronUi-hours").setValue("0");
+										$$("CronUi-daysM").setValue("?");
+										$$("CronUi-months").setValue("*");
+										$$("CronUi-daysW").setValue("*");
+										$$("CronUi-years").setValue("*");
+										$$("cronDescriptionId").setValue("At 00:00:00am every day");
+									}
+							},
+							{
 								view: "button", id: "CronUiFormButtons_apply", label: $.i18n("planSchedule.form.apply"), value: "", width: 130, height: 41, css: "dialog-accept",
 								click:
 									function() {
 
-										//										let sec = $$("inputsHeaderSeconds").getValue();
-										//										let min = $$("inputsHeaderMinutes").getValue();
-										//										let hour = $$("inputsHeaderHours").getValue();
-										//										let day = $$("inputsHeaderDays").getValue();
-										//										let month = $$("inputsHeaderMonths").getValue();
-										//										//{ view: "text", id: "inputsHeaderWeeks",   name: "weeks"},
-										//										let year = $$("inputsHeaderYears").getValue();
+										let sec = $$("CronUi-secs").getValue();
+										let min = $$("CronUi-mins").getValue();
+										let hour = $$("CronUi-hours").getValue();
+										let dayM = $$("CronUi-daysM").getValue();
+										let month = $$("CronUi-months").getValue();
+										let dayW = $$("CronUi-daysW").getValue();
+										let year = $$("CronUi-years").getValue();
 
-										const CRON_EXPRESSION_NULL = "* * * * * ? *";
-										let sec = self.cronExpressionArr[0];
-										let min = self.cronExpressionArr[1];
-										let hour = self.cronExpressionArr[2];
-										let day = self.cronExpressionArr[3];
-										let month = self.cronExpressionArr[4];
-										let year = self.cronExpressionArr[6];
-
-										let cronEx = sec + " " + min + " " + hour + " " + day + " " + month + " ? " + year;
-										//let translate = self.getDescription(sec + " " + min + " " + hour + " " + day + " " + month + " ? " + year);
-										
+										let cronEx = sec + " " + min + " " + hour + " " + dayM + " " + month + " " + dayW + " " + year;
 										let translate = prettyCron.toString(cronEx, true);
 
-										if (cronEx === CRON_EXPRESSION_NULL) {
-
-											webix.alert({
-												title: i18n.t("LBL_CRON_EXPRESSION_IS_NULL"),
-												text: i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"),
-												type: "alert-error",
-												width: 600
-											});
-
-										} else {
-
-											$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
-											$$(self.cronWindow).close();
-										}
-
+										$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
+										$$(self.cronWindow).close();
 									}
 							},
 							{ width: 20 }
@@ -1562,16 +1776,499 @@ export default class CronUi {
 			};
 
 			return buttons;
-
-
 		}
 
 
-		if (cronExpression != undefined) {
-			setCronDescription(cronExpression);
+		function calculateSeconds(id) {
+
+			const SECONDS_OPT01 = "secondsOpt01";
+			const SECONDS_OPT02 = "secondsOpt02";
+			const SECONDS_OPT03 = "secondsOpt03";
+			const SECONDS_OPT04 = "secondsOpt04";
+
+			let seconds = '';
+
+			if (id.startsWith(SECONDS_OPT01)) {
+
+				seconds = '*';
+
+			} else if (id.startsWith(SECONDS_OPT02)) {
+
+				seconds = $$("secondsOpt02_counter02").getValue();
+				seconds += '/';
+				seconds += $$("secondsOpt02_counter01").getValue();
+
+			} else if (id.startsWith(SECONDS_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedSecs.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedSecs.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedSecs.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedSecs.sort(function(a, b) { return a - b })
+					seconds = self.checkedSecs.join();
+
+				} else {
+
+					seconds = 0;
+				}
+
+			} else if (id.startsWith(SECONDS_OPT04)) {
+
+				seconds = $$("secondsOpt04_counter01").getValue();
+				seconds += '-';
+				seconds += $$("secondsOpt04_counter02").getValue();
+			}
+
+			$$("CronUi-secs").setValue(seconds);
+			setCronDescription();
 		}
+
+
+		function calculateMinutes(id) {
+
+			const MINUTES_OPT01 = "minutesOpt01";
+			const MINUTES_OPT02 = "minutesOpt02";
+			const MINUTES_OPT03 = "minutesOpt03";
+			const MINUTES_OPT04 = "minutesOpt04";
+
+			let minutes = '';
+
+			if (id.startsWith(MINUTES_OPT01)) {
+
+				minutes = '*';
+
+			} else if (id.startsWith(MINUTES_OPT02)) {
+
+				minutes = $$("minutesOpt02_counter02").getValue();
+				minutes += '/';
+				minutes += $$("minutesOpt02_counter01").getValue();
+
+			} else if (id.startsWith(MINUTES_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedMins.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedMins.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedMins.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedMins.sort(function(a, b) { return a - b })
+					minutes = self.checkedMins.join();
+
+				} else {
+
+					minutes = 0;
+				}
+
+			} else if (id.startsWith(MINUTES_OPT04)) {
+
+				minutes = $$("minutesOpt04_counter01").getValue();
+				minutes += '-';
+				minutes += $$("minutesOpt04_counter02").getValue();
+			}
+
+			$$("CronUi-mins").setValue(minutes);
+			setCronDescription();
+		}
+
+
+		function calculateHours(id) {
+
+			const HOURS_OPT01 = "hoursOpt01";
+			const HOURS_OPT02 = "hoursOpt02";
+			const HOURS_OPT03 = "hoursOpt03";
+			const HOURS_OPT04 = "hoursOpt04";
+
+			let hours = '';
+
+			if (id.startsWith(HOURS_OPT01)) {
+
+				hours = '*';
+
+			} else if (id.startsWith(HOURS_OPT02)) {
+
+				hours = $$("hoursOpt02_counter02").getValue();
+				hours += '/';
+				hours += $$("hoursOpt02_counter01").getValue();
+
+			} else if (id.startsWith(HOURS_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedHours.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedHours.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedHours.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedHours.sort(function(a, b) { return a - b })
+					hours = self.checkedHours.join();
+
+				} else {
+
+					hours = 0;
+				}
+
+			} else if (id.startsWith(HOURS_OPT04)) {
+
+				hours = $$("hoursOpt04_counter01").getValue();
+				hours += '-';
+				hours += $$("hoursOpt04_counter02").getValue();
+			}
+
+			$$("CronUi-hours").setValue(hours);
+			setCronDescription();
+		}
+
+
+		function calculateDays(id) {
+
+			const DAYS_OPT01 = "daysOpt01";
+			const DAYS_OPT02 = "daysOpt02";
+			const DAYS_OPT03 = "daysOpt03";
+			const DAYS_OPT04 = "daysOpt04";
+			const DAYS_OPT05 = "daysOpt05";
+			let daysOfWeek = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
+			let daysOfWeekCron = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+
+			let days = '';
+
+			if (id.startsWith(DAYS_OPT01)) {
+
+				days = '*';
+
+			} else if (id.startsWith(DAYS_OPT02)) {
+
+				let transformDay = $$("daysOpt02_counter02").getValue();
+				let indexDay = daysOfWeek.indexOf(transformDay);
+
+				days = indexDay + 1;
+				days += '/';
+				days += $$("daysOpt02_counter01").getValue();
+
+			} else if (id.startsWith(DAYS_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedDays.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedDays.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedDays.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedDays.sort(function(a, b) { return a - b })
+					days = self.checkedDays.join();
+
+				} else {
+
+					days = 0;
+				}
+
+			} else if (id.startsWith(DAYS_OPT04)) {
+
+				let transformDays = $$("daysOpt04_counter02").getValue();
+
+				days = transformDays.slice(0, -2)
+				days += '/';
+				days += $$("daysOpt04_counter01").getValue();
+
+			} else if (id.startsWith(DAYS_OPT05)) {
+
+				if (id.includes("-")) {
+
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedDaysWeek.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedDaysWeek.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedDaysWeek.splice(deleteCheck, 1);
+						}
+					}
+					self.checkedDaysWeek.sort(function(a, b) { return a - b });
+
+					let daysArr = [];
+
+					self.checkedDaysWeek.forEach(days => {
+						daysArr.push(daysOfWeekCron[days]);
+					});
+
+					days = daysArr.join();
+
+				} else {
+
+					days = "SUN";
+				}
+			}
+
+			if (id.startsWith(DAYS_OPT01) || id.startsWith(DAYS_OPT02) || id.startsWith(DAYS_OPT05)) {
+
+				$$("CronUi-daysW").setValue(days);
+				$$("CronUi-daysM").setValue("?");
+
+			} else {
+
+				$$("CronUi-daysM").setValue(days);
+				$$("CronUi-daysW").setValue("?");
+			}
+			setCronDescription();
+		}
+
+
+		function calculateMonths(id) {
+
+			const MONTHS_OPT01 = "monthsOpt01";
+			const MONTHS_OPT02 = "monthsOpt02";
+			const MONTHS_OPT03 = "monthsOpt03";
+			const MONTHS_OPT04 = "monthsOpt04";
+			let monthsOfYear = [i18n.t("LBL_JANUARY"), i18n.t("LBL_FEBRUARY"), i18n.t("LBL_MARCH"), i18n.t("LBL_APRIL"), i18n.t("LBL_MAY"), i18n.t("LBL_JUNE"), i18n.t("LBL_JULY"), i18n.t("LBL_AUGUST"), i18n.t("LBL_SEPTEMBER"), i18n.t("LBL_OCTOBER"), i18n.t("LBL_NOVEMBER"), i18n.t("LBL_DECEMBER")];
+			let monthsOfYearCron = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+			let months = '';
+
+			if (id.startsWith(MONTHS_OPT01)) {
+
+				months = '*';
+
+			} else if (id.startsWith(MONTHS_OPT02)) {
+
+				let transformMonths = $$("monthsOpt02_counter02").getValue();
+				let indexMonth = monthsOfYear.indexOf(transformMonths);
+
+				months = indexMonth + 1;
+				months += '/';
+				months += $$("monthsOpt02_counter01").getValue();
+
+			} else if (id.startsWith(MONTHS_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedMonths.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedMonths.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedMonths.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedMonths.sort(function(a, b) { return a - b });
+
+					let monthsArr = [];
+
+					self.checkedMonths.forEach(month => {
+						monthsArr.push(monthsOfYearCron[month]);
+					});
+					
+					months = monthsArr.join();
+
+				} else {
+
+					months = 1;
+				}
+				
+			} else if (id.startsWith(MONTHS_OPT04)) {
+
+				let transformMonths1 = $$("monthsOpt04_counter01").getValue();
+				let transformMonths2 = $$("monthsOpt04_counter02").getValue();
+
+				let indexMonth1 = monthsOfYear.indexOf(transformMonths1);
+				let indexMonth2 = monthsOfYear.indexOf(transformMonths2);
+
+				months = indexMonth1 + 1;
+				months += "-";
+				months += indexMonth2 + 1;
+			}
+
+			$$("CronUi-months").setValue(months);
+			setCronDescription();
+		}
+
+
+		function calculateYears(id) {
+
+			const YEARS_OPT01 = "yearsOpt01";
+			const YEARS_OPT02 = "yearsOpt02";
+			const YEARS_OPT03 = "yearsOpt03";
+			const YEARS_OPT04 = "yearsOpt04";
+
+			let years = '';
+
+			if (id.startsWith(YEARS_OPT01)) {
+
+				years = '*';
+
+			} else if (id.startsWith(YEARS_OPT02)) {
+
+				years = $$("yearsOpt02_counter02").getValue();
+				years += '/';
+				years += $$("yearsOpt02_counter01").getValue();
+
+			} else if (id.startsWith(YEARS_OPT03)) {
+
+				if (id.includes("-")) {
+					let checkId = id.split("-", 2);
+
+					if ($$(id).getValue() === 1) {
+						self.checkedYears.push(checkId[1]);
+
+					} else {
+
+						let deleteCheck = self.checkedYears.indexOf(checkId[1]);
+
+						if (deleteCheck != -1) {
+							self.checkedYears.splice(deleteCheck, 1);
+						}
+					}
+
+					self.checkedYears.sort(function(a, b) { return a - b });
+					years = self.checkedYears.join();
+
+				} else {
+
+					years = 2021;
+				}
+
+			} else if (id.startsWith(YEARS_OPT04)) {
+
+				years = $$("yearsOpt04_counter01").getValue();
+				years += "-";
+				years += $$("yearsOpt04_counter02").getValue();
+			}
+
+			$$("CronUi-years").setValue(years);
+			setCronDescription();
+		}
+
+
+		function timeSelector(id) {
+
+			const SECONDS = "seconds";
+			const MINUTES = "minutes";
+			const HOURS = "hours";
+			const DAYS = "days";
+			const MONTHS = "months";
+			const YEARS = "years";
+
+			if (id.startsWith(SECONDS)) {
+				
+				calculateSeconds(id);
+		
+			} else if (id.startsWith(MINUTES)) {
+		
+				calculateMinutes(id);
+		
+			} else if (id.startsWith(HOURS)) {
+		
+				calculateHours(id);
+		
+			} else if (id.startsWith(DAYS)) {
+		
+				calculateDays(id);
+		
+			} else if (id.startsWith(MONTHS)) {
+		
+				calculateMonths(id);
+		
+			} else if (id.startsWith(YEARS)) {
+		
+				calculateYears(id);
+			}
+		}
+
+
+		function setCronDescription() {
+
+			let sec = $$("CronUi-secs").getValue();
+			let min = $$("CronUi-mins").getValue();
+			let hour = $$("CronUi-hours").getValue();
+			let dayM = $$("CronUi-daysM").getValue();
+			let month = $$("CronUi-months").getValue();
+			let dayW = $$("CronUi-daysW").getValue();
+			let year = $$("CronUi-years").getValue();
+
+			let cronEx = sec + " " + min + " " + hour + " " + dayM + " " + month + " " + dayW + " " + year;
+			let translate = prettyCron.toString(cronEx, true);
+
+			$$("cronDescriptionId").setValue(`<div style="font-size: 15px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
+		}
+
+
+		this.cronWindow = util.ui.loadWindow(
+			i18n.t(self.windowLabel),
+			genericForm,
+			700,
+			790,
+			true
+		);
+		
+		self.currentExpression(cronExpression);
 		return genericForm;
 	}
+
+
+	currentExpression(cronExpression) {
+
+		if (cronExpression != null) {
+
+			let cronEditArr = cronExpression.split(" ");
+
+			$$("CronUi-secs-current").setValue(cronEditArr[0]);
+			$$("CronUi-mins-current").setValue(cronEditArr[1]);
+			$$("CronUi-hours-current").setValue(cronEditArr[2]);
+			$$("CronUi-daysM-current").setValue(cronEditArr[3]);
+			$$("CronUi-months-current").setValue(cronEditArr[4]);
+			$$("CronUi-daysW-current").setValue(cronEditArr[5]);
+			$$("CronUi-years-current").setValue(cronEditArr[6]);
+
+			let translate = prettyCron.toString(cronExpression, true);
+
+			$$("currentCronDescriptionId").setValue(`<div style="font-size: 15px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
+
+		}
+	}
+
 
 	loadData() {
 		let valor = $$(this.input).getValue();

@@ -449,7 +449,7 @@ export default class PlanScheduleModule extends GenericModule {
 							cols: [
 								{
 									view: "text",
-									label: i18n.t("LBL_PLAN_CRON"),
+									label: i18n.t("LBL_SCHEDULER"),
 									name: "cronExpressionDescription",
 									id: "cronExpressionDescription",
 									value: type === "edit" ? cronExpressionDesc : "",
