@@ -597,110 +597,115 @@ export default class IncidentReportModule extends GenericModule {
 								
 								let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
 								let causesOptions = [];
-								ireportType.incidentTypeCauses.forEach(item =>{
-									causesOptions.push({ id: item.id, value: item.alias });
-								});
-
-								body.push({ 
-									height: 27,
-									borderless: true,
-									cols:[
-									{
-										view: "label",
-										width: 250,
-										template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>`
-									},
-									{
-										view: "label",
-										id: "fieldCause-label-" + self.uid, 
-										width: 0,
-										template: `<div class="value">${fieldsValues[e.objField]}</div>`
-									},
-									{
-										view: "combo",
-										id: "fieldCause-combo-" + self.uid, 
-										value: fieldsValues[e.objField] !== "-" ? fieldsValues["fieldCauseId"] : "",
-										required: true,
-										labelWidth: 200, 
-										width: 0,
-										hidden: true,
-										options: causesOptions
-									},
-									{width: 50},
-									{
-										view:"icon",
-										id: "fieldCause-edit-" + self.uid, 
-										icon: "mdi mdi-pencil",
-										//width: 0,
-										on: {
-											onItemClick: function() {
-												$$("fieldCause-combo-" + self.uid).show();
-												$$("fieldCause-save-" + self.uid).show();
-												$$("fieldCause-cancel-" + self.uid).show();
-												$$("fieldCause-label-" + self.uid).hide();
-												$$("fieldCause-edit-" + self.uid).hide();
+								
+								if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0) {
+									
+									ireportType.incidentTypeCauses.forEach(item =>{
+										causesOptions.push({ id: item.id, value: item.alias });
+									});
+	
+									body.push({ 
+										height: 27,
+										borderless: true,
+										cols:[
+										{
+											view: "label",
+											width: 250,
+											template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>`
+										},
+										{
+											view: "label",
+											id: "fieldCause-label-" + self.uid, 
+											width: 0,
+											template: `<div class="value">${fieldsValues[e.objField]}</div>`
+										},
+										{
+											view: "combo",
+											id: "fieldCause-combo-" + self.uid, 
+											value: fieldsValues[e.objField] !== "-" ? fieldsValues["fieldCauseId"] : "",
+											required: true,
+											labelWidth: 200, 
+											width: 0,
+											hidden: true,
+											options: causesOptions
+										},
+										{width: 50},
+										{
+											view:"icon",
+											id: "fieldCause-edit-" + self.uid, 
+											icon: "mdi mdi-pencil",
+											//width: 0,
+											on: {
+												onItemClick: function() {
+													$$("fieldCause-combo-" + self.uid).show();
+													$$("fieldCause-save-" + self.uid).show();
+													$$("fieldCause-cancel-" + self.uid).show();
+													$$("fieldCause-label-" + self.uid).hide();
+													$$("fieldCause-edit-" + self.uid).hide();
+												}
 											}
-										}
-									},
-									{
-										view:"icon",
-										id: "fieldCause-save-" + self.uid, 
-										hidden: true,
-										icon: "mdi mdi-content-save",
-										width: 30,
-										on: {
-											onItemClick: function() {
-
-												webix.confirm({
-													title: i18n.t("LBL_IMS_CAUSE_CONFIRM"),
-													ok: i18n.t("LBL_YES"),
-													cancel: i18n.t("LBL_NO"),
-													text: i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"),
-													width: 600
-												}).then(function() {
-
-													let body = {
-														id:  self.incidentReportId,
-														causeId: $$( "fieldCause-combo-" + self.uid).getValue()
-													};
-
-													let endpoint = util.fillTemplate(self.config.actionEndpoints.assignCauseIncidentReport, body);
-													self.restAction(endpoint);
-													
+										},
+										{
+											view:"icon",
+											id: "fieldCause-save-" + self.uid, 
+											hidden: true,
+											icon: "mdi mdi-content-save",
+											width: 30,
+											on: {
+												onItemClick: function() {
+	
+													webix.confirm({
+														title: i18n.t("LBL_IMS_CAUSE_CONFIRM"),
+														ok: i18n.t("LBL_YES"),
+														cancel: i18n.t("LBL_NO"),
+														text: i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"),
+														width: 600
+													}).then(function() {
+	
+														let body = {
+															id:  self.incidentReportId,
+															causeId: $$( "fieldCause-combo-" + self.uid).getValue()
+														};
+	
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.assignCauseIncidentReport, body);
+														self.restAction(endpoint);
+														
+														$$("fieldCause-combo-" + self.uid).hide();
+														$$("fieldCause-save-" + self.uid).hide();
+														$$("fieldCause-cancel-" + self.uid).hide();
+														$$("fieldCause-edit-" + self.uid).show();
+														$$("fieldCause-label-" + self.uid).show();
+	
+													});
+												}
+											}
+										},
+										{
+											view:"icon",
+											id: "fieldCause-cancel-" + self.uid, 
+											hidden: true,
+											icon: "mdi mdi-close",
+											width: 30,
+											on: {
+												onItemClick: function() {
+	
 													$$("fieldCause-combo-" + self.uid).hide();
 													$$("fieldCause-save-" + self.uid).hide();
 													$$("fieldCause-cancel-" + self.uid).hide();
 													$$("fieldCause-edit-" + self.uid).show();
 													$$("fieldCause-label-" + self.uid).show();
-
-												});
+	
+												}
 											}
-										}
-									},
-									{
-										view:"icon",
-										id: "fieldCause-cancel-" + self.uid, 
-										hidden: true,
-										icon: "mdi mdi-close",
-										width: 30,
-										on: {
-											onItemClick: function() {
-
-												$$("fieldCause-combo-" + self.uid).hide();
-												$$("fieldCause-save-" + self.uid).hide();
-												$$("fieldCause-cancel-" + self.uid).hide();
-												$$("fieldCause-edit-" + self.uid).show();
-												$$("fieldCause-label-" + self.uid).show();
-
-											}
-										}
-									},
-									{}
-									]
-								});
-								body.push({
-									height: 10
-								});
+										},
+										{}
+										]
+									});
+									body.push({
+										height: 10
+									});
+								}
+								
 							} else {
 								body.push(
 									{ 

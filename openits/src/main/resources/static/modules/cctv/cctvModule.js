@@ -76,18 +76,18 @@ export default class CCTVModule extends GenericModule {
 					
 							let camViewer = new CamViewer(self, element);
 				
-							let viewModule = camViewer.getView();
+							let viewCamViewer = camViewer.getView();
 							
 							let viewMain = {
 								id: self.uid,
 								rows: [
-									viewModule
+									viewCamViewer
 								]
 							};
 					
 							$$("loading-" + self.uid).hide();
 					
-							webix.ui(viewMain, $$(self.uid));			
+							webix.ui(viewMain, $$(self.uid));
 						}
 					}
 				});

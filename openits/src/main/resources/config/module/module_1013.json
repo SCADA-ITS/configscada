@@ -14,7 +14,7 @@
 		"incidentTypesByStretch": "incidents/stretch/${id}"
 	},
 	"steps": {
-		"fromMap": [
+		"fromIncidentsNoMap": [
 			{
 				"position": 1,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",

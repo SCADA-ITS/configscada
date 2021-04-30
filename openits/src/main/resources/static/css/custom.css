@@ -2148,3 +2148,14 @@
 	color: #475466; 
 }
 
+.syn-tooltip {
+	background: cornsilk;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.syn-tooltip-selected-item{
+	background: rgba(255,255,255,0.3);
+	box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+}

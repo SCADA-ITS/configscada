@@ -1,6 +1,6 @@
 import GenericModule from "../../modules/genericModule.js";
 import ListView from "../../component/listview.js";
-import { util } from "../../../lib/util.js";
+import { util } from "../../lib/util.js";
 
 
 export default class signalingManagerModule extends GenericModule {

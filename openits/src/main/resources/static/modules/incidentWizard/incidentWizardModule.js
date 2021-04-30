@@ -374,7 +374,7 @@ export default class IncidentWizardModule extends GenericModule {
 
 		let fromIncidentsNoMap = function() {
 			
-			self.steps = webix.copy(self.config.steps.fromMap);
+			self.steps = webix.copy(self.config.steps.fromIncidentsNoMap);
 		
 			return drawMain();
 		}

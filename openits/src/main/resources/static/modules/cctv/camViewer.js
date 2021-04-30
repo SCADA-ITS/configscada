@@ -39,37 +39,52 @@ export default class CamViewer {
 			
 			if (url) {
 				
-				let img = new Image();
-			
-				let viewStreamMjpeg = undefined;
-				
-				img.onload = function() {
-				
-					viewStreamMjpeg = {
-						id: "camviewer-" + self.uid,
-						template: function() {
+				if (!webix.env.isWebKit) {
 					
-							return `<div><img style="max-width:100%;width:100%;height:100%;" src="${img.src}"></div> `
-						}
-						,on: {
+					let img = new Image();
 							
-							onDestruct: function(obj) {
-								
-								img.src = '';
+					img.onload = function() {
+					
+						let viewStreamMjpeg = {
+							id: "camviewer-" + self.uid,
+							template: function() {
+	
+								return `<div><img style="max-width:100%;width:100%;height:100%;" src="${img.src}"></div> `
 							}
-						}
+							,on: {
+								
+								onDestruct: function(obj) {
+									
+									img.src = '';
+								}
+							}
+						};
 						
+						webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
+						
+						img.onload = undefined;
 					};
 					
-					webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
+					//let url = 'http://admin:(R4D7)Revenga@192.168.88.251/cgi-bin/mjpg/video.cgi?channel=1&subtype=1';		
+					img.src = url;
+				}
+				else {
 					
-					img.onload = undefined;
-				};
-				
-				//let url = 'img/not_found_50.png';
-				//let url = 'http://admin:(R4D7)Revenga@192.168.88.251/cgi-bin/mjpg/video.cgi?channel=1&subtype=1';
-		
-				img.src = url;	
+					let offset = url.indexOf('@');
+					
+					if (offset !== -1) {
+						
+						let protocol = url.substring(0, url.indexOf('//') + 2);
+						
+						url = protocol + url.substring(offset + 1);
+					}
+					
+					view = {
+						id: "camviewer-" + self.uid,
+						view: "iframe",
+						src: url
+					};
+				}
 			}
 		}
 
