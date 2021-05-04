@@ -20,7 +20,8 @@ export default class CronUi {
 		this.checkedDaysWeek = [];
 		this.checkedMonths = [];
 		this.checkedYears = [];
-		this.editCron = [];
+		this.cronExpressionArr = ["0", "0", "0", "?", "*", "*", "*"];
+		this.cronExpressionEditArr = [];
 	}
 
 	getComponent(cronExpression) {
@@ -40,7 +41,7 @@ export default class CronUi {
 							rows: [
 								drawForm(),
 								drawResume(),
-								drawButtons(cronExpression)
+								drawButtons()
 							]
 						},
 						{ width: 6 }
@@ -131,6 +132,20 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
+														$$("secondsOpt02_counter01").setValue("1");
+														$$("secondsOpt02_counter02").setValue("0");
+														$$("secondsOpt04_counter01").setValue("0");
+														$$("secondsOpt04_counter02").setValue("0");
+
+														for (let i = 0; i <= 59; i++) {
+
+															$$("secondsOpt03-" + i).setValue("0");
+														}
+
+														self.checkedSecs = [];
+														self.cronExpressionArr[0] = 0;
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateSeconds(newv);
 													}
 												}
@@ -180,6 +195,20 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
+														$$("minutesOpt02_counter01").setValue("1");
+														$$("minutesOpt02_counter02").setValue("0");
+														$$("minutesOpt04_counter01").setValue("0");
+														$$("minutesOpt04_counter02").setValue("0");
+
+														for (let i = 0; i <= 59; i++) {
+
+															$$("minutesOpt03-" + i).setValue("0");
+														}
+
+														self.checkedMins = [];
+														self.cronExpressionArr[1] = 0;
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateMinutes(newv);
 													}
 												}
@@ -229,6 +258,19 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
+														$$("hoursOpt02_counter01").setValue("1");
+														$$("hoursOpt02_counter02").setValue("0");
+														$$("hoursOpt02_counter01").setValue("0");
+														$$("hoursOpt02_counter02").setValue("0");
+
+														for (let i = 0; i <= 23; i++) {
+															$$("hoursOpt03-" + i).setValue("0");
+														}
+
+														self.checkedHours = [];
+														self.cronExpressionArr[2] = 0;
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateHours(newv);
 													}
 												}
@@ -278,6 +320,26 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
+														$$("daysOpt02_counter01").setValue("1");
+														$$("daysOpt02_counter02").setValue(i18n.t("LBL_SUNDAY"));
+														$$("daysOpt04_counter01").setValue("1");
+														$$("daysOpt04_counter02").setValue("1st");
+
+														for (let i = 1; i <= 31; i++) {
+															$$("daysOpt03-" + i).setValue("0");
+														}
+
+														for (let i = 0; i <= 6; i++) {
+															$$("daysOpt05-" + i).setValue("0");
+														}
+
+														self.checkedDays = [];
+														self.checkedDaysWeek = [];
+
+														self.cronExpressionArr[3] = "?";
+														self.cronExpressionArr[5] = "*";
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateDays(newv);
 													}
 												}
@@ -329,6 +391,19 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
+														$$("monthsOpt02_counter01").setValue("1");
+														$$("monthsOpt02_counter02").setValue(i18n.t("LBL_JANUARY"));
+														$$("monthsOpt04_counter01").setValue(i18n.t("LBL_JANUARY"));
+														$$("monthsOpt04_counter02").setValue(i18n.t("LBL_JANUARY"));
+
+														for (let i = 0; i <= 11; i++) {
+															$$("monthsOpt03-" + i).setValue("0");
+														}
+
+														self.checkedMonths = [];
+														self.cronExpressionArr[4] = "*";
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateMonths(newv);
 													}
 												}
@@ -377,7 +452,22 @@ export default class CronUi {
 												multiview: true,
 												on: {
 													onChange: function(newv, oldv) {
+														let date = new Date().getFullYear();
+
 														$$(newv).show();
+														$$("yearsOpt02_counter01").setValue("1");
+														$$("yearsOpt02_counter02").setValue(date + 1);
+														$$("yearsOpt04_counter01").setValue(date + 1);
+														$$("yearsOpt04_counter02").setValue(date + 1);
+
+														for (let i = date + 1; i <= date + 36; i++) {
+															$$("yearsOpt03-" + i).setValue("0");
+														}
+
+														self.checkedYears = [];
+														self.cronExpressionArr[6] = "*";
+														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
+
 														calculateYears(newv);
 													}
 												}
@@ -696,9 +786,9 @@ export default class CronUi {
 										id: ids + "_counter01",
 										name: "",
 										width: 105,
-										value: 1,
-										min: 1,
-										max: 60,
+										value: 0,
+										min: 0,
+										max: 59,
 										click:
 											function(id, event) {
 												timeSelector(id)
@@ -890,14 +980,14 @@ export default class CronUi {
 									{
 										view: "label",
 										label: i18n.t("LBL_DAY(S)_STARTING_ON"),
-										width: 360,
+										width: 300,
 										align: "left"
 									},
 									{
 										view: "combo",
 										id: id + "_counter02",
 										name: "",
-										width: 105,
+										width: 166,
 										value: i18n.t("LBL_SUNDAY"),
 										options: [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")],
 										on:
@@ -1045,7 +1135,7 @@ export default class CronUi {
 										view: "combo",
 										id: id + "_counter02",
 										name: "",
-										width: 105,
+										width: 80,
 										value: "1st",
 										options: selectDays,
 										on: {
@@ -1058,7 +1148,7 @@ export default class CronUi {
 									{
 										view: "label",
 										label: i18n.t("LBL_OF_THE_MONTH"),
-										width: 160,
+										width: 185,
 										align: "left"
 									},
 								]
@@ -1262,6 +1352,8 @@ export default class CronUi {
 				let maxValue = (id === MONTHS_OPT02) ? 12 : 50;
 				let comboValue = (id === MONTHS_OPT02) ? monthsOfYear[0] : date;
 				let comboOptions = (id === MONTHS_OPT02) ? monthsOfYear : yearsArr;
+				let maxWidth1 = (id === MONTHS_OPT02) ? 300 : 360;
+				let maxWidth2 = (id === MONTHS_OPT02) ? 166 : 105;
 
 				view = [
 					{
@@ -1293,14 +1385,14 @@ export default class CronUi {
 									{
 										view: "label",
 										label: i18n.t(label),
-										width: 360,
+										width: maxWidth1,
 										align: "left"
 									},
 									{
 										view: "combo",
 										id: ids + "_counter02",
 										name: "",
-										width: 105,
+										width: maxWidth2,
 										value: comboValue,
 										options: comboOptions,
 										on: {
@@ -1321,6 +1413,8 @@ export default class CronUi {
 				let label = (id === MONTHS_OPT04) ? "LBL_EVERY_MONTH_BETWEEN" : "LBL_EVERY_YEAR_BETWEEN";
 				let comboValue = (id === MONTHS_OPT04) ? monthsOfYear[0] : date;
 				let comboOptions = (id === MONTHS_OPT04) ? monthsOfYear : yearsArr;
+				let maxWidth1 = (id === MONTHS_OPT04) ? 300 : 360;
+				let maxWidth2 = (id === MONTHS_OPT04) ? 166 : 105;
 
 				view = [
 					{
@@ -1330,14 +1424,14 @@ export default class CronUi {
 								cols: [
 									{
 										view: "label",
-										width: 360,
+										width: maxWidth1,
 										label: i18n.t(label)
 									},
 									{
 										view: "combo",
 										id: ids + "_counter01",
 										name: "",
-										width: 105,
+										width: maxWidth2,
 										value: comboValue,
 										options: comboOptions,
 										on: {
@@ -1354,14 +1448,14 @@ export default class CronUi {
 									{
 										view: "label",
 										label: i18n.t("LBL_AND"),
-										width: 360,
+										width: maxWidth1,
 										align: "left"
 									},
 									{
 										view: "combo",
 										id: ids + "_counter02",
 										name: "",
-										width: 105,
+										width: maxWidth2,
 										value: comboValue,
 										options: comboOptions,
 										on: {
@@ -1549,7 +1643,7 @@ export default class CronUi {
 			let resume = {
 				css: "cronui-resume",
 				cols: [
-					{ width: 25 },
+					{ width: 15 },
 					{
 						width: 365,
 						rows: [
@@ -1562,55 +1656,15 @@ export default class CronUi {
 							{
 								height: 25,
 								cols: [
-									{ width: 10 },
+									{ width: 5 },
 									{
 										view: "label",
-										id: "CronUi-secs",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-mins",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-hours",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-daysM",
-										value: "?",
-										label: "?",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-months",
-										value: "*",
-										label: "*",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-daysW",
-										value: "*",
-										label: "*",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-years",
-										value: "*",
-										label: "*",
-										width: 52
+										tooltip: true,
+										align: "center",
+										borderless: false,
+										id: "cronExpression" + self.uid,
+										value: "0 0 0 ? * * *",
+										label: "0 0 0 ? * * *"
 									}
 								]
 							},
@@ -1623,60 +1677,21 @@ export default class CronUi {
 							{
 								height: 25,
 								cols: [
-									{ width: 10 },
+									{ width: 5 },
 									{
 										view: "label",
-										id: "CronUi-secs-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-mins-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-hours-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-daysM-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-months-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-daysW-current",
-										value: "0",
-										label: "0",
-										width: 52
-									},
-									{
-										view: "label",
-										id: "CronUi-years-current",
-										value: "0",
-										label: "0",
-										width: 52
+										tooltip: true,
+										align: "center",
+										borderless: false,
+										id: "cronExpressionEdit",
+										value: "-",
+										label: "-"
 									}
 								]
 							}
 						]
 					},
+					{ width: 20 },
 					{
 						width: 365,
 						rows: [
@@ -1689,8 +1704,11 @@ export default class CronUi {
 							{
 								height: 25,
 								view: "label",
+								tooltip: true,
+								css: "cronui-description",
 								id: "cronDescriptionId",
-								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_NEW_SCHEDULER_DESCRIPTION")}</span></div>`
+								label: i18n.t("LBL_NEW_SCHEDULER_DESCRIPTION"),
+								value: i18n.t("LBL_NEW_SCHEDULER_DESCRIPTION")
 							},
 							{ height: 15 },
 							{
@@ -1701,12 +1719,15 @@ export default class CronUi {
 							{
 								height: 25,
 								view: "label",
+								tooltip: true,
+								css: "cronui-description",
 								id: "currentCronDescriptionId",
-								template: `<div><span style="padding: 0px 5px; font-size: 12px; text-align: center; color: #475269">${i18n.t("LBL_CURRENT_SCHEDULE_DESCRIPTION")}</span></div>`
+								label: i18n.t("LBL_CURRENT_SCHEDULE_DESCRIPTION"),
+								value: i18n.t("LBL_CURRENT_SCHEDULE_DESCRIPTION")
 							}
 						]
 					},
-					{ width: 25 }
+					{ width: 15 }
 				]
 			}
 
@@ -1721,7 +1742,7 @@ export default class CronUi {
 				id: "CronUiFormButtons",
 				borderless: true,
 				rows: [
-					{ height: 10 },
+					{ height: 15 },
 					{
 						cols: [
 							{ width: 20 },
@@ -1738,13 +1759,73 @@ export default class CronUi {
 								click:
 									function() {
 
-										$$("CronUi-secs").setValue("0");
-										$$("CronUi-mins").setValue("0");
-										$$("CronUi-hours").setValue("0");
-										$$("CronUi-daysM").setValue("?");
-										$$("CronUi-months").setValue("*");
-										$$("CronUi-daysW").setValue("*");
-										$$("CronUi-years").setValue("*");
+										let date = new Date().getFullYear();
+
+										$$("secondsOpt02_counter01").setValue("1");
+										$$("secondsOpt02_counter02").setValue("0");
+										$$("secondsOpt04_counter01").setValue("1");
+										$$("secondsOpt04_counter02").setValue("0");
+
+										$$("minutesOpt02_counter01").setValue("1");
+										$$("minutesOpt02_counter02").setValue("0");
+										$$("minutesOpt04_counter01").setValue("1");
+										$$("minutesOpt04_counter02").setValue("0");
+
+										$$("hoursOpt02_counter01").setValue("1");
+										$$("hoursOpt02_counter02").setValue("0");
+										$$("hoursOpt02_counter01").setValue("1");
+										$$("hoursOpt02_counter02").setValue("0");
+
+										$$("daysOpt02_counter01").setValue("1");
+										$$("daysOpt02_counter02").setValue(i18n.t("LBL_SUNDAY"));
+										$$("daysOpt04_counter01").setValue("1");
+										$$("daysOpt04_counter02").setValue("1st");
+
+										$$("monthsOpt02_counter01").setValue("1");
+										$$("monthsOpt02_counter02").setValue(i18n.t("LBL_JANUARY"));
+										$$("monthsOpt04_counter01").setValue(i18n.t("LBL_JANUARY"));
+										$$("monthsOpt04_counter02").setValue(i18n.t("LBL_JANUARY"));
+
+										$$("yearsOpt02_counter01").setValue("1");
+										$$("yearsOpt02_counter02").setValue(date + 1);
+										$$("yearsOpt04_counter01").setValue(date + 1);
+										$$("yearsOpt04_counter02").setValue(date + 1);
+
+										for (let i = 0; i <= 59; i++) {
+											$$("secondsOpt03-" + i).setValue("0");
+											$$("minutesOpt03-" + i).setValue("0");
+										}
+
+										for (let i = 0; i <= 23; i++) {
+											$$("hoursOpt03-" + i).setValue("0");
+										}
+
+										for (let i = 1; i <= 31; i++) {
+											$$("daysOpt03-" + i).setValue("0");
+										}
+
+										for (let i = 0; i <= 6; i++) {
+											$$("daysOpt05-" + i).setValue("0");
+										}
+
+										for (let i = 0; i <= 11; i++) {
+											$$("monthsOpt03-" + i).setValue("0");
+										}
+
+										for (let i = date + 1; i <= date + 36; i++) {
+											$$("yearsOpt03-" + i).setValue("0");
+										}
+
+										self.checkedSecs = [];
+										self.checkedMins = [];
+										self.checkedHours = [];
+										self.checkedDays = [];
+										self.checkedDaysWeek = [];
+										self.checkedMonths = [];
+										self.checkedYears = [];
+										self.cronExpressionArr = ["0", "0", "0", "?", "*", "*", "*"];
+
+										$$("cronExpression" + self.uid).setValue("0 0 0 ? * * *");
 										$$("cronDescriptionId").setValue("At 00:00:00am every day");
 									}
 							},
@@ -1753,15 +1834,7 @@ export default class CronUi {
 								click:
 									function() {
 
-										let sec = $$("CronUi-secs").getValue();
-										let min = $$("CronUi-mins").getValue();
-										let hour = $$("CronUi-hours").getValue();
-										let dayM = $$("CronUi-daysM").getValue();
-										let month = $$("CronUi-months").getValue();
-										let dayW = $$("CronUi-daysW").getValue();
-										let year = $$("CronUi-years").getValue();
-
-										let cronEx = sec + " " + min + " " + hour + " " + dayM + " " + month + " " + dayW + " " + year;
+										let cronEx = $$("cronExpression" + self.uid).getValue();
 										let translate = prettyCron.toString(cronEx, true);
 
 										$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
@@ -1813,10 +1886,15 @@ export default class CronUi {
 						if (deleteCheck != -1) {
 							self.checkedSecs.splice(deleteCheck, 1);
 						}
+
 					}
 
 					self.checkedSecs.sort(function(a, b) { return a - b })
 					seconds = self.checkedSecs.join();
+
+					if (self.checkedSecs.length === 0) {
+						seconds = 0;
+					}
 
 				} else {
 
@@ -1830,7 +1908,8 @@ export default class CronUi {
 				seconds += $$("secondsOpt04_counter02").getValue();
 			}
 
-			$$("CronUi-secs").setValue(seconds);
+			self.cronExpressionArr[0] = seconds;
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -1869,10 +1948,15 @@ export default class CronUi {
 						if (deleteCheck != -1) {
 							self.checkedMins.splice(deleteCheck, 1);
 						}
+
 					}
 
 					self.checkedMins.sort(function(a, b) { return a - b })
 					minutes = self.checkedMins.join();
+
+					if (self.checkedMins.length === 0) {
+						minutes = 0;
+					}
 
 				} else {
 
@@ -1886,7 +1970,8 @@ export default class CronUi {
 				minutes += $$("minutesOpt04_counter02").getValue();
 			}
 
-			$$("CronUi-mins").setValue(minutes);
+			self.cronExpressionArr[1] = minutes;
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -1925,11 +2010,15 @@ export default class CronUi {
 						if (deleteCheck != -1) {
 							self.checkedHours.splice(deleteCheck, 1);
 						}
+
 					}
 
 					self.checkedHours.sort(function(a, b) { return a - b })
 					hours = self.checkedHours.join();
 
+					if (self.checkedHours.length === 0) {
+						hours = 0;
+					}
 				} else {
 
 					hours = 0;
@@ -1942,7 +2031,8 @@ export default class CronUi {
 				hours += $$("hoursOpt04_counter02").getValue();
 			}
 
-			$$("CronUi-hours").setValue(hours);
+			self.cronExpressionArr[2] = hours;
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -1987,10 +2077,15 @@ export default class CronUi {
 						if (deleteCheck != -1) {
 							self.checkedDays.splice(deleteCheck, 1);
 						}
+
 					}
 
 					self.checkedDays.sort(function(a, b) { return a - b })
 					days = self.checkedDays.join();
+
+					if (self.checkedDays.length === 0) {
+						days = 0;
+					}
 
 				} else {
 
@@ -2032,6 +2127,9 @@ export default class CronUi {
 
 					days = daysArr.join();
 
+					if (self.checkedDaysWeek.length === 0) {
+						days = "SUN";
+					}
 				} else {
 
 					days = "SUN";
@@ -2040,14 +2138,16 @@ export default class CronUi {
 
 			if (id.startsWith(DAYS_OPT01) || id.startsWith(DAYS_OPT02) || id.startsWith(DAYS_OPT05)) {
 
-				$$("CronUi-daysW").setValue(days);
-				$$("CronUi-daysM").setValue("?");
+				self.cronExpressionArr[3] = "?";
+				self.cronExpressionArr[5] = days;
 
 			} else {
 
-				$$("CronUi-daysM").setValue(days);
-				$$("CronUi-daysW").setValue("?");
+				self.cronExpressionArr[5] = "?";
+				self.cronExpressionArr[3] = days;
 			}
+
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -2100,14 +2200,18 @@ export default class CronUi {
 					self.checkedMonths.forEach(month => {
 						monthsArr.push(monthsOfYearCron[month]);
 					});
-					
+
 					months = monthsArr.join();
+
+					if (self.checkedMonths.length === 0) {
+						months = 1;
+					}
 
 				} else {
 
 					months = 1;
 				}
-				
+
 			} else if (id.startsWith(MONTHS_OPT04)) {
 
 				let transformMonths1 = $$("monthsOpt04_counter01").getValue();
@@ -2121,7 +2225,8 @@ export default class CronUi {
 				months += indexMonth2 + 1;
 			}
 
-			$$("CronUi-months").setValue(months);
+			self.cronExpressionArr[4] = months;
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -2165,9 +2270,13 @@ export default class CronUi {
 					self.checkedYears.sort(function(a, b) { return a - b });
 					years = self.checkedYears.join();
 
+					if (self.checkedYears.length === 0) {
+						years = new Date().getFullYear() + 1;
+					}
+
 				} else {
 
-					years = 2021;
+					years = new Date().getFullYear() + 1;
 				}
 
 			} else if (id.startsWith(YEARS_OPT04)) {
@@ -2177,7 +2286,8 @@ export default class CronUi {
 				years += $$("yearsOpt04_counter02").getValue();
 			}
 
-			$$("CronUi-years").setValue(years);
+			self.cronExpressionArr[6] = years;
+			setCronExpression();
 			setCronDescription();
 		}
 
@@ -2192,57 +2302,57 @@ export default class CronUi {
 			const YEARS = "years";
 
 			if (id.startsWith(SECONDS)) {
-				
+
 				calculateSeconds(id);
-		
+
 			} else if (id.startsWith(MINUTES)) {
-		
+
 				calculateMinutes(id);
-		
+
 			} else if (id.startsWith(HOURS)) {
-		
+
 				calculateHours(id);
-		
+
 			} else if (id.startsWith(DAYS)) {
-		
+
 				calculateDays(id);
-		
+
 			} else if (id.startsWith(MONTHS)) {
-		
+
 				calculateMonths(id);
-		
+
 			} else if (id.startsWith(YEARS)) {
-		
+
 				calculateYears(id);
 			}
 		}
 
 
+		function setCronExpression() {
+
+			let expression = self.cronExpressionArr.join(" ");
+			$$("cronExpression" + self.uid).setValue(expression);
+
+		}
+
+
 		function setCronDescription() {
-
-			let sec = $$("CronUi-secs").getValue();
-			let min = $$("CronUi-mins").getValue();
-			let hour = $$("CronUi-hours").getValue();
-			let dayM = $$("CronUi-daysM").getValue();
-			let month = $$("CronUi-months").getValue();
-			let dayW = $$("CronUi-daysW").getValue();
-			let year = $$("CronUi-years").getValue();
-
-			let cronEx = sec + " " + min + " " + hour + " " + dayM + " " + month + " " + dayW + " " + year;
+			let cronEx = $$("cronExpression" + self.uid).getValue();
+			//let cronEx = self.cronExpressionArr[0] + " " + self.cronExpressionArr[1] + " " + self.cronExpressionArr[2] + " " + self.cronExpressionArr[3] + " " + self.cronExpressionArr[4] + " " + self.cronExpressionArr[5] + " " + self.cronExpressionArr[6];
 			let translate = prettyCron.toString(cronEx, true);
 
-			$$("cronDescriptionId").setValue(`<div style="font-size: 15px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
+			$$("cronDescriptionId").setValue(translate);
 		}
 
 
 		this.cronWindow = util.ui.loadWindow(
 			i18n.t(self.windowLabel),
 			genericForm,
-			700,
+			715,
 			790,
 			true
 		);
-		
+
 		self.currentExpression(cronExpression);
 		return genericForm;
 	}
@@ -2252,20 +2362,10 @@ export default class CronUi {
 
 		if (cronExpression != null) {
 
-			let cronEditArr = cronExpression.split(" ");
-
-			$$("CronUi-secs-current").setValue(cronEditArr[0]);
-			$$("CronUi-mins-current").setValue(cronEditArr[1]);
-			$$("CronUi-hours-current").setValue(cronEditArr[2]);
-			$$("CronUi-daysM-current").setValue(cronEditArr[3]);
-			$$("CronUi-months-current").setValue(cronEditArr[4]);
-			$$("CronUi-daysW-current").setValue(cronEditArr[5]);
-			$$("CronUi-years-current").setValue(cronEditArr[6]);
-
 			let translate = prettyCron.toString(cronExpression, true);
 
-			$$("currentCronDescriptionId").setValue(`<div style="font-size: 15px; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis"><span style="padding: 0px 5px; font-size: 15px; text-align: center; color: #475269; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${translate}</span></div>`);
-
+			$$("cronExpressionEdit").setValue(cronExpression);
+			$$("currentCronDescriptionId").setValue(translate);
 		}
 	}
 
