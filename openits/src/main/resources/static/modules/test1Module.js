@@ -115,8 +115,8 @@ export default class Test1Module extends GenericModule {
 					
 					elements.push({
 						img: "./img/cam_0.svg",
-						x: Math.round(Math.random() * (1700 - 100) + 100),
-						y: Math.round(Math.random() * (900 - 100) + 100),
+						x: Math.round(Math.random() * (1600 - 100) + 100),
+						y: Math.round(Math.random() * (800 - 100) + 100),
 						w: 75,
 						h: 75,
 						elementId: "Element:9:" + (i + 1),
@@ -126,16 +126,38 @@ export default class Test1Module extends GenericModule {
 				
 				function test1(ctx) {
 					
-					let snapCanvas = Snap("#" + "snap-" + self.uid);
-					snapCanvas.attr({ width: ctx.$width, height: ctx.$height });
-					let g = snapCanvas.group();
+					let s = Snap("#" + "snap-" + self.uid);
+					s.attr({ width: ctx.$width, height: ctx.$height });
+					//let grp = s.group().attr({ id: 'grp' });
+					
+					
 					let elementsLoaded = 0;
+					let layerSyn;
+					let flagMouseMove = false;
 					
 					createTooltip();
 				
 					Snap.load("./img/tunel.svg", function(f) {
 						
-						let layer0 = snapCanvas.append(f);
+						//layerSyn = s.append(f);
+						
+						layerSyn = f.select("#main");
+						
+						s.append(layerSyn);
+						
+						//layerSyn.click(unselectAll);
+						
+						layerSyn.mousemove(function() {
+							
+							flagMouseMove = true;
+						});
+						
+						layerSyn.mousedown(function() {
+							
+							flagMouseMove = false;
+						});
+						
+						layerSyn.mouseup(mouseUp);
 						
 						elements.forEach(element => {
 							
@@ -145,7 +167,7 @@ export default class Test1Module extends GenericModule {
 							});
 						});
 						
-						snapCanvas.add(g);
+						//s.add(grp);
 					});
 					
 					function createTooltip() {
@@ -175,46 +197,44 @@ export default class Test1Module extends GenericModule {
 						
 						elementsLoaded++;
 						
-						var layerElement = f.select("#main");
-
-						// Calculate original width and height 		
-						layerElement.attr({
-					        visibility: "hidden"
-					    });
-	
-						snapCanvas.append(layerElement);
-	
-						let camOriginalH = layerElement.getBBox().height;
-						let camOriginalW = layerElement.getBBox().width;
+						let svg2 = f.select("#svg2");
 						
-						layerElement.remove();
+						// Calculate original width and height
+						let gWidth = svg2.attr("viewBox").width;
+						let gHeight = svg2.attr("viewBox").height;
+						
+						let g = f.select("#main");
+						
+						let gSel = s.rect(0, 0, gWidth, gHeight);
+						gSel.attr({ id: "selBox", visibility: "hidden", stroke: "rgb(0, 51, 103)", strokeWidth: 10, fill: "rgb(0, 102, 204)", opacity: 0.2 });
+						g.append(gSel);
+						
 						// End Calculate original width and height
 	
-						let scaleH = element.h / camOriginalH;
-						let scaleW = element.w / camOriginalW;
+						//let scaleH = element.h / gHeight;
+						//let scaleW = element.w / gWidth;
 						 
 						let position = "t" + [element.x, element.y].join();
-						let scale = "s" + [scaleW, scaleH].join();
+						//let scale = "s" + [scaleW, scaleH].join();
+						let scale = "s" + element.h / gHeight;
 						
-						layerElement.transform(position + ',' + scale);
+						g.transform(position + ',' + scale);
 						
-						layerElement.attr({
+						g.attr({
 					        visibility: "visible",
 							cursor: "pointer",
 							elementId: element.elementId
 					    });
-	
-//						let tooltip = Snap.parse(`<title>${element.elementId}</title>`);
-//						layerElement.append(tooltip);
+							
+						//grp.add(g);
+						s.add(g);
 						
-						g.add(layerElement);
+						element.layer = g;
 						
-						element.layer = layerElement;
+						g.click(onClick);
+						g.dblclick(onDblClick);
 						
-						layerElement.click(onClick);
-						layerElement.dblclick(onDblClick);
-						
-						layerElement.hover(function(e) { showTooltip(e, element.elementId) }, hideTooltip)
+						g.hover(function(e) { showTooltip(e, element.elementId) }, hideTooltip)
 						
 						
 						if (elementsLoaded === elements.length) {
@@ -234,7 +254,13 @@ export default class Test1Module extends GenericModule {
 						
 						let elementId = this.attr('elementId');
 						
-						this.addClass("syn-tooltip-selected-item");
+						let gSel = this.select("#selBox");
+						
+						gSel.attr({ visibility: gSel.attr("visibility") === "visible" ? "hidden" : "visible" });
+						
+						//let selRect = s.rect(100,100,100,100,20,20).attr({ stroke: '#123456', 'strokeWidth': 20, fill: 'red', 'opacity': 0.2 });
+						
+						//this.addClass("syn-tooltip-selected-item");
 					}
 					
 					function onDblClick(e) {
@@ -259,6 +285,22 @@ export default class Test1Module extends GenericModule {
 						}
 					}
 					
+					function mouseUp(evt) {
+					
+						if (!flagMouseMove) {
+							
+							var allItems = s.selectAll("#grp *");
+						
+							allItems.forEach(e => {
+								
+								if (e.attr('id') === 'selBox') {
+									
+									e.attr({ visibility: "hidden" });
+								}
+							});	
+						}
+					}
+					
 					function simulate() {
 						
 						const ICON_COLOR = [
@@ -273,11 +315,11 @@ export default class Test1Module extends GenericModule {
 	
 							elements.forEach(element => {
 							
-								let layerElement = element.layer;
+								let g = element.layer;
 								
-								if (layerElement) {
+								if (g) {
 									
-									let layerState = layerElement.select("#path7");
+									let layerState = g.select("#path7");
 									
 									if (layerState) {
 										

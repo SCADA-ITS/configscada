@@ -1,0 +1,12 @@
+{
+	"restEndpoints": {
+		"synoptic": "synoptics/${id}",
+		"element": "elements/${id}",
+		"alarm": "alarms/${id}"
+	},
+	"topic": "/topic/alarm.>",
+	"adapter": "ws.element.getList",
+	"params": {
+		"synopticId": 4
+	}
+}
