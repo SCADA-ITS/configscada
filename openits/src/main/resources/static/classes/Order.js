@@ -307,7 +307,7 @@ export default class Order {
     }else{
       let message = this.comandElement.commandElementType.alias;
       let idtype = "ElementType:" + this.comandElement.element.id.split(":")[1];
-      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
       if (pmvTypes.includes(this.comandElement.element.id.split(":")[1]) && message === "SEND MESSAGE"){ 
         let text_commands = this.comandElement.commandElementValues;
         $$(view)
@@ -893,7 +893,7 @@ let saveWindowOrder = (id, event, parentId)=> {
                 }
               }
             });
-            let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+            let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
             if (pmvTypes.includes(idtype.split(":")[1])){
               if(v_commandElementType === send_command){ //si es SEND COMMAND MIRAMOS LOS VALORES DEL PANEL
                 let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null,undefined);
@@ -1193,7 +1193,7 @@ function createOrderDinamic(container,data, parentId){
       });
       let message = data.comandElement.commandElementType.alias;
       let idtype = "ElementType:" + data.comandElement.element.id.split(":")[1];
-      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
       if (pmvTypes.includes(data.comandElement.element.id.split(":")[1]) && message === "SEND MESSAGE"){ 
         let text_commands = data.comandElement.commandElementValues;
 
@@ -1276,7 +1276,7 @@ let orderEditCancel = (id, event, parentId) => {
   let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
   let datos = null;
   let message = $$(idOrder + "_commandElementType").config.text;
-  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
   if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
     let lista_ordenada = [];
     let lista_valores = {};
@@ -1415,7 +1415,7 @@ function orderEdit(id){
   
   let datos = null;
   let message = $$(id.toString().split("_")[1] + "_commandElementType").config.text;
-  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
   if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
     let lista_ordenada = [];
     let lista_valores = {};
@@ -1458,7 +1458,7 @@ function orderSave(id, event, parentId){
   let message = $$(id.toString().split("_")[1] + "_commandElementType").config.text;
   let v_commands = [];
   let v_commands_values = [];
-  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
   if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
     //SI TENEMOS UN SEND MESSAGE
     let graphElemType = `query {
@@ -1844,7 +1844,7 @@ function build_type_table(id) {
     if (toolbar !== null && toolbar !== undefined) {
       $$("window_order_new_dashboard_" + planid).removeView(toolbar.config.id);
     }
-    let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+    let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
     if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
       let scala = panelData[idtype].scala;
       let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT,scala,null);
@@ -1864,7 +1864,7 @@ function build_type_panel_edit(id){
   let text_commands = $$(id["id"].toString().split("_")[0] + "_commandElementValues").data.value;
   let datos = null;
   let message = $$(id["id"].toString().split("_")[0] + "_commandElementType").config.text;
-  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV, elementTypeMap.ELEMENT_TYPE_32_PMV, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV];
+  let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
   if (pmvTypes.includes(idtype.split(":")[1]) && message === "SEND MESSAGE"){
     let lista_ordenada = [];
     let lista_valores = {};

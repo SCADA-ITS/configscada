@@ -24,6 +24,85 @@ export function getLinesOfText(panelType, zone, subPanel) {
 
 
 export function generateIcon(element, suffix = "") {
+	const pmvParamValues = [
+		{
+			id: elementTypeMap.ELEMENT_TYPE_24_PMV_A_C,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_26_PMV_64X64,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_27_PMV_A_B,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_28_PMV_192X64,
+			y_text: -0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_29_PMV_B_D,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "10px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_30_PMV_128X64,
+			y_text: 20,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP,
+			y_text: -4,
+			y_graphic: 1,
+			fontsize: "12px"
+		},		
+		{
+			id: elementTypeMap.ELEMENT_TYPE_36_PMV,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT,
+			y_text: 0,
+			y_graphic: 5,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_38_PMV_TXT,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "18px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_64_PMV_SNOW,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT,
+			y_text: 0,
+			y_graphic: 0,
+			fontsize: "15px"
+		}
+	];
+	
+	let pmvParams = pmvParamValues.find(e => {
+										return "ElementType:" + e.id === element.elementType.id
+									});
+									
   // check for the panel config
   let panelConfig = element.elementValues.find(
     (ic) =>
@@ -99,8 +178,8 @@ export function generateIcon(element, suffix = "") {
     let panel_width = parseInt(n_size.split("x")[0]);
     let panel_height = parseInt(n_size.split("x")[1]);
 
-    let subpanel_x = 0;
-    let subpanel_y = 0;
+    let subpanel_x = 0;//pmvParams.subpanel_x;
+    let subpanel_y = 0;//pmvParams.subpanel_y;
     let last_subpanel_height = 0;
     
     index = 0;
@@ -155,7 +234,7 @@ export function generateIcon(element, suffix = "") {
             // subpanel_x = subpanel_x + 1
             // subpanel_y = subpanel_y + 2
             
-            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
+            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), (subpanel_y + pmvParams.y_graphic).toString(), subpanel_width.toString(), subpanel_height.toString());
             im.attr("id", element.id + suffix + ":" + value_to_find);
             im.attr("subpanel_type", "graphic");
             if(subpanel_width != subpanel_height) {
@@ -170,11 +249,11 @@ export function generateIcon(element, suffix = "") {
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (15 + subpanel_y + pmvParams.y_text + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
                 r1.attr("font-family", "'VT323', monospace")
-                r1.attr("font-size", "10px");
+                r1.attr("font-size", pmvParams.fontsize);
               });
             } else {
               // if there is no text, we create the placeholder based on the panel configuration
@@ -188,11 +267,11 @@ export function generateIcon(element, suffix = "") {
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (105 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
-                r1.attr("font-family", "'VT323', monospace")
-                r1.attr("font-size", "10px");
+                r1.attr("font-family", "'VT323', monospace");
+                r1.attr("font-size", pmvParams.fontsize);
               });
 
             }

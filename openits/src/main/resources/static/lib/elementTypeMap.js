@@ -27,13 +27,13 @@ export const ELEMENT_TYPE_27_PMV_A_B = "27";
 export const ELEMENT_TYPE_28_PMV_192X64 = "28";
 export const ELEMENT_TYPE_29_PMV_B_D = "29";
 export const ELEMENT_TYPE_30_PMV_128X64 = "30";
-export const ELEMENT_TYPE_31_PMV = "31";
-export const ELEMENT_TYPE_32_PMV = "32";
+export const ELEMENT_TYPE_31_PMV_TEMP = "31";
+export const ELEMENT_TYPE_32_PMV_WEIGHT = "32";
 export const ELEMENT_TYPE_33_ETD = "33";
 export const ELEMENT_TYPE_34_CABIN_SCN = "34";
 export const ELEMENT_TYPE_35_PMV = "35";
 export const ELEMENT_TYPE_36_PMV = "36";
-export const ELEMENT_TYPE_38_PMV = "38";
+export const ELEMENT_TYPE_38_PMV_TXT = "38";
 export const ELEMENT_TYPE_41_CABIN_ATC = "41";
 export const ELEMENT_TYPE_42_CABIN_NRL = "42";
 export const ELEMENT_TYPE_43_CABIN_NRS = "43";
@@ -54,19 +54,19 @@ export const ELEMENT_TYPE_60_SIRENA = "60";
 export const ELEMENT_TYPE_61_FIRE_DET_CT = "61";
 export const ELEMENT_TYPE_62_TEMP_PROBE = "62";
 export const ELEMENT_TYPE_63_AIR_CONDITIONER = "63";
-export const ELEMENT_TYPE_64_VMS_SNOW = "64";
+export const ELEMENT_TYPE_64_PMV_SNOW = "64";
 export const ELEMENT_TYPE_65_SAI = "65";
 export const ELEMENT_TYPE_66_VANE = "66";
 export const ELEMENT_TYPE_67_SEM_RR = "67";
-export const ELEMENT_TYPE_69_PMV = "69";
+export const ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT = "69";
 export const ELEMENT_TYPE_70_ANALIZADOR_RED = "70";
 
-export const ELEMENT_TYPE_71_VIS = "71";
-export const ELEMENT_TYPE_72_ACCEL = "72";
-export const ELEMENT_TYPE_73_RADAR = "73";
 export const ELEMENT_TYPE_74_ERU = "74";
 export const ELEMENT_TYPE_75_GE = "75";
-export const ELEMENT_TYPE_76_DEPOSITO_DIESEL = "76";
+
+export const ELEMENT_TYPE_81_VIS = "81";
+export const ELEMENT_TYPE_82_ACCEL = "82";
+export const ELEMENT_TYPE_83_RADAR = "83";
 
 export const POSITION_OF_ELEMENT_TYPE_ID = 1;
 export const POSITION_OF_ELEMENT_ID = 2;
@@ -356,7 +356,7 @@ export function getElementTypeName(elementTypeIdString) {
     case ELEMENT_TYPE_25_CABIN:
     case ELEMENT_TYPE_35_PMV:
     case ELEMENT_TYPE_36_PMV:
-    case ELEMENT_TYPE_38_PMV:
+    case ELEMENT_TYPE_38_PMV_TXT:
     case ELEMENT_TYPE_34_CABIN_SCN:
     case ELEMENT_TYPE_41_CABIN_ATC:
     case ELEMENT_TYPE_43_CABIN_NRS:

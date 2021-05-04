@@ -108,12 +108,12 @@ export default class Map {
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_28_PMV_192X64 ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_29_PMV_B_D ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_30_PMV_128X64 ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_31_PMV ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_32_PMV ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_35_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_36_PMV ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_38_PMV ||
-        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_69_PMV) {
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_38_PMV_TXT ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {
           throw "DMSETDException";
         }
 
@@ -142,12 +142,12 @@ export default class Map {
               elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
               || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
               || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+              || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
+              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+              || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
 
               total_width = 0;
               total_height = 0;
@@ -297,12 +297,12 @@ export default class Map {
                   elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
                   || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
                   || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-                  || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
-                  || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
+                  || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+                  || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
                   || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
-                  || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
-                  || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
+                  || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+                  || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
 
 
                   total_width = 0;
@@ -557,12 +557,12 @@ export default class Map {
               elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
               || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
               || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
+              || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+              || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
-              || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
+              || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+              || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
            
               total_width = 0;
               total_height = 0;
@@ -1111,12 +1111,12 @@ export default class Map {
                     elementType === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
                     || elementType === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
                     || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-                    || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV
-                    || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV
+                    || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+                    || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
                     || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
-                    || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV
-                    || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV) {  // MATRIX PANEL
+                    || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+                    || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
                 
                     total_width = 0;
                     total_height = 0;

@@ -56,7 +56,6 @@ export default class TabForm {
 					elementTypeParam {
 						id 
 						alias  
-						representation
 						dataType{
 							id
 						}
@@ -391,12 +390,12 @@ export default class TabForm {
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
-								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
-								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_38_PMV
-								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_69_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT
 								) {
 									let elementQuery = webix.proxy(
 										"GraphQL",`
@@ -716,12 +715,12 @@ export default class TabForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_28_PMV_192X64
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_29_PMV_B_D
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_31_PMV
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_32_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_38_PMV
-					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_69_PMV
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT
 				) {
 					// obtain the panel configuration
 					let panelConfig = data.elementValues.find(
@@ -792,6 +791,7 @@ export default class TabForm {
 			try {
 				if(data.elementValues) {
 					data.elementValues.forEach(item => {
+			    		console.log("Jony item: " + JSON.stringify(item));
 						if(item){
 							let itemValue = item.value;		
 							try {

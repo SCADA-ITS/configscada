@@ -1,7 +1,7 @@
 import {SVG_3_DET,SVG_5_PA_SYSTEM, SVG_7_ZONE, SVG_8_BAR, SVG_9_FAN, SVG_11_SOS, SVG_12_LUX, SVG_13_SEM_RAV, SVG_14_LUM, SVG_15_FIRE_DET, 
   SVG_16_PA_ZONE,SVG_17_ANEM_EXT, SVG_18_ANEM_INT, SVG_19_CO, SVG_20_NO, SVG_21_OPAC, SVG_22_VALVULA, SVG_25_CABIN, SVG_51_ETD, SVG_52_SERVER_DAI,SVG_53_SEM_AA, SVG_54_ATC, 
   SVG_55_CT, SVG_56_UNIFILAR, SVG_57_MAGNETOTERMICO, SVG_58_PULSADOR, SVG_59_SMOKE_DETECTOR, SVG_60_SIRENA, SVG_61_FIRE_DET_CT, 
-  SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_71_VIS, SVG_72_ACCEL, SVG_73_RADAR, SVG_74_ERU, SVG_75_GE} from "./SVG_ELEMENT_TYPE_PATTERN.js";
+  SVG_65_SAI, SVG_66_VANE, SVG_67_SEM_RR, SVG_70_ANALIZADOR_RED, SVG_74_ERU, SVG_75_GE, SVG_81_VIS, SVG_82_ACCEL, SVG_83_RADAR} from "./SVG_ELEMENT_TYPE_PATTERN.js";
 
 export const ELEMENT_TYPE = {
   ID_1_WS: "ElementType:1",
@@ -63,14 +63,11 @@ export const ELEMENT_TYPE = {
   ID_67_SEM_RR : "ElementType:67",
   ID_69_PMV : "ElementType:69",
   ID_70_ANALIZADOR_RED : "ElementType:70",
-  ID_71_VIS : "ElementType:71",
-  ID_72_ACCEL : "ElementType:72",
-  ID_73_RADAR : "ElementType:73",
   ID_74_ERU : "ElementType:74",
   ID_75_GE : "ElementType:75",
-  ID_76_DEPOSITO_DIESEL : "ElementType:76",
-
-  
+  ID_81_VIS : "ElementType:81",
+  ID_82_ACCEL : "ElementType:82",
+  ID_83_RADAR : "ElementType:83",
 
   values: {
     "ElementType:1":{ id: "ElementType:1", uiType: UI_ELEMENT_TYPE_STATIC, value: 1, scale_x: 28, scale_y: 28},
@@ -127,18 +124,18 @@ export const ELEMENT_TYPE = {
       ]
     },
     "ElementType:10" :{ id: "ElementType:10", uiType: UI_ELEMENT_TYPE_DEFAULT, value: 10, scale_x: 76, scale_y: 24},
-    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 250, scale_y: 250, svgRaw:SVG_11_SOS},
+    "ElementType:11" :{ id: "ElementType:11", uiType: UI_ELEMENT_TYPE_GENERIC, value: 11, scale_x: 40, scale_y: 40, svgRaw:SVG_11_SOS},
     "ElementType:12" :{ id: "ElementType:12", uiType: UI_ELEMENT_TYPE_GENERIC, value: 12, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_12_LUX, 
       elementTypeParams:[
         {LUX_LUMINOSITY: "1:2"}
       ]
     },
-    "ElementType:13" :{ id: "ElementType:13", uiType: UI_ELEMENT_TYPE_GENERIC, value: 13, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_13_SEM_RAV, 
+    "ElementType:13" :{ id: "ElementType:13", uiType: UI_ELEMENT_TYPE_GENERIC, value: 13, scale_x: 40, scale_y: 40, svgRaw:SVG_13_SEM_RAV, 
       elementTypeParams:[
         {SEM_STATUS: "1:2"}
       ] 
     },
-    "ElementType:14" :{ id: "ElementType:14", uiType: UI_ELEMENT_TYPE_GENERIC, value: 14, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_14_LUM, 
+    "ElementType:14" :{ id: "ElementType:14", uiType: UI_ELEMENT_TYPE_GENERIC, value: 14, scale_x: 40, scale_y: 40, svgRaw:SVG_14_LUM, 
       elementTypeParams:[
         {LUM_LUMINOSITY: "2:2"}
       ]
@@ -149,12 +146,12 @@ export const ELEMENT_TYPE = {
     		{PA_ZONE_PLAYING: "1004:2"}
           ]},
   
-    "ElementType:17" :{ id: "ElementType:17", uiType: UI_ELEMENT_TYPE_GENERIC, value: 17, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_17_ANEM_EXT,
+    "ElementType:17" :{ id: "ElementType:17", uiType: UI_ELEMENT_TYPE_GENERIC, value: 17, scale_x: 40, scale_y: 40, svgRaw:SVG_17_ANEM_EXT,
       elementTypeParams:[
         {ANEM_EXT_WIND_SPEED: "1:2"}
       ]
     },
-    "ElementType:18" :{ id: "ElementType:18", uiType: UI_ELEMENT_TYPE_GENERIC, value: 18, scale_x: 14.628, scale_y: 15.698, svgRaw:SVG_18_ANEM_INT,
+    "ElementType:18" :{ id: "ElementType:18", uiType: UI_ELEMENT_TYPE_GENERIC, value: 18, scale_x: 40, scale_y: 40, svgRaw:SVG_18_ANEM_INT,
       elementTypeParams:[
         {ANEM_INT_WIND_SPEED: "1:2"}
       ]
@@ -202,7 +199,7 @@ export const ELEMENT_TYPE = {
     "ElementType:47" :{ id: "ElementType:47", uiType: UI_ELEMENT_TYPE_GENERIC, value: 47, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:51" :{ id: "ElementType:51", uiType: UI_ELEMENT_TYPE_GENERIC, value: 51, scale_x: 20, scale_y: 20, svgRaw:SVG_51_ETD},
     "ElementType:52" :{ id: "ElementType:52", uiType: UI_ELEMENT_TYPE_GENERIC, value: 52, scale_x: 150, scale_y: 150, svgRaw:SVG_52_SERVER_DAI},
-    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_53_SEM_AA,
+    "ElementType:53" :{ id: "ElementType:53", uiType: UI_ELEMENT_TYPE_GENERIC, value: 53, scale_x: 40, scale_y: 40, svgRaw:SVG_53_SEM_AA,
       elementTypeParams:[
         {SEM_AMBAR_AMBAR_STATUS: "1:2"}
       ] 
@@ -244,18 +241,18 @@ export const ELEMENT_TYPE = {
     	        {VANE_WIND_DIR: "1:2"}
     	      ]	
     },
-    "ElementType:67" :{ id: "ElementType:67", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 67, scale_x: 8.752, scale_y: 10.247, svgRaw:SVG_67_SEM_RR ,
+    "ElementType:67" :{ id: "ElementType:67", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 67, scale_x: 40, scale_y: 40, svgRaw:SVG_67_SEM_RR ,
       elementTypeParams:[
         {SEM_ROJO_ROJO_STATUS: "1:2"}
       ] 
     },
     "ElementType:69" :{ id: "ElementType:69", uiType: UI_ELEMENT_TYPE_MATRIX, 	value: 69, scale_x: 28, scale_y: 28},
     "ElementType:70" :{ id: "ElementType:70", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 70, scale_x: 90, scale_y: 90, svgRaw:SVG_70_ANALIZADOR_RED },
-    "ElementType:71" :{ id: "ElementType:71", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_71_VIS },
-    "ElementType:72" :{ id: "ElementType:72", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_72_ACCEL },
-    "ElementType:73" :{ id: "ElementType:73", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_73_RADAR },
     "ElementType:74" :{ id: "ElementType:74", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 74, scale_x: 28, scale_y: 28, svgRaw:SVG_74_ERU },
     "ElementType:75" :{ id: "ElementType:75", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 75, scale_x: 10, scale_y: 10, svgRaw:SVG_75_GE },
+    "ElementType:81" :{ id: "ElementType:81", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_81_VIS },
+    "ElementType:82" :{ id: "ElementType:82", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_82_ACCEL },
+    "ElementType:83" :{ id: "ElementType:83", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_83_RADAR },
 
   }
 };

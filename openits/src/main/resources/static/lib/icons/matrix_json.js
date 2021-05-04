@@ -169,11 +169,11 @@ export function generateIcon(element, suffix = "") {
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (15 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
                 r1.attr("font-family", "'VT323', monospace")
-                r1.attr("font-size", "10px");
+                r1.attr("font-size", "15px");
               });
             } else {
               // if there is no text, we create the placeholder based on the panel configuration
@@ -187,11 +187,11 @@ export function generateIcon(element, suffix = "") {
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (15 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
                 r1.attr("font-family", "'VT323', monospace")
-                r1.attr("font-size", "10px");
+                r1.attr("font-size", "15px");
               });
 
             }
