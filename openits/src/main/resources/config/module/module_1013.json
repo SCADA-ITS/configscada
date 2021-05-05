@@ -11,7 +11,9 @@
 	},
 	"restEndpoints": {
 		"locationsByStretch": "locations/locations/stretch/${id}",
-		"incidentTypesByStretch": "incidents/stretch/${id}"
+		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
+		"incidentTypesByStretch": "incidents/stretch/${id}",
+		"incidentTypes": "incidents/imsIncidentTypes"		
 	},
 	"steps": {
 		"fromIncidentsNoMap": [
@@ -19,23 +21,22 @@
 				"position": 1,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
 				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_1",
-				"labelAlias": "LBL_STRETCH_AND_LOCATION",
-				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_1",
-				"active": true,
-				"drawFunction": "drawStepStretchAndLocation",
-				"validateFunction": "validateStepStretchAndLocation",
-				"resetFunction": "resetStepStretchAndLocation"
-			},
-			{
-				"position": 2,
-				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_2",
 				"labelAlias": "LBL_INCIDENT_TYPE",
 				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_2",
-				"active": false,
+				"active": true,
 				"drawFunction": "drawStepIncidentType",
 				"validateFunction": "validateStepIncidentType",
 				"resetFunction": "resetStepIncidentType"
+			},{
+				"position": 2,
+				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_2",
+				"labelAlias": "LBL_STRETCH_AND_LOCATION",
+				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_1",
+				"active": false,
+				"drawFunction": "drawStepStretchAndLocation",
+				"validateFunction": "validateStepStretchAndLocation",
+				"resetFunction": "resetStepStretchAndLocationFromIncidentType"
 			},
 			{
 				"position": 3,

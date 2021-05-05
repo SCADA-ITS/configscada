@@ -550,37 +550,9 @@ export default class MapModule extends GenericModule{
 	
   }
 
-  close_intervals() {
-	
-    // if (window.synopticService && window.synopticService.synopticIntevals && window.synopticService.synopticIntevals[this.mapDivId + "SVG"]) {
-      
-    //   for(let element in window.synopticService.synopticIntevals[this.mapDivId + "SVG"]) {
-      
-    //     delete window.synopticService.synopticIntevals[this.mapDivId + "SVG"][element];
-    //     let isRunningOut = false;
-    //     for(let synoptic in window.synopticService.synopticIntevals) {
-    //       if(window.synopticService.synopticIntevals[synoptic][element]){
-    //         isRunningOut = true;
-    //       }
-    //     }
-
-    //     if(!isRunningOut){
-    //       clearInterval(window.synopticService.elementIntevals[element]);
-    //       delete window.synopticService.elementIntevals[element];
-    //     }
-        
-    //   }
-      
-    //   delete window.synopticService.synopticIntevals[this.mapDivId + "SVG"];
-
-    // }
-	
-  }
-
   on_destroy(){
 
     this.disconnect_ws();
-    this.close_intervals();
   }
 
   on_show(){
@@ -588,17 +560,6 @@ export default class MapModule extends GenericModule{
     if(this.map){
       this.map.updateSize();
     }
-
-    // if(this.elementsStompMap){
-
-    //   for (let [key, value] of this.elementsStompMap) {
-
-    //     this.elementsMap.get(key).updatePaint();
-    //     this.elementsStompMap.delete(key);
-
-    //   }
-
-    // }
 
   }
 

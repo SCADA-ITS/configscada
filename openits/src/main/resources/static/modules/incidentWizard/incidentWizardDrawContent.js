@@ -19,7 +19,15 @@ export default class IncidentWizardDrawContent {
 		let getViewStretchs = function() {
 					
 			let viewStretchs = {};
-			let stretchs = window.em.getAll(EntityType.STRETCH);
+			let stretchs;
+			if (parent.incidentData.incidentTypeId){
+				let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId }))
+				if(stretchsResponse){
+					stretchs = JSON.parse(stretchsResponse.responseText);
+				}
+			} else{
+				stretchs = window.em.getAll(EntityType.STRETCH);
+			}
 			
 			if (Array.isArray(stretchs) && stretchs.length > 0) {
 										
@@ -232,7 +240,14 @@ export default class IncidentWizardDrawContent {
 							hide: false
 						});
 						
-						webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentTypesByStretch, { id: parent.incidentData.stretchId })).then(function(dat) {
+						let restUrl;
+						if(parent.incidentData.stretchId){
+							restUrl = appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentTypesByStretch, { id: parent.incidentData.stretchId });
+						} else {
+							restUrl = appConfig.restUrl + parent.config.restEndpoints.incidentTypes;
+						}
+
+						webix.ajax().get(restUrl).then(function(dat) {
 					
 							if (dat != null) {
 						

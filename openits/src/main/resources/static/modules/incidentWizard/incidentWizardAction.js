@@ -1,4 +1,5 @@
 import IncidentWizardModule from "./incidentWizardModule.js";
+import { util } from "../../lib/util.js";
 
 export default class IncidentWizardAction {
 
@@ -239,6 +240,48 @@ export default class IncidentWizardAction {
 			
 			parent.listViewIncidentGroups.unselect();
 			parent.dtIncidentTypes.clear();
+		}
+
+		let resetStepStretchAndLocationFromIncidentType = function() {
+			
+			parent.incidentData.stretchId = undefined;
+			parent.incidentData.stretch = undefined;
+			parent.incidentData.locationId = undefined;
+			parent.incidentData.location = undefined;
+			
+			$$("view-locations-" + parent.uid).showProgress({
+				type: "bottom",
+				hide: false
+			});
+
+			parent.listViewStrechs.clear();
+			
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
+			
+				if (dat != null) {
+			
+					let strechs = dat.json();
+					
+					if (Array.isArray(strechs) && strechs.length > 0) {
+						
+						let dataStrechs = strechs.map(e => {
+							
+							return {
+								id: e.id,
+								alias: e.alias,
+								description: e.description
+							}
+						});
+						
+						parent.listViewStrechs.add(dataStrechs);
+					}
+					
+					$$("view-locations-" + parent.uid).hideProgress();
+				}
+
+			})
+
+			parent.dtLocations.clear();
 		}
 		
 		let resetStepSummary = function() {

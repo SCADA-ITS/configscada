@@ -236,6 +236,38 @@ export default class ListView {
 			list.refresh();
 		}	
 	}
+
+	clear() {
+		let list = $$("list-" + this.uid);
+
+		if (list) {
+
+			list.clearAll();
+		}	
+	}
+
+	add(items) {
+
+		let list = $$("list-" + this.uid);
+
+		if (Array.isArray(items) && items.length > 0) {
+
+			items.forEach(dat => {
+
+				if (list.find(function(e) { return e.id === dat.id; }), true) {
+
+					list.add(dat);
+				}
+			});
+		}
+		else if (!Array.isArray(items)) {
+
+			if (dataTable.find(function(e) { return e.id === items.id; }), true) {
+
+				dataTable.add(items);
+			}
+		}
+	}
 }
 
 Object.defineProperty(ListView, 'EventTypes', {
