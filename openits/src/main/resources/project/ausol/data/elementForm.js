@@ -554,9 +554,13 @@ export let columnsElementFormList = {
 			{value: "ElementTypeParam:74:1:1", type:"string"}, 
 			{value: "ElementTypeParam:74:1:2", type:"string"},
 			{value: "ElementTypeParam:74:1:3", type:"string"}, 
-			{value: "ElementTypeParam:74:1:4", type:"string"}
+			{value: "ElementTypeParam:74:1:4", type:"string"},
+			{value: "ElementTypeParam:74:1:5", type:"string"}, 
+			{value: "ElementTypeParam:74:1:6", type:"string"},
+			{value: "ElementTypeParam:74:1:7", type:"string"}, 
+			{value: "ElementTypeParam:74:2:1", type:"string"}
 		],
-		"rowCounts": 4,
+		"rowCounts": 8,
 		"scroll": false,  
 		"width": 540,
 		"options": {}

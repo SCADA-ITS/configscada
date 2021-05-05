@@ -1246,6 +1246,14 @@ var i18_es = {
     "ElementTypeParam:74:1:3.description": "Carretera",
     "ElementTypeParam:74:1:4.alias": "Tramo",
     "ElementTypeParam:74:1:4.description": "Tramo",
+    "ElementTypeParam:74:1:5.alias": "Tipo de Redundancia",
+    "ElementTypeParam:74:1:5.description": "Tipo de Redundancia",
+    "ElementTypeParam:74:1:6.alias": "Tipo de ERU",
+    "ElementTypeParam:74:1:6.description": "Tipo de ERU",
+    "ElementTypeParam:74:1:7.alias": "Alias ERU Redundante",
+    "ElementTypeParam:74:1:7.description": "Alias ERU Redundante",
+    "ElementTypeParam:74:2:1.alias": "Control de Perifericos",
+    "ElementTypeParam:74:2:1.description": "Control de Perifericos",
     
 	"ElementTypeParam:75:1:1.alias": "PK",
     "ElementTypeParam:75:1:1.description": "PK",
@@ -1601,6 +1609,8 @@ var i18_es = {
     "CommandElementType:2:69": "SEÑALIZAR",
     "CommandElementType:3:69": "APAGAR",
 
+    "CommandElementType:1:74": "TOMAR EL CONTROL",
+    
     "lbl_command_sended": "Comando ejecutado correctamente",
     "lbl_panel_signaling_correctly": "El panel se ha señalizado correctamente",
     "lbl_panel_signaling_error": "Seleccione un pictograma por favor",
