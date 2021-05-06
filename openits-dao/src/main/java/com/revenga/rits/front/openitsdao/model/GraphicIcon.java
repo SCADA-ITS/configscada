@@ -33,12 +33,18 @@ public class GraphicIcon implements Serializable {
 
 	private Float height;
 
+	@Column(name="js_custom_type_render")
+	private String jsCustomTypeRender;
+	
 	@Column(name="js_draw_file")
 	private String jsDrawFile;
 
 	private Boolean measures;
 
 	private String name;
+	
+	@Column(name="svg_file")
+	private String svgFile;
 
 	@Column(name="svg_pattern_var")
 	private String svgPatternVar;
@@ -80,6 +86,14 @@ public class GraphicIcon implements Serializable {
 		this.height = height;
 	}
 
+	public String getJsCustomTypeRender() {
+		return jsCustomTypeRender;
+	}
+
+	public void setJsCustomTypeRender(String jsCustomTypeRender) {
+		this.jsCustomTypeRender = jsCustomTypeRender;
+	}
+
 	public String getJsDrawFile() {
 		return jsDrawFile;
 	}
@@ -104,6 +118,14 @@ public class GraphicIcon implements Serializable {
 		this.name = name;
 	}
 	
+	public String getSvgFile() {
+		return svgFile;
+	}
+
+	public void setSvgFile(String svgFile) {
+		this.svgFile = svgFile;
+	}
+
 	public String getSvgPatternVar() {
 		return svgPatternVar;
 	}
