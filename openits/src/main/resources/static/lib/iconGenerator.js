@@ -296,7 +296,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 5000) + ',' + (height / 5000) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
     case elementTypeMap.ELEMENT_TYPE_22_VALVULA:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 8) + ',' + (height / 8) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_52_SERVER_DAI:   
         iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 1000) + ',' + (height / 1000) + ')">' + createIcon(element, suffix) + '</g>';
@@ -568,21 +568,11 @@ function updateIcon(element, suffix="") {
       } 
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_22_VALVULA){
-    console.log(params)
     if (params != undefined && params && params["VALVULA_STATE"]) {
-      if (params["VALVULA_STATE"]=="false") {
-        let valvula = document.getElementById(element.id + suffix);       
-        let close = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        close.setAttribute("id", "close");
-        close.setAttribute("transform", "matrix(0.69013995,0.72367593,-0.79066728,0.61224607,0,0)");
-        close.setAttribute("style", "fill:#ff0000;stroke:#000000;stroke-width:0.230433;stroke-linecap:square");
-        close.setAttribute("width", "78.0597");
-        close.setAttribute("height", "7.4624028");
-        close.setAttribute("x", "5.7004442");
-        close.setAttribute("y", "-4.6259723");
-
-        valvula.appendChild(close);
-        
+      if (params["VALVULA_STATE"]=="false" || params["VALVULA_STATE"]==" ") {
+    	  document.getElementById(element.id + suffix + ":lineaRoja").style["visibility"] = "visible";        
+      }else if(params["VALVULA_STATE"]=="true") {
+    	  document.getElementById(element.id + suffix + ":lineaRoja").style["visibility"] = "hidden";
       }
     }
   }

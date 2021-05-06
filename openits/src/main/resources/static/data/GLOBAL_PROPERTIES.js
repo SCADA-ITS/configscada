@@ -171,7 +171,7 @@ export const ELEMENT_TYPE = {
         {OPAC_CONCENTRATION: "1:2"}
       ]
     },
-    "ElementType:22" :{ id: "ElementType:22", uiType: UI_ELEMENT_TYPE_GENERIC, value: 22, scale_x: 100, scale_y: 100, svgRaw:SVG_22_VALVULA,
+    "ElementType:22" :{ id: "ElementType:22", uiType: UI_ELEMENT_TYPE_GENERIC, value: 22, scale_x: 40, scale_y: 40, svgRaw:SVG_22_VALVULA,
       elementTypeParams:[
         {VALVULA_STATE: "1:2"}
       ]

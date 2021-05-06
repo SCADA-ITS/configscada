@@ -328,8 +328,6 @@ export let columnsElementList = {
 			"alias",
 			"ElementTypeParam:22:1:1",
 			"ElementTypeParam:22:1:2",
-			"ElementTypeParam:22:1:3",
-			"ElementTypeParam:22:1:4"
 		],
 		2:[
 			"alias",
@@ -1531,14 +1529,7 @@ export let columnsElementConfig = {
 			},
             "ElementTypeParam:22:1:2": {
 				"header": [ $.i18n("ElementTypeParam:22:1:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-			"ElementTypeParam:22:1:3": {
-				"header": [ $.i18n("ElementTypeParam:22:1:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:22:1:4": {
-				"header": [ $.i18n("ElementTypeParam:22:1:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			}
-             
+			},             
 		},
 		2:{
 			"alias": {

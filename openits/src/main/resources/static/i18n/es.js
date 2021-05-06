@@ -1862,6 +1862,7 @@ var i18_es = {
     "AlarmConfig:85" : "ALARMA SERVIDOR DAI SIN CONEXION",
     "AlarmConfig:86" : "ALARMA DAI INCIDENCIA",
     "AlarmConfig:87" : "ALARMA MEGAFONIA EMERGENCIA",
+    "AlarmConfig:88" : "ALARMA VALVULA SIN CONEXI&Oacute;N",
 
     "AlarmConfig:83" : "ALARMA DEP&Oacute;SITO_DIESEL SIN CONEXI&Oacute;N",
     "AlarmConfig:84" : "ALARMA DEP&Oacute;SITO_DIESEL NIVEL BAJO",
