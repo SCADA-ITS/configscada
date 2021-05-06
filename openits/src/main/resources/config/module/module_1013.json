@@ -20,7 +20,7 @@
 			{
 				"position": 1,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_1",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_2",
 				"labelAlias": "LBL_INCIDENT_TYPE",
 				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_2",
 				"active": true,
@@ -30,7 +30,7 @@
 			},{
 				"position": 2,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_2",
+				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_1",
 				"labelAlias": "LBL_STRETCH_AND_LOCATION",
 				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_1",
 				"active": false,
