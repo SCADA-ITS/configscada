@@ -23,6 +23,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.closed = false;
 		this.dtLogs = undefined;
 		this.selectedTabId = undefined;
+		this.tableAlarms = undefined;
 
 		this.config = module.config;
 
@@ -1963,7 +1964,7 @@ export default class IncidentReportModule extends GenericModule {
 															}
 														}
 
-														let tableAlarms = new DataTable(null, null, metadata, data);
+														self.tableAlarms = new DataTable(null, null, metadata, data);
 														//let h = document.documentElement.clientHeight - 600;
 														//let w = document.documentElement.clientWidth - 1100;
 														let h = 500;
@@ -1979,7 +1980,7 @@ export default class IncidentReportModule extends GenericModule {
 																		{
 																			height: 375,
 																			widht: 750,
-																			rows: tableAlarms.getView()
+																			rows: self.tableAlarms.getView()
 																		},
 																		{ height: 20 },
 																		{
@@ -2015,6 +2016,10 @@ export default class IncidentReportModule extends GenericModule {
 															h,
 															w
 														);
+														
+														if (self.tableAlarms) {
+															self.tableAlarms.callbacks();
+														}
 													}
 													}
 												}
