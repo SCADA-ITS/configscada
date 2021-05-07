@@ -727,7 +727,7 @@ export let synopticData= [
 		"ExclusiveLayers": false,
 		"tittle": "RIO VERDE",
 		"BaseLayers": {
-			"BASE_LAYER": "CT UNIFILAR GRUPO PCI_v0.1.svg"
+			"BASE_LAYER": "Tunel+CT_v3.svg"
 		},
 		"Layers": {
 			"BASE_LAYER": {
@@ -755,23 +755,22 @@ export let synopticData= [
 				"items": ["Element:60:1"],
 				"translation_key": "",
 				"visibility": "visible"
-			}
+			}	
 		},
-		"Element:22:1": { "x": 585,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VC-1MA" },
-		"Element:22:2": { "x": 735,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VM-1MA" },
-		"Element:22:3": { "x": 585,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VC-1CA" },
-		"Element:22:4": { "x": 735,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VM-1CA" },
-		"Element:22:5": { "x": 1083,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VC-2MA" },
-		"Element:22:6": { "x": 1233,   "y": 320, "width": 50, "height": 50,  "alias": "RV-VM-2MA" },
-		"Element:22:7": { "x": 1083,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VC-2CA" },
-		"Element:22:8": { "x": 1233,   "y": 620, "width": 50, "height": 50,  "alias": "RV-VM-2CA" },
+		"Element:22:1": { "x": 180,   "y": 3, "width": 250, "height": 250,  "alias": "RV-VC-1MA" },
+		"Element:22:2": { "x": 230,   "y": 3, "width": 250, "height": 250,  "alias": "RV-VM-1MA" },
+		"Element:22:3": { "x": 180,   "y": 615, "width": 250, "height": 250,  "alias": "RV-VC-1CA" },
+		"Element:22:4": { "x": 230,   "y": 615, "width": 250, "height": 250,  "alias": "RV-VM-1CA" },
+		"Element:22:5": { "x": 1360,   "y": 3, "width": 250, "height": 250,  "alias": "RV-VC-2MA" },
+		"Element:22:6": { "x": 1410,   "y": 3, "width": 250, "height": 250,  "alias": "RV-VM-2MA" },
+		"Element:22:7": { "x": 1360,   "y": 615, "width": 250, "height": 250,  "alias": "RV-VC-2CA" },
+		"Element:22:8": { "x": 1410,   "y": 615, "width": 250, "height": 250,  "alias": "RV-VM-2CA" },
 
+		"Element:58:2": { "x": 105,   "y": -105, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
 
-		"Element:58:2": { "x": 155,   "y": -20, "width": 300, "height": 300,  "alias": "RV-CT-FIRE-PULS-1" },
+		"Element:59:2": { "x": 550,   "y": 870, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
 
-		"Element:59:2": { "x": 550,   "y": 790, "width": 90, "height": 90,  "alias": "RV-CT-FIRE-HUM-1" },
-
-		"Element:60:1": { "x": 1500,   "y": 90, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
+		"Element:60:1": { "x": 1500,   "y": 5, "width": 200, "height": 200,  "alias": "RV-CT-FIRE-SIR-1" },
 		
 	},
 	{
