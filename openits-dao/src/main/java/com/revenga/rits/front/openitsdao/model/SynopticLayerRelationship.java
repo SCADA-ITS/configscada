@@ -21,7 +21,7 @@ public class SynopticLayerRelationship implements Serializable {
 	private Integer id;
 
 	@Column(name="parent_layer_id")
-	private Integer parent_layer_id;
+	private Integer parentLayerId;
 
 	@Column(name="child_layer_id")
 	private Integer childLayerId;
@@ -42,12 +42,12 @@ public class SynopticLayerRelationship implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getParent_layer_id() {
-		return parent_layer_id;
+	public Integer getParentLayerId() {
+		return parentLayerId;
 	}
 
-	public void setParent_layer_id(Integer parent_layer_id) {
-		this.parent_layer_id = parent_layer_id;
+	public void setParentLayerId(Integer parentLayerId) {
+		this.parentLayerId = parentLayerId;
 	}
 
 	public Integer getChildLayerId() {

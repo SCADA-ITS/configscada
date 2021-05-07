@@ -920,24 +920,130 @@ export let util = {
 		},
 		cronDescription(cronExpression) {
 
-		let translate = prettyCron.toString(cronExpression, true);
-
-		if (translate != undefined) {
-
-			return translate;
-		}
-
-	},
+			let translate = prettyCron.toString(cronExpression, true);
+	
+			if (translate != undefined) {
+	
+				return translate;
+			}
+	
+		},
 		getNextExec(cronExpression) {
 
-		let nextDate = moment(prettyCron.getNextDate(cronExpression, true)).format("DD/MM/YYYY HH:mm:ss");
-
-		if (nextDate != undefined) {
-
-			return nextDate
+			let nextDate = moment(prettyCron.getNextDate(cronExpression, true)).format("DD/MM/YYYY HH:mm:ss");
+	
+			if (nextDate != undefined) {
+	
+				return nextDate
+			}
 		}
-	}
 	},
+	
+	tree: {
+		
+		getNodes(items, relationships, remapedFields, translate) {
+			
+			const PARENT_ID_IDX = 0;
+			const CHILD_ID_IDX = 1;
+					
+			let nodes = [];
+			let mapNodes = new Map();
+			
+			if (Array.isArray(items) && items.length > 0) {
+			
+				items.forEach(item => {
+
+					let node = {
+						id: item.id + "_" + item.id,
+						value: item.label,
+						data: [],
+						params: {},
+						props: {
+							translate: translate,
+							folder: false
+						}
+					};
+					
+					mapNodes.set(node.id, node);
+				});
+				
+				let hierarchies = relationships.map(e => { 
+					
+					let hierarchy = undefined;
+					let parentNodeId = e[remapedFields.parentNodeId] + "_" + e[remapedFields.parentNodeId];
+					let childNodeId = e[remapedFields.childNodeId] + "_" + e[remapedFields.childNodeId];
+					
+					if (parentNodeId && childNodeId) {
+						
+						hierarchy = { 
+							id: e.id, 
+							parentNode: mapNodes.get(parentNodeId), 
+							childNode: mapNodes.get(childNodeId)
+						}; 
+					}
+					
+					return hierarchy;
+				});
+				
+				let childNodeIds = fillNodes(hierarchies);
+				
+				childNodeIds.forEach(childNodeId => {
+			
+					mapNodes.delete(childNodeId);
+				});
+				
+				mapNodes.forEach(function(value) { // Full params => function(value, key, map) 
+					
+					nodes.push(value);
+				});
+			}
+			
+			function fillNodes(hierarchies) {
+			
+				let childNodeIds = [];
+				
+				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
+					
+					hierarchies.forEach(hierarchy => {
+						
+						let parentNode =  hierarchy.parentNode;
+						let childNode =  hierarchy.childNode;
+						
+						if (parentNode && childNode) {
+			
+							let parentNodeId =  parentNode.id;
+							let childNodeId =  childNode.id;
+							
+							if (parentNodeId && childNodeId) {
+								
+								let parentTreeData = mapNodes.get(parentNodeId);
+								let childTreeData = mapNodes.get(childNodeId);
+								
+								if (parentTreeData && childTreeData) {
+									
+									parentTreeData.props.folder = true;
+									
+									let newChild = webix.copy(childTreeData);
+					
+									newChild.id = parentTreeData.id.split("_")[CHILD_ID_IDX] + "_" + childTreeData.id.split("_")[CHILD_ID_IDX];
+									parentTreeData.data.push(newChild);
+									
+									mapNodes.set(childNodeId, newChild)
+									
+									childNodeIds.push(childNodeId);
+								}
+							}
+						}
+					});
+				}
+				
+				return childNodeIds;
+			}
+			
+			return nodes;
+		}
+	},
+	
 
 	toLocaleString(ts) {
 

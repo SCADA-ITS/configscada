@@ -177,7 +177,7 @@ export default class SynopticModule extends GenericModule{
       url: ()=>{
         let recursiveTreeNode = (treeNode, layerHierarchy, layer) =>{
           treeNode.forEach(node => {
-            if(node.internal_id===layerHierarchy.parent_layer_id){
+            if(node.internal_id===layerHierarchy.parentLayerId){
               if(!node.data){
                 node.data=[];
               }
@@ -193,7 +193,7 @@ export default class SynopticModule extends GenericModule{
         let treeData=[];
         this.synopticConf.metadata.synopticLayerRelationships.forEach(layerHierarchy => {
           let layer = this.synopticConf.metadata.synopticLayers.find(item => item.id === layerHierarchy.childLayerId);
-          if(layerHierarchy.parent_layer_id == undefined){
+          if(layerHierarchy.parentLayerId == undefined){
             treeData.push({id:layer.name, value:layer.label, internal_id:layer.id, open:true});
           }else{
             recursiveTreeNode(treeData, layerHierarchy, layer);

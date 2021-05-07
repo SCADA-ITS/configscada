@@ -2160,6 +2160,120 @@
     box-shadow: 0 0 0 1px rgb(255 255 255 / 50%)
 }
 
+.syn-toolbar-actions{
+	background: transparent;
+}
+
+.syn-toolbar-actions .button-layers .webix_button{
+    height:35px;
+    border-radius: 30%;
+    color: white;
+    background: #009688;
+}
+
+.syn-toolbar-actions .button-layers .webix_button .webix_icon_btn {
+	font-size: 20px;
+	color: white;
+	margin-left: 4px;
+    padding-top: 8px;
+}
+
+.syn-toolbar-actions .button-layers .webix_button:hover {
+  	background: #014740;
+}
+
+.syn-toolbar-actions .button-layers .webix_button:focus {
+	background-color: #009688;
+}
+
+.syn-toolbar-actions .button-layers .webix_button:active {
+	background-color: #009688;
+}
+
+.syn-toolbar-actions .button-actions .webix_button{
+    height:35px;
+    border-radius: 30%;
+    color: white;
+    background: #ff6347;
+}
+
+.syn-toolbar-actions .button-actions .webix_button .webix_icon_btn {
+	font-size: 20px;
+	color: white;
+	margin-left: 4px;
+    padding-top: 8px;
+}
+
+.syn-toolbar-actions .button-actions .webix_button:hover {
+  	background: #b24532;
+}
+
+.syn-toolbar-actions .button-actions .webix_button:focus {
+	background-color: #ff6347;
+}
+
+.syn-toolbar-actions .button-actions .webix_button:active {
+	background-color: #ff6347;
+}
+
+.syn-window-actions {
+	border: 1px solid #014740;
+}
+
+.syn-panel-layers {
+	background-color: #009688;
+}
+
+.syn-panel-layers .header {
+	color: white;
+	background: transparent;
+}
+
+.syn-panel-layers .header .title {
+	margin-left: 4px;
+	margin-top: 2px;
+}
+
+.syn-panel-layers .webix_icon_button .webix_icon {
+    color: white;
+    padding: 1px 5px 10px;
+    font-size: 20px;
+}
+
+.syn-panel-layers .webix_icon_button:hover:before {
+	background-color: #014740;
+	opacity: 1;
+	transform: scale(1.30);
+	margin-left: 7px;
+}
+
+.syn-panel-actions {
+	background-color: #ff6347;
+}
+
+.syn-panel-actions .header {
+	color: white;
+	background: transparent;
+}
+
+.syn-panel-actions .header .title {
+	margin-left: 4px;
+	margin-top: 2px;
+}
+
+.syn-panel-actions .webix_icon_button .webix_icon {
+    color: white;
+    padding: 1px 5px 10px;
+    font-size: 20px;
+}
+
+.syn-panel-actions .webix_icon_button:hover:before {
+	background-color: #b24532;
+	opacity: 1;
+	transform: scale(1.30);
+	margin-left: 7px;
+}
+
 .cronui-resume{
 	width: 778px !important;
 	height: 130px !important;

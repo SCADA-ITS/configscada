@@ -8,8 +8,8 @@ export default class CalendarDialogBox {
 		this.onBlockDates = onBlockDates;
 		this.onAccept = onAccept;
 	}
-
-	show() {
+	
+	getView() {
 		
 		let self = this;
 		
@@ -45,20 +45,28 @@ export default class CalendarDialogBox {
 			viewCalendars.cols.push({ width: 20 });
 			viewCalendars.cols.push(calendar2);	
 		}
+		
 		viewCalendars.cols.push({});
 		
+		return viewCalendars;
+	}
+
+	show() {
+		
+		let self = this;
+				
 		webix.ui({
 			view: "window",
 			modal: true,
 			height: 450,
-			width: self.multidate ? 700 : 500,
+			width: this.multidate ? 700 : 500,
 			css: "dialog-input-custom",
-			head: self.title,
+			head: this.title,
 			position: "center",
 			body: {
-				rows: [
+			rows: [
 					{ template: self.text, borderless: true },
-					viewCalendars,
+					self.getView(),
 					{},
 					{
 						cols: [
@@ -82,22 +90,7 @@ export default class CalendarDialogBox {
 									
 									const window = this.getTopParentView();
 									
-									let dates = {};
-									
-									let dateFrom = $$("calendar1-" + self.uid).getSelectedDate();
-									
-									dateFrom.setSeconds(0, 0);
-									
-									dates.from = dateFrom;
-									
-									if (self.multidate) {
-										
-										let dateTo = $$("calendar2-" + self.uid).getSelectedDate();;
-										
-										dateTo.setSeconds(0, 0);
-									
-										dates.to = dateTo;	
-									}
+									let dates = self.getSelectedDates();
 									
 									self.onAccept(dates);
 									
@@ -111,6 +104,40 @@ export default class CalendarDialogBox {
 				type: "form"
 			}
 		}).show();
+	}
+	
+	getSelectedDates() {
+		
+		let self = this;
+		
+		let dates = {};
+									
+		let dateFrom = $$("calendar1-" + self.uid).getSelectedDate();
+		
+		if (!dateFrom) {
+			
+			dateFrom = $$("calendar1-" + self.uid).getVisibleDate();
+		}
+		
+		dateFrom.setSeconds(0, 0);
+		
+		dates.from = dateFrom;
+		
+		if (self.multidate && $$("calendar2-" + self.uid)) {
+			
+			let dateTo = $$("calendar2-" + self.uid).getSelectedDate();
+			
+			if (!dateTo) {
+				
+				dateTo = $$("calendar2-" + self.uid).getVisibleDate();
+			}	
+			
+			dateTo.setSeconds(0, 0);
+		
+			dates.to = dateTo;	
+		}
+		
+		return dates;
 	}
 }
 

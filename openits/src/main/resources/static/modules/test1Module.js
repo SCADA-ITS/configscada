@@ -2,6 +2,7 @@ import GenericModule from "../modules/genericModule.js";
 import TreeView from "../component/treeview.js";
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
+import CalendarDialogBox from "../component/calendarDialogBox.js";
 
 
 export default class Test1Module extends GenericModule {
@@ -12,6 +13,8 @@ export default class Test1Module extends GenericModule {
 
 		this.uid = webix.uid();
 		this.config = module.config;
+		
+		this.calendar = undefined;
 	}
 
 	getView() {
@@ -61,8 +64,8 @@ export default class Test1Module extends GenericModule {
 
 		return view;
 	}
-
-	loadData() {
+	
+		loadData() {
 
 		let self = this;
 
@@ -100,12 +103,42 @@ export default class Test1Module extends GenericModule {
 					{
 						width: 400,
 						rows: [
-							treeView.getView()	
+							treeView.getView()
 						]
 					},
-					drawSVG()
+					drawSVG(),
+					drawCalendar(),
+					drawButtonCalendar()
 				]
 			};
+			
+			function drawButtonCalendar() {
+				return {
+					view: "button",
+					click: function() {
+						
+						console.log(self.calendar.getSelectedDates());
+					}
+				}
+			}
+			
+			function drawCalendar() {
+		
+				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"), false, 
+							
+					function(date) {
+						
+						return (Math.floor(date) < Math.floor(new Date()));
+					},
+					function(dates) {
+						
+						console.log(dates) ;
+		
+					}
+				); 
+				
+				return self.calendar.getView();
+			}
 			
 			function drawSVG() {
 				

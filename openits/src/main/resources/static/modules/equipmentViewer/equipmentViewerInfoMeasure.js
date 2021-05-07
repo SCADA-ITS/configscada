@@ -207,7 +207,7 @@ class MeasureGroup {
 			return {
 				view: "carousel",
 				borderless: true,
-			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
+			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id,
 				navigation:{
 				    type: "side",
 				    items: true,
