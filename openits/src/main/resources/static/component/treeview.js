@@ -76,70 +76,62 @@ export default class TreeView {
 		
 		let getBranchItems = function(item, rootItem, branchItems) {
 			
-			let tree = $$("tree-" + self.uid);
+			function getRoot(id, data) {
+				
+				let rootItem = undefined;
+				
+				if (!data){
+					
+					data = self.data;
+				}
+				
+				if (id && data) {
+					
+					rootItem = data.find(e => e.id === id);
+					
+					let index = 0;
+						
+					while(!rootItem && index < data.length) {
+					
+						if(data[index].data && data[index].data.length > 0) {
+							
+							rootItem = getRoot(id, data[index].data);
+						}
+						index++;
+					}
+				}
+				return rootItem;
+			}
+			
+			let currentItem = undefined;
 			
 			if (!branchItems) {
 				
 				branchItems = [];
 			}
-			
-			if (!rootItem) {
-				
-				rootItem = item;
-			}
-			
+		
 			if (item) {
-				
-				let currentItem = item;
-				
-				while (currentItem) {
+
+				if (!rootItem) {
+					
+					rootItem = getRoot(item.id);
+					currentItem = rootItem;
+					
+				} else {
+					
+					currentItem = item;
+				}
+
+				if(currentItem) {	 
 					
 					branchItems.push(currentItem);
-					
-					let firstChildId = tree.getFirstChildId(currentItem.id);
-					
-					if (firstChildId) {
+				
+					if(currentItem.data && currentItem.data.length > 0) {
 						
-						getBranchItems(tree.getItem(firstChildId), rootItem, branchItems)
-					}
-					
-					let nextSiblingId = tree.getNextSiblingId(currentItem.id);
-					
-					if (nextSiblingId && rootItem !== currentItem) {
-						
-						currentItem = tree.getItem(nextSiblingId);
-					}
-					else {
-						
-						currentItem = undefined;
+						currentItem.data.forEach(e => getBranchItems(e, rootItem, branchItems));
 					}
 				}
-			}
-			
-			function getFirstChild(id) {
-				
-				if (id) {
-					
-					let firstChildId = tree.getFirstChildId(id);
-					
-					if (firstChildId) {
-						
-						return tree.getItem(firstChildId);
-					}
-				}
-			}
-			
-			function getNextSibling(id) {
-				
-				if (id) {
-					
-					let nextSiblingId = tree.getNextSiblingId(id);
-					
-					if (nextSiblingId) {
-						
-						return tree.getItem(nextSiblingId);
-					}
-				}	
+
 			}
 			
 			return branchItems;
@@ -274,7 +266,9 @@ export default class TreeView {
 	
 		let drawTree = function() {
 			
-			let data = applyProperties(self.data);
+			let data = applyProperties(webix.copy(self.data));
+			
+			console.log(data);
 			
 			let ids = data.map(e => {
 				return e.id
