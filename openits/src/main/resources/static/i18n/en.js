@@ -22,6 +22,7 @@ var i18_en = {
     "alarms.title": "Alarm settings",
 
     "order.id":  "Id",
+    "signalling": "Send Message",
 
     "ElementType:1.alias": "WEATHER STATION",
     "ElementType:1.description": "Meteorological data collection",
@@ -1236,7 +1237,7 @@ var i18_en = {
     "elementForm.alarms.recognized": "Recognized",
     "elementForm.alarms.sourceElement": "sourceElement",
 
-    "elementForm.señalization.panel.head": "Choose the signaling",
+    "elementForm.senialization.panel.head": "Choose the signaling",
 
     "state.unknown": "Unknown",
     "state.connected": "Connected",

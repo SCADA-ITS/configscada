@@ -560,7 +560,7 @@ export default class PanelManager {
 			case elementTypeMap.PANELMANAGER_TYPE_PANEL:
 				$$("tree_zone_panelManager_" + this.orderId).addView({
 					id: "tree_zone_panelManager_button_" + this.orderId,
-					view:"button", value:"Señalizar", click:function(){
+					view:"button", value:$.i18n("signalling"), click:function(){
 						let v_commands_values = [];
 						let control = true;
 						let tamanio = true;
@@ -876,7 +876,7 @@ export default class PanelManager {
 			case elementTypeMap.PANELMANAGER_TYPE_MULTI_PANEL:
 				$$("tree_zone_panelManager_" + this.orderId).addView({
 					id: "tree_zone_panelManager_button_" + this.orderId,
-					view:"button", value:"Señalizar", click:function(){
+					view:"button", value:$.i18n("signalling"), click:function(){
 						let v_commands_values = [];
 						let control = true;
 						let tamanio = true;
@@ -1059,7 +1059,7 @@ export default class PanelManager {
 			case elementTypeMap.PANELMANAGER_TYPE_PLAN_EDIT:
 				$$("tree_zone_panelManager_" + this.orderId).addView({
 					id: "tree_zone_panelManager_button_" + this.orderId,
-					view:"button", value:"Señalizar", click:function(){
+					view:"button", value:$.i18n("signalling"), click:function(){
 						let v_commands_values = [];
 						let control = true;
 						let tamanio = true;

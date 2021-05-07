@@ -908,7 +908,7 @@ export default class TabForm {
 												modal:true,
 												close: true,
 												body: panelMan.getInitComponent(),
-												head:$.i18n("elementForm.señalization.panel.head"),
+												head:$.i18n("elementForm.senialization.panel.head"),
 												on: {
 													onShow: function(obj){
 														panelMan.loadComponent();
@@ -946,7 +946,7 @@ export default class TabForm {
 													modal:true,
 													close: true,
 													body: paMan.getInitComponent(),
-													head:$.i18n("elementForm.señalization.panel.head"),
+													head:$.i18n("elementForm.senialization.panel.head"),
 													on: {
 														onShow: function(obj){
 															paMan.loadComponent();

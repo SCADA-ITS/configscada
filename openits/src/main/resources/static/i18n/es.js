@@ -22,6 +22,7 @@ var i18_es = {
     "alarms.title": "Configuracion Alarmas",
 
     "order.id":  "Id",
+    "signalling": "Señalizar",
 
     "ElementType:1.alias": "ESTACION_METEOROLOGICA",
     "ElementType:1.description": "Meteorological data collection",
@@ -1519,7 +1520,7 @@ var i18_es = {
     "elementForm.alarms.recognized": "Reconocida",
     "elementForm.alarms.sourceElement": "Fuente",
 
-    "elementForm.señalization.panel.head": "Escoja la señalización",
+    "elementForm.senialization.panel.head": "Escoja la señalización",
 
     "state.unknown": "Desconocido",
     "state.connected": "Conectado",
