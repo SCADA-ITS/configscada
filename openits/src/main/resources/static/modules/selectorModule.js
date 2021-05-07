@@ -1,11 +1,12 @@
-import GenericModule from "../modules/genericModule.js";
+import GenericModule from "./genericModule.js";
 import TreeView from "../component/treeview.js";
 import { util } from "../lib/util.js";
+import ListView from "../component/listview.js";
 
-const MODULE_TYPE_GENERIC_SELECTOR_TREE_ID = 9;
-const SYNOPTIC_REST_ENDPOINT = appConfig.restUrl + "selector_trees/";
+const MODULE_TYPE_GENERIC_SELECTOR_ID = 9;
+const SELECTOR_REST_ENDPOINT = appConfig.restUrl + "selector_trees/";
 
-export default class treeSectModule extends GenericModule {
+export default class selectorModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
@@ -14,7 +15,7 @@ export default class treeSectModule extends GenericModule {
 		this.uid = webix.uid();
 		this.config = module.config;
 		this.treeNodes = undefined;
-		this.treeView = undefined;
+		this.componentView = undefined;
 	}
 
 	getView() {
@@ -74,11 +75,11 @@ export default class treeSectModule extends GenericModule {
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
 
-			let selectorTreeId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_SELECTOR_TREE_ID).value;
+			let selectorTreeId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_SELECTOR_ID).value;
 
 			if (selectorTreeId) {
 
-				webix.ajax().get(SYNOPTIC_REST_ENDPOINT + selectorTreeId).then(function(dat) {
+				webix.ajax().get(SELECTOR_REST_ENDPOINT + selectorTreeId).then(function(dat) {
 
 					if (dat != null) {
 
@@ -163,61 +164,10 @@ export default class treeSectModule extends GenericModule {
 				}
 			}
 
-			/*function fillNode(treeData, hierarchies) {
-
-				hierarchies.forEach(hierarchy => {
-
-					let parentElementId = hierarchy.nodeParentId;
-					let childElementId = hierarchy.nodeChildId;
-
-					if (parentElementId && childElementId && treeData.id === parentElementId) {
-
-						let childTreeData = newTreeData(childElementId);
-
-						treeData.data.push(childTreeData);
-
-						treeData.props.folder = true;
-
-						fillNode(childTreeData, hierarchies);
-					}
-				});
-			}
-
-
 			function getTreeViewData(nodes, hierarchies) {
 
 				let data = [];
-
-				if (Array.isArray(nodes) && nodes.length > 0) {
-
-					nodes.forEach(node => {
-
-						let isElementRoot = true;
-
-						for (let i = 0; isElementRoot && i < hierarchies.length; i++) {
-
-							let nodeChildId = hierarchies[i].nodeChildId;
-
-							isElementRoot = (nodeChildId !== node.id);
-						}
-
-						if (isElementRoot) {
-
-							let rootNode = newTreeData(node.id);
-
-							data.push(rootNode);
-
-							fillNode(rootNode, hierarchies);
-						}
-					});
-				}
-				return data;
-			}*/
-
-			function getTreeViewData(nodes, hierarchies) {
-
-				let data = [];
-
+				let events = {};
 				let childElements = [];
 				let mapNodes = new Map();
 
@@ -253,7 +203,9 @@ export default class treeSectModule extends GenericModule {
 					data.push(item);
 				});
 
-				return data;
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = selectEvent;
+				
+				return new TreeView({}, data, events);
 			}
 
 			let viewMain = {
@@ -261,9 +213,8 @@ export default class treeSectModule extends GenericModule {
 				cols: []
 			};
 
-			let events = {};
 
-			events[TreeView.EventTypes.ON_SELECT_ITEM] = function(items) {
+			let selectEvent = function(items) {
 
 				if (items) {
 
@@ -271,7 +222,7 @@ export default class treeSectModule extends GenericModule {
 
 					if (self.treeNodes) {
 
-						let node = self.treeNodes.find(e => e.id === nodeIdSelected);
+						let node = self.treeNodes.find(e => e.id == nodeIdSelected);
 
 						if (node && node.moduleId) {
 
@@ -282,9 +233,39 @@ export default class treeSectModule extends GenericModule {
 
 			};
 
-			let data = getTreeViewData(treeSelector.treeNodes, treeSelector.treeHierarchies);
+			function getListView(nodes) {
+				
+				let data = [];
+				let options = {};
+				let events = {};
+				
+				if (Array.isArray(nodes) && nodes.length > 0) {
 
-			self.treeView = new TreeView({}, data, events);
+					data = nodes.map(e => {
+		
+						return {
+							id: e.id,
+							alias: i18n.t(e.label),
+							description: i18n.t(e.label),
+							image: e.image
+						};
+					});
+				}
+
+				events[ListView.EventTypes.ON_SELECT_ROW] = selectEvent;
+
+				return new ListView(data, options, events);
+			}
+
+			if(treeSelector.treeHierarchies && Array.isArray(treeSelector.treeHierarchies) && treeSelector.treeHierarchies.length > 0) {
+
+				self.componentView = getTreeViewData(treeSelector.treeNodes, treeSelector.treeHierarchies); 
+				
+			} else {
+				
+				self.componentView = getListView(treeSelector.treeNodes);
+			}
+			
 
 			let viewMainSelectorTree = {
 				id: "view-main-selector-tree-" + self.uid,
@@ -294,7 +275,7 @@ export default class treeSectModule extends GenericModule {
 					rows: [
 						{
 							cols: [
-								self.treeView.getView()
+								self.componentView.getView()
 							]
 						}
 					]
