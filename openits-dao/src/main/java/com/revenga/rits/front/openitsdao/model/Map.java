@@ -4,19 +4,18 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the maps database table.
  * 
  */
 @Entity
-@Table(name="maps")
-@NamedQuery(name="Map.findAll", query="SELECT m FROM Map m")
+@Table(name = "maps")
+@NamedQuery(name = "Map.findAll", query = "SELECT m FROM Map m")
 public class Map implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
 	private String description;
@@ -33,17 +32,21 @@ public class Map implements Serializable {
 
 	private Integer zoom;
 
-	//bi-directional many-to-one association to MapCommand
-	@OneToMany(mappedBy="map")
+	// bi-directional many-to-one association to MapCommand
+	@OneToMany(mappedBy = "map")
 	private List<MapCommand> mapCommands;
 
-	//bi-directional many-to-one association to MapLayerRelationship
-	@OneToMany(mappedBy="map")
+	// bi-directional many-to-one association to MapLayerRelationship
+	@OneToMany(mappedBy = "map")
 	private List<MapLayerRelationship> mapLayerRelationships;
 
-	//bi-directional many-to-one association to MapLayer
-	@OneToMany(mappedBy="map")
+	// bi-directional many-to-one association to MapLayer
+	@OneToMany(mappedBy = "map")
 	private List<MapLayer> mapLayers;
+
+	// bi-directional many-to-one association to MapZone
+	@OneToMany(mappedBy = "map")
+	private List<MapZone> mapZones;
 
 	public Map() {
 	}
@@ -162,6 +165,28 @@ public class Map implements Serializable {
 
 	public void setZoom(Integer zoom) {
 		this.zoom = zoom;
+	}
+
+	public List<MapZone> getMapZones() {
+		return this.mapZones;
+	}
+
+	public void setMapZones(List<MapZone> mapZones) {
+		this.mapZones = mapZones;
+	}
+
+	public MapZone addMapLayer(MapZone mapZone) {
+		getMapZones().add(mapZone);
+		mapZone.setMap(this);
+
+		return mapZone;
+	}
+
+	public MapZone removeMapLayer(MapZone mapZone) {
+		getMapZones().remove(mapZone);
+		mapZone.setMap(null);
+
+		return mapZone;
 	}
 
 }
