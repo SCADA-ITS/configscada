@@ -25,6 +25,7 @@ export const ELEMENT_TYPE = {
   ID_20_NO : "ElementType:20",
   ID_21_OPAC : "ElementType:21",
   ID_22_VALVULA : "ElementType:22",
+  ID_23_BAT_CONDEN : "ElementType:23",
   ID_24_PMV_A_C : "ElementType:24",
   ID_25_CABIN : "ElementType:25",
   ID_26_PMV_64X64 : "ElementType:26",
@@ -176,6 +177,7 @@ export const ELEMENT_TYPE = {
         {VALVULA_STATE: "1:2"}
       ]
     },
+    "ElementType:23" :{ id: "ElementType:23", uiType: UI_ELEMENT_TYPE_GENERIC, value: 25, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:24" :{ id: "ElementType:24", uiType: UI_ELEMENT_TYPE_MATRIX, value: 24, scale_x: 28, scale_y: 28},
     "ElementType:25" :{ id: "ElementType:25", uiType: UI_ELEMENT_TYPE_GENERIC, value: 25, scale_x: 80, scale_y: 80, svgRaw:SVG_25_CABIN},
     "ElementType:26" :{ id: "ElementType:26", uiType: UI_ELEMENT_TYPE_MATRIX, value: 26, scale_x: 28, scale_y: 28},

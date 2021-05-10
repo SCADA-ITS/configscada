@@ -110,6 +110,7 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
     || elementType === elementTypeMap.ELEMENT_TYPE_21_OPAC
     || elementType === elementTypeMap.ELEMENT_TYPE_22_VALVULA
+    || elementType === elementTypeMap.ELEMENT_TYPE_23_BAT_CONDEN
     || elementType === elementTypeMap.ELEMENT_TYPE_25_CABIN
     || elementType === elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN
     || elementType === elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC
@@ -239,6 +240,7 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_19_CO:
     case elementTypeMap.ELEMENT_TYPE_20_NO:
     case elementTypeMap.ELEMENT_TYPE_21_OPAC:
+    case elementTypeMap.ELEMENT_TYPE_23_BAT_CONDEN:
     case elementTypeMap.ELEMENT_TYPE_25_CABIN:
     case elementTypeMap.ELEMENT_TYPE_34_CABIN_SCN:
     case elementTypeMap.ELEMENT_TYPE_41_CABIN_ATC:

@@ -335,6 +335,18 @@ export let columnsElementList = {
 			"ElementTypeParam:22:2:1"
 		]
 	},
+	"ElementType:23": { 
+		1:[
+			"alias",
+			"ElementTypeParam:23:1:1",
+			"ElementTypeParam:23:1:2",
+		],
+		2:[
+			"alias",
+			"state",
+			"ElementTypeParam:23:2:1"
+		]
+	},
 	"ElementType:26": { 
 			1:[
 				"alias",
@@ -1567,155 +1579,8 @@ export let columnsElementConfig = {
 				"header": [ $.i18n("equipment.table.state"), { content:"textFilter", autoheight:true, autowidth:true }],
 				"rotate": false
 			},
-            "ElementTypeParam:23:2:1": { //"opac_concentration
+			"ElementTypeParam:23:2:1": { 
 				"header": [ $.i18n("ElementTypeParam:23:2:1.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:2": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:2.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:3": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:3.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:4": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:4.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:5": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:5.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:6": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:6.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:7": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:7.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:8": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:8.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:9": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:9.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:10": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:10.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:11": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:11.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:12": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:12.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:13": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:13.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:14": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:14.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:15": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:15.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:16": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:16.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:17": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:17.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:18": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:18.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:19": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:19.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:20": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:20.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:21": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:21.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:22": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:22.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:23": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:23.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:24": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:24.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:25": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:25.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:26": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:26.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:27": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:27.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:28": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:28.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:29": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:29.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:30": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:30.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:31": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:31.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:32": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:32.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:33": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:33.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:34": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:34.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:35": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:35.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:36": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:36.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:37": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:37.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:38": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:38.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:39": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:39.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:40": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:40.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:41": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:41.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:42": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:42.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:43": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:43.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:44": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:44.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:45": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:45.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:46": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:46.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:47": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:47.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:48": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:48.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:49": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:49.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
-			},
-            "ElementTypeParam:23:2:50": { //"status
-				"header": [ $.i18n("ElementTypeParam:23:2:50.alias"), { content:"textFilter", autoheight:true, autowidth:true }],
 			}
 		}
 	},
