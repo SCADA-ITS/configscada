@@ -2276,8 +2276,16 @@
 
 .cronui-resume{
 	width: 778px !important;
-	height: 130px !important;
-	border: 1px solid #dadee0;	
+	height: 75px !important;
+	border: 1px solid #dadee0;
+	border-bottom: none;	
+}
+
+.cronui-current-resume{
+	width: 778px !important;
+	height: 75px !important;
+	border: 1px solid #dadee0;
+	border-top: none;	
 }
 
 .cronui-description > div {
@@ -2287,4 +2295,12 @@
 	overflow: hidden; 
 	white-space: nowrap; 
 	text-overflow: ellipsis;
+}
+
+.cronui-checks > div > label{
+	padding-right: 0px;
+}
+
+.cron-expression > div{
+	border: 1px solid #dadee0;
 }
