@@ -468,6 +468,103 @@ export let util = {
 				console.log(error);
 			}
 		},
+		
+		executeCommand(command, allPks, selectedPksCallback) {
+			
+			let selectedPks = [];
+			
+			if (selectedPksCallback) {
+				
+				selectedPks = selectedPksCallback();
+			}
+			
+			if (command && command.moduleAction) {
+				
+				open_module();
+			}
+			
+			function open_module() {
+
+				let processPks = selectedPks;
+				let viewTypeId = undefined;
+				let executeModule = false;
+	
+				if (command.viewType) {
+	
+					viewTypeId = command.viewType.id;
+				}
+	
+				if (processPks.length > 0) {
+	
+					// Multiselect not allowed with 2 o more selected
+					if (processPks.length > 1 && command.multiselect === false) {
+	
+						webix.alert({
+							title: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"),
+							text: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"),
+							type: "alert-error",
+							width: 500
+						});
+					}
+					// One or more selected and multiselect allowed
+					else {
+	
+						executeModule = true;
+					}
+				}
+				// No rows selected
+				else {
+					// Required one or more selected
+					if (command.itemRequired) {
+						webix.alert({
+							title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
+							text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
+							type: "alert-warning",
+							width: 500
+						});
+					}
+					// No required select rows
+					else {
+						executeModule = true;
+						processPks = allPks;
+					}
+				}
+				
+				let args = {};
+				
+				if (executeModule) {
+					
+					args.selectedPks = processPks;
+					
+					executeCommand();	
+				}
+				
+				// Only single selection
+				function executeCommand() {
+					
+					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
+						
+						let selectedPk = args.selectedPks[0];
+						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType.id;
+						
+						let cmdElementType = ccommand.elementTypeCommand.find(e => e.elementType === elementType.id && e.commandId === command.id);
+						
+						if (cmdElementType) {
+							
+							let module = util.module.getFromModuleAction(cmdElementType.moduleAction.id);
+							
+							util.module.open(module, cmdElementType.moduleActionId, viewTypeId, null, args);
+						}
+					}
+					else {
+						
+						let module = util.module.getFromModuleAction(command.moduleAction.id);
+							
+						util.module.open(module, command.moduleAction, viewTypeId, null, args);
+					}
+				}
+			}
+		},
 
 		getFromModuleAction(moduleActionId) {
 

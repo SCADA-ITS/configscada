@@ -8,7 +8,8 @@ export default class GraphicIcon {
 	
 	static get CUSTOM_SVG_FILE() { return "img/graphic_icon/custom.svg" }
 	
-	static get G_ID_STATE() { return "#state" }
+	static get G_ID_STATE() { return "state" }
+	static get G_ID_SELBOX() { return "selBox" }
 	
 	static DEFAULT_STATE_COLOR(state) {
 		
@@ -17,7 +18,7 @@ export default class GraphicIcon {
 		return colors[state];
 	}
 	
-	constructor(layerElement, element, container) {
+	constructor(layerElement, element, container, events) {
 
 		if (this.constructor == GraphicIcon) {
 
@@ -26,7 +27,11 @@ export default class GraphicIcon {
 		
 		this.layerElement = layerElement;
 		this.element = element;
+		this.elementTypeState = element.elementTypeState;
+		this.elementValues = element.elementValues;
+		this.alarms = undefined;
 		this.container = container;
+		this.events = events;
 		
 		this.g = undefined;
 		this.ratio = undefined;
@@ -86,43 +91,93 @@ export default class GraphicIcon {
 				}
 				
 				self.g = f.select("#main");
-				
-				createSelection(gWidth, gHeight);
-				
-				placeInContainer(gWidth, gHeight);
-				
-				self.g.click(onClick);
-				//self.g.touchstart(onClick);
-				self.g.dblclick(onDblClick);
-				
-				onLoaded();
+				afterLoad(gWidth, gHeight);
 			});
 		}
 		else {
 			
 			self.g = s.group().attr( { id: "main" });
+			afterLoad(graphicIcon.width, graphicIcon.height);
+		}
+		
+		
+		function afterLoad(w, h) {
 			
-			createSelection(graphicIcon.width, graphicIcon.height);
-				
-			placeInContainer(graphicIcon.width, graphicIcon.height);
+			createSelection(w, h);
+			placeInContainer(w, h);
+			createText(w, h);
+			createTooltip();
 			
 			self.g.click(onClick);
 			//self.g.touchstart(onClick);
 			self.g.dblclick(onDblClick);
 			
 			onLoaded();
-		}
-		
-		
-		function afterLoad() {
 			
+			function createTooltip() {
+				
+				if (self.layerElement.tooltip) {
+				
+					let tooltip = document.createElement("div");
+					tooltip.setAttribute("id", "graphic-icon-tooltip");
+					tooltip.setAttribute("class", "graphic-icon-tooltip");
+					tooltip.setAttribute("display", "none");
+					tooltip.setAttribute("style", "position: absolute; display: none;");
+					document.body.appendChild(tooltip);
+					
+					self.g.hover(function(e) { showTooltip(e) }, hideTooltip);
+				}
+			}
+			
+			function showTooltip(e) {
+				
+				let tooltip = document.getElementById("graphic-icon-tooltip");
+				
+				let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
+				let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", self.elementTypeState.id);
+								
+				if (elementType && elementTypeState) {
+					
+					tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
+										<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+										<div class="state">
+											<span class="badge" style="background: ${elementTypeState.color} ">${i18n.t(elementTypeState.labelAlias)}</span>
+										</div>
+										<div class="text">${self.element.alias}</div>`;
+										
+					tooltip.style.display = "block";
+					tooltip.style.left = e.pageX + 10 + 'px';
+					tooltip.style.top = e.pageY + 10 + 'px';	
+				}
+				
+			}
+			
+			function hideTooltip() {
+				
+				var tooltip = document.getElementById("graphic-icon-tooltip");
+				tooltip.style.display = "none";
+			}
 		}
 		
 		function createSelection(gWidth, gHeight) {
 			
 			let gSel = s.rect(0, 0, gWidth, gHeight);
-			gSel.attr({ id: "selBox", visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
+			gSel.attr({ id: GraphicIcon.G_ID_SELBOX, visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
 			self.g.prepend(gSel);
+		}
+		
+		function createText(gWidth, gHeight) {
+			
+			if (self.layerElement.showText) {
+				
+				let alignCenter = (gWidth - (7 * self.element.alias.length)) / 2;
+				let gName = s.text(alignCenter, gHeight * 1.15, self.element.alias);
+				
+				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: "#ffcc00" });
+				gName.transform("s" + (1 / self.ratio));
+			
+				self.g.append(gName);	
+			}
 		}
 		
 		function placeInContainer(gWidth, gHeight) {
@@ -151,65 +206,91 @@ export default class GraphicIcon {
 		
 		function onClick(e) {
 			
-			let gSel = self.g.select("#selBox");
-		
-			if (gSel.attr("visibility") === "hidden") {
+			// Custom event
+			if (self.events && self.events[GraphicIcon.EventTypes.ON_CLIC]) {
 				
-				self.select();	
+				eval(self.events[GraphicIcon.EventTypes.ON_CLIC])();
 			}
-//			else {
-//				
-//				self.unselect();
-//			}
+			else {
+			
+				let gSel = self.g.select("#" + GraphicIcon.G_ID_SELBOX);
+		
+				if (gSel.attr("visibility") === "hidden") {
+					
+					self.select();	
+				}	
+			}
 		}
 		
 		function onDblClick(e) {
 			
+			// Only custom events
+			if (self.events && self.events[GraphicIcon.EventTypes.ON_DBL_CLIC]) {
+				
+				eval(self.events[GraphicIcon.EventTypes.ON_DBL_CLIC])();
+			}
 		}
 	}
 	
 	updateState(elementTypeState) {
 		
-		throw new Error("Method 'updateState(elementState)' must be implemented.");
+		this.elementTypeState = elementTypeState; 
+		//throw new Error("Method 'updateState(elementState)' must be implemented.");
 	}
 	
 	updateValues(elementValues) {
 		
-		throw new Error("Method 'updateValues(elementValues)' must be implemented.");
+		this.elementValues = elementValues;
+		//throw new Error("Method 'updateValues(elementValues)' must be implemented.");
 	}
 	
 	updateAlarms(alarms) {
 		
-		throw new Error("Method 'updateAlarms(alarms)' must be implemented.");
+		this.alarms = alarms;
+		//throw new Error("Method 'updateAlarms(alarms)' must be implemented.");
 	}
 
 	show() {
 		
-		self.g.attr({ visibility: "visible" });
+		if (this.g.attr("visibility") != "visible") {
+			
+			this.g.attr({ visibility: "visible" });
+		
+			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
+			
+			gSel.attr({ visibility: "hidden" });	
+		}
 	}
 
 	hide() {
 		
-		self.g.attr({ visibility: "hidden" });
+		if (this.g.attr("visibility") != "hidden") {
+			
+			this.g.attr({ visibility: "hidden" });
+		
+			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
+			
+			gSel.attr({ visibility: "hidden" });	
+		}
 	}
 	
 	isSelected() {
 		
-		let gSel = this.select("#selBox");
+		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
 		return (gSel.attr("visibility") === "visible")
 	}
     
 	select() {
 		
-		let gSel = this.g.select("#selBox");
+		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
 		gSel.attr({ visibility: "visible" });
 	}
 
 	unselect() {
 		
-		let gSel = this.g.select("#selBox");
+		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
 		gSel.attr({ visibility: "hidden" });
 	}
@@ -218,3 +299,21 @@ export default class GraphicIcon {
 		return this[method]();
 	}
 }
+
+Object.defineProperty(GraphicIcon, 'EventTypes', {
+    value: {}
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_CLIC", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_DBL_CLIC", {
+    value: 2,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});

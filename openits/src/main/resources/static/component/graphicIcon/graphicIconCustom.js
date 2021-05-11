@@ -2,9 +2,9 @@ import GraphicIcon from "./graphicIcon.js";
 
 export default class GraphicIconCustom extends GraphicIcon {
 	
-	constructor(layerElement, element, container) {
+	constructor(layerElement, element, container, events) {
 
-		super(layerElement, element, container);
+		super(layerElement, element, container, events);
 		
 		this.graphicIconCustomType = undefined;
 		this.elementInfo = {
@@ -85,6 +85,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 	
 	updateState(elementTypeState) {
 		
+		super.updateState(elementTypeState);
 		let id = elementTypeState.id;
 		
 		if (this.graphicIconCustomType) {
@@ -107,6 +108,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 	
 	updateValues(elementValues) {
 	
+		super.updateAlarms(elementValues);
 		let currentValues = this.elementInfo.values;
 		
 		if (this.graphicIconCustomType) {
@@ -140,9 +142,8 @@ export default class GraphicIconCustom extends GraphicIcon {
 	
 	updateAlarms(alarms) {
 		
+		super.updateAlarms(alarms);
 		// TODO
 	}
-	
-	
 }
 
