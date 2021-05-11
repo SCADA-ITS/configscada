@@ -13,7 +13,6 @@ export const ELEMENT_TYPE_13_SEM_RAV = "13";
 export const ELEMENT_TYPE_14_LUM = "14";
 export const ELEMENT_TYPE_15_FIRE = "15";
 export const ELEMENT_TYPE_16_PA_ZONE = "16";
-export const ELEMENT_TYPE_17_ANEM_EXT = "17";
 export const ELEMENT_TYPE_18_ANEM_INT = "18";
 export const ELEMENT_TYPE_19_CO = "19";
 export const ELEMENT_TYPE_20_NO = "20";

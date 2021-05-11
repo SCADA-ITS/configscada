@@ -104,7 +104,6 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_14_LUM
     || elementType === elementTypeMap.ELEMENT_TYPE_15_FIRE
     || elementType === elementTypeMap.ELEMENT_TYPE_16_PA_ZONE
-    || elementType === elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT
     || elementType === elementTypeMap.ELEMENT_TYPE_18_ANEM_INT
     || elementType === elementTypeMap.ELEMENT_TYPE_19_CO
     || elementType === elementTypeMap.ELEMENT_TYPE_20_NO
@@ -235,7 +234,6 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_11_SOS:
     case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
     case elementTypeMap.ELEMENT_TYPE_15_FIRE:
-    case elementTypeMap.ELEMENT_TYPE_17_ANEM_EXT:
     case elementTypeMap.ELEMENT_TYPE_18_ANEM_INT:
     case elementTypeMap.ELEMENT_TYPE_19_CO:
     case elementTypeMap.ELEMENT_TYPE_20_NO:

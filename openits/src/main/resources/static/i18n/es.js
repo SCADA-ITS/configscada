@@ -54,8 +54,6 @@ var i18_es = {
     "ElementType:19.description": "CO",
     "ElementType:20.alias": "NO",
     "ElementType:20.description": "NO",
-    "ElementType:17.alias": "ANEM_EXT",
-    "ElementType:17.description": "ANEM_EXT",
     "ElementType:10.alias": "ROTAPANEL",
     "ElementType:10.description": "Rotapanel",
     "ElementType:13.alias": "SEM",
@@ -547,16 +545,6 @@ var i18_es = {
 
     "ElementTypeParam:16:2:1.alias": "status",
     "ElementTypeParam:16:2:1.description": "status",
-
-    "ElementTypeParam:17:1:1.alias": "PK",
-    "ElementTypeParam:17:1:1.description": "PK",
-    "ElementTypeParam:17:1:2.alias": "Distancia entrada del t&uacute;nel (m)",
-    "ElementTypeParam:17:1:2.description": "Entrance Tunnel Distance (m)",
-
-    "ElementTypeParam:17:2:1.alias": "wind speed",
-    "ElementTypeParam:17:2:1.description": "wind speed",
-    "ElementTypeParam:17:2:2.alias": "status",
-    "ElementTypeParam:17:2:2.description": "status",
 
     "ElementTypeParam:18:1:1.alias": "PK",
     "ElementTypeParam:18:1:1.description": "PK",

@@ -70,7 +70,7 @@ export let synopticData= [
 				"visibility": "visible"
 			},
 			"FIRE": {
-				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4"],
+				"items": ["Element:15:1", "Element:15:2", "Element:15:3", "Element:15:4", "Element:15:5", "Element:15:6", "Element:15:7", "Element:15:8"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -81,11 +81,6 @@ export let synopticData= [
 			},
 			"MEG": {
 				"items": ["Element:16:1", "Element:16:2", "Element:16:3", "Element:16:4"],
-				"translation_key": "",
-				"visibility": "visible"
-			},
-			"ANEM_EXT": {
-				"items": ["Element:17:1"],
 				"translation_key": "",
 				"visibility": "visible"
 			},
@@ -229,18 +224,22 @@ export let synopticData= [
 		"Element:12:7": { "x": 1200,  "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-3MA" },
 		"Element:12:8": { "x": 1400, "y": 178, "width": 6,  "height": 7,  "alias": "RV-LUX-4MA" },
 	
-		"Element:13:1": { "x": 1630, 	"y": 800, "width": 35,  "height": 45,  "alias": "RV-SRAV-1CA" },
-		"Element:13:2": { "x": 1630, 	"y": 658, "width": 35,  "height": 45,  "alias": "RV-SRAV-2CA" },
-		"Element:13:3": { "x": 125,   	"y": 253, "width": 35,  "height": 45,  "alias": "RV-SRAV-1MA" },
+		"Element:13:1": { "x": 1630, 	"y": 800, "width": 35,  "height": 45,  "alias": "RV-SMF-RAV-1CA" },
+		"Element:13:3": { "x": 1630, 	"y": 658, "width": 35,  "height": 45,  "alias": "RV-SRAV-2CA" },
+		"Element:13:2": { "x": 125,   	"y": 253, "width": 35,  "height": 45,  "alias": "RV-SMF-RAV-1MA" },
 		"Element:13:4": { "x": 125,   	"y": 395, "width": 35,  "height": 45,  "alias": "RV-SRAV-2MA" },	
 		
 		"Element:14:1": { "x": 1660, "y": 525, "width": 40,  "height": 55,  "alias": "RV-LUM-1CA" },
 		"Element:14:2": { "x": 95,   "y": 525, "width": 40,  "height": 55,  "alias": "RV-LUM-1MA" },
 
-		"Element:15:1": { "x": 898,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-1CA" },
-		"Element:15:2": { "x": 184,  "y": 800, "width": 240, "height": 90,  "alias": "RV-ZI-2CA" },
-		"Element:15:3": { "x": 184,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-1MA" },
-		"Element:15:4": { "x": 898,  "y": 125, "width": 240, "height": 90,  "alias": "RV-ZI-2MA" },
+		"Element:15:1": { "x": 1250,  "y": 800, "width": 120, "height": 90,  "alias": "RV-ZI-1CA" },
+		"Element:15:2": { "x": 895,  "y": 800, "width": 120, "height": 90,  "alias": "RV-ZI-2CA" },
+		"Element:15:3": { "x": 540,  "y": 800, "width": 120, "height": 90,  "alias": "RV-ZI-3CA" },
+		"Element:15:4": { "x": 185,  "y": 800, "width": 120, "height": 90,  "alias": "RV-ZI-4CA" },
+		"Element:15:5": { "x": 185,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-1MA" },
+		"Element:15:6": { "x": 540,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-2MA" },
+		"Element:15:7": { "x": 895,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-3MA" },
+		"Element:15:8": { "x": 1250,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-4MA" },
 		
 		"Element:5:1": { "x": 1358, "y": 410, "width": 160,  "height": 160,  "alias": "PA-ESTEPONA" },
 		
@@ -248,8 +247,6 @@ export let synopticData= [
 		"Element:16:2": { "x": 911,  "y": 450, "width": 120,  "height": 120,  "alias": "PA-ZONE-60" },
 		"Element:16:3": { "x": 360,  "y": 245, "width": 120,  "height": 120,  "alias": "PA-ZONE-61" },
 		"Element:16:4": { "x": 851,  "y": 450, "width": 120,  "height": 120,  "alias": "PA-ZONE-62" },
-
-		"Element:17:1": { "x": 140,  "y": 517, "width": 40,  "height": 55,  "alias": "RV-ANE-1CA" },
 
 		"Element:18:1": { "x": 890,  "y": 813, "width": 40,  "height": 55,  "alias": "RV-ANI-1CA" },
 		"Element:18:2": { "x": 900,  "y": 235, "width": 40,  "height": 55,  "alias": "RV-ANI-1MA" },
@@ -266,8 +263,8 @@ export let synopticData= [
 		"Element:36:1": { "x": 50,   "y": 320, "width": 200, "height": 54,  "alias": "GT_1" },
 		"Element:36:2": { "x": 1580, "y": 725, "width": 200, "height": 54,  "alias": "GT_2" },
 		
-		"Element:51:1": { "x": 1475,   "y": 470, "width": 80, "height": 100,  "alias": "RV-ETD-1" },
-		"Element:51:2": { "x": 90,   "y": 80, "width": 80, "height": 100,  "alias": "RV-ETD-1" },
+		"Element:51:1": { "x": 1475,   "y": 470, "width": 80, "height": 100,  "alias": "RV-ETD-1CA" },
+		"Element:51:2": { "x": 90,   "y": 80, "width": 80, "height": 100,  "alias": "RV-ETD-1MA" },
 		
 		"Element:53:1": { "x": 1670, "y": 658, "width": 35,  "height": 45,  "alias": "RV-SAA-1CA" },
 		"Element:53:2": { "x": 1670, "y": 800, "width": 35,  "height": 45,  "alias": "RV-SAA-2CA" },
