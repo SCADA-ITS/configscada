@@ -1946,11 +1946,26 @@ export default class CronUi {
 								click:
 									function() {
 
+										const CRON_EXPRESSION_NULL = "* * * ? * * *";
 										let cronEx = $$("cronExpression" + self.uid).getValue();
 										let translate = prettyCron.toString(cronEx, true);
 
-										$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
-										$$(self.cronWindow).close();
+										if (cronEx === CRON_EXPRESSION_NULL) {
+
+											webix.alert({
+												title: i18n.t("LBL_CRON_EXPRESSION_IS_NULL"),
+												text: i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"),
+												type: "alert-error",
+												width: 600
+											});
+
+										} else {
+											$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
+											$$(self.cronWindow).close();
+
+										}
+
+
 									}
 							},
 							{ width: 20 }
