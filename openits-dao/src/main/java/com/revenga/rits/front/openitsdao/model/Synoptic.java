@@ -1,8 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -35,14 +45,17 @@ public class Synoptic implements Serializable {
 
 	//bi-directional many-to-one association to SynopticCommand
 	@OneToMany(mappedBy="synoptic")
+	@JsonProperty("commands")
 	private List<SynopticCommand> synopticCommands;
 
 	//bi-directional many-to-one association to SynopticLayerRelationship
 	@OneToMany(mappedBy="synoptic")
+	@JsonProperty("layerRelationships")
 	private List<SynopticLayerRelationship> synopticLayerRelationships;
 
 	//bi-directional many-to-one association to SynopticLayer
 	@OneToMany(mappedBy="synoptic")
+	@JsonProperty("layers")
 	private List<SynopticLayer> synopticLayers;
 
 	public Synoptic() {

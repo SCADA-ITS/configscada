@@ -18,11 +18,18 @@ export default class GraphicIconCustomType {
 		
 		this.width = layerElement.graphicIcon.width / ratio;
 		this.height = layerElement.graphicIcon.height / ratio;
+		
+//		this.isVisible = true;
 	}
 	
 	render(elementInfo) {
 		
 		throw new Error("Method 'render(elementInfo)' must be implemented.");
+	}
+	
+	visible(value) {
+		
+		throw new Error("Method 'visible(value)' must be implemented.");
 	}
 	
 	getValue(elementParamId) {

@@ -1,12 +1,15 @@
 import { util } from "../lib/util.js";
-import TreeView from "./treeview.js";
-import SynopticLayer from "./synopticLayer.js";
-import SynopticAction from "./synopticAction.js";
-import { adapter } from "../lib/adapter.js";
+import MapLayer from "./mapLayer.js";
+import MapAction from "./mapAction.js";
+import MapContextMenu from "./mapContextMenu.js";
 import GraphicIcon from "../component/graphicIcon/graphicIcon.js";
 
 const MAIN_TAG = "#main";
 const TOPIC_ELEMENTS = "/topic/element.>";
+const OPTIONS_PAN_ZOOM = {
+	controlIconsEnabled: false,
+	dblClickZoomEnabled: false
+};
 
 export default class Synoptic {
 
@@ -24,9 +27,14 @@ export default class Synoptic {
 		this.s = undefined;
 		this.synoptic = undefined;
 		
+		this.panZoomTiger = undefined;
+		
 		this.graphicIcons = new Map();
-		this.synopticLayerElements = 0;
-		this.synopticLayerElementsLoaded = 0;
+		this.layerElements = 0;
+		this.layerElementsLoaded = 0;
+		
+		this.mapLayer = undefined;
+		this.mapAction = undefined;
 		
 		this.idStompSubscriptor = undefined;
 	}
@@ -38,6 +46,7 @@ export default class Synoptic {
 		
 		view = {
 			view: "abslayout",
+			id: self.uid,
 			cells: [
 				{
 					view: "template",
@@ -45,7 +54,9 @@ export default class Synoptic {
 					css: { "background": "#9e9e9e" },
 					id: "syn-" + self.uid,
 					template: function() {
-						return `<svg id=${"svg-syn-" + self.uid}></svg>`
+						return `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
+									<svg id=${"svg-syn-" + self.uid}></svg>
+								</div>`
 					},
 					on: {
 						onAfterRender: function() {
@@ -63,54 +74,9 @@ export default class Synoptic {
 						}
 					}
 				},
-				getToolbarActions(),
-				{
-					id: "syn-window-actions-" + self.uid,
-					//css: "syn-window-actions",
-					hidden: true,
-					top: 60, 
-					right: 10,
-					width: 300,
-					height: self.h - 70,
-					rows: [
-						{
-							id: "syn-window-actions-toolbar-" + self.uid,
-							view: "toolbar",
-							height: 25,
-							cols: [
-								{
-									id: "syn-window-actions-toolbar-title-" + self.uid,
-									css: "header",
-									width: 250,
-									borderless: true,
-									template: function(obj) {
-										
-										return `<div class="title"><span class="${obj.icon}">${obj.title}</span></div>`;
-									}
-								},
-								{},
-								{
-									view: "icon",
-									icon: "mdi mdi-close",
-									on: {
-										onItemClick: function(id) {
-											
-											$$("syn-window-actions-" + self.uid).hide();
-										}
-									}
-								},
-							]
-						},
-						{
-							id: "syn-window-actions-multiview-" + self.uid,
-							view: "multiview",
-							keepViews:true,
-							animate: false,
-							cells: getMultiViewCellActions()		
-						}
-					]
-					
-				}
+				{ id: "syn-toolbar-main-" + self.uid },
+				{ id: "syn-toolbar-actions-" + self.uid },
+				{ id: "syn-window-actions-" + self.uid }
 			]
 		}
 		
@@ -118,14 +84,16 @@ export default class Synoptic {
 			
 			let cells = [];
 			
-			let synopticLayer = new SynopticLayer(self.uid, self.metadata, onLayersSelectedChange);
-			let synopticAction = new SynopticAction(self.uid);
+			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
+				self.mapLayer = new MapLayer(self.metadata.layers, self.metadata.layerRelationships, function(layersId) {
+					showLayers(layersId)
+				});
+				cells.push(self.mapLayer.getView());	
+			}
 			
-			cells.push(synopticLayer.getView());
-			cells.push(synopticAction.getView());
-			
-			function onLayersSelectedChange() {
-				
+			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
+				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks);
+				cells.push(self.mapAction.getView());
 			}
 			
 			return cells;
@@ -136,7 +104,6 @@ export default class Synoptic {
 			let flagMouseMove = false;
 			self.s = Snap("#svg-syn-" + self.uid);
 			self.s.attr({ width: self.w, height: self.h });
-			
 			
 			Snap.load(self.metadata.baseLayer, function(fragment) {
 				
@@ -155,17 +122,225 @@ export default class Synoptic {
 			
 				if (!flagMouseMove) {
 								
-					var allItems = self.s.selectAll("*");
-				
-					allItems.forEach(e => {
-						
-						if (e.attr('id') === 'selBox') {
-							
-							e.attr({ visibility: "hidden" });
-						}
-					});	
+					unselectAll();
 				}
 			}
+		}
+		
+		function select(elementId) {
+			
+			if (self.graphicIcons) {
+				
+				let graphicIcons = getGraphicIcons(elementId)
+				
+				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+					
+					unselectAll();
+					
+					graphicIcons.forEach(graphicIcon => {
+						graphicIcon.select();
+					});
+				}
+			}
+		}
+		
+		function unselectAll() {
+			
+			var allItems = self.s.selectAll("*");
+				
+			allItems.forEach(e => {
+				
+				if (e.attr('id') === 'selBox') {
+					
+					e.attr({ visibility: "hidden" });
+				}
+			});	
+		}
+		
+		function getToolbarMain() {
+			
+			let viewToolbarMain = {
+				
+				view: "toolbar",
+				id: "syn-toolbar-main-" + self.uid,
+				css: "syn-toolbar-zoom",
+				borderless: true,
+				top: 10, 
+				left: 10,
+				height: 100,
+				cols: [
+					{ width: 1 }
+				]
+			};
+			
+			let viewButtonsZoom = {
+				rows: [
+					{},
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-plus-thick",
+						tooltip: i18n.t("LBL_ZOOM_IN"),
+						css: "button-zoom",
+						width: 30, height: 30,
+						on: {
+							onItemClick: function() {
+								
+								self.panZoomTiger.zoomIn();
+							}
+						}		
+					}, 
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-minus-thick",
+						tooltip: i18n.t("LBL_ZOOM_OUT"),
+						css: "button-zoom",
+						width: 30, height: 30,
+						on: {
+							onItemClick: function() {
+								
+								self.panZoomTiger.zoomOut();								
+							}
+						}		
+					},
+					{}
+				]
+			};
+			
+			let viewButtonResetZoom = {
+				rows: [
+					{},
+					{
+						view: "button",
+						type: "icon",
+						icon:"mdi mdi-restore",
+						tooltip: i18n.t("LBL_RESET"),
+						css: "button-zoom-reset",
+						width: 40, height: 40,
+						on: {
+							onItemClick: function() {
+								
+								self.panZoomTiger.reset();
+							}
+						}
+					},
+					{}
+				]
+			};
+			
+			let viewButtonSearch = {
+				rows: [
+					{},
+					{
+						css: { "background": "#009688 !important", "border-radius": "10px !important" },
+						height: 35,
+						cols: [
+							{
+								view: "button",
+								type: "icon",
+								icon:"mdi mdi-magnify",
+								tooltip: i18n.t("LBL_SEARCH"),
+								css: "button-zoom-search",
+								width: 38, height: 40,
+								on: {
+									onItemClick: function() {
+										
+										let cboSearch = $$("syn-toolbar-zoom-cbo-search-" + self.uid);
+										let cboSearchSeparator = $$("syn-toolbar-zoom-cbo-search-sep-" + self.uid);
+										
+										if (cboSearch && cboSearchSeparator) {
+											
+											if (cboSearch.isVisible() && cboSearchSeparator.isVisible()) {
+
+												cboSearch.hide();
+												cboSearchSeparator.hide();
+											}
+											else {
+												
+												cboSearch.show();
+												cboSearchSeparator.show();
+											}
+										}
+									}
+								}
+							},
+							{
+								rows: [
+									{},
+									{
+										view: "combo",
+										borderless: true,
+										id: "syn-toolbar-zoom-cbo-search-" + self.uid,
+										hidden: true,
+										width: 200, height: 30,
+										suggest: function() {
+											
+											let data = [];
+											
+											if (self.graphicIcons) {
+												
+												self.graphicIcons.forEach(function(value, key) {
+													
+													let elementId = key;
+													let graphicIcons = value;
+													
+													if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+														
+														let element = self.data.find(e => e.id === elementId);
+														
+														if (element) {
+															
+															let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+															
+															if (elementType) {
+															
+																let item = {
+																	id: elementId,
+																	value: element.alias + " - " + i18n.t(elementType.labelAlias)
+																}
+																
+																data.push(item);		
+															}
+														}
+													}
+												});
+											}
+											
+											if (data.length > 0) {
+												
+												data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));	
+											}
+											
+											return data;
+										}(),
+										on:{
+											onChange: function(newValue, oldValue, config){
+										        
+												select(newValue);
+										 	}
+										}
+									},
+									{}
+								]
+							},
+							{ 
+								id: "syn-toolbar-zoom-cbo-search-sep-" + self.uid,
+								width: 10,
+								hidden: true
+							}
+						]
+					},	
+					{}	
+				]
+				
+			};
+						
+			viewToolbarMain.cols.push(viewButtonsZoom);
+			viewToolbarMain.cols.push(viewButtonResetZoom);
+			viewToolbarMain.cols.push(viewButtonSearch);
+			
+			return viewToolbarMain;
 		}
 		
 		function getToolbarActions() {
@@ -173,76 +348,151 @@ export default class Synoptic {
 			let viewToolbarActions = {
 				
 				view: "toolbar",
+				id: "syn-toolbar-actions-" + self.uid,
 				css: "syn-toolbar-actions",
 				borderless: true,
-				top: 10, 
-				right: 10,
+				top: 20, 
+				right: 20,
 				cols: [
 					{ width: 1 }
 				]
 			};
 			
-			let viewButtonLayers = {
-				view: "button",
-				type: "icon",
-				icon:"mdi mdi-layers",
-				css: "button-layers",
-				width: 40, height: 40,
-				on: {
-					onItemClick: function() {
-						
-						$$("syn-window-actions-" + self.uid).show();
-						$$("synoptic-layer-" + self.uid).show();
-						
-						webix.html.removeCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
-						webix.html.addCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
-						$$("syn-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_LAYERS"), icon: "mdi mdi-layers"})
+			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
+				
+				let viewButtonLayers = {
+					view: "button",
+					type: "icon",
+					icon:"mdi mdi-layers",
+					tooltip: i18n.t("LBL_SHOW_LAYERS"),
+					css: "button-layers",
+					width: 40, height: 40,
+					on: {
+						onItemClick: function() {
+							
+							$$("syn-window-actions-" + self.uid).show();
+							self.mapLayer.show();
+							
+							webix.html.removeCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
+							webix.html.addCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
+							$$("syn-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_LAYERS"), icon: "mdi mdi-layers"})
+						}
 					}
-				}
-			};
+				};
+				
+				viewToolbarActions.cols.push(viewButtonLayers);	
+			}
 			
-			let viewButtonActions = {
-				view: "button",
-				type: "icon",
-				icon:"mdi mdi-dots-vertical",
-				css: "button-actions",
-				width: 40, height: 40,
-				on: {
-					onItemClick: function() {
-						
-						$$("syn-window-actions-" + self.uid).show();
-						$$("synoptic-action-" + self.uid).show();
-						
-						webix.html.removeCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
-						webix.html.addCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
-						$$("syn-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_ACTIONS"), icon: "mdi mdi-dots-vertical"})
+			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
+				
+				let viewButtonActions = {
+					view: "button",
+					type: "icon",
+					icon:"mdi mdi-dots-vertical",
+					tooltip: i18n.t("LBL_SHOW_ACTIONS"),
+					css: "button-actions",
+					width: 40, height: 40,
+					on: {
+						onItemClick: function() {
+							
+							$$("syn-window-actions-" + self.uid).show();
+							self.mapAction.show();
+							
+							webix.html.removeCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
+							webix.html.addCss( $$("syn-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
+							$$("syn-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_ACTIONS"), icon: "mdi mdi-dots-vertical"})
+						}
 					}
-				}
-			};
-			
-			viewToolbarActions.cols.push(viewButtonLayers);
-			viewToolbarActions.cols.push(viewButtonActions);
+				};
+				
+				viewToolbarActions.cols.push(viewButtonActions);	
+			} 
 			
 			return viewToolbarActions;	
-		}	
+		}
+	
+		function loadContextMenu() {
+			
+			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
+				
+				let contextMenu = new MapContextMenu(self.metadata.commands, getAllPks(), getSelectedPks);
+				
+				let contextMenuView = contextMenu.getView();
+				contextMenuView.master = "svg-syn-" + self.uid;
+
+			    webix.ui(contextMenuView);
+			}
+		}
+		
+		function getPanelActions() {
+			
+			let viewPanelActions = {
+				id: "syn-window-actions-" + self.uid,
+				//css: "syn-window-actions",
+				hidden: true,
+				top: 70, 
+				right: 10,
+				width: 300,
+				height: self.h - 80,
+				rows: [
+					{
+						id: "syn-window-actions-toolbar-" + self.uid,
+						view: "toolbar",
+						height: 25,
+						cols: [
+							{
+								id: "syn-window-actions-toolbar-title-" + self.uid,
+								css: "header",
+								width: 250,
+								borderless: true,
+								template: function(obj) {
+									
+									return `<div class="title"><span class="${obj.icon}">${obj.title}</span></div>`;
+								}
+							},
+							{},
+							{
+								view: "icon",
+								icon: "mdi mdi-close",
+								on: {
+									onItemClick: function(id) {
+										
+										$$("syn-window-actions-" + self.uid).hide();
+									}
+								}
+							},
+						]
+					},
+					{
+						id: "syn-window-actions-multiview-" + self.uid,
+						view: "multiview",
+						keepViews:true,
+						animate: false,
+						cells: getMultiViewCellActions()		
+					}
+				]
+			};
+			
+			return viewPanelActions;
+		}
 		
 		function loadGraphicIcons() {
 
-			let synopticLayers = self.metadata.synopticLayers;
+			let layers = self.metadata.layers;
 			
-			synopticLayers.forEach(synLayer => {
+			layers.forEach(layer => {
 				
-				synLayer.synopticLayerElements.forEach(synLayerElement => {
+				layer.layerElements.forEach(layerElement => {
 					
-					createGraphicIcon(synLayerElement,
-						self.data.find(element => element.id === synLayerElement.elementId),
+					createGraphicIcon(layerElement,
+						self.data.find(element => element.id === layerElement.elementId),
 						{ type: GraphicIcon.CONTAINER_TYPE_SNAP, obj: self.s },
 						function(graphicIconInstance) {
 
-							onLoadGraphicIcon(synLayerElement.elementId, graphicIconInstance);
+							onLoadGraphicIcon(layerElement.elementId, graphicIconInstance);
 						});
 						
-					self.synopticLayerElements++;
+					self.layerElements++;
 				});
 			});
 		}
@@ -251,14 +501,9 @@ export default class Synoptic {
 			
 			addGraphicIcon(elementId, graphicIconInstance);
 			
-			if (++self.synopticLayerElementsLoaded === self.synopticLayerElements) {
+			if (++self.layerElementsLoaded === self.layerElements) {
 				
-				let optionsPanZoom = {
-					controlIconsEnabled: true,
-					dblClickZoomEnabled: false
-				}
-				
-				svgPanZoom("#svg-syn-" + self.uid, optionsPanZoom);
+				self.panZoomTiger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
 				
 				loadElementInfo();
 			}
@@ -298,6 +543,12 @@ export default class Synoptic {
 						if (++loadedElements === self.data.length) {
 							
 							connectWS();
+							
+							webix.ui(getToolbarMain(), $$("syn-toolbar-main-" + self.uid));
+							webix.ui(getToolbarActions(), $$("syn-toolbar-actions-" + self.uid));
+							webix.ui(getPanelActions(), $$("syn-window-actions-" + self.uid));
+							
+							loadContextMenu();
 						}
 					}
 					
@@ -310,7 +561,7 @@ export default class Synoptic {
 			});
 			 
 		}
-		
+				
 		function addGraphicIcon(elementId, graphicIcon) {
 		
 			let arrGraphicIcons;
@@ -330,6 +581,61 @@ export default class Synoptic {
 			return self.graphicIcons.get(elementId); 
 		}
 		
+		function getSelectedPks() {
+			
+			let selectedPks = new Set();
+			
+			self.graphicIcons.forEach((value, key) => {
+				
+				let elementId = key;
+				let graphicIcons = value;
+				
+				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+					
+					// One selected, no more is required
+					if (graphicIcons[0].isSelected()) {
+						
+						selectedPks.add(elementId);
+					}
+				}
+			});
+				
+			return Array.from(selectedPks);
+		}
+		
+		function getAllPks() {
+			
+			return Array.from(self.graphicIcons.keys());
+		}
+		
+		function showLayers(layersId) {
+			
+			if (Array.isArray(layersId)) {
+					
+				self.metadata.layers.forEach(layer => {
+						
+					layer.layerElements.forEach(layerElement => {
+						
+						let graphicIcons = getGraphicIcons(layerElement.elementId);
+						
+						graphicIcons.forEach(graphicIcon => {
+							
+							// Visible
+							if (layersId.indexOf(layer.id) !== -1) {
+							
+								graphicIcon.show();
+							}
+							// No visible
+							else {
+								
+								graphicIcon.hide();
+							}	
+						});
+					});	
+				});
+			}
+		}
+		
 		function createGraphicIcon(layerElement, element, container, onCreate) {
 			
 			let graphicIcon = layerElement.graphicIcon;
@@ -342,7 +648,11 @@ export default class Synoptic {
 		
 					const mod = await import(jsFile);
 					
-					let graphicIconInstance = new mod.default(layerElement, element, container);
+					let events = {};
+			
+					events[GraphicIcon.EventTypes.ON_DBL_CLIC] = onDblClic;
+					
+					let graphicIconInstance = new mod.default(layerElement, element, container, events);
 					
 					graphicIconInstance.load(function() {
 						
@@ -358,6 +668,16 @@ export default class Synoptic {
 			catch (error) {
 				
 				console.log(error);
+			}
+			
+			function onDblClic() {
+				
+				if (self.mapAction) {
+					
+					self.mapAction.executeDefault();
+					
+					unselectAll();
+				} 
 			}
 			
 			function onLoaded(graphicIconInstance) {
@@ -401,7 +721,12 @@ export default class Synoptic {
 						
 							if (element.elementTypeState) {
 								
-								graphicIcon.updateState(element.elementTypeState);	
+								let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+								
+								if (elementTypeState) {
+									
+									graphicIcon.updateState(elementTypeState); 
+								}
 							}
 							
 							if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
@@ -442,4 +767,4 @@ export default class Synoptic {
 		
 		return view;			
 	}
-}
+} 

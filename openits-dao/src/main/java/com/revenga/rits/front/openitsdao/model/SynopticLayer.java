@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class SynopticLayer implements Serializable {
 
 	//bi-directional many-to-one association to SynopticLayerElement
 	@OneToMany(mappedBy="synopticLayer")
+	@JsonProperty("layerElements")
 	private List<SynopticLayerElement> synopticLayerElements;
 
 	//bi-directional many-to-one association to Synoptic

@@ -2216,6 +2216,79 @@
 	background-color: #ff6347;
 }
 
+/****/
+
+.syn-toolbar-zoom{
+	background: transparent;
+	margin-top: -20px;
+}
+
+.syn-toolbar-zoom .button-zoom .webix_button{
+    border-radius: 10%;
+    color: white;
+    background: #2d7cbe;
+}
+
+.syn-toolbar-zoom .button-zoom .webix_button .webix_icon_btn {
+	font-size: 15px;
+	color: white;
+	margin-left: 3px;
+	padding-bottom: 2px;
+}
+
+.syn-toolbar-zoom .button-zoom .webix_button:hover {
+  	background: #1C507B;
+}
+
+.syn-toolbar-zoom .button-zoom .webix_button:focus {
+	background-color: #2d7cbe;
+}
+
+.syn-toolbar-zoom  .button-zoom .webix_button:active {
+	background-color: #2d7cbe;
+}
+
+.syn-toolbar-zoom .button-zoom-reset .webix_button{
+    height:35px;
+    border-radius: 30%;
+    color: white;
+    background: #ef2929;
+}
+
+.syn-toolbar-zoom .button-zoom-reset .webix_button .webix_icon_btn {
+	font-size: 19px;
+	color: white;
+	margin-left: 3px;
+}
+
+.syn-toolbar-zoom .button-zoom-reset .webix_button:hover {
+  	background: #cc0000;
+}
+
+.syn-toolbar-zoom .button-zoom-reset .webix_button:focus {
+	background-color: #ef2929;
+}
+
+.syn-toolbar-zoom  .button-zoom-reset .webix_button:active {
+	background-color: #ef2929;
+}
+
+.syn-toolbar-zoom .button-zoom-search .webix_button{
+    height:35px;
+    color: white;
+    background: #009688;
+    border-radius: 10px !important;
+}
+
+.syn-toolbar-zoom .button-zoom-search .webix_button .webix_icon_btn {
+	font-size: 20px;
+	color: white;
+	margin-left: 4px;
+	margin-bottom: 2px;
+}
+
+/****/
+
 .syn-window-actions {
 	border: 1px solid #014740;
 }
@@ -2272,6 +2345,51 @@
 	opacity: 1;
 	transform: scale(1.30);
 	margin-left: 7px;
+}
+
+.graphic-icon-tooltip{
+	background: cornsilk;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 10px;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+}
+
+.graphic-icon-tooltip .title {
+	font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-align: center;
+    background: #fae286;
+    color: #977800;
+    border: 3px solid #fae286;
+    border-radius: 4px;
+}
+.graphic-icon-tooltip .state {
+	letter-spacing: 1px;
+    padding-top: 15px;
+    float: left;
+}
+
+.graphic-icon-tooltip .text {
+	letter-spacing: 1px;
+    padding-top: 50px;
+    padding-left: 15px;
+}
+
+.graphic-icon-tooltip .badge {
+    border-radius: 8px;
+    padding: 6px 20px;
+    color: white;
+    margin-left: 30px;
+}
+
+.graphic-icon-tooltip .icon {
+	width: 40px;
+    height: 40px;
+    float: left;
+    padding: 5px 0px 0px 15px;
 }
 
 .cronui-resume{

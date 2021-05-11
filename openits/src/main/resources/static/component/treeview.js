@@ -7,10 +7,11 @@ const TreeOptions = {
 	SORTED: 3,
 	CMD_BUTTONS: 4,
 	SEARCH: 5,
-	EXPAND_ALL: 6
+	EXPAND_ALL: 6,
+	CHECK_ALL: 7
 };
 
-const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false };
+const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false };
 const DefProperties = {
 	TRANSLATE: {
 		name: "translate",
@@ -78,7 +79,7 @@ export default class TreeView {
 			
 			function getRoot(id, data) {
 				
-				let rootItem = undefined;
+				let rootItm = undefined;
 				
 				if (!data){
 					
@@ -87,20 +88,20 @@ export default class TreeView {
 				
 				if (id && data) {
 					
-					rootItem = data.find(e => e.id === id);
+					rootItm = data.find(e => e.id === id);
 					
 					let index = 0;
 						
-					while(!rootItem && index < data.length) {
+					while(!rootItm && index < data.length) {
 					
 						if(data[index].data && data[index].data.length > 0) {
 							
-							rootItem = getRoot(id, data[index].data);
+							rootItm = getRoot(id, data[index].data);
 						}
 						index++;
 					}
 				}
-				return rootItem;
+				return rootItm;
 			}
 			
 			let currentItem = undefined;
@@ -355,6 +356,14 @@ export default class TreeView {
 							
 							this.openAll();
 						}
+						
+						let checkAll = self.getTreeOptions(TreeOptions.CHECK_ALL);
+						let multiselect = self.getTreeOptions(TreeOptions.MULTISELECT);
+						
+						if (checkAll && multiselect) {
+							
+							this.checkAll();
+						}
 					},
 					onAfterSelect: function(id) {
 					    
@@ -419,14 +428,14 @@ export default class TreeView {
 						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
 									
 							let checkedList = this.getChecked();
-							let checkedItems = [];
+//							let checkedItems = [];
+//							
+//							if (Array.isArray(checkedList) && checkedList.length > 0) {
+//								
+//								checkedItems = checkedList.filter(e => this.getItem(e).props && !this.getItem(e).props.folder);
+//							}
 							
-							if (Array.isArray(checkedList) && checkedList.length > 0) {
-								
-								checkedItems = checkedList.filter(e => this.getItem(e).props && !this.getItem(e).props.folder);
-							}
-							
-							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedItems);
+							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
 						}
 					}
 				}
@@ -532,6 +541,11 @@ export default class TreeView {
 		}
 	}
 	
+	selectAll() {
+		
+		this.select();
+	}
+	
 	select(id) {
 		
 		let tree = $$("tree-" + this.uid);
@@ -545,7 +559,52 @@ export default class TreeView {
 				tree.select(id);
 				tree.showItem(id);
 			}
+			else {
+				
+				if (id) {
+					
+					tree.checkAll(id);
+					tree.showItem(id);
+				}
+				else {
+					
+					tree.checkAll();
+				}
+			}
 		}
+	}
+	
+	unselectAll() {
+		
+		this.unselect();
+	}
+	
+	unselect(id) {
+		
+		let tree = $$("tree-" + this.uid);
+		
+		if (tree) {
+			
+			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
+			
+			if (!multiSelect) {
+				
+				tree.unselect(id);
+				tree.showItem(id);
+			}
+			else {
+				
+				if (id) {
+					
+					tree.uncheckAll(id);
+					tree.showItem(id);
+				}
+				else {
+					
+					tree.uncheckAll();
+				}
+			}
+		}	
 	}
 	
 	expand(id) {
@@ -582,25 +641,6 @@ export default class TreeView {
 				tree.closeAll();
 			}
 		}
-	}
-	
-	unselect(id) {
-		
-		let tree = $$("tree-" + this.uid);
-		
-		if (tree) {
-			
-			if (id) {
-				
-				tree.unselect(id);	
-			}
-			else {
-				
-				tree.unselectAll();
-			}
-			
-			tree.refresh();
-		}	
 	}
 }
 
