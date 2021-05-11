@@ -3,9 +3,9 @@ import GraphicIcon from "../graphicIcon.js";
 
 const PARAM_FAN_COMMAND = "ElementTypeParam:9:2:1";
 
-const G_ID_ANIMATION = "animation";
-const G_ID_ARROW = "arrow";
-const G_ID_FAN = "fan";
+const G_ID_ANIMATION = "#animation";
+const G_ID_ARROW = "#arrow";
+const G_ID_FAN = "#fan";
 
 const CMD_FAN_VALUE_STOP = 0;
 const CMD_FAN_VALUE_MODE_DIRECT = 1;
@@ -18,13 +18,6 @@ export default class Fan extends GraphicIconCustomType {
 	constructor(s, g, elementInfo, layerElement, ratio) {
 
 		super(s, g, elementInfo, layerElement, ratio);
-		
-		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
-		this.gFan = this.g.select("#" + G_ID_FAN); 
-		this.gAnimation = this.g.select("#" + G_ID_ANIMATION);
-		this.gArrow = this.g.select("#" + G_ID_ARROW);
-		
-//		this.gArrowVisible = true;
 	}
 	
 	render(elementInfo) {
@@ -32,11 +25,15 @@ export default class Fan extends GraphicIconCustomType {
 		this.elementInfo = elementInfo;
 		
 		// Update state
+		let gState = this.g.select(GraphicIcon.G_ID_STATE);
+		let gFan = this.g.select(G_ID_FAN); 
+		let gAnimation = this.g.select(G_ID_ANIMATION);
+		let gArrow = this.g.select(G_ID_ARROW);
 			
-		if (this.gState && this.gFan && this.gAnimation && this.gArrow) {
+		if (gState && gFan && gAnimation && gArrow) {
 			
-			this.gState.attr({ fill: elementInfo.state.color });
-			this.gFan.attr({ fill: elementInfo.state.color });
+			gState.attr({ fill: elementInfo.state.color });
+			gFan.attr({ fill: elementInfo.state.color });
 			
 			// Update others
 			let cmdFanValue = this.getValue(PARAM_FAN_COMMAND);
@@ -48,70 +45,36 @@ export default class Fan extends GraphicIconCustomType {
 				
 					case CMD_FAN_VALUE_MODE_DIRECT:
 					
-//						this.gArrowVisible = true;
-//						
-//						if (this.isVisible) {
-//							
-//							this.gArrow.attr({ visibility: "visible" });
-//						}
-						
-						this.gArrow.attr({ fill: "#ffcc00" });
-						this.gAnimation.attr({ dur: "6s", from: "0 245 410", to: "360 245 410" });
-						this.gArrow.transform("r0," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
+						gAnimation.attr({ dur: "6s", from: "0 245 410", to: "360 245 410" });
+						gArrow.attr({ visibility: "visible" });
+						gArrow.transform("r0," + gArrow.getBBox().cx + "," + gArrow.getBBox().cy);
 
 						break;
 						
 					case CMD_FAN_VALUE_MODE_REVERSE:
 					
-//						this.gArrowVisible = true;
-//						
-//						if (this.isVisible) {
-//							
-//							this.gArrow.attr({ visibility: "visible" });
-//						}
-						
-						this.gArrow.attr({ fill: "#ffcc00" });
-						
-						this.gAnimation.attr({ dur: "6s", from: "360 245 410", to: "0 245 410" });
-					    this.gArrow.transform("r180," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
+						gAnimation.attr({ dur: "6s", from: "360 245 410", to: "0 245 410" });
+						gArrow.attr({ visibility: "visible" });
+					    gArrow.transform("r180," + gArrow.getBBox().cx + "," + gArrow.getBBox().cy);
 	
 						break;
 						
 					default:
 					
-//						this.gArrowVisible = false;
-						
-						this.gAnimation.attr({ dur: "indefinite" });
-//						this.gArrow.attr({ visibility: "hidden" });
-
-						this.gArrow.attr({ fill: "transparent" });
+						gAnimation.attr({ dur: "indefinite" });
+						gArrow.attr({ visibility: "hidden" });
 				}	
 			}
 			else {
 				
-//				this.gArrowVisible = false;
-				
-				this.gAnimation.attr({ dur: "indefinite" });
-//				this.gArrow.attr({ visibility: "hidden" });
-				this.gArrow.attr({ fill: "transparent" });
+				gAnimation.attr({ dur: "indefinite" });
+				gArrow.attr({ visibility: "hidden" });
 			}
+			
+			
 			
 			//this.g.attr( { transform: "rotateX( 180deg )" });
 		}
 	}
-	
-//	visible(value) {
-//		
-//		this.isVisible = value;
-//		
-//		if (value && this.gArrowVisible) {
-//
-//			this.gArrow.attr({ visibility: "visible" });	
-//		}
-//		else {
-//			
-//			this.gArrow.attr({ visibility: "hidden" });
-//		}
-//	}
 }
 

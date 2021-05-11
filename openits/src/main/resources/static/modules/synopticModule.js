@@ -364,7 +364,7 @@ export default class SynopticModule extends GenericModule{
 
     let contextMenu = new ContextMenu(this.uid, this.synopticConf.metadata.synopticCommands, this);
     let contextMenuComponent = contextMenu.getComponent();
-    contextMenuComponent.master = this.uid;
+    contextMenuComponent.master = this.synopticDivId + "SVG";
     webix.ui(contextMenuComponent);
 
 	}

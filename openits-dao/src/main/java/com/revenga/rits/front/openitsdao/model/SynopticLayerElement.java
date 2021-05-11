@@ -36,13 +36,6 @@ public class SynopticLayerElement implements Serializable {
 	private Boolean horizontalFlip;
 
 	private String label;
-	
-	private Integer rotate;
-	
-	@Column(name="show_text")
-	private Boolean showText;
-	
-	private Boolean tooltip;
 
 	private Integer x;
 
@@ -92,30 +85,6 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Integer getRotate() {
-		return rotate;
-	}
-
-	public void setRotate(Integer rotate) {
-		this.rotate = rotate;
-	}
-
-	public Boolean getShowText() {
-		return showText;
-	}
-
-	public void setShowText(Boolean showText) {
-		this.showText = showText;
-	}
-
-	public Boolean getTooltip() {
-		return tooltip;
-	}
-
-	public void setTooltip(Boolean tooltip) {
-		this.tooltip = tooltip;
 	}
 
 	public Integer getX() {

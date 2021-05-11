@@ -1,13 +1,13 @@
 import { util } from "../lib/util.js";
 import TreeView from "../component/treeview.js";
 
-export default class MapLayer {
+export default class SynopticLayer {
 
-	constructor(layers, layerRelationships, onLayersSelectedChange) {
+	constructor(uid, metadata, onLayersSelectedChange) {
 
-		this.uid = webix.uid();
-		this.layers = layers;
-		this.layerRelationships = layerRelationships;
+		this.uid = uid;
+		this.layers = metadata.synopticLayers;
+		this.layerRelationships = metadata.synopticLayerRelationships;
 		this.treeWindow = undefined;
 		
 		this.onLayersSelectedChange = onLayersSelectedChange;
@@ -19,7 +19,7 @@ export default class MapLayer {
 		let view;	
 
 		view = {
-			id: "map-layer-" + self.uid,
+			id: "synoptic-layer-" + self.uid,
 			rows: [
 				getTreeLayers()
 			]
@@ -43,8 +43,7 @@ export default class MapLayer {
 						{ treeOption: { id: 3}, value: true }, 	// sorted
 						{ treeOption: { id: 4}, value: true }, 	// cmd_buttons
 						{ treeOption: { id: 5}, value: true }, 	// search
-						{ treeOption: { id: 6}, value: true },	// expand_all
-						{ treeOption: { id: 7}, value: true }	// check_all
+						{ treeOption: { id: 6}, value: true }	// expand_all
 					]
 				};
 				
@@ -60,22 +59,12 @@ export default class MapLayer {
 			
 			function onCheckItem(items) {
 				
-				self.onLayersSelectedChange(items.map(item => parseInt(item.split("_")[1])));
+				console.log(items.join());
 			}
 			
 			return treeLayers.getView();
 		}
 		
 		return view;
-	}
-	
-	show() {
-		
-		let mapLayer = $$("map-layer-" + this.uid);
-		
-		if (mapLayer) {
-			
-			mapLayer.show();	
-		}
 	}
 }

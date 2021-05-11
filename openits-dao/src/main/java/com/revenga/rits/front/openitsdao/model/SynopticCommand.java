@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -75,7 +74,6 @@ public class SynopticCommand implements Serializable {
 
 	//bi-directional many-to-one association to SynopticElementTypeCommand
 	@OneToMany(mappedBy="synopticCommand")
-	@JsonProperty("elementTypeCommand")
 	private List<SynopticElementTypeCommand> synopticElementTypeCommand;
 
 

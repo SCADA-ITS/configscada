@@ -24,8 +24,4 @@ export default class Matrix extends GraphicIconCustomType {
 		
 		this.g.append(r);
 	}
-	
-	visible(value) {
-		
-	}
 }
