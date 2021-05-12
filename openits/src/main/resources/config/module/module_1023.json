@@ -1,0 +1,8 @@
+{
+	"moduleAction": {
+		"play": 102301
+	},
+	"actionEndpoints": {
+		"play": "plans/send_play_plan"
+	}
+}

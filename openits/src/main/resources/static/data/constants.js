@@ -85,7 +85,8 @@ const EntityType = Object.freeze({
 	IMS_INCIDENT_TYPE: {id: 13, mode: ENTITY_TYPE_MODE_PERMANENT,syncLoad: false, endpoint: appConfig.restUrl + "incidents/imsIncidentTypes", load: true },
 	IMS_INCIDENT_LEVEL: {id: 14, mode: ENTITY_TYPE_MODE_PERMANENT,syncLoad: false, endpoint: appConfig.restUrl + "incidents/incidentLevels", load: true },
 	STRETCH: {id: 15, mode: ENTITY_TYPE_MODE_PERMANENT,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: true },
-	ELEMENT_VALUE_STATE: { id: 16, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true }
+	ELEMENT_VALUE_STATE: { id: 16, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true },
+	PLAN_STATE_TYPE: { id: 17, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: true }
 });
 
 

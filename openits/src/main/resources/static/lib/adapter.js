@@ -336,5 +336,84 @@ export let adapter = {
 			}
 		},
 
+		plan: {
+
+			getList(data, update_callback) {
+
+				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
+
+					let gridData = {};
+					gridData.data = [];
+					gridData.action = data.action;
+
+					data.basicElementsVO.forEach(plan => {
+
+						let dataItem = {};
+						dataItem.id = plan.id;
+
+						if(plan.planStateType && plan.planStateType.id){
+
+							plan.planStateType = window.em.getByField(EntityType.PLAN_STATE_TYPE, "id", plan.planStateType.id);
+							plan.planStateTypeLabelAlias = plan.planStateType.labelAlias;
+						}
+
+						if(plan.currentPlanOrder){
+
+							plan.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder.planOrderOrder;
+						}
+
+						if (gridData.action == 'CREATE') {
+
+							let planEM = window.em.getByField(EntityType.PLAN, "id", plan.id);
+							
+							dataItem = updateObject(webix.copy(planEM), plan);
+
+							gridData.data.push(dataItem);
+
+						} else if (gridData.action == 'UPDATE') {
+
+							dataItem = updateObject(dataItem, plan);
+
+							gridData.data.push(dataItem);
+
+						} else if (gridData.action == 'DELETE') {
+
+							gridData.data.push(dataItem);
+
+						}
+					});
+
+					update_callback(gridData);
+				}
+			}
+		}
+
 	}
 };
+
+function updateObject(oldItem, newItem){
+
+	if(oldItem){
+
+		if(newItem){
+
+			for (let i in newItem) {
+
+				if(typeof newItem[i] === 'object' && newItem[i] !== null){
+
+					oldItem[i] = updateObject(oldItem[i], newItem[i]);
+
+				}else if (newItem[i] !== undefined ) {
+
+					oldItem[i] = newItem[i];
+				}
+			}        
+		}
+
+	}else{
+
+		oldItem = newItem;
+	}
+
+	return oldItem;
+}  

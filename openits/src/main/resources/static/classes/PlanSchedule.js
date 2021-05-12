@@ -279,7 +279,7 @@ export default class PlanSchedule {
                     ], 
                     sort:"text",  
                     "template": (data, type, value) => {
-                        let tmpValue=data.plan.planStateType !== undefined ? data.plan.planStateType.alias : "UNKNOWN";
+                        let tmpValue= data.plan.planStateType?data.plan.planStateType.alias : "UNKNOWN";
                         var html = "\n\t\t<div class=\"webix_um_badge_container\">\n\t\t\t<span class=\"webix_um_status_badge planschedule_state_" + tmpValue.toLowerCase() + "\">" + tmpValue + "</span>\n\t\t</div>";
                         return html;
                     }, 
