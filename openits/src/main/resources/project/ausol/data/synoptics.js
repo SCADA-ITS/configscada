@@ -144,13 +144,18 @@ export let synopticData= [
 				"translation_key": "",
 				"visibility": "visible"
 			},
+			"CABINETS": {
+				"items": ["Element:25:1"],
+				"translation_key": "",
+				"visibility": "visible"
+			},
 		},
 		
 		"Element:2:1":  { "x": 1400, "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-1CA" },
 		"Element:2:2":  { "x": 1150,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-2CA" },
 		"Element:2:3":  { "x": 800,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-3CA" },
 		"Element:2:4":  { "x": 400,  "y": 910, "width": 40,  "height": 40,  "alias": "RV-TV-4CA" },
-		"Element:2:5":  { "x": 1710,  "y": 517, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
+		"Element:2:5":  { "x": 1688,  "y": 520, "width": 40,  "height": 40,  "alias": "RV-TVD-1CA" },
 		"Element:2:6":  { "x": 270,  "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-1MA" },
 		"Element:2:7":  { "x": 580, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-2MA" },
 		"Element:2:8":  { "x": 900, "y": 141, "width": 40,  "height": 40,  "alias": "RV-TV-3MA" },
@@ -229,7 +234,7 @@ export let synopticData= [
 		"Element:13:2": { "x": 125,   	"y": 253, "width": 35,  "height": 45,  "alias": "RV-SMF-RAV-1MA" },
 		"Element:13:4": { "x": 125,   	"y": 395, "width": 35,  "height": 45,  "alias": "RV-SRAV-2MA" },	
 		
-		"Element:14:1": { "x": 1660, "y": 525, "width": 40,  "height": 55,  "alias": "RV-LUM-1CA" },
+		"Element:14:1": { "x": 1650, "y": 525, "width": 40,  "height": 55,  "alias": "RV-LUM-1CA" },
 		"Element:14:2": { "x": 95,   "y": 525, "width": 40,  "height": 55,  "alias": "RV-LUM-1MA" },
 
 		"Element:15:1": { "x": 1250,  "y": 800, "width": 120, "height": 90,  "alias": "RV-ZI-1CA" },
@@ -241,7 +246,7 @@ export let synopticData= [
 		"Element:15:7": { "x": 895,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-3MA" },
 		"Element:15:8": { "x": 1250,  "y": 125, "width": 120, "height": 90,  "alias": "RV-ZI-4MA" },
 		
-		"Element:5:1": { "x": 1358, "y": 410, "width": 160,  "height": 160,  "alias": "PA-ESTEPONA" },
+		"Element:5:1": { "x": 1430, "y": 410, "width": 160,  "height": 160,  "alias": "PA-ESTEPONA" },
 		
 		"Element:16:1": { "x": 1428, "y": 645, "width": 120,  "height": 120,  "alias": "PA-ZONE-59" },
 		"Element:16:2": { "x": 911,  "y": 450, "width": 120,  "height": 120,  "alias": "PA-ZONE-60" },
@@ -260,10 +265,13 @@ export let synopticData= [
 		"Element:21:1": { "x": 1000, "y": 902, "width": 50,  "height": 50,  "alias": "RV-OPC-1CA" },
 		"Element:21:2": { "x": 745,  "y": 132, "width": 50,  "height": 50,  "alias": "RV-OPC-1MA" },
 
+        "Element:25:1": { "x": 1725, "y": 515, "width": 50,  "height": 50,  "alias": "RV-PLCE-1MA" },
+		
+		
 		"Element:36:1": { "x": 50,   "y": 320, "width": 200, "height": 54,  "alias": "GT_1" },
 		"Element:36:2": { "x": 1580, "y": 725, "width": 200, "height": 54,  "alias": "GT_2" },
 		
-		"Element:51:1": { "x": 1475,   "y": 470, "width": 80, "height": 100,  "alias": "RV-ETD-1CA" },
+		"Element:51:1": { "x": 1528,   "y": 470, "width": 80, "height": 100,  "alias": "RV-ETD-1CA" },
 		"Element:51:2": { "x": 90,   "y": 80, "width": 80, "height": 100,  "alias": "RV-ETD-1MA" },
 		
 		"Element:53:1": { "x": 1670, "y": 658, "width": 35,  "height": 45,  "alias": "RV-SAA-1CA" },
@@ -271,7 +279,7 @@ export let synopticData= [
 		"Element:53:3": { "x": 80,  "y": 253, "width": 35,  "height": 45,  "alias": "RV-SAA-1MA" },
 		"Element:53:4": { "x": 80,  "y": 395, "width": 35,  "height": 45,  	"alias": "RV-SAA-2MA" },
 
-		"Element:55:2": { "x": 1570,   "y": 500, "width": 55, "height": 80,  "alias": "RV-MAP-CT" },
+		"Element:55:2": { "x": 1595,   "y": 500, "width": 55, "height": 80,  "alias": "RV-MAP-CT" },
 		
 		"Element:66:1": { "x": 190,  "y": 495, "width": 80,  "height": 80,  "alias": "RV-VTA-1C" },
 
@@ -280,7 +288,8 @@ export let synopticData= [
 		"Element:67:3": { "x": 40,   "y": 253, "width": 35, "height": 45,  "alias": "RV-SMF-RR-2CA" },
 		"Element:67:4": { "x": 40,   "y": 395, "width": 35, "height": 45,  "alias": "RV-SMF-RR-2MA" },
 		
-		"Element:52:1": { "x": 1278,   "y": 570, "width": 10, "height": 10,  "alias": "SERVER-DAI" },
+		
+		"Element:52:1": { "x": 1365,   "y": 570, "width": 10, "height": 10,  "alias": "SERVER-DAI" },
 	},
 	{
 		"id":"synopticMetro",
