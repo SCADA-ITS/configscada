@@ -1,8 +1,8 @@
-import { util } from "../lib/util.js";
+import { util } from "../../lib/util.js";
 import MapLayer from "./mapLayer.js";
 import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
-import GraphicIcon from "../component/graphicIcon/graphicIcon.js";
+import GraphicIcon from "../graphicIcon/graphicIcon.js";
 
 const MAIN_TAG = "#main";
 const TOPIC_ELEMENTS = "/topic/element.>";

@@ -1,5 +1,5 @@
-import { util } from "../lib/util.js";
-import TreeView from "../component/treeview.js";
+import { util } from "../../lib/util.js";
+import TreeView from "../treeview.js";
 
 export default class MapLayer {
 

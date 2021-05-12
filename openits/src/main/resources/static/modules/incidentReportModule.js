@@ -2043,11 +2043,11 @@ export default class IncidentReportModule extends GenericModule {
 					{
 						height: 150,
 						cols: [
-							{ width: 50 },
+							{ width: 15 },
 							{
 								rows: getLowerButtonsViewArray()
 							},
-							{ width: 50 }
+							{ width: 15 }
 						]
 					},
 					{},

@@ -1467,14 +1467,14 @@
 	font-size: 13px;
 	width: 100% !important;
 	border-radius: 4px;
-	border-width: 0px;
+	border: 1px solid rgba(81 150 254 / 0.13);
     background: transparent;
     color: var(--blue-mid2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
-    text-align: left;
+    text-align: center;
 }
 
 .panel-button .webix_button:hover{
@@ -1483,7 +1483,7 @@
 }
 
 .panel-button .webix_button .webix_icon_btn {
-	font-size: 24px;
+	font-size: 20px;
     color: var(--blue-mid2);
     padding-right: 10px;
 }

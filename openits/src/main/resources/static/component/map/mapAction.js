@@ -1,4 +1,4 @@
-import { util } from "../lib/util.js";
+import { util } from "../../lib/util.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const MARGIN_BETWEEN_COMMANDS = 10;
