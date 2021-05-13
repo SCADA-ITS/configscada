@@ -104,7 +104,7 @@ export function plans(){
   function removeGrid(view){
     const hijos = $$(view).getChildViews();
     if(hijos[0] !== undefined){
-      console.log(hijos[0].config.id);
+     
       if (hijos[0].config.id.toString().split("_")[0] === "planHeader") {
         console.log("SOMOS UN PLAN");
         let plan = new Plan(hijos[0].config.id.toString().split("_")[1],null, widgetId);
@@ -282,7 +282,7 @@ export function plans(){
     if( $$("new_order_window_" + item.qid)){
       $$("new_order_window_" + item.qid).show();
     }else{
-      let newOrder = new Order(null,"new",null,null,item.qid,gridId, this.parentId);
+      let newOrder = new Order(null,"new",null,null,item.qid,gridId, widgetId);//this.parentId);
       webix.ui({
         id:"new_order_window_" + item.qid,
         view:"window",	

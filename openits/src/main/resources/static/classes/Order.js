@@ -815,6 +815,7 @@ export default class Order {
                 cols:[
                     { view:"button", id: this.planId + "_" + this.view + "_window_order_new_button_load", value:"Guardar", width:100, align:"right", 
                     click: (id,event)=>{
+
                       saveWindowOrder(id,event, this.parentId);
                     }
                   }]
@@ -841,6 +842,8 @@ export default class Order {
 }
 
 let saveWindowOrder = (id, event, parentId)=> {
+
+  let parent_Id = parentId;
   let container = id.split("_")[1];
   if ($$("window_order_new_alias_" + id.split("_")[0]).data.value !== "") {
     let v_alias = $$("window_order_new_alias_" + id.split("_")[0]).data.value;
@@ -1042,7 +1045,7 @@ let saveWindowOrder = (id, event, parentId)=> {
               createOrden.load(data_query).then(data => {
                 if(data) {
                   Object.entries(data).map(([k, v]) => {
-                    createOrderDinamic(container,v, parentId);
+                    createOrderDinamic(container,v, parent_Id);
                   });
                   $$("new_order_window_" + id.split("_")[0]).hide();
                   webix.message("Guardado Correctamente");
@@ -1067,7 +1070,7 @@ let saveWindowOrder = (id, event, parentId)=> {
                 })
                 .then(data => {
                   if(data) {
-                    createOrderDinamic(container,data, parentId);
+                    createOrderDinamic(container,data, parent_Id);
                     $$("new_order_window_" + id.split("_")[0]).hide();
                     webix.message("Creado Correctamente");
                   } else {
@@ -1092,6 +1095,7 @@ let saveWindowOrder = (id, event, parentId)=> {
 }
 
 function createOrderDinamic(container,data, parentId){
+
   let result = updateOrderTree(parentId,data,"new");
 
   try {
@@ -1452,6 +1456,7 @@ function orderEdit(id){
 }
 
 function orderSave(id, event, parentId){
+
   let idform = $$(id.toString().split("_")[1] + "_form").getValues();
   let value = $$(id.toString().split("_")[1] + "_element").data.value;
   let idtype = "ElementType:" + elementTypeMap.getElementType(value.split("_")[1]);
@@ -1651,9 +1656,11 @@ function updateOrderList(data,parameter){
 }
 
 function updateOrderTree(view,data,parameter){
+
   try {
     let selectPlan = $$(view).getSelectedId();
     let item = $$(view).getItem(selectPlan);
+
     let itemPlanOrders = item["planOrders"].filter(function(value, index, arr){ return value.id !== data.id;});
     switch (parameter) {
       case "remove":

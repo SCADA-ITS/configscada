@@ -191,7 +191,7 @@ export default class PlansTree {
             
             $$("bar_tree"+this.parentId).show();
             $$("btn_delete"+this.parentId).hide();
-            $$(this.parentId).data.each(function(obj){  
+            $$(this.parentId).data.each((obj)=>{  
               if ( obj.id.toString() === item2.id.toString() ) {
                
                 switch (obj.$level) {
