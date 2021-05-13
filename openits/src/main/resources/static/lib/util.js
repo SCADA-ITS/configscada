@@ -1033,6 +1033,16 @@ export let util = {
 	
 				return nextDate
 			}
+		},
+		hasData(data) {
+			
+			return (data !== null && data !== undefined) ? "true" : "false";
+			
+		},
+		boolToString(data) {
+
+			return ((data !== null && data !== undefined) ? (data !== true ? "false" : "true") : "false" );
+			
 		}
 	},
 	

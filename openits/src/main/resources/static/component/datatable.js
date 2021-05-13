@@ -1821,6 +1821,7 @@ export default class DataTable {
 				args.callbacks = [];
 			}
 
+
 			args.callbacks.push(function() { self.refresh(self) });
 
 			// Any selected?
@@ -2023,11 +2024,16 @@ export default class DataTable {
 
 		if (!webix.isUndefined(grid)) {
 
-			grid.showProgress({
 
-				hide: true, type: "bottom"
-			});
+			if(self.getGridOptions(GridOptions.REFRESH_BUTTON)){
 
+				grid.showProgress({
+
+					hide: true, type: "bottom"
+				});
+
+			}
+		 
 			if (this.dataGridParams) {
 
 				url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
@@ -2058,7 +2064,10 @@ export default class DataTable {
 						}
 					}
 
-					grid.hideProgress();
+
+					self.getGridOptions(GridOptions.REFRESH_BUTTON) ? grid.hideProgress() : null;
+		
+
 
 				}, null, null, 1);
 			});
