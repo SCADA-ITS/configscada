@@ -68,7 +68,11 @@ export default class SynopticModule extends GenericModule {
 					
 					let events = {};
 					
-					let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height);
+					let options = {};
+						
+					options[Synoptic.Options.DEBUG_MODE] = self.config.debugMode;
+					
+					let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
 					
 					$$("loading-" + self.uid).hide();
 					$$(self.uid).show();

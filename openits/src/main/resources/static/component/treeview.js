@@ -269,13 +269,13 @@ export default class TreeView {
 			
 			let data = applyProperties(webix.copy(self.data));
 			
-			console.log(data);
+			//console.log(data);
 			
 			let ids = data.map(e => {
 				return e.id
 			});
 			
-			console.log(ids.sort());
+			//console.log(ids.sort());
 			
 			
 			let treeView = {

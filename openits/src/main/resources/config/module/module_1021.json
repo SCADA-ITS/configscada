@@ -8,5 +8,6 @@
 	"adapter": "ws.element.getList",
 	"params": {
 		"synopticId": 4
-	}
+	},
+	"debugMode": false
 }

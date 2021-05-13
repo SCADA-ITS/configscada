@@ -13,23 +13,26 @@ const OPTIONS_PAN_ZOOM = {
 
 export default class Synoptic {
 
-	constructor(metadata, data, events, w, h) {
+	constructor(metadata, data, events, w, h, options) {
 
 		this.metadata = metadata;
 		this.data = data;
 		this.events = events;
 		this.w = w;
 		this.h = h;
+		this.options = options;
 		this.stomp = {};
 		this.uid = webix.uid();
 		
 		// Snap main paper
 		this.s = undefined;
 		this.synoptic = undefined;
+		this.flagMouseMove = false;
 		
 		this.panZoomTiger = undefined;
 		
 		this.graphicIcons = new Map();
+		this.baseLayers = new Map();
 		this.layerElements = 0;
 		this.layerElementsLoaded = 0;
 		
@@ -101,7 +104,6 @@ export default class Synoptic {
 			
 		function drawSynoptic() {
 			
-			let flagMouseMove = false;
 			self.s = Snap("#svg-syn-" + self.uid);
 			self.s.attr({ width: self.w, height: self.h });
 			
@@ -112,15 +114,17 @@ export default class Synoptic {
 				self.s.append(self.synoptic);
 				
 				self.synoptic.mouseup(onMouseUp);
-				self.synoptic.mousemove(function() { flagMouseMove = true; });
-				self.synoptic.mousedown(function() { flagMouseMove = false;});
+				self.synoptic.mousemove(function() { self.flagMouseMove = true });
+				self.synoptic.mousedown(function() { self.flagMouseMove = false });
+				
+				loadLayerBase();
 				
 				loadGraphicIcons();			
 			});
 			
 			function onMouseUp() {
 			
-				if (!flagMouseMove) {
+				if (!self.flagMouseMove) {
 								
 					unselectAll();
 				}
@@ -476,6 +480,38 @@ export default class Synoptic {
 			return viewPanelActions;
 		}
 		
+		function loadLayerBase() {
+			
+			let layers = self.metadata.layers;
+			
+			layers.forEach(layer => {
+				
+				if (layer.baseLayer) {
+					
+					Snap.load(layer.baseLayer, function(fragment) {
+				
+						let baseLayer = fragment.select(MAIN_TAG);
+						
+						self.baseLayers.set(layer.id, baseLayer);
+						
+						baseLayer.mouseup(onMouseUp);
+						baseLayer.mousemove(function() { self.flagMouseMove = true });
+						baseLayer.mousedown(function() { self.flagMouseMove = false });
+											
+						self.s.append(baseLayer);
+					});
+					
+					function onMouseUp() {
+			
+						if (!self.flagMouseMove) {
+										
+							unselectAll();
+						}
+					}
+				}
+			});
+		}
+		
 		function loadGraphicIcons() {
 
 			let layers = self.metadata.layers;
@@ -613,6 +649,8 @@ export default class Synoptic {
 			if (Array.isArray(layersId)) {
 					
 				self.metadata.layers.forEach(layer => {
+					
+					showBaseLayer(layer.id);
 						
 					layer.layerElements.forEach(layerElement => {
 						
@@ -633,6 +671,31 @@ export default class Synoptic {
 						});
 					});	
 				});
+			}
+			
+			function showBaseLayer(layerId) {
+				
+				let baseLayer = self.baseLayers.get(layerId);
+				
+				if (baseLayer) {
+					
+					// Visible
+					if (layersId.indexOf(layerId) !== -1) {
+					
+						if (baseLayer.attr("visibility") != "visible") {
+							
+							baseLayer.attr({ visibility: "visible" });
+						}
+					}
+					// No visible
+					else {
+	
+						if (baseLayer.attr("visibility") != "hidden") {
+							
+							baseLayer.attr({ visibility: "hidden" });
+						}
+					}	
+				}
 			}
 		}
 		
@@ -713,6 +776,11 @@ export default class Synoptic {
 
 				if (element) {
 					
+					if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
+						
+						console.log("RX >> " + JSON.stringify(element));
+					}
+					
 					let graphicIcons = getGraphicIcons(element.id);
 					
 					if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
@@ -725,13 +793,25 @@ export default class Synoptic {
 								
 								if (elementTypeState) {
 									
+									if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
+						
+										console.log("Update state for: " + element.id + " with " + JSON.stringify(elementTypeState));
+									}
+									
 									graphicIcon.updateState(elementTypeState); 
 								}
 							}
 							
 							if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
 								
-								graphicIcon.updateValues(getElementValues());
+								let elementValues = getElementValues();
+								
+								if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
+						
+									console.log("Update values for: " + element.id + " with " + JSON.stringify(elementValues));
+								}
+								
+								graphicIcon.updateValues(elementValues);
 							}
 							
 							// TODO ALARMS
@@ -768,3 +848,14 @@ export default class Synoptic {
 		return view;			
 	}
 } 
+
+Object.defineProperty(Synoptic, 'Options', {
+    value: {}
+});
+
+Object.defineProperty(Synoptic.Options, "DEBUG_MODE", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
