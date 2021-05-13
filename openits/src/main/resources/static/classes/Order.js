@@ -898,6 +898,7 @@ let saveWindowOrder = (id, event, parentId)=> {
             });
             let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
             if (pmvTypes.includes(idtype.split(":")[1])){
+
               if(v_commandElementType === send_command){ //si es SEND COMMAND MIRAMOS LOS VALORES DEL PANEL
                 let panelMan = new PanelManager(null, idtype,elementTypeMap.PANELMANAGER_TYPE_PLAN,3,null,undefined);
                 let dataList = panelMan.configExportData();
@@ -1197,7 +1198,7 @@ function createOrderDinamic(container,data, parentId){
       });
       let message = data.comandElement.commandElementType.alias;
       let idtype = "ElementType:" + data.comandElement.element.id.split(":")[1];
-      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
+      let pmvTypes = [elementTypeMap.ELEMENT_TYPE_10_DMS, elementTypeMap.ELEMENT_TYPE_24_PMV_A_C, elementTypeMap.ELEMENT_TYPE_26_PMV_64X64, elementTypeMap.ELEMENT_TYPE_27_PMV_A_B, elementTypeMap.ELEMENT_TYPE_28_PMV_192X64, elementTypeMap.ELEMENT_TYPE_29_PMV_B_D, elementTypeMap.ELEMENT_TYPE_30_PMV_128X64, elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP, elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT, elementTypeMap.ELEMENT_TYPE_35_PMV, elementTypeMap.ELEMENT_TYPE_36_PMV, elementTypeMap.ELEMENT_TYPE_38_PMV_TXT, elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT];
       if (pmvTypes.includes(data.comandElement.element.id.split(":")[1]) && message === "SEND MESSAGE"){ 
         let text_commands = data.comandElement.commandElementValues;
 
