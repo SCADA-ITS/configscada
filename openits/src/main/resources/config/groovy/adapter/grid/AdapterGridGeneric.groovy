@@ -32,7 +32,7 @@ class AdapterGridGeneric extends AdapterGrid{
 			if (!CollectionUtils.isEmpty(entities)) {
 				
 				for (Map<String, Object> entity : entities) {
-									
+
 					data.add(vo2uiAdapter.convert(fieldId, getObject(entity, null, fieldId)));
 				}
 			}
@@ -54,7 +54,7 @@ class AdapterGridGeneric extends AdapterGrid{
 			dataRow = new HashMap<>();
 			
 			for (Map.Entry<String, Object> entry : entity.entrySet()) {
-				
+
 				String key = entry.getKey();
 				
 				if (!StringUtils.isEmpty(parentClassName)) {
@@ -78,8 +78,8 @@ class AdapterGridGeneric extends AdapterGrid{
 					dataRow.put(key, value);
 				}
 				else if (value instanceof Map) {
-					
-					Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) value, entry.getKey(), fieldId);
+				
+					Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) value, key, fieldId);
 					
 					for (Map.Entry<String, Object> entryObject : objectMapFlattened.entrySet()) {
 						
@@ -87,30 +87,29 @@ class AdapterGridGeneric extends AdapterGrid{
 					}
 				}
 				else if (value instanceof List) {
-						
+
 					List<?> list = (List<?>) value;
-					
+					List<?> rowList = new ArrayList<?>(); 
+
 					for (Object item : list) {
 						
 						if (item instanceof Map) {
-							
+
 							String fieldIdValue = (String) ((Map<String, Object>) item).get(fieldId);
 							
 							if (!StringUtils.isEmpty(fieldIdValue)) {
-							
-								Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) item, entry.getKey() + "[" + fieldIdValue + "].", fieldId);
-								
-								for (Map.Entry<String, Object> entryObject : objectMapFlattened.entrySet()) {
-									
-									dataRow.put(entryObject.getKey(), entryObject.getValue());	
-								}
+
+								Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) item, null, fieldId);
+								rowList.add(objectMapFlattened);
 							}
 						}
 					}
+					
+					dataRow.put(key, rowList);
 				}
 			}
 		}
-		
+
 		return dataRow;
 	}
 }
