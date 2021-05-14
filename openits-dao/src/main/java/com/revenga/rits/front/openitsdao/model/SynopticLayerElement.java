@@ -42,6 +42,9 @@ public class SynopticLayerElement implements Serializable {
 	@Column(name="show_text")
 	private Boolean showText;
 	
+	@Column(name="text_color")
+	private String textColor;
+	
 	private Boolean tooltip;
 
 	private Integer x;
@@ -108,6 +111,14 @@ public class SynopticLayerElement implements Serializable {
 
 	public void setShowText(Boolean showText) {
 		this.showText = showText;
+	}
+
+	public String getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
 	}
 
 	public Boolean getTooltip() {

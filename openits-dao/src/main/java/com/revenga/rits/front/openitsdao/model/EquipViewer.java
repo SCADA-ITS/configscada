@@ -21,6 +21,11 @@ public class EquipViewer implements Serializable {
 	private String id;
 
 	private String description;
+	
+	//uni-directional many-to-one association to GraphicIcon
+	@ManyToOne
+	@JoinColumn(name="graphic_icon_id")
+	private GraphicIcon graphicIcon;
 
 	private String icon;
 	
@@ -83,6 +88,14 @@ public class EquipViewer implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public GraphicIcon getGraphicIcon() {
+		return graphicIcon;
+	}
+
+	public void setGraphicIcon(GraphicIcon graphicIcon) {
+		this.graphicIcon = graphicIcon;
 	}
 
 	public String getIcon() {

@@ -1,5 +1,6 @@
 import EquipmentViewerInfoMeasure from "./equipmentViewerInfoMeasure.js";
 import { util } from "../../lib/util.js";
+import GraphicIcon from "../../component/graphicIcon/graphicIcon.js";
 
 export default class EquipmentViewerInfo {
 	
@@ -10,6 +11,7 @@ export default class EquipmentViewerInfo {
 		this.element = element;
 		this.equipmentViewer = equipmentViewer;
 		this.equipmentViewerInfoMeasure = undefined;
+		this.graphicIconInstance = undefined;
 		
 		if (element) {
 			
@@ -47,47 +49,147 @@ export default class EquipmentViewerInfo {
 			
 			function getViewMainImage() {
 				
-				let viewMainImage = {
-					width: 300,
-					rows: [
-						{ height: 20},
-						{},
-						{
-							id:  "view-main-info-image-" + self.uid,
-							height: 200,
-							borderless: true,
-							template: function(data) {
-								
-								if (self.elementType) {
+				let viewMainImage = {};
+				
+				if (self.equipmentViewer.graphicIcon) {
+					
+					viewMainImage = getGraphicIcon();
+				}
+				else {
+					
+					viewMainImage = getDefaultImage();
+				}
+				
+				function getDefaultImage() {
+					
+					let viewDefaultImage = {
+						width: 300,
+						rows: [
+							{ height: 20},
+							{},
+							{
+								id:  "view-main-info-image-" + self.uid,
+								height: 200,
+								borderless: true,
+								template: function(data) {
 									
-									let equipmentIcon = self.elementType.elementTypePhoto;
-																	
-									let elementTypeStateLabel = i18n.t(self.element.elementTypeState.labelAlias);
-									let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
-									
-									if (data && data.elementTypeState) {
+									if (self.elementType) {
 										
-										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
-									
-										if (elementTypeState) {
+										let equipmentIcon = self.elementType.elementTypePhoto;
+																		
+										let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
+										
+										if (data && data.elementTypeState) {
 											
-											elementTypeStateLabel = i18n.t(elementTypeState.labelAlias);
-											color = elementTypeState.color ? elementTypeState.color : "#000000";
+											let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+										
+											if (elementTypeState) {
+												
+												color = elementTypeState.color ? elementTypeState.color : "#000000";
+											}
 										}
-									}
+										
+										let res = `<div class="equip-viewer-info-image">
+														<image class="image" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
+														<div style="background: ${color}" class="shadow"></div>
+												   <div>`; 
 									
-									let res = `<div class="equip-viewer-info-image">
-													<image class="image" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
-													<div style="background: ${color}" class="shadow"></div>
-											   <div>`; 
-								
-									return res;
+										return res;
+									}
 								}
+							},
+							{}
+						]
+					};
+					
+					return viewDefaultImage;
+					
+				}
+				
+				function getGraphicIcon() {
+					
+					let viewGraphicIcon = {
+						width: 300,
+						rows: [
+							{ height: 20},
+							{},
+							{
+								id:  "view-main-info-image-" + self.uid,
+								height: 200,
+								borderless: true,
+								template: function() {
+									return `<div>
+												<svg id=${"view-main-info-image-svg-" + self.uid}></svg>
+											</div>`
+								},
+								on: {
+									onAfterRender: function() {
+					
+										drawGraphicIcon(this.$width, this.$height);
+									}
+								}
+							},
+							{}
+						]
+					};
+					
+					function drawGraphicIcon(w, h) {
+						
+						let graphicIcon = self.equipmentViewer.graphicIcon;
+						graphicIcon.width = w;
+						graphicIcon.height = h;
+						
+						if (graphicIcon) {
+							
+							const lazy = async _ => {
+					
+								let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsDrawFile;
+					
+								const mod = await import(jsFile);
+								
+								let layerElement = {
+									graphicIcon: graphicIcon
+								}
+								
+								let s = Snap("#" + "view-main-info-image-svg-" + self.uid);
+								s.attr({ width: w, height: h });
+								
+								let container = { 
+									type: GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW, 
+									obj: s
+								} 
+								
+								self.graphicIconInstance = new mod.default(layerElement, self.element, container, null);
+								
+								self.graphicIconInstance.load(function() {
+									
+									self.graphicIconInstance.loadRender(function() {
+										
+										if (self.element.elementTypeState) {
+									
+											self.graphicIconInstance.updateState(self.element.elementTypeState);	
+										}
+										
+										if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
+											
+											self.graphicIconInstance.updateValues(self.element.elementValues);
+										}
+										
+										if (Array.isArray(self.element.alarms) && self.element.alarms.length > 0) {
+											
+											self.graphicIconInstance.updateAlarms(self.element.alarms);
+										}
+									});
+								});
 							}
-						},
-						{}
-					]
-				};
+							
+							lazy();	
+						}
+						
+					}
+					
+					return viewGraphicIcon;
+				}
 				
 				return viewMainImage;
 			}
@@ -163,6 +265,11 @@ export default class EquipmentViewerInfo {
 		if (this.equipmentViewerInfoMeasure) {
 			
 			this.equipmentViewerInfoMeasure.updateMeasure(elementValues);
+			
+			if (this.graphicIconInstance) {
+				
+				this.graphicIconInstance.updateValues(elementValues);
+			}
 		}
 	}
 	
@@ -170,10 +277,27 @@ export default class EquipmentViewerInfo {
 
 		let viewMainInfoImage = $$("view-main-info-image-" + this.uid);
 		
-		if (viewMainInfoImage) {
+		if (this.graphicIconInstance) {
+			
+			this.graphicIconInstance.updateState(elementTypeState);
+		}
+		else {
 			
 			viewMainInfoImage.setValues( { elementTypeState: elementTypeState });
-		}		
+		}
+	}
+	
+	// TODO: Update alarms
+	updateAlarms(alarms) {
+		
+		if (this.graphicIconInstance) {
+			
+			this.graphicIconInstance.updateAlarms(alarms);
+		}
+		else {
+			
+			// TODO: Update any in equipment viewer???
+		}
 	}
 	
 	refresh() {

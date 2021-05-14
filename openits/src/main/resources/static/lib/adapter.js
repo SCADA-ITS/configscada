@@ -74,6 +74,73 @@ export let adapter = {
 				
 					update_callback(gridData);	
 				}
+			},
+			
+			// Only for one element
+			get(data, elementTypeParams, update_callback) {
+				
+				let element = undefined;
+				
+				if (data) {
+				
+					element = webix.copy(data);
+				
+					// Adapter for state
+					if (element.elementTypeState) {
+						
+						let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+							
+						if (elementTypeState) {
+							
+							element.elementTypeState = elementTypeState; 
+						}	
+					}
+					
+					// Adapter for measures
+					let elementValues = getElementValues();
+					
+					if (elementValues) {
+						
+						element.elementValues = elementValues;
+					}
+	
+					// TODO: Adapter for alarms
+	
+	
+					if (update_callback) {
+					
+						update_callback(elements);	
+					}
+					
+					function getElementValues() {
+						
+						let elementValuesToUpdate = [];
+						
+						if (element && Array.isArray(elementTypeParams) && elementTypeParams.length > 0 && 
+							Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+						
+							element.elementValues.forEach(elementValue => {
+								
+								let elementTypeParamId = util.element.getElementTypeParamId(elementValue.id);
+								
+								let elementTypeParam = elementTypeParams.find(e => e.id === elementTypeParamId);
+							
+								if (elementTypeParam) {
+									
+									elementValue.elementTypeParam = elementTypeParam;
+									
+									elementValuesToUpdate.push(elementValue);
+								}	
+								
+							});		
+						}
+						
+						return elementValuesToUpdate;
+					}	
+				}
+				
+				
+				return element;
 			}
 		},
 

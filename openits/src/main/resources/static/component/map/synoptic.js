@@ -1,4 +1,5 @@
 import { util } from "../../lib/util.js";
+import { adapter } from "../../lib/adapter.js";
 import MapLayer from "./mapLayer.js";
 import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
@@ -772,75 +773,51 @@ export default class Synoptic {
 				}
 			}
 			
-			function onMessage(element) {
+			function onMessage(data) {
 
-				if (element) {
+				if (data) {
 					
 					if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
 						
-						console.log("RX >> " + JSON.stringify(element));
+						console.log("RX >> " + JSON.stringify(data));
 					}
 					
-					let graphicIcons = getGraphicIcons(element.id);
-					
-					if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-						
-						graphicIcons.forEach(graphicIcon => {
-						
-							if (element.elementTypeState) {
-								
-								let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
-								
-								if (elementTypeState) {
-									
-									if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
-						
-										console.log("Update state for: " + element.id + " with " + JSON.stringify(elementTypeState));
-									}
-									
-									graphicIcon.updateState(elementTypeState); 
-								}
-							}
-							
-							if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-								
-								let elementValues = getElementValues();
-								
-								if (self.options && self.options[Synoptic.Options.DEBUG_MODE]) {
-						
-									console.log("Update values for: " + element.id + " with " + JSON.stringify(elementValues));
-								}
-								
-								graphicIcon.updateValues(elementValues);
-							}
-							
-							// TODO ALARMS
-						});
-					}
-				}
+					let elementTypeParams = [];
 				
-				function getElementValues() {
-					
-					let elementValuesToUpdate = [];
-								
-					let elementAux = self.data.find(e => e.id === element.id);
-					
-					if (elementAux && Array.isArray(elementAux.elementValues) && elementAux.elementValues.length > 0) {
+					if (Array.isArray(self.data) && self.data.length > 0) {
 						
-						element.elementValues.forEach(elementValue => {
+						let elementAux = self.data.find(e => e.id === data.id);
+						
+						if (elementAux && Array.isArray(elementAux.elementValues) && elementAux.elementValues.length > 0) {
 							
-							let elementValueAux = elementAux.elementValues.find(e => e.id === elementValue.id);
-							
-							if (elementValueAux && elementValueAux.elementTypeParam) {
-								
-								elementValue.elementTypeParam = elementValueAux.elementTypeParam;
-								
-								elementValuesToUpdate.push(elementValue);
-							}	
-						})	
+							elementTypeParams = elementAux.elementValues.map(elementValue => elementValue.elementTypeParam);
+						}
 					}
 					
-					return elementValuesToUpdate;
+					let element = adapter.ws.element.get(data, elementTypeParams);
+					
+					if (element) {
+						
+						let graphicIcons = getGraphicIcons(element.id);
+					
+						if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+							
+							graphicIcons.forEach(graphicIcon => {
+							
+								if (element.elementTypeState) {
+									
+									graphicIcon.updateState(element.elementTypeState);
+								}
+								
+								if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+									
+									graphicIcon.updateValues(element.elementValues);
+								}
+								
+								// TODO ALARMS
+							});
+						}
+					}
 				}
 			}
 		}

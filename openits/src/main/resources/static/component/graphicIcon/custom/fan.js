@@ -23,8 +23,6 @@ export default class Fan extends GraphicIconCustomType {
 		this.gFan = this.g.select("#" + G_ID_FAN); 
 		this.gAnimation = this.g.select("#" + G_ID_ANIMATION);
 		this.gArrow = this.g.select("#" + G_ID_ARROW);
-		
-//		this.gArrowVisible = true;
 	}
 	
 	render(elementInfo) {
@@ -48,13 +46,7 @@ export default class Fan extends GraphicIconCustomType {
 				
 					case CMD_FAN_VALUE_MODE_DIRECT:
 					
-//						this.gArrowVisible = true;
-//						
-//						if (this.isVisible) {
-//							
-//							this.gArrow.attr({ visibility: "visible" });
-//						}
-						
+					
 						this.gArrow.attr({ fill: "#ffcc00" });
 						this.gAnimation.attr({ dur: "6s", from: "0 245 410", to: "360 245 410" });
 						this.gArrow.transform("r0," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
@@ -62,14 +54,7 @@ export default class Fan extends GraphicIconCustomType {
 						break;
 						
 					case CMD_FAN_VALUE_MODE_REVERSE:
-					
-//						this.gArrowVisible = true;
-//						
-//						if (this.isVisible) {
-//							
-//							this.gArrow.attr({ visibility: "visible" });
-//						}
-						
+										
 						this.gArrow.attr({ fill: "#ffcc00" });
 						
 						this.gAnimation.attr({ dur: "6s", from: "360 245 410", to: "0 245 410" });
@@ -79,39 +64,18 @@ export default class Fan extends GraphicIconCustomType {
 						
 					default:
 					
-//						this.gArrowVisible = false;
-						
 						this.gAnimation.attr({ dur: "indefinite" });
-//						this.gArrow.attr({ visibility: "hidden" });
-
 						this.gArrow.attr({ fill: "transparent" });
 				}	
 			}
 			else {
 				
-//				this.gArrowVisible = false;
-				
+			
 				this.gAnimation.attr({ dur: "indefinite" });
-//				this.gArrow.attr({ visibility: "hidden" });
 				this.gArrow.attr({ fill: "transparent" });
 			}
 			
-			//this.g.attr( { transform: "rotateX( 180deg )" });
 		}
 	}
-	
-//	visible(value) {
-//		
-//		this.isVisible = value;
-//		
-//		if (value && this.gArrowVisible) {
-//
-//			this.gArrow.attr({ visibility: "visible" });	
-//		}
-//		else {
-//			
-//			this.gArrow.attr({ visibility: "hidden" });
-//		}
-//	}
 }
 

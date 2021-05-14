@@ -59,7 +59,15 @@ export default class GraphicIcon {
 		}
 		else if (self.container.type === GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
 			
-			s = Snap("#" + self.container.obj.id);
+			s = self.container.obj;
+//			let container = $$(self.container.obj.id);
+//			
+//			if (container) {
+//				
+//				s = Snap("#" + self.container.obj.id);
+//				s.attr({ width: container.$width, height: container.$height });	
+//			}
+			
 		}
 		
 		let svgFile = graphicIcon.svgFile;
@@ -116,7 +124,7 @@ export default class GraphicIcon {
 			
 			function createTooltip() {
 				
-				if (self.layerElement.tooltip) {
+				if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.tooltip) {
 				
 					let tooltip = document.createElement("div");
 					tooltip.setAttribute("id", "graphic-icon-tooltip");
@@ -161,19 +169,24 @@ export default class GraphicIcon {
 		
 		function createSelection(gWidth, gHeight) {
 			
-			let gSel = s.rect(0, 0, gWidth, gHeight);
-			gSel.attr({ id: GraphicIcon.G_ID_SELBOX, visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
-			self.g.prepend(gSel);
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+				
+				let gSel = s.rect(0, 0, gWidth, gHeight);
+				gSel.attr({ id: GraphicIcon.G_ID_SELBOX, visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
+				self.g.prepend(gSel);	
+			}
+			
 		}
 		
 		function createText(gWidth, gHeight) {
 			
-			if (self.layerElement.showText) {
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.showText) {
 				
 				let alignCenter = (gWidth - (7 * self.element.alias.length)) / 2;
-				let gName = s.text(alignCenter, gHeight * 1.15, self.element.alias);
+				let gName = s.text(alignCenter, gHeight * 1.2, self.element.alias);
+				let textColor = self.layerElement.textColor ? self.layerElement.textColor : "#ffcc00";
 				
-				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: "#ffcc00" });
+				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: textColor });
 				gName.transform("s" + (1 / self.ratio));
 			
 				self.g.append(gName);	
@@ -184,9 +197,11 @@ export default class GraphicIcon {
 			
 			let wRatio = graphicIcon.width / gWidth;
 			let hRatio = graphicIcon.height / gHeight;
-			self.ratio = graphicIcon.width > graphicIcon.height ? wRatio : hRatio;
+			self.ratio = graphicIcon.width < graphicIcon.height ? wRatio : hRatio;
+			let x = self.layerElement.x ? self.layerElement.x : 0;
+			let y = self.layerElement.y ? self.layerElement.y : 0;
 			
-			let position = "t" + [self.layerElement.x, self.layerElement.y].join();
+			let position = "t" + [x, y].join();
 			//let scale = "s" + ((graphicIcon.width > graphicIcon.height) ? (graphicIcon.width / gWidth) : (graphicIcon.height / gHeight));
 			
 			
@@ -206,28 +221,35 @@ export default class GraphicIcon {
 		
 		function onClick(e) {
 			
-			// Custom event
-			if (self.events && self.events[GraphicIcon.EventTypes.ON_CLIC]) {
-				
-				eval(self.events[GraphicIcon.EventTypes.ON_CLIC])();
-			}
-			else {
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
 			
-				let gSel = self.g.select("#" + GraphicIcon.G_ID_SELBOX);
-		
-				if (gSel.attr("visibility") === "hidden") {
+				// Custom event
+				if (self.events && self.events[GraphicIcon.EventTypes.ON_CLIC]) {
 					
-					self.select();	
+					eval(self.events[GraphicIcon.EventTypes.ON_CLIC])();
+				}
+				else {
+				
+					let gSel = self.g.select("#" + GraphicIcon.G_ID_SELBOX);
+			
+					if (gSel.attr("visibility") === "hidden") {
+						
+						self.select();	
+					}	
 				}	
 			}
+			
 		}
 		
 		function onDblClick(e) {
 			
-			// Only custom events
-			if (self.events && self.events[GraphicIcon.EventTypes.ON_DBL_CLIC]) {
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
 				
-				eval(self.events[GraphicIcon.EventTypes.ON_DBL_CLIC])();
+				// Only custom events
+				if (self.events && self.events[GraphicIcon.EventTypes.ON_DBL_CLIC]) {
+					
+					eval(self.events[GraphicIcon.EventTypes.ON_DBL_CLIC])();
+				}	
 			}
 		}
 	}

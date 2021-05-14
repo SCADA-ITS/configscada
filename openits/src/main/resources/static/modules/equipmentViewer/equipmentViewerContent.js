@@ -363,8 +363,17 @@ export default class EquipmentViewerContent {
 			}
 
 			function onMessage(data) {
-
-				if (data) {
+				
+				let elementTypeParams = [];
+				
+				if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
+				
+					elementTypeParams = self.element.elementValues.map(elementValue => elementValue.elementTypeParam);
+				}
+				
+				let element = adapter.ws.element.get(data, elementTypeParams);
+									
+				if (element) {
 
 					let elementHeader = $$("view-main-content-header-element-" + self.uid);
 
@@ -373,34 +382,34 @@ export default class EquipmentViewerContent {
 						elementHeader.setValues({});
 					}
 
-					if (data.elementTypeState) {
+					if (element.elementTypeState) {
 
 						let elementStateBar = $$("view-main-content-header-bar-state-" + self.uid);
 
 						if (elementHeader) {
 
-							elementHeader.setValues({ elementTypeState: data.elementTypeState });
+							elementHeader.setValues({ elementTypeState: element.elementTypeState });
 						}
 
 						if (elementStateBar) {
 
-							elementStateBar.setValues({ elementTypeState: data.elementTypeState });
+							elementStateBar.setValues({ elementTypeState: element.elementTypeState });
 						}
 
 						if (self.equipmentViewerInfo) {
 
-							self.equipmentViewerInfo.updateState(data.elementTypeState);
+							self.equipmentViewerInfo.updateState(element.elementTypeState);
 						}
 					}
 
-					if (Array.isArray(data.alarms) && data.alarms.length > 0) {
+					if (Array.isArray(element.alarms) && element.alarms.length > 0) {
 
 						// TODO: Update alarms
 					}
 
-					if (self.equipmentViewerInfo && Array.isArray(data.elementValues) && data.elementValues.length > 0) {
+					if (self.equipmentViewerInfo && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
 
-						self.equipmentViewerInfo.updateMeasures(data.elementValues);
+						self.equipmentViewerInfo.updateMeasures(element.elementValues);
 					}
 				}
 			}

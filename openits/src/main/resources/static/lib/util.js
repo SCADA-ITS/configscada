@@ -984,6 +984,33 @@ export let util = {
 			}
 		}
 	},
+	
+	element: {
+		
+		getElementTypeParamId(elementValueId) {
+			
+			const ELEMENT_TYPE_PARAM = "ElementTypeParam";
+			let elementTypeParamArray = [];
+			let elementTypeParamId = undefined;
+			
+			if (elementValueId) {
+				
+				let elementValueArray = elementValueId.split(":");
+				
+				if (elementValueArray.length === 5) {
+					
+					elementTypeParamArray.push(ELEMENT_TYPE_PARAM);
+					elementTypeParamArray.push(elementValueArray[1]);
+					elementTypeParamArray.push(elementValueArray[4]);
+					elementTypeParamArray.push(elementValueArray[3]);
+					
+					elementTypeParamId = elementTypeParamArray.join(":"); 
+				}
+			}
+			
+			return elementTypeParamId;
+		}
+	},
 
 	datatable: {
 
