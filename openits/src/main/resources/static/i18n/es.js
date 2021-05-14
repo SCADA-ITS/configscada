@@ -1673,7 +1673,7 @@ var i18_es = {
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL*/
+/*AUSOL
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1783,9 +1783,9 @@ var i18_es = {
     "AlarmConfig:1307": "ALARMA OBJETO EN CARRIL DERECHO",
     "AlarmConfig:1308": "ALARMA VEHICULO EN CARRIL IZQUIERDO",
     "AlarmConfig:1309": "ALARMA VEHICULO EN CARRIL DERECHO",
-    "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",
+    "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",*/
         
-    /* TG 
+    /* TG */
     "AlarmConfig:1": "ALARMA ESTACION METEOROLOGICA DESCONECTADA",
     "AlarmConfig:2": "ALARMA CAMARA DESCONECTADA",
     "AlarmConfig:3": "ALARMA VISIBILIMETRO DESCONECTADO",
