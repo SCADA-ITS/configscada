@@ -1797,11 +1797,12 @@ var i18_es = {
     "AlarmConfig:9": "ALARMA RADAR DESCONECTADO",
     "AlarmConfig:10": "ALARMA RADAR PERSONA",
     "AlarmConfig:11": "ALARMA VMS DESCONECTADO",
-    "AlarmConfig:12": "ALARM RADAR ESCOMBROS",
-    "AlarmConfig:13": "ALARM RADAR VEHICULO LENTO",
-    "AlarmConfig:14": "ALARM RADAR VEHICULO PARADO",
-    "AlarmConfig:15": "ALARM RADAR KAMIKAZE",
-    "AlarmConfig:16": "ALARM RADAR COLA", */
+    "AlarmConfig:12": "ALARMA RADAR ESCOMBROS",
+    "AlarmConfig:13": "ALARMA RADAR VEHICULO LENTO",
+    "AlarmConfig:14": "ALARMA RADAR VEHICULO PARADO",
+    "AlarmConfig:15": "ALARMA RADAR KAMIKAZE",
+    "AlarmConfig:16": "ALARMA RADAR COLA", 
+    "AlarmConfig:17": "ALARMA VMS ERROR DE PIXEL", 
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",

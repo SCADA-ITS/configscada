@@ -1517,6 +1517,7 @@ var i18_en = {
     "AlarmConfig:14": "ALARM RADAR STOPPED VEHICLE",
     "AlarmConfig:15": "ALARM RADAR REVERSING",
     "AlarmConfig:16": "ALARM RADAR QUEUE",
+    "AlarmConfig:17": "ALARM VMS PIXEL ERROR", 
 			
     "pictograms.type.1":"Advertencia de peligro",
 	"pictograms.type.2":"Prioridad",

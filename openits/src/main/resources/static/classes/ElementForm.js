@@ -396,7 +396,9 @@ export default class TabForm {
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT
-								) {
+							    || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_81_VIS
+							    || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_82_ACCEL
+							    || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_83_RADAR) {
 									let elementQuery = webix.proxy(
 										"GraphQL",`
 										query ($elem: String!) {
@@ -791,7 +793,6 @@ export default class TabForm {
 			try {
 				if(data.elementValues) {
 					data.elementValues.forEach(item => {
-			    		console.log("Jony item: " + JSON.stringify(item));
 						if(item){
 							let itemValue = item.value;		
 							try {

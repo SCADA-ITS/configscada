@@ -137,7 +137,10 @@ export function getElementIcon(element, suffix="") {
     || elementType === elementTypeMap.ELEMENT_TYPE_67_SEM_RR
     || elementType === elementTypeMap.ELEMENT_TYPE_70_ANALIZADOR_RED
     || elementType === elementTypeMap.ELEMENT_TYPE_74_ERU
-    || elementType === elementTypeMap.ELEMENT_TYPE_75_GE) {
+    || elementType === elementTypeMap.ELEMENT_TYPE_75_GE
+    || elementType === elementTypeMap.ELEMENT_TYPE_81_VIS
+    || elementType === elementTypeMap.ELEMENT_TYPE_82_ACCEL
+    || elementType === elementTypeMap.ELEMENT_TYPE_83_RADAR) {
     updateIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_4_SEC) {
     etd.updateEtdIcon(element, suffix);
@@ -173,12 +176,6 @@ export function getElementIcon(element, suffix="") {
       full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {
 	  full_matrix_panel.updateMatrixPanelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_81_VIS) {
-    vis.updateVisIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_82_ACCEL) {
-    accel.updateAccelIcon(element, suffix);
-  } else if (elementType === elementTypeMap.ELEMENT_TYPE_83_RADAR) {
-    radar.updateRadarIcon(element, suffix);
   } else {
     if (typeof staticsIcons[elementType] != "undefined") {
       elem_icon = staticsIcons[elementType]["state"].find(
@@ -255,9 +252,10 @@ export function getElementSVG(element, width, height, suffix="", state="", value
     case elementTypeMap.ELEMENT_TYPE_66_VANE:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / ELEMENT_TYPE.values[element.elementType.id].scale_x) + ',' + (height / ELEMENT_TYPE.values[element.elementType.id].scale_y) + ')">' + createIcon(element, suffix) + '</g>';
       break; 
+   case elementTypeMap.ELEMENT_TYPE_13_SEM_RAV:
    case elementTypeMap.ELEMENT_TYPE_53_SEM_AA:
    case elementTypeMap.ELEMENT_TYPE_67_SEM_RR:
-      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 100) + ',' + (height / 100) + ')">' + createIcon(element, suffix) + '</g>';
+      iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 70) + ',' + (height / 70) + ')">' + createIcon(element, suffix) + '</g>';
       break;
     case elementTypeMap.ELEMENT_TYPE_9_FAN:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 522) + ',' + (height / 704) + ')">' + createIcon(element, suffix) + '</g>';
@@ -505,17 +503,17 @@ function updateIcon(element, suffix="") {
         document.getElementById(element.id + suffix + "yellow").style["fill"] = "gray";
         document.getElementById(element.id + suffix + "red").style["fill"] = "gray";
       } else if (params["SEM_STATUS"] == "1") {
-        document.getElementById(element.id + suffix + "green").style["fill"] = "#00FF00";
-        document.getElementById(element.id + suffix + "yellow").style["fill"] = "gray";
-        document.getElementById(element.id + suffix + "red").style["fill"] = "gray";
-      } else if (params["SEM_STATUS"] == "2") {
-        document.getElementById(element.id + suffix + "green").style["fill"] = "gray";
-        document.getElementById(element.id + suffix + "yellow").style["fill"] = "#ffff00";
-        document.getElementById(element.id + suffix + "red").style["fill"] = "gray";
-      } else if (params["SEM_STATUS"] == "3") {
         document.getElementById(element.id + suffix + "green").style["fill"] = "gray";
         document.getElementById(element.id + suffix + "yellow").style["fill"] = "gray";
         document.getElementById(element.id + suffix + "red").style["fill"] = "#FF0000";
+      } else if (params["SEM_STATUS"] == "2") {
+        document.getElementById(element.id + suffix + "green").style["fill"] = "gray";
+        document.getElementById(element.id + suffix + "yellow").style["fill"] = "#FFFF00";
+        document.getElementById(element.id + suffix + "red").style["fill"] = "gray";
+      } else if (params["SEM_STATUS"] == "3") {
+        document.getElementById(element.id + suffix + "green").style["fill"] = "#00FF00";
+        document.getElementById(element.id + suffix + "yellow").style["fill"] = "gray";
+        document.getElementById(element.id + suffix + "red").style["fill"] = "gray";
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_16_PA_ZONE){
@@ -534,19 +532,20 @@ function updateIcon(element, suffix="") {
       if (params["SEM_AMBAR_AMBAR_STATUS"] == 'true') {
         circle1.innerHTML = '<animate attributeName="fill" values="#ffff00;gray" dur="2s" repeatCount="indefinite" />';
         circle2.innerHTML = '<animate attributeName="fill" values="#ffff00;gray" begin="1s" dur="2s" repeatCount="indefinite" />';
-        svgAmbar.children[0].children[0].children[0].children[1].children[1].style.display = "block"
+        svgAmbar.children[0].children[3].children[0].children[2].style.display = "block"
       } else if (params["SEM_AMBAR_AMBAR_STATUS"] == 'false'){
         circle1.innerHTML = '';
         circle2.innerHTML = '';
-        svgAmbar.children[0].children[0].children[0].children[1].style["fill"] = "gray"
+        svgAmbar.children[0].children[3].children[0].children[2].style["fill"] = "gray"
+        svgAmbar.children[0].children[3].children[0].children[3].style["fill"] = "gray"
       }
     }
   } else if(element.elementType.id === ELEMENT_TYPE.ID_67_SEM_RR){
     if (params != undefined && params && params["SEM_ROJO_ROJO_STATUS"]) {
-      if (params["SEM_ROJO_ROJO_STATUS"] == 'true') {
+      if (params["SEM_ROJO_ROJO_STATUS"] == 1) {
         document.getElementById(element.id + suffix + "ligth1").style["fill"] = "#FF0000";
         document.getElementById(element.id + suffix + "ligth2").style["fill"] = "#FF0000";
-      } else if (params["SEM_ROJO_ROJO_STATUS"] == 'false'){
+      } else if (params["SEM_ROJO_ROJO_STATUS"] == 0){
         document.getElementById(element.id + suffix + "ligth1").style["fill"] = "gray";
         document.getElementById(element.id + suffix + "ligth2").style["fill"] = "gray";
       }

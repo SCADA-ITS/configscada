@@ -146,7 +146,7 @@ export const ELEMENT_TYPE = {
     		{PA_ZONE_PLAYING: "1004:2"}
       ]
     },
-    "ElementType:18" :{ id: "ElementType:18", uiType: UI_ELEMENT_TYPE_GENERIC, value: 18, scale_x: 40, scale_y: 40, svgRaw:SVG_18_ANEM_INT,
+    "ElementType:18" :{ id: "ElementType:18", uiType: UI_ELEMENT_TYPE_GENERIC, value: 18, scale_x: 15, scale_y: 15, svgRaw:SVG_18_ANEM_INT,
       elementTypeParams:[
         {ANEM_INT_WIND_SPEED: "1:2"}
       ]

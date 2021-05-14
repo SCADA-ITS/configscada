@@ -560,25 +560,25 @@ export let SVG_13_SEM_RAV =
        inkscape:label="sem"
        rx="1.0216126" />
     <ellipse
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="path1115"
-       cx="6.8125219"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +'red"' +
+       `cx="6.8125219"
        cy="3.0880778"
        rx="1.8303969"
        ry="1.6789649"
        inkscape:label="rojo" />
     <ellipse
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="path1115-0"
-       cx="6.8125219"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +'green"' +
+       `cx="6.8125219"
        cy="10.392361"
        rx="1.8303969"
        ry="1.6789649"
        inkscape:label="verde" />
     <ellipse
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-       id="path1115-2"
-       cx="6.8125219"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+       'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +'yellow"' +
+       `cx="6.8125219"
        cy="6.7631354"
        rx="1.8303969"
        ry="1.678965"
@@ -2336,17 +2336,17 @@ export let SVG_53_SEM_AA = `<?xml version="1.0" encoding="UTF-8" standalone="no"
          inkscape:label="sem"
          rx="0.68097687" />
       <ellipse
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-         id="path1115"
-         cx="4.6743193"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+         'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +':orangeCircle1"' +
+         `cx="4.6743193"
          cy="3.9314845"
          rx="1.2706153"
          ry="1.3481628"
          inkscape:label="rojo" />
       <ellipse
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-         id="path1115-2"
-         cx="4.6743193"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+         'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +':orangeCircle2"' +
+         `cx="4.6743193"
          cy="6.8824549"
          rx="1.2706153"
          ry="1.3481629"
@@ -2986,17 +2986,17 @@ export let SVG_67_SEM_RR = `<?xml version="1.0" encoding="UTF-8" standalone="no"
          inkscape:label="sem"
          rx="0.68097687" />
       <ellipse
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-         id="path1115"
-         cx="4.6743193"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+         'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +'ligth1"' +
+         `cx="4.6743193"
          cy="3.9314845"
          rx="1.2706153"
          ry="1.3481628"
          inkscape:label="rojo" />
       <ellipse
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-         id="path1115-2"
-         cx="4.6743193"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#313131;stroke-width:0.197536;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"` +
+         'id="' + REGEX_PATTERN_INIT + 'elementId' + REGEX_PATTERN_END +'ligth2"' +
+         `cx="4.6743193"
          cy="6.8824549"
          rx="1.2706153"
          ry="1.3481629"

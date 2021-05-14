@@ -1,8 +1,8 @@
 // Endpoints configuration
 const appConfig = {
 
-	restUrl: './api/v1/',
-	stompUrl: 'ws://192.168.88.170:61614',
+	restUrl: 'http://10.148.136.10:8090/openits/api/v1/',
+	stompUrl: 'ws://10.148.136.10:61614',
 }
 
 // APP properties
