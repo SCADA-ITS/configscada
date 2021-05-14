@@ -1752,15 +1752,22 @@ var i18_es = {
     "AlarmConfig:80" : "ALARMA GE GENERAL",
     "AlarmConfig:81" : "ALARMA GE MOTOR ENCENDIDO",
     "AlarmConfig:82" : "ALARMA GE NIVEL COMBUSTIBLE RESERVADO",
+    "AlarmConfig:83" : "ALARMA DEP&Oacute;SITO_DIESEL SIN CONEXI&Oacute;N",
+    "AlarmConfig:84" : "ALARMA DEP&Oacute;SITO_DIESEL NIVEL BAJO",
     "AlarmConfig:85" : "ALARMA SERVIDOR DAI SIN CONEXION",
     "AlarmConfig:86" : "ALARMA DAI INCIDENCIA",
     "AlarmConfig:87" : "ALARMA MEGAFONIA EMERGENCIA",
     "AlarmConfig:88" : "ALARMA VALVULA SIN CONEXI&Oacute;N",
     "AlarmConfig:89" : "ALARMA BAT_CONDEN SIN CONEXI&Oacute;N",
-    "AlarmConfig:90" : "ALARMA BAT_CONDEN BATERIA CONDENSADOR",
-
-    "AlarmConfig:83" : "ALARMA DEP&Oacute;SITO_DIESEL SIN CONEXI&Oacute;N",
-    "AlarmConfig:84" : "ALARMA DEP&Oacute;SITO_DIESEL NIVEL BAJO",
+    
+    "AlarmConfig:94" : "ALARMA SENSOR",
+    "AlarmConfig:95" : "ALARMA DEVANADOS MOTOR",
+    "AlarmConfig:96" : "ALARMA SENSOR",
+    "AlarmConfig:97" : "ALARMA SENSOR",
+    "AlarmConfig:98" : "ALARMA SENSOR",
+    "AlarmConfig:99" : "ALARMA SENSOR",
+    "AlarmConfig:100" : "ALARMA SENSOR",
+    
 
     "AlarmConfig:701": "ALARMA METEO PRECIPITACION MODERADA",
     "AlarmConfig:702": "ALARMA METEO VISIBILIDAD REDUCIDA",
