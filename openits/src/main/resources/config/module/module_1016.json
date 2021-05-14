@@ -14,5 +14,36 @@
 		"alarmsArray": "alarms"
 	},
 	"treeElementType": "1",
-	"gridAlarmsConfig": "1011"
+	"gridAlarmsConfig": "1011",
+	"gridStepPosition": 2,
+	"steps": {
+		"fromNoMap": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_ALARM_FILTER_HEADER",
+				"headerLabelDescription": "LBL_ALARM_FILTER_HEADER_STEP_1",
+				"labelAlias": "LBL_ALARM_FILTER_TYPE",
+				"stepLabel": "LBL_ALARM_FILTER_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepRadeonOptions"
+			},{
+				"position": 2,
+				"headerLabel": "LBL_ALARM_FILTER_HEADER",
+				"headerLabelDescription": "LBL_ALARM_FILTER_HEADER_STEP_2",
+				"labelAlias": "LBL_ALARM_FILTER_TREE_GRID",
+				"stepLabel": "LBL_ALARM_FILTER_STEP_2",
+				"active": false,
+				"drawFunction": "drawStepCreateTreeGrid"
+			},
+			{
+				"position": 3,
+				"headerLabel": "LBL_ALARM_FILTER_HEADER",
+				"headerLabelDescription": "LBL_ALARM_FILTER_HEADER_STEP_3",
+				"labelAlias": "LBL_ALARM_FILTER_CALENDAR",
+				"stepLabel": "LBL_ALARM_FILTER_STEP_3",
+				"active": false,
+				"drawFunction": "drawStepCalendar"
+			}
+		]
+	}
 }
