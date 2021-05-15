@@ -249,6 +249,9 @@ export default class EquipmentViewerContent {
 				animate: false,
 				borderless: true,
 				cells: [{ id: "tab2remove" + self.uid }],
+				multiview: {
+					keepViews:true
+		        },
 				tabbar: {
 					tabMargin: 6
 				}

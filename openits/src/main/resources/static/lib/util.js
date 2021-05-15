@@ -421,7 +421,8 @@ export let util = {
 
 				const lazy = async _ => {
 
-					let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
+					//let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
+					let jsFile = util.getContextPath() + "/" + module.jsFile;
 
 					const mod = await import(jsFile);
 
@@ -1251,6 +1252,11 @@ export let util = {
 		}
 
 		return hash;
+	},
+	
+	getContextPath() {
+		
+		return window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 	},
 
 	getSimpleId(key) {

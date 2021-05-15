@@ -56,7 +56,8 @@ function drawService(service, module) {
 
 		const lazy = async _ => {
 
-			let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
+			//let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
+			let jsFile = util.getContextPath() + "/" + module.jsFile;
 			const mod = await import(jsFile);
 
 			let lazyClass = new mod.default(module, mod);

@@ -143,7 +143,8 @@ export default class EquipmentViewerInfo {
 							
 							const lazy = async _ => {
 					
-								let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsDrawFile;
+								//let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsDrawFile;
+								let jsFile = util.getContextPath() + '/' + graphicIcon.jsDrawFile; 
 					
 								const mod = await import(jsFile);
 								

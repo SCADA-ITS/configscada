@@ -1,4 +1,5 @@
 import GraphicIcon from "./graphicIcon.js";
+import {util} from "../../lib/util.js";
 
 export default class GraphicIconCustom extends GraphicIcon {
 	
@@ -24,7 +25,8 @@ export default class GraphicIconCustom extends GraphicIcon {
 			
 			const lazy = async _ => {
 
-				let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsCustomTypeRender;
+				//let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsCustomTypeRender;
+				let jsFile = util.getContextPath() + "/" + graphicIcon.jsCustomTypeRender;
 
 				const mod = await import(jsFile);
 				

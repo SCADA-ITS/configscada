@@ -95,10 +95,10 @@ class MeasureItem {
 					this.currentValue = value;
 								
 					let res = `<div class="measure-box" style="background: ${stateValueBackColor}">
-									<image class="image" src="../../img/${icon}" />
+									<image class="image" src="img/${icon}" />
 									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
 									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${label}">${label}</span></div>
-									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="../../img/state/${iconElementValueState}" 
+									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="img/state/${iconElementValueState}" 
 													title="${stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
 							   </div>`;
 					
@@ -207,7 +207,7 @@ class MeasureGroup {
 			return {
 				view: "carousel",
 				borderless: true,
-			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id,
+			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.uid,
 				navigation:{
 				    type: "side",
 				    items: true,
