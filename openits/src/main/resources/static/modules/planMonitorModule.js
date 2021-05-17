@@ -72,12 +72,16 @@ export default class GenericGridModule extends GenericModule {
 					for (let index = data.length-1; index >= 0; index--) {
 						
 						let exist = false;
-						
-						if(data[index].planOrders){
 
-							exist = data[index].planOrders.some(order => {
-								return self.args.selectedPks.includes(order.comandElementElementId);
-							});
+						for (var key in data[index]) {
+
+							if(key.endsWith(".comandElementElementId")){
+
+								if (self.args.selectedPks.includes(data[index][key]) ){
+
+									exist=true;
+								}
+							}
 						}
 
 						if(!exist){

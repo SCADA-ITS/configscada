@@ -41,7 +41,7 @@ class AdapterGridGeneric extends AdapterGrid{
 			log.error(e.getMessage());
 			log.debug(ExceptionUtils.getStackTrace(e));
 		}
-
+		
 		return data;
 	}
 	
@@ -59,7 +59,7 @@ class AdapterGridGeneric extends AdapterGrid{
 				
 				if (!StringUtils.isEmpty(parentClassName)) {
 					
-					if (parentClassName.contains("[")) {
+					if (parentClassName.endsWith("].")) {
 						
 						key = parentClassName + key;
 					}
@@ -89,7 +89,6 @@ class AdapterGridGeneric extends AdapterGrid{
 				else if (value instanceof List) {
 
 					List<?> list = (List<?>) value;
-					List<?> rowList = new ArrayList<?>(); 
 
 					for (Object item : list) {
 						
@@ -99,13 +98,15 @@ class AdapterGridGeneric extends AdapterGrid{
 							
 							if (!StringUtils.isEmpty(fieldIdValue)) {
 
-								Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) item, null, fieldId);
-								rowList.add(objectMapFlattened);
+								Map<String, Object> objectMapFlattened = getObject((Map<String, Object>) item, entry.getKey() + "[" + fieldIdValue + "].", fieldId);
+								
+								for (Map.Entry<String, Object> entryObject : objectMapFlattened.entrySet()) {
+									
+									dataRow.put(entryObject.getKey(), entryObject.getValue());	
+								}
 							}
 						}
 					}
-					
-					dataRow.put(key, rowList);
 				}
 			}
 		}
