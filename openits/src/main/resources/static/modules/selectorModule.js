@@ -246,7 +246,7 @@ export default class selectorModule extends GenericModule {
 						return {
 							id: e.id,
 							alias: i18n.t(e.label),
-							description: i18n.t(e.label),
+							description: "",
 							image: e.image
 						};
 					});
@@ -271,7 +271,7 @@ export default class selectorModule extends GenericModule {
 				id: "view-main-selector-tree-" + self.uid,
 				header: i18n.t(treeSelector.label),
 				body: {
-					width: 200,
+					width: 250,
 					rows: [
 						{
 							cols: [
