@@ -29,72 +29,91 @@ export function generateIcon(element, suffix = "") {
 			id: elementTypeMap.ELEMENT_TYPE_24_PMV_A_C,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_26_PMV_64X64,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_27_PMV_A_B,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_28_PMV_192X64,
 			y_text: -0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_29_PMV_B_D,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "10px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_30_PMV_128X64,
 			y_text: 20,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP,
 			y_text: -4,
 			y_graphic: 1,
+			x_graphic: 0,
 			fontsize: "12px"
 		},		
 		{
 			id: elementTypeMap.ELEMENT_TYPE_36_PMV,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT,
 			y_text: 0,
 			y_graphic: 5,
-			fontsize: "15px"
+			x_graphic: 0,
+			fontsize: "13px"
+		},
+		{
+			id: elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA,
+			y_text: 0,
+			y_graphic: 5,
+			x_graphic: 63,
+			fontsize: "13px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_38_PMV_TXT,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "18px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_64_PMV_SNOW,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		},
 		{
 			id: elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT,
 			y_text: 0,
 			y_graphic: 0,
+			x_graphic: 0,
 			fontsize: "15px"
 		}
 	];
@@ -234,7 +253,7 @@ export function generateIcon(element, suffix = "") {
             // subpanel_x = subpanel_x + 1
             // subpanel_y = subpanel_y + 2
             
-            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), (subpanel_y + pmvParams.y_graphic).toString(), subpanel_width.toString(), subpanel_height.toString());
+            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), (subpanel_y + pmvParams.y_graphic).toString(), (subpanel_x + pmvParams.x_graphic).toString(), subpanel_width.toString(), subpanel_height.toString());
             im.attr("id", element.id + suffix + ":" + value_to_find);
             im.attr("subpanel_type", "graphic");
             if(subpanel_width != subpanel_height) {

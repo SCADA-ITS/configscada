@@ -110,6 +110,7 @@ export default class Map {
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_30_PMV_128X64 ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT ||
+        elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_35_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_36_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_38_PMV_TXT ||
@@ -144,6 +145,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
               || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
               || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
+              || elementType === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
@@ -299,6 +301,7 @@ export default class Map {
                   || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
                   || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
                   || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
+                  || elementType === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA
                   || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
@@ -559,6 +562,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
               || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
               || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
+              || elementType === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
@@ -1113,6 +1117,7 @@ export default class Map {
                     || elementType === elementTypeMap.ELEMENT_TYPE_30_PMV_128X64
                     || elementType === elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP
                     || elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT
+                    || elementType === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA
                     || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT

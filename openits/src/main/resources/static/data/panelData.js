@@ -34,6 +34,11 @@ export let panelData = {
         "scala_List": 4,
         "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x3\",\"Tamanio\":\"64x96\",\"Zonas\":[{\"Tamanio\":\"64x48\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"64x16\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"64x32\",\"Tipo\":\"Texto\",\"NumLineas\":\"2\",\"TamLineas\":\"64\"}]}]}",
     },
+    "ElementType:33": {
+        "scala": 5,
+        "scala_List": 4,
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x2\",\"Tamanio\":\"64x80\",\"Zonas\":[{\"Tamanio\":\"48x48\",\"Tipo\":\"Grafico\",\"NumLineas\":\"0\",\"TamLineas\":\"0\"},{\"Tamanio\":\"64x32\",\"Tipo\":\"Texto\",\"NumLineas\":\"2\",\"TamLineas\":\"64\"}]}]}",
+    },
     "ElementType:35": {
         "scala": 3.3,
         "scala_List": 4,

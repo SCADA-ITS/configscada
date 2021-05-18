@@ -78,10 +78,6 @@ export function getElementIcon(element, suffix="") {
     elem_icon = staticsIcons[elementType]["state"].find(
       (ic) => ic.state === elementState
     );
-  } else {
-    elem_icon = staticsIcons[elementTypeMap.ELEMENT_TYPE_33_ETD]["state"].find(
-      (ic) => ic.state === elementState
-    );
   }
 
   if (typeof elem_icon != "undefined") {
@@ -166,6 +162,8 @@ export function getElementIcon(element, suffix="") {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
+  }  else if (elementType === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA) {
+      full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   }  else if (elementType === elementTypeMap.ELEMENT_TYPE_35_PMV) {
     full_matrix_panel.updateMatrixPanelIcon(element, suffix);
   } else if (elementType === elementTypeMap.ELEMENT_TYPE_36_PMV) {
@@ -271,7 +269,8 @@ export function getElementSVG(element, width, height, suffix="", state="", value
       break;
     case elementTypeMap.ELEMENT_TYPE_24_PMV_A_C:
     case elementTypeMap.ELEMENT_TYPE_26_PMV_64X64:
-    case elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT:  
+    case elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT: 
+    case elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA:  
     case elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP:
       iconStr = '<g id="' + element.id + suffix + '" state="' + elementState + '" transform="scale(' + (width / 64) + ',' + (height / 64) + ')">' + generateFullMatrixPanelIcon(element, suffix) + '</g>';
       break;

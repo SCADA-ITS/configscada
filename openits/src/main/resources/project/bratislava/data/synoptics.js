@@ -259,6 +259,7 @@ export let synopticData= [
 					/*"Element:32:13",
 					"Element:32:14",*/
 					"Element:32:15",
+					"Element:33:4",
 					"Element:69:5",
 					"Element:69:6",
 				],
@@ -285,6 +286,7 @@ export let synopticData= [
 					"Element:69:4",*/
 					"Element:32:10",
 					"Element:32:11",
+					"Element:33:3",
 				],
 				"translation_key": "",
 				"visibility": "hidden"
@@ -399,6 +401,7 @@ export let synopticData= [
 					"Element:24:11",		
 					"Element:31:2",
 					"Element:31:5",
+					"Element:33:2",
 					"Element:64:3",
 					"Element:64:4",
 					"Element:64:7",
@@ -425,9 +428,10 @@ export let synopticData= [
 				"Element:64:6",
 				"Element:64:9",
 				"Element:64:10",
-				/*"Element:32:1",
+				"Element:32:1",
+				"Element:33:1",
 				"Element:69:1",
-				"Element:32:2",
+				/*"Element:32:2",
 				"Element:32:3",
 				"Element:32:4",*/
 			
@@ -461,6 +465,8 @@ export let synopticData= [
 		"Element:24:24": { "x": 1685, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-1"  },
 		"Element:29:13": { "x": 1738, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-2"  },
 		"Element:24:25": { "x": 1791, "y": 587,  "width": 30, "height": 35, "alias": "NRJS484L-3"  },
+		"Element:33:4": { "x": 1113, "y": 835,  "width": 30, "height": 35, "alias": "PDZJS06L"  },
+
 		
 		// S1F1_(6-11) P
 		"Element:24:14": { "x": 981, "y": 835,  "width": 30, "height": 35, "alias": "NRJS412P-1"  },
@@ -481,6 +487,8 @@ export let synopticData= [
 		"Element:24:26": { "x": 1452, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-1"  },
 		"Element:29:14": { "x": 1505, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-2"  },
 		"Element:24:27": { "x": 1558, "y": 510,  "width": 30, "height": 35, "alias": "NRJS416P-3"  },
+		"Element:33:3": { "x": 1455, "y": 730,  "width": 30, "height": 35, "alias": "PDZJS05P"  },
+
 		
 		// S1F2_(11-24) L
 		"Element:24:28": { "x": 333, "y": 981,  "width": 30, "height": 35, "alias": "NRJS482L-1"  },
@@ -593,14 +601,16 @@ export let synopticData= [
 		"Element:69:2": { "x": 1756, "y": 266,  "width": 40, "height": 45, "alias": "PDZDH13L"  },*/
 		"Element:64:11": { "x": 1623, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH25L"  },
 		"Element:64:12": { "x": 1697, "y": 180,  "width": 60, "height": 60, "alias": "PDZDH26L"  },
-		
+		"Element:33:2": { "x": 1622, "y": 625,  "width": 30, "height": 35, "alias": "PDZDH10L"  },
+		 
 		// S4-S5 P
 		"Element:31:1": { "x": 124, "y": 981,  "width": 88, "height": 79, "alias": "PDZTKD01P"  },
 		"Element:31:3": { "x": 124, "y": 722,  "width": 88, "height": 79, "alias": "PDZTDH02P"  },
 		"Element:31:4": { "x": 124, "y": 490,  "width": 88, "height": 79, "alias": "PDZTDH03P"  },
-		/*"Element:32:1": { "x": 124, "y": 425,  "width": 30, "height": 35, "alias": "PDZDH04aP"  },
+		"Element:32:1": { "x": 124, "y": 425,  "width": 30, "height": 35, "alias": "PDZDH04aP"  },
+		"Element:33:1": { "x": 350, "y": 260,  "width": 30, "height": 35, "alias": "PDZDH07P"  },
 		"Element:69:1": { "x": 255, "y": 327,  "width": 40, "height": 45, "alias": "PDZDH04bP"  },
-		"Element:32:2": { "x": 124, "y": 280,  "width": 30, "height": 35, "alias": "PDZDH05P"  },
+		/*"Element:32:2": { "x": 124, "y": 280,  "width": 30, "height": 35, "alias": "PDZDH05P"  },
 		"Element:32:3": { "x": 124, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH06P"  },
 		"Element:32:4": { "x": 344, "y": 130,   "width": 30, "height": 35, "alias": "PDZDH08P"  },*/
 

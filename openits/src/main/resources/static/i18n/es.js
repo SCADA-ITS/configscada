@@ -84,6 +84,8 @@ var i18_es = {
     "ElementType:31.description": "PANEL DE TEMPERATURA",
     "ElementType:32.alias": "Panel",
     "ElementType:32.description": "Panel",
+    "ElementType:33.alias": "Panel",
+    "ElementType:33.description": "Panel",
     "ElementType:34.alias": "ARMARIO_ELECTRICO_SCN",
     "ElementType:34.description": "ARMARIO_ELECTRICO_SCN",
     "ElementType:35.alias": "Panel",
@@ -784,7 +786,29 @@ var i18_es = {
     "ElementTypeParam:32:2:2.description": "Control de Brillo",
     "ElementTypeParam:32:2:3.alias": "Temperatura",
     "ElementTypeParam:32:2:3.description": "Temperatura",
- 
+
+    "ElementTypeParam:33:1:1.alias": "PK",
+    "ElementTypeParam:33:1:1.description": "PK",
+    "ElementTypeParam:33:1:2.alias": "Sentido",
+    "ElementTypeParam:33:1:2.description": "Sentido",
+    "ElementTypeParam:33:1:3.alias": "Direccion Logica",
+    "ElementTypeParam:33:1:3.description": "Direccion Logica",
+    "ElementTypeParam:33:1:4.alias": "Protocolo",
+    "ElementTypeParam:33:1:4.description": "Protocolo",
+    "ElementTypeParam:33:1:5.alias": "Disposicion",
+    "ElementTypeParam:33:1:5.description": "Disposicion",
+    "ElementTypeParam:33:1:6.alias": "Carretera",
+    "ElementTypeParam:33:1:6.description": "Carretera",
+    "ElementTypeParam:33:1:7.alias": "Seccion",
+    "ElementTypeParam:33:1:7.description": "Seccion",
+    "ElementTypeParam:33:1:8.alias": "Armario Asociado",
+    "ElementTypeParam:33:1:8.description": "Armario Asociado",
+    "ElementTypeParam:33:2:1.alias": "Brillo",
+    "ElementTypeParam:33:2:1.description": "Brillo",
+    "ElementTypeParam:33:2:2.alias": "Control de Brillo",
+    "ElementTypeParam:33:2:2.description": "Control de Brillo",
+    "ElementTypeParam:33:2:3.alias": "Temperatura",
+    "ElementTypeParam:33:2:3.description": "Temperatura",
    
     "ElementTypeParam:34:1:1.alias": "PK",
     "ElementTypeParam:34:1:1.description": "PK",
@@ -1475,7 +1499,8 @@ var i18_es = {
     "CommandElementType:2:32": "SEÑALIZAR",
     "CommandElementType:3:32": "APAGAR",
     
-    "CommandElementType:1:33": "CAMBIAR LONGITUD 1",
+    "CommandElementType:1:33": "REINICIAR",
+    "CommandElementType:3:33": "APAGAR",
     
     "CommandElementType:1:35": "REINICIAR",
     "CommandElementType:2:35": "SEÑALIZAR",
@@ -1519,7 +1544,7 @@ var i18_es = {
 
 
 
-    /*  BRATISLAVA 
+    // BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1664,10 +1689,17 @@ var i18_es = {
     "AlarmConfig:152": "ALARMA PMV ADVERTENCIA DE TEMPERATURA",
     "AlarmConfig:153": "ALARMA PMV TEMPERATURA CRITICA",
     "AlarmConfig:154": "ALARMA PMV ERROR DE PUERTA ABIERTA",
+    "AlarmConfig:155": "ALARMA PLC ARMARIO SIN CONEXI&Oacute;N",
     "AlarmConfig:156": "ALARMA CONTROLADORA PMV ADVERTENCIA DE TEMPERATURA",
     "AlarmConfig:157": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",
     "AlarmConfig:158": "ALARMA CONTROLADORA PMV ADVERTENCIA DE TEMPERATURA",
-    "AlarmConfig:159": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",*/
+    "AlarmConfig:159": "ALARMA CONTROLADORA PMV TEMPERATURA CRITICA",
+    "AlarmConfig:249": "ALARMA PMV SIN CONEXI&Oacute;N",
+    "AlarmConfig:250": "ALARMA PMV ERROR DE PIXEL",
+    "AlarmConfig:251": "ALARMA PMV ERROR DE FOTOCELULA",
+    "AlarmConfig:252": "ALARMA PMV ADVERTENCIA DE TEMPERATURA",
+    "AlarmConfig:253": "ALARMA PMV TEMPERATURA CRITICA",
+    "AlarmConfig:254": "ALARMA PMV PUERTA ABIERTA",
    
 
     "Alarm_recon": "Alarma ya reconocida",
@@ -1785,7 +1817,7 @@ var i18_es = {
     "AlarmConfig:1309": "ALARMA VEHICULO EN CARRIL DERECHO",
     "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",*/
         
-    /* TG */
+    /* TG 
     "AlarmConfig:1": "ALARMA ESTACION METEOROLOGICA DESCONECTADA",
     "AlarmConfig:2": "ALARMA CAMARA DESCONECTADA",
     "AlarmConfig:3": "ALARMA VISIBILIMETRO DESCONECTADO",
@@ -1802,7 +1834,7 @@ var i18_es = {
     "AlarmConfig:14": "ALARMA RADAR VEHICULO PARADO",
     "AlarmConfig:15": "ALARMA RADAR KAMIKAZE",
     "AlarmConfig:16": "ALARMA RADAR COLA", 
-    "AlarmConfig:17": "ALARMA VMS ERROR DE PIXEL", 
+    "AlarmConfig:17": "ALARMA VMS ERROR DE PIXEL", */
     
     "AlarmType:1": "Alarma",
     "AlarmType:2": "Alerta",
