@@ -29,7 +29,7 @@ export default class CCTV {
 					elementTypeParam {
 						id 
 						alias
-						representation
+						
 					}
 				}
 			}
@@ -44,8 +44,7 @@ export default class CCTV {
                 elementValues {id value alerted elementTypeParam {
                   id 
                   alias  
-                  representation
-                  graphics {id alias graphicType graphicValues {id value}}
+                 
                 }}
             
               }
