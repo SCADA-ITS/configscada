@@ -21,33 +21,35 @@ export default class PlanModule extends GenericModule {
 
 		if (this.moduleAction.id === this.config.moduleAction.play) {
 
-			this.actionPlay();
+			actionPlay();
 		}
+		
+		function actionPlay() {
 
-	}
-
-	actionPlay() {
-
-		let self = this;
-
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
-
-			webix.confirm({
-				title: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
-				ok: i18n.t("LBL_YES"),
-				cancel: i18n.t("LBL_NO"),
-				text: i18n.t("LBL_PLAN_CONFIRM_PLAY_DESCRIPTION"),
-				width: 600
-			}).then(function() {
-
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.play, { "planIds": self.args.selectedPks }).then(function(data) {
-					if (self.args.callbacks.length > 0) {
-
-						self.args.callbacks[0]();
-					}
+			let self = this;
+	
+			if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+	
+				webix.confirm({
+					title: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
+					ok: i18n.t("LBL_YES"),
+					cancel: i18n.t("LBL_NO"),
+					text: i18n.t("LBL_PLAN_CONFIRM_PLAY_DESCRIPTION"),
+					width: 600
+				}).then(function() {
+	
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.play, { "planIds": self.args.selectedPks }).then(function(data) {
+						if (self.args.callbacks.length > 0) {
+	
+							self.args.callbacks[0]();
+						}
+					});
 				});
-			});
+			}
 		}
+
 	}
+
+	
 
 }

@@ -62,7 +62,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 			
 				if (!(color = self.element.elementTypeState.color)) {
 						
-					color = GraphicIcon.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(elementState.lastIndexOf(":") + 1));  
+					color = GraphicIcon.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(id.lastIndexOf(":") + 1));  
 				}
 				
 				return {

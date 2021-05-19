@@ -146,10 +146,18 @@ export default class GraphicIcon {
 								
 				if (elementType && elementTypeState) {
 					
+					let elementTypeStateColor;
+				
+					if (!(elementTypeStateColor = elementTypeState.color)) {
+						
+						elementTypeStateColor = GraphicIcon.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));  
+					}
+					
+					
 					tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
 										<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 										<div class="state">
-											<span class="badge" style="background: ${elementTypeState.color} ">${i18n.t(elementTypeState.labelAlias)}</span>
+											<span class="badge" style="background: ${elementTypeStateColor} ">${i18n.t(elementTypeState.labelAlias)}</span>
 										</div>
 										<div class="text">${self.element.alias}</div>`;
 										
@@ -197,7 +205,9 @@ export default class GraphicIcon {
 			
 			let wRatio = graphicIcon.width / gWidth;
 			let hRatio = graphicIcon.height / gHeight;
-			self.ratio = graphicIcon.width < graphicIcon.height ? wRatio : hRatio;
+
+			//self.ratio = graphicIcon.width < graphicIcon.height ? wRatio : hRatio;
+			self.ratio = gWidth > gHeight ? wRatio : hRatio;
 			let x = self.layerElement.x ? self.layerElement.x : 0;
 			let y = self.layerElement.y ? self.layerElement.y : 0;
 			
