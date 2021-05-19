@@ -270,11 +270,11 @@ export default class TreeView {
 			let data = applyProperties(webix.copy(self.data));
 			
 			//console.log(data);
-			
-			let ids = data.map(e => {
+			try {
+			let ids = data !== null && data !== undefined ? data.map(e => {
 				return e.id
-			});
-			
+			}) : null;
+			} catch(e) {console.log(e);}
 			//console.log(ids.sort());
 			
 			

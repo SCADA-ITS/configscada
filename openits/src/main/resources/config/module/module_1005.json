@@ -6,6 +6,9 @@
 	    	"ignoreCommandModuleActions": [101402]
 	    }
 	},
+	"actionEndpoints": {
+		"createManualAlarm": "alarms/send_alarms"
+	},
 	"adapter": "ws.alarm.getList",
 	"restEndpoint": "alarms",
 	"restEndpoints": {
@@ -29,5 +32,20 @@
 		"alarmMuted": 1015,
 		"newIncident":101303,
 		"alarmConfig": 1002
+	},
+	"gridAlarmsConfig": "1011",
+	"gridStepPosition": 1,
+	"steps": {
+		"fromNoMap": [
+			{
+				"position": 1,
+				"headerLabel": "LBL_CREATE_ALARM_MANUAL_HEADER",
+				"headerLabelDescription": "LBL_CREATE_ALARM_MANUAL_HEADER_STEP_1",
+				"labelAlias": "LBL_CREATE_ALARM_MANUAL_TYPE",
+				"stepLabel": "LBL_CREATE_ALARM_MANUAL_STEP_1",
+				"active": true,
+				"drawFunction": "drawStepCreateTreeGrid"
+			}
+		]
 	}
 }
