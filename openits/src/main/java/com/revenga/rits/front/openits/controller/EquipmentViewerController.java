@@ -40,8 +40,8 @@ public class EquipmentViewerController {
 	@ApiOperation(value = "Get equipment viewer by element id", notes = "Get equipment viewer by element id")
 	public ResponseEntity<EquipViewer> getEquipmentViewer(
 			@ApiParam(
-					name = "id",
-					type = "Integer",
+					name = "elementId",
+					type = "String",
 					value = "Equipment viewer identifier",
 					example = "Element:71:1",
 					required = true) @PathVariable String elementId) {
