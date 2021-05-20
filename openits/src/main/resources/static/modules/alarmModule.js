@@ -1,5 +1,7 @@
 import GenericModule from "../modules/genericModule.js";
 import InputDialogBox from "../component/inputDialogBox.js";
+import TreeView from "../component/treeview.js";
+import DataTable from "../component/datatable.js";
 import CalendarDialogBox from "../component/calendarDialogBox.js";
 import { util } from "../lib/util.js";
 
@@ -71,6 +73,10 @@ export default class AlarmModule extends GenericModule {
 		else if (this.moduleAction.id === this.config.moduleAction.deactivate) {
 
 			deactivate();
+		}
+		else if (this.moduleAction.id === this.config.moduleAction.createManualAlarm) {
+
+			createManualAlarm();
 		}
 
 		function recognize() {
@@ -155,8 +161,9 @@ export default class AlarmModule extends GenericModule {
 								let alarmType = alarmConfig.alarmType.id;
 								
 								if (alarmType) {
-								
-									allAlarmsManual &= Array.isArray(self.config.alarmTypeManual) && (self.config.alarmTypeManual.indexOf(alarmType) !== -1);	
+
+									allAlarmsManual &= Array.isArray(self.config.alarmTypeManual) && (self.config.alarmTypeManual.indexOf(alarmType) !== -1);
+
 								}
 							}
 						});
@@ -189,6 +196,382 @@ export default class AlarmModule extends GenericModule {
 					}
 				});
 			}
+		}
+
+		function createManualAlarm() {
+
+			function drawGrid() {
+
+				let view = {};
+
+				const defaultGridOptionValues = [
+					{ id: 1024, value: "false", gridOption: { id:  7, description: "bool", enabled: "true", name: "tb_main", visible: "true"}},
+					{ id: 1023, value: "false", gridOption: { id: 10, description: "bool", enabled: "true", name: "tb_actions", visible: "true"}},
+					{ id: 1022, value: "false", gridOption: { id: 11, description: "bool", enabled: "true", name: "tb_actions_buttons_commons", visible: "true"}},
+					{ id: 1025, value: "img/grid/alarmConfig.png", gridOption: { id: 16, description: "string", enabled: "true", name: "icon", visible: "true"}}
+				];
+
+				let metadata = {
+					filter: false,
+					label: "LBL_ALARM_CONFIG",
+					visible: true,
+					gridOptionValues: defaultGridOptionValues,
+					gridFields: [
+						{
+							id: 101101,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: true,
+							label: "LBL_ID",
+							labelTooltip: "LBL_ID",
+							needsTranslation: false,
+							parameterized: false,
+							position: 1,
+							required: true,
+							sourceField: "id",
+							visible: false,
+							widthPx: 50,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							id: 101102,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_ALARM_CONFIG_ALIAS",
+        					labelTooltip: "LBL_ALARM_CONFIG_ALIAS",
+							needsTranslation: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "alarmConfigAlias",
+							visible: true,
+							widthPx: 350,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							id: 101104,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							needsTranslation: true,
+							parameterized: false,
+							position: 4,
+							required: true,
+							sourceField: "alarmLevelLabelAlias",
+							visible: true,
+							label: "LBL_ALARM_LEVEL_ALIAS",
+							labelTooltip: "LBL_ALARM_LEVEL_ALIAS",
+							widthPx: 100,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						}
+
+					]
+				};
+	
+				self.tableAlarmsModal = new DataTable(null, null, metadata, []);
+
+				view = {
+					id: "viewTable" + self.uid,
+					cols: [
+						{
+							width: 600,
+							rows: self.tableAlarmsModal.getView()
+							
+						}
+					]
+				};			
+
+				return view;
+
+			}
+
+			function drawTree() {
+
+				let view = {};
+
+				let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
+				let alarmConfigManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
+	
+				let elemntTypeList = [];
+				alarmConfigManual.forEach(e => {
+					elemntTypeList.push(e.elementType.id);
+				});
+	
+				elemntTypeList = [...new Set(elemntTypeList)].sort((a,b)=>parseInt(a.split(":")[1])-parseInt(b.split(":")[1]));
+	
+				let data = [];
+				let elements = window.em.getAll(EntityType.ELEMENT);
+	
+				elemntTypeList.forEach(e => {
+	
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", e);
+	
+					let parent = {
+						id: elementType.id,
+						value: elementType.alias,
+						data: [],
+						props: {
+							folder: true,
+							translate: false
+						}
+					}
+	
+					let elementsTree = elements.filter(item => item.elementType.id === e);
+	
+					if (Array.isArray(elementsTree) && elementsTree.length > 0) {
+						
+						elementsTree.forEach(item => {
+							
+							let child = {
+								
+								id: item.id,
+								value: item.alias,
+								props: {}
+							}
+							
+							parent.data.push(child);
+						});
+					}
+					
+					data.push(parent);
+	
+				});
+	
+				let events = {};
+	
+				let metadata = {
+					id: -1,
+					label: "LBL_EQUIPMENT_HIERARCHY",
+					treeOptionValues: [
+						{ value: "img/tree/equipment.png", treeOption: { id: 1 } },
+						{ value: false, treeOption: { id: 2 } },
+						{ value: true, treeOption: { id: 3 } },
+						{ value: true, treeOption: { id: 4 } },
+						{ value: true, treeOption: { id: 5 } },
+						{ value: false, treeOption: { id: 6 } }
+					]
+				};
+				
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(items) {
+	
+					self.tableAlarmsModal.clear();
+	
+					let element = window.em.getByField(EntityType.ELEMENT, undefined, items);
+					self.alarmMutedElementSelect = element;
+	
+					let elementTypeId = element.elementType.id;
+					let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
+					let aconfitArray = alarmConfig.find(e => e.elementType.id === elementTypeId);
+	
+					if (Array.isArray(aconfitArray) && aconfitArray.length) {
+						let alarmsConfig = aconfitArray;
+						for (let i = 0; i < alarmsConfig.length; i++) {
+	
+							let row = {};
+	
+							row.id = alarmsConfig[i].id;
+							row.alarmConfigAlias = alarmsConfig[i].alias;
+							row.alarmTypeLabelAlias = i18n.t(alarmsConfig[i].alarmType.labelAlias);
+							row.alarmLevelLabelAlias = i18n.t(alarmsConfig[i].alarmLevel.labelAlias);
+	
+							self.tableAlarmsModal.add(row);
+						}
+					} else {
+	
+						let row = {};
+	
+						row.id = aconfitArray.id;
+						row.alarmConfigAlias = aconfitArray.alias;
+						row.alarmTypeLabelAlias = i18n.t(aconfitArray.alarmType.labelAlias);
+						row.alarmLevelLabelAlias = i18n.t(aconfitArray.alarmLevel.labelAlias);
+	
+						self.tableAlarmsModal.add(row);
+					}
+					
+				};
+	
+				let treeView = new TreeView(metadata, data, events);
+	
+				view = {
+					id: "viewTree" + self.uid,
+					cols: [
+						{
+							width: 250,
+							rows: [
+								treeView.getView()		
+							]
+						}
+					]
+				};
+
+				return view;
+
+			}
+
+			function drawButtons() {
+
+				return {
+					cols: [
+						{
+							rows: [
+								{ height: 10},
+								{
+									view: "toolbar",
+									height: 45,
+									borderless: true,
+									elements: [
+										{ width: 18 },
+										{ 
+											id: "button-cancel-" + "-" + self.uid,
+											view: "button",
+											css: "dialog-cancel", 
+											width: 130,
+											height: 35,
+											label: i18n.t("LBL_CANCEL"),
+											on: {
+												onItemClick() {
+				
+													$$(self.createView).close();
+				
+												}
+											}
+										},
+										{},
+										{
+											id: "button-next-" + "-" + self.uid,
+											view: "button", 
+											css: "dialog-accept",
+											width: 130,
+											height: 35,
+											label: i18n.t("LBL_ACCEPT"),
+											on: {
+												onItemClick() {
+					
+													if(Array.isArray(self.tableAlarmsModal.getSelectedIds()) && self.tableAlarmsModal.getSelectedIds().length > 0){
+															
+														let userData = util.user.auth();
+		
+														(new InputDialogBox(i18n.t("LBL_DIALOG_CREATE_MANUAL_ALARM"), i18n.t("LBL_ARE_YOU_SURE_CREATE_MANUAL_ALARM"), function(comments) {
+						
+															let body = {
+																"alarmConfigIds": self.tableAlarmsModal.getSelectedIds(), 
+																"targetElementIds":[self.alarmMutedElementSelect.id], 
+																"userId": userData.id,
+																"creationComments": comments
+															};
+										
+															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.createManualAlarm, body).then(function(data) {
+																console.log(data);
+																$$(self.createView).close();
+															});
+															
+														})).show();
+		
+													} else {
+		
+														webix.alert({
+															title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
+															text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
+															type: "alert-warning",
+															width: 500
+														}); 
+		
+													}
+												}
+											}
+										},
+										{ width: 18 }
+									]
+								},
+								{ height: 10}
+							]
+						}
+					]
+				};
+
+			}
+
+			let view = {
+				css: "custom_window",
+				cols: [
+					{
+						rows: [
+							{ height: 6 },
+							{
+								id: "custom_window" + self.uid,
+								type: "line",
+								cols: [
+									{ width: 6 },
+									{
+										id: "view" + "createManual" + "loading-" + self.uid,
+										rows: [util.ui.getViewDrawNoData()],
+										height: 500,
+										width: 834,
+										hidden: true
+									},
+									{ width: 6 }
+								]
+							},
+							{ height: 30 }
+						]
+					}
+				]
+			};
+
+			let h = document.documentElement.clientHeight - 400;
+			let w = document.documentElement.clientWidth - 1000;
+
+			self.createView = util.ui.loadWindow(
+				i18n.t("LBL_CREATE_MANUAL_ALARM"),
+				view,
+				h,
+				w,
+				true
+			);
+		
+			$$("view" + "createManual" + "loading-" + self.uid).show();
+
+			let multiView = {
+				
+				view: "multiview",
+				id: "multi" + self.uid,
+				animate: false,
+				height: 0,
+				cells: [
+					{
+						rows: [
+							{
+								id: "treeGridView" + self.uid,
+								cols:[]
+							},
+							{ 
+								rows: [{ height: 20 }] 
+							},
+							drawButtons()
+						]
+					}
+				]
+
+			};
+
+			$$("custom_window" + self.uid).addView(multiView, 1);
+			$$("treeGridView" + self.uid).addView(drawTree(), 1);
+			$$("treeGridView" + self.uid).addView(drawGrid(), 2);
+			$$("view" + "createManual" + "loading-" + self.uid).hide();
+
 		}
 
 	}
