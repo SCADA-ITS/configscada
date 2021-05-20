@@ -36,17 +36,17 @@ public class EquipmentViewerController {
 		return new ResponseEntity<>(equipmentViewerBO.getEquipViewers(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{id}")
-	@ApiOperation(value = "Get equipment viewer by id", notes = "Get equipment viewer by id")
+	@GetMapping(value = "/{elementId}")
+	@ApiOperation(value = "Get equipment viewer by element id", notes = "Get equipment viewer by element id")
 	public ResponseEntity<EquipViewer> getEquipmentViewer(
 			@ApiParam(
 					name = "id",
 					type = "Integer",
 					value = "Equipment viewer identifier",
-					example = "ElementType:1",
-					required = true) @PathVariable String id) {
+					example = "Element:71:1",
+					required = true) @PathVariable String elementId) {
 
 		
-		return new ResponseEntity<>(equipmentViewerBO.getEquipViewer(id), HttpStatus.OK);
+		return new ResponseEntity<>(equipmentViewerBO.getEquipViewer(elementId), HttpStatus.OK);
 	}
 }

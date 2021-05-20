@@ -129,7 +129,7 @@ export default class EquipmentViewerModule extends GenericModule {
 							
 							if (element) {
 								
-								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: element.elementType.id })).then(function(equipmentViewerResponse) {
+								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { elementId: elementId })).then(function(equipmentViewerResponse) {
 									
 									if (equipmentViewerResponse) {
 									
@@ -353,7 +353,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 				else {
 					
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: elem.elementType.id })).then(function(dat) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: elem.id })).then(function(dat) {
 				
 						if (dat != null) {
 							
