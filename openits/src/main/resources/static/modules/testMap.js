@@ -1,5 +1,36 @@
 import GenericModule from "../modules/genericModule.js";
 
+const CIRCLES = [
+	{
+		id: "svgContainer-1",
+		lonlat: [-4.899232, 36.516884],
+		w: 200,
+		h: 200,
+		r: 100
+	},
+	{
+		id: "svgContainer-2",
+		lonlat: [-4.869415, 36.520443],
+		w: 200,
+		h: 200,
+		r: 100
+	},
+	{
+		id: "svgContainer-3",
+		lonlat: [-4.861390, 36.521426],
+		w: 200,
+		h: 200,
+		r: 100
+	},
+	{
+		id: "svgContainer-4",
+		lonlat: [-4.852636, 36.524414],
+		w: 200,
+		h: 200,
+		r: 100
+	}
+]
+
 export default class TestMap extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -9,6 +40,9 @@ export default class TestMap extends GenericModule {
 		this.uid = webix.uid();
 		this.config = module.config;
 		this.map = undefined;
+		this.buttonPressed = false;
+		this.draw;
+
 
 	}
 
@@ -108,8 +142,9 @@ export default class TestMap extends GenericModule {
 									],
 									view: new ol.View({
 										center: ol.proj.fromLonLat([-4.869415, 36.520443]),
+										//extent: [ -553203.4061760335, 4366939.736625225, -531934.8030556832, 4374793.6412815275 ],
 										zoom: 13
-									}),
+									})
 								});
 
 								drawSvg();
@@ -117,6 +152,66 @@ export default class TestMap extends GenericModule {
 								return map;
 							}
 						}
+					},
+					{
+						view: "toolbar",
+						id: "syn-toolbar-main-" + self.uid,
+						css: "syn-toolbar-zoom",
+						borderless: true,
+						top: 10,
+						left: 10,
+						width: 120,
+						height: 85,
+						rows: [
+							{ height: 23 },
+							{
+								cols: [
+									{ width: 40 },
+									{
+										id: "reset-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "mdi mdi-restore",
+										tooltip: i18n.t("LBL_RESET"),
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												map.getView().animate({
+													center: ol.proj.fromLonLat([-4.869415, 36.520443]),
+													zoom: 15,
+													duration: 3000
+												});
+											}
+										}
+									},
+									{
+										id: "add-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-radiobox-marked",
+										tooltip: i18n.t("LBL_ADD"),
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+												console.log($$("add-" + self.uid).config);
+
+													($$("add-" + self.uid)).config.css = "button-add-pressed";
+
+												if (self.buttonPressed === false) {
+													self.buttonPressed = true;
+													addMarker();
+												} else {
+													self.buttonPressed = false;
+													map.removeInteraction(self.draw);
+												}
+											}
+										}
+									}
+								]
+							}]
 					}
 				]
 			}
@@ -158,7 +253,7 @@ export default class TestMap extends GenericModule {
 				});
 
 				circle2.animate({ r: 1 }, 250, function() {
-					circle2.animate({ r: 2 },250);
+					circle2.animate({ r: 2 }, 250);
 				});
 
 				circle3.animate({ r: 1 }, 200, function() {
@@ -171,6 +266,22 @@ export default class TestMap extends GenericModule {
 			};
 
 			setInterval(blink, 3000);
+
+
+			//			let arraySvgLayer = [];
+			//
+			//			arraySvgLayer.push(new ol.Overlay({
+			//				position: svgPosition1,
+			//				positioning: 'center-center',
+			//				element: document.getElementById('svgContainer-1'),
+			//				//element: $$("mapDetail-" + self.uid).innerHTML.getElementById('svgContainer-1'),
+			//				stopEvent: false
+			//			}));
+			//
+			//			arraySvgLayer.forEach(svgLayer => {
+			//
+			//				map.addOverlay(svgLayer);
+			//			});
 
 			let svgLonLat1 = [-4.899232, 36.516884];
 			let svgPosition1 = ol.proj.fromLonLat(svgLonLat1);
@@ -218,6 +329,82 @@ export default class TestMap extends GenericModule {
 			map.addOverlay(svgLayer4);
 
 		}
+
+		map.on('dblclick', function(evt) {
+
+			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+
+			console.log(evt, coor);
+
+			webix.alert({
+				title: "COORDENADAS",
+				text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
+				type: "alert-warning",
+				width: 500
+			});
+		});
+
+
+		function addMarker() {
+
+			let source = new ol.source.Vector();
+
+			let marksLayer = new ol.layer.Vector({
+				source: source,
+				style: new ol.style.Style({
+					fill: new ol.style.Fill({
+						color: 'rgba(255, 255, 255, 0.2)'
+					}),
+					stroke: new ol.style.Stroke({
+						color: '#ffcc33',
+						width: 2
+					}),
+					image: new ol.style.Circle({
+						radius: 7,
+						fill: new ol.style.Fill({
+							color: '#ffcc33'
+						})
+					})
+				})
+			});
+
+			map.addLayer(marksLayer);
+
+			let modify = new ol.interaction.Modify({ source: source });
+
+			map.addInteraction(modify);
+
+			function addInteractions() {
+
+				self.draw = new ol.interaction.Draw({
+					source: source,
+					type: "Point"
+				});
+
+				map.addInteraction(self.draw);
+
+				self.snap = new ol.interaction.Snap({ source: source });
+				map.addInteraction(self.snap);
+
+			}
+
+			addInteractions();
+
+			map.on('singleclick', function(evt) {
+
+				let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+
+				webix.alert({
+					title: "COORDENADAS",
+					text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
+					type: "alert-warning",
+					width: 500
+				});
+
+				evt.preventDefault();
+			});
+		}
+
 
 	}
 }
