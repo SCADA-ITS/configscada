@@ -39,14 +39,15 @@ export default class EquipmentViewerInfo {
 			
 			viewMain = {
 				cols: [
-					{ width: 100 },
+					{ width: 50 },
 					getViewMainImage(),
 					{},
 					getViewMainInfo(),
-					{ width: 100}
+					{}
+					//{ width: 100 }
 				]
 			};
-			
+						
 			function getViewMainImage() {
 				
 				let viewMainImage = {};
@@ -63,7 +64,7 @@ export default class EquipmentViewerInfo {
 				function getDefaultImage() {
 					
 					let viewDefaultImage = {
-						width: 300,
+						width: 500,
 						rows: [
 							{ height: 20},
 							{},
@@ -109,7 +110,9 @@ export default class EquipmentViewerInfo {
 				function getGraphicIcon() {
 					
 					let viewGraphicIcon = {
-						width: 300,
+						id: "view-graphic-icon-" + self.uid,
+						width: self.parent.containerWidth * 0.45,
+						//height: self.parent.containerHeight * 0.45,
 						rows: [
 							{ height: 20},
 							{},
@@ -129,17 +132,24 @@ export default class EquipmentViewerInfo {
 									}
 								}
 							},
-							{}
+							{},
+							{ height: 20 }
 						]
 					};
 					
 					function drawGraphicIcon(w, h) {
 						
-						let graphicIcon = self.equipmentViewer.graphicIcon;
-						graphicIcon.width = w;
-						graphicIcon.height = h;
+						//let viewGraphicIconInstance = $$("view-graphic-icon-" + self.uid); 
+						let graphicIcon = webix.copy(self.equipmentViewer.graphicIcon);
+						
 						
 						if (graphicIcon) {
+							
+							//let w = viewGraphicIconInstance.$width;
+							//let h = viewGraphicIconInstance.$height;
+							
+							graphicIcon.width = w;
+							graphicIcon.height = h;
 							
 							const lazy = async _ => {
 					
@@ -308,4 +318,6 @@ export default class EquipmentViewerInfo {
 			this.equipmentViewerInfoMeasure.refresh();
 		}
 	}
+	
+	
 }	

@@ -207,9 +207,28 @@ export default class GraphicIcon {
 			let hRatio = graphicIcon.height / gHeight;
 
 			//self.ratio = graphicIcon.width < graphicIcon.height ? wRatio : hRatio;
-			self.ratio = gWidth > gHeight ? wRatio : hRatio;
+			//self.ratio = gWidth > gHeight ?  wRatio : hRatio;
+			
+			self.ratio = wRatio > hRatio ? hRatio : wRatio;
 			let x = self.layerElement.x ? self.layerElement.x : 0;
 			let y = self.layerElement.y ? self.layerElement.y : 0;
+			
+			
+//			if (x === 0) {
+//				
+//				if (gWidth * self.ratio < graphicIcon.width) {
+//					
+//					x = (graphicIcon.width - (gWidth * self.ratio)) / 2;
+//				}
+//			}
+			// Center x
+			if (y === 0) {
+				
+				if (gHeight * self.ratio < graphicIcon.height) {
+					
+					y = (graphicIcon.height - (gHeight * self.ratio)) / 2;
+				}
+			}
 			
 			let position = "t" + [x, y].join();
 			//let scale = "s" + ((graphicIcon.width > graphicIcon.height) ? (graphicIcon.width / gWidth) : (graphicIcon.height / gHeight));
