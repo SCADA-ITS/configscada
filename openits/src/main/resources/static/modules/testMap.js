@@ -125,6 +125,8 @@ export default class TestMap extends GenericModule {
 						id: "mapDetail-" + self.uid,
 						template:
 							function() {
+								// SE REQUIERE UN DIV CON MISMO ID Y CLASS, QUE ES DONDE SE PINTA EL MAPA.
+								// UN UNICO SVG HARDCODEADO DEL QUE DEPENDEN EL RESTO DE SVG'S QUE SE AÑADEN DINAMICAMENTE. 
 
 								return `	<div id='${divMap}' class='${divMap}' style='height: 100vh; width: 100vw'></div>
 											<div style="display: none;">
@@ -136,6 +138,9 @@ export default class TestMap extends GenericModule {
 						on: {
 							onAfterRender: function() {
 
+								// TARGET: ES EL DIV DONDE SE INYECTARA EL MAPA, HAY QUA PASAR LA ID DEL DIV.
+								// LAYERS: LAS DIFERENTES CAPAS DEL MAPA CON LA FUENTE CORRESPONDIENTE (EN ESTE CASO SOLO UNA DE TIPO OSM).
+								// VIEW: LA VISTA INICIAL DEL MAPA SETEANDO EL PUNTO CENTRAL DE LA PANTALLA, LOS LIMITES DEL MAPA Y EL ZOOM INICIAL.
 								map = new ol.Map({
 									target: divMap,
 									layers: [
@@ -181,7 +186,7 @@ export default class TestMap extends GenericModule {
 										width: 40, height: 40,
 										on: {
 											onItemClick: function(obj) {
-
+												// ANIMACION PARA CENTRAR AL MAPA.
 												map.getView().animate({
 													center: ol.proj.fromLonLat([-4.869415, 36.520443]),
 													zoom: 15,
@@ -207,6 +212,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-add-pressed");
 													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
 													$$(obj).refresh();
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN MARCADORES.													
 													map.on('singleclick', singleClick);
 													addMarker();
 
@@ -216,6 +222,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-zoom-reset");
 													webix.html.removeCss($$(obj).$view, "button-add-pressed");
 													$$(obj).refresh();
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.removeInteraction(self.drawMark);
 													map.un('singleclick', singleClick);
 												}
@@ -239,6 +246,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-add-pressed");
 													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
 													$$(obj).refresh();
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
 													map.on('singleclick', singleClick);
 													addPolyline();
 
@@ -248,6 +256,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-zoom-reset");
 													webix.html.removeCss($$(obj).$view, "button-add-pressed");
 													$$(obj).refresh();
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.un('singleclick', singleClick);
 													map.removeInteraction(self.drawLine);
 												}
@@ -270,7 +279,8 @@ export default class TestMap extends GenericModule {
 		function drawSvg() {
 
 			let arrCircles = [];
-
+			// PINTANDO LA CAPA PRINCIPAL.
+			// SE CREA EL MARCADOR CON SNAP Y SE INYECTA LA CAPA EN EL MAPA CAPTURANDO EN "ELEMENT" EL CONTENEDOR SVG QUE ES DONDE SE INCLUYE.  
 			let sPrincipal = Snap('#svgContainer-P');
 			let circleP = sPrincipal.circle(100, 100, 2).attr({
 				fill: "black"
@@ -290,6 +300,8 @@ export default class TestMap extends GenericModule {
 			map.addOverlay(self.svgPrincipalLayer);
 
 
+			// SE MONTA DINAMICAMENTE EL RESTO DE CAPAS, PRIMERO CREANDO LOS CONTENEDORES SVG'S EN EL HTML, LUEGO LOS MARCADORES CON SNAP Y LUEGO SE MONTAN 
+			// LAS CAPAS Y SE INYECTAN EN EL MAPA.
 			for (let circle of CIRCLES) {
 
 				let newSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -316,12 +328,15 @@ export default class TestMap extends GenericModule {
 
 				map.addOverlay(svgLayer);
 
+				// ARRAY DONDE GUARDO TODAS LAS CAPAS AÑADIDAS AL MAPA.
 				self.arraySvgLayer.push(svgLayer);
+
+				// ARRAY DONDE GUARDO TODOS LOS MARCADORES.
 				arrCircles.push(c);
 
 			}
 
-
+			// EFECTO DE PARPADEO DE LOS MARCADORES
 			function blink() {
 
 				arrCircles[0].animate({ r: 1 }, 350, function() {
@@ -350,6 +365,8 @@ export default class TestMap extends GenericModule {
 		}
 
 
+		// FUNCION PARA CONTROLAR EL NIVEL DE ZOOM A CADA MOVIMIENTO DEL MAPA, CON ZOOMIN Y ZOOMOUT CONTROLO CUANDO DEBO LLAMAR A "CHANGELAYERS()" 
+		// PARA MOSTRAR/OCULTAR CAPAS.
 		function zoomEvents(map) {
 
 			let actualZoom = undefined;
@@ -364,6 +381,7 @@ export default class TestMap extends GenericModule {
 
 				newZoom = map.getView().getZoom();
 				console.log(newZoom)
+				
 				if (actualZoom != newZoom) {
 
 					if (newZoom >= ZOOM_LEVEL) {
@@ -388,7 +406,7 @@ export default class TestMap extends GenericModule {
 			});
 		}
 
-
+		// FUNCION QUE MUESTRA/OCULTA LAS CAPAS EN FUNCION DEL NIVEL DE ZOOM, COMO LOS SVG'S SON ELEMENTOS HTML SE APLICA UN "HIDDEN" O "VISIBLE".
 		function changeLayers(init) {
 
 			if (init) {
@@ -427,10 +445,14 @@ export default class TestMap extends GenericModule {
 		}
 
 
+		// FUNCION PARA AÑADIR MARCADORES.
+
 		function addMarker() {
 
+			// SE CREA LA "SOURCE".
 			let source = new ol.source.Vector();
 
+			// SE CREA LA CAPA TIPO "VECTOR".
 			let marksLayer = new ol.layer.Vector({
 				source: source,
 				style: new ol.style.Style({
@@ -450,12 +472,15 @@ export default class TestMap extends GenericModule {
 				})
 			});
 
+			// SE AÑADE LA CAPA AL MAPA.
 			map.addLayer(marksLayer);
 
+			// SE CREA LA INTERACION QUE PERMITE MODIFICAR LOS MARCADORES Y SE AÑADE LA INTERACCCION AL MAPA.
 			let modify = new ol.interaction.Modify({ source: source });
 
 			map.addInteraction(modify);
 
+			// FUNCION PARA PINTAR LOS MARCADORES Y EL EFECTO ACOPLE AL PINCHAR EN UN MARCADOR, SE AÑADEN LAS INTERACCIONES AL MAPA.
 			function addInteractions() {
 
 				self.drawMark = new ol.interaction.Draw({
@@ -475,10 +500,13 @@ export default class TestMap extends GenericModule {
 		}
 
 
+		// FUNCION PARA PINTAR LINEAS.
 		function addPolyline() {
 
+			// SE CREA LA "SOURCE".
 			let source = new ol.source.Vector();
 
+			// SE CREA LA CAPA TIPO "VECTOR".
 			let lineLayer = new ol.layer.Vector({
 				source: source,
 				style: new ol.style.Style({
@@ -498,11 +526,16 @@ export default class TestMap extends GenericModule {
 				})
 			});
 
+			// SE AÑADE LA CAPA AL MAPA.
 			map.addLayer(lineLayer);
+
+			// SE CREA LA INTERACION QUE PERMITE MODIFICAR LAS LINEAS Y SE AÑADE LA INTERACCCION AL MAPA.
 
 			let modify = new ol.interaction.Modify({ source: source });
 
 			map.addInteraction(modify);
+
+			// FUNCION PARA PINTARLAS LINEAS Y EL EFECTO ACOPLE AL PINCHAR UNA LINEA, SE AÑADEN LAS INTERACCIONES AL MAPA.
 
 			function addInteractions() {
 
@@ -522,6 +555,8 @@ export default class TestMap extends GenericModule {
 		}
 
 
+		// LISTENERS PARA EL SINGLECLICK Y DOUBLECLICK, EL SINGLECLICK SOLO SE ACTIVA MIENTRAS SE ESTA PINTANDO UNA LINEA O UN MARCADOR PARA PODER
+		// VER SUS COORDENADAS.
 		function singleClick(evt) {
 
 			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
