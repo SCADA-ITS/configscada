@@ -144,7 +144,7 @@ export default class TestMap extends GenericModule {
 									view: new ol.View({
 										center: ol.proj.fromLonLat([-4.869415, 36.520443]),
 										extent: [-553203.4061760335, 4366939.736625225, -531934.8030556832, 4374793.6412815275],
-										zoom: 13
+										zoom: 10
 									})
 								});
 
@@ -318,7 +318,7 @@ export default class TestMap extends GenericModule {
 
 			let actualZoom = undefined;
 			let newZoom = undefined;
-			const ZOOM_LEVEL = 11;
+			const ZOOM_LEVEL = 15;
 
 			map.on('movestart', function(e) {
 				actualZoom = map.getView().getZoom();
