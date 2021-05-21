@@ -56,6 +56,7 @@ export default class GraphicIcon {
 		else if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
 			
 			// TODO
+			s = self.container.obj;
 		}
 		else if (self.container.type === GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
 			

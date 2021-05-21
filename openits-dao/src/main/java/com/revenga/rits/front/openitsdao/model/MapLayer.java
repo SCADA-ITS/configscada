@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class MapLayer implements Serializable {
 
 	//bi-directional many-to-one association to MapLayerElement
 	@OneToMany(mappedBy="mapLayer")
+	@JsonProperty("layerElements")
 	private List<MapLayerElement> mapLayerElements;
 
 	//bi-directional many-to-one association to Map

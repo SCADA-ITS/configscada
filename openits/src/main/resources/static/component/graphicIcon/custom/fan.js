@@ -7,9 +7,15 @@ const G_ID_ANIMATION = "animation";
 const G_ID_ARROW = "arrow";
 const G_ID_FAN = "fan";
 
-const CMD_FAN_VALUE_STOP = 0;
 const CMD_FAN_VALUE_MODE_DIRECT = 1;
 const CMD_FAN_VALUE_MODE_REVERSE = 2;
+
+const SPEED_FAN = 10; // From 1 to 10. Lower value is more slow
+const MAX_TIME_ROTATE = 10;
+const FAN_START_POSITION = "0 246 413";
+const FAN_END_POSITION = "360 246 413";
+const ARROW_COLOR_ENABLED = "#ffcc00";
+const ARROW_COLOR_DISABLED = "transparent";
 
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:9:0", "ElementTypeState:9:2"];
 
@@ -26,12 +32,14 @@ export default class Fan extends GraphicIconCustomType {
 	}
 	
 	render(elementInfo) {
-		
+	
 		this.elementInfo = elementInfo;
 		
 		// Update state
 			
 		if (this.gState && this.gFan && this.gAnimation && this.gArrow) {
+			
+			let timeFanRotate = MAX_TIME_ROTATE + 1 - SPEED_FAN + "s";
 			
 			this.gState.attr({ fill: elementInfo.state.color });
 			this.gFan.attr({ fill: elementInfo.state.color });
@@ -45,34 +53,33 @@ export default class Fan extends GraphicIconCustomType {
 				switch (parseInt(cmdFanValue)) {
 				
 					case CMD_FAN_VALUE_MODE_DIRECT:
-					
-					
-						this.gArrow.attr({ fill: "#ffcc00" });
-						this.gAnimation.attr({ dur: "6s", from: "0 245 410", to: "360 245 410" });
+										
+						this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_END_POSITION });
+						
 						this.gArrow.transform("r0," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
 
 						break;
 						
 					case CMD_FAN_VALUE_MODE_REVERSE:
 										
-						this.gArrow.attr({ fill: "#ffcc00" });
+						this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
 						
-						this.gAnimation.attr({ dur: "6s", from: "360 245 410", to: "0 245 410" });
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_END_POSITION, to: FAN_START_POSITION });
 					    this.gArrow.transform("r180," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
 	
 						break;
 						
 					default:
 					
-						this.gAnimation.attr({ dur: "indefinite" });
-						this.gArrow.attr({ fill: "transparent" });
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
+						this.gArrow.attr({ fill: ARROW_COLOR_DISABLED });
 				}	
 			}
 			else {
-				
 			
-				this.gAnimation.attr({ dur: "indefinite" });
-				this.gArrow.attr({ fill: "transparent" });
+				this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
+				this.gArrow.attr({ fill: ARROW_COLOR_DISABLED });
 			}
 			
 		}

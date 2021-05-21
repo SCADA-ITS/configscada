@@ -2,6 +2,9 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -17,6 +20,12 @@ public class Map implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Column(name="custom_provider_url")
+	private String customProviderUrl;
+	
+	@Column(name="default_zoom_search")
+	private Integer defaultZoomSearch;
 
 	private String description;
 
@@ -34,14 +43,17 @@ public class Map implements Serializable {
 
 	// bi-directional many-to-one association to MapCommand
 	@OneToMany(mappedBy = "map")
+	@JsonProperty("commands")
 	private List<MapCommand> mapCommands;
 
 	// bi-directional many-to-one association to MapLayerRelationship
 	@OneToMany(mappedBy = "map")
+	@JsonProperty("layerRelationships")
 	private List<MapLayerRelationship> mapLayerRelationships;
 
 	// bi-directional many-to-one association to MapLayer
 	@OneToMany(mappedBy = "map")
+	@JsonProperty("layers")
 	private List<MapLayer> mapLayers;
 
 	// bi-directional many-to-one association to MapZone
@@ -57,6 +69,22 @@ public class Map implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCustomProviderUrl() {
+		return customProviderUrl;
+	}
+
+	public void setCustomProviderUrl(String customProviderUrl) {
+		this.customProviderUrl = customProviderUrl;
+	}
+
+	public Integer getDefaultZoomSearch() {
+		return defaultZoomSearch;
+	}
+
+	public void setDefaultZoomSearch(Integer defaultZoomSearch) {
+		this.defaultZoomSearch = defaultZoomSearch;
 	}
 
 	public String getDescription() {

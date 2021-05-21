@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -33,9 +34,18 @@ public class MapLayerElement implements Serializable {
 	private Float latitude;
 
 	private Float longitude;
+	
+	private Integer rotate;
+	
+	@Column(name="show_text")
+	private Boolean showText;
+	
+	@Column(name="text_color")
+	private String textColor;
 
 	//bi-directional many-to-one association to MapLayerElementZoom
 	@OneToMany(mappedBy="mapLayerElement")
+	@JsonProperty("layerElementZooms")
 	private List<MapLayerElementZoom> mapLayerElementZooms;
 
 	//uni-directional many-to-one association to GraphicIcon
@@ -98,6 +108,30 @@ public class MapLayerElement implements Serializable {
 
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
+	}
+
+	public Integer getRotate() {
+		return rotate;
+	}
+
+	public void setRotate(Integer rotate) {
+		this.rotate = rotate;
+	}
+
+	public Boolean getShowText() {
+		return showText;
+	}
+
+	public void setShowText(Boolean showText) {
+		this.showText = showText;
+	}
+
+	public String getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
 	}
 
 	public List<MapLayerElementZoom> getMapLayerElementZooms() {

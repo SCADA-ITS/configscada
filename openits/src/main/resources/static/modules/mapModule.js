@@ -112,12 +112,12 @@ export default class MapModule extends GenericModule{
 
   loadData() {
     // layers
-    this.mapConf.metadata.mapLayers.forEach(layer => {
+    this.mapConf.metadata.layers.forEach(layer => {
       
       try {
         let markers = [];
         // Elements
-        layer.mapLayerElements.forEach(layerElement => {
+        layer.layerElements.forEach(layerElement => {
   
           try {
             let elementData = this.mapConf.data.find(item => item.id === layerElement.elementId);
@@ -201,8 +201,8 @@ export default class MapModule extends GenericModule{
         }
 
         let treeData=[];
-        this.mapConf.metadata.mapLayerRelationships.forEach(layerHierarchy => {
-          let layer = this.mapConf.metadata.mapLayers.find(item => item.id === layerHierarchy.childLayerId);
+        this.mapConf.metadata.layerRelationships.forEach(layerHierarchy => {
+          let layer = this.mapConf.metadata.layers.find(item => item.id === layerHierarchy.childLayerId);
           if(layerHierarchy.parent_layer_id == undefined){
             treeData.push({id:layer.id, value: i18n.t(layer.label), internal_id:layer.id, open:true});
           }else{
@@ -216,7 +216,7 @@ export default class MapModule extends GenericModule{
       }
     };
     
-    let commandsMenu = new CommandsComponent(this.uid, this.mapConf.metadata.mapCommands, this);
+    let commandsMenu = new CommandsComponent(this.uid, this.mapConf.metadata.commands, this);
 
     let viewTree = {
       padding:10,
@@ -270,7 +270,7 @@ export default class MapModule extends GenericModule{
           if(value.isCtrlClicked){
             
             this.elementsMap.get(key).isCtrlClicked = false;
-            let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == key}))});
+            let layer = this.mapConf.metadata.layers.find(item => {return (item.layerElements.find(layerElement => {return layerElement.elementId == key}))});
             let layerFeature;
             if(this.map){
               this.map.getLayers().forEach(function(l) {
@@ -305,7 +305,7 @@ export default class MapModule extends GenericModule{
 
   drawContextButtonAction() {
 
-    let contextMenu = new ContextMenu(this.uid, this.mapConf.metadata.mapCommands, this);
+    let contextMenu = new ContextMenu(this.uid, this.mapConf.metadata.commands, this);
     let contextMenuComponent = contextMenu.getComponent();
     contextMenuComponent.master = this.mapDivId+"_ol";
     webix.ui(contextMenuComponent);
@@ -329,7 +329,7 @@ export default class MapModule extends GenericModule{
       try{
       
         let featureId = e.target.getFeatures().array_[0].id_;
-        let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == featureId}))});
+        let layer = this.mapConf.metadata.layers.find(item => {return (item.layerElements.find(layerElement => {return layerElement.elementId == featureId}))});
         let layerFeature;
         this.map.getLayers().forEach(function(l) {
           if(l.get("id") == "layer_"+layer.id) {
@@ -404,7 +404,7 @@ export default class MapModule extends GenericModule{
         e.target.getFeatures().clear();
 
         let command ={};      
-        let defaultCommand = this.mapConf.metadata.mapCommands.find(mapCommand => {
+        let defaultCommand = this.mapConf.metadata.commands.find(mapCommand => {
           return mapCommand.default_ === true
         });
         command.moduleAction = defaultCommand.moduleAction;
@@ -473,7 +473,7 @@ export default class MapModule extends GenericModule{
               }
               this.elementsMap.get(element.id).updateElement(element);
 
-              let layer = this.mapConf.metadata.mapLayers.find(item => {return (item.mapLayerElements.find(layerElement => {return layerElement.elementId == element.id}))});
+              let layer = this.mapConf.metadata.layers.find(item => {return (item.layerElements.find(layerElement => {return layerElement.elementId == element.id}))});
               let layerFeature;
               if(this.map){
                 this.map.getLayers().forEach(function(l) {

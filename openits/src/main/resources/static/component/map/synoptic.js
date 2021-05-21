@@ -30,7 +30,7 @@ export default class Synoptic {
 		this.synoptic = undefined;
 		this.flagMouseMove = false;
 		
-		this.panZoomTiger = undefined;
+		this.panZoomTrigger = undefined;
 		
 		this.graphicIcons = new Map();
 		this.baseLayers = new Map();
@@ -120,7 +120,7 @@ export default class Synoptic {
 				
 				loadLayerBase();
 				
-				loadGraphicIcons();			
+				loadGraphicIcons();		
 			});
 			
 			function onMouseUp() {
@@ -191,7 +191,7 @@ export default class Synoptic {
 						on: {
 							onItemClick: function() {
 								
-								self.panZoomTiger.zoomIn();
+								self.panZoomTrigger.zoomIn();
 							}
 						}		
 					}, 
@@ -205,7 +205,7 @@ export default class Synoptic {
 						on: {
 							onItemClick: function() {
 								
-								self.panZoomTiger.zoomOut();								
+								self.panZoomTrigger.zoomOut();								
 							}
 						}		
 					},
@@ -226,7 +226,7 @@ export default class Synoptic {
 						on: {
 							onItemClick: function() {
 								
-								self.panZoomTiger.reset();
+								self.panZoomTrigger.reset();
 							}
 						}
 					},
@@ -540,7 +540,7 @@ export default class Synoptic {
 			
 			if (++self.layerElementsLoaded === self.layerElements) {
 				
-				self.panZoomTiger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
+				self.panZoomTrigger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
 				
 				loadElementInfo();
 			}

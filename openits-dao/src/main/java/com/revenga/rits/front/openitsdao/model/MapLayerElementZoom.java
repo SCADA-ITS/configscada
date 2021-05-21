@@ -37,6 +37,14 @@ public class MapLayerElementZoom implements Serializable {
 	private Float latitude;
 
 	private Float longitude;
+	
+	private Integer rotate;
+	
+	@Column(name="show_text")
+	private Boolean showText;
+	
+	@Column(name="text_color")
+	private String textColor;
 
 	//bi-directional many-to-one association to MapLayerElement
 	@JsonIgnore
@@ -101,6 +109,30 @@ public class MapLayerElementZoom implements Serializable {
 
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
+	}
+
+	public Integer getRotate() {
+		return rotate;
+	}
+
+	public void setRotate(Integer rotate) {
+		this.rotate = rotate;
+	}
+
+	public Boolean getShowText() {
+		return showText;
+	}
+
+	public void setShowText(Boolean showText) {
+		this.showText = showText;
+	}
+
+	public String getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
 	}
 
 	public MapLayerElement getMapLayerElement() {
