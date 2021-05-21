@@ -2,6 +2,10 @@ import GenericModule from "../modules/genericModule.js";
 import OpenMap from "../component/map/openMap.js";
 import { util } from "../lib/util.js";
 
+const PARAM_MODULE_TYPE_GENERIC_MAP_WINDOW_MAP_ID = 6;
+const MAP_REST_ENDPOINT = "maps/${id}";
+const DEBUG_MODE = false;
+
 export default class MapModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -58,7 +62,7 @@ export default class MapModule extends GenericModule {
 
 		let mapId = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_GENERIC_MAP_WINDOW_MAP_ID).value;	
 		
-		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.map, { id: mapId })).then(function(response) {
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(MAP_REST_ENDPOINT, { id: mapId })).then(function(response) {
 						
 			if (response != null) {
 			
@@ -70,7 +74,7 @@ export default class MapModule extends GenericModule {
 					
 					let options = {};
 						
-					options[Map.Options.DEBUG_MODE] = self.config.debugMode;
+					options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 					
 					let map = new OpenMap(responseJson.metadata, responseJson.data, events, options);
 					

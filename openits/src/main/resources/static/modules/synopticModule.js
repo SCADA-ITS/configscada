@@ -2,6 +2,10 @@ import GenericModule from "../modules/genericModule.js";
 import Synoptic from "../component/map/synoptic.js";
 import { util } from "../lib/util.js";
 
+const PARAM_MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW_SYNOPTIC_ID = 4;
+const SYNOPTIC_REST_ENDPOINT = "synoptics/${id}";
+const DEBUG_MODE = false;
+
 export default class SynopticModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -10,8 +14,6 @@ export default class SynopticModule extends GenericModule {
 
 		this.uid = webix.uid();
 		this.stompClient = undefined;
-		this.config = module.config;
-
 	}
 
 	getView() {
@@ -58,7 +60,7 @@ export default class SynopticModule extends GenericModule {
 
 		let synopticId = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW_SYNOPTIC_ID).value;	
 		
-		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.synoptic, { id: synopticId })).then(function(response) {
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(SYNOPTIC_REST_ENDPOINT, { id: synopticId })).then(function(response) {
 						
 			if (response != null) {
 			
@@ -70,7 +72,7 @@ export default class SynopticModule extends GenericModule {
 					
 					let options = {};
 						
-					options[Synoptic.Options.DEBUG_MODE] = self.config.debugMode;
+					options[Synoptic.Options.DEBUG_MODE] = DEBUG_MODE;
 					
 					let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
 					
