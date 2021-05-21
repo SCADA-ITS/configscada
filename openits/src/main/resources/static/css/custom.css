@@ -1,3 +1,4 @@
+
 :root {
   --blue-strong: rgb(15, 23, 36);
   --blue-strong-opacity-1: rgba(15 23 36 / 0.1);
@@ -2423,8 +2424,16 @@
 	border: 1px solid #dadee0;
 }
 
+/*
+.auxiliary-tab {
+	height: 32px !important;
+	background-color: red;	
+}
+*/
 .auxiliary-tab .webix_el_tabbar {
 	height: 32px !important;
+	box-shadow: none;
+	border: none;
 }
 
 .auxiliary-tab .webix_all_tabs .webix_item_tab {
@@ -2438,16 +2447,24 @@
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_filler {
+	box-shadow: none;
+	border: none;
     background-color: transparent;
 }
 
 .auxiliary-tab .webix_all_tabs .webix_item_tab.webix_selected {
+	width: 150px !important;
 	color: var(--blue-mid);
 	box-shadow: inset 0 -2px var(--blue-headers);
+	background-color: transparent;
+
 }
  
 .auxiliary-tab .webix_item_tab:not(.webix_selected) {
-    color: #92abcf;
+	width: 150px !important;    
+	color: #92abcf;
+	background-color: transparent;
+	box-shadow: inset 0 -2px var(--blue-headers);
 }
 
 .auxiliary-tab .webix_item_tab:not(.webix_selected):hover {
@@ -2457,4 +2474,56 @@
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon .webix_icon{
 	color: #92abcf;
+}
+
+.syn-toolbar-zoom .button-add-pressed .webix_button{
+    height:35px;
+    border-radius: 30%;
+    color: grey;
+    background:  #cc0000;
+}
+
+.syn-toolbar-zoom .button-add-pressed .webix_button .webix_icon_btn {
+	font-size: 19px;
+	color: grey;
+	margin-left: 3px;
+}
+
+.syn-toolbar-zoom .button-add-pressed .webix_button:hover {
+  	background: #cc0000;
+}
+
+.syn-toolbar-zoom .button-add-pressed .webix_button:focus {
+	background-color: #ef2929;
+}
+
+.syn-toolbar-zoom  .button-add-pressed .webix_button:active {
+	background-color: #ef2929;
+}
+
+.ol-control button {
+	width: 26px !important;
+	height: 24px !important;
+	background: #2d7cbe;
+	border-radius: 10% !important;
+	margin: 4px 9px;
+	padding-bottom: 2px;
+}
+
+.ol-control button:hover{
+	background: #1C507B;
+	cursor: pointer;
+	
+}
+
+.ol-control button:focus {
+	background-color: #2d7cbe;
+}
+
+.ol-control button:active {
+	background-color: #2d7cbe;	
+}
+
+.ol-control {
+	background-color: transparent !important;
 }
