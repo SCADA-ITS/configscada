@@ -45,8 +45,10 @@ export default class TestMap extends GenericModule {
 		this.uid = webix.uid();
 		this.config = module.config;
 		this.map = undefined;
-		this.buttonPressed = false;
-		this.draw;
+		this.addButtonPressed = false;
+		this.drawButtonPressed = false;
+		this.drawMark;
+		this.drawLine;
 		this.zoomIn = false;
 		this.zoomOut = true;
 		this.svgPrincipalLayer;
@@ -163,7 +165,7 @@ export default class TestMap extends GenericModule {
 						borderless: true,
 						top: 10,
 						right: 10,
-						width: 90,
+						width: 120,
 						height: 85,
 						rows: [
 							{ height: 23 },
@@ -199,21 +201,55 @@ export default class TestMap extends GenericModule {
 										on: {
 											onItemClick: function(obj) {
 
-												if (!self.buttonPressed) {
+												if (!self.addButtonPressed) {
 
-													self.buttonPressed = true;
+													self.addButtonPressed = true;
 													webix.html.addCss($$(obj).$view, "button-add-pressed");
 													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
 													$$(obj).refresh();
+													map.on('singleclick', singleClick);
 													addMarker();
 
 												} else {
 
-													self.buttonPressed = false;
+													self.addButtonPressed = false;
 													webix.html.addCss($$(obj).$view, "button-zoom-reset");
 													webix.html.removeCss($$(obj).$view, "button-add-pressed");
 													$$(obj).refresh();
-													map.removeInteraction(self.draw);
+													map.removeInteraction(self.drawMark);
+													map.un('singleclick', singleClick);
+												}
+											}
+										}
+									},
+									{
+										id: "draw-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-pencil",
+										tooltip: i18n.t("LBL_DRAW"),
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												if (!self.drawButtonPressed) {
+
+													self.drawButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+													map.on('singleclick', singleClick);
+													addPolyline();
+
+												} else {
+
+													self.drawButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+													map.un('singleclick', singleClick);
+													map.removeInteraction(self.drawLine);
 												}
 											}
 										}
@@ -366,7 +402,7 @@ export default class TestMap extends GenericModule {
 				}
 
 			} else {
-				
+
 				if (self.zoomIn) {
 
 					$$("mapDetail-" + self.uid).getNode().querySelector('#svgContainer-P').style.visibility = "hidden";
@@ -376,7 +412,7 @@ export default class TestMap extends GenericModule {
 						let layerId = "#" + layer.id;
 						$$("mapDetail-" + self.uid).getNode().querySelector(layerId).style.visibility = "visible";
 					}
-					
+
 				} else if (self.zoomOut) {
 
 					$$("mapDetail-" + self.uid).getNode().querySelector('#svgContainer-P').style.visibility = "visible";
@@ -422,12 +458,12 @@ export default class TestMap extends GenericModule {
 
 			function addInteractions() {
 
-				self.draw = new ol.interaction.Draw({
+				self.drawMark = new ol.interaction.Draw({
 					source: source,
 					type: "Point"
 				});
 
-				map.addInteraction(self.draw);
+				map.addInteraction(self.drawMark);
 
 				self.snap = new ol.interaction.Snap({ source: source });
 				map.addInteraction(self.snap);
@@ -436,20 +472,71 @@ export default class TestMap extends GenericModule {
 
 			addInteractions();
 
-			map.on('singleclick', function(evt) {
+		}
 
-				let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
-				webix.alert({
-					title: "COORDENADAS",
-					text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
-					type: "alert-warning",
-					width: 500
+		function addPolyline() {
+
+			let source = new ol.source.Vector();
+
+			let lineLayer = new ol.layer.Vector({
+				source: source,
+				style: new ol.style.Style({
+					fill: new ol.style.Fill({
+						color: 'rgba(255, 255, 255, 0.2)'
+					}),
+					stroke: new ol.style.Stroke({
+						color: '#ffcc33',
+						width: 2
+					}),
+					image: new ol.style.Circle({
+						radius: 5,
+						fill: new ol.style.Fill({
+							color: '#ffcc33'
+						})
+					})
+				})
+			});
+
+			map.addLayer(lineLayer);
+
+			let modify = new ol.interaction.Modify({ source: source });
+
+			map.addInteraction(modify);
+
+			function addInteractions() {
+
+				self.drawLine = new ol.interaction.Draw({
+					source: source,
+					type: "LineString"
 				});
 
-				evt.preventDefault();
-			});
+				map.addInteraction(self.drawLine);
+
+				self.snap = new ol.interaction.Snap({ source: source });
+				map.addInteraction(self.snap);
+
+			}
+
+			addInteractions();
 		}
+
+
+		function singleClick(evt) {
+
+			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+
+			webix.alert({
+				title: "COORDENADAS",
+				text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
+				type: "alert-warning",
+				width: 500
+			});
+
+			evt.preventDefault();
+
+		}
+
 
 		map.on('dblclick', function(evt) {
 
