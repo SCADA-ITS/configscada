@@ -14,8 +14,6 @@ export default class MapModule extends GenericModule {
 
 		this.uid = webix.uid();
 		this.stompClient = undefined;
-		this.config = module.config;
-
 	}
 
 	getView() {
@@ -76,7 +74,7 @@ export default class MapModule extends GenericModule {
 						
 					options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 					
-					let map = new OpenMap(responseJson.metadata, responseJson.data, events, options);
+					let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
 					
 					$$("loading-" + self.uid).hide();
 					$$(self.uid).show();

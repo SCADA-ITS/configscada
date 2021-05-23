@@ -186,16 +186,24 @@ export default class GraphicIcon {
 			}
 			
 		}
-		
+
 		function createText(gWidth, gHeight) {
 			
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.showText) {
 				
-				let alignCenter = (gWidth - (7 * self.element.alias.length)) / 2;
-				let gName = s.text(alignCenter, gHeight * 1.2, self.element.alias);
+				let x = gWidth / 2;			
+				let y = gHeight * 1.15;
+				
+				if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
+					
+					x *= self.ratio;
+					y *= self.ratio;
+				}
+							
+				let gName = s.text(x, y, self.element.alias);
 				let textColor = self.layerElement.textColor ? self.layerElement.textColor : "#ffcc00";
 				
-				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: textColor });
+				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: textColor, "dominant-baseline": "middle", "text-anchor": "middle" });
 				gName.transform("s" + (1 / self.ratio));
 			
 				self.g.append(gName);	
@@ -303,14 +311,19 @@ export default class GraphicIcon {
 	}
 
 	show() {
-		
+
 		if (this.g.attr("visibility") != "visible") {
 			
 			this.g.attr({ visibility: "visible" });
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
-			gSel.attr({ visibility: "hidden" });	
+			gSel.attr({ visibility: "hidden" });
+			
+//			if (this.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
+//				
+//				this.container.obj.attr({ visibility: "visible" });
+//			}	
 		}
 	}
 
@@ -322,7 +335,12 @@ export default class GraphicIcon {
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
-			gSel.attr({ visibility: "hidden" });	
+			gSel.attr({ visibility: "hidden" });
+			
+//			if (this.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
+//				
+//				this.container.obj.attr({ visibility: "hidden" });
+//			}	
 		}
 	}
 	
@@ -335,16 +353,22 @@ export default class GraphicIcon {
     
 	select() {
 		
-		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
+		if (this.g.attr("visibility") === "visible") {
+			
+			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
-		gSel.attr({ visibility: "visible" });
+			gSel.attr({ visibility: "visible" });	
+		}
 	}
 
 	unselect() {
 		
-		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
+		if (this.g.attr("visibility") === "visible") {
 		
-		gSel.attr({ visibility: "hidden" });
+			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
+		
+			gSel.attr({ visibility: "hidden" });	
+		}
 	}
 	
 	runOne(method) {

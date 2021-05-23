@@ -45,6 +45,8 @@ public class MapLayerElementZoom implements Serializable {
 	
 	@Column(name="text_color")
 	private String textColor;
+	
+	private Boolean tooltip;
 
 	//bi-directional many-to-one association to MapLayerElement
 	@JsonIgnore
@@ -133,6 +135,14 @@ public class MapLayerElementZoom implements Serializable {
 
 	public void setTextColor(String textColor) {
 		this.textColor = textColor;
+	}
+
+	public Boolean getTooltip() {
+		return tooltip;
+	}
+
+	public void setTooltip(Boolean tooltip) {
+		this.tooltip = tooltip;
 	}
 
 	public MapLayerElement getMapLayerElement() {

@@ -36,10 +36,31 @@ public class Map implements Serializable {
 	private String name;
 
 	private Float latitude;
+	
+	@Column(name="limit_end_lon")
+	private Float limitEndLon;
+	
+	@Column(name="limit_end_lat")
+	private Float limitEndLat;
+	
+	@Column(name="limit_init_lon")
+	private Float limitInitLon;
+	
+	@Column(name="limit_init_lat")
+	private Float limitInitLat;
 
 	private Float longitude;
+	
+	@Column(name="dark_mode")
+	private Boolean darkMode;
 
 	private Integer zoom;
+	
+	@Column(name="zoom_max")
+	private Integer zoomMax;
+	
+	@Column(name="zoom_min")
+	private Integer zoomMin;
 
 	// bi-directional many-to-one association to MapCommand
 	@OneToMany(mappedBy = "map")
@@ -179,6 +200,38 @@ public class Map implements Serializable {
 		this.latitude = latitude;
 	}
 
+	public Float getLimitEndLon() {
+		return limitEndLon;
+	}
+
+	public void setLimitEndLon(Float limitEndLon) {
+		this.limitEndLon = limitEndLon;
+	}
+
+	public Float getLimitEndLat() {
+		return limitEndLat;
+	}
+
+	public void setLimitEndLat(Float limitEndLat) {
+		this.limitEndLat = limitEndLat;
+	}
+
+	public Float getLimitInitLon() {
+		return limitInitLon;
+	}
+
+	public void setLimitInitLon(Float limitInitLon) {
+		this.limitInitLon = limitInitLon;
+	}
+
+	public Float getLimitInitLat() {
+		return limitInitLat;
+	}
+
+	public void setLimitInitLat(Float limitInitLat) {
+		this.limitInitLat = limitInitLat;
+	}
+
 	public Float getLongitude() {
 		return longitude;
 	}
@@ -187,12 +240,36 @@ public class Map implements Serializable {
 		this.longitude = longitude;
 	}
 
+	public Boolean getDarkMode() {
+		return darkMode;
+	}
+
+	public void setDarkMode(Boolean darkMode) {
+		this.darkMode = darkMode;
+	}
+
 	public Integer getZoom() {
 		return zoom;
 	}
 
 	public void setZoom(Integer zoom) {
 		this.zoom = zoom;
+	}
+	
+	public Integer getZoomMax() {
+		return zoomMax;
+	}
+
+	public void setZoomMax(Integer zoomMax) {
+		this.zoomMax = zoomMax;
+	}
+
+	public Integer getZoomMin() {
+		return zoomMin;
+	}
+
+	public void setZoomMin(Integer zoomMin) {
+		this.zoomMin = zoomMin;
 	}
 
 	public List<MapZone> getMapZones() {
