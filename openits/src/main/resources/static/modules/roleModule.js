@@ -249,7 +249,7 @@ export default class RoleModule extends GenericModule {
 					cols: [
 						{
 							view: "label",
-							label: "<img src='../img/grid/role.png' class='grid-icon'/>",
+							label: "<img src='img/grid/role.png' class='grid-icon'/>",
 							height: 75,
 							css: "userrole-header-icon"
 						},

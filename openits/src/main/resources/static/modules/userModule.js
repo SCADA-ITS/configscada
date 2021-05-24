@@ -457,7 +457,7 @@ export default class UserModule extends GenericModule {
 					cols: [
 						{
 							view: "label",
-							label: "<img src='../img/grid/user.png' class='grid-icon'/>",
+							label: "<img src='img/grid/user.png' class='grid-icon'/>",
 							height: 75,
 							css: "userrole-header-icon"
 						},

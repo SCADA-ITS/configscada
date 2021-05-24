@@ -304,7 +304,7 @@ export default class PlanScheduleModule extends GenericModule {
 				cols: [
 					{
 						view: "label",
-						label: "<img src='../img/grid/sheduler.png' class='grid-icon'/>",
+						label: "<img src='img/grid/sheduler.png' class='grid-icon'/>",
 						height: 75,
 						css: "userrole-header-icon"
 					},
