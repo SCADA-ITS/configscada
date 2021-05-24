@@ -358,7 +358,7 @@ export default class OpenMap {
 				
 				if (layerElementZoom) {
 				
-					svgGraphicIcon.setAttribute("zIndex", self.maxZoomLevel - layerElementZoom.zoomLower);	
+					svgGraphicIcon.setAttribute("style", "z-index: " + (self.maxZoomLevel - layerElementZoom.zoomLower));	
 				}
 				
 				document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
