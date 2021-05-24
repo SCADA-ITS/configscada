@@ -2483,10 +2483,6 @@ p {
 .auxiliary-tab .webix_all_tabs .webix_item_tab {
 	width: 150px !important;
 	background-color: transparent;
-	box-shadow: inset 0 -2px var(--blue-headers);
-	border-color: var(--blue-soft-opacity-2);
-	border-bottom-right-radius: 2px;
-	border-bottom-left-radius: 2px;
 	font-size: 13px;
 }
 
@@ -2500,20 +2496,20 @@ p {
 	width: 150px !important;
 	color: var(--blue-mid);
 	box-shadow: inset 0 -2px var(--blue-headers);
+	border-color: var(--blue-soft-opacity-2);
 	background-color: transparent;
-
 }
  
 .auxiliary-tab .webix_item_tab:not(.webix_selected) {
 	width: 150px !important;    
-	color: #92abcf;
+	color: #babdb6;
 	background-color: transparent;
-	box-shadow: inset 0 -2px var(--blue-headers);
 }
 
 .auxiliary-tab .webix_item_tab:not(.webix_selected):hover {
-	color: white;
-	background-color: #92abcf;
+	color: #babdb6;;
+	box-shadow: inset 0 -2px var(--blue-headers);
+	border-color: var(--blue-soft-opacity-2);
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon .webix_icon{
