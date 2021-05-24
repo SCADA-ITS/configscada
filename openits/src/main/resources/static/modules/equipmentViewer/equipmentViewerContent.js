@@ -1,4 +1,5 @@
 import EquipmentViewerInfo from "./equipmentViewerInfo.js";
+import EquipmentViewerProperties from "./equipmentViewerProperties.js";
 import { util } from "../../lib/util.js";
 import { adapter } from "../../lib/adapter.js";
 
@@ -164,7 +165,7 @@ export default class EquipmentViewerContent {
 							css: "equip-viewer-header-actions",
 							elements: [
 								{},
-								/*{
+								{
 									view: "button",
 									width: 135,
 									label: i18n.t("LBL_EQUIP_VIEWER_PROPERTIES"),
@@ -174,27 +175,27 @@ export default class EquipmentViewerContent {
 									on: {
 		
 										onItemClick() {
-		
-											util.ui.notImplementedMessage();
+											let propertiesWindow = new EquipmentViewerProperties(self.parent, self.element, self.equipmentViewer);
+											propertiesWindow.getView();
 										}
 									}
 								},
-								{
-									view: "button",
-									width: 135,
-									hidden: !self.element.location,
-									label: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP"),
-									tooltip: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP_DESCRIPTION"),
-									type: "iconTop",
-									icon: "mdi mdi-map-marker",
-									on: {
-		
-										onItemClick() {
-		
-											util.ui.notImplementedMessage();
-										}
-									}
-								},*/
+//								{
+//									view: "button",
+//									width: 135,
+//									hidden: !self.element.location,
+//									label: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP"),
+//									tooltip: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP_DESCRIPTION"),
+//									type: "iconTop",
+//									icon: "mdi mdi-map-marker",
+//									on: {
+//		
+//										onItemClick() {
+//		
+//											util.ui.notImplementedMessage();
+//										}
+//									}
+//								},
 								{
 									view: "button",
 									width: 135,
