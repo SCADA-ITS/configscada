@@ -356,14 +356,10 @@ export default class OpenMap {
 				svgGraphicIcon.setAttribute("width", w);
 				svgGraphicIcon.setAttribute("height", h);
 				
-				if (layerElementZoom) {
-				
-					svgGraphicIcon.setAttribute("style", "z-index: " + (self.maxZoomLevel - layerElementZoom.zoomLower));	
-				}
-				
 				document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
 				
 				svgGraphicIcon.onmouseover = function() {
+					
 				    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
 				    self.mouseOverSvg = true;
 				};
@@ -485,6 +481,7 @@ export default class OpenMap {
 						graphicIcons.forEach(graphicIcon => {
 							
 							let olOverlay = new ol.Overlay({
+								//id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
 								position: ol.proj.fromLonLat([graphicIcon.layerElement.longitude, graphicIcon.layerElement.latitude]),
 								positioning: 'center-center',
 								element: graphicIcon.container.obj.node,
@@ -492,6 +489,33 @@ export default class OpenMap {
 							});
 							
 							self.olMap.addOverlay(olOverlay);
+							
+							let olOverlayDiv = undefined;
+							
+							if (olOverlayDiv = graphicIcon.container.obj.node.parentNode) {
+							
+								if (graphicIcon.layerElement.layerElementZoom) {
+								
+									olOverlayDiv.style.zIndex = self.maxZoomLevel - graphicIcon.layerElement.layerElementZoom.zoomLower;
+								}
+							}
+								
+							graphicIcon.container.obj.node.onmouseover = function() {
+				
+								if (graphicIcon.isVisible()) {
+								
+									self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
+							    	self.mouseOverSvg = true;	
+								}
+							};
+							
+							graphicIcon.container.obj.node.onmouseout = function() {
+								
+								if (graphicIcon.isVisible()) {
+								    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+								    self.mouseOverSvg = false;
+								}
+							};
 						});
 					}
 				});
@@ -574,11 +598,13 @@ export default class OpenMap {
 				
 				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 					
-					// One selected, no more is required
-					if (graphicIcons[0].isSelected()) {
+					graphicIcons.forEach(graphicIcon => {
 						
-						selectedPks.add(elementId);
-					}
+						if (graphicIcon.isSelected()) {
+							
+							selectedPks.add(elementId);	
+						}
+					});
 				}
 			});
 				
@@ -902,7 +928,7 @@ export default class OpenMap {
 						type: "icon",
 						icon:"mdi mdi-restore",
 						tooltip: i18n.t("LBL_RESET"),
-						css: "button-zoom-reset",
+						css: "button",
 						width: 40, height: 40,
 						on: {
 							onItemClick: function() {
@@ -923,7 +949,7 @@ export default class OpenMap {
 				rows: [
 					{},
 					{
-						css: { "background": "#009688 !important", "border-radius": "10px !important" },
+						css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
 						height: 35,
 						cols: [
 							{
@@ -1055,7 +1081,7 @@ export default class OpenMap {
 					type: "icon",
 					icon:"mdi mdi-layers",
 					tooltip: i18n.t("LBL_SHOW_LAYERS"),
-					css: "button-layers",
+					css: "button",
 					width: 40, height: 40,
 					on: {
 						onItemClick: function() {
@@ -1080,7 +1106,7 @@ export default class OpenMap {
 					type: "icon",
 					icon:"mdi mdi-weather-night",
 					tooltip: i18n.t("LBL_DARK_MODE"),
-					css: "button-dark-mode",
+					css: "button",
 					width: 40, height: 40,
 					on: {
 						onItemClick: function() {
@@ -1100,7 +1126,7 @@ export default class OpenMap {
 					type: "icon",
 					icon:"mdi mdi-dots-vertical",
 					tooltip: i18n.t("LBL_SHOW_ACTIONS"),
-					css: "button-actions",
+					css: "button",
 					width: 40, height: 40,
 					on: {
 						onItemClick: function() {

@@ -2183,85 +2183,31 @@ p {
 	background: transparent;
 }
 
-.syn-toolbar-actions .button-layers .webix_button{
+.syn-toolbar-actions .button .webix_button{
     height:35px;
     border-radius: 30%;
     color: white;
-    background: #009688;
+    background: var(--blue-mid2-opacity-5);
 }
 
-.syn-toolbar-actions .button-layers .webix_button .webix_icon_btn {
+.syn-toolbar-actions .button .webix_button .webix_icon_btn {
 	font-size: 20px;
 	color: white;
 	margin-left: 4px;
     padding-top: 8px;
 }
 
-.syn-toolbar-actions .button-layers .webix_button:hover {
-  	background: #014740;
+.syn-toolbar-actions .button .webix_button:hover {
+  	background: var(--blue-mid2);
 }
 
-.syn-toolbar-actions .button-layers .webix_button:focus {
-	background-color: #009688;
+.syn-toolbar-actions .button .webix_button:focus {
+	background-color: var(--blue-mid2-opacity-5);
 }
 
-.syn-toolbar-actions .button-layers .webix_button:active {
-	background-color: #009688;
+.syn-toolbar-actions .button .webix_button:active {
+	background-color: var(--blue-mid2-opacity-5);
 }
-
-.syn-toolbar-actions .button-dark-mode .webix_button{
-    height:35px;
-    border-radius: 30%;
-    color: white;
-    background: #5c3566;
-}
-
-.syn-toolbar-actions .button-dark-mode .webix_button .webix_icon_btn {
-	font-size: 20px;
-	color: white;
-	margin-left: 4px;
-    padding-top: 8px;
-}
-
-.syn-toolbar-actions .button-dark-mode .webix_button:hover {
-  	background: #37193e;
-}
-
-.syn-toolbar-actions .button-dark-mode .webix_button:focus {
-	background-color: #5c3566;
-}
-
-.syn-toolbar-actions .button-dark-mode .webix_button:active {
-	background-color: #5c3566;
-}
-
-.syn-toolbar-actions .button-actions .webix_button{
-    height:35px;
-    border-radius: 30%;
-    color: white;
-    background: #ff6347;
-}
-
-.syn-toolbar-actions .button-actions .webix_button .webix_icon_btn {
-	font-size: 20px;
-	color: white;
-	margin-left: 4px;
-    padding-top: 8px;
-}
-
-.syn-toolbar-actions .button-actions .webix_button:hover {
-  	background: #b24532;
-}
-
-.syn-toolbar-actions .button-actions .webix_button:focus {
-	background-color: #ff6347;
-}
-
-.syn-toolbar-actions .button-actions .webix_button:active {
-	background-color: #ff6347;
-}
-
-/****/
 
 .syn-toolbar-zoom{
 	background: transparent;
@@ -2271,7 +2217,7 @@ p {
 .syn-toolbar-zoom .button-zoom .webix_button{
     border-radius: 10%;
     color: white;
-    background: #2d7cbe;
+    background: var(--blue-mid2-opacity-5);
 }
 
 .syn-toolbar-zoom .button-zoom .webix_button .webix_icon_btn {
@@ -2282,46 +2228,47 @@ p {
 }
 
 .syn-toolbar-zoom .button-zoom .webix_button:hover {
-  	background: #1C507B;
+  	background: var(--blue-mid2);
 }
 
 .syn-toolbar-zoom .button-zoom .webix_button:focus {
-	background-color: #2d7cbe;
+	background-color: var(--blue-mid2-opacity-5);
 }
 
 .syn-toolbar-zoom  .button-zoom .webix_button:active {
-	background-color: #2d7cbe;
+	background-color: var(--blue-mid2-opacity-5);
 }
 
-.syn-toolbar-zoom .button-zoom-reset .webix_button{
+.syn-toolbar-zoom .button .webix_button{
     height:35px;
     border-radius: 30%;
     color: white;
-    background: #ef2929;
+    background: var(--blue-mid2-opacity-5);
 }
 
-.syn-toolbar-zoom .button-zoom-reset .webix_button .webix_icon_btn {
-	font-size: 19px;
+.syn-toolbar-zoom .button .webix_button .webix_icon_btn {
+	font-size: 20px;
 	color: white;
-	margin-left: 3px;
+	margin-left: 4px;
+    padding-top: 8px;
 }
 
-.syn-toolbar-zoom .button-zoom-reset .webix_button:hover {
-  	background: #cc0000;
+.syn-toolbar-zoom .button .webix_button:hover {
+  	background: var(--blue-mid2);
 }
 
-.syn-toolbar-zoom .button-zoom-reset .webix_button:focus {
-	background-color: #ef2929;
+.syn-toolbar-zoom .button .webix_button:focus {
+	background-color: var(--blue-mid2-opacity-5);
 }
 
-.syn-toolbar-zoom  .button-zoom-reset .webix_button:active {
-	background-color: #ef2929;
+.syn-toolbar-zoom .button .webix_button:active {
+	background-color: var(--blue-mid2-opacity-5);
 }
 
 .syn-toolbar-zoom .button-zoom-search .webix_button{
     height:35px;
     color: white;
-    background: #009688;
+    background: transparent;
     border-radius: 10px !important;
 }
 

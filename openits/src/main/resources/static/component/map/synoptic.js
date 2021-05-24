@@ -221,7 +221,7 @@ export default class Synoptic {
 						type: "icon",
 						icon:"mdi mdi-restore",
 						tooltip: i18n.t("LBL_RESET"),
-						css: "button-zoom-reset",
+						css: "button",
 						width: 40, height: 40,
 						on: {
 							onItemClick: function() {
@@ -238,7 +238,7 @@ export default class Synoptic {
 				rows: [
 					{},
 					{
-						css: { "background": "#009688 !important", "border-radius": "10px !important" },
+						css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
 						height: 35,
 						cols: [
 							{
@@ -370,7 +370,7 @@ export default class Synoptic {
 					type: "icon",
 					icon:"mdi mdi-layers",
 					tooltip: i18n.t("LBL_SHOW_LAYERS"),
-					css: "button-layers",
+					css: "button",
 					width: 40, height: 40,
 					on: {
 						onItemClick: function() {
@@ -395,7 +395,7 @@ export default class Synoptic {
 					type: "icon",
 					icon:"mdi mdi-dots-vertical",
 					tooltip: i18n.t("LBL_SHOW_ACTIONS"),
-					css: "button-actions",
+					css: "button",
 					width: 40, height: 40,
 					on: {
 						onItemClick: function() {

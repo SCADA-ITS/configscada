@@ -344,6 +344,11 @@ export default class GraphicIcon {
 		}
 	}
 	
+	isVisible() {
+		
+		return (this.g.attr("visibility") === "visible");
+	}
+	
 	isSelected() {
 		
 		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
