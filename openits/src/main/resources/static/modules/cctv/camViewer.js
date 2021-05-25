@@ -10,6 +10,8 @@ export default class CamViewer {
 		this.parent = parent;
 		this.element = element;
 		this.stream = STREAM_MJPEG;
+		this.w = $$(parent.args.containerId) ? $$(parent.args.containerId).$width : "100%";
+		this.h = $$(parent.args.containerId) ? $$(parent.args.containerId).$height : "100%";
 	}
 
 	getView() {
@@ -49,7 +51,8 @@ export default class CamViewer {
 							id: "camviewer-" + self.uid,
 							template: function() {
 	
-								return `<div><img style="max-width:100%;width:100%;height:100%;" src="${img.src}"></div> `
+								//return `<div><img style="max-width:100%;width:100%;height:100%;" src="${img.src}"></div> `
+								return `<div><img style="max-width:100%;width:100%;height:${self.h};" src="${img.src}"></div>`;
 							}
 							,on: {
 								
@@ -82,6 +85,7 @@ export default class CamViewer {
 					view = {
 						id: "camviewer-" + self.uid,
 						view: "iframe",
+						height: self.h,
 						src: url
 					};
 				}
