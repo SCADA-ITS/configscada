@@ -1,0 +1,11 @@
+{
+	"moduleAction": {
+	    "map": 200001,
+	    "synoptic": 200002
+	},
+
+	"restEndpoints": {
+		"map": "maps/${id}",
+		"synoptic": "synoptics/${id}"
+	}
+}
