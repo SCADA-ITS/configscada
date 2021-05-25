@@ -8,6 +8,9 @@ const G_ID_LINE_PREFIX = "line";
 const G_ID_GRAPHIC_PREFIX = "graphic";
 const DEFAULT_TEXT_COLOR = "#ffffff";
 const PATH_PICTOGRAMS = "img/pictograms";
+const NO_PICTOGRAM = "img/undefined.png";
+const TIME_ANIMATION_MS = 5000;
+const TIME_BLINKING_MS = 1000;
 
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:71:0", "ElementTypeState:71:2"];
 
@@ -16,53 +19,10 @@ const ZONE_ELEMENT_TYPE = {
 	graphic: "graphic"
 }
 
-const jsonDataFake = [
-	{
-		"zone": 1,
-		"alternance_ms": 5000,
-		"graphic": [
-			{
-				"id": 1,
-				"value": 20,
-				"alternance": 22
-			}
-		]
-	},
-	{
-		"zone": 2,
-		"alternance_ms": 5000,
-		"text": [
-			{
-				"id": 1,
-				"value": "line 1",
-				"alternance": "line 1 alternance",
-				"color": "#ff0000"
-			},
-			{
-				"id": 2,
-				"value": "line 2",
-				"alternance": "line 2 alternance",
-				"color": "#00ff00"
-			},
-			{
-				"id": 3,
-				"value": "line 3",
-				"alternance": "line 3 alternance",
-				"color": "#0000ff"
-			}
-		]
-	},
-	{
-		"zone": 3,
-		"flashing_on_ms": 1000,
-		"flashing_off_ms": 1000,
-		"graphic": [
-			{
-				"id": 1,
-				"value": 30
-			}
-		]
-	}
+const jsonDataFakeArray = [
+	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
+	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":99901}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":99900}]}],
+	[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 ];
 
 export default class Vms extends GraphicIconCustomType {
@@ -73,9 +33,15 @@ export default class Vms extends GraphicIconCustomType {
 		
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		
-		this.mapLinesAlternance = new Map();
-		this.mapGraphicsAlternance = new Map();
+		this.linesAlternance = [];
+		this.graphicsAlternance = [];
+		this.linesBlinking = [];
+		this.graphicsBlinking = [];
+		this.animateReady = false;
+		this.isAlternance = false;
+		this.isBlinking = false;
 		
+		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
 	}
 	
 	render(elementInfo) {
@@ -88,7 +54,7 @@ export default class Vms extends GraphicIconCustomType {
 		
 		if (!jsonData) {
 			
-			jsonData = jsonDataFake;
+			jsonData = this.jsonDataFake;
 		}
 				
 		if (this.gState) {
@@ -103,8 +69,10 @@ export default class Vms extends GraphicIconCustomType {
 			while(gZone = this.g.select("#" + G_ID_ZONE_PREFIX + (++zoneId))) {
 
 				renderZone(gZone, zoneId);
-			}	
+			}
 		}
+		
+		animate();
 		
 		function renderZone(gZone, zoneId) {
 			
@@ -112,12 +80,12 @@ export default class Vms extends GraphicIconCustomType {
 			
 			if (zoneData) {
 				
-				renderGraphics();
-				renderLines();	
+				renderGraphics(zoneData);
+				renderLines(zoneData);	
 			}
 			
 						
-			function renderGraphics() {
+			function renderGraphics(zoneData) {
 				
 				let gGraphic;
 				let graphicId = 0;
@@ -126,11 +94,24 @@ export default class Vms extends GraphicIconCustomType {
 					
 					let graphicData = getElementData(zoneId, ZONE_ELEMENT_TYPE.graphic, graphicId);
 					
-					renderGraphic(gGraphic, graphicData);
+					if (graphicData) {
+					
+						if (graphicData.alternance) {
+							
+							self.graphicsAlternance.push(zoneId + "-" + graphicId);
+						}
+						
+						if (zoneData.flashing_on_ms || zoneData.flashing_off_ms) {
+							
+							self.graphicsBlinking.push(zoneId + "-" + graphicId);
+						}
+					
+						renderGraphic(gGraphic, graphicData);
+					}
 				}
 			}
 			
-			function renderLines() {
+			function renderLines(zoneData) {
 				
 				let gLine;
 				let lineId = 0;
@@ -139,30 +120,33 @@ export default class Vms extends GraphicIconCustomType {
 					
 					let lineData = getElementData(zoneId, ZONE_ELEMENT_TYPE.line, lineId);
 					
-					renderLine(gLine, lineData, zoneData);
+					if (lineData) {
+					
+						if (lineData.alternance) {
+							
+							self.linesAlternance.push(zoneId + "-" + lineId);
+						}
+						
+						if (zoneData.flashing_on_ms || zoneData.flashing_off_ms) {
+							
+							self.graphicsBlinking.push(zoneId + "-" + graphicId);
+						}
+					
+						renderLine(gLine, lineData);
+					}
 				}
 			}
 		}
 		
-		function renderLine(gLine, lineData, zoneData) {
+		function renderLine(gLine, lineData) {
 			
 			if (gLine) {
 				
 				if (lineData) {
 					
 					let text = lineData.val ? lineData.val : lineData.value;
-					
-					if (zoneData) {
-						
-						let lineAlternance = self.mapLinesAlternance.get(lineData.id);
-					
-						if (!lineAlternance) {
-							
-							self.mapLinesAlternance.set(lineData.id, { object: gLine, data: lineData, alternance: false, period: zoneData.alternance_ms, nextChange: new Date() + zoneData.alternance_ms })
-						}	
-					}
-					
-					gLine.attr( { text: text, color: lineData.color ? lineData.color : DEFAULT_TEXT_COLOR } );
+									
+					gLine.attr( { text: text, fill: lineData.color ? lineData.color : DEFAULT_TEXT_COLOR } );
 				}
 				else {
 					
@@ -171,7 +155,7 @@ export default class Vms extends GraphicIconCustomType {
 			}
 		}
 		
-		function renderGraphic(gGraphic, graphicData, zoneData) {
+		function renderGraphic(gGraphic, graphicData) {
 			
 			if (gGraphic) {
 				
@@ -179,24 +163,13 @@ export default class Vms extends GraphicIconCustomType {
 					
 					let graphic = graphicData.val ? graphicData.val : graphicData.value;
 					
-					if (zoneData) {
-						
-						let graphicAlternance = self.mapGraphicsAlternance.get(graphicData.id);
-					
-						if (!graphicAlternance) {
-							
-							self.mapGraphicsAlternance.set(graphicData.id, { object: gGraphic, data: lineData, alternance: false, period: zoneData.alternance_ms, nextChange: new Date() + zoneData.alternance_ms });
-						}	
-					}
-					
 					gGraphic.attr( { "xlink:href": PATH_PICTOGRAMS + "/" + graphic + ".bmp" });
-
 						
 					console.log(gGraphic.attr());
 				}
 				else {
 					
-					
+					gGraphic.attr( { "xlink:href": NO_PICTOGRAM });
 				}
 			}
 		}
@@ -208,7 +181,7 @@ export default class Vms extends GraphicIconCustomType {
 			
 			if (zoneData && Array.isArray(zoneData[elementType])) {
 				
-				elementData = zoneData[elementType].find(e => e.id === id);
+				elementData = zoneData[elementType].find(e => e.id == id);
 			} 
 			
 			return elementData;
@@ -220,7 +193,7 @@ export default class Vms extends GraphicIconCustomType {
 			
 			if (Array.isArray(jsonData) && jsonData.length > 0) {
 				
-				zoneData = jsonData.find(e => e.zone === zoneId);
+				zoneData = jsonData.find(e => e.zone == zoneId);
 			}
 			
 			return zoneData;
@@ -228,48 +201,109 @@ export default class Vms extends GraphicIconCustomType {
 		
 		// Alternance and flashing
 		function animate() {
+			
+			if (self.animateReady) {
+				
+				return;
+			}
+			else {
+				
+				self.animateReady = !self.animateReady;
+			}
 					
 			setInterval(function(){
 				
-				animateTextAlternances();
+				animateAlternance(ZONE_ELEMENT_TYPE.line);
+				animateAlternance(ZONE_ELEMENT_TYPE.graphic);
 				
-			}, 100);
+				self.isAlternance = !self.isAlternance;
+				
+			}, TIME_ANIMATION_MS);
+
+			setInterval(function(){
+				
+				animateBlinking(ZONE_ELEMENT_TYPE.line);
+				animateBlinking(ZONE_ELEMENT_TYPE.graphic);
+				
+				self.isBlinking = !self.isBlinking;
+				
+			}, TIME_BLINKING_MS);
 			
-			function animateTextAlternances() {
+			function animateAlternance(zoneElementType) {
 				
-				let now = new Date();
-
-				self.mapLinesAlternance.forEach(function(lineAlternance, lineId) {
+				let arrAlternanceElements = (zoneElementType === ZONE_ELEMENT_TYPE.line ? self.linesAlternance : self.graphicsAlternance);
+				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.line ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
+				
+				arrAlternanceElements.forEach(elementId => {
 					
-					if (lineAlternance.nextChange < now) {
+					let gElement = self.g.select("#" + gIdPrefix + elementId);
+					
+					if (gElement) {
 						
-						let newLineAlternance = webix.copy(lineAlternance);
-						let newLineData = webix.copy(lineAlternance.lineData);
+						let zoneId = elementId.split("-")[0];
+						let id = elementId.split("-")[1];
 						
-						newLineData.val = newLineAlternance.alternance ? newLineData.alternance : newLineData.value;
+						let elementData = getElementData(zoneId, zoneElementType, id);
 						
-						newLineAlternance.alternance = !newLineAlternance.alternance;
-						newLineAlternance.data = newLineData;
-						 					
-						renderLine(lineAlternance.object, newLineData);
+						if (elementData) {
 
-						self.mapLinesAlternance.set(lineId, newLineAlternance);
+							let newElementData = webix.copy(elementData);
+							
+							newElementData.val = self.isAlternance ? newElementData.value : newElementData.alternance;
+							
+							if (zoneElementType === ZONE_ELEMENT_TYPE.line) {
+							
+								renderLine(gElement, newElementData);
+							} 
+							else {
+								
+								renderGraphic(gElement, newElementData);
+							}
+						}
 					}
 				});
 			}
 			
-			function animateGraphicAlternances(gZone, zoneId) {
+			function animateBlinking(zoneElementType) {
 				
-				// TODO
+				let arrBlinkingElements = (zoneElementType === ZONE_ELEMENT_TYPE.line ? self.linesBlinking : self.graphicsBlinking);
+				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.line ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
+				
+				arrBlinkingElements.forEach(elementId => {
+					
+					let gElement = self.g.select("#" + gIdPrefix + elementId);
+					
+					if (gElement) {
+						
+						let zoneId = elementId.split("-")[0];
+						let id = elementId.split("-")[1];
+						
+						let elementData = getElementData(zoneId, zoneElementType, id);
+						
+						if (elementData) {
+
+							let newElementData = undefined;
+							
+							if (self.isBlinking) {
+								
+								newElementData = webix.copy(elementData);
+							
+								newElementData.val = newElementData.value;	
+							}
+							
+							if (zoneElementType === ZONE_ELEMENT_TYPE.line) {
+							
+								renderLine(gElement, newElementData);
+							} 
+							else {
+								
+								renderGraphic(gElement, newElementData);
+							}
+						}
+					}
+				});
 			}
 		}
-		
-		function blink(gObj, time_ms){
-			
-			gObj.animate({
-		      fill: '#000'
-		    }, time_ms, indefinite);
-		};
 	}
 }
 
