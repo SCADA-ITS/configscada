@@ -45,37 +45,13 @@ export default class GraphicIcon {
 	load(onLoaded) {
 		
 		let self = this;
-		
-		let s = undefined;
+		let s = self.container.obj;
 		let graphicIcon = self.layerElement.graphicIcon;
-		
-		if (self.container.type === GraphicIcon.CONTAINER_TYPE_SNAP) {
-						
-			s = self.container.obj;
-		}
-		else if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
-			
-			// TODO
-			s = self.container.obj;
-		}
-		else if (self.container.type === GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
-			
-			s = self.container.obj;
-//			let container = $$(self.container.obj.id);
-//			
-//			if (container) {
-//				
-//				s = Snap("#" + self.container.obj.id);
-//				s.attr({ width: container.$width, height: container.$height });	
-//			}
-			
-		}
 		
 		let svgFile = graphicIcon.svgFile;
 		
 		if (!svgFile || svgFile == '' || !util.resourceExist(svgFile)) {
 			
-			//svgFile = GraphicIcon.CUSTOM_SVG_FILE;
 			svgFile = undefined;
 		}
 		
@@ -126,14 +102,14 @@ export default class GraphicIcon {
 			function createTooltip() {
 				
 				if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.tooltip) {
-				
+						
 					let tooltip = document.createElement("div");
 					tooltip.setAttribute("id", "graphic-icon-tooltip");
 					tooltip.setAttribute("class", "graphic-icon-tooltip");
 					tooltip.setAttribute("display", "none");
 					tooltip.setAttribute("style", "position: absolute; display: none;");
 					document.body.appendChild(tooltip);
-					
+									
 					self.g.hover(function(e) { showTooltip(e) }, hideTooltip);
 				}
 			}
@@ -164,7 +140,8 @@ export default class GraphicIcon {
 										
 					tooltip.style.display = "block";
 					tooltip.style.left = e.pageX + 10 + 'px';
-					tooltip.style.top = e.pageY + 10 + 'px';	
+					tooltip.style.top = e.pageY + 10 + 'px';
+					tooltip.style.zIndex = 99999;	
 				}
 				
 			}

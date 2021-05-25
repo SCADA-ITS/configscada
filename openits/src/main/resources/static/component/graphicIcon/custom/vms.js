@@ -164,8 +164,6 @@ export default class Vms extends GraphicIconCustomType {
 					let graphic = graphicData.val ? graphicData.val : graphicData.value;
 					
 					gGraphic.attr( { "xlink:href": PATH_PICTOGRAMS + "/" + graphic + ".bmp" });
-						
-					console.log(gGraphic.attr());
 				}
 				else {
 					

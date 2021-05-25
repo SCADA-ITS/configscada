@@ -59,7 +59,7 @@ export default class Synoptic {
 					id: "syn-" + self.uid,
 					template: function() {
 						return `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
-									<svg id=${"svg-syn-" + self.uid}></svg>
+									<svg id=${"svg-syn-" + self.uid} style="height: ${self.h}; width: ${self.w}"></svg>
 								</div>`
 					},
 					on: {

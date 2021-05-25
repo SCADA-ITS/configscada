@@ -328,7 +328,7 @@ export default class EquipmentViewerContent {
 		function addModule(module, equipViewerTab) {
 
 			let moduleAction = { id: equipViewerTab.moduleActionId };
-			let args = { selectedPks: [self.element.id] };
+			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id };
 
 			util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args);
 

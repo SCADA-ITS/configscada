@@ -93,7 +93,7 @@ export default class MapModule extends GenericModule {
 
 							options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 
-							let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
+							let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width , $$(self.args.containerId).$height, options);
 
 							$$("loading-" + self.uid).hide();
 							$$(self.uid).show();
@@ -126,7 +126,7 @@ export default class MapModule extends GenericModule {
 
 							options[Synoptic.Options.DEBUG_MODE] = DEBUG_MODE;
 
-							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
+							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width, $$(self.args.containerId).$height, options);
 
 							$$("loading-" + self.uid).hide();
 							$$(self.uid).show();

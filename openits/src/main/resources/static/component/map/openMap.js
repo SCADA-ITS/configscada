@@ -59,9 +59,10 @@ export default class OpenMap {
 					css: { "background": "#9e9e9e" },
 					id: "view-map-" + self.uid,
 					template: function() {
-													
+									
+						// <!--<div id="map-${self.uid}" style="height: 100vh; width: 100vw"></div>-->				
 						let t = `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
-									<div id="map-${self.uid}" style="height: 100vh; width: 100vw"></div>
+									<div id="map-${self.uid}" style="height: ${self.h}px; width: ${self.w}px">
 									<div id="svg-main-container-${self.uid}" style="display: none;"></div>
 								 </div>`;
 						
@@ -193,6 +194,11 @@ export default class OpenMap {
 			self.currentZoomLevel = self.metadata.zoom;
 			self.maxZoomLevel = self.metadata.zoomMax;
 			self.minZoomLevel = self.metadata.zoomMin;
+			
+			webix.delay(function() {
+
+				map.updateSize();
+			}, null, null, 1000);
 			
 			return map;
 		}
@@ -341,9 +347,8 @@ export default class OpenMap {
 			function loadGraphicIcon(layerElement, layerElementZoom) {
 				
 				let layerElem = webix.copy(layerElement);
-				
 				let svgId = getSvgId(layerElem, layerElementZoom);
-				let svgGraphicIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+				let svgGraphicIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 				let w = layerElementZoom ? layerElementZoom.graphicIcon.width : layerElem.graphicIcon.width;
 				let h = layerElementZoom ? layerElementZoom.graphicIcon.height : layerElem.graphicIcon.height;
 				
