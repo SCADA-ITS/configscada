@@ -199,6 +199,38 @@ export default class AlarmModule extends GenericModule {
 		}
 
 		function createManualAlarm() {
+			
+			function drawHeader() {
+
+			let header = {
+					id: "viewHeader-" + self.uid,
+					rows: [
+						{height: 10},
+						{
+					cols: [
+						{
+							view: "label",
+							label: "<img src='img/grid/alarmConfig.png' class='grid-icon'/>",
+							height: 75,
+							css: "userrole-header-icon"
+						},
+						{
+							view: "label",
+							height: 75,
+							id: "label-bottom-" + self.uid,
+							template: "<span>"+ i18n.t("LBL_CREATE_MANUAL_ALARM")+ "</span> <br> <span style='font-size: 13px'>" +i18n.t("LBL_CREATE_MANUAL_ALARM_DESCRIPTION")+"</span>",
+							css: "userrole-header-label"
+						}
+					]							
+						},
+						{height: 10}
+					]
+
+				};
+
+				return header;
+			};
+
 
 			function drawGrid() {
 
@@ -285,9 +317,13 @@ export default class AlarmModule extends GenericModule {
 
 				view = {
 					id: "viewTable" + self.uid,
+					css: {"box-sizing": "border-box" },
+					width: 590,
 					cols: [
 						{
-							width: 600,
+							css: {"box-sizing": "border-box" },
+							width: 580,
+							height: 350,
 							rows: self.tableAlarmsModal.getView()
 							
 						}
@@ -410,6 +446,7 @@ export default class AlarmModule extends GenericModule {
 					cols: [
 						{
 							width: 250,
+							hight: 370,
 							rows: [
 								treeView.getView()		
 							]
@@ -427,13 +464,13 @@ export default class AlarmModule extends GenericModule {
 					cols: [
 						{
 							rows: [
-								{ height: 10},
+								{ height: 20},
 								{
 									view: "toolbar",
 									height: 45,
 									borderless: true,
 									elements: [
-										{ width: 18 },
+										{ width: 10 },
 										{ 
 											id: "button-cancel-" + "-" + self.uid,
 											view: "button",
@@ -493,7 +530,7 @@ export default class AlarmModule extends GenericModule {
 												}
 											}
 										},
-										{ width: 18 }
+										{ width: 10 }
 									]
 								},
 								{ height: 10}
@@ -506,39 +543,37 @@ export default class AlarmModule extends GenericModule {
 
 			let view = {
 				css: "custom_window",
+				height: 545,
 				cols: [
 					{
 						rows: [
-							{ height: 6 },
 							{
 								id: "custom_window" + self.uid,
 								type: "line",
+								height: 535,
 								cols: [
 									{ width: 6 },
 									{
 										id: "view" + "createManual" + "loading-" + self.uid,
 										rows: [util.ui.getViewDrawNoData()],
-										height: 500,
 										width: 834,
 										hidden: true
 									},
 									{ width: 6 }
 								]
-							},
-							{ height: 30 }
-						]
+							}						]
 					}
 				]
 			};
 
-			let h = document.documentElement.clientHeight - 400;
-			let w = document.documentElement.clientWidth - 1000;
+//			let h = document.documentElement.clientHeight - 400;
+//			let w = document.documentElement.clientWidth - 1000;
 
 			self.createView = util.ui.loadWindow(
 				i18n.t("LBL_CREATE_MANUAL_ALARM"),
 				view,
-				h,
-				w,
+				575,
+				850,
 				true
 			);
 		
@@ -549,16 +584,17 @@ export default class AlarmModule extends GenericModule {
 				view: "multiview",
 				id: "multi" + self.uid,
 				animate: false,
-				height: 0,
 				cells: [
 					{
 						rows: [
+							drawHeader(),
 							{
 								id: "treeGridView" + self.uid,
+								css: "alarm-multiview",
 								cols:[]
 							},
 							{ 
-								rows: [{ height: 20 }] 
+								rows: [{ height: 1 }] 
 							},
 							drawButtons()
 						]
@@ -566,7 +602,7 @@ export default class AlarmModule extends GenericModule {
 				]
 
 			};
-
+		
 			$$("custom_window" + self.uid).addView(multiView, 1);
 			$$("treeGridView" + self.uid).addView(drawTree(), 1);
 			$$("treeGridView" + self.uid).addView(drawGrid(), 2);
