@@ -44,54 +44,6 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.config = module.config;
 	}
 
-	getView() {
-
-		let view = undefined;
-
-		view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: false
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
-									hidden: true
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-//		function getViewDrawNoData() {
-//
-//			return {
-//				view: "template",
-//				template: function() {
-//
-//					let icon = "<img src='img/loading.svg' align='center'>";
-//
-//					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-//				}
-//			}
-//		}
-
-		return view;
-	}
-
 	loadData() {
 
 		let self = this;
@@ -652,15 +604,13 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				let events = {};
 
-				events[TreeView.EventTypes.ON_SELECT_ANY] = function(ids, callbackEnable) { 
+				events[TreeView.EventTypes.ON_SELECT_ANY] = function(items, callbackEnable) { 
 					
-					if (Array.isArray(ids) && ids.length > 0) {
+					if (Array.isArray(items) && items.length > 0) {
 						
-						self.lastSelectedTreeView = ids;
+						self.lastSelectedTreeView = items.map(e => e.id);
 						
-						let elementIds = ids.map(e => { return e.split("_")[1] });
-					
-						fillGrids(elementIds, callbackEnable);
+						fillGrids(items.map(e => e.id_), callbackEnable);
 					}
 				};
 				

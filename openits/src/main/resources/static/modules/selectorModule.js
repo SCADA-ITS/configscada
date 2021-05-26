@@ -6,7 +6,7 @@ import ListView from "../component/listview.js";
 const MODULE_TYPE_GENERIC_SELECTOR_ID = 9;
 const SELECTOR_REST_ENDPOINT = appConfig.restUrl + "selector_trees/";
 
-export default class selectorModule extends GenericModule {
+export default class SelectorModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
@@ -16,54 +16,6 @@ export default class selectorModule extends GenericModule {
 		this.config = module.config;
 		this.treeNodes = undefined;
 		this.componentView = undefined;
-	}
-
-	getView() {
-
-		let view = undefined;
-
-		view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: false
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [getViewDrawNoData()],
-									hidden: true
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		function getViewDrawNoData() {
-
-			return {
-				view: "template",
-				template: function() {
-
-					let icon = "<img src='img/loading.svg' align='center'>";
-
-					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-				}
-			}
-		}
-
-		return view;
 	}
 
 	loadData() {
@@ -148,6 +100,7 @@ export default class selectorModule extends GenericModule {
 						console.log(treeNode);
 						let treeData = {};
 						treeData.id = treeNode.id;
+						treeData.id_ = treeNode.id;
 						treeData.value = treeNode.label;
 						treeData.props = {};
 						treeData.data = [];
@@ -214,11 +167,11 @@ export default class selectorModule extends GenericModule {
 			};
 
 
-			let selectEvent = function(items) {
+			let selectEvent = function(item) {
 
-				if (items) {
+				if (item) {
 
-					let nodeIdSelected = items;
+					let nodeIdSelected = item.id;
 
 					if (self.treeNodes) {
 

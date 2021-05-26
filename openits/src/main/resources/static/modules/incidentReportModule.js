@@ -41,40 +41,7 @@ export default class IncidentReportModule extends GenericModule {
 
 	getView() {
 
-		let view = undefined;
-
-		if (this.moduleAction.id === this.config.moduleAction.edit) {
-
-			view = {
-				css: "custom_window",
-				cols: [
-					{
-						rows: [
-							{ height: 6 },
-							{
-								cols: [
-									{ width: 6 },
-									{
-										id: this.uid,
-										rows: [],
-										hidden: false
-									},
-									{
-										id: "loading-" + this.uid,
-										rows: [this.getViewDrawNoData()],
-										hidden: true
-									},
-									{ width: 6 }
-								]
-							},
-							{ height: 6 }
-						]
-					}
-				]
-			}
-		}
-
-		return view;
+		return super.getViewCheckModuleActionAndSelectedPks();
 	}
 
 	loadData() {
@@ -92,19 +59,6 @@ export default class IncidentReportModule extends GenericModule {
 			this.actionCancel();
 		}
 
-	}
-
-	getViewDrawNoData() {
-
-		return {
-			view: "template",
-			template: function() {
-
-				let icon = "<img src='img/loading.svg' align='center'>";
-
-				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-			}
-		}
 	}
 
 	actionConfirm() {

@@ -11,7 +11,7 @@
 	"adapter": "ws.element.getList",
 	"restEndpoints": {
 		"element": "elements/${id}",
-		"alarm": "alarms/${elementId}",
+		"alarm": "alarms/${id}",
 		"equipmentViewer": "equip_viewer/${elementId}"
 	},
 	"paramType": {

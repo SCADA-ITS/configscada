@@ -34,35 +34,7 @@ export default class EquipmentViewerModule extends GenericModule {
 
 	getView() {
 
-		let view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: true
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
-									hidden: false
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		return view;
+		return super.getViewCheckModuleActionAndSelectedPks();
 	}
 
 	loadData() {
@@ -353,11 +325,16 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 				else {
 					
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { id: elem.id })).then(function(dat) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.equipmentViewer, { elementId: elem.id })).then(function(dat) {
 				
 						if (dat != null) {
 							
 							let equipmentViewer = dat.json();
+							
+							if (!equipmentViewer) {
+								
+								equipmentViewer = EquipmentViewerModule.DEFAULT_EQUIPMENT_VIEWER;
+							}
 							
 							doSelect(equipmentViewer);
 						}	
@@ -374,7 +351,6 @@ export default class EquipmentViewerModule extends GenericModule {
 							
 						self.equipmentViewerContent.loadData();
 					}
-					
 					
 					$$("view-main-loading-" + self.uid).hide();	
 				}

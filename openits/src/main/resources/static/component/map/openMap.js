@@ -42,9 +42,11 @@ export default class OpenMap {
 		
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
+		
+		this.afterRenderCallback;
 	}
 
-	getView() {
+	getView(afterRenderCallback) {
 
 		let self = this;
 		let view;
@@ -71,11 +73,10 @@ export default class OpenMap {
 					on: {
 						onAfterRender: function() {
 		
+							self.afterRenderCallback = afterRenderCallback;
 							self.olMap = createMap();
 							
-							loadGraphicIcons();							
-							
-							return self.olMap;
+							loadGraphicIcons();
 						},
 						onDestruct: function() {
 		
@@ -187,7 +188,7 @@ export default class OpenMap {
 			    
 				if (!self.flagMouseMove && !self.mouseOverSvg) {
 								
-					unselectAll();
+					self.unselectAll();
 				}
 			}, false); 
 			
@@ -261,7 +262,7 @@ export default class OpenMap {
 						
 						graphicIcons.forEach(graphicIcon => {
 							
-							if (isElementLayerVisible(graphicIcon)) {
+							if (self.isElementLayerVisible(graphicIcon)) {
 							
 								graphicIcon.show();	
 							}
@@ -281,7 +282,7 @@ export default class OpenMap {
 				
 				newZoomLevelGraphicIcons.forEach(newZoomLevelGraphicIcon => {
 					
-					if (isElementLayerVisible(newZoomLevelGraphicIcon)) {
+					if (self.isElementLayerVisible(newZoomLevelGraphicIcon)) {
 						
 						newZoomLevelGraphicIcon.show();
 					
@@ -462,6 +463,11 @@ export default class OpenMap {
 									linkGraphicIcons();
 									
 									loadContextMenu();
+									
+									if (afterRenderCallback) {
+										
+										afterRenderCallback();
+									}
 								}
 							}
 							
@@ -621,61 +627,11 @@ export default class OpenMap {
 			return Array.from(self.graphicIcons.keys());
 		}
 		
-		function isElementLayerVisible(graphicIcon) {
-			
-			let isVisible = false;
-			
-			for (let i = 0; !isVisible && i < self.metadata.layers.length; i++) {
-				 
-				let layer = self.metadata.layers[i];
-				
-				if (self.layersVisible.find(layerVisible => layerVisible === layer.id)) {
-					
-					let layerElement = layer.layerElements.find(e => e.elementId === graphicIcon.element.id);
-				
-					if (layerElement) {
-						
-						isVisible = true;
-					}	
-				}
-			}
-			
-			return isVisible;
-		}
-		
 		function showLayers(layersId) {
 			
 			self.layersVisible = layersId;
 			
 			refreshVisibleGraphicIcons();
-			
-//			if (Array.isArray(layersId)) {
-//					
-//				self.metadata.layers.forEach(layer => {
-//					
-//					layer.layerElements.forEach(layerElement => {
-//						
-//						let graphicIcons = getGraphicIcons(layerElement.elementId);
-//						
-//						if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-//						
-//							graphicIcons.forEach(graphicIcon => {
-//							
-//								// Visible
-//								if (layersId.indexOf(layer.id) !== -1) {
-//								
-//									graphicIcon.show();
-//								}
-//								// No visible
-//								else {
-//									
-//									graphicIcon.hide();
-//								}	
-//							});	
-//						}
-//					});	
-//				});
-//			}
 		}
 		
 		function createGraphicIcon(layerElement, element, container, onCreate) {
@@ -718,7 +674,7 @@ export default class OpenMap {
 					
 					self.mapAction.executeDefault();
 					
-					unselectAll();
+					self.unselectAll();
 				} 
 			}
 			
@@ -726,147 +682,6 @@ export default class OpenMap {
 				
 				onCreate(graphicIconInstance);
 			}
-		}
-		
-		function select(elementId) {
-			
-			if (!selectInAllZoom()) {
-				
-				selectInOtherZooms();
-			}
-			
-			function selectInAllZoom() {
-				
-				let selected = false;
-			
-				let graphicIcon = self.zoomLevelGraphicIcons.get(ALL_ZOOM_LEVEL).find(allZoomLevelGraphicIcon => allZoomLevelGraphicIcon.element.id === elementId);
-				
-				if (graphicIcon && isElementLayerVisible(graphicIcon)) {
-					
-					unselectAll();
-
-					graphicIcon.select();
-					
-					if (selected = graphicIcon.isSelected()) {
-						
-						goto(graphicIcon, self.currentZoomLevel);
-					}
-				}
-				
-				return selected;
-			}
-			
-			function selectInOtherZooms() {
-				
-				let zoomLevels = Array.from(self.zoomLevelGraphicIcons.keys());
-				//zoomLevels.sort((a, b) => b - a); // Descending sort. Select max zoom level for element
-				
-				// Ascending sort. Select min zoom level for element...
-				zoomLevels.sort((a, b) => a - b); 
-				
-				// But add currentZoomLevel to the beginning/end of all zoomLevels to eval
-				const index = zoomLevels.indexOf(self.currentZoomLevel);
-				
-				if (index > -1) {
-					zoomLevels.splice(index, 1);
-					zoomLevels.unshift(self.currentZoomLevel);
-				} 
-				
-				let graphicIcon = undefined;
-				let zoomLevel = self.currentZoomLevel;
-				
-				for (let i = 0; !graphicIcon && i < zoomLevels.length; i++) {
-					
-					zoomLevel = zoomLevels[i];
-					let graphicIcons = self.zoomLevelGraphicIcons.get(zoomLevel);
-					
-					if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-						
-						graphicIcon = graphicIcons.find(e => e.element.id === elementId);
-					}
-				}
-				
-				if (graphicIcon && isElementLayerVisible(graphicIcon)) {
-					
-					unselectAll();
-					
-					goto(graphicIcon, zoomLevel);
-					
-					// Make sure it is selected after zoom
-					webix.delay(function() {
-						
-						graphicIcon.select();
-
-					}, null, null, 4000);
-				}
-				else {
-					
-					webix.alert({
-						title: i18n.t("LBL_LAYER_NOT_VISIBLE"),
-						text: i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"),
-						type: "alert-error",
-						width: 500
-					});
-				}
-			}
-			
-			function goto(graphicIcon, zoomLvl) {
-				
-				let lon = graphicIcon.layerElement.longitude;
-				let lat = graphicIcon.layerElement.latitude;
-				
-				self.olMap.getView().animate({
-					center: ol.proj.fromLonLat([lon, lat]),
-					zoom: zoomLvl,
-					duration: 3000
-				});
-			}
-			
-//			if (self.graphicIcons) {
-//				
-//				let graphicIcons = getGraphicIcons(elementId)
-//				
-//				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-//					
-//					unselectAll();
-//					
-//					let graphicIconSelected = graphicIcons[0];
-//					
-//					graphicIcons[0].select();
-//					
-//					if (graphicIconSelected.isSelected()) {
-//						
-//						let lon = graphicIconSelected.layerElement.longitude;
-//						let lat = graphicIconSelected.layerElement.latitude;
-//						
-//						self.olMap.getView().animate({
-//							center: ol.proj.fromLonLat([lon, lat]),
-//							zoom: self.currentZoomLevel,
-//							duration: 1000
-//						});	
-//					}
-//					// TOOO: Find element in other zoom levels and select
-//					else {
-//						
-//					}
-//				}
-//			}
-		}
-		
-		function unselectAll() {
-			
-			self.graphicIcons.forEach((value) => {
-				
-				let graphicIcons = value;
-				
-				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-					
-					graphicIcons.forEach(graphicIcon => {
-						
-						graphicIcon.unselect();
-					});
-				}
-			});
 		}
 		
 		function reloadCboSearch() {
@@ -1038,7 +853,7 @@ export default class OpenMap {
 										on:{
 											onChange: function(newValue, oldValue, config){
 										        
-												select(newValue);
+												self.select(newValue);
 										 	}
 										}
 									},
@@ -1298,6 +1113,141 @@ export default class OpenMap {
 		}
 		
 		return view;			
+	}
+	
+	select(elementId) {
+		
+		let self = this;
+			
+		if (!selectInAllZoom()) {
+			
+			selectInOtherZooms();
+		}
+		
+		function selectInAllZoom() {
+			
+			let selected = false;
+		
+			let graphicIcon = self.zoomLevelGraphicIcons.get(ALL_ZOOM_LEVEL).find(allZoomLevelGraphicIcon => allZoomLevelGraphicIcon.element.id === elementId);
+			
+			if (graphicIcon && self.isElementLayerVisible(graphicIcon)) {
+				
+				self.unselectAll();
+
+				graphicIcon.select();
+				
+				if (selected = graphicIcon.isSelected()) {
+					
+					self.goto(graphicIcon, self.currentZoomLevel);
+				}
+			}
+			
+			return selected;
+		}
+		
+		function selectInOtherZooms() {
+			
+			let zoomLevels = Array.from(self.zoomLevelGraphicIcons.keys());
+			//zoomLevels.sort((a, b) => b - a); // Descending sort. Select max zoom level for element
+			
+			// Ascending sort. Select min zoom level for element...
+			zoomLevels.sort((a, b) => a - b); 
+			
+			// But add currentZoomLevel to the beginning/end of all zoomLevels to eval
+			const index = zoomLevels.indexOf(self.currentZoomLevel);
+			
+			if (index > -1) {
+				zoomLevels.splice(index, 1);
+				zoomLevels.unshift(self.currentZoomLevel);
+			} 
+			
+			let graphicIcon = undefined;
+			let zoomLevel = self.currentZoomLevel;
+			
+			for (let i = 0; !graphicIcon && i < zoomLevels.length; i++) {
+				
+				zoomLevel = zoomLevels[i];
+				let graphicIcons = self.zoomLevelGraphicIcons.get(zoomLevel);
+				
+				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+					
+					graphicIcon = graphicIcons.find(e => e.element.id === elementId);
+				}
+			}
+			
+			if (graphicIcon && self.isElementLayerVisible(graphicIcon)) {
+				
+				self.unselectAll();
+				
+				self.goto(graphicIcon, zoomLevel);
+				
+				// Make sure it is selected after zoom
+				webix.delay(function() {
+					
+					graphicIcon.select();
+
+				}, null, null, 4000);
+			}
+			else {
+				
+				webix.alert({
+					title: i18n.t("LBL_LAYER_NOT_VISIBLE"),
+					text: i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"),
+					type: "alert-error",
+					width: 500
+				});
+			}
+		}
+	}
+	
+	unselectAll() {
+			
+		this.graphicIcons.forEach((value) => {
+			
+			let graphicIcons = value;
+			
+			if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+				
+				graphicIcons.forEach(graphicIcon => {
+					
+					graphicIcon.unselect();
+				});
+			}
+		});
+	}
+	
+	goto(graphicIcon, zoomLvl) {
+				
+		let lon = graphicIcon.layerElement.longitude;
+		let lat = graphicIcon.layerElement.latitude;
+		
+		this.olMap.getView().animate({
+			center: ol.proj.fromLonLat([lon, lat]),
+			zoom: zoomLvl,
+			duration: 3000
+		});
+	}
+	
+	isElementLayerVisible(graphicIcon) {
+			
+		let isVisible = false;
+		
+		for (let i = 0; !isVisible && i < this.metadata.layers.length; i++) {
+			 
+			let layer = this.metadata.layers[i];
+			
+			if (this.layersVisible.find(layerVisible => layerVisible === layer.id)) {
+				
+				let layerElement = layer.layerElements.find(e => e.elementId === graphicIcon.element.id);
+			
+				if (layerElement) {
+					
+					isVisible = true;
+				}	
+			}
+		}
+		
+		return isVisible;
 	}
 } 
 
