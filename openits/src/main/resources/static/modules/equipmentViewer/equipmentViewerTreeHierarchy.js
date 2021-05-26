@@ -20,8 +20,12 @@ export default class EquipmentViewerTreeHierarchy {
 			
 			if (self.onSelectElement) {
 			
-				events[TreeView.EventTypes.ON_SELECT_FOLDER] = self.onSelectElement;
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = self.onSelectElement;	
+				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
+					self.onSelectElement(item.id_) 
+				};
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
+					self.onSelectElement(item.id_) 
+				};	
 			}
 			
 			return events;	
@@ -46,6 +50,7 @@ export default class EquipmentViewerTreeHierarchy {
 			
 			let parent = {
 				id: self.element.id,
+				id_: self.element.id,
 				value: self.element.alias,
 				data: [],
 				props: {
@@ -61,6 +66,7 @@ export default class EquipmentViewerTreeHierarchy {
 					let child = {
 						
 						id: e.id,
+						id_: e.id,
 						value: e.alias,
 						props: {}
 					}

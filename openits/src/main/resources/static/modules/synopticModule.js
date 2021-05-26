@@ -16,41 +16,6 @@ export default class SynopticModule extends GenericModule {
 		this.stompClient = undefined;
 	}
 
-	getView() {
-
-		let view = undefined;
-
-		view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: true
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
-									hidden: false
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		return view;
-	}
-
 	loadData() {
 
 		let self = this;

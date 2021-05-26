@@ -14,41 +14,6 @@ export default class CCTVModule extends GenericModule {
 
 	}
 
-	getView() {
-
-		let view = undefined;
-
-		view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: false
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
-									hidden: true
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		return view;
-	}
-
 	loadData() {
 
 		let self = this;

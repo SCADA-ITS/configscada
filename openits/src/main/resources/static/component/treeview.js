@@ -57,87 +57,7 @@ export default class TreeView {
 
 		let self = this;
 		let view;
-		
-		let getItemProps = function(item, prop) {
-	
-			let propValue = undefined
-	
-			if (item && item.props) {
-	
-				propValue = item.props[prop.name];
-			}
 			
-			if (!propValue) {
-				
-				propValue = prop.value; 
-			}
-			
-			return propValue;
-		}
-		
-		let getBranchItems = function(item, rootItem, branchItems) {
-			
-			function getRoot(id, data) {
-				
-				let rootItm = undefined;
-				
-				if (!data){
-					
-					data = self.data;
-				}
-				
-				if (id && data) {
-					
-					rootItm = data.find(e => e.id === id);
-					
-					let index = 0;
-						
-					while(!rootItm && index < data.length) {
-					
-						if(data[index].data && data[index].data.length > 0) {
-							
-							rootItm = getRoot(id, data[index].data);
-						}
-						index++;
-					}
-				}
-				return rootItm;
-			}
-			
-			let currentItem = undefined;
-			
-			if (!branchItems) {
-				
-				branchItems = [];
-			}
-		
-			if (item) {
-
-				if (!rootItem) {
-					
-					rootItem = getRoot(item.id);
-					currentItem = rootItem;
-					
-				} else {
-					
-					currentItem = item;
-				}
-
-				if(currentItem) {	 
-					
-					branchItems.push(currentItem);
-				
-					if(currentItem.data && currentItem.data.length > 0) {
-						
-						currentItem.data.forEach(e => getBranchItems(e, rootItem, branchItems));
-					}
-				}
-
-			}
-			
-			return branchItems;
-		}
-		
 		let searchView = {
 			
 			view: "toolbar",
@@ -151,7 +71,14 @@ export default class TreeView {
 					on: {
 						onTimedKeyPress: function() {
 							
-							$$("tree-" + self.uid).filter("#value#", this.getValue());				
+							let value = this.getValue().toLowerCase(); // input data is derived
+							
+							$$("tree-" + self.uid).filter(function(obj) {  // here it filters all titles from the dataset
+			
+								return obj.value.toLowerCase().indexOf(value) != -1;
+							});
+							
+							//$$("tree-" + self.uid).filter("#value#", this.getValue());
 						}
 					}
 				},
@@ -237,7 +164,28 @@ export default class TreeView {
 			
 		tbActionView.elements.push({ width: 4 });
 		
-		let applyProperties = function(data) {
+		drawCommands();
+		
+		view = {
+			id: "treeview-" + this.uid,
+			rows: []
+		};
+		
+		view.rows.push({ height: 6 });
+		
+		if (self.getTreeOptions(TreeOptions.SEARCH)) {
+			
+			view.rows.push(searchView);		
+		}
+		
+		if (self.getTreeOptions(TreeOptions.CMD_BUTTONS)) {
+		
+			view.rows.push(tbActionView);		
+		}
+		
+		view.rows.push(drawTree());
+		
+		function applyProperties(data) {
 			
 			if (Array.isArray(data) && data.length > 0) {
 				
@@ -265,18 +213,9 @@ export default class TreeView {
 			}
 		}
 	
-		let drawTree = function() {
+		function drawTree() {
 			
-			let data = applyProperties(webix.copy(self.data));
-			
-			//console.log(data);
-			try {
-			let ids = data !== null && data !== undefined ? data.map(e => {
-				return e.id
-			}) : null;
-			} catch(e) {console.log(e);}
-			//console.log(ids.sort());
-			
+			let data = applyProperties(webix.copy(self.data));		
 			
 			let treeView = {
 				id: "tree-" + self.uid,
@@ -379,7 +318,7 @@ export default class TreeView {
 								// Item selected
 								if (selectedItem && self.events[TreeView.EventTypes.ON_SELECT_ITEM]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item.id, function(value) {
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ITEM])(item, function(value) {
 									
 										self.enable(value, currentContext);
 									});
@@ -387,7 +326,7 @@ export default class TreeView {
 								// Folder selected
 								else if (!selectedItem && self.events[TreeView.EventTypes.ON_SELECT_FOLDER]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item.id, function(value) {
+									eval(self.events[TreeView.EventTypes.ON_SELECT_FOLDER])(item, function(value) {
 									
 										self.enable(value, currentContext);
 									});
@@ -395,7 +334,7 @@ export default class TreeView {
 								// Any selected 
 								else if (self.events[TreeView.EventTypes.ON_SELECT_ANY]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_SELECT_ANY])(getBranchItems(item).map(item => item.id), function(value) {
+									eval(self.events[TreeView.EventTypes.ON_SELECT_ANY])(getBranchItems(item), function(value) {
 									
 										self.enable(value, currentContext);
 									});
@@ -416,7 +355,7 @@ export default class TreeView {
 								// Item selected
 								if (selectedItem && self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC]) {
 									
-									eval(self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC])(item.id);
+									eval(self.events[TreeView.EventTypes.ON_ITEM_DBL_CLIC])(item);
 								}
 							}
 						}
@@ -427,13 +366,7 @@ export default class TreeView {
 						
 						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
 									
-							let checkedList = this.getChecked();
-//							let checkedItems = [];
-//							
-//							if (Array.isArray(checkedList) && checkedList.length > 0) {
-//								
-//								checkedItems = checkedList.filter(e => this.getItem(e).props && !this.getItem(e).props.folder);
-//							}
+							let checkedList = self.getSelected();
 							
 							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
 						}
@@ -444,25 +377,195 @@ export default class TreeView {
 			return treeView;
 		}
 		
-		view = {
-			id: "treeview-" + this.uid,
-			rows: []
-		};
-		
-		view.rows.push({ height: 6 });
-		
-		if (self.getTreeOptions(TreeOptions.SEARCH)) {
+		function drawCommands() {
 			
-			view.rows.push(searchView);		
+			let viewGroupCommands = [];
+			
+			if (Array.isArray(self.metadata.treeCommands) && self.metadata.treeCommands.length > 0) {
+				
+				self.metadata.treeCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+				
+				self.metadata.treeCommands.forEach(treeCommand => {
+					
+					if (treeCommand.grouped) {
+						
+						drawGroupCommands(treeCommand);
+					}
+					else {
+						
+						let viewButtonCommand = { 
+							view: "icon", 
+							icon: treeCommand.icon, 
+							value: i18n.t(treeCommand.label), 
+							tooltip: true,
+							on: {
+								onItemClick: function() {
+								
+									executeTreeCommand(treeCommand.id);			
+								}
+							}
+						};
+						
+						tbActionView.elements.push(viewButtonCommand);
+					}
+					
+				});
+				
+				if (viewGroupCommands.length > 0) {
+					
+					let viewButtonGroupCommand = { 
+						view: "icon", 
+						icon: "mdi mdi-dots-vertical", 
+						popup: "groupCommands-" + self.uid
+					};
+					
+					tbActionView.elements.push(viewButtonGroupCommand);
+					
+					webix.ui({
+  						view: "popup",
+					  	id: "groupCommands-" + self.uid,
+					  	//width:300,
+					  	body:{
+						
+							view: "list", 
+					    	data: viewGroupCommands,
+							borderless: true,
+					    	type: {
+
+								template: function(obj) {
+		
+									if (!obj.default) {
+										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
+									}
+									else {
+										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
+									}
+								}
+							},
+					    	autoheight:true,
+							autowidth:true,
+					    	select:true,
+							on: {
+								onAfterSelect: function(id) {
+									
+									let item = this.getItem(id);
+									
+									executeTreeCommand(item.treeCommandId);
+									
+									this.unselectAll();
+									this.getParentView().hide();			
+								}
+							}	    
+					  	}
+					});
+					
+					
+				}
+			}
+			
+			function drawGroupCommands(treeCommand) {
+				
+				viewGroupCommands.push({
+
+					id: webix.uid(),		
+					value: i18n.t(treeCommand.label),
+					icon: treeCommand.icon,
+					treeCommandId: treeCommand.id  
+				});
+			}
+			
+			function executeTreeCommand(treeCommandId) {
+			
+				let treeCommand = self.metadata.treeCommands.find(e => {
+					return e.id === treeCommandId
+				});
+				
+				if (treeCommand) {
+				
+					util.module.executeCommand(treeCommand, null, function() { return self.getSelected().map(e => e.id_) });
+				}
+			}
 		}
 		
-		if (self.getTreeOptions(TreeOptions.CMD_BUTTONS)) {
-		
-			view.rows.push(tbActionView);		
+		function getItemProps(item, prop) {
+	
+			let propValue = undefined
+	
+			if (item && item.props) {
+	
+				propValue = item.props[prop.name];
+			}
+			
+			if (!propValue) {
+				
+				propValue = prop.value; 
+			}
+			
+			return propValue;
 		}
 		
-		view.rows.push(drawTree());
-		// view.rows.push({ height: 6 });
+		function getBranchItems(item, rootItem, branchItems) {
+			
+			let currentItem = undefined;
+			
+			if (!branchItems) {
+				
+				branchItems = [];
+			}
+		
+			if (item) {
+
+				if (!rootItem) {
+					
+					rootItem = getRoot(item.id);
+					currentItem = rootItem;
+					
+				} else {
+					
+					currentItem = item;
+				}
+
+				if(currentItem) {	 
+					
+					branchItems.push(currentItem);
+				
+					if(currentItem.data && currentItem.data.length > 0) {
+						
+						currentItem.data.forEach(e => getBranchItems(e, rootItem, branchItems));
+					}
+				}
+
+			}
+			
+			function getRoot(id, data) {
+				
+				let rootItm = undefined;
+				
+				if (!data){
+					
+					data = self.data;
+				}
+				
+				if (id && data) {
+					
+					rootItm = data.find(e => e.id === id);
+					
+					let index = 0;
+						
+					while(!rootItm && index < data.length) {
+					
+						if(data[index].data && data[index].data.length > 0) {
+							
+							rootItm = getRoot(id, data[index].data);
+						}
+						index++;
+					}
+				}
+				return rootItm;
+			}
+			
+			return branchItems;
+		}
 			
 		return view;
 	}
@@ -501,7 +604,7 @@ export default class TreeView {
 		}
 	}
 	
-	getChecked() {
+	getSelected() {
 		
 		let tree = $$("tree-" + this.uid);
 		let checkedItems = [];
@@ -516,8 +619,17 @@ export default class TreeView {
 				
 				if (Array.isArray(checkedList) && checkedList.length > 0) {
 				
-					checkedItems = checkedList.filter(e => tree.getItem(e).props && !tree.getItem(e).props.folder);	
+					//checkedItems = checkedList.filter(e => tree.getItem(e).props && !tree.getItem(e).props.folder);
+					
+					checkedList.forEach(e => {
+						
+						checkedItems.push(tree.getItem(e));
+					})
 				}
+			}
+			else {
+				
+				checkedItems.push(tree.getSelectedItem());
 			}
 		}
 		

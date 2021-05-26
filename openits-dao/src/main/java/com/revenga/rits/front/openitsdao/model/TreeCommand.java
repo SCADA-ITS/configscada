@@ -3,6 +3,8 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the tree_commands database table.
@@ -22,6 +24,8 @@ public class TreeCommand implements Serializable {
 
 	@Column(name="default")
 	private Boolean default_;
+	
+	private Boolean grouped;
 
 	private String icon;
 
@@ -37,6 +41,7 @@ public class TreeCommand implements Serializable {
 	private ModuleAction moduleAction;
 
 	//bi-directional many-to-one association to Tree
+	@JsonIgnore
 	@ManyToOne
 	private Tree tree;
 
@@ -70,6 +75,14 @@ public class TreeCommand implements Serializable {
 
 	public void setDefault_(Boolean default_) {
 		this.default_ = default_;
+	}
+
+	public Boolean getGrouped() {
+		return grouped;
+	}
+
+	public void setGrouped(Boolean grouped) {
+		this.grouped = grouped;
 	}
 
 	public String getIcon() {

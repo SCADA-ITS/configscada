@@ -5,7 +5,7 @@ import { util } from "../lib/util.js";
 
 const DEBUG_MODE = false;
 
-export default class MapModule extends GenericModule {
+export default class MapLauncherModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
@@ -14,42 +14,11 @@ export default class MapModule extends GenericModule {
 		this.uid = webix.uid();
 		this.stompClient = undefined;
 		this.config = module.config;
-
 	}
 
 	getView() {
 
-		let view = undefined;
-
-		view = {
-			css: "custom_window",
-			cols: [
-				{
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: this.uid,
-									rows: [],
-									hidden: true
-								},
-								{
-									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
-									hidden: false
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		return view;
+		return super.getViewCheckModuleActionAndSelectedPks();
 	}
 
 	loadData() {
@@ -65,15 +34,15 @@ export default class MapModule extends GenericModule {
 
 			if (self.moduleAction.id === self.config.moduleAction.map) {
 
-				map(element);
+				loadMap(element);
 
 			} else if (self.moduleAction.id === self.config.moduleAction.synoptic) {
 
-				synoptic(element);
+				loadSynoptic(element);
 			}
 		}
 
-		function map(element) {
+		function loadMap(element) {
 
 			if (element && element.map) {
 
@@ -98,15 +67,16 @@ export default class MapModule extends GenericModule {
 							$$("loading-" + self.uid).hide();
 							$$(self.uid).show();
 
-							webix.ui(map.getView(), $$(self.uid));
+							webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+							
+							
 						}
 					}
 				});
 			}
-
 		}
 
-		function synoptic(element) {
+		function loadSynoptic(element) {
 
 			if (element && element.synoptic) {
 

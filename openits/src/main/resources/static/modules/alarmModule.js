@@ -23,35 +23,10 @@ export default class AlarmModule extends GenericModule {
 	getView() {
 
 		let view = undefined;
+		
 		if (this.moduleAction.id === this.config.moduleAction.view) {
 
-			view = {
-				css: "custom_window",
-				cols: [
-					{
-						rows: [
-							{ height: 6 },
-							{
-								cols: [
-									{ width: 6 },
-									{
-										id: this.uid,
-										rows: [],
-										hidden: false
-									},
-									{
-										id: "loading-" + this.uid,
-										rows: [this.getViewDrawNoData()],
-										hidden: true
-									},
-									{ width: 6 }
-								]
-							},
-							{ height: 6 }
-						]
-					}
-				]
-			};
+			view = super.getView();
 		}
 
 		return view;
@@ -357,6 +332,7 @@ export default class AlarmModule extends GenericModule {
 	
 					let parent = {
 						id: elementType.id,
+						id_: elementType.id,
 						value: elementType.alias,
 						data: [],
 						props: {
@@ -374,6 +350,7 @@ export default class AlarmModule extends GenericModule {
 							let child = {
 								
 								id: item.id,
+								id_: item.id,
 								value: item.alias,
 								props: {}
 							}
@@ -401,11 +378,11 @@ export default class AlarmModule extends GenericModule {
 					]
 				};
 				
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(items) {
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 	
 					self.tableAlarmsModal.clear();
 	
-					let element = window.em.getByField(EntityType.ELEMENT, undefined, items);
+					let element = window.em.getByField(EntityType.ELEMENT, undefined, item.id_);
 					self.alarmMutedElementSelect = element;
 	
 					let elementTypeId = element.elementType.id;

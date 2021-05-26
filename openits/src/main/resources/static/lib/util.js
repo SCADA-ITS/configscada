@@ -1091,6 +1091,7 @@ export let util = {
 					let node = {
 						id: item.id + "_" + item.id,
 						value: item.label,
+						id_: item.id,
 						data: [],
 						params: {},
 						props: {

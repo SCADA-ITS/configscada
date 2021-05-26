@@ -42,8 +42,81 @@ export default class GenericModule {
 
 	getView() {
 
-		throw new Error("Method 'getView()' must be implemented.");
+		return this.getDefaultView();
 	}
+	
+	getViewCheckModuleAction() {
+
+		let view = undefined;
+		
+		if (this.moduleAction) {
+			
+			view = this.getDefaultView();	
+		}
+		else {
+			
+			webix.alert({
+				title: i18n.t("LBL_MODULE_OPEN_ERROR"),
+				text: i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION"),
+				type: "alert-error",
+				width: 500
+			});
+		}
+		
+		return view;
+	}
+	
+	getViewCheckModuleActionAndSelectedPks() {
+
+		let view = undefined;
+		
+		if (this.moduleAction && Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+			
+			view = this.getDefaultView();	
+		}
+		else {
+			
+			webix.alert({
+				title: i18n.t("LBL_MODULE_OPEN_ERROR"),
+				text: i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION_OR_IDS"),
+				type: "alert-error",
+				width: 500
+			});
+		}
+		
+		return view;
+	}
+	
+	getDefaultView() {
+		
+		return {
+			css: "custom_window",
+			cols: [
+				{
+					rows: [
+						{ height: 6 },
+						{
+							cols: [
+								{ width: 6 },
+								{
+									id: this.uid,
+									rows: [],
+									hidden: true
+								},
+								{
+									id: "loading-" + this.uid,
+									rows: [util.ui.getViewDrawNoData()],
+									hidden: false
+								},
+								{ width: 6 }
+							]
+						},
+						{ height: 6 }
+					]
+				}
+			]
+		};
+	} 
 
 	loadData() {
 

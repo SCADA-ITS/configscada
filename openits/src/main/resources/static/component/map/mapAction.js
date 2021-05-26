@@ -58,7 +58,7 @@ export default class MapAction {
 				{ height: 20 }*/
 			];
 			self.commandsGrpMap.get(undefined).forEach(command => {
-				componentRows.push(getRowCommamd(command));
+				componentRows.push(getRowCommand(command));
 				componentRows.push({ height: MARGIN_BETWEEN_COMMANDS });
 			});
 			
@@ -71,7 +71,7 @@ export default class MapAction {
 				{ height: 20 }
 			];
 			self.commandsGrpMap.get(commandGrp.id).forEach(command => {
-				componentRows.push(getRowCommamd(command));
+				componentRows.push(getRowCommand(command));
 				componentRows.push({ height: MARGIN_BETWEEN_COMMANDS });
 			});
 			
@@ -80,7 +80,7 @@ export default class MapAction {
 		
 		view.rows.push({ height: 20 });
 		
-		function getRowCommamd(command){
+		function getRowCommand(command){
 		
 			let row = {
 				view: "button",

@@ -3,7 +3,7 @@ import ListView from "../../component/listview.js";
 import { util } from "../../lib/util.js";
 
 
-export default class signalingManagerModule extends GenericModule {
+export default class SignalingManagerModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
@@ -20,57 +20,12 @@ export default class signalingManagerModule extends GenericModule {
 
 	getView() {
 
-		let view = undefined;
-
-		if (this.moduleAction.id === this.config.moduleAction.commandEquipments) {
-			view = {
-				css: "custom_window",
-				cols: [
-					{
-						rows: [
-							{ height: 6 },
-							{
-								cols: [
-									{ width: 6 },
-									{
-										id: this.uid,
-										rows: [],
-										hidden: false
-									},
-									{
-										id: "loading-" + this.uid,
-										rows: [getViewDrawNoData()],
-										hidden: true
-									},
-									{ width: 6 }
-								]
-							},
-							{ height: 6 }
-						]
-					}
-				]
-			};
-		}
-
-		function getViewDrawNoData() {
-
-			return {
-				view: "template",
-				template: function() {
-
-					let icon = "<img src='img/loading.svg' align='center'>";
-
-					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-				}
-			}
-		}
-
-		return view;
+		return super.getViewCheckModuleActionAndSelectedPks();
 	}
 
 	loadData() {
 
-		if (this.moduleAction.id === this.config.moduleAction.commandEquipments) {
+		if (this.moduleAction && this.moduleAction.id === this.config.moduleAction.commandEquipments) {
 
 			this.refresh();
 		}

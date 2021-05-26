@@ -180,22 +180,6 @@ export default class EquipmentViewerContent {
 										}
 									}
 								},
-//								{
-//									view: "button",
-//									width: 135,
-//									hidden: !self.element.location,
-//									label: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP"),
-//									tooltip: i18n.t("LBL_EQUIP_VIEWER_SHOW_IN_MAP_DESCRIPTION"),
-//									type: "iconTop",
-//									icon: "mdi mdi-map-marker",
-//									on: {
-//		
-//										onItemClick() {
-//		
-//											util.ui.notImplementedMessage();
-//										}
-//									}
-//								},
 								{
 									view: "button",
 									width: 135,

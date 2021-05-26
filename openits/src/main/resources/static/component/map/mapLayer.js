@@ -60,7 +60,7 @@ export default class MapLayer {
 			
 			function onCheckItem(items) {
 				
-				self.onLayersSelectedChange(items.map(item => parseInt(item.split("_")[1])));
+				self.onLayersSelectedChange(items.map(e => e.id_));
 			}
 			
 			return treeLayers.getView();
