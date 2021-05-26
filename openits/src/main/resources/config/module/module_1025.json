@@ -1,0 +1,44 @@
+{
+	"restEndpoints": {
+		"plan": "plans/${id}"
+	},
+	"topic": "/topic/plan",
+	"adapters": {
+		"orders": "ws.order.getList"
+	},
+	"confirmOrderTypes":[
+		"PlanOrderType:2"
+	], 
+	"actionButtons": [
+		{
+			"action": "PLAY",
+			"moduleAction": {
+				"id" : 102302
+			},
+			"label" : "LBL_PLAY",
+			"icon" : "mdi mdi-pencil",
+			"enableActions" : ["PAUSE" , "STOP"],
+			"disabled" : false
+		},
+		{
+			"action": "PAUSE",
+			"moduleAction": {
+				"id" : 102302
+			},
+			"label" : "LBL_PAUSE",
+			"icon" : "mdi mdi-pencil",
+			"enableActions" : ["PLAY" , "STOP"],
+			"disabled" : true
+		},
+		{
+			"action": "STOP",
+			"moduleAction": {
+				"id" : 102302
+			},
+			"label" : "LBL_STOP",
+			"icon" : "mdi mdi-pencil",
+			"enableActions" : ["PLAY"],
+			"disabled" : true
+		}
+	]
+}

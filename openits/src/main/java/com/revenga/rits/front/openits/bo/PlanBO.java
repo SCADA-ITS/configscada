@@ -91,4 +91,16 @@ public class PlanBO extends GenericBO {
 	    
 	  }
 
+	  public Boolean sendExecutePlan(Object input) {
+	    
+	    Boolean res = false;
+	    
+	    Map<String, Object> sendExecutePlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_EXECUTE_PLAN, (Map<String, Object>) input);
+	    
+	    res = checkMapIsBoolean(sendExecutePlan);
+
+	    return res;
+	    
+	  }
+
 }

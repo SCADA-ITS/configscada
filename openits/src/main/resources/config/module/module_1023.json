@@ -1,8 +1,9 @@
 {
 	"moduleAction": {
-		"play": 102301
+		"play": 102301,
+		"execute" : 102302
 	},
 	"actionEndpoints": {
-		"play": "plans/send_play_plan"
+		"play": "plans/send_execute_plan"
 	}
 }

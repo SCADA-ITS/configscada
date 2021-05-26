@@ -1,5 +1,5 @@
-import GenericModule from "./genericModule.js";
-import DataTable from "../component/datatable.js";
+import GenericModule from "../genericModule.js";
+import DataTable from "../../component/datatable.js";
 
 const MODULE_TYPE_GENERIC_PARAM_GRID_ID = 3;
 

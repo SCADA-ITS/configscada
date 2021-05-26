@@ -206,10 +206,11 @@ public class VODataSourceAdapter {
 
 	public static final int DATA_SOURCE_SEND_ASSING_CAUSE_INCIDENT_REPORT = getPropertyInt("send_assign_cause_incident_report");
 
-
-
 	public static final int DATA_SOURCE_GET_SYSTEM_PARAMS = getPropertyInt("get_system_params");
 	public static final int DATA_SOURCE_GET_HIERARCHIES = getPropertyInt("get_hierarchies");
+
+	public static final int DATA_SOURCE_SEND_EXECUTE_PLAN = getPropertyInt("send_execute_plan");
+
 	
 	private static int getPropertyInt(final String prop) {
 		

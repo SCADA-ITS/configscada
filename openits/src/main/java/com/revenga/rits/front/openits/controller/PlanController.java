@@ -333,4 +333,11 @@ public class PlanController {
 		return new ResponseEntity<>(planBO.sendPlayPlan(planIds), HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/send_execute_plan")
+	@ApiOperation(value = "Send Execute Plan", notes = "Send Execute Plan")
+	public ResponseEntity<Boolean> sendExecutePlan(@RequestBody Object planExecution) {
+		
+		return new ResponseEntity<>(planBO.sendExecutePlan(planExecution), HttpStatus.OK);
+	}
+
 }

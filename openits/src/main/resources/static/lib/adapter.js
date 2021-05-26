@@ -453,6 +453,58 @@ export let adapter = {
 					update_callback(gridData);
 				}
 			}
+		},
+
+		order: {
+
+			getList(data, update_callback) {
+
+				let listOutput = [];
+
+				if (data != undefined && Array.isArray(data) && data.length > 0) {
+
+					data.forEach(e => {
+
+						let itemOutput = {};
+
+						itemOutput.id = e.id;
+
+						try {
+						
+							itemOutput.orderStatus = e.planOrderStateType.alias;
+							itemOutput.orderResult = e.planOrderStateType.aliasLabel;
+						
+						} catch (error) {
+						
+							itemOutput.orderStatus = "-";
+							itemOutput.orderResult = "-";
+						}
+						
+						itemOutput.orderTypeId = e.planOrderType.id;
+						
+						try {
+						
+							itemOutput.orderTypeAliasLabel = i18n.t(e.planOrderType.labelAlias);
+						
+						} catch (error) {
+						
+							itemOutput.orderTypeAliasLabel = "-";
+						}
+						
+						itemOutput.orderAlias = e.alias;
+						itemOutput.orderExuctedAt = e.orderExuctedAt;
+
+						listOutput.push(itemOutput);
+					});
+
+					if (update_callback) {
+
+						update_callback(listOutput);
+					}
+				}
+
+				return listOutput;
+			}
 		}
 
 	}
