@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="55mm"
+   height="55mm"
+   viewBox="0 0 55 55"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="83_radar_state_new.svg">
+  <defs
+     id="defs1087" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3556054"
+     inkscape:cx="111.04043"
+     inkscape:cy="122.29611"
+     inkscape:document-units="mm"
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1090">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="main">
+    <rect
+       style="fill:#4caf50;stroke:none;stroke-width:1.3915;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       id="state"
+       width="55"
+       height="55"
+       x="0"
+       y="0"
+       ry="5" />
+    <rect
+       style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1658"
+       width="45"
+       height="45"
+       x="5"
+       y="5"
+       ry="5" />
+    <image
+       preserveAspectRatio="none"
+       inkscape:svg-dpi="96"
+       width="40"
+       height="40"
+       xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0 b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZl cnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEi IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93 d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTEy LjAwNCA1MTIuMDA0IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIuMDA0IDUx Mi4wMDQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxnPg0KCQk8cGF0aCBzdHlsZT0i ZmlsbDojNEZCQTZGOyIgZD0iTTUzLjA4OCw0MDYuMTAyYy0yLjc4MywwLjAwNS01LjM5NC0xLjM1 LTYuOTkyLTMuNjI5QzE1Ljk2LDM1OS41ODgtMC4xNDQsMzA4LjQxNiwwLjAwMSwyNTYuMDAyDQoJ CQljMC4xNi0xNDEuMzE4LDExNC42ODItMjU1Ljg0LDI1Ni0yNTZjNC43MTMsMCw4LjUzMywzLjgy MSw4LjUzMyw4LjUzM3MtMy44MjEsOC41MzMtOC41MzMsOC41MzMNCgkJCUMxMjQuMTAzLDE3LjIx NiwxNy4yMTYsMTI0LjEwNCwxNy4wNjgsMjU2LjAwMmMtMC4xNDEsNDguOTA0LDE0Ljg4LDk2LjY0 OSw0Mi45OTYsMTM2LjY2M2MxLjgyOSwyLjYwNSwyLjA1Nyw2LjAxMSwwLjU5LDguODM1DQoJCQlD NTkuMTg4LDQwNC4zMjQsNTYuMjcxLDQwNi4wOTgsNTMuMDg4LDQwNi4xMDJ6Ii8+DQoJCTxwYXRo IHN0eWxlPSJmaWxsOiM0RkJBNkY7IiBkPSJNMjU2LjAwMSw1MTIuMDAyYy02NS4yMzksMC4xMi0x MjguMDMzLTI0LjgxNS0xNzUuNDE3LTY5LjY1OA0KCQkJYy0yLjI1NS0yLjA4NC0zLjIxNy01LjIx OS0yLjUxOC04LjIwOWMwLjY5OS0yLjk5LDIuOTUtNS4zNzQsNS44OTUtNi4yNDNjMi45NDUtMC44 NjksNi4xMy0wLjA4OCw4LjM0LDIuMDQ0DQoJCQljNjkuMzg1LDY1LjM2OCwxNzAuOTk0LDgzLjIy LDI1OC41MDUsNDUuNDE2czE0NC4xNjMtMTI0LjAyMiwxNDQuMTI5LTIxOS4zNDljMC4yNDctNTMu ODQxLTE3Ljk1LTEwNi4xNDMtNTEuNTYzLTE0OC4yMDQNCgkJCWMtMi45MzQtMy42ODktMi4zMjIt OS4wNTgsMS4zNjctMTEuOTkyYzMuNjg5LTIuOTM0LDkuMDU4LTIuMzIyLDExLjk5MiwxLjM2N2Mz Ni4wMjUsNDUuMDc2LDU1LjUzLDEwMS4xMjcsNTUuMjcsMTU4LjgyOQ0KCQkJQzUxMS44NDEsMzk3 LjMyLDM5Ny4zMTksNTExLjg0MSwyNTYuMDAxLDUxMi4wMDJ6Ii8+DQoJCTxwYXRoIHN0eWxlPSJm aWxsOiM0RkJBNkY7IiBkPSJNMjU2LjAwMSw0NDMuNzM1Yy05OC40ODYtMC4wMDktMTgwLjIyNi03 Ni4xMTctMTg3LjI1NS0xNzQuMzUyUzEzMS43OSw4NC4xNzgsMjI5LjI3Miw3MC4xNDcNCgkJCWM0 LjY1OC0wLjY1OCw4Ljk3LDIuNTc5LDkuNjM5LDcuMjM2YzAuNjY5LDQuNjU3LTIuNTU4LDguOTc2 LTcuMjE0LDkuNjU2QzE1Ni4yMzEsOTcuODcxLDk3LjEsMTU3LjQzOCw4Ni44MjQsMjMyLjk4Mg0K CQkJczMwLjc5NCwxNDguNzQyLDEwMC42MjUsMTc5LjMzOHMxNTEuNDg1LDExLjE3MSwyMDAuMDU2 LTQ3LjU5NGMxLjk0Ny0yLjM0Niw0Ljk5OC0zLjQ3NSw4LjAwMy0yLjk2MnM1LjUwOCwyLjU5MSw2 LjU2Nyw1LjQ1DQoJCQljMS4wNTgsMi44NTksMC41MTEsNi4wNjYtMS40MzYsOC40MTJDMzY1LjAw MSw0MTguNzcsMzExLjk2LDQ0My43NDcsMjU2LjAwMSw0NDMuNzM1eiIvPg0KCQk8cGF0aCBzdHls ZT0iZmlsbDojNEZCQTZGOyIgZD0iTTQyMC41MTgsMzM1LjI4MWMtMi44NzctMC4wMDQtNS41NTgt MS40NTUtNy4xMzQtMy44NjJzLTEuODM0LTUuNDQ1LTAuNjg3LTguMDg0DQoJCQljOS4yNjEtMjEu MjM4LDE0LjAxOC00NC4xNjUsMTMuOTcxLTY3LjMzM2MwLjA3NC0zNi45MTQtMTEuOTEzLTcyLjg0 Mi0zNC4xMzgtMTAyLjMxN2MtMS44MjgtMi40NC0yLjIxNi01LjY3LTEuMDE3LTguNDczDQoJCQlj MS4xOTktMi44MDMsMy44MDItNC43NTMsNi44MjktNS4xMTdjMy4wMjctMC4zNjMsNi4wMTgsMC45 MTYsNy44NDYsMy4zNTZjNDAuNCw1My43MjksNDguODYsMTI1LjAwNywyMi4xNTgsMTg2LjcNCgkJ CUM0MjYuOTg5LDMzMy4yNjYsNDIzLjkxNSwzMzUuMjc5LDQyMC41MTgsMzM1LjI4MXoiLz4NCgkJ PHBhdGggc3R5bGU9ImZpbGw6IzRGQkE2RjsiIGQ9Ik0yNTYuMDAxLDM3NS40NjhjLTU1LjQ4Miww LjE2OC0xMDMuNzE1LTM4LjAzNi0xMTYuMjU0LTkyLjA4M2MtMC43MjQtMy4wMzIsMC4yNi02LjIx OCwyLjU3LTguMzEzDQoJCQljMi4zMDktMi4wOTUsNS41NzYtMi43NjUsOC41MjMtMS43NDljMi45 NDcsMS4wMTYsNS4xMDgsMy41NTYsNS42MzYsNi42MjljOS41NDEsMzkuNzQsNDEuODA0LDY5Ljk5 OCw4Mi4wNzQsNzYuOTc0DQoJCQljNDAuMjcsNi45NzYsODAuODMtMTAuNjY3LDEwMy4xODItNDQu ODgyczIyLjIxNC03OC40NDYtMC4zNTItMTEyLjUyMWMtMi41OTgtMy45MzMtMS41MTYtOS4yMjcs Mi40MTctMTEuODI1DQoJCQljMy45MzMtMi41OTgsOS4yMjctMS41MTYsMTEuODI1LDIuNDE3YzI0 LjI4LDM2LjY3NCwyNi40MzcsODMuNzI1LDUuNjE0LDEyMi40NjZTMjk5Ljk4NCwzNzUuNDgzLDI1 Ni4wMDEsMzc1LjQ2OHoiLz4NCgkJPHBhdGggc3R5bGU9ImZpbGw6IzRGQkE2RjsiIGQ9Ik0xNDgu MDU1LDIzOS4xNDdjLTIuMjU5LDAuMDA5LTQuNDI4LTAuODgxLTYuMDI5LTIuNDc0Yy0xLjYwMS0x LjU5My0yLjUwMi0zLjc1OC0yLjUwNC02LjAxNw0KCQkJdi0wLjA4NGMwLTAuNjU4LDAuMDc1LTEu MzE0LDAuMjI1LTEuOTU0YzEyLjUzOS01NC4wNDcsNjAuNzcyLTkyLjI1MSwxMTYuMjU0LTkyLjA4 M2M0LjcxMywwLDguNTMzLDMuODIxLDguNTMzLDguNTMzDQoJCQlzLTMuODIxLDguNTMzLTguNTMz LDguNTMzYy00Ny40ODUtMC4xNDUtODguNzg0LDMyLjUwOC05OS41OTYsNzguNzQ2QzE1NS41NzMs MjM2LjI5OSwxNTIuMDk0LDIzOS4xMzMsMTQ4LjA1NSwyMzkuMTQ3eiIvPg0KCQk8cGF0aCBzdHls ZT0iZmlsbDojNEZCQTZGOyIgZD0iTTI1Ni4wMDEsMzA3LjIwMmMtMjguMjc3LDAtNTEuMi0yMi45 MjMtNTEuMi01MS4yczIyLjkyMy01MS4yLDUxLjItNTEuMg0KCQkJYzcuMTY3LDAuMDA3LDE0LjI1 NSwxLjQ5OCwyMC44MTcsNC4zNzljNC4zMjIsMS44ODIsNi4yOTksNi45MTIsNC40MTcsMTEuMjMz Yy0xLjg4Miw0LjMyMi02LjkxMiw2LjI5OS0xMS4yMzMsNC40MTcNCgkJCWMtNC40MTItMS45NDUt OS4xNzktMi45NTQtMTQtMi45NjNjLTE4Ljg1MSwwLTM0LjEzMywxNS4yODItMzQuMTMzLDM0LjEz M2MwLDE4Ljg1MSwxNS4yODIsMzQuMTMzLDM0LjEzMywzNC4xMzMNCgkJCXMzNC4xMzMtMTUuMjgy LDM0LjEzMy0zNC4xMzNjMC4wMDUtMy43NTEtMC41OTYtNy40NzgtMS43NzktMTEuMDM4Yy0wLjk2 NS0yLjg5Mi0wLjMxMy02LjA4LDEuNzEtOC4zNjFzNS4xMDktMy4zMTEsOC4wOTYtMi43DQoJCQlj Mi45ODcsMC42MTEsNS40MjIsMi43NjksNi4zODYsNS42NjFjMS43NjQsNS4zLDIuNjYsMTAuODUx LDIuNjU0LDE2LjQzOEMzMDcuMTcsMjg0LjI2NiwyODQuMjY1LDMwNy4xNzEsMjU2LjAwMSwzMDcu MjAyeiIvPg0KCTwvZz4NCgk8Zz4NCgkJPGNpcmNsZSBzdHlsZT0iZmlsbDojRjBDNDE5OyIgY3g9 IjI1Ni4wMDEiIGN5PSI3Ni44MDIiIHI9IjI1LjYiLz4NCgkJPGNpcmNsZSBzdHlsZT0iZmlsbDoj RjBDNDE5OyIgY3g9IjE0NS4wNjgiIGN5PSIyNTYuMDAyIiByPSIyNS42Ii8+DQoJCTxjaXJjbGUg c3R5bGU9ImZpbGw6I0YwQzQxOTsiIGN4PSI2OC4yNjgiIGN5PSI0MTguMTM1IiByPSIyNS42Ii8+ DQoJCTxjaXJjbGUgc3R5bGU9ImZpbGw6I0YwQzQxOTsiIGN4PSI0MDkuNjAxIiBjeT0iMzQ5Ljg2 OCIgcj0iMjUuNiIvPg0KCQk8cGF0aCBzdHlsZT0iZmlsbDojRjBDNDE5OyIgZD0iTTI1Ny4xMzEs MjMxLjg5MmwxODQuOS0xNjguMzAzYzYuOTctNi4zNDUsMTcuNzY1LTUuODM4LDI0LjEwOSwxLjEz M2wwLDANCgkJCWM2LjM0NSw2Ljk3LDUuODM4LDE3Ljc2NS0xLjEzMywyNC4xMDlsLTE4NC45LDE2 OC4zMDNjLTYuOTcsNi4zNDUtMTcuNzY1LDUuODM4LTI0LjEwOS0xLjEzM2wwLDANCgkJCUMyNDku NjUzLDI0OS4wMzEsMjUwLjE2LDIzOC4yMzcsMjU3LjEzMSwyMzEuODkyeiIvPg0KCTwvZz4NCjwv Zz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+ DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0K PGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwv c3ZnPg0K "
+       id="image251"
+       x="7.5"
+       y="7.5" />
+  </g>
+</svg>
