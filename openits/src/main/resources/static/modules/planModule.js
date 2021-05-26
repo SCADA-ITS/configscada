@@ -19,16 +19,16 @@ export default class PlanModule extends GenericModule {
 
 	loadData() {
 
+		let self = this;
+		
 		if (this.moduleAction.id === this.config.moduleAction.play) {
 
 			actionPlay();
 		}
 		
 		function actionPlay() {
-
-			let self = this;
 	
-			if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 	
 				webix.confirm({
 					title: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
