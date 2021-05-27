@@ -89,6 +89,22 @@ export default class SelectorModule extends GenericModule {
 
 		function drawComponents(treeSelector) {
 
+			function selectEvent(nodeIdSelected) {
+
+				if (nodeIdSelected) {
+
+					if (self.treeNodes) {
+
+						let node = self.treeNodes.find(e => e.id == nodeIdSelected);
+
+						if (node && node.moduleId) {
+
+							loadModule(node.moduleId);
+						}
+					}
+				};
+			}
+
 			function newTreeData(treeNodeId) {
 
 				if (treeNodeId && self.treeNodes) {
@@ -100,7 +116,6 @@ export default class SelectorModule extends GenericModule {
 						console.log(treeNode);
 						let treeData = {};
 						treeData.id = treeNode.id;
-						treeData.id_ = treeNode.id;
 						treeData.value = treeNode.label;
 						treeData.props = {};
 						treeData.data = [];
@@ -156,8 +171,14 @@ export default class SelectorModule extends GenericModule {
 					data.push(item);
 				});
 
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = selectEvent;
-				
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
+
+					if (item && item.id) {
+
+						selectEvent(item.id);
+					}
+				}
+
 				return new TreeView({}, data, events);
 			}
 
@@ -166,36 +187,16 @@ export default class SelectorModule extends GenericModule {
 				cols: []
 			};
 
-
-			let selectEvent = function(item) {
-
-				if (item) {
-
-					let nodeIdSelected = item.id;
-
-					if (self.treeNodes) {
-
-						let node = self.treeNodes.find(e => e.id == nodeIdSelected);
-
-						if (node && node.moduleId) {
-
-							loadModule(node.moduleId);
-						}
-					}
-				}
-
-			};
-
 			function getListView(nodes) {
-				
+
 				let data = [];
 				let options = {};
 				let events = {};
-				
+
 				if (Array.isArray(nodes) && nodes.length > 0) {
 
 					data = nodes.map(e => {
-		
+
 						return {
 							id: e.id,
 							alias: i18n.t(e.label),
@@ -205,20 +206,26 @@ export default class SelectorModule extends GenericModule {
 					});
 				}
 
-				events[ListView.EventTypes.ON_SELECT_ROW] = selectEvent;
+				events[ListView.EventTypes.ON_SELECT_ROW] = function(item) {
+
+					if (item) {
+
+						selectEvent(item);
+					}
+				}
 
 				return new ListView(data, options, events);
 			}
 
-			if(treeSelector.treeHierarchies && Array.isArray(treeSelector.treeHierarchies) && treeSelector.treeHierarchies.length > 0) {
+			if (treeSelector.treeHierarchies && Array.isArray(treeSelector.treeHierarchies) && treeSelector.treeHierarchies.length > 0) {
 
-				self.componentView = getTreeViewData(treeSelector.treeNodes, treeSelector.treeHierarchies); 
-				
+				self.componentView = getTreeViewData(treeSelector.treeNodes, treeSelector.treeHierarchies);
+
 			} else {
-				
+
 				self.componentView = getListView(treeSelector.treeNodes);
 			}
-			
+
 
 			let viewMainSelectorTree = {
 				id: "view-main-selector-tree-" + self.uid,
