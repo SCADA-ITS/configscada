@@ -128,20 +128,20 @@ export default class PlanExecutor extends GenericModule {
 								}).then(function() {
 
 									let btnConfig = self.config.actionButtons.find(e => e.action == "PLAY");
+									btnConfig.confirm = false;
+									
 									self.open_module(btnConfig);
 
 								}).fail(function(){
 
 									let btnConfig = self.config.actionButtons.find(e => e.action == "STOP");
+									btnConfig.confirm = false;
+									
 									self.open_module(btnConfig);
-
 								});;
 							}
 						}
 					});
-					
-
-					
 				});
 			}
 		}
@@ -458,9 +458,9 @@ export default class PlanExecutor extends GenericModule {
         let args = {};
         args.selectedPks = [this.planId];
 		args.planAction = btnConfig.action;
-		args.confirmMssg = btnConfig.action;
-        util.module.open(module, btnConfig.moduleAction, null, null, args);
+		args.confirm = btnConfig.confirm;
 
+        util.module.open(module, btnConfig.moduleAction, null, null, args);
 	}
 
 }

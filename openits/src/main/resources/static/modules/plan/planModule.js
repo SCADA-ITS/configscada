@@ -25,7 +25,7 @@ export default class PlanModule extends GenericModule {
 		
 		} else if(this.moduleAction.id === this.config.moduleAction.execute){
 			
-			this.executePlan();
+			this.actionExecute();
 		}
 
 	}
@@ -47,7 +47,7 @@ export default class PlanModule extends GenericModule {
 				self.args.planAction = "PLAY";
 				let body = self.prepareData(self.args);
 
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.play, body).then(function(data) {
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
 					if (self.args.callbacks.length > 0) {
 
 						self.args.callbacks[0]();
@@ -57,29 +57,42 @@ export default class PlanModule extends GenericModule {
 		}
 	}
 
-	executePlan() {
+	actionExecute() {
 
 		let self = this;
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+	
+			if(this.args.confirm == undefined || this.args.confirm){
 
-			webix.confirm({
-				title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
-				ok: i18n.t("LBL_YES"),
-				cancel: i18n.t("LBL_NO"),
-				text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
-				width: 600
-			}).then(function() {
-				
+				webix.confirm({
+					title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
+					ok: i18n.t("LBL_YES"),
+					cancel: i18n.t("LBL_NO"),
+					text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
+					width: 600
+				}).then(function() {
+					
+					let body = this.prepareData(self.args);
+
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
+						if (self.args.callbacks.length > 0) {
+
+							self.args.callbacks[0]();
+						}
+					});
+				});
+
+			} else {
 				let body = this.prepareData(self.args);
 
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.play, body).then(function(data) {
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
 					if (self.args.callbacks.length > 0) {
 
 						self.args.callbacks[0]();
 					}
 				});
-			});
+			}
 		}
 	}
 

@@ -4,6 +4,6 @@
 		"execute" : 102302
 	},
 	"actionEndpoints": {
-		"play": "plans/send_execute_plan"
+		"execute": "plans/send_execute_plan"
 	}
 }
