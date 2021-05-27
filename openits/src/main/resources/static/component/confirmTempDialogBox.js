@@ -17,15 +17,15 @@ export default class ConfirmTempDialogBox {
 		webix.ui({
 			view: "window",
 			modal: true,
-			height: 220,
-			width:  300,
+			height: 300,
+			width:  640,
 			css: "dialog-input-custom",
 			head: this.message,
-			position: "center",
+			position: "top",
 			body: {
 			rows: [
 					{ template: self.text, borderless: true },
-					this.getTempMessage(),
+					this.getBody(),
 					{},
 					{
 						cols: [
@@ -67,12 +67,21 @@ export default class ConfirmTempDialogBox {
 		
 	}
 
-	getTempMessage(){
+	getBody(){
 
 		let body = {
-			view: "label",
-			label: this.timeSec + " seconds",
-			align:"center"
+			rows:[
+				{
+					view: "label",
+					label: this.description,
+					align:"center"
+				},
+				{
+					view: "label",
+					label: this.timeSec + " seconds",
+					align:"center"
+				}
+			]
 		};
 
 		//TODO countDown and self.defaultCallBack()
