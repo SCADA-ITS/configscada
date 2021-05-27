@@ -434,6 +434,7 @@ export let adapter = {
 									dataItem.description = plan.description;
 									dataItem.planStateTypeLabelAlias = plan.planStateType ? plan.planStateType.labelAlias : undefined;
 									dataItem.planSubtypeAlias = plan.planSubtype ? plan.planSubtype.alias : undefined;
+									dataItem.planSubtypePlanTypeAlias = plan.planSubtype && plan.planSubtype.planType ? plan.planSubtype.planType.alias : undefined;
 									dataItem.currentPlanOrderAlias = plan.currentPlanOrder ? plan.currentPlanOrder.alias : undefined;
 									dataItem.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder ? plan.currentPlanOrder.planOrderOrder : undefined;
 
