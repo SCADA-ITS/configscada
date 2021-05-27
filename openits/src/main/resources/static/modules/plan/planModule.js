@@ -19,98 +19,67 @@ export default class PlanModule extends GenericModule {
 
 	loadData() {
 
-		if (this.moduleAction.id === this.config.moduleAction.play) {
+		let self = this;
 
-			this.actionPlay();
-		
-		} else if(this.moduleAction.id === this.config.moduleAction.execute){
+		if(this.moduleAction.id === this.config.moduleAction.execute){
 			
-			this.actionExecute();
+			actionExecute();
 		}
 
-	}
-
-	actionPlay() {
-
-		let self = this;
-
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
-
-			webix.confirm({
-				title: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
-				ok: i18n.t("LBL_ACCEPT"),
-				cancel: i18n.t("LBL_CANCEL"),
-				text: i18n.t("LBL_PLAN_CONFIRM_PLAY_DESCRIPTION"),
-				width: 600
-			}).then(function() {
-				
-				self.args.planAction = "PLAY";
-				let body = self.prepareData(self.args);
-
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
-					if (self.args.callbacks.length > 0) {
-
-						self.args.callbacks[0]();
-					}
-				});
-			});
-		}
-	}
-
-	actionExecute() {
-
-		let self = this;
-
-		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+		function actionExecute() {
 	
-			if(this.args.confirm == undefined || this.args.confirm){
-
-				webix.confirm({
-					title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
-					ok: i18n.t("LBL_ACCEPT"),
-					cancel: i18n.t("LBL_CANCEL"),
-					text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
-					width: 600
-				}).then(function() {
+			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+		
+				if(self.args.confirm == undefined || self.args.confirm){
+	
+					webix.confirm({
+						title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
+						ok: i18n.t("LBL_ACCEPT"),
+						cancel: i18n.t("LBL_CANCEL"),
+						text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
+						width: 600
+					}).then(function() {
+						
+						let body = prepareData(self.args);
+	
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
+							if (self.args.callbacks.length > 0) {
+	
+								self.args.callbacks[0]();
+							}
+						});
+					});
+	
+				} else {
 					
-					let body = this.prepareData(self.args);
-
+					let body = prepareData(self.args);
+	
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
 						if (self.args.callbacks.length > 0) {
-
+	
 							self.args.callbacks[0]();
 						}
 					});
-				});
-
-			} else {
-				let body = this.prepareData(self.args);
-
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
-					if (self.args.callbacks.length > 0) {
-
-						self.args.callbacks[0]();
-					}
-				});
+				}
 			}
 		}
-	}
 
-	prepareData(args){
+		function prepareData(args) {
 
-		let body = { 
-			planActions: [
-			]
-		};
-
-		args.selectedPks.forEach(element => {
-			body.planActions.push({
-				planId: element,
-				action: args.planAction
+			let body = { 
+				planActions: [
+				]
+			};
+	
+			args.selectedPks.forEach(element => {
+				body.planActions.push({
+					planId: element,
+					action: args.planAction
+				});
 			});
-		});
-
-		return body;
+	
+			return body;
+		}
 
 	}
 

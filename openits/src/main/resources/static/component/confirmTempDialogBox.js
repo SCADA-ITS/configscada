@@ -19,9 +19,9 @@ export default class ConfirmTempDialogBox {
 			modal: true,
 			height: 300,
 			width:  640,
-			css: "dialog-input-custom",
+			// css: "dialog-input-custom",
 			head: this.message,
-			position: "top",
+			position: "center",
 			body: {
 			rows: [
 					{ template: self.text, borderless: true },
