@@ -43,10 +43,10 @@ export default class PlanModule extends GenericModule {
 						let body = prepareData(self.args);
 	
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
-							if (self.args.callbacks.length > 0) {
+							/*if (self.args.callbacks.length > 0) {
 	
 								self.args.callbacks[0]();
-							}
+							}*/
 						});
 					});
 	
@@ -55,10 +55,10 @@ export default class PlanModule extends GenericModule {
 					let body = prepareData(self.args);
 	
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
-						if (self.args.callbacks.length > 0) {
+						/*if (self.args.callbacks.length > 0) {
 	
 							self.args.callbacks[0]();
-						}
+						}*/
 					});
 				}
 			}

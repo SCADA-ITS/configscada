@@ -1,6 +1,8 @@
 import { util } from "../lib/util.js";
 
 const INCIDENT_REPORT_END_POINT = "incidents/summary"
+const PLAN_END_POINT = "plans"
+
 
 export let adapter = {
 
@@ -71,75 +73,75 @@ export let adapter = {
 				}
 
 				if (update_callback) {
-				
-					update_callback(gridData);	
+
+					update_callback(gridData);
 				}
 			},
-			
+
 			// Only for one element
 			get(data, elementTypeParams, update_callback) {
-				
+
 				let element = undefined;
-				
+
 				if (data) {
-				
+
 					element = webix.copy(data);
-				
+
 					// Adapter for state
 					if (element.elementTypeState) {
-						
+
 						let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
-							
+
 						if (elementTypeState) {
-							
-							element.elementTypeState = elementTypeState; 
-						}	
+
+							element.elementTypeState = elementTypeState;
+						}
 					}
-					
+
 					// Adapter for measures
 					let elementValues = getElementValues();
-					
+
 					if (elementValues) {
-						
+
 						element.elementValues = elementValues;
 					}
-	
+
 					// TODO: Adapter for alarms
-	
-	
+
+
 					if (update_callback) {
-					
-						update_callback(elements);	
+
+						update_callback(elements);
 					}
-					
+
 					function getElementValues() {
-						
+
 						let elementValuesToUpdate = [];
-						
-						if (element && Array.isArray(elementTypeParams) && elementTypeParams.length > 0 && 
+
+						if (element && Array.isArray(elementTypeParams) && elementTypeParams.length > 0 &&
 							Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-						
+
 							element.elementValues.forEach(elementValue => {
-								
+
 								let elementTypeParamId = util.element.getElementTypeParamId(elementValue.id);
-								
+
 								let elementTypeParam = elementTypeParams.find(e => e.id === elementTypeParamId);
-							
+
 								if (elementTypeParam) {
-									
+
 									elementValue.elementTypeParam = elementTypeParam;
-									
+
 									elementValuesToUpdate.push(elementValue);
-								}	
-								
-							});		
+								}
+
+							});
 						}
-						
+
 						return elementValuesToUpdate;
-					}	
+					}
 				}
-				
-				
+
+
 				return element;
 			}
 		},
@@ -352,23 +354,23 @@ export let adapter = {
 					let gridData = {};
 					gridData.data = [];
 					gridData.action = data.action;
-					
-					
+
+
 					data.basicElementsVO.forEach(planSchedule => {
 
-						
+
 						let dataItem = {};
 						dataItem.id = planSchedule.id;
 
 						if (gridData.action == 'CREATE') {
 
 							let plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id);
-							
+
 							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
 							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
 							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
 							planSchedule.plan !== undefined ? dataItem.planAlias = plan.alias : null;
-					
+
 							gridData.data.push(dataItem);
 
 						}
@@ -379,13 +381,13 @@ export let adapter = {
 							let plan = null;
 							planSchedule.planScheduleStateType !== undefined ? planScheduleStateType = window.em.getByField(EntityType.PLAN_SCHEDULE_STATE, "id", planSchedule.planScheduleStateType.id) : null;
 							planSchedule.plan !== undefined ? plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id) : null;
-							
+
 							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
 							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
 							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
 							plan !== null ? dataItem.planAlias = plan.alias : null;
 							planScheduleStateType !== null ? dataItem.planScheduleStateTypeLabelAlias = planScheduleStateType.labelAlias : null;
-							
+
 							gridData.data.push(dataItem);
 
 						}
@@ -394,7 +396,7 @@ export let adapter = {
 
 							gridData.data.push(dataItem);
 						}
-						
+
 					});
 
 					update_callback(gridData);
@@ -410,6 +412,7 @@ export let adapter = {
 				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
 
 					let gridData = {};
+					let count = data.basicElementsVO.length;
 					gridData.data = [];
 					gridData.action = data.action;
 
@@ -418,39 +421,42 @@ export let adapter = {
 						let dataItem = {};
 						dataItem.id = plan.id;
 
-						if(plan.planStateType && plan.planStateType.id){
+						if (gridData.action === 'UPDATE') {
 
-							plan.planStateType = window.em.getByField(EntityType.PLAN_STATE_TYPE, "id", plan.planStateType.id);
-							plan.planStateTypeLabelAlias = plan.planStateType.labelAlias;
-						}
+							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + plan.id).then(function(dat) {
 
-						if(plan.currentPlanOrder){
+								if (dat != null) {
 
-							plan.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder.planOrderOrder;
-						}
+									let plan = dat.json();
 
-						if (gridData.action == 'CREATE') {
 
-							let planEM = window.em.getByField(EntityType.PLAN, "id", plan.id);
-							
-							dataItem = updateObject(webix.copy(planEM), plan);
+									dataItem.alias = plan.alias;
+									dataItem.description = plan.description;
+									dataItem.planStateTypeLabelAlias = plan.planStateType ? plan.planStateType.labelAlias : undefined;
+									dataItem.planSubtypeAlias = plan.planSubtype ? plan.planSubtype.alias : undefined;
+									dataItem.currentPlanOrderAlias = plan.currentPlanOrder ? plan.currentPlanOrder.alias : undefined;
+									dataItem.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder ? plan.currentPlanOrder.planOrderOrder : undefined;
+
+									gridData.data.push(dataItem);
+
+									count--;
+
+									if (count == 0)
+										update_callback(gridData);
+								}
+
+							}, function(response) { util.ajax.handleError(response); });
+
+						} else  if (gridData.action === 'DELETE'){
 
 							gridData.data.push(dataItem);
 
-						} else if (gridData.action == 'UPDATE') {
+							count--;
 
-							dataItem = updateObject(dataItem, plan);
-
-							gridData.data.push(dataItem);
-
-						} else if (gridData.action == 'DELETE') {
-
-							gridData.data.push(dataItem);
-
+							if (count == 0)
+								update_callback(gridData);
 						}
 					});
-
-					update_callback(gridData);
 				}
 			}
 		},
@@ -470,27 +476,27 @@ export let adapter = {
 						itemOutput.id = e.id;
 
 						try {
-						
+
 							itemOutput.orderStatus = e.planOrderStateType.alias;
 							itemOutput.orderResult = e.planOrderStateType.aliasLabel;
-						
+
 						} catch (error) {
-						
+
 							itemOutput.orderStatus = "-";
 							itemOutput.orderResult = "-";
 						}
-						
+
 						itemOutput.orderTypeId = e.planOrderType.id;
-						
+
 						try {
-						
+
 							itemOutput.orderTypeAliasLabel = i18n.t(e.planOrderType.labelAlias);
-						
+
 						} catch (error) {
-						
+
 							itemOutput.orderTypeAliasLabel = "-";
 						}
-						
+
 						itemOutput.orderAlias = e.alias;
 						itemOutput.orderExuctedAt = e.orderExuctedAt;
 
@@ -510,26 +516,26 @@ export let adapter = {
 	}
 };
 
-function updateObject(oldItem, newItem){
+function updateObject(oldItem, newItem) {
 
-	if(oldItem){
+	if (oldItem) {
 
-		if(newItem){
+		if (newItem) {
 
 			for (let i in newItem) {
 
-				if(typeof newItem[i] === 'object' && newItem[i] !== null){
+				if (typeof newItem[i] === 'object' && newItem[i] !== null) {
 
 					oldItem[i] = updateObject(oldItem[i], newItem[i]);
 
-				}else if (newItem[i] !== undefined ) {
+				} else if (newItem[i] !== undefined) {
 
 					oldItem[i] = newItem[i];
 				}
-			}        
+			}
 		}
 
-	}else{
+	} else {
 
 		oldItem = newItem;
 	}
