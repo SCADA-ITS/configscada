@@ -1,5 +1,6 @@
 import GenericModule from "../genericModule.js";
 import DataTable from "../../component/datatable.js";
+import ConfirmTempDialogBox from "../../component/confirmTempDialogBox.js";
 import { adapter } from "../../lib/adapter.js";
 
 import { util } from "../../lib/util.js";
@@ -119,26 +120,30 @@ export default class PlanExecutor extends GenericModule {
 
 							if(self.config.confirmOrderTypes.includes(order.orderTypeId) && planOrderStateType.alias == "RUNNING"){
 
-								webix.confirm({
-									title: i18n.t("LBL_PLAN_CONFIRM_PLAN"),
-									ok: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
-									cancel: i18n.t("LBL_PLAN_CONFIRM_STOP"),
-									text: i18n.t("LBL_PLAN_CONFIRM_PLAN_DESCRIPTION"),
-									width: 600
-								}).then(function() {
+								let confirmWindow = new ConfirmTempDialogBox( 
+									i18n.t("LBL_PLAN_CONFIRM_PLAN"), 
+									i18n.t("LBL_PLAN_CONFIRM_PLAN_DESCRIPTION"), 
+									30, 
+									callBackAccept, 
+									callBackCancel, 
+									null);
+
+								function callBackAccept() {
 
 									let btnConfig = self.config.actionButtons.find(e => e.action == "PLAY");
 									btnConfig.confirm = false;
 									
 									self.open_module(btnConfig);
-
-								}).fail(function(){
-
+								}
+			
+								function callBackCancel() {
+									
 									let btnConfig = self.config.actionButtons.find(e => e.action == "STOP");
 									btnConfig.confirm = false;
 									
 									self.open_module(btnConfig);
-								});;
+								}		
+								confirmWindow.show();
 							}
 						}
 					});

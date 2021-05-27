@@ -38,8 +38,8 @@ export default class PlanModule extends GenericModule {
 
 			webix.confirm({
 				title: i18n.t("LBL_PLAN_CONFIRM_PLAY"),
-				ok: i18n.t("LBL_YES"),
-				cancel: i18n.t("LBL_NO"),
+				ok: i18n.t("LBL_ACCEPT"),
+				cancel: i18n.t("LBL_CANCEL"),
 				text: i18n.t("LBL_PLAN_CONFIRM_PLAY_DESCRIPTION"),
 				width: 600
 			}).then(function() {
@@ -67,8 +67,8 @@ export default class PlanModule extends GenericModule {
 
 				webix.confirm({
 					title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
+					ok: i18n.t("LBL_ACCEPT"),
+					cancel: i18n.t("LBL_CANCEL"),
 					text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
 					width: 600
 				}).then(function() {
