@@ -2,12 +2,13 @@ import { util } from "../../lib/util.js";
 
 export default class MapContextMenu {
 	
-    constructor(commands, allPks, selectedPksCallback) {
+    constructor(commands, allPks, selectedPksCallback, cmdCallbacks) {
         
         this.uid = webix.uid();
         this.commands = commands;
 		this.allPks = allPks;
 		this.selectedPksCallback = selectedPksCallback;
+		this.cmdCallbacks = cmdCallbacks;
         
         let ctxMenuData = [];
 
@@ -55,7 +56,7 @@ export default class MapContextMenu {
                     
                     if (command) {
                     
-						util.module.executeCommand(command, self.allPks, self.selectedPksCallback);
+						util.module.executeCommand(command, self.allPks, self.selectedPksCallback, self.cmdCallbacks);
                     }
                 }
             }

@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import { adapter } from "../../lib/adapter.js";
+import GenericMap from "./genericMap.js";
 import MapLayer from "./mapLayer.js";
 import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
@@ -12,18 +13,20 @@ const OPTIONS_PAN_ZOOM = {
 	dblClickZoomEnabled: false
 };
 
-export default class Synoptic {
+export default class Synoptic extends GenericMap {
 
 	constructor(metadata, data, events, w, h, options) {
 
-		this.metadata = metadata;
-		this.data = data;
-		this.events = events;
-		this.w = w;
-		this.h = h;
-		this.options = options;
+		super(metadata, data, events, w, h, options);
+		
+//		this.metadata = metadata;
+//		this.data = data;
+//		this.events = events;
+//		this.w = w;
+//		this.h = h;
+//		this.options = options;
 		this.stomp = {};
-		this.uid = webix.uid();
+//		this.uid = webix.uid();
 		
 		// Snap main paper
 		this.s = undefined;
@@ -96,7 +99,16 @@ export default class Synoptic {
 			}
 			
 			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
-				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks);
+				
+				let cmdCallbacks = undefined;
+				
+				if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
+					self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
+						
+					cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+				}
+				
+				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
 				cells.push(self.mapAction.getView());
 			}
 			
@@ -420,7 +432,15 @@ export default class Synoptic {
 			
 			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
 				
-				let contextMenu = new MapContextMenu(self.metadata.commands, getAllPks(), getSelectedPks);
+				let cmdCallbacks = undefined;
+				
+				if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
+					self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
+						
+					cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+				}
+				
+				let contextMenu = new MapContextMenu(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
 				
 				let contextMenuView = contextMenu.getView();
 				contextMenuView.master = "svg-syn-" + self.uid;
@@ -438,7 +458,7 @@ export default class Synoptic {
 				top: 70, 
 				right: 10,
 				width: 300,
-				height: self.h - 80,
+				height: self.h - 200,
 				rows: [
 					{
 						id: "syn-window-actions-toolbar-" + self.uid,

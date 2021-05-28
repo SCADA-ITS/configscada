@@ -470,7 +470,7 @@ export let util = {
 			}
 		},
 		
-		executeCommand(command, allPks, selectedPksCallback) {
+		executeCommand(command, allPks, selectedPksCallback, cmdCallbacks) {
 			
 			let selectedPks = [];
 			
@@ -481,7 +481,10 @@ export let util = {
 			
 			if (command && command.moduleAction) {
 				
-				open_module();
+				if (!commandExecCallback()) {
+				
+					open_module();	
+				}
 			}
 			
 			function open_module() {
@@ -543,27 +546,42 @@ export let util = {
 				// Only single selection
 				function executeCommand() {
 					
+					let cmd = command;
+					
 					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
 						
 						let selectedPk = args.selectedPks[0];
-						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType.id;
+						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType;
 						
-						let cmdElementType = ccommand.elementTypeCommand.find(e => e.elementType === elementType.id && e.commandId === command.id);
+						let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === elementType.id); 
 						
-						if (cmdElementType) {
+						if (elementTypeCommand) {
 							
-							let module = util.module.getFromModuleAction(cmdElementType.moduleAction.id);
-							
-							util.module.open(module, cmdElementType.moduleActionId, viewTypeId, null, args);
-						}
+							cmd = elementTypeCommand;
+						} 
 					}
-					else {
+					
+					let module = util.module.getFromModuleAction(cmd.moduleAction.id);
 						
-						let module = util.module.getFromModuleAction(command.moduleAction.id);
-							
-						util.module.open(module, command.moduleAction, viewTypeId, null, args);
-					}
+					util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
 				}
+			}
+			
+			function commandExecCallback() {
+		
+				let cmdCallback = undefined;
+				
+				if (Array.isArray(cmdCallbacks) && cmdCallbacks.length > 0) {
+					
+					cmdCallback = cmdCallbacks.find(cmdCall => cmdCall.commandId === command.id);
+				
+					if (cmdCallback) {
+					
+						cmdCallback.function(selectedPks);
+					}	
+				}
+						
+				return cmdCallback != undefined;
 			}
 		},
 
@@ -583,8 +601,6 @@ export let util = {
 					return false;
 				});
 			}
-
-
 		},
 
 		checkSytemPermision(modules, userData) {

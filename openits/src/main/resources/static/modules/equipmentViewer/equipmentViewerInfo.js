@@ -4,6 +4,13 @@ import GraphicIcon from "../../component/graphicIcon/graphicIcon.js";
 
 export default class EquipmentViewerInfo {
 	
+	static DEFAULT_STATE_COLOR(state) {
+		
+		let colors = ["#800080", "#008000", "#ff0000", "#ffcc00"];
+		
+		return colors[state];
+	}
+	
 	constructor(parent, element, equipmentViewer) {
 
 		this.parent = parent;
@@ -39,7 +46,8 @@ export default class EquipmentViewerInfo {
 			
 			viewMain = {
 				cols: [
-					{ width: 50 },
+					//{ width: 50 },
+					{},
 					getViewMainImage(),
 					{},
 					getViewMainInfo(),
@@ -78,7 +86,7 @@ export default class EquipmentViewerInfo {
 										
 										let equipmentIcon = self.elementType.elementTypePhoto;
 																		
-										let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
+										let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(self.element.elementTypeState.id.lastIndexOf(":") + 1));
 										
 										if (data && data.elementTypeState) {
 											
@@ -86,7 +94,7 @@ export default class EquipmentViewerInfo {
 										
 											if (elementTypeState) {
 												
-												color = elementTypeState.color ? elementTypeState.color : "#000000";
+												color = elementTypeState.color ? elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));
 											}
 										}
 										
@@ -117,10 +125,11 @@ export default class EquipmentViewerInfo {
 							{ height: 20},
 							{},
 							{
-								id:  "view-main-info-image-" + self.uid,
+								//id:  "view-main-info-image-" + self.uid,
 								height: 200,
 								borderless: true,
 								template: function() {
+										
 									return `<div>
 												<svg id=${"view-main-info-image-svg-" + self.uid}></svg>
 											</div>`
@@ -130,6 +139,29 @@ export default class EquipmentViewerInfo {
 					
 										drawGraphicIcon(this.$width, this.$height);
 									}
+								}
+							},
+							{
+								id:  "view-main-info-image-" + self.uid,
+								borderless: true,
+								height: 40,
+								template: function(data) {
+
+									let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(self.element.elementTypeState.id.lastIndexOf(":") + 1));
+										
+									if (data && data.elementTypeState) {
+										
+										let elementTypeState = self.elementType.elementTypeStates.find(e => e.id === data.elementTypeState.id);
+									
+										if (elementTypeState) {
+											
+											color = elementTypeState.color ? elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));
+										}
+									}
+									
+									return `<div class="equip-viewer-info-image" style="height: 40px;">
+												<div style="background: ${color}" class="shadow"></div>
+											</div>`
 								}
 							},
 							{},
@@ -292,10 +324,8 @@ export default class EquipmentViewerInfo {
 			
 			this.graphicIconInstance.updateState(elementTypeState);
 		}
-		else {
-			
-			viewMainInfoImage.setValues( { elementTypeState: elementTypeState });
-		}
+
+		viewMainInfoImage.setValues( { elementTypeState: elementTypeState });
 	}
 	
 	// TODO: Update alarms

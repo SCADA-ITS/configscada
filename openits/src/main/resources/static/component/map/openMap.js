@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import { adapter } from "../../lib/adapter.js";
+import GenericMap from "./genericMap.js";
 import MapLayer from "./mapLayer.js";
 import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
@@ -11,18 +12,15 @@ const ALL_ZOOM_LEVEL = 0;
 const MAX_ZOOM_LEVEL = 20;
 const MIN_ZOOM_LEVEL = 1;
 
-export default class OpenMap {
+const ZINDEX_BACK = 0;
+const ZINDEX_FRONT = 9999;
+
+export default class OpenMap extends GenericMap {
 
 	constructor(metadata, data, events, w, h, options) {
 
-		this.metadata = metadata;
-		this.data = data;
-		this.events = events;
-		this.w = w;
-		this.h = h;
-		this.options = options;
+		super(metadata, data, events, w, h, options)
 		this.stomp = {};
-		this.uid = webix.uid();
 
 		this.graphicIcons = new Map();
 		this.zoomLevelGraphicIcons = new Map();
@@ -43,7 +41,7 @@ export default class OpenMap {
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
 		
-		this.afterRenderCallback;
+		this.afterRenderCallback = undefined;
 	}
 
 	getView(afterRenderCallback) {
@@ -101,7 +99,7 @@ export default class OpenMap {
 				
 			return id;
 		}
-		
+				
 		function getMultiViewCellActions() {
 			
 			let cells = [];
@@ -114,7 +112,16 @@ export default class OpenMap {
 			}
 			
 			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
-				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks);
+				
+				let cmdCallbacks = undefined;
+				
+				if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
+					self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
+						
+					cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+				}
+				
+				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
 				cells.push(self.mapAction.getView());
 			}
 			
@@ -167,14 +174,17 @@ export default class OpenMap {
 //				darkMode();
 //			});
 			
-			map.on('singleclick', function(evt) {
+			if (self.options && self.options[Map.Options.DEBUG_MODE]) {
+			
+				map.on('singleclick', function(evt) {
 				
-				let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-
-				console.log("LAT: " + coor[1] + " - " + "LON: " + coor[0]);
+					let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 	
-				evt.preventDefault();
-			});
+					console.log("(LON, LAT) => " + coor.join());
+		
+					evt.preventDefault();
+				});	
+			}
 			
 			map.getViewport().addEventListener('mousedown', function(evt){
 			    self.flagMouseMove = false;
@@ -222,6 +232,9 @@ export default class OpenMap {
 			
 			var newZoom = self.olMap.getView().getZoom();
 			
+			self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+			self.mouseOverSvg = false;
+			
 			if (self.currentZoomLevel != Math.round(newZoom)) {
 				console.log('zoom end, new zoom: ' + newZoom);
 				self.currentZoomLevel = Math.round(newZoom);
@@ -251,6 +264,8 @@ export default class OpenMap {
 							}
 							
 							graphicIcon.hide();
+							
+							zIndexOverlay(graphicIcon, ZINDEX_BACK);
 						});
 					}	
 				}
@@ -264,11 +279,15 @@ export default class OpenMap {
 							
 							if (self.isElementLayerVisible(graphicIcon)) {
 							
-								graphicIcon.show();	
+								graphicIcon.show();
+								
+								zIndexOverlay(graphicIcon, ZINDEX_FRONT);	
 							}
 							else {
 								
 								graphicIcon.hide();
+								
+								zIndexOverlay(graphicIcon, ZINDEX_BACK);
 							}
 						});
 					}
@@ -285,6 +304,8 @@ export default class OpenMap {
 					if (self.isElementLayerVisible(newZoomLevelGraphicIcon)) {
 						
 						newZoomLevelGraphicIcon.show();
+						
+						zIndexOverlay(newZoomLevelGraphicIcon, ZINDEX_FRONT);
 					
 						if (selectedGraphicIcons.has(newZoomLevelGraphicIcon)) {
 							
@@ -294,9 +315,31 @@ export default class OpenMap {
 					else {
 						
 						newZoomLevelGraphicIcon.hide();
+						
+						zIndexOverlay(newZoomLevelGraphicIcon, ZINDEX_BACK);
 					}
 				});
 			} 
+			
+			function zIndexOverlay(graphicIcon, zIndex) {
+			
+				let overlayId = graphicIcon.container.obj.node.id.replace("svg", "ol-overlay");
+				let layerElement = graphicIcon.layerElement;
+							
+				let olOverlayDiv = self.olMap.getOverlayById(overlayId);
+				
+				if (olOverlayDiv) {
+					
+					let zIndexCalculated = zIndex;
+					
+					if (layerElement.zIndexFront) {
+					
+						zIndexCalculated = zIndex + layerElement.zIndexFront;
+					}
+					
+					olOverlayDiv.element.style.zIndex = zIndexCalculated;
+				}	
+			}
 		}
 		
 	
@@ -348,34 +391,7 @@ export default class OpenMap {
 			function loadGraphicIcon(layerElement, layerElementZoom) {
 				
 				let layerElem = webix.copy(layerElement);
-				let svgId = getSvgId(layerElem, layerElementZoom);
-				let svgGraphicIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-				let w = layerElementZoom ? layerElementZoom.graphicIcon.width : layerElem.graphicIcon.width;
-				let h = layerElementZoom ? layerElementZoom.graphicIcon.height : layerElem.graphicIcon.height;
-				
-				if ((layerElem && layerElem.showText) || (layerElementZoom && layerElementZoom.showText)) {
-					
-					h *= 1.2;
-				}
-				
-				svgGraphicIcon.setAttribute("id", svgId);
-				svgGraphicIcon.setAttribute("width", w);
-				svgGraphicIcon.setAttribute("height", h);
-				
-				document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
-				
-				svgGraphicIcon.onmouseover = function() {
-					
-				    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
-				    self.mouseOverSvg = true;
-				};
-				
-				svgGraphicIcon.onmouseout = function() {
-				    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
-				    self.mouseOverSvg = false;
-				};
-				
-				let s = Snap("#" + svgId);
+				let s = Snap("#" + createSvgIcon());
 				
 				let container = { 
 					type: GraphicIcon.CONTAINER_TYPE_OPEN_LAYER,
@@ -407,6 +423,62 @@ export default class OpenMap {
 									onLoadGraphicIcon(layerElem, graphicIconInstance);
 								}
 				);
+				
+				function createSvgIcon() {
+					
+					let svgId = getSvgId(layerElem, layerElementZoom);
+					let svgGraphicIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+					let w = layerElementZoom ? layerElementZoom.graphicIcon.width : layerElem.graphicIcon.width;
+					let h = layerElementZoom ? layerElementZoom.graphicIcon.height : layerElem.graphicIcon.height;
+					
+					if ((layerElem && layerElem.showText) || (layerElementZoom && layerElementZoom.showText)) {
+
+						let element = window.em.getByField(EntityType.ELEMENT, "id", layerElem.elementId);
+						
+						if (element) {
+							
+							let fontSize = 14;
+							let text = document.createElement("div");
+							text.style.fontSize = fontSize + "px";
+							text.style.fontFamily = "monospace";
+							text.style.fontWeight = "bold";
+							text.style.position = "absolute";
+							text.style.visibility = "hidden";
+							text.style.height = "auto";
+							text.style.width = "auto";
+							text.style.whiteSpace = "nowrap";
+							//text.setAttribute("style", "position: absolute; visibility: hidden; height: auto; width: auto; white-space: nowrap;");
+							text.innerHTML = element.alias;
+							document.body.appendChild(text);
+							
+							//let height = (text.clientHeight + 1);
+							let width = (text.clientWidth + fontSize);
+							
+							w = width > w ? width : w;
+						}						
+						 
+						h *= 1.2;
+					}
+					
+					svgGraphicIcon.setAttribute("id", svgId);
+					svgGraphicIcon.setAttribute("width", w);
+					svgGraphicIcon.setAttribute("height", h);
+					
+					document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
+					
+//					svgGraphicIcon.onmouseover = function() {
+//						
+//					    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
+//					    self.mouseOverSvg = true;
+//					};
+					
+//					svgGraphicIcon.onmouseout = function() {
+//					    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+//					    self.mouseOverSvg = false;
+//					};
+					
+					return svgId;
+				}
 			}
 			
 			function onLoadGraphicIcon(layerElement, graphicIconInstance) {
@@ -492,7 +564,7 @@ export default class OpenMap {
 						graphicIcons.forEach(graphicIcon => {
 							
 							let olOverlay = new ol.Overlay({
-								//id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
+								id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
 								position: ol.proj.fromLonLat([graphicIcon.layerElement.longitude, graphicIcon.layerElement.latitude]),
 								positioning: 'center-center',
 								element: graphicIcon.container.obj.node,
@@ -511,22 +583,22 @@ export default class OpenMap {
 								}
 							}
 								
-							graphicIcon.container.obj.node.onmouseover = function() {
-				
-								if (graphicIcon.isVisible()) {
-								
-									self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
-							    	self.mouseOverSvg = true;	
-								}
-							};
+//							graphicIcon.container.obj.node.onmouseover = function() {
+//				
+//								if (graphicIcon.isVisible()) {
+//								
+//									self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
+//							    	self.mouseOverSvg = true;	
+//								}
+//							};
 							
-							graphicIcon.container.obj.node.onmouseout = function() {
-								
-								if (graphicIcon.isVisible()) {
-								    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
-								    self.mouseOverSvg = false;
-								}
-							};
+//							graphicIcon.container.obj.node.onmouseout = function() {
+//								
+//								if (graphicIcon.isVisible()) {
+//								    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+//								    self.mouseOverSvg = false;
+//								}
+//							};
 						});
 					}
 				});
@@ -649,6 +721,8 @@ export default class OpenMap {
 					let events = {};
 			
 					events[GraphicIcon.EventTypes.ON_DBL_CLIC] = onDblClic;
+					events[GraphicIcon.EventTypes.ON_MOUSE_OVER] = onMouseOver;
+					events[GraphicIcon.EventTypes.ON_MOUSE_OUT] = onMouseOut;
 					
 					let graphicIconInstance = new mod.default(layerElement, element, container, events);
 					
@@ -659,6 +733,18 @@ export default class OpenMap {
 							onLoaded(graphicIconInstance);	
 						});
 					});
+					
+					function onMouseOver() {
+				
+						self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
+						self.mouseOverSvg = true;
+					}
+					
+					function onMouseOut() {
+						
+						self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+						self.mouseOverSvg = false;						
+					}
 				}
 				
 				lazy();
@@ -971,7 +1057,15 @@ export default class OpenMap {
 			
 			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
 				
-				let contextMenu = new MapContextMenu(self.metadata.commands, getAllPks(), getSelectedPks);
+				let cmdCallbacks = undefined;
+				
+				if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
+					self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
+						
+					cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+				}
+				
+				let contextMenu = new MapContextMenu(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
 				
 				let contextMenuView = contextMenu.getView();
 				contextMenuView.master = "map-" + self.uid;
@@ -989,7 +1083,7 @@ export default class OpenMap {
 				top: 70, 
 				right: 10,
 				width: 300,
-				height: self.h - 80,
+				height: self.h - 200,
 				rows: [
 					{
 						id: "map-window-actions-toolbar-" + self.uid,
@@ -1261,3 +1355,5 @@ Object.defineProperty(Map.Options, "DEBUG_MODE", {
     enumerable : true,
     configurable : false
 });
+
+

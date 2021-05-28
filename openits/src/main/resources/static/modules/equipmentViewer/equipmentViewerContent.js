@@ -82,7 +82,7 @@ export default class EquipmentViewerContent {
 					height: 15,
 					template: function(data) {
 
-						let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : "#000000";
+						let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(self.element.elementTypeState.id.lastIndexOf(":") + 1));
 
 						if (data && data.elementTypeState) {
 
@@ -90,7 +90,7 @@ export default class EquipmentViewerContent {
 
 							if (elementTypeState) {
 
-								color = elementTypeState.color ? elementTypeState.color : "#000000";
+								color = elementTypeState.color ? elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));
 							}
 						}
 
@@ -127,7 +127,7 @@ export default class EquipmentViewerContent {
 									}
 
 									let elementTypeStateLabel = i18n.t(self.currentElementTypeState.labelAlias);
-									let color = self.currentElementTypeState.color ? self.currentElementTypeState.color : "#000000";
+									let color = self.currentElementTypeState.color ? self.currentElementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.currentElementTypeState.id.substring(self.currentElementTypeState.id.lastIndexOf(":") + 1));
 
 									let timeService = window.sm.getService(Services.TIME_SERVICE);
 

@@ -1,17 +1,18 @@
 import { util } from "../../lib/util.js";
+import GenericMap from "./genericMap.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const MARGIN_BETWEEN_COMMANDS = 10;
 
 export default class MapAction {
 
-	constructor(commands, allPks, selectedPksCallback, events) {
+	constructor(commands, allPks, selectedPksCallback, cmdCallbacks) {
 
 		this.uid = webix.uid();
 		this.commands = commands;
 		this.allPks = allPks;
 		this.selectedPksCallback = selectedPksCallback;
-		this.events = events;
+		this.cmdCallbacks = cmdCallbacks;
 		
 		let commandGroups = [];
         let commandsGrpMap = new Map();
@@ -90,10 +91,10 @@ export default class MapAction {
 	                onItemClick: () => {
 	                    
 	                    if (command) {
-	                    
-							util.module.executeCommand(command, self.allPks, self.selectedPksCallback);
-	                    }
-	                }
+		
+							util.module.executeCommand(command, self.allPks, self.selectedPksCallback, self.cmdCallbacks);
+		                }
+					}
 	            }
 			};
 	
@@ -173,3 +174,4 @@ export default class MapAction {
 		}
 	}
 }
+

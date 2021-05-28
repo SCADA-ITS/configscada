@@ -1,12 +1,13 @@
 export default class CalendarDialogBox {
 	
-	constructor(title, text, multidate, onBlockDates, onAccept) {
+	constructor(title, text, multidate, onBlockDates, onAccept, onAfterDateSelect) {
 
 		this.title = title;
 		this.text = text;
 		this.multidate = multidate; 
 		this.onBlockDates = onBlockDates;
 		this.onAccept = onAccept;
+		this.onAfterDateSelect = onAfterDateSelect;
 	}
 	
 	getView() {
@@ -21,6 +22,10 @@ export default class CalendarDialogBox {
 			blockDates: function(date) {
 				
 				return self.onBlockDates(date);
+			},
+			onAfterDateSelect: function(date) {
+				
+				self.onAfterDateSelect(self.getSelectedDates());
 			}
 		};
 		
@@ -32,6 +37,10 @@ export default class CalendarDialogBox {
 			blockDates: function(date) {
 				
 				return self.onBlockDates(date);
+			},
+			onAfterDateSelect: function(date) {
+				
+				self.onAfterDateSelect(self.getSelectedDates());
 			} 
 		};
 		

@@ -28,6 +28,9 @@ public class MapLayerElementZoom implements Serializable {
 
 	@Column(name="zoom_upper")
 	private Integer zoomUpper;
+	
+	@Column(name="z_index_front")
+	private Integer zIndexFront;
 
 	//bi-directional many-to-one association to GraphicIcon
 	@ManyToOne
@@ -87,6 +90,14 @@ public class MapLayerElementZoom implements Serializable {
 
 	public void setZoomUpper(Integer zoomUpper) {
 		this.zoomUpper = zoomUpper;
+	}
+
+	public Integer getzIndexFront() {
+		return zIndexFront;
+	}
+
+	public void setzIndexFront(Integer zIndexFront) {
+		this.zIndexFront = zIndexFront;
 	}
 
 	public GraphicIcon getGraphicIcon() {

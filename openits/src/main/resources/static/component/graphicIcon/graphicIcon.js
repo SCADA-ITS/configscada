@@ -33,6 +33,11 @@ export default class GraphicIcon {
 		this.container = container;
 		this.events = events;
 		
+		if (container && container.obj && container.obj.node) {
+			
+			this.absWidth = container.obj.node.getAttribute("width");	
+		}
+		
 		this.g = undefined;
 		this.ratio = undefined;
 	}
@@ -110,7 +115,27 @@ export default class GraphicIcon {
 					tooltip.setAttribute("style", "position: absolute; display: none;");
 					document.body.appendChild(tooltip);
 									
-					self.g.hover(function(e) { showTooltip(e) }, hideTooltip);
+					self.g.hover(
+						function(e) { 
+							
+							showTooltip(e);
+					
+									
+							if (self.isVisible() && self.events && self.events[GraphicIcon.EventTypes.ON_MOUSE_OVER]) {
+					
+								eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_OVER])();
+							} 
+						},
+						function() {
+							
+							hideTooltip();
+							
+							if (self.isVisible() && self.events && self.events[GraphicIcon.EventTypes.ON_MOUSE_OUT]) {
+					
+								eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_OUT])();
+							}
+						}
+					);
 				}
 			}
 			
@@ -169,10 +194,12 @@ export default class GraphicIcon {
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.showText) {
 				
 				let x = gWidth / 2;			
+				
 				let y = gHeight * 1.15;
 				
 				if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
 					
+					//x = self.absWidth / 2;
 					x *= self.ratio;
 					y *= self.ratio;
 				}
@@ -185,6 +212,33 @@ export default class GraphicIcon {
 			
 				self.g.append(gName);	
 			}
+			
+			if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER && self.layerElement.showText) {
+				
+				createTextMap();
+			}
+		}
+		
+		function createTextMap() {
+				
+				let text = document.createElement("div");
+				text.style.fontSize = "14px";
+				text.style.fontFamily = "monospace";
+				text.style.fontWeight = "bold";
+				text.style.position = "absolute";
+				//text.style.visibility = "hidden";
+				text.style.height = "auto";
+				text.style.width = "auto";
+				text.style.whiteSpace = "nowrap";
+				//text.setAttribute("style", "position: absolute; visibility: hidden; height: auto; width: auto; white-space: nowrap;");
+				text.innerHTML = "ESTO ES UNA PRUEBA";
+				
+				text.style.display = "block";
+				text.style.left = 0 + 'px';
+				text.style.top = 0 + 'px';
+				text.style.zIndex = 99999;	
+				
+				self.container.obj.node.parentElement.appendChild(text);
 		}
 		
 		function placeInContainer(gWidth, gHeight) {
@@ -199,15 +253,13 @@ export default class GraphicIcon {
 			let x = self.layerElement.x ? self.layerElement.x : 0;
 			let y = self.layerElement.y ? self.layerElement.y : 0;
 			
-			
-//			if (x === 0) {
-//				
-//				if (gWidth * self.ratio < graphicIcon.width) {
-//					
-//					x = (graphicIcon.width - (gWidth * self.ratio)) / 2;
-//				}
-//			}
-			// Center x
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_SNAP) {
+				
+				//x = (self.absWidth - (graphicIcon.width * self.ratio)) / 2;
+				x = (self.absWidth - (gWidth * self.ratio)) / 2;
+			}
+
+			// Center y
 			if (y === 0) {
 				
 				if (gHeight * self.ratio < graphicIcon.height) {
@@ -371,6 +423,20 @@ Object.defineProperty(GraphicIcon.EventTypes, "ON_CLIC", {
 
 Object.defineProperty(GraphicIcon.EventTypes, "ON_DBL_CLIC", {
     value: 2,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_OVER", {
+    value: 3,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_OUT", {
+    value: 4,
     writable : false,
     enumerable : true,
     configurable : false

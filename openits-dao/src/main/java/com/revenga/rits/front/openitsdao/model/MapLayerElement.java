@@ -44,6 +44,9 @@ public class MapLayerElement implements Serializable {
 	private String textColor;
 	
 	private Boolean tooltip;
+	
+	@Column(name="z_index_front")
+	private Integer zIndexFront;
 
 	//bi-directional many-to-one association to MapLayerElementZoom
 	@OneToMany(mappedBy="mapLayerElement")
@@ -142,6 +145,14 @@ public class MapLayerElement implements Serializable {
 
 	public void setTooltip(Boolean tooltip) {
 		this.tooltip = tooltip;
+	}
+
+	public Integer getzIndexFront() {
+		return zIndexFront;
+	}
+
+	public void setzIndexFront(Integer zIndexFront) {
+		this.zIndexFront = zIndexFront;
 	}
 
 	public List<MapLayerElementZoom> getMapLayerElementZooms() {

@@ -4,7 +4,7 @@ import { util } from "../lib/util.js";
 
 const PARAM_MODULE_TYPE_GENERIC_MAP_WINDOW_MAP_ID = 6;
 const MAP_REST_ENDPOINT = "maps/${id}";
-const DEBUG_MODE = false;
+const DEBUG_MODE = true;
 
 export default class MapModule extends GenericModule {
 
