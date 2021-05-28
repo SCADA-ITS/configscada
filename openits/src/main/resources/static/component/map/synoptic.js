@@ -18,15 +18,7 @@ export default class Synoptic extends GenericMap {
 	constructor(metadata, data, events, w, h, options) {
 
 		super(metadata, data, events, w, h, options);
-		
-//		this.metadata = metadata;
-//		this.data = data;
-//		this.events = events;
-//		this.w = w;
-//		this.h = h;
-//		this.options = options;
 		this.stomp = {};
-//		this.uid = webix.uid();
 		
 		// Snap main paper
 		this.s = undefined;
@@ -291,46 +283,58 @@ export default class Synoptic extends GenericMap {
 										id: "syn-toolbar-zoom-cbo-search-" + self.uid,
 										hidden: true,
 										width: 200, height: 30,
-										suggest: function() {
-											
-											let data = [];
-											
-											if (self.graphicIcons) {
+										options: {
+											view: "suggest",
+											filter: function(obj, value) {
 												
-												self.graphicIcons.forEach(function(value, key) {
-													
-													let elementId = key;
-													let graphicIcons = value;
-													
-													if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+												return (obj.value.toLowerCase().indexOf(value) !== -1)
+											},
+											body: {
+												view: "list",
+												data: function() {
+											
+													let data = [];
+											
+													if (self.graphicIcons) {
 														
-														let element = self.data.find(e => e.id === elementId);
-														
-														if (element) {
+														self.graphicIcons.forEach(function(value, key) {
 															
-															let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+															let elementId = key;
+															let graphicIcons = value;
 															
-															if (elementType) {
-															
-																let item = {
-																	id: elementId,
-																	value: element.alias + " - " + i18n.t(elementType.labelAlias)
-																}
+															if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 																
-																data.push(item);		
+																let element = self.data.find(e => e.id === elementId);
+																
+																if (element) {
+																	
+																	let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+																	
+																	if (elementType) {
+																	
+																		let item = {
+																			id: elementId,
+																			value: element.alias + " - " + i18n.t(elementType.labelAlias)
+																		}
+																		
+																		data.push(item);		
+																	}
+																}
 															}
-														}
+														});
 													}
-												});
+													
+													if (data.length > 0) {
+														
+														data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));	
+													}
+													
+													return data;
+												}(),
+												template: "#value#",
+        										yCount: 7
 											}
-											
-											if (data.length > 0) {
-												
-												data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));	
-											}
-											
-											return data;
-										}(),
+										},
 										on:{
 											onChange: function(newValue, oldValue, config){
 										        

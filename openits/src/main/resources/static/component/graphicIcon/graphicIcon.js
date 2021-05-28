@@ -11,6 +11,8 @@ export default class GraphicIcon {
 	static get G_ID_STATE() { return "state" }
 	static get G_ID_SELBOX() { return "selBox" }
 	
+	static get FONT_SIZE() { return 14 }
+	
 	static DEFAULT_STATE_COLOR(state) {
 		
 		let colors = ["#800080", "#008000", "#ff0000", "#ffcc00"];
@@ -35,7 +37,8 @@ export default class GraphicIcon {
 		
 		if (container && container.obj && container.obj.node) {
 			
-			this.absWidth = container.obj.node.getAttribute("width");	
+			this.absWidth = container.obj.node.getAttribute("width");
+			this.absHeight = container.obj.node.getAttribute("height");	
 		}
 		
 		this.g = undefined;
@@ -168,7 +171,6 @@ export default class GraphicIcon {
 					tooltip.style.top = e.pageY + 10 + 'px';
 					tooltip.style.zIndex = 99999;	
 				}
-				
 			}
 			
 			function hideTooltip() {
@@ -194,51 +196,22 @@ export default class GraphicIcon {
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && self.layerElement.showText) {
 				
 				let x = gWidth / 2;			
-				
-				let y = gHeight * 1.15;
+				let y = gHeight + GraphicIcon.FONT_SIZE;
 				
 				if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
 					
-					//x = self.absWidth / 2;
 					x *= self.ratio;
-					y *= self.ratio;
+					y = gHeight * self.ratio + GraphicIcon.FONT_SIZE;
 				}
 							
 				let gName = s.text(x, y, self.element.alias);
 				let textColor = self.layerElement.textColor ? self.layerElement.textColor : "#ffcc00";
 				
-				gName.attr({ fontFamily: "monospace", fontWeight: "bold", fill: textColor, "dominant-baseline": "middle", "text-anchor": "middle" });
+				gName.attr({ fontSize: GraphicIcon.FONT_SIZE + "px",fontFamily: "monospace", fontWeight: "bold", fill: textColor, "dominant-baseline": "middle", "text-anchor": "middle" });
 				gName.transform("s" + (1 / self.ratio));
 			
 				self.g.append(gName);	
 			}
-			
-			if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER && self.layerElement.showText) {
-				
-				createTextMap();
-			}
-		}
-		
-		function createTextMap() {
-				
-				let text = document.createElement("div");
-				text.style.fontSize = "14px";
-				text.style.fontFamily = "monospace";
-				text.style.fontWeight = "bold";
-				text.style.position = "absolute";
-				//text.style.visibility = "hidden";
-				text.style.height = "auto";
-				text.style.width = "auto";
-				text.style.whiteSpace = "nowrap";
-				//text.setAttribute("style", "position: absolute; visibility: hidden; height: auto; width: auto; white-space: nowrap;");
-				text.innerHTML = "ESTO ES UNA PRUEBA";
-				
-				text.style.display = "block";
-				text.style.left = 0 + 'px';
-				text.style.top = 0 + 'px';
-				text.style.zIndex = 99999;	
-				
-				self.container.obj.node.parentElement.appendChild(text);
 		}
 		
 		function placeInContainer(gWidth, gHeight) {
@@ -255,7 +228,6 @@ export default class GraphicIcon {
 			
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_SNAP) {
 				
-				//x = (self.absWidth - (graphicIcon.width * self.ratio)) / 2;
 				x = (self.absWidth - (gWidth * self.ratio)) / 2;
 			}
 
@@ -269,9 +241,6 @@ export default class GraphicIcon {
 			}
 			
 			let position = "t" + [x, y].join();
-			//let scale = "s" + ((graphicIcon.width > graphicIcon.height) ? (graphicIcon.width / gWidth) : (graphicIcon.height / gHeight));
-			
-			
 			
 			let scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (self.ratio + "," + self.ratio);
 			
@@ -324,19 +293,16 @@ export default class GraphicIcon {
 	updateState(elementTypeState) {
 		
 		this.elementTypeState = elementTypeState; 
-		//throw new Error("Method 'updateState(elementState)' must be implemented.");
 	}
 	
 	updateValues(elementValues) {
 		
 		this.elementValues = elementValues;
-		//throw new Error("Method 'updateValues(elementValues)' must be implemented.");
 	}
 	
 	updateAlarms(alarms) {
 		
 		this.alarms = alarms;
-		//throw new Error("Method 'updateAlarms(alarms)' must be implemented.");
 	}
 
 	show() {
@@ -348,11 +314,6 @@ export default class GraphicIcon {
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
 			gSel.attr({ visibility: "hidden" });
-			
-//			if (this.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
-//				
-//				this.container.obj.attr({ visibility: "visible" });
-//			}	
 		}
 	}
 
@@ -365,11 +326,6 @@ export default class GraphicIcon {
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
 			gSel.attr({ visibility: "hidden" });
-			
-//			if (this.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER) {
-//				
-//				this.container.obj.attr({ visibility: "hidden" });
-//			}	
 		}
 	}
 	
