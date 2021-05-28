@@ -9,6 +9,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 		
 		this.graphicIconCustomType = undefined;
 		this.elementInfo = {
+			id: element.id,
 			state: undefined,
 			values: [],
 			alarms: []
@@ -49,6 +50,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 			
 			return {
 				
+				id: self.element.id,
 				state: getState(),
 				values: getValues(),
 				alarms: []

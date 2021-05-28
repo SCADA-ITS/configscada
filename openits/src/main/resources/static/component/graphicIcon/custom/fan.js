@@ -21,9 +21,9 @@ const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:9:0", "ElementTypeSt
 
 export default class Fan extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
-		super(s, g, elementInfo, layerElement, ratio);
+		super(s, g, elementInfo);
 		
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		this.gFan = this.g.select("#" + G_ID_FAN); 

@@ -27,9 +27,9 @@ const jsonDataFakeArray = [
 
 export default class Vms extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
-		super(s, g, elementInfo, layerElement, ratio);
+		super(s, g, elementInfo);
 		
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		

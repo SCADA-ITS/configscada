@@ -1,6 +1,6 @@
 export default class GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
 		if (this.constructor == GraphicIconCustomType) {
 
@@ -10,16 +10,6 @@ export default class GraphicIconCustomType {
 		this.s = s;
 		this.g = g;
 		this.elementInfo = elementInfo;
-		this.layerElement = layerElement;
-		this.ratio = ratio;
-		
-		this.x = layerElement.x;
-		this.y = layerElement.y;
-		
-		this.width = layerElement.graphicIcon.width / ratio;
-		this.height = layerElement.graphicIcon.height / ratio;
-		
-//		this.isVisible = true;
 	}
 	
 	render(elementInfo) {

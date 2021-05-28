@@ -18,9 +18,9 @@ const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:8:0","ElementTypeSta
 
 export default class Barrier extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
-		super(s, g, elementInfo, layerElement, ratio);
+		super(s, g, elementInfo);
 
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		this.gAnimation = this.g.select("#" + G_ID_ANIMATION);

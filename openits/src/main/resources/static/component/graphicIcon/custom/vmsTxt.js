@@ -10,9 +10,9 @@ const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:38:0", "ElementTypeS
 
 export default class VmsTxt extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
-		super(s, g, elementInfo, layerElement, ratio);
+		super(s, g, elementInfo);
 		
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 	}

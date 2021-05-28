@@ -6,9 +6,9 @@ const MARGIN_MATRIX = 5;
 
 export default class Matrix extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo, layerElement, ratio) {
+	constructor(s, g, elementInfo) {
 
-		super(s, g, elementInfo, layerElement, ratio);
+		super(s, g, elementInfo);
 	}
 	
 	render(elementInfo) {
