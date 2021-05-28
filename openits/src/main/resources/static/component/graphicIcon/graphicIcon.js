@@ -13,13 +13,6 @@ export default class GraphicIcon {
 	
 	static get FONT_SIZE() { return 14 }
 	
-	static DEFAULT_STATE_COLOR(state) {
-		
-		let colors = ["#800080", "#008000", "#ff0000", "#ffcc00"];
-		
-		return colors[state];
-	}
-	
 	constructor(layerElement, element, container, events) {
 
 		if (this.constructor == GraphicIcon) {
@@ -151,14 +144,8 @@ export default class GraphicIcon {
 								
 				if (elementType && elementTypeState) {
 					
-					let elementTypeStateColor;
+					let elementTypeStateColor = util.element.getColor(elementTypeState);
 				
-					if (!(elementTypeStateColor = elementTypeState.color)) {
-						
-						elementTypeStateColor = GraphicIcon.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));  
-					}
-					
-					
 					tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
 										<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 										<div class="state">

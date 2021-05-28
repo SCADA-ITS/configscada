@@ -4,13 +4,6 @@ import GraphicIcon from "../../component/graphicIcon/graphicIcon.js";
 
 export default class EquipmentViewerInfo {
 	
-	static DEFAULT_STATE_COLOR(state) {
-		
-		let colors = ["#800080", "#008000", "#ff0000", "#ffcc00"];
-		
-		return colors[state];
-	}
-	
 	constructor(parent, element, equipmentViewer) {
 
 		this.parent = parent;
@@ -86,7 +79,7 @@ export default class EquipmentViewerInfo {
 										
 										let equipmentIcon = self.elementType.elementTypePhoto;
 																		
-										let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(self.element.elementTypeState.id.lastIndexOf(":") + 1));
+										let color = util.element.getColor(self.element.elementTypeState);
 										
 										if (data && data.elementTypeState) {
 											
@@ -94,7 +87,7 @@ export default class EquipmentViewerInfo {
 										
 											if (elementTypeState) {
 												
-												color = elementTypeState.color ? elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));
+												color = util.element.getColor(elementTypeState);
 											}
 										}
 										
@@ -147,7 +140,7 @@ export default class EquipmentViewerInfo {
 								height: 40,
 								template: function(data) {
 
-									let color = self.element.elementTypeState.color ? self.element.elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(self.element.elementTypeState.id.substring(self.element.elementTypeState.id.lastIndexOf(":") + 1));
+									let color = util.element.getColor(self.element.elementTypeState);
 										
 									if (data && data.elementTypeState) {
 										
@@ -155,7 +148,7 @@ export default class EquipmentViewerInfo {
 									
 										if (elementTypeState) {
 											
-											color = elementTypeState.color ? elementTypeState.color : EquipmentViewerInfo.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));
+											color = util.element.getColor(elementTypeState);
 										}
 									}
 									

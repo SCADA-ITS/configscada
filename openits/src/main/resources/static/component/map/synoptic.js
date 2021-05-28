@@ -551,7 +551,8 @@ export default class Synoptic extends GenericMap {
 						function(graphicIconInstance) {
 
 							onLoadGraphicIcon(layerElement.elementId, graphicIconInstance);
-						});
+						});	
+
 						
 					self.layerElements++;
 				});

@@ -1026,6 +1026,36 @@ export let util = {
 			}
 			
 			return elementTypeParamId;
+		},
+		
+		getColor(elementTypeState) {
+			
+			let colors = ["#800080", "#008000", "#ff0000", "#ffcc00"]
+			let color = colors[0]; 
+			
+			if (elementTypeState) {
+				
+				if (elementTypeState.color) {
+					
+					color = elementTypeState.color	
+				}
+				else if (elementTypeState.id) {
+					
+					let idx = elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1);
+				
+					if (!isNaN(idx)) {
+						
+						let colorPos = parseInt(idx, 10); 
+						
+						if (colorPos < colors.length) {
+						
+							color = colors [colorPos];	
+						}
+					}
+				}
+			}
+
+			return color;
 		}
 	},
 

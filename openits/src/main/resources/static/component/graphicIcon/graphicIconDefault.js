@@ -1,4 +1,5 @@
 import GraphicIcon from "./graphicIcon.js";
+import { util } from "../../lib/util.js"; 
 
 export default class GraphicIconDefault extends GraphicIcon {
 	
@@ -17,12 +18,7 @@ export default class GraphicIconDefault extends GraphicIcon {
 			
 			if (gState) {
 				
-				let color;
-				
-				if (!(color = elementTypeState.color)) {
-					
-					color = GraphicIcon.DEFAULT_STATE_COLOR(elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1));  
-				}
+				let color = util.element.getColor(elementTypeState);
 				
 				gState.attr({
 					
