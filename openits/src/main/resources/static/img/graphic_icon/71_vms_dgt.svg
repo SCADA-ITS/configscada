@@ -9,11 +9,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="157.05498mm"
-   height="40.984329mm"
-   viewBox="0 0 157.05498 40.984329"
+   height="37.984333mm"
+   viewBox="0 0 157.05498 37.984333"
    version="1.1"
    id="svg2"
-   inkscape:version="1.0.2 (394de47547, 2021-03-26)"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    sodipodi:docname="71_vms_dgt.svg">
   <defs
      id="defs2" />
@@ -31,10 +31,10 @@
      inkscape:current-layer="zone2"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1870"
-     inkscape:window-height="900"
-     inkscape:window-x="48"
-     inkscape:window-y="23"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -43,11 +43,11 @@
      fit-margin-right="0"
      fit-margin-bottom="0">
     <sodipodi:guide
-       position="-180.62161,111.35735"
+       position="-180.62162,108.35736"
        orientation="0,-1"
        id="guide44" />
     <sodipodi:guide
-       position="-135.79389,58.672804"
+       position="-135.79389,55.67281"
        orientation="0,-1"
        id="guide46" />
   </sodipodi:namedview>
@@ -86,14 +86,14 @@
          d="M 2.0259449,2.397778 H 35.778945 v 33.753 H 2.0259449 Z"
          id="path191" />
       <image
-         sodipodi:absref="/home/alvaro/repositorio/rits/ritsfront/openits/src/main/resources/project/ausol/img/pictograms/80.bmp"
+         sodipodi:absref="C:\project\ausol\img\pictograms\80.bmp"
          xlink:href="../../../project/ausol/img/pictograms/80.bmp"
-         y="6.8549428"
-         x="6.6774473"
-         id="graphic1-1"
-         preserveAspectRatio="none"
+         width="24"
          height="24"
-         width="24" />
+         preserveAspectRatio="none"
+         id="graphic1-1"
+         x="6.6774473"
+         y="6.8549428" />
     </g>
     <g
        inkscape:groupmode="layer"
@@ -153,14 +153,14 @@
          d="m 121.009,2.397778 h 33.753 v 33.752805 h -33.753 z"
          id="path215" />
       <image
-         sodipodi:absref="/home/alvaro/repositorio/rits/ritsfront/openits/src/main/resources/project/ausol/img/pictograms/321.bmp"
+         sodipodi:absref="C:\project\ausol\img\pictograms\321.bmp"
          xlink:href="../../../project/ausol/img/pictograms/321.bmp"
-         y="7.0329838"
-         x="127.03872"
-         id="graphic3-1"
-         preserveAspectRatio="none"
+         width="24"
          height="24"
-         width="24" />
+         preserveAspectRatio="none"
+         id="graphic3-1"
+         x="127.03872"
+         y="7.0329838" />
     </g>
   </g>
 </svg>

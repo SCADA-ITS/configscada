@@ -437,7 +437,7 @@ export default class OpenMap extends GenericMap {
 						
 						if (element) {
 							
-							let fontSize = 14;
+							let fontSize = GraphicIcon.FONT_SIZE;
 							let text = document.createElement("div");
 							text.style.fontSize = fontSize + "px";
 							text.style.fontFamily = "monospace";
@@ -451,13 +451,12 @@ export default class OpenMap extends GenericMap {
 							text.innerHTML = element.alias;
 							document.body.appendChild(text);
 							
-							//let height = (text.clientHeight + 1);
+							let height = (text.clientHeight + 1);
 							let width = (text.clientWidth + fontSize);
 							
 							w = width > w ? width : w;
+							h += GraphicIcon.FONT_SIZE + 5;
 						}						
-						 
-						h *= 1.2;
 					}
 					
 					svgGraphicIcon.setAttribute("id", svgId);
@@ -896,46 +895,58 @@ export default class OpenMap extends GenericMap {
 										id: "map-toolbar-zoom-cbo-search-" + self.uid,
 										hidden: true,
 										width: 200, height: 30,
-										suggest: function() {
-											
-											let data = [];
-											
-											if (self.graphicIcons) {
+										options: {
+											view: "suggest",
+											filter: function(obj, value) {
 												
-												self.graphicIcons.forEach(function(value, key) {
+												return (obj.value.toLowerCase().indexOf(value) !== -1)
+											},
+											body: {
+												view: "list",
+												data: function() {
+											
+													let data = [];
 													
-													let elementId = key;
-													let graphicIcons = value;
-													
-													if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+													if (self.graphicIcons) {
 														
-														let element = self.data.find(e => e.id === elementId);
-														
-														if (element) {
+														self.graphicIcons.forEach(function(value, key) {
 															
-															let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+															let elementId = key;
+															let graphicIcons = value;
 															
-															if (elementType) {
-															
-																let item = {
-																	id: elementId,
-																	value: element.alias + " - " + i18n.t(elementType.labelAlias)
-																}
+															if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 																
-																data.push(item);		
+																let element = self.data.find(e => e.id === elementId);
+																
+																if (element) {
+																	
+																	let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+																	
+																	if (elementType) {
+																	
+																		let item = {
+																			id: elementId,
+																			value: element.alias + " - " + i18n.t(elementType.labelAlias)
+																		}
+																		
+																		data.push(item);		
+																	}
+																}
 															}
-														}
+														});
 													}
-												});
+													
+													if (data.length > 0) {
+														
+														data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));	
+													}
+													
+													return data;
+												}(),
+												template: "#value#",
+        										yCount: 7
 											}
-											
-											if (data.length > 0) {
-												
-												data.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));	
-											}
-											
-											return data;
-										}(),
+										},
 										on:{
 											onChange: function(newValue, oldValue, config){
 										        
@@ -1222,18 +1233,23 @@ export default class OpenMap extends GenericMap {
 			
 			let selected = false;
 		
-			let graphicIcon = self.zoomLevelGraphicIcons.get(ALL_ZOOM_LEVEL).find(allZoomLevelGraphicIcon => allZoomLevelGraphicIcon.element.id === elementId);
+			let allZoomLevelGraphicIcons = self.zoomLevelGraphicIcons.get(ALL_ZOOM_LEVEL);
+				
+			if (Array.isArray(allZoomLevelGraphicIcons) && allZoomLevelGraphicIcons.length > 0) {
+				
+				let graphicIcon = allZoomLevelGraphicIcons.find(allZoomLevelGraphicIcon => allZoomLevelGraphicIcon.element.id === elementId);
 			
-			if (graphicIcon && self.isElementLayerVisible(graphicIcon)) {
-				
-				self.unselectAll();
-
-				graphicIcon.select();
-				
-				if (selected = graphicIcon.isSelected()) {
+				if (graphicIcon && self.isElementLayerVisible(graphicIcon)) {
 					
-					self.goto(graphicIcon, self.currentZoomLevel);
-				}
+					self.unselectAll();
+	
+					graphicIcon.select();
+					
+					if (selected = graphicIcon.isSelected()) {
+						
+						self.goto(graphicIcon, self.currentZoomLevel);
+					}
+				}	
 			}
 			
 			return selected;

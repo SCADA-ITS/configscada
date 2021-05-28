@@ -23,9 +23,13 @@ export default class CalendarDialogBox {
 				
 				return self.onBlockDates(date);
 			},
-			onAfterDateSelect: function(date) {
-				
-				self.onAfterDateSelect(self.getSelectedDates());
+			on: {
+				onAfterDateSelect: function(date) {
+					
+					if (self.onAfterDateSelect) {
+						self.onAfterDateSelect(date);
+					}
+				}
 			}
 		};
 		
@@ -33,15 +37,19 @@ export default class CalendarDialogBox {
 		    view:"calendar",
 			id: "calendar2-" + self.uid,
 			date: new Date(),
-		    timepicker:true,
+		    	timepicker:true,
 			blockDates: function(date) {
 				
 				return self.onBlockDates(date);
 			},
-			onAfterDateSelect: function(date) {
-				
-				self.onAfterDateSelect(self.getSelectedDates());
-			} 
+			on: {
+				onAfterDateSelect: function(date) {
+					
+					if (self.onAfterDateSelect) {
+						self.onAfterDateSelect(date);
+					}
+				}
+			}
 		};
 		
 		let viewCalendars = { cols: [] };

@@ -150,7 +150,7 @@ export default class EquipmentViewerProperties {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							needsTranslation: false,
+							needsTranslation: true,
 							parameterized: false,
 							position: 2,
 							required: true,
