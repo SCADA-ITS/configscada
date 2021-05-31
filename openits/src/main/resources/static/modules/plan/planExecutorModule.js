@@ -516,34 +516,9 @@ export default class PlanExecutor extends GenericModule {
 			on: {
                 onItemClick: () => {
 
-					// if (btnConfig.moduleAction) {
-                    //     this.open_module(btnConfig);		
-                    // }
-
-					let confirmWindow = new ConfirmTempDialogBox( 
-						i18n.t("LBL_PLAN_CONFIRM_PLAN"), 
-						i18n.t("LBL_PLAN_CONFIRM_PLAN_DESCRIPTION"), 
-						30, 
-						callBackAccept, 
-						callBackCancel, 
-						null);
-
-					function callBackAccept() {
-
-						let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
-						btnConfig.confirm = false;
-						
-						self.open_module(btnConfig);
-					}
-
-					function callBackCancel() {
-						
-						let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_STOP);
-						btnConfig.confirm = false;
-						
-						self.open_module(btnConfig);
-					}		
-					confirmWindow.show();
+					if (btnConfig.moduleAction) {
+                        this.open_module(btnConfig);		
+                    }
                 }
             },
 			autowidth : true
