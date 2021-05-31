@@ -478,24 +478,25 @@ export let adapter = {
 
 						try {
 
+							itemOutput.orderStatusId = e.planOrderStateType.id;
 							itemOutput.orderStatus = e.planOrderStateType.alias;
-							itemOutput.orderResult = e.planOrderStateType.aliasLabel;
+							itemOutput.orderResult = e.planOrderStateType.labelAlias;
 
 						} catch (error) {
-
+							itemOutput.orderStatusId ="-";
 							itemOutput.orderStatus = "-";
-							itemOutput.orderResult = "-";
+							itemOutput.orderResult = "LBL_EMPTY";
 						}
 
 						itemOutput.orderTypeId = e.planOrderType.id;
 
 						try {
 
-							itemOutput.orderTypeAliasLabel = i18n.t(e.planOrderType.labelAlias);
+							itemOutput.orderTypeLabelAlias = i18n.t(e.planOrderType.labelAlias);
 
 						} catch (error) {
 
-							itemOutput.orderTypeAliasLabel = "-";
+							itemOutput.orderTypeLabelAlias = "-";
 						}
 
 						itemOutput.orderAlias = e.alias;

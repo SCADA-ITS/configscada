@@ -8,7 +8,16 @@
 	},
 	"confirmOrderTypes":[
 		"PlanOrderType:2"
-	], 
+	],
+	"planStateTransitions":{
+		"PlanStateType:0" : ["PLAY"],
+		"PlanStateType:1" : ["PLAY"],
+		"PlanStateType:2" : ["PAUSE" , "STOP"],
+		"PlanStateType:3" : ["PLAY"],
+		"PlanStateType:4" : ["PLAY" , "STOP"],
+		"PlanStateType:5" : ["PLAY" , "STOP"],
+		"PlanStateType:6" : ["PLAY"]
+	}, 
 	"actionButtons": [
 		{
 			"action": "PLAY",
@@ -16,8 +25,8 @@
 				"id" : 102302
 			},
 			"label" : "LBL_PLAY",
-			"icon" : "mdi mdi-pencil",
-			"enableActions" : ["PAUSE" , "STOP"],
+			"icon" : "mdi mdi-play",
+			"css" : "planExecutor-button-play",
 			"disabled" : false
 		},
 		{
@@ -26,8 +35,8 @@
 				"id" : 102302
 			},
 			"label" : "LBL_PAUSE",
-			"icon" : "mdi mdi-pencil",
-			"enableActions" : ["PLAY" , "STOP"],
+			"icon" : "mdi mdi-pause",
+			"css" : "planExecutor-button-pause",
 			"disabled" : true
 		},
 		{
@@ -36,8 +45,8 @@
 				"id" : 102302
 			},
 			"label" : "LBL_STOP",
-			"icon" : "mdi mdi-pencil",
-			"enableActions" : ["PLAY"],
+			"icon" : "mdi mdi-stop",
+			"css" : "planExecutor-button-stop",
 			"disabled" : true
 		}
 	]

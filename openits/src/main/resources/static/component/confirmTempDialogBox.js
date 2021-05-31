@@ -17,47 +17,48 @@ export default class ConfirmTempDialogBox {
 		webix.ui({
 			view: "window",
 			modal: true,
-			height: 300,
+			height: 240,
 			width:  640,
-			// css: "dialog-input-custom",
+			css: "dialog-input-custom",
 			head: this.message,
 			position: "center",
 			body: {
 			rows: [
-					{ template: self.text, borderless: true },
-					this.getBody(),
 					{},
+					this.getBody(),
 					{
 						cols: [
-							{},
 							{ 
 								view: "button", 
-								css:"webix_danger", 
-								type:"icon", 
-								icon:"mdi mdi-cancel", 
-								label: i18n.t("LBL_CANCEL"), 
-								value: i18n.t("LBL_CANCEL"), 
+								css: "dialog-cancel", 
+								align:"left",
+								value: i18n.t("LBL_CANCEL"),
+								width: 130, 
+								height: 41,
 								click: function () { 
+
 									self.callBackCancel();
+									
 									let parentWindow = this.getTopParentView();
 									parentWindow.close();
 								} 
 							},
-							{ width: 5 },
+							{ },
 							{ 
-								view: "button", 
-								css:"webix_primary", 
-								type:"icon", 
-								icon:"mdi mdi-check", 
-								label: i18n.t("LBL_ACCEPT"), 
-								value: i18n.t("LBL_ACCEPT"), 
+								view: "button",
+								align:"right", 
+								css: "dialog-accept",
+								value: i18n.t("LBL_ACCEPT"),
+								width: 130, 
+								height: 41,
 								click: function () { 
+									
 									self.callBackAccept();
+									
 									let parentWindow = this.getTopParentView();
 									parentWindow.close();
 								} 
-							},
-							{}
+							}
 						]
 					}
 				],
@@ -68,6 +69,8 @@ export default class ConfirmTempDialogBox {
 	}
 
 	getBody(){
+		
+		let self = this;
 
 		let body = {
 			rows:[
@@ -77,6 +80,7 @@ export default class ConfirmTempDialogBox {
 					align:"center"
 				},
 				{
+					id: "patataaaa",
 					view: "label",
 					label: this.timeSec + " seconds",
 					align:"center"
@@ -84,7 +88,15 @@ export default class ConfirmTempDialogBox {
 			]
 		};
 
-		//TODO countDown and self.defaultCallBack()
+		let interval = setInterval(function(){
+			self.timeSec--;
+			$$("patataaaa").setValue(self.timeSec);
+
+			if(self.timeSec == 0 ){
+				clearInterval(interval);
+			}
+			
+		}, 1000);
 
 		return body;
 	}

@@ -2523,4 +2523,73 @@ p {
 	padding: 10px 0px;
 }
 
+.planExecutor-button-play .webix_button {
+
+	display: inline-flex;
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent;
+	font-size: 15px;
+	font-weight: 500;
+	color: green;
+}
+
+.planExecutor-button-play .webix_button .webix_icon_btn {
+	font-size: 30px;
+	color: green;
+}
+
+.planExecutor-button-play button:disabled{
+	color: #94A1B3 !important;
+	background: transparent !important;
+}
+
+.planExecutor-button-pause .webix_button {
+
+	display: inline-flex;
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent;
+	font-size: 15px;
+	font-weight: 500;
+	color: blue;
+}
+
+.planExecutor-button-pause .webix_button .webix_icon_btn {
+	font-size: 30px;
+	color: blue;
+}
+
+.planExecutor-button-pause button:disabled{
+	color: #94A1B3 !important;
+	background: transparent !important;
+}
+
+.planExecutor-button-stop .webix_button {
+
+	display: inline-flex;
+	width: 120px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: transparent;
+	font-size: 15px;
+	font-weight: 500;
+	color: red;
+}
+
+.planExecutor-button-stop .webix_button .webix_icon_btn {
+	font-size: 30px;
+	color: red;
+}
+
+.planExecutor-button-stop button:disabled{
+	color: #94A1B3 !important;
+	background: transparent !important;
+}
+
 
