@@ -124,16 +124,6 @@
          style="fill:#c7c7c5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.539943" />
       <g
          id="barrier">
-         
-         <animateTransform
-            id="animation"
-            attributeType="xml"
-            attributeName="transform"
-            type="rotate"
-            from="0 11 29" 
-            to="-40 11 29"
-            dur="6s"
-            repeatCount="0" />
         <g
            id="g3841"
            transform="matrix(1.2413767,0.67056083,-0.50630484,1.6441056,155.13409,-451.62228)"
