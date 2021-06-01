@@ -94,6 +94,12 @@ export default class PlanExecutor extends GenericModule {
 				self.orders = eval("adapter." + self.config.adapters.orders)(self.data.planOrders, null);
 
 				drawComponents();
+
+				if(self.ordersDataTable){
+				
+					self.ordersDataTable.callbacks();
+				}
+
 				connectWS();
 	
 				$$(self.uid).attachEvent("onDestruct", function() {
@@ -334,7 +340,6 @@ export default class PlanExecutor extends GenericModule {
 						{ gridOption: { id: 8 }, value: "false" },
 						{ gridOption: { id: 9 }, value: "true" },
 						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-						{ gridOption: { id: 18 }, value: "{'fieldId': '102502', 'value': 'PlanOrderStateType:2', 'backcolor': '00FF00'} }"},
 						{ gridOption: { id: 21 }, value: "custom" },
 						{ gridOption: { id: 23 }, value: "false" }
 					];
@@ -556,10 +561,8 @@ export default class PlanExecutor extends GenericModule {
 					};
 			
 					self.ordersDataTable = new DataTable(null, null, metadata, data, null);
-					let orderDataTableView = self.ordersDataTable.getView();
-					// self.ordersDataTable.callbacks();
-		
-					return orderDataTableView;
+
+					return self.ordersDataTable.getView();
 				};
 		
 				return dataTable;
