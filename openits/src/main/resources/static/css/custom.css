@@ -1633,7 +1633,7 @@ p {
     background: rgb(78, 154, 6) !important;
     font-size: 14px;
     font-weight: 500;
-    color: white;
+    color: white !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1654,7 +1654,7 @@ p {
     background: rgb(204, 0, 0) !important;
     font-size: 14px;
     font-weight: 500;
-    color: white;
+    color: white !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

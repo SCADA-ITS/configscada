@@ -22,32 +22,46 @@
 		{
 			"action": "PLAY",
 			"moduleAction": {
-				"id" : 102302
+				"id" : 102301
 			},
 			"label" : "LBL_PLAY",
 			"icon" : "mdi mdi-play",
 			"css" : "planExecutor-button-play",
-			"disabled" : false
+			"disabled" : false,
+			"visible" : true
 		},
 		{
 			"action": "PAUSE",
 			"moduleAction": {
-				"id" : 102302
+				"id" : 102301
 			},
 			"label" : "LBL_PAUSE",
 			"icon" : "mdi mdi-pause",
 			"css" : "planExecutor-button-pause",
-			"disabled" : true
+			"disabled" : true,
+			"visible" : true
 		},
 		{
 			"action": "STOP",
 			"moduleAction": {
-				"id" : 102302
+				"id" : 102301
 			},
 			"label" : "LBL_STOP",
 			"icon" : "mdi mdi-stop",
 			"css" : "planExecutor-button-stop",
-			"disabled" : true
+			"disabled" : true,
+			"visible" : true
+		},
+		{
+			"action": "CANCEL",
+			"moduleAction": {
+				"id" : 102301
+			},
+			"label" : "LBL_CANCEL",
+			"icon" : "mdi mdi-cancel",
+			"css" : "planExecutor-button-stop",
+			"disabled" : true,
+			"visible" : false
 		}
 	]
 }

@@ -16,6 +16,9 @@ const PLAN_STATE_TYPE_ID_6 = "PlanStateType:6";
 const PLAN_ORDER_STATE_TYPE_ID_1 = "PlanOrderStateType:1";
 const PLAN_ORDER_ACTION_PLAY = "PLAY";
 const PLAN_ORDER_ACTION_STOP = "STOP";
+const PLAN_ORDER_ACTION_CANCEL = "CANCEL";
+
+const CONFIRM_WINDOW_SECONDS = 30;
 
 export default class PlanExecutor extends GenericModule {
 
@@ -129,13 +132,16 @@ export default class PlanExecutor extends GenericModule {
 					//Update buttons enable/disable
 					self.config.actionButtons.forEach(btnConfig => {
 
-						if(self.config.planStateTransitions[updateData.planStateType.id].includes(btnConfig.action)){
+						if(btnConfig.visible){
+							
+							if(self.config.planStateTransitions[updateData.planStateType.id].includes(btnConfig.action)){
 
-							$$("BTN-"+btnConfig.action+"-"+this.uid).enable();
-
-						} else {
-
-							$$("BTN-"+btnConfig.action+"-"+this.uid).disable();
+								$$("BTN-"+btnConfig.action+"-"+this.uid).enable();
+	
+							} else {
+	
+								$$("BTN-"+btnConfig.action+"-"+this.uid).disable();
+							}
 						}
 					});
 
@@ -155,10 +161,10 @@ export default class PlanExecutor extends GenericModule {
 								let confirmWindow = new ConfirmTempDialogBox( 
 									i18n.t("LBL_PLAN_CONFIRM_PLAN"), 
 									i18n.t("LBL_PLAN_CONFIRM_PLAN_DESCRIPTION"), 
-									30, 
+									CONFIRM_WINDOW_SECONDS, 
 									callBackAccept, 
 									callBackCancel, 
-									null);
+									callBackAccept);
 
 								function callBackAccept() {
 
@@ -170,7 +176,7 @@ export default class PlanExecutor extends GenericModule {
 			
 								function callBackCancel() {
 									
-									let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_STOP);
+									let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL);
 									btnConfig.confirm = false;
 									
 									self.open_module(btnConfig);
@@ -253,7 +259,10 @@ export default class PlanExecutor extends GenericModule {
 
 		this.config.actionButtons.forEach(button => {
 
-			buttonsGrid.cols.push( this.getButton(button) );
+			if(button.visible){
+			
+				buttonsGrid.cols.push( this.getButton(button) );
+			}
 		});
 		
 		buttonsGrid.cols.push({});
@@ -517,6 +526,7 @@ export default class PlanExecutor extends GenericModule {
                 onItemClick: () => {
 
 					if (btnConfig.moduleAction) {
+						
                         this.open_module(btnConfig);		
                     }
                 }
