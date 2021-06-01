@@ -33,7 +33,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 				
 				self.elementInfo = getElementInfo();
 				
-				self.graphicIconCustomType = new mod.default(self.container.obj, self.g, self.elementInfo, self.layerElement, self.ratio);
+				self.graphicIconCustomType = new mod.default(self.container.obj, self.g, self.elementInfo, self.events);
 				
 				onRenderReady();
 			}

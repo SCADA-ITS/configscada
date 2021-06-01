@@ -94,9 +94,7 @@ export default class GraphicIcon {
 			createText(w, h);
 			createTooltip();
 			
-			self.g.click(onClick);
-			//self.g.touchstart(onClick);
-			self.g.dblclick(onDblClick);
+			assignEvents();
 			
 			onLoaded();
 			
@@ -242,9 +240,16 @@ export default class GraphicIcon {
 			s.add(self.g);
 		}
 		
-		function onClick(e) {
+		function assignEvents() {
 			
-			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+			if (self.g && self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+				
+				self.g.click(onClick);
+				//self.g.touchstart(onClick);
+				self.g.dblclick(onDblClick);
+			}
+			
+			function onClick(e) {
 			
 				// Custom event
 				if (self.events && self.events[GraphicIcon.EventTypes.ON_CLIC]) {
@@ -259,14 +264,10 @@ export default class GraphicIcon {
 						
 						self.select();	
 					}	
-				}	
+				}			
 			}
 			
-		}
-		
-		function onDblClick(e) {
-			
-			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+			function onDblClick(e) {
 				
 				// Only custom events
 				if (self.events && self.events[GraphicIcon.EventTypes.ON_DBL_CLIC]) {
@@ -380,6 +381,20 @@ Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_OVER", {
 
 Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_OUT", {
     value: 4,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_EDIT_CLIC", {
+    value: 5,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_DELETE_CLIC", {
+    value: 6,
     writable : false,
     enumerable : true,
     configurable : false

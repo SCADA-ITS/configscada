@@ -1,6 +1,6 @@
 export default class GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo) {
+	constructor(s, g, elementInfo, events) {
 
 		if (this.constructor == GraphicIconCustomType) {
 
@@ -10,6 +10,7 @@ export default class GraphicIconCustomType {
 		this.s = s;
 		this.g = g;
 		this.elementInfo = elementInfo;
+		this.events = events;
 	}
 	
 	render(elementInfo) {

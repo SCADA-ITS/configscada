@@ -21,9 +21,9 @@ const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:13:0","ElementTypeSt
 
 export default class TrafficLight extends GraphicIconCustomType {
 	
-	constructor(s, g, elementInfo) {
+	constructor(s, g, elementInfo, events) {
 
-		super(s, g, elementInfo);
+		super(s, g, elementInfo, events);
 
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 
