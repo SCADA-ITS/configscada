@@ -41,13 +41,13 @@ export default class Barrier extends GraphicIconCustomType {
 				switch (parseInt(cmdBarrierValue)) {
 
 					case CMD_BARRIER_VALUE_MODE_PULL_DOWN:
-						console.log("DOWN");
+						
 						this.gBarrier.transform("rotate(" + BARRIER_PULL_DOWN_POSITION + ")");
 
 						break;
 						
 					case CMD_BARRIER_VALUE_MODE_PULL_UP:
-						console.log("up");
+						
 						this.gBarrier.transform("rotate(" + BARRIER_PULL_UP_POSITION + ")");
 
 						break;
