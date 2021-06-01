@@ -1920,17 +1920,17 @@ p {
 	border-right: 1px solid #e2e2e2; 
 }
 
-.userrole-header-icon {
+.global-header-icon {
 	width: 100px !important;
 	padding: 10px 30px;
 }
 
-.userrole-header-icon img {
+.global-header-icon img {
 	width: 32px !important;
 	height: 32px !important;
 }
 
-.userrole-header-label {
+.global-header-label {
 	padding-top: 17px;
 	margin-bottom: 20px;
 	font-size: 16px;

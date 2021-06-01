@@ -53,7 +53,7 @@ export default class PlanExecutor extends GenericModule {
 								},
 								{
 									id: "loading-" + this.uid,
-									rows: [this.getViewDrawNoData()],
+									rows: [getViewDrawNoData()],
 									hidden: true
 								},
 								{ width: 6 }
@@ -64,6 +64,20 @@ export default class PlanExecutor extends GenericModule {
 				}
 			]
 		};
+
+		function getViewDrawNoData() {
+
+			return {
+				view: "template",
+				template: function() {
+	
+					let icon = "<img src='img/loading.svg' align='center'>";
+	
+					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+				}
+			}
+		};
+
 		return view;
 	}
 
@@ -131,7 +145,7 @@ export default class PlanExecutor extends GenericModule {
 	
 							if(btnConfig.visible){
 								
-								if(self.config.planStateTransitions[updateData.planStateType.id].includes(btnConfig.action)){
+								if(self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)){
 	
 									$$("BTN-"+btnConfig.action+"-"+self.uid).enable();
 		
@@ -200,328 +214,330 @@ export default class PlanExecutor extends GenericModule {
 					getBody()
 				]
 			};
+
+			function getHeader() {
+
+				let header = {};
+		
+				header = {
+		
+					id: "viewHeader-" + self.uid,
+					rows:[
+						{
+							cols: [
+								{
+									view: "label",
+									label: "<img src='../img/grid/plan.png' class='grid-icon'/>",
+									height: 75,
+									css: "global-header-icon"
+								},
+								{
+									view: "label",
+									height: 75,
+									width: 420,
+									id: "label-boddy-" + self.uid,
+									template: "<span>" + self.data.planSubtype.planType.alias + " > " + self.data.planSubtype.alias + " > " + self.data.alias + "</span> <br> <span style='font-size: 13px'>" + self.data.description + "</span>",
+									css: "global-header-label"
+								},
+								{
+									view: "label",
+									height: 75,
+									id: "label-state-" + self.uid,
+									template: getPlanStateTemplate(self.data.planStateType),
+									css: "global-header-label"
+								}
+							]
+						}
+					]
+				};
+		
+				return header;
+			};
+
+			function getActionButtons(){
+
+				let buttonsGrid = {
+					id: "btns-" + self.uid,
+					cols: [
+					]
+				};
+		
+				self.config.actionButtons.forEach(button => {
+		
+					if(button.visible){
+					
+						buttonsGrid.cols.push( getButton(button) );
+					}
+				});
+	
+				function getButton(btnConfig) {
+						
+					let button = {
+						id: "BTN-"+btnConfig.action+"-"+self.uid ,
+						view: "button",
+						type: "icon",
+						width: 80,
+						on: {
+							onItemClick: () => {
+			
+								if (btnConfig.moduleAction) {
+								
+									open_module(btnConfig);		
+								}
+							}
+						},
+						autowidth : true
+					};
+			
+					button.label = i18n.t(btnConfig.label);
+					button.tooltip = i18n.t(btnConfig.label);
+					button.icon = btnConfig.icon;
+					button.disabled = btnConfig.disabled;
+					button.css = btnConfig.css;
+					
+					return button;
+				}
+				
+				buttonsGrid.cols.push({});
+		
+				return buttonsGrid;
+			}
+
+			function getBody() {
+
+				let dataTable = {
+					id: "dt-" + self.uid,
+					height: 391,
+					css: "global-form",
+					rows: [
+						{
+							cols: [
+								{
+									rows: getTable()
+								}
+							]
+						},
+					]
+				};
+
+				function getTable() {
+
+					let data = self.orders;
+			
+					const defaultGridOptionValues = [
+						{ gridOption: { id: 10 }, value: "false" },
+						// { gridOption: { id: 3 }, value: 1 },
+						// { gridOption: { id: 4 }, value: "asc" },
+						{ gridOption: { id: 5 }, value: undefined },
+						{ gridOption: { id: 6 }, value: undefined },
+						{ gridOption: { id: 7 }, value: "false" },
+						{ gridOption: { id: 8 }, value: "false" },
+						{ gridOption: { id: 9 }, value: "true" },
+						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+						{ gridOption: { id: 18 }, value: "{'fieldId': '102502', 'value': 'PlanOrderStateType:2', 'backcolor': '00FF00'} }"},
+						{ gridOption: { id: 21 }, value: "custom" },
+						{ gridOption: { id: 23 }, value: "false" }
+					];
+			
+					let metadata = {
+						filter: true,
+						label: "LBL_PLAN_ORDER_PROGRESS",
+						visible: true,
+						gridOptionValues: defaultGridOptionValues,
+						gridFields: [
+							{
+								id: 102501,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: true,
+								needsTranslation: false,
+								parameterized: false,
+								position: 1,
+								required: true,
+								sourceField: "id",
+								visible: false,
+								widthPx: 1,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								}
+							},
+							{
+								id: 102502,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_STATUS",
+								labelTooltip: "LBL_STATUS",
+								needsTranslation: false,
+								parameterized: false,
+								position: 2,
+								required: false,
+								sourceField: "orderStatusId",
+								visible: true,
+								widthPx: 60,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: [
+									{
+										icon: "./img/plan/right-arrow.png",
+										showValue: false,
+										value: "PlanOrderStateType:1"
+									},
+									{
+										icon: "./img/plan/check.png",
+										showValue: false,
+										value: "PlanOrderStateType:2"
+									},
+									{
+										icon: "./img/plan/error.png",
+										showValue: false,
+										value: "PlanOrderStateType:3"
+									}
+								]
+							},
+							{
+								id: 102503,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								needsTranslation: false,
+								parameterized: false,
+								position: 3,
+								required: true,
+								sourceField: "orderTypeId",
+								visible: true,
+								widthPx: 40,
+								// fillspace: true,
+								adjust: false,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: [
+									{
+										icon: "./img/grid/confirmed.png",
+										showValue: false,
+										value: "PlanOrderType:1"
+									},
+									{
+										icon: "./img/grid/not_confirmed.png",
+										showValue: false,
+										value: null
+									}]
+							},
+							{
+								id: 102504,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_PLAN_TYPE",
+								labelTooltip: "LBL_PLAN_TYPE",
+								needsTranslation: false,
+								parameterized: false,
+								position: 4,
+								required: true,
+								sourceField: "orderTypeLabelAlias",
+								visible: true,
+								widthPx: 160,
+								// fillspace: true,
+								adjust: false,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: []
+							},
+							{
+								id: 102505,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_NAME",
+								labelTooltip: "LBL_NAME",
+								needsTranslation: false,
+								parameterized: false,
+								position: 5,
+								required: true,
+								sourceField: "orderAlias",
+								visible: true,
+								widthPx: 200,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: []
+							},
+							{
+								id: 102506,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_RESULT",
+								labelTooltip: "LBL_RESULT",
+								needsTranslation: true,
+								parameterized: false,
+								position: 6,
+								required: true,
+								sourceField: "orderResult",
+								visible: true,
+								widthPx: 100,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: []
+							},
+							{
+								id: 102507,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_EXECUTED_AT",
+								labelTooltip: "LBL_EXECUTED_AT",
+								needsTranslation: false,
+								parameterized: false,
+								position: 7,
+								required: true,
+								sourceField: "orderExuctedAt",
+								visible: true,
+								widthPx: 100,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: []
+							}
+						],
+						gridCommands: [
+							
+						]
+			
+					};
+			
+					self.ordersDataTable = new DataTable(null, null, metadata, data, null);
+					let orderDataTableView = self.ordersDataTable.getView();
+					// self.ordersDataTable.callbacks();
+		
+					return orderDataTableView;
+				};
+		
+				return dataTable;
+			}
 	
 			$$("loading-" + self.uid).hide();
 	
 			webix.ui(viewMain, $$(self.uid));
 	
-		}
-
-		function getHeader() {
-
-			let header = {};
-	
-			header = {
-	
-				id: "viewHeader-" + self.uid,
-				rows:[
-					{
-						cols: [
-							{
-								view: "label",
-								label: "<img src='../img/grid/plan.png' class='grid-icon'/>",
-								height: 75,
-								css: "userrole-header-icon"
-							},
-							{
-								view: "label",
-								height: 75,
-								width: 420,
-								id: "label-boddy-" + self.uid,
-								template: "<span>" + self.data.planSubtype.planType.alias + " > " + self.data.planSubtype.alias + " > " + self.data.alias + "</span> <br> <span style='font-size: 13px'>" + self.data.description + "</span>",
-								css: "userrole-header-label"
-							},
-							{
-								view: "label",
-								height: 75,
-								id: "label-state-" + self.uid,
-								template: getPlanStateTemplate(self.data.planStateType),
-								css: "userrole-header-label"
-							}
-						]
-					}
-				]
-			};
-	
-			return header;
-		};
-
-		function getActionButtons(){
-
-			let buttonsGrid = {
-				id: "btns-" + self.uid,
-				cols: [
-				]
-			};
-	
-			self.config.actionButtons.forEach(button => {
-	
-				if(button.visible){
-				
-					buttonsGrid.cols.push( getButton(button) );
-				}
-			});
-			
-			buttonsGrid.cols.push({});
-	
-			return buttonsGrid;
-		}
-
-		function getBody() {
-
-			let dataTable = {
-				id: "dt-" + self.uid,
-				height: 391,
-				css: "user-form",
-				rows: [
-					{
-						cols: [
-							{
-								rows: getTable()
-							}
-						]
-					},
-				]
-			};
-	
-			return dataTable;
-		}
-
-		function getTable() {
-
-			let data = self.orders;
-	
-			const defaultGridOptionValues = [
-				{ gridOption: { id: 10 }, value: "false" },
-				// { gridOption: { id: 3 }, value: 1 },
-				// { gridOption: { id: 4 }, value: "asc" },
-				{ gridOption: { id: 5 }, value: undefined },
-				{ gridOption: { id: 6 }, value: undefined },
-				{ gridOption: { id: 7 }, value: "false" },
-				{ gridOption: { id: 8 }, value: "false" },
-				{ gridOption: { id: 9 }, value: "true" },
-				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-				{ gridOption: { id: 18 }, value: "{'fieldId': '102502', 'value': 'PlanOrderStateType:2', 'backcolor': '00FF00'} }"},
-				{ gridOption: { id: 21 }, value: "custom" },
-				{ gridOption: { id: 23 }, value: "false" }
-			];
-	
-			let metadata = {
-				filter: true,
-				label: "LBL_PLAN_ORDER_PROGRESS",
-				visible: true,
-				gridOptionValues: defaultGridOptionValues,
-				gridFields: [
-					{
-						id: 102501,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: true,
-						needsTranslation: false,
-						parameterized: false,
-						position: 1,
-						required: true,
-						sourceField: "id",
-						visible: false,
-						widthPx: 1,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						}
-					},
-					{
-						id: 102502,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_STATUS",
-						labelTooltip: "LBL_STATUS",
-						needsTranslation: false,
-						parameterized: false,
-						position: 2,
-						required: false,
-						sourceField: "orderStatusId",
-						visible: true,
-						widthPx: 60,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								icon: "./img/plan/right-arrow.png",
-								showValue: false,
-								value: "PlanOrderStateType:1"
-							},
-							{
-								icon: "./img/plan/check.png",
-								showValue: false,
-								value: "PlanOrderStateType:2"
-							},
-							{
-								icon: "./img/plan/error.png",
-								showValue: false,
-								value: "PlanOrderStateType:3"
-							}
-						]
-					},
-					{
-						id: 102503,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						needsTranslation: false,
-						parameterized: false,
-						position: 3,
-						required: true,
-						sourceField: "orderTypeId",
-						visible: true,
-						widthPx: 40,
-						// fillspace: true,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								icon: "./img/grid/confirmed.png",
-								showValue: false,
-								value: "PlanOrderType:1"
-							},
-							{
-								icon: "./img/grid/not_confirmed.png",
-								showValue: false,
-								value: null
-							}]
-					},
-					{
-						id: 102504,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_PLAN_TYPE",
-						labelTooltip: "LBL_PLAN_TYPE",
-						needsTranslation: false,
-						parameterized: false,
-						position: 4,
-						required: true,
-						sourceField: "orderTypeLabelAlias",
-						visible: true,
-						widthPx: 160,
-						// fillspace: true,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: []
-					},
-					{
-						id: 102505,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_NAME",
-						labelTooltip: "LBL_NAME",
-						needsTranslation: false,
-						parameterized: false,
-						position: 5,
-						required: true,
-						sourceField: "orderAlias",
-						visible: true,
-						widthPx: 200,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: []
-					},
-					{
-						id: 102506,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_RESULT",
-						labelTooltip: "LBL_RESULT",
-						needsTranslation: true,
-						parameterized: false,
-						position: 6,
-						required: true,
-						sourceField: "orderResult",
-						visible: true,
-						widthPx: 100,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: []
-					},
-					{
-						id: 102507,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_EXECUTED_AT",
-						labelTooltip: "LBL_EXECUTED_AT",
-						needsTranslation: false,
-						parameterized: false,
-						position: 7,
-						required: true,
-						sourceField: "orderExuctedAt",
-						visible: true,
-						widthPx: 100,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: []
-					}
-				],
-				gridCommands: [
-					
-				]
-	
-			};
-	
-			self.ordersDataTable = new DataTable(null, null, metadata, data, null);
-	
-			return self.ordersDataTable.getView();
-		};
-
-		function getButton(btnConfig) {
-					
-			let button = {
-				id: "BTN-"+btnConfig.action+"-"+self.uid ,
-				view: "button",
-				type: "icon",
-				width: 80,
-				on: {
-					onItemClick: () => {
-	
-						if (btnConfig.moduleAction) {
-						
-							self.open_module(btnConfig);		
-						}
-					}
-				},
-				autowidth : true
-			};
-	
-			button.label = i18n.t(btnConfig.label);
-			button.tooltip = i18n.t(btnConfig.label);
-			button.icon = btnConfig.icon;
-			button.disabled = btnConfig.disabled;
-			button.css = btnConfig.css;
-			
-			return button;
 		}
 		
 		function open_module(btnConfig) {
@@ -535,65 +551,19 @@ export default class PlanExecutor extends GenericModule {
 			util.module.open(module, btnConfig.moduleAction, null, null, args);
 		}
 
-		function getPlanStateTemplate(planOrderStateType) {
+		function getPlanStateTemplate(planStateType) {
 
-			let color;
 			let planStateTemplate = "";
 	
-			if(planOrderStateType){
-	
-				if(planOrderStateType.id == PLAN_STATE_TYPE_ID_0){
-	
-					color = "#989898";
+			if(planStateType){
 		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_1){
-		
-					color = "#FF2222";
-		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_2){
-		
-					color = "#EEFF41";
-		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_3){
-		
-					color = "#11B900";
-		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_4){
-		
-					color = "#FF8927";
-		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_5){
-		
-					color = "#6495ed";
-		
-				} else if(planOrderStateType.id == PLAN_STATE_TYPE_ID_6){
-		
-					color = "#000000";
-		
-				}
-				
-				if (color){
-		
-					planStateTemplate = '<div><span class="table-badge" style="background:' + color + '3b'+'; color: '+ color + 'a0'+';">'+ i18n.t(planOrderStateType.labelAlias) + '</span></div>';
-				}
+				let color = self.config.planStateTypes[planStateType.id].color;		
+				planStateTemplate = '<div><span class="table-badge" style="background:' + color + '3b'+'; color: '+ color + 'a0'+';">'+ i18n.t(planStateType.labelAlias) + '</span></div>';
 			}
 			 
 			return planStateTemplate;
 		}
 
 	}
-
-	getViewDrawNoData() {
-
-		return {
-			view: "template",
-			template: function() {
-
-				let icon = "<img src='img/loading.svg' align='center'>";
-
-				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-			}
-		}
-	};
 
 }

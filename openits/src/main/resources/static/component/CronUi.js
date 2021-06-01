@@ -87,14 +87,14 @@ export default class CronUi {
 						view: "label",
 						label: "<img src='img/grid/sheduler.png' class='grid-icon'/>",
 						height: 75,
-						css: "userrole-header-icon"
+						css: "global-header-icon"
 					},
 					{
 						view: "label",
 						height: 75,
 						id: "label-bottom" + self.uid,
 						template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
-						css: "userrole-header-label"
+						css: "global-header-label"
 					}
 				]
 			};

@@ -9,14 +9,35 @@
 	"confirmOrderTypes":[
 		"PlanOrderType:2"
 	],
-	"planStateTransitions":{
-		"PlanStateType:0" : ["PLAY"],
-		"PlanStateType:1" : ["PLAY"],
-		"PlanStateType:2" : ["PAUSE" , "STOP"],
-		"PlanStateType:3" : ["PLAY"],
-		"PlanStateType:4" : ["PLAY" , "STOP"],
-		"PlanStateType:5" : ["PLAY" , "STOP"],
-		"PlanStateType:6" : ["PLAY"]
+	"planStateTypes":{
+		"PlanStateType:0" : {
+			"color" : "#989898",
+			"actions" : ["PLAY"]
+		},
+		"PlanStateType:1" : {
+			"color" : "#FF2222",
+			"actions" : ["PLAY"]
+		},
+		"PlanStateType:2" : {
+			"color" : "#EEFF41",
+			"actions" : ["PAUSE" , "STOP"]
+		},
+		"PlanStateType:3" : {
+			"color" : "#11B900",
+			"actions" : ["PLAY"]
+		},
+		"PlanStateType:4" : {
+			"color" : "#FF8927",
+			"actions" : ["PLAY" , "STOP"]
+		},
+		"PlanStateType:5" : {
+			"color" : "#6495ed",
+			"actions" : ["PLAY" , "STOP"]
+		},
+		"PlanStateType:6" : {
+			"color" : "#000000",
+			"actions" : ["PLAY"]
+		}
 	}, 
 	"actionButtons": [
 		{

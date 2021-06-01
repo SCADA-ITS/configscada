@@ -187,7 +187,7 @@ export default class AlarmModule extends GenericModule {
 							view: "label",
 							label: "<img src='img/grid/alarmConfig.png' class='grid-icon'/>",
 							height: 75,
-							css: "userrole-header-icon"
+							css: "global-header-icon"
 						},
 						{
 							view: "label",
