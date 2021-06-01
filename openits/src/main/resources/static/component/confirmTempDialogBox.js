@@ -28,7 +28,7 @@ export default class ConfirmTempDialogBox {
 			body: {
 				rows: [
 						{},
-						this.getBody(),
+						getBody(),
 						{
 							cols: [
 								{ 
@@ -90,30 +90,29 @@ export default class ConfirmTempDialogBox {
 				}
 			}
 		}).show();
+
+		function getBody(){
 		
-	}
-
-	getBody(){
-		
-		let body = {
-			rows:[
-				{
-					view: "label",
-					label: this.description,
-					align:"center"
-				},
-				{
-					id: "temp-count-"+this.uid,
-					view: "label",
-					label: this.timeSec + " "+ i18n.t("LBL_SECONDS"),
-					align:"center"
-				}
-			]
-		};
-
-		return body;
-	}
-
+			let body = {
+				rows:[
+					{
+						view: "label",
+						label: self.description,
+						align:"center"
+					},
+					{
+						id: "temp-count-"+self.uid,
+						view: "label",
+						label: self.timeSec + " "+ i18n.t("LBL_SECONDS"),
+						align:"center"
+					}
+				]
+			};
 	
+			return body;
+		}
+		
+	}
+
 }
 
