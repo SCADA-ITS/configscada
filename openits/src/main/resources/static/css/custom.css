@@ -1938,7 +1938,7 @@ p {
 	font-family: Roboto;
 }
 
-.user-form {
+.global-form {
 	width: 724px !important;
 	height: 375px !important;
 	border: 1px solid var(--blue-mid-opacity-3) !important;
@@ -1947,7 +1947,7 @@ p {
 	padding-bottom: 12px;
 }
 
-.user-form .webix_inp_label{
+.global-form .webix_inp_label{
 	color:  #475466 !important;
 	font-size: 13px ;
 	padding-left: 75px ;

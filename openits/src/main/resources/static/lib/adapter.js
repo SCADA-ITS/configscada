@@ -483,7 +483,7 @@ export let adapter = {
 							itemOutput.orderResult = e.planOrderStateType.labelAlias;
 
 						} catch (error) {
-							itemOutput.orderStatusId ="-";
+							itemOutput.orderStatusId = null;
 							itemOutput.orderStatus = "-";
 							itemOutput.orderResult = "LBL_EMPTY";
 						}

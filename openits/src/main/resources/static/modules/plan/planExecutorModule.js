@@ -421,15 +421,46 @@ export default class PlanExecutor extends GenericModule {
 								},
 								gridFieldIcons: [
 									{
-										icon: "./img/grid/confirmed.png",
+										icon: "./img/plan/PlanOrderType_1.png",
 										showValue: false,
 										value: "PlanOrderType:1"
 									},
 									{
-										icon: "./img/grid/not_confirmed.png",
+										icon: "./img/plan/PlanOrderType_2.png",
 										showValue: false,
-										value: null
-									}]
+										value: "PlanOrderType:2"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_3.png",
+										showValue: false,
+										value: "PlanOrderType:3"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_4.png",
+										showValue: false,
+										value: "PlanOrderType:4"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_5.png",
+										showValue: false,
+										value: "PlanOrderType:5"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_6.png",
+										showValue: false,
+										value: "PlanOrderType:6"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_7.png",
+										showValue: false,
+										value: "PlanOrderType:7"
+									},
+									{
+										icon: "./img/plan/PlanOrderType_8.png",
+										showValue: false,
+										value: "PlanOrderType:8"
+									}
+								]
 							},
 							{
 								id: 102504,

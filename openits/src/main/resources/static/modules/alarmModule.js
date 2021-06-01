@@ -194,7 +194,7 @@ export default class AlarmModule extends GenericModule {
 							height: 75,
 							id: "label-bottom-" + self.uid,
 							template: "<span>"+ i18n.t("LBL_CREATE_MANUAL_ALARM")+ "</span> <br> <span style='font-size: 13px'>" +i18n.t("LBL_CREATE_MANUAL_ALARM_DESCRIPTION")+"</span>",
-							css: "userrole-header-label"
+							css: "global-header-label"
 						}
 					]							
 						},
