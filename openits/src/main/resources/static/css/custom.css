@@ -2592,4 +2592,6 @@ p {
 	background: transparent !important;
 }
 
-
+.alarm-radio-options .webix_radio_option {
+	margin: 20px 0px !important;
+}

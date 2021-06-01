@@ -1021,11 +1021,11 @@ export default class AlarmMonitorModule extends GenericModule {
 					}
 				}
 			
-				function alarmMuted() {
+				function alarmFiltered() {
 			
-					if (self.config && self.config.action && self.config.action.alarmMuted) {
+					if (self.config && self.config.action && self.config.action.alarmFiltered) {
 						
-						let module = window.em.getByField(EntityType.MODULE, "id", self.config.action.alarmMuted);
+						let module = window.em.getByField(EntityType.MODULE, "id", self.config.action.alarmFiltered);
 			
 						if (module) {
 			
@@ -1252,15 +1252,15 @@ export default class AlarmMonitorModule extends GenericModule {
 								{
 									view: "button",
 									width: 135,
-									label: i18n.t("LBL_ALARMS_MONITOR_VIEW_MUTED"),
-									tooltip: i18n.t("LBL_ALARMS_MONITOR_VIEW_MUTED_DESCRIPTION"),
+									label: i18n.t("LBL_ALARMS_MONITOR_VIEW_FILTERED"),
+									tooltip: i18n.t("LBL_ALARMS_MONITOR_VIEW_FILTERED_DESCRIPTION"),
 									type: "iconTop",
-									icon: "mdi mdi-volume-mute",
+									icon: "wxi-filter",
 									on: {
 
 										onItemClick() {
 
-											alarmMuted();
+											alarmFiltered();
 										}
 									}
 								},

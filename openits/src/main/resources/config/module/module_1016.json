@@ -1,8 +1,8 @@
 {
 	"moduleAction": {
 		"mute": 101601,
-		"unmute": 101602,
-		"createMuteAlarm": 101603,
+		"deleteAlarmFilter": 101602,
+		"filterAlarmWizard": 101603,
 		"muteModalAction": 101604
 	},
 	"actionEndpoints": {
@@ -16,6 +16,7 @@
 	"treeElementType": "1",
 	"gridAlarmsConfig": "1011",
 	"gridStepPosition": 2,
+	"summaryStepPosition": 4,
 	"steps": {
 		"fromNoMap": [
 			{
@@ -26,7 +27,8 @@
 				"stepLabel": "LBL_ALARM_FILTER_STEP_1",
 				"active": true,
 				"drawFunction": "drawStepRadeonOptions"
-			},{
+			},
+			{
 				"position": 2,
 				"headerLabel": "LBL_ALARM_FILTER_HEADER",
 				"headerLabelDescription": "LBL_ALARM_FILTER_HEADER_STEP_2",
@@ -43,6 +45,15 @@
 				"stepLabel": "LBL_ALARM_FILTER_STEP_3",
 				"active": false,
 				"drawFunction": "drawStepCalendar"
+			},
+			{
+				"position": 4,
+				"headerLabel": "LBL_ALARM_FILTER_HEADER",
+				"headerLabelDescription": "LBL_ALARM_FILTER_HEADER_STEP_4",
+				"labelAlias": "LBL_ALARM_FILTER_SUMMARY",
+				"stepLabel": "LBL_ALARM_FILTER_STEP_4",
+				"active": false,
+				"drawFunction": "drawSummary"
 			}
 		]
 	}
