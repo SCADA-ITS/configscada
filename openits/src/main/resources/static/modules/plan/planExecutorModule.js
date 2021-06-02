@@ -5,14 +5,6 @@ import { adapter } from "../../lib/adapter.js";
 
 import { util } from "../../lib/util.js";
 
-const PLAN_STATE_TYPE_ID_0 = "PlanStateType:0";
-const PLAN_STATE_TYPE_ID_1 = "PlanStateType:1";
-const PLAN_STATE_TYPE_ID_2 = "PlanStateType:2";
-const PLAN_STATE_TYPE_ID_3 = "PlanStateType:3";
-const PLAN_STATE_TYPE_ID_4 = "PlanStateType:4";
-const PLAN_STATE_TYPE_ID_5 = "PlanStateType:5";
-const PLAN_STATE_TYPE_ID_6 = "PlanStateType:6";
-
 const PLAN_ORDER_STATE_TYPE_ID_1 = "PlanOrderStateType:1";
 
 const PLAN_ORDER_ACTION_PLAY = "PLAY";
@@ -248,6 +240,7 @@ export default class PlanExecutor extends GenericModule {
 								{
 									view: "label",
 									height: 75,
+									align:"right",
 									id: "label-state-" + self.uid,
 									template: getPlanStateTemplate(self.data.planStateType),
 									css: "global-header-label"
@@ -287,9 +280,9 @@ export default class PlanExecutor extends GenericModule {
 							onItemClick: () => {
 			
 								if (btnConfig.moduleAction) {
-								
-									open_module(btnConfig);		
-								}
+									
+									open_module(btnConfig);
+								}		
 							}
 						},
 						autowidth : true
@@ -588,11 +581,11 @@ export default class PlanExecutor extends GenericModule {
 		function getPlanStateTemplate(planStateType) {
 
 			let planStateTemplate = "";
-	
+
 			if(planStateType){
 		
 				let color = self.config.planStateTypes[planStateType.id].color;		
-				planStateTemplate = '<div><span class="table-badge" style="background:' + color + '3b'+'; color: '+ color + 'a0'+';">'+ i18n.t(planStateType.labelAlias) + '</span></div>';
+				planStateTemplate = '<div><span class="table-badge" style="background:' + color + 'a0'+'; color: white;">'+ i18n.t(planStateType.labelAlias) + '</span></div>';
 			}
 			 
 			return planStateTemplate;

@@ -68,25 +68,29 @@ export default class ConfirmTempDialogBox {
 				type: "form"
 			},
 			on: {
-				onShow: () => {
+				onShow: function(){
 
-					this.interval = setInterval(() => {
+					self.interval = setInterval(() => {
 
-						this.timeSec--;
-						$$("temp-count-"+this.uid).setValue(this.timeSec + " "+ i18n.t("LBL_SECONDS"));
+						self.timeSec--;
+						$$("temp-count-"+self.uid).setValue(self.timeSec + " "+ i18n.t("LBL_SECONDS"));
 			
-						if(this.timeSec == 0 ){
-							clearInterval(this.interval);
-							this.defaultCallBack();
-							$$("temp-count-"+this.uid).setValue(i18n.t("LBL_CONFIRM_TEMP_DIALOG_BOX_TIMEOUT"));
+						if(self.timeSec == 0 ){
+							clearInterval(self.interval);
+							self.defaultCallBack();
+							let parentWindow = this.getTopParentView();
+							parentWindow.close();
 						}
 						
 					}, 1000);
 
 				},
 				onDestruct: () => {
-
-					clearInterval(this.interval);
+					
+					if(this.interval){
+					
+						clearInterval(this.interval);
+					}
 				}
 			}
 		}).show();
