@@ -114,6 +114,7 @@ export default class Map {
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_35_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_36_PMV ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_38_PMV_TXT ||
+		elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L ||
         elementTypeMap.getElementType(element.id) == elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {
           throw "DMSETDException";
         }
@@ -149,6 +150,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+			  || elementType === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
               || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
 
               total_width = 0;
@@ -305,6 +307,7 @@ export default class Map {
                   || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
                   || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+				  || elementType === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
                   || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
 
 
@@ -566,6 +569,7 @@ export default class Map {
               || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
               || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+			  || elementType === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
               || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
            
               total_width = 0;
@@ -1121,6 +1125,7 @@ export default class Map {
                     || elementType === elementTypeMap.ELEMENT_TYPE_35_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_36_PMV
                     || elementType === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+					|| elementType === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
                     || elementType === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT) {  // MATRIX PANEL
                 
                     total_width = 0;

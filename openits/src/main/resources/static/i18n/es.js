@@ -54,8 +54,8 @@ var i18_es = {
     "ElementType:19.description": "CO",
     "ElementType:20.alias": "NO",
     "ElementType:20.description": "NO",
-    "ElementType:10.alias": "ROTAPANEL",
-    "ElementType:10.description": "Rotapanel",
+    "ElementType:10.alias": "Panel",
+    "ElementType:10.description": "Panel",
     "ElementType:13.alias": "SEM",
     "ElementType:13.description": "SEM",
     "ElementType:18.alias": "ANEM_INT",
@@ -433,25 +433,6 @@ var i18_es = {
     "ElementTypeParam:1:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:1:1:1003.description": "MANGO SESSION_UID",
     
-    "ElementTypeParam:10:3:1.alias": "rotapanel cmd",
-    "ElementTypeParam:10:3:1.description": "rotapanel cmd",
-    "ElementTypeParam:10:2:2.alias": "door open",
-    "ElementTypeParam:10:2:2.description": "door open",
-    "ElementTypeParam:10:1:1.alias": "status 1",
-    "ElementTypeParam:10:1:1.description": "status 1",
-    "ElementTypeParam:10:1:2.alias": "status 2",
-    "ElementTypeParam:10:1:2.description": "status 2",
-
-    "ElementTypeParam:10:1:3.alias": "PK",
-    "ElementTypeParam:10:1:3.description": "PK",
-    "ElementTypeParam:10:1:4.alias": "Distancia entrada del t&uacute;nel (m)",
-    "ElementTypeParam:10:1:4.description": "Entrance Tunnel Distance (m)",
-
-    "ElementTypeParam:10:1:1003.alias": "MANGO SESSION_UID",
-    "ElementTypeParam:10:1:1003.description": "MANGO SESSION_UID",
-    "ElementTypeParam:10:2:1.alias": "status",
-    "ElementTypeParam:10:2:1.description": "status",
-
     "ElementTypeParam:8:1:1003.alias": "MANGO SESSION_UID",
     "ElementTypeParam:8:1:1003.description": "MANGO SESSION_UID",
 
@@ -1443,8 +1424,8 @@ var i18_es = {
     "state.noconnected": "No conectado",
     "state.alarm": "Alarmado",
     
-    "CommandElementType:1:2": "DESCARTAR INCIDENCIA",
-    "CommandElementType:2:2": "CERRAR INCIDENCIA",
+    "CommandElementType:1:2": "ENCLAVAR CAMARA",
+    "CommandElementType:2:2": "IR A PRESET",
     
     
     "CommandElementType:1:5": "PARAR",
@@ -1458,9 +1439,9 @@ var i18_es = {
     "CommandElementType:2:9": "ARRANCAR VENTILADOR",
     "CommandElementType:3:9": "ARRANCAR VENTILADOR REVERSO",
     
-    "CommandElementType:1:10": "MOSTRAR LADO PANEL 1",
-    "CommandElementType:2:10": "MOSTRAR LADO PANEL 2",
-    "CommandElementType:3:10": "NO MOSTRAR NADA",
+    "CommandElementType:1:10": "REINICIAR",
+    "CommandElementType:2:10": "SEÑALIZAR",
+    "CommandElementType:3:10": "APAGAR",
     
     "CommandElementType:1:13": "ENCENDER VERDE",
     "CommandElementType:2:13": "ENCENDER AMBAR",
@@ -1544,7 +1525,7 @@ var i18_es = {
 
 
 
-    // BRATISLAVA 
+    /* BRATISLAVA 
     "AlarmConfig:2": "ALARMA METEO SIN CONEXI&Oacute;N",
     "AlarmConfig:3": "ALARMA METEO PRESI&Oacute;N DE AIRE MAYOR QUE 65534",
     "AlarmConfig:4": "ALARMA METEO TEMPERATURA DEL AIRE NO ENTRE -1000 AND 1000",
@@ -1699,13 +1680,13 @@ var i18_es = {
     "AlarmConfig:251": "ALARMA PMV ERROR DE FOTOCELULA",
     "AlarmConfig:252": "ALARMA PMV ADVERTENCIA DE TEMPERATURA",
     "AlarmConfig:253": "ALARMA PMV TEMPERATURA CRITICA",
-    "AlarmConfig:254": "ALARMA PMV PUERTA ABIERTA",
+    "AlarmConfig:254": "ALARMA PMV PUERTA ABIERTA",*/
    
 
     "Alarm_recon": "Alarma ya reconocida",
     "Alarm_deactivated": "Alarma ya desactivada",
 
-/*AUSOL
+/*AUSOL*/
     "AlarmConfig:3": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:4": "ALARMA DE DESCONEXI&Oacute;N",
     "AlarmConfig:5": "ALARMA DE DESCONEXI&Oacute;N",
@@ -1800,6 +1781,7 @@ var i18_es = {
     "AlarmConfig:99" : "ALARMA SENSOR",
     "AlarmConfig:100" : "ALARMA SENSOR",
     
+    "AlarmConfig:255": "ALARMA FIRE_DET INCENDIO",
 
     "AlarmConfig:701": "ALARMA METEO PRECIPITACION MODERADA",
     "AlarmConfig:702": "ALARMA METEO VISIBILIDAD REDUCIDA",
@@ -1815,7 +1797,7 @@ var i18_es = {
     "AlarmConfig:1307": "ALARMA OBJETO EN CARRIL DERECHO",
     "AlarmConfig:1308": "ALARMA VEHICULO EN CARRIL IZQUIERDO",
     "AlarmConfig:1309": "ALARMA VEHICULO EN CARRIL DERECHO",
-    "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",*/
+    "AlarmConfig:1310": "ALARMA PEATONES EN EL TUNEL",
         
     /* TG 
     "AlarmConfig:1": "ALARMA ESTACION METEOROLOGICA DESCONECTADA",

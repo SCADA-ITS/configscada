@@ -2,7 +2,6 @@ import * as elementTypeMap from "../elementTypeMap.js";
 import { panelData } from "../../data/panelData.js";
 import { availablePictos } from "../../data/pmvpicto.js";
 import {ICON_COLOR} from "../../data/GLOBAL_PROPERTIES.js";
-
 export function getLinesOfText(panelType, zone, subPanel) {
   let panelConfig = JSON.parse(panelData[panelType]["panel"]);
   let nLines = 0;
@@ -21,114 +20,13 @@ export function getLinesOfText(panelType, zone, subPanel) {
   
   return parseInt(nLines);
 }
-
-
 export function generateIcon(element, suffix = "") {
-	const pmvParamValues = [
-		{
-			id: elementTypeMap.ELEMENT_TYPE_24_PMV_A_C,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_26_PMV_64X64,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_27_PMV_A_B,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_28_PMV_192X64,
-			y_text: -0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_29_PMV_B_D,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "10px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_30_PMV_128X64,
-			y_text: 20,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_31_PMV_TEMP,
-			y_text: -4,
-			y_graphic: 1,
-			x_graphic: 0,
-			fontsize: "12px"
-		},		
-		{
-			id: elementTypeMap.ELEMENT_TYPE_36_PMV,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_32_PMV_WEIGHT,
-			y_text: 0,
-			y_graphic: 5,
-			x_graphic: 0,
-			fontsize: "13px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA,
-			y_text: 0,
-			y_graphic: 5,
-			x_graphic: 63,
-			fontsize: "13px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_38_PMV_TXT,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "18px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_64_PMV_SNOW,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		},
-		{
-			id: elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT,
-			y_text: 0,
-			y_graphic: 0,
-			x_graphic: 0,
-			fontsize: "15px"
-		}
-	];
-	
-	let pmvParams = pmvParamValues.find(e => {
-										return "ElementType:" + e.id === element.elementType.id
-									});
-									
   // check for the panel config
   let panelConfig = element.elementValues.find(
     (ic) =>
       elementTypeMap.getElementTypeParam(ic.id) ==
       elementTypeMap.PANEL_MANAGER_CONFIG
   );
-
   // control stomp 5:1
   if (panelConfig === undefined){
     panelConfig = JSON.parse(panelData[element.elementType.id]["panel"]);
@@ -141,11 +39,9 @@ export function generateIcon(element, suffix = "") {
   if(element.elementTypeState && element.elementTypeState.id) {
     elementState = getTrimId(element.elementTypeState.id);
   }
-
   if(typeof elementState != 'undefined') {
     color = ICON_COLOR[elementState];
   }
-
   
   let subpanel_matrix = [];
   let total_width = 0;
@@ -160,7 +56,6 @@ export function generateIcon(element, suffix = "") {
     let n_zones = panelConfig["Subpaneles"][nsubpanel]["NumZonas"];
     let zone_cols = parseInt(n_zones.split("x")[0]);
     let zone_rows = parseInt(n_zones.split("x")[1]);
-
     let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
     let panel_width = parseInt(n_size.split("x")[0]);
     let panel_height = parseInt(n_size.split("x")[1]);
@@ -168,7 +63,6 @@ export function generateIcon(element, suffix = "") {
     if(panel_height > total_height) {
       total_height = panel_height;
     }
-
     index= 0;
     for(let r=0; r<zone_rows; r++) {
       subpanel_matrix.push([]);
@@ -176,19 +70,15 @@ export function generateIcon(element, suffix = "") {
         let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][index]["Tamanio"];
         let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
-
         subpanel_matrix[r].push({width: subpanel_width, height: subpanel_height})
         index++;
       }
     }
   }
-
   let background_rect = s.rect(0, 0, total_width, total_height);
   background_rect.attr("fill", "black");
   s.attr({ height: total_height, width: total_width});
-
   let n_elements = 0;
-
   for (let nsubpanel=0; nsubpanel<panelConfig["Subpaneles"].length; nsubpanel++) {
     let n_zones = panelConfig["Subpaneles"][nsubpanel]["NumZonas"];
     let zone_cols = parseInt(n_zones.split("x")[0]);
@@ -196,9 +86,8 @@ export function generateIcon(element, suffix = "") {
     let n_size = panelConfig["Subpaneles"][nsubpanel]["Tamanio"];
     let panel_width = parseInt(n_size.split("x")[0]);
     let panel_height = parseInt(n_size.split("x")[1]);
-
-    let subpanel_x = 0;//pmvParams.subpanel_x;
-    let subpanel_y = 0;//pmvParams.subpanel_y;
+    let subpanel_x = 0;
+    let subpanel_y = 0;
     let last_subpanel_height = 0;
     
     index = 0;
@@ -210,7 +99,6 @@ export function generateIcon(element, suffix = "") {
         let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][index]["Tamanio"];
         let subpanel_height = parseInt(subpanel_size.split("x")[1]);
         let subpanel_width = parseInt(subpanel_size.split("x")[0]);
-
         row_covered_size += subpanel_width;
         index++;
         
@@ -225,7 +113,6 @@ export function generateIcon(element, suffix = "") {
           let subpanel_size = panelConfig["Subpaneles"][nsubpanel]["Zonas"][subindex]["Tamanio"];
           let subpanel_height = parseInt(subpanel_size.split("x")[1]);
           let subpanel_width = parseInt(subpanel_size.split("x")[0]);
-
           // find the element with that value
           let value_to_find = 1001 + n_elements;
           let content_value = element.elementValues.find( (value) => value.id === "ElementValue:" + elementTypeMap.getElementId(element.id) + ":" + value_to_find + ":2").value;
@@ -253,7 +140,7 @@ export function generateIcon(element, suffix = "") {
             // subpanel_x = subpanel_x + 1
             // subpanel_y = subpanel_y + 2
             
-            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), (subpanel_y + pmvParams.y_graphic).toString(), (subpanel_x + pmvParams.x_graphic).toString(), subpanel_width.toString(), subpanel_height.toString());
+            let im = s.image("data:image/png;base64," + auxBase64, subpanel_x.toString(), subpanel_y.toString(), subpanel_width.toString(), subpanel_height.toString());
             im.attr("id", element.id + suffix + ":" + value_to_find);
             im.attr("subpanel_type", "graphic");
             if(subpanel_width != subpanel_height) {
@@ -268,11 +155,11 @@ export function generateIcon(element, suffix = "") {
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (15 + subpanel_y + pmvParams.y_text + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
                 r1.attr("font-family", "'VT323', monospace")
-                r1.attr("font-size", pmvParams.fontsize);
+                r1.attr("font-size", "10px");
               });
             } else {
               // if there is no text, we create the placeholder based on the panel configuration
@@ -281,24 +168,20 @@ export function generateIcon(element, suffix = "") {
               for(let iLine=0; iLine<nLines; iLine++) {
                 all_lines.push([]);
               }
-
               let g1 = s.group();
               g1.attr("id", element.id + suffix + ":" + value_to_find);
               g1.attr("subpanel_type", "text");
               all_lines.forEach((item, i) => { 
-                let r1 = g1.text((subpanel_x + 3).toString(), (105 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
+                let r1 = g1.text((subpanel_x + 3).toString(), (10 + subpanel_y + (subpanel_height / all_lines.length * i)).toString(), item);
                 r1.attr("id", element.id + suffix + ":" + value_to_find + ":Line" + (i + 1));
                 r1.attr("fill", "white");
-                r1.attr("font-family", "'VT323', monospace");
-                r1.attr("font-size", pmvParams.fontsize);
+                r1.attr("font-family", "'VT323', monospace")
+                r1.attr("font-size", "10px");
               });
-
             }
           }
-
           last_subpanel_height = subpanel_height;
           subpanel_x += subpanel_width;
-
           n_elements++;
           subindex++;
         } catch (error) {
@@ -314,14 +197,10 @@ export function generateIcon(element, suffix = "") {
   foreground_rect.attr("fill", "transparent");
   foreground_rect.attr("stroke", color);
   foreground_rect.attr("stroke-width", "3px");
-
   let retSVG = s.innerSVG();
-
   s.clear();
-
   return retSVG;
 }
-
 export function changeMatrixPanelIcon(element, suffix = "") {
   // adds the pictograph
   // currently its fixed to pic1.jpg
@@ -336,7 +215,6 @@ export function changeMatrixPanelIcon(element, suffix = "") {
     r.node.getAttribute("height")
   );
 }
-
 export function updateMatrixPanelIcon(element, suffix = "") {
   // search in the values for an id greater than 1001
   for(let i=0; i<element.elementValues.length; i++) {
@@ -345,7 +223,6 @@ export function updateMatrixPanelIcon(element, suffix = "") {
       let picToShow = element.elementValues.find(
         (ic) => elementTypeMap.getElementTypeParam(ic.id) == elementTypeParam.toString() + ":2"
       );
-
       let subpanelType = "";
       if(document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
         if(document.getElementById(element.id + suffix + ":" + elementTypeParam).getAttribute("subpanel_type") == "text") {
@@ -354,7 +231,6 @@ export function updateMatrixPanelIcon(element, suffix = "") {
           subpanelType = "graphical";
         }
       }
-
       if(subpanelType == "graphical") {
         if (typeof picToShow != "undefined" && document.getElementById(element.id + suffix + ":" + elementTypeParam) != null) {
           if (availablePictos[picToShow.value] && typeof availablePictos[picToShow.value].base64 != "undefined") {
@@ -388,7 +264,6 @@ export function updateMatrixPanelIcon(element, suffix = "") {
       }
     }
   }
-
    // changes the color based on the status
   let elementState;
   if(element.elementTypeState && element.elementTypeState.id) {

@@ -6,7 +6,7 @@ export const ELEMENT_TYPE_5_PA_SYSTEM = "5";
 export const ELEMENT_TYPE_7_ZONE = "7";
 export const ELEMENT_TYPE_8_BAR = "8";
 export const ELEMENT_TYPE_9_FAN = "9";
-export const ELEMENT_TYPE_10_DMS = "10";
+export const ELEMENT_TYPE_10_PVM_TXT_4L = "10";
 export const ELEMENT_TYPE_11_SOS = "11";
 export const ELEMENT_TYPE_12_LUX = "12";
 export const ELEMENT_TYPE_13_SEM_RAV = "13";
@@ -216,6 +216,7 @@ export const COMMAND_TYPE_MATRIX_PANEL_TEMP_A = "2:32";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT = "2:35";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT = "2:36";
 export const COMMAND_TYPE_MATRIX_PANEL_DGT_TXT = "2:38";
+export const COMMAND_TYPE_MATRIX_PANEL_DGT_TXT_4L = "2:10";
 export const COMMAND_TYPE_PMV_WEIGHT_LIMIT = "2:69";
 
 export const PANEL_MANAGER_CONFIG = "5:1";
@@ -338,7 +339,7 @@ export function getElementTypeName(elementTypeIdString) {
     case ELEMENT_TYPE_7_ZONE:
     case ELEMENT_TYPE_8_BAR:
     case ELEMENT_TYPE_9_FAN:
-    case ELEMENT_TYPE_10_DMS:
+    case ELEMENT_TYPE_10_PVM_TXT_4L:
     case ELEMENT_TYPE_11_SOS:
     case ELEMENT_TYPE_12_LUX:
     case ELEMENT_TYPE_13_SEM_RAV:

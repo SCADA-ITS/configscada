@@ -246,9 +246,9 @@ export const ELEMENT_TYPE = {
     "ElementType:70" :{ id: "ElementType:70", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 70, scale_x: 90, scale_y: 90, svgRaw:SVG_70_ANALIZADOR_RED },
     "ElementType:74" :{ id: "ElementType:74", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 74, scale_x: 28, scale_y: 28, svgRaw:SVG_74_ERU },
     "ElementType:75" :{ id: "ElementType:75", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 75, scale_x: 10, scale_y: 10, svgRaw:SVG_75_GE },
-    "ElementType:81" :{ id: "ElementType:81", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 71, scale_x: 602, scale_y: 503, svgRaw:SVG_81_VIS },
-    "ElementType:82" :{ id: "ElementType:82", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 72, scale_x: 369, scale_y: 248, svgRaw:SVG_82_ACCEL },
-    "ElementType:83" :{ id: "ElementType:83", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 73, scale_x: 28, scale_y: 28, svgRaw:SVG_83_RADAR },
+    "ElementType:81" :{ id: "ElementType:81", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 81, scale_x: 602, scale_y: 503, svgRaw:SVG_81_VIS },
+    "ElementType:82" :{ id: "ElementType:82", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 82, scale_x: 369, scale_y: 248, svgRaw:SVG_82_ACCEL },
+    "ElementType:83" :{ id: "ElementType:83", uiType: UI_ELEMENT_TYPE_GENERIC,  value: 83, scale_x: 28, scale_y: 28, svgRaw:SVG_83_RADAR },
 
   }
 };

@@ -395,6 +395,7 @@ export default class TabForm {
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_33_PMV_TRUCK_ALPHA
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
+								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
 								|| elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT
 							    || elementTypeMap.getElementType(element.id) === elementTypeMap.ELEMENT_TYPE_81_VIS
@@ -724,6 +725,7 @@ export default class TabForm {
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_35_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_36_PMV
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_38_PMV_TXT
+					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_10_PVM_TXT_4L
 					|| elementTypeMap.getElementType(data.id) === elementTypeMap.ELEMENT_TYPE_69_PMV_WEIGTH_LIMIT
 				) {
 					// obtain the panel configuration
@@ -887,6 +889,7 @@ export default class TabForm {
 								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_TEMP_A
 								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT
 								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_TXT
+								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_TXT_4L
 								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_MATRIX_PANEL_DGT_GR_TXT
 								|| data.commandElements[index].id==="CommandElementType:" + elementTypeMap.COMMAND_TYPE_PMV_WEIGHT_LIMIT
 							){

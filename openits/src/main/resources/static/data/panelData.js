@@ -1,4 +1,9 @@
 export let panelData = {
+    "ElementType:10": {
+        "scala": 3.3,
+        "scala_List": 4,
+        "panel": "{\"Subpaneles\":[{\"NumZonas\":\"1x1\",\"Tamanio\":\"240x72\",\"Zonas\":[{\"Tamanio\":\"240x72\",\"Tipo\":\"Texto\",\"NumLineas\":\"4\",\"TamLineas\":\"240\"}]}]}",
+    },
 	"ElementType:24": {
         "scala": 5,
         "scala_List": 4,
