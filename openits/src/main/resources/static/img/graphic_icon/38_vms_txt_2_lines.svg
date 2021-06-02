@@ -7,12 +7,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="101.07231mm"
-   height="56.665112mm"
-   viewBox="0 0 101.07231 56.665111"
+   width="105.53654mm"
+   height="39.54113mm"
+   viewBox="0 0 105.53654 39.541129"
    version="1.1"
    id="svg2"
-   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:docname="38_vms_txt_2_lines.svg">
   <defs
      id="defs2" />
@@ -23,16 +23,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.0624463"
-     inkscape:cx="138.92064"
-     inkscape:cy="297.31383"
+     inkscape:zoom="1.7282938"
+     inkscape:cx="162.24659"
+     inkscape:cy="57.131359"
      inkscape:document-units="mm"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="-8"
+     inkscape:window-x="3832"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="true"
@@ -42,23 +42,23 @@
      fit-margin-right="0"
      fit-margin-bottom="0">
     <sodipodi:guide
-       position="-12.758943,124.9916"
+       position="-12.758943,107.86761"
        orientation="1,0"
        id="guide40" />
     <sodipodi:guide
-       position="84.72562,152.01847"
+       position="84.725618,134.89448"
        orientation="1,0"
        id="guide42" />
     <sodipodi:guide
-       position="-57.586676,125.24257"
+       position="-57.586674,108.11858"
        orientation="0,-1"
        id="guide44" />
     <sodipodi:guide
-       position="-12.758943,72.558028"
+       position="-12.758943,55.434045"
        orientation="0,-1"
        id="guide46" />
     <sodipodi:guide
-       position="34.174987,147.53523"
+       position="34.174986,130.41124"
        orientation="1,0"
        id="guide48" />
   </sodipodi:namedview>
@@ -70,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,33 +80,23 @@
      id="main">
     <path
        id="state"
-       style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke-width:1.0607"
-       d="M 0,0 H 101.07231 V 56.66511 H 0 Z" />
+       style="fill:#4caf50;fill-opacity:1;fill-rule:evenodd;stroke-width:0.905409"
+       d="M 0,0 H 105.53654 V 39.541131 H 0 Z" />
     <path
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd"
-       d="M 2.1166667,2.6458334 H 99.200106 V 55.079412 H 2.1166667 Z"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.829632"
+       d="M 2.1166667,2.6458334 H 102.93559 V 37.398126 H 2.1166667 Z"
        id="path70" />
     <text
        xml:space="preserve"
-       style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
-       x="50.632042"
-       y="22.035198"
-       id="line1"><tspan
-         sodipodi:role="line"
-         x="50.632042"
-         y="22.035198"
-         style="font-size:6.35px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
-         id="tspan24">ACCIDENTE A 5KM</tspan></text>
+       style="font-size:10.5833px;line-height:1.05;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:3.50167;stroke-miterlimit:4;stroke-dasharray:none;"
+       x="6.4722199"
+       y="16.910072"
+       id="line1">aaaa</text>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
-       x="50.631706"
-       y="38.495003"
-       id="line2"><tspan
-         sodipodi:role="line"
-         x="50.631706"
-         y="38.495003"
-         style="font-size:6.35px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
-         id="tspan24-5">ABCDEFGHIJKLMNOPQRST</tspan></text>
+       style="font-size:10.5833px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke-width:1.50532;stroke-miterlimit:4;stroke-dasharray:none;"
+       x="6.4722199"
+       y="31.942337"
+       id="line2">aaaa</text>
   </g>
 </svg>
