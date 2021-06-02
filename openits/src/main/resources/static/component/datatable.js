@@ -673,6 +673,39 @@ export default class DataTable {
 		return selectedItems;
 	}
 
+	enable() {
+
+		if($$("tbActions-" + this.uid)){
+
+			$$("tbActions-" + this.uid).enable();
+		}
+		
+		if($$("ctx_menu-" + this.uid)){
+
+			$$("ctx_menu-" + this.uid).enable();
+		}
+
+		$$("dt-" + this.uid).on_dblclick=function(){};
+	}
+
+	disable() {
+
+		if($$("tbActions-" + this.uid)){
+
+			$$("tbActions-" + this.uid).disable();
+		}
+		
+		if($$("ctx_menu-" + this.uid)){
+
+			$$("ctx_menu-" + this.uid).disable();
+		}
+
+		if($$("dt-" + this.uid)){
+
+			$$("dt-" + this.uid).on_dblclick="";
+		}
+	}
+
 	drawMainToolbar() {
 
 		let metadata = this.metadata;
