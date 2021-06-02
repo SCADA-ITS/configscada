@@ -225,7 +225,7 @@ export default class PlanExecutor extends GenericModule {
 							cols: [
 								{
 									view: "label",
-									label: "<img src='../img/grid/plan.png' class='grid-icon'/>",
+									label: "<img src='../img/plan/plan.png' class='grid-icon'/>",
 									height: 75,
 									css: "global-header-icon"
 								},
@@ -580,7 +580,7 @@ export default class PlanExecutor extends GenericModule {
 
 		function getPlanStateTemplate(planStateType) {
 
-			let planStateTemplate = "";
+			let planStateTemplate = '<div><span> </span></div>';
 
 			if(planStateType){
 		
