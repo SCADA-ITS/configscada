@@ -2595,3 +2595,23 @@ p {
 .alarm-radio-options .webix_radio_option {
 	margin: 20px 0px !important;
 }
+
+.search-list-item-text {
+	font-size:14px;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+	padding-top: 10px;	
+}
+
+.search-list-item-image {
+	display:inline-block;
+	width:24px;
+	height:24px;
+	float:left;
+	padding-top: 7px;
+}

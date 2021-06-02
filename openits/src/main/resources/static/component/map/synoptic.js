@@ -287,7 +287,7 @@ export default class Synoptic extends GenericMap {
 											view: "suggest",
 											filter: function(obj, value) {
 												
-												return (obj.value.toLowerCase().indexOf(value) !== -1)
+												return (obj.value.toLowerCase().indexOf(value.toLowerCase()) !== -1)
 											},
 											body: {
 												view: "list",
@@ -314,7 +314,8 @@ export default class Synoptic extends GenericMap {
 																	
 																		let item = {
 																			id: elementId,
-																			value: element.alias + " - " + i18n.t(elementType.labelAlias)
+																			value: element.alias + " - " + i18n.t(elementType.labelAlias),
+																			image: elementType.elementTypePhoto
 																		}
 																		
 																		data.push(item);		
@@ -331,7 +332,21 @@ export default class Synoptic extends GenericMap {
 													
 													return data;
 												}(),
-												template: "#value#",
+												template: function(obj) {
+							
+													let html = "";
+													
+													let image = obj.image;
+													
+													if (image) {
+													
+														html = `<image class="search-list-item-image" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;	
+													}
+								
+													html += `<span title="${obj.value}" class="search-list-item-text">${obj.value} </span>`;
+						
+													return html;
+												},
         										yCount: 7
 											}
 										},
