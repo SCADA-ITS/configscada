@@ -203,7 +203,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 							rows: [
 								{
 									view: "template",
-									id: "alarm-control-panel-box-muted",
+									id: "alarm-control-panel-box-filtered",
 									css: "box-component",
 									height: 50,
 									template: function() {
@@ -215,7 +215,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 									css: "box-component",
 									height: 20,
 									template: function() {
-										return `<span class="box-description">${i18n.t("LBL_ALARMS_STATS_MUTED")}</span>`;
+										return `<span class="box-description">${i18n.t("LBL_ALARMS_STATS_FILTERED")}</span>`;
 									}
 								}
 							]
@@ -327,10 +327,10 @@ export default class AlarmControlPanel extends GenericControlPanel {
 					$$("alarm-control-panel-box-no-recognized").refresh();
 				}
 
-				if (stats.mutedAlarms) {
+				if (stats.filteredAlarms) {
 
-					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${stats.mutedAlarms}</span>`);
-					$$("alarm-control-panel-box-muted").refresh();
+					$$("alarm-control-panel-box-filtered").setHTML(`<span class="box-value">${stats.filteredAlarms}</span>`);
+					$$("alarm-control-panel-box-filtered").refresh();
 				}
 			}
 
