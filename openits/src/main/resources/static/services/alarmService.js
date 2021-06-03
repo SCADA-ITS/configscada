@@ -24,7 +24,7 @@ export default class AlarmService extends GenericModule {
 				stats: {
 					activeAlarms: 0,
 					noRecognizedAlarms: 0,
-					mutedAlarms: 0
+					filteredAlarms: 0
 				},
 				latest: []
 			}
@@ -88,7 +88,7 @@ export default class AlarmService extends GenericModule {
 
 		this.updateActiveAlarms();
 		this.updateNoRecognizedAlarms();
-		this.updateMutedAlarms();
+		this.updateFilteredAlarms();
 		this.updateAlarms();
 	}
 
@@ -167,35 +167,31 @@ export default class AlarmService extends GenericModule {
 		});
 	}
 
-	updateMutedAlarms() {
+	updateFilteredAlarms() {
 
 		let self = this;
 
-		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.muted_alarms).then(function(data) {
+		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.filtered_alarms).then(function(data) {
 
 			if (data.json() != undefined) {
 				
-				let mutedAlarms = data.json().value;
+				let filteredAlarms = data.json().value;
 
-				self.alarms.data.stats.mutedAlarms = mutedAlarms;
+				self.alarms.data.stats.filteredAlarms = filteredAlarms;
 				
 				window.alarmControlPanel.updateData();
 
-//				$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${mutedAlarms}</span>`);
-//				$$("alarm-control-panel-box-muted").refresh();
 
-				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.muted_alarms, null, on_message);
+				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.filtered_alarms, null, on_message);
 
 				function on_message(message) {
 
 					var dat = JSON.parse(JSON.parse(message.body));
 					
-					self.alarms.data.stats.mutedAlarms = dat.basicElementsVO[0].value;
+					self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
 					
 					window.alarmControlPanel.updateData();
 
-//					$$("alarm-control-panel-box-muted").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
-//					$$("alarm-control-panel-box-muted").refresh();
 				}
 			}
 		});
@@ -219,11 +215,11 @@ export default class AlarmService extends GenericModule {
 			this.idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
 		}
 		
-		let isMuted = function(data) {
+		let isFiltered = function(data) {
 			
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			
-			return (data.mutedUntil && timeService.getDateTime() < data.mutedUntil / 1000);
+			return (data.filteredUntil && timeService.getDateTime() < data.filteredUntil / 1000);
 		}
 
 		function onMessage(be) {
@@ -244,7 +240,7 @@ export default class AlarmService extends GenericModule {
 				else {
 					date = be.activation / 1000;
 
-					if (alarmLevel.notification === 'true' && !isMuted(be)) {
+					if (alarmLevel.notification === 'true' && !isFiltered(be)) {
 
 						let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
 

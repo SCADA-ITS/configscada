@@ -247,23 +247,23 @@ export default class AlarmMonitorModule extends GenericModule {
 			}
 		}
 
-		function isMuted(data) {
+		function isFiltered(data) {
 
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 
-			return (data.mutedUntil && timeService.getDateTime() < (data.mutedUntil.getTime() / 1000));
+			return (data.filteredUntil && timeService.getDateTime() < (data.filteredUntil.getTime() / 1000));
 		}
 
 		function loadDataCollections(data) {
 
 			self.dcNoRecognized = data.filter(e => {
 
-				return !e.recognized && !isMuted(e);
+				return !e.recognized && !isFiltered(e);
 			});
 
 			self.dcRecognized = data.filter(e => {
 
-				return e.recognized && !isMuted(e);
+				return e.recognized && !isFiltered(e);
 			});
 		}
 
@@ -1084,7 +1084,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{ view: "label", label: i18n.t("LBL_ALARMS_STATS_ACTIVE") },
 								{ view: "label", label: i18n.t("LBL_ALARMS_STATS_NO_RECOGNIZED") },
-								{ view: "label", label: i18n.t("LBL_ALARMS_STATS_MUTED") }
+								{ view: "label", label: i18n.t("LBL_ALARMS_STATS_FILTERED") }
 							]
 						},
 						{
@@ -1093,7 +1093,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							cols: [
 								{ view: "label", id: "action-panel-alarm-stat-active-" + self.uid, label: 0 },
 								{ view: "label", id: "action-panel-alarm-stat-no-recognized-" + self.uid, label: 0 },
-								{ view: "label", id: "action-panel-alarm-stat-muted-" + self.uid, label: 0 }
+								{ view: "label", id: "action-panel-alarm-stat-filtered-" + self.uid, label: 0 }
 							]
 						}
 					]
@@ -1389,9 +1389,9 @@ export default class AlarmMonitorModule extends GenericModule {
 							$$("action-panel-alarm-stat-no-recognized-" + self.uid).setValue(stats.noRecognizedAlarms);
 						}
 
-						if (stats.mutedAlarms) {
+						if (stats.filteredAlarms) {
 
-							$$("action-panel-alarm-stat-muted-" + self.uid).setValue(stats.mutedAlarms);
+							$$("action-panel-alarm-stat-filtered-" + self.uid).setValue(stats.filteredAlarms);
 						}
 					}
 				}
@@ -1603,9 +1603,9 @@ export default class AlarmMonitorModule extends GenericModule {
 						return e.id === flattenedItem.id;
 					}, true);
 
-					// Receive alarm recognized and desactivated or alarm is muted
+					// Receive alarm recognized and desactivated or alarm is filtered
 					// Actions: Remove from any datacollection
-					if ((flattenedItem.recognized && flattenedItem.deactivation) || isMuted(flattenedItem)) {
+					if ((flattenedItem.recognized && flattenedItem.deactivation) || isFiltered(flattenedItem)) {
 
 						let items = 0;
 

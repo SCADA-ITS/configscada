@@ -175,9 +175,9 @@ export let adapter = {
 						itemOutput.alarmLevelId = alarmLevel.id;
 						itemOutput.alarmLevelAlias = alarmLevel.labelAlias;
 
-						if (e.mutedUntil) {
+						if (e.filteredUntil) {
 
-							itemOutput.mutedUntil = new Date(e.mutedUntil);
+							itemOutput.filteredUntil = new Date(e.filteredUntil);
 						}
 
 						if (e.recognized) {

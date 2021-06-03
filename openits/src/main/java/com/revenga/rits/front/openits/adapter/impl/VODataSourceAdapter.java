@@ -50,10 +50,10 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ALARM_CONFIG = getPropertyInt("get_alarm_config");
 	public static final int DATA_SOURCE_GET_THRESOLD_OPERATIONS = getPropertyInt("get_threshold_operations");
 	public static final int DATA_SOURCE_GET_THRESOLD_OPERATION = getPropertyInt("get_threshold_operation");
-	public static final int DATA_SOURCE_GET_ALARM_MUTEDS = getPropertyInt("get_alarm_muteds");
-	public static final int DATA_SOURCE_GET_ALARM_MUTED = getPropertyInt("get_alarm_muted");
-	public static final int DATA_SOURCE_GET_ALARM_MUTEDS_BY_ALARM_CONFIG = getPropertyInt("get_alarm_muteds_by_alarm_config");
-	public static final int DATA_SOURCE_GET_ALARM_MUTEDS_BY_ELEMENT = getPropertyInt("get_alarm_muteds_by_element");
+	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS = getPropertyInt("get_alarm_filtereds");
+	public static final int DATA_SOURCE_GET_ALARM_FILTERED = getPropertyInt("get_alarm_filtered");
+	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ALARM_CONFIG = getPropertyInt("get_alarm_filtereds_by_alarm_config");
+	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ELEMENT = getPropertyInt("get_alarm_filtereds_by_element");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_by_element_type");
 	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
@@ -178,7 +178,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_SEND_RECOGNIZE_AUDIT_LOGS = getPropertyInt("send_recognize_audit_logs");
 	public static final int DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS = getPropertyInt("send_plan_schedule_actions");
 	public static final int DATA_SOURCE_SEND_PLAY_PLAN = getPropertyInt("send_play_plan");
-	public static final int DATA_SOURCE_SEND_ALARM_MUTED_ACTIONS = getPropertyInt("send_alarm_muted_actions");
+	public static final int DATA_SOURCE_SEND_ALARM_FILTERED_ACTIONS = getPropertyInt("send_alarm_filtered_actions");
 	public static final int DATA_SOURCE_SEND_ALARMS= getPropertyInt("send_alarms");
 	public static final int DATA_SOURCE_SEND_RECOGNIZE_ALARM = getPropertyInt("send_recognize_alarm");
 	public static final int DATA_SOURCE_SEND_DEACTIVATION_ALARMS = getPropertyInt("send_deactivation_alarms");
