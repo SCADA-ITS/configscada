@@ -1855,7 +1855,7 @@ export default class DataTable {
 			}
 
 
-			args.callbacks.push(function() { self.refresh(self) });
+			args.callbacks.push(function(delay) { self.refresh(self,delay) });
 
 			// Any selected?
 			if (selectedPks.length > 0) {
@@ -2041,10 +2041,11 @@ export default class DataTable {
 		}
 	}
 
-	refresh(obj) {
+	refresh(obj, delay) {
 
 		let url = undefined;
 		let self = undefined;
+		let millis = undefined;
 
 		if (obj != undefined) {
 			self = obj;
@@ -2053,19 +2054,24 @@ export default class DataTable {
 			self = this;
 		}
 
+
+		if (delay) {
+			millis = delay;
+		} 
+		else {
+			millis = 0;
+		}
+		
 		let grid = $$("dt-" + self.uid);
+		
+			grid.showProgress({
 
+					hide: false, type: "bottom"
+			});	
+		
+		setTimeout( function (){
+			
 		if (!webix.isUndefined(grid)) {
-
-
-			if(self.getGridOptions(GridOptions.REFRESH_BUTTON)){
-
-				grid.showProgress({
-
-					hide: true, type: "bottom"
-				});
-
-			}
 		 
 			if (this.dataGridParams) {
 
@@ -2078,18 +2084,20 @@ export default class DataTable {
 
 			webix.ajax(url).then(function(dat) {
 
+						grid.clearAll();
+
 				webix.delay(function() {
 
 					if (dat && dat.json) {
 
 						let data = dat.json();
 
-						if (data.data) {
+						
+						if (data && data.data) {
 
 							self.translateFieldValues(data.data);
 							self.convertDate(data.data);
 
-							grid.clearAll();
 							grid.parse(data.data);
 
 							self.restoreSort();
@@ -2097,14 +2105,14 @@ export default class DataTable {
 						}
 					}
 
-
 					self.getGridOptions(GridOptions.REFRESH_BUTTON) ? grid.hideProgress() : null;
 		
-
-
 				}, null, null, 1);
 			});
 		}
+		}, millis)
+
+
 	}
 
 	print_callback() {

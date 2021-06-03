@@ -6,11 +6,11 @@
 		"muteModalAction": 101604
 	},
 	"actionEndpoints": {
-		"mute": "alarms/send_alarm_muted_actions",
-		"unmute": "alarms/send_alarm_muted_actions"
+		"mute": "alarms/send_alarm_filtered_actions",
+		"unmute": "alarms/send_alarm_filtered_actions"
 	},
 	"restEndpoints": {
-		"alarmMuted": "alarms/alarm_muted/${id}",
+		"alarmMuted": "alarms/alarm_filtered/${id}",
 		"alarmsArray": "alarms"
 	},
 	"treeElementType": "1",

@@ -13,17 +13,16 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-class AdapterGridAlarmMuted extends AdapterGrid{
+class AdapterGridAlarmFiltered extends AdapterGrid{
 
 	static final String FIELD_ALIAS = "alias";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
-    static final String FIELD_MUTED_UNTIL = "mutedUntil";
     static final String FIELD_OBJECT_ELEMENT = "element";
     static final String FIELD_ELEMENT_ALIAS  = "elementAlias";
     static final String FIELD_OBJECT_ALARM_CONFIG = "alarmConfig";
 	static final String FIELD_ALARM_CONFIG_LABEL_ALIAS = "alarmConfigLabelAlias";
 
-	public AdapterGridAlarmMuted(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
+	public AdapterGridAlarmFiltered(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
 		super(cacheManager, vo2uiAdapter, log);
 	}
