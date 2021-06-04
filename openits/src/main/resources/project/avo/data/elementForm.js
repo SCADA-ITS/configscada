@@ -1,10 +1,46 @@
 export let columnsElementFormList = {
+	"ElementType:1": {
+		"rows": [
+			{ value: "ElementTypeParam:1:1:1", type: "string" },
+			{ value: "ElementTypeParam:1:1:2", type: "string" },
+			{ value: "ElementTypeParam:1:1:3", type: "string" },
+			{ value: "ElementTypeParam:1:1:4", type: "string" },
+		],
+		"rowCounts": 4,
+		"scroll": false,  //y -> vertical x -> horizontal, false or true 
+		"width": 540,
+		"options": {}  //particulary options for type
+	},
+	"ElementType:8": {
+		"rows": [
+			{ value: "ElementTypeParam:8:1:1", type: "string" },
+			{ value: "ElementTypeParam:8:1:2", type: "string" },
+			{ value: "ElementTypeParam:8:1:3", type: "string" },
+			{ value: "ElementTypeParam:8:1:4", type: "string" },
+		],
+		"rowCounts": 4,
+		"scroll": false,  //y -> vertical x -> horizontal, false or true 
+		"width": 540,
+		"options": {}  //particulary options for type
+	},
 	"ElementType:11": {
-		"rows":[		
-			{value: "ElementTypeParam:11:1:1", type:"string"},
-			{value: "ElementTypeParam:11:1:2", type:"string"},
-			{value: "ElementTypeParam:11:1:3", type:"string"},
-			{value: "ElementTypeParam:11:1:4", type:"string"},
+		"rows": [
+			{ value: "ElementTypeParam:11:1:1", type: "string" },
+			{ value: "ElementTypeParam:11:1:2", type: "string" },
+			{ value: "ElementTypeParam:11:1:3", type: "string" },
+			{ value: "ElementTypeParam:11:1:4", type: "string" },
+		],
+		"rowCounts": 4,
+		"scroll": false,  //y -> vertical x -> horizontal, false or true 
+		"width": 540,
+		"options": {}  //particulary options for type
+	},
+	"ElementType:13": {
+		"rows": [
+			{ value: "ElementTypeParam:13:1:1", type: "string" },
+			{ value: "ElementTypeParam:13:1:2", type: "string" },
+			{ value: "ElementTypeParam:13:1:3", type: "string" },
+			{ value: "ElementTypeParam:13:1:4", type: "string" },
 		],
 		"rowCounts": 4,
 		"scroll": false,  //y -> vertical x -> horizontal, false or true 
