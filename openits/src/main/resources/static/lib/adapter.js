@@ -480,7 +480,7 @@ export let adapter = {
 
 							itemOutput.orderStatusId = e.planOrderStateType.id;
 							itemOutput.orderStatus = e.planOrderStateType.alias;
-							itemOutput.orderResult = e.planOrderStateType.labelAlias;
+							itemOutput.orderResult = i18n.t(e.planOrderStateType.labelAlias);
 
 						} catch (error) {
 							itemOutput.orderStatusId = null;
@@ -500,7 +500,7 @@ export let adapter = {
 						}
 
 						itemOutput.orderAlias = e.alias;
-						itemOutput.orderExuctedAt = e.orderExuctedAt;
+						itemOutput.orderExecutedAt = e.orderExecutedAt;
 
 						listOutput.push(itemOutput);
 					});

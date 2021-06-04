@@ -5,13 +5,9 @@ import { adapter } from "../../lib/adapter.js";
 
 import { util } from "../../lib/util.js";
 
-const PLAN_ORDER_STATE_TYPE_ID_1 = "PlanOrderStateType:1";
-
 const PLAN_ORDER_ACTION_PLAY = "PLAY";
 const PLAN_ORDER_ACTION_STOP = "STOP";
 const PLAN_ORDER_ACTION_CANCEL = "CANCEL";
-
-const CONFIRM_WINDOW_SECONDS = 30;
 
 export default class PlanExecutor extends GenericModule {
 
@@ -62,9 +58,9 @@ export default class PlanExecutor extends GenericModule {
 			return {
 				view: "template",
 				template: function() {
-	
+
 					let icon = "<img src='img/loading.svg' align='center'>";
-	
+
 					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
 				}
 			}
@@ -87,13 +83,13 @@ export default class PlanExecutor extends GenericModule {
 
 				drawComponents();
 
-				if(self.ordersDataTable){
-				
+				if (self.ordersDataTable) {
+
 					self.ordersDataTable.callbacks();
 				}
 
 				connectWS();
-	
+
 				$$(self.uid).attachEvent("onDestruct", function() {
 
 					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
@@ -109,91 +105,121 @@ export default class PlanExecutor extends GenericModule {
 		function connectWS() {
 
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
+
 			if (stompSubscriptorService) {
-	
-				let fields = undefined;
-				
+
 				if (self.planId) {
-					
-					fields = [];
-	
-					fields.push({
-						target: "id",
-						values: [self.planId]
-					});
-									
-					self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage, fields);
+
+					let topic = self.config.topic + "." + self.planId;
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessage);
+
 				}
 			}
-	
+
 			function onMessage(stompData) {
-	
+
 				if (stompData) {
-	
+
 					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: self.planId })).then((data) => {
-	
+
 						let updateData = data.json();
-	
+
 						//Update header plan state
 						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(updateData.planStateType));
-						
+
 						//Update buttons enable/disable
 						self.config.actionButtons.forEach(btnConfig => {
-	
-							if(btnConfig.visible){
-								
-								if(self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)){
-	
-									$$("BTN-"+btnConfig.action+"-"+self.uid).enable();
-		
+
+							if (btnConfig.visible) {
+
+								if (self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)) {
+
+									$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
+
 								} else {
-		
-									$$("BTN-"+btnConfig.action+"-"+self.uid).disable();
+
+									$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
 								}
 							}
 						});
-	
+
 						//Update orders table
-						self.data.orders.forEach(order => {
-	
-							let updateOrder = updateData.orders.find(e => e.id === order.id);
-	
-							if(updateOrder.planOrderStateType != order.planOrderStateType){
-	
-								updateOrder.orderExuctedAt = new Date();
-								order = eval("adapter." + self.config.adapters.orders)([updateOrder], null);
-								self.ordersDataTable.update(order);
-	
-								if(self.config.confirmOrderTypes.includes(order.orderTypeId) && planOrderStateType.id == PLAN_ORDER_STATE_TYPE_ID_1){
-	
-									let confirmWindow = new ConfirmTempDialogBox( 
-										i18n.t("LBL_PLAN_CONFIRM_PLAN"), 
-										i18n.t("LBL_PLAN_CONFIRM_PLAN_DESCRIPTION"), 
-										CONFIRM_WINDOW_SECONDS, 
-										callBackAccept, 
-										callBackCancel, 
-										callBackAccept);
-	
-									function callBackAccept() {
-	
-										let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
-										btnConfig.confirm = false;
-										
-										open_module(btnConfig);
+						let ids = [];
+						self.data.planOrders.forEach(order => {
+
+							let updateOrder = updateData.planOrders.find(e => e.id === order.id);
+
+							if (updateOrder.planOrderStateType.id != order.planOrderStateType.id || !order.orderExecutedAt) {
+
+								if (updateOrder.planOrderStateType.id === self.config.planOrderStateTypes.running) {
+
+									ids.push(order.id);
+								}
+
+								order.planOrderStateType = updateOrder.planOrderStateType;
+
+								if (updateOrder.planOrderStateType.id != self.config.planOrderStateTypes.unknown &&
+									updateOrder.planOrderStateType.id != self.config.planOrderStateTypes.running) {
+
+									updateOrder.orderExecutedAt = new Date(Date.now());
+									order.orderExecutedAt = new Date(Date.now());
+								}
+
+								updateOrder = eval("adapter." + self.config.adapters.orders)([updateOrder], null);
+
+								self.ordersDataTable.update(updateOrder);
+
+								if (self.config.confirmationOrder.typeId === order.planOrderType.id &&
+									order.planOrderStateType.id === self.config.planOrderStateTypes.success) {
+
+									let waitingTime = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamWaitingTimeId) : undefined;
+									let message = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamMessageId) : undefined;
+
+									if (waitingTime && message && waitingTime.value && message.value) {
+
+										let confirmWindow = new ConfirmTempDialogBox(
+											i18n.t("LBL_PLAN_ORDER_TYPE_CONFIRM"),
+											i18n.t(message.value),
+											waitingTime.value,
+											callBackAccept,
+											callBackCancel,
+											callBackAccept);
+
+										function callBackAccept() {
+
+											let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
+											btnConfig.confirm = false;
+
+											open_module(btnConfig);
+										}
+
+										function callBackCancel() {
+
+											let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL);
+											btnConfig.confirm = false;
+
+											open_module(btnConfig);
+										}
+										confirmWindow.show();
 									}
-				
-									function callBackCancel() {
-										
-										let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL);
-										btnConfig.confirm = false;
-										
-										open_module(btnConfig);
-									}		
-									confirmWindow.show();
+
+
 								}
 							}
 						});
+
+						if (ids && ids.length > 0) {
+
+							self.ordersDataTable.select(ids);
+						}
+
+						if (self.config.resetTimer.includes(updateData.planStateType.id)) {
+							self.data.planOrders.forEach(order => {
+
+								order.orderExecutedAt = undefined;
+							});
+						}
+
 					});
 				}
 			}
@@ -202,7 +228,7 @@ export default class PlanExecutor extends GenericModule {
 		function drawComponents() {
 
 			$$("loading-" + self.uid).show();
-	
+
 			let viewMain = {
 				id: self.uid,
 				// view : "form",
@@ -216,16 +242,16 @@ export default class PlanExecutor extends GenericModule {
 			function getHeader() {
 
 				let header = {};
-		
+
 				header = {
-		
+
 					id: "viewHeader-" + self.uid,
-					rows:[
+					rows: [
 						{
 							cols: [
 								{
 									view: "label",
-									label: "<img src='../img/plan/plan.png' class='grid-icon'/>",
+									label: "<img src='./img/grid/plan.png' class='grid-icon'/>",
 									height: 75,
 									css: "global-header-icon"
 								},
@@ -240,7 +266,7 @@ export default class PlanExecutor extends GenericModule {
 								{
 									view: "label",
 									height: 75,
-									align:"right",
+									align: "right",
 									id: "label-state-" + self.uid,
 									template: getPlanStateTemplate(self.data.planStateType),
 									css: "global-header-label"
@@ -249,56 +275,56 @@ export default class PlanExecutor extends GenericModule {
 						}
 					]
 				};
-		
+
 				return header;
 			};
 
-			function getActionButtons(){
+			function getActionButtons() {
 
 				let buttonsGrid = {
 					id: "btns-" + self.uid,
 					cols: [
 					]
 				};
-		
+
 				self.config.actionButtons.forEach(button => {
-		
-					if(button.visible){
-					
-						buttonsGrid.cols.push( getButton(button) );
+
+					if (button.visible) {
+
+						buttonsGrid.cols.push(getButton(button));
 					}
 				});
-	
+
 				function getButton(btnConfig) {
-						
+
 					let button = {
-						id: "BTN-"+btnConfig.action+"-"+self.uid ,
+						id: "BTN-" + btnConfig.action + "-" + self.uid,
 						view: "button",
 						type: "icon",
 						width: 80,
 						on: {
 							onItemClick: () => {
-			
+
 								if (btnConfig.moduleAction) {
-									
+
 									open_module(btnConfig);
-								}		
+								}
 							}
 						},
-						autowidth : true
+						autowidth: true
 					};
-			
+
 					button.label = i18n.t(btnConfig.label);
 					button.tooltip = i18n.t(btnConfig.label);
 					button.icon = btnConfig.icon;
 					button.disabled = btnConfig.disabled;
 					button.css = btnConfig.css;
-					
+
 					return button;
 				}
-				
+
 				buttonsGrid.cols.push({});
-		
+
 				return buttonsGrid;
 			}
 
@@ -322,7 +348,7 @@ export default class PlanExecutor extends GenericModule {
 				function getTable() {
 
 					let data = self.orders;
-			
+
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 10 }, value: "false" },
 						// { gridOption: { id: 3 }, value: 1 },
@@ -334,9 +360,9 @@ export default class PlanExecutor extends GenericModule {
 						{ gridOption: { id: 9 }, value: "true" },
 						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
 						{ gridOption: { id: 21 }, value: "custom" },
-						{ gridOption: { id: 23 }, value: "false" }
+						{ gridOption: { id: 23 }, value: "true" }
 					];
-			
+
 					let metadata = {
 						filter: true,
 						label: "LBL_PLAN_ORDER_PROGRESS",
@@ -367,32 +393,36 @@ export default class PlanExecutor extends GenericModule {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_STATUS",
-								labelTooltip: "LBL_STATUS",
+								labelTooltip: "LBL_PLAN_ORDER_STATE",
 								needsTranslation: false,
 								parameterized: false,
 								position: 2,
 								required: false,
 								sourceField: "orderStatusId",
 								visible: true,
-								widthPx: 60,
+								widthPx: 40,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
 								},
 								gridFieldIcons: [
 									{
+										icon: "./img/grid/empty.png",
+										showValue: false,
+										value: "PlanOrderStateType:0"
+									},
+									{
 										icon: "./img/plan/right-arrow.png",
 										showValue: false,
 										value: "PlanOrderStateType:1"
 									},
 									{
-										icon: "./img/plan/check.png",
+										icon: "./img/grid/confirmed.png",
 										showValue: false,
 										value: "PlanOrderStateType:2"
 									},
 									{
-										icon: "./img/plan/error.png",
+										icon: "./img/grid/critical.png'",
 										showValue: false,
 										value: "PlanOrderStateType:3"
 									}
@@ -411,7 +441,6 @@ export default class PlanExecutor extends GenericModule {
 								sourceField: "orderTypeId",
 								visible: true,
 								widthPx: 40,
-								// fillspace: true,
 								adjust: false,
 								gridFieldDataType: {
 									id: 1,
@@ -466,8 +495,8 @@ export default class PlanExecutor extends GenericModule {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_PLAN_TYPE",
-								labelTooltip: "LBL_PLAN_TYPE",
+								label: "LBL_PLAN_ORDER_TYPE",
+								labelTooltip: "LBL_PLAN_ORDER_TYPE",
 								needsTranslation: false,
 								parameterized: false,
 								position: 4,
@@ -475,7 +504,6 @@ export default class PlanExecutor extends GenericModule {
 								sourceField: "orderTypeLabelAlias",
 								visible: true,
 								widthPx: 160,
-								// fillspace: true,
 								adjust: false,
 								gridFieldDataType: {
 									id: 1,
@@ -489,15 +517,15 @@ export default class PlanExecutor extends GenericModule {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_NAME",
-								labelTooltip: "LBL_NAME",
+								label: "LBL_PLAN_ORDER_ALIAS",
+								labelTooltip: "LBL_PLAN_ORDER_ALIAS",
 								needsTranslation: false,
 								parameterized: false,
 								position: 5,
 								required: true,
 								sourceField: "orderAlias",
 								visible: true,
-								widthPx: 200,
+								widthPx: 180,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
@@ -510,26 +538,33 @@ export default class PlanExecutor extends GenericModule {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_RESULT",
-								labelTooltip: "LBL_RESULT",
-								needsTranslation: true,
+								label: "LBL_PLAR_ORDER_STATE",
+								labelTooltip: "LBL_PLAR_ORDER_STATE",
+								needsTranslation: false,
 								parameterized: false,
 								position: 6,
 								required: true,
 								sourceField: "orderResult",
 								visible: true,
-								widthPx: 100,
+								widthPx: 120,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
 								},
-								gridFieldIcons: []
+								gridFieldIcons: [
+									{
+										showValue: false,
+										badgeColor: true,
+										avatar: false,
+										enabled: true
+									}
+								]
 							},
 							{
 								id: 102507,
 								extended: false,
 								filtered: false,
-								isEpochMilli: false,
+								isEpochMilli: true,
 								isPk: false,
 								label: "LBL_EXECUTED_AT",
 								labelTooltip: "LBL_EXECUTED_AT",
@@ -537,44 +572,43 @@ export default class PlanExecutor extends GenericModule {
 								parameterized: false,
 								position: 7,
 								required: true,
-								sourceField: "orderExuctedAt",
+								sourceField: "orderExecutedAt",
 								visible: true,
-								widthPx: 100,
+								widthPx: 170,
 								gridFieldDataType: {
-									id: 1,
-									name: "string"
+									id: 4,
+									name: "date"
 								},
-								gridFieldIcons: []
 							}
 						],
 						gridCommands: [
-							
+
 						]
-			
+
 					};
-			
+
 					self.ordersDataTable = new DataTable(null, null, metadata, data, null);
 
 					return self.ordersDataTable.getView();
 				};
-		
+
 				return dataTable;
 			}
-	
+
 			$$("loading-" + self.uid).hide();
-	
+
 			webix.ui(viewMain, $$(self.uid));
-	
+
 		}
-		
+
 		function open_module(btnConfig) {
-        
+
 			let module = findModuleByIdAction(btnConfig.moduleAction.id);
 			let args = {};
 			args.selectedPks = [self.planId];
 			args.planAction = btnConfig.action;
 			args.confirm = btnConfig.confirm;
-	
+
 			util.module.open(module, btnConfig.moduleAction, null, null, args);
 		}
 
@@ -582,12 +616,12 @@ export default class PlanExecutor extends GenericModule {
 
 			let planStateTemplate = '<div><span> </span></div>';
 
-			if(planStateType){
-		
-				let color = self.config.planStateTypes[planStateType.id].color;		
-				planStateTemplate = '<div><span class="table-badge" style="background:' + color + 'a0'+'; color: white;">'+ i18n.t(planStateType.labelAlias) + '</span></div>';
+			if (planStateType) {
+
+				let color = self.config.planStateTypes[planStateType.id].color;
+				planStateTemplate = '<div><span class="table-badge" style="background:' + color + 'a0' + '; color: white;">' + i18n.t(planStateType.labelAlias) + '</span></div>';
 			}
-			 
+
 			return planStateTemplate;
 		}
 

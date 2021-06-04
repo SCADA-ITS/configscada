@@ -6,9 +6,13 @@
 	"adapters": {
 		"orders": "ws.order.getList"
 	},
-	"confirmOrderTypes":[
-		"PlanOrderType:2"
-	],
+	
+	"confirmationOrder":{
+		"typeId": "PlanOrderType:2",
+		"typeParamWaitingTimeId": "PlanOrderTypeParam:2:1",
+		"typeParamMessageId": "PlanOrderTypeParam:2:2"
+	},
+		
 	"planStateTypes":{
 		"PlanStateType:0" : {
 			"color" : "#989898",
@@ -39,6 +43,16 @@
 			"actions" : ["PLAY"]
 		}
 	}, 
+	
+	"resetTimer"  : ["PlanStateType:3", "PlanStateType:4", "PlanStateType:6"],
+	
+	"planOrderStateTypes": {
+		"unknown" : "PlanOrderStateType:0",
+		"running" : "PlanOrderStateType:1",
+		"success" : "PlanOrderStateType:2",
+		"failed" : "PlanOrderStateType:3"
+	}, 
+	
 	"actionButtons": [
 		{
 			"action": "PLAY",
