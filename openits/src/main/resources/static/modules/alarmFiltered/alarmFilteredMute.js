@@ -41,10 +41,10 @@ export default class AlarmFilteredMute {
 						if (counter === arrAlarms.length) {
 
 							webix.confirm({
-								title: i18n.t("LBL_ALARM_UNMUTE/ENABLE_CONFIRM"),
+								title: i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM"),
 								ok: i18n.t("LBL_YES"),
 								cancel: i18n.t("LBL_NO"),
-								text: i18n.t("LBL_ALARM_UNMUTE/ENABLE_CONFIRM_DESCRIPTION"),
+								text: i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"),
 								width: 600
 							}).then(function() {
 
@@ -106,7 +106,7 @@ export default class AlarmFilteredMute {
 
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then((data) => {
 
-											parent.args.callbacks[0](2000);
+											parent.args.callbacks[0](1000);
 
 										});
 									}
@@ -141,13 +141,15 @@ export default class AlarmFilteredMute {
 
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.unmute, body).then((data) => {
 
-							parent.args.callbacks[0](2000);
+							parent.args.callbacks[0](1000);
 
 						});
 					}
 				}
 			}
 		}
+		
+
 
 	}
 
