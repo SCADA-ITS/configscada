@@ -71,6 +71,9 @@ public class GridField implements Serializable {
 
 	@Column(name="width_px")
 	private Integer widthPx;
+	
+	@Column(name="precision_filter")
+	private Integer precisionFilter;
 
 	//bi-directional many-to-one association to GridFieldIcon
 	@OneToMany(mappedBy="gridField")
@@ -384,6 +387,14 @@ public class GridField implements Serializable {
 
 	public void setReplacementFunction(String replacementFunction) {
 		this.replacementFunction = replacementFunction;
+	}
+
+	public Integer getPrecisionFilter() {
+		return this.precisionFilter;
+	}
+
+	public void setPrecisionFilter(Integer precisionFilter) {
+		this.precisionFilter = precisionFilter;
 	}
 
 }

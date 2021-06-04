@@ -428,8 +428,32 @@ export default class DataTable {
 								}
 							}
 							else if (value != undefined) {
+								
+								if (field.precisionFilter && field.precisionFilter > 0 && field.gridFieldDataType.id === DataType.DECIMAL.value){
+									
+									let parseValue = (typeof(value) === DataType.STRING.sort) ? parseFloat(value) : value;
+										
+									 let precisionValue = parseValue.toFixed(field.precisionFilter);
+									
+									if (state != undefined) {
 
-								if (state != undefined) {
+									//let iconElementState = "ElementValueState_" + state + ".png";
+									let iconElementState = state.replace(":", "_") + ".png";
+
+									return `<div style="width: ${field.widthPx}">
+												<span>${precisionValue}</span>		
+												<img class="table-field-icons" src="./img/state/${iconElementState}" 
+													 onerror="this.onerror=null; this.style.display = 'none'"/>
+											</div>`
+								}  
+								else {
+
+									return `<span class="table-row-text">${precisionValue}</span>`;
+								}
+
+									}
+
+								else if (state != undefined) {
 
 									//let iconElementState = "ElementValueState_" + state + ".png";
 									let iconElementState = state.replace(":", "_") + ".png";

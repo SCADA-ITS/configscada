@@ -88,6 +88,31 @@ class MeasureItem {
 					}
 					
 					let value = elementValue.value ? elementValue.value : '-';
+					
+					if(elementValue.elementTypeParam.precision){
+						
+						if(value != "-"){
+						
+						let posComma = value.indexOf(',');
+						let posDot = value.indexOf('.');
+						
+						   if(posComma === -1){
+						     
+							value = value;
+						   }
+						
+						   if(posDot === -1){
+						    
+						    value =value.replace(/\,/g, '.');
+						   }
+						
+					}
+							
+						let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
+						value = parseValue.toFixed(elementValue.elementTypeParam.precision);	
+					}
+					
+					
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
 					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
