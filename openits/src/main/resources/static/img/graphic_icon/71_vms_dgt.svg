@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="157.05498mm"
    height="37.984333mm"
    viewBox="0 0 157.05498 37.984333"
    version="1.1"
    id="svg2"
-   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="71_vms_dgt.svg">
+   inkscape:version="1.1 (ce6663b3b7, 2021-05-25)"
+   sodipodi:docname="71_vms_dgt.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,23 +25,24 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.502526"
-     inkscape:cx="264.22264"
-     inkscape:cy="61.916877"
-     inkscape:document-units="mm"
+     inkscape:cx="264.22172"
+     inkscape:cy="61.895768"
+     inkscape:document-units="px"
      inkscape:current-layer="zone2"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1870"
+     inkscape:window-height="900"
+     inkscape:window-x="48"
+     inkscape:window-y="23"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0">
     <sodipodi:guide
        position="-180.62162,108.35736"
        orientation="0,-1"
@@ -59,7 +60,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -86,7 +86,6 @@
          d="M 2.0259449,2.397778 H 35.778945 v 33.753 H 2.0259449 Z"
          id="path191" />
       <image
-         sodipodi:absref="C:\project\ausol\img\pictograms\80.bmp"
          xlink:href="../../../project/ausol/img/pictograms/80.bmp"
          width="24"
          height="24"
@@ -106,18 +105,18 @@
          id="path195" />
       <text
          xml:space="preserve"
-         style="font-size:4.7625px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-size:4.7625px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
          x="78.827835"
          y="9.7999954"
          id="line2-1"><tspan
            sodipodi:role="line"
            x="78.827835"
            y="9.7999954"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.7625px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.7625px;font-family:monospace;-inkscape-font-specification:monospace;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
            id="tspan24">ABGCDEFGHIJLMNOPQRSTUVWXYZ</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:4.7625px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-size:4.7625px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
          x="78.827835"
          y="20.562502"
          id="line2-2"><tspan
@@ -128,7 +127,7 @@
            id="tspan24-6">1234567890!&quot;·$%&amp;/()=?¿*ÇÑA</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:4.7625px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-size:4.7625px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
          x="78.827835"
          y="31.32501"
          id="line2-3"><tspan
@@ -153,7 +152,6 @@
          d="m 121.009,2.397778 h 33.753 v 33.752805 h -33.753 z"
          id="path215" />
       <image
-         sodipodi:absref="C:\project\ausol\img\pictograms\321.bmp"
          xlink:href="../../../project/ausol/img/pictograms/321.bmp"
          width="24"
          height="24"

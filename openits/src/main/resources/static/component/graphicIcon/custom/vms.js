@@ -38,24 +38,27 @@ export default class Vms extends GraphicIconCustomType {
 		this.linesBlinking = [];
 		this.graphicsBlinking = [];
 		this.animateReady = false;
+		this.eventsReady = false;
 		this.isAlternance = false;
 		this.isBlinking = false;
-		
+	
 		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
 	}
-	
+
 	render(elementInfo) {
 		
 		let self = this;
 		
 		this.elementInfo = elementInfo;
-		
+			
 		let jsonData = this.getValue(PARAM_JSON_VALUE);
 		
 		if (!jsonData) {
 			
 			jsonData = this.jsonDataFake;
 		}
+		
+		enableEvents();
 				
 		if (this.gState) {
 			
@@ -80,12 +83,12 @@ export default class Vms extends GraphicIconCustomType {
 			
 			if (zoneData) {
 				
-				renderGraphics(zoneData);
-				renderLines(zoneData);	
+				renderGraphics();
+				renderLines();	
 			}
 			
 						
-			function renderGraphics(zoneData) {
+			function renderGraphics() {
 				
 				let gGraphic;
 				let graphicId = 0;
@@ -111,7 +114,7 @@ export default class Vms extends GraphicIconCustomType {
 				}
 			}
 			
-			function renderLines(zoneData) {
+			function renderLines() {
 				
 				let gLine;
 				let lineId = 0;
@@ -172,17 +175,29 @@ export default class Vms extends GraphicIconCustomType {
 			}
 		}
 		
-		function getElementData(zoneId, elementType, id) {
+		function getFontInfo(zoneId) {
 			
-			let elementData;
-			let zoneData = getZoneData(zoneId);
+			let fontInfo = undefined;
 			
-			if (zoneData && Array.isArray(zoneData[elementType])) {
+			let gZone = self.g.select("#" + G_ID_ZONE_PREFIX + zoneId);
+			
+			if (gZone) {
 				
-				elementData = zoneData[elementType].find(e => e.id == id);
-			} 
+				const firstLineId = 1;
+				
+				let gLine = gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + firstLineId);
+				
+				if (gLine) {
+					
+					fontInfo = {
+						
+						"font-family": gLine.attr("font-family"),
+						"font-size": gLine.attr("font-size")
+					}
+				}
+			}
 			
-			return elementData;
+			return fontInfo;
 		}
 		
 		function getZoneData(zoneId) {
@@ -195,6 +210,57 @@ export default class Vms extends GraphicIconCustomType {
 			}
 			
 			return zoneData;
+		}
+		
+		function getZoneDataInitialized(zoneId) {
+		
+			let zoneData = {
+				zone: zoneId
+			};
+			
+			let gZone;
+			
+			if (gZone = self.g.select("#" + G_ID_ZONE_PREFIX + zoneId)) {
+
+				let graphicId = 0;
+				
+				while (gZone.select("#" + G_ID_GRAPHIC_PREFIX + zoneId + "-" + (++graphicId))) {
+					
+					if (!zoneData.graphic) {
+						
+						zoneData.graphic = [];
+					}
+					
+					zoneData.graphic.push({ id: graphicId });
+				}
+				
+				let lineId = 0;
+				
+				while (gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
+					
+					if (!zoneData.text) {
+						
+						zoneData.text = [];
+					}
+					
+					zoneData.graphic.push({ id: lineId });
+				}
+			}
+			
+			return zoneData;
+		}
+		
+		function getElementData(zoneId, elementType, id) {
+			
+			let elementData;
+			let zoneData = getZoneData(zoneId);
+			
+			if (zoneData && Array.isArray(zoneData[elementType])) {
+				
+				elementData = zoneData[elementType].find(e => e.id == id);
+			} 
+			
+			return elementData;
 		}
 		
 		// Alternance and flashing
@@ -300,6 +366,147 @@ export default class Vms extends GraphicIconCustomType {
 						}
 					}
 				});
+			}
+		}
+		
+		function enableEvents() {
+			
+			if (self.eventsReady) {
+				
+				return;
+			}
+			else {
+				
+				self.eventsReady = !self.eventsReady;
+			}
+			
+			if (self.events) {
+				
+				let gZone;
+				let zoneId = 0;
+				
+				while(gZone = self.g.select("#" + G_ID_ZONE_PREFIX + (++zoneId))) {
+	
+					enableEdit(gZone, zoneId);
+					enableDelete(gZone, zoneId);
+				}	
+			}
+			
+			function enableEdit(gZone, zoneId) {
+			
+				if (self.events[GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC]) {
+					
+					let g = self.s.g();
+	
+					let gEditButton = g.image("img/graphic_icon/resources/pencil.svg", 
+												gZone.getBBox().cx + gZone.getBBox().width / 2 - (gZone.getBBox().height * 0.2) * 2, 
+												gZone.getBBox().height * 0.1,
+												gZone.getBBox().height * 0.2,
+												gZone.getBBox().height * 0.2);
+												
+					gEditButton.attr( {cursor: "pointer" });
+					
+					createTooltip(gEditButton, i18n.t("LBL_EDIT"));
+					
+					gZone.append(gEditButton);
+					
+					gEditButton.click(function(e) {
+						
+						let zoneData = getZoneData(zoneId);
+						
+						if (!zoneData) {
+							
+							zoneData = getZoneDataInitialized(zoneId);
+						}
+						
+						let fontInfo = getFontInfo(zoneId);
+						
+						let zoneInfo = {
+							w: gZone.getBBox().width,
+							h: gZone.getBBox().height,
+							fontInfo: fontInfo
+						}
+						
+						eval(self.events[GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC])(zoneData, zoneInfo);
+					});
+				}
+			}
+			
+			function enableDelete(gZone, zoneId) {
+				
+				if (self.events[GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC]) {
+					
+					let g = self.s.g();
+	
+					let gDeleteButton = g.image("img/graphic_icon/resources/clear.svg", 
+												gZone.getBBox().cx + gZone.getBBox().width / 2 - (gZone.getBBox().height * 0.2) * 1, 
+												gZone.getBBox().height * 0.1,
+												gZone.getBBox().height * 0.2,
+												gZone.getBBox().height * 0.2);
+					gZone.append(gDeleteButton);
+					
+					gDeleteButton.attr( {cursor: "pointer" });
+					
+					createTooltip(gDeleteButton, i18n.t("LBL_CLEAR"));
+					
+					gDeleteButton.click(function(e) {
+						
+						let zoneData = getZoneData(zoneId);
+						
+						if (!zoneData) {
+							
+							zoneData = getZoneDataInitialized(zoneId);
+						}
+						
+						eval(self.events[GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC])(zoneData);
+					});
+				}
+			}
+			
+			function createTooltip(gButton, text) {
+				
+				let tooltip = document.createElement("div");
+				tooltip.setAttribute("id", "graphic-icon-tooltip-2");
+				tooltip.setAttribute("class", "graphic-icon-tooltip-simple");
+				tooltip.setAttribute("display", "none");
+				tooltip.setAttribute("style", "position: absolute; display: none;");
+				document.body.appendChild(tooltip);
+								
+				gButton.hover(
+					function(e) { 
+						
+						showTooltip(e, text);
+					},
+					function() {
+						
+						hideTooltip();
+					}
+				);
+			}
+			
+			function showTooltip(e, text) {
+				
+				let tooltip = document.getElementById("graphic-icon-tooltip");
+				
+				if (tooltip) {
+					
+					tooltip.innerHTML = `<div>${text}</div>`;
+											
+					tooltip.style.display = "block";
+					tooltip.style.left = e.pageX + 10 + 'px';
+					tooltip.style.top = e.pageY + 10 + 'px';
+					tooltip.style.zIndex = 99999;	
+				}
+			}
+			
+			function hideTooltip() {
+				
+				var tooltip = document.getElementById("graphic-icon-tooltip");
+				
+				if (tooltip) {
+				
+					tooltip.style.display = "none";	
+				}
 			}
 		}
 	}

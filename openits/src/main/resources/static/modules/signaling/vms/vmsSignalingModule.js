@@ -1,6 +1,9 @@
 import GenericModule from "../../../modules/genericModule.js";
+import VmsSignalingContent from "./vmsSignalingContent.js";
+import VmsSignalingTree from "./vmsSignalingTree.js";
+import { util } from "../../../lib/util.js";
 
-const TREE_PANEL_WIDTH = 275;
+const TREE_PANEL_WIDTH = 325;
 
 export default class VmsSignalingModule extends GenericModule {
 
@@ -9,9 +12,10 @@ export default class VmsSignalingModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
-		this.vmsSignallingTree = undefined;
-		this.vmsSignallingContent = undefined;
-		self.element = undefined;
+		this.vmsSignalingTree = undefined;
+		this.vmsSignalingContent = undefined;
+		self.currentElement = undefined;
+		self.elements = undefined;
 	}
 
 	loadData() {
@@ -24,36 +28,51 @@ export default class VmsSignalingModule extends GenericModule {
 			$$(this.uid).hide();
 		}
 		
-		function load(element) {
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.vms.type })).then(function(elementsResponse) {
+			
+			if (elementsResponse != null) {
+						
+				self.elements = elementsResponse.json();
+				
+				if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+				
+					self.currentElement = getElementFromElementId(self.args.selectedPks[0]); 
+				}
+				
+				load();
+			}
+		});
+		
+		function load() {
 			
 			let view = {};
 			
-			self.element = element;
-				
-			let container = $$(self.args.containerId);
-
-			if (container) {
+//			let container = $$(self.args.containerId);
+//
+//			if (container) {
+//			
+//				util.ui.setWindowTitle(container, i18n.t(self.currentElement.elementType.labelDescription) + " - " + self.currentElement.alias);
+//			}
 			
-				util.ui.setWindowTitle(container, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias);
-			}
-			
-			view = drawMain(self.element);
+			view = drawMain();
 			
 			$$("loading-" + self.uid).hide();
 			$$(self.uid).show();
 			
 			webix.ui(view, $$(self.uid));
 			
-			if (self.element) {
+			if (!self.currentElement) {
 				
-				if (self.VmsSingallingTree) {
+				self.currentElement = self.elements[0];
+			}
+			
+			if (self.vmsSignalingTree) {
 				
-					self.VmsSingallingTree.select(self.element);
-				}
+				self.vmsSignalingTree.select(self.currentElement);
 			}
 		}
 		
-		function drawMain(element) {
+		function drawMain() {
 			
 			let container = $$(self.args.containerId);
 
@@ -67,12 +86,8 @@ export default class VmsSignalingModule extends GenericModule {
 				cols: []
 			};
 			
-			let viewMainTreeHierarchyHidden = true;
+			let viewMainTreeHierarchyHidden = (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1);
 			
-			if (self.vmsSignaling) {
-				
-				viewMainTreeHierarchyHidden = (self.args.selectedPks.length === 1);
-			}
 
 			let viewMainTreeHierarchy = {
 				id: "view-main-tree-hierarchy-" + self.uid,
@@ -125,29 +140,16 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view = {};
 				
-				self.vmsSignallingTree = new VmsSingallingTree(self, element, onSelectElement);
+				self.vmsSignalingTree = new VmsSignalingTree(self.elements, self.currentElement, onSelectElement);
 				
-				view = self.vmsSignallingTree.getView();
+				view = self.vmsSignalingTree.getView();
 				
 				return view;
 			}
 			
 			function getElementFromElementId(elementId) {
 				
-				if (self.element) {
-					
-					if (self.element.id === elementId) {
-						
-						return self.element;
-					}
-					else {
-						
-						if (Array.isArray(self.element.childs) && self.element.childs.length > 0) {
-							
-							return self.element.childs.find(child => child.id === elementId);
-						}
-					}
-				}
+				return self.elements.find(e => e.id === elementId);
 			}
 			
 			function onSelectElement(elementId) {
@@ -155,27 +157,27 @@ export default class VmsSignalingModule extends GenericModule {
 				$$("view-main-body-" + self.uid).hide();
 				$$("view-main-loading-" + self.uid).show();
 				
-				let elem = getElementFromElementId(elementId);
+				self.currentElement = getElementFromElementId(elementId);
 				
 				$$("view-main-body-" + self.uid).show();
 					
-				webix.ui(getViewContent(elem), $$("view-main-content-" + self.uid));
+				webix.ui(getViewContent(), $$("view-main-content-" + self.uid));
 				
-				if (self.vmsSignallingContent) {
+				if (self.vmsSignalingContent) {
 						
-					self.vmsSignallingContent.loadData();
+					self.vmsSignalingContent.loadData();
 				}
 				
 				$$("view-main-loading-" + self.uid).hide();
 			}
 			
-			function getViewContent(element) {
+			function getViewContent() {
 				
 				let view = {};
 				
-				self.vmsSignallingContent = new VmsSinganallingContent(self, element);
+				self.vmsSignalingContent = new VmsSignalingContent(self, self.currentElement);
 				
-				view = self.vmsSignallingContent.getView();
+				view = self.vmsSignalingContent.getView();
 				
 				return view;
 			}

@@ -1,5 +1,28 @@
 {
 	"moduleAction": {
 	    "elements": 102601
-	}
+	},
+	"restEndpoints": {
+		"elementsByType": "element_types/${id}/elements"
+	},
+	"vms": {
+		"type": "ElementType:71",
+		"jsonData": "ElementTypeParam:71:2:3",
+		"jsonConfig": "ElementTypeParam:71:1:7"
+	},
+	"properties": [
+		{
+			"id": "ElementSubtype:1:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_dgt.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"blinking": true,
+			"textColor": true,
+			"textAlign": true
+		}
+	]
 }

@@ -234,7 +234,7 @@ export default class GraphicIcon {
 			
 			self.g.attr({
 		        visibility: "visible",
-				cursor: "pointer"
+				cursor: self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW ? "pointer" : "auto"
 		    });
 
 			s.add(self.g);

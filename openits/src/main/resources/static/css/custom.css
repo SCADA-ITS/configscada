@@ -2384,6 +2384,15 @@ p {
     padding: 5px 0px 0px 15px;
 }
 
+.graphic-icon-tooltip-simple{
+	background: cornsilk;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 5px;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+}
+
 .cronui-resume{
 	width: 778px !important;
 	height: 75px !important;
