@@ -2624,3 +2624,19 @@ p {
 	float:left;
 	padding-top: 7px;
 }
+
+.webix_menu-x.dt-submenu .webix_list_item {
+	background-color: transparent !important;
+	color: #94a1b3 !important; 
+	width: 34px !important;	
+	height: 34px !important;
+	padding: 0px 0px 0px 10px;
+}
+
+.webix_menu-x.dt-submenu .webix_list_item:hover {
+	background-color: #F4F5F9 !important;
+	color: #475466 !important;
+	border-radius: 50%;
+	background-size: 85% 85% !important;
+}
+

@@ -785,6 +785,7 @@ export default class DataTable {
 
 		let metadata = this.metadata;
 		let dataGridId = this.dataGridId;
+		let self = this;
 
 		let resultCommons = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMONS);
 		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
@@ -884,17 +885,60 @@ export default class DataTable {
 			toolbar.elements.push({ width: 8 });
 			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-			metadata.gridCommands.forEach(cmd => {
+			let groupedMenu = metadata.gridCommands.filter(e => e.grouped);
+			let noGroupedMenu = metadata.gridCommands.filter(e => !e.grouped);
 
-				if (cmd.showText) {
+			if (noGroupedMenu && noGroupedMenu.length > 0) {
 
-					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, css: "grid-button-text", width: 120, label: i18n.t(cmd.label), tooltip: i18n.t(cmd.label) });
+				noGroupedMenu.forEach(cmd => {
 
-				} else {
+					if (cmd.showText) {
 
-					toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "icon", icon: cmd.icon, value: i18n.t(cmd.label), tooltip: true });
-				}
-			});
+						toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, css: "grid-button-text", width: 120, label: i18n.t(cmd.label), tooltip: i18n.t(cmd.label) });
+
+					} else {
+
+						toolbar.elements.push({ id: "tb_btn-" + this.uid + "_" + cmd.id, view: "icon", icon: cmd.icon, value: i18n.t(cmd.label), tooltip: true });
+					}
+				});
+			}
+
+			if (groupedMenu && groupedMenu.length > 0) {
+
+				let subMenu = {
+					view: "menu",
+					id: "my_menu" + this.uid,
+					autowidth: true,
+					width: 34,
+					height: 34,
+					css: "dt-submenu",
+					subMenuPos: "down",
+					data: [
+						{ value: "", icon: "mdi mdi-expand-all", css: "dt-submenu-icon", submenu: [] },
+					],
+					on: {
+						onMenuItemClick: function(id) {
+							
+							let gridCommand = metadata.gridCommands.find(e => {
+								return e.id == id.split("_")[2];
+							});
+
+							if (gridCommand) {
+								self.open_module(gridCommand);
+							}
+						}
+					}
+				};
+
+				groupedMenu.forEach(cmd => {
+
+					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label) });
+
+				});
+
+				toolbar.elements.push(subMenu);
+
+			}
 		}
 
 		toolbar.elements.push({});
