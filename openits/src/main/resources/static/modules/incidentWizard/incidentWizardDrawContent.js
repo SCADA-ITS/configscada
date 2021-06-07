@@ -107,20 +107,18 @@ export default class IncidentWizardDrawContent {
 							label: i18n.t("LBL_STRETCHS")
 						},
 						{ 
-							borderless: false,
 							cols: [
-								{ width: 1, borderless: false },
 								{
+									css: {"border": "1px solid #dadee0 !important", "box-sizing": "border-box"},
 									rows: [
-										{ height: 1, borderless: false },
+										{ height: 1, borderless: true },
 										parent.listViewStrechs.getView(),
-										{ height: 2, borderless: false }
+										{ height: 2, borderless: true }
 									]
-								},
-								{ width: 1, borderless: false }
+								}
 							]
 						},
-						{ height: 1, borderless: false }
+						{ height: 1, borderless: true }
 					]
 				};
 			}
@@ -182,18 +180,17 @@ export default class IncidentWizardDrawContent {
 						css: "headers",
 						label: i18n.t("LBL_LOCATIONS")
 					},
-					{ height: 5 },
+					{ height: 5, css: {"border-left": "1px solid #dadee0 !important", "border-right": "1px solid #dadee0 !important", "box-sizing": "border-box"} },
 					{ 
-						borderless: false,
+						borderless: true,
 						cols: [
-							{ width: 1, borderless: false },
 							{
+								css: {"border": "1px solid #dadee0 !important", "border-top":"none !important", "box-sizing": "border-box"},
 								rows: parent.dtLocations.getView()
-							},
-							{ width: 1, borderless: false }
+							}
 						]
 					},
-					{ height: 1, borderless: false }
+					{ height: 1, borderless: true }
 				]
 			};
 			
@@ -312,20 +309,18 @@ export default class IncidentWizardDrawContent {
 							label: i18n.t("LBL_INCIDENT_GROUPS")
 						},
 						{ 
-							borderless: false,
 							cols: [
-								{ width: 1, borderless: false },
 								{
+									css: {"border": "1px solid #dadee0 !important", "box-sizing": "border-box"},
 									rows: [
-										{ height: 1, borderless: false },
+										{ height: 1, borderless: true },
 										parent.listViewIncidentGroups.getView(),
-										{ height: 2, borderless: false }
+										{ height: 2, borderless: true }
 									]
-								},
-								{ width: 1, borderless: false }
+								}
 							]
 						},
-						{ height: 1, borderless: false }
+						{ height: 1, borderless: true }
 					]
 				};
 			}
@@ -427,18 +422,17 @@ export default class IncidentWizardDrawContent {
 						css: "headers",
 						label: i18n.t("LBL_INCIDENT_TYPES")
 					},
-					{ height: 5 },
+					{ height: 5 ,css: {"border-left": "1px solid #dadee0 !important", "border-right": "1px solid #dadee0 !important", "box-sizing": "border-box"}},
 					{ 
-						borderless: false,
+						borderless: true,
 						cols: [
-							{ width: 1, borderless: false },
 							{
+								css: {"border": "1px solid #dadee0 !important", "border-top":"none !important", "box-sizing": "border-box"},
 								rows: parent.dtIncidentTypes.getView()
-							},
-							{ width: 1, borderless: false }
+							}
 						]
 					},
-					{ height: 1, borderless: false }
+					{ height: 1, borderless: true }
 				]
 			};
 			
