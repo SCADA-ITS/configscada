@@ -134,6 +134,14 @@ export default class GraphicIconCustom extends GraphicIcon {
 		}
 	}
 	
+	stop() {
+		
+		if (this.graphicIconCustomType) {
+			
+			this.graphicIconCustomType.stop();
+		}
+	}
+	
 	updateAlarms(alarms) {
 		
 		super.updateAlarms(alarms);

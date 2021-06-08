@@ -18,6 +18,11 @@ export default class GraphicIconCustomType {
 		throw new Error("Method 'render(elementInfo)' must be implemented.");
 	}
 	
+	stop() {
+		
+		
+	}
+	
 	visible(value) {
 		
 		throw new Error("Method 'visible(value)' must be implemented.");

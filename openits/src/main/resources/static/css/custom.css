@@ -1920,6 +1920,28 @@ p {
 	border-right: 1px solid #e2e2e2; 
 }
 
+.global-header {
+	background: var(--blue-mid2-opacity-1);
+}
+
+.global-header .icon {
+	width: 100px !important;
+	padding: 10px 30px;
+}
+
+.global-header .icon img{
+	width: 32px !important;
+	height: 32px !important;
+}
+
+.global-header .label {
+	padding-top: 17px;
+	margin-bottom: 20px;
+	font-size: 16px;
+	font-weight: 500;
+	font-family: Roboto;
+}
+
 .global-header-icon {
 	width: 100px !important;
 	padding: 10px 30px;
@@ -2640,3 +2662,27 @@ p {
 	background-size: 85% 85% !important;
 }
 
+.toolbar-button-text .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border: 1px;
+	border-radius: 5px;
+	background: transparent;
+	font-size: 16px;
+	color: var(--blue-headers);
+	border: 1px solid var(--blue-headers-not-sel);
+}
+
+.toolbar-button-text .webix_button:hover {
+	background: var(--blue-headers-not-sel);
+	border-radius: 5px; 
+	color: var(--blue-headers);
+}
+
+.toolbar-button-text .webix_button .webix_icon_btn {
+	font-size: 20px;
+	color: var(--blue-headers);
+}

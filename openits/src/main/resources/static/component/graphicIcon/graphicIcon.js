@@ -304,6 +304,10 @@ export default class GraphicIcon {
 			gSel.attr({ visibility: "hidden" });
 		}
 	}
+	
+	stop() {
+		
+	}
 
 	hide() {
 		

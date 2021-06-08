@@ -175,7 +175,7 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view = {};
 				
-				self.vmsSignalingContent = new VmsSignalingContent(self, self.currentElement);
+				self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement);
 				
 				view = self.vmsSignalingContent.getView();
 				

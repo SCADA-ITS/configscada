@@ -83,7 +83,9 @@ export default class OpenMap extends GenericMap {
 							if (stompSubscriptorService && self.idStompSubscriptor) {
 		
 								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
-							}					
+							}	
+							
+							stop();				
 						}
 					}
 				},
@@ -91,6 +93,25 @@ export default class OpenMap extends GenericMap {
 				{ id: "map-toolbar-actions-" + self.uid },
 				{ id: "map-window-actions-" + self.uid }
 			]
+		}
+		
+		function stop() {
+			
+			if (self.graphicIcons) {
+														
+				self.graphicIcons.forEach(function(value, key) {
+					
+					let graphicIcons = value;
+					
+					if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+						
+						graphicIcons.forEach(graphicIcon => {
+							
+							graphicIcon.stop();
+						});
+					}
+				});
+			}
 		}
 			
 		function getSvgId(layerElement, layerElementZoom) {

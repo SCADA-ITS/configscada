@@ -41,8 +41,26 @@ export default class Vms extends GraphicIconCustomType {
 		this.eventsReady = false;
 		this.isAlternance = false;
 		this.isBlinking = false;
+		
+		this.intervalAlternanceId = undefined;
+		this.intervalBlinkingId = undefined;
 	
 		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
+		
+		this.jsonData = undefined;
+	}
+	
+	stop() {
+		
+		if (this.intervalAlternanceId) {
+			
+			clearInterval(this.intervalAlternanceId);	
+		}
+		
+		if (this.intervalBlinkingId) {
+			
+			clearInterval(this.intervalBlinkingId);	
+		}
 	}
 
 	render(elementInfo) {
@@ -50,12 +68,28 @@ export default class Vms extends GraphicIconCustomType {
 		let self = this;
 		
 		this.elementInfo = elementInfo;
-			
-		let jsonData = this.getValue(PARAM_JSON_VALUE);
+	
+		let value = this.getValue(PARAM_JSON_VALUE);
 		
-		if (!jsonData) {
+		if (!value) {
 			
-			jsonData = this.jsonDataFake;
+			self.jsonData = this.jsonDataFake;
+		}
+		else {
+			
+			if (!self.jsonData || (self.jsonData && JSON.stringify(self.jsonData) != value)) {
+				
+				self.jsonData = JSON.parse(value);
+				
+				self.linesAlternance = [];
+				self.graphicsAlternance = [];
+				self.linesBlinking = [];
+				self.graphicsBlinking = [];
+				//self.animateReady = false;
+				self.eventsReady = false;
+				self.isAlternance = false;
+				self.isBlinking = false;
+			}
 		}
 		
 		enableEvents();
@@ -132,7 +166,7 @@ export default class Vms extends GraphicIconCustomType {
 						
 						if (zoneData.flashing_on_ms || zoneData.flashing_off_ms) {
 							
-							self.graphicsBlinking.push(zoneId + "-" + graphicId);
+							self.linesBlinking.push(zoneId + "-" + lineId);
 						}
 					
 						renderLine(gLine, lineData);
@@ -204,9 +238,9 @@ export default class Vms extends GraphicIconCustomType {
 			
 			let zoneData;
 			
-			if (Array.isArray(jsonData) && jsonData.length > 0) {
+			if (Array.isArray(self.jsonData) && self.jsonData.length > 0) {
 				
-				zoneData = jsonData.find(e => e.zone == zoneId);
+				zoneData = self.jsonData.find(e => e.zone == zoneId);
 			}
 			
 			return zoneData;
@@ -275,7 +309,7 @@ export default class Vms extends GraphicIconCustomType {
 				self.animateReady = !self.animateReady;
 			}
 					
-			setInterval(function(){
+			self.intervalAlternanceId = setInterval(function(){
 				
 				animateAlternance(ZONE_ELEMENT_TYPE.line);
 				animateAlternance(ZONE_ELEMENT_TYPE.graphic);
@@ -284,7 +318,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 			}, TIME_ANIMATION_MS);
 
-			setInterval(function(){
+			self.intervalBlinkingId = setInterval(function(){
 				
 				animateBlinking(ZONE_ELEMENT_TYPE.line);
 				animateBlinking(ZONE_ELEMENT_TYPE.graphic);
