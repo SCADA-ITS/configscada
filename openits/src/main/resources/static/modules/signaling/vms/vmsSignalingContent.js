@@ -42,18 +42,21 @@ export default class VmsSignalingContent {
 								{}
 							]
 						},
-						{ width: 20 }
+						{}
+//						{ width: 20 }
 					]
 				},
 				{
 					cols: [
-						{ width: 20 },
+//						{ width: 20 },
+						{},
 						getViewActions(),	
 						{ width: 20 }
 					],	
 				},
 				{ height: 10 }
 			]
+			
 		};
 		
 		function getViewHeader() {

@@ -4,15 +4,15 @@ import VmsSignalingTextEditor from "./vmsSignalingTextEditor.js";
 import VmsSignalingGraphicEditor from "./vmsSignalingGraphicEditor.js";
 import { util } from "../../../lib/util.js";
 
-const jsonDataFakeArray = [
-	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
-	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":99901}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":99900}]}],
-	[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
-];
-
 export default class VmsSignalingComposer {
 
 	constructor(config, element) {
+		
+		const jsonDataFakeArray = [
+			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":99901}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":99900}]}],
+			[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
+		];
 
 		this.config = config;
 		this.element = element;
@@ -81,8 +81,14 @@ export default class VmsSignalingComposer {
 					
 					let events = {};
 	
-					events[GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC] = onZoneEditClic;
-					events[GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC] = onZoneDeleteClic;
+					events[GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC] = function(zoneData, zoneInfo) {
+						
+						onZoneEvent(GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC, zoneData, zoneInfo);
+					};
+					events[GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC] = function(zoneData) {
+						
+						onZoneEvent(GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC, zoneData);
+					};
 					
 					self.graphicIconInstance = new mod.default(layerElement, self.element, container, events);
 					
@@ -93,9 +99,7 @@ export default class VmsSignalingComposer {
 							self.jsonData = self.getJsonDataInitialized();
 							
 							if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
-								
-								//self.graphicIconInstance.updateValues(self.element.elementValues);
-								
+																
 								self.update();
 							}
 						});
@@ -105,7 +109,7 @@ export default class VmsSignalingComposer {
 				lazy();	
 			}
 			
-			function onZoneEditClic(zoneData, zoneInfo) {
+			function onZoneEvent(eventType, zoneData, zoneInfo) {
 				
 				let configPanel = getConfigPanel();
 				
@@ -115,9 +119,13 @@ export default class VmsSignalingComposer {
 					
 					if (zoneConfig) {
 						
-						zoneConfig.w = zoneInfo.w;
-						zoneConfig.h = zoneInfo.h;
-						zoneConfig.fontInfo = zoneInfo.fontInfo;
+						if (zoneInfo) {
+						
+							zoneConfig.w = zoneInfo.w;
+							zoneConfig.h = zoneInfo.h;
+							zoneConfig.fontInfo = zoneInfo.fontInfo;	
+						}
+						
 						zoneConfig.properties = property;
 						
 						let zoneEditor;
@@ -125,12 +133,23 @@ export default class VmsSignalingComposer {
 						if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_TEXT) {
 							
 							zoneEditor = new VmsSignalingTextEditor(zoneConfig, zoneData, onZoneDataChange);
-							
-							zoneEditor.show();
 						}
 						else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
+
+							zoneConfig.graphics = getGraphics(zoneConfig.vms_group_id);
 							
-							zoneEditor = new VmsSignalingGraphicEditor(zoneConfig, zoneData, onZoneDataChange);
+							if (zoneConfig.graphics) {
+								
+								zoneConfig.pictogramsPath = self.config.vms.pictogramsPath;
+								zoneConfig.pictogramsExtension = self.config.vms.pictogramsExtension;
+								zoneConfig.pictogramsSize = self.config.vms.pictogramsSize;
+								
+								zoneEditor = new VmsSignalingGraphicEditor(zoneConfig, zoneData, onZoneDataChange);	
+							}
+							else {
+							
+								// TODO ERROR: No pictograms associated to zone	
+							}
 						}
 						else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
 							
@@ -140,16 +159,20 @@ export default class VmsSignalingComposer {
 							
 							// TODO ERROR: UNKNOWN ZONE TYPE
 						}
+						
+						if (zoneEditor) {
+							
+							if (eventType === GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC) {
+								
+								zoneEditor.show();
+							}
+							else if (eventType === GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC) {
+								
+								zoneEditor.delete();
+							}
+						}
 					}
 				}
-				
-				
-				//console.log(zoneData);
-			}
-			
-			function onZoneDeleteClic(zoneData) {
-				
-				console.log(zoneData);
 			}
 			
 			function onZoneDataChange(newZoneData) {
@@ -157,6 +180,33 @@ export default class VmsSignalingComposer {
 				console.log(newZoneData);
 				
 				self.updateZone(newZoneData);
+			}
+			
+			function getGraphics(vmsGroupId) {
+				
+				let graphics = undefined;
+				
+				if (Array.isArray(self.element.graphicGroups) && self.element.graphicGroups.length > 0) {
+							
+					let graphicGroup = self.element.graphicGroups.find(e => e.id.split(":")[1] == vmsGroupId);
+					
+					if (graphicGroup && Array.isArray(graphicGroup.graphics) && graphicGroup.graphics.length > 0) {
+						
+						graphics = graphicGroup.graphics.map(e => e.id.split(":")[2]);
+						
+						graphics = graphicGroup.graphics.map(e => {
+							
+							let graphic = {
+								id: e.id.split(":")[2],
+								group: (e.graphicCategory && e.graphicCategory.labelAlias) ? i18n.t(e.graphicCategory.labelAlias) : null
+							};
+							
+							return graphic;
+						});
+					}
+				}
+				
+				return graphics;
 			}
 			
 			function getConfigPanel() {

@@ -142,9 +142,9 @@ export default class Vms extends GraphicIconCustomType {
 							
 							self.graphicsBlinking.push(zoneId + "-" + graphicId);
 						}
-					
-						renderGraphic(gGraphic, graphicData);
 					}
+					
+					renderGraphic(gGraphic, graphicData);
 				}
 			}
 			
@@ -168,9 +168,9 @@ export default class Vms extends GraphicIconCustomType {
 							
 							self.linesBlinking.push(zoneId + "-" + lineId);
 						}
-					
-						renderLine(gLine, lineData);
 					}
+					
+					renderLine(gLine, lineData);
 				}
 			}
 		}
@@ -182,6 +182,11 @@ export default class Vms extends GraphicIconCustomType {
 				if (lineData) {
 					
 					let text = lineData.val ? lineData.val : lineData.value;
+					
+					if (!text) {
+						
+						text = "";
+					}
 									
 					gLine.attr( { text: text, fill: lineData.color ? lineData.color : DEFAULT_TEXT_COLOR } );
 				}

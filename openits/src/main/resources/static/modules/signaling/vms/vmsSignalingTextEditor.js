@@ -493,4 +493,31 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		
 		initialize();
 	}
+	
+	delete() {
+		
+		let self = this;
+	
+		let data = {
+			zone: this.data.zone,
+			text: function() {
+				
+				let textArray = [];
+				
+				if (Array.isArray(self.data.text) && self.data.text.length > 0) {
+					
+					let id = 0;
+					
+					while (id++ < self.data.text.length) {
+					
+						textArray.push({id: id});	
+					} 
+				}
+				
+				return textArray;
+			}()
+		};
+		
+		this.onZoneDataChange(data);
+	}
 }	

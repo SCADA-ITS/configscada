@@ -8,7 +8,10 @@
 	"vms": {
 		"type": "ElementType:71",
 		"jsonData": "ElementTypeParam:71:2:3",
-		"jsonConfig": "ElementTypeParam:71:1:7"
+		"jsonConfig": "ElementTypeParam:71:1:7",
+		"pictogramsPath": "img/pictograms",
+		"pictogramsExtension": ".bmp",
+		"pictogramsSize": 64
 	},
 	"properties": [
 		{
@@ -25,7 +28,7 @@
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
 			"textColor": true,
-			"defaultTextColor": "#ffffff",
+			"defaultTextColor": "#FFFFFF",
 			"textAlign": true
 		}
 	]
