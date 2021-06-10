@@ -1,0 +1,29 @@
+{
+	"moduleAction": {
+	    "tunnel": 102701,
+	    "tubo": 102702,
+		"fan": 102703
+	},
+	"restEndpoints": {
+		"elementsByIdType": "element_types/${id}/elements",
+		"elementById": "elements/${id}"
+	},
+	"adapters": {
+		"fans": "ws.fans.getList"
+	},
+	"elementType": "ElementType:2001",
+	"elementTypeChilds" :[
+		"ElementType:2000"
+	],
+	"params":{
+		"availableRegime": "ElementTypeParam:2000:1:1",
+		"actualRegime": "ElementTypeParam:2000:2:2", 
+		"proposedRegime" : "ElementTypeParam:2000:2:2",
+		"ventilationMode" : "ElementTypeParam:2000:2:1"
+	},
+	"availableVentilationModes" :[
+		{"id": 0, "label" : "LBL_MANUAL", "disable" : false},
+		{"id": 2, "label" : "LBL_AUTO", "disable" : true},	
+		{"id": 1, "label" : "LBL_AUTO_MAINTENANCE", "disable" : true}
+	]
+}

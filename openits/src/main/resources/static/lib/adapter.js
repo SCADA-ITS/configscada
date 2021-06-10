@@ -513,6 +513,46 @@ export let adapter = {
 
 				return listOutput;
 			}
+		},
+
+		fans: {
+
+			getList(data, update_callback) {
+
+				let listOutput = [];
+
+				if (data != undefined && Array.isArray(data) && data.length > 0) {
+
+					data.forEach(e => {
+
+						let itemOutput = {};
+
+						itemOutput.id = e.id;
+						itemOutput.alias = e.alias;
+
+						try {
+
+							itemOutput.statusId = e.elementTypeState.id;
+							itemOutput.statusLabelAlias = e.elementTypeState.labelAlias;
+							itemOutput.statusColor = e.elementTypeState.color;
+
+						} catch (error) {
+							itemOutput.statusId = null;
+							itemOutput.statusLabelAlias = "LBL_EMPTY";
+							itemOutput.statusColor = null;
+						}
+
+						listOutput.push(itemOutput);
+					});
+
+					if (update_callback) {
+
+						update_callback(listOutput);
+					}
+				}
+
+				return listOutput;
+			}
 		}
 
 	}

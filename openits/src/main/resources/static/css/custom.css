@@ -1975,6 +1975,21 @@ p {
 	padding-left: 75px ;
 }
 
+.global-text {
+	margin: 6px 0px;
+	font-size: 14px;
+	padding-bottom: 12px;
+	font-family: Roboto;
+}
+
+.global-text .webix_inp_label{
+	margin: 6px 0px;
+	padding-bottom: 6px;
+	font-size: 14px;
+	padding-bottom: 12px;
+	font-family: Roboto;
+}
+
 .role-form{
 	width: 724px !important;
 	height: 325px !important;
@@ -2686,4 +2701,25 @@ p {
 .toolbar-button-text .webix_button .webix_icon_btn {
 	font-size: 20px;
 	color: var(--blue-headers);
+}
+
+.button-cta .webix_button{
+	width: 130px !important;
+	height: 35px;
+    border-radius: 2px;
+    background: #ff9800 !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: white !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button-cta .webix_button:hover{
+    background: #ffdaa2 !important;
+}
+
+.button-cta .webix_button .webix_icon_btn{
+	color: white;
 }
