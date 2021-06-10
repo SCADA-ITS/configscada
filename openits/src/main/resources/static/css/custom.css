@@ -2481,6 +2481,7 @@ p {
 .auxiliary-tab .webix_item_tab:not(.webix_selected) {
 	width: 150px !important;    
 	color: #babdb6;
+	box-shadow: none;
 	background-color: transparent;
 }
 

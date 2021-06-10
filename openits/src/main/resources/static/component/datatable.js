@@ -433,27 +433,11 @@ export default class DataTable {
 									
 									let parseValue = (typeof(value) === DataType.STRING.sort) ? parseFloat(value) : value;
 										
-									 let precisionValue = parseValue.toFixed(field.precisionFilter);
-									
-									if (state != undefined) {
+									value = parseValue.toFixed(field.precisionFilter);
 
-									//let iconElementState = "ElementValueState_" + state + ".png";
-									let iconElementState = state.replace(":", "_") + ".png";
-
-									return `<div style="width: ${field.widthPx}">
-												<span>${precisionValue}</span>		
-												<img class="table-field-icons" src="./img/state/${iconElementState}" 
-													 onerror="this.onerror=null; this.style.display = 'none'"/>
-											</div>`
-								}  
-								else {
-
-									return `<span class="table-row-text">${precisionValue}</span>`;
 								}
 
-									}
-
-								else if (state != undefined) {
+								if (state != undefined) {
 
 									//let iconElementState = "ElementValueState_" + state + ".png";
 									let iconElementState = state.replace(":", "_") + ".png";
@@ -546,12 +530,6 @@ export default class DataTable {
 
 				datatable.data = data;
 
-				let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
-
-				if (resultCommands) {
-					this.drawContextButtonAction(datatable);
-
-				}
 			}
 
 			//layout.push({ height: 8 });
@@ -907,20 +885,22 @@ export default class DataTable {
 
 				let subMenu = {
 					view: "menu",
-					id: "my_menu" + this.uid,
+					id: "subMenu" + this.uid,
 					autowidth: true,
+					openAction: "click",
 					width: 34,
 					height: 34,
 					css: "dt-submenu",
 					subMenuPos: "down",
 					data: [
-						{ value: "", icon: "mdi mdi-expand-all", css: "dt-submenu-icon", submenu: [] },
+						{ value: "", icon: "mdi mdi-dots-vertical", submenu: [] },
 					],
 					on: {
 						onMenuItemClick: function(id) {
-							
-							let gridCommand = metadata.gridCommands.find(e => {
-								return e.id == id.split("_")[2];
+
+							let gridCommand = metadata.gridCommands.find(element => {
+			
+								return id.endsWith(element.moduleAction.id);
 							});
 
 							if (gridCommand) {
@@ -932,8 +912,7 @@ export default class DataTable {
 
 				groupedMenu.forEach(cmd => {
 
-					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label) });
-
+					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.moduleAction.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label)});
 				});
 
 				toolbar.elements.push(subMenu);
@@ -984,54 +963,66 @@ export default class DataTable {
 		return toolbar;
 	}
 
-	drawContextButtonAction(datatable) {
+	drawContextButtonAction() {
 
 		let ctxMenuData = [];
 		let self = this;
 		let metadata = this.metadata;
 		let data = this.data;
+		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
 
-		if (metadata.gridCommands && data) {
+		if (metadata.gridCommands && resultCommands) {
 
 			metadata.gridCommands.forEach(cmd => {
 
-				ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+				if (data != undefined) {
+
+					ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
+
+				} else {
+					
+					let addModule = metadata.gridCommands.find(e => e.itemRequired === false);
+					
+					if (addModule) {
+
+						ctxMenuData.push({ id: addModule.id, value: i18n.t(addModule.label), icon: addModule.icon, default: addModule.default_ });
+					}
+				}
 			});
 
 			if (ctxMenuData.length > 0) {
-				datatable.ready = function() {
-					webix.ui({
-						view: "contextmenu",
-						id: "ctx_menu-" + self.uid,
-						width: 300,
-						data: ctxMenuData,
-						template: (obj) => {
 
-							if (!obj.default) {
-								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
-							}
-							else {
-								return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
-							}
+				webix.ui({
+					view: "contextmenu",
+					id: "ctx_menu-" + self.uid,
+					width: 300,
+					data: ctxMenuData,
+					master: $$("dt-" + self.uid).$view,
+					template: (obj) => {
 
-						},
-						on: {
-							onMenuItemClick: function(id) {
+						if (!obj.default) {
+							return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
+						}
+						else {
+							return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
+						}
 
-								
-								let gridCommand = metadata.gridCommands.find(e => {
-									return e.id === this.getItem(id).id
-								});
-								
-								if (gridCommand) {
-								
-									self.open_module(gridCommand);
-								}
+					},
+					on: {
+						onMenuItemClick: function(id) {
+
+							let gridCommand = metadata.gridCommands.find(e => {
+								return e.id === this.getItem(id).id
+							});
+
+							if (gridCommand) {
+
+								self.open_module(gridCommand);
 							}
 						}
-						
-					}).attachTo(this);
-				};
+					}
+
+				});
 			}
 		}
 	}
@@ -1779,6 +1770,7 @@ export default class DataTable {
 		this.restoreSelected();
 		this.sortDatatable();
 		this.filterDatatable();
+		this.drawContextButtonAction();
 	}
 
 	on_destroy() {

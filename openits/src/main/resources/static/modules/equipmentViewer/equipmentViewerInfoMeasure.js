@@ -87,31 +87,22 @@ class MeasureItem {
 						icon = "not_found_50.png";
 					}
 					
-					let value = elementValue.value ? elementValue.value : '-';
+					let value = '-';
 					
-					if(elementValue.elementTypeParam.precision){
+					if (elementValue.value) {
 						
-						if(value != "-"){
-						
-						let posComma = value.indexOf(',');
-						let posDot = value.indexOf('.');
-						
-						   if(posComma === -1){
-						     
-							value = value;
-						   }
-						
-						   if(posDot === -1){
-						    
-						    value =value.replace(/\,/g, '.');
-						   }
-						
-					}
+						value = elementValue.value;
+					
+						if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.decimal && 
+						    elementValue.elementTypeParam.precision) {
 							
-						let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
-						value = parseValue.toFixed(elementValue.elementTypeParam.precision);	
-					}
-					
+							value = value.replace(",", ".");
+							
+							let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
+							
+							value = parseValue.toFixed(elementValue.elementTypeParam.precision);
+						}	
+					}	
 					
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);

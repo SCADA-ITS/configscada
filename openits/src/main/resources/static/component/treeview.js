@@ -413,52 +413,77 @@ export default class TreeView {
 				
 				if (viewGroupCommands.length > 0) {
 					
-					let viewButtonGroupCommand = { 
-						view: "icon", 
-						icon: "mdi mdi-dots-vertical", 
-						popup: "groupCommands-" + self.uid
-					};
+//					let viewButtonGroupCommand = { 
+//						view: "icon", 
+//						icon: "mdi mdi-dots-vertical", 
+//						popup: "groupCommands-" + self.uid
+//					};
 					
+					let viewButtonGroupCommand = {
+						view: "menu",
+						id: "groupCommands-" + self.uid,
+						autowidth: true,
+						openAction: "click",
+						width: 34,
+						height: 34,
+						css: "dt-submenu",
+						subMenuPos: "down",
+						data: [
+							{ value: "", icon: "mdi mdi-dots-vertical", submenu: viewGroupCommands },
+						],
+						on: {
+							onMenuItemClick: function(id) {
+								
+									let item = viewGroupCommands.find(e => e.id == id);
+									
+									if(item != undefined){
+									executeTreeCommand(item.treeCommandId);	
+									this.unselectAll();	
+								}
+							}
+						}
+				};
+							
 					tbActionView.elements.push(viewButtonGroupCommand);
 					
-					webix.ui({
-  						view: "popup",
-					  	id: "groupCommands-" + self.uid,
-					  	//width:300,
-					  	body:{
-						
-							view: "list", 
-					    	data: viewGroupCommands,
-							borderless: true,
-					    	type: {
-
-								template: function(obj) {
-		
-									if (!obj.default) {
-										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
-									}
-									else {
-										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
-									}
-								}
-							},
-					    	autoheight:true,
-							autowidth:true,
-					    	select:true,
-							on: {
-								onAfterSelect: function(id) {
-									
-									let item = this.getItem(id);
-									
-									executeTreeCommand(item.treeCommandId);
-									
-									this.unselectAll();
-									this.getParentView().hide();			
-								}
-							}	    
-					  	}
-					});
-					
+//					webix.ui({
+//  						view: "popup",
+//					  	id: "groupCommands-" + self.uid,
+//					  	//width:300,
+//					  	body:{
+//						
+//							view: "list", 
+//					    	data: viewGroupCommands,
+//							borderless: true,
+//					    	type: {
+//
+//								template: function(obj) {
+//		
+//									if (!obj.default) {
+//										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
+//									}
+//									else {
+//										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
+//									}
+//								}
+//							},
+//					    	autoheight:true,
+//							autowidth:true,
+//					    	select:true,
+//							on: {
+//								onAfterSelect: function(id) {
+//									
+//									let item = this.getItem(id);
+//									
+//									executeTreeCommand(item.treeCommandId);
+//									
+//									this.unselectAll();
+//									this.getParentView().hide();			
+//								}
+//							}	    
+//					  	}
+//					});
+//					
 					
 				}
 			}

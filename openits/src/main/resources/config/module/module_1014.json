@@ -18,6 +18,13 @@
 		"config": "ParamType:1",
 		"measure": "ParamType:2"
 	},
+	"dataType": {
+		"integer": "DataType:1",
+		"alphanumeric": "DataType:2",
+		"decimal": "DataType:3",
+		"timestamp": "DataType:4",
+		"boolean": "DataType:5"
+	},
 	"stateValue": {
 		"initialized": "ElementValueState:1",
 		"online": "ElementValueState:2",
