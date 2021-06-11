@@ -1,22 +1,33 @@
 const DefaultOptionValues = { 
 	1: true,
 	2: true,
-	3: 66
+	3: 66,
+	4: 128
 };
+
+const DrawMode = {
+	DETAIL: "DETAIL",
+	COMPACT: "COMPACT",
+	IMAGE: "IMAGE"
+};
+
+const HeightCompact = 45;
 
 export default class ListView {
 
-	constructor(data, options, events) {
+	constructor(data, options, events, mode) {
 
 		this.uid = webix.uid();
 		this.data = data;
 		this.options = options;
 		this.events = events;
+		this.mode = mode;
 	}
 
 	getView() {
 
 		let self = this;
+		let mode = getMode(ListView.Mode.VIEW);
 
 		let view = {
 			id: "listview-" + this.uid,
@@ -62,6 +73,16 @@ export default class ListView {
 		function getList() {
 
 			let list;
+			let height;
+
+			if (mode === DrawMode.DETAIL) {
+				
+				height = getOptions(ListView.Options.ROW_HEIGHT);
+				
+			} else if (mode === DrawMode.COMPACT) {
+				
+				height = HeightCompact;
+			}
 
 			if (Array.isArray(self.data) && self.data.length > 0) {
 
@@ -69,33 +90,44 @@ export default class ListView {
 					view: "list",
 					id: "list-" + self.uid,
 					select: true,
+					tooltip: 
+						function(obj) {
+							if (mode === DrawMode.COMPACT || mode === DrawMode.IMAGE) {
+								return obj.description;
+							} else {
+								return "";
+							}
+						}
+						,
 					type: {
 
 						template: function(obj) {
 
-							let html = "";
-							let marginTop = 0;
+							return drawElements(obj);
 							
-							if (getOptions(ListView.Options.ICON)) {
-								
-								let image = obj.image;
-																
-								html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
-							}
-							
-							if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
-								
-								marginTop = Math.round((getOptions(ListView.Options.ROW_HEIGHT) - DefaultOptionValues[ListView.Options.ROW_HEIGHT]) / 2); 
-							}
-							
-							html += `<div class="text" style="margin-top: ${marginTop}px">
-								  		<span class="list-first-line">${obj.alias} </span>
-								  		<span class="list-second-line">${obj.description} </span>
-									</div>`; 
-
-							return html;
+							//							let html = "";
+							//							let marginTop = 0;
+							//							
+							//							if (getOptions(ListView.Options.ICON)) {
+							//								
+							//								let image = obj.image;
+							//																
+							//								html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+							//							}
+							//							
+							//							if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
+							//								
+							//								marginTop = Math.round((getOptions(ListView.Options.ROW_HEIGHT) - DefaultOptionValues[ListView.Options.ROW_HEIGHT]) / 2); 
+							//							}
+							//							
+							//							html += `<div class="text" style="margin-top: ${marginTop}px">
+							//								  		<span class="list-first-line">${obj.alias} </span>
+							//								  		<span class="list-second-line">${obj.description} </span>
+							//									</div>`; 
+							//
+							//							return html;
 						},
-						height: getOptions(ListView.Options.ROW_HEIGHT)
+						height: height
 					},
 					data: self.data,
 					on: {
@@ -117,7 +149,8 @@ export default class ListView {
 
 			return list;
 		}
-		
+
+
 		function getOptions(option) {
 			
 			let value = undefined;
@@ -133,6 +166,76 @@ export default class ListView {
 			}
 			
 			return value;
+		}
+
+
+		function getMode(viewMode) {
+
+			let value = undefined;
+
+			if (self.mode) {
+
+			let arrDrawMode = Object.values(DrawMode);			
+			let view = arrDrawMode.find(e => e === self.mode[viewMode]);
+			
+			value = (view) ? self.mode[viewMode] : DrawMode.DETAIL;
+
+			}
+
+			if (value === undefined) {
+
+				value = DrawMode.DETAIL;
+			}
+
+			return value;
+		}
+
+
+		function drawElements(obj) {
+
+			let html = "";
+			let image = obj.image;
+
+			if (mode === DrawMode.DETAIL || mode === undefined || mode === null) {
+
+				let marginTop = 0;
+
+				if (getOptions(ListView.Options.ICON)) {
+
+					html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+				}
+
+				if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
+
+					marginTop = Math.round((getOptions(ListView.Options.ROW_HEIGHT) - DefaultOptionValues[ListView.Options.ROW_HEIGHT]) / 2);
+				}
+
+				html += `<div class="text" style="margin-top: ${marginTop}px">
+								  		<span class="list-first-line">${obj.alias} </span>
+								  		<span class="list-second-line">${obj.description} </span>
+									</div>`;
+
+			} else if (mode === DrawMode.COMPACT) {
+
+				html = `<image style="width:25px; height:25px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+
+				html += `<div class="text">
+								<span class="list-first-line">${obj.alias} </span>
+							</div>`;
+
+			} else if (mode === DrawMode.IMAGE) {
+
+				let heightIcon = getOptions(ListView.Options.ICON_HEIGHT);
+
+				html = `<image style="width:${heightIcon}px; height:${heightIcon}px; display: block; padding-top: 7px; margin: 0 auto" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+
+				html += `<div class="text" style="margin-top: 5px">
+								 <span class="list-first-line" style="text-align: center; padding-left: 0px">${obj.alias}</span>
+							</div>`;
+			}
+
+			return html;
+
 		}
 
 		return view;
@@ -308,3 +411,23 @@ Object.defineProperty(ListView.Options, 'ROW_HEIGHT', {
 	enumerable: true,
 	configurable: false
 });
+
+Object.defineProperty(ListView.Options, 'ICON_HEIGHT', {
+	value: 4,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView, 'Mode', {
+	value: {}
+});
+
+
+Object.defineProperty(ListView.Mode, 'VIEW', {
+	value: 1,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
