@@ -560,6 +560,8 @@ export default class IncidentReportModule extends GenericModule {
 									ireportType.incidentTypeCauses.forEach(item => {
 										causesOptions.push({ id: item.id, value: item.alias });
 									});
+									
+									causesOptions.push({ id: "ImsIncidentTypeCause:7:1000", value: "-" });
 
 									body.push({
 										height: 27,
@@ -2657,7 +2659,7 @@ export default class IncidentReportModule extends GenericModule {
 					taskDetailsBody,
 					{
 						view: "toolbar",
-						height: 55,
+						height: 45,
 						cols: [
 							{},
 							{
@@ -2674,8 +2676,8 @@ export default class IncidentReportModule extends GenericModule {
 									}
 
 								})(),
-								height: 50,
-								width: 150,
+								height: 41,
+								width: 130,
 								label: (function() {
 
 									return i18n.t("LBL_INCIDENT_END_TASK");
