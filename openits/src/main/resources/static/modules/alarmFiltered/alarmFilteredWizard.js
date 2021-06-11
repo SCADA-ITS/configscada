@@ -47,8 +47,6 @@ export default class AlarmFilteredWizard {
 		let h = document.documentElement.clientHeight - 270;
 		let w = document.documentElement.clientWidth - 750;
 
-		console.log("Wizard alarm filter width = " + w);
-
 		this.createView = util.ui.loadWindow(
 			i18n.t("LBL_CREATE_ALARMS_FILTER"),
 			view,
@@ -143,6 +141,8 @@ export default class AlarmFilteredWizard {
 
 			let drawStepCreateTreeGrid = function() {
 
+				let aconfitArray = [];
+				
 				let viewContent = {
 					id: "treeGridStepView" + parent.uid,
 					cols: []
@@ -159,14 +159,13 @@ export default class AlarmFilteredWizard {
 						events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 
 							self.tableAlarmsModal.clear();
-							$$("calendar1-undefined").setValue(new Date());
 
 							let element = window.em.getByField(EntityType.ELEMENT, undefined, item.id);
 							self.alarmMutedElementSelect = element;
 
 							let elementTypeId = element.elementType.id;
 							let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-							let aconfitArray = alarmConfig.find(e => e.elementType.id === elementTypeId);
+							aconfitArray = alarmConfig.filter(e => e.elementType.id === elementTypeId);
 
 							if (aconfitArray != undefined) {
 
@@ -184,10 +183,6 @@ export default class AlarmFilteredWizard {
 										row.alarmLevelLabelAlias = i18n.t(alarmsConfig[i].alarmLevel.labelAlias);
 
 										self.tableAlarmsModal.add(row);
-
-										self.arrSummary.alarmConfigAlias = row.alarmConfigAlias;
-										self.arrSummary.alarmLevelLabelAlias = row.alarmLevelLabelAlias;
-
 									}
 								} else {
 
@@ -199,9 +194,6 @@ export default class AlarmFilteredWizard {
 									row.alarmLevelLabelAlias = i18n.t(aconfitArray.alarmLevel.labelAlias);
 
 									self.tableAlarmsModal.add(row);
-
-									self.arrSummary.alarmConfigAlias = row.alarmConfigAlias;
-									self.arrSummary.alarmLevelLabelAlias = row.alarmLevelLabelAlias;
 								}
 							}
 						};
@@ -294,6 +286,14 @@ export default class AlarmFilteredWizard {
 
 								$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterSelect", function(selection, preserve) {
 									$$("button-next-" + position + "-" + parent.uid).enable();
+									$$("calendar1-undefined").setValue(new Date());
+									
+									let alarmSelected = aconfitArray.find(e => e.id === selection.id);
+									
+									if (alarmSelected){
+										self.arrSummary.alarmConfigAlias = alarmSelected.alias;
+										self.arrSummary.alarmLevelLabelAlias = i18n.t(alarmSelected.alarmLevel.labelAlias);										
+									}
 								});
 
 								$$(self.treeView.getView().rows[3].id).attachEvent("onAfterSelect", function(id) {
@@ -633,10 +633,9 @@ export default class AlarmFilteredWizard {
 									self.arrSummary.filteredUntil = date;
 									self.arrSummary.user = user.name;
 
-
 									$$("alarm-name").setValue(`<div><span class="ico webix_icon mdi mdi-exclamation-thick" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_ALARM")}</span></div><div class="value">${self.arrSummary.alarmConfigAlias}</div>`);
 									$$("alarm-level").setValue(`<div><span class="ico webix_icon mdi mdi-signal-cellular-3" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div><div class="value">${self.arrSummary.alarmLevelLabelAlias}</div>`);
-									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value" style="max-width: 300px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis">${self.arrSummary.filteredUntil}</div>`);
+									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value">${self.arrSummary.filteredUntil}</div>`);
 									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${self.arrSummary.user}</div>`);
 
 									let titleSummary = (self.arrSummary.alarmDisabled) ? `<div><span style="font-size: 13px">${i18n.t("LBL_ALARM_FILTER_RADIO_DISABLED")}</span></div>` : `<div><span style="font-size: 14px; color: #475466">${i18n.t("LBL_ALARM_FILTER_RADIO_MUTE")}</span></div>`;
@@ -655,11 +654,11 @@ export default class AlarmFilteredWizard {
 									width: 600
 								}).then(function() {
 
-									let mutedAlarms = [];
+									let filteredAlarms = [];
 
 									self.tableAlarmsModal.getSelectedIds().forEach(alarm => {
 
-										mutedAlarms.push({
+										filteredAlarms.push({
 
 											alarmConfigId: alarm,
 											filteredUntil: self.calendar.getSelectedDates().from.getTime(),
@@ -670,11 +669,11 @@ export default class AlarmFilteredWizard {
 										});
 									});
 
-									if (Array.isArray(mutedAlarms) && mutedAlarms.length > 0) {
+									if (Array.isArray(filteredAlarms) && filteredAlarms.length > 0) {
 
 										let body = {
 
-											alarmFiltereds: mutedAlarms
+											alarmFiltereds: filteredAlarms
 										};
 
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then(function(data) {
@@ -716,10 +715,6 @@ export default class AlarmFilteredWizard {
 					label: i18n.t("LBL_PREVIOUS"),
 					on: {
 						onItemClick() {
-
-							let pos = parent.config.gridStepPosition;
-
-							console.log(pos, step.position)
 
 							$$("multi" + parent.uid).back();
 

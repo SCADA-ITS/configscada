@@ -2,7 +2,6 @@ import GenericModule from "../modules/genericModule.js";
 import InputDialogBox from "../component/inputDialogBox.js";
 import TreeView from "../component/treeview.js";
 import DataTable from "../component/datatable.js";
-import CalendarDialogBox from "../component/calendarDialogBox.js";
 import { util } from "../lib/util.js";
 
 export default class AlarmModule extends GenericModule {
@@ -313,22 +312,16 @@ export default class AlarmModule extends GenericModule {
 
 				let view = {};
 
-				let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-				let alarmConfigManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
-	
-				let elemntTypeList = [];
-				alarmConfigManual.forEach(e => {
-					elemntTypeList.push(e.elementType.id);
-				});
-	
-				elemntTypeList = [...new Set(elemntTypeList)].sort((a,b)=>parseInt(a.split(":")[1])-parseInt(b.split(":")[1]));
-	
+				let alarmsConfig = window.em.getAll(EntityType.ALARM_CONFIG);
+				let alarmsConfigManual = alarmsConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
+		
 				let data = [];
+				let elementsTree = [];
 				let elements = window.em.getAll(EntityType.ELEMENT);
 	
-				elemntTypeList.forEach(e => {
-	
-					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", e);
+				alarmsConfigManual.forEach(e => {
+						
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", e.elementType.id);
 	
 					let parent = {
 						id: elementType.id,
@@ -340,9 +333,16 @@ export default class AlarmModule extends GenericModule {
 							translate: false
 						}
 					}
-	
-					let elementsTree = elements.filter(item => item.elementType.id === e);
-	
+						
+					if(e.element && e.element.id){
+								
+						elementsTree = elements.filter(item => item.id === e.element.id);											
+
+					} else {
+							
+						elementsTree = elements.filter(item => item.elementType.id === e.elementType.id);
+					}
+
 					if (Array.isArray(elementsTree) && elementsTree.length > 0) {
 						
 						elementsTree.forEach(item => {
@@ -360,7 +360,6 @@ export default class AlarmModule extends GenericModule {
 					}
 					
 					data.push(parent);
-	
 				});
 	
 				let events = {};
@@ -387,8 +386,10 @@ export default class AlarmModule extends GenericModule {
 	
 					let elementTypeId = element.elementType.id;
 					let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-					let aconfitArray = alarmConfig.find(e => e.elementType.id === elementTypeId);
-	
+					let aconfitArray = alarmConfig.filter(e => e.elementType.id === elementTypeId);
+					
+					if (aconfitArray != undefined){
+					
 					if (Array.isArray(aconfitArray) && aconfitArray.length) {
 						let alarmsConfig = aconfitArray;
 						for (let i = 0; i < alarmsConfig.length; i++) {
@@ -413,8 +414,8 @@ export default class AlarmModule extends GenericModule {
 	
 						self.tableAlarmsModal.add(row);
 					}
-					
-				};
+				}		
+			};
 	
 				let treeView = new TreeView(metadata, data, events);
 	
