@@ -16,14 +16,14 @@
 		"ElementType:2000"
 	],
 	"params":{
-		"availableRegime": "ElementTypeParam:2000:1:1",
+		"ventilationRegimeConfig": "ElementTypeParam:2000:1:1",
 		"actualRegime": "ElementTypeParam:2000:2:2", 
 		"proposedRegime" : "ElementTypeParam:2000:2:2",
 		"ventilationMode" : "ElementTypeParam:2000:2:1"
 	},
-	"availableVentilationModes" :[
-		{"id": 0, "label" : "LBL_MANUAL", "disable" : false},
-		{"id": 2, "label" : "LBL_AUTO", "disable" : true},	
-		{"id": 1, "label" : "LBL_AUTO_MAINTENANCE", "disable" : true}
+	"ventilationModeOptions" :[
+		{"id": 1, "label" : "LBL_AUTO", "disable" : true},
+		{"id": 2, "label" : "LBL_AUTO_MAINTENANCE", "disable" : true},
+		{"id": 0, "label" : "LBL_MANUAL", "disable" : false}
 	]
 }

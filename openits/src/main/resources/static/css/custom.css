@@ -772,6 +772,52 @@ p {
 	color: var(--blue-mid) !important;
 }
 
+.segment-custom-3 .webix_segment_0,
+.segment-custom-3 .webix_segment_1,
+.segment-custom-3 .webix_segment_N {
+  	background: transparent;
+  	color: #babdb6;
+	font-size: 13px;
+}
+
+.segment-custom-3 .webix_segment_0:hover, 
+.segment-custom-3 .webix_segment_1:hover, 
+.segment-custom-3 .webix_segment_N:hover{
+	background: transparent;
+	box-shadow: 0px 2px var(--blue-strong);
+}
+
+.segment-custom-3 .webix_segment_0.webix_selected,
+.segment-custom-3 .webix_segment_1.webix_selected,
+.segment-custom-3 .webix_segment_N.webix_selected {
+  	background: transparent;
+  	color: var(--blue-mid);
+	box-shadow: 0px 2px var(--blue-strong);
+	font-size: 13px;
+}
+
+.segment-custom-3 .webix_segment_0.webix_selected:hover, 
+.segment-custom-3 .webix_segment_1.webix_selected:hover, 
+.segment-custom-3 .webix_segment_N.webix_selected:hover{
+	background: transparent;
+	color: var(--blue-mid) !important;
+}
+
+.segment-custom-3 .webix_segment_0:disabled,
+.segment-custom-3 .webix_segment_1:disabled,
+.segment-custom-3 .webix_segment_N:disabled {
+  	background: transparent !important;
+  	color: #babdb6;
+	font-size: 13px;
+}
+
+.segment-custom-3 .webix_segment_0.webix_selected:disabled, 
+.segment-custom-3 .webix_segment_1.webix_selected:disabled, 
+.segment-custom-3 .webix_segment_N.webix_selected:disabled{
+	background: transparent;
+	color: var(--blue-mid) !important;
+}
+
 .webix_list_item.webix_selected {
     box-shadow: inset 2px 0 var(--blue-strong);
     background-color: var(--blue-soft-opacity-4);
@@ -1978,7 +2024,8 @@ p {
 .global-text {
 	margin: 6px 0px;
 	font-size: 14px;
-	padding-bottom: 12px;
+	padding-bottom: 6px;
+	padding-top: 2px;
 	font-family: Roboto;
 }
 
@@ -2743,3 +2790,48 @@ p {
     border-radius: var(--radius);
   }
 */
+
+.button-ventilation-action .webix_button{
+	width: 130px !important;
+	height: 35px;
+    border-radius: 2px;
+    background: transparent !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: #567eba !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	border: 1px solid #567eba;
+}
+
+.button-ventilation-action .webix_button:hover{
+    background: rgb(185, 185, 185) !important;
+}
+
+.button-ventilation-action .webix_button .webix_icon_btn{
+    color: #567eba !important;
+}
+
+.ventilation-description-box {
+    height:50px;
+    width:972px;
+	border-radius: 4px;
+    color: var(--blue-mid2);
+    background: rgba(198 211 231 / 0.3);
+	font-size: 12px;
+	font-weight: 300;
+	padding: 4px;
+}
+
+.button-icon-transparent .webix_button{
+	font-family: Roboto;
+	font-size: 12px;
+	background: transparent !important;
+    font-weight: 500;
+    color: var(--blue-mid2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	text-align: right;
+}

@@ -18,9 +18,10 @@ export default class VentilationModule extends GenericModule {
 		this.hierarchy;
 
 		this.ventilations;
-		this.selectedVentilation;
+		this.selectedTube;
 		this.tubeFans;
 		this.tubeFansDataTable;
+		this.proposedRegime;
 	}
 
 	loadData() {
@@ -82,8 +83,9 @@ export default class VentilationModule extends GenericModule {
 				
 				let metadata = {
 					id: 1,
-					label: "LBL_TUNNELS",
+					label: "LBL_VENTILATIONS",
 					treeOptionValues: [
+						// { treeOption: { id: 1}, value: "./img/ventilation.png" },
 						{ treeOption: { id: 2}, value: false },	// multiselect
 						{ treeOption: { id: 3}, value: true }, 	// sorted
 						{ treeOption: { id: 4}, value: false }, // cmd_buttons
@@ -131,7 +133,7 @@ export default class VentilationModule extends GenericModule {
 				cols: [
 					{
 						id: "view-tree-" + self.uid,
-						header: i18n.t("LBL_TUNNELS"),
+						header: i18n.t("LBL_VENTILATIONS"),
 						body: {
 							width: 250,
 							rows: [
@@ -162,8 +164,8 @@ export default class VentilationModule extends GenericModule {
 
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementById, { id: self.treeView.getSelected()[0].id_})).then(function(data) {
 				
-				self.selectedVentilation = data.json();
-				self.tubeFans = eval("adapter." + self.config.adapters.fans)(self.selectedVentilation.childs, null);
+				self.selectedTube = data.json();
+				self.tubeFans = eval("adapter." + self.config.adapters.fans)(self.selectedTube.childs, null);
 				webix.ui(getViewContent(), $$("view-content-" + self.uid), 0);
 	
 				if(self.tubeFansDataTable){
@@ -192,7 +194,8 @@ export default class VentilationModule extends GenericModule {
 							getContentBody(),
 							{ width: 6 }
 						]
-					}
+					},
+					{}
 				]
 			};
 
@@ -200,26 +203,70 @@ export default class VentilationModule extends GenericModule {
 
 				let header = {
 					id: "view-content-header-" + self.uid,
-					borderless: true,
 					rows: [
 						{
 							id: "view-content-header-bar-color-" + self.uid,
 							height: 15,
-							css: { "background": util.element.getColor(self.selectedVentilation.elementTypeState) }
+							css: { "background": util.element.getColor(self.selectedTube.elementTypeState) }
 						},
+						{ height: 4 },
 						{
-							id: "view-content-header-info" + self.uid,
-							height: 80,
-							template: function() {
+							cols:[
+								{
+									borderless:true,
+									id: "view-content-header-info" + self.uid,
+									height: 80,
+									template: function() {
 
-								return `<image class="ims-incident-report-icon" src="./img/ventilation.png" />
-										<div class="ims-incident-report-title">
-											${self.selectedVentilation.alias}
-										</div>
-										<div class="ims-incident-report-title">
-											<span class="ims-incident-badge" style="background: ${util.element.getColor(self.selectedVentilation.elementTypeState)}; color: white;">${i18n.t(self.selectedVentilation.elementTypeState.labelAlias)}</span>
-										</div>`;
-							}
+										return `<image class="ims-incident-report-icon" src="./img/grid/element_type_07.png" />
+												<div class="ims-incident-report-title">
+													${self.selectedTube.alias}
+												</div>
+												<div class="ims-incident-report-title">
+													<span class="ims-incident-badge" style="background: ${util.element.getColor(self.selectedTube.elementTypeState)}; color: white;">${i18n.t(self.selectedTube.elementTypeState.labelAlias)}</span>
+												</div>`;
+									}
+								},
+								{
+									rows:[
+										{height:18},
+										{
+											cols:[
+												{ 	
+													width: 135,
+													height: 40,
+													type:"icon", 
+													icon:"mdi mdi-stop",
+													view: "button",
+													align:"right", 
+													css: "button-ventilation-action",
+													label: i18n.t("LBL_STOP"),
+													click: function () { 
+														
+														webix.message("STOP POR HACER");
+													}
+												},
+												{ width: 12 },
+												{ 	
+													width: 135,
+													height: 40,
+													type:"icon", 
+													icon:"mdi mdi-play",
+													view: "button",
+													align:"right",
+													css: "button-ventilation-action",
+													label: i18n.t("LBL_START"),
+													click: function () { 
+														
+														webix.message("PLAY POR HACER");
+													}
+												}
+											]
+										}
+									]
+								},
+								{width: 24 }
+							]
 						}
 					]
 				};
@@ -231,6 +278,14 @@ export default class VentilationModule extends GenericModule {
 		}
 
 		function getContentToolbar() {
+
+			let ventilationModeValue = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.params.ventilationMode);
+			let ventilationModeOptions = [];
+
+			self.config.ventilationModeOptions.forEach(option => {
+
+				ventilationModeOptions.push({ id : option.id, value: i18n.t(option.label)});
+			});
 					
 			let viewContentToolbar = {
 				
@@ -243,55 +298,11 @@ export default class VentilationModule extends GenericModule {
 			
 			let actionPanelSwitcher = {
 				view: "segmented",
-				css: "segment-custom-2",
-				value: "action-panel-switcher-auto" + self.uid,
+				css: "segment-custom-3",
+				disabled: true,
+				value: ventilationModeValue.value,
 				width: 500,
-				options: [
-					{
-						id: "action-panel-switcher-auto" + self.uid,
-						value: "<span>" + i18n.t("LBL_AUTO") + "</span>",
-					},
-					{
-						id: "action-panel-switcher-auto-maintenance" + self.uid,
-						value: "<span>" + i18n.t("LBL_AUTO_MAINTENANCE") + "</span>",
-					},
-					{
-						id: "action-panel-switcher-manual" + self.uid,
-						value: "<span>" + i18n.t("LBL_MANUAL") + "</span>",
-					}
-				],
-				tooltip: function(obj) {
-
-					if (obj.id === "action-panel-switcher-auto" + self.uid) {
-
-						return i18n.t("LBL_AUTO");
-					}
-					else if (obj.id === "action-panel-switcher-auto-maintenance" + self.uid) {
-
-						return i18n.t("LBL_AUTO_MAINTENANCE");
-					}
-					else if (obj.id === "action-panel-switcher-manual" + self.uid) {
-
-						return i18n.t("LBL_MANUAL");
-					}
-				},
-				on: {
-					onChange(newv, oldv) {
-
-						if (newv === "action-panel-switcher-auto" + self.uid) {
-							
-							webix.message("show-all");
-						}
-						else if (newv === "action-panel-switcher-auto-maintenance" + self.uid) {
-
-							webix.message("show-top");
-						}
-						else if (newv === "action-panel-switcher-manual" + self.uid) {
-
-							webix.message("show-bottom");
-						}
-					}
-				}
+				options: ventilationModeOptions
 			};
 			
 			viewContentToolbar.elements.push({});
@@ -306,79 +317,215 @@ export default class VentilationModule extends GenericModule {
 				view:"form", 
 				id: "view-content-body-" + self.uid,
 				rows:[
-					{ height: 6 },
 					getRegime(),
-					{ height: 6 },
 					getButtons(),
 					getTable(),
-					{ height: 6 },
-					getBottom()
+					getBottom(),
+					{}
 				]
 			}
 
 			function getRegime(){
 
+				let ventilationRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.params.ventilationRegimeConfig);
+				let availableRegimes;
+				let actualRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.params.actualRegime);
+				self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.params.proposedRegime);
+
+				try {
+
+					ventilationRegimeConfig = JSON.parse(ventilationRegimeConfig.value);
+					
+					availableRegimes = ventilationRegimeConfig.ventilationRegimes.map(function (regime) {
+						return { 
+							id: regime.id, 
+							value: i18n.t(regime.labelAlias)
+						};
+					});
+
+					if(actualRegime.value && ventilationRegimeConfig.ventilationRegimes){
+
+						actualRegime.labelAlias = ventilationRegimeConfig.ventilationRegimes.find(e =>e.id==actualRegime.value).labelAlias;
+					} else {
+						actualRegime.labelAlias = "LBL_NO_REGIME";
+					}
+
+					updateProposedRegime(self.proposedRegime.value, ventilationRegimeConfig.ventilationRegimes);
+					
+				} catch (error) {
+
+					console.error("El Json de regimenes no esta correctamente formateado.")
+				}
+
 				let regime = {
-					rows:[
+					cols:[
 						{
-							cols:[
+							rows: [
+								{ height: 26 },
 								{
-									view: "label",
-									height: 60,
-									width: 180,
-									id: "label-regimen-1-" + self.uid,
-									template: "<span>" +i18n.t("LBL_ACTUAL_REGIME") + "</span> <br> <br>" + 
-										'<div><span class="table-badge" style="background:#ba9b6f3b; color: #ba9b6fa0;">' + "Regimen 3" + '</span></div>',
-									css: "global-text"
+									cols:[
+										{
+											view: "label",
+											height: 25,
+											width: 180,
+											template: "<span>" +i18n.t("LBL_ACTUAL_REGIME") + "</span>",
+											css: "global-text"
+										},
+										{ width: 12 },
+										{
+											view: "label",
+											height: 24,
+											width: 180,
+											template: "<span>" +i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
+											css: "global-text"
+										},
+										{ width: 24 },
+										{
+											view: "label",
+											height: 24,
+											width: 180,
+											template: "<span>" +i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
+											css: "global-text"
+										}
+									]
 								},
-								{ width: 12 },
+								{ height: 12 },
 								{
-									id: "label-regimen-2-" + self.uid,
-									height: 60,
-									width: 180,
-									view:"combo", 
-									label: i18n.t("LBL_CHANGE_REGIME_TO"),
-									labelPosition:"top",
-									value:i18n.t("LBL_REGIME_THREE"), 
-									options:[
-										i18n.t("LBL_REGIME_ONE"), 
-										i18n.t("LBL_REGIME_TWO"), 
-										i18n.t("LBL_REGIME_THREE")
-									],
-									css: "global-text"
+									cols:[
+										{
+											view: "label",
+											width: 180,
+											height: 20,
+											id: "label-regimen-1-" + self.uid,
+											template: '<div><span class="table-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegime.labelAlias) + '</span></div>',
+											css: "global-text"
+										},
+										{ width: 12 },
+										{
+											id: "label-regimen-2-" + self.uid,
+											width: 180,
+											height: 30,
+											view:"combo", 
+											value: self.proposedRegime.value, 
+											options: availableRegimes,
+											on: {
+												onChange(newv, oldv) {
+
+													updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
+													webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-3-" + self.uid));
+													webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.uid));
+												}
+											}
+										},
+										{ width: 24 },
+										getViewProposedRegimeLabel()
+									]
 								},
-								{ width: 12 },
-								{
-									view: "label",
-									height: 60,
-									width: 180,
-									id: "label-regimen-3-" + self.uid,
-									template: "<span>" +i18n.t("LBL_PROPOSED_REGIME") + "</span> <br> <br>" + 
-										'<div><span class="table-badge" style="background:#ba9b6f3b; color: #ba9b6fa0;">' + "Regimen 2" + '</span></div>',
-									css: "global-text"
-								},
-								{}	
-							]
+								{}
+							] 
 						},
-						{ height: 6 },
+						{},
 						{
-							cols:[
-								{},
+							rows:[
+								getViewDocument(),
+								{
+									height: 58,
+    								width: 980,
+									borderless: true,
+									view: "template",
+									template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
+								},
+								{ height: 12 },
 								{ 	
-									width: 130,
-									view: "button",
-									align:"right", 
-									css: "button-cta",
-									value: i18n.t("LBL_CHANGE_REGIME"),
-									click: function () { 
-										
-										webix.message("por hacer");
-									}
+									cols:[
+										{},
+										{ 	
+											width: 130,
+											view: "button",
+											align:"right", 
+											css: "button-cta",
+											value: i18n.t("LBL_CHANGE_REGIME"),
+											click: function () { 
+												
+												webix.message("por hacer");
+											}
+										}
+									]
 								}
 							]
 						}
 					]
 				};
+
+				function getViewProposedRegimeLabel(){
+
+					let viewProposedRegimeLabel = {
+						view: "label",
+						width: 180,
+						height: 20,
+						id: "label-regimen-3-" + self.uid,
+						template: '<div><span class="table-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
+						css: "global-text"
+					};
+
+					return viewProposedRegimeLabel;
+				}
+
+				function getViewDocument(){
+
+					let viewDocument = { 
+						id: "view-content-regime-document-" + self.uid,
+						height: 26 
+					};
+
+					if(self.proposedRegime.documentUrl){
+
+						viewDocument = {
+							id: "view-content-regime-document-" + self.uid,
+							cols:[
+								{},
+								{
+									height: 26,
+									align: "right",
+									width: 200,
+									view: "button",
+									type: "icon",
+									label: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
+									icon: "mdi mdi-file",
+									click: function (){
+										window.open(self.proposedRegime.documentUrl, '_blank');
+									},
+									css: "button-icon-transparent"
+								}		
+							]
+						};
+					}
+
+					return viewDocument;
+				}
+
+				function updateProposedRegime(value, ventilationRegimes){
+
+					self.proposedRegime.value = value;
+
+					if(self.proposedRegime.value && ventilationRegimes){
+
+						let proposedConfig = ventilationRegimes.find(e =>e.id==self.proposedRegime.value);
+						self.proposedRegime.labelAlias = proposedConfig.labelAlias;
+						self.proposedRegime.description = proposedConfig.description;
+						self.proposedRegime.documentUrl = proposedConfig.documentUrl
+
+						if (self.proposedRegime.documentUrl){
+
+							self.proposedRegime.documentName = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf("/")+1, self.proposedRegime.documentUrl.lastIndexOf("."));
+							self.proposedRegime.documentType = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf(".")+1, self.proposedRegime.documentUrl.length);
+						}
+					} else {
+
+						self.proposedRegime.labelAlias = "LBL_NO_REGIME";
+						self.proposedRegime.description = "";
+					}
+				}
 
 				return regime;
 			}
@@ -550,7 +697,7 @@ export default class VentilationModule extends GenericModule {
 
 				self.tubeFansDataTable = new DataTable(null, null, metadata, data, null);
 				
-				return {height: 320,rows:self.tubeFansDataTable.getView()};
+				return {height: 338,rows:self.tubeFansDataTable.getView()};
 			};
 
 			function getBottom(){
