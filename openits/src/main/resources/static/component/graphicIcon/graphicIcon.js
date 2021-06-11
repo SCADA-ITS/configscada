@@ -247,6 +247,17 @@ export default class GraphicIcon {
 				self.g.click(onClick);
 				//self.g.touchstart(onClick);
 				self.g.dblclick(onDblClick);
+				
+				if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER && s &&
+					self.events && self.events[GraphicIcon.EventTypes.ON_MOUSE_WHEEL]) {
+					
+					s.node.addEventListener("mousewheel", function() {
+						
+						eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_WHEEL])();	
+					}, false);
+					
+					
+				}
 			}
 			
 			function onClick(e) {
@@ -390,15 +401,22 @@ Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_OUT", {
     configurable : false
 });
 
-Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_EDIT_CLIC", {
+Object.defineProperty(GraphicIcon.EventTypes, "ON_MOUSE_WHEEL", {
     value: 5,
     writable : false,
     enumerable : true,
     configurable : false
 });
 
-Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_DELETE_CLIC", {
+Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_EDIT_CLIC", {
     value: 6,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(GraphicIcon.EventTypes, "ON_ZONE_DELETE_CLIC", {
+    value: 7,
     writable : false,
     enumerable : true,
     configurable : false

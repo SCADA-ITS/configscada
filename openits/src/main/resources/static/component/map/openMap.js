@@ -743,6 +743,7 @@ export default class OpenMap extends GenericMap {
 					events[GraphicIcon.EventTypes.ON_DBL_CLIC] = onDblClic;
 					events[GraphicIcon.EventTypes.ON_MOUSE_OVER] = onMouseOver;
 					events[GraphicIcon.EventTypes.ON_MOUSE_OUT] = onMouseOut;
+					events[GraphicIcon.EventTypes.ON_MOUSE_WHEEL] = onMouseWheel;
 					
 					let graphicIconInstance = new mod.default(layerElement, element, container, events);
 					
@@ -764,6 +765,12 @@ export default class OpenMap extends GenericMap {
 						
 						self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
 						self.mouseOverSvg = false;						
+					}
+					
+					function onMouseWheel() {
+						
+						self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+						self.mouseOverSvg = false;							
 					}
 				}
 				

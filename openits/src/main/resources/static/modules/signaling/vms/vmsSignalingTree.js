@@ -56,7 +56,7 @@ export default class VmsSignalingTree {
 				
 				if (elementSubType) {
 					
-					relationship.parentId = elementSubType.id;
+					relationship.parentNodeId = elementSubType.id;
 				}
 				else {
 					

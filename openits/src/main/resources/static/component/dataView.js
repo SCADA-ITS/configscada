@@ -29,6 +29,7 @@ export default class DataView {
 		view = {
 			rows: [
 				drawToolbar(),
+				{ height: 5 },
 				{
 					cols: [
 						{ width: 4 },
@@ -83,14 +84,14 @@ export default class DataView {
 						elements.push(drawComboGroup());	
 					}
 					
-					elements.push({ width: 4 });
+					//elements.push({ width: 4 });
 					
 					if (getOptions(DataView.Options.SEARCH)) {
 						
 						elements.push(drawSearchBox());	
 					}
 					
-					elements.push({ width: 4 });
+					//elements.push({ width: 4 });
 					
 					return elements;
 				}(),
@@ -294,6 +295,30 @@ export default class DataView {
 		}
 		
 		return view;
+	}
+	
+	getSelectedIds() {
+
+		let dataView = $$("dataview-" + this.uid);
+		let selectedIds;
+		
+		if (dataView) {
+			
+			selectedIds = dataView.getSelectedId(true);	
+		}	
+		
+		return selectedIds;
+	}
+	
+	select(ids) {
+
+		let dataView = $$("dataview-" + this.uid);
+		
+		if (Array.isArray(ids) && ids.length > 0) {
+			
+			dataView.select(ids);
+			dataView.showItem(ids[0]);
+		}	
 	}
 }
 

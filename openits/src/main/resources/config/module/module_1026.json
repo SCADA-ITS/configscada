@@ -11,7 +11,15 @@
 		"jsonConfig": "ElementTypeParam:71:1:7",
 		"pictogramsPath": "img/pictograms",
 		"pictogramsExtension": ".bmp",
-		"pictogramsSize": 64
+		"pictogramsSize": 64,
+		"textEditor": {
+			"width": 900,
+			"height": 500
+		},
+		"graphicEditor": {
+			"width": 930,
+			"height": 800
+		}
 	},
 	"properties": [
 		{

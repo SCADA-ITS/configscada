@@ -10,14 +10,16 @@ export default class VmsSignalingComposer {
 		
 		const jsonDataFakeArray = [
 			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
-			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":99901}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":99900}]}],
+			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":28}]}],
 			[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 		];
 
 		this.config = config;
 		this.element = element;
 		this.uid = webix.uid();
-		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
+		
+		this.jsonDataFake = jsonDataFakeArray[(new Date()).getSeconds() % jsonDataFakeArray.length];
+		//this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
 		
 		this.graphicIconInstance = undefined;
 		
@@ -36,6 +38,7 @@ export default class VmsSignalingComposer {
 			template: function() {
 					
 				return `<div>
+							<!--<svg id=${"vms-composer-svg-" + self.uid} style="display: none"></svg>-->
 							<svg id=${"vms-composer-svg-" + self.uid}></svg>
 						</div>`
 			},
@@ -101,6 +104,13 @@ export default class VmsSignalingComposer {
 							if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
 																
 								self.update();
+								
+//								let svgElement = document.getElementById("vms-composer-svg-" + self.uid);
+//								
+//								if (svgElement) {
+//									
+//									svgElement.style.display = "block";	
+//								}
 							}
 						});
 					});	
@@ -132,7 +142,11 @@ export default class VmsSignalingComposer {
 						
 						if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_TEXT) {
 							
-							zoneEditor = new VmsSignalingTextEditor(zoneConfig, zoneData, onZoneDataChange);
+							zoneEditor = new VmsSignalingTextEditor(self.config.vms.textEditor.width, 
+																	self.config.vms.textEditor.height,
+																	zoneConfig, 
+																	zoneData, 
+																	onZoneDataChange);
 						}
 						else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
 
@@ -144,11 +158,20 @@ export default class VmsSignalingComposer {
 								zoneConfig.pictogramsExtension = self.config.vms.pictogramsExtension;
 								zoneConfig.pictogramsSize = self.config.vms.pictogramsSize;
 								
-								zoneEditor = new VmsSignalingGraphicEditor(zoneConfig, zoneData, onZoneDataChange);	
+								zoneEditor = new VmsSignalingGraphicEditor(self.config.vms.graphicEditor.width, 
+																		   self.config.vms.graphicEditor.height, 
+																		   zoneConfig, 
+																		   zoneData, 
+																		   onZoneDataChange);	
 							}
 							else {
 							
-								// TODO ERROR: No pictograms associated to zone	
+								webix.alert({
+									title: i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE"),
+									text: i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE_DESCRIPTION") + " " + zoneConfig.vms_group_id,
+									type: "alert-error",
+									width: 500
+								});	
 							}
 						}
 						else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
@@ -157,7 +180,12 @@ export default class VmsSignalingComposer {
 						}
 						else {
 							
-							// TODO ERROR: UNKNOWN ZONE TYPE
+							webix.alert({
+								title: i18n.t("LBL_UNKNOWN_ZONE_TYPE"),
+								text: i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type,
+								type: "alert-error",
+								width: 500
+							});
 						}
 						
 						if (zoneEditor) {

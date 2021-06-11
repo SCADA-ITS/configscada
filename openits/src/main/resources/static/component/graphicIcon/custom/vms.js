@@ -21,7 +21,7 @@ const ZONE_ELEMENT_TYPE = {
 
 const jsonDataFakeArray = [
 	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
-	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":99901}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":99900}]}],
+	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":28}]}],
 	[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 ];
 
@@ -47,6 +47,8 @@ export default class Vms extends GraphicIconCustomType {
 	
 		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
 		
+		this.render(this.getDataInitialized());
+		
 		this.jsonData = undefined;
 	}
 	
@@ -61,6 +63,57 @@ export default class Vms extends GraphicIconCustomType {
 			
 			clearInterval(this.intervalBlinkingId);	
 		}
+	}
+	
+	getZoneDataInitialized(zoneId) {
+		
+		let zoneData = {
+			zone: zoneId
+		};
+		
+		let gZone;
+		
+		if (gZone = this.g.select("#" + G_ID_ZONE_PREFIX + zoneId)) {
+
+			let graphicId = 0;
+			
+			while (gZone.select("#" + G_ID_GRAPHIC_PREFIX + zoneId + "-" + (++graphicId))) {
+				
+				if (!zoneData.graphic) {
+					
+					zoneData.graphic = [];
+				}
+				
+				zoneData.graphic.push({ id: graphicId });
+			}
+			
+			let lineId = 0;
+			
+			while (gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
+				
+				if (!zoneData.text) {
+					
+					zoneData.text = [];
+				}
+				
+				zoneData.text.push({ id: lineId });
+			}
+		}
+		
+		return zoneData;
+	}
+	
+	getDataInitialized() {
+			
+		let data = [];
+		let zoneId = 0;
+		
+		while(this.g.select("#" + G_ID_ZONE_PREFIX + (++zoneId))) {
+
+			data.push(this.getZoneDataInitialized(zoneId));
+		}
+		
+		return data;
 	}
 
 	render(elementInfo) {
@@ -96,9 +149,14 @@ export default class Vms extends GraphicIconCustomType {
 				
 		if (this.gState) {
 			
-			this.gState.attr({ fill: elementInfo.state.color });
+			let treatmentValue = undefined;
 			
-			let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
+			if (elementInfo.state) {
+				
+				this.gState.attr({ fill: elementInfo.state.color });
+				
+				treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);	
+			}
 			
 			let gZone;
 			let zoneId = 0;
@@ -243,47 +301,9 @@ export default class Vms extends GraphicIconCustomType {
 			
 			let zoneData;
 			
-			if (Array.isArray(self.jsonData) && self.jsonData.length > 0) {
+			if (zoneId && Array.isArray(self.jsonData) && self.jsonData.length > 0) {
 				
 				zoneData = self.jsonData.find(e => e.zone == zoneId);
-			}
-			
-			return zoneData;
-		}
-		
-		function getZoneDataInitialized(zoneId) {
-		
-			let zoneData = {
-				zone: zoneId
-			};
-			
-			let gZone;
-			
-			if (gZone = self.g.select("#" + G_ID_ZONE_PREFIX + zoneId)) {
-
-				let graphicId = 0;
-				
-				while (gZone.select("#" + G_ID_GRAPHIC_PREFIX + zoneId + "-" + (++graphicId))) {
-					
-					if (!zoneData.graphic) {
-						
-						zoneData.graphic = [];
-					}
-					
-					zoneData.graphic.push({ id: graphicId });
-				}
-				
-				let lineId = 0;
-				
-				while (gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
-					
-					if (!zoneData.text) {
-						
-						zoneData.text = [];
-					}
-					
-					zoneData.graphic.push({ id: lineId });
-				}
 			}
 			
 			return zoneData;
@@ -455,7 +475,7 @@ export default class Vms extends GraphicIconCustomType {
 						
 						if (!zoneData) {
 							
-							zoneData = getZoneDataInitialized(zoneId);
+							zoneData = self.getZoneDataInitialized(zoneId);
 						}
 						
 						let fontInfo = getFontInfo(zoneId);
@@ -494,7 +514,7 @@ export default class Vms extends GraphicIconCustomType {
 						
 						if (!zoneData) {
 							
-							zoneData = getZoneDataInitialized(zoneId);
+							zoneData = self.getZoneDataInitialized(zoneId);
 						}
 						
 						eval(self.events[GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC])(zoneData);
@@ -525,7 +545,7 @@ export default class Vms extends GraphicIconCustomType {
 			
 			function showTooltip(e, text) {
 				
-				let tooltip = document.getElementById("graphic-icon-tooltip");
+				let tooltip = document.getElementById("graphic-icon-tooltip-2");
 				
 				if (tooltip) {
 					
@@ -540,7 +560,7 @@ export default class Vms extends GraphicIconCustomType {
 			
 			function hideTooltip() {
 				
-				var tooltip = document.getElementById("graphic-icon-tooltip");
+				var tooltip = document.getElementById("graphic-icon-tooltip-2");
 				
 				if (tooltip) {
 				

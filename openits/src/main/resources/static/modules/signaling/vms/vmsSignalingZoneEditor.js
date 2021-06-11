@@ -8,13 +8,15 @@ export default class VmsSignalingZoneEditor {
 	static get FLASHING_MODE() { return 2 }
 	static get ALTERNANCE_MODE() { return 3 }
 
-	constructor(config, data, onZoneDataChange) {
+	constructor(width, height, config, data, onZoneDataChange) {
 
 		if (this.constructor == VmsSignalingZoneEditor) {
 
 			throw new Error("Abstract classes can't be instantiated.");
 		}
 		
+		this.width = width;
+		this.height = height;
 		this.config = config;
 		this.data = data;
 		this.onZoneDataChange = onZoneDataChange

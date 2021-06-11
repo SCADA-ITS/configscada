@@ -2496,7 +2496,6 @@ p {
 .auxiliary-tab .webix_item_tab:not(.webix_selected) {
 	width: 150px !important;    
 	color: #babdb6;
-	box-shadow: none;
 	background-color: transparent;
 }
 
@@ -2687,7 +2686,7 @@ p {
 	border: 1px;
 	border-radius: 5px;
 	background: transparent;
-	font-size: 16px;
+	font-size: 14px;
 	color: var(--blue-headers);
 	border: 1px solid var(--blue-headers-not-sel);
 }
@@ -2723,3 +2722,24 @@ p {
 .button-cta .webix_button .webix_icon_btn{
 	color: white;
 }
+
+.webix_dataview_item {
+	
+	border: none;
+}
+
+.webix_dataview_item.webix_selected {
+    color: #475466;
+    background: var(--blue-soft-opacity-4);
+}
+
+/* Dynamic passthrought params to css class
+<div class="round" style="--radius: 100%;"></div>
+.round {
+    display: block;
+    height: 40px;
+    width: 40px;
+    border: 1px solid #BADA55;
+    border-radius: var(--radius);
+  }
+*/

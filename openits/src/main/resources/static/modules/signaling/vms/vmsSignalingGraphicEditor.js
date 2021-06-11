@@ -2,17 +2,17 @@ import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
 import DataView from "../../../component/dataView.js";
 
-const WINDOW_WIDTH = 1110;
-const WINDOW_HEIGHT = 700;
-
 export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 	
-	constructor(config, data, onZoneDataChange) {
+	constructor(width, height, config, data, onZoneDataChange) {
 
-		super(config, data, onZoneDataChange);
+		super(width, height, config, data, onZoneDataChange);
 		
 		this.uid = webix.uid();
 		this.containerId = undefined;
+		
+		this.dataViewMain = undefined;
+		this.dataViewAlt = undefined;
 	}
 
 	show() {
@@ -160,19 +160,32 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 			let viewTabs = {
 				id: "view-signalling-graphic-editor-tabs-" + self.uid,
 				view: "tabview",
-				css: "auxiliary-tab",
+				css: "secondary-tab",
 				animate: false,
-				borderless: true,
 				cells: [drawPictogramTable(false), drawPictogramTable(true)],
 				multiview: {
 					keepViews:true
 		        },
 				tabbar: {
-					tabMargin: 6
+					tabMargin: 6,
+					on: {
+						onAfterRender: webix.once(function() {
+							
+							if (self.dataViewMain && Array.isArray(self.data.graphic) && self.data.graphic.length === 1 && self.data.graphic[0].value) {
+								
+								self.dataViewMain.select([self.data.graphic[0].value]);
+							}
+							
+							if (isAlternance() && self.dataViewAlt && Array.isArray(self.data.graphic) && self.data.graphic.length === 1 && self.data.graphic[0].alternance) {
+								
+								self.dataViewAlt.select([self.data.graphic[0].alternance]);
+							}
+						})
+					}
 				}
 			};
 			
-			function drawPictogramTable(alternance) {
+			function drawPictogramTable(isAlt) {
 				
 				let metadata = {
 					
@@ -188,15 +201,40 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 				
 				let viewPictogramTable = {
 					
-					header: !alternance ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
+					header: !isAlt ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
 					body: {
-						id: (!alternance ? "view-signalling-graphic-editor-main-" : "view-signalling-graphic-editor-alt-") + self.uid,
-						cols: [
-							{ width: 10 },
-							dataView.getView(),
-							{ width: 10 }
-						]	
+						id: (!isAlt ? "view-signalling-graphic-editor-main-" : "view-signalling-graphic-editor-alt-") + self.uid,
+						rows: [
+							{
+								cols: [
+									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
+									{ width: 15 },
+									{
+										rows: [
+											{ height: 15 },
+											dataView.getView(),
+											{ height: 15 },	
+										]
+									},
+									{ width: 11 },
+									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
+									{ width: 3 }
+									
+								]		
+							},
+							{ height: 1, css: { "border-top": "solid 1px #475466 !important" } },
+							{ height: 1 }
+						]
 					}
+				}
+				
+				if (isAlt) {
+					
+					self.dataViewAlt = dataView; 
+				}
+				else {
+					
+					self.dataViewMain = dataView;
 				}
 				
 				return viewPictogramTable;	
@@ -263,11 +301,25 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 						on: {
 							onItemClick() {
 		
-								self.data = getData();
+								let data = getData();
 								
-								self.onZoneDataChange(self.data);
+								if (data) {
+									
+									self.data = data;
+									
+									self.onZoneDataChange(self.data);
 								
-								$$(self.containerId).close();					
+									$$(self.containerId).close();	
+								}
+								else {
+									
+									webix.alert({
+										title: i18n.t("LBL_WRONG_SELECTION"),
+										text: i18n.t("LBL_WRONG_SELECTION_DESCRIPTION"),
+										type: "alert-error",
+										width: 500
+									});
+								}
 							}
 						}
 					}
@@ -280,7 +332,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 		function getData() {
 			
 			let data = {};
-			let optionModesInstance = $$("view-signalling-text-editor-option-modes-" + self.uid);
+			let optionModesInstance = $$("view-signalling-graphic-editor-option-modes-" + self.uid);
 				
 			data.zone = self.data.zone;
 			
@@ -297,8 +349,34 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 				}
 				
 				data.graphic= [];
+
+				let graphic = {	id: 1 }				
+				let mainSelectedIds = self.dataViewMain.getSelectedIds();
 				
-				// TODO: Get data from datatables
+				if (Array.isArray(mainSelectedIds) && mainSelectedIds.length === 1) {
+					
+					graphic.value = mainSelectedIds[0];
+					
+					data.graphic.push(graphic);
+					
+					if (optionModesInstance.getValue() == VmsSignalingZoneEditor.ALTERNANCE_MODE) {
+						
+						let altSelectedIds = self.dataViewAlt.getSelectedIds();
+						
+						if (Array.isArray(altSelectedIds) && altSelectedIds.length === 1) {
+							
+							graphic.alternance = altSelectedIds[0];
+						}
+						else {
+							
+							data = undefined;
+						}
+					}
+				}
+				else {
+					
+					data = undefined;
+				}
 			}
 			
 			return data;
@@ -310,12 +388,15 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 			let graphicNum = 1;
 			let graphicData = undefined;
 			
-			while ((graphicData = self.data.graphic.find(e => e.id === graphicNum)) && !isAlt) {
-						
-				isAlt |= graphicData.alternance ? true : false; 
-				graphicNum++; 
-			}		
-			
+			if (Array.isArray(self.data.graphic)) {
+				
+				while ((graphicData = self.data.graphic.find(e => e.id === graphicNum)) && !isAlt) {
+							
+					isAlt |= graphicData.alternance ? true : false; 
+					graphicNum++; 
+				}	
+			}
+							
 			return isAlt;
 		}
 		
@@ -345,7 +426,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 			}	
 		}
 		
-		self.containerId = util.ui.loadWindow(i18n.t("LBL_EDIT_GRAPHIC"), view, WINDOW_HEIGHT, WINDOW_WIDTH, true);
+		self.containerId = util.ui.loadWindow(i18n.t("LBL_EDIT_GRAPHIC") + " - " + i18n.t("LBL_PANEL_ZONE") + " " + self.config.zone, view, self.height, self.width, true);
 		
 		initialize();
 	}

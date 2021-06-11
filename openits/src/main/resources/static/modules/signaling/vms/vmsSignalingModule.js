@@ -14,8 +14,9 @@ export default class VmsSignalingModule extends GenericModule {
 		this.config = module.config;
 		this.vmsSignalingTree = undefined;
 		this.vmsSignalingContent = undefined;
-		self.currentElement = undefined;
-		self.elements = undefined;
+		this.currentElement = undefined;
+		this.elements = undefined;
+		this.currentViewContent = undefined;		
 	}
 
 	loadData() {
@@ -34,12 +35,31 @@ export default class VmsSignalingModule extends GenericModule {
 						
 				self.elements = elementsResponse.json();
 				
-				if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+				if (Array.isArray(self.elements) && self.elements.length > 0) {
+					
+					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 				
-					self.currentElement = getElementFromElementId(self.args.selectedPks[0]); 
+						self.currentElement = getElementFromElementId(self.args.selectedPks[0]); 
+					}
+					
+					load();	
 				}
-				
-				load();
+				else {
+					
+					let container = $$(self.args.containerId);
+					
+					if (container) {
+						
+						container.close();
+						
+						webix.alert({
+							title: i18n.t("LBL_NO_VMS_AVAILABLE"),
+							text: i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"),
+							type: "alert-error",
+							width: 500
+						});
+					}
+				}
 			}
 		});
 		
@@ -62,6 +82,8 @@ export default class VmsSignalingModule extends GenericModule {
 			webix.ui(view, $$(self.uid));
 			
 			if (!self.currentElement) {
+				
+				self.elements.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 				
 				self.currentElement = self.elements[0];
 			}
@@ -111,9 +133,16 @@ export default class VmsSignalingModule extends GenericModule {
 				view: "resizer" 
 			};
 			
+			self.currentViewContent = "view-main-content-" + self.uid;
+			
 			let viewMainContent = {
 				body: {
-					id: "view-main-content-" + self.uid
+					rows: [
+						{
+							id: self.currentViewContent		
+						}
+					]
+					
 				}
 			};
 			
@@ -122,6 +151,13 @@ export default class VmsSignalingModule extends GenericModule {
 				hidden: true,
 				rows: [
 					{
+						id: "view-loading-panel-" + self.uid,
+						hidden: true,
+						rows: [util.ui.getViewDrawNoData(true)],
+					},
+					{
+						id: "view-panel-" + self.uid,
+						hidden: false,
 						cols: [viewMainContent],
 					}
 				]	
@@ -157,11 +193,14 @@ export default class VmsSignalingModule extends GenericModule {
 				$$("view-main-body-" + self.uid).hide();
 				$$("view-main-loading-" + self.uid).show();
 				
+				$$("view-loading-panel-" + self.uid).show();
+				$$("view-panel-" + self.uid).hide();
+				
 				self.currentElement = getElementFromElementId(elementId);
 				
-				$$("view-main-body-" + self.uid).show();
-					
-				webix.ui(getViewContent(), $$("view-main-content-" + self.uid));
+				let previousViewContent = self.currentViewContent;
+				
+				webix.ui(getViewContent(), $$(previousViewContent));
 				
 				if (self.vmsSignalingContent) {
 						
@@ -169,6 +208,16 @@ export default class VmsSignalingModule extends GenericModule {
 				}
 				
 				$$("view-main-loading-" + self.uid).hide();
+				$$("view-main-body-" + self.uid).show();
+				
+				
+				webix.delay(function() {
+
+					$$("view-loading-panel-" + self.uid).hide();
+					$$("view-panel-" + self.uid).show();
+					
+				}, null, null, 500);
+				
 			}
 			
 			function getViewContent() {
@@ -178,6 +227,8 @@ export default class VmsSignalingModule extends GenericModule {
 				self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement);
 				
 				view = self.vmsSignalingContent.getView();
+				
+				self.currentViewContent = view.id;
 				
 				return view;
 			}

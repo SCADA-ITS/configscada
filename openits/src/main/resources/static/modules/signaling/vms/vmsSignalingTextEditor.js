@@ -1,14 +1,11 @@
 import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
 
-const WINDOW_WIDTH = 900;
-const WINDOW_MIN_HEIGHT = 500;
-
 export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
-	constructor(config, data, onZoneDataChange) {
+	constructor(width, height, config, data, onZoneDataChange) {
 
-		super(config, data, onZoneDataChange);
+		super(width, height, config, data, onZoneDataChange);
 		
 		this.uid = webix.uid();
 		this.containerId = undefined;
@@ -35,7 +32,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 								drawOptionAligns(),
 								{ height: 30 },
 								drawTabs(),
-								{},
+								{ height: 10 },
+								//{},
 								drawActionButtons(),
 								{ height: 10 },
 							]
@@ -217,7 +215,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			let viewTabs = {
 				id: "view-signalling-text-editor-tabs-" + self.uid,
 				view: "tabview",
-				css: "auxiliary-tab",
+				css: "secondary-tab",
 				animate: false,
 				borderless: true,
 				cells: [drawTextEditor(false), drawTextEditor(true)],
@@ -236,17 +234,38 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					header: !alternance ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
 					body: {
 						id: (!alternance ? "view-signalling-text-editor-main-" : "view-signalling-text-editor-alt-") + self.uid,
-						cols: [
-							{ width: 10 },
+//						cols: [
+//							{ width: 10 },
+//							{
+//								rows: [
+//									{ height: 40 },
+//									drawTextEditorLines(),
+//									{}
+//								],	
+//							},
+//							{ width: 10 }
+//						]
+						rows: [
 							{
-								rows: [
-									{ height: 40 },
-									drawTextEditorLines(),
-									{}
-								],	
+								cols: [
+									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
+									{ width: 10 },
+									{
+										rows: [
+											{},
+											drawTextEditorLines(),
+											{}
+										]
+									},
+									{ width: 6 },
+									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
+									{ width: 3 }
+									
+								]		
 							},
-							{ width: 10 }
-						]	
+							{ height: 1, css: { "border-top": "solid 1px #475466 !important" } },
+							{ height: 1 }
+						]
 					}
 				}
 				
@@ -279,10 +298,17 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 									id: (!alternance ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-") + lineData.id + "-" + self.uid,
 									view: "text", 
 									width: 400,
-									css: { "font-family": self.config.fontInfo["font-family"]},
+									//css: { "font-family": self.config.fontInfo["font-family"]},
+									//css: "vms-input-line",
 									label: i18n.t("LBL_LINE") + lineData.id,
 									labelWidth: 150,
-									value: alternance ? lineData.alternance : lineData.value
+									value: alternance ? lineData.alternance : lineData.value,
+									on: {
+										onAfterRender: function() {
+											
+											this.getNode().getElementsByTagName("input")[0].style["font-family"] = self.config.fontInfo["font-family"];
+										}
+									}
 	
 								},
 								{
@@ -439,11 +465,14 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			let lineNum = 1;
 			let lineData = undefined;
 			
-			while ((lineData = self.data.text.find(e => e.id === lineNum)) && !isAlt) {
-						
-				isAlt |= lineData.alternance ? true : false; 
-				lineNum++; 
-			}		
+			if (Array.isArray(self.data.text)) {
+				
+				while ((lineData = self.data.text.find(e => e.id === lineNum)) && !isAlt) {
+							
+					isAlt |= lineData.alternance ? true : false; 
+					lineNum++; 
+				}	
+			}
 			
 			return isAlt;
 		}
@@ -477,7 +506,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		function getWindowHeight() {
 			
 			let lineNum = 1;
-			let h = WINDOW_MIN_HEIGHT;
+			let h = self.height;
 			
 			while (self.data.text.find(e => e.id === lineNum)) {
 						
@@ -489,7 +518,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			return h;
 		}
 		
-		self.containerId = util.ui.loadWindow(i18n.t("LBL_EDIT_TEXT"), view, getWindowHeight(), WINDOW_WIDTH, true);
+		self.containerId = util.ui.loadWindow(i18n.t("LBL_EDIT_TEXT") + " - " + i18n.t("LBL_PANEL_ZONE") + " " + self.config.zone, view, getWindowHeight(), self.width, true);
 		
 		initialize();
 	}

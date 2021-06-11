@@ -21,7 +21,7 @@ export default class VmsSignalingContent {
 
 		let self = this;
 		let view = {
-			
+			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
 				{ height: 20 },
@@ -94,11 +94,11 @@ export default class VmsSignalingContent {
 				elements: []
 			}
 			
-			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-file-outline", css: "toolbar-button-text", width: 180, label: i18n.t("LBL_NEW"), tooltip: i18n.t("LBL_NEW_PANEL_COMPOSITION") });
-			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-folder-open-outline", css: "toolbar-button-text", width: 180, label: i18n.t("LBL_LOAD"), tooltip: i18n.t("LBL_LOAD_PANEL_FROM_LIBRARY") });
-			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-content-save-outline", css: "toolbar-button-text", width: 180, label: i18n.t("LBL_SAVE"), tooltip: i18n.t("LBL_SAVE_TO_LIBRARY") });
-			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-trash-can-outline", css: "toolbar-button-text", width: 180, label: i18n.t("LBL_DELETE"), tooltip: i18n.t("LBL_DELETE") });
-			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-information-outline", css: "toolbar-button-text", width: 180, label: i18n.t("LBL_INFO"), tooltip: i18n.t("LBL_VIEW_EQUIPMENT") });
+			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-file-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_NEW"), tooltip: i18n.t("LBL_NEW_PANEL_COMPOSITION") });
+			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-folder-open-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_LOAD"), tooltip: i18n.t("LBL_LOAD_PANEL_FROM_LIBRARY") });
+			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-content-save-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_SAVE"), tooltip: i18n.t("LBL_SAVE_TO_LIBRARY") });
+			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-trash-can-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_DELETE"), tooltip: i18n.t("LBL_DELETE") });
+			viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-information-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_INFO"), tooltip: i18n.t("LBL_VIEW_EQUIPMENT") });
 			
 			return viewToolbar;
 		}
@@ -133,7 +133,7 @@ export default class VmsSignalingContent {
 					},
 					{
 						cols: [
-							{ width: 60 },
+							{ width: 30 },
 							composer.getView(),
 							{ width: 30 }
 						]
