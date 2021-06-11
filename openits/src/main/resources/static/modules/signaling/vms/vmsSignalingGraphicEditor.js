@@ -171,14 +171,14 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 					on: {
 						onAfterRender: webix.once(function() {
 							
-							if (self.dataViewMain && Array.isArray(self.data.graphic) && self.data.graphic.length === 1 && self.data.graphic[0].value) {
+							if (self.dataViewMain && Array.isArray(self.data.graphics) && self.data.graphics.length === 1 && self.data.graphics[0].value) {
 								
-								self.dataViewMain.select([self.data.graphic[0].value]);
+								self.dataViewMain.select([self.data.graphics[0].value]);
 							}
 							
-							if (isAlternance() && self.dataViewAlt && Array.isArray(self.data.graphic) && self.data.graphic.length === 1 && self.data.graphic[0].alternance) {
+							if (isAlternance() && self.dataViewAlt && Array.isArray(self.data.graphics) && self.data.graphics.length === 1 && self.data.graphics[0].alternance) {
 								
-								self.dataViewAlt.select([self.data.graphic[0].alternance]);
+								self.dataViewAlt.select([self.data.graphics[0].alternance]);
 							}
 						})
 					}
@@ -348,7 +348,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 					data["flashing_off_ms"] = self.config.properties.defaultFlashingOffMs;
 				}
 				
-				data.graphic= [];
+				data.graphics= [];
 
 				let graphic = {	id: 1 }				
 				let mainSelectedIds = self.dataViewMain.getSelectedIds();
@@ -357,7 +357,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 					
 					graphic.value = mainSelectedIds[0];
 					
-					data.graphic.push(graphic);
+					data.graphics.push(graphic);
 					
 					if (optionModesInstance.getValue() == VmsSignalingZoneEditor.ALTERNANCE_MODE) {
 						
@@ -388,9 +388,9 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 			let graphicNum = 1;
 			let graphicData = undefined;
 			
-			if (Array.isArray(self.data.graphic)) {
+			if (Array.isArray(self.data.graphics)) {
 				
-				while ((graphicData = self.data.graphic.find(e => e.id === graphicNum)) && !isAlt) {
+				while ((graphicData = self.data.graphics.find(e => e.id === graphicNum)) && !isAlt) {
 							
 					isAlt |= graphicData.alternance ? true : false; 
 					graphicNum++; 
@@ -441,11 +441,11 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 				
 				let graphicArray = [];
 				
-				if (Array.isArray(self.data.graphic) && self.data.graphic.length > 0) {
+				if (Array.isArray(self.data.graphics) && self.data.graphics.length > 0) {
 					
 					let id = 0;
 					
-					while (id++ < self.data.graphic.length) {
+					while (id++ < self.data.graphics.length) {
 					
 						graphicArray.push({id: id});	
 					} 

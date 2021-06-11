@@ -999,6 +999,27 @@ export let util = {
 					return `<div class='empty-app-inner'><img src='img/loading.svg' align='center'><span class='empty-app-inner-text'>${(!noText ? i18n.t("LBL_LOADING_DATA") : "")}</span></div>`;
 				}
 			}
+		},
+		
+		calculateTextWidth(text, fontFamily, fontSize) {
+				
+			let width = 0;
+			
+			let dText = document.createElement("div");
+			dText.id = webix.uid();
+			dText.style.fontSize = fontSize;
+			dText.style.fontFamily = fontFamily;
+			dText.style.position = "absolute";
+			dText.style.visibility = "hidden";
+			dText.style.whiteSpace = "nowrap";
+			dText.innerHTML = text;
+			document.body.appendChild(dText);
+			
+			width = dText.clientWidth;
+			
+			dText.remove();
+			
+			return width;
 		}
 	},
 	

@@ -4,16 +4,20 @@ import VmsSignalingTextEditor from "./vmsSignalingTextEditor.js";
 import VmsSignalingGraphicEditor from "./vmsSignalingGraphicEditor.js";
 import { util } from "../../../lib/util.js";
 
+const TEXT_ALIGN_CENTER = "center";
+const TEXT_ALIGN_LEFT = "left";
+const TEXT_ALIGN_RIGHT = "right";
+
 export default class VmsSignalingComposer {
 
 	constructor(config, element) {
 		
 		const jsonDataFakeArray = [
-			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
-			[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":28}]}],
-			[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
+			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 		];
-
+		
 		this.config = config;
 		this.element = element;
 		this.uid = webix.uid();
@@ -130,6 +134,14 @@ export default class VmsSignalingComposer {
 					if (zoneConfig) {
 						
 						if (zoneInfo) {
+						
+							let dZone = document.querySelector("#" + "vms-composer-svg-" + self.uid).querySelector("#zone" + zoneData.zone);
+							
+							if (dZone) {
+								
+								zoneConfig.clientWidth = dZone.getBoundingClientRect().width;
+								zoneConfig.clientHeight = dZone.getBoundingClientRect().height;
+							}
 						
 							zoneConfig.w = zoneInfo.w;
 							zoneConfig.h = zoneInfo.h;

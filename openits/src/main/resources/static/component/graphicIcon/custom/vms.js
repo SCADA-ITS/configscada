@@ -1,5 +1,6 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
+import { util } from "../../../lib/util.js";
 
 const PARAM_JSON_VALUE = "ElementTypeParam:71:2:3";
 
@@ -12,22 +13,26 @@ const NO_PICTOGRAM = "img/undefined.png";
 const TIME_ANIMATION_MS = 5000;
 const TIME_BLINKING_MS = 1000;
 
+const TEXT_ALIGN_CENTER = "center";
+const TEXT_ALIGN_LEFT = "left";
+const TEXT_ALIGN_RIGHT = "right";
+
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:71:0", "ElementTypeState:71:2"];
 
 const ZONE_ELEMENT_TYPE = {
-	line: "text",
-	graphic: "graphic"
+	texts: "texts",
+	graphics: "graphics"
 }
-
-const jsonDataFakeArray = [
-	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":85}]}],
-	[{"zone":1,"alternance_ms":5000,"graphic":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphic":[{"id":1,"value":28}]}],
-	[{"zone":1,"graphic":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"text":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
-];
 
 export default class Vms extends GraphicIconCustomType {
 	
 	constructor(s, g, elementInfo, events) {
+		
+		const jsonDataFakeArray = [
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
+			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
+		];
 
 		super(s, g, elementInfo, events);
 		
@@ -79,24 +84,24 @@ export default class Vms extends GraphicIconCustomType {
 			
 			while (gZone.select("#" + G_ID_GRAPHIC_PREFIX + zoneId + "-" + (++graphicId))) {
 				
-				if (!zoneData.graphic) {
+				if (!zoneData[ZONE_ELEMENT_TYPE.graphics]) {
 					
-					zoneData.graphic = [];
+					zoneData[ZONE_ELEMENT_TYPE.graphics] = [];
 				}
 				
-				zoneData.graphic.push({ id: graphicId });
+				zoneData[ZONE_ELEMENT_TYPE.graphics].push({ id: graphicId });
 			}
 			
 			let lineId = 0;
 			
 			while (gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
 				
-				if (!zoneData.text) {
+				if (!zoneData[ZONE_ELEMENT_TYPE.texts]) {
 					
-					zoneData.text = [];
+					zoneData[ZONE_ELEMENT_TYPE.texts] = [];
 				}
 				
-				zoneData.text.push({ id: lineId });
+				zoneData[ZONE_ELEMENT_TYPE.texts].push({ id: lineId });
 			}
 		}
 		
@@ -187,7 +192,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 				while (gGraphic = gZone.select("#" + G_ID_GRAPHIC_PREFIX + zoneId + "-" + (++graphicId))) {
 					
-					let graphicData = getElementData(zoneId, ZONE_ELEMENT_TYPE.graphic, graphicId);
+					let graphicData = getElementData(zoneId, ZONE_ELEMENT_TYPE.graphics, graphicId);
 					
 					if (graphicData) {
 					
@@ -213,7 +218,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 				while (gLine = gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
 					
-					let lineData = getElementData(zoneId, ZONE_ELEMENT_TYPE.line, lineId);
+					let lineData = getElementData(zoneId, ZONE_ELEMENT_TYPE.texts, lineId);
 					
 					if (lineData) {
 					
@@ -226,6 +231,9 @@ export default class Vms extends GraphicIconCustomType {
 							
 							self.linesBlinking.push(zoneId + "-" + lineId);
 						}
+						
+						lineData.align = zoneData.align ? zoneData.align : "left";
+						lineData.zoneWidth = gZone.getBBox().width;
 					}
 					
 					renderLine(gLine, lineData);
@@ -237,9 +245,11 @@ export default class Vms extends GraphicIconCustomType {
 			
 			if (gLine) {
 				
+				let text = "";
+				
 				if (lineData) {
 					
-					let text = lineData.val ? lineData.val : lineData.value;
+					text = lineData.val ? lineData.val : lineData.value;
 					
 					if (!text) {
 						
@@ -247,10 +257,54 @@ export default class Vms extends GraphicIconCustomType {
 					}
 									
 					gLine.attr( { text: text, fill: lineData.color ? lineData.color : DEFAULT_TEXT_COLOR } );
+					
+					alignLine(gLine, lineData, text);
 				}
 				else {
 					
 					gLine.attr( { text: '' } );
+				}
+			}
+		}
+		
+		function alignLine(gLine, lineData, text) {
+				
+			if (lineData.align) {
+			
+				let textWidth = util.ui.calculateTextWidth(text, gLine.attr("font-family"), gLine.attr("font-size"));
+				let x = 0;
+				
+				if (lineData.align === TEXT_ALIGN_LEFT) {
+					
+					x -= (lineData.zoneWidth / 2) - lineData.zoneWidth * 0.05;
+				}	
+				else if (lineData.align === TEXT_ALIGN_RIGHT) {
+					
+					x = (lineData.zoneWidth / 2) - textWidth - lineData.zoneWidth * 0.05;
+				}
+				
+				let styleArray = gLine.attr("style").split(";");
+				
+				if (styleArray.length > 0) {
+					
+					let styleFinalArray = [];
+					
+					styleArray.forEach(s => {
+						
+						let styleName = (s.split(":")[0]).trim();
+						
+						if (styleName && styleName != "text-align" && styleName != "text-anchor") {
+							
+							styleFinalArray.push(s);
+						}
+						
+					});
+					
+					styleFinalArray.push("text-align: " + lineData.align);
+					
+					gLine.attr({'style': styleFinalArray.join(";")});
+					
+					gLine.transform('T' + x);
 				}
 			}
 		}
@@ -336,8 +390,8 @@ export default class Vms extends GraphicIconCustomType {
 					
 			self.intervalAlternanceId = setInterval(function(){
 				
-				animateAlternance(ZONE_ELEMENT_TYPE.line);
-				animateAlternance(ZONE_ELEMENT_TYPE.graphic);
+				animateAlternance(ZONE_ELEMENT_TYPE.texts);
+				animateAlternance(ZONE_ELEMENT_TYPE.graphics);
 				
 				self.isAlternance = !self.isAlternance;
 				
@@ -345,8 +399,8 @@ export default class Vms extends GraphicIconCustomType {
 
 			self.intervalBlinkingId = setInterval(function(){
 				
-				animateBlinking(ZONE_ELEMENT_TYPE.line);
-				animateBlinking(ZONE_ELEMENT_TYPE.graphic);
+				animateBlinking(ZONE_ELEMENT_TYPE.texts);
+				animateBlinking(ZONE_ELEMENT_TYPE.graphics);
 				
 				self.isBlinking = !self.isBlinking;
 				
@@ -354,8 +408,8 @@ export default class Vms extends GraphicIconCustomType {
 			
 			function animateAlternance(zoneElementType) {
 				
-				let arrAlternanceElements = (zoneElementType === ZONE_ELEMENT_TYPE.line ? self.linesAlternance : self.graphicsAlternance);
-				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.line ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
+				let arrAlternanceElements = (zoneElementType === ZONE_ELEMENT_TYPE.texts ? self.linesAlternance : self.graphicsAlternance);
+				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.texts ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
 				
 				arrAlternanceElements.forEach(elementId => {
 					
@@ -374,7 +428,7 @@ export default class Vms extends GraphicIconCustomType {
 							
 							newElementData.val = self.isAlternance ? newElementData.value : newElementData.alternance;
 							
-							if (zoneElementType === ZONE_ELEMENT_TYPE.line) {
+							if (zoneElementType === ZONE_ELEMENT_TYPE.texts) {
 							
 								renderLine(gElement, newElementData);
 							} 
@@ -389,8 +443,8 @@ export default class Vms extends GraphicIconCustomType {
 			
 			function animateBlinking(zoneElementType) {
 				
-				let arrBlinkingElements = (zoneElementType === ZONE_ELEMENT_TYPE.line ? self.linesBlinking : self.graphicsBlinking);
-				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.line ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
+				let arrBlinkingElements = (zoneElementType === ZONE_ELEMENT_TYPE.texts ? self.linesBlinking : self.graphicsBlinking);
+				let gIdPrefix = (zoneElementType === ZONE_ELEMENT_TYPE.texts ? G_ID_LINE_PREFIX : G_ID_GRAPHIC_PREFIX);
 				
 				arrBlinkingElements.forEach(elementId => {
 					
@@ -414,7 +468,7 @@ export default class Vms extends GraphicIconCustomType {
 								newElementData.val = newElementData.value;	
 							}
 							
-							if (zoneElementType === ZONE_ELEMENT_TYPE.line) {
+							if (zoneElementType === ZONE_ELEMENT_TYPE.texts) {
 							
 								renderLine(gElement, newElementData);
 							} 

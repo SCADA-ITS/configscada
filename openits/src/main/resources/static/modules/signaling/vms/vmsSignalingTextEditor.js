@@ -1,6 +1,8 @@
 import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
 
+const DEFAULT_INPUT_FONT_SIZE = "14";
+
 export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
 	constructor(width, height, config, data, onZoneDataChange) {
@@ -281,7 +283,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						]
 					};
 					
-					while (lineData = self.data.text.find(e => e.id === lineNum)) {
+					while (lineData = self.data.texts.find(e => e.id === lineNum)) {
 						
 						viewLines.cols[0].rows.push(drawTextEditorLine());
 						
@@ -290,14 +292,17 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					function drawTextEditorLine() {
 					
+						let inputWidth = (DEFAULT_INPUT_FONT_SIZE * self.config.w) / parseFloat(self.config.fontInfo["font-size"]);
+					
 						let viewTextEditorLine = {
 							
 							cols: [
 								{},
 								{
 									id: (!alternance ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-") + lineData.id + "-" + self.uid,
-									view: "text", 
-									width: 400,
+									view: "text",
+									//width: 400, 
+									width: inputWidth + 150,
 									//css: { "font-family": self.config.fontInfo["font-family"]},
 									//css: "vms-input-line",
 									label: i18n.t("LBL_LINE") + lineData.id,
@@ -307,6 +312,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 										onAfterRender: function() {
 											
 											this.getNode().getElementsByTagName("input")[0].style["font-family"] = self.config.fontInfo["font-family"];
+											this.getNode().getElementsByTagName("input")[0].style["font-size"] = DEFAULT_INPUT_FONT_SIZE;
 										}
 									}
 	
@@ -424,7 +430,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 				let inputDataMainInstance = undefined;
 				let lineNum = 1;
 				
-				data.text = [];
+				data.texts = [];
 				
 				while (inputDataMainInstance = $$("view-signalling-text-editor-main-input-" + lineNum + "-" + self.uid)) {
 					
@@ -450,7 +456,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						lineData.color = colorDataInstance.getValue();
 					}
 					
-					data.text.push(lineData);
+					data.texts.push(lineData);
 					
 					lineNum++;
 				}
@@ -465,9 +471,9 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			let lineNum = 1;
 			let lineData = undefined;
 			
-			if (Array.isArray(self.data.text)) {
+			if (Array.isArray(self.data.texts)) {
 				
-				while ((lineData = self.data.text.find(e => e.id === lineNum)) && !isAlt) {
+				while ((lineData = self.data.texts.find(e => e.id === lineNum)) && !isAlt) {
 							
 					isAlt |= lineData.alternance ? true : false; 
 					lineNum++; 
@@ -508,7 +514,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			let lineNum = 1;
 			let h = self.height;
 			
-			while (self.data.text.find(e => e.id === lineNum)) {
+			while (self.data.texts.find(e => e.id === lineNum)) {
 						
 				lineNum++; 
 			}
@@ -533,11 +539,11 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 				
 				let textArray = [];
 				
-				if (Array.isArray(self.data.text) && self.data.text.length > 0) {
+				if (Array.isArray(self.data.texts) && self.data.texts.length > 0) {
 					
 					let id = 0;
 					
-					while (id++ < self.data.text.length) {
+					while (id++ < self.data.texts.length) {
 					
 						textArray.push({id: id});	
 					} 
