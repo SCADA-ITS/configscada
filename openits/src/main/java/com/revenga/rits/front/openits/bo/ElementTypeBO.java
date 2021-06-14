@@ -50,6 +50,15 @@ public class ElementTypeBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE).getFieldId(), elements);
 	}
+
+	public List<Map<String, Object>> getElementsWithChildsByElementType(String id) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE, new Object[] { id });
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE).getFieldId(), elements);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getElementTypeStatesByElementType(String id) {

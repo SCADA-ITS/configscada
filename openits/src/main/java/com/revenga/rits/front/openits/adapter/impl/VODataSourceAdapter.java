@@ -211,6 +211,7 @@ public class VODataSourceAdapter {
 
 	public static final int DATA_SOURCE_SEND_EXECUTE_PLAN = getPropertyInt("send_execute_plan");
 
+	public static final int DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_with_childs_by_element_type");
 	
 	private static int getPropertyInt(final String prop) {
 		

@@ -5,8 +5,13 @@
 		"fan": 102703
 	},
 	"restEndpoints": {
-		"elementsByIdType": "element_types/${id}/elements",
+		"elementsByIdType": "element_types/${id}/elementsWithChilds",
 		"elementById": "elements/${id}"
+	},
+	"topics": {
+		"ventilation" : "/topic/element",
+		"tubo" : "/topic/element",
+		"fan" : "/topic/element.ElementType:9.>"
 	},
 	"adapters": {
 		"fans": "ws.fans.getList"

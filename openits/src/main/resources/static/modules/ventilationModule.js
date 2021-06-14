@@ -77,9 +77,9 @@ export default class VentilationModule extends GenericModule {
 				}
 			});
 			
-			self.treeView = new TreeView(getMetadata(), getData(), getEvents());
+			self.treeView = new TreeView(getTreeMetadata(), getTreeData(), getTreeEvents());
 
-			function getMetadata() {
+			function getTreeMetadata() {
 				
 				let metadata = {
 					id: 1,
@@ -98,14 +98,14 @@ export default class VentilationModule extends GenericModule {
 				return metadata;
 			}
 	
-			function getData() {
+			function getTreeData() {
 				
 				let data = util.tree.getNodes(self.nodes, self.hierarchy, { parentNodeId: "parentId", childNodeId: "childId" }, true);
 				
 				return data;
 			}
 	
-			function getEvents() {
+			function getTreeEvents() {
 					
 				let events = {};
 	
@@ -284,7 +284,10 @@ export default class VentilationModule extends GenericModule {
 
 			self.config.ventilationModeOptions.forEach(option => {
 
-				ventilationModeOptions.push({ id : option.id, value: i18n.t(option.label)});
+				ventilationModeOptions.push({
+					id : option.id, 
+					value: i18n.t(option.label) 
+				});
 			});
 					
 			let viewContentToolbar = {
@@ -298,11 +301,18 @@ export default class VentilationModule extends GenericModule {
 			
 			let actionPanelSwitcher = {
 				view: "segmented",
-				css: "segment-custom-3",
-				disabled: true,
+				css: "segment-custom-2",
 				value: ventilationModeValue.value,
 				width: 500,
-				options: ventilationModeOptions
+				options: ventilationModeOptions,
+				tooltip: true,
+				on: {
+					onChange(newv, oldv) {
+
+						let selectedOption = self.config.ventilationModeOptions.find(o => o.id == newv);
+						webix.message(selectedOption.disable);
+					}
+				}
 			};
 			
 			viewContentToolbar.elements.push({});
@@ -376,15 +386,15 @@ export default class VentilationModule extends GenericModule {
 											view: "label",
 											height: 24,
 											width: 180,
-											template: "<span>" +i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
+											template: "<span>" +i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
 											css: "global-text"
 										},
-										{ width: 24 },
+										{ width: 12 },
 										{
 											view: "label",
 											height: 24,
 											width: 180,
-											template: "<span>" +i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
+											template: "<span>" +i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
 											css: "global-text"
 										}
 									]
@@ -401,8 +411,10 @@ export default class VentilationModule extends GenericModule {
 											css: "global-text"
 										},
 										{ width: 12 },
+										getViewProposedRegimeLabel(),
+										{ width: 12 },
 										{
-											id: "label-regimen-2-" + self.uid,
+											id: "label-regimen-3-" + self.uid,
 											width: 180,
 											height: 30,
 											view:"combo", 
@@ -412,13 +424,11 @@ export default class VentilationModule extends GenericModule {
 												onChange(newv, oldv) {
 
 													updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
-													webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-3-" + self.uid));
+													webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-2-" + self.uid));
 													webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.uid));
 												}
 											}
-										},
-										{ width: 24 },
-										getViewProposedRegimeLabel()
+										}										
 									]
 								},
 								{}
@@ -463,7 +473,7 @@ export default class VentilationModule extends GenericModule {
 						view: "label",
 						width: 180,
 						height: 20,
-						id: "label-regimen-3-" + self.uid,
+						id: "label-regimen-2-" + self.uid,
 						template: '<div><span class="table-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
 						css: "global-text"
 					};
