@@ -7,6 +7,10 @@ export default class VmsSignalingZoneEditor {
 	static get SINGLE_MODE() { return 1 }
 	static get FLASHING_MODE() { return 2 }
 	static get ALTERNANCE_MODE() { return 3 }
+	
+	static get ALIGN_LEFT() { return 1 }
+	static get ALIGN_CENTER() { return 2 }
+	static get ALIGN_RIGHT() { return 3 }
 
 	constructor(width, height, config, data, onZoneDataChange) {
 

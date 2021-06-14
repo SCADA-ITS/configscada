@@ -108,13 +108,6 @@ export default class VmsSignalingComposer {
 							if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
 																
 								self.update();
-								
-//								let svgElement = document.getElementById("vms-composer-svg-" + self.uid);
-//								
-//								if (svgElement) {
-//									
-//									svgElement.style.display = "block";	
-//								}
 							}
 						});
 					});	
@@ -286,9 +279,30 @@ export default class VmsSignalingComposer {
 	
 	getJsonDataInitialized() {
 		
-		let jsonData = this.jsonDataFake;
+		let jsonData = undefined;
+				
+		if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
+			
+			let elementValueJsonConfig = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonConfig);
 		
-		if (!jsonData && this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
+			if (elementValueJsonConfig && elementValueJsonConfig.value) {
+				
+				let jsonConfig = JSON.parse(elementValueJsonConfig.value);
+				
+				if (Array.isArray(jsonConfig) && jsonConfig.length > 0) {
+					
+					jsonData = [];
+					
+					jsonConfig.forEach(e => {
+					
+						jsonData.push({
+							zone: e.zone,
+							graphic: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
+							text: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
+						})
+					})	
+				} 
+			}
 			
 			let elementValueJsonData = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonData);
 		
@@ -298,22 +312,8 @@ export default class VmsSignalingComposer {
 			}
 			else {
 				
-				let elementValueJsonConfig = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonConfig);
-		
-				if (elementValueJsonConfig && elementValueJsonConfig.value) {
-					
-					let jsonConfig = JSON.parse(elementValueJsonConfig.value);
-					
-					jsonConfig.forEach(e => {
-						
-						jsonData.push({
-							zone: e.zone,
-							graphic: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
-							text: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
-						})
-					})
-				}
-			}
+				jsonData = USE_VMS_FAKE_DATA ? this.jsonDataFake : undefined;
+			}	
 		}
 		
 		return jsonData;

@@ -24,17 +24,18 @@ const ZONE_ELEMENT_TYPE = {
 	graphics: "graphics"
 }
 
+	
 export default class Vms extends GraphicIconCustomType {
 	
 	constructor(s, g, elementInfo, events) {
+
+		super(s, g, elementInfo, events);
 		
 		const jsonDataFakeArray = [
 			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
 			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
 			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 		];
-
-		super(s, g, elementInfo, events);
 		
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
 		
@@ -50,11 +51,9 @@ export default class Vms extends GraphicIconCustomType {
 		this.intervalAlternanceId = undefined;
 		this.intervalBlinkingId = undefined;
 	
-		this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
+		this.jsonDataFake = webix.copy(jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))]);
 		
-		this.render(this.getDataInitialized());
-		
-		this.jsonData = undefined;
+		this.jsonData = this.getDataInitialized();
 	}
 	
 	stop() {
@@ -120,6 +119,20 @@ export default class Vms extends GraphicIconCustomType {
 		
 		return data;
 	}
+	
+	getElementInfoInitial() {
+			
+		let elementInfo = {
+			values: []
+		};
+		
+		elementInfo.values.push({
+			id: PARAM_JSON_VALUE,
+			value: JSON.stringify(this.getDataInitialized())
+		});
+		
+		return elementInfo;
+	}
 
 	render(elementInfo) {
 		
@@ -129,7 +142,7 @@ export default class Vms extends GraphicIconCustomType {
 	
 		let value = this.getValue(PARAM_JSON_VALUE);
 		
-		if (!value) {
+		if (!value && USE_VMS_FAKE_DATA) {
 			
 			self.jsonData = this.jsonDataFake;
 		}
@@ -160,7 +173,12 @@ export default class Vms extends GraphicIconCustomType {
 				
 				this.gState.attr({ fill: elementInfo.state.color });
 				
-				treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);	
+				treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
+				
+				if (!treatmentValue && !USE_VMS_FAKE_DATA) {
+					
+					self.jsonData = self.getDataInitialized();	
+				}	
 			}
 			
 			let gZone;
@@ -222,7 +240,7 @@ export default class Vms extends GraphicIconCustomType {
 					
 					if (lineData) {
 					
-						if (lineData.alternance) {
+						if (lineData.alternance != null) {
 							
 							self.linesAlternance.push(zoneId + "-" + lineId);
 						}
@@ -249,7 +267,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 				if (lineData) {
 					
-					text = lineData.val ? lineData.val : lineData.value;
+					text = (lineData.val != null) ? lineData.val : lineData.value;
 					
 					if (!text) {
 						
@@ -277,7 +295,7 @@ export default class Vms extends GraphicIconCustomType {
 				if (lineData.align === TEXT_ALIGN_LEFT) {
 					
 					x -= (lineData.zoneWidth / 2) - lineData.zoneWidth * 0.05;
-				}	
+				}
 				else if (lineData.align === TEXT_ALIGN_RIGHT) {
 					
 					x = (lineData.zoneWidth / 2) - textWidth - lineData.zoneWidth * 0.05;
@@ -301,6 +319,11 @@ export default class Vms extends GraphicIconCustomType {
 					});
 					
 					styleFinalArray.push("text-align: " + lineData.align);
+					
+					if (lineData.align === TEXT_ALIGN_CENTER) {
+						
+						styleFinalArray.push("text-anchor: middle");	
+					}
 					
 					gLine.attr({'style': styleFinalArray.join(";")});
 					

@@ -2,6 +2,10 @@ import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
 
 const DEFAULT_INPUT_FONT_SIZE = "14";
+const TEXT_ALIGN_CENTER = "center";
+const TEXT_ALIGN_LEFT = "left";
+const TEXT_ALIGN_RIGHT = "right";
+
 
 export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
@@ -192,13 +196,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 											{ "id": VmsSignalingZoneEditor.ALIGN_LEFT, "value": i18n.t("LBL_ALIGN_LEFT") },
 											{ "id": VmsSignalingZoneEditor.ALIGN_CENTER, "value": i18n.t("LBL_ALIGN_CENTER") },
 											{ "id": VmsSignalingZoneEditor.ALIGN_RIGHT, "value": i18n.t("LBL_ALIGN_RIGHT") }
-										],
-										on: {
-											onChange: function(newv) {
-						
-												// TODO: Alignment text						
-											}
-										}
+										]
 									}
 								]
 							}
@@ -236,17 +234,6 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					header: !alternance ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
 					body: {
 						id: (!alternance ? "view-signalling-text-editor-main-" : "view-signalling-text-editor-alt-") + self.uid,
-//						cols: [
-//							{ width: 10 },
-//							{
-//								rows: [
-//									{ height: 40 },
-//									drawTextEditorLines(),
-//									{}
-//								],	
-//							},
-//							{ width: 10 }
-//						]
 						rows: [
 							{
 								cols: [
@@ -278,21 +265,37 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					let viewLines = {
 						cols: [
 							{
-								rows: []
+								view: "form",
+								id: (!alternance ? "view-signalling-text-editor-main-form-" : "view-signalling-text-editor-alt-form-") + self.uid,
+								borderless: true,
+								elements: []
+								//rows: []
 							}
 						]
 					};
 					
+					let inputWidth = (DEFAULT_INPUT_FONT_SIZE * (self.config.w - self.config.w * 0.1)) / parseFloat(self.config.fontInfo["font-size"]);
+					
 					while (lineData = self.data.texts.find(e => e.id === lineNum)) {
 						
-						viewLines.cols[0].rows.push(drawTextEditorLine());
+						//viewLines.cols[0].rows.push(drawTextEditorLine());
+						viewLines.cols[0].elements.push(drawTextEditorLine());
+						
+//						viewLines.cols[0].rules[(alternance ? "alt-" : "main-") + lineData.id] = function(value) {
+//							
+//							console.log("Input value is " + value);
+//							let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
+//							
+//							console.log("Input width is " + inputWidth + "px.")
+//							console.log("Text width is " + textWidth + "px.")
+//								
+//							return inputWidth < textWidth;
+//						}
 						
 						lineNum++;
 					}
 					
 					function drawTextEditorLine() {
-					
-						let inputWidth = (DEFAULT_INPUT_FONT_SIZE * self.config.w) / parseFloat(self.config.fontInfo["font-size"]);
 					
 						let viewTextEditorLine = {
 							
@@ -302,7 +305,29 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 									id: (!alternance ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-") + lineData.id + "-" + self.uid,
 									view: "text",
 									//width: 400, 
-									width: inputWidth + 150,
+									width: (DEFAULT_INPUT_FONT_SIZE * self.config.w) / parseFloat(self.config.fontInfo["font-size"]) + 150 + 12,
+									name: (alternance ? "alt-" : "main-") + lineData.id,
+									validate: function(value) {
+										
+										console.log("Input value is " + value);
+										let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
+										
+										console.log("Input width is " + inputWidth + "px.")
+										console.log("Text width is " + textWidth + "px.")
+											
+										//return inputWidth > (textWidth + parseInt(DEFAULT_INPUT_FONT_SIZE, 10));
+										return inputWidth > textWidth;
+									},
+//									validate: function() {
+//										
+//										console.log("Input value is " + this.getValues()[(alternance ? "alt-" : "main-") + lineData.id]);
+//										let textWidth = util.ui.calculateTextWidth(this.getValues()[(alternance ? "alt-" : "main-") + lineData.id], self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
+//										
+//										console.log("Input width is " + inputWidth + "px.")
+//										console.log("Text width is " + textWidth + "px.")
+//											
+//										return inputWidth < textWidth;
+//									},
 									//css: { "font-family": self.config.fontInfo["font-family"]},
 									//css: "vms-input-line",
 									label: i18n.t("LBL_LINE") + lineData.id,
@@ -313,6 +338,16 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 											
 											this.getNode().getElementsByTagName("input")[0].style["font-family"] = self.config.fontInfo["font-family"];
 											this.getNode().getElementsByTagName("input")[0].style["font-size"] = DEFAULT_INPUT_FONT_SIZE;
+										},
+										onChange: function(newValue, oldValue, config) {
+											
+											$$((!alternance ? "view-signalling-text-editor-main-form-" : "view-signalling-text-editor-alt-form-") + self.uid).validate();
+//											this.validate();
+//											console.log("Input value is " + newValue);
+//											let textWidth = util.ui.calculateTextWidth(newValue, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
+//											
+//											console.log("Input width is " + inputWidth + "px.")
+//											console.log("Text width is " + textWidth + "px.")
 										}
 									}
 	
@@ -344,8 +379,6 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 								},
 								{}
 							]
-						
-							
 						};
 						
 						return viewTextEditorLine;
@@ -394,11 +427,23 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						on: {
 							onItemClick() {
 		
-								self.data = getData();
+								if (validate()) {
+									
+									self.data = getData();
 								
-								self.onZoneDataChange(self.data);
-								
-								$$(self.containerId).close();					
+									self.onZoneDataChange(self.data);
+									
+									$$(self.containerId).close();	
+								}
+								else {
+									
+									webix.alert({
+										title: i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED"),
+										text: i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED_DESCRIPTION"),
+										type: "alert-error",
+										width: 500
+									});
+								}
 							}
 						}
 					}
@@ -406,6 +451,26 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			};
 			
 			return viewToolbarActions;
+		}
+		
+		function validate() {
+			
+			let textEditorMainForm;
+			let valid = true;
+			
+			if (textEditorMainForm = $$("view-signalling-text-editor-main-form-" + self.uid)) {
+				
+				valid &= textEditorMainForm.validate();
+			}
+			
+			let textEditorAltForm;
+			
+			if (valid && (textEditorAltForm = $$("view-signalling-text-editor-alt-form-" + self.uid))) {
+				
+				valid &= textEditorAltForm.validate();
+			}
+			
+			return valid;
 		}
 		
 		function getData() {
@@ -430,6 +495,24 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 				let inputDataMainInstance = undefined;
 				let lineNum = 1;
 				
+				data.align = function() {
+					
+					let optionAligns = $$("view-signalling-text-editor-option-aligns-" + self.uid);
+					
+					let align = TEXT_ALIGN_CENTER;
+					
+					if (optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_LEFT) {
+						
+						align = TEXT_ALIGN_LEFT;
+					}
+					else if (optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_RIGHT) {
+						
+						align = TEXT_ALIGN_RIGHT;
+					}
+					
+					return align;
+				}();
+				
 				data.texts = [];
 				
 				while (inputDataMainInstance = $$("view-signalling-text-editor-main-input-" + lineNum + "-" + self.uid)) {
@@ -437,7 +520,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					let lineData = {};
 					
 					lineData.id = lineNum;
-					lineData.value = inputDataMainInstance.getValue();
+					lineData.value = inputDataMainInstance.getValue() ? inputDataMainInstance.getValue() : "";
 					
 					if (optionModesInstance.getValue() == VmsSignalingZoneEditor.ALTERNANCE_MODE) {
 						
@@ -445,7 +528,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						
 						if (inputDataAltInstance) {
 							
-							lineData.alternance = inputDataAltInstance.getValue(); 		
+							lineData.alternance = inputDataAltInstance.getValue() ? inputDataAltInstance.getValue() : ""; 		
 						}		
 					}
 					
@@ -483,6 +566,11 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			return isAlt;
 		}
 		
+		function getAlign() {
+			
+			return self.data.align;
+		}
+		
 		function isFlashing() {
 			
 			return self.data["flashing_on_ms"] ? true : false;
@@ -491,6 +579,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		function initialize() {
 			
 			let optionModes = $$("view-signalling-text-editor-option-modes-" + self.uid);
+			let optionAligns = $$("view-signalling-text-editor-option-aligns-" + self.uid);
 			
 			if (optionModes) {
 				
@@ -506,7 +595,33 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					optionModes.setValue(VmsSignalingZoneEditor.SINGLE_MODE);
 				}	
-			}	
+			}
+			
+			if (optionAligns) {
+				
+				let align;
+				
+				if (align = getAlign()) {
+				
+					if (align === TEXT_ALIGN_LEFT) {
+				
+						optionAligns.setValue(VmsSignalingZoneEditor.ALIGN_LEFT);
+					}
+					else if (align === TEXT_ALIGN_CENTER) {
+						
+						optionAligns.setValue(VmsSignalingZoneEditor.ALIGN_CENTER);
+					}
+					else if (align === TEXT_ALIGN_RIGHT) {
+						
+						optionAligns.setValue(VmsSignalingZoneEditor.ALIGN_RIGHT);
+					}	
+				}
+				else {
+					
+					optionAligns.setValue(VmsSignalingZoneEditor.ALIGN_CENTER);
+					optionAligns.disable();
+				}
+			}
 		}
 		
 		function getWindowHeight() {
@@ -535,7 +650,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 	
 		let data = {
 			zone: this.data.zone,
-			text: function() {
+			texts: function() {
 				
 				let textArray = [];
 				
