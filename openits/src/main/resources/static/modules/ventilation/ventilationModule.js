@@ -1,8 +1,8 @@
-import GenericModule from "../modules/genericModule.js";
-import TreeView from "../component/treeview.js";
-import { util } from "../lib/util.js";
-import DataTable from "../component/datatable.js";
-import { adapter } from "../lib/adapter.js";
+import GenericModule from "../genericModule.js";
+import TreeView from "../../component/treeview.js";
+import { util } from "../../lib/util.js";
+import DataTable from "../../component/datatable.js";
+import { adapter } from "../../lib/adapter.js";
 
 export default class VentilationModule extends GenericModule {
 	
@@ -163,6 +163,7 @@ export default class VentilationModule extends GenericModule {
 			webix.ui(util.ui.getViewDrawNoData(), $$("view-content-" + self.uid), 0);
 
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementById, { id: self.treeView.getSelected()[0].id_})).then(function(data) {
+			// webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elementByIds, body).then(function(data) {
 				
 				self.selectedTube = data.json();
 				self.tubeFans = eval("adapter." + self.config.adapters.fans)(self.selectedTube.childs, null);
@@ -243,7 +244,30 @@ export default class VentilationModule extends GenericModule {
 													label: i18n.t("LBL_STOP"),
 													click: function () { 
 														
-														webix.message("STOP POR HACER");
+														webix.confirm({
+															title: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM"),
+															ok: i18n.t("LBL_ACCEPT"),
+															cancel: i18n.t("LBL_CANCEL"),
+															text: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"),
+															width: 600
+														}).then(function() {
+															
+															let command = self.config.commands.SEND_VENTILATION_STOP;
+															command.elementId = self.treeView.getSelected()[0].id_;
+								
+															let body = {
+																commands : []
+															};
+															body.commands.push(command);
+								
+															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+																
+																if(!data.json()){
+
+																	webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+																}
+															});
+														});
 													}
 												},
 												{ width: 12 },
@@ -258,7 +282,30 @@ export default class VentilationModule extends GenericModule {
 													label: i18n.t("LBL_START"),
 													click: function () { 
 														
-														webix.message("PLAY POR HACER");
+														webix.confirm({
+															title: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM"),
+															ok: i18n.t("LBL_ACCEPT"),
+															cancel: i18n.t("LBL_CANCEL"),
+															text: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"),
+															width: 600
+														}).then(function() {
+															
+															let command = self.config.commands.SEND_VENTILATION_START;
+															command.elementId = self.treeView.getSelected()[0].id_;
+								
+															let body = {
+																commands : []
+															};
+															body.commands.push(command);
+								
+															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+																
+																if(!data.json()){
+																	
+																	webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+																}
+															});
+														});
 													}
 												}
 											]
@@ -309,8 +356,37 @@ export default class VentilationModule extends GenericModule {
 				on: {
 					onChange(newv, oldv) {
 
-						let selectedOption = self.config.ventilationModeOptions.find(o => o.id == newv);
-						webix.message(selectedOption.disable);
+						webix.confirm({
+							title: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM"),
+							ok: i18n.t("LBL_ACCEPT"),
+							cancel: i18n.t("LBL_CANCEL"),
+							text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
+							width: 600
+						}).then(function() {
+							
+							let command = self.config.commands.SEND_VENTILATION_MODE;
+							command.elementId = self.selectedTube.id;
+							command.commandElementValues[0].value = newv;
+
+							let body = {
+								commands : []
+							};
+							body.commands.push(command);
+
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+								
+								if(!data.json()){
+									
+									webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+								}
+							});
+							
+						}).fail(() => {
+
+							this.blockEvent();
+							this.setValue(oldv); 
+							this.unblockEvent();
+						});
 					}
 				}
 			};
@@ -376,7 +452,7 @@ export default class VentilationModule extends GenericModule {
 									cols:[
 										{
 											view: "label",
-											height: 25,
+											height: 24,
 											width: 180,
 											template: "<span>" +i18n.t("LBL_ACTUAL_REGIME") + "</span>",
 											css: "global-text"
@@ -405,9 +481,9 @@ export default class VentilationModule extends GenericModule {
 										{
 											view: "label",
 											width: 180,
-											height: 20,
+											height: 24,
 											id: "label-regimen-1-" + self.uid,
-											template: '<div><span class="table-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegime.labelAlias) + '</span></div>',
+											template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegime.labelAlias) + '</span></div>',
 											css: "global-text"
 										},
 										{ width: 12 },
@@ -416,15 +492,16 @@ export default class VentilationModule extends GenericModule {
 										{
 											id: "label-regimen-3-" + self.uid,
 											width: 180,
-											height: 30,
+											height: 28,
 											view:"combo", 
+											// css: {"margin-top": "-5px"},
 											value: self.proposedRegime.value, 
 											options: availableRegimes,
 											on: {
 												onChange(newv, oldv) {
 
 													updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
-													webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-2-" + self.uid));
+													// webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-2-" + self.uid));
 													webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.uid));
 												}
 											}
@@ -457,7 +534,31 @@ export default class VentilationModule extends GenericModule {
 											value: i18n.t("LBL_CHANGE_REGIME"),
 											click: function () { 
 												
-												webix.message("por hacer");
+												webix.confirm({
+													title: i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM"),
+													ok: i18n.t("LBL_ACCEPT"),
+													cancel: i18n.t("LBL_CANCEL"),
+													text: i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"),
+													width: 600
+												}).then(function() {
+													
+													let command = self.config.commands.SEND_VENTILATION_REGIME;
+													command.elementId = self.selectedTube.id;
+													command.commandElementValues[0].value = $$("label-regimen-3-" + self.uid).getValue();
+
+													let body = {
+														commands : []
+													};
+													body.commands.push(command);
+						
+													webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+														
+														if(!data.json()){
+
+															webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+														}
+													});
+												});
 											}
 										}
 									]
@@ -472,9 +573,9 @@ export default class VentilationModule extends GenericModule {
 					let viewProposedRegimeLabel = {
 						view: "label",
 						width: 180,
-						height: 20,
+						height: 24,
 						id: "label-regimen-2-" + self.uid,
-						template: '<div><span class="table-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
+						template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
 						css: "global-text"
 					};
 

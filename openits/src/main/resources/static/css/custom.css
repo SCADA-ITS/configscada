@@ -2037,6 +2037,13 @@ p {
 	font-family: Roboto;
 }
 
+.global-text-badge {
+	font-size: 14px;
+	font-weight: 500;
+	padding: 2px 12px;
+	border-radius: 8px;
+}
+
 .role-form{
 	width: 724px !important;
 	height: 325px !important;
