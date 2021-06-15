@@ -560,8 +560,6 @@ export default class IncidentReportModule extends GenericModule {
 									ireportType.incidentTypeCauses.forEach(item => {
 										causesOptions.push({ id: item.id, value: item.alias });
 									});
-									
-									causesOptions.push({ id: "ImsIncidentTypeCause:7:1000", value: "-" });
 
 									body.push({
 										height: 27,
@@ -1633,30 +1631,56 @@ export default class IncidentReportModule extends GenericModule {
 
 											onItemClick() {
 
+												let bCancel = false;
 												if (!self.closed) {
 
 													if (self.incidentReport.confirm === true) {
 
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
-															id: self.incidentReportId
-														});
+														let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
 
-														if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+														if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0) {
 
-															let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-															let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+															let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
 
-															if (tasksCompleted.length === tasksMandatory.length) {
+															if (comboCauseValue === "") {
+
+																webix.alert({
+																	title: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED"),
+																	ok: i18n.t("LBL_YES"),
+																	text: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"),
+																	type: "alert-warning",
+																	width: 600
+																}).then(function() {
+																	$$("tab-details-" + self.uid).show();
+
+																	bCancel = true;
+																});
+															}
+														}
+
+														if (!bCancel) {
+
+															let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
+																id: self.incidentReportId
+															});
+
+															if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+
+																let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+																let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+																if (tasksCompleted.length === tasksMandatory.length) {
+
+																	self.restAction(endpoint);
+																}
+															
+															} else {
 
 																self.restAction(endpoint);
 															}
 														}
-														else {
 
-															self.restAction(endpoint);
-														}
-													}
-													else {
+													} else {
 
 														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
 															id: self.incidentReportId
@@ -1664,8 +1688,8 @@ export default class IncidentReportModule extends GenericModule {
 
 														self.restAction(endpoint);
 													}
-												}
-												else {
+
+												} else {
 
 													let container = $$(self.args.containerId);
 
@@ -2556,8 +2580,8 @@ export default class IncidentReportModule extends GenericModule {
 
 					task = tasks[0];
 				}
-				
-			 	self.currentTask = task;
+
+				self.currentTask = task;
 			}
 		}
 

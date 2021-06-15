@@ -899,8 +899,7 @@ export default class DataTable {
 						onMenuItemClick: function(id) {
 
 							let gridCommand = metadata.gridCommands.find(element => {
-			
-								return id.endsWith(element.moduleAction.id);
+								return (element.moduleAction.id === this.getMenuItem(id).moduleId);
 							});
 
 							if (gridCommand) {
@@ -911,8 +910,7 @@ export default class DataTable {
 				};
 
 				groupedMenu.forEach(cmd => {
-
-					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.moduleAction.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label)});
+					subMenu.data[0].submenu.push({ id: "tb_btnMenu-" + this.uid + "_" + cmd.id, view: "button", type: "icon", icon: cmd.icon, value: i18n.t(cmd.label), moduleId: cmd.moduleAction.id});
 				});
 
 				toolbar.elements.push(subMenu);
@@ -968,26 +966,13 @@ export default class DataTable {
 		let ctxMenuData = [];
 		let self = this;
 		let metadata = this.metadata;
-		let data = this.data;
 		let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
 
 		if (metadata.gridCommands && resultCommands) {
 
 			metadata.gridCommands.forEach(cmd => {
-
-				if (data != undefined) {
-
 					ctxMenuData.push({ id: cmd.id, value: i18n.t(cmd.label), icon: cmd.icon, default: cmd.default_ });
 
-				} else {
-					
-					let addModule = metadata.gridCommands.find(e => e.itemRequired === false);
-					
-					if (addModule) {
-
-						ctxMenuData.push({ id: addModule.id, value: i18n.t(addModule.label), icon: addModule.icon, default: addModule.default_ });
-					}
-				}
 			});
 
 			if (ctxMenuData.length > 0) {

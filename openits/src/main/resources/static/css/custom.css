@@ -2550,6 +2550,7 @@ p {
 	color: #babdb6;;
 	box-shadow: inset 0 -2px var(--blue-headers);
 	border-color: var(--blue-soft-opacity-2);
+	background-color: transparent;
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_more_icon .webix_icon{

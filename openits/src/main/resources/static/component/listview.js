@@ -6,12 +6,15 @@ const DefaultOptionValues = {
 };
 
 const DrawMode = {
-	DETAIL: "DETAIL",
+	DEFAULT: "DEFAULT",
 	COMPACT: "COMPACT",
 	IMAGE: "IMAGE"
 };
 
-const HeightCompact = 45;
+const HeightCompact = {
+	ICON_HEIGHT: 25,
+	ROW_HEIGHT: 45	
+	};
 
 export default class ListView {
 
@@ -27,8 +30,8 @@ export default class ListView {
 	getView() {
 
 		let self = this;
-		let mode = getMode(ListView.Mode.VIEW);
-
+		let mode = (getOptions(ListView.Options.DEFAULT)) ? DrawMode.DEFAULT : (getOptions(ListView.Options.COMPACT)) ? DrawMode.COMPACT : getOptions(ListView.Options.IMAGE) ? DrawMode.IMAGE : DrawMode.DEFAULT;
+		
 		let view = {
 			id: "listview-" + this.uid,
 			borderless: true,
@@ -75,13 +78,13 @@ export default class ListView {
 			let list;
 			let height;
 
-			if (mode === DrawMode.DETAIL) {
+			if (mode === DrawMode.DEFAULT) {
 				
 				height = getOptions(ListView.Options.ROW_HEIGHT);
 				
 			} else if (mode === DrawMode.COMPACT) {
 				
-				height = HeightCompact;
+				height = HeightCompact.ROW_HEIGHT;
 			}
 
 			if (Array.isArray(self.data) && self.data.length > 0) {
@@ -104,28 +107,7 @@ export default class ListView {
 						template: function(obj) {
 
 							return drawElements(obj);
-							
-							//							let html = "";
-							//							let marginTop = 0;
-							//							
-							//							if (getOptions(ListView.Options.ICON)) {
-							//								
-							//								let image = obj.image;
-							//																
-							//								html = `<image class="list-photo" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
-							//							}
-							//							
-							//							if (getOptions(ListView.Options.ROW_HEIGHT) < DefaultOptionValues[ListView.Options.ROW_HEIGHT]) {
-							//								
-							//								marginTop = Math.round((getOptions(ListView.Options.ROW_HEIGHT) - DefaultOptionValues[ListView.Options.ROW_HEIGHT]) / 2); 
-							//							}
-							//							
-							//							html += `<div class="text" style="margin-top: ${marginTop}px">
-							//								  		<span class="list-first-line">${obj.alias} </span>
-							//								  		<span class="list-second-line">${obj.description} </span>
-							//									</div>`; 
-							//
-							//							return html;
+
 						},
 						height: height
 					},
@@ -169,34 +151,12 @@ export default class ListView {
 		}
 
 
-		function getMode(viewMode) {
-
-			let value = undefined;
-
-			if (self.mode) {
-
-			let arrDrawMode = Object.values(DrawMode);			
-			let view = arrDrawMode.find(e => e === self.mode[viewMode]);
-			
-			value = (view) ? self.mode[viewMode] : DrawMode.DETAIL;
-
-			}
-
-			if (value === undefined) {
-
-				value = DrawMode.DETAIL;
-			}
-
-			return value;
-		}
-
-
 		function drawElements(obj) {
 
 			let html = "";
 			let image = obj.image;
 
-			if (mode === DrawMode.DETAIL || mode === undefined || mode === null) {
+			if (mode === DrawMode.DEFAULT || mode === undefined || mode === null) {
 
 				let marginTop = 0;
 
@@ -217,7 +177,7 @@ export default class ListView {
 
 			} else if (mode === DrawMode.COMPACT) {
 
-				html = `<image style="width:25px; height:25px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+				html = `<image style="width:${HeightCompact.ICON_HEIGHT}px; height:${HeightCompact.ICON_HEIGHT}px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
 
 				html += `<div class="text">
 								<span class="list-first-line">${obj.alias} </span>
@@ -419,13 +379,22 @@ Object.defineProperty(ListView.Options, 'ICON_HEIGHT', {
 	configurable: false
 });
 
-Object.defineProperty(ListView, 'Mode', {
-	value: {}
+Object.defineProperty(ListView.Options, 'DEFAULT', {
+	value: 5,
+	writable: false,
+	enumerable: true,
+	configurable: false
 });
 
+Object.defineProperty(ListView.Options, 'COMPACT', {
+	value: 6,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
 
-Object.defineProperty(ListView.Mode, 'VIEW', {
-	value: 1,
+Object.defineProperty(ListView.Options, 'IMAGE', {
+	value: 7,
 	writable: false,
 	enumerable: true,
 	configurable: false

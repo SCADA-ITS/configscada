@@ -386,11 +386,11 @@ export default class AlarmModule extends GenericModule {
 	
 					let elementTypeId = element.elementType.id;
 					let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-					let aconfitArray = alarmConfig.filter(e => e.elementType.id === elementTypeId);
+					let alarmsConfigManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
+					let aconfitArray = alarmsConfigManual.filter(e => e.elementType && e.elementType.id  === elementTypeId && (!e.element || (e.element && e.element.id === element.id)));
 					
-					if (aconfitArray != undefined){
-					
-					if (Array.isArray(aconfitArray) && aconfitArray.length) {
+					if (Array.isArray(aconfitArray) && aconfitArray.length > 0 && aconfitArray != undefined) {
+						
 						let alarmsConfig = aconfitArray;
 						for (let i = 0; i < alarmsConfig.length; i++) {
 	
@@ -414,7 +414,6 @@ export default class AlarmModule extends GenericModule {
 	
 						self.tableAlarmsModal.add(row);
 					}
-				}		
 			};
 	
 				let treeView = new TreeView(metadata, data, events);
