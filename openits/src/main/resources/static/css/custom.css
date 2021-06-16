@@ -2836,3 +2836,11 @@ p {
     text-overflow: ellipsis;
 	text-align: right;
 }
+
+.label-window-alarms .webix_el_box {
+	font-size: 13px !important;
+	text-decoration: underline;
+	cursor: pointer;
+	color: var(--blue-mid2) !important;
+	
+}

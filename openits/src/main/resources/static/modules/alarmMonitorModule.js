@@ -959,7 +959,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						label: (self.args.selectedPks) ? self.args.selectedPks.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "",
 						align: "center",
 						width: 350,
-						css: { "cursor": "pointer", "border-bottom": "1px solid black"},
+						css: "label-window-alarms",
 						on: {
 							onItemClick: function(id) {
 
@@ -973,7 +973,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					if (self.moduleAction != null && self.args.selectedPks && self.args.selectedPks.length > 1) {
 						viewContentToolbar.elements.push(equipmentSelected);
-						viewContentToolbar.elements.push({});
+						viewContentToolbar.elements.push({width: 262});
 					}
 
 				
