@@ -4,6 +4,9 @@
 	    "tubo": 102702,
 		"fan": 102703
 	},
+	"containerAction": {
+	    "tunnel": 101401
+	},
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
 		"elementById": "elements/${id}",
@@ -43,7 +46,8 @@
 		"ventilationRegimeConfig": "ElementTypeParam:2000:1:1",
 		"actualRegime": "ElementTypeParam:2000:2:2", 
 		"proposedRegime" : "ElementTypeParam:2000:2:2",
-		"ventilationMode" : "ElementTypeParam:2000:2:1"
+		"ventilationMode" : "ElementTypeParam:2000:2:1",
+		"fanState" : "ElementTypeParam:9:2:1"
 	},
 	"ventilationModeOptions" :[
 		{"id": "1", "label" : "LBL_AUTO", "disable" : true},
