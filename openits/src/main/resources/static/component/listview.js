@@ -18,13 +18,12 @@ const HeightCompact = {
 
 export default class ListView {
 
-	constructor(data, options, events, mode) {
+	constructor(data, options, events) {
 
 		this.uid = webix.uid();
 		this.data = data;
 		this.options = options;
 		this.events = events;
-		this.mode = mode;
 	}
 
 	getView() {
