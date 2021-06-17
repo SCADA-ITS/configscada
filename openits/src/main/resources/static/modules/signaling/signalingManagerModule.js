@@ -196,6 +196,7 @@ export default class SignalingManagerModule extends GenericModule {
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.SEARCH] = false;
 				options[ListView.Options.ROW_HEIGHT] = 35;
+				options[ListView.Options.COMPACT] = true;
 
 				let listView = new ListView(elementsView, options, null);
 
@@ -321,6 +322,7 @@ export default class SignalingManagerModule extends GenericModule {
 			let viewListElementTypes = {
 
 				height: 260,
+				css: {"border-bottom": "1px solid #dadee0 !important"},
 				cols: [
 					getViewListElementTypes()
 				]
@@ -330,12 +332,15 @@ export default class SignalingManagerModule extends GenericModule {
 
 				view: "label",
 				label: "(*) " + i18n.t("LBL_DEFAULT_SIGNALING_MODULE"),
+				css: "label-default"
 			}
 
-			let viewLabelListEqupments = {
+			let viewLabelListEquipments = {
 
 				view: "label",
 				label: i18n.t("LBL_LIST_EQUIPMENTS"),
+				height: 43,
+				css: "label-list-equipments"
 			}
 
 			let viewListElements = {
@@ -348,10 +353,10 @@ export default class SignalingManagerModule extends GenericModule {
 
 			if (self.useDefaultModue) {
 
-				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelDefaulSigalingModule, viewLabelListEqupments, viewListElements];
+				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEquipments, viewListElements, viewLabelDefaulSigalingModule];
 
 			} else {
-				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEqupments, viewListElements];
+				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEquipments, viewListElements];
 			}
 
 			let viewMainResizer = {
