@@ -3,7 +3,27 @@
 	    "elements": 102601
 	},
 	"restEndpoints": {
-		"elementsByType": "element_types/${id}/elements"
+		"elementsByType": "element_types/${id}/elements",
+		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
+		"command": "elements/send_command_element"
+	},
+	"commands":{
+		"reset" :{
+			"commandElementTypeId":"CommandElementType:1:71"
+		},
+		"sendMessage" :{
+			"commandElementTypeId":"CommandElementType:2:71",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:71:1",
+					"value": null
+				}
+			]
+		},
+		"switchOff" :{
+			"commandElementTypeId":"CommandElementType:3:71"
+		}
 	},
 	"vms": {
 		"type": "ElementType:71",
@@ -39,5 +59,8 @@
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": true
 		}
-	]
+	],
+	"action": {
+		"equipmentViewer": 101401
+	}
 }

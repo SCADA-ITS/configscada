@@ -36,7 +36,6 @@ export default class VmsSignalingTree {
 				id: -1,
 				label: "LBL_EQUIPMENT_HIERARCHY",
 				treeOptionValues: [
-					{ value: false, treeOption: { id: 5 } },
 					{ value: true, treeOption: { id: 6 } }
 				]
 			}

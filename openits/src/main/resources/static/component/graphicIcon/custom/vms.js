@@ -32,8 +32,8 @@ export default class Vms extends GraphicIconCustomType {
 		super(s, g, elementInfo, events);
 		
 		const jsonDataFakeArray = [
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE","alternance":"REDUZCA"},{"id":2,"value":"A 3 KM EN","alternance":"LA VELOCIDAD"},{"id":3,"value":"CARRIL DER.","alternance":"USE CAR. IZD"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION","alternance":"ATENCION","color":"#ff0000"},{"id":2,"value":"LA SENDA","alternance":"AMIGO","color":"#00ff00"},{"id":3,"value":"ES PELIGROSA","alternance":"CONDUCTOR","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
 			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 		];
 		
@@ -54,6 +54,8 @@ export default class Vms extends GraphicIconCustomType {
 		this.jsonDataFake = webix.copy(jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))]);
 		
 		this.jsonData = this.getDataInitialized();
+		
+		this.pauseAnimate = true;
 	}
 	
 	stop() {
@@ -138,6 +140,8 @@ export default class Vms extends GraphicIconCustomType {
 		
 		let self = this;
 		
+		self.pauseAnimate = true;
+		
 		this.elementInfo = elementInfo;
 	
 		let value = this.getValue(PARAM_JSON_VALUE);
@@ -151,17 +155,17 @@ export default class Vms extends GraphicIconCustomType {
 			if (!self.jsonData || (self.jsonData && JSON.stringify(self.jsonData) != value)) {
 				
 				self.jsonData = JSON.parse(value);
-				
-				self.linesAlternance = [];
-				self.graphicsAlternance = [];
-				self.linesBlinking = [];
-				self.graphicsBlinking = [];
-				//self.animateReady = false;
-				self.eventsReady = false;
-				self.isAlternance = false;
-				self.isBlinking = false;
 			}
 		}
+		
+		self.linesAlternance = [];
+		self.graphicsAlternance = [];
+		self.linesBlinking = [];
+		self.graphicsBlinking = [];
+		//self.animateReady = false;
+		self.eventsReady = false;
+		self.isAlternance = false;
+		self.isBlinking = false;
 		
 		enableEvents();
 				
@@ -192,15 +196,14 @@ export default class Vms extends GraphicIconCustomType {
 		
 		animate();
 		
+		self.pauseAnimate = false;
+		
 		function renderZone(gZone, zoneId) {
 			
 			let zoneData = getZoneData(zoneId);
 			
-			if (zoneData) {
-				
-				renderGraphics();
-				renderLines();	
-			}
+			renderGraphics();
+			renderLines();	
 			
 						
 			function renderGraphics() {
@@ -219,7 +222,7 @@ export default class Vms extends GraphicIconCustomType {
 							self.graphicsAlternance.push(zoneId + "-" + graphicId);
 						}
 						
-						if (zoneData.flashing_on_ms || zoneData.flashing_off_ms) {
+						if (zoneData && (zoneData.flashing_on_ms || zoneData.flashing_off_ms)) {
 							
 							self.graphicsBlinking.push(zoneId + "-" + graphicId);
 						}
@@ -245,12 +248,12 @@ export default class Vms extends GraphicIconCustomType {
 							self.linesAlternance.push(zoneId + "-" + lineId);
 						}
 						
-						if (zoneData.flashing_on_ms || zoneData.flashing_off_ms) {
+						if (zoneData && (zoneData.flashing_on_ms || zoneData.flashing_off_ms)) {
 							
 							self.linesBlinking.push(zoneId + "-" + lineId);
 						}
 						
-						lineData.align = zoneData.align ? zoneData.align : "left";
+						lineData.align = (zoneData && zoneData.align) ? zoneData.align : "left";
 						lineData.zoneWidth = gZone.getBBox().width;
 					}
 					
@@ -289,7 +292,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 			if (lineData.align) {
 			
-				let textWidth = util.ui.calculateTextWidth(text, gLine.attr("font-family"), gLine.attr("font-size"));
+				let textWidth = util.ui.calculateTextWidth(text, gLine.attr("font-family"), gLine.attr("font-size"), gLine.attr("letter-spacing"));
 				let x = 0;
 				
 				if (lineData.align === TEXT_ALIGN_LEFT) {
@@ -366,7 +369,8 @@ export default class Vms extends GraphicIconCustomType {
 					fontInfo = {
 						
 						"font-family": gLine.attr("font-family"),
-						"font-size": gLine.attr("font-size")
+						"font-size": gLine.attr("font-size"),
+						"letter-spacing": gLine.attr("letter-spacing")
 					}
 				}
 			}
@@ -413,19 +417,25 @@ export default class Vms extends GraphicIconCustomType {
 					
 			self.intervalAlternanceId = setInterval(function(){
 				
-				animateAlternance(ZONE_ELEMENT_TYPE.texts);
-				animateAlternance(ZONE_ELEMENT_TYPE.graphics);
-				
-				self.isAlternance = !self.isAlternance;
+				if (!self.pauseAnimate) {
+					
+					animateAlternance(ZONE_ELEMENT_TYPE.texts);
+					animateAlternance(ZONE_ELEMENT_TYPE.graphics);
+					
+					self.isAlternance = !self.isAlternance;	
+				}
 				
 			}, TIME_ANIMATION_MS);
 
 			self.intervalBlinkingId = setInterval(function(){
 				
-				animateBlinking(ZONE_ELEMENT_TYPE.texts);
-				animateBlinking(ZONE_ELEMENT_TYPE.graphics);
+				if (!self.pauseAnimate) {
 				
-				self.isBlinking = !self.isBlinking;
+					animateBlinking(ZONE_ELEMENT_TYPE.texts);
+					animateBlinking(ZONE_ELEMENT_TYPE.graphics);
+					
+					self.isBlinking = !self.isBlinking;	
+				}
 				
 			}, TIME_BLINKING_MS);
 			

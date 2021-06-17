@@ -1001,13 +1001,19 @@ export let util = {
 			}
 		},
 		
-		calculateTextWidth(text, fontFamily, fontSize) {
+		calculateTextWidth(text, fontFamily, fontSize, letterSpacing) {
 				
 			let width = 0;
 			
 			let dText = document.createElement("div");
 			dText.id = webix.uid();
 			dText.style.fontSize = fontSize;
+			
+			if (letterSpacing) {
+				
+				dText.style.letterSpacing = letterSpacing;	
+			}
+			
 			dText.style.fontFamily = fontFamily;
 			dText.style.position = "absolute";
 			dText.style.visibility = "hidden";

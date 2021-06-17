@@ -27,6 +27,7 @@ public class VmsLibraryNode implements Serializable {
 	private Integer id;
 	private String name;
 	private String description;
+	private String label;
 	private String signaling;
 	private Boolean enabled;
 	private Boolean visible;
@@ -69,6 +70,14 @@ public class VmsLibraryNode implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public String getSignaling() {

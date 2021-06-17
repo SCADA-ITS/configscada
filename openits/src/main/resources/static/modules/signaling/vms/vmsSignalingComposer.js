@@ -10,20 +10,21 @@ const TEXT_ALIGN_RIGHT = "right";
 
 export default class VmsSignalingComposer {
 
-	constructor(config, element) {
+	constructor(config, element, onUpdate, onAfterRender) {
 		
 		const jsonDataFakeArray = [
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE A 3 KM","alternance":"REDUZCA LA VELOCIDAD"},{"id":2,"value":"EN CARRIL DERECHO","alternance":"Y CIRCULE POR EL"},{"id":3,"value":"","alternance":"CARRIL IZQUIERDO"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION SR. CONDUCTOR","alternance":"TE ESTOY VIENDO","color":"#ff0000"},{"id":2,"value":"LA SENDA ES PELIGROSA","alternance":"LOS PELOS DE LA NARIZ","color":"#00ff00"},{"id":3,"value":"--------","alternance":"CARA CULO","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE","alternance":"REDUZCA"},{"id":2,"value":"A 3 KM EN","alternance":"LA VELOCIDAD"},{"id":3,"value":"CARRIL DER.","alternance":"USE CAR. IZD"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION","alternance":"ATENCION","color":"#ff0000"},{"id":2,"value":"LA SENDA","alternance":"AMIGO","color":"#00ff00"},{"id":3,"value":"ES PELIGROSA","alternance":"CONDUCTOR","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
 			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
-		];
+		]
 		
 		this.config = config;
 		this.element = element;
+		this.onUpdate = onUpdate;
+		this.onAfterRender = onAfterRender;
 		this.uid = webix.uid();
 		
 		this.jsonDataFake = jsonDataFakeArray[(new Date()).getSeconds() % jsonDataFakeArray.length];
-		//this.jsonDataFake = jsonDataFakeArray[Math.round(Math.random() * (jsonDataFakeArray.length - 1))];
 		
 		this.graphicIconInstance = undefined;
 		
@@ -53,7 +54,10 @@ export default class VmsSignalingComposer {
 				},
 				onDestruct: function() {
 		
-					self.graphicIconInstance.stop();				
+					if (self.graphicIconInstance) {
+						
+						self.graphicIconInstance.stop();	
+					}
 				}
 			}
 		};
@@ -97,17 +101,22 @@ export default class VmsSignalingComposer {
 						onZoneEvent(GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC, zoneData);
 					};
 					
-					self.graphicIconInstance = new mod.default(layerElement, self.element, container, events);
+					self.graphicIconInstance = new mod.default(layerElement, self.element, container, self.onUpdate ? events : undefined);
 					
 					self.graphicIconInstance.load(function() {
 						
 						self.graphicIconInstance.loadRender(function() {
 							
-							self.jsonData = self.getJsonDataInitialized();
+							self.jsonData = self.getCurrentSignalingJsonData();
 							
 							if (Array.isArray(self.element.elementValues) && self.element.elementValues.length > 0) {
 																
-								self.update();
+								self.update(self.jsonData);
+								
+								if (self.onAfterRender) {
+						
+									self.onAfterRender();
+								}
 							}
 						});
 					});	
@@ -225,8 +234,6 @@ export default class VmsSignalingComposer {
 					
 					if (graphicGroup && Array.isArray(graphicGroup.graphics) && graphicGroup.graphics.length > 0) {
 						
-						graphics = graphicGroup.graphics.map(e => e.id.split(":")[2]);
-						
 						graphics = graphicGroup.graphics.map(e => {
 							
 							let graphic = {
@@ -273,36 +280,44 @@ export default class VmsSignalingComposer {
 		}
 		
 		this.jsonData.push(zoneData);
-				
-		this.update();
+		
+		this.update(this.jsonData);
 	}
 	
-	getJsonDataInitialized() {
+	getJsonDataClear() {
+		
+		let jsonData = undefined;
+		let elementValueJsonConfig = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonConfig);
+		
+		if (elementValueJsonConfig && elementValueJsonConfig.value) {
+			
+			let jsonConfig = JSON.parse(elementValueJsonConfig.value);
+			
+			if (Array.isArray(jsonConfig) && jsonConfig.length > 0) {
+				
+				jsonData = [];
+				
+				jsonConfig.forEach(e => {
+				
+					jsonData.push({
+						zone: e.zone,
+						graphic: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
+						text: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
+					})
+				})	
+			} 
+		}
+		
+		return jsonData;
+	}
+	
+	getCurrentSignalingJsonData() {
 		
 		let jsonData = undefined;
 				
 		if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
 			
-			let elementValueJsonConfig = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonConfig);
-		
-			if (elementValueJsonConfig && elementValueJsonConfig.value) {
-				
-				let jsonConfig = JSON.parse(elementValueJsonConfig.value);
-				
-				if (Array.isArray(jsonConfig) && jsonConfig.length > 0) {
-					
-					jsonData = [];
-					
-					jsonConfig.forEach(e => {
-					
-						jsonData.push({
-							zone: e.zone,
-							graphic: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
-							text: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
-						})
-					})	
-				} 
-			}
+			jsonData = this.getJsonDataClear();
 			
 			let elementValueJsonData = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonData);
 		
@@ -319,16 +334,30 @@ export default class VmsSignalingComposer {
 		return jsonData;
 	}
 	
-	update() {
+	update(jsonData) {
+		
+		let jsonDataCopy = webix.copy(jsonData);
+		
+		this.jsonData = jsonDataCopy;
 		
 		let elementValueJsonData = {
-			
+		
 			elementTypeParam: {
 				id: this.config.vms.jsonData
 			},
-			value: JSON.stringify(this.jsonData)
+			value: JSON.stringify(jsonDataCopy)
 		}
 		
 		this.graphicIconInstance.updateValues([elementValueJsonData]);
+		
+		if (this.onUpdate) {
+			
+			this.onUpdate(jsonDataCopy);	
+		}
+	}
+	
+	clear() {
+		
+		this.update(this.getJsonDataClear());
 	}
 }	

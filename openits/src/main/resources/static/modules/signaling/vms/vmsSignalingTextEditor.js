@@ -309,8 +309,10 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 									name: (alternance ? "alt-" : "main-") + lineData.id,
 									validate: function(value) {
 										
+										let ratioLetter = parseFloat(DEFAULT_INPUT_FONT_SIZE) / parseFloat(self.config.fontInfo["font-size"]);
+										
 										console.log("Input value is " + value);
-										let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
+										let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px",  (parseFloat(self.config.fontInfo["letter-spacing"]) * ratioLetter) + "px");
 										
 										console.log("Input width is " + inputWidth + "px.")
 										console.log("Text width is " + textWidth + "px.")

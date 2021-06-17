@@ -260,10 +260,22 @@ export default class TreeView {
 					
 					if (obj.image) {
 						
+						let img = obj.image;
+						 
+						if (obj.image === DefProperties.IMAGE.value) {
 						
+							if (obj.props.folder) {
+								
+								img = "tree_folder.png";
+							}
+							else {
+								
+								img = "tree_document.png";
+							}
+						}
 						
 						nodeValue = `<div style="margin-left: 30px;">	
-										<img src="img/${obj.image}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+										<img src="img/${img}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
 									</div>`;	
 					}
