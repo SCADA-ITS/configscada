@@ -243,38 +243,62 @@ export default class EquipmentViewerInfo {
 							template: function(data) {
 								
 								let labelType = i18n.t("LBL_ELEMENT_TYPE");
-								let labelTypeValue = i18n.t(self.element.elementType.labelAlias);
-								
+								let labelTypeValue = i18n.t(self.element.elementType.labelDescription);
+
 								if (self.element.elementSubtype) {
-									
+
 									labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
-									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelAlias) + ")";
+									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription) + ")";
 								}
-								
+
 								return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-grid"></span>
 											<span class="title">${labelType}</span>
 											<span class="value">${labelTypeValue}</span>
-										</div>`;	
-							}
-						},	
-						{
-							height: 70,
-							borderless: true,
-							template: function(data) {
-								
-								return `<div class="equip-viewer-info">
-											<span class="ico webix_icon mdi mdi-format-color-text"></span>
-											<span class="title">${i18n.t("LBL_ELEMENT_ALIAS")}</span>
-											<span class="value">${self.element.alias}</span>
 										</div>`;
 							}
 						},
 						{
 							height: 70,
 							borderless: true,
+							tooltip: {
+								template: function() {
+
+									if (Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 1) {
+
+										let tooltip = `<div class='title'>${self.element.location.alias}</div>`;
+
+										for (let stretch of self.element.location.stretchs) {
+											tooltip += `<div style="color: #35445f; padding-top: 5px">${stretch.alias} - ${stretch.road.alias}</div>`;
+										}
+
+										return tooltip;
+
+									} else {
+										return "";
+									}
+								},
+								css: "graphic-icon-tooltip"
+							},
 							template: function(data) {
-								
+
+								if (Array.isArray(self.element.location.stretchs) && self.element.location.stretchs.length > 0) {
+
+									let ellipsis = (self.element.location.stretchs.length > 1) ? "..." : "";
+
+									return `<div class="equip-viewer-info">
+											<span class="ico webix_icon mdi mdi-map-marker"></span>
+											<span class="title">${i18n.t("LBL_ELEMENT_LOCATION")}</span>
+											<span class="value">${self.element.location.alias} - ${self.element.location.stretchs[0].alias} - ${self.element.location.stretchs[0].road.alias} ${ellipsis}</span>									
+										</div>`;
+								}
+							}
+						},
+						{
+							height: 70,
+							borderless: true,
+							template: function(data) {
+
 								return `<div class="equip-viewer-info">
 											<span class="ico webix_icon mdi mdi-view-headline"></span>
 											<span class="title">${i18n.t("LBL_ELEMENT_DESCRIPTION")}</span>
@@ -282,17 +306,17 @@ export default class EquipmentViewerInfo {
 										</div>`;
 							}
 						},
-						{}		
+						{}
 					]
 				};
-				
+
 				return viewMainInfo;
 			}
-			
+
 			return viewMain;
-		} 
-		
-		
+		}
+
+
 		return view;
 	}
 	

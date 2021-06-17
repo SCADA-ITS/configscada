@@ -103,6 +103,11 @@ export default class EquipmentViewerContent {
 
 			function getViewHeaderElement() {
 
+				const TITLE_LONG = 40;
+				let elementLabelDescription = i18n.t(self.elementType.labelDescription);
+				let long = elementLabelDescription.length + self.element.alias.length;
+				let ellipsis = (long > TITLE_LONG) ? "style='padding-left: 21px !important; max-width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'" : "";
+
 				let viewHeaderElement = {
 					rows: [
 						{},
@@ -110,6 +115,7 @@ export default class EquipmentViewerContent {
 							id: "view-main-content-header-element-" + self.uid,
 							height: 86,
 							borderless: true,
+							tooltip: (long > TITLE_LONG) ? elementLabelDescription + " - " + self.element.alias : "",
 							template: function(data) {
 
 								if (self.elementType) {
@@ -128,12 +134,11 @@ export default class EquipmentViewerContent {
 
 									let elementTypeStateLabel = i18n.t(self.currentElementTypeState.labelAlias);
 									let color = util.element.getColor(self.currentElementTypeState);
-
 									let timeService = window.sm.getService(Services.TIME_SERVICE);
 
 									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
-											<div class="ims-incident-report-title">
-												${self.element.alias + ' - ' + self.element.description}
+											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis}>
+												${elementLabelDescription + ' - ' + self.element.alias}
 											</div>
 											<div class="equip-viewer-header">
 												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
