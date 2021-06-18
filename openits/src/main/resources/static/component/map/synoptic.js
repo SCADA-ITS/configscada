@@ -167,9 +167,21 @@ export default class Synoptic extends GenericMap {
 					
 					unselectAll();
 					
-					graphicIcons.forEach(graphicIcon => {
-						graphicIcon.select();
-					});
+					graphicIcons[0].select();
+					
+					if (self.panZoomTrigger) {
+						
+						let currentZoom = self.panZoomTrigger.getZoom();
+						
+						self.panZoomTrigger.zoom(1);
+						
+						self.panZoomTrigger.pan({
+							x: (self.panZoomTrigger.getSizes().width / 2) - graphicIcons[0].layerElement.x,
+							y: (self.panZoomTrigger.getSizes().height / 2) - graphicIcons[0].layerElement.y
+						});
+						
+						self.panZoomTrigger.zoom(currentZoom);
+					}
 				}
 			}
 		}
@@ -603,8 +615,27 @@ export default class Synoptic extends GenericMap {
 				
 				self.panZoomTrigger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
 				
+				self.panZoomTrigger.setBeforePan(beforePan);
+				
 				loadElementInfo();
 			}
+
+	        function beforePan(oldPan, newPan) {
+		
+	        	let   gutterWidth = 100
+		            , gutterHeight = 100
+		            , sizes = this.getSizes()
+		            , leftLimit = -((sizes.viewBox.x + sizes.viewBox.width) * sizes.realZoom) + gutterWidth
+		            , rightLimit = sizes.width - gutterWidth - (sizes.viewBox.x * sizes.realZoom)
+		            , topLimit = -((sizes.viewBox.y + sizes.viewBox.height) * sizes.realZoom) + gutterHeight
+		            , bottomLimit = sizes.height - gutterHeight - (sizes.viewBox.y * sizes.realZoom);
+	
+	          	let customPan = {};
+	          	customPan.x = Math.max(leftLimit, Math.min(rightLimit, newPan.x));
+	          	customPan.y = Math.max(topLimit, Math.min(bottomLimit, newPan.y));
+	
+	          	return customPan;
+	        }
 		}
 		
 		function loadElementInfo() {
