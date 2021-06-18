@@ -187,15 +187,22 @@ export default class GraphicIcon {
 					
 					x *= self.ratio;
 					y = gHeight * self.ratio + GraphicIcon.FONT_SIZE;
+					
+					if (self.layerElement.horizontalFlip) {
+					
+						x -= (gWidth * self.ratio);
+					}
 				}
 							
 				let gName = s.text(x, y, self.element.alias);
 				let textColor = self.layerElement.textColor ? self.layerElement.textColor : "#ffcc00";
 				
 				gName.attr({ fontSize: GraphicIcon.FONT_SIZE + "px",fontFamily: "monospace", fontWeight: "bold", fill: textColor, "dominant-baseline": "middle", "text-anchor": "middle" });
-				gName.transform("s" + (1 / self.ratio));
-			
-				self.g.append(gName);	
+				
+				gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / self.ratio) + "," + (1 / self.ratio)));
+				//gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / self.ratio)));
+				
+				self.g.append(gName);
 			}
 		}
 		
@@ -214,6 +221,11 @@ export default class GraphicIcon {
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_SNAP) {
 				
 				x = (self.absWidth - (gWidth * self.ratio)) / 2;
+			}
+			
+			if (self.layerElement.horizontalFlip) {
+					
+				x += (gWidth * self.ratio);
 			}
 
 			// Center y
