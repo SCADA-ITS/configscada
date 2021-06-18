@@ -9,8 +9,7 @@ export default class GenericModule {
 			throw new Error("Abstract classes can't be instantiated.");
 		}
 
-		if (moduleAction != null && moduleAction != undefined &&
-			!util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), moduleAction.id)) {
+		if (moduleAction &&	!util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), moduleAction.id)) {
 
 			webix.alert({
 				title: i18n.t("LBL_MODULE_ACTION_NOT_ALLOWED"),

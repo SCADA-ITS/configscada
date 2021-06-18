@@ -603,7 +603,7 @@ export let util = {
 			}
 		},
 
-		checkSytemPermision(modules, userData) {
+		checkSystemPermissions(modules, userData) {
 
 			let systemPermissionId = [];
 
@@ -676,20 +676,19 @@ export let util = {
 
 			let moduleAction = undefined;
 
-			if (modules != null && modules != undefined &&
-				moduleActionId != null && moduleActionId != undefined) {
+			if (modules &&	moduleActionId) {
 
-				for (let i = 0; i < modules.length && moduleAction == undefined; i++) {
+				for (let i = 0; i < modules.length && !moduleAction; i++) {
 
 					moduleAction = modules[i].moduleActions.find(item => item.id == moduleActionId);
 				}
 			}
-
-			if (moduleAction == undefined || moduleAction == null) {
+			
+			if (!moduleAction) {
 
 				return false;
 
-			} else if (moduleAction.isAllowed == undefined || moduleAction.isAllowed == null) {
+			} else if (moduleAction.isAllowed == null) {
 
 				return true;
 
@@ -703,18 +702,16 @@ export let util = {
 
 			let module = undefined;
 
-			if (modules != null && modules != undefined &&
-				moduleId != null && moduleId != undefined) {
+			if (modules && moduleId) {
 
 				module = modules.find(item => item.id == moduleId);
-
 			}
 			
-			if (module == undefined || module == null) {
+			if (!module) {
 
 				return false;
 
-			} else if (module.isAllowed == undefined || module.isAllowed == null) {
+			} else if (module.isAllowed == null) {
 				
 				return true;
 

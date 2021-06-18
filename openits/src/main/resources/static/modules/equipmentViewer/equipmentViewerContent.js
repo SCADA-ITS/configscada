@@ -107,6 +107,13 @@ export default class EquipmentViewerContent {
 				let elementLabelDescription = i18n.t(self.elementType.labelDescription);
 				let long = elementLabelDescription.length + self.element.alias.length;
 				let ellipsis = (long > TITLE_LONG) ? "style='padding-left: 21px !important; max-width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'" : "";
+				
+				let container = $$(self.parent.args.containerId);
+				
+				if (container) {
+
+					ellipsis = `style='padding-left: 21px !important; max-width: ${container.$width * 0.7}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+				}
 
 				let viewHeaderElement = {
 					rows: [
@@ -153,12 +160,29 @@ export default class EquipmentViewerContent {
 						{}
 					]
 				};
+				
+				if (container) {
+					
+					viewHeaderElement.width = container.$width * 0.7;
+				}
 
 				return viewHeaderElement;
 			}
 
 			function getViewHeaderButtons() {
 
+				let commandsModuleActionId;
+				let commandsModule;
+				let isAllowedCommands = false;
+				
+				if (self.parent.config.moduleAction.commandEquipments) {
+
+					commandsModuleActionId = self.parent.config.moduleAction.commandEquipments;
+					commandsModule = util.module.getFromModuleAction(commandsModuleActionId);
+					
+					isAllowedCommands = util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), commandsModuleActionId);
+				}
+				
 				let viewHeaderButtons = {
 					rows: [
 						{},
@@ -188,7 +212,7 @@ export default class EquipmentViewerContent {
 								{
 									view: "button",
 									width: 135,
-									hidden: !(self.equipmentViewer.showActions),
+									hidden: !(self.equipmentViewer.showActions) && !isAllowedCommands,
 									label: i18n.t("LBL_EQUIP_VIEWER_COMMANDS"),
 									tooltip: i18n.t("LBL_EQUIP_VIEWER_COMMANDS_DESCRIPTION"),
 									type: "iconTop",
@@ -197,21 +221,14 @@ export default class EquipmentViewerContent {
 
 										onItemClick() {
 
-											if (self.parent.config.moduleAction.commandEquipments) {
+											if (commandsModule && commandsModuleActionId) {
 
-												let moduleActionId = self.parent.config.moduleAction.commandEquipments;
-												let module = util.module.getFromModuleAction(moduleActionId);
-
-												if (module) {
-
-													let moduleAction = { id: moduleActionId };
-
-													let args = { selectedPks: [self.element.id] };
-
-													util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-												}
+												let moduleAction = { id: commandsModuleActionId };
+						
+												let args = { selectedPks: [self.element.id] };
+						
+												util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
 											}
-
 										}
 									}
 								},
