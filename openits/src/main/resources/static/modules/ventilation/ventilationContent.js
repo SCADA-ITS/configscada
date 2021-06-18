@@ -14,6 +14,120 @@ export default class VentilationContent {
 		this.tubeFans;
 		this.tubeFansDataTable;
 		this.proposedRegime;
+
+		this.idStompSubscriptorTunnel;
+		this.idStompSubscriptorTube;
+		this.idStompSubscriptorFans;
+	}
+
+	loadModule(parentContainnerId) {
+
+		let module = findModuleByIdAction(this.parent.config.containerAction.test);
+		let args = {};
+		args.selectedPks = [this.tunnelId];
+
+		let drawContent = (view) => {
+
+			view.relative = true;
+
+			let viewContent = {
+				view: "abslayout",
+				cells: [
+					view,
+					{
+						top: 20, right:35,
+						rows:[
+							{height:18},
+							{
+								cols:[
+									{ 	
+										width: 135,
+										height: 40,
+										type:"icon", 
+										icon:"mdi mdi-stop",
+										view: "button",
+										align:"right", 
+										css: "button-ventilation-action",
+										label: i18n.t("LBL_STOP"),
+										click: function () { 
+											
+											webix.confirm({
+												title: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM"),
+												ok: i18n.t("LBL_ACCEPT"),
+												cancel: i18n.t("LBL_CANCEL"),
+												text: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"),
+												width: 600
+											}).then(function() {
+												
+												let command = self.parent.config.commands.SEND_VENTILATION_STOP;
+												command.elementId = self.tunnelId;
+					
+												let body = {
+													commands : []
+												};
+												body.commands.push(command);
+					
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+													
+													if(!data.json()){
+
+														webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+													}
+												});
+											});
+										}
+									},
+									{ width: 12 },
+									{ 	
+										width: 135,
+										height: 40,
+										type:"icon", 
+										icon:"mdi mdi-play",
+										view: "button",
+										align:"right",
+										css: "button-ventilation-action",
+										label: i18n.t("LBL_START"),
+										click: function () { 
+											
+											webix.confirm({
+												title: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM"),
+												ok: i18n.t("LBL_ACCEPT"),
+												cancel: i18n.t("LBL_CANCEL"),
+												text: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"),
+												width: 600
+											}).then(function() {
+												
+												let command = self.parent.config.commands.SEND_VENTILATION_START;
+												command.elementId = self.tunnelId;
+					
+												let body = {
+													commands : []
+												};
+												body.commands.push(command);
+					
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+													
+													if(!data.json()){
+														
+														webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+													}
+												});
+											});
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+
+			webix.ui(viewContent, $$(parentContainnerId), 0);
+		}
+		
+		util.module.open(module, null, VIEW_TYPE_CUSTOM, drawContent, args);
+
+		this.connectWS();
 	}
 
 	async loadData() {
@@ -22,6 +136,8 @@ export default class VentilationContent {
 			
 		this.selectedTube = data.json();
 		this.tubeFans = eval("adapter." + this.parent.config.adapters.fans)(this.selectedTube.childs, null);
+
+		this.connectWS();
 
 		return true;
 	}
@@ -82,90 +198,6 @@ export default class VentilationContent {
 												<span class="ims-incident-badge" style="background: ${util.element.getColor(self.selectedTube.elementTypeState)}; color: white;">${i18n.t(self.selectedTube.elementTypeState.labelAlias)}</span>
 											</div>`;
 								}
-							},
-							{
-								rows:[
-									{height:18},
-									{
-										cols:[
-											{ 	
-												width: 135,
-												height: 40,
-												type:"icon", 
-												icon:"mdi mdi-stop",
-												view: "button",
-												align:"right", 
-												css: "button-ventilation-action",
-												label: i18n.t("LBL_STOP"),
-												click: function () { 
-													
-													webix.confirm({
-														title: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM"),
-														ok: i18n.t("LBL_ACCEPT"),
-														cancel: i18n.t("LBL_CANCEL"),
-														text: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"),
-														width: 600
-													}).then(function() {
-														
-														let command = self.parent.config.commands.SEND_VENTILATION_STOP;
-														command.elementId = self.tunnelId;
-							
-														let body = {
-															commands : []
-														};
-														body.commands.push(command);
-							
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-															
-															if(!data.json()){
-
-																webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
-															}
-														});
-													});
-												}
-											},
-											{ width: 12 },
-											{ 	
-												width: 135,
-												height: 40,
-												type:"icon", 
-												icon:"mdi mdi-play",
-												view: "button",
-												align:"right",
-												css: "button-ventilation-action",
-												label: i18n.t("LBL_START"),
-												click: function () { 
-													
-													webix.confirm({
-														title: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM"),
-														ok: i18n.t("LBL_ACCEPT"),
-														cancel: i18n.t("LBL_CANCEL"),
-														text: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"),
-														width: 600
-													}).then(function() {
-														
-														let command = self.parent.config.commands.SEND_VENTILATION_START;
-														command.elementId = self.tunnelId;
-							
-														let body = {
-															commands : []
-														};
-														body.commands.push(command);
-							
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-															
-															if(!data.json()){
-																
-																webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
-															}
-														});
-													});
-												}
-											}
-										]
-									}
-								]
 							},
 							{width: 24 }
 						]
@@ -353,7 +385,7 @@ export default class VentilationContent {
 												onChange(newv, oldv) {
 
 													updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
-													// webix.ui(getViewProposedRegimeLabel(), $$("label-regimen-2-" + self.parent.uid));
+													webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.parent.uid));
 													webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.parent.uid));
 												}
 											}
@@ -367,13 +399,7 @@ export default class VentilationContent {
 						{
 							rows:[
 								getViewDocument(),
-								{
-									height: 58,
-    								width: 980,
-									borderless: true,
-									view: "template",
-									template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
-								},
+								getViewDocumentText(),
 								{ height: 12 },
 								{ 	
 									cols:[
@@ -465,6 +491,17 @@ export default class VentilationContent {
 					}
 
 					return viewDocument;
+				}
+
+				function getViewDocumentText(){
+					return {
+						id: "view-content-regime-document-text-"+ self.parent.uid,
+						height: 58,
+						width: 980,
+						borderless: true,
+						view: "template",
+						template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
+					};
 				}
 
 				function updateProposedRegime(value, ventilationRegimes){
@@ -653,12 +690,85 @@ export default class VentilationContent {
 						// }
 					],
 					gridCommands: [
-
+						{
+							id: 1,
+							default_: false,
+							icon: "mdi mdi-plus",
+							label: "LBL_FAN_PLAY",
+							multiselect: true,
+							position: 1,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 2,
+							default_: false,
+							icon: "mdi mdi-pen",
+							label: "LBL_FAN_REVERSE",
+							multiselect: true,
+							position: 2,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 3,
+							default_: false,
+							icon: "mdi mdi-play",
+							label: "LBL_FAN_STOP",
+							multiselect: true,
+							position: 3,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 4,
+							default_: false,
+							icon: "mdi mdi-delete",
+							label: "LBL_CLEAR",
+							multiselect: true,
+							position: 4,
+							showText: false,
+							itemRequired: true
+						}
 					]
 
 				};
 
-				self.tubeFansDataTable = new DataTable(null, null, metadata, data, null);
+				let events = {};
+				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 1,
+					function: () => {
+
+						webix.message("command1");
+					}
+				});
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 2,
+					function: () => {
+
+						webix.message("command2");
+					}
+				});
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 3,
+					function: () => {
+
+						webix.message("command3");
+					}
+				});
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 4,
+					function: () => {
+
+						webix.message("command4");
+					}
+				});
+
+				self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
 				
 				return {height: 338,rows:self.tubeFansDataTable.getView()};
 			};
@@ -688,4 +798,61 @@ export default class VentilationContent {
 			return contentBody;
 		}
 	}
+
+	connectWS() {
+
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+		if (stompSubscriptorService) {
+
+			if (this.tunnelId) {
+
+				let topic = this.parent.config.topics.element + "." + self.tunnelId;
+				this.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
+			}
+
+			if (this.tubeId) {
+
+				let topic = this.parent.config.topics.element + "." + self.tubeId;
+				this.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
+			}
+
+			if (this.tubeFans && Array.isArray(this.tubeFans) && this.tubeFans.length > 0) {
+
+				let fields = [];
+				fields.push({
+					target: "id",
+					values: []
+				});
+				this.tubeFans.forEach(element => fields[0].values.push(element.id));
+								
+				this.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(this.parent.config.topics.fans), onMessageFan, fields);
+			}	
+		}
+
+		function onMessageTunnel(stompData) {
+
+			webix.message("Tunnel");
+			if (stompData) {
+
+			}
+		}
+
+		function onMessageTube(stompData) {
+
+			webix.message("Tube");
+			if (stompData) {
+
+			}
+		}
+
+		function onMessageFan(stompData) {
+
+			webix.message("Fan");
+			if (stompData) {
+
+			}
+		}
+	}
+
 }

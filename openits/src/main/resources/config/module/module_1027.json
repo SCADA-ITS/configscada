@@ -5,7 +5,8 @@
 		"fan": 102703
 	},
 	"containerAction": {
-	    "tunnel": 101401
+	    "tunnel": 101401,
+		"test": 50001
 	},
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
@@ -14,9 +15,8 @@
 		"command": "elements/send_command_element"
 	},
 	"topics": {
-		"ventilation" : "/topic/element",
-		"tubo" : "/topic/element",
-		"fan" : "/topic/element.ElementType:9.>"
+		"element" : "/topic/element",
+		"fans" : "/topic/element.ElementType:9.>"
 	},
 	"adapters": {
 		"fans": "ws.fans.getList"

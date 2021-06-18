@@ -130,22 +130,11 @@ export default class VentilationModule extends GenericModule {
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
 					
-					webix.ui(util.ui.getViewDrawNoData(), $$("view-content-" + self.uid), 0);
-
 					self.selectedTunnelId = item.id_;
 					self.selectedTubeId = null;
 
 					let ventilationContent = new VentilationContent(self.selectedTunnelId, self.selectedTubeId, self);
-
-					ventilationContent.loadData().then( function(data) {
-
-						webix.ui(ventilationContent.getView(), $$("view-content-" + self.uid), 0);
-
-						if(ventilationContent.tubeFansDataTable){
-							
-							ventilationContent.tubeFansDataTable.callbacks();
-						}
-					});
+					ventilationContent.loadModule("view-content-" + self.uid);
 				};
 				
 				return events;
