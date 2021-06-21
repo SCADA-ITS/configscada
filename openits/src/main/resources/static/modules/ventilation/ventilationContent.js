@@ -2,6 +2,10 @@ import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import { adapter } from "../../lib/adapter.js";
 
+const FAN_COMMAND_SEND_FANS_STOP = "SEND_FANS_STOP";
+const FAN_COMMAND_SEND_FANS_START = "SEND_FANS_START";
+const FAN_COMMAND_SEND_FANS_START_REVERSE = "SEND_FANS_START_REVERSE"; 
+
 export default class VentilationContent {
 	
 	constructor(tunnelId, tubeId, parent) {
@@ -20,13 +24,47 @@ export default class VentilationContent {
 		this.idStompSubscriptorFans;
 	}
 
+	loadComponent(parentContainnerId){
+
+		webix.ui(util.ui.getViewDrawNoData(), $$(parentContainnerId), 0);
+
+		if(this.tubeId){
+
+			this.loadData().then( (data) => {
+
+				webix.ui(this.getView(), $$(parentContainnerId), 0);
+
+				if(this.tubeFansDataTable){
+
+					this.tubeFansDataTable.callbacks();
+				}
+			});
+		} else {
+
+			this.loadModule(parentContainnerId);
+		}
+	}
+
 	loadModule(parentContainnerId) {
 
-		let module = findModuleByIdAction(this.parent.config.containerAction.test);
+		let self = this;
+		let module = findModuleByIdAction(this.parent.config.containerAction.tunnel);
 		let args = {};
 		args.selectedPks = [this.tunnelId];
+		let moduleAction = {id:this.parent.config.containerAction.tunnel};
 
-		let drawContent = (view) => {
+		try {
+
+			moduleAction = module.moduleActions.find(action => action.id == moduleAction.id);
+
+		} catch (error) {
+			
+			console.warn("Module Action not found");
+		}
+
+		util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
+
+		function drawContent(view) {
 
 			view.relative = true;
 
@@ -123,11 +161,9 @@ export default class VentilationContent {
 			}
 
 			webix.ui(viewContent, $$(parentContainnerId), 0);
+			
+			self.connectWS();
 		}
-		
-		util.module.open(module, null, VIEW_TYPE_CUSTOM, drawContent, args);
-
-		this.connectWS();
 	}
 
 	async loadData() {
@@ -666,28 +702,45 @@ export default class VentilationContent {
 							gridFieldIcons: [
 							]
 						},
-						// {
-						// 	id: 102504,
-						// 	extended: false,
-						// 	filtered: false,
-						// 	isEpochMilli: false,
-						// 	isPk: false,
-						// 	label: "LBL_PLAN_ORDER_TYPE",
-						// 	labelTooltip: "LBL_PLAN_ORDER_TYPE",
-						// 	needsTranslation: false,
-						// 	parameterized: false,
-						// 	position: 4,
-						// 	required: true,
-						// 	sourceField: "orderTypeLabelAlias",
-						// 	visible: true,
-						// 	widthPx: 160,
-						// 	adjust: false,
-						// 	gridFieldDataType: {
-						// 		id: 1,
-						// 		name: "string"
-						// 	},
-						// 	gridFieldIcons: []
-						// }
+						{
+							id: 102504,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							needsTranslation: false,
+							parameterized: false,
+							position: 4,
+							required: false,
+							sourceField: "statusSendId",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},{
+							id: 102505,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_FAN_SEND_STATUS",
+							labelTooltip: "LBL_FAN_SEND_STATUS",
+							needsTranslation: false,
+							parameterized: false,
+							position: 5,
+							required: true,
+							sourceField: "statusSendAlias",
+							visible: true,
+							widthPx: 160,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						}
 					],
 					gridCommands: [
 						{
@@ -741,7 +794,12 @@ export default class VentilationContent {
 					commandId: 1,
 					function: () => {
 
-						webix.message("command1");
+						self.tubeFansDataTable.getSelectedItems().forEach(item => {
+							
+							item.statusSendId = FAN_COMMAND_SEND_FANS_STOP;
+							item.statusSendAlias = i18n.t("LBL_SEND_FAN_STOP");
+							self.tubeFansDataTable.update(item);
+						});						
 					}
 				});
 
@@ -749,7 +807,12 @@ export default class VentilationContent {
 					commandId: 2,
 					function: () => {
 
-						webix.message("command2");
+						self.tubeFansDataTable.getSelectedItems().forEach(item => {
+
+							item.statusSendId = FAN_COMMAND_SEND_FANS_START;
+							item.statusSendAlias = i18n.t("LBL_SEND_FAN_START");
+							self.tubeFansDataTable.update(item);
+						});
 					}
 				});
 
@@ -757,14 +820,25 @@ export default class VentilationContent {
 					commandId: 3,
 					function: () => {
 
-						webix.message("command3");
+						self.tubeFansDataTable.getSelectedItems().forEach(item => {
+
+							item.statusSendId = FAN_COMMAND_SEND_FANS_START_REVERSE;
+							item.statusSendAlias = i18n.t("LBL_SEND_FAN_START_REVERSE");
+							self.tubeFansDataTable.update(item);
+						});
 					}
 				});
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 4,
 					function: () => {
 
-						webix.message("command4");
+						self.tubeFansDataTable.getSelectedItems().forEach(item => {
+
+							item.statusSendId = null;
+							item.statusSendAlias = "-";
+							self.tubeFansDataTable.update(item);
+						});
 					}
 				});
 
@@ -783,10 +857,74 @@ export default class VentilationContent {
 							view: "button",
 							align:"right", 
 							css: "button-cta",
-							value: i18n.t("LBL_CHANGE_STATUS"),
+							value: i18n.t("LBL_VENTILATION_CHANGE_STATUS"),
 							click: function () { 
 								
-								webix.message("por hacer");
+								webix.confirm({
+									title: i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM"),
+									ok: i18n.t("LBL_ACCEPT"),
+									cancel: i18n.t("LBL_CANCEL"),
+									text: i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
+									width: 600
+								}).then(function() {
+									
+									let allTableItems = self.tubeFansDataTable.getAllItems();
+									
+									let fansStopCommand = [];
+									let fansStartCommand = [];
+									let fansStartReverseCommand = [];
+
+									allTableItems.forEach(row => {
+
+										if(row.statusSendId == FAN_COMMAND_SEND_FANS_STOP){
+
+											fansStopCommand.push(row.id);
+										
+										} else if(row.statusSendId == FAN_COMMAND_SEND_FANS_START){
+
+											fansStartCommand.push(row.id);
+										
+										} else if(row.statusSendId == FAN_COMMAND_SEND_FANS_START_REVERSE){
+
+											fansStartReverseCommand.push(row.id);
+										}
+									});
+
+									if(fansStopCommand.length > 0) {
+
+										executeFansCommand(FAN_COMMAND_SEND_FANS_STOP, fansStopCommand);
+									}  
+									
+									if(fansStartCommand.length > 0) {
+
+										executeFansCommand(FAN_COMMAND_SEND_FANS_START, fansStartCommand);
+									}
+									
+									if(fansStartReverseCommand.length > 0) {
+
+										executeFansCommand(FAN_COMMAND_SEND_FANS_START_REVERSE, fansStartReverseCommand);
+									}
+
+									function executeFansCommand(commandAction, values){
+
+										let command = self.parent.config.commands[commandAction];
+										command.elementId = self.selectedTube.id;
+										command.commandElementValues[0].value = JSON.stringify(values);
+			
+										let body = {
+											commands : []
+										};
+										body.commands.push(command);
+			
+										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+											
+											if(!data.json()){
+												
+												webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+											}
+										});
+									}
+								});
 							} 
 						}
 					]

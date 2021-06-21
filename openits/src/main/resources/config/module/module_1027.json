@@ -5,8 +5,7 @@
 		"fan": 102703
 	},
 	"containerAction": {
-	    "tunnel": 101401,
-		"test": 50001
+	    "tunnel": 100501
 	},
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
@@ -19,6 +18,7 @@
 		"fans" : "/topic/element.ElementType:9.>"
 	},
 	"adapters": {
+		"element": "ws.element.update",
 		"fans": "ws.fans.getList"
 	},
 	"elementType": "ElementType:2001",

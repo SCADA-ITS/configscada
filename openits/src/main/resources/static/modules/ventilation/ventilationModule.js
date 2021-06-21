@@ -109,23 +109,11 @@ export default class VentilationModule extends GenericModule {
 	
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
 
-					webix.ui(util.ui.getViewDrawNoData(), $$("view-content-" + self.uid), 0);
-
 					self.selectedTunnelId = $$("tree-"+self.treeView.uid).getItem(item.$parent).id_;
 					self.selectedTubeId = item.id_;
 
 					let ventilationContent = new VentilationContent(self.selectedTunnelId, self.selectedTubeId, self);
-
-					ventilationContent.loadData().then( function(data) {
-
-						webix.ui(ventilationContent.getView(), $$("view-content-" + self.uid), 0);
-
-						if(ventilationContent.tubeFansDataTable){
-
-							ventilationContent.tubeFansDataTable.callbacks();
-						}
-					});
-
+					ventilationContent.loadComponent("view-content-" + self.uid);
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
@@ -134,7 +122,7 @@ export default class VentilationModule extends GenericModule {
 					self.selectedTubeId = null;
 
 					let ventilationContent = new VentilationContent(self.selectedTunnelId, self.selectedTubeId, self);
-					ventilationContent.loadModule("view-content-" + self.uid);
+					ventilationContent.loadComponent("view-content-" + self.uid);
 				};
 				
 				return events;
