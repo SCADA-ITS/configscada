@@ -12,7 +12,7 @@
    height="55mm"
    viewBox="0 0 55 55"
    version="1.1"
-   id="svg8"
+   id="svg2"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:docname="19_co.svg">
   <defs
@@ -51,9 +51,9 @@
   <g
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
-     id="svg2">
+     id="main">
     <g
-       id="main">
+       id="g-1000">
       <rect
          style="fill:#4CAF50;stroke-width:0.360909;stroke-linecap:square;stroke-linejoin:round"
          id="state"
