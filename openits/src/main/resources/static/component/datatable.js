@@ -662,6 +662,32 @@ export default class DataTable {
 		return selectedPks;
 	}
 
+	getAllItems() {
+
+		let grid = $$("dt-" + this.uid);
+		let allItems = [];
+
+		if (grid != undefined) {
+
+			allItems = grid.serialize();
+		}
+
+		return allItems;
+	}
+
+	getItem(itemId) {
+
+		let grid = $$("dt-" + this.uid);
+		let item;
+
+		if (grid != undefined) {
+
+			item = grid.getItem(itemId);
+		}
+
+		return item;
+	}
+
 	getSelectedItems() {
 
 		let grid = $$("dt-" + this.uid);

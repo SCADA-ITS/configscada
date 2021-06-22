@@ -18,6 +18,7 @@ export default class VentilationContent {
 		this.tubeFans;
 		this.tubeFansDataTable;
 		this.proposedRegime;
+		this.selectedTunnel;
 
 		this.idStompSubscriptorTunnel;
 		this.idStompSubscriptorTube;
@@ -48,20 +49,21 @@ export default class VentilationContent {
 	loadModule(parentContainnerId) {
 
 		let self = this;
-		let module = findModuleByIdAction(this.parent.config.containerAction.tunnel);
 		let args = {};
 		args.selectedPks = [this.tunnelId];
-		let moduleAction = {id:this.parent.config.containerAction.tunnel};
 
-		try {
-
-			moduleAction = module.moduleActions.find(action => action.id == moduleAction.id);
-
-		} catch (error) {
-			
-			console.warn("Module Action not found");
+		let tunnelResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.parent.config.restEndpoints.elementById, { id: this.tunnelId}));		
+		if (tunnelResponse) {
+	
+			self.selectedTunnel = JSON.parse(tunnelResponse.responseText);
 		}
 
+		let module = findModuleByIdAction(this.parent.config.containerAction.tunnel);
+		let moduleAction = {id:this.parent.config.containerAction.tunnel};
+		if (module.moduleActions){
+
+			moduleAction = module.moduleActions.find(action => action.id == moduleAction.id);
+		}
 		util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
 
 		function drawContent(view) {
@@ -79,6 +81,7 @@ export default class VentilationContent {
 							{
 								cols:[
 									{ 	
+										id : "view-content-ventilation-stop-" + self.parent.uid,
 										width: 135,
 										height: 40,
 										type:"icon", 
@@ -87,6 +90,7 @@ export default class VentilationContent {
 										align:"right", 
 										css: "button-ventilation-action",
 										label: i18n.t("LBL_STOP"),
+										disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP"),
 										click: function () { 
 											
 											webix.confirm({
@@ -117,6 +121,7 @@ export default class VentilationContent {
 									},
 									{ width: 12 },
 									{ 	
+										id : "view-content-ventilation-start-" + self.parent.uid,
 										width: 135,
 										height: 40,
 										type:"icon", 
@@ -125,6 +130,7 @@ export default class VentilationContent {
 										align:"right",
 										css: "button-ventilation-action",
 										label: i18n.t("LBL_START"),
+										disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START"),
 										click: function () { 
 											
 											webix.confirm({
@@ -512,10 +518,12 @@ export default class VentilationContent {
 								{
 									height: 26,
 									align: "right",
-									width: 200,
+									width: 500,
 									view: "button",
 									type: "icon",
 									label: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
+									value: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
+									tooltip: true,
 									icon: "mdi mdi-file",
 									click: function (){
 										window.open(self.proposedRegime.documentUrl, '_blank');
@@ -939,20 +947,21 @@ export default class VentilationContent {
 
 	connectWS() {
 
+		let self = this;
+
 		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
 		if (stompSubscriptorService) {
 
-			if (this.tunnelId) {
-
-				let topic = this.parent.config.topics.element + "." + self.tunnelId;
-				this.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
-			}
-
 			if (this.tubeId) {
 
-				let topic = this.parent.config.topics.element + "." + self.tubeId;
+				let topic = this.parent.config.topics.element + "." + this.tubeId;
 				this.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
+			
+			} else {
+
+				let topic = this.parent.config.topics.element + "." + this.tunnelId;
+				this.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
 			}
 
 			if (this.tubeFans && Array.isArray(this.tubeFans) && this.tubeFans.length > 0) {
@@ -968,29 +977,51 @@ export default class VentilationContent {
 			}	
 		}
 
-		function onMessageTunnel(stompData) {
+		function onMessageTunnel(data) {
 
-			webix.message("Tunnel");
-			if (stompData) {
+			if (data) {
+
+				self.selectedTunnel = eval("adapter." + self.parent.config.adapters.element)(data, self.selectedTunnel);
+				
+				if(self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP")){
+
+					$$("view-content-ventilation-stop-" + self.parent.uid).enable();				
+				} else {
+
+					$$("view-content-ventilation-stop-" + self.parent.uid).disable();
+				}
+				
+				if(self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START")){
+
+					$$("view-content-ventilation-start-" + self.parent.uid).enable();				
+				} else {
+
+					$$("view-content-ventilation-start-" + self.parent.uid).disable();
+				}
+			}
+		}
+
+		function onMessageTube(data) {
+
+			if (data) {
+
+				self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(data, self.selectedTube);
+				
 
 			}
 		}
 
-		function onMessageTube(stompData) {
+		function onMessageFan(data) {
 
-			webix.message("Tube");
-			if (stompData) {
+			if (data) {
 
-			}
-		}
+				let oldFanData = self.tubeFansDataTable.getItem(data.id);
+				data.statusSendId = oldFanData.statusSendId;
+				data.statusSendAlias = oldFanData.statusSendAlias;
 
-		function onMessageFan(stompData) {
-
-			webix.message("Fan");
-			if (stompData) {
-
+				let fanData = eval("adapter." + self.parent.config.adapters.fans)([data], null);
+				self.tubeFansDataTable.update(fanData);
 			}
 		}
 	}
-
 }

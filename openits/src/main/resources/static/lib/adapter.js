@@ -143,6 +143,30 @@ export let adapter = {
 
 
 				return element;
+			},
+
+			update(oldData, newData, update_callback){
+
+				// Adapter for state
+				if (newData.elementTypeState) {
+
+					let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", newData.elementTypeState.id);
+
+					if (elementTypeState) {
+
+						newData.elementTypeState = elementTypeState;
+					}
+				}
+
+				// update only change fields without remove or modify UI extension params
+				let element = updateObject(oldData, newData);
+
+				if (update_callback) {
+
+					update_callback(element);
+				}
+
+				return element;
 			}
 		},
 
@@ -529,7 +553,9 @@ export let adapter = {
 
 						itemOutput.id = e.id;
 						itemOutput.alias = e.alias;
-
+						itemOutput.statusSendId = e.statusSendId;
+						itemOutput.statusSendAlias = e.statusSendAlias;
+						
 						try {
 
 							itemOutput.statusId = e.elementTypeState.id;
