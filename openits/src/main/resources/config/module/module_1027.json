@@ -1,7 +1,7 @@
 {
 	"moduleAction": {
 	    "tunnel": 102701,
-	    "tubo": 102702,
+	    "tube": 102702,
 		"fan": 102703
 	},
 	"containerAction": {
@@ -11,7 +11,8 @@
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
 		"elementById": "elements/${id}",
 		"elementByIds": "elements",
-		"command": "elements/send_command_element"
+		"command": "elements/send_command_element",
+		"elementsHierarchy": "elements/hierarchy"
 	},
 	"topics": {
 		"element" : "/topic/element",
@@ -22,9 +23,7 @@
 		"fans": "ws.fans.getList"
 	},
 	"elementType": "ElementType:2001",
-	"elementTypeChilds" :[
-		"ElementType:2000"
-	],
+	"elementTypeChild" :"ElementType:2000",
 	"ventilationStates":{
 		"ElementTypeState:2001:0" :{
 			"actions": []

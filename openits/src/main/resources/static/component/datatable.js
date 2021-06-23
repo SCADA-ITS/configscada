@@ -2420,6 +2420,8 @@ export default class DataTable {
 	select(ids) {
 
 		let grid = $$("dt-" + this.uid);
+		
+		let preserve = false;
 
 		if (grid != undefined) {
 
@@ -2431,7 +2433,8 @@ export default class DataTable {
 
 					if (record != undefined) {
 
-						grid.select(id);
+						grid.select(id, preserve);
+						preserve = true;
 					}
 				});
 			}
@@ -2443,7 +2446,7 @@ export default class DataTable {
 
 				if (record != undefined) {
 
-					grid.select(id);
+					grid.select(id, preserve);
 				}
 			}
 		}
