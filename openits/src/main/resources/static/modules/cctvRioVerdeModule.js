@@ -87,11 +87,17 @@ export default class CctvRioVerdeModule extends GenericModule {
 		function drawComponents() {
 
 			let viewMain = {
-				id: self.uid + "gridlayout",
-                view: "gridlayout",
-                gridColumns: self.ncols, 
-                gridRows: self.nrows,
-                cells:drawSVG()
+				rows:[
+					{
+						id: self.uid + "gridlayout",
+						view: "gridlayout",
+						gridColumns: self.ncols, 
+						gridRows: self.nrows,
+						height: 500,
+						cells:drawSVG()
+					},
+					{}
+					]
 			};
 
 			function drawSVG() {
@@ -105,7 +111,7 @@ export default class CctvRioVerdeModule extends GenericModule {
 
                         camerasList.push({ 
                                 id: self.uid + "camera" + i + j, 
-                                template: self.camerasTitleList[i][j] + '<br><img src=' + cameraStream + "/stream" + '" id="img_cam' + i + j + '" style="width:100%; height:96%" />', 
+                                template: self.camerasTitleList[i][j] + '<br><img src=' + cameraStream + "/stream" + '" id="img_cam' + i + j + '" style="width:100%;" />', 
                                 x:j, 
                                 y:i, 
                                 dx:1, 
