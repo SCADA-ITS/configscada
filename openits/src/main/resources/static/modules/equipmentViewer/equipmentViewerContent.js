@@ -212,7 +212,7 @@ export default class EquipmentViewerContent {
 								{
 									view: "button",
 									width: 135,
-									hidden: !(self.equipmentViewer.showActions) && !isAllowedCommands,
+									hidden: !(self.equipmentViewer.showActions) || !isAllowedCommands,
 									label: i18n.t("LBL_EQUIP_VIEWER_COMMANDS"),
 									tooltip: i18n.t("LBL_EQUIP_VIEWER_COMMANDS_DESCRIPTION"),
 									type: "iconTop",
@@ -227,7 +227,7 @@ export default class EquipmentViewerContent {
 						
 												let args = { selectedPks: [self.element.id] };
 						
-												util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+												util.module.open(commandsModule, moduleAction, VIEW_TYPE_WINDOW, null, args);
 											}
 										}
 									}
