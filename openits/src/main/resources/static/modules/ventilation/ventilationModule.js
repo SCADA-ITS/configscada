@@ -127,7 +127,7 @@ export default class VentilationModule extends GenericModule {
 			loadTree().then(function(res) {
 
 				drawComponents();
-				self.treeView.select(self.treeView.data[0].data[0].id);
+				self.treeView.select(self.treeView.data[0].id);
 			});
 		}
 
@@ -243,7 +243,7 @@ export default class VentilationModule extends GenericModule {
 						id: "view-tree-" + self.uid,
 						header: i18n.t("LBL_VENTILATIONS"),
 						body: {
-							width: 250,
+							width: 230,
 							rows: [
 								{
 									cols: [

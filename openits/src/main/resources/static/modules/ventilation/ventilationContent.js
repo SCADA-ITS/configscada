@@ -4,10 +4,10 @@ import { adapter } from "../../lib/adapter.js";
 
 const FAN_COMMAND_SEND_FANS_STOP = "SEND_FANS_STOP";
 const FAN_COMMAND_SEND_FANS_START = "SEND_FANS_START";
-const FAN_COMMAND_SEND_FANS_START_REVERSE = "SEND_FANS_START_REVERSE"; 
+const FAN_COMMAND_SEND_FANS_START_REVERSE = "SEND_FANS_START_REVERSE";
 
 export default class VentilationContent {
-	
+
 	constructor(tunnelId, tubeId, parent) {
 
 		this.tunnelId = tunnelId;
@@ -22,34 +22,34 @@ export default class VentilationContent {
 		this.selectedTunnel;
 		this.ventilationModeValueParam;
 
-		this.idStompSubscriptorTunnel;
-		this.idStompSubscriptorTube;
-		this.idStompSubscriptorFans;
+		this.idStompSubscriptorTunnel = undefined;
+		this.idStompSubscriptorTube = undefined;
+		this.idStompSubscriptorFans = undefined;
 	}
 
-	loadComponent(parentContainnerId, enabledFanIds){
+	loadComponent(parentContainnerId, enabledFanIds) {
 
 		let self = this;
 
 		webix.ui(util.ui.getViewDrawNoData(), $$(parentContainnerId), 0);
 
-		if(this.tubeId){
+		if (this.tubeId) {
 
-			loadData().then( (data) => {
+			loadData().then((data) => {
 
 				webix.ui(getView(), $$(parentContainnerId), 0);
 
-				if(this.tubeFansDataTable){
+				if (this.tubeFansDataTable) {
 
 					this.tubeFansDataTable.callbacks();
 
-					if(enabledFanIds){
-						
+					if (enabledFanIds) {
+
 						this.tubeFansDataTable.select(enabledFanIds);
 					}
 
-					if(this.ventilationModeValueParam && this.parent.config.ventilationModeOptions.find(option => option.id == this.ventilationModeValueParam.value).disable){
-						
+					if (this.ventilationModeValueParam && this.parent.config.ventilationModeOptions.find(option => option.id == this.ventilationModeValueParam.value).disable) {
+
 						this.tubeFansDataTable.disable();
 					}
 				}
@@ -63,32 +63,33 @@ export default class VentilationContent {
 
 			let args = {};
 			args.selectedPks = [self.tunnelId];
-	
-			let tunnelResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementById, { id: self.tunnelId}));		
+			args.containerId = parentContainnerId;
+
+			let tunnelResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementById, { id: self.tunnelId }));
 			if (tunnelResponse) {
-		
+
 				self.selectedTunnel = JSON.parse(tunnelResponse.responseText);
 			}
-	
+
 			let module = findModuleByIdAction(self.parent.config.containerAction.tunnel);
-			let moduleAction = {id:self.parent.config.containerAction.tunnel};
-			if (module.moduleActions){
-	
+			let moduleAction = { id: self.parent.config.containerAction.tunnel };
+			if (module.moduleActions) {
+
 				moduleAction = module.moduleActions.find(action => action.id == moduleAction.id);
 			}
 			util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
-	
+
 			function drawContent(view) {
-	
+
 				view.relative = true;
-	
+
 				let viewContent = {
 					view: "abslayout",
 					cells: [
 						view,
 						{
-							top: 20, right:35,
-							rows:[
+							top: 34, right: 186,
+							rows: [
 								{},
 								{
 									view: "toolbar",
@@ -97,7 +98,7 @@ export default class VentilationContent {
 									css: "equip-viewer-header-actions",
 									elements: [
 										{
-											id : "view-content-ventilation-stop-" + self.parent.uid,
+											id: "view-content-ventilation-stop-" + self.parent.uid,
 											view: "button",
 											width: 135,
 											label: i18n.t("LBL_STOP"),
@@ -107,7 +108,7 @@ export default class VentilationContent {
 											disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP"),
 											on: {
 												onItemClick() {
-	
+
 													webix.confirm({
 														title: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM"),
 														ok: i18n.t("LBL_ACCEPT"),
@@ -115,20 +116,20 @@ export default class VentilationContent {
 														text: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"),
 														width: 600
 													}).then(function() {
-														
+
 														let command = self.parent.config.commands.SEND_VENTILATION_STOP;
 														command.elementId = self.tunnelId;
-							
+
 														let body = {
-															commands : []
+															commands: []
 														};
 														body.commands.push(command);
-							
+
 														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-															
-															if(!data.json()){
-		
-																webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+
+															if (!data.json()) {
+
+																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 															}
 														});
 													});
@@ -137,7 +138,7 @@ export default class VentilationContent {
 										},
 										{ width: 12 },
 										{
-											id : "view-content-ventilation-start-" + self.parent.uid,
+											id: "view-content-ventilation-start-" + self.parent.uid,
 											view: "button",
 											width: 135,
 											label: i18n.t("LBL_START"),
@@ -147,7 +148,7 @@ export default class VentilationContent {
 											disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START"),
 											on: {
 												onItemClick() {
-	
+
 													webix.confirm({
 														title: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM"),
 														ok: i18n.t("LBL_ACCEPT"),
@@ -155,20 +156,20 @@ export default class VentilationContent {
 														text: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"),
 														width: 600
 													}).then(function() {
-														
+
 														let command = self.parent.config.commands.SEND_VENTILATION_START;
 														command.elementId = self.tunnelId;
-							
+
 														let body = {
-															commands : []
+															commands: []
 														};
 														body.commands.push(command);
-							
+
 														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-															
-															if(!data.json()){
-																
-																webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+
+															if (!data.json()) {
+
+																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 															}
 														});
 													});
@@ -182,27 +183,30 @@ export default class VentilationContent {
 						}
 					]
 				}
-	
+
 				webix.ui(viewContent, $$(parentContainnerId), 0);
-				
+
 				connectWS();
+
+				$$(parentContainnerId).attachEvent("onDestruct", disConnectWS);
 			}
 		}
-	
+
 		async function loadData() {
-	
-			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementById, { id: self.tubeId}));
-				
+
+			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementById, { id: self.tubeId }));
+
 			self.selectedTube = data.json();
-			self.tubeFans = eval("adapter." + self.parent.config.adapters.fans)(self.selectedTube.childs, null);
-	
+			let fans = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdFan);
+			self.tubeFans = eval("adapter." + self.parent.config.adapters.fan)(fans, null);
+
 			connectWS();
-	
+
 			return true;
 		}
-	
+
 		function getView() {
-				
+
 			let viewContent = {
 				rows: [
 					{ height: 6 },
@@ -225,15 +229,15 @@ export default class VentilationContent {
 					{}
 				]
 			};
-	
+
 			return viewContent;
-	
-			function getContentBody(){
-	
+
+			function getContentBody() {
+
 				let contentBody = {
-					view:"form", 
+					view: "form",
 					id: "view-content-body-" + self.parent.uid,
-					rows:[
+					rows: [
 						getRegime(),
 						getButtons(),
 						getTable(),
@@ -241,51 +245,51 @@ export default class VentilationContent {
 						{}
 					]
 				}
-	
-				function getRegime(){
-	
+
+				function getRegime() {
+
 					let ventilationRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationRegimeConfig);
 					let availableRegimes;
 					self.actualRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.actualRegime);
 					self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
-	
+
 					try {
-	
+
 						ventilationRegimeConfig = JSON.parse(ventilationRegimeConfig.value);
-						
-						availableRegimes = ventilationRegimeConfig.ventilationRegimes.map(function (regime) {
-							return { 
-								id: regime.id, 
+
+						availableRegimes = ventilationRegimeConfig.ventilationRegimes.map(function(regime) {
+							return {
+								id: regime.id,
 								value: i18n.t(regime.labelAlias)
 							};
 						});
-	
-						if(self.actualRegime.value && ventilationRegimeConfig.ventilationRegimes){
-	
-							self.actualRegime.labelAlias = ventilationRegimeConfig.ventilationRegimes.find(e =>e.id==self.actualRegime.value).labelAlias;
+
+						if (self.actualRegime.value && ventilationRegimeConfig.ventilationRegimes) {
+
+							self.actualRegime.labelAlias = ventilationRegimeConfig.ventilationRegimes.find(e => e.id == self.actualRegime.value).labelAlias;
 						} else {
 							self.actualRegime.labelAlias = "LBL_NO_REGIME";
 						}
-	
+
 						updateProposedRegime(self.proposedRegime.value, ventilationRegimeConfig.ventilationRegimes);
-						
+
 					} catch (error) {
-	
+
 						console.error("El Json de regimenes no esta correctamente formateado.")
 					}
-	
+
 					let regime = {
-						cols:[
+						cols: [
 							{
 								rows: [
 									{ height: 26 },
 									{
-										cols:[
+										cols: [
 											{
 												view: "label",
 												height: 24,
 												width: 180,
-												template: "<span>" +i18n.t("LBL_ACTUAL_REGIME") + "</span>",
+												template: "<span>" + i18n.t("LBL_ACTUAL_REGIME") + "</span>",
 												css: "global-text"
 											},
 											{ width: 12 },
@@ -293,7 +297,7 @@ export default class VentilationContent {
 												view: "label",
 												height: 24,
 												width: 180,
-												template: "<span>" +i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
+												template: "<span>" + i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
 												css: "global-text"
 											},
 											{ width: 12 },
@@ -301,14 +305,14 @@ export default class VentilationContent {
 												view: "label",
 												height: 24,
 												width: 180,
-												template: "<span>" +i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
+												template: "<span>" + i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
 												css: "global-text"
 											}
 										]
 									},
 									{ height: 12 },
 									{
-										cols:[
+										cols: [
 											{
 												view: "label",
 												width: 180,
@@ -324,48 +328,48 @@ export default class VentilationContent {
 												id: "label-regimen-3-" + self.parent.uid,
 												width: 180,
 												height: 28,
-												view:"combo", 
+												view: "combo",
 												// css: {"margin-top": "-5px"},
-												value: self.proposedRegime.value, 
+												value: self.proposedRegime.value,
 												options: availableRegimes,
 												on: {
 													onChange(newv, oldv) {
-	
+
 														updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
 														webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.parent.uid));
 														webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.parent.uid));
 													}
 												}
-											}										
+											}
 										]
 									},
 									{}
-								] 
+								]
 							},
 							{},
 							{
-								rows:[
+								rows: [
 									getViewDocument(),
 									getViewDocumentText(),
 									{ height: 12 },
-									{ 	
-										cols:[
+									{
+										cols: [
 											{},
-											{ 	
-												id:"view-content-button-change-regime-" + self.parent.uid,
+											{
+												id: "view-content-button-change-regime-" + self.parent.uid,
 												width: 130,
 												view: "button",
-												align:"right", 
+												align: "right",
 												css: "button-cta",
 												value: i18n.t("LBL_CHANGE_REGIME"),
 												disabled: self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable,
-												click: function () {
+												click: function() {
 
 													let command = self.parent.config.commands.SEND_VENTILATION_REGIME;
 													command.elementId = self.tubeId;
 													command.commandElementValues[0].value = $$("label-regimen-3-" + self.parent.uid).getValue();
 
-													if (!command.commandElementValues[0].value || command.commandElementValues[0].value ==0) {
+													if (!command.commandElementValues[0].value || command.commandElementValues[0].value == 0) {
 
 														webix.alert({
 															title: i18n.t("LBL_NO_REGIME_SELECTED"),
@@ -375,7 +379,7 @@ export default class VentilationContent {
 														});
 
 													} else {
-														
+
 														webix.confirm({
 															title: i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM"),
 															ok: i18n.t("LBL_ACCEPT"),
@@ -383,21 +387,21 @@ export default class VentilationContent {
 															text: i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"),
 															width: 600
 														}).then(function() {
-	
+
 															let body = {
-																commands : []
+																commands: []
 															};
 															body.commands.push(command);
-								
+
 															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-																
-																if(!data.json()){
-		
-																	webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+
+																if (!data.json()) {
+
+																	webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 																}
-															});													
+															});
 														});
-													}	
+													}
 												}
 											}
 										]
@@ -406,9 +410,9 @@ export default class VentilationContent {
 							}
 						]
 					};
-	
-					function getViewProposedRegimeLabel(){
-	
+
+					function getViewProposedRegimeLabel() {
+
 						let viewProposedRegimeLabel = {
 							view: "label",
 							width: 180,
@@ -417,22 +421,22 @@ export default class VentilationContent {
 							template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
 							css: "global-text"
 						};
-	
+
 						return viewProposedRegimeLabel;
 					}
-	
-					function getViewDocument(){
-	
-						let viewDocument = { 
+
+					function getViewDocument() {
+
+						let viewDocument = {
 							id: "view-content-regime-document-" + self.parent.uid,
-							height: 26 
+							height: 26
 						};
-	
-						if(self.proposedRegime.documentUrl){
-	
+
+						if (self.proposedRegime.documentUrl) {
+
 							viewDocument = {
 								id: "view-content-regime-document-" + self.parent.uid,
-								cols:[
+								cols: [
 									{},
 									{
 										height: 26,
@@ -444,59 +448,59 @@ export default class VentilationContent {
 										value: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
 										tooltip: true,
 										icon: "mdi mdi-file",
-										click: function (){
+										click: function() {
 											window.open(self.proposedRegime.documentUrl, '_blank');
 										},
 										css: "button-icon-transparent"
-									}		
+									}
 								]
 							};
 						}
-	
+
 						return viewDocument;
 					}
-	
-					function getViewDocumentText(){
+
+					function getViewDocumentText() {
 						return {
-							id: "view-content-regime-document-text-"+ self.parent.uid,
-							height: 58,
-							width: 980,
+							id: "view-content-regime-document-text-" + self.parent.uid,
+							height: 60,
+							width: 500,
 							borderless: true,
 							view: "template",
 							template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
 						};
 					}
-	
-					function updateProposedRegime(value, ventilationRegimes){
-	
+
+					function updateProposedRegime(value, ventilationRegimes) {
+
 						self.proposedRegime.value = value;
-	
-						if(self.proposedRegime.value && ventilationRegimes){
-	
-							let proposedConfig = ventilationRegimes.find(e =>e.id==self.proposedRegime.value);
+
+						if (self.proposedRegime.value && ventilationRegimes) {
+
+							let proposedConfig = ventilationRegimes.find(e => e.id == self.proposedRegime.value);
 							self.proposedRegime.labelAlias = proposedConfig.labelAlias;
 							self.proposedRegime.description = proposedConfig.description;
 							self.proposedRegime.documentUrl = proposedConfig.documentUrl
-	
-							if (self.proposedRegime.documentUrl){
-	
-								self.proposedRegime.documentName = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf("/")+1, self.proposedRegime.documentUrl.lastIndexOf("."));
-								self.proposedRegime.documentType = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf(".")+1, self.proposedRegime.documentUrl.length);
+
+							if (self.proposedRegime.documentUrl) {
+
+								self.proposedRegime.documentName = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf("/") + 1, self.proposedRegime.documentUrl.lastIndexOf("."));
+								self.proposedRegime.documentType = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf(".") + 1, self.proposedRegime.documentUrl.length);
 							}
 						} else {
-	
+
 							self.proposedRegime.labelAlias = "LBL_NO_REGIME";
 							self.proposedRegime.description = "";
 						}
 					}
-	
+
 					return regime;
 				}
-	
-				function getButtons(){
-	
+
+				function getButtons() {
+
 					let buttons = {
-						cols:[
+						cols: [
 							{
 								view: "segmented",
 								css: "segment-custom-2",
@@ -506,32 +510,32 @@ export default class VentilationContent {
 									{
 										id: "action-panel-switcher-fan" + self.parent.uid,
 										value: "<span>" + i18n.t("LBL_FAN") + "</span>",
-									},
-									{
+									}
+									/*{
 										id: "action-panel-switcher-tube" + self.parent.uid,
 										value: "<span>" + i18n.t("LBL_TUBE") + "</span>",
-									}
+									}*/
 								],
 								tooltip: function(obj) {
-				
+
 									if (obj.id === "action-panel-switcher-fan" + self.parent.uid) {
-				
+
 										return i18n.t("LBL_FAN");
 									}
-									else if (obj.id === "action-panel-switcher-tube" + self.parent.uid) {
-				
+									/*else if (obj.id === "action-panel-switcher-tube" + self.parent.uid) {
+
 										return i18n.t("LBL_TUBE");
-									}
+									}*/
 								},
 								on: {
 									onChange(newv, oldv) {
-				
+
 										if (newv === "action-panel-switcher-fan" + self.parent.uid) {
-											
+
 											webix.message("show-all");
 										}
 										else if (newv === "action-panel-switcher-tube" + self.parent.uid) {
-				
+
 											webix.message("show-top");
 										}
 									}
@@ -540,14 +544,14 @@ export default class VentilationContent {
 							{}
 						]
 					};
-	
+
 					return buttons;
 				}
-	
+
 				function getTable() {
-	
+
 					let data = self.tubeFans;
-	
+
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 5 }, value: undefined },
 						{ gridOption: { id: 6 }, value: undefined },
@@ -559,7 +563,7 @@ export default class VentilationContent {
 						{ gridOption: { id: 21 }, value: "custom" },
 						{ gridOption: { id: 23 }, value: "true" }
 					];
-	
+
 					let metadata = {
 						filter: true,
 						label: "LBL_FAN",
@@ -572,7 +576,6 @@ export default class VentilationContent {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: true,
-								needsTranslation: false,
 								parameterized: false,
 								position: 1,
 								required: true,
@@ -585,42 +588,58 @@ export default class VentilationContent {
 								}
 							},
 							{
-								id: 102702,
+								id: 102502,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								parameterized: false,
+								position: 2,
+								required: true,
+								sourceField: "state",
+								visible: true,
+								widthPx: 30,
+								adjust: false,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								gridFieldIcons: [
+									{
+										icon: "./img/state/stateUp.png",
+										showValue: false,
+										value: "ElementTypeState:9:1",
+										labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+									},
+									{
+										icon: "./img/state/stateDown.png",
+										showValue: false,
+										value: "ElementTypeState:9:2",
+										labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+									},
+									{
+										icon: "./img/state/stateAlarm.png",
+										showValue: false,
+										value: "ElementTypeState:9:3",
+										labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+
+									}
+								]
+							},
+							{
+								id: 102703,
 								extended: false,
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
 								label: "LBL_FAN_ALIAS",
 								labelTooltip: "LBL_FAN_ALIAS",
-								needsTranslation: false,
 								parameterized: false,
-								position: 2,
+								position: 3,
 								required: false,
 								sourceField: "alias",
 								visible: true,
-								widthPx: 100,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								},
-								gridFieldIcons: []
-							},
-							{
-								id: 102503,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								label: "LBL_FAN_STATUS",
-								labelTooltip: "LBL_FAN_STATUS",
-								needsTranslation: true,
-								parameterized: false,
-								position: 3,
-								required: true,
-								sourceField: "statusLabelAlias",
-								visible: true,
 								widthPx: 200,
-								adjust: false,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
@@ -633,32 +652,60 @@ export default class VentilationContent {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								needsTranslation: false,
+								label: "LBL_FAN_STATE",
+								labelTooltip: "LBL_FAN_STATE",
 								parameterized: false,
 								position: 4,
+								required: true,
+								sourceField: "ElementTypeParam:9:2:1",
+								visible: true,
+								widthPx: 250,
+								adjust: false,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								},
+								replacementFunction: "getLabelToFanState",
+								gridFieldIcons: [
+									{
+										showValue: false,
+										badgeColor: true,
+										avatar: false,
+										enabled: true
+									}
+								]
+							},
+							{
+								id: 102505,
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								parameterized: false,
+								position: 5,
 								required: false,
-								sourceField: "statusSendId",
+								sourceField: "fanStateToSend",
 								visible: false,
 								widthPx: 1,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
 								}
-							},{
-								id: 102505,
+							}, {
+								id: 102506,
 								extended: false,
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_FAN_SEND_STATUS",
-								labelTooltip: "LBL_FAN_SEND_STATUS",
+								label: "LBL_FAN_STATE_TO_SEND",
+								labelTooltip: "LBL_FAN_STATE_TO_SEND",
 								needsTranslation: false,
 								parameterized: false,
-								position: 5,
+								position: 6,
 								required: true,
-								sourceField: "statusSendAlias",
+								sourceField: "fanStateToSendAlias",
 								visible: true,
-								widthPx: 400,
+								widthPx: 250,
 								adjust: false,
 								gridFieldDataType: {
 									id: 1,
@@ -709,84 +756,84 @@ export default class VentilationContent {
 								itemRequired: true
 							}
 						]
-	
+
 					};
-	
+
 					let events = {};
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-	
+
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 						commandId: 1,
 						function: () => {
-	
+
 							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-								
-								item.statusSendId = FAN_COMMAND_SEND_FANS_START;
-								item.statusSendAlias = i18n.t("LBL_SEND_FAN_START");
+
+								item.fanStateToSend = FAN_COMMAND_SEND_FANS_START;
+								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_START");
 								self.tubeFansDataTable.update(item);
-							});						
+							});
 						}
 					});
-	
+
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 						commandId: 2,
 						function: () => {
-	
+
 							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-	
-								item.statusSendId = FAN_COMMAND_SEND_FANS_START_REVERSE;
-								item.statusSendAlias = i18n.t("LBL_SEND_FAN_START_REVERSE");
+
+								item.fanStateToSend = FAN_COMMAND_SEND_FANS_START_REVERSE;
+								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_START_REVERSE");
 								self.tubeFansDataTable.update(item);
 							});
 						}
 					});
-	
+
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 						commandId: 3,
 						function: () => {
-	
+
 							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-	
-								item.statusSendId = FAN_COMMAND_SEND_FANS_STOP;
-								item.statusSendAlias = i18n.t("LBL_SEND_FAN_STOP");
+
+								item.fanStateToSend = FAN_COMMAND_SEND_FANS_STOP;
+								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_STOP");
 								self.tubeFansDataTable.update(item);
 							});
 						}
 					});
-	
+
 					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 						commandId: 4,
 						function: () => {
-	
+
 							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-	
-								item.statusSendId = null;
-								item.statusSendAlias = "-";
+
+								item.fanStateToSend = null;
+								item.fanStateToSendAlias = "-";
 								self.tubeFansDataTable.update(item);
 							});
 						}
 					});
-	
+
 					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
-					
-					return {height: 338,rows:self.tubeFansDataTable.getView()};
+
+					return { height: 338, rows: self.tubeFansDataTable.getView() };
 				};
-	
-				function getBottom(){
-	
+
+				function getBottom() {
+
 					let bottom = {
-						cols:[
+						cols: [
 							{},
-							{ 	
-								id:"view-content-button-change-fans-status-" + self.parent.uid,
+							{
+								id: "view-content-button-change-fans-status-" + self.parent.uid,
 								width: 130,
 								view: "button",
-								align:"right", 
+								align: "right",
 								css: "button-cta",
 								value: i18n.t("LBL_VENTILATION_CHANGE_STATUS"),
 								disabled: self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable,
-								click: function () { 
-									
+								click: function() {
+
 									webix.confirm({
 										title: i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM"),
 										ok: i18n.t("LBL_ACCEPT"),
@@ -794,78 +841,96 @@ export default class VentilationContent {
 										text: i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
 										width: 600
 									}).then(function() {
-										
+
 										let allTableItems = self.tubeFansDataTable.getAllItems();
-										
+
 										let fansStopCommand = [];
 										let fansStartCommand = [];
 										let fansStartReverseCommand = [];
-	
+
 										allTableItems.forEach(row => {
-	
-											if(row.statusSendId == FAN_COMMAND_SEND_FANS_STOP){
-	
+
+											if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_STOP) {
+
 												fansStopCommand.push(row.id);
-											
-											} else if(row.statusSendId == FAN_COMMAND_SEND_FANS_START){
-	
+
+											} else if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_START) {
+
 												fansStartCommand.push(row.id);
-											
-											} else if(row.statusSendId == FAN_COMMAND_SEND_FANS_START_REVERSE){
-	
+
+											} else if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_START_REVERSE) {
+
 												fansStartReverseCommand.push(row.id);
 											}
 										});
-	
-										if(fansStopCommand.length > 0) {
-	
+
+										if (fansStopCommand.length > 0) {
+
 											executeFansCommand(FAN_COMMAND_SEND_FANS_STOP, fansStopCommand);
-										}  
-										
-										if(fansStartCommand.length > 0) {
-	
+										}
+
+										if (fansStartCommand.length > 0) {
+
 											executeFansCommand(FAN_COMMAND_SEND_FANS_START, fansStartCommand);
 										}
-										
-										if(fansStartReverseCommand.length > 0) {
-	
+
+										if (fansStartReverseCommand.length > 0) {
+
 											executeFansCommand(FAN_COMMAND_SEND_FANS_START_REVERSE, fansStartReverseCommand);
 										}
-	
-										function executeFansCommand(commandAction, values){
-	
+
+										function executeFansCommand(commandAction, values) {
+
 											let command = self.parent.config.commands[commandAction];
+											let value = "[";
 											command.elementId = self.selectedTube.id;
-											command.commandElementValues[0].value = JSON.stringify(values);
-				
+
+											for (var i = 0; i < values.length; i++) {
+
+												if (i > 0) {
+													value += ", ";
+												}
+												value += values[i];
+											}
+
+											value += "]";
+											command.commandElementValues[0].value = value;
+
 											let body = {
-												commands : []
+												commands: []
 											};
 											body.commands.push(command);
-				
+
 											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-												
-												if(!data.json()){
-													
-													webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+
+												self.tubeFansDataTable.getAllItems().forEach(row => {
+
+													row.fanStateToSend = null;
+													row.fanStateToSendAlias = null;
+													self.tubeFansDataTable.update(row);
+												});
+
+												if (!data.json()) {
+
+													webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 												}
 											});
 										}
 									});
-								} 
+								}
 							}
 						]
 					};
-	
+
 					return bottom;
 				}
-	
+
 				return contentBody;
 			}
 		}
-	
+
 		function getContentHeader() {
-	
+
 			let header = {
 				id: "view-content-header-" + self.parent.uid,
 				rows: [
@@ -876,13 +941,13 @@ export default class VentilationContent {
 					},
 					{ height: 4 },
 					{
-						cols:[
+						cols: [
 							{
-								borderless:true,
+								borderless: true,
 								id: "view-content-header-info" + self.parent.uid,
 								height: 80,
 								template: function() {
-	
+
 									return `<image class="ims-incident-report-icon" src="./img/grid/element_type_07.png" />
 											<div class="ims-incident-report-title">
 												${self.selectedTube.alias}
@@ -892,38 +957,38 @@ export default class VentilationContent {
 											</div>`;
 								}
 							},
-							{width: 24 }
+							{ width: 24 }
 						]
 					}
 				]
 			};
-		
+
 			return header;
 		}
-	
+
 		function getContentToolbar() {
-	
+
 			self.ventilationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationMode);
-	
+
 			let ventilationModeOptions = [];
-	
+
 			self.parent.config.ventilationModeOptions.forEach(option => {
-	
+
 				ventilationModeOptions.push({
-					id : option.id, 
-					value: i18n.t(option.label) 
+					id: option.id,
+					value: i18n.t(option.label)
 				});
 			});
-					
+
 			let viewContentToolbar = {
-				
+
 				id: "view-content-toolbar-" + self.parent.uid,
 				view: "toolbar",
 				height: 28,
 				elements: [],
 				borderless: true
 			}
-			
+
 			let actionPanelSwitcher = {
 				view: "segmented",
 				css: "segment-custom-2",
@@ -933,7 +998,7 @@ export default class VentilationContent {
 				tooltip: true,
 				on: {
 					onChange(newv, oldv) {
-	
+
 						webix.confirm({
 							title: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM"),
 							ok: i18n.t("LBL_ACCEPT"),
@@ -941,133 +1006,162 @@ export default class VentilationContent {
 							text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
 							width: 600
 						}).then(function() {
-							
+
 							let command = self.parent.config.commands.SEND_VENTILATION_MODE;
 							command.elementId = self.selectedTube.id;
 							command.commandElementValues[0].value = newv;
-	
+
 							let body = {
-								commands : []
+								commands: []
 							};
 							body.commands.push(command);
-	
+
 							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-								
-								if(!data.json()){
-									
-									webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+
+								if (!data.json()) {
+
+									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 								}
 							});
-							
+
 						}).fail(() => {
-	
+
 							this.blockEvent();
-							this.setValue(oldv); 
+							this.setValue(oldv);
 							this.unblockEvent();
 						});
 					}
 				}
 			};
-			
+
 			viewContentToolbar.elements.push({});
 			viewContentToolbar.elements.push(actionPanelSwitcher);
-			
+
 			return viewContentToolbar;
 		}
-	
+
 		function connectWS() {
-	
+
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
+
 			if (stompSubscriptorService) {
-	
+
 				if (self.tubeId) {
-	
-					let topic = self.parent.config.topics.element + "." + self.tubeId;
+
+					let topic = self.parent.config.topics.tube + "." + self.tubeId;
 					self.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
-				
+
 				} else {
-	
-					let topic = self.parent.config.topics.element + "." + self.tunnelId;
+
+					let topic = self.parent.config.topics.tunnel + "." + self.tunnelId;
 					self.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
 				}
-	
+
 				if (self.tubeFans && Array.isArray(self.tubeFans) && self.tubeFans.length > 0) {
-	
+
 					let fields = [];
 					fields.push({
 						target: "id",
 						values: []
 					});
 					self.tubeFans.forEach(element => fields[0].values.push(element.id));
-									
-					self.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.fans), onMessageFan, fields);
-				}	
+
+					self.idStompSubscriptorFans = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.fan), onMessageFan, fields);
+				}
 			}
-	
+
 			function onMessageTunnel(data) {
-	
+
 				if (data) {
-	
-					self.selectedTunnel = eval("adapter." + self.parent.config.adapters.element)(data, self.selectedTunnel);
-					
-					if(self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP")){
-	
-						$$("view-content-ventilation-stop-" + self.parent.uid).enable();				
+
+					self.selectedTunnel = eval("adapter." + self.parent.config.adapters.element)(self.selectedTunnel, data);
+
+					if (self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP")) {
+
+						$$("view-content-ventilation-stop-" + self.parent.uid).enable();
 					} else {
-	
+
 						$$("view-content-ventilation-stop-" + self.parent.uid).disable();
 					}
-					
-					if(self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START")){
-	
-						$$("view-content-ventilation-start-" + self.parent.uid).enable();				
+
+					if (self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START")) {
+
+						$$("view-content-ventilation-start-" + self.parent.uid).enable();
 					} else {
-	
+
 						$$("view-content-ventilation-start-" + self.parent.uid).disable();
 					}
 				}
 			}
-	
+
 			function onMessageTube(data) {
-	
+
 				if (data) {
-	
-					self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(data, self.selectedTube);
+
+					self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
 					self.actualRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.actualRegime);
 					self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
 					self.ventilationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationMode);
-	
+
 					webix.ui(getContentHeader(), $$("view-content-header-" + self.parent.uid));
 					webix.ui(getContentToolbar(), $$("view-content-toolbar-" + self.parent.uid));
-					$$("label-regimen-1-"+self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">'+ i18n.t(self.actualRegime.labelAlias) +'</span></div>')
-					$$("label-regimen-2-"+self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">'+ i18n.t(self.proposedRegime.labelAlias) +'</span></div>')
-				
-					if(!self.ventilationModeValueParam || self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable){
-							
+
+					let actualRegimeLabel = self.actualRegime.value ? self.actualRegime.labelAlias : "LBL_NO_REGIME";
+					let proposedRegimeLabel = self.proposedRegime.value ? self.proposedRegime.labelAlias : "LBL_NO_REGIME";
+
+					$$("label-regimen-1-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegimeLabel) + '</span></div>')
+					$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
+
+
+					if (!self.ventilationModeValueParam || self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable) {
+
 						self.tubeFansDataTable.disable();
 						$$("view-content-button-change-regime-" + self.parent.uid).disable();
 						$$("view-content-button-change-fans-status-" + self.parent.uid).disable();
 					} else {
-	
+
 						self.tubeFansDataTable.enable();
 						$$("view-content-button-change-regime-" + self.parent.uid).enable();
 						$$("view-content-button-change-fans-status-" + self.parent.uid).enable();
 					}
 				}
 			}
-	
+
 			function onMessageFan(data) {
-	
+
 				if (data) {
-	
+
 					let oldFanData = self.tubeFansDataTable.getItem(data.id);
-					data.statusSendId = oldFanData.statusSendId;
-					data.statusSendAlias = oldFanData.statusSendAlias;
-	
-					let fanData = eval("adapter." + self.parent.config.adapters.fans)([data], null);
-					self.tubeFansDataTable.update(fanData);
+
+					if (oldFanData) {
+
+						data.fanStateToSend = oldFanData.statusSendId;
+						data.fanStateToSendAlias = oldFanData.statusSendAlias;
+						data.alias = oldFanData.alias;
+
+						let fanData = eval("adapter." + self.parent.config.adapters.fan)([data], null);
+						self.tubeFansDataTable.update(fanData);
+					}
+
 				}
+			}
+		}
+
+		function disConnectWS() {
+
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+			if (stompSubscriptorService) {
+
+				if (self.idStompSubscriptorTunnel)
+					stompSubscriptorService.unsubscribe(self.idStompSubscriptorTunnel);
+
+				if (self.idStompSubscriptorTube)
+
+					stompSubscriptorService.unsubscribe(self.idStompSubscriptorTube);
+
+				if (self.idStompSubscriptorFans)
+					stompSubscriptorService.unsubscribe(self.idStompSubscriptorFans);
 			}
 		}
 	}

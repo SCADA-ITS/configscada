@@ -145,7 +145,50 @@ export let adapter = {
 				return element;
 			},
 
-			update(oldData, newData, update_callback){
+			update(oldData, newData, update_callback) {
+
+				function updateObject(oldItem, newItem) {
+
+					if (oldItem) {
+
+						if (newItem) {
+
+							for (let property in newItem) {
+
+								if (Array.isArray(newItem[property])) {
+
+									for (let j in newItem[property]) {
+
+										let thisElementValuePosition = oldItem[property].findIndex(
+											(item) => item.id === newItem[property][j].id
+										);
+
+										if (newItem[property][j].id && newItem[property][j].id.includes("ElementValue") && newItem[property][j].value == undefined) {
+
+											newItem[property][j].value = null;
+										}
+
+										oldItem[property][thisElementValuePosition] = updateObject(oldItem[property][thisElementValuePosition], newItem[property][j]);
+									}
+
+								} else if (typeof newItem[property] === 'object' && newItem[property] !== null) {
+
+									oldItem[property] = updateObject(oldItem[property], newItem[property]);
+
+								} else if (newItem[property] !== undefined || property == "value") {
+
+									oldItem[property] = newItem[property];
+								}
+							}
+						}
+
+					} else {
+
+						oldItem = newItem;
+					}
+
+					return oldItem;
+				}
 
 				// Adapter for state
 				if (newData.elementTypeState) {
@@ -160,7 +203,7 @@ export let adapter = {
 
 				// update only change fields without remove or modify UI extension params
 				let element = updateObject(oldData, newData);
-
+				
 				if (update_callback) {
 
 					update_callback(element);
@@ -266,7 +309,6 @@ export let adapter = {
 
 							webix.ajax().get(appConfig.restUrl + INCIDENT_REPORT_END_POINT + "/" + incidentReport.id).then(function(dat) {
 
-								console.log(dataItem);
 								if (dat != null) {
 
 									let incidentReport = dat.json();
@@ -472,7 +514,7 @@ export let adapter = {
 
 							}, function(response) { util.ajax.handleError(response); });
 
-						} else  if (gridData.action === 'DELETE'){
+						} else if (gridData.action === 'DELETE') {
 
 							gridData.data.push(dataItem);
 
@@ -539,7 +581,7 @@ export let adapter = {
 			}
 		},
 
-		fans: {
+		fan: {
 
 			getList(data, update_callback) {
 
@@ -553,19 +595,21 @@ export let adapter = {
 
 						itemOutput.id = e.id;
 						itemOutput.alias = e.alias;
-						itemOutput.statusSendId = e.statusSendId;
-						itemOutput.statusSendAlias = e.statusSendAlias;
-						
-						try {
 
-							itemOutput.statusId = e.elementTypeState.id;
-							itemOutput.statusLabelAlias = e.elementTypeState.labelAlias;
-							itemOutput.statusColor = e.elementTypeState.color;
+						if (e.elementTypeState != undefined) {
 
-						} catch (error) {
-							itemOutput.statusId = null;
-							itemOutput.statusLabelAlias = "LBL_EMPTY";
-							itemOutput.statusColor = null;
+							itemOutput.state = e.elementTypeState.id;
+						}
+
+						if (e.elementValues != undefined && Array.isArray(e.elementValues) && e.elementValues.length > 0) {
+
+							e.elementValues.forEach(elementValue => {
+
+								let elementTypeParamId = adapter.getElementTypeParamId(elementValue.id);
+
+								itemOutput[elementTypeParamId] = elementValue.value;
+
+							});
 						}
 
 						listOutput.push(itemOutput);
@@ -583,30 +627,3 @@ export let adapter = {
 
 	}
 };
-
-function updateObject(oldItem, newItem) {
-
-	if (oldItem) {
-
-		if (newItem) {
-
-			for (let i in newItem) {
-
-				if (typeof newItem[i] === 'object' && newItem[i] !== null) {
-
-					oldItem[i] = updateObject(oldItem[i], newItem[i]);
-
-				} else if (newItem[i] !== undefined) {
-
-					oldItem[i] = newItem[i];
-				}
-			}
-		}
-
-	} else {
-
-		oldItem = newItem;
-	}
-
-	return oldItem;
-}  

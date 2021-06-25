@@ -1141,6 +1141,11 @@ export let util = {
 
 			return ((data !== null && data !== undefined) ? (data !== true ? "false" : "true") : "false" );
 			
+		},
+		
+		getLabelToFanState(fanState){
+			
+			return i18n.t(FanSate.find(e => e.value === fanState).label);
 		}
 	},
 	

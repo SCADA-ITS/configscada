@@ -1691,10 +1691,10 @@ export default class DataTable {
 				iconData.length = 0;
 
 				if (Array.isArray(metadata.gridFields) && metadata.gridFields.length > 0) {
-
+				
 					for (let gridField of metadata.gridFields) {
 
-						if (gridField.gridFieldIcons.length > 0) {
+						if (Array.isArray(gridField.gridFieldIcons) && gridField.gridFieldIcons.length > 0) {
 
 							gridField.gridFieldIcons.forEach(e => {
 

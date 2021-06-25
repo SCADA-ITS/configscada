@@ -101,3 +101,10 @@ const INCIDENTS_LOGS_VALUE_ARG1 = "LogTypeParam:1:2";
 const INCIDENTS_LOGS_VALUE_ARG2 = "LogTypeParam:1:3";
 
 const USE_VMS_FAKE_DATA = true;
+
+// Type of entities to load
+const FanSate = Object.freeze([
+	{id: 1, value: "0", label: "LBL_FAN_STATE_STOP"},
+	{id: 2, value: "1", label: "LBL_FAN_STATE_START"},
+	{id: 3, value: "2", label: "LBL_FAN_STATE_REVERSE"}
+]);
