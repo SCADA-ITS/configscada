@@ -197,6 +197,7 @@ export default class SignalingManagerModule extends GenericModule {
 				options[ListView.Options.SEARCH] = false;
 				options[ListView.Options.ROW_HEIGHT] = 35;
 				options[ListView.Options.COMPACT] = true;
+				options[ListView.Options.SELECTED] = false;
 
 				let listView = new ListView(elementsView, options, null);
 

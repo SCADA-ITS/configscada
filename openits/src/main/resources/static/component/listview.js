@@ -2,7 +2,8 @@ const DefaultOptionValues = {
 	1: true,
 	2: true,
 	3: 66,
-	4: 128
+	4: 128,
+	8: true
 };
 
 const DrawMode = {
@@ -91,7 +92,7 @@ export default class ListView {
 				list = {
 					view: "list",
 					id: "list-" + self.uid,
-					select: true,
+					select: getOptions(ListView.Options.SELECTED),
 					tooltip: 
 						function(obj) {
 							if (mode === DrawMode.COMPACT || mode === DrawMode.IMAGE) {
@@ -128,6 +129,10 @@ export default class ListView {
 				};
 			}
 
+			if(getOptions(ListView.Options.SELECTED) === false){
+				list.css = "list-not-selected"
+				}
+	
 			return list;
 		}
 
@@ -242,6 +247,7 @@ export default class ListView {
 			}	
 		}
 	}
+	
 	
 	select(id) {
 		
@@ -394,6 +400,13 @@ Object.defineProperty(ListView.Options, 'COMPACT', {
 
 Object.defineProperty(ListView.Options, 'IMAGE', {
 	value: 7,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.Options, 'SELECTED', {
+	value: 8,
 	writable: false,
 	enumerable: true,
 	configurable: false
