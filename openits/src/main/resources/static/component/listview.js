@@ -3,13 +3,14 @@ const DefaultOptionValues = {
 	2: true,
 	3: 66,
 	4: 128,
-	8: true
+	8: true,
+	9: 1
 };
 
 const DrawMode = {
-	DEFAULT: "DEFAULT",
-	COMPACT: "COMPACT",
-	IMAGE: "IMAGE"
+	DEFAULT: 1,
+	COMPACT: 2,
+	IMAGE: 3
 };
 
 const HeightCompact = {
@@ -30,8 +31,8 @@ export default class ListView {
 	getView() {
 
 		let self = this;
-		let mode = (getOptions(ListView.Options.DEFAULT)) ? DrawMode.DEFAULT : (getOptions(ListView.Options.COMPACT)) ? DrawMode.COMPACT : getOptions(ListView.Options.IMAGE) ? DrawMode.IMAGE : DrawMode.DEFAULT;
-		
+		let mode = getOptions(ListView.Options.MODE);
+
 		let view = {
 			id: "listview-" + this.uid,
 			borderless: true,
@@ -384,27 +385,6 @@ Object.defineProperty(ListView.Options, 'ICON_HEIGHT', {
 	configurable: false
 });
 
-Object.defineProperty(ListView.Options, 'DEFAULT', {
-	value: 5,
-	writable: false,
-	enumerable: true,
-	configurable: false
-});
-
-Object.defineProperty(ListView.Options, 'COMPACT', {
-	value: 6,
-	writable: false,
-	enumerable: true,
-	configurable: false
-});
-
-Object.defineProperty(ListView.Options, 'IMAGE', {
-	value: 7,
-	writable: false,
-	enumerable: true,
-	configurable: false
-});
-
 Object.defineProperty(ListView.Options, 'SELECTED', {
 	value: 8,
 	writable: false,
@@ -412,3 +392,9 @@ Object.defineProperty(ListView.Options, 'SELECTED', {
 	configurable: false
 });
 
+Object.defineProperty(ListView.Options, 'MODE', {
+	value: 9,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
