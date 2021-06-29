@@ -555,7 +555,7 @@ export default class AlarmFilteredWizard {
 							{ height: 15 },
 							{
 								view: "label",
-								label: `<span class="${icon}" style="font-size: 30px;"></span><span class="content-wizard-label">${label.stepLabel}</span>`
+								label: `<span class="${icon}" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(label.stepLabel)}</span>`
 							},
 							{ height: 17 }
 						]
