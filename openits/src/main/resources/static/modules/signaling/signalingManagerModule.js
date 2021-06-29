@@ -2,6 +2,12 @@ import GenericModule from "../../modules/genericModule.js";
 import ListView from "../../component/listview.js";
 import { util } from "../../lib/util.js";
 
+const LISTVIEW_MODE = {
+	DEFAULT: 1,
+	COMPACT: 2,
+	IMAGE: 3
+};
+
 
 export default class SignalingManagerModule extends GenericModule {
 
@@ -196,8 +202,8 @@ export default class SignalingManagerModule extends GenericModule {
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.SEARCH] = false;
 				options[ListView.Options.ROW_HEIGHT] = 35;
-				options[ListView.Options.COMPACT] = true;
 				options[ListView.Options.SELECTED] = false;
+				options[ListView.Options.MODE] = LISTVIEW_MODE.COMPACT;
 
 				let listView = new ListView(elementsView, options, null);
 
