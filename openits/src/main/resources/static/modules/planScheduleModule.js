@@ -477,7 +477,7 @@ export default class PlanScheduleModule extends GenericModule {
 											let box = $$("form-edit-core-" + self.uid);
 											let cron = new CronUi(box.config.id, popupid);
 											
-											let cronExpression = (self.planSchedule != undefined) ? self.planSchedule.cronExpression : null;
+											let cronExpression = (self.planSchedule != undefined) ? self.planSchedule.cronExpression : ($$("cronExpression").getValue()) ? ($$("cronExpression").getValue()) : null;
 
 											cron.getComponent(cronExpression);
 
