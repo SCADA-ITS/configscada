@@ -1,9 +1,9 @@
-import { util } from "../../lib/util.js";
-import DataTable from "../../component/datatable.js";
-import { adapter } from "../../lib/adapter.js";
+import { util } from "../../../lib/util.js";
+import DataTable from "../../../component/datatable.js";
+import { adapter } from "../../../lib/adapter.js";
 
-const CIRCUIT_COMMAND_SEND_ON = "SEND_FANS_STOP";
-const CIRCUIT_COMMAND_SEND_OFF = "SEND_FANS_START";
+const CIRCUIT_COMMAND_SEND_ON = "LBL_CIRCUIT_COMMAND_SEND_ON";
+const CIRCUIT_COMMAND_SEND_OFF = "LBL_CIRCUIT_COMMAND_SEND_OFF";
 
 export default class TubeContent {
 	
@@ -16,6 +16,7 @@ export default class TubeContent {
 		this.selectedTube;
 		this.tubeCircuits;
 		this.tubeCircuitsDataTable;
+		this.tubeDalisDataTable;
 		this.currentRegime;
 		this.proposedRegime;
 		this.selectedTunnel;
@@ -26,7 +27,7 @@ export default class TubeContent {
 		this.idStompSubscriptorCircuits = undefined;
 	}
 
-	loadComponent(enabledCircuitIds, drawContent) {
+	loadData(enabledCircuitIds, drawContent) {
 
 		let self = this;
 
@@ -34,7 +35,31 @@ export default class TubeContent {
 
 			self.selectedTube = data.json();
 			let circuits = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdCircuit);
-			self.tubeCircuits = eval("adapter." + self.parent.config.adapters.circuit)(circuits, null);	
+
+			if(circuits && Array.isArray(circuits) && circuits.length > 0){
+
+				self.tubeCircuits = [];
+
+				circuits.forEach(element => {
+
+					let circuit = {};
+
+					circuit.id = element.id;
+					circuit.alias = element.alias;
+					circuit.state = (element.elementTypeState)?element.elementTypeState.id:null;
+
+					if(element.elementValues && Array.isArray(element.elementValues) && element.elementValues.length > 0){
+					
+						element.elementValues.forEach(elementValue => {
+						
+							circuit[elementValue.elementTypeParam.id] = elementValue.value;
+						});
+					}
+					
+					self.tubeCircuits.push(circuit);
+				});
+			}
+
 			self.connectWS();
 
 			drawContent(self.getView());
@@ -76,7 +101,13 @@ export default class TubeContent {
 						this.getContentBody(),
 					]
 				}
-			]
+			],
+			on: {
+				onDestruct: (obj) => {
+
+				  this.disConnectWS();
+				}
+			}
 		};
 
 		return viewContent;
@@ -208,7 +239,12 @@ export default class TubeContent {
 			rows:[
 				getRegime(),
 				getButtons(),
-				getTable(),
+				{
+					id: "view-content-body-dt-" + self.parent.uid,
+					cols: [
+						getCircuitsTable()
+					]
+				},
 				getBottom(),
 			]
 		}
@@ -477,7 +513,7 @@ export default class TubeContent {
 						view: "segmented",
 						css: "segment-custom-2",
 						value: "action-panel-switcher-circuit" + self.parent.uid,
-						width: 200,
+						width: 300,
 						options: [
 							{
 								id: "action-panel-switcher-circuit" + self.parent.uid,
@@ -510,18 +546,24 @@ export default class TubeContent {
 						on: {
 							onChange(newv, oldv) {
 		
+								let targetLayout = {
+									id: "view-content-body-dt-" + self.parent.uid
+								};
+
 								if (newv === "action-panel-switcher-circuit" + self.parent.uid) {
 									
-									webix.message("show-circuit");
+									targetLayout.cols = [getCircuitsTable()];
 								}
 								else if (newv === "action-panel-switcher-dali" + self.parent.uid) {
 		
-									webix.message("show-dali");
+									targetLayout.cols = [getDalisTable()];
 								}
 								else if (newv === "action-panel-switcher-tube" + self.parent.uid) {
 		
 									webix.message("show-tube");
 								}
+								
+								webix.ui(targetLayout, $$("view-content-body-dt-" + self.parent.uid));
 							}
 						}
 					},
@@ -532,7 +574,7 @@ export default class TubeContent {
 			return buttons;
 		}
 
-		function getTable() {
+		function getCircuitsTable() {
 
 			let data = self.tubeCircuits;
 
@@ -555,7 +597,7 @@ export default class TubeContent {
 				gridOptionValues: defaultGridOptionValues,
 				gridFields: [
 					{
-						id: 102701,
+						id: 102801,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -572,57 +614,102 @@ export default class TubeContent {
 						}
 					},
 					{
-						id: 102702,
+						id: 102802,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_CIRCUIT_ALIAS",
-						labelTooltip: "LBL_CIRCUIT_ALIAS",
-						needsTranslation: false,
 						parameterized: false,
 						position: 2,
-						required: false,
-						sourceField: "alias",
-						visible: true,
-						widthPx: 100,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: []
-					},
-					{
-						id: 102503,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_CIRCUIT_STATUS",
-						labelTooltip: "LBL_CIRCUIT_STATUS",
-						needsTranslation: true,
-						parameterized: false,
-						position: 3,
 						required: true,
-						sourceField: "statusLabelAlias",
+						sourceField: "state",
 						visible: true,
-						widthPx: 200,
+						widthPx: 30,
 						adjust: false,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
 						},
+						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUp.png",
+								showValue: false,
+								value: "ElementTypeState:9:1",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+							},
+							{
+								icon: "./img/state/stateDown.png",
+								showValue: false,
+								value: "ElementTypeState:9:2",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+							},
+							{
+								icon: "./img/state/stateAlarm.png",
+								showValue: false,
+								value: "ElementTypeState:9:3",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+
+							}
+						]
+					},
+					{
+						id: 102803,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_FAN_ALIAS",
+						labelTooltip: "LBL_FAN_ALIAS",
+						parameterized: false,
+						position: 3,
+						required: false,
+						sourceField: "alias",
+						visible: true,
+						widthPx: 200,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
 						gridFieldIcons: []
 					},
 					{
-						id: 102504,
+						id: 102804,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_FAN_STATE",
+						labelTooltip: "LBL_FAN_STATE",
+						parameterized: false,
+						position: 4,
+						required: true,
+						sourceField: self.parent.config.params.fanState,
+						visible: true,
+						widthPx: 250,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						replacementFunction: "getLabelToFanState",
+						gridFieldIcons: [
+							{
+								showValue: false,
+								badgeColor: true,
+								avatar: false,
+								enabled: true
+							}
+						]
+					},
+					{
+						id: 102805,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
 						needsTranslation: false,
 						parameterized: false,
-						position: 4,
+						position: 5,
 						required: false,
 						sourceField: "statusSendId",
 						visible: false,
@@ -632,7 +719,7 @@ export default class TubeContent {
 							name: "string"
 						}
 					},{
-						id: 102505,
+						id: 102806,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -641,7 +728,7 @@ export default class TubeContent {
 						labelTooltip: "LBL_CIRCUIT_SEND_STATUS",
 						needsTranslation: false,
 						parameterized: false,
-						position: 5,
+						position: 6,
 						required: true,
 						sourceField: "statusSendAlias",
 						visible: true,
@@ -683,6 +770,16 @@ export default class TubeContent {
 						multiselect: true,
 						position: 3,
 						showText: false,
+						itemRequired: true
+					},
+					{
+						id: 4,
+						default_: false,
+						icon: "mdi mdi-pen",
+						label: "LBL_CHANGE_REGIME",
+						multiselect: true,
+						position: 4,
+						showText: true,
 						itemRequired: true
 					}
 				]
@@ -731,9 +828,441 @@ export default class TubeContent {
 				}
 			});
 
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 4,
+				function: () => {
+
+					let head = {
+						view: "toolbar",
+						css: "default-window-head",
+						cols: [
+							{
+	
+								view: "label",
+								label: i18n.t("LBL_CHANGE_REGIME")
+							},
+							{
+								view: "icon",
+								icon: "mdi mdi-close",
+								on: {
+									onItemClick: function(id) {
+										$$("view-windows-regime-" + self.parent.uid).close();
+									}
+								}
+							}
+						],
+						borderless: 1
+					};
+	
+					webix.ui({
+						view: "window",
+						id: "view-windows-regime-" + self.parent.uid,
+						move: true,
+						position: "center",
+						modal: true,
+						css: "default-window",
+						head: head,
+						height: 500,
+						width: 800,
+						body: getViewRegimeWindow()
+					}).show();					
+				}
+			});
+
+			function getViewRegimeWindow(){
+
+				let illuminationRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.illuminationRegimeConfig);
+				illuminationRegimeConfig = JSON.parse(illuminationRegimeConfig.value);
+				//TODO ventilationRegimes
+				let availableRegimes = illuminationRegimeConfig["ventilationRegimes"].map(function(regime) {
+					return { 
+						id: regime.id, 
+						value: i18n.t(regime.labelAlias)
+					};
+				});
+
+				let combo = {
+					rows: [
+						{
+							view: "label",
+							height: 24,
+							width: 180,
+							template: "<span>" + i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
+							css: "global-text"
+						},
+						{ height: 12 },
+						{
+							width: 180,
+							height: 28,
+							view: "combo", 
+							options: availableRegimes,
+							on: {
+								onChange(newv, oldv) {
+									updateProposedRegime(newv, illuminationRegimeConfig.ventilationRegimes);
+									webix.ui(getViewDocumentText(), $$("view-windows-regime-document-text-" + self.parent.uid));
+									webix.ui(getViewDocument(), $$("view-windows-regime-document-" + self.parent.uid));
+								}
+							}
+						}
+					]
+				};
+
+				let docs = {
+					rows: [
+						getViewDocument(),
+						getViewDocumentText()
+					]
+				};
+
+				let viewRegimesWindow = {
+					cols: [
+						combo,
+						{width: 12},
+						docs
+					]
+				};
+
+				return viewRegimesWindow;
+
+				function updateProposedRegime(value, illuminationRegimes) {
+
+					self.proposedWindowRegimeValue = value;
+	
+					if (self.proposedWindowRegimeValue && illuminationRegimes) {
+	
+						let proposedConfig = illuminationRegimes.find(e => e.id == self.proposedWindowRegimeValue);
+						self.proposedWinRegimeDescription = proposedConfig.description;
+						self.proposedWinRegimeDocumentUrl = proposedConfig.documentUrl
+	
+						if (self.proposedWinRegimeDocumentUrl) {
+	
+							self.proposedWinRegimeDocumentName = self.proposedWinRegimeDocumentUrl.substring(self.proposedWinRegimeDocumentUrl.lastIndexOf("/") + 1, self.proposedWinRegimeDocumentUrl.lastIndexOf("."));
+							self.proposedWinRegimeDocumentType = self.proposedWinRegimeDocumentUrl.substring(self.proposedWinRegimeDocumentUrl.lastIndexOf(".") + 1, self.proposedWinRegimeDocumentUrl.length);
+						}
+					} else {
+	
+						self.proposedWinRegimeDescription = "";
+					}
+				}
+
+				function getViewDocument() {
+
+					let viewDocument = {
+						id: "view-windows-regime-document" + self.parent.uid,
+						height: 26 
+					};
+				
+					if(self.proposedWinRegimeDocumentUrl) {
+				
+						viewDocument = {
+							id: "view-windows-regime-document-" + self.parent.uid,
+							type:"line",
+							cols: [
+								{},
+								{
+									height: 26,
+									align: "right",
+									width: 500,
+									view: "button",
+									type: "icon",
+									label: self.proposedWinRegimeDocumentName + " " + self.proposedWinRegimeDocumentType,
+									value: self.proposedWinRegimeDocumentName + " " + self.proposedWinRegimeDocumentType,
+									tooltip: true,
+									icon: "mdi mdi-file",
+									click: function() {
+										window.open(self.proposedWinRegimeDocumentUrl, '_blank');
+									},
+									css: "button-icon-transparent"
+								}		
+							]
+						};
+					}
+				
+					return viewDocument;
+				}
+				
+				function getViewDocumentText() {
+					return {
+						id: "view-windows-regime-document-text-"+ self.parent.uid,
+						height: 60,
+						width: 500,
+						borderless: true,
+						view: "template",
+						template: `<div class="ventilation-description-box"><span > ${self.proposedWinRegimeDescription}</span></div>`
+					};
+				}
+
+			}
+
 			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 			
 			return {height: 338,rows:self.tubeCircuitsDataTable.getView()};
+		};
+
+		function getDalisTable() {
+
+			let data = self.tubeCircuits;
+
+			const defaultGridOptionValues = [
+				{ gridOption: { id: 5 }, value: undefined },
+				{ gridOption: { id: 6 }, value: undefined },
+				{ gridOption: { id: 7 }, value: "false" },
+				{ gridOption: { id: 8 }, value: "false" },
+				{ gridOption: { id: 9 }, value: "true" },
+				{ gridOption: { id: 10 }, value: "true" },
+				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+				{ gridOption: { id: 21 }, value: "custom" },
+				{ gridOption: { id: 23 }, value: "true" }
+			];
+
+			let metadata = {
+				filter: true,
+				label: "LBL_DALI",
+				visible: true,
+				gridOptionValues: defaultGridOptionValues,
+				gridFields: [
+					{
+						id: 102801,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: true,
+						parameterized: false,
+						position: 1,
+						required: true,
+						sourceField: "id",
+						visible: false,
+						widthPx: 1,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						}
+					},
+					{
+						id: 102802,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						parameterized: false,
+						position: 2,
+						required: true,
+						sourceField: "state",
+						visible: true,
+						widthPx: 30,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUp.png",
+								showValue: false,
+								value: "ElementTypeState:9:1",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+							},
+							{
+								icon: "./img/state/stateDown.png",
+								showValue: false,
+								value: "ElementTypeState:9:2",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+							},
+							{
+								icon: "./img/state/stateAlarm.png",
+								showValue: false,
+								value: "ElementTypeState:9:3",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+
+							}
+						]
+					},
+					{
+						id: 102803,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI_ALIAS",
+						labelTooltip: "LBL_DALI_ALIAS",
+						parameterized: false,
+						position: 3,
+						required: false,
+						sourceField: "alias",
+						visible: true,
+						widthPx: 200,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
+					},
+					{
+						id: 102804,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI_STATE",
+						labelTooltip: "LBL_DALI_STATE",
+						parameterized: false,
+						position: 4,
+						required: true,
+						sourceField: self.parent.config.params.fanState,
+						visible: true,
+						widthPx: 250,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						replacementFunction: "getLabelToFanState",
+						gridFieldIcons: [
+							{
+								showValue: false,
+								badgeColor: true,
+								avatar: false,
+								enabled: true
+							}
+						]
+					},
+					{
+						id: 102805,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						needsTranslation: false,
+						parameterized: false,
+						position: 5,
+						required: false,
+						sourceField: "statusSendId",
+						visible: false,
+						widthPx: 1,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						}
+					},{
+						id: 102806,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI_SEND_STATUS",
+						labelTooltip: "LBL_DALI_SEND_STATUS",
+						needsTranslation: false,
+						parameterized: false,
+						position: 6,
+						required: true,
+						sourceField: "statusSendAlias",
+						visible: true,
+						widthPx: 400,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
+					}
+				],
+				gridCommands: [
+					{
+						id: 1,
+						default_: false,
+						icon: "mdi mdi-pen",
+						label: "LBL_CHANGE_REGIME",
+						multiselect: true,
+						position: 1,
+						showText: true,
+						itemRequired: true
+					},
+					{
+						id: 2,
+						default_: false,
+						icon: "mdi mdi-cancel",
+						label: "LBL_CLEAR",
+						multiselect: true,
+						position: 2,
+						showText: false,
+						itemRequired: true
+					}
+				]
+
+			};
+
+			let events = {};
+			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 1,
+				function: () => {
+
+					let head = {
+						view: "toolbar",
+						css: "default-window-head",
+						cols: [
+							{
+	
+								view: "label",
+								label: i18n.t("LBL_CHANGE_REGIME")
+							},
+							{
+								view: "icon",
+								icon: "mdi mdi-close",
+								on: {
+									onItemClick: function(id) {
+										$$("view-windows-regime-" + self.parent.uid).close();
+									}
+								}
+							}
+						],
+						borderless: 1
+					};
+	
+					webix.ui({
+						view: "window",
+						id: "view-windows-regime-" + self.parent.uid,
+						move: true,
+						position: "center",
+						modal: true,
+						css: "default-window",
+						head: head,
+						height: 400,
+						width: 800,
+						body: {
+							rows: [
+								{
+									view: "template",
+									template: function() {
+					
+										let icon = "<img src='img/loading.svg' align='center'>";
+					
+										return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
+									}
+								}
+							]
+						}
+					}).show();					
+				}
+			});
+
+			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+				commandId: 2,
+				function: () => {
+
+					self.tubeDalisDataTable.getSelectedItems().forEach(item => {
+
+						item.statusSendId = null;
+						item.statusSendAlias = "-";
+						self.tubeDalisDataTable.update(item);
+					});
+				}
+			});
+
+			self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
+			
+			return {height: 338,rows:self.tubeDalisDataTable.getView()};
 		};
 
 		function getBottom(){
@@ -914,15 +1443,21 @@ export default class TubeContent {
 
 		if (stompSubscriptorService) {
 
-			if (self.idStompSubscriptorTunnel)
-				stompSubscriptorService.unsubscribe(self.idStompSubscriptorTunnel);
+			if (self.idStompSubscriptorTunnel){
 
-			if (self.idStompSubscriptorTube)
+				stompSubscriptorService.unsubscribe(self.idStompSubscriptorTunnel);
+			}
+				
+			if (self.idStompSubscriptorTube){
 
 				stompSubscriptorService.unsubscribe(self.idStompSubscriptorTube);
+			}
 
-			if (self.idStompSubscriptorCircuits)
+				
+			if (self.idStompSubscriptorCircuits){
+
 				stompSubscriptorService.unsubscribe(self.idStompSubscriptorCircuits);
+			}
 		}
 	}
 }

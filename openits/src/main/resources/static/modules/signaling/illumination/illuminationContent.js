@@ -1,4 +1,4 @@
-import { util } from "../../lib/util.js";
+import { util } from "../../../lib/util.js";
 
 export default class IlluminationContent {
 	
@@ -7,7 +7,7 @@ export default class IlluminationContent {
 		this.parent = parent;
 	}
 
-	loadComponent(args, drawContent) {
+	loadData(args, drawContent) {
 
 		let self = this;
 

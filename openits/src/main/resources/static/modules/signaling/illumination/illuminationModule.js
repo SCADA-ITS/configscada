@@ -1,9 +1,9 @@
-import GenericModule from "../genericModule.js";
-import TreeView from "../../component/treeview.js";
-import { util } from "../../lib/util.js";
+import GenericModule from "../../genericModule.js";
+import TreeView from "../../../component/treeview.js";
+import { util } from "../../../lib/util.js";
 import TubeContent from "./TubeContent.js";
 import IlluminationContent from "./IlluminationContent.js";
-import { adapter } from "../../lib/adapter.js";
+import { adapter } from "../../../lib/adapter.js";
 
 export default class IlluminationModule extends GenericModule {
 	
@@ -273,7 +273,7 @@ export default class IlluminationModule extends GenericModule {
 					$$("view-content-loading-" + self.uid).show();
 					
 					let containerContent = new TubeContent(self.selectedTunnelId, self.selectedTubeId, self);
-					containerContent.loadComponent(self.enabledCircuitIds, drawContent);
+					containerContent.loadData(self.enabledCircuitIds, drawContent);
 					self.enabledCircuitIds = undefined;
 				};
 	
@@ -300,7 +300,7 @@ export default class IlluminationModule extends GenericModule {
 					$$("view-content-loading-" + self.uid).show();
 
 					let containerContent = new IlluminationContent(self);
-					containerContent.loadComponent(args, drawContent);
+					containerContent.loadData(args, drawContent);
 
 					// let childs = self.treeView.data.find(e =>e.id==item.id);
 
