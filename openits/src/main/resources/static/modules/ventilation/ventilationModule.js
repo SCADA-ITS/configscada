@@ -256,7 +256,7 @@ export default class VentilationModule extends GenericModule {
 					{ view: "resizer" },
 					{
 						id: "view-content-" + self.uid,
-						body: util.ui.getViewDrawNoData()
+						body: util.ui.getViewDrawLoading()
 					}
 				]
 			};

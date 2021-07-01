@@ -41,7 +41,7 @@ export default class CronUi {
 						{ width: 6 },
 						{
 							id: "loading-" + this.uid,
-							rows: [util.ui.getViewDrawNoData()],
+							rows: [util.ui.getViewDrawLoading()],
 							hidden: true
 						},
 						{

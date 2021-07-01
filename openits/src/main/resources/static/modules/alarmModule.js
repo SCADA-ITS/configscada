@@ -532,7 +532,7 @@ export default class AlarmModule extends GenericModule {
 									{ width: 6 },
 									{
 										id: "view" + "createManual" + "loading-" + self.uid,
-										rows: [util.ui.getViewDrawNoData()],
+										rows: [util.ui.getViewDrawLoading()],
 										width: 834,
 										hidden: true
 									},
@@ -663,7 +663,7 @@ export default class AlarmModule extends GenericModule {
 			
 	}
 
-	getViewDrawNoData() {
+	getViewDrawLoading() {
 
 		return {
 			view: "template",

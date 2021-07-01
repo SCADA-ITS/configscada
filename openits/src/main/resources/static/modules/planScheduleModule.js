@@ -56,7 +56,7 @@ export default class PlanScheduleModule extends GenericModule {
 									},
 									{
 										id: "loading-" + this.uid,
-										rows: [this.getViewDrawNoData()],
+										rows: [this.getViewDrawLoading()],
 										hidden: true
 									},
 									{ width: 6 }
@@ -92,7 +92,7 @@ export default class PlanScheduleModule extends GenericModule {
 		}
 	}
 
-	getViewDrawNoData() {
+	getViewDrawLoading() {
 
 		return {
 			view: "template",

@@ -74,7 +74,7 @@ export default class TestMap extends GenericModule {
 								},
 								{
 									id: "loading-" + this.uid,
-									rows: [getViewDrawNoData()],
+									rows: [getViewDrawLoading()],
 									hidden: true
 								},
 								{ width: 6 }
@@ -87,7 +87,7 @@ export default class TestMap extends GenericModule {
 		};
 
 
-		function getViewDrawNoData() {
+		function getViewDrawLoading() {
 
 			return {
 				view: "template",

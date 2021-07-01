@@ -288,7 +288,7 @@ export default class EquipmentViewerModule extends GenericModule {
 			let viewMainLoading = {
 				id: "view-main-loading-" + self.uid,
 				hidden: false,
-				rows: [util.ui.getViewDrawNoData()],
+				rows: [util.ui.getViewDrawLoading()],
 			};
 			
 			viewMain.cols = [viewMainTreeHierarchy, viewMainResizer, viewMainBody, viewMainLoading];

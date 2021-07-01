@@ -30,7 +30,7 @@ export default class VmsSignalingLibrary {
 					id: "loading-" + self.uid,
 					hidden: false,
 					rows: [
-						util.ui.getViewDrawNoData()
+						util.ui.getViewDrawLoading()
 					]
 				},
 				{

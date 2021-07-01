@@ -353,7 +353,7 @@ export default class IlluminationModule extends GenericModule {
 											},
 											{
 												id: "view-content-loading-" + self.uid,
-												rows: [util.ui.getViewDrawNoData()],
+												rows: [util.ui.getViewDrawLoading()],
 												hidden: false
 											},
 											// { width: 6 }

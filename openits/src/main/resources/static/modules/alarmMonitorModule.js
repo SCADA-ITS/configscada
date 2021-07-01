@@ -14,12 +14,6 @@ const ALARM_TYPE_MANUAL = 2;
 const MODE_TYPE = 1;
 const MODE_ELEMENTS = 2;
 
-const LISTVIEW_MODE = {
-	DEFAULT: 1,
-	COMPACT: 2,
-	IMAGE: 3
-};
-
 export default class AlarmMonitorModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -484,7 +478,7 @@ export default class AlarmMonitorModule extends GenericModule {
 				id: "loading-switcher-" + self.uid,
 				hidden: false,
 				cols: [
-					util.ui.getViewDrawNoData(true)
+					util.ui.getViewDrawLoading(true)
 				]
 			});
 				
@@ -598,7 +592,7 @@ export default class AlarmMonitorModule extends GenericModule {
 					
 					let options = {}
 					
-					options[ListView.Options.MODE] = LISTVIEW_MODE.DEFAULT;
+					options[ListView.Options.MODE] = ListView.DrawMode.DEFAULT;
 					
 					self.listView = new ListView(elementTypeView, options, events);
 

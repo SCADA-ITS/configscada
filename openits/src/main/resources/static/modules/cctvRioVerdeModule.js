@@ -43,7 +43,7 @@ export default class CctvRioVerdeModule extends GenericModule {
 								},
 								{
 									id: "loading-" + this.uid,
-									rows: [getViewDrawNoData()],
+									rows: [getViewDrawLoading()],
 									hidden: true
 								},
 								{ width: 6 }
@@ -55,7 +55,7 @@ export default class CctvRioVerdeModule extends GenericModule {
 			]
 		};
 
-		function getViewDrawNoData() {
+		function getViewDrawLoading() {
 
 			return {
 				view: "template",

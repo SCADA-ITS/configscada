@@ -153,7 +153,7 @@ export default class VmsSignalingModule extends GenericModule {
 					{
 						id: "view-loading-panel-" + self.uid,
 						hidden: true,
-						rows: [util.ui.getViewDrawNoData(true)],
+						rows: [util.ui.getViewDrawLoading(true)],
 					},
 					{
 						id: "view-panel-" + self.uid,
@@ -166,7 +166,7 @@ export default class VmsSignalingModule extends GenericModule {
 			let viewMainLoading = {
 				id: "view-main-loading-" + self.uid,
 				hidden: false,
-				rows: [util.ui.getViewDrawNoData()],
+				rows: [util.ui.getViewDrawLoading()],
 			};
 			
 			viewMain.cols = [viewMainTreeHierarchy, viewMainResizer, viewMainBody, viewMainLoading];

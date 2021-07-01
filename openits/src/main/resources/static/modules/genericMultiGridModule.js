@@ -14,7 +14,7 @@ export default class GenericMultiGridModule extends GenericModule {
 		
     }
 
-	getViewDrawNoData() {
+	getViewDrawLoading() {
 		
 		return {
 			view: "template",
@@ -81,7 +81,7 @@ export default class GenericMultiGridModule extends GenericModule {
 									{ width: 6 },
 									{
 										id: this.uid,
-										rows: [this.getViewDrawNoData()]
+										rows: [this.getViewDrawLoading()]
 									},
 									{ width: 6 }
 								]
@@ -167,7 +167,7 @@ export default class GenericMultiGridModule extends GenericModule {
 			};
 		}
 		else {
-			equipmentTypeList = this.getViewDrawNoData();
+			equipmentTypeList = this.getViewDrawLoading();
 		}
 	
 		return equipmentTypeList;
@@ -185,7 +185,7 @@ export default class GenericMultiGridModule extends GenericModule {
 			
 			if (self.dataTable) {
 				
-				webix.ui(self.getViewDrawNoData(), $$(self.dataTable.getViewId()));
+				webix.ui(self.getViewDrawLoading(), $$(self.dataTable.getViewId()));
 				
 				let viewsToRemove = [];
 				equipmentTable.getChildViews().forEach(view => {
@@ -226,7 +226,7 @@ export default class GenericMultiGridModule extends GenericModule {
 			}, function(response) { util.ajax.handleError(response); });
 		}
 		else {
-			equipmentTable.addView(self.getViewDrawNoData());
+			equipmentTable.addView(self.getViewDrawLoading());
 			equipmentTable.addView({ height: 20 });
 		}
 	}

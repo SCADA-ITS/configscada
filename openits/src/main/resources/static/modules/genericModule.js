@@ -104,7 +104,7 @@ export default class GenericModule {
 								},
 								{
 									id: "loading-" + this.uid,
-									rows: [util.ui.getViewDrawNoData()],
+									rows: [util.ui.getViewDrawLoading()],
 									hidden: false
 								},
 								{ width: 6 }

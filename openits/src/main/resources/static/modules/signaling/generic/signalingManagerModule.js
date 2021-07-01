@@ -1,6 +1,6 @@
-import GenericModule from "../../modules/genericModule.js";
-import ListView from "../../component/listview.js";
-import { util } from "../../lib/util.js";
+import GenericModule from "../../../modules/genericModule.js";
+import ListView from "../../../component/listview.js";
+import { util } from "../../../lib/util.js";
 
 
 export default class SignalingManagerModule extends GenericModule {
@@ -15,7 +15,7 @@ export default class SignalingManagerModule extends GenericModule {
 		this.config = module.config;
 		this.mapElements = undefined;
 		this.mapCommandModule = undefined;
-		this.useDefaultModue = false;
+		this.useDefaultModule = false;
 	}
 
 	getView() {
@@ -113,7 +113,7 @@ export default class SignalingManagerModule extends GenericModule {
 									} else {
 										alias = "(*) " + i18n.t(elementType.labelAlias);
 										commandModule = self.config.defaultSignalingModuleAction;
-										self.useDefaultModue = true;
+										self.useDefaultModule = true;
 									}
 
 									listElement = [];
@@ -162,52 +162,6 @@ export default class SignalingManagerModule extends GenericModule {
 			return view;
 		}
 
-		function getViewListElements() {
-
-			let view = {};
-			let viewListElements = {};
-			let elementsView = [];
-			view.rows = [];
-
-			if (self.elementTypeIdSelected && self.mapElements) {
-
-				let elementList = self.mapElements.get(self.elementTypeIdSelected);
-
-				if (elementList && elementList.length > 0) {
-
-					elementList.forEach(id => {
-
-						let element = window.em.getByField(EntityType.ELEMENT, "id", id);
-
-						if (element) {
-
-							elementsView.push({
-								id: element.id,
-								alias: element.alias,
-								description: element.description
-							});
-						}
-					});
-				}
-				elementsView.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-
-				let options = {};
-
-				options[ListView.Options.ICON] = false;
-				options[ListView.Options.SEARCH] = false;
-				options[ListView.Options.ROW_HEIGHT] = 35;
-				options[ListView.Options.COMPACT] = true;
-
-				let listView = new ListView(elementsView, options, null);
-
-				viewListElements = listView.getView();
-			}
-
-			view.rows.push(viewListElements);
-
-			return view;
-		}
-
 		function fillData(elementTypeArray, callbackEnable) {
 
 			let elementTypeId;
@@ -226,27 +180,9 @@ export default class SignalingManagerModule extends GenericModule {
 
 			fillViewSignalingModule();
 
-			fillViewListElements();
-
 			if (callbackEnable) {
 
 				callbackEnable(true);
-			}
-		}
-
-		function fillViewListElements() {
-
-			let content = $$("view-list-element-" + self.uid);
-
-			if (content) {
-
-				let viewContent = {
-
-					id: "view-list-element-" + self.uid,
-					cols: [getViewListElements()]
-				};
-
-				webix.ui(viewContent, $$("view-list-element-" + self.uid));
 			}
 		}
 
@@ -341,7 +277,7 @@ export default class SignalingManagerModule extends GenericModule {
 
 			let viewListElementTypes = {
 
-				height: 260,
+				//height: 260,
 				css: {"border-bottom": "1px solid #dadee0 !important"},
 				cols: [
 					getViewListElementTypes()
@@ -355,28 +291,12 @@ export default class SignalingManagerModule extends GenericModule {
 				css: "label-default"
 			}
 
-			let viewLabelListEquipments = {
+			if (self.useDefaultModule) {
 
-				view: "label",
-				label: i18n.t("LBL_LIST_EQUIPMENTS"),
-				height: 43,
-				css: "label-list-equipments"
-			}
-
-			let viewListElements = {
-
-				id: "view-list-element-" + self.uid,
-				cols: [
-					getViewListElements()
-				]
-			}
-
-			if (self.useDefaultModue) {
-
-				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEquipments, viewListElements, viewLabelDefaulSigalingModule];
+				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelDefaulSigalingModule];
 
 			} else {
-				viewMainListEquipments.body.rows = [viewListElementTypes, viewLabelListEquipments, viewListElements];
+				viewMainListEquipments.body.rows = [viewListElementTypes];
 			}
 
 			let viewMainResizer = {

@@ -1155,7 +1155,7 @@ export let util = {
 			}
 		},
 
-		getViewDrawNoData(noText) {
+		getViewDrawLoading(noText) {
 
 			return {
 				view: "template",

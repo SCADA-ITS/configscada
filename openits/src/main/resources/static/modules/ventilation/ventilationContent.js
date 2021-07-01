@@ -31,7 +31,7 @@ export default class VentilationContent {
 
 		let self = this;
 
-		webix.ui(util.ui.getViewDrawNoData(), $$(parentContainnerId), 0);
+		webix.ui(util.ui.getViewDrawLoading(), $$(parentContainnerId), 0);
 
 		if (this.tubeId) {
 

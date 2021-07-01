@@ -79,11 +79,11 @@ export default class ListView {
 			let list;
 			let height;
 
-			if (mode === DrawMode.DEFAULT) {
+			if (mode === ListView.DrawMode.DEFAULT) {
 				
 				height = getOptions(ListView.Options.ROW_HEIGHT);
 				
-			} else if (mode === DrawMode.COMPACT) {
+			} else if (mode === ListView.DrawMode.COMPACT) {
 				
 				height = HeightCompact.ROW_HEIGHT;
 			}
@@ -96,7 +96,7 @@ export default class ListView {
 					select: getOptions(ListView.Options.SELECTED),
 					tooltip: 
 						function(obj) {
-							if (mode === DrawMode.COMPACT || mode === DrawMode.IMAGE) {
+							if (mode === ListView.DrawMode.COMPACT || mode === ListView.DrawMode.IMAGE) {
 								return obj.description;
 							} else {
 								return "";
@@ -161,7 +161,7 @@ export default class ListView {
 			let html = "";
 			let image = obj.image;
 
-			if (mode === DrawMode.DEFAULT || mode === undefined || mode === null) {
+			if (mode === ListView.DrawMode.DEFAULT || mode === undefined || mode === null) {
 
 				let marginTop = 0;
 
@@ -180,7 +180,7 @@ export default class ListView {
 								  		<span class="list-second-line">${obj.description} </span>
 									</div>`;
 
-			} else if (mode === DrawMode.COMPACT) {
+			} else if (mode === ListView.DrawMode.COMPACT) {
 
 				html = `<image style="width:${HeightCompact.ICON_HEIGHT}px; height:${HeightCompact.ICON_HEIGHT}px; float: left; padding-top: 7px" src="img/${image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
 
@@ -188,7 +188,7 @@ export default class ListView {
 								<span class="list-first-line">${obj.alias} </span>
 							</div>`;
 
-			} else if (mode === DrawMode.IMAGE) {
+			} else if (mode === ListView.DrawMode.IMAGE) {
 
 				let heightIcon = getOptions(ListView.Options.ICON_HEIGHT);
 
@@ -394,6 +394,32 @@ Object.defineProperty(ListView.Options, 'SELECTED', {
 
 Object.defineProperty(ListView.Options, 'MODE', {
 	value: 9,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView, 'DrawMode', {
+	value: {}
+});
+
+
+Object.defineProperty(ListView.DrawMode, 'DEFAULT', {
+	value: 1,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.DrawMode, 'COMPACT', {
+	value: 2,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.DrawMode, 'IMAGE', {
+	value: 3,
 	writable: false,
 	enumerable: true,
 	configurable: false
