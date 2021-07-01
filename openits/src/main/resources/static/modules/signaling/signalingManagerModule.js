@@ -2,12 +2,6 @@ import GenericModule from "../../modules/genericModule.js";
 import ListView from "../../component/listview.js";
 import { util } from "../../lib/util.js";
 
-const LISTVIEW_MODE = {
-	DEFAULT: 1,
-	COMPACT: 2,
-	IMAGE: 3
-};
-
 
 export default class SignalingManagerModule extends GenericModule {
 
@@ -202,8 +196,7 @@ export default class SignalingManagerModule extends GenericModule {
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.SEARCH] = false;
 				options[ListView.Options.ROW_HEIGHT] = 35;
-				options[ListView.Options.SELECTED] = false;
-				options[ListView.Options.MODE] = LISTVIEW_MODE.COMPACT;
+				options[ListView.Options.COMPACT] = true;
 
 				let listView = new ListView(elementsView, options, null);
 
@@ -274,6 +267,26 @@ export default class SignalingManagerModule extends GenericModule {
 						let args = { selectedPks: elementIds };
 
 						util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
+						
+						if (Array.isArray(elementIds) && elementIds.length > 0) {
+							
+							let container = $$(self.args.containerId);
+				
+							if (container) {
+							
+								if (elementIds.length === 1) {
+							
+									let element = window.em.getByField(EntityType.ELEMENT, "id", elementIds[0]);
+									
+									util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);		
+								}
+								else {
+
+									util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + elementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED"));
+								}	
+							}
+						}
+						
 
 						function drawContent(view) {
 
@@ -383,19 +396,6 @@ export default class SignalingManagerModule extends GenericModule {
 			};
 
 			viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent];
-
-			if (self.args.selectedPks.length === 1) {
-				
-				let container = $$(self.args.containerId);
-
-				if (container) {
-
-					let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
-					
-					util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);
-				}
-			}
-
 
 			webix.ui(viewMain, $$(self.uid));
 		}

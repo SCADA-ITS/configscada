@@ -8,6 +8,7 @@ const DIALOG_DATA_TYPE_TREE = 2;
 
 const DIALOG_ENDPOINT_TYPE_REST = 1;
 const DIALOG_ENDPOINT_TYPE_EM = 2;
+const DIALOG_ENDPOINT_TYPE_CUSTOM = 3;
 	
 export default class SearchDialogBox {
 	
@@ -105,6 +106,10 @@ export default class SearchDialogBox {
 					let response = webix.ajax().sync().get(appConfig.restUrl + dialogEntity.endpoint);
 
 					entities = JSON.parse(response.responseText);
+				}
+				else if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM) {
+					
+					entities = dialogEntity.data;
 				}
 				
 				if (Array.isArray(entities) && entities.length > 0) {
@@ -289,39 +294,48 @@ export default class SearchDialogBox {
 				view: "toolbar",
 				height: 45,
 				borderless: true,
-				elements: [
-					{ 
-						view: "button",
-						css: "dialog-cancel", 
-						width: 130,
-						height: 35, 
-						label: i18n.t("LBL_CANCEL"),
-						on: {
-							onItemClick() {
+				elements: []
+			};
+			
+			if (!self.onAccept) {
+				
+				viewToolbarActions.elements.push({});
+			}
+			
+			viewToolbarActions.elements.push({ 
+				view: "button",
+				css: "dialog-cancel", 
+				width: 130,
+				height: 35, 
+				label: i18n.t("LBL_CANCEL"),
+				on: {
+					onItemClick() {
+					
+						$$(self.containerId).close();
+					}
+				}
+			});
+			
+			if (self.onAccept) {
+				
+				viewToolbarActions.elements.push({});
+				viewToolbarActions.elements.push({ 
+					view: "button", 
+					css: "dialog-accept",
+					width: 130,
+					height: 35,
+					label: i18n.t("LBL_ACCEPT"),
+					on: {
+						onItemClick() {
 							
-								$$(self.containerId).close();
-							}
-						}
-					},
-					{},
-					{ 
-						view: "button", 
-						css: "dialog-accept",
-						width: 130,
-						height: 35,
-						label: i18n.t("LBL_ACCEPT"),
-						on: {
-							onItemClick() {
-								
-								if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
-								
-									acceptCallback(self.searchDataTable.getSelectedItems());	
-								}
+							if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
+							
+								acceptCallback(self.searchDataTable.getSelectedItems());	
 							}
 						}
 					}
-				]
-			};
+				});
+			}
 			
 			return viewToolbarActions;	
 		}
@@ -358,6 +372,13 @@ Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
 
 Object.defineProperty(SearchDialogBox, 'PLANS', {
 	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "PLAN", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(SearchDialogBox, 'CUSTOM', {
+	value: { id: 6, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_CUSTOM },
 	writable: false,
 	enumerable: true,
 	configurable: false

@@ -1,5 +1,9 @@
 {
 	"moduleAction": {
 		"commandEquipments": 101901
+	},
+	"restEndpoints": {
+		"element": "elements/${id}",
+		"command": "elements/send_command_element"
 	}
 }

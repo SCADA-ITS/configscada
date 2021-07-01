@@ -1,5 +1,7 @@
 import GenericModule from "../../modules/genericModule.js";
-import ElementCommand from "../../classes/ElementCommand.js";
+import { util } from "../../lib/util.js";
+import GenericSignalingCommand from "./genericSignalingCommand.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 export default class GenericSignalingModule extends GenericModule {
 
@@ -9,6 +11,7 @@ export default class GenericSignalingModule extends GenericModule {
 
 		this.uid = webix.uid();
 		this.config = module.config;
+		this.element = undefined;
 	}
 
 	getView() {
@@ -17,50 +20,191 @@ export default class GenericSignalingModule extends GenericModule {
 	}
 
 	loadData() {
-
-		if (this.moduleAction.id === this.config.moduleAction.commandEquipments &&
-			Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
-
-			this.refresh();
-		}
-	}
-
-	refresh() {
-
+		
 		let self = this;
 
-		if ($$(this.uid)) {
+		if (self.moduleAction.id === self.config.moduleAction.commandEquipments &&
+			Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
-			$$("loading-" + this.uid).show();
-			$$(this.uid).hide();
+			if ($$(self.uid)) {
 
-			drawComponents();
+				$$("loading-" + self.uid).show();
+				$$(self.uid).hide();
+	
+				loadSingleElement();
+			}
+			
+			function loadSingleElement() {
+			
+				let elementId = self.args.selectedPks[0];
+				
+				if (elementId) {
+				
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
+					
+						if (elementResponse != null) {
+							
+							let element = elementResponse.json();
+								
+							if (element) {
+							
+								self.element = element;
+								
+								drawComponents();
+	
+								$$("loading-" + self.uid).hide();
+								$$(self.uid).show();
+							}
+						}
+					});
+				}
+			}
+	
+			function drawComponents() {
+				
+				let viewMain = {
+					
+					id: self.uid,					
+					rows: [
+						getViewHeader(),
+						{ height: 20 },
+						{
+							cols: [
+								{ width: 20 },
+								getViewTabs(),
+								{ width: 20 }
+							]
+						},
+						{ height: 20 }
+					]
+				}
+	
+				function getViewHeader() {
+					
+					let viewHeader;
+					
+					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
+					
+						if (self.args.selectedPks.length === 1) {
+							
+							viewHeader = {
+								cols: [
+									{
+										view: "label",
+										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-view-headline"></i></div>`,
+										align: "center",
+										height: 50,
+										width: 56
+									},
+									{
+										view: "label",
+										css: "alarm-view-header-details-text",
+										label: `<span class="alarm-view-header-details-text">${self.element.alias}</span>`,
+										align: "left",
+										height: 50
+									},
+									{}
+								]
+							};	
+						}
+						else {
+							
+							viewHeader = {
+								cols: [
+									{},
+									{
+										view: "label",
+										label: self.args.selectedPks.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED"),
+										align: "center",
+										width: 350,
+										css: "label-window-alarms",
+										on: {
+											onItemClick: function(id) {
+				
+												getWindowEquipmentSelected();
+											}
+										}
+									},
+									{}
+								]
+							}	
+						}	
+					}
+					
+					function getWindowEquipmentSelected() {
 
-			$$("loading-" + self.uid).hide();
-			$$(self.uid).show();
-		}
+						let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+			
+						dialogEntity.data = [];
+						
+						dialogEntity.pkField = "id"
+						dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
+						dialogEntity.height = 600;
+						dialogEntity.width = 800;
+						
+						let elements = window.em.getAll(EntityType.ELEMENT);
+						
+						if (Array.isArray(elements) && elements.length > 0) {
+								
+							elements.forEach(element => {
+				
+								let ele = self.args.selectedPks.find(e => e === element.id);
+				
+								if (ele) {
+									
+									dialogEntity.data.push({
+										id: element.id,
+										element: element.alias,
+										elementType: i18n.t(element.elementType.labelAlias)
+									})
+								}
+							});
+						}
+							
+						let s = new SearchDialogBox("LBL_EQUIPMENT_SELECTED", dialogEntity);
+			
+						s.show();
+					}
+					
+					return viewHeader;
+				}
+				
+				function getViewTabs() {
+					
+					let viewTabs = {};
 
-		function drawComponents() {
-
-			let filteredElements = self.args.selectedPks;
-			let elementCommand = new ElementCommand(filteredElements);
-
-			let viewMainContent = {
-				id: "view-main-content-" + self.uid,
-				body: elementCommand.getComponent(),
-				on: {
-					onHide: function(obj) {
-						$$("view-main-content-" + self.uid).destructor();
-					},
-				},
-			};
-
-			let viewMain = {
-				id: self.uid,
-				cols: [viewMainContent]
-			};
-
-			webix.ui(viewMain, $$(self.uid));
+					viewTabs = {
+						view: "tabview",
+						id: "view-tabs-" + self.uid,
+						css: "auxiliary-tab",
+						animate: false,
+						borderless: true,
+						cells: [],
+						multiview: {
+							keepViews:true
+				        },
+						tabbar: {
+							tabMargin: 6
+						}
+					};
+					
+					
+					if (self.element && Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+						
+						self.element.commandElements.forEach(cmdElement => {
+							
+							let signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, cmdElement);
+							
+							viewTabs.cells.push(signalingCmd.getView());
+						});
+					} 
+					
+		
+					return viewTabs;
+				}
+				
+				webix.ui(viewMain, $$(self.uid));
+			}
 		}
 	}
 

@@ -4,6 +4,7 @@ import ListView from "../component/listview.js";
 import TreeView from "../component/treeview.js";
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
+import SearchDialogBox from "../component/searchDialogBox.js";
 
 const ELEMENT_TYPE_ALL = "-1";
 const ELEMENT_ALL = "-1";
@@ -997,167 +998,37 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					function getWindowEquipmentSelected() {
 
-						let viewMain = {
-							id: "equipment-selected" + self.uid,
-							cols: [
-								{ width: 20 },
-								{
-									rows: [
-										{ height: 20 },
-										getDatatable(),
-										{ height: 20 },
-										{
-											cols: [
-												{},
-												{
-													view: "button",
-													css: "dialog-cancel",
-													height: 41,
-													width: 130,
-													label: i18n.t("LBL_CLOSE"),
-													on: {
-														onItemClick() {
-
-															$$(equipmentWindow).close();
-														}
-													}
-												}
-											]
-										},
-										{ height: 7 }
-									]
-								},
-								{ width: 20 }
-							]
-						};
-
-
-						function getDatatable() {
-
-							const defaultGridOptionValues = [
-								{ gridOption: { id: 1 }, value: "true" },
-								{ gridOption: { id: 2 }, value: "true" },
-								{ gridOption: { id: 3 }, value: "1" },
-								{ gridOption: { id: 4 }, value: "asc" },
-								{ gridOption: { id: 7 }, value: "false" },
-								{ gridOption: { id: 8 }, value: "false" },
-								{ gridOption: { id: 9 }, value: "true" },
-								{ gridOption: { id: 10 }, value: "true" },
-								{ gridOption: { id: 11 }, value: "false" },
-								{ gridOption: { id: 12 }, value: "false" },
-								{ gridOption: { id: 13 }, value: "true" },
-								{ gridOption: { id: 14 }, value: "false" },
-								{ gridOption: { id: 15 }, value: "false" },
-								{ gridOption: { id: 16 }, value: "img/grid/default.png" }
-							];
-
-							let metadata = {
-								filter: true,
-								label: "LBL_EQUIPMENT_SELECTED",
-								visible: true,
-								gridOptionValues: defaultGridOptionValues,
-								gridFields: [
-									{
-										extended: false,
-										filtered: false,
-										isEpochMilli: false,
-										isPk: true,
-										needsTranslation: false,
-										parameterized: false,
-										position: 1,
-										required: true,
-										sourceField: "id",
-										visible: false,
-										widthPx: 1,
-										gridFieldDataType: {
-											id: 1,
-											name: "string"
-										}
-									},
-									{
-										id: 1,
-										extended: false,
-										filtered: false,
-										isEpochMilli: false,
-										isPk: false,
-										needsTranslation: false,
-										parameterized: false,
-										position: 2,
-										required: true,
-										sourceField: "equipment",
-										visible: true,
-										label: "LBL_EQUIPMENT",
-										widthPx: 360,
-										gridFieldDataType: {
-											id: 1,
-											name: "string"
-										}
-									},
-									{
-										id: 2,
-										extended: false,
-										filtered: false,
-										isEpochMilli: false,
-										isPk: false,
-										needsTranslation: true,
-										parameterized: false,
-										position: 3,
-										required: true,
-										sourceField: "equipment_type",
-										visible: true,
-										label: "LBL_EQUIPMENT_TYPE",
-										widthPx: 360,
-										gridFieldDataType: {
-											id: 1,
-											name: "string"
-										}
-									}
-								]
-							};
-
-							let data = [];
-							let equipSelected = [];
-							let elements = window.em.getAll(EntityType.ELEMENT);
-
+						let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+			
+						dialogEntity.data = [];
+						
+						dialogEntity.pkField = "id"
+						dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
+						dialogEntity.height = 600;
+						dialogEntity.width = 800;
+						
+						let elements = window.em.getAll(EntityType.ELEMENT);
+						
+						if (Array.isArray(elements) && elements.length > 0) {
+								
 							elements.forEach(element => {
-
-								let equipment = self.args.selectedPks.find(item => item === element.id);
-
-								if (equipment) {
-									equipSelected.push(element);
+				
+								let ele = self.args.selectedPks.find(e => e === element.id);
+				
+								if (ele) {
+									
+									dialogEntity.data.push({
+										id: element.id,
+										element: element.alias,
+										elementType: i18n.t(element.elementType.labelAlias)
+									})
 								}
 							});
-
-							if (equipSelected && equipSelected.length > 0) {
-
-								for (let equip of equipSelected) {
-
-									let row = {};
-
-									row.id = equip.id;
-									row.equipment = equip.alias;
-									row.equipment_type = equip.elementType.labelAlias;
-
-									data.push(row);
-								}
-							}
-
-							self.tableEquipmentSelected = new DataTable(null, null, metadata, data);
-
-							let table = {
-								rows:
-									self.tableEquipmentSelected.getView()
-							}
-
-							return table;
 						}
-
-						let equipmentWindow = util.ui.loadWindow(i18n.t("LBL_EQUIPMENT_SELECTED"), viewMain, 600, 800, true);
-
-						if (self.tableEquipmentSelected) {
-
-							self.tableEquipmentSelected.callbacks();
-						}
+							
+						let s = new SearchDialogBox("LBL_EQUIPMENT_SELECTED", dialogEntity);
+			
+						s.show();
 
 					}
 
