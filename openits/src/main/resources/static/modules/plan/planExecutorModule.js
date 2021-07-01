@@ -73,6 +73,13 @@ export default class PlanExecutor extends GenericModule {
 
 		let self = this;
 
+		if ($$(this.uid)) {
+
+			$$("loading-" + this.uid).show();
+			$$(this.uid).hide();
+		}
+
+
 		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: self.planId })).then((data) => {
 
 			if (data != null) {
@@ -126,7 +133,7 @@ export default class PlanExecutor extends GenericModule {
 
 						//Update header plan state
 						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(updateData.planStateType));
-
+						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(updateData.planStateType));
 						//Update buttons enable/disable
 						self.config.actionButtons.forEach(btnConfig => {
 
@@ -235,7 +242,8 @@ export default class PlanExecutor extends GenericModule {
 				rows: [
 					getHeader(),
 					getActionButtons(),
-					getBody()
+					getBody(),
+					getCancelButton()
 				]
 			};
 
@@ -247,6 +255,12 @@ export default class PlanExecutor extends GenericModule {
 
 					id: "viewHeader-" + self.uid,
 					rows: [
+						{
+							view: "label",
+							id: "header-line-color" + self.uid,
+							height: 15,
+							template: getHeaderLineTemplate(self.data.planStateType)
+						},
 						{
 							cols: [
 								{
@@ -262,14 +276,6 @@ export default class PlanExecutor extends GenericModule {
 									id: "label-boddy-" + self.uid,
 									template: "<span>" + self.data.planSubtype.planType.alias + " > " + self.data.planSubtype.alias + " > " + self.data.alias + "</span> <br> <span style='font-size: 13px'>" + self.data.description + "</span>",
 									css: "global-header-label"
-								},
-								{
-									view: "label",
-									height: 75,
-									align: "right",
-									id: "label-state-" + self.uid,
-									template: getPlanStateTemplate(self.data.planStateType),
-									css: "global-header-label"
 								}
 							]
 						}
@@ -283,6 +289,7 @@ export default class PlanExecutor extends GenericModule {
 
 				let buttonsGrid = {
 					id: "btns-" + self.uid,
+					css: {"margin-left":"2px !important"},
 					cols: [
 					]
 				};
@@ -301,7 +308,8 @@ export default class PlanExecutor extends GenericModule {
 						id: "BTN-" + btnConfig.action + "-" + self.uid,
 						view: "button",
 						type: "icon",
-						width: 80,
+						css: "toolbar-button-text",
+						width: 100,
 						on: {
 							onItemClick: () => {
 
@@ -311,19 +319,28 @@ export default class PlanExecutor extends GenericModule {
 								}
 							}
 						},
-						autowidth: true
+						//autowidth: true
 					};
 
 					button.label = i18n.t(btnConfig.label);
 					button.tooltip = i18n.t(btnConfig.label);
 					button.icon = btnConfig.icon;
 					button.disabled = btnConfig.disabled;
-					button.css = btnConfig.css;
+					//button.css = btnConfig.css;
 
 					return button;
 				}
 
-				buttonsGrid.cols.push({});
+				buttonsGrid.cols.push(
+					{},
+					{
+						view: "label",
+						align: "right",
+						id: "label-state-" + self.uid,
+						template: getPlanStateTemplate(self.data.planStateType),
+						css: { "padding-top": "11px" }
+					},
+					{ width: 10 });
 
 				return buttonsGrid;
 			}
@@ -333,15 +350,22 @@ export default class PlanExecutor extends GenericModule {
 				let dataTable = {
 					id: "dt-" + self.uid,
 					height: 391,
-					css: "global-form",
 					rows: [
 						{
+							height: 5
+						},
+						{
 							cols: [
+								{ width: 5 },
 								{
 									rows: getTable()
-								}
+								},
+								{ width: 5 }
 							]
 						},
+						{
+							height: 5
+						}
 					]
 				};
 
@@ -525,7 +549,7 @@ export default class PlanExecutor extends GenericModule {
 								required: true,
 								sourceField: "orderAlias",
 								visible: true,
-								widthPx: 180,
+								widthPx: 200,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
@@ -538,15 +562,15 @@ export default class PlanExecutor extends GenericModule {
 								filtered: false,
 								isEpochMilli: false,
 								isPk: false,
-								label: "LBL_PLAR_ORDER_STATE",
-								labelTooltip: "LBL_PLAR_ORDER_STATE",
+								label: "LBL_PLAN_ORDER_STATE",
+								labelTooltip: "LBL_PLAN_ORDER_STATE",
 								needsTranslation: false,
 								parameterized: false,
 								position: 6,
 								required: true,
 								sourceField: "orderResult",
 								visible: true,
-								widthPx: 120,
+								widthPx: 200,
 								gridFieldDataType: {
 									id: 1,
 									name: "string"
@@ -574,7 +598,7 @@ export default class PlanExecutor extends GenericModule {
 								required: true,
 								sourceField: "orderExecutedAt",
 								visible: true,
-								widthPx: 170,
+								widthPx: 200,
 								gridFieldDataType: {
 									id: 4,
 									name: "date"
@@ -594,6 +618,38 @@ export default class PlanExecutor extends GenericModule {
 
 				return dataTable;
 			}
+
+
+			function getCancelButton() {
+
+				let cancelButton = {
+					rows: [
+						{ height: 10 },
+						{
+							cols: [
+								{},
+								{
+									view: "button",
+									css: "dialog-cancel",
+									height: 41,
+									width: 130,
+									label: i18n.t("LBL_CLOSE"),
+									on: {
+										onItemClick() {
+											$$(self.args.containerId).close();
+										}
+									}
+								},
+								{ width: 5 }
+							]
+
+						}
+					]
+				};
+
+				return cancelButton;
+			}
+
 
 			$$("loading-" + self.uid).hide();
 
@@ -619,10 +675,23 @@ export default class PlanExecutor extends GenericModule {
 			if (planStateType) {
 
 				let color = self.config.planStateTypes[planStateType.id].color;
-				planStateTemplate = '<div><span class="table-badge" style="background:' + color + 'a0' + '; color: white;">' + i18n.t(planStateType.labelAlias) + '</span></div>';
+				planStateTemplate = '<div><span class="table-badge" style="background:' + color + '; color: white;">' + i18n.t(planStateType.labelAlias) + '</span></div>';
 			}
 
 			return planStateTemplate;
+		}
+
+		function getHeaderLineTemplate(planStateType) {
+			console.log(planStateType)
+			let planHeaderLineTemplate = '<div> </div>';
+
+			if (planStateType) {
+
+				let color = self.config.planStateTypes[planStateType.id].color;
+				planHeaderLineTemplate = '<div style="background-color:' + color + ';height: 15px;"></div>';
+			}
+
+			return planHeaderLineTemplate;
 		}
 
 	}
