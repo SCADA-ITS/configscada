@@ -18,7 +18,7 @@ export default class CctvRioVerdeModule extends GenericModule {
             0:["BM","SM1","SM2","SM3","SM4"],
             1:["BC","SC1","SC2","SC3","SC4"]
         };
-        this.urlIp = "http://192.168.56.8";
+        this.urlIp = "http://192.168.0.198";
         this.ncols = 5;
         this.nrows = 2;
 	}
