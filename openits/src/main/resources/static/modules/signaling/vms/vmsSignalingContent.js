@@ -357,7 +357,7 @@ export default class VmsSignalingContent {
 											
 											if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
 												
-												sendMessageCmd.commandElementValues[0].value = self.composer.jsonData;
+												sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
 											}
 											
 											body.commands.push(sendMessageCmd);	

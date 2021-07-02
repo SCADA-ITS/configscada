@@ -167,7 +167,7 @@ export default class GraphicIcon {
 		
 		function createSelection(gWidth, gHeight) {
 			
-			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) {
 				
 				let gSel = s.rect(0, 0, gWidth, gHeight);
 				gSel.attr({ id: GraphicIcon.G_ID_SELBOX, visibility: "hidden", stroke: "#FF9800", strokeWidth: 10, fill: "#FF9800", opacity: 0.6 });
@@ -246,7 +246,7 @@ export default class GraphicIcon {
 			
 			self.g.attr({
 		        visibility: "visible",
-				cursor: self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW ? "pointer" : "auto"
+				cursor: ((self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) ? "pointer" : "auto"
 		    });
 
 			s.add(self.g);
@@ -254,7 +254,7 @@ export default class GraphicIcon {
 		
 		function assignEvents() {
 			
-			if (self.g && self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) {
+			if (self.g && self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) {
 				
 				self.g.click(onClick);
 				//self.g.touchstart(onClick);
@@ -283,7 +283,7 @@ export default class GraphicIcon {
 				
 					let gSel = self.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
-					if (gSel.attr("visibility") === "hidden") {
+					if (gSel && gSel.attr("visibility") === "hidden") {
 						
 						self.select();	
 					}	
@@ -324,7 +324,10 @@ export default class GraphicIcon {
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
-			gSel.attr({ visibility: "hidden" });
+			if (gSel) {
+				
+				gSel.attr({ visibility: "hidden" });	
+			}
 		}
 	}
 	
@@ -340,7 +343,10 @@ export default class GraphicIcon {
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
-			gSel.attr({ visibility: "hidden" });
+			if (gSel) {
+				
+				gSel.attr({ visibility: "hidden" });	
+			}
 		}
 	}
 	
@@ -351,9 +357,16 @@ export default class GraphicIcon {
 	
 	isSelected() {
 		
+		let selected = false;
+		
 		let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
-		return (gSel.attr("visibility") === "visible")
+		if (gSel) {
+			
+			selected = (gSel.attr("visibility") === "visible");
+		}
+		
+		return selected;
 	}
     
 	select() {
@@ -361,8 +374,11 @@ export default class GraphicIcon {
 		if (this.g.attr("visibility") === "visible") {
 			
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
-		
-			gSel.attr({ visibility: "visible" });	
+			
+			if (gSel) {
+				
+				gSel.attr({ visibility: "visible" });	
+			}
 		}
 	}
 
@@ -372,7 +388,10 @@ export default class GraphicIcon {
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		
-			gSel.attr({ visibility: "hidden" });	
+			if (gSel) {
+				
+				gSel.attr({ visibility: "hidden" });	
+			}
 		}
 	}
 	

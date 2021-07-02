@@ -534,7 +534,7 @@ export default class PlanScheduleModule extends GenericModule {
 										onItemClick: function() {
 
 											newPlan = $$(form.id).getValues();
-											let dialogBox = new SearchDialogBox("LBL_SELECT_PLAN", SearchDialogBox.PLANS, selectPlan);
+											let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), SearchDialogBox.PLANS, selectPlan);
 											dialogBox.show();
 										}
 									}

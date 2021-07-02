@@ -1,7 +1,7 @@
 import GenericModule from "../../../modules/genericModule.js";
 import ListView from "../../../component/listview.js";
 import { util } from "../../../lib/util.js";
-
+import SearchDialogBox from "../../../component/searchDialogBox.js";
 
 export default class SignalingManagerModule extends GenericModule {
 
@@ -150,7 +150,7 @@ export default class SignalingManagerModule extends GenericModule {
 
 				let options = {};
 
-				options[ListView.Options.SEARCH] = false;
+				options[ListView.Options.SEARCH] = true;
 
 				self.listViewElementType = new ListView(elementTypeView, options, events);
 
@@ -192,6 +192,7 @@ export default class SignalingManagerModule extends GenericModule {
 
 				let moduleActionId = parseInt(self.mapCommandModule.get(self.elementTypeIdSelected));
 				let elementIds = self.mapElements.get(self.elementTypeIdSelected);
+				let element = window.em.getByField(EntityType.ELEMENT, "id", elementIds[0]);
 
 				if (moduleActionId && elementIds) {
 
@@ -211,8 +212,6 @@ export default class SignalingManagerModule extends GenericModule {
 							if (container) {
 							
 								if (elementIds.length === 1) {
-							
-									let element = window.em.getByField(EntityType.ELEMENT, "id", elementIds[0]);
 									
 									util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);		
 								}
@@ -223,6 +222,7 @@ export default class SignalingManagerModule extends GenericModule {
 							}
 						}
 						
+						webix.ui(getViewHeader(), $$("view-main-content-signaling-header-" + self.uid));
 
 						function drawContent(view) {
 
@@ -244,7 +244,100 @@ export default class SignalingManagerModule extends GenericModule {
 						}
 					}
 				}
+				
+				function getViewHeader() {
+					
+					let viewHeader;
+					let elementTypeLabelDescription;
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+					if (elementType) {
+						
+						elementTypeLabelDescription = elementType.labelDescription; 
+					}
+					
+					let label = i18n.t("LBL_EQUIPMENT_SELECTED") + ": " + elementIds.length + " " + i18n.t(element.elementType.labelAlias) + (elementTypeLabelDescription ? " (" + i18n.t(elementTypeLabelDescription) + ")" : ""); 
+					
+					if (Array.isArray(elementIds) && elementIds.length > 0) {
+					
+						if (elementIds.length > 1) {
+							
+							viewHeader = {
+								id: "view-main-content-signaling-header-" + self.uid,
+								cols: [
+									{},
+									{
+										rows: [
+											{ height: 10 },
+											{
+												view: "label",
+												label: label, 
+												align: "center",
+												width: 350,
+												css: "label-window-alarms",
+												on: {
+													onItemClick: function(id) {
+						
+														getWindowEquipmentSelected();
+													}
+												}
+											},
+											{ height: 10 }
+										]
+									},
+									{}
+								]
+							}	
+						}
+						else {
+							
+							viewHeader = { 
+								id: "view-main-content-signaling-header-" + self.uid,
+								height: 1
+							};
+						}
+					}
+					
+					function getWindowEquipmentSelected() {
+	
+						let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+			
+						dialogEntity.data = [];
+						
+						dialogEntity.pkField = "id"
+						dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
+						dialogEntity.height = 600;
+						dialogEntity.width = 800;
+						
+						let elements = window.em.getAll(EntityType.ELEMENT);
+						
+						if (Array.isArray(elements) && elements.length > 0) {
+								
+							elements.forEach(el => {
+				
+								let ele = elementIds.find(e => e === el.id);
+				
+								if (ele) {
+									
+									dialogEntity.data.push({
+										id: el.id,
+										element: el.alias,
+										elementType: i18n.t(el.elementType.labelAlias)
+									})
+								}
+							});
+						}
+							
+						let s = new SearchDialogBox(label, dialogEntity);
+			
+						s.show();
+					}
+					
+					return viewHeader;
+				}
 			}
+			
+			
 		}
 
 		function initListView() {
@@ -264,7 +357,7 @@ export default class SignalingManagerModule extends GenericModule {
 
 			let viewMainListEquipments = {
 				id: "view-main-list-equipments-" + self.uid,
-				header: i18n.t("LBL_EQUIPMENT_TYPES"),
+				header: i18n.t("LBL_EQUIPMENT_SELECTED"),
 				hidden: (self.args.selectedPks.length === 1),
 				body: {
 					width: 350,
@@ -309,7 +402,10 @@ export default class SignalingManagerModule extends GenericModule {
 				body: {
 					rows: [
 						{
-							id: "view-main-content-signaling-module-" + self.uid,
+							id: "view-main-content-signaling-header-" + self.uid
+						},
+						{
+							id: "view-main-content-signaling-module-" + self.uid
 						}
 					]
 				}
@@ -318,6 +414,16 @@ export default class SignalingManagerModule extends GenericModule {
 			viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent];
 
 			webix.ui(viewMain, $$(self.uid));
+			
+			if (self.mapElements.size === 1) {
+				
+				let listView = $$("view-main-list-equipments-" + self.uid);
+				
+				if (listView) {
+					
+					listView.hide();
+				}				
+			}
 		}
 	}
 

@@ -525,7 +525,7 @@ export default class UserModule extends GenericModule {
 											onItemClick: function() {
 
 												newUser = $$(form.id).getValues();
-												let dialogBox = new SearchDialogBox("LBL_SELECT_LOCALE", SearchDialogBox.LOCALES, selectLocale);
+												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_LOCALE"), SearchDialogBox.LOCALES, selectLocale);
 
 												dialogBox.show();
 											}
@@ -544,7 +544,7 @@ export default class UserModule extends GenericModule {
 											onItemClick: function() {
 
 												newUser = $$(form.id).getValues();
-												let dialogBox = new SearchDialogBox("LBL_SELECT_ROLE", SearchDialogBox.ROLES, selectRole);
+												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_ROLE"), SearchDialogBox.ROLES, selectRole);
 
 												dialogBox.show();
 											}
@@ -784,7 +784,7 @@ export default class UserModule extends GenericModule {
 							commandId: 1,
 							function: () => {
 
-								let dialogBox = new SearchDialogBox("LBL_SELECT_PERMISSION", SearchDialogBox.PERMISSIONS, userPermissionsToAdd);
+								let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), SearchDialogBox.PERMISSIONS, userPermissionsToAdd);
 
 								dialogBox.show();
 							}

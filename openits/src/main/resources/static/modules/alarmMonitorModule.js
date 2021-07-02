@@ -1020,7 +1020,7 @@ export default class AlarmMonitorModule extends GenericModule {
 							});
 						}
 							
-						let s = new SearchDialogBox("LBL_EQUIPMENT_SELECTED", dialogEntity);
+						let s = new SearchDialogBox(i18n.t("LBL_EQUIPMENT_SELECTED"), dialogEntity);
 			
 						s.show();
 

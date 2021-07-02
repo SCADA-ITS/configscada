@@ -37,11 +37,19 @@ public class MapLayerElement implements Serializable {
 	
 	private Integer rotate;
 	
+	private Boolean selectable;
+	
 	@Column(name="show_text")
 	private Boolean showText;
 	
 	@Column(name="text_color")
 	private String textColor;
+	
+	@Column(name="text_pos")
+	private Integer textPos;
+	
+	@Column(name="text_size")
+	private Integer textSize;
 	
 	private Boolean tooltip;
 	
@@ -123,6 +131,14 @@ public class MapLayerElement implements Serializable {
 		this.rotate = rotate;
 	}
 
+	public Boolean getSelectable() {
+		return selectable;
+	}
+
+	public void setSelectable(Boolean selectable) {
+		this.selectable = selectable;
+	}
+
 	public Boolean getShowText() {
 		return showText;
 	}
@@ -137,6 +153,22 @@ public class MapLayerElement implements Serializable {
 
 	public void setTextColor(String textColor) {
 		this.textColor = textColor;
+	}
+
+	public Integer getTextPos() {
+		return textPos;
+	}
+
+	public void setTextPos(Integer textPos) {
+		this.textPos = textPos;
+	}
+
+	public Integer getTextSize() {
+		return textSize;
+	}
+
+	public void setTextSize(Integer textSize) {
+		this.textSize = textSize;
 	}
 
 	public Boolean getTooltip() {

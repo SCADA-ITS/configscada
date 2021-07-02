@@ -241,7 +241,7 @@ export default class SearchDialogBox {
 			]
 		};
 		
-		self.containerId = util.ui.loadWindow(i18n.t(self.title), body, self.dialogEntity.height, self.dialogEntity.width, true);
+		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
 		
 		// Post draw views actions
 		if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {

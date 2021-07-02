@@ -1791,7 +1791,7 @@ export default class IncidentReportModule extends GenericModule {
 
 														}
 
-														let s = new SearchDialogBox("LBL_SELECT_USER", SearchDialogBox.USERS, resultSearch);
+														let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
 
 														s.show();
 													}

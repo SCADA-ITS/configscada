@@ -454,7 +454,7 @@ export default class RoleModule extends GenericModule {
 							commandId: 1,
 							function: () => {
 
-								let dialogBox = new SearchDialogBox("LBL_SELECT_PERMISSION", SearchDialogBox.PERMISSIONS, getPermissions);
+								let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PERMISSION"), SearchDialogBox.PERMISSIONS, getPermissions);
 
 								dialogBox.show();
 							}

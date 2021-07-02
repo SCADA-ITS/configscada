@@ -538,8 +538,26 @@ export let util = {
 				
 				if (executeModule) {
 					
-					args.selectedPks = processPks;
+					args.selectedPks = [];
 					
+					if (command.args != undefined) {
+
+						try {
+							args = JSON.parse(command.args);
+		
+						} catch (error) {
+		
+							console.error(error);
+							args = {};
+						}
+					}
+					
+					if (Array.isArray(args.selectedPks) && args.selectedPks.length == 0 && 
+						Array.isArray(processPks) && processPks.length > 0) {
+						
+						args.selectedPks = processPks;	
+					}
+
 					executeCommand();	
 				}
 				
