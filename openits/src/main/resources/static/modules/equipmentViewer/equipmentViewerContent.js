@@ -103,12 +103,9 @@ export default class EquipmentViewerContent {
 
 			function getViewHeaderElement() {
 
-				const TITLE_LONG = 40;
-				let elementLabelDescription = i18n.t(self.elementType.labelDescription);
-				let long = elementLabelDescription.length + self.element.alias.length;
-				let ellipsis = (long > TITLE_LONG) ? "style='padding-left: 21px !important; max-width: 500px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'" : "";
-				
+				let elementLabelDescription = i18n.t(self.elementType.labelDescription);				
 				let container = $$(self.parent.args.containerId);
+				let ellipsis;
 				
 				if (container) {
 
@@ -122,7 +119,6 @@ export default class EquipmentViewerContent {
 							id: "view-main-content-header-element-" + self.uid,
 							height: 86,
 							borderless: true,
-							tooltip: (long > TITLE_LONG) ? elementLabelDescription + " - " + self.element.alias : "",
 							template: function(data) {
 
 								if (self.elementType) {
@@ -285,6 +281,7 @@ export default class EquipmentViewerContent {
 
 		let self = this;
 		let contentTabs = $$("view-main-content-tabs-" + self.uid);
+		let extraTabs = false;
 
 		if (contentTabs) {
 
@@ -301,9 +298,9 @@ export default class EquipmentViewerContent {
 			}
 
 			// Load tabs for modules
-			if (self.equipmentViewer && Array.isArray(self.equipmentViewer.equipViewerTabs) && self.equipmentViewer.equipViewerTabs.length > 0) {
+			addTabs();
 
-				self.equipmentViewer.equipViewerTabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+			if (extraTabs) {
 
 				self.equipmentViewer.equipViewerTabs.forEach(e => {
 
@@ -331,6 +328,29 @@ export default class EquipmentViewerContent {
 			});
 		}
 
+		function addTabs() {
+
+			if (self.equipmentViewer && Array.isArray(self.equipmentViewer.equipViewerTabs) && self.equipmentViewer.equipViewerTabs.length > 0) {
+
+				self.equipmentViewer.equipViewerTabs.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+				self.equipmentViewer.equipViewerTabs.forEach(e => {
+
+					contentTabs.addView({
+						header: i18n.t(e.label),
+						id: "view-main-content-tab-" + e.moduleActionId + "-" + self.uid,
+						body: {
+							id: "view-main-content-tab_body-" + e.moduleActionId + "-" + self.uid,
+							rows: [{ }]
+						}
+					});
+				});
+
+				extraTabs = true;
+
+			}
+		}
+
 		function addModule(module, equipViewerTab) {
 
 			let moduleAction = { id: equipViewerTab.moduleActionId };
@@ -340,18 +360,13 @@ export default class EquipmentViewerContent {
 
 			function drawTabContent(view) {
 
-				let tabId = "view-main-content-tab-" + moduleAction.id + "-" + self.uid;
-				let tabBodyId = tabId.replace("tab", "tab_body");
+				let newContentTab = {
+					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
+					width: 1070,
+					cols: [view]
+				};
 
-				contentTabs.addView({
-					id: tabId,
-					header: i18n.t(equipViewerTab.label),
-					body: {
-						id: tabBodyId,
-						autowidth: true,
-						cols: [view]
-					}
-				});
+				webix.ui(newContentTab, $$("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid));
 
 				// Select initial tab for modules if configured
 				if (equipViewerTab.id === self.equipmentViewer.initialTab) {
