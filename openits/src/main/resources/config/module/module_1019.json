@@ -5,5 +5,12 @@
 	"restEndpoints": {
 		"element": "elements/${id}",
 		"command": "elements/send_command_element"
+	},
+	"dataType": {
+		"integer": "DataType:1",
+		"alphanumeric": "DataType:2",
+		"decimal": "DataType:3",
+		"timestamp": "DataType:4",
+		"boolean": "DataType:5"
 	}
 }

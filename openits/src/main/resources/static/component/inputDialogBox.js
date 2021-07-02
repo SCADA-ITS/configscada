@@ -1,10 +1,12 @@
 export default class InputDialogBox {
 	
-	constructor(title, text, onAccept) {
+	constructor(title, text, onAccept, requiredValue, currentValue) {
 
 		this.title = title;
 		this.text = text;
 		this.onAccept = onAccept;
+		this.requiredValue = requiredValue;
+		this.currentValue = currentValue;
 	}
 
 	show() {
@@ -26,7 +28,8 @@ export default class InputDialogBox {
 						view: "textarea", 
 						id: "txt-dialog-" + self.uid, 
 						height: 80,
-						placeholder: i18n.t("LBL_COMMENTS_HERE_OPTIONAL") 
+						placeholder: self.requiredValue ? "" : i18n.t("LBL_COMMENTS_HERE_OPTIONAL"),
+						value: self.currentValue ? self.currentValue : undefined 
 					},
 					{},
 					{
@@ -34,7 +37,7 @@ export default class InputDialogBox {
 							{},
 							{
 								view: "button", 
-								value: i18n.t("LBL_NO"),
+								value: self.requiredValue ? i18n.t("LBL_CANCEL") : i18n.t("LBL_NO"),
 								width: 100, 
 								click: function() {
 									
@@ -45,7 +48,7 @@ export default class InputDialogBox {
 							{ width: 5 },
 							{
 								view: "button", 
-								value: i18n.t("LBL_YES"),
+								value: self.requiredValue ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_YES"),
 								width: 100, 
 								click: function() {
 									

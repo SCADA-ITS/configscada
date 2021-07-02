@@ -12,6 +12,7 @@ export default class GenericSignalingModule extends GenericModule {
 		this.uid = webix.uid();
 		this.config = module.config;
 		this.element = undefined;
+		this.signalingCmds = [];
 	}
 
 	getView() {
@@ -196,14 +197,28 @@ export default class GenericSignalingModule extends GenericModule {
 							let signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, cmdElement);
 							
 							viewTabs.cells.push(signalingCmd.getView());
+							
+							self.signalingCmds.push(signalingCmd);
 						});
-					} 
+					}
+					else {
+						
+						viewTabs =util.ui.getViewNoData();
+					}
 					
 		
 					return viewTabs;
 				}
 				
 				webix.ui(viewMain, $$(self.uid));
+				
+				if (Array.isArray(self.signalingCmds) && self.signalingCmds.length > 0) {
+					
+					self.signalingCmds.forEach(e => {
+						
+						e.loadData();
+					});
+				}
 			}
 		}
 	}

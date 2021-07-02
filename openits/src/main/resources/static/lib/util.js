@@ -1166,6 +1166,17 @@ export let util = {
 			}
 		},
 		
+		getViewNoData(noText) {
+
+			return {
+				view: "template",
+				template: function() {
+
+					return `<div class='empty-app-inner'><img src='img/not_found_150.png' align='center'><span class='empty-app-inner-text'>${(!noText ? i18n.t("LBL_UNAVAILABLE") : "")}</span></div>`;
+				}
+			}
+		},
+		
 		calculateTextWidth(text, fontFamily, fontSize, letterSpacing) {
 				
 			let width = 0;
