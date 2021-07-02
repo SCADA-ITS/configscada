@@ -21,8 +21,7 @@ export default class IlluminationModule extends GenericModule {
 		this.selectedTunnelId;
 		this.selectedTubeId;
 		
-		this.enabledCircuitIds;
-		this.enabledDaliIds;
+		this.enabledSelectedPks;
 	}
 
 	loadData() {
@@ -86,14 +85,14 @@ export default class IlluminationModule extends GenericModule {
 			
 			if(this.args && this.args.selectedPks){
 
-				self.enabledCircuitIds = this.args.selectedPks;
+				self.enabledSelectedPks = this.args.selectedPks;
 				
 				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(response) {
 
 					if(response){
 
 						let elementsHierarchy = response.json();
-						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledCircuitIds.includes(element.child.id));
+						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledSelectedPks.includes(element.child.id));
 						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTube);
 						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
 
@@ -127,14 +126,14 @@ export default class IlluminationModule extends GenericModule {
 			
 			if(this.args && this.args.selectedPks){
 
-				self.enabledDaliIds = this.args.selectedPks;
+				self.enabledSelectedPks = this.args.selectedPks;
 				
 				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(response) {
 
 					if(response){
 
 						let elementsHierarchy = response.json();
-						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledDaliIds.includes(element.child.id));
+						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledSelectedPks.includes(element.child.id));
 						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTube);
 						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
 
@@ -273,8 +272,8 @@ export default class IlluminationModule extends GenericModule {
 					$$("view-content-loading-" + self.uid).show();
 					
 					let containerContent = new TubeContent(self.selectedTunnelId, self.selectedTubeId, self);
-					containerContent.loadData(self.enabledCircuitIds, drawContent);
-					self.enabledCircuitIds = undefined;
+					containerContent.loadData(self.enabledSelectedPks, drawContent);
+					self.enabledSelectedPks = undefined;
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
