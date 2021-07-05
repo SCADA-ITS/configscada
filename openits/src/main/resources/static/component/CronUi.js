@@ -1,6 +1,7 @@
 import { util } from "../lib/util.js";
 
-var selectDays = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th", "13th", "14th", "15th", "16th", "17th", "18th", "19th", "20th", "21st", "22nd", "23rd", "24th", "25th", "26th", "27th", "28th", "29th", "30th", "31th"]
+const DAYS_ARR = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
+const DAYSCRON_ARR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 export default class CronUi {
 
@@ -13,6 +14,8 @@ export default class CronUi {
 		this.input = input;
 		this.cronWindow = undefined;
 		this.windowLabel = undefined;
+		this.daysOfWeek = [];
+		this.daysOfWeekCron = [];
 		this.checkedSecs = [];
 		this.checkedMins = [];
 		this.checkedHours = [];
@@ -29,6 +32,31 @@ export default class CronUi {
 
 		let self = this;
 		let editCronExpression = $$(self.input).elements.cronExpression.data.value;
+		let userData = util.user.auth();
+		let userLocale = userData.locale.code.split("_")[0];
+		let localLocale = moment();
+
+		localLocale.locale(userLocale);
+		let startDay = localLocale._locale._week.dow;
+
+		if (localLocale._locale._week.dow <= DAYS_ARR.length) {
+
+			let temporalArr = webix.copy(DAYS_ARR);
+			let temporalCronArr = webix.copy(DAYSCRON_ARR);
+
+			for (let i = 0; i < startDay; i++) {
+
+				let deleteDay = temporalArr.shift();
+				temporalArr.push(deleteDay);
+
+				let deleteCronDay = temporalCronArr.shift();
+				temporalCronArr.push(deleteCronDay);
+			}
+
+			self.daysOfWeek = temporalArr;
+			self.daysOfWeekCron = temporalCronArr;
+
+		}
 
 		let genericForm = {
 			id: "win_body-" + self.uid,
@@ -152,31 +180,6 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
-														//														$$("secondsOpt02_counter01").setValue("1");
-														//														$$("secondsOpt02_counter02").setValue("0");
-														//														$$("secondsOpt04_counter01").setValue("0");
-														//														$$("secondsOpt04_counter02").setValue("0");
-
-
-														//														if (newv === "secondsOpt03") {
-														//
-														//															self.checkedSecs = [];
-														//
-														//															for (let i = 0; i <= 59; i++) {
-														//
-														//																let check = $$("secondsOpt03-" + i).getValue();
-														//
-														//																if (check === 1) {
-														//																	console.log(i)
-														//																	self.checkedSecs.push(i.toString());
-														//																}
-														//															}
-														//														}
-
-
-														//														self.cronExpressionArr[0] = 0;
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateSeconds(newv);
 													}
 												}
@@ -232,20 +235,6 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
-														//														$$("minutesOpt02_counter01").setValue("1");
-														//														$$("minutesOpt02_counter02").setValue("0");
-														//														$$("minutesOpt04_counter01").setValue("0");
-														//														$$("minutesOpt04_counter02").setValue("0");
-														//
-														//														for (let i = 0; i <= 59; i++) {
-														//
-														//															$$("minutesOpt03-" + i).setValue("0");
-														//														}
-														//
-														//														self.checkedMins = [];
-														//														self.cronExpressionArr[1] = 0;
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateMinutes(newv);
 													}
 												}
@@ -301,19 +290,6 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
-														//														$$("hoursOpt02_counter01").setValue("1");
-														//														$$("hoursOpt02_counter02").setValue("0");
-														//														$$("hoursOpt02_counter01").setValue("0");
-														//														$$("hoursOpt02_counter02").setValue("0");
-														//
-														//														for (let i = 0; i <= 23; i++) {
-														//															$$("hoursOpt03-" + i).setValue("0");
-														//														}
-														//
-														//														self.checkedHours = [];
-														//														self.cronExpressionArr[2] = 0;
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateHours(newv);
 													}
 												}
@@ -369,26 +345,6 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
-														//														$$("daysOpt02_counter01").setValue("1");
-														//														$$("daysOpt02_counter02").setValue(i18n.t("LBL_SUNDAY"));
-														//														$$("daysOpt04_counter01").setValue("1");
-														//														$$("daysOpt04_counter02").setValue("1st");
-														//
-														//														for (let i = 1; i <= 31; i++) {
-														//															$$("daysOpt03-" + i).setValue("0");
-														//														}
-														//
-														//														for (let i = 0; i <= 6; i++) {
-														//															$$("daysOpt05-" + i).setValue("0");
-														//														}
-														//
-														//														self.checkedDays = [];
-														//														self.checkedDaysWeek = [];
-														//
-														//														self.cronExpressionArr[3] = "?";
-														//														self.cronExpressionArr[5] = "*";
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateDays(newv);
 													}
 												}
@@ -446,19 +402,6 @@ export default class CronUi {
 												on: {
 													onChange: function(newv, oldv) {
 														$$(newv).show();
-														//														$$("monthsOpt02_counter01").setValue("1");
-														//														$$("monthsOpt02_counter02").setValue(i18n.t("LBL_JANUARY"));
-														//														$$("monthsOpt04_counter01").setValue(i18n.t("LBL_JANUARY"));
-														//														$$("monthsOpt04_counter02").setValue(i18n.t("LBL_JANUARY"));
-														//
-														//														for (let i = 0; i <= 11; i++) {
-														//															$$("monthsOpt03-" + i).setValue("0");
-														//														}
-														//
-														//														self.checkedMonths = [];
-														//														self.cronExpressionArr[4] = "*";
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateMonths(newv);
 													}
 												}
@@ -513,22 +456,7 @@ export default class CronUi {
 												multiview: true,
 												on: {
 													onChange: function(newv, oldv) {
-
 														$$(newv).show();
-														//														let date = new Date().getFullYear();
-														//														$$("yearsOpt02_counter01").setValue("1");
-														//														$$("yearsOpt02_counter02").setValue(date + 1);
-														//														$$("yearsOpt04_counter01").setValue(date + 1);
-														//														$$("yearsOpt04_counter02").setValue(date + 1);
-														//
-														//														for (let i = date + 1; i <= date + 36; i++) {
-														//															$$("yearsOpt03-" + i).setValue("0");
-														//														}
-														//
-														//														self.checkedYears = [];
-														//														self.cronExpressionArr[6] = "*";
-														//														$$("cronExpression" + self.uid).setValue(self.cronExpressionArr);
-
 														calculateYears(newv);
 													}
 												}
@@ -1096,8 +1024,8 @@ export default class CronUi {
 										id: id + "_counter02",
 										name: "",
 										width: 166,
-										value: i18n.t("LBL_SUNDAY"),
-										options: [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")],
+										value: self.daysOfWeek[0],
+										options: webix.copy(self.daysOfWeek),
 										on:
 										{
 											onChange:
@@ -1114,7 +1042,6 @@ export default class CronUi {
 
 			else if (id === DAYS_OPT05) {
 
-				let daysOfWeek = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
 				let row1 = [{ rows: [] }];
 				let row2 = [{ rows: [] }];
 				let row3 = [{ rows: [] }];
@@ -1131,7 +1058,7 @@ export default class CronUi {
 						id: id + "-" + i,
 						margin: 0,
 						padding: 0,
-						label: daysOfWeek[i],
+						label: self.daysOfWeek[i],
 						value: 0,
 						width: 245,
 						labelWidth: 175,
@@ -1149,7 +1076,7 @@ export default class CronUi {
 						id: id + "-" + i,
 						margin: 0,
 						padding: 0,
-						label: daysOfWeek[i],
+						label: self.daysOfWeek[i],
 						value: 0,
 						width: 245,
 						labelWidth: 175,
@@ -1167,7 +1094,7 @@ export default class CronUi {
 						id: id + "-" + i,
 						margin: 0,
 						padding: 0,
-						label: daysOfWeek[i],
+						label: self.daysOfWeek[i],
 						value: 0,
 						width: 245,
 						labelWidth: 175,
@@ -1183,7 +1110,7 @@ export default class CronUi {
 					id: id + "-" + 6,
 					margin: 0,
 					padding: 0,
-					label: daysOfWeek[6],
+					label: self.daysOfWeek[6],
 					value: 0,
 					width: 500,
 					labelWidth: 175,
@@ -1205,6 +1132,12 @@ export default class CronUi {
 				view[0].rows[3] = row4[0];
 
 			} else if (id === DAYS_OPT04) {
+
+				let ordinalDays = [];
+				for (let i = 1; i <= 31; i++) {
+
+					ordinalDays.push(String(i));
+				}
 
 				view = [
 					{
@@ -1241,7 +1174,7 @@ export default class CronUi {
 								cols: [
 									{
 										view: "label",
-										label: i18n.t("LBL_DAYS_STARTING_ON"),
+										label: i18n.t("LBL_STARTING_DAY_Nº"),
 										width: 200,
 										align: "left"
 									},
@@ -1250,8 +1183,8 @@ export default class CronUi {
 										id: id + "_counter02",
 										name: "",
 										width: 80,
-										value: "1st",
-										options: selectDays,
+										value: "1",
+										options: webix.copy(ordinalDays),
 										on: {
 											onChange:
 												function(newv, oldv) {
@@ -1514,7 +1447,7 @@ export default class CronUi {
 										name: "",
 										width: maxWidth2,
 										value: comboValue,
-										options: comboOptions,
+										options: webix.copy(comboOptions),
 										on: {
 											onChange:
 												function(newv, oldv) {
@@ -1553,7 +1486,7 @@ export default class CronUi {
 										name: "",
 										width: maxWidth2,
 										value: comboValue,
-										options: comboOptions,
+										options: webix.copy(comboOptions),
 										on: {
 											onChange:
 												function(newv, oldv) {
@@ -1577,7 +1510,7 @@ export default class CronUi {
 										name: "",
 										width: maxWidth2,
 										value: comboValue,
-										options: comboOptions,
+										options: webix.copy(comboOptions),
 										on: {
 											onChange:
 												function(newv, oldv) {
@@ -2198,8 +2131,6 @@ export default class CronUi {
 			const DAYS_OPT05 = "daysOpt05";
 			const MAX1 = 7;
 			const MAX2 = 31;
-			let daysOfWeek = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
-			let daysOfWeekCron = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 			let days = '';
 
@@ -2210,9 +2141,27 @@ export default class CronUi {
 			} else if (id.startsWith(DAYS_OPT02)) {
 
 				let transformDay = $$("daysOpt02_counter02").getValue();
-				let indexDay = daysOfWeek.indexOf(transformDay);
+				let indexDay = self.daysOfWeek.indexOf(transformDay);
 
-				days = indexDay + 1;
+				if (startDay === 0) {
+
+					days = indexDay + 1;
+
+				} else {
+
+					let transformDaysOfWeek = [];
+
+					for (let i = 0; i <= DAYS_ARR.length - 1; i++) {
+						transformDaysOfWeek.push({ id: i, value: DAYS_ARR[i] });
+					}
+
+					let selectedDay = transformDaysOfWeek.find(e => e.value === transformDay);
+
+					if (selectedDay) {
+						days = selectedDay.id + 1;
+					}
+				}
+
 				days += '/';
 				days += ($$("daysOpt02_counter01").getValue() > MAX1) ? MAX1 : $$("daysOpt02_counter01").getValue();
 
@@ -2288,7 +2237,7 @@ export default class CronUi {
 					let daysArr = [];
 
 					self.checkedDaysWeek.forEach(d => {
-						daysArr.push(daysOfWeekCron[d]);
+						daysArr.push(self.daysOfWeekCron[d]);
 					});
 
 					days = daysArr.join();
@@ -2303,7 +2252,7 @@ export default class CronUi {
 					if (self.checkedDaysWeek.length > 0) {
 
 						self.checkedDaysWeek.forEach(d => {
-							daysArr.push(daysOfWeekCron[d]);
+							daysArr.push(self.daysOfWeekCron[d]);
 						});
 
 						days = daysArr.join();
@@ -2610,8 +2559,6 @@ export default class CronUi {
 
 		let self = this;
 		let timesArr = ["secondsOpt", "minutesOpt", "hoursOpt", "daysOpt", "monthsOpt", "daysOpt", "yearsOpt"];
-		let daysOfWeek = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
-		let daysOfWeekCron = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 		let monthsOfYear = [i18n.t("LBL_JANUARY"), i18n.t("LBL_FEBRUARY"), i18n.t("LBL_MARCH"), i18n.t("LBL_APRIL"), i18n.t("LBL_MAY"), i18n.t("LBL_JUNE"), i18n.t("LBL_JULY"), i18n.t("LBL_AUGUST"), i18n.t("LBL_SEPTEMBER"), i18n.t("LBL_OCTOBER"), i18n.t("LBL_NOVEMBER"), i18n.t("LBL_DECEMBER")];
 		let monthsOfYearCron = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
@@ -2651,7 +2598,7 @@ export default class CronUi {
 				if (i === DAYS_WEEK) {
 
 					$$(timesArr[i] + "02_counter01").setValue(checkList[1]);
-					$$(timesArr[i] + "02_counter02").setValue(daysOfWeek[checkList[0] - 1]);
+					$$(timesArr[i] + "02_counter02").setValue(self.daysOfWeek[checkList[0] - 1]);
 
 				} else if (i === DAYS_MONTH) {
 
@@ -2703,7 +2650,7 @@ export default class CronUi {
 
 					} else if (i === DAYS_WEEK) {
 
-						let dayOfWeek = daysOfWeekCron.indexOf(check);
+						let dayOfWeek = self.daysOfWeekCron.indexOf(check);
 						$$(timesArr[i] + "05-" + dayOfWeek).setValue(1);
 						self.checkedDaysWeek.push(dayOfWeek.toString());
 
@@ -2752,7 +2699,7 @@ export default class CronUi {
 
 					} else {
 
-						let dayOfWeek = daysOfWeekCron.indexOf(editCronExpressionArr[i]);
+						let dayOfWeek = self.daysOfWeekCron.indexOf(editCronExpressionArr[i]);
 						$$(timesArr[i] + "05-" + dayOfWeek).setValue(1);
 						self.checkedDaysWeek.push(dayOfWeek.toString());
 
