@@ -1,8 +1,10 @@
-import GenericModule from "../genericModule.js";
-import TreeView from "../../component/treeview.js";
-import { util } from "../../lib/util.js";
-import VentilationContent from "./ventilationContent.js";
-import { adapter } from "../../lib/adapter.js";
+import GenericModule from "../../genericModule.js";
+import TreeView from "../../../component/treeview.js";
+import { util } from "../../../lib/util.js";
+import TunnelContent from "./tunnelContent.js";
+import TubeContent from "./tubeContent.js";
+
+import { adapter } from "../../../lib/adapter.js";
 
 export default class VentilationModule extends GenericModule {
 	
@@ -13,15 +15,13 @@ export default class VentilationModule extends GenericModule {
 
 		this.config = module.config;
 		
-		this.treeView;
-		this.nodes;
-		this.hierarchy;
-		this.ventilations;
+		this.treeView = undefined;
+		this.nodes = undefined;
+		this.hierarchy = undefined;
 
-		this.selectedTunnelId;
-		this.selectedTubeId;
-		
-		this.enabledFanIds;
+		this.selectedTunnelId = undefined;
+		this.selectedTubeId = undefined;
+		this.selectedFansIds = undefined;
 	}
 
 	loadData() {
@@ -85,14 +85,14 @@ export default class VentilationModule extends GenericModule {
 			
 			if(this.args && this.args.selectedPks){
 
-				self.enabledFanIds = this.args.selectedPks;
+				self.selectedFansIds = this.args.selectedPks;
 				
 				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(response) {
 
 					if(response){
 
 						let elementsHierarchy = response.json();
-						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledFanIds.includes(element.child.id));
+						let tubesHierarchy = elementsHierarchy.filter(element => self.selectedFansIds.includes(element.child.id));
 						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeChild);
 						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
 
@@ -134,12 +134,12 @@ export default class VentilationModule extends GenericModule {
 		async function loadTree(enabledTunnelIds) {
 
 			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByIdType, { id: self.config.elementType }));
+			let ventilations = data.json();
 			
-			self.ventilations = data.json();
 			self.nodes = [];
 			self.hierarchy = [];
 
-			self.ventilations.forEach(e => {
+			ventilations.forEach(e => {
 				
 				if(!enabledTunnelIds || (enabledTunnelIds.includes(e.id))){
 
@@ -214,9 +214,15 @@ export default class VentilationModule extends GenericModule {
 					self.selectedTunnelId = $$("tree-"+self.treeView.uid).getItem(item.$parent).id_;
 					self.selectedTubeId = item.id_;
 
-					let ventilationContent = new VentilationContent(self.selectedTunnelId, self.selectedTubeId, self);
-					ventilationContent.loadComponent("view-content-" + self.uid, self.enabledFanIds);
-					self.enabledFanIds = undefined;
+					let tubeContent = new TubeContent(self.selectedTubeId, self);
+							
+					if(tubeContent){
+						
+						webix.ui(tubeContent.getView(), $$("view-main-content-" + self.uid));
+						tubeContent.loadData();
+						self.selectedFansIds = undefined;
+					}
+					
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
@@ -224,8 +230,13 @@ export default class VentilationModule extends GenericModule {
 					self.selectedTunnelId = item.id_;
 					self.selectedTubeId = null;
 
-					let ventilationContent = new VentilationContent(self.selectedTunnelId, self.selectedTubeId, self);
-					ventilationContent.loadComponent("view-content-" + self.uid);
+					let tunnelContent = new TunnelContent(self.selectedTunnelId, self);
+					
+					if(tunnelContent){
+						
+						webix.ui(tunnelContent.getView(), $$("view-main-content-" + self.uid));
+						tunnelContent.loadData();
+					}
 				};
 				
 				return events;
@@ -255,8 +266,7 @@ export default class VentilationModule extends GenericModule {
 					},
 					{ view: "resizer" },
 					{
-						id: "view-content-" + self.uid,
-						body: util.ui.getViewDrawLoading()
+						id: "view-main-content-" + self.uid,
 					}
 				]
 			};
