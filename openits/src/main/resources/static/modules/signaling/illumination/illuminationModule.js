@@ -1,8 +1,8 @@
 import GenericModule from "../../genericModule.js";
 import TreeView from "../../../component/treeview.js";
 import { util } from "../../../lib/util.js";
-import TubeContent from "./TubeContent.js";
-import IlluminationContent from "./IlluminationContent.js";
+import TubeContent from "./tubeContent.js";
+import IlluminationContent from "./illuminationContent.js";
 import { adapter } from "../../../lib/adapter.js";
 
 export default class IlluminationModule extends GenericModule {
@@ -81,7 +81,7 @@ export default class IlluminationModule extends GenericModule {
 				});
 			}
 		
-		} else if(this.moduleAction && this.moduleAction.id == this.config.moduleAction.circuit) {
+		} else if(this.moduleAction && (this.moduleAction.id == this.config.moduleAction.circuit || this.moduleAction.id == this.config.moduleAction.dali)) {
 			
 			if(this.args && this.args.selectedPks){
 
@@ -121,48 +121,6 @@ export default class IlluminationModule extends GenericModule {
 					}
 				});
 			}
-
-		} else if(this.moduleAction && this.moduleAction.id == this.config.moduleAction.dali) {
-			
-			if(this.args && this.args.selectedPks){
-
-				self.enabledSelectedPks = this.args.selectedPks;
-				
-				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(response) {
-
-					if(response){
-
-						let elementsHierarchy = response.json();
-						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledSelectedPks.includes(element.child.id));
-						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTube);
-						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
-
-						let tunnelsHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.elementType);
-						tunnelsHierarchy = tunnelsHierarchy.filter(element => enabledTubeIds.includes(element.child.id));
-						enabledTunnelIds = tunnelsHierarchy.map(e => { return e.parent.id; }); 
-
-						loadTree(enabledTunnelIds).then(function(res) {
-
-							drawComponents();
-							
-							let selectedTreeId;
-							self.treeView.data.some(tunnelOptionTree => {
-
-								return tunnelOptionTree.data.some(tubeOptionTree => {
-
-									if(enabledTubeIds.includes(tubeOptionTree.id_)){
-
-										selectedTreeId = tubeOptionTree.id;
-										return true;
-									}
-								});
-							});
-							self.treeView.select(selectedTreeId);
-						});
-					}
-				});
-			}
-
 		} else {
 
 			loadTree().then(function(res) {
@@ -336,32 +294,14 @@ export default class IlluminationModule extends GenericModule {
 					},
 					{ view: "resizer" },
 					{
-						// css: "custom_window",
-						// type:"line",
-						cols: [
-							// {
-							// 	rows: [
-									// { height: 6 },
-									// {
-									// 	cols: [
-											// { width: 6 },
-											{
-												id: "view-content-" + self.uid,
-												rows: [],
-												hidden: true
-											},
-											{
-												id: "view-content-loading-" + self.uid,
-												rows: [util.ui.getViewDrawLoading()],
-												hidden: false
-											},
-											// { width: 6 }
-									// 	]
-									// },
-									// { height: 6 }
-							// 	]
-							// }
-						]
+						id: "view-content-" + self.uid,
+						rows: [],
+						hidden: true
+					},
+					{
+						id: "view-content-loading-" + self.uid,
+						rows: [util.ui.getViewDrawLoading()],
+						hidden: false
 					}
 				]
 			};

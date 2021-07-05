@@ -839,7 +839,8 @@ export default class TubeContent {
 
 			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 			
-			return {height: 338,rows:self.tubeCircuitsDataTable.getView()};
+			// return {height: 338,rows:self.tubeCircuitsDataTable.getView()};
+			return {rows:self.tubeCircuitsDataTable.getView()};
 		};
 
 		function getDalisTable() {
@@ -954,13 +955,15 @@ export default class TubeContent {
 
 			self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
 			
-			return {height: 338,rows:self.tubeDalisDataTable.getView()};
+			//return {height: 338,rows:self.tubeDalisDataTable.getView()};
+			return {rows:self.tubeDalisDataTable.getView()};
 		};
 
 		function getBottom(){
 
 			let bottom = {
 				type:"line",
+				height: 40,
 				cols:[
 					{},
 					{ 	
