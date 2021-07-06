@@ -23,7 +23,7 @@
 			"actions" : ["PLAY"]
 		},
 		"PlanStateType:2" : {
-			"color" : "#EEFF41",
+			"color" : "#FFCC00",
 			"actions" : ["PAUSE" , "STOP"]
 		},
 		"PlanStateType:3" : {
