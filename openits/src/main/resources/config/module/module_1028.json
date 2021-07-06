@@ -38,7 +38,7 @@
 		"daliRegimeConfig": "ElementTypeParam:85:1:1"
 	},
 	"illuminationModeOptions" :[
-		{"id": "1", "label" : "LBL_AUTO", "disable" : false},
+		{"id": "1", "label" : "LBL_AUTO", "disable" : true},
 		{"id": "0", "label" : "LBL_MANUAL", "disable" : false}
 	],
 	"commands":{

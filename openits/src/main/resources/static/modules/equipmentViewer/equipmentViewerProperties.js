@@ -205,7 +205,10 @@ export default class EquipmentViewerProperties {
 
 				} else {
 
-					elementValues = self.element.elementValues;
+					if (Array.isArray(self.element.elementValues)) {
+					
+						elementValues = self.element.elementValues;	
+					}
 				}
 
 				for (let elementValue of elementValues) {

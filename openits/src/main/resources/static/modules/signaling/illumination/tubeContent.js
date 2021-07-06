@@ -6,6 +6,11 @@ import { adapter } from "../../../lib/adapter.js";
 const CIRCUIT_COMMAND_SEND_ON = "SEND_CIRCUIT_ON";
 const CIRCUIT_COMMAND_SEND_OFF = "SEND_CIRCUIT_OFF";
 
+const CircuitState = Object.freeze([
+	{id: 1, value: "0", label: "LBL_CIRCUIT_STATE_OFF"},
+	{id: 2, value: "1", label: "LBL_CIRCUIT_STATE_ON"}
+]);
+
 export default class TubeContent {
 	
 	constructor(tunnelId, tubeId, parent) {
@@ -103,6 +108,16 @@ export default class TubeContent {
 							element.elementValues.forEach(elementValue => {
 							
 								circuit[elementValue.elementTypeParam.id] = elementValue.value;
+								
+								if (elementValue.elementTypeParam.id === self.parent.config.params.circuitState) {
+									
+									let circuitState = CircuitState.find(e => e.value == elementValue.value);
+									
+									if (circuitState) {
+										
+										circuit["circuitStateLabel"] = i18n.t(circuitState.label);	
+									}
+								}
 							});
 						}
 						
@@ -135,6 +150,19 @@ export default class TubeContent {
 							});
 						}
 						
+						let daliState = dali[self.parent.config.params.daliState];
+						let daliRegimeConfig = JSON.parse(dali[self.parent.config.params.daliRegimeConfig]);
+						
+						if (daliState && daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
+						
+							let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState);
+							
+							if (daliRegime) {
+								
+								dali["daliStateAlias"] = daliRegime.alias;	
+							}
+						}
+						
 						self.tubeDalis.push(dali);
 					});
 				}
@@ -147,11 +175,11 @@ export default class TubeContent {
 	getView() {
 				
 		let viewContent = {
-			type:"line",
+			//type:"line",
 			rows: [
 				this.getContentHeader(),
 				{
-					type:"line",
+					//type:"line",
 					cols: [
 						this.getContentToolbar(),
 					]
@@ -650,7 +678,6 @@ export default class TubeContent {
 				gridOptionValues: defaultGridOptionValues,
 				gridFields: [
 					{
-						id: 102801,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -667,7 +694,43 @@ export default class TubeContent {
 						}
 					},
 					{
-						id: 102802,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						parameterized: false,
+						position: 2,
+						required: true,
+						sourceField: "state",
+						visible: true,
+						widthPx: 30,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUp.png",
+								showValue: false,
+								value: "ElementTypeState:84:1",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+							},
+							{
+								icon: "./img/state/stateDown.png",
+								showValue: false,
+								value: "ElementTypeState:84:2",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+							},
+							{
+								icon: "./img/state/stateAlarm.png",
+								showValue: false,
+								value: "ElementTypeState:84:3",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+							}
+						]
+					},
+					{
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -675,7 +738,7 @@ export default class TubeContent {
 						label: "LBL_CIRCUIT_ALIAS",
 						labelTooltip: "LBL_CIRCUIT_ALIAS",
 						parameterized: false,
-						position: 2,
+						position: 3,
 						required: false,
 						sourceField: "alias",
 						visible: true,
@@ -687,7 +750,25 @@ export default class TubeContent {
 						gridFieldIcons: []
 					},
 					{
-						id: 102803,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "",
+						labelTooltip: "LBL_CIRCUIT_STATE",
+						parameterized: false,
+						position: 4,
+						required: true,
+						sourceField: self.parent.config.params.circuitState,
+						visible: true,
+						widthPx: 1,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						}
+					},
+					{
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -695,9 +776,9 @@ export default class TubeContent {
 						label: "LBL_CIRCUIT_STATE",
 						labelTooltip: "LBL_CIRCUIT_STATE",
 						parameterized: false,
-						position: 3,
+						position: 5,
 						required: true,
-						sourceField: self.parent.config.params.circuitState,
+						sourceField: "circuitStateLabel",
 						visible: true,
 						widthPx: 250,
 						adjust: false,
@@ -707,28 +788,20 @@ export default class TubeContent {
 						},
 						gridFieldIcons: [
 							{
-								icon: "./img/state/switchOff.png",
 								showValue: false,
-								value: "0",
-								labelValue: "LBL_OFF"
-							},
-							{
-								icon: "./img/state/switchOn.png",
-								showValue: false,
-								value: "1",
-								labelValue: "LBL_ON"
+								badgeColor: true,
+								avatar: false,
+								enabled: true
 							}
 						]
 					},
 					{
-						id: 102804,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						needsTranslation: false,
 						parameterized: false,
-						position: 4,
+						position: 6,
 						required: false,
 						sourceField: "circuitStateToSend",
 						visible: false,
@@ -737,17 +810,16 @@ export default class TubeContent {
 							id: 1,
 							name: "string"
 						}
-					},{
-						id: 102805,
+					},
+					{
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
 						label: "LBL_CIRCUIT_SEND_STATUS",
 						labelTooltip: "LBL_CIRCUIT_SEND_STATUS",
-						needsTranslation: false,
 						parameterized: false,
-						position: 5,
+						position: 7,
 						required: true,
 						sourceField: "circuitStateToSendAlias",
 						visible: true,
@@ -757,7 +829,14 @@ export default class TubeContent {
 							id: 1,
 							name: "string"
 						},
-						gridFieldIcons: []
+						gridFieldIcons: [
+							{
+								showValue: false,
+								badgeColor: true,
+								avatar: false,
+								enabled: true
+							}
+						]
 					}
 				],
 				gridCommands: [
@@ -839,7 +918,6 @@ export default class TubeContent {
 
 			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 			
-			// return {height: 338,rows:self.tubeCircuitsDataTable.getView()};
 			return {rows:self.tubeCircuitsDataTable.getView()};
 		};
 
@@ -866,7 +944,6 @@ export default class TubeContent {
 				gridOptionValues: defaultGridOptionValues,
 				gridFields: [
 					{
-						id: 102811,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -883,7 +960,43 @@ export default class TubeContent {
 						}
 					},
 					{
-						id: 102812,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						parameterized: false,
+						position: 2,
+						required: true,
+						sourceField: "state",
+						visible: true,
+						widthPx: 30,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUp.png",
+								showValue: false,
+								value: "ElementTypeState:85:1",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+							},
+							{
+								icon: "./img/state/stateDown.png",
+								showValue: false,
+								value: "ElementTypeState:85:2",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+							},
+							{
+								icon: "./img/state/stateAlarm.png",
+								showValue: false,
+								value: "ElementTypeState:85:3",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+							}
+						]
+					},
+					{
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -891,7 +1004,7 @@ export default class TubeContent {
 						label: "LBL_DALI_ALIAS",
 						labelTooltip: "LBL_DALI_ALIAS",
 						parameterized: false,
-						position: 2,
+						position: 3,
 						required: false,
 						sourceField: "alias",
 						visible: true,
@@ -903,7 +1016,6 @@ export default class TubeContent {
 						gridFieldIcons: []
 					},
 					{
-						id: 102813,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -911,9 +1023,29 @@ export default class TubeContent {
 						label: "LBL_DALI_STATE",
 						labelTooltip: "LBL_DALI_STATE",
 						parameterized: false,
-						position: 3,
+						position: 4,
 						required: true,
 						sourceField: self.parent.config.params.daliState,
+						visible: true,
+						widthPx: 250,
+						adjust: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: []
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_DALI_STATE_ALIAS",
+						labelTooltip: "LBL_DALI_STATE_ALIAS",
+						parameterized: false,
+						position: 5,
+						required: true,
+						sourceField: "daliStateAlias",
 						visible: true,
 						widthPx: 250,
 						adjust: false,
@@ -1101,7 +1233,7 @@ export default class TubeContent {
 				});
 				self.tubeDalis.forEach(element => fields[0].values.push(element.id));
 								
-				self.idStompSubscriptorDalis = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.circuits), onMessageDali, fields);
+				self.idStompSubscriptorDalis = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.dalis), onMessageDali, fields);
 			}
 		}
 
@@ -1146,25 +1278,33 @@ export default class TubeContent {
 		}
 
 		function onMessageCircuit(data) {
+			
+			let oldItemData = self.tubeCircuitsDataTable.getItem(data.id);
+			let newItemData = undefined;
 
-			if (data) {
-				
-				let oldCircuitData = self.tubeCircuitsDataTable.getItem(data.id);
+			if (oldItemData) {
 
-				if (oldCircuitData) {
-
-					if (data.elementValues != undefined && Array.isArray(data.elementValues) && data.elementValues.length > 0){
-
-						e.elementValues.forEach(elementValue => {
-
-							if(elementValue.value != undefined){
-
-								let elementTypeParamId = util.element.getElementTypeParamId(elementValue.id);
-								oldCircuitData[elementTypeParamId] = elementValue.value;
-							}
-						});
+				if (Array.isArray(data.elementValues) && data.elementValues.length > 0){
+					
+					let circuitState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.circuitState);
+					
+					if (circuitState && circuitState.value) {
 						
-						self.tubeCircuitsDataTable.update(oldCircuitData);
+						if (oldItemData[self.parent.config.params.circuitState] != circuitState.value) {
+							
+							newItemData = webix.copy(oldItemData);
+							
+							newItemData[self.parent.config.params.circuitState] = circuitState.value;
+							
+							let circuitStateLabel = CircuitState.find(e => e.value == circuitState.value);
+									
+							if (circuitStateLabel) {
+								
+								newItemData["circuitStateLabel"] = i18n.t(circuitStateLabel.label);	
+							}
+							
+							self.tubeCircuitsDataTable.update(newItemData);	
+						}
 					}
 				}
 			}
@@ -1172,24 +1312,46 @@ export default class TubeContent {
 
 		function onMessageDali(data) {
 
-			if (data) {
+			let oldItemData = self.tubeDalisDataTable.getItem(data.id);
+			let newItemData = undefined;
 
-				let oldDaliData = self.tubeDalisDataTable.getItem(data.id);
+			if (oldItemData) {
 
-				if (oldDaliData) {
-
-					if (data.elementValues != undefined && Array.isArray(data.elementValues) && data.elementValues.length > 0){
-
-						e.elementValues.forEach(elementValue => {
-
-							if(elementValue.value != undefined){
-
-								let elementTypeParamId = util.element.getElementTypeParamId(elementValue.id);
-								oldDaliData[elementTypeParamId] = elementValue.value;
-							}
-						});
+				if (Array.isArray(data.elementValues) && data.elementValues.length > 0){
+					
+					let daliState = data.elementValues.find(e => util.element.getElementTypeParamId(e.id) == self.parent.config.params.daliState);
+					
+					if (daliState && daliState.value) {
 						
-						self.tubeDalisDataTable.update(oldDaliData);
+						if (oldItemData[self.parent.config.params.daliState] != daliState.value) {
+							
+							newItemData = webix.copy(oldItemData);
+							
+							newItemData[self.parent.config.params.daliState] = daliState.value;
+							
+							if (Array.isArray(self.tubeDalis)) {
+								
+								let tubeDali = self.tubeDalis.find(dali => dali.id == data.id)
+								
+								if (tubeDali) {
+									
+									let daliRegimeConfig = JSON.parse(tubeDali[self.parent.config.params.daliRegimeConfig]);
+						
+									if (daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
+									
+										let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState.value);
+										
+										if (daliRegime) {
+											
+											newItemData["daliStateAlias"] = daliRegime.alias;	
+										}
+									}
+									
+								}
+							}
+							
+							self.tubeDalisDataTable.update(newItemData);	
+						}
 					}
 				}
 			}
