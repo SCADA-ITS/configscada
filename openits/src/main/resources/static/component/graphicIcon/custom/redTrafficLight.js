@@ -1,7 +1,7 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
-const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:1";
+const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:2";
 
 const G_ID_UPPER_LIGHT = "upperLight";
 const G_ID_LOWER_LIGHT = "lowerLight";	
@@ -13,7 +13,7 @@ const GROUP_COLOR_ON = "#eb5569";
 
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:53:0","ElementTypeState:53:2"];
 
-export default class AmberTrafficLight extends GraphicIconCustomType {
+export default class RedTrafficLight extends GraphicIconCustomType {
 	
 	constructor(s, g, elementInfo, events) {
 
@@ -44,8 +44,8 @@ export default class AmberTrafficLight extends GraphicIconCustomType {
 
 				if(cmd === CMD_CHANGE_VALUE) {
 
-					this.gUpperLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_ON });
-					this.gLowerLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_ON });
+					this.gUpperLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });
+					this.gLowerLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });
 
 				} else {
 

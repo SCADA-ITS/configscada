@@ -123,7 +123,16 @@
          cy="224.006"
          fill="#b3b3b3"
          r="52.381001"
-         id="yellow" />
+         id="yellow" >
+		 <animate 
+            id= "yellowFlash"
+            attributeType="XML" 
+            attributeName="fill" 
+            from="#b3b3b3" 
+            to="#b3b3b3"
+            dur="1s" 
+            repeatCount="indefinite"/>
+	</circle>
       <circle
          cx="256"
          cy="358.789"

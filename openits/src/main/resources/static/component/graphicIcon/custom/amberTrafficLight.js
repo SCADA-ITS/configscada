@@ -11,6 +11,12 @@ const GROUP_COLOR_ON = "#fec165";
 
 const CMD_CHANGE_VALUE = "true";
 
+const CMD_GROUP_OFF = "0";
+const CMD_GROUP_AMBER_ALTERNANT = "1";	
+const CMD_GROUP_AMBER_FLASHING = "2";	
+const CMD_GROUP_AMBER = "3";	
+
+
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:53:0","ElementTypeState:53:2"];
 
 export default class AmberTrafficLight extends GraphicIconCustomType {
@@ -42,17 +48,28 @@ export default class AmberTrafficLight extends GraphicIconCustomType {
 
 				let cmd = cmdGroupValue;
 
-				if(cmd === CMD_CHANGE_VALUE) {
+				if(cmd === CMD_GROUP_OFF) {
 					
-					this.gUpperLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_ON });
-					this.gLowerLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_OFF });
-					
-				} else {
-
 					this.gUpperLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_OFF });
 					this.gLowerLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_OFF });
+					
+				} else if(cmd === CMD_GROUP_AMBER){
 
+					this.gUpperLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });
+					this.gLowerLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });
+
+				} else if(cmd === CMD_GROUP_AMBER_FLASHING){
+	
+					this.gUpperLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_OFF });
+					this.gLowerLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_OFF });
+	
+				} else if(cmd === CMD_GROUP_AMBER_ALTERNANT){
+				
+					this.gUpperLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_OFF });
+					this.gLowerLight.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_ON });
 				}
+
+			
 			}
 
 		}
