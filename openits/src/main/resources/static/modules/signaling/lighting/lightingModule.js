@@ -2,10 +2,10 @@ import GenericModule from "../../genericModule.js";
 import TreeView from "../../../component/treeview.js";
 import { util } from "../../../lib/util.js";
 import TubeContent from "./tubeContent.js";
-import IlluminationContent from "./illuminationContent.js";
+import LightingContent from "./lightingContent.js";
 import { adapter } from "../../../lib/adapter.js";
 
-export default class IlluminationModule extends GenericModule {
+export default class LightingnModule extends GenericModule {
 	
 	constructor(module, moduleAction, args) {
 
@@ -182,9 +182,8 @@ export default class IlluminationModule extends GenericModule {
 				
 				let metadata = {
 					id: 1,
-					label: "LBL_ILLUMINATIONS",
+					label: "LBL_TUNNELS",
 					treeOptionValues: [
-						// { treeOption: { id: 1}, value: "./img/illumination.png" },
 						{ treeOption: { id: 2}, value: false },	// multiselect
 						{ treeOption: { id: 3}, value: true }, 	// sorted
 						{ treeOption: { id: 4}, value: false }, // cmd_buttons
@@ -256,7 +255,7 @@ export default class IlluminationModule extends GenericModule {
 					$$("view-content-" + self.uid).hide();
 					$$("view-content-loading-" + self.uid).show();
 
-					let containerContent = new IlluminationContent(self);
+					let containerContent = new LightingContent(self);
 					containerContent.loadData(args, drawContent);
 
 					// let childs = self.treeView.data.find(e =>e.id==item.id);
@@ -280,7 +279,7 @@ export default class IlluminationModule extends GenericModule {
 				cols: [
 					{
 						id: "view-tree-" + self.uid,
-						header: i18n.t("LBL_ILLUMINATIONS"),
+						header: i18n.t("LBL_TUNNELS"),
 						body: {
 							width: 250,
 							rows: [

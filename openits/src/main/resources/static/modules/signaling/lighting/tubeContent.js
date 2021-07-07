@@ -24,7 +24,7 @@ export default class TubeContent {
 		this.selectedTable = "action-panel-switcher-circuit" + this.parent.uid;
 		this.currentRegime;
 		this.proposedRegime;
-		this.illuminationModeValueParam;
+		this.lightingModeValueParam;
 
 		this.tubeCircuits;
 		this.tubeCircuitsDataTable;
@@ -66,7 +66,7 @@ export default class TubeContent {
 					this.tubeCircuitsDataTable.select(enabledSelectedPks);
 				}
 
-				if (this.illuminationModeValueParam && this.parent.config.illuminationModeOptions.find(option => option.id == this.illuminationModeValueParam.value).disable) {
+				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
 					
 					this.tubeCircuitsDataTable.disable();
 				}
@@ -81,7 +81,7 @@ export default class TubeContent {
 					this.tubeDalisDataTable.select(enabledSelectedPks);
 				}
 
-				if (this.illuminationModeValueParam && this.parent.config.illuminationModeOptions.find(option => option.id == this.illuminationModeValueParam.value).disable) {
+				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
 					
 					this.tubeDalisDataTable.disable();
 				}
@@ -175,16 +175,19 @@ export default class TubeContent {
 	getView() {
 				
 		let viewContent = {
-			//type:"line",
+			css: { "background-color": "white" },			
 			rows: [
 				this.getContentHeader(),
 				{
-					//type:"line",
+					borderless: true,
 					cols: [
+						{ width: 15 },
 						this.getContentToolbar(),
+						{ width: 15 }
 					]
 				},
 				{
+					css: { "border-width": "0px !important" },
 					type:"form",
 					cols: [
 						this.getContentBody(),
@@ -208,7 +211,6 @@ export default class TubeContent {
 
 		let header = {
 			id: "view-content-header-" + self.parent.uid,
-			type:"line",
 			rows: [
 				{
 					id: "view-content-header-bar-color-" + self.parent.uid,
@@ -216,7 +218,6 @@ export default class TubeContent {
 					css: { "background": util.element.getColor(self.selectedTube.elementTypeState) }
 				},
 				{
-					type:"line",
 					cols: [
 						{
 							borderless: true,
@@ -245,13 +246,13 @@ export default class TubeContent {
 
 		let self = this;
 
-		self.illuminationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.illuminationMode);
+		self.lightingModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingMode);
 
-		let illuminationModeOptions = [];
+		let lightingModeOptions = [];
 
-		self.parent.config.illuminationModeOptions.forEach(option => {
+		self.parent.config.lightingModeOptions.forEach(option => {
 
-			illuminationModeOptions.push({
+			lightingModeOptions.push({
 				id: option.id, 
 				value: i18n.t(option.label) 
 			});
@@ -269,22 +270,22 @@ export default class TubeContent {
 		let actionPanelSwitcher = {
 			view: "segmented",
 			css: "segment-custom-2",
-			value: self.illuminationModeValueParam.value,
-			width: 500,
-			options: illuminationModeOptions,
+			value: self.lightingModeValueParam.value,
+			width: 330,
+			options: lightingModeOptions,
 			tooltip: true,
 			on: {
 				onChange(newv, oldv) {
 
 					webix.confirm({
-						title: i18n.t("LBL_ILLUMINATION_CHANGE_MODE_CONFIRM"),
+						title: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM"),
 						ok: i18n.t("LBL_ACCEPT"),
 						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_ILLUMINATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
+						text: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM_DESCRIPTION"),
 						width: 600
 					}).then(function() {
 						
-						let command = self.parent.config.commands.SEND_ILLUMINATION_MODE;
+						let command = self.parent.config.commands.SEND_LIGHTING_MODE;
 						command.elementId = self.selectedTube.id;
 						command.commandElementValues[0].value = newv;
 
@@ -322,7 +323,7 @@ export default class TubeContent {
 		let self = this;
 
 		let contentBody = {
-			css: { "margin-top" : "0px !important" },
+			//css: { "margin-top" : "0px !important" },
 			view: "form", 
 			id: "view-content-body-" + self.parent.uid,
 			rows:[
@@ -348,29 +349,29 @@ export default class TubeContent {
 
 		function getRegime(){
 
-			let illuminationRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.illuminationRegimeConfig);
+			let lightingRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingRegimeConfig);
 			let availableRegimes;
 			self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
 			self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
 
 			try {
 
-				illuminationRegimeConfig = JSON.parse(illuminationRegimeConfig.value);
-				availableRegimes = illuminationRegimeConfig.regimes.map(function(regime) {
+				lightingRegimeConfig = JSON.parse(lightingRegimeConfig.value);
+				availableRegimes = lightingRegimeConfig.regimes.map(function(regime) {
 					return { 
 						id: regime.id, 
 						value: i18n.t(regime.labelAlias)
 					};
 				});
 
-				if(self.currentRegime.value && illuminationRegimeConfig.regimes) {
+				if(self.currentRegime.value && lightingRegimeConfig.regimes) {
 
-					self.currentRegime.labelAlias = illuminationRegimeConfig.regimes.find(e =>e.id == self.currentRegime.value).labelAlias;
+					self.currentRegime.labelAlias = lightingRegimeConfig.regimes.find(e =>e.id == self.currentRegime.value).labelAlias;
 				} else {
 					self.currentRegime.labelAlias = "LBL_NO_REGIME";
 				}
 
-				updateProposedRegime(self.proposedRegime.value, illuminationRegimeConfig.regimes);
+				updateProposedRegime(self.proposedRegime.value, lightingRegimeConfig.regimes);
 				
 			} catch (error) {
 
@@ -378,14 +379,11 @@ export default class TubeContent {
 			}
 
 			let regime = {
-				type:"line",
 				cols: [
 					{
-						type:"line",
 						rows: [
 							{ height: 26 },
 							{
-								type:"line",
 								cols: [
 									{
 										view: "label",
@@ -414,7 +412,6 @@ export default class TubeContent {
 							},
 							{ height: 12 },
 							{
-								type:"line",
 								cols: [
 									{
 										view: "label",
@@ -445,7 +442,7 @@ export default class TubeContent {
 										on: {
 											onChange(newv, oldv) {
 
-												updateProposedRegime(newv, illuminationRegimeConfig.regimes);
+												updateProposedRegime(newv, lightingRegimeConfig.regimes);
 												webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.parent.uid));
 												webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.parent.uid));
 											}
@@ -456,15 +453,13 @@ export default class TubeContent {
 							{}
 						] 
 					},
-					{},
+					{ width: 20 },
 					{
-						type:"line",
 						rows: [
 							getViewDocument(),
 							getViewDocumentText(),
 							{ height: 12 },
 							{ 	
-								type:"line",
 								cols:[
 									{},
 									{ 	
@@ -474,10 +469,10 @@ export default class TubeContent {
 										align: "right", 
 										css: "button-cta",
 										value: i18n.t("LBL_CHANGE_REGIME"),
-										disabled: self.parent.config.illuminationModeOptions.find(option => option.id == self.illuminationModeValueParam.value).disable,
+										disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable,
 										click: function() {
 
-											let command = self.parent.config.commands.SEND_ILLUMINATION_REGIME;
+											let command = self.parent.config.commands.SEND_LIGHTING_REGIME;
 											command.elementId = self.tubeId;
 											command.commandElementValues[0].value = $$("label-regimen-3-" + self.parent.uid).getValue();
 
@@ -493,10 +488,10 @@ export default class TubeContent {
 											} else {
 
 												webix.confirm({
-													title: i18n.t("LBL_SEND_ILLUMINATION_REGIME_CONFIRM"),
+													title: i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM"),
 													ok: i18n.t("LBL_ACCEPT"),
 													cancel: i18n.t("LBL_CANCEL"),
-													text: i18n.t("LBL_SEND_ILLUMINATION_REGIME_CONFIRM_DESCRIPTION"),
+													text: i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"),
 													width: 600
 												}).then(function() {
 
@@ -534,7 +529,6 @@ export default class TubeContent {
 
 					viewDocument = {
 						id: "view-content-regime-document-" + self.parent.uid,
-						type:"line",
 						cols: [
 							{},
 							{
@@ -563,20 +557,20 @@ export default class TubeContent {
 				return {
 					id: "view-content-regime-document-text-"+ self.parent.uid,
 					height: 60,
-					width: 500,
+					//width: 500,
 					borderless: true,
 					view: "template",
 					template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
 				};
 			}
 
-			function updateProposedRegime(value, illuminationRegimes) {
+			function updateProposedRegime(value, lightingRegimes) {
 
 				self.proposedRegime.value = value;
 
-				if (self.proposedRegime.value && illuminationRegimes) {
+				if (self.proposedRegime.value && lightingRegimes) {
 
-					let proposedConfig = illuminationRegimes.find(e => e.id == self.proposedRegime.value);
+					let proposedConfig = lightingRegimes.find(e => e.id == self.proposedRegime.value);
 					self.proposedRegime.labelAlias = proposedConfig.labelAlias;
 					self.proposedRegime.description = proposedConfig.description;
 					self.proposedRegime.documentUrl = proposedConfig.documentUrl
@@ -599,7 +593,6 @@ export default class TubeContent {
 		function getButtons() {
 
 			let buttons = {
-				type:"line",
 				cols: [
 					{
 						view: "segmented",
@@ -828,15 +821,7 @@ export default class TubeContent {
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								showValue: false,
-								badgeColor: true,
-								avatar: false,
-								enabled: true
-							}
-						]
+						}
 					}
 				],
 				gridCommands: [
@@ -1094,7 +1079,6 @@ export default class TubeContent {
 		function getBottom(){
 
 			let bottom = {
-				type:"line",
 				height: 40,
 				cols:[
 					{},
@@ -1104,15 +1088,15 @@ export default class TubeContent {
 						view: "button",
 						align:"right", 
 						css: "button-cta",
-						value: i18n.t("LBL_ILLUMINATION_CHANGE_STATUS"),
-						disabled: self.parent.config.illuminationModeOptions.find(option => option.id == self.illuminationModeValueParam.value).disable,
+						value: i18n.t("LBL_LIGHTING_CHANGE_STATUS"),
+						disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable,
 						click: function () { 
 							
 							webix.confirm({
-								title: i18n.t("LBL_ILLUMINATION_CHANGE_STATUS_CONFIRM"),
+								title: i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM"),
 								ok: i18n.t("LBL_ACCEPT"),
 								cancel: i18n.t("LBL_CANCEL"),
-								text: i18n.t("LBL_ILLUMINATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
+								text: i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
 								width: 600
 							}).then(function() {
 								
@@ -1251,7 +1235,7 @@ export default class TubeContent {
 				self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
 				self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
 				self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
-				self.illuminationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.illuminationMode);
+				self.lightingModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingMode);
 
 				webix.ui(self.getContentHeader(), $$("view-content-header-" + self.parent.uid));
 				webix.ui(self.getContentToolbar(), $$("view-content-toolbar-" + self.parent.uid));
@@ -1263,14 +1247,16 @@ export default class TubeContent {
 				$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
 
 			
-				if (!self.illuminationModeValueParam || self.parent.config.illuminationModeOptions.find(option => option.id == self.illuminationModeValueParam.value).disable) {
+				if (!self.lightingModeValueParam || self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
 						
 					self.tubeCircuitsDataTable.disable();
+					self.tubeDalisDataTable.disable();
 					$$("view-content-button-change-regime-" + self.parent.uid).disable();
 					$$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
 				} else {
 
 					self.tubeCircuitsDataTable.enable();
+					self.tubeDalisDataTable.enable();
 					$$("view-content-button-change-regime-" + self.parent.uid).enable();
 					$$("view-content-button-change-circuits-status-" + self.parent.uid).enable();
 				}

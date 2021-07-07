@@ -1,6 +1,6 @@
 import { util } from "../../../lib/util.js";
 
-export default class IlluminationContent {
+export default class LightingContent {
 	
 	constructor(parent) {
 

@@ -29,15 +29,15 @@
 	"elementTypeIdCircuit": "ElementType:84",
 	"elementTypeIdDali": "ElementType:85",
 	"params":{
-		"illuminationRegimeConfig": "ElementTypeParam:2000:1:2",
+		"lightingRegimeConfig": "ElementTypeParam:2000:1:2",
 		"currentRegime": "ElementTypeParam:2000:2:4", 
 		"proposedRegime" : "ElementTypeParam:2000:2:6",
-		"illuminationMode" : "ElementTypeParam:2000:2:3",
+		"lightingMode" : "ElementTypeParam:2000:2:3",
 		"circuitState" : "ElementTypeParam:84:2:1",
 		"daliState" : "ElementTypeParam:85:2:1",
 		"daliRegimeConfig": "ElementTypeParam:85:1:1"
 	},
-	"illuminationModeOptions" :[
+	"lightingModeOptions" :[
 		{"id": "1", "label" : "LBL_AUTO", "disable" : true},
 		{"id": "0", "label" : "LBL_MANUAL", "disable" : false}
 	],
@@ -72,7 +72,7 @@
 				}
 			]
 		},
-		"SEND_ILLUMINATION_MODE" :{
+		"SEND_LIGHTING_MODE" :{
 			"commandElementTypeId":"CommandElementType:6:2000",
 			"elementId": null,
 			"commandElementValues": [
@@ -82,7 +82,7 @@
 				}
 			]
 		},
-		"SEND_ILLUMINATION_REGIME" :{
+		"SEND_LIGHTING_REGIME" :{
 			"commandElementTypeId":"CommandElementType:7:2000",
 			"elementId": null,
 			"commandElementValues": [
