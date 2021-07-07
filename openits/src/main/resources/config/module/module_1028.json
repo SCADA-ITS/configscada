@@ -35,7 +35,8 @@
 		"lightingMode" : "ElementTypeParam:2000:2:3",
 		"circuitState" : "ElementTypeParam:84:2:1",
 		"daliState" : "ElementTypeParam:85:2:1",
-		"daliRegimeConfig": "ElementTypeParam:85:1:1"
+		"daliRegimeConfig": "ElementTypeParam:85:1:1",
+		"tubeState": "ElementTypeParam:2000:2:8"
 	},
 	"lightingModeOptions" :[
 		{"id": "1", "label" : "LBL_AUTO", "disable" : true},

@@ -19,11 +19,8 @@ export default class TubeContent {
 		this.tubeId = tubeId;
 		this.parent = parent;
 
-		this.selectedTunnel;
-		this.selectedTube;
+		this.selectedTube = undefined;
 		this.selectedTable = "action-panel-switcher-circuit" + this.parent.uid;
-		this.currentRegime;
-		this.proposedRegime;
 		this.lightingModeValueParam;
 
 		this.tubeCircuits;
@@ -31,7 +28,6 @@ export default class TubeContent {
 		this.tubeDalis;
 		this.tubeDalisDataTable;
 
-		this.idStompSubscriptorTunnel = undefined;
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorCircuits = undefined;
 		this.idStompSubscriptorDalis = undefined;
@@ -208,6 +204,17 @@ export default class TubeContent {
 	getContentHeader() {
 
 		let self = this;
+		let tubeTypeState = undefined;
+		
+		if (self.selectedTube && Array.isArray(self.selectedTube.elementValues)) {
+									
+			let tubeStateParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.tubeState);
+			
+			if (tubeStateParam) {
+				
+				tubeTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", tubeStateParam.value);
+			}	
+		}
 
 		let header = {
 			id: "view-content-header-" + self.parent.uid,
@@ -215,7 +222,7 @@ export default class TubeContent {
 				{
 					id: "view-content-header-bar-color-" + self.parent.uid,
 					height: 15,
-					css: { "background": util.element.getColor(self.selectedTube.elementTypeState) }
+					css: { "background": util.element.getColor(tubeTypeState) }
 				},
 				{
 					cols: [
@@ -230,7 +237,7 @@ export default class TubeContent {
 											${self.selectedTube.alias}
 										</div>
 										<div class="ims-incident-report-title">
-											<span class="ims-incident-badge" style="background: ${util.element.getColor(self.selectedTube.elementTypeState)}; color: white;">${i18n.t(self.selectedTube.elementTypeState.labelAlias)}</span>
+											<span class="ims-incident-badge" style="background: ${util.element.getColor(tubeTypeState)}; color: white;">${i18n.t(tubeTypeState.labelAlias)}</span>
 										</div>`;
 							}
 						}
@@ -351,12 +358,11 @@ export default class TubeContent {
 
 			let lightingRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingRegimeConfig);
 			let availableRegimes;
-			self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
-			self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
 
 			try {
 
 				lightingRegimeConfig = JSON.parse(lightingRegimeConfig.value);
+				
 				availableRegimes = lightingRegimeConfig.regimes.map(function(regime) {
 					return { 
 						id: regime.id, 
@@ -364,14 +370,7 @@ export default class TubeContent {
 					};
 				});
 
-				if(self.currentRegime.value && lightingRegimeConfig.regimes) {
-
-					self.currentRegime.labelAlias = lightingRegimeConfig.regimes.find(e =>e.id == self.currentRegime.value).labelAlias;
-				} else {
-					self.currentRegime.labelAlias = "LBL_NO_REGIME";
-				}
-
-				updateProposedRegime(self.proposedRegime.value, lightingRegimeConfig.regimes);
+				updateInfoRegime(self.getCurrentRegime());
 				
 			} catch (error) {
 
@@ -418,7 +417,7 @@ export default class TubeContent {
 										width: 180,
 										height: 24,
 										id: "label-regimen-1-" + self.parent.uid,
-										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.currentRegime.labelAlias) + '</span></div>',
+										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getCurrentRegime() ? self.getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
 										css: "global-text"
 									},
 									{ width: 12 },
@@ -427,7 +426,7 @@ export default class TubeContent {
 										width: 180,
 										height: 24,
 										id: "label-regimen-2-" + self.parent.uid,
-										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
+										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getProposedRegime() ? self.getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
 										css: "global-text"
 									},
 									{ width: 12 },
@@ -437,12 +436,14 @@ export default class TubeContent {
 										height: 28,
 										view: "combo", 
 										// css: {"margin-top": "-5px"},
-										value: self.proposedRegime.value, 
+										value: self.getCurrentRegime() ? self.getCurrentRegime().id : undefined,
 										options: availableRegimes,
 										on: {
 											onChange(newv, oldv) {
+												
+												updateInfoRegime(self.getLightingRegime(newv));
 
-												updateProposedRegime(newv, lightingRegimeConfig.regimes);
+												//updateProposedRegime(newv, lightingRegimeConfig.regimes);
 												webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.parent.uid));
 												webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.parent.uid));
 											}
@@ -525,7 +526,7 @@ export default class TubeContent {
 					height: 26 
 				};
 
-				if(self.proposedRegime.documentUrl) {
+				if(self.infoRegime.documentUrl) {
 
 					viewDocument = {
 						id: "view-content-regime-document-" + self.parent.uid,
@@ -537,12 +538,12 @@ export default class TubeContent {
 								width: 500,
 								view: "button",
 								type: "icon",
-								label: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
-								value: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
+								label: self.infoRegime.documentName + " " + self.infoRegime.documentType,
+								value: self.infoRegime.documentName + " " + self.infoRegime.documentType,
 								tooltip: true,
 								icon: "mdi mdi-file",
 								click: function() {
-									window.open(self.proposedRegime.documentUrl, '_blank');
+									window.open(self.infoRegime.documentUrl, '_blank');
 								},
 								css: "button-icon-transparent"
 							}		
@@ -560,30 +561,29 @@ export default class TubeContent {
 					//width: 500,
 					borderless: true,
 					view: "template",
-					template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
+					template: `<div class="ventilation-description-box"><span > ${self.infoRegime.description}</span></div>`
 				};
 			}
 
-			function updateProposedRegime(value, lightingRegimes) {
+			function updateInfoRegime(lightingRegime) {
 
-				self.proposedRegime.value = value;
+				self.infoRegime = {};
 
-				if (self.proposedRegime.value && lightingRegimes) {
+				if (lightingRegime) {
 
-					let proposedConfig = lightingRegimes.find(e => e.id == self.proposedRegime.value);
-					self.proposedRegime.labelAlias = proposedConfig.labelAlias;
-					self.proposedRegime.description = proposedConfig.description;
-					self.proposedRegime.documentUrl = proposedConfig.documentUrl
+					self.infoRegime.labelAlias = lightingRegime.labelAlias;
+					self.infoRegime.description = lightingRegime.description;
+					self.infoRegime.documentUrl = lightingRegime.documentUrl
 
-					if (self.proposedRegime.documentUrl) {
+					if (lightingRegime.documentUrl) {
 
-						self.proposedRegime.documentName = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf("/") + 1, self.proposedRegime.documentUrl.lastIndexOf("."));
-						self.proposedRegime.documentType = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf(".") + 1, self.proposedRegime.documentUrl.length);
+						self.infoRegime.documentName = lightingRegime.documentUrl.substring(lightingRegime.documentUrl.lastIndexOf("/") + 1, lightingRegime.documentUrl.lastIndexOf("."));
+						self.infoRegime.documentType = lightingRegime.documentUrl.substring(lightingRegime.documentUrl.lastIndexOf(".") + 1, lightingRegime.documentUrl.length);
 					}
 				} else {
 
-					self.proposedRegime.labelAlias = "LBL_NO_REGIME";
-					self.proposedRegime.description = "";
+					self.infoRegime.labelAlias = "LBL_NO_REGIME";
+					self.infoRegime.description = "";
 				}
 			}
 
@@ -597,7 +597,6 @@ export default class TubeContent {
 					{
 						view: "segmented",
 						css: "segment-custom-2",
-						value: "action-panel-switcher-circuit" + self.parent.uid,
 						width: 300,
 						value: self.selectedTable,
 						tooltip: true,
@@ -1189,14 +1188,9 @@ export default class TubeContent {
 
 				let topic = self.parent.config.topics.tube + "." + self.tubeId;
 				self.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
-			
-			} else {
-
-				let topic = self.parent.config.topics.tunnel + "." + self.tunnelId;
-				self.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
 			}
 
-			if (self.tubeCircuits && Array.isArray(self.tubeCircuits) && self.tubeCircuits.length > 0) {
+			if (Array.isArray(self.tubeCircuits) && self.tubeCircuits.length > 0) {
 
 				let fields = [];
 				fields.push({
@@ -1208,7 +1202,7 @@ export default class TubeContent {
 				self.idStompSubscriptorCircuits = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.circuits), onMessageCircuit, fields);
 			}
 
-			if (self.tubeDalis && Array.isArray(self.tubeDalis) && self.tubeDalis.length > 0) {
+			if (Array.isArray(self.tubeDalis) && self.tubeDalis.length > 0) {
 
 				let fields = [];
 				fields.push({
@@ -1221,38 +1215,61 @@ export default class TubeContent {
 			}
 		}
 
-		function onMessageTunnel(data) {
-
-			if (data) {
-
-			}
-		}
-
+//		function onMessageTube(data) {
+//
+//			if (data) {
+//
+//				self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
+//				self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
+//				self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
+//				self.lightingModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingMode);
+//
+//				webix.ui(self.getContentHeader(), $$("view-content-header-" + self.parent.uid));
+//				webix.ui(self.getContentToolbar(), $$("view-content-toolbar-" + self.parent.uid));
+//				
+//				let actualRegimeLabel = self.currentRegime.value ? self.currentRegime.labelAlias : "LBL_NO_REGIME";
+//				let proposedRegimeLabel = self.proposedRegime.value ? self.proposedRegime.labelAlias : "LBL_NO_REGIME";
+//
+//				$$("label-regimen-1-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegimeLabel) + '</span></div>')
+//				$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
+//
+//			
+//				if (!self.lightingModeValueParam || self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
+//						
+//					self.tubeCircuitsDataTable.disable();
+//					self.tubeDalisDataTable.disable();
+//					$$("view-content-button-change-regime-" + self.parent.uid).disable();
+//					$$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
+//				} else {
+//
+//					self.tubeCircuitsDataTable.enable();
+//					self.tubeDalisDataTable.enable();
+//					$$("view-content-button-change-regime-" + self.parent.uid).enable();
+//					$$("view-content-button-change-circuits-status-" + self.parent.uid).enable();
+//				}
+//			}
+//		}
+		
 		function onMessageTube(data) {
 
 			if (data) {
 
 				self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
-				self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
-				self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
-				self.lightingModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingMode);
+				let lightingMode = self.getLightingMode();
 
 				webix.ui(self.getContentHeader(), $$("view-content-header-" + self.parent.uid));
 				webix.ui(self.getContentToolbar(), $$("view-content-toolbar-" + self.parent.uid));
-				
-				let actualRegimeLabel = self.currentRegime.value ? self.currentRegime.labelAlias : "LBL_NO_REGIME";
-				let proposedRegimeLabel = self.proposedRegime.value ? self.proposedRegime.labelAlias : "LBL_NO_REGIME";
 
-				$$("label-regimen-1-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegimeLabel) + '</span></div>')
-				$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
+				$$("label-regimen-1-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getCurrentRegime() ? self.getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
+				$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getProposedRegime() ? self.getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
 
-			
-				if (!self.lightingModeValueParam || self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
-						
+				if (!lightingMode || self.parent.config.lightingModeOptions.find(option => option.id == lightingMode).disable) {
+
 					self.tubeCircuitsDataTable.disable();
 					self.tubeDalisDataTable.disable();
 					$$("view-content-button-change-regime-" + self.parent.uid).disable();
 					$$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
+
 				} else {
 
 					self.tubeCircuitsDataTable.enable();
@@ -1351,12 +1368,7 @@ export default class TubeContent {
 		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
 		if (stompSubscriptorService) {
-
-			if (self.idStompSubscriptorTunnel){
-
-				stompSubscriptorService.unsubscribe(self.idStompSubscriptorTunnel);
-			}
-				
+			
 			if (self.idStompSubscriptorTube){
 
 				stompSubscriptorService.unsubscribe(self.idStompSubscriptorTube);
@@ -1373,5 +1385,49 @@ export default class TubeContent {
 				stompSubscriptorService.unsubscribe(self.idStompSubscriptorDalis);
 			}
 		}
+	}
+	
+	getLightingRegime(regimeId) {
+
+		let lightingRegime = undefined;
+
+		if (regimeId) {
+
+			let lightingRegimesConfig = this.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.parent.config.params.lightingRegimeConfig);
+
+			if (lightingRegimesConfig && lightingRegimesConfig.value) {
+
+				lightingRegimesConfig = JSON.parse(lightingRegimesConfig.value);
+
+				if (lightingRegimesConfig && Array.isArray(lightingRegimesConfig.regimes) && lightingRegimesConfig.regimes.length > 0) {
+
+					lightingRegime = lightingRegimesConfig.regimes.find(e => e.id == regimeId);
+				}
+
+			}
+		}
+		
+		return lightingRegime;
+	}
+	
+	getCurrentRegime() {
+
+		let currentRegime = this.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.parent.config.params.currentRegime);
+
+		return currentRegime && currentRegime.value ? this.getLightingRegime(currentRegime.value) : undefined;
+	}
+
+	getProposedRegime() {
+
+		let proposedRegime = this.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.parent.config.params.proposedRegime);
+
+		return proposedRegime && proposedRegime.value ? this.getLightingRegime(proposedRegime.value) : undefined;
+	}
+
+	getLightingMode() {
+
+		let lightingMode = this.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.parent.config.params.lightingMode);
+		
+		return lightingMode ? lightingMode.value : undefined;
 	}
 }

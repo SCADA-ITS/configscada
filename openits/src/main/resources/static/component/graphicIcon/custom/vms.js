@@ -97,12 +97,14 @@ export default class Vms extends GraphicIconCustomType {
 			
 			while (gZone.select("#" + G_ID_LINE_PREFIX + zoneId + "-" + (++lineId))) {
 				
+				zoneData.align = TEXT_ALIGN_LEFT;
+				
 				if (!zoneData[ZONE_ELEMENT_TYPE.texts]) {
 					
 					zoneData[ZONE_ELEMENT_TYPE.texts] = [];
 				}
 				
-				zoneData[ZONE_ELEMENT_TYPE.texts].push({ id: lineId });
+				zoneData[ZONE_ELEMENT_TYPE.texts].push({ id: lineId, value: "" });
 			}
 		}
 		
@@ -146,13 +148,12 @@ export default class Vms extends GraphicIconCustomType {
 	
 		let value = this.getValue(PARAM_JSON_VALUE);
 		
-		if (!value && USE_VMS_FAKE_DATA) {
+		if (!value) {
 			
-			self.jsonData = this.jsonDataFake;
-			
-		} else if(!value){
-			
-			self.jsonData = [];
+			if (USE_VMS_FAKE_DATA) {
+				
+				self.jsonData = this.jsonDataFake;	
+			}
 		}
 		else {
 			
@@ -183,7 +184,7 @@ export default class Vms extends GraphicIconCustomType {
 				
 				treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
 				
-				if (!treatmentValue && !USE_VMS_FAKE_DATA) {
+				if (!treatmentValue) {
 					
 					self.jsonData = self.getDataInitialized();	
 				}	
@@ -564,7 +565,10 @@ export default class Vms extends GraphicIconCustomType {
 						
 						let zoneData = getZoneData(zoneId);
 						
-						if (!zoneData) {
+						let zoneDataWithTexts = zoneData && Array.isArray(zoneData.texts) && zoneData.texts.length > 0;
+						let zoneDataWithGraphics = zoneData && Array.isArray(zoneData.graphics) && zoneData.graphics.length > 0;  
+						
+						if (!zoneData || (zoneData && !zoneDataWithTexts && !zoneDataWithGraphics)) {
 							
 							zoneData = self.getZoneDataInitialized(zoneId);
 						}

@@ -301,8 +301,8 @@ export default class VmsSignalingComposer {
 				
 					jsonData.push({
 						zone: e.zone,
-						graphic: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
-						text: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
+						graphics: e.type == VmsSignalingZoneEditor.TYPE_GRAPHIC ? [] : undefined,
+						texts: e.type == VmsSignalingZoneEditor.TYPE_TEXT ? [] : undefined
 					})
 				})	
 			} 
@@ -336,6 +336,11 @@ export default class VmsSignalingComposer {
 	
 	update(jsonData) {
 		
+		if (!jsonData) {
+			
+			jsonData = this.getJsonDataClear();
+		}
+		
 		let jsonDataCopy = webix.copy(jsonData);
 		
 		this.jsonData = jsonDataCopy;
@@ -348,7 +353,11 @@ export default class VmsSignalingComposer {
 			value: JSON.stringify(jsonDataCopy)
 		}
 		
+		this.graphicIconInstance.updateState({
+			id: "ElementTypeState:71:1"
+		});
 		this.graphicIconInstance.updateValues([elementValueJsonData]);
+		
 		
 		if (this.onUpdate) {
 			
