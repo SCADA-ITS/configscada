@@ -23,15 +23,15 @@
 		"element": "ws.element.update",
 		"fan": "ws.fan.getList"
 	},
-	"elementType": "ElementType:2001",
-	"elementTypeChild": "ElementType:2000",
-	"elementTypeIdFan": "ElementType:9",
+	"elementTypeTunnel": "ElementType:2001",
+	"elementTypeTube": "ElementType:2000",
+	"elementTypeFan": "ElementType:9",
 	"ventilationStates":{
 		"ElementTypeState:2001:0" :{
 			"actions": []
 		},
 		"ElementTypeState:2001:1" :{
-			"actions": ["SEND_VENTILATION_STOP"]
+			"actions": ["SEND_VENTILATION_STOP", "SEND_VENTILATION_REGIME"]
 		},
 		"ElementTypeState:2001:2" :{
 			"actions": ["SEND_VENTILATION_START"]
@@ -44,11 +44,12 @@
 		}
 	},
 	"params":{
-		"ventilationRegimeConfig": "ElementTypeParam:2000:1:1",
-		"actualRegime": "ElementTypeParam:2000:2:2", 
-		"proposedRegime" : "ElementTypeParam:2000:2:2",
+		"ventilationRegimesConfig": "ElementTypeParam:2000:1:1",
+		"currentRegime": "ElementTypeParam:2000:2:2", 
+		"proposedRegime" : "ElementTypeParam:2000:2:5",
 		"ventilationMode" : "ElementTypeParam:2000:2:1",
-		"fanState" : "ElementTypeParam:9:2:1"
+		"fanState" : "ElementTypeParam:9:2:1",
+		"currentVentilationState" : "ElementTypeParam:2000:2:7"
 	},
 	"ventilationModeOptions" :[
 		{"id": "1", "label" : "LBL_AUTO", "disable" : true},

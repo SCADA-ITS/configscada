@@ -55,7 +55,7 @@ export default class VentilationModule extends GenericModule {
 					if(response){
 
 						let elementsHierarchy = response.json();
-						let tunnelsHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.elementType);
+						let tunnelsHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTunnel);
 						tunnelsHierarchy = tunnelsHierarchy.filter(element => enabledTubeIds.includes(element.child.id));
 						enabledTunnelIds = tunnelsHierarchy.map(e => { return e.parent.id; }); 
 
@@ -93,10 +93,10 @@ export default class VentilationModule extends GenericModule {
 
 						let elementsHierarchy = response.json();
 						let tubesHierarchy = elementsHierarchy.filter(element => self.selectedFansIds.includes(element.child.id));
-						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeChild);
+						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTube);
 						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
 
-						let tunnelsHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.elementType);
+						let tunnelsHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTunnel);
 						tunnelsHierarchy = tunnelsHierarchy.filter(element => enabledTubeIds.includes(element.child.id));
 						enabledTunnelIds = tunnelsHierarchy.map(e => { return e.parent.id; }); 
 
@@ -133,7 +133,7 @@ export default class VentilationModule extends GenericModule {
 
 		async function loadTree(enabledTunnelIds) {
 
-			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByIdType, { id: self.config.elementType }));
+			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByIdType, { id: self.config.elementTypeTunnel}));
 			let ventilations = data.json();
 			
 			self.nodes = [];

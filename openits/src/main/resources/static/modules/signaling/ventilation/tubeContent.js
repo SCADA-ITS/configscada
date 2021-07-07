@@ -18,9 +18,7 @@ export default class TubeContent {
 		this.selectedTube = undefined;
 		this.tubeFans = undefined;
 		this.tubeFansDataTable = undefined;;
-		this.actualRegime = undefined;
-		this.proposedRegime = undefined;
-		this.ventilationModeValueParam = undefined;
+		this.infoRegime = undefined;
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorFans = undefined;
@@ -86,7 +84,7 @@ export default class TubeContent {
 				if (data != null) {
 
 					self.selectedTube = data.json();
-					let fans = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdFan);
+					let fans = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeFan);
 					self.tubeFans = eval("adapter." + self.parent.config.adapters.fan)(fans, null);
 
 					webix.ui(drawContent(), $$("view-tube-content-" + self.uid));
@@ -101,7 +99,7 @@ export default class TubeContent {
 							self.tubeFansDataTable.select(self.enabledFanIds);
 						}
 
-						if (self.ventilationModeValueParam && self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable) {
+						if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disable) {
 
 							self.tubeFansDataTable.disable();
 						}
@@ -112,6 +110,69 @@ export default class TubeContent {
 			});
 		}
 
+		function getCurrentVentilationState() {
+
+			let currentVentilationState = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentVentilationState);
+			return currentVentilationState && currentVentilationState.value ? window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", currentVentilationState.value) : undefined;
+		}
+
+		function getDisabledChangeRegime() {
+
+			let currentVentilationState = getCurrentVentilationState();
+
+			if (currentVentilationState && currentVentilationState.id &&
+				self.parent.config.ventilationStates[currentVentilationState.id].actions.includes("SEND_VENTILATION_REGIME")) {
+
+				return false;
+
+			} else {
+
+				return true;
+			}
+		}
+
+		function getVentilationRegime(regimeId) {
+
+			let ventilationRegime = undefined;
+
+			if (regimeId) {
+
+				let ventilationRegimesConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationRegimesConfig);
+
+				if (ventilationRegimesConfig && ventilationRegimesConfig.value) {
+
+					ventilationRegimesConfig = JSON.parse(ventilationRegimesConfig.value);
+
+					if (ventilationRegimesConfig && Array.isArray(ventilationRegimesConfig.ventilationRegimes) && ventilationRegimesConfig.ventilationRegimes.length > 0) {
+
+						ventilationRegime = ventilationRegimesConfig.ventilationRegimes.find(e => e.id == regimeId);
+					}
+
+				}
+			}
+			return ventilationRegime;
+		}
+
+		function getCurrentRegime() {
+
+			let currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
+
+			return currentRegime && currentRegime.value ? getVentilationRegime(currentRegime.value) : undefined;
+		}
+
+		function getProposedRegime() {
+
+			let currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
+
+			return currentRegime && currentRegime.value ? getVentilationRegime(currentRegime.value) : undefined;
+		}
+
+		function getVentilationMode() {
+
+			let ventilationMode = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationMode);
+			return ventilationMode ? ventilationMode.value : undefined;
+		}
+
 		function getContentHeader() {
 
 			let header = {
@@ -120,7 +181,7 @@ export default class TubeContent {
 					{
 						id: "view-content-header-bar-color-" + self.uid,
 						height: 15,
-						css: { "background": util.element.getColor(self.selectedTube.elementTypeState) }
+						css: { "background": util.element.getColor(getCurrentVentilationState()) }
 					},
 					{ height: 4 },
 					{
@@ -136,7 +197,7 @@ export default class TubeContent {
 												${self.selectedTube.alias}
 											</div>
 											<div class="ims-incident-report-title">
-												<span class="ims-incident-badge" style="background: ${util.element.getColor(self.selectedTube.elementTypeState)}; color: white;">${i18n.t(self.selectedTube.elementTypeState.labelAlias)}</span>
+												<span class="ims-incident-badge" style="background: ${util.element.getColor(getCurrentVentilationState())}; color: white;">${i18n.t(getCurrentVentilationState() ? getCurrentVentilationState().labelAlias : "LBL_UNKNOWN")}</span>
 											</div>`;
 								}
 							},
@@ -150,8 +211,6 @@ export default class TubeContent {
 		}
 
 		function getContentToolbar() {
-
-			self.ventilationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationMode);
 
 			let ventilationModeOptions = [];
 
@@ -175,7 +234,7 @@ export default class TubeContent {
 			let actionPanelSwitcher = {
 				view: "segmented",
 				css: "segment-custom-2",
-				value: self.ventilationModeValueParam.value,
+				value: getVentilationMode(),
 				width: 500,
 				options: ventilationModeOptions,
 				tooltip: true,
@@ -222,7 +281,7 @@ export default class TubeContent {
 
 			return viewContentToolbar;
 		}
-		
+
 		function connectWS() {
 
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
@@ -254,29 +313,32 @@ export default class TubeContent {
 				if (data) {
 
 					self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
-					self.actualRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.actualRegime);
-					self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
-					self.ventilationModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationMode);
+					let ventilationMode = getVentilationMode();
 
 					webix.ui(getContentHeader(), $$("view-content-header-" + self.uid));
 					webix.ui(getContentToolbar(), $$("view-content-toolbar-" + self.uid));
 
-					let actualRegimeLabel = self.actualRegime.value ? self.actualRegime.labelAlias : "LBL_NO_REGIME";
-					let proposedRegimeLabel = self.proposedRegime.value ? self.proposedRegime.labelAlias : "LBL_NO_REGIME";
+					$$("label-regimen-1-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getCurrentRegime() ? getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
+					$$("label-regimen-2-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getProposedRegime() ? getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
 
-					$$("label-regimen-1-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegimeLabel) + '</span></div>')
-					$$("label-regimen-2-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
-
-
-					if (!self.ventilationModeValueParam || self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable) {
+					if (!ventilationMode || self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disable) {
 
 						self.tubeFansDataTable.disable();
 						$$("view-content-button-change-regime-" + self.uid).disable();
 						$$("view-content-button-change-fans-status-" + self.uid).disable();
+
 					} else {
 
+						if (getDisabledChangeRegime()) {
+
+							$$("view-content-button-change-regime-" + self.uid).disable();
+
+						} else {
+
+							$$("view-content-button-change-regime-" + self.uid).enable();
+						}
+
 						self.tubeFansDataTable.enable();
-						$$("view-content-button-change-regime-" + self.uid).enable();
 						$$("view-content-button-change-fans-status-" + self.uid).enable();
 					}
 				}
@@ -351,30 +413,21 @@ export default class TubeContent {
 
 				function getRegime() {
 
-					let ventilationRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationRegimeConfig);
+					let ventilationRegimesConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.ventilationRegimesConfig);
 					let availableRegimes;
-					self.actualRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.actualRegime);
-					self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
 
 					try {
 
-						ventilationRegimeConfig = JSON.parse(ventilationRegimeConfig.value);
+						ventilationRegimesConfig = JSON.parse(ventilationRegimesConfig.value);
 
-						availableRegimes = ventilationRegimeConfig.ventilationRegimes.map(function(regime) {
+						availableRegimes = ventilationRegimesConfig.ventilationRegimes.map(function(regime) {
 							return {
 								id: regime.id,
 								value: i18n.t(regime.labelAlias)
 							};
 						});
 
-						if (self.actualRegime.value && ventilationRegimeConfig.ventilationRegimes) {
-
-							self.actualRegime.labelAlias = ventilationRegimeConfig.ventilationRegimes.find(e => e.id == self.actualRegime.value).labelAlias;
-						} else {
-							self.actualRegime.labelAlias = "LBL_NO_REGIME";
-						}
-
-						updateProposedRegime(self.proposedRegime.value, ventilationRegimeConfig.ventilationRegimes);
+						updateInfoRegime(getCurrentRegime());
 
 					} catch (error) {
 
@@ -392,7 +445,7 @@ export default class TubeContent {
 												view: "label",
 												height: 24,
 												width: 180,
-												template: "<span>" + i18n.t("LBL_ACTUAL_REGIME") + "</span>",
+												template: "<span>" + i18n.t("LBL_CURRENT_REGIME") + "</span>",
 												css: "global-text"
 											},
 											{ width: 12 },
@@ -421,24 +474,31 @@ export default class TubeContent {
 												width: 180,
 												height: 24,
 												id: "label-regimen-1-" + self.uid,
-												template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.actualRegime.labelAlias) + '</span></div>',
+												template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getCurrentRegime() ? getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
 												css: "global-text"
 											},
 											{ width: 12 },
-											getViewProposedRegimeLabel(),
+											{
+												view: "label",
+												width: 180,
+												height: 24,
+												id: "label-regimen-2-" + self.uid,
+												template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getProposedRegime() ? getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
+												css: "global-text"
+
+											},
 											{ width: 12 },
 											{
 												id: "label-regimen-3-" + self.uid,
 												width: 180,
 												height: 28,
 												view: "combo",
-												// css: {"margin-top": "-5px"},
-												value: self.proposedRegime.value,
+												value: getCurrentRegime() ? getCurrentRegime().id : undefined,
 												options: availableRegimes,
 												on: {
 													onChange(newv, oldv) {
 
-														updateProposedRegime(newv, ventilationRegimeConfig.ventilationRegimes);
+														updateInfoRegime(getVentilationRegime(newv));
 														webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.uid));
 														webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.uid));
 													}
@@ -465,7 +525,8 @@ export default class TubeContent {
 												align: "right",
 												css: "button-cta",
 												value: i18n.t("LBL_CHANGE_REGIME"),
-												disabled: self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable,
+												disabled: self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disable ||
+													getDisabledChangeRegime(),
 												click: function() {
 
 													let command = self.parent.config.commands.SEND_VENTILATION_REGIME;
@@ -514,20 +575,6 @@ export default class TubeContent {
 						]
 					};
 
-					function getViewProposedRegimeLabel() {
-
-						let viewProposedRegimeLabel = {
-							view: "label",
-							width: 180,
-							height: 24,
-							id: "label-regimen-2-" + self.uid,
-							template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.proposedRegime.labelAlias) + '</span></div>',
-							css: "global-text"
-						};
-
-						return viewProposedRegimeLabel;
-					}
-
 					function getViewDocument() {
 
 						let viewDocument = {
@@ -535,7 +582,7 @@ export default class TubeContent {
 							height: 26
 						};
 
-						if (self.proposedRegime.documentUrl) {
+						if (self.infoRegime.documentUrl) {
 
 							viewDocument = {
 								id: "view-content-regime-document-" + self.uid,
@@ -547,12 +594,12 @@ export default class TubeContent {
 										width: 500,
 										view: "button",
 										type: "icon",
-										label: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
-										value: self.proposedRegime.documentName + " " + self.proposedRegime.documentType,
+										label: self.infoRegime.documentName + " " + self.infoRegime.documentType,
+										value: self.infoRegime.documentName + " " + self.infoRegime.documentType,
 										tooltip: true,
 										icon: "mdi mdi-file",
 										click: function() {
-											window.open(self.proposedRegime.documentUrl, '_blank');
+											window.open(self.infoRegime.documentUrl, '_blank');
 										},
 										css: "button-icon-transparent"
 									}
@@ -570,30 +617,29 @@ export default class TubeContent {
 							width: 500,
 							borderless: true,
 							view: "template",
-							template: `<div class="ventilation-description-box"><span > ${self.proposedRegime.description}</span></div>`
+							template: `<div class="ventilation-description-box"><span > ${self.infoRegime.description}</span></div>`
 						};
 					}
 
-					function updateProposedRegime(value, ventilationRegimes) {
+					function updateInfoRegime(ventilationRegime) {
 
-						self.proposedRegime.value = value;
+						self.infoRegime = {};
 
-						if (self.proposedRegime.value && ventilationRegimes) {
+						if (ventilationRegime) {
 
-							let proposedConfig = ventilationRegimes.find(e => e.id == self.proposedRegime.value);
-							self.proposedRegime.labelAlias = proposedConfig.labelAlias;
-							self.proposedRegime.description = proposedConfig.description;
-							self.proposedRegime.documentUrl = proposedConfig.documentUrl
+							self.infoRegime.labelAlias = ventilationRegime.labelAlias;
+							self.infoRegime.description = ventilationRegime.description;
+							self.infoRegime.documentUrl = ventilationRegime.documentUrl
 
-							if (self.proposedRegime.documentUrl) {
+							if (ventilationRegime.documentUrl) {
 
-								self.proposedRegime.documentName = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf("/") + 1, self.proposedRegime.documentUrl.lastIndexOf("."));
-								self.proposedRegime.documentType = self.proposedRegime.documentUrl.substring(self.proposedRegime.documentUrl.lastIndexOf(".") + 1, self.proposedRegime.documentUrl.length);
+								self.infoRegime.documentName = ventilationRegime.documentUrl.substring(ventilationRegime.documentUrl.lastIndexOf("/") + 1, ventilationRegime.documentUrl.lastIndexOf("."));
+								self.infoRegime.documentType = ventilationRegime.documentUrl.substring(ventilationRegime.documentUrl.lastIndexOf(".") + 1, ventilationRegime.documentUrl.length);
 							}
 						} else {
 
-							self.proposedRegime.labelAlias = "LBL_NO_REGIME";
-							self.proposedRegime.description = "";
+							self.infoRegime.labelAlias = "LBL_NO_REGIME";
+							self.infoRegime.description = "";
 						}
 					}
 
@@ -928,7 +974,7 @@ export default class TubeContent {
 								align: "right",
 								css: "button-cta",
 								value: i18n.t("LBL_VENTILATION_CHANGE_STATUS"),
-								disabled: self.parent.config.ventilationModeOptions.find(option => option.id == self.ventilationModeValueParam.value).disable,
+								disabled: self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disable,
 								click: function() {
 
 									webix.confirm({
