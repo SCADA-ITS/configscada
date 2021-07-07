@@ -149,6 +149,10 @@ export default class Vms extends GraphicIconCustomType {
 		if (!value && USE_VMS_FAKE_DATA) {
 			
 			self.jsonData = this.jsonDataFake;
+			
+		} else if(!value){
+			
+			self.jsonData = [];
 		}
 		else {
 			
