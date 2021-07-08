@@ -371,7 +371,7 @@ export default class EquipmentViewerContent {
 				// Select initial tab for modules if configured
 				if (equipViewerTab.id === self.equipmentViewer.initialTab) {
 
-					contentTabs.getTabbar().setValue(tabBodyId);
+					contentTabs.getTabbar().setValue("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
 				}
 			}
 		}

@@ -7,7 +7,15 @@
 		
 	},
 	"restEndpoints": {
-		"element": "elements/${id}"
+		"element": "elements/${id}",
+		"cctvScenario": "cctv_scenarios/${id}",
+		"cctvHierarchies": "cctv_scenarios/hierarchies"
+	},
+	"multi": {
+		"fit": true
+	},
+	"single": {
+		"fit": false
 	},
 	"camConf": {
 		"stream_mjpeg": {

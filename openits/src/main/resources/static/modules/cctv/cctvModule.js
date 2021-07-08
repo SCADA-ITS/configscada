@@ -1,5 +1,6 @@
 import GenericModule from "../../modules/genericModule.js";
-import CamViewer from "./camViewer.js";
+import CCTVSingle from "./cctvSingle.js";
+import CCTVMulti from "./cctvMulti.js";
 import { util } from "../../lib/util.js";
 
 export default class CCTVModule extends GenericModule {
@@ -19,43 +20,41 @@ export default class CCTVModule extends GenericModule {
 		let self = this;
 		
 		$$("loading-" + self.uid).show();
-
-		if (this.moduleAction.id === this.config.moduleAction.singleCam) {
+		
+		if (this.moduleAction && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
 			
-			loadSingleCam();
+			if (this.moduleAction.id === this.config.moduleAction.singleCam) {
+			
+				loadSingleCam(self.args.selectedPks[0]);
+			}
+			else if(this.moduleAction.id === this.config.moduleAction.scenario) {
+				
+				loadScenario(self.args.selectedPks[0]);
+			}	
+		}
+		else {
+			
+			loadScenario();
 		}
 		
-		function loadSingleCam() {
+		function loadSingleCam(elementId) {
 			
-			let elementId = self.args.selectedPks[0];
+			(new CCTVSingle(self, elementId, onLoad)).loadData();
+		}
+		
+		function loadScenario(scenarioId) {
 			
-			if (elementId) {
+			(new CCTVMulti(self, scenarioId, onLoad)).loadData();
+		}
+		
+		function onLoad(view, afterRender) {
 			
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
+			$$("loading-" + self.uid).hide();
+			webix.ui(view, $$(self.uid));
+			
+			if (afterRender) {
 				
-					if (elementResponse != null) {
-						
-						let element = elementResponse.json();
-							
-						if (element) {
-					
-							let camViewer = new CamViewer(self, element);
-				
-							let viewCamViewer = camViewer.getView();
-							
-							let viewMain = {
-								id: self.uid,
-								rows: [
-									viewCamViewer
-								]
-							};
-					
-							$$("loading-" + self.uid).hide();
-					
-							webix.ui(viewMain, $$(self.uid));
-						}
-					}
-				});
+				afterRender();
 			}
 		}
 	}
