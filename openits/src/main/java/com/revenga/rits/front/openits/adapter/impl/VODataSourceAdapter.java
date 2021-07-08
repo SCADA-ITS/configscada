@@ -213,6 +213,9 @@ public class VODataSourceAdapter {
 
 	public static final int DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_with_childs_by_element_type");
 	
+	public static final int DATA_SOURCE_GET_CCTV_SCENARIO = getPropertyInt("get_cctv_scenario");
+	public static final int DATA_SOURCE_GET_CCTV_SCENARIO_HIERARCHIES = getPropertyInt("get_cctv_scenario_hierarchies");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {
