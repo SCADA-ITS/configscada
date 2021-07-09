@@ -42,9 +42,7 @@ public class VmsLibraryBO extends GenericBO {
 
 		VmsLibrary vmsLibrary = vmsLibraryService.getById(id);
 
-		Map<String, Object> vmsLibraryMap = ConversionUtil.objectToMap(vmsLibrary);
-
-		return vmsLibraryMap;
+		return ConversionUtil.objectToMap(vmsLibrary);
 	}
 
 	@Override

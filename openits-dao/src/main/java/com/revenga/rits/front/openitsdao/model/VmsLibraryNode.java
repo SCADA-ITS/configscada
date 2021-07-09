@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,7 +26,11 @@ public class VmsLibraryNode implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(
+		    name = "incrementGenerator",
+		    strategy = "org.hibernate.id.IncrementGenerator")
+	@GeneratedValue(generator="incrementGenerator")
 	private Integer id;
 	private String name;
 	private String description;

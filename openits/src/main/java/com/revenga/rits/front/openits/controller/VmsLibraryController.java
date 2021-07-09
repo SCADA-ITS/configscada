@@ -7,14 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revenga.rits.front.openits.bo.VmsLibraryBO;
 import com.revenga.rits.front.openits.bo.VmsLibraryElementSubtypeBO;
+import com.revenga.rits.front.openits.bo.VmsLibraryNodeBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +38,9 @@ public class VmsLibraryController {
 
 	@Autowired
 	VmsLibraryBO vmsLibraryBO;
+	
+	@Autowired
+	VmsLibraryNodeBO vmsLibraryNodeBO;
 
 	@GetMapping
 	@ApiOperation(value = "Get all vms_libraries", notes = "Get all vms libraries")
@@ -45,7 +52,7 @@ public class VmsLibraryController {
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get vms_libraries by id", notes = "Get vms libraries by id")
 	public ResponseEntity<Map<String, Object>> getVmsLibraryById(
-			@ApiParam(name = "id", type = "Integer", value = "VmsLipbrary id", example = "1", required = true) @PathVariable Integer id) {
+			@ApiParam(name = "id", type = "Integer", value = "VmsLibrary id", example = "1", required = true) @PathVariable Integer id) {
 
 		return new ResponseEntity<>(vmsLibraryBO.getItem(id), HttpStatus.OK);
 	}
@@ -64,4 +71,32 @@ public class VmsLibraryController {
 
 		return new ResponseEntity<>(vmsLibraryElementSubtypeBO.getItem(id), HttpStatus.OK);
 	}
+	
+//	@PostMapping(value = "/{id}/node")
+//	@ApiOperation(value = "Save library node", notes = "Save library node")
+//	public ResponseEntity<Map<String, Object>> saveLibraryNode(
+//			@ApiParam(name = "id", type = "Integer", value = "VmsLibrary id", example = "1", required = true) @PathVariable Integer id,
+//			@RequestBody Object vmslibraryNode) {
+//
+//		return new ResponseEntity<>(vmsLibraryNodeBO.save(id, vmslibraryNode), HttpStatus.OK);
+//	}
+	
+	@PostMapping(value = "/{id}/node/{parentNodeIds}")
+	@ApiOperation(value = "Save library node and assign to parent node", notes = "Save library node and assign to parent node")
+	public ResponseEntity<Map<String, Object>> saveLibraryNodeWithParent(
+			@ApiParam(name = "id", type = "Integer", value = "VmsLibrary id", example = "1", required = true) @PathVariable Integer id,
+			@ApiParam(name = "parentNodeIds", type = "String", value = "VmsLibraryNode parent ids", example = "1,2", required = true) @PathVariable String parentNodeIds,
+			@RequestBody Object vmslibraryNode) {
+
+		return new ResponseEntity<>(vmsLibraryNodeBO.save(id, vmslibraryNode, parentNodeIds), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/node/{id}")
+	@ApiOperation(value = "Delete library node", notes = "Delete library node")
+	public ResponseEntity<Map<String, Object>> saveLibraryNode(
+			@ApiParam(name = "id", type = "Integer", value = "VmsLibraryNode id", example = "1", required = true) @PathVariable Integer id) {
+
+		return new ResponseEntity<>(vmsLibraryNodeBO.delete(id), HttpStatus.OK);
+	}
+
 }

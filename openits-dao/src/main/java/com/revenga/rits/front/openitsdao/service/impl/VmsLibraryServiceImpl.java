@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openitsdao.model.VmsLibrary;
+import com.revenga.rits.front.openitsdao.model.VmsLibraryHierarchy;
+import com.revenga.rits.front.openitsdao.model.VmsLibraryNode;
 import com.revenga.rits.front.openitsdao.repository.VmsLibraryRepository;
 import com.revenga.rits.front.openitsdao.service.VmsLibraryService;
 

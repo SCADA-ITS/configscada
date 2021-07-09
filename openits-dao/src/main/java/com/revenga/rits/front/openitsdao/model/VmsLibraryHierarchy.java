@@ -24,7 +24,7 @@ public class VmsLibraryHierarchy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private Boolean enabled;
@@ -81,7 +81,7 @@ public class VmsLibraryHierarchy implements Serializable {
 		return this.nodeParentId;
 	}
 
-	public void setNodeParenIdt(Integer nodeParentId) {
+	public void setNodeParentId(Integer nodeParentId) {
 		this.nodeParentId = nodeParentId;
 	}
 	
