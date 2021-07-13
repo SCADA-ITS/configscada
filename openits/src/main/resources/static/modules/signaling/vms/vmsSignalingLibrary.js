@@ -193,7 +193,10 @@ export default class VmsSignalingLibrary {
 					
 					id: -1,
 					label: "LBL_LIBRARY",
-					treeOptionValues: []
+					treeOptionValues: [],
+					treeCommands: [
+						
+					]
 				}
 			}
 			

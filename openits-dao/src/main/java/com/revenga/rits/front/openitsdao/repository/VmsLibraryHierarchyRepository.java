@@ -12,9 +12,10 @@ public interface VmsLibraryHierarchyRepository extends JpaRepository<VmsLibraryH
 
 	VmsLibraryHierarchy findById(Integer id);
 	List<VmsLibraryHierarchy> findByNodeParentId(Integer id);
+	List<VmsLibraryHierarchy> findByNodeChildId(Integer id);
 	List<VmsLibraryHierarchy> findAll();
 
-	<S extends VmsLibraryHierarchy> S save(VmsLibraryHierarchy vmsLibraryHierarchy);
+	<S extends VmsLibraryHierarchy> S save(S vmsLibraryHierarchy);
 	void deleteById(Integer id);
 	void delete(VmsLibraryHierarchy vmsLibraryHierarchy);
 }

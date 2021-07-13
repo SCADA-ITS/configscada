@@ -34,12 +34,13 @@ public class VmsLibraryHierarchyServiceImpl implements VmsLibraryHierarchyServic
 		return vmsLibraryHierarchyRepository.findByNodeParentId(id);
 	}
 
-	@Override
-	@Transactional
-	public VmsLibraryHierarchy save(VmsLibraryHierarchy vmsLibraryHierarchy) {
-		
-		return vmsLibraryHierarchyRepository.save(vmsLibraryHierarchy);
-	}
+	
+//	@Override
+//	@Transactional
+//	public VmsLibraryHierarchy save(VmsLibraryHierarchy vmsLibraryHierarchy) {
+//		
+//		return vmsLibraryHierarchyRepository.save(vmsLibraryHierarchy);
+//	}
 	
 
 	@Override
@@ -62,5 +63,12 @@ public class VmsLibraryHierarchyServiceImpl implements VmsLibraryHierarchyServic
 		
 		return vmsLibraryHierarchy;
 		
+	}
+
+	@Override
+	@Transactional
+	public <S extends VmsLibraryHierarchy> S save(S vmsLibraryHierarchy) {
+		
+		return vmsLibraryHierarchyRepository.save(vmsLibraryHierarchy);
 	}
 }

@@ -9,8 +9,9 @@ public interface VmsLibraryNodeService {
 	public List<VmsLibraryNode> getAll();
 	public VmsLibraryNode getById(Integer id);
 	
-	public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode);
-	public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode, List<Integer> parentNodeIds);
+	public <S extends VmsLibraryNode> S save(S vmsLibraryNode);
+	public <S extends VmsLibraryNode> S save(S vmsLibraryNode, List<Integer> parentNodeIds);
+	//public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode);
+	//public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode, List<Integer> parentNodeIds);
 	public VmsLibraryNode deleteById(Integer id);
-	public VmsLibraryNode delete(VmsLibraryNode vmsLibraryNode);
 }

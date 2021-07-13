@@ -93,7 +93,7 @@ public class VmsLibraryController {
 	
 	@DeleteMapping(value = "/node/{id}")
 	@ApiOperation(value = "Delete library node", notes = "Delete library node")
-	public ResponseEntity<Map<String, Object>> saveLibraryNode(
+	public ResponseEntity<Map<String, Object>> deleteLibraryNode(
 			@ApiParam(name = "id", type = "Integer", value = "VmsLibraryNode id", example = "1", required = true) @PathVariable Integer id) {
 
 		return new ResponseEntity<>(vmsLibraryNodeBO.delete(id), HttpStatus.OK);

@@ -13,8 +13,6 @@ public interface VmsLibraryNodeRepository extends JpaRepository<VmsLibraryNode, 
 	VmsLibraryNode findById(Integer id);
 	List<VmsLibraryNode> findAll();
 
-	<S extends VmsLibraryNode> S save(VmsLibraryNode vmsLibraryNode);
+	<S extends VmsLibraryNode> S save(S vmsLibraryNode);
 	void deleteById(Integer id);
-	void delete(VmsLibraryNode vmsLibraryNode);
-	
 }

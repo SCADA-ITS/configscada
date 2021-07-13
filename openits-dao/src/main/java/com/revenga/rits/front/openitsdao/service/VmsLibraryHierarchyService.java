@@ -10,7 +10,8 @@ public interface VmsLibraryHierarchyService {
 	public List<VmsLibraryHierarchy> getByNodeParentId(Integer id);
 	public VmsLibraryHierarchy getById(Integer id);
 	
-	public VmsLibraryHierarchy save(VmsLibraryHierarchy vmsLibraryHierarchy);
+	//public VmsLibraryHierarchy save(VmsLibraryHierarchy vmsLibraryHierarchy);
+	public <S extends VmsLibraryHierarchy> S save(S vmsLibraryHierarchy);
 	public VmsLibraryHierarchy deleteById(Integer id);
 	public VmsLibraryHierarchy delete(VmsLibraryHierarchy vmsLibraryHierarchy);
 }

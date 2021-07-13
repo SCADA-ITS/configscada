@@ -36,16 +36,16 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 	
 	@Override
 	@Transactional
-	public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode) {
+	public <S extends VmsLibraryNode> S save(S vmsLibraryNode) {
 		
 		return save(vmsLibraryNode, null);
 	}
 
 	@Override
 	@Transactional
-	public VmsLibraryNode save(VmsLibraryNode vmsLibraryNode, List<Integer> parentNodeIds) {
+	public <S extends VmsLibraryNode> S save(S vmsLibraryNode, List<Integer> parentNodeIds) {
 		
-		VmsLibraryNode vmsLibraryNodeSaved = null;
+		S vmsLibraryNodeSaved = null;
 				
 		boolean exists = (getById(vmsLibraryNode.getId()) != null);
 		
@@ -96,19 +96,45 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 		
 		VmsLibraryNode vmsLibraryNode = getById(id);
 		
-		vmsLibraryNodeRepository.deleteById(id);
+		if (vmsLibraryNode != null) {
+		
+			deleteChilds(id);
+			
+			deleteParents(id);
+			
+			vmsLibraryNodeRepository.deleteById(id);
+		}
 		
 		return vmsLibraryNode;
-		
 	}
-
-	@Override
-	@Transactional
-	public VmsLibraryNode delete(VmsLibraryNode vmsLibraryNode) {
+	
+	private void deleteChilds(Integer childId) {
 		
-		vmsLibraryNodeRepository.delete(vmsLibraryNode);
+		vmsLibraryNodeRepository.deleteById(childId);
 		
-		return vmsLibraryNode;
+		List<VmsLibraryHierarchy> libraryHierarchyChilds = vmsLibraryHierarchyRepository.findByNodeChildId(childId);
 		
+		if (!CollectionUtils.isEmpty(libraryHierarchyChilds)) {
+			
+			for (VmsLibraryHierarchy vmsLibraryHierarchyChild : libraryHierarchyChilds) {
+				
+				vmsLibraryHierarchyRepository.deleteById(vmsLibraryHierarchyChild.getId());
+			}
+		}
+	}
+	
+	private void deleteParents(Integer parentId) {
+		
+		List<VmsLibraryHierarchy> libraryHierarchyParents = vmsLibraryHierarchyRepository.findByNodeParentId(parentId);
+		
+		if (!CollectionUtils.isEmpty(libraryHierarchyParents)) {
+			
+			for (VmsLibraryHierarchy vmsLibraryHierarchyParent : libraryHierarchyParents) {
+				
+				vmsLibraryHierarchyRepository.deleteById(vmsLibraryHierarchyParent.getId());
+				
+				deleteById(vmsLibraryHierarchyParent.getNodeChildId());
+			}
+		}
 	}
 }
