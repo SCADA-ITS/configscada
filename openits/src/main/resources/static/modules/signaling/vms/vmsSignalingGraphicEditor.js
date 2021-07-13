@@ -66,7 +66,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 						view: "label",
 						height: 75,
 						id: "label-bottom-" + self.uid,
-						template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
+						template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + description + "</span>",
 						css: "label"
 					}
 				]

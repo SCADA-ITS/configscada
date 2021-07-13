@@ -413,7 +413,7 @@ export default class TreeView {
 							on: {
 								onItemClick: function() {
 								
-									executeTreeCommand(treeCommand.id);			
+									executeTreeCommand(treeCommand);			
 								}
 							}
 						};
@@ -424,12 +424,6 @@ export default class TreeView {
 				});
 				
 				if (viewGroupCommands.length > 0) {
-					
-//					let viewButtonGroupCommand = { 
-//						view: "icon", 
-//						icon: "mdi mdi-dots-vertical", 
-//						popup: "groupCommands-" + self.uid
-//					};
 					
 					let viewButtonGroupCommand = {
 						view: "menu",
@@ -446,57 +440,26 @@ export default class TreeView {
 						on: {
 							onMenuItemClick: function(id) {
 								
-									let item = viewGroupCommands.find(e => e.id == id);
+								let item = viewGroupCommands.find(e => e.id == id);
+								
+								if(item != undefined) {
 									
-									if(item != undefined){
-									executeTreeCommand(item.treeCommandId);	
+									let treeCommand = self.metadata.treeCommands.find(e => {
+										return e.id === item.treeCommandId
+									});
+									
+									if (treeCommand) {
+										
+										executeTreeCommand(treeCommand);	
+									}
+										
 									this.unselectAll();	
 								}
 							}
 						}
-				};
+					};
 							
 					tbActionView.elements.push(viewButtonGroupCommand);
-					
-//					webix.ui({
-//  						view: "popup",
-//					  	id: "groupCommands-" + self.uid,
-//					  	//width:300,
-//					  	body:{
-//						
-//							view: "list", 
-//					    	data: viewGroupCommands,
-//							borderless: true,
-//					    	type: {
-//
-//								template: function(obj) {
-//		
-//									if (!obj.default) {
-//										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px;'>${obj.value}</span>`;
-//									}
-//									else {
-//										return `<span class = 'webix_icon ${obj.icon}'></span> <span style='position: relative; top: -1px; left: 10px; font-weight: 500;'>${obj.value}</span>`;
-//									}
-//								}
-//							},
-//					    	autoheight:true,
-//							autowidth:true,
-//					    	select:true,
-//							on: {
-//								onAfterSelect: function(id) {
-//									
-//									let item = this.getItem(id);
-//									
-//									executeTreeCommand(item.treeCommandId);
-//									
-//									this.unselectAll();
-//									this.getParentView().hide();			
-//								}
-//							}	    
-//					  	}
-//					});
-//					
-					
 				}
 			}
 			
@@ -511,15 +474,11 @@ export default class TreeView {
 				});
 			}
 			
-			function executeTreeCommand(treeCommandId) {
+			function executeTreeCommand(treeCommand) {
 			
-				let treeCommand = self.metadata.treeCommands.find(e => {
-					return e.id === treeCommandId
-				});
-				
 				if (treeCommand) {
 				
-					util.module.executeCommand(treeCommand, null, function() { return self.getSelected().map(e => e.id_) });
+					util.module.executeCommand(treeCommand, null, function() { return self.getSelected().map(e => e.id_) }, treeCommand.callbacks);
 				}
 			}
 		}
@@ -641,6 +600,19 @@ export default class TreeView {
 		}
 	}
 	
+	getParent(item) {
+		
+		let tree = $$("tree-" + this.uid);
+		let parent = undefined;
+		
+		if (tree && item) {
+			
+			parent = tree.getItem(tree.getParentId(item.id)); 
+		}
+		
+		return parent;
+	}
+	
 	getSelected() {
 		
 		let tree = $$("tree-" + this.uid);
@@ -655,9 +627,7 @@ export default class TreeView {
 				let checkedList = tree.getChecked();
 				
 				if (Array.isArray(checkedList) && checkedList.length > 0) {
-				
-					//checkedItems = checkedList.filter(e => tree.getItem(e).props && !tree.getItem(e).props.folder);
-					
+								
 					checkedList.forEach(e => {
 						
 						checkedItems.push(tree.getItem(e));
@@ -666,7 +636,12 @@ export default class TreeView {
 			}
 			else {
 				
-				checkedItems.push(tree.getSelectedItem());
+				let selectedItem = undefined;
+				
+				if (selectedItem = tree.getSelectedItem()) {
+					
+					checkedItems.push(selectedItem);	
+				}
 			}
 		}
 		

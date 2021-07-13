@@ -71,7 +71,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						view: "label",
 						height: 75,
 						id: "label-bottom-" + self.uid,
-						template: "<span>" + i18n.t(label) + "</span> <br> <span style='font-size: 13px'>" + i18n.t(description) + "</span>",
+						template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + description + "</span>",
 						css: "label"
 					}
 				]
@@ -330,7 +330,7 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 								{
 									id: (!alternance ? "view-signalling-text-editor-main-color-" : "view-signalling-text-editor-alt-color-") + lineData.id + "-" + self.uid,
 									view: "colorpicker",
-									disabled: !self.config.properties.textColor,
+									hidden: !self.config.properties.textColor,
 									value: lineData.color ? lineData.color : self.config.properties.defaultTextColor,
 									on:{
 										onChange: function(newValue, oldValue, config){

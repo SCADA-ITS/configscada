@@ -1610,6 +1610,7 @@ p {
 	font-size: 13px;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
+	padding-bottom: 8px;
 }
 
 .secondary-tab .webix_all_tabs .webix_tab_filler {

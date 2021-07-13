@@ -479,12 +479,9 @@ export let util = {
 				selectedPks = selectedPksCallback();
 			}
 			
-			if (command && command.moduleAction) {
+			if (command && !commandExecCallback() && command.moduleAction) {
 				
-				if (!commandExecCallback()) {
-				
-					open_module();	
-				}
+				open_module();	
 			}
 			
 			function open_module() {
