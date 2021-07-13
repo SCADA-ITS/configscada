@@ -162,51 +162,55 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		
 		function drawOptionAligns() {
 			
-			let viewOptionAligns = {
-				cols: [
-					{
-						rows: [
-							{
-								cols: [
-									{
-										view: "label",
-										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-format-align-left"></i></div>`,
-										align: "center",
-										height: 50,
-										width: 56
-									},
-									{
-										view: "label",
-										css: "alarm-view-header-details-text",
-										label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING_TEXT_ALIGN")}</span>`,
-										align: "left",
-										height: 50
-									},
-									{}
-								]
-							},
-							{
-								cols: [
-									{ width: 55 },
-									{
-										id: "view-signalling-text-editor-option-aligns-" + self.uid,
-										view: "radio",
-										vertical: false,
-										options: [
-											{ "id": VmsSignalingZoneEditor.ALIGN_LEFT, "value": i18n.t("LBL_ALIGN_LEFT") },
-											{ "id": VmsSignalingZoneEditor.ALIGN_CENTER, "value": i18n.t("LBL_ALIGN_CENTER") },
-											{ "id": VmsSignalingZoneEditor.ALIGN_RIGHT, "value": i18n.t("LBL_ALIGN_RIGHT") }
-										]
-									}
-								]
-							}
-							
-						]
-					}	
-				]
-			};
-			
-			
+			let viewOptionAligns = { height: 1 };
+				
+			if (self.config.properties.textAlign) {
+				
+				viewOptionAligns = {
+					cols: [
+						{
+							rows: [
+								{
+									cols: [
+										{
+											view: "label",
+											label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-format-align-left"></i></div>`,
+											align: "center",
+											height: 50,
+											width: 56
+										},
+										{
+											view: "label",
+											css: "alarm-view-header-details-text",
+											label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING_TEXT_ALIGN")}</span>`,
+											align: "left",
+											height: 50
+										},
+										{}
+									]
+								},
+								{
+									cols: [
+										{ width: 55 },
+										{
+											id: "view-signalling-text-editor-option-aligns-" + self.uid,
+											view: "radio",
+											vertical: false,
+											options: [
+												{ "id": VmsSignalingZoneEditor.ALIGN_LEFT, "value": i18n.t("LBL_ALIGN_LEFT") },
+												{ "id": VmsSignalingZoneEditor.ALIGN_CENTER, "value": i18n.t("LBL_ALIGN_CENTER") },
+												{ "id": VmsSignalingZoneEditor.ALIGN_RIGHT, "value": i18n.t("LBL_ALIGN_RIGHT") }
+											]
+										}
+									]
+								}
+								
+							]
+						}	
+					]
+				};	
+			}
+				
 			return viewOptionAligns;
 		}
 		
@@ -278,20 +282,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					while (lineData = self.data.texts.find(e => e.id === lineNum)) {
 						
-						//viewLines.cols[0].rows.push(drawTextEditorLine());
 						viewLines.cols[0].elements.push(drawTextEditorLine());
-						
-//						viewLines.cols[0].rules[(alternance ? "alt-" : "main-") + lineData.id] = function(value) {
-//							
-//							console.log("Input value is " + value);
-//							let textWidth = util.ui.calculateTextWidth(value, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
-//							
-//							console.log("Input width is " + inputWidth + "px.")
-//							console.log("Text width is " + textWidth + "px.")
-//								
-//							return inputWidth < textWidth;
-//						}
-						
+
 						lineNum++;
 					}
 					
@@ -317,21 +309,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 										console.log("Input width is " + inputWidth + "px.")
 										console.log("Text width is " + textWidth + "px.")
 											
-										//return inputWidth > (textWidth + parseInt(DEFAULT_INPUT_FONT_SIZE, 10));
 										return inputWidth > textWidth;
 									},
-//									validate: function() {
-//										
-//										console.log("Input value is " + this.getValues()[(alternance ? "alt-" : "main-") + lineData.id]);
-//										let textWidth = util.ui.calculateTextWidth(this.getValues()[(alternance ? "alt-" : "main-") + lineData.id], self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
-//										
-//										console.log("Input width is " + inputWidth + "px.")
-//										console.log("Text width is " + textWidth + "px.")
-//											
-//										return inputWidth < textWidth;
-//									},
-									//css: { "font-family": self.config.fontInfo["font-family"]},
-									//css: "vms-input-line",
 									label: i18n.t("LBL_LINE") + lineData.id,
 									labelWidth: 150,
 									value: alternance ? lineData.alternance : lineData.value,
@@ -344,19 +323,14 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 										onChange: function(newValue, oldValue, config) {
 											
 											$$((!alternance ? "view-signalling-text-editor-main-form-" : "view-signalling-text-editor-alt-form-") + self.uid).validate();
-//											this.validate();
-//											console.log("Input value is " + newValue);
-//											let textWidth = util.ui.calculateTextWidth(newValue, self.config.fontInfo["font-family"], DEFAULT_INPUT_FONT_SIZE + "px");
-//											
-//											console.log("Input width is " + inputWidth + "px.")
-//											console.log("Text width is " + textWidth + "px.")
 										}
 									}
 	
 								},
 								{
 									id: (!alternance ? "view-signalling-text-editor-main-color-" : "view-signalling-text-editor-alt-color-") + lineData.id + "-" + self.uid,
-									view: "colorpicker", 
+									view: "colorpicker",
+									disabled: !self.config.properties.textColor,
 									value: lineData.color ? lineData.color : self.config.properties.defaultTextColor,
 									on:{
 										onChange: function(newValue, oldValue, config){
@@ -503,11 +477,11 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					let align = TEXT_ALIGN_CENTER;
 					
-					if (optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_LEFT) {
+					if (optionAligns && optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_LEFT) {
 						
 						align = TEXT_ALIGN_LEFT;
 					}
-					else if (optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_RIGHT) {
+					else if (optionAligns && optionAligns.getValue() == VmsSignalingZoneEditor.ALIGN_RIGHT) {
 						
 						align = TEXT_ALIGN_RIGHT;
 					}
