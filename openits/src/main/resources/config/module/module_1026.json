@@ -69,12 +69,12 @@
 			},
 			"alternance": true,
 			"defaultAlternanceMs": 5000,
-			"blinking": true,
+			"blinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
-			"textColor": true,
+			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
-			"textAlign": true
+			"textAlign": false
 		}
 	],
 	"action": {
