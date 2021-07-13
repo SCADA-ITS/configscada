@@ -22,6 +22,7 @@ export default class LightingnModule extends GenericModule {
 		this.selectedTubeId;
 		
 		this.enabledSelectedPks;
+		this.tubeTableOption;
 	}
 
 	loadData() {
@@ -86,6 +87,11 @@ export default class LightingnModule extends GenericModule {
 			if(this.args && this.args.selectedPks){
 
 				self.enabledSelectedPks = this.args.selectedPks;
+
+				if(this.moduleAction.id == this.config.moduleAction.dali){
+				
+					self.tubeTableOption = "action-panel-switcher-dali" + this.uid;
+				}
 				
 				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(response) {
 
@@ -228,9 +234,13 @@ export default class LightingnModule extends GenericModule {
 					$$("view-content-" + self.uid).hide();
 					$$("view-content-loading-" + self.uid).show();
 					
-					let containerContent = new TubeContent(self.selectedTunnelId, self.selectedTubeId, self);
-					containerContent.loadData(self.enabledSelectedPks, drawContent);
+					let containerContent = new TubeContent(self.args, self.selectedTubeId, self);
+					let args = {};
+					args.selectedPks = self.enabledSelectedPks;
+					args.tubeTableOption = self.tubeTableOption;
+					containerContent.loadData(args, drawContent);
 					self.enabledSelectedPks = undefined;
+					self.tubeTableOption = undefined;
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 

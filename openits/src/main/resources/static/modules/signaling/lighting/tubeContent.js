@@ -33,7 +33,7 @@ export default class TubeContent {
 		this.idStompSubscriptorDalis = undefined;
 	}
 
-	loadData(enabledSelectedPks, drawContent) {
+	loadData(args, drawContent) {
 
 		let self = this;
 
@@ -41,9 +41,9 @@ export default class TubeContent {
 
 			self.selectedTube = data.json();
 			
-			if(parent.moduleAction && parent.moduleAction.id == this.config.moduleAction.dali){
+			if(args && args.tubeTableOption){
 
-				self.selectedTable = "action-panel-switcher-dali" + self.parent.uid;
+				self.selectedTable = args.tubeTableOption;
 			}
 
 			loadDataCircuits();
@@ -57,9 +57,9 @@ export default class TubeContent {
 
 				this.tubeCircuitsDataTable.callbacks();
 
-				if (enabledSelectedPks) {
+				if (args.selectedPks) {
 					
-					this.tubeCircuitsDataTable.select(enabledSelectedPks);
+					this.tubeCircuitsDataTable.select(args.selectedPks);
 				}
 
 				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
@@ -72,9 +72,9 @@ export default class TubeContent {
 
 				this.tubeDalisDataTable.callbacks();
 
-				if (enabledSelectedPks) {
+				if (args.selectedPks) {
 					
-					this.tubeDalisDataTable.select(enabledSelectedPks);
+					this.tubeDalisDataTable.select(args.selectedPks);
 				}
 
 				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
