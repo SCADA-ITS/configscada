@@ -72,14 +72,14 @@ public class VmsLibraryController {
 		return new ResponseEntity<>(vmsLibraryElementSubtypeBO.getItem(id), HttpStatus.OK);
 	}
 	
-//	@PostMapping(value = "/{id}/node")
-//	@ApiOperation(value = "Save library node", notes = "Save library node")
-//	public ResponseEntity<Map<String, Object>> saveLibraryNode(
-//			@ApiParam(name = "id", type = "Integer", value = "VmsLibrary id", example = "1", required = true) @PathVariable Integer id,
-//			@RequestBody Object vmslibraryNode) {
-//
-//		return new ResponseEntity<>(vmsLibraryNodeBO.save(id, vmslibraryNode), HttpStatus.OK);
-//	}
+	@PostMapping(value = "/{id}/node")
+	@ApiOperation(value = "Save library node", notes = "Save library node")
+	public ResponseEntity<Map<String, Object>> saveLibraryNode(
+			@ApiParam(name = "id", type = "Integer", value = "VmsLibrary id", example = "1", required = true) @PathVariable Integer id,
+			@RequestBody Object vmslibraryNode) {
+
+		return new ResponseEntity<>(vmsLibraryNodeBO.save(id, vmslibraryNode, null), HttpStatus.OK);
+	}
 	
 	@PostMapping(value = "/{id}/node/{parentNodeIds}")
 	@ApiOperation(value = "Save library node and assign to parent node", notes = "Save library node and assign to parent node")

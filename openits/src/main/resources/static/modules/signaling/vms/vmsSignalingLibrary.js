@@ -29,16 +29,16 @@ export default class VmsSignalingLibrary {
 		
 		view = {
 			cols: [
-				{
-					id: "loading-" + self.uid,
-					hidden: false,
-					rows: [
-						util.ui.getViewDrawLoading()
-					]
-				},
+//				{
+//					id: "loading-" + self.uid,
+//					hidden: true,
+//					rows: [
+//						util.ui.getViewDrawLoading()
+//					]
+//				},
 				{
 					id: self.uid,
-					hidden: true,
+					//hidden: true,
 					rows: [
 						drawHeader(),
 						{
@@ -68,8 +68,8 @@ export default class VmsSignalingLibrary {
 		
 			if ($$(self.uid)) {
 	
-				$$("loading-" + self.uid).show();
-				$$(self.uid).hide();
+//				$$("loading-" + self.uid).show();
+//				$$(self.uid).hide();
 			}
 			
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.vmsLibraryBySubtype, { id: self.element.elementSubtype.id })).then(function(response) {
@@ -83,10 +83,19 @@ export default class VmsSignalingLibrary {
 						self.vmsSignalingLibraryPersist = new VmsSignalingLibraryPersist(self.config, vmsLib.vmsLibrary.id);
 						
 						drawViewTree(vmsLib.vmsLibrary.vmsLibraryNodes, vmsLib.vmsLibrary.vmsLibraryHierarchies);
+					}
+					
+					if ($$(self.uid)) {
+
+//						$$("loading-" + self.uid).hide();
+//						$$(self.uid).show();
 						
-						if (libraryNodeId) {
+						if (self.treeView) {
 							
-							if (self.treeView) {
+							self.treeView.select("root");
+							self.treeView.expand("root");
+								
+							if (libraryNodeId) {
 				
 								self.treeView.select(libraryNodeId);
 								
@@ -94,24 +103,26 @@ export default class VmsSignalingLibrary {
 								
 								if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 									
-									let selectedItem = selectedItems[0]; 
-									let parent = self.treeView.getParent(selectedItem);
-								
-									if (parent) {
+									let selectedItem = selectedItems[0];
+									
+									if (selectedItem.props && selectedItem.props.folder) {
 										
-										self.treeView.expand(parent.id);	
-									}	
+										self.treeView.expand(selectedItem.id)
+									}
+									else {
+										
+										let parent = self.treeView.getParent(selectedItem);
+								
+										if (parent) {
+											
+											self.treeView.expand(parent.id);	
+										}	
+									}
 								}
 								
 								
 							}
 						}
-					}
-					
-					if ($$(self.uid)) {
-
-						$$("loading-" + self.uid).hide();
-						$$(self.uid).show();
 					}
 				}	
 			});
@@ -217,7 +228,7 @@ export default class VmsSignalingLibrary {
 							self.undoJsonData = self.composer.getJsonDataClear();
 						}
 						
-						btnAccept.show();
+						btnAccept.enable();
 						btnAccept.enable();
 						btnSave.disable();
 						btnUndo.disable();
@@ -232,7 +243,7 @@ export default class VmsSignalingLibrary {
 						tbMain.hide();
 						viewComposer.hide();
 						
-						btnAccept.hide();
+						btnAccept.disable();
 					}
 				}
 				
@@ -249,7 +260,8 @@ export default class VmsSignalingLibrary {
 						{ value: true, treeOption: { id: 3 } },
 						{ value: true, treeOption: { id: 4 } },
 						{ value: true, treeOption: { id: 5 } },
-						{ value: false, treeOption: { id: 6 } }
+						{ value: false, treeOption: { id: 6 } },
+						{ value: true, treeOption: { id: 8 } }
 					],
 					treeCommands: [
 						{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
@@ -294,7 +306,7 @@ export default class VmsSignalingLibrary {
 						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
 						.then(function(data) {
 							
-							load(parent ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+							load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
 						})
 						.catch(function() {
 							
@@ -335,10 +347,10 @@ export default class VmsSignalingLibrary {
 					
 				}).then(function(result){
 					
-					self.vmsSignalingLibraryPersist.saveItem(undefined, result, undefined, parent.id_)
+					self.vmsSignalingLibraryPersist.saveItem(undefined, result, JSON.stringify(self.composer.getJsonDataClear()) , parent.id_)
 					.then(function(data) {
 						
-						load(parent ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+						load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
 					})
 					.catch(function() {
 						
@@ -356,34 +368,47 @@ export default class VmsSignalingLibrary {
 					
 				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
 					
-					webix.confirm({
-						title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
-						width: 600
-					}).then(function(result) {
-						
-						let selected = itemsSelected[0];
-						
-						if (selected.id_ === selectedPks[0]) {
-						
-							 parent = selected.props.folder ? selected : self.treeView.getParent(selected);
-						}
+					let selected = itemsSelected[0];
 					
-						if (selected.id_ === selectedPks[0]) {
+					if (selected.id === "root") {
 						
-							self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
-							.then(function(data) {
+						webix.alert({
+							title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
+							text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
+							type: "alert-warning",
+							width: 500
+						});
+					}
+					else {
 						
-								load(parent.id);
-							})
-							.catch(function() {
-								
-							});
-						}
-					});
+						webix.confirm({
+							title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
+							ok: i18n.t("LBL_YES"),
+							cancel: i18n.t("LBL_NO"),
+							text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
+							width: 600
+						}).then(function(result) {
+							
+							if (selected.id_ === selectedPks[0]) {
+							
+								 parent = self.treeView.getParent(selected);
+							}
+						
+							if (selected.id_ === selectedPks[0]) {
+							
+								self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
+								.then(function(data) {
+									
+									load(parent ? parent.id : undefined);
+								})
+								.catch(function() {
+									
+								});
+							}
+						});
+					}	
 				}
+					
 			}
 			
 			function getTreeData() {
@@ -397,6 +422,7 @@ export default class VmsSignalingLibrary {
 						id: e.id,
 						label: e.name,
 						signaling: e.signaling,
+						folder: !e.signaling,
 						enabled: e.enabled,
 						visible: e.visible
 					}
@@ -685,7 +711,6 @@ export default class VmsSignalingLibrary {
 						id: "btn-accept-" + self.uid,
 						view: "button", 
 						css: "dialog-accept",
-						hidden: true,
 						width: 130,
 						height: 35,
 						label: i18n.t("LBL_ACCEPT"),
@@ -721,6 +746,12 @@ export default class VmsSignalingLibrary {
 			if (viewComposer) {
 				
 				viewComposer.hide();
+			}
+			
+			if (self.treeView) {
+				
+				self.treeView.select("root");
+				self.treeView.expand("root");
 			}
 			
 		}, null, null, 300);

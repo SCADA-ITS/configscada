@@ -60,8 +60,12 @@ public class VmsLibraryNodeBO extends GenericBO {
 		vmsLibraryNode.setVmsLibrary(vmsLibraryService.getById(vmslibraryId));
 		
 		return ConversionUtil
-				.objectToMap(vmsLibraryNodeService.save(vmsLibraryNode, Arrays.asList(parentNodeIds.split(",")).stream()
-						.map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList())));
+				.objectToMap(
+						parentNodeIds != null
+								? vmsLibraryNodeService.save(vmsLibraryNode,
+										Arrays.asList(parentNodeIds.split(",")).stream()
+												.map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList()))
+								: vmsLibraryNodeService.save(vmsLibraryNode));
 	}
 
 	public Map<String, Object> delete(Integer id) {

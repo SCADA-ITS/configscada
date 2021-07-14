@@ -8,10 +8,11 @@ const TreeOptions = {
 	CMD_BUTTONS: 4,
 	SEARCH: 5,
 	EXPAND_ALL: 6,
-	CHECK_ALL: 7
+	CHECK_ALL: 7,
+	ROOT_NODE: 8
 };
 
-const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false };
+const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false };
 const DefProperties = {
 	TRANSLATE: {
 		name: "translate",
@@ -212,10 +213,30 @@ export default class TreeView {
 				});
 			}
 		}
+		
+		function addRootNode(data) {
+			
+			let dat = [];
+			
+			dat.push({
+				
+				id: "root",
+				disabled: false,
+				value: "/",
+				props: {
+					folder: true
+				},
+				data: webix.copy(data)
+			});
+			
+			return dat;
+		}
 	
 		function drawTree() {
 			
-			let data = applyProperties(webix.copy(self.data));		
+			let data = applyProperties(webix.copy(self.data));
+			
+			data = self.getTreeOptions(TreeOptions.ROOT_NODE) ? addRootNode(data) : data; 
 			
 			let treeView = {
 				id: "tree-" + self.uid,
@@ -648,9 +669,10 @@ export default class TreeView {
 		return checkedItems;
 	}
 	
-	getFirstItem() {
+	getFirstItem(fromItem) {
 		
 		let firstItem = undefined;
+		let fromItemFound = false;
 		
 		if (Array.isArray(this.data) && this.data.length > 0) {
 			
@@ -668,9 +690,14 @@ export default class TreeView {
 						
 						let d = data[i];
 						
+						fromItemFound |= (fromItem && fromItem.id === d.id);
+						
 						if (d.props.folder === false) {
 							
-							item = d;
+							if (!fromItem || fromItemFound) {
+								
+								item = d;	
+							}
 						}
 						else {
 							
@@ -777,8 +804,24 @@ export default class TreeView {
 			
 			if (id) {
 				
-				tree.open(id);
-				tree.showItem(id);	
+				let selected = tree.getItem(id);
+				let hasRootNode = this.getTreeOptions(TreeOptions.ROOT_NODE);
+				
+				if (selected) {
+					
+					let rootParentId = selected.id; 
+					
+					do {
+						
+						tree.open(rootParentId, true);
+						
+						rootParentId = tree.getParentId(rootParentId);
+						
+					} while (rootParentId != 0 && (!hasRootNode || (hasRootNode && rootParentId != "root")))
+					
+	
+					tree.showItem(id);	
+				}
 			}
 			else {
 				

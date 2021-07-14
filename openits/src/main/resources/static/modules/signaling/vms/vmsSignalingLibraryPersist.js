@@ -19,15 +19,11 @@ export default class VmsSignalingLibraryPersist {
 		};
 		
 		let templateArgs = {
-			id: this.libraryId
+			id: this.libraryId,
+			parentNodeIds: parentNodeId ? parentNodeId : "" 
 		}
 		
-		if (parentNodeId) {
-			
-			templateArgs.parentNodeIds = parentNodeId; 
-		}
-
-		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.saveNode, parentNodeId), body);
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.saveNode, templateArgs), body);
 		
 		return data.json();
 	}
@@ -44,14 +40,10 @@ export default class VmsSignalingLibraryPersist {
 		};
 		
 		let templateArgs = {
-			id: this.libraryId
+			id: this.libraryId,
+			parentNodeIds: parentNodeId ? parentNodeId : ""
 		}
 		
-		if (parentNodeId) {
-			
-			templateArgs.parentNodeIds = parentNodeId; 
-		}
-
 		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.saveNode, templateArgs), body);
 		
 		return data.json();

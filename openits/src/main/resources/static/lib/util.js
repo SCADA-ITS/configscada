@@ -1365,7 +1365,7 @@ export let util = {
 						params: {},
 						props: {
 							translate: translate,
-							folder: false
+							folder: item.folder ? item.folder : false
 						}
 					};
 					
