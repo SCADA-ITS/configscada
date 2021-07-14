@@ -15,4 +15,5 @@ public interface VmsLibraryNodeRepository extends JpaRepository<VmsLibraryNode, 
 
 	<S extends VmsLibraryNode> S save(S vmsLibraryNode);
 	void deleteById(Integer id);
+	void delete(VmsLibraryNode vmsLibraryNode);
 }

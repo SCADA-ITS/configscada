@@ -19,6 +19,7 @@ export default class VmsSignalingLibrary {
 		
 		this.treeView = undefined;
 		this.composer = undefined;
+		this.undoJsonData = undefined;
 	}
 
 	show() {
@@ -85,9 +86,24 @@ export default class VmsSignalingLibrary {
 						
 						if (libraryNodeId) {
 							
-							if(self.treeView) {
+							if (self.treeView) {
 				
-								self.treeView.select(libraryNodeId)
+								self.treeView.select(libraryNodeId);
+								
+								let selectedItems = self.treeView.getSelected();
+								
+								if (Array.isArray(selectedItems) && selectedItems.length === 1) {
+									
+									let selectedItem = selectedItems[0]; 
+									let parent = self.treeView.getParent(selectedItem);
+								
+									if (parent) {
+										
+										self.treeView.expand(parent.id);	
+									}	
+								}
+								
+								
 							}
 						}
 					}
@@ -167,17 +183,23 @@ export default class VmsSignalingLibrary {
 			function getEvents() {
 		
 				let events = {};
+				let headerMain = $$("headerMain-" + self.uid);
+				let tbMain = $$("tbMain-" + self.uid);
 				let viewComposer = $$("view-composer-" + self.uid);
+				let lblSelected = $$("label-lib-selected-" + self.uid);
+				let btnAccept = $$("btn-accept-" + self.uid);
+				let btnSave = $$("btn-save-" + self.uid);
+				let btnUndo = $$("btn-undo-" + self.uid);
 				
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
 					
 					let vmsItemLib = items.find(e => e.id === item.id_);
-					let lblSelected = $$("label-lib-selected-" + self.uid);
 					
-					let btnAccept = $$("btn-accept-" + self.uid);
 					
-					if (vmsItemLib && self.composer && lblSelected && viewComposer && btnAccept) {
+					if (vmsItemLib && self.composer && lblSelected && viewComposer && headerMain && tbMain && btnAccept && btnUndo && btnSave) {
 						
+						headerMain.show();
+						tbMain.show();
 						viewComposer.show();
 						
 						if (vmsItemLib.signaling) {
@@ -185,24 +207,32 @@ export default class VmsSignalingLibrary {
 							self.composer.update(JSON.parse(vmsItemLib.signaling));
 							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name}</span>`);
 							
-							btnAccept.enable();
-
+							self.undoJsonData = JSON.parse(vmsItemLib.signaling);							
 						}
 						else {
 							
 							self.composer.clear();
 							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
 							
-							btnAccept.disable();
+							self.undoJsonData = self.composer.getJsonDataClear();
 						}
+						
+						btnAccept.show();
+						btnAccept.enable();
+						btnSave.disable();
+						btnUndo.disable();
 					}
 				};
 				
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(folder) {
 					
-					if (viewComposer) {
+					if (viewComposer && headerMain && tbMain && btnAccept) {
 						
+						headerMain.hide();
+						tbMain.hide();
 						viewComposer.hide();
+						
+						btnAccept.hide();
 					}
 				}
 				
@@ -253,7 +283,7 @@ export default class VmsSignalingLibrary {
 				    	required: true,
 				    	placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
 				  	},
-					width: 500,
+					width: 600,
 					
 				}).then(function(result){
 				  	
@@ -264,7 +294,7 @@ export default class VmsSignalingLibrary {
 						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
 						.then(function(data) {
 							
-							load(data.id);
+							load(parent ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
 						})
 						.catch(function() {
 							
@@ -301,16 +331,14 @@ export default class VmsSignalingLibrary {
 				    	required: true,
 				    	placeholder: i18n.t("LBL_NEW_SIGNALING_NAME")
 				  	},
-					width: 500,
+					width: 600,
 					
 				}).then(function(result){
-				  	
-					// TODO: POST with result
 					
 					self.vmsSignalingLibraryPersist.saveItem(undefined, result, undefined, parent.id_)
 					.then(function(data) {
 						
-						load(data.id);
+						load(parent ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
 					})
 					.catch(function() {
 						
@@ -323,6 +351,7 @@ export default class VmsSignalingLibrary {
 			
 			function onDelete(selectedPks) {
 				
+				let parent = undefined;
 				let itemsSelected = self.treeView.getSelected();
 					
 				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
@@ -333,13 +362,25 @@ export default class VmsSignalingLibrary {
 						cancel: i18n.t("LBL_NO"),
 						text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
 						width: 600
-					}).then(function() {
+					}).then(function(result) {
 						
 						let selected = itemsSelected[0];
+						
+						if (selected.id_ === selectedPks[0]) {
+						
+							 parent = selected.props.folder ? selected : self.treeView.getParent(selected);
+						}
 					
 						if (selected.id_ === selectedPks[0]) {
 						
-							self.vmsSignalingLibraryPersist.deleteItem(selected.id_);
+							self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
+							.then(function(data) {
+						
+								load(parent.id);
+							})
+							.catch(function() {
+								
+							});
 						}
 					});
 				}
@@ -408,6 +449,8 @@ export default class VmsSignalingLibrary {
 			function getViewContentHeader() {
 			
 				let viewContentHeader = {
+					id: "headerMain-" + self.uid,
+					hidden: true,
 					cols: [
 						{
 							view: "label",
@@ -436,12 +479,131 @@ export default class VmsSignalingLibrary {
 					view: "toolbar",
 					height: 50,
 					id: "tbMain-" + self.uid,
+					hidden: true,
 					borderless: true,
 					elements: []
 				}
 				
 				viewContentToolbar.elements.push({ width: 20 });
-				//viewContentToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-content-save-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_SAVE"), tooltip: i18n.t("LBL_SAVE_TO_LIBRARY") });
+				
+				viewContentToolbar.elements.push(
+					{ 
+						view: "button",
+						id: "btn-save-" + self.uid,
+						type: "icon",
+						disabled: true, 
+						icon: "mdi mdi-content-save", 
+						css: "toolbar-button-text", 
+						width: 130, 
+						label: i18n.t("LBL_SAVE"), 
+						tooltip: i18n.t("LBL_SAVE"),
+						on: {
+							onItemClick() {
+		
+								if (self.composer) {
+									
+									webix.confirm({
+										title: i18n.t("LBL_DIALOG_SAVE_CHANGES"),
+										ok: i18n.t("LBL_YES"),
+										cancel: i18n.t("LBL_NO"),
+										text: i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"),
+										width: 600
+									}).then(function() {
+		
+										if (self.composer) {
+											
+											let currentJsonData = self.composer.jsonData;
+											let selectedItems = self.treeView.getSelected();
+											
+											if (currentJsonData && self.vmsSignalingLibraryPersist && Array.isArray(selectedItems) && selectedItems.length === 1) {
+												
+												let selectedItem = selectedItems[0];
+												
+												let parent = self.treeView.getParent(selectedItem);
+												let parentId = undefined;
+												
+												if (parent) {
+													
+													parentId = parent.id_; 
+												}
+												
+												self.vmsSignalingLibraryPersist.saveItem(selectedItem.id_, selectedItem.value, JSON.stringify(currentJsonData), parentId)
+													.then(function(data) {
+														
+														load(parentId ? parentId + "_" + data.id : data.id + "_" + data.id);
+													})
+													.catch(function() {
+														
+													});
+											}
+										
+											let btnSave = $$("btn-save-" + self.uid);
+											let btnUndo = $$("btn-undo-" + self.uid);
+											
+											if (btnSave) {
+												
+												btnSave.disable();
+											}	
+											
+											if (btnUndo) {
+												
+												btnUndo.disable();
+											}
+										}
+									});
+								}
+							}
+						} 
+					}
+				);
+				
+				viewContentToolbar.elements.push(
+					{ 
+						view: "button", 
+						id: "btn-undo-" + self.uid,
+						type: "icon", 
+						disabled: true,
+						icon: "mdi mdi-undo", 
+						css: "toolbar-button-text", 
+						width: 130, 
+						label: i18n.t("LBL_UNDO"), 
+						tooltip: i18n.t("LBL_UNDO"),
+						on: {
+							onItemClick() {
+		
+								if (self.composer) {
+									
+									webix.confirm({
+										title: i18n.t("LBL_DIALOG_UNDO_CHANGES"),
+										ok: i18n.t("LBL_YES"),
+										cancel: i18n.t("LBL_NO"),
+										text: i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"),
+										width: 600
+									}).then(function() {
+		
+										if (self.undoJsonData) {
+											
+											self.composer.update(self.undoJsonData);
+										
+											let btnSave = $$("btn-save-" + self.uid);
+											let btnUndo = $$("btn-undo-" + self.uid);
+											
+											if (btnSave) {
+												
+												btnSave.disable();
+											}	
+											
+											if (btnUndo) {
+												
+												btnUndo.disable();
+											}
+										}
+									});
+								}
+							}
+						} 
+					}
+				);
 				
 				return viewContentToolbar;
 			}
@@ -469,12 +631,31 @@ export default class VmsSignalingLibrary {
 		
 		function onAfterRenderComposer() {
 			
-			self.composer.clear();
+			if (self.composer) {
+				
+				self.composer.clear();	
+			}
 		}
 		
 		function onUpdateComposer() {
 			
-			// TODO
+			if (self.composer) {
+				
+				let btnSave = $$("btn-save-" + self.uid);
+				let btnUndo = $$("btn-undo-" + self.uid);
+				
+				if (btnSave) {
+					
+					btnSave.enable();	
+				}
+				
+				if (btnUndo) {
+					
+					btnUndo.enable();
+				}
+				
+					
+			}
 		}
 		
 		function drawActionButtons() {
@@ -504,7 +685,7 @@ export default class VmsSignalingLibrary {
 						id: "btn-accept-" + self.uid,
 						view: "button", 
 						css: "dialog-accept",
-						disabled: true,
+						hidden: true,
 						width: 130,
 						height: 35,
 						label: i18n.t("LBL_ACCEPT"),

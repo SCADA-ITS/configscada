@@ -252,7 +252,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 							id: e.id,
 							image: self.config.pictogramsPath + "/" + e.id + self.config.pictogramsExtension,
 							//value: ("00000" + parseInt(e.id, 10)).slice(-5),
-							value: e.id,
+							value: e.value,
 							group: e.group
 						};
 						

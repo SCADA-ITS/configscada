@@ -17,5 +17,4 @@ public interface VmsLibraryHierarchyRepository extends JpaRepository<VmsLibraryH
 
 	<S extends VmsLibraryHierarchy> S save(S vmsLibraryHierarchy);
 	void deleteById(Integer id);
-	void delete(VmsLibraryHierarchy vmsLibraryHierarchy);
 }

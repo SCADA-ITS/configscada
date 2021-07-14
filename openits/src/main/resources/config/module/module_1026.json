@@ -5,7 +5,10 @@
 	"restEndpoints": {
 		"elementsByType": "element_types/${id}/elements",
 		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
-		"command": "elements/send_command_element"
+		"command": "elements/send_command_element",
+		"saveNode": "vms_libraries/${id}/node/${parentNodeIds}",
+		"deleteNode": "vms_libraries/node/${id}"
+		
 	},
 	"commands":{
 		"reset" :{

@@ -1,3 +1,5 @@
+import { util } from "../../../lib/util.js";
+
 export default class VmsSignalingLibraryPersist {
 
 	constructor(config, libraryId) {
@@ -25,9 +27,9 @@ export default class VmsSignalingLibraryPersist {
 			templateArgs.parentNodeIds = parentNodeId; 
 		}
 
-		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.saveNode, parentNodeId), body);
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.saveNode, parentNodeId), body);
 		
-		return data;
+		return data.json();
 	}
 	
 	async saveItem(itemId, itemName, signaling, parentNodeId) {
@@ -50,15 +52,15 @@ export default class VmsSignalingLibraryPersist {
 			templateArgs.parentNodeIds = parentNodeId; 
 		}
 
-		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.saveNode, templateArgs), body);
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.saveNode, templateArgs), body);
 		
-		return data;
+		return data.json();
 	}
 	
 	async deleteItem(id) {
 		
-		let data = await webix.ajax().delete(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.deleteNode, { id: id }));
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).del(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.deleteNode, { id: id }));
 		
-		return data;
+		return data.json();
 	}
 }	

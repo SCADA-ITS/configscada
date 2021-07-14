@@ -238,7 +238,8 @@ export default class VmsSignalingComposer {
 							
 							let graphic = {
 								id: e.id.split(":")[2],
-								group: (e.graphicCategory && e.graphicCategory.labelAlias) ? i18n.t(e.graphicCategory.labelAlias) : null
+								group: (e.graphicCategory && e.graphicCategory.labelAlias) ? i18n.t(e.graphicCategory.labelAlias) : null,
+								value: e.alias
 							};
 							
 							return graphic;

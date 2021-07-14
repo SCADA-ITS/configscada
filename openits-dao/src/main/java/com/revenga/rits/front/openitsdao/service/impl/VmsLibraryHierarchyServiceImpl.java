@@ -31,7 +31,21 @@ public class VmsLibraryHierarchyServiceImpl implements VmsLibraryHierarchyServic
 	@Override
 	public List<VmsLibraryHierarchy> getByNodeParentId(Integer id) {
 		
-		return vmsLibraryHierarchyRepository.findByNodeParentId(id);
+		List<VmsLibraryHierarchy> hierarchies = null;
+		try {
+			hierarchies = vmsLibraryHierarchyRepository.findByNodeParentId(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return hierarchies;
+	}
+	
+	@Override
+	public List<VmsLibraryHierarchy> getByNodeChildId(Integer id) {
+		
+		return vmsLibraryHierarchyRepository.findByNodeChildId(id);
 	}
 
 	
@@ -47,22 +61,11 @@ public class VmsLibraryHierarchyServiceImpl implements VmsLibraryHierarchyServic
 	@Transactional
 	public VmsLibraryHierarchy deleteById(Integer id) {
 		
-		VmsLibraryHierarchy vmsLibraryHierarchy = getById(id);
+		VmsLibraryHierarchy vmsLibraryHierarchy = vmsLibraryHierarchyRepository.findById(id);
 		
 		vmsLibraryHierarchyRepository.deleteById(id);
 		
 		return vmsLibraryHierarchy;
-		
-	}
-
-	@Override
-	@Transactional
-	public VmsLibraryHierarchy delete(VmsLibraryHierarchy vmsLibraryHierarchy) {
-		
-		vmsLibraryHierarchyRepository.delete(vmsLibraryHierarchy);
-		
-		return vmsLibraryHierarchy;
-		
 	}
 
 	@Override

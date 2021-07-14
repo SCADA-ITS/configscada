@@ -11,6 +11,7 @@ import com.revenga.rits.front.openitsdao.model.VmsLibraryHierarchy;
 import com.revenga.rits.front.openitsdao.model.VmsLibraryNode;
 import com.revenga.rits.front.openitsdao.repository.VmsLibraryHierarchyRepository;
 import com.revenga.rits.front.openitsdao.repository.VmsLibraryNodeRepository;
+import com.revenga.rits.front.openitsdao.service.VmsLibraryHierarchyService;
 import com.revenga.rits.front.openitsdao.service.VmsLibraryNodeService;
 
 @Service
@@ -20,7 +21,7 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 	VmsLibraryNodeRepository vmsLibraryNodeRepository;
 	
 	@Autowired
-	VmsLibraryHierarchyRepository vmsLibraryHierarchyRepository;
+	VmsLibraryHierarchyServiceImpl vmsLibraryHierarchyService;
 	
 	@Override
 	public List<VmsLibraryNode> getAll() {
@@ -61,7 +62,7 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 				
 				if (vmsLibraryNodeParent != null ) {
 					
-					List<VmsLibraryHierarchy> vmsLibraryHierarchyList = vmsLibraryHierarchyRepository.findByNodeParentId(vmsLibraryNodeParent.getId());
+					List<VmsLibraryHierarchy> vmsLibraryHierarchyList = vmsLibraryHierarchyService.getByNodeParentId(vmsLibraryNodeParent.getId());
 					
 					boolean insertHierarchy = true;
 					
@@ -81,7 +82,7 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 						vmsLibraryHierarchy.setVisible(true);
 						vmsLibraryHierarchy.setVmsLibrary(vmsLibraryNode.getVmsLibrary());
 						
-						vmsLibraryHierarchyRepository.save(vmsLibraryHierarchy);
+						vmsLibraryHierarchyService.save(vmsLibraryHierarchy);
 					}
 				}
 			}
@@ -102,7 +103,7 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 			
 			deleteParents(id);
 			
-			vmsLibraryNodeRepository.deleteById(id);
+			vmsLibraryNodeRepository.delete(vmsLibraryNode);
 		}
 		
 		return vmsLibraryNode;
@@ -110,28 +111,26 @@ public class VmsLibraryNodeServiceImpl implements VmsLibraryNodeService {
 	
 	private void deleteChilds(Integer childId) {
 		
-		vmsLibraryNodeRepository.deleteById(childId);
-		
-		List<VmsLibraryHierarchy> libraryHierarchyChilds = vmsLibraryHierarchyRepository.findByNodeChildId(childId);
+		List<VmsLibraryHierarchy> libraryHierarchyChilds = vmsLibraryHierarchyService.getByNodeChildId(childId);
 		
 		if (!CollectionUtils.isEmpty(libraryHierarchyChilds)) {
 			
 			for (VmsLibraryHierarchy vmsLibraryHierarchyChild : libraryHierarchyChilds) {
 				
-				vmsLibraryHierarchyRepository.deleteById(vmsLibraryHierarchyChild.getId());
+				vmsLibraryHierarchyService.deleteById(vmsLibraryHierarchyChild.getId());
 			}
 		}
 	}
 	
 	private void deleteParents(Integer parentId) {
 		
-		List<VmsLibraryHierarchy> libraryHierarchyParents = vmsLibraryHierarchyRepository.findByNodeParentId(parentId);
+		List<VmsLibraryHierarchy> libraryHierarchyParents = vmsLibraryHierarchyService.getByNodeParentId(parentId);
 		
 		if (!CollectionUtils.isEmpty(libraryHierarchyParents)) {
 			
 			for (VmsLibraryHierarchy vmsLibraryHierarchyParent : libraryHierarchyParents) {
 				
-				vmsLibraryHierarchyRepository.deleteById(vmsLibraryHierarchyParent.getId());
+				vmsLibraryHierarchyService.deleteById(vmsLibraryHierarchyParent.getId());
 				
 				deleteById(vmsLibraryHierarchyParent.getNodeChildId());
 			}
