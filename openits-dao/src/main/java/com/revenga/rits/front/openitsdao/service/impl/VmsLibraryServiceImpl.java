@@ -2,14 +2,12 @@ package com.revenga.rits.front.openitsdao.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.revenga.rits.front.openitsdao.model.VmsLibrary;
-import com.revenga.rits.front.openitsdao.model.VmsLibraryHierarchy;
-import com.revenga.rits.front.openitsdao.model.VmsLibraryNode;
 import com.revenga.rits.front.openitsdao.repository.VmsLibraryRepository;
 import com.revenga.rits.front.openitsdao.service.VmsLibraryService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class VmsLibraryServiceImpl implements VmsLibraryService {
