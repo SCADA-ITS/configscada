@@ -1178,6 +1178,9 @@ export default class AlarmModule extends GenericModule {
 		}
 
 
+		let labelAlarm = (this.alarmConfig.labelDescription) ? i18n.t(this.alarmConfig.labelDescription) : this.alarmConfigLabelAlias;
+		const MAX_LENGTH = 50;
+
 		let viewMain = {
 			id: this.uid,
 			cols: [
@@ -1263,6 +1266,7 @@ export default class AlarmModule extends GenericModule {
 									]
 								},
 								{
+									width:400,
 									rows: [
 										{ height: 16 },
 										{
@@ -1274,7 +1278,15 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										{
 											view: "label",
-											label: `<span class="alarm-view-text">${this.alarmConfigLabelAlias}</span>`,
+											tooltip: function(obj){
+												if (labelAlarm.length > MAX_LENGTH){
+												return labelAlarm;	
+												
+												} else {
+													return "";
+												}
+											},
+											label: `<span class="alarm-view-text" style="max-width: 390px; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${labelAlarm}</span>`,
 											align: "left",
 											height: 20
 										},
@@ -1342,6 +1354,7 @@ export default class AlarmModule extends GenericModule {
 									]
 								},
 								{
+									width: 400,
 									rows: [
 										{ height: 24 },
 										getAlarmLevelIcon(this.alarmLevelId),
