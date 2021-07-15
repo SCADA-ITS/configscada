@@ -11,8 +11,8 @@ const GROUP_COLOR_ON = "#fec165";
 
 const CMD_CHANGE_VALUE = "true";
 
-const CMD_GROUP_OFF = "0";
-const CMD_GROUP_AMBER_ALTERNANT = "1";	
+const CMD_GROUP_OFF = "1";
+const CMD_GROUP_AMBER_ALTERNANT = "0";	
 const CMD_GROUP_AMBER_FLASHING = "2";	
 const CMD_GROUP_AMBER = "3";	
 
