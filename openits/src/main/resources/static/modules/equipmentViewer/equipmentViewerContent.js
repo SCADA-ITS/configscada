@@ -201,7 +201,7 @@ export default class EquipmentViewerContent {
 		
 										onItemClick() {
 											let propertiesWindow = new EquipmentViewerProperties(self.parent, self.element, self.equipmentViewer);
-											propertiesWindow.getView();
+											propertiesWindow.loadData();
 										}
 									}
 								},
@@ -362,7 +362,7 @@ export default class EquipmentViewerContent {
 
 				let newContentTab = {
 					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
-					width: 1070,
+					width: 1074,
 					cols: [view]
 				};
 

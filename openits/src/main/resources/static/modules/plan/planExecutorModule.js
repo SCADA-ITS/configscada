@@ -664,6 +664,8 @@ export default class PlanExecutor extends GenericModule {
 			args.selectedPks = [self.planId];
 			args.planAction = btnConfig.action;
 			args.confirm = btnConfig.confirm;
+			args.confirmTitle = btnConfig.confirmTitle;
+			args.confirmDescription = btnConfig.confirmDescription;
 
 			util.module.open(module, btnConfig.moduleAction, null, null, args);
 		}

@@ -4,6 +4,7 @@ import GenericMap from "./genericMap.js";
 import MapLayer from "./mapLayer.js";
 import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
+import MapZone from "./mapZone.js";
 import GraphicIcon from "../graphicIcon/graphicIcon.js";
 
 const TOPIC_ELEMENTS = "/topic/element.>";
@@ -40,6 +41,7 @@ export default class OpenMap extends GenericMap {
 		
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
+		this.mapZone = undefined;
 		
 		this.afterRenderCallback = undefined;
 	}
@@ -144,6 +146,13 @@ export default class OpenMap extends GenericMap {
 				
 				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
 				cells.push(self.mapAction.getView());
+			}
+			
+			if(Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0){
+				self.mapZone = new MapZone(self.metadata.mapZones, function(zoneCoor) {
+					gotoZone(zoneCoor)
+				});
+				cells.push(self.mapZone.getView());
 			}
 			
 			return cells;
@@ -719,6 +728,16 @@ export default class OpenMap extends GenericMap {
 			return Array.from(self.graphicIcons.keys());
 		}
 		
+		function gotoZone(zoneCoor){
+
+			self.olMap.getView().animate({
+				center: ol.proj.fromLonLat([zoneCoor[0].lon,  zoneCoor[0].lat]),
+				zoom: zoneCoor[0].zoom,
+				duration: 1000
+			});
+			
+		}
+		
 		function showLayers(layersId) {
 			
 			self.layersVisible = layersId;
@@ -1033,6 +1052,31 @@ export default class OpenMap extends GenericMap {
 					{ width: 1 }
 				]
 			};
+			
+			if(Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0){
+				
+				let viewButtonZones = {
+					view: "button",
+					type: "icon",
+					icon:"mdi mdi-vector-circle",
+					tooltip: i18n.t("LBL_SHOW_ZONES"),
+					css: "button",
+					width: 40, height: 40,
+					on: {
+						onItemClick: function() {
+							
+							$$("map-window-actions-" + self.uid).show();
+							self.mapZone.show();
+							
+							webix.html.removeCss( $$("map-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
+							webix.html.addCss( $$("map-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
+							$$("map-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_ZONES"), icon: "mdi mdi-vector-circle"});
+						}
+					}
+				};
+				
+				viewToolbarActions.cols.push(viewButtonZones);	
+			}
 			
 			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
 				

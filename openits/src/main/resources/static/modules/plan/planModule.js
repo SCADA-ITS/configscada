@@ -33,10 +33,10 @@ export default class PlanModule extends GenericModule {
 				if(self.args.confirm == undefined || self.args.confirm){
 	
 					webix.confirm({
-						title: i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
+						title: self.args.confirmTitle ? i18n.t(self.args.confirmTitle) :  i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
 						ok: i18n.t("LBL_ACCEPT"),
 						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
+						text: self.args.confirmDescription ? i18n.t(self.args.confirmDescription) :i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
 						width: 600
 					}).then(function() {
 						
