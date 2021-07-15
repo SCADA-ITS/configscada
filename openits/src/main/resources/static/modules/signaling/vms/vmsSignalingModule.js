@@ -16,12 +16,14 @@ export default class VmsSignalingModule extends GenericModule {
 		this.vmsSignalingContent = undefined;
 		this.currentElement = undefined;
 		this.elements = undefined;
+		this.elementsSelected = undefined;
 		this.currentViewContent = undefined;		
 	}
 
 	loadData() {
 
 		let self = this;
+		let isModuleActionElements = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0); 
 
 		if ($$(this.uid)) {
 
@@ -63,16 +65,14 @@ export default class VmsSignalingModule extends GenericModule {
 			}
 		});
 		
+		function getElementFromElementId(elementId) {
+				
+			return self.elements.find(e => e.id === elementId);
+		}
+		
 		function load() {
 			
 			let view = {};
-			
-//			let container = $$(self.args.containerId);
-//
-//			if (container) {
-//			
-//				util.ui.setWindowTitle(container, i18n.t(self.currentElement.elementType.labelDescription) + " - " + self.currentElement.alias);
-//			}
 			
 			view = drawMain();
 			
@@ -81,11 +81,21 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			webix.ui(view, $$(self.uid));
 			
+			if (isModuleActionElements) {
+				
+				self.currentElement = self.elements.find(e => e.id === self.args.selectedPks[0]);
+				self.elementsSelected = self.elements.filter(e => self.args.selectedPks.includes(e.id));
+				
+				$$("view-main-tree-hierarchy-" + self.uid).hide();
+				$$("view-main-resizer-" + self.uid).hide();
+			}
+			
 			if (!self.currentElement) {
 				
 				self.elements.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 				
 				self.currentElement = self.elements[0];
+				self.elementsSelected = [self.currentElement];
 			}
 			
 			if (self.vmsSignalingTree) {
@@ -183,11 +193,6 @@ export default class VmsSignalingModule extends GenericModule {
 				return view;
 			}
 			
-			function getElementFromElementId(elementId) {
-				
-				return self.elements.find(e => e.id === elementId);
-			}
-			
 			function onSelectElement(elementId) {
 				
 				$$("view-main-body-" + self.uid).hide();
@@ -201,11 +206,6 @@ export default class VmsSignalingModule extends GenericModule {
 				let previousViewContent = self.currentViewContent;
 				
 				webix.ui(getViewContent(), $$(previousViewContent));
-				
-				if (self.vmsSignalingContent) {
-						
-					self.vmsSignalingContent.loadData();
-				}
 				
 				$$("view-main-loading-" + self.uid).hide();
 				$$("view-main-body-" + self.uid).show();
@@ -224,11 +224,16 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view = {};
 				
-				self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement);
+				if (self.currentElement) {
+					
+					let subtypeElements = self.elements.filter(e => e.elementSubtype.id === self.currentElement.elementSubtype.id);
 				
-				view = self.vmsSignalingContent.getView();
-				
-				self.currentViewContent = view.id;
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected);
+					
+					view = self.vmsSignalingContent.getView();
+					
+					self.currentViewContent = view.id;	
+				}
 				
 				return view;
 			}

@@ -224,6 +224,11 @@ p, input, textarea {
 	margin-top: -6px;
 	border-right: 0px;
 } 
+
+.webix_menu-x.menu-custom .webix_list_item .webix_submenu_icon {
+	display: none
+}
+
 .webix_menu-x.menu-custom .webix_list_item:hover{
 	/*background-color: transparent; */
 	/*box-shadow: 0px 2px #1CA1C1; */
@@ -360,6 +365,7 @@ p, input, textarea {
 	    background-color: var(--blue-strong-opacity-9);
 	    animation: fadeInRight;
 	    animation-duration: 0.4s;
+	    border-width: 0px !important;
 	}
 }
 
@@ -369,6 +375,7 @@ p, input, textarea {
 	    box-shadow: unset;
 	    animation: fadeInRight;
 	    animation-duration: 0.4s;
+	    border-width: 0px !important;
 	}
 }
 
@@ -1558,6 +1565,45 @@ p, input, textarea {
 }
 
 .action-button-dis .webix_icon_btn{
+	
+    color: white !important;
+}
+
+.action-aux-button .webix_button{
+	
+	width: 100% !important;
+    border-radius: 4px;
+    border-width: 0px;
+    background: rgba(3 169 244 / 1) !important;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-aux-button .webix_icon_btn{
+	
+    color: white !important;
+}
+
+.action-aux-button .webix_button:hover{
+	
+	background: rgba(3 169 244 / 0.5) !important;
+}
+
+.action-aux-button-dis .webix_button{
+	
+	width: 100% !important;
+    border-radius: 4px;
+    border-width: 0px;
+    background: #ddd !important;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-aux-button-dis .webix_icon_btn{
 	
     color: white !important;
 }

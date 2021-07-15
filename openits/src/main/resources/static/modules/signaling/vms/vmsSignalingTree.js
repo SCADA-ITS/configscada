@@ -85,7 +85,7 @@ export default class VmsSignalingTree {
 		}
 
 		self.treeView = new TreeView(getMetadata(), getTreeData(), getEvents());
-		
+				
 		return self.treeView.getView();
 	}
 	

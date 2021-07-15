@@ -1,20 +1,26 @@
 import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibrary from "./vmsSignalingLibrary.js";
+import VmsSignalingMulti from "./vmsSignalingMulti.js";
 import { util } from "../../../lib/util.js";
 
 export default class VmsSignalingContent {
 
-	constructor(config, element) {
+	constructor(config, element, subtypeElements, selectedElements) {
 
 		this.config = config;
 		this.element = element;
+		this.subtypeElements = subtypeElements;
+		this.selectedElements = selectedElements ? selectedElements : [element];
+		this.commandsElement = [];
+		this.selectedCommand = config.commands.sendMessage.commandElementTypeId;
 		this.uid = webix.uid();
 		
 		this.panelMain = undefined;
 		this.panelAlt = undefined;
 		this.composer = undefined;
 		
-		this.selectedElements = [element];
+		this.hasMessage = false;
+		
 		this.undoJsonData = undefined;
 	}
 
@@ -43,12 +49,10 @@ export default class VmsSignalingContent {
 								{}
 							]
 						}
-//						{ width: 20 }
 					]
 				},
 				{
 					cols: [
-//						{ width: 20 },
 						{},
 						getViewActions(),	
 						{ width: 20 }
@@ -73,7 +77,17 @@ export default class VmsSignalingContent {
 					{
 						view: "label",
 						css: "alarm-view-header-details-text",
-						label: `<span class="alarm-view-header-details-text">${self.element.alias}</span>`,
+						label: function() {
+							
+							let label = self.element.alias;
+							
+							if (Array.isArray(self.selectedElements) && self.selectedElements.length > 1) {
+								
+								label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (self.selectedElements.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
+							}
+							 
+							return `<span class="alarm-view-header-details-text">${label}</span>`;
+						}(),
 						align: "left",
 						height: 50
 					},
@@ -146,8 +160,10 @@ export default class VmsSignalingContent {
 			);
 			
 			viewToolbar.cols.push(
-				{ 
-					view: "button", 
+				{
+					id: "btn-undo-" + self.uid, 
+					view: "button",
+					disabled: true, 
 					type: "icon", 
 					icon: "mdi mdi-undo", 
 					css: "toolbar-button-text", 
@@ -172,8 +188,12 @@ export default class VmsSignalingContent {
 										self.composer.update(self.undoJsonData);
 									
 										let btnSend = $$("btn-send-" + self.uid);
-										
-										if (btnSend) {
+										let btnUndo = $$("btn-undo-" + self.uid);
+
+										self.hasMessage = false;
+										btnUndo.disable();
+																				
+										if (btnSend && btnUndo && self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId) {
 											
 											btnSend.disable();
 										}	
@@ -220,82 +240,82 @@ export default class VmsSignalingContent {
 				}
 			);
 
-			let cmdElements = [];
-			
-			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
-				
-				self.element.commandElements.forEach(cmdElement => {
-				
-					if (cmdElement.id !== self.config.commands.sendMessage.commandElementTypeId) {
-						
-						cmdElements.push({
-							id: cmdElements.length + 1,
-							value: i18n.t(cmdElement.labelAlias),
-							commandElementTypeId: cmdElement.id 
-						});
-					}	
-				});
-			}
-			
-			if (self.element.commandElements.length > 0) {
-				
-				viewToolbar.cols.push(
-					{ 
-						view: "menu",
-						id: "groupCommands-" + self.uid,
-						autowidth: true,
-						openAction: "click",
-						width: TOOLBAR_BUTTONS_WIDTH,
-						height: 35,
-						css: "toolbar-button-menu",
-						tooltip: i18n.t("LBL_COMMANDS"),
-						subMenuPos: "down",
-						data: [
-							{ value: "Comandos", icon: "mdi mdi-dots-vertical", submenu: cmdElements },
-						],
-						on: {
-							onMenuItemClick: function(id) {
-								
-								let command = cmdElements.find(e => e.id == id);
-								
-								if (command) {
-									
-									webix.confirm({
-										title: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-										
-										if (self.config.commands && self.config.commands.sendMessage) {
-											
-											let body = {
-												commands : []
-											};
-											
-											let sendCmd = {
-												commandElementTypeId: command.commandElementTypeId,
-												elementId: self.element.id
-											}
-											
-											body.commands.push(sendCmd);
-										
-											if (Array.isArray(body.commands) && body.commands.length > 0) {
-												
-												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-														
-													console.log(data);
-												});	
-											}	
-										}
-									});	
-								}
-							}
-						}
-					}
-				);
-			}
+//			let cmdElements = [];
+//			
+//			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+//				
+//				self.element.commandElements.forEach(cmdElement => {
+//				
+//					if (cmdElement.id !== self.config.commands.sendMessage.commandElementTypeId) {
+//						
+//						cmdElements.push({
+//							id: cmdElements.length + 1,
+//							value: i18n.t(cmdElement.labelAlias),
+//							commandElementTypeId: cmdElement.id 
+//						});
+//					}	
+//				});
+//			}
+//			
+//			if (cmdElements.length > 0) {
+//				
+//				viewToolbar.cols.push(
+//					{ 
+//						view: "menu",
+//						id: "groupCommands-" + self.uid,
+//						autowidth: true,
+//						openAction: "click",
+//						width: TOOLBAR_BUTTONS_WIDTH,
+//						height: 35,
+//						css: "toolbar-button-menu",
+//						tooltip: i18n.t("LBL_COMMANDS"),
+//						subMenuPos: "down",
+//						data: [
+//							{ value: i18n.t("LBL_COMMANDS"), icon: "mdi mdi-dots-vertical", submenu: cmdElements },
+//						],
+//						on: {
+//							onMenuItemClick: function(id) {
+//								
+//								let command = cmdElements.find(e => e.id == id);
+//								
+//								if (command) {
+//									
+//									webix.confirm({
+//										title: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM"),
+//										ok: i18n.t("LBL_YES"),
+//										cancel: i18n.t("LBL_NO"),
+//										text: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM_DESCRIPTION"),
+//										width: 600
+//									}).then(function() {
+//										
+//										if (self.config.commands && self.config.commands.sendMessage) {
+//											
+//											let body = {
+//												commands : []
+//											};
+//											
+//											let sendCmd = {
+//												commandElementTypeId: command.commandElementTypeId,
+//												elementId: self.element.id
+//											}
+//											
+//											body.commands.push(sendCmd);
+//										
+//											if (Array.isArray(body.commands) && body.commands.length > 0) {
+//												
+//												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+//														
+//													console.log(data);
+//												});	
+//											}	
+//										}
+//									});	
+//								}
+//							}
+//						}
+//					}
+//				);
+//			}
 			
 			viewToolbar.cols.push({});
 			
@@ -306,8 +326,57 @@ export default class VmsSignalingContent {
 				if (self.composer) {
 					
 					self.composer.update(jsonData);
+					
+					
 				}
 			}
+		}
+		
+		function getViewCommands() {
+			
+			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+				
+				self.commandsElement = self.element.commandElements.map(cmdElement => {
+					
+					return {
+						
+						id: cmdElement.id,
+						value: i18n.t(cmdElement.labelAlias)
+					}
+				})
+			}
+			
+			let viewCommands = {
+				id: "view-signalling-commands-" + self.uid,
+				view: "radio",
+				vertical: false,
+				value: self.config.commands.sendMessage.commandElementTypeId,
+				options: self.commandsElement,
+				on: {
+					onChange: function(newv) {
+						
+						self.selectedCommand = newv;
+						
+						let btnSend = $$("btn-send-" + self.uid);
+						let btnUndo = $$("btn-undo-" + self.uid);
+										
+						if (btnSend) {
+							
+							if (newv != self.config.commands.sendMessage.commandElementTypeId) {
+							
+								btnSend.enable();
+								
+							}
+							else {
+								
+								self.hasMessage ? btnSend.enable() : btnSend.disable();
+							}	
+						}
+					}
+				}
+			}
+			
+			return viewCommands;
 		}
 		
 		function getViewComposer() {
@@ -340,6 +409,13 @@ export default class VmsSignalingContent {
 					},
 					{
 						cols: [
+							{ width: 60 },
+							getViewCommands(),
+							{ width: 60 }	
+						]
+					},
+					{
+						cols: [
 							{},
 							self.composer.getView(),
 							{}
@@ -365,10 +441,13 @@ export default class VmsSignalingContent {
 				if (jsonData) {
 					
 					let btnSend = $$("btn-send-" + self.uid);
+					let btnUndo = $$("btn-undo-" + self.uid);
 				
-					if (btnSend) {
+					if (btnSend && btnUndo) {
 						
+						self.hasMessage = true;
 						btnSend.enable();
+						btnUndo.enable();
 					}	
 				}	
 			}
@@ -404,6 +483,42 @@ export default class VmsSignalingContent {
 					{},
 					{ 
 						view: "button", 
+						id: "btn-multisignaling-" + self.uid,
+						css: "action-aux-button", 
+						width: 130, 
+						height: 35,
+						label: i18n.t("LBL_MULTISIGNALING"), 
+						tooltip: i18n.t("LBL_VMS_SELECTED") + ": " + Array.isArray(self.selectedElements) ? self.selectedElements.length : 1,
+						badge: Array.isArray(self.selectedElements) ? self.selectedElements.length : 1,
+						on: {
+							onItemClick() {
+								
+								let vmsSingalingMulti = new VmsSignalingMulti(self.config, 
+																			  self.subtypeElements, 
+																			  self.selectedElements, 
+																			  self.element, 
+																			  function(selectedElements) { 
+																			 	
+																				self.selectedElements = selectedElements;
+																				
+																				let btnMultisignaling = $$("btn-multisignaling-" + self.uid);
+																				
+																				if (btnMultisignaling) {
+																					
+																					btnMultisignaling.config.badge = selectedElements.length;
+																					btnMultisignaling.config.tooltip = i18n.t("LBL_VMS_SELECTED") + ": " + selectedElements.length;
+																					
+																					btnMultisignaling.refresh();	
+																				}
+																				
+																			  });
+								
+								vmsSingalingMulti.show();
+							}
+						} 
+					},
+					{ 
+						view: "button", 
 						id: "btn-send-" + self.uid,
 						css: "action-button",
 						disabled: true,
@@ -414,42 +529,62 @@ export default class VmsSignalingContent {
 							onItemClick() {
 		
 								webix.confirm({
-									title: i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM"),
+									title: function() {
+									
+										let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
+										let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
+										
+										title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
+										
+										return title;
+									}(),
 									ok: i18n.t("LBL_YES"),
 									cancel: i18n.t("LBL_NO"),
 									text: i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM_DESCRIPTION"),
 									width: 600
 								}).then(function() {
 									
-									if (self.config.commands && self.config.commands.sendMessage) {
+									let isCmdSendMessage = (self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId);
 										
-										let body = {
-											commands : []
-										};
+									let body = {
+										commands : []
+									};
 									
-										self.selectedElements.forEach(element => {
+									let sendMessageCmd = {};
+								
+									self.selectedElements.forEach(element => {
 
-											let sendMessageCmd = self.config.commands.sendMessage;
+										sendMessageCmd = {};
 										
-											sendMessageCmd.elementId = element.id;
+										if (isCmdSendMessage) {
 											
-											if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
+											sendMessageCmd = self.config.commands.sendMessage;
+										}
+										else {
+											
+											sendMessageCmd.commandElementTypeId = self.selectedCommand;
+										}
+										
+										if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
+											
+											sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
+										}
+										
+										sendMessageCmd.elementId = element.id;
+										
+										body.commands.push(webix.copy(sendMessageCmd));	
+										
+										sendMessageCmd = undefined;
+										
+									});
+									
+									if (Array.isArray(body.commands) && body.commands.length > 0) {
+										
+										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
 												
-												sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
-											}
-											
-											body.commands.push(sendMessageCmd);	
-											
-										});
-										
-										if (Array.isArray(body.commands) && body.commands.length > 0) {
-											
-											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-													
-												console.log(data);
-											});	
-										}	
-									}
+											console.log(data);
+										});	
+									}	
 								});					
 							}
 						}
@@ -461,9 +596,5 @@ export default class VmsSignalingContent {
 		}
 				
 		return view;
-	}
-	
-	loadData() {
-		
 	}
 }	
