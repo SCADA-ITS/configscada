@@ -418,10 +418,12 @@ export default class SignalingManagerModule extends GenericModule {
 			if (self.mapElements.size === 1) {
 				
 				let listView = $$("view-main-list-equipments-" + self.uid);
+				let resizer = $$("view-main-resizer-" + self.uid);
 				
-				if (listView) {
+				if (listView && resizer) {
 					
 					listView.hide();
+					resizer.hide();
 				}				
 			}
 		}
