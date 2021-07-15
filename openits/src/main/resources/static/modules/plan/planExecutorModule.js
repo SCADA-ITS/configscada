@@ -309,7 +309,7 @@ export default class PlanExecutor extends GenericModule {
 						view: "button",
 						type: "icon",
 						css: "toolbar-button-text",
-						width: 100,
+						width: 130,
 						on: {
 							onItemClick: () => {
 

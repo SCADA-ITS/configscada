@@ -29,16 +29,8 @@ export default class VmsSignalingLibrary {
 		
 		view = {
 			cols: [
-//				{
-//					id: "loading-" + self.uid,
-//					hidden: true,
-//					rows: [
-//						util.ui.getViewDrawLoading()
-//					]
-//				},
 				{
 					id: self.uid,
-					//hidden: true,
 					rows: [
 						drawHeader(),
 						{
@@ -66,12 +58,6 @@ export default class VmsSignalingLibrary {
 		
 		function load(libraryNodeId) {
 		
-			if ($$(self.uid)) {
-	
-//				$$("loading-" + self.uid).show();
-//				$$(self.uid).hide();
-			}
-			
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.vmsLibraryBySubtype, { id: self.element.elementSubtype.id })).then(function(response) {
 			
 				if (response) {
@@ -86,10 +72,7 @@ export default class VmsSignalingLibrary {
 					}
 					
 					if ($$(self.uid)) {
-
-//						$$("loading-" + self.uid).hide();
-//						$$(self.uid).show();
-						
+					
 						if (self.treeView) {
 							
 							self.treeView.select("root");
@@ -119,8 +102,6 @@ export default class VmsSignalingLibrary {
 										}	
 									}
 								}
-								
-								
 							}
 						}
 					}
@@ -198,7 +179,7 @@ export default class VmsSignalingLibrary {
 				let tbMain = $$("tbMain-" + self.uid);
 				let viewComposer = $$("view-composer-" + self.uid);
 				let lblSelected = $$("label-lib-selected-" + self.uid);
-				let btnAccept = $$("btn-accept-" + self.uid);
+				let btnSelect = $$("btn-select-" + self.uid);
 				let btnSave = $$("btn-save-" + self.uid);
 				let btnUndo = $$("btn-undo-" + self.uid);
 				
@@ -207,7 +188,7 @@ export default class VmsSignalingLibrary {
 					let vmsItemLib = items.find(e => e.id === item.id_);
 					
 					
-					if (vmsItemLib && self.composer && lblSelected && viewComposer && headerMain && tbMain && btnAccept && btnUndo && btnSave) {
+					if (vmsItemLib && self.composer && lblSelected && viewComposer && headerMain && tbMain && btnSelect && btnUndo && btnSave) {
 						
 						headerMain.show();
 						tbMain.show();
@@ -228,8 +209,7 @@ export default class VmsSignalingLibrary {
 							self.undoJsonData = self.composer.getJsonDataClear();
 						}
 						
-						btnAccept.enable();
-						btnAccept.enable();
+						btnSelect.enable();
 						btnSave.disable();
 						btnUndo.disable();
 					}
@@ -237,13 +217,13 @@ export default class VmsSignalingLibrary {
 				
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(folder) {
 					
-					if (viewComposer && headerMain && tbMain && btnAccept) {
+					if (viewComposer && headerMain && tbMain && btnSelect) {
 						
 						headerMain.hide();
 						tbMain.hide();
 						viewComposer.hide();
 						
-						btnAccept.disable();
+						btnSelect.disable();
 					}
 				}
 				
@@ -501,18 +481,18 @@ export default class VmsSignalingLibrary {
 			
 			function getViewContentToolbar() {
 			
+				const TOOLBAR_BUTTONS_WIDTH = 130;
+			
 				let viewContentToolbar = {
-					view: "toolbar",
-					height: 50,
 					id: "tbMain-" + self.uid,
-					hidden: true,
-					borderless: true,
-					elements: []
-				}
+					height: 39,
+					css: {"margin-left":"2px !important"},
+					cols: []
+				};
 				
-				viewContentToolbar.elements.push({ width: 20 });
+				viewContentToolbar.cols.push({ width: 20 });
 				
-				viewContentToolbar.elements.push(
+				viewContentToolbar.cols.push(
 					{ 
 						view: "button",
 						id: "btn-save-" + self.uid,
@@ -520,7 +500,7 @@ export default class VmsSignalingLibrary {
 						disabled: true, 
 						icon: "mdi mdi-content-save", 
 						css: "toolbar-button-text", 
-						width: 130, 
+						width: TOOLBAR_BUTTONS_WIDTH, 
 						label: i18n.t("LBL_SAVE"), 
 						tooltip: i18n.t("LBL_SAVE"),
 						on: {
@@ -583,7 +563,7 @@ export default class VmsSignalingLibrary {
 					}
 				);
 				
-				viewContentToolbar.elements.push(
+				viewContentToolbar.cols.push(
 					{ 
 						view: "button", 
 						id: "btn-undo-" + self.uid,
@@ -591,7 +571,7 @@ export default class VmsSignalingLibrary {
 						disabled: true,
 						icon: "mdi mdi-undo", 
 						css: "toolbar-button-text", 
-						width: 130, 
+						width: TOOLBAR_BUTTONS_WIDTH, 
 						label: i18n.t("LBL_UNDO"), 
 						tooltip: i18n.t("LBL_UNDO"),
 						on: {
@@ -630,6 +610,8 @@ export default class VmsSignalingLibrary {
 						} 
 					}
 				);
+				
+				viewContentToolbar.cols.push({});
 				
 				return viewContentToolbar;
 			}
@@ -679,8 +661,6 @@ export default class VmsSignalingLibrary {
 					
 					btnUndo.enable();
 				}
-				
-					
 			}
 		}
 		
@@ -708,12 +688,12 @@ export default class VmsSignalingLibrary {
 					},
 					{},
 					{ 
-						id: "btn-accept-" + self.uid,
+						id: "btn-select-" + self.uid,
 						view: "button", 
 						css: "dialog-accept",
 						width: 130,
 						height: 35,
-						label: i18n.t("LBL_ACCEPT"),
+						label: i18n.t("LBL_SELECT"),
 						on: {
 							onItemClick() {
 		

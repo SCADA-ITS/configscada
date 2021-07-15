@@ -86,21 +86,22 @@ export default class VmsSignalingContent {
 		
 		function getViewToolbar() {
 			
-			let viewToolbar = {
-				view: "toolbar",
-				height: 50,
-				id: "tbMain-" + self.uid,
-				borderless: true,
-				elements: []
-			}
+			const TOOLBAR_BUTTONS_WIDTH = 130;
 			
-			viewToolbar.elements.push(
+			let viewToolbar = {
+				id: "tbMain-" + self.uid,
+				height: 39,
+				css: {"margin-left":"2px !important"},
+				cols: []
+			};
+			
+			viewToolbar.cols.push(
 				{ 
 					view: "button", 
 					type: "icon", 
 					icon: "mdi mdi-file-outline", 
 					css: "toolbar-button-text", 
-					width: 130, 
+					width: TOOLBAR_BUTTONS_WIDTH, 
 					label: i18n.t("LBL_NEW"), 
 					tooltip: i18n.t("LBL_NEW_PANEL_COMPOSITION"),
 					on: {
@@ -124,13 +125,13 @@ export default class VmsSignalingContent {
 				}
 			);
 			
-			viewToolbar.elements.push(
+			viewToolbar.cols.push(
 				{ 
 					view: "button", 
 					type: "icon", 
 					icon: "mdi mdi-folder-open-outline", 
 					css: "toolbar-button-text", 
-					width: 130, 
+					width: TOOLBAR_BUTTONS_WIDTH, 
 					label: i18n.t("LBL_LOAD"), 
 					tooltip: i18n.t("LBL_LOAD_PANEL_FROM_LIBRARY"),
 					on: {
@@ -144,13 +145,13 @@ export default class VmsSignalingContent {
 				}
 			);
 			
-			viewToolbar.elements.push(
+			viewToolbar.cols.push(
 				{ 
 					view: "button", 
 					type: "icon", 
 					icon: "mdi mdi-undo", 
 					css: "toolbar-button-text", 
-					width: 130, 
+					width: TOOLBAR_BUTTONS_WIDTH, 
 					label: i18n.t("LBL_UNDO"), 
 					tooltip: i18n.t("LBL_UNDO"),
 					on: {
@@ -184,15 +185,13 @@ export default class VmsSignalingContent {
 				}
 			);
 			
-			//viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-content-save-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_SAVE"), tooltip: i18n.t("LBL_SAVE_TO_LIBRARY") });
-			//viewToolbar.elements.push({ view: "button", type: "icon", icon: "mdi mdi-trash-can-outline", css: "toolbar-button-text", width: 130, label: i18n.t("LBL_DELETE"), tooltip: i18n.t("LBL_DELETE") });
-			viewToolbar.elements.push(
+			viewToolbar.cols.push(
 				{ 
 					view: "button", 
 					type: "icon", 
 					icon: "mdi mdi-information-outline", 
 					css: "toolbar-button-text", 
-					width: 130, 
+					width: TOOLBAR_BUTTONS_WIDTH, 
 					label: i18n.t("LBL_INFO"), 
 					tooltip: i18n.t("LBL_VIEW_EQUIPMENT"),
 					on: {
@@ -220,6 +219,85 @@ export default class VmsSignalingContent {
 					} 
 				}
 			);
+
+			let cmdElements = [];
+			
+			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+				
+				self.element.commandElements.forEach(cmdElement => {
+				
+					if (cmdElement.id !== self.config.commands.sendMessage.commandElementTypeId) {
+						
+						cmdElements.push({
+							id: cmdElements.length + 1,
+							value: i18n.t(cmdElement.labelAlias),
+							commandElementTypeId: cmdElement.id 
+						});
+					}	
+				});
+			}
+			
+			if (self.element.commandElements.length > 0) {
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "menu",
+						id: "groupCommands-" + self.uid,
+						autowidth: true,
+						openAction: "click",
+						width: TOOLBAR_BUTTONS_WIDTH,
+						height: 35,
+						css: "toolbar-button-menu",
+						tooltip: i18n.t("LBL_COMMANDS"),
+						subMenuPos: "down",
+						data: [
+							{ value: "Comandos", icon: "mdi mdi-dots-vertical", submenu: cmdElements },
+						],
+						on: {
+							onMenuItemClick: function(id) {
+								
+								let command = cmdElements.find(e => e.id == id);
+								
+								if (command) {
+									
+									webix.confirm({
+										title: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM"),
+										ok: i18n.t("LBL_YES"),
+										cancel: i18n.t("LBL_NO"),
+										text: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM_DESCRIPTION"),
+										width: 600
+									}).then(function() {
+										
+										if (self.config.commands && self.config.commands.sendMessage) {
+											
+											let body = {
+												commands : []
+											};
+											
+											let sendCmd = {
+												commandElementTypeId: command.commandElementTypeId,
+												elementId: self.element.id
+											}
+											
+											body.commands.push(sendCmd);
+										
+											if (Array.isArray(body.commands) && body.commands.length > 0) {
+												
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+														
+													console.log(data);
+												});	
+											}	
+										}
+									});	
+								}
+							}
+						}
+					}
+				);
+			}
+			
+			viewToolbar.cols.push({});
 			
 			return viewToolbar;
 			
