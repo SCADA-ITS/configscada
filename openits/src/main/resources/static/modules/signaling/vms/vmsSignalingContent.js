@@ -240,83 +240,6 @@ export default class VmsSignalingContent {
 				}
 			);
 
-//			let cmdElements = [];
-//			
-//			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
-//				
-//				self.element.commandElements.forEach(cmdElement => {
-//				
-//					if (cmdElement.id !== self.config.commands.sendMessage.commandElementTypeId) {
-//						
-//						cmdElements.push({
-//							id: cmdElements.length + 1,
-//							value: i18n.t(cmdElement.labelAlias),
-//							commandElementTypeId: cmdElement.id 
-//						});
-//					}	
-//				});
-//			}
-//			
-//			if (cmdElements.length > 0) {
-//				
-//				viewToolbar.cols.push(
-//					{ 
-//						view: "menu",
-//						id: "groupCommands-" + self.uid,
-//						autowidth: true,
-//						openAction: "click",
-//						width: TOOLBAR_BUTTONS_WIDTH,
-//						height: 35,
-//						css: "toolbar-button-menu",
-//						tooltip: i18n.t("LBL_COMMANDS"),
-//						subMenuPos: "down",
-//						data: [
-//							{ value: i18n.t("LBL_COMMANDS"), icon: "mdi mdi-dots-vertical", submenu: cmdElements },
-//						],
-//						on: {
-//							onMenuItemClick: function(id) {
-//								
-//								let command = cmdElements.find(e => e.id == id);
-//								
-//								if (command) {
-//									
-//									webix.confirm({
-//										title: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM"),
-//										ok: i18n.t("LBL_YES"),
-//										cancel: i18n.t("LBL_NO"),
-//										text: i18n.t("LBL_SEND_VMS_COMMAND_CONFIRM_DESCRIPTION"),
-//										width: 600
-//									}).then(function() {
-//										
-//										if (self.config.commands && self.config.commands.sendMessage) {
-//											
-//											let body = {
-//												commands : []
-//											};
-//											
-//											let sendCmd = {
-//												commandElementTypeId: command.commandElementTypeId,
-//												elementId: self.element.id
-//											}
-//											
-//											body.commands.push(sendCmd);
-//										
-//											if (Array.isArray(body.commands) && body.commands.length > 0) {
-//												
-//												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-//														
-//													console.log(data);
-//												});	
-//											}	
-//										}
-//									});	
-//								}
-//							}
-//						}
-//					}
-//				);
-//			}
-			
 			viewToolbar.cols.push({});
 			
 			return viewToolbar;
@@ -493,27 +416,24 @@ export default class VmsSignalingContent {
 						on: {
 							onItemClick() {
 								
-								let vmsSingalingMulti = new VmsSignalingMulti(self.config, 
-																			  self.subtypeElements, 
-																			  self.selectedElements, 
-																			  self.element, 
-																			  function(selectedElements) { 
-																			 	
-																				self.selectedElements = selectedElements;
-																				
-																				let btnMultisignaling = $$("btn-multisignaling-" + self.uid);
-																				
-																				if (btnMultisignaling) {
-																					
-																					btnMultisignaling.config.badge = selectedElements.length;
-																					btnMultisignaling.config.tooltip = i18n.t("LBL_VMS_SELECTED") + ": " + selectedElements.length;
-																					
-																					btnMultisignaling.refresh();	
-																				}
-																				
-																			  });
+								let vmsSingalingMulti = new VmsSignalingMulti(self.config, self.subtypeElements, self.selectedElements, self.element, onAccept);
 								
 								vmsSingalingMulti.show();
+								
+								function onAccept(selectedElements) {
+									
+									self.selectedElements = selectedElements;
+																				
+									let btnMultisignaling = $$("btn-multisignaling-" + self.uid);
+									
+									if (btnMultisignaling) {
+										
+										btnMultisignaling.config.badge = selectedElements.length;
+										btnMultisignaling.config.tooltip = i18n.t("LBL_VMS_SELECTED") + ": " + selectedElements.length;
+										
+										btnMultisignaling.refresh();	
+									}
+								}
 							}
 						} 
 					},
@@ -582,7 +502,12 @@ export default class VmsSignalingContent {
 										
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
 												
-											console.log(data);
+											webix.alert({
+												title: i18n.t("LBL_COMMAND_SEND"),
+											  	ok: i18n.t("LBL_ACCEPT"),
+											  	text: i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"),
+												width: 600
+											})
 										});	
 									}	
 								});					

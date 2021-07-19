@@ -18,6 +18,7 @@
 		"fit": false
 	},
 	"camConf": {
+		"streamProtocol": "ElementTypeParam:2:1:13",
 		"stream_mjpeg": {
 			"url": "ElementTypeParam:2:1:3"
 		},

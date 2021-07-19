@@ -115,7 +115,19 @@ export default class CCTVMulti {
 				cols: [				
 					drawTree(),
 					{ view: "resizer" },
-					{ id: "view-cctv-content-" + self.uid }
+					{ 
+						view: "abslayout",
+						cells: [
+							{
+								id: "view-cctv-content-" + self.uid,
+								relative: true
+							},
+							{
+								id: "view-cctv-pager-" + self.uid
+							}
+						]
+						 
+					}
 				]
 			}
 			
@@ -198,12 +210,15 @@ export default class CCTVMulti {
 			function loadContent(scenarioId) {
 			
 				let viewContent;
+				let viewPager;
+				let pages = 1;
 				
 				self.scenarioId = scenarioId;
 				
 				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.cctvScenario, { id: self.scenarioId })).then(function(response) {
 					
 					let scenario;
+					let position = 1;
 					
 					if (response) {
 						
@@ -211,11 +226,25 @@ export default class CCTVMulti {
 						
 						viewContent = { 
 							id: "view-cctv-content-" + self.uid,
+							view: "multiview",
+							relative: true,
+							animate: false,
+							cells: [{}]
 						}
 						
 						let viewContentClear = webix.copy(viewContent);
 						
-						makeMatrixView();
+						if (Array.isArray(scenario.elements) && scenario.elements.length > 0) {
+							
+							viewContent.cells = [];
+							
+							pages = Math.floor(scenario.elements.length / (scenario.nRows * scenario.nColumns)) + 1;
+							
+							for (let page = 0; page < pages; page++) {
+								
+								viewContent.cells.push(getMatrixView())
+							}
+						}
 				
 						// First clear
 						webix.ui(viewContentClear, $$(viewContent.id));
@@ -224,12 +253,18 @@ export default class CCTVMulti {
 						webix.ui(viewContent, $$(viewContent.id));
 						
 						loadCameras();
+						
+						// Put pager
+						viewPager = getViewPager();
+						webix.ui(viewPager, $$(viewPager.id));
+						
 					}
 					
-					function makeMatrixView() {
+					function getMatrixView() {
 						
-						viewContent.rows = [];
-						let position = 1;
+						let viewMatrix = {};
+						
+						viewMatrix.rows = [];
 						
 						for (let row = 0; row < scenario.nRows; row++) {
 							
@@ -245,26 +280,28 @@ export default class CCTVMulti {
 								rowView.cols.push(cell);
 							}
 							
-							viewContent.rows.push(rowView);
+							viewMatrix.rows.push(rowView);
 						}
+						
+						return viewMatrix;
 					}
 					
 					function loadCameras() {
 						
 						if (Array.isArray(scenario.elements) && scenario.elements.length > 0) {
 							
-							let position = 1;
+							let pos = 1;
 							
 							scenario.elements.forEach(e => {
 								
-								loadCamera(e.id, position++);
+								loadCamera(e.id, pos++);
 							})
 						}
 					}
 					
-					function loadCamera(elementId, position) {
+					function loadCamera(elementId, pos) {
 						
-						if ($$("cell-" + position + "-" + self.uid)) {
+						if ($$("cell-" + pos + "-" + self.uid)) {
 							
 							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
 			
@@ -274,27 +311,144 @@ export default class CCTVMulti {
 							
 									if (element) {
 								
-										let w = !self.parent.config.multi.fit ? $$("cell-" + position + "-" + self.uid).$width + "px" : "100%";
-										let h = !self.parent.config.multi.fit ? $$("cell-" + position + "-" + self.uid).$height + "px" : "100%";
+										let w = !self.parent.config.multi.fit ? $$("cell-" + pos + "-" + self.uid).$width + "px" : "100%";
+										let h = !self.parent.config.multi.fit ? $$("cell-" + pos + "-" + self.uid).$height + "px" : "100%";
 								
-										let camViewer = new CamViewer(self.parent.config.camConf, element, w, h);
+										let camViewer = new CamViewer(self.parent.config.camConf, element, w, h, CamViewer.MODE_MULTI);
 							
 										let viewCamViewer = camViewer.getView();
 										
-										let viewMain = {
-											id: "cell-" + position + "-" + self.uid,
+										let newViewCamViewer = {
+											id: "cell-" + pos + "-" + self.uid,
 											rows: [
 												viewCamViewer
 											]
 										};
 										
-										webix.ui(viewMain, $$("cell-" + position + "-" + self.uid));
+										webix.ui(newViewCamViewer, $$("cell-" + pos + "-" + self.uid));
 									}
 								}
 							});	
 						}
 					}
 				});
+				
+				function getViewPager() {
+					
+					let viewToolbarPager = {
+						id: "view-cctv-pager-" + self.uid,
+						view: "toolbar",
+						css: "syn-toolbar-zoom",
+						borderless: true,
+						top: 10, 
+						left: 10,
+						height: 100,
+						cols: [
+							{ width: 1 }
+						]
+					};
+					
+					let viewCboPage = {
+						rows: [
+							{},
+							{
+								css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
+								height: 35,
+								cols: [
+									{
+										view: "button",
+										type: "icon",
+										icon:"mdi mdi-table-multiple",
+										tooltip: i18n.t("LBL_PAGE"),
+										css: "button-zoom-search",
+										width: 38, height: 40,
+										on: {
+											onItemClick: function() {
+												
+												let cboPage = $$("cbo-page-" + self.uid);
+												let cboPageSeparator = $$("cbo-page-sep-" + self.uid);
+												
+												if (cboPage && cboPageSeparator) {
+													
+													if (cboPage.isVisible() && cboPageSeparator.isVisible()) {
+		
+														cboPage.hide();
+														cboPageSeparator.hide();
+													}
+													else {
+														
+														cboPage.show();
+														cboPageSeparator.show();
+													}
+												}
+											}
+										}
+									},
+									{
+										rows: [
+											{},
+											{
+												view: "combo",
+												borderless: true,
+												id: "cbo-page-" + self.uid,
+												hidden: true,
+												width: 200, height: 30,
+												value: 1,
+												options: {
+													view: "suggest",
+													filter: function(obj, value) {
+														
+														return (obj.value.toLowerCase().indexOf(value.toLowerCase()) !== -1)
+													},
+													body: {
+														view: "list",
+														data: function() {
+													
+															let data = [];
+															
+															for (let page = 1; page <= pages; page++) {
+								
+																data.push({
+																	
+																	id: page,
+																	value: i18n.t("LBL_PAGE") + " " + page
+																});
+															}
+													
+															return data;
+														}(),
+														template: function(obj) {
+								
+															return `<span title="${obj.value}" class="search-list-item-text">${obj.value} </span>`;
+														},
+		        										yCount: 7
+													}
+												},
+												on:{
+													onChange: function(newValue, oldValue, config){
+												        
+														// TODO
+												 	}
+												}
+											},
+											{}
+										]
+									},
+									{ 
+										id: "cbo-page-sep-" + self.uid,
+										width: 10,
+										hidden: true
+									}
+								]
+							},	
+							{}	
+						]
+					};
+					
+					viewToolbarPager.cols.push(viewCboPage);
+					
+					return viewToolbarPager;
+				} 
 			}
 			
 			return viewMain;

@@ -2980,3 +2980,34 @@ p, input, textarea {
 .list-not-selected .webix_list_item{
 	cursor: default !important;
 }
+
+
+.cam-viewer-button .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-button .webix_button:hover {
+	background-color: transparent;
+}
+
+.cam-viewer-button .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-button .webix_button .webix_icon_btn {
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) inset; 
+	border-radius: 5px;
+	background-color: transparent;
+}
+
+.cam-viewer-button .webix_button .webix_icon_btn:hover {
+	color: white;
+	border: 1px var(--blue-mid) inset;
+	border-radius: 5px;
+	background-color: var(--blue-mid); 
+}

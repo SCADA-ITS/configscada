@@ -43,7 +43,7 @@ export default class CCTVSingle {
 							}
 						}
 				
-						let camViewer = new CamViewer(self.parent.config.camConf, element, w, h);
+						let camViewer = new CamViewer(self.parent.config.camConf, element, w, h, CamViewer.MODE_SINGLE);
 			
 						let viewCamViewer = camViewer.getView();
 						

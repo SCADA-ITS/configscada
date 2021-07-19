@@ -204,7 +204,7 @@ export default class LightingnModule extends GenericModule {
 	
 			function getTreeData() {
 				
-				let data = util.tree.getNodes(self.nodes, self.hierarchy, { parentNodeId: "parentId", childNodeId: "childId" }, true);
+				let data = util.tree.getNodes(self.nodes, self.hierarchy, { parentNodeId: "parentId", childNodeId: "childId" }, false);
 				
 				return data;
 			}
