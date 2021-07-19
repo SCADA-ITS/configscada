@@ -4,7 +4,8 @@ const DefaultOptionValues = {
 	3: 66,
 	4: 128,
 	8: true,
-	9: 1
+	9: 1,
+	10 : 0
 };
 
 const DrawMode = {
@@ -113,6 +114,7 @@ export default class ListView {
 						height: height
 					},
 					data: self.data,
+					yCount: getOptions(ListView.Options.Y_COUNT),
 					on: {
 						onAfterSelect: function() {
 							
@@ -394,6 +396,13 @@ Object.defineProperty(ListView.Options, 'SELECTED', {
 
 Object.defineProperty(ListView.Options, 'MODE', {
 	value: 9,
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(ListView.Options, 'Y_COUNT', {
+	value: 10,
 	writable: false,
 	enumerable: true,
 	configurable: false

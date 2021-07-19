@@ -17,6 +17,13 @@ export default class MapZone {
 
 		let self = this;
 		let view;
+		let zones = [];
+
+		for (let mapZone of self.mapZones) {
+
+			mapZone.alias = mapZone.label;
+			zones.push(mapZone);
+		}
 
 		view = {
 			id: "map-zone-" + self.uid,
@@ -27,18 +34,15 @@ export default class MapZone {
 
 		function getListZones() {
 
-			let zones = [];
 			let events = {};
 
 			events[ListView.EventTypes.ON_SELECT_ROW] = onSelectItem;
 
-			for (let mapZone of self.mapZones) {
+			let options = {};
 
-				mapZone.alias = mapZone.label;
-				zones.push(mapZone);
-			}
+			options[ListView.Options.Y_COUNT] = zones.length;
 
-			self.listZones = new ListView(zones, null, events);
+			self.listZones = new ListView(zones, options, events);
 
 			function onSelectItem(item) {
 

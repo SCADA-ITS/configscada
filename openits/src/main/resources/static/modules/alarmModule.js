@@ -1180,6 +1180,14 @@ export default class AlarmModule extends GenericModule {
 
 		let labelAlarm = (this.alarmConfig.labelDescription) ? i18n.t(this.alarmConfig.labelDescription) : this.alarmConfigLabelAlias;
 		const MAX_LENGTH = 50;
+		
+		let container = $$(self.args.containerId);
+		let ellipsis = undefined;
+		
+			if (container) {
+
+				ellipsis = `style='display: inline-block; max-width: ${container.$width * 0.5}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+			}
 
 		let viewMain = {
 			id: this.uid,
@@ -1280,13 +1288,13 @@ export default class AlarmModule extends GenericModule {
 											view: "label",
 											tooltip: function(obj){
 												if (labelAlarm.length > MAX_LENGTH){
-												return labelAlarm;	
-												
-												} else {
-													return "";
-												}
+													return labelAlarm;	
+													
+													} else {
+														return "";
+													}
 											},
-											label: `<span class="alarm-view-text" style="max-width: 390px; display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">${labelAlarm}</span>`,
+											label: `<span id="labelAlarm" class="alarm-view-text" ${ellipsis}>${labelAlarm}</span>`,
 											align: "left",
 											height: 20
 										},
