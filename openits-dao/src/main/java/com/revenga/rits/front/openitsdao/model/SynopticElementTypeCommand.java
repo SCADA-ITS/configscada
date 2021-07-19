@@ -40,6 +40,9 @@ public class SynopticElementTypeCommand implements Serializable {
 	@ManyToOne
 	private ModuleAction moduleAction;
 	
+	//uni-directional many-to-one association to ViewType
+	@ManyToOne
+	private ViewType viewType;
 
 	public SynopticElementTypeCommand() {
 	}
@@ -74,6 +77,14 @@ public class SynopticElementTypeCommand implements Serializable {
 
 	public void setModuleAction(ModuleAction moduleAction) {
 		this.moduleAction = moduleAction;
+	}
+	
+	public ViewType getViewType() {
+		return viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType= viewType;
 	}
 
 }

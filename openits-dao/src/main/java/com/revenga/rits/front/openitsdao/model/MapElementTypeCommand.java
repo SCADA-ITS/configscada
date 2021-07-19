@@ -39,7 +39,10 @@ public class MapElementTypeCommand implements Serializable {
 	//uni-directional many-to-one association to ModuleAction
 	@ManyToOne
 	private ModuleAction moduleAction;
-	
+
+	//uni-directional many-to-one association to ViewType
+	@ManyToOne
+	private ViewType viewType;
 
 	public MapElementTypeCommand() {
 	}
@@ -74,6 +77,14 @@ public class MapElementTypeCommand implements Serializable {
 
 	public void setModuleAction(ModuleAction moduleAction) {
 		this.moduleAction = moduleAction;
+	}
+	
+	public ViewType getViewType() {
+		return viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType= viewType;
 	}
 
 }

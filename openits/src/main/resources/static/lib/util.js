@@ -563,16 +563,20 @@ export let util = {
 					
 					let cmd = command;
 					
-					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
+					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1 ||
+					Array.isArray(command.mapElementTypeCommand) && command.mapElementTypeCommand.length > 0 && args.selectedPks.length === 1) {
+												
+						let element = (command.elementTypeCommand) ? command.elementTypeCommand : command.mapElementTypeCommand;
 						
 						let selectedPk = args.selectedPks[0];
 						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType;
 						
-						let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === elementType.id); 
+						let elementTypeCommand = element.find(e => e.elementType === elementType.id); 
 						
 						if (elementTypeCommand) {
 							
 							cmd = elementTypeCommand;
+							viewTypeId = cmd.viewType.id;
 						} 
 					}
 					
