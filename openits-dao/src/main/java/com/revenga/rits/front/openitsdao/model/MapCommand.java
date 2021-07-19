@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -74,6 +75,7 @@ public class MapCommand implements Serializable {
 
 	//bi-directional many-to-one association to MapElementTypeCommand
 	@OneToMany(mappedBy="mapCommand")
+	@JsonProperty("elementTypeCommand")
 	private List<MapElementTypeCommand> mapElementTypeCommand;
 
 
