@@ -1,6 +1,7 @@
 import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibraryPersist from "./vmsSignalingLibraryPersist.js";
 import TreeView from "../../../component/treeview.js";
+import OptionDialogBox from "../../../component/optionDialogBox.js";
 import { util } from "../../../lib/util.js";
 
 const TREE_PANEL_WIDTH = 325;
@@ -20,6 +21,7 @@ export default class VmsSignalingLibrary {
 		this.treeView = undefined;
 		this.composer = undefined;
 		this.undoJsonData = undefined;
+		this.optionDialogBox = undefined;
 	}
 
 	show() {
@@ -182,223 +184,235 @@ export default class VmsSignalingLibrary {
 				let btnSelect = $$("btn-select-" + self.uid);
 				let btnSave = $$("btn-save-" + self.uid);
 				let btnUndo = $$("btn-undo-" + self.uid);
-				
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
-					
+				let viewOptionDialog = $$("view-option-dialog-" + self.uid);
+
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
+
 					let vmsItemLib = items.find(e => e.id === item.id_);
-					
-					
+
 					if (vmsItemLib && self.composer && lblSelected && viewComposer && headerMain && tbMain && btnSelect && btnUndo && btnSave) {
-						
+
 						headerMain.show();
 						tbMain.show();
 						viewComposer.show();
-						
+						viewOptionDialog.hide();
+
 						if (vmsItemLib.signaling) {
-						
+
 							self.composer.update(JSON.parse(vmsItemLib.signaling));
 							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name}</span>`);
-							
-							self.undoJsonData = JSON.parse(vmsItemLib.signaling);							
+
+							self.undoJsonData = JSON.parse(vmsItemLib.signaling);
 						}
 						else {
-							
+
 							self.composer.clear();
 							lblSelected.setValue(`<span class="alarm-view-header-details-text">${vmsItemLib.name + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
-							
+
 							self.undoJsonData = self.composer.getJsonDataClear();
 						}
-						
+
 						btnSelect.enable();
 						btnSave.disable();
 						btnUndo.disable();
 					}
 				};
-				
+
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(folder) {
 					
-					if (viewComposer && headerMain && tbMain && btnSelect) {
+					if (folder.value) {
+
+						lblSelected.setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);
+
+					} else {
+
+						lblSelected.setValue(`<span class="alarm-view-header-details-text">${folder.value + " (" + i18n.t("LBL_NO_CONFIG") + ")"}</span>`);
+					}
 						
-						headerMain.hide();
+					if (viewComposer && headerMain && tbMain && btnSelect && viewOptionDialog) {
+
+						headerMain.show();
+						viewOptionDialog.show();
 						tbMain.hide();
 						viewComposer.hide();
-						
+
 						btnSelect.disable();
 					}
 				}
-				
-				return events;	
-			}
-			function getMetadata() {
-		
-				return {
-					
-					id: -1,
-					label: "LBL_LIBRARY",
-					treeOptionValues: [
-						{ value: false, treeOption: { id: 2 } },
-						{ value: true, treeOption: { id: 3 } },
-						{ value: true, treeOption: { id: 4 } },
-						{ value: true, treeOption: { id: 5 } },
-						{ value: false, treeOption: { id: 6 } },
-						{ value: true, treeOption: { id: 8 } }
-					],
-					treeCommands: [
-						{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
-						{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
-						{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
-					]
-				}
-			}
-			
-			function onNewFolder(selectedPks) {
-				
-				let parent = undefined;
-				let itemsSelected = self.treeView.getSelected();
-					
-				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
-				
-					let selected = itemsSelected[0];
-					
-					if (selected.id_ === selectedPks[0]) {
-						
-						 parent = selected.props.folder ? selected : self.treeView.getParent(selected);
-					}	
-				}
 
-				webix.prompt({
-					title: i18n.t("LBL_NEW_FOLDER"),
-				  	text: i18n.t("LBL_NEW_FOLDER_DESCRIPTION"),
-				  	ok: i18n.t("LBL_ACCEPT"),
-				  	cancel: i18n.t("LBL_CANCEL"),
-				  	input: {
-				    	required: true,
-				    	placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
-				  	},
-					width: 600,
-					
-				}).then(function(result){
-				  	
-					// TODO: POST with result
-					
-					if (self.vmsSignalingLibraryPersist) {
-						
-						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
-						.then(function(data) {
-							
-							load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-						})
-						.catch(function() {
-							
-						});	
-					}
-					
-					
-				}).fail(function(){
-				  	
-				});	
+				return events;
 			}
-			
-			function onNewItem(selectedPks) {
-				
-				let parent = undefined;
-				let itemsSelected = self.treeView.getSelected();
-					
-				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
-				
-					let selected = itemsSelected[0];
-					
-					if (selected.id_ === selectedPks[0]) {
-						
-						 parent = selected.props.folder ? selected : self.treeView.getParent(selected);
-					}	
-				}
 
-				webix.prompt({
-					title: i18n.t("LBL_NEW_SIGNALING"),
-				  	text: i18n.t("LBL_NEW_SIGNALING_DESCRIPTION"),
-				  	ok: i18n.t("LBL_ACCEPT"),
-				  	cancel: i18n.t("LBL_CANCEL"),
-				  	input: {
-				    	required: true,
-				    	placeholder: i18n.t("LBL_NEW_SIGNALING_NAME")
-				  	},
-					width: 600,
-					
-				}).then(function(result){
-					
-					self.vmsSignalingLibraryPersist.saveItem(undefined, result, JSON.stringify(self.composer.getJsonDataClear()) , parent.id_)
-					.then(function(data) {
-						
-						load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-					})
-					.catch(function() {
-						
-					});
-					
-				}).fail(function(){
-				  	
-				});	
-			}
-			
-			function onDelete(selectedPks) {
-				
-				let parent = undefined;
-				let itemsSelected = self.treeView.getSelected();
-					
-				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
-					
-					let selected = itemsSelected[0];
-					
-					if (selected.id === "root") {
-						
-						webix.alert({
-							title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
-							text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
-							type: "alert-warning",
-							width: 500
-						});
-					}
-					else {
-						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
-							width: 600
-						}).then(function(result) {
-							
-							if (selected.id_ === selectedPks[0]) {
-							
-								 parent = self.treeView.getParent(selected);
-							}
-						
-							if (selected.id_ === selectedPks[0]) {
-							
-								self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
-								.then(function(data) {
-									
-									load(parent ? parent.id : undefined);
-								})
-								.catch(function() {
-									
-								});
-							}
-						});
-					}	
-				}
-					
-			}
-			
+			//			function getMetadata() {
+			//		
+			//				return {
+			//					
+			//					id: -1,
+			//					label: "LBL_LIBRARY",
+			//					treeOptionValues: [
+			//						{ value: false, treeOption: { id: 2 } },
+			//						{ value: true, treeOption: { id: 3 } },
+			//						{ value: true, treeOption: { id: 4 } },
+			//						{ value: true, treeOption: { id: 5 } },
+			//						{ value: false, treeOption: { id: 6 } },
+			//						{ value: true, treeOption: { id: 8 } }
+			//					],
+			//					treeCommands: [
+			//						{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
+			//						{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
+			//						{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
+			//					]
+			//				}
+			//			}
+//
+//			function onNewFolder(selectedPks) {
+//
+//				let parent = undefined;
+//				let itemsSelected = self.treeView.getSelected();
+//
+//				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+//
+//					let selected = itemsSelected[0];
+//
+//					if (selected.id_ === selectedPks[0]) {
+//
+//						parent = selected.props.folder ? selected : self.treeView.getParent(selected);
+//					}
+//				}
+//
+//				webix.prompt({
+//					title: i18n.t("LBL_NEW_FOLDER"),
+//					text: i18n.t("LBL_NEW_FOLDER_DESCRIPTION"),
+//					ok: i18n.t("LBL_ACCEPT"),
+//					cancel: i18n.t("LBL_CANCEL"),
+//					input: {
+//						required: true,
+//						placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
+//					},
+//					width: 600,
+//
+//				}).then(function(result) {
+//
+//					// TODO: POST with result
+//
+//					if (self.vmsSignalingLibraryPersist) {
+//
+//						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
+//							.then(function(data) {
+//
+//								load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+//							})
+//							.catch(function() {
+//
+//							});
+//					}
+//
+//
+//				}).fail(function() {
+//
+//				});
+//			}
+//
+//			function onNewItem(selectedPks) {
+//
+//				let parent = undefined;
+//				let itemsSelected = self.treeView.getSelected();
+//
+//				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+//
+//					let selected = itemsSelected[0];
+//
+//					if (selected.id_ === selectedPks[0]) {
+//
+//						parent = selected.props.folder ? selected : self.treeView.getParent(selected);
+//					}
+//				}
+//
+//				webix.prompt({
+//					title: i18n.t("LBL_NEW_SIGNALING"),
+//					text: i18n.t("LBL_NEW_SIGNALING_DESCRIPTION"),
+//					ok: i18n.t("LBL_ACCEPT"),
+//					cancel: i18n.t("LBL_CANCEL"),
+//					input: {
+//						required: true,
+//						placeholder: i18n.t("LBL_NEW_SIGNALING_NAME")
+//					},
+//					width: 600,
+//
+//				}).then(function(result) {
+//
+//					self.vmsSignalingLibraryPersist.saveItem(undefined, result, JSON.stringify(self.composer.getJsonDataClear()), parent.id_)
+//						.then(function(data) {
+//
+//							load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+//						})
+//						.catch(function() {
+//
+//						});
+//
+//				}).fail(function() {
+//
+//				});
+//			}
+//
+//			function onDelete(selectedPks) {
+//
+//				let parent = undefined;
+//				let itemsSelected = self.treeView.getSelected();
+//
+//				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+//
+//					let selected = itemsSelected[0];
+//
+//					if (selected.id === "root") {
+//
+//						webix.alert({
+//							title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
+//							text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
+//							type: "alert-warning",
+//							width: 500
+//						});
+//					}
+//					else {
+//
+//						webix.confirm({
+//							title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
+//							ok: i18n.t("LBL_YES"),
+//							cancel: i18n.t("LBL_NO"),
+//							text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
+//							width: 600
+//						}).then(function(result) {
+//
+//							if (selected.id_ === selectedPks[0]) {
+//
+//								parent = self.treeView.getParent(selected);
+//							}
+//
+//							if (selected.id_ === selectedPks[0]) {
+//
+//								self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
+//									.then(function(data) {
+//
+//										load(parent ? parent.id : undefined);
+//									})
+//									.catch(function() {
+//
+//									});
+//							}
+//						});
+//					}
+//				}
+//
+//			}
+
 			function getTreeData() {
-				
+
 				let data = [];
-				
+
 				let itemsTree = items.map(e => {
-						
+
 					return {
-						
+
 						id: e.id,
 						label: e.name,
 						signaling: e.signaling,
@@ -407,51 +421,215 @@ export default class VmsSignalingLibrary {
 						visible: e.visible
 					}
 				});
-				
+
 				data = util.tree.getNodes(itemsTree, relationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
-				
+
 				return data;
 			}
-			
+
 			self.treeView = new TreeView(getMetadata(), getTreeData(), getEvents());
-			
+
 			treeView.cols.push(self.treeView.getView());
-			
+
 			webix.ui(treeView, $$("view-tree-" + self.uid));
 		}
+
+		function getMetadata() {
+
+			return {
+
+				id: -1,
+				label: "LBL_LIBRARY",
+				treeOptionValues: [
+					{ value: false, treeOption: { id: 2 } },
+					{ value: true, treeOption: { id: 3 } },
+					{ value: true, treeOption: { id: 4 } },
+					{ value: true, treeOption: { id: 5 } },
+					{ value: false, treeOption: { id: 6 } },
+					{ value: true, treeOption: { id: 8 } }
+				],
+				treeCommands: [
+					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
+					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
+					{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
+				]
+			}
+		}
 		
+		
+			function onNewFolder(selectedPks) {
+
+				let parent = undefined;
+				let itemsSelected = self.treeView.getSelected();
+
+				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+
+					let selected = itemsSelected[0];
+
+					if (selected.id_ === selectedPks[0]) {
+
+						parent = selected.props.folder ? selected : self.treeView.getParent(selected);
+					}
+				}
+
+				webix.prompt({
+					title: i18n.t("LBL_NEW_FOLDER"),
+					text: i18n.t("LBL_NEW_FOLDER_DESCRIPTION"),
+					ok: i18n.t("LBL_ACCEPT"),
+					cancel: i18n.t("LBL_CANCEL"),
+					input: {
+						required: true,
+						placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
+					},
+					width: 600,
+
+				}).then(function(result) {
+
+					// TODO: POST with result
+
+					if (self.vmsSignalingLibraryPersist) {
+
+						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
+							.then(function(data) {
+
+								load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+							})
+							.catch(function() {
+
+							});
+					}
+
+
+				}).fail(function() {
+
+				});
+			}
+
+			function onNewItem(selectedPks) {
+
+				let parent = undefined;
+				let itemsSelected = self.treeView.getSelected();
+
+				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+
+					let selected = itemsSelected[0];
+
+					if (selected.id_ === selectedPks[0]) {
+
+						parent = selected.props.folder ? selected : self.treeView.getParent(selected);
+					}
+				}
+
+				webix.prompt({
+					title: i18n.t("LBL_NEW_SIGNALING"),
+					text: i18n.t("LBL_NEW_SIGNALING_DESCRIPTION"),
+					ok: i18n.t("LBL_ACCEPT"),
+					cancel: i18n.t("LBL_CANCEL"),
+					input: {
+						required: true,
+						placeholder: i18n.t("LBL_NEW_SIGNALING_NAME")
+					},
+					width: 600,
+
+				}).then(function(result) {
+
+					self.vmsSignalingLibraryPersist.saveItem(undefined, result, JSON.stringify(self.composer.getJsonDataClear()), parent.id_)
+						.then(function(data) {
+
+							load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+						})
+						.catch(function() {
+
+						});
+
+				}).fail(function() {
+
+				});
+			}
+
+			function onDelete(selectedPks) {
+
+				let parent = undefined;
+				let itemsSelected = self.treeView.getSelected();
+
+				if (Array.isArray(itemsSelected) && itemsSelected.length > 0 && Array.isArray(selectedPks) && selectedPks.length > 0) {
+
+					let selected = itemsSelected[0];
+
+					if (selected.id === "root") {
+
+						webix.alert({
+							title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
+							text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
+							type: "alert-warning",
+							width: 500
+						});
+					}
+					else {
+
+						webix.confirm({
+							title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
+							ok: i18n.t("LBL_YES"),
+							cancel: i18n.t("LBL_NO"),
+							text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
+							width: 600
+						}).then(function(result) {
+
+							if (selected.id_ === selectedPks[0]) {
+
+								parent = self.treeView.getParent(selected);
+							}
+
+							if (selected.id_ === selectedPks[0]) {
+
+								self.vmsSignalingLibraryPersist.deleteItem(selected.id_)
+									.then(function(data) {
+
+										load(parent ? parent.id : undefined);
+									})
+									.catch(function() {
+
+									});
+							}
+						});
+					}
+				}
+
+			}
+
 		function drawResizer() {
-			
+
 			let viewResizer = {};
-			
+
 			viewResizer = {
 				id: "view-signaling-lib-resizer-" + self.uid,
 				view: "resizer"
 			}
-			
+
 			return viewResizer;
 		}
-		
+
 		function drawContent() {
-			
+
 			let viewContent = {
 				id: "view-signaling-lib-content-" + self.uid,
-				css: { "background-color": "white"},
+				css: { "background-color": "white" },
 				rows: [
-					
+
 					getViewContentHeader(),
 					getViewContentToolbar(),
 					{
 						cols: [
 							{},
 							getViewComposer(),
+							getViewOptionDialogBox(),
 							{}
 						]
 					},
 					{}
 				]
 			};
-			
+
 			function getViewContentHeader() {
 			
 				let viewContentHeader = {
@@ -630,15 +808,67 @@ export default class VmsSignalingLibrary {
 						{ width: 30 }
 					]
 				}
-				
+
 				return viewComposer;
 			}
-			
+
+			function getViewOptionDialogBox() {
+
+				let actions = getMetadata().treeCommands;
+
+				if (Array.isArray(actions) && actions.length > 0) {
+
+					let options = [];
+
+					for (let action of actions) {
+						
+						options.push({
+							id: action.id,
+							label: i18n.t(action.label),
+							description: i18n.t(action.label.toUpperCase() + "_DESCRIPTION"),
+							default: action.default,
+							icon: action.icon
+						});
+					}
+
+					self.optionDialogBox = new OptionDialogBox(null, options, onAceptOptionDialogBox);
+
+					let viewOptionDialogBox = {
+						id: "view-option-dialog-" + self.uid,
+						rows: [
+							{height: 30},
+							{						
+								cols: [
+									{ width: 30 },
+									self.optionDialogBox.show(),
+									{ width: 30 }
+								]}							
+						]
+					}
+
+					return viewOptionDialogBox;
+				}
+
+			}
+
 			return viewContent;
 		}
 		
-		function onAfterRenderComposer() {
+		function onAceptOptionDialogBox(buttonId){
 			
+			let actions = getMetadata().treeCommands;
+			let itemsSelected = self.treeView.getSelected();
+			let callbackAction = actions.find(e => e.id === buttonId);
+			let selectedPks = [];
+			
+			if (callbackAction){
+				selectedPks.push(itemsSelected[0].id_);
+				callbackAction.callbacks[0].function(selectedPks);
+			}
+		}
+
+		function onAfterRenderComposer() {
+
 			if (self.composer) {
 				
 				self.composer.clear();	

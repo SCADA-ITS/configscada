@@ -1,6 +1,7 @@
 import { util } from "../../../lib/util.js";
 import DaliRegimeDialogBox from "./daliRegimeDialogBox.js";
 import DataTable from "../../../component/datatable.js";
+import OptionDialogBox from "../../../component/optionDialogBox.js";
 import { adapter } from "../../../lib/adapter.js";
 
 const CIRCUIT_COMMAND_SEND_ON = "SEND_CIRCUIT_ON";
@@ -284,37 +285,86 @@ export default class TubeContent {
 			on: {
 				onChange(newv, oldv) {
 
-					webix.confirm({
-						title: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function() {
+					this.blockEvent();
+					this.setValue(oldv);
+					this.unblockEvent();
+
+					let options = [];
+
+					for (let modeOption of lightingModeOptions) {
+
+						let newSelection = modeOption.id === newv ? true : false;
+
+						options.push({
+							id: modeOption.id,
+							label: modeOption.value,
+							icon: modeOption.icon,
+							description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_DESCRIPTION"),
+							default: newSelection
+						});
+					}
+
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode);
+					optionDialog.show(oldv);
+
+
+					function changeMode(newModeId) {
 
 						let command = self.parent.config.commands.SEND_LIGHTING_MODE;
 						command.elementId = self.selectedTube.id;
-						command.commandElementValues[0].value = newv;
+						command.commandElementValues[0].value = newModeId;
 
 						let body = {
 							commands: []
 						};
+
 						body.commands.push(command);
 
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
+							console.log(data.json())
 							if (!data.json()) {
-
 								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 							}
+						}, () => {
+							this.blockEvent();
+							this.setValue(oldv);
+							this.unblockEvent();
 						});
 
-					}).fail(() => {
 
-						this.blockEvent();
-						this.setValue(oldv);
-						this.unblockEvent();
-					});
+					}
+
+					//					webix.confirm({
+					//						title: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM"),
+					//						ok: i18n.t("LBL_ACCEPT"),
+					//						cancel: i18n.t("LBL_CANCEL"),
+					//						text: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM_DESCRIPTION"),
+					//						width: 600
+					//					}).then(function() {
+					//						
+					//						let command = self.parent.config.commands.SEND_LIGHTING_MODE;
+					//						command.elementId = self.selectedTube.id;
+					//						command.commandElementValues[0].value = newv;
+					//
+					//						let body = {
+					//							commands: []
+					//						};
+					//						body.commands.push(command);
+					//
+					//						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+					//							
+					//							if (!data.json()){
+					//								
+					//								webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+					//							}
+					//						});
+					//						
+					//					}).fail(() => {
+					//
+					//						this.blockEvent();
+					//						this.setValue(oldv); 
+					//						this.unblockEvent();
+					//					});
 				}
 			}
 		};
@@ -1060,14 +1110,52 @@ export default class TubeContent {
 				commandId: 1,
 				function: () => {
 
+					let options = [];
 					let dali = self.tubeDalis.find(dali => dali.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
 
-					let daliRegimeDialogBox = new DaliRegimeDialogBox(dali, self.parent)
-					daliRegimeDialogBox.show();
+					let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
+					daliRegimeConfig = JSON.parse(daliRegimeConfig);
+
+					for (let regime of daliRegimeConfig.regimes) {
+						options.push({
+							id: regime.id,
+							label: regime.alias,
+							description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
+							default: null
+						});
+					}
+
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
+					optionDialog.show();
+
+					//					let daliRegimeDialogBox = new DaliRegimeDialogBox(dali, self.parent)
+					//					daliRegimeDialogBox.show();
 				}
 			});
 
 			self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
+
+			function changeRegime(newRegimeId) {
+
+				let command = self.parent.config.commands.SEND_DALI_REGIME;
+				let dali = self.tubeDalis.find(dali => dali.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+	
+				command.elementId = dali.id;
+				command.commandElementValues[0].value = newRegimeId;
+
+				let body = {
+					commands: []
+				};
+				body.commands.push(command);
+
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+					console.log(data.json())
+					if (!data.json()) {
+
+						webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+					}
+				});
+			}
 
 			//return {height: 338,rows:self.tubeDalisDataTable.getView()};
 			return { rows: self.tubeDalisDataTable.getView() };

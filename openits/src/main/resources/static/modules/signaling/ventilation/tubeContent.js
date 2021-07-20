@@ -1,5 +1,6 @@
 import { util } from "../../../lib/util.js";
 import DataTable from "../../../component/datatable.js";
+import OptionDialogBox from "../../../component/optionDialogBox.js";
 import { adapter } from "../../../lib/adapter.js";
 
 const FAN_COMMAND_SEND_FANS_STOP = "SEND_FANS_STOP";
@@ -232,6 +233,7 @@ export default class TubeContent {
 			}
 
 			let actionPanelSwitcher = {
+				id: "segmented-" + self.parent.uid,
 				view: "segmented",
 				css: "segment-custom-2",
 				value: getVentilationMode(),
@@ -240,38 +242,84 @@ export default class TubeContent {
 				tooltip: true,
 				on: {
 					onChange(newv, oldv) {
+												
+					this.blockEvent();
+					this.setValue(oldv);
+					this.unblockEvent();					
+					
+					let options = [];
+					
+					for (let modeOption of ventilationModeOptions){
 
-						webix.confirm({
-							title: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM"),
-							ok: i18n.t("LBL_ACCEPT"),
-							cancel: i18n.t("LBL_CANCEL"),
-							text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
-							width: 600
-						}).then(function() {
-
-							let command = self.parent.config.commands.SEND_VENTILATION_MODE;
-							command.elementId = self.selectedTube.id;
-							command.commandElementValues[0].value = newv;
-
-							let body = {
-								commands: []
-							};
-							body.commands.push(command);
-
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
-								if (!data.json()) {
-
-									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-								}
-							});
-
-						}).fail(() => {
-
-							this.blockEvent();
-							this.setValue(oldv);
-							this.unblockEvent();
+					let newSelection = modeOption.id === newv ? true : false;
+															
+						 options.push({
+							id: modeOption.id,
+							label: modeOption.value,
+							description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_DESCRIPTION"),
+							default: newSelection
 						});
+					}
+					
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode);
+					optionDialog.show(oldv);
+
+				 function changeMode(newModeId){
+						
+					let command = self.parent.config.commands.SEND_VENTILATION_MODE;
+					command.elementId = self.selectedTube.id;
+					command.commandElementValues[0].value = newModeId;
+		
+					let body = {
+							commands: []
+							};
+								
+					body.commands.push(command);
+					
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+					console.log(data.json())
+						if (!data.json()){
+							webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+						}
+					},() => {
+						this.blockEvent();
+						this.setValue(oldv); 
+						this.unblockEvent();				
+					});						
+				
+				}
+
+//						webix.confirm({
+//							title: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM"),
+//							ok: i18n.t("LBL_ACCEPT"),
+//							cancel: i18n.t("LBL_CANCEL"),
+//							text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
+//							width: 600
+//						}).then(function() {
+//
+//							let command = self.parent.config.commands.SEND_VENTILATION_MODE;
+//							command.elementId = self.selectedTube.id;
+//							command.commandElementValues[0].value = newv;
+//
+//							let body = {
+//								commands: []
+//							};
+//							body.commands.push(command);
+//
+//							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+//
+//								if (!data.json()) {
+//
+//									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+//								}
+//							});
+//
+//						}).fail(() => {
+//
+//							this.blockEvent();
+//							this.setValue(oldv);
+//							this.unblockEvent();
+//						});
 					}
 				}
 			};
