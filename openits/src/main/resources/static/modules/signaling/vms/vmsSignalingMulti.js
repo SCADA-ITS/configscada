@@ -116,6 +116,7 @@ export default class VmsSignalingMulti {
 					id: "view-signaling-multi-dbllist-" + self.uid,
 					view: "dbllist",
 				  	//list: { autoheight:true },
+					css: "dbllist",
 				  	labelLeft: i18n.t("LBL_AVAILABLE"),
 				  	labelRight: i18n.t("LBL_SELECTED"),
 				  	data: getData(),

@@ -3264,5 +3264,36 @@ p, input, textarea {
 	top: 12%;
 }
 
+.dbllist .webix_view .webix_list {
+	background-color: transparent;
+	box-sizing: border-box;
+	border: 1px solid #dadee0 !important;
+}
+
+.dbllist .webix_list_item {
+	border: none !important;
+	border-bottom: 1px solid #dadee0 !important;
+}
 
 
+.dbllist .webix_list_item.webix_selected {
+	background-color: #eaeef5;
+}
+
+.dbllist .dbllist_button {
+	background-color: transparent;
+	border: 1px solid var(--blue-headers-not-sel);
+	border-radius: 5px;
+}
+
+.dbllist .dbllist_button:hover {
+	background-color: var(--blue-headers-not-sel);  
+}
+
+.dbllist .dbllist_button:active, .dbllist .dbllist_button:focus {
+	background-color: transparent; 
+}
+
+.dbllist .dbllist_button .webix_icon {
+	color: var(--blue-headers);
+}
