@@ -1,15 +1,49 @@
 {
 	"moduleAction": {
 	    "singleCam": 102001,
-	    "multiCam": 102002
+	    "multiCam": 102002,
+	    "equipmentViewer": 101401
 	},
-	"actionEndpoints": {
-		
+	"commands": {
+		"lock": {
+			"commandElementTypeId": "CommandElementType:1:2",
+			"elementId": null
+		},
+		"preset": {
+			"commandElementTypeId": "CommandElementType:2:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:2:1",
+					"value": null
+				}
+			]
+		},
+		"ptz": {
+			"commandElementTypeId": "CommandElementType:3:2",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:3:2:1",
+					"value": null
+				}
+			]
+		}
+	},
+	"ptzValue": {
+		"stop": "0",
+		"up": "1",
+		"down": "2",
+		"left": "3",
+		"right": "4",
+		"zoomIn": "5",
+		"zoomOut": "6"
 	},
 	"restEndpoints": {
 		"element": "elements/${id}",
 		"cctvScenario": "cctv_scenarios/${id}",
-		"cctvHierarchies": "cctv_scenarios/hierarchies"
+		"cctvHierarchies": "cctv_scenarios/hierarchies",
+		"command": "elements/send_command_element"
 	},
 	"multi": {
 		"fit": true
@@ -18,7 +52,8 @@
 		"fit": false
 	},
 	"camConf": {
-		"streamProtocol": "ElementTypeParam:2:1:13",
+		"presetConfigJson": "ElementTypeParam:2:1:11",
+		"featuresPTZ": "ElementTypeParam:2:1:12",
 		"stream_mjpeg": {
 			"url": "ElementTypeParam:2:1:3"
 		},

@@ -2981,6 +2981,62 @@ p, input, textarea {
 	cursor: default !important;
 }
 
+.cam-viewer-button-small .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-button-small .webix_button:hover {
+	background-color: transparent;
+}
+
+.cam-viewer-button-small .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-button-small .webix_button .webix_icon_btn {
+	color: white;
+	border: 1px white solid; 
+	border-radius: 5px;
+	background-color: transparent;
+}
+
+.cam-viewer-button-small .webix_button .webix_icon_btn:hover {
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid;
+	border-radius: 5px;
+	background-color: white; 
+}
+
+/**/
+
+.cam-viewer-button-pressed-small .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-button-pressed-small .webix_button:hover {
+	background-color: transparent;
+}
+
+.cam-viewer-button-pressed-small .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-button-pressed-small .webix_button .webix_icon_btn {
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid; 
+	border-radius: 5px;
+	background-color: white;
+}
+
+/**/
 
 .cam-viewer-button .webix_button {
 
@@ -2999,17 +3055,177 @@ p, input, textarea {
 }
 
 .cam-viewer-button .webix_button .webix_icon_btn {
-	color: var(--blue-mid);
-	border: 1px var(--blue-mid) inset; 
+	color: white;
+	border: 1px white solid; 
 	border-radius: 5px;
 	background-color: transparent;
+	font-size: 30px;
+	width: 30px;
 }
 
 .cam-viewer-button .webix_button .webix_icon_btn:hover {
-	color: white;
-	border: 1px var(--blue-mid) inset;
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid;
 	border-radius: 5px;
-	background-color: var(--blue-mid); 
+	background-color: white; 
+}
+
+/**/
+
+.cam-viewer-button-pressed .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-button-pressed .webix_button:hover {
+	background-color: transparent;
+}
+
+.cam-viewer-button-pressed .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-button-pressed .webix_button .webix_icon_btn {
+	color: var(--blue-mid);
+	border: 1px var(--blue-mid) solid; 
+	border-radius: 5px;
+	background-color: white;
+	font-size: 30px;
+	width: 30px;
+}
+
+/**/
+
+.cam-viewer-controls-small .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-controls-small .webix_button:hover {
+	color: white;
+	background-color: transparent;
+	border-radius: 20px;
+	background-color: rgba(255 255 255 / 0.2);
+}
+
+.cam-viewer-controls-small .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-controls-small .webix_button .webix_icon_btn {
+	color: #eeeeec;
+	font-size: 15px;
+}
+
+.cam-viewer-controls-small .webix_button .webix_icon_btn:hover {
+	color: white;
+}
+
+/*** ****/
+
+.cam-viewer-controls .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	background: transparent;
+}
+
+.cam-viewer-controls .webix_button:hover {
+	color: white;
+	background-color: transparent;
+	border-radius: 40px;
+	background-color: rgba(255 255 255 / 0.2);
+}
+
+.cam-viewer-controls .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-controls .webix_button .webix_icon_btn {
+	color: #eeeeec;
+	padding-right: 15px;
+	padding-top: 10px;
+	font-size: 40px;
+}
+
+.cam-viewer-controls .webix_button .webix_icon_btn:hover {
+	color: white;
+}
+
+/**/
+
+.cam-viewer-controls-preset-small .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	border-radius: 5px;
+	color: #eeeeec;
+	background: rgba(255 255 255 / 0.15);
+	font-size: 10px;
+}
+
+.cam-viewer-controls-preset-small .webix_button:hover {
+	color: #eeeeec;
+	background-color: rgba(255 255 255 / 0.5);
+}
+
+.cam-viewer-controls-preset-small .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-controls-preset .webix_button {
+
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	border-radius: 10px;
+	color: #eeeeec;
+	background: rgba(255 255 255 / 0.1);
+	font-size: 20px;
+	height: 35px;
+}
+
+.cam-viewer-controls-preset .webix_button:hover {
+	color: #eeeeec;
+	background-color: rgba(255 255 255 / 0.5);
+}
+
+.cam-viewer-controls-preset .webix_button:focus {
+	background-color: transparent;
+}
+
+.cam-viewer-name-small {
+	
+	height: 20px;
+}
+
+.cam-viewer-name-small .webix_el_box {
+	
+	color: white;
+	font-size: 10px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.cam-viewer-name {
+	
+	height: 30px;
+}
+
+.cam-viewer-name .webix_el_box{
+	
+	color: white;
+	font-size: 20px;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .toggle-option-list {

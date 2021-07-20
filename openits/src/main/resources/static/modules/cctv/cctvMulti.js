@@ -240,9 +240,9 @@ export default class CCTVMulti {
 							
 							pages = Math.floor(scenario.elements.length / (scenario.nRows * scenario.nColumns)) + 1;
 							
-							for (let page = 0; page < pages; page++) {
+							for (let page = 1; page <= pages; page++) {
 								
-								viewContent.cells.push(getMatrixView())
+								viewContent.cells.push(getMatrixView(page))
 							}
 						}
 				
@@ -260,9 +260,9 @@ export default class CCTVMulti {
 						
 					}
 					
-					function getMatrixView() {
+					function getMatrixView(page) {
 						
-						let viewMatrix = {};
+						let viewMatrix = { id: "page-" + page + "-" + self.uid };
 						
 						viewMatrix.rows = [];
 						
@@ -301,6 +301,9 @@ export default class CCTVMulti {
 					
 					function loadCamera(elementId, pos) {
 						
+						let w = $$("cell-1-" + self.uid).$width;
+						let h = $$("cell-1-" + self.uid).$height;
+						
 						if ($$("cell-" + pos + "-" + self.uid)) {
 							
 							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
@@ -310,11 +313,10 @@ export default class CCTVMulti {
 									let element = elementResponse.json();
 							
 									if (element) {
+										
+										
 								
-										let w = !self.parent.config.multi.fit ? $$("cell-" + pos + "-" + self.uid).$width + "px" : "100%";
-										let h = !self.parent.config.multi.fit ? $$("cell-" + pos + "-" + self.uid).$height + "px" : "100%";
-								
-										let camViewer = new CamViewer(self.parent.config.camConf, element, w, h, CamViewer.MODE_MULTI);
+										let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_MULTI, self.parent.config.multi.fit);
 							
 										let viewCamViewer = camViewer.getView();
 										
@@ -427,7 +429,13 @@ export default class CCTVMulti {
 												on:{
 													onChange: function(newValue, oldValue, config){
 												        
-														// TODO
+														let multiview = $$("view-cctv-content-" + self.uid); 
+														let page = $$("page-" + newValue + "-" + self.uid);
+														
+														if (multiview && page) {
+															
+															multiview.setValue(page.config.id);
+														}
 												 	}
 												}
 											},

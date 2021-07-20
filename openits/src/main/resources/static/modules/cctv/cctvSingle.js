@@ -25,36 +25,26 @@ export default class CCTVSingle {
 						
 					if (element) {
 
-						let w, h;
+						let container = $$(self.parent.args.containerId);
+					 
+						if (container) {
 						
-						if (self.parent.config.single.fit) {
+							let w = container.$width;
+							let h = container.$height;
 							
-							w = "100%";
-							h = "100%";
-						}
-						else {
-							
-							let container = $$(self.parent.args.containerId);
-							 
-							if (container) {
-								
-								w = container.$width + "px";
-								h = container.$height + "px";
-							}
-						}
-				
-						let camViewer = new CamViewer(self.parent.config.camConf, element, w, h, CamViewer.MODE_SINGLE);
+							let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_SINGLE, self.parent.config.single.fit);
 			
-						let viewCamViewer = camViewer.getView();
-						
-						let viewMain = {
-							id: self.parent.uid,
-							rows: [
-								viewCamViewer
-							]
-						};
-						
-						self.onLoad(viewMain);
+							let viewCamViewer = camViewer.getView();
+							
+							let viewMain = {
+								id: self.parent.uid,
+								rows: [
+									viewCamViewer
+								]
+							};
+							
+							self.onLoad(viewMain);	
+						}
 					}
 				}
 			});

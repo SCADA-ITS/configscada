@@ -1117,6 +1117,39 @@ export let util = {
 
 			return winId;
 		},
+		
+		loadTab(title, body) {
+			
+			let tabId = "tab_aux_" + webix.uid();
+			let mainTab = $$(MAIN_TAB_ID);
+			let icon = 'img/module/default.png';
+			
+			if (mainTab) {
+			
+				mainTab.addView({
+					id: tabId,
+					header: `<div style='float: left; width: 250px;'>
+								<img class='tab-icon' src='${icon}'/>
+								<span class='tab-text'>${title}</span>
+								<span style='float: right; padding-top: 2px'><a href='#'><img src='./img/externalize_button.png'></a></span>
+							</div>`,
+					body: {
+						autoheight: true,
+						id: tabId.replace("tab", "tab_body"),
+						autowidth: true,
+						cols: [
+							{
+								rows: [
+									body
+								]
+							}
+						]
+					}
+				});
+	
+				mainTab.getTabbar().setValue(tabId.replace("tab", "tab_body"));	
+			}
+		},
 
 		setWindowTitle(winId, title) {
 
