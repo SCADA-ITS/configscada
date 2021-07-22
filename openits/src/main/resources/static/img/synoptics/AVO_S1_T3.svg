@@ -11,21 +11,21 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <defs id="defs6">
-    <clipPath id="clipPath20" clipPathUnits="userSpaceOnUse">
-      <path id="path18" d="M 0,0 H 1191 V 842 H 0 Z" />
-    </clipPath>
-    <clipPath id="clipPath30" clipPathUnits="userSpaceOnUse">
-      <path id="path28" d="M 0,98 H 19842 V 13933 H 0 V 98" />
-    </clipPath>
-    <clipPath id="clipPath1254" clipPathUnits="userSpaceOnUse">
-      <path id="path1252" d="M 0,98 H 19842 V 13933 H 0 V 98" />
-    </clipPath>
-    <clipPath id="clipPath1268" clipPathUnits="userSpaceOnUse">
-      <path id="path1266" d="M 0,98 H 19842 V 13933 H 0 V 98" />
-    </clipPath>
-  </defs>
   <g transform="matrix(1.3333333,0,0,-1.3333333,0,1122.6667)" id="main">
+    <defs id="defs6">
+      <clipPath id="clipPath20" clipPathUnits="userSpaceOnUse">
+        <path id="path18" d="M 0,0 H 1191 V 842 H 0 Z" />
+      </clipPath>
+      <clipPath id="clipPath30" clipPathUnits="userSpaceOnUse">
+        <path id="path28" d="M 0,98 H 19842 V 13933 H 0 V 98" />
+      </clipPath>
+      <clipPath id="clipPath1254" clipPathUnits="userSpaceOnUse">
+        <path id="path1252" d="M 0,98 H 19842 V 13933 H 0 V 98" />
+      </clipPath>
+      <clipPath id="clipPath1268" clipPathUnits="userSpaceOnUse">
+        <path id="path1266" d="M 0,98 H 19842 V 13933 H 0 V 98" />
+      </clipPath>
+    </defs>
     <g id="g12">
       <g id="g14">
         <g clip-path="url(#clipPath20)" id="g16">
