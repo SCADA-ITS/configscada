@@ -70,12 +70,15 @@ export default class SignalingManagerModule extends GenericModule {
 
 						if (elementType) {
 
-							if (element.elementSubtype && element.elementSubtype.id && element.elementSubtype.commandModule &&
+							if (element.elementSubtype && element.elementSubtype.id &&
 								elementType.elementSubtypes && elementType.elementSubtypes.length > 0) {
 
 								let elementSubtype = elementType.elementSubtypes.find(e => e.id === element.elementSubtype.id);
 
 								if (elementSubtype) {
+									
+									let commandModule = element.elementSubtype.commandModule ? element.elementSubtype.commandModule : self.config.defaultSignalingModuleAction;
+									let alias = !element.elementSubtype.commandModule ? "(*) " : "";
 
 									let listElement = self.mapElements.get(element.elementSubtype.id);
 
@@ -84,11 +87,11 @@ export default class SignalingManagerModule extends GenericModule {
 										listElement = [];
 
 										self.mapElements.set(element.elementSubtype.id, listElement);
-										self.mapCommandModule.set(element.elementSubtype.id, element.elementSubtype.commandModule);
+										self.mapCommandModule.set(element.elementSubtype.id, commandModule);
 
 										elementTypeView.push({
 											id: element.elementSubtype.id,
-											alias: i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
+											alias: alias + i18n.t(elementType.labelAlias) + ' - ' + i18n.t(elementSubtype.labelAlias),
 											description: i18n.t(elementSubtype.labelDescription),
 											image: elementType.elementTypePhoto
 										});
