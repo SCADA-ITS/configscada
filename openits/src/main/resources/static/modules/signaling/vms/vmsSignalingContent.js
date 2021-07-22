@@ -132,6 +132,22 @@ export default class VmsSignalingContent {
 								}).then(function() {
 	
 									self.composer.clear();
+									self.hasMessage = false;
+									let radioCommands = $$("view-signalling-commands-" + self.uid);
+									
+									if (radioCommands) {
+										
+										radioCommands.setValue(self.config.commands.sendMessage.commandElementTypeId);	
+									}
+									
+									let btnSend = $$("btn-send-" + self.uid);
+									let btnUndo = $$("btn-undo-" + self.uid);
+									
+									if (btnSend && btnUndo) {
+										
+										btnSend.disable();
+										btnUndo.disable();
+									}
 								});
 							}
 						}
@@ -293,6 +309,7 @@ export default class VmsSignalingContent {
 							else {
 								
 								self.hasMessage ? btnSend.enable() : btnSend.disable();
+								self.hasMessage ? btnUndo.enable() : btnUndo.disable();
 							}	
 						}
 					}
@@ -483,6 +500,15 @@ export default class VmsSignalingContent {
 										else {
 											
 											sendMessageCmd.commandElementTypeId = self.selectedCommand;
+											
+											self.composer.clear();
+											self.hasMessage = false;
+											let radioCommands = $$("view-signalling-commands-" + self.uid);
+											
+											if (radioCommands) {
+												
+												radioCommands.setValue(self.config.commands.sendMessage.commandElementTypeId);	
+											}
 										}
 										
 										if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
