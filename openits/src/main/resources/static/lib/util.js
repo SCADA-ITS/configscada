@@ -573,7 +573,11 @@ export let util = {
 						if (elementTypeCommand) {
 							
 							cmd = elementTypeCommand;
-							viewTypeId = cmd.viewType.id;
+							
+							if (cmd.viewType) {
+								
+								viewTypeId = cmd.viewType.id;	
+							}
 						} 
 					}
 					

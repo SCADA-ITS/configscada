@@ -41,7 +41,14 @@ export default class IncidentReportModule extends GenericModule {
 
 	getView() {
 
-		return super.getViewCheckModuleActionAndSelectedPks();
+		let view = undefined;
+		
+		if (this.moduleAction.id === this.config.moduleAction.edit) {
+
+			return super.getViewCheckModuleActionAndSelectedPks();
+		}
+		
+		return view;
 	}
 
 	loadData() {
