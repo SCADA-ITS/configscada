@@ -172,7 +172,7 @@ export default class TreeView {
 			rows: []
 		};
 		
-		view.rows.push({ height: 6 });
+		//view.rows.push({ height: 6 });
 		
 		if (self.getTreeOptions(TreeOptions.SEARCH)) {
 			
