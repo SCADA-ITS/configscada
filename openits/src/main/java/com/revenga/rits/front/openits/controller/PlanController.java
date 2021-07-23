@@ -350,7 +350,14 @@ public class PlanController {
 		return new ResponseEntity<>(planBO.getPlanHierarchies(), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/{id}/node")
+	@GetMapping(value = "/nodes")
+	@ApiOperation(value = "Get plan nodes", notes = "Get plan nodes")
+	public ResponseEntity<List<Map<String, Object>>> getPlanNodes() {
+
+		return new ResponseEntity<>(planBO.getPlanNodes(), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/node")
 	@ApiOperation(value = "Create plan node", notes = "Create plan node")
 	public ResponseEntity<Map<String, Object>> createPlanNode(@RequestBody Object planNode) {
 

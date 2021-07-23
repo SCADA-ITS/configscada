@@ -120,6 +120,14 @@ public class PlanBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_HIERARCHIES).getFieldId(), planHierarchies);
 	}
 	
+	public List<Map<String, Object>> getPlanNodes() {
+		
+		List<Map<String, Object>> planNodes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_NODES, null);
+		
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_NODES).getFieldId(), planNodes);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createPlanNode(Object input) {
 

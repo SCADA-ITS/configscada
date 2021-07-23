@@ -216,6 +216,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_CCTV_SCENARIO = getPropertyInt("get_cctv_scenario");
 	public static final int DATA_SOURCE_GET_CCTV_SCENARIO_HIERARCHIES = getPropertyInt("get_cctv_scenario_hierarchies");
 	public static final int DATA_SOURCE_GET_PLAN_HIERARCHIES = getPropertyInt("get_plan_hierarchies");
+	public static final int DATA_SOURCE_GET_PLAN_NODES = getPropertyInt("get_plan_nodes");
 	public static final int DATA_SOURCE_CREATE_PLAN_NODE = getPropertyInt("create_plan_node");
 	public static final int DATA_SOURCE_DELETE_PLAN_NODE = getPropertyInt("delete_plan_node");
 	

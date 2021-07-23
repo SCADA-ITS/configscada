@@ -416,9 +416,7 @@ export default class VmsSignalingLibrary {
 						id: e.id,
 						label: e.name,
 						signaling: e.signaling,
-						folder: !e.signaling,
-						enabled: e.enabled,
-						visible: e.visible
+						folder: !e.signaling
 					}
 				});
 

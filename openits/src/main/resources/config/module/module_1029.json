@@ -1,0 +1,7 @@
+{
+	"restEndpoints": {
+		"plan": "plans/${id}",
+		"planNodes": "plans/nodes",
+		"planHierarchies": "plans/hierarchies"
+	}
+}
