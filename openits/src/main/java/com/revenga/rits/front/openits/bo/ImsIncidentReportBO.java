@@ -82,6 +82,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE_ID = "incidentTypeCauseId";
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE = "incidentTypeCause";
 
+	@SuppressWarnings("unchecked")
 	private Object getIncidentStateLabelAlias(final Map<String, Object> incidentReport) {
 
 		if (incidentReport != null && incidentReport.containsKey(FIELD_INCIDENT_STATE)) {
@@ -102,6 +103,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private Object getIncidentTypeTaskAlias(final Map<String, Object> incidentReport, final String incidentTypeTaskId) {
 
 		if (incidentReport != null && incidentTypeTaskId != null
@@ -161,6 +163,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private Object getPlanAlias(final Map<String, Object> incidentReport, final String incidentTaskPlanId) {
 
 		if (incidentReport != null && incidentTaskPlanId != null
@@ -247,6 +250,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private Object getNextStateLabelAlias(final Map<String, Object> incidentReport) {
 
 		if (incidentReport != null && incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)
@@ -337,6 +341,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	private Object getCauseAlias(final Map<String, Object> incidentReport, final String incidentTypeCauseId) {
 
 		if (incidentReport != null && incidentTypeCauseId != null
@@ -485,6 +490,7 @@ public class ImsIncidentReportBO extends GenericBO {
 				incidentReport);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object create(Object input) {
 		
 		Boolean res = false;
@@ -652,6 +658,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return res;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Boolean addLog(Object input) {
 
 		Boolean res = false;

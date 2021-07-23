@@ -41,6 +41,7 @@ public class RoleBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ROLE).getFieldId(), role);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> createRole(Object input) {
 		
 		Map<String, Object> createdRole = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_ROLE, (Map<String, Object>) input);
@@ -49,6 +50,7 @@ public class RoleBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_ROLE).getFieldId(), createdRole);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> updateRole(Object input) {
 			
 		Map<String, Object> updatedRole = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_ROLE, (Map<String, Object>) input);

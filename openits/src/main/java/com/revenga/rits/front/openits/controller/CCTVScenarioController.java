@@ -39,7 +39,7 @@ public class CCTVScenarioController {
 	
 	@GetMapping(value = "/hierarchies")
 	@ApiOperation(value = "Get cctv scenario hierarchies", notes = "Get cctv scenario hierarchies")
-	public ResponseEntity<List<Map<String, Object>>> getCCTVScenarioHierarcies() {
+	public ResponseEntity<List<Map<String, Object>>> getCCTVScenarioHierarchies() {
 
 		return new ResponseEntity<>(cctvScenarioBO.getScenarioHierarchies(), HttpStatus.OK);
 	}

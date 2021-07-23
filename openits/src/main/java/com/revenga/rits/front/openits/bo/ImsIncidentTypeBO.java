@@ -27,10 +27,10 @@ public class ImsIncidentTypeBO extends GenericBO {
 	@Autowired
 	ImsIncidentTypeStretchBO imsIncidentTypeStretchBO;
 	
-	private final String FIELD_STRETCH = "stretch";
-	private final String FIELD_STRETCH_ID = "id";
-	private final String FIELD_INCIDENT_TYPE = "incidentType";
-	private final String FIELD_INCIDENT_TYPE_ID = "id";
+	private static final String FIELD_STRETCH = "stretch";
+	private static final String FIELD_STRETCH_ID = "id";
+	private static final String FIELD_INCIDENT_TYPE = "incidentType";
+	private static final String FIELD_INCIDENT_TYPE_ID = "id";
 
 	@Override
 	public List<Map<String, Object>> getList() {
@@ -41,7 +41,8 @@ public class ImsIncidentTypeBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPES).getFieldId(), incidents);
 	}
 	
-
+	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getListByStretch(String id) {
 
 		List<Map<String, Object>> incidentsFiltered = null;
@@ -53,7 +54,6 @@ public class ImsIncidentTypeBO extends GenericBO {
 			
 			if (!CollectionUtils.isEmpty(listIncidentTypeStretchs)) {
 				
-				@SuppressWarnings("unchecked")
 				List<Map<String, Object>> listIncidentTypeStretchsFiltered = listIncidentTypeStretchs.stream()
 						.filter(e -> {
 							

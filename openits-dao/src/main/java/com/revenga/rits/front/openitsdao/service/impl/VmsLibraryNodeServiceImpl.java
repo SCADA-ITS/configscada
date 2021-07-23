@@ -9,9 +9,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.revenga.rits.front.openitsdao.model.VmsLibraryHierarchy;
 import com.revenga.rits.front.openitsdao.model.VmsLibraryNode;
-import com.revenga.rits.front.openitsdao.repository.VmsLibraryHierarchyRepository;
 import com.revenga.rits.front.openitsdao.repository.VmsLibraryNodeRepository;
-import com.revenga.rits.front.openitsdao.service.VmsLibraryHierarchyService;
 import com.revenga.rits.front.openitsdao.service.VmsLibraryNodeService;
 
 @Service

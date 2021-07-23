@@ -41,6 +41,7 @@ public class PlanTypeBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_TYPE).getFieldId(), planType);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> createPlanType(Object input) {
 		
 		Map<String, Object> createdPlanType = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_TYPE, (Map<String, Object>) input);
@@ -49,6 +50,7 @@ public class PlanTypeBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_TYPE).getFieldId(), createdPlanType);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> updatePlanType(Object input) {
 			
 		Map<String, Object> updatedPlanType = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_TYPE, (Map<String, Object>) input);

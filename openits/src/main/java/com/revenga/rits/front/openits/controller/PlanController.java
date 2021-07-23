@@ -1,5 +1,8 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -338,6 +341,29 @@ public class PlanController {
 	public ResponseEntity<Boolean> sendExecutePlan(@RequestBody Object planExecution) {
 		
 		return new ResponseEntity<>(planBO.sendExecutePlan(planExecution), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/hierarchies")
+	@ApiOperation(value = "Get plan hierarchies", notes = "Get plan hierarchies")
+	public ResponseEntity<List<Map<String, Object>>> getCCTVScenarioHierarchies() {
+
+		return new ResponseEntity<>(planBO.getPlanHierarchies(), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/{id}/node")
+	@ApiOperation(value = "Create plan node", notes = "Create plan node")
+	public ResponseEntity<Map<String, Object>> createPlanNode(@RequestBody Object planNode) {
+
+		return new ResponseEntity<>(planBO.createPlanNode(planNode), HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping(value = "/node/{id}")
+	@ApiOperation(value = "Delete plan node", notes = "Delete plan node")
+	public ResponseEntity<Map<String, Object>> deletePlanNode(
+			@ApiParam(name = "id", type = "Integer", value = "PlanNode id", example = "1", required = true) @PathVariable Integer id) {
+
+		return new ResponseEntity<>(planBO.deletePlanNode(id), HttpStatus.OK);
 	}
 
 }

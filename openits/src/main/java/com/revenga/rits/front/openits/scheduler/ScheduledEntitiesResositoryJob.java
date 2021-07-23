@@ -1,8 +1,5 @@
 package com.revenga.rits.front.openits.scheduler;
 
-import java.time.Duration;
-import java.time.Instant;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

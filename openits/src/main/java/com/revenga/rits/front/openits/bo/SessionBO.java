@@ -24,13 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.UserSessionUI;
 import com.revenga.rits.front.openits.service.CacheManager;
-import com.revenga.rits.front.openits.util.ConversionUtil;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -47,12 +45,6 @@ public class SessionBO extends GenericBO {
 	private static final String USER_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
 	private static final String USER_FIELD_SESSION_EXPIRE_TIME_S = "sessionExpireTimeS";
 	
-	private static final String USER_FIELD_LOCALE = "locale";
-	private static final String USER_FIELD_ROLE = "role";
-	private static final String USER_FIELD_USER_PERMISSIONS = "userPermissions";
-	
-	private static final String USER_FIELD_LOCALE_ID = "locateId";
-	private static final String USER_FIELD_ROLE_ID = "roleId";
 	
 	private static final String DEFAULT_ACCOUNT_LOCKED_ISO_DATE = "2099-12-31T23:59:59.999Z";
 			
@@ -260,7 +252,6 @@ public class SessionBO extends GenericBO {
 		return userSession;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private boolean allowLoginRetry(Map<String, Object> user, String httpSessionId) {
 		
 		boolean allowed = true;

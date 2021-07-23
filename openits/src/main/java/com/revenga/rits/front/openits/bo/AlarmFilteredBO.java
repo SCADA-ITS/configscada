@@ -56,7 +56,7 @@ public class AlarmFilteredBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ELEMENT).getFieldId(), alarmFiltereds);
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public Boolean sendAlarmFilteredActions(Object input) {
 	    
 	    Boolean res = false;

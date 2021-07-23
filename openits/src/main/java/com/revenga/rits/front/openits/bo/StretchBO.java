@@ -41,6 +41,7 @@ public class StretchBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS).getFieldId(), stretchs);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getListByIncidentType(String id) {
 
 		List<Map<String, Object>> scretchsFiltered = null;
@@ -52,7 +53,6 @@ public class StretchBO extends GenericBO {
 		
 			if (!CollectionUtils.isEmpty(listIncidentTypeStretchs)) {
 				
-				@SuppressWarnings("unchecked")
 				List<Map<String, Object>> listIncidentTypeStretchsFiltered = listIncidentTypeStretchs.stream()
 						.filter(e -> {
 							

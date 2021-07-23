@@ -48,6 +48,7 @@ public class PlanScheduleBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_BY_PLAN).getFieldId(), planScheduleByPlan);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> sendPlanScheduleActions(Object input) {
 		
 		List<Map<String, Object>> sendPlanScheduleActions = voDataSourceAdapter.putList(VODataSourceAdapter.DATA_SOURCE_SEND_PLAN_SCHEDULE_ACTIONS, (Map<String, Object>)input);

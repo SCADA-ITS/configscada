@@ -77,9 +77,23 @@ export default class SignalingManagerModule extends GenericModule {
 
 								if (elementSubtype) {
 									
-									let commandModule = element.elementSubtype.commandModule ? element.elementSubtype.commandModule : self.config.defaultSignalingModuleAction;
-									let alias = !element.elementSubtype.commandModule ? "(*) " : "";
-
+									let commandModule = self.config.defaultSignalingModuleAction;
+									let alias = "";
+									
+									if (element.elementSubtype.commandModule) {
+										
+										commandModule = element.elementSubtype.commandModule; 
+									}
+									else if (element.elementType.commandModule) {
+										
+										commandModule = element.elementType.commandModule;
+									}
+									
+									if (commandModule == self.config.defaultSignalingModuleAction) {
+										
+										alias = "(*) ";
+									}
+									
 									let listElement = self.mapElements.get(element.elementSubtype.id);
 
 									if (!listElement) {

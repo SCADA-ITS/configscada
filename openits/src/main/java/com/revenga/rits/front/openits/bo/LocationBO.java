@@ -86,6 +86,7 @@ public class LocationBO extends GenericBO {
 		return elementsRes;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> replaceLocation(Map<String, Object> element) {
 		
 		// TODO: replaceLocation

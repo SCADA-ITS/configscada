@@ -28,7 +28,7 @@ public class ImsIncidentSourceBO extends GenericBO {
 		List<Map<String, Object>> incidentsSource = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENTS_SOURCE, null);
 		
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(voDataSourceAdapter.DATA_SOURCE_GET_INCIDENTS_SOURCE).getFieldId(), incidentsSource);
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENTS_SOURCE).getFieldId(), incidentsSource);
 	}
 
 	@Override

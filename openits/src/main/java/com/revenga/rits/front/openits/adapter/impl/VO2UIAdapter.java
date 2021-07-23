@@ -16,10 +16,7 @@ import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.model.VoEntityValue;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
-import lombok.extern.log4j.Log4j2;
-
 @Component
-@Log4j2
 public class VO2UIAdapter {
 	
 	@Autowired

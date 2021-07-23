@@ -23,7 +23,6 @@ public class SystemParamBO extends GenericBO {
 	public static final String SYSTEM_PARAM_USER_LOGIN_RETRIES = "SystemParam:2";
 	public static final String SYSTEM_PARAM_DEFAULT_ACCOUNT_LOCKED_TIME_MINUTES = "SystemParam:4";
 	
-	private static final String FIELD_ID = "id";
 	private static final String FIELD_VALUE = "value";
 	
 	@Override

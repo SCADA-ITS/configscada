@@ -51,6 +51,7 @@ public class UserBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USER).getFieldId(), user);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> createUser(Object input) {
 		
 		Map<String, Object> createdUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, (Map<String, Object>) input);
@@ -59,6 +60,7 @@ public class UserBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_USER).getFieldId(), createdUser);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> updateUser(Object input) {
 			
 		Map<String, Object> updatedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, (Map<String, Object>) input);
@@ -79,6 +81,7 @@ public class UserBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_USER).getFieldId(), deletedUser);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Boolean sendKillUser(Object input) {
 		
 	    Boolean res = false;
