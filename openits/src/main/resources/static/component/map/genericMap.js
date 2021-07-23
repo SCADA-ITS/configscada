@@ -1,5 +1,9 @@
 
 export default class GenericMap {
+	
+	static get MOUSE_EVENT_LEFT_PRESSED() { return 1 }
+	static get MOUSE_EVENT_MIDDLE_PRESSED() { return 2 }
+	static get MOUSE_EVENT_RIGHT_PRESSED() { return 3 }
 
 	constructor(metadata, data, events, w, h, options) {
 		

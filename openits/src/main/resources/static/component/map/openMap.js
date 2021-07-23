@@ -226,7 +226,7 @@ export default class OpenMap extends GenericMap {
 			
 			map.getViewport().addEventListener('mouseup', function(evt){
 			    
-				if (!self.flagMouseMove && !self.mouseOverSvg) {
+				if (!self.flagMouseMove && !self.mouseOverSvg && evt.which === GenericMap.MOUSE_EVENT_LEFT_PRESSED) {
 								
 					self.unselectAll();
 				}
@@ -710,13 +710,11 @@ export default class OpenMap extends GenericMap {
 				
 				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 					
-					graphicIcons.forEach(graphicIcon => {
+					// One selected, no more is required
+					if (graphicIcons.findIndex(e => e.isSelected()) !== -1) {
 						
-						if (graphicIcon.isSelected()) {
-							
-							selectedPks.add(elementId);	
-						}
-					});
+						selectedPks.add(elementId);
+					}
 				}
 			});
 				

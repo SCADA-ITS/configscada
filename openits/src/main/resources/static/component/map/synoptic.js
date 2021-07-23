@@ -148,9 +148,9 @@ export default class Synoptic extends GenericMap {
 				loadGraphicIcons();		
 			});
 			
-			function onMouseUp() {
+			function onMouseUp(e) {
 			
-				if (!self.flagMouseMove) {
+				if (!self.flagMouseMove && e.which === GenericMap.MOUSE_EVENT_LEFT_PRESSED) {
 								
 					unselectAll();
 				}
@@ -722,7 +722,7 @@ export default class Synoptic extends GenericMap {
 				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 					
 					// One selected, no more is required
-					if (graphicIcons[0].isSelected()) {
+					if (graphicIcons.findIndex(e => e.isSelected()) !== -1) {
 						
 						selectedPks.add(elementId);
 					}

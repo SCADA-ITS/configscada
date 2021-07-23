@@ -1,5 +1,9 @@
 import { util } from "../../lib/util.js";
 
+const MOUSE_EVENT_LEFT_PRESSED = 1;
+const MOUSE_EVENT_MIDDLE_PRESSED = 2;
+const MOUSE_EVENT_RIGHT_PRESSED = 3;
+
 export default class GraphicIcon {
 	
 	static get CONTAINER_TYPE_SNAP() { return 1 }
@@ -113,12 +117,12 @@ export default class GraphicIcon {
 						function(e) { 
 							
 							showTooltip(e);
-					
-									
+				
 							if (self.isVisible() && self.events && self.events[GraphicIcon.EventTypes.ON_MOUSE_OVER]) {
 					
 								eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_OVER])();
-							} 
+							}	
+ 
 						},
 						function() {
 							
@@ -127,42 +131,42 @@ export default class GraphicIcon {
 							if (self.isVisible() && self.events && self.events[GraphicIcon.EventTypes.ON_MOUSE_OUT]) {
 					
 								eval(self.events[GraphicIcon.EventTypes.ON_MOUSE_OUT])();
-							}
+							}	
 						}
 					);
 				}
 			}
+		}
+		
+		function showTooltip(e) {
 			
-			function showTooltip(e) {
-				
-				let tooltip = document.getElementById("graphic-icon-tooltip");
-				
-				let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
-				let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", self.elementTypeState.id);
-								
-				if (elementType && elementTypeState) {
-					
-					let elementTypeStateColor = util.element.getColor(elementTypeState);
-				
-					tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
-										<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
-										<div class="state">
-											<span class="badge" style="background: ${elementTypeStateColor} ">${i18n.t(elementTypeState.labelAlias)}</span>
-										</div>
-										<div class="text">${self.element.alias}</div>`;
-										
-					tooltip.style.display = "block";
-					tooltip.style.left = e.pageX + 10 + 'px';
-					tooltip.style.top = e.pageY + 10 + 'px';
-					tooltip.style.zIndex = 99999;	
-				}
-			}
+			let tooltip = document.getElementById("graphic-icon-tooltip");
 			
-			function hideTooltip() {
+			let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
+			let elementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", self.elementTypeState.id);
+							
+			if (elementType && elementTypeState) {
 				
-				var tooltip = document.getElementById("graphic-icon-tooltip");
-				tooltip.style.display = "none";
+				let elementTypeStateColor = util.element.getColor(elementTypeState);
+			
+				tooltip.innerHTML = `<div class="title">${i18n.t(elementType.labelAlias)}</div>
+									<image class="icon" src="img/${elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+									<div class="state">
+										<span class="badge" style="background: ${elementTypeStateColor} ">${i18n.t(elementTypeState.labelAlias)}</span>
+									</div>
+									<div class="text">${self.element.alias}</div>`;
+									
+				tooltip.style.display = "block";
+				tooltip.style.left = e.pageX + 10 + 'px';
+				tooltip.style.top = e.pageY + 10 + 'px';
+				tooltip.style.zIndex = 99999;	
 			}
+		}
+		
+		function hideTooltip() {
+			
+			var tooltip = document.getElementById("graphic-icon-tooltip");
+			tooltip.style.display = "none";
 		}
 		
 		function createSelection(gWidth, gHeight) {
@@ -270,6 +274,15 @@ export default class GraphicIcon {
 					
 					
 				}
+				
+				self.g.mousedown(function(e) {
+						
+					if (e.which === MOUSE_EVENT_RIGHT_PRESSED) {
+						
+						hideTooltip();
+						onClick(e);
+					}
+				});
 			}
 			
 			function onClick(e) {
