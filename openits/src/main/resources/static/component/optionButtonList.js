@@ -1,20 +1,22 @@
-import { util } from "../lib/util.js";
-
 export default class OptionButtonList {
 
-	constructor(title, data, onClick, onToggle) {
+	static get MODE_TOGGLE() { return 1 };
+	static get MODE_BUTTONS() { return 2 };
 
-		this.title = title;
-		this.data = data;
-		this.onClick = onClick;
-		this.onToggle = onToggle;
-		this.optionWindow = undefined;
+	constructor(options, onChange, mode) {
+
+		this.options = options;
+		this.onChange = onChange;
+		this.mode = mode;
 
 		this.uid = webix.uid();
 
+		this.allIconsIncluded = undefined;
+
 	}
 
-	show(oldSelection) {
+
+	getView() {
 
 		let self = this;
 
@@ -33,26 +35,36 @@ export default class OptionButtonList {
 						{ width: 25 }
 					]
 				},
-				{ height: 15 },
-				getToolbarActions()
+				{ height: 15 }
 			]
-		}
-
-		if (self.title != undefined || self.title != null) {
-
-			self.optionWindow = util.ui.loadWindow(self.title, body, 500, 650, true);
-
-		} else {
-
-			return body;
-		}
+		};
 
 
 		function getContent() {
 
 			let content = [];
+			let iconsArray = [];
 
-			for (let dat of self.data) {
+			for (let opt of self.options) {
+
+				if (opt.icon != undefined) {
+
+					iconsArray.push(opt.icon);
+
+				}
+			}
+
+			if (iconsArray.length === self.options.length) {
+
+				self.allIconsIncluded = true;
+
+			} else if (iconsArray.length === 0) {
+
+				self.allIconsIncluded = false;
+			}
+
+
+			for (let option of self.options) {
 
 				let contentDetail = {
 					rows: [
@@ -60,21 +72,21 @@ export default class OptionButtonList {
 						{
 							css: "option-button-list-actions",
 							cols: [
-								getButtons(dat),
+								getButtons(option),
 								{
 									rows: [
 										{
-											id: "text" + dat.id + "-" + self.uid,
+											id: "text" + option.id + "-" + self.uid,
 											view: "label",
 											css: { "padding-left": "10px", "height": "25px" },
-											label: `<span>${dat.label}</span>`
+											label: `<span>${option.label}</span>`
 										},
 										{
-											id: "desc-" + dat.id + "-" + self.uid,
+											id: "desc-" + option.id + "-" + self.uid,
 											height: 35,
 											scroll: "auto",
 											css: { "padding-left": "10px !important", "border": "none" },
-											template: `<span style="font-size: 13px !important; line-height: 15px">${dat.description}</span>`
+											template: `<span style="font-size: 13px !important; line-height: 15px">${option.description}</span>`
 										}
 									]
 								}
@@ -88,142 +100,88 @@ export default class OptionButtonList {
 			}
 
 			return content;
+		}
 
 
-			function getButtons(dat) {
+		function getButtons(option) {
+			
+			let buttonType = {}
+			let icon = undefined;
 
-				let componentType = (self.onClick != undefined) ? "button" : "toggle";
-				let buttonType = {};
+			if (self.allIconsIncluded) {
 
-				if (self.onClick != undefined) {
+				icon = option.icon;
 
-					buttonType = {
-						id: "button-" + dat.id + "-" + self.uid,
-						view: componentType,
-						width: 75,
-						height: 75,
-						type: "icon",
-						icon: (dat.icon) ? dat.icon : "mdi mdi-exit-to-app",
-						css: "toggle-option-list",
-						on: {
-							onItemClick() {
+			} else if (self.allIconsIncluded === false) {
 
-								self.onClick(dat.id);
-							}
-						}
-					}
+				icon = (option.default) ? "mdi mdi-checkbox-marked-outline" : "mdi mdi-checkbox-blank-outline";
 
-				} else {
+			} else {
 
-					buttonType = {
-						id: "button-" + dat.id + "-" + self.uid,
-						view: componentType,
-						width: 75,
-						height: 75,
-						type: "icon",
-						icon: (dat.icon) ? dat.icon : "mdi mdi-exit-to-app",
-						value: (dat.default) ? 1 : 0,
-						name: dat.id,
-						css: "toggle-option-list",
-						on: {
-							onItemClick(obj) {
+				icon = "mdi mdi-checkbox-blank-circle";
+			}
 
-								for (let dat of self.data) {
-									$$("button-" + dat.id + "-" + self.uid).setValue(0);
+			if (self.mode === OptionButtonList.MODE_BUTTONS) {
 
-								}
+				buttonType = {
+					id: "button-" + option.id + "-" + self.uid,
+					view: "button",
+					width: 75,
+					height: 75,
+					type: "icon",
+					icon: icon,
+					css: "toggle-option-list",
+					on: {
+						onItemClick() {
 
-								$$(obj).setValue(1);
-
-							}
+							self.onChange(option.id);
 						}
 					}
 				}
 
-				return buttonType;
-			}
-		}
+			} else {
 
+				buttonType = {
+					id: "button-" + option.id + "-" + self.uid,
+					view: "toggle",
+					width: 75,
+					height: 75,
+					type: "icon",
+					icon: icon,
+					value: (option.default) ? 1 : 0,
+					name: option.id,
+					css: "toggle-option-list",
+					on: {
+						onItemClick(obj) {
 
-		function getToolbarActions() {
+							for (let opt of self.options) {
 
-			let viewToolbarActions = {};
+								$$("button-" + opt.id + "-" + self.uid).setValue(0);
 
-			if ((self.title != undefined) || (self.title != null)) {
-
-				viewToolbarActions = {
-					view: "toolbar",
-					height: 45,
-					borderless: true,
-					css: { "border-top": "1px solid black" },
-					elements: [
-						{ width: 15 },
-						{
-							view: "button",
-							css: "dialog-cancel",
-							width: 130,
-							height: 35,
-							label: i18n.t("LBL_CANCEL"),
-							on: {
-								onItemClick() {
-
-									$$(self.optionWindow).close();
+								if (self.allIconsIncluded === false ) {
+									
+									$$("button-" + opt.id + "-" + self.uid).config.icon = "mdi mdi-checkbox-blank-outline";
+									$$("button-" + opt.id + "-" + self.uid).refresh();
 								}
+
 							}
-						},
-						{},
-						{
-							view: "button",
-							css: "dialog-accept",
-							width: 130,
-							height: 35,
-							label: i18n.t("LBL_ACCEPT"),
-							on: {
-								onItemClick(id) {
 
-									for (let dat of self.data) {
+							$$(obj).setValue(1);
 
-										let value = $$("button-" + dat.id + "-" + self.uid).getValue();
-
-										if (value == 1) {
-											let selectionId = $$("button-" + dat.id + "-" + self.uid).config.name;
-
-											if (selectionId === oldSelection) {
-
-												webix.alert({
-													title: i18n.t("LBL_SAME_MODE_SELECTED"),
-													text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
-													type: "alert-warning",
-													width: 600
-												});
-
-											} else {
-
-												webix.confirm({
-													title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-													ok: i18n.t("LBL_ACCEPT"),
-													cancel: i18n.t("LBL_CANCEL"),
-													text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-													width: 600
-												}).then(function() {
-
-													self.onToggle(selectionId);
-													$$(self.optionWindow).close();
-												});
-											}
-										}
-									}
-								}
+							if (self.allIconsIncluded === false) {
+							
+								$$(obj).config.icon = "mdi mdi-checkbox-marked-outline";
+								$$(obj).refresh();
 							}
-						},
-						{ width: 15 }
-					]
-				};
+						}
+					}
+				}
 			}
 
-			return viewToolbarActions;
+			return buttonType;
 		}
 
+		return body;
 	}
 
 }

@@ -261,32 +261,43 @@ export default class TubeContent {
 						});
 					}
 					
-					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode);
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_COMBO);
 					optionDialog.show(oldv);
 
-				 function changeMode(newModeId){
-						
-					let command = self.parent.config.commands.SEND_VENTILATION_MODE;
-					command.elementId = self.selectedTube.id;
-					command.commandElementValues[0].value = newModeId;
-		
-					let body = {
-							commands: []
-							};
-								
-					body.commands.push(command);
+				 function changeMode(newModeId, callbackCloseDialog){
 					
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-					console.log(data.json())
-						if (!data.json()){
-							webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
-						}
-					},() => {
-						this.blockEvent();
-						this.setValue(oldv); 
-						this.unblockEvent();				
-					});						
+					webix.confirm({
+					title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
+					ok: i18n.t("LBL_ACCEPT"),
+					cancel: i18n.t("LBL_CANCEL"),
+					text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
+					width: 600
+					}).then(function(res) {
+						
+						callbackCloseDialog(true);		
+							
+						let command = self.parent.config.commands.SEND_VENTILATION_MODE;
+						command.elementId = self.selectedTube.id;
+						command.commandElementValues[0].value = newModeId;
+			
+						let body = {
+								commands: []
+								};
+									
+						body.commands.push(command);
+						
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+						console.log(data.json())
+							if (!data.json()){
+								webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+							}
+						},() => {
+							this.blockEvent();
+							this.setValue(oldv); 
+							this.unblockEvent();				
+						});						
 				
+				});
 				}
 
 //						webix.confirm({

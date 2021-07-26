@@ -1,26 +1,22 @@
-import { util } from "../lib/util.js";
-
 const NON_SELECTED = "nonSelected";
 
 export default class ComboDetail {
 
-	constructor(title, data, onClick, onToggle) {
+	constructor(options, onChange) {
 
-		this.title = title;
-		this.data = data;
-		this.onClick = onClick;
-		this.onToggle = onToggle;
-		this.optionWindow = undefined;
+		this.options = options;
+		this.onChange = onChange;
 
 		this.uid = webix.uid();
 
 	}
 
-	show(oldSelection) {
+
+	getView() {
 
 		let self = this;
 
-		let optionsArr = self.data.map(function(item) {
+		let optionsArr = self.options.map(function(item) {
 			return {
 				id: item.id,
 				value: item.label,
@@ -48,22 +44,22 @@ export default class ComboDetail {
 						{ width: 25 }
 					]
 				},
-				{ height: 15 },
-				getToolbarActions()
+				{ height: 15 }
 			]
-		}
+		};
 
-		if (self.title != undefined || self.title != null) {
-			
-			self.optionWindow = util.ui.loadWindow(self.title, body, 500, 650, true);
-
-		} else {
-		
-			return body;
-		}
-		
 
 		function getContent() {
+
+			let initialSelection = "";
+			let initialDescription = "";
+			let initialValues = optionsArr.find(e => (e.default));
+
+			if (initialValues) {
+
+				initialSelection = initialValues.id;
+				initialDescription = initialValues.description;
+			}
 
 			let content = [
 				{ height: 20 },
@@ -79,7 +75,7 @@ export default class ComboDetail {
 							view: "combo",
 							id: "selected-mode-" + self.uid,
 							width: 350,
-							value: " ",
+							value: initialSelection,
 							options: optionsArr,
 							on: {
 								onChange: function(newv, oldv) {
@@ -90,21 +86,20 @@ export default class ComboDetail {
 
 										$$("description-" + self.uid).setValue(selection.description);
 
-										if ($$("acept-button" + self.uid)) {
-											$$("acept-button" + self.uid).enable();
+										if ($$("dialog-accept-" + self.uid)) {
+											$$("dialog-accept-" + self.uid).enable();
 										}
 
 									} else {
 
 										$$("description-" + self.uid).setValue("");
 
-										if ($$("acept-button" + self.uid)) {
-											$$("acept-button" + self.uid).disable();
+										if ($$("dialog-accept-" + self.uid)) {
+											$$("dialog-accept-" + self.uid).disable();
 										}
 									}
 								}
 							}
-
 						},
 						{ width: 40 }
 					]
@@ -119,7 +114,7 @@ export default class ComboDetail {
 							scroll: "auto",
 							readonly: true,
 							height: 150,
-							value: ""
+							value: initialDescription
 						},
 						{ width: 40 }
 					]
@@ -128,85 +123,9 @@ export default class ComboDetail {
 			];
 
 			return content;
-
 		}
 
-
-		function getToolbarActions() {
-
-			let viewToolbarActions = {};
-
-			if ((self.title != undefined) || (self.title != null)) {
-
-				viewToolbarActions = {
-					view: "toolbar",
-					height: 45,
-					borderless: true,
-					css: { "border-top": "1px solid black" },
-					elements: [
-						{ width: 15 },
-						{
-							view: "button",
-							css: "dialog-cancel",
-							width: 130,
-							height: 35,
-							label: i18n.t("LBL_CANCEL"),
-							on: {
-								onItemClick() {
-
-									$$(self.optionWindow).close();
-								}
-							}
-						},
-						{},
-						{
-							id: "acept-button" + self.uid,
-							view: "button",
-							css: "dialog-accept",
-							width: 130,
-							height: 35,
-							disabled: true,
-							label: i18n.t("LBL_ACCEPT"),
-							on: {
-								onItemClick(id) {
-
-									let newSelectedId = $$("selected-mode-" + self.uid).getValue();
-
-									if ((oldSelection && oldSelection == newSelectedId) || (newSelectedId === NON_SELECTED)) {
-
-										webix.alert({
-											title: (newSelectedId === NON_SELECTED) ? i18n.t("LBL_WITHOUT_SELECTION") : i18n.t("LBL_SAME_MODE_SELECTED"),
-											text: (newSelectedId === NON_SELECTED) ? i18n.t("LBL_WITHOUT_SELECTION_DESCRIPTION") : i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
-											type: "alert-warning",
-											width: 600
-										});
-
-									} else {
-
-										webix.confirm({
-											title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-											ok: i18n.t("LBL_ACCEPT"),
-											cancel: i18n.t("LBL_CANCEL"),
-											text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-											width: 600
-										}).then(function() {
-
-											self.onToggle(newSelectedId);
-											$$(self.optionWindow).close();
-										});
-									}
-								}
-							}
-						},
-						{ width: 15 }
-					]
-				};
-
-			}
-
-			return viewToolbarActions;
-		}
-
+		return body;
 	}
 
 }

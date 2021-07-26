@@ -1,48 +1,159 @@
 import OptionButtonList from "./optionButtonList.js";
 import ComboDetail from "./comboDetail.js";
+import { util } from "../lib/util.js";
 
 const NUM_OPTIONS = 3;
 
 export default class OptionDialogBox {
 
-	constructor(title, options, onAcept) {
+	static get MODE_TOGGLE() { return 1 };
+	static get MODE_COMBO() { return 2 };
+
+	constructor(title, options, onChange, mode) {
 
 		this.title = title;
 		this.options = options;
-		this.onAcept = onAcept;
+		this.onChange = onChange;
+		this.mode = mode;
 
 		this.uid = webix.uid();
 
+		this.optionWindow = undefined;
 	}
 
 
 	show(oldSelection) {
 
 		let self = this;
+		let content = {};
 
-		let functionClick = undefined;
-		let functionToggle = undefined;
+		if (self.mode === OptionDialogBox.MODE_TOGGLE) {
 
-		if ((self.title != undefined) || (self.title != null)) {
-	
-			functionToggle = self.onAcept;
+			content = new OptionButtonList(self.options, self.onChange, self.mode);
 
-		} else {
-	
-			functionClick = self.onAcept;
-		}
+		} else if (self.mode === OptionDialogBox.MODE_COMBO) {
 
-		if (self.options.length > NUM_OPTIONS) {
-
-			let comboDetail = new ComboDetail(self.title, self.options, functionClick, functionToggle);
-			return comboDetail.show(oldSelection);
+			content = new ComboDetail(self.options, self.onChange);
 
 		} else {
 
-			let optionButtonList = new OptionButtonList(self.title, self.options, functionClick, functionToggle);
-			return optionButtonList.show(oldSelection);
+			if (self.options.length > NUM_OPTIONS) {
+
+				content = new ComboDetail(self.options, self.onChange);
+
+			} else {
+
+				content = new OptionButtonList(self.options, self.onChange, OptionButtonList.MODE_TOGGLE);
+
+			}
 		}
 
+		let body = content.getView();
+
+		body.rows.push(getToolbarActions());
+
+		self.optionWindow = util.ui.loadWindow(self.title, body, 500, 650, true);
+
+
+		function getToolbarActions() {
+
+			let viewToolbarActions = {
+				id: "toolbar-" + self.uid,
+				view: "toolbar",
+				height: 45,
+				borderless: true,
+				elements: [
+					{ width: 15 },
+					{
+						view: "button",
+						css: "dialog-cancel",
+						width: 130,
+						height: 35,
+						label: i18n.t("LBL_CANCEL"),
+						on: {
+							onItemClick() {
+
+								$$(self.optionWindow).close();
+							}
+						}
+					},
+					{},
+					{
+						id: "dialog-accept-" + content.uid,
+						view: "button",
+						css: "dialog-accept",
+						width: 130,
+						height: 35,
+						label: i18n.t("LBL_ACCEPT"),
+						on: {
+							onItemClick(id) {
+
+								if (self.mode === OptionDialogBox.MODE_TOGGLE) {
+
+									for (let opt of content.options) {
+
+										let button = $$("button-" + opt.id + "-" + content.uid);
+										let value = button.getValue();
+
+										if (value == 1) {
+
+											let selectionId = button.config.name;
+
+											if (selectionId === oldSelection) {
+
+												webix.alert({
+													title: i18n.t("LBL_SAME_MODE_SELECTED"),
+													text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
+													type: "alert-warning",
+													width: 600
+												});
+
+											} else {
+
+												let res = self.onChange(selectionId, function(close) {
+
+													console.log(res)
+
+													if (close === undefined || close === true) {
+														$$(self.optionWindow).close();
+													}
+												});
+											}
+										}
+									}
+
+								} else if (self.mode === OptionDialogBox.MODE_COMBO) {
+
+									let selectionId = $$("selected-mode-" + content.uid).getValue();
+
+									if (selectionId === oldSelection) {
+
+										webix.alert({
+											title: i18n.t("LBL_SAME_MODE_SELECTED"),
+											text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
+											type: "alert-warning",
+											width: 600
+										});
+
+									} else {
+
+										let res = self.onChange(selectionId, function(close) {
+
+											if (res === undefined || res === true) {
+												$$(self.optionWindow).close();
+											}
+										});
+									}
+								}
+							}
+						}
+					},
+					{ width: 15 }
+				]
+			};
+
+			return viewToolbarActions;
+		}
 	}
 
 }

@@ -1,7 +1,7 @@
 import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibraryPersist from "./vmsSignalingLibraryPersist.js";
 import TreeView from "../../../component/treeview.js";
-import OptionDialogBox from "../../../component/optionDialogBox.js";
+import OptionButtonList from "../../../component/optionButtonList.js";
 import { util } from "../../../lib/util.js";
 
 const TREE_PANEL_WIDTH = 325;
@@ -21,7 +21,7 @@ export default class VmsSignalingLibrary {
 		this.treeView = undefined;
 		this.composer = undefined;
 		this.undoJsonData = undefined;
-		this.optionDialogBox = undefined;
+		this.optionButtonList = undefined;
 	}
 
 	show() {
@@ -130,6 +130,7 @@ export default class VmsSignalingLibrary {
 					{
 						view: "label",
 						height: 75,
+						width: 900,
 						template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + description + "</span>",
 						css: "label"
 					}
@@ -620,7 +621,7 @@ export default class VmsSignalingLibrary {
 						cols: [
 							{},
 							getViewComposer(),
-							getViewOptionDialogBox(),
+							getViewOptionButtonList(),
 							{}
 						]
 					},
@@ -810,7 +811,7 @@ export default class VmsSignalingLibrary {
 				return viewComposer;
 			}
 
-			function getViewOptionDialogBox() {
+			function getViewOptionButtonList() {
 
 				let actions = getMetadata().treeCommands;
 
@@ -829,22 +830,22 @@ export default class VmsSignalingLibrary {
 						});
 					}
 
-					self.optionDialogBox = new OptionDialogBox(null, options, onAceptOptionDialogBox);
+					self.optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
 
-					let viewOptionDialogBox = {
+					let viewOptionButtonList = {
 						id: "view-option-dialog-" + self.uid,
 						rows: [
 							{height: 30},
 							{						
 								cols: [
 									{ width: 30 },
-									self.optionDialogBox.show(),
+									self.optionButtonList.getView(),
 									{ width: 30 }
 								]}							
 						]
 					}
 
-					return viewOptionDialogBox;
+					return viewOptionButtonList;
 				}
 
 			}
@@ -852,7 +853,7 @@ export default class VmsSignalingLibrary {
 			return viewContent;
 		}
 		
-		function onAceptOptionDialogBox(buttonId){
+		function onAceptOptionButtonList(buttonId){
 			
 			let actions = getMetadata().treeCommands;
 			let itemsSelected = self.treeView.getSelected();
