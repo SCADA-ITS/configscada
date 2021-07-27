@@ -219,14 +219,14 @@ export default class AlarmService extends GenericModule {
 			
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			
-			return (data.filteredUntil && timeService.getDateTime() < data.filteredUntil / 1000);
+			return (data.filteredUntil && timeService.getEpoch() < data.filteredUntil);
 		}
 		
 		let isRecognized = function(data) {
 			
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			
-			return (data.recognized && timeService.getDateTime() > data.recognized / 1000);
+			return (data.recognized && timeService.getEpoch() > data.recognized);
 		}
 
 		function onMessage(be) {

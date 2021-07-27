@@ -146,7 +146,7 @@ export default class EquipmentViewerContent {
 											<div class="equip-viewer-header">
 												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
 												<!-- <span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
-												<span class="clock-text">${util.toLocaleString(timeService.getDateTime())}</span> -->
+												<span class="clock-text">${util.toLocaleString(Math.round(timeService.getEpoch() / 1000))}</span> -->
 											</div>`;
 
 									return res;

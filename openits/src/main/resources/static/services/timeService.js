@@ -1,6 +1,8 @@
 import {util} from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 
+const TRACE_TIME_EACH_MIN = 5;
+
 export default class TimeService extends GenericModule {
 	
 	constructor(module, mod){
@@ -10,7 +12,9 @@ export default class TimeService extends GenericModule {
 		this.module = module;
 		this.mod = mod;
 		
-		this.serverTime = undefined; 
+		this.serverTime = undefined;
+		this.serverTimeMs = undefined;
+		this.timer = undefined;
 	}
 	
 	getView() {
@@ -22,9 +26,9 @@ export default class TimeService extends GenericModule {
 		return views;
 	}
 	
-	getDateTime() {
+	getEpoch() {
 		
-		return this.serverTime;
+		return this.serverTimeMs;
 	}
 	
 	loadData() {
@@ -49,49 +53,76 @@ export default class TimeService extends GenericModule {
 			
 			if (!webix.isUndefined(labelTime)) {
 				
-				let timeElapsed = -1;
-				let lastUTCSeconds = 0;
+				let timeElapsedMs = -1;
 				let waitingResponse = false;
+				let serverTimeMs = 0;
+				let initTimeMs = Date.now();
+				let clientTimeMs = Date.now();
+				let diffCliSrvMs = 0;
+				let requestTraceCount = 0;
 				
-				setInterval(function(){
-					
-					if (!waitingResponse && timeElapsed === -1 || timeElapsed > 60000) {
-						
-						waitingResponse = true;
-						webix.ajax(appConfig.restUrl + "server/time").then(function(data) {
-							
-							timeElapsed = 1000;
-						
-							if (typeof data.json() === "object") {
-								
-								let utcSeconds = data.json().epochSecs + (timeElapsed / 1000);
-								
-								self.serverTime = utcSeconds; 
-								lastUTCSeconds = utcSeconds;
+				self.timer = setInterval(function() {
 
-								updateLabel(utcSeconds);
-							}
-							
-							waitingResponse = false;
-						});
-					}
-					else {
+					if (!waitingResponse) {
 						
-						if (!waitingResponse) {
+						if (timeElapsedMs === -1 || timeElapsedMs > 60000) {
 							
-							let utcSeconds = lastUTCSeconds + (timeElapsed / 1000);
+							waitingResponse = true;
 							
-							self.serverTime = utcSeconds;
+							let responseTimeout = Date.now();
+													
+							webix.ajax(appConfig.restUrl + "server/time")
+								.then(function(data) {
+								
+									responseTimeout = Date.now() - responseTimeout; 
+									
+									timeElapsedMs = 0;
+								
+									if (typeof data.json() === "object") {
+										
+										initTimeMs = Date.now();
+										clientTimeMs = Date.now();
+										serverTimeMs = data.json().epochMillis + responseTimeout;
+										
+										self.serverTimeMs = serverTimeMs;
+									
+										diffCliSrvMs = clientTimeMs - serverTimeMs;
+										
+										updateLabel(Math.round(self.serverTimeMs / 1000));
+									}
+									
+									if (!(++requestTraceCount % TRACE_TIME_EACH_MIN)) {
+										
+										requestTraceCount = 0;
+										
+										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Server time = " + new Date(self.serverTimeMs).toISOString());
+										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Client time = " + new Date(clientTimeMs).toISOString());
+										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Diff time (ms) = " + diffCliSrvMs);
+									}
+									
+									waitingResponse = false;
+								})
+								.fail(function(err) {
+									
+									console.error("Server not response => " + appConfig.restUrl + "server/time")
+									
+									initTimeMs = Date.now();
+									timeElapsedMs = 0;
+									waitingResponse = false;
+									
+									requestTraceCount = TRACE_TIME_EACH_MIN - 1; // Force to trace next retry...
+								});
+						}
+						else {
+							
+							clientTimeMs = Date.now();
+							self.serverTimeMs = clientTimeMs - diffCliSrvMs;
+							timeElapsedMs = clientTimeMs - initTimeMs;
 
-							updateLabel(utcSeconds);
+							updateLabel(Math.round(self.serverTimeMs / 1000));
 						}
 					}
-					
-					if (!waitingResponse) {
-					
-						timeElapsed += 1000;	
-					}
-					
+						
 				}, 999);
 			}
 		};

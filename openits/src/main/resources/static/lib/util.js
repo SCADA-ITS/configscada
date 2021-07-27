@@ -1325,7 +1325,7 @@ export let util = {
 		dateExpired(data) {
 
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			let actualTimeMs = timeService.getDateTime() * 1000;
+			let actualTimeMs = timeService.getEpoch();
 
 			//return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 1 : 0;		
 			return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data) ? 0 : 1;
@@ -1334,7 +1334,7 @@ export let util = {
 		clearDateExpired(data) {
 
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			let actualTimeMs = timeService.getDateTime() * 1000;
+			let actualTimeMs = timeService.getEpoch();
 
 			if (data instanceof Date) {
 

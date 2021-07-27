@@ -253,7 +253,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 
-			return (data.filteredUntil && timeService.getDateTime() < (data.filteredUntil.getTime() / 1000));
+			return (data.filteredUntil && timeService.getEpoch() < data.filteredUntil.getTime());
 		}
 
 		function loadDataCollections(data) {

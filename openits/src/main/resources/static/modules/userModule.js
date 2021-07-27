@@ -245,7 +245,7 @@ export default class UserModule extends GenericModule {
 
 					let timeService = window.sm.getService(Services.TIME_SERVICE);
 					let users = [];
-					let actualDate = new Date(timeService.getDateTime() * 1000);
+					let actualDate = new Date(timeService.getEpoch());
 					let action = -1;
 					let isDiffActions = false;
 
@@ -344,7 +344,7 @@ export default class UserModule extends GenericModule {
 
 						usersToUpdate.forEach(user => {
 
-							user.user.lockedUntil = timeService.getDateTime() * 1000;
+							user.user.lockedUntil = timeService.getEpoch();
 
 							webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user).then(function(data) {
 
