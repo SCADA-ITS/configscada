@@ -103,13 +103,14 @@ export default class EquipmentViewerContent {
 
 			function getViewHeaderElement() {
 
-				let elementLabelDescription = i18n.t(self.elementType.labelDescription);				
+				let elementLabelDescription = i18n.t(self.elementType.labelDescription);
 				let container = $$(self.parent.args.containerId);
+				let percentageWidth = (self.equipmentViewer.showActions) && (self.element.tm && self.element.tm != undefined) ? 0.5 : 0.7;
 				let ellipsis;
-				
+
 				if (container) {
 
-					ellipsis = `style='padding-left: 21px !important; max-width: ${container.$width * 0.7}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+					ellipsis = `style='padding-left: 21px !important; max-width: ${container.$width * percentageWidth}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
 				}
 
 				let viewHeaderElement = {
@@ -158,8 +159,8 @@ export default class EquipmentViewerContent {
 				};
 				
 				if (container) {
-					
-					viewHeaderElement.width = container.$width * 0.7;
+
+					viewHeaderElement.width = container.$width * percentageWidth;
 				}
 
 				return viewHeaderElement;
@@ -224,6 +225,28 @@ export default class EquipmentViewerContent {
 												let args = { selectedPks: [self.element.id] };
 						
 												util.module.open(commandsModule, moduleAction, VIEW_TYPE_WINDOW, null, args);
+											}
+										}
+									}
+								},
+								{
+									view: "button",
+									width: 135,
+									hidden: (self.element.tm && self.element.tm != undefined) ? false : true,
+									label: i18n.t("LBL_TERMINAL"),
+									tooltip: i18n.t("LBL_TERMINAL_DESCRIPTION"),
+									type: "iconTop",
+									icon: "mdi mdi-console",
+									on: {
+
+										onItemClick() {
+
+											const URL_TYPE = "url";
+											let obj = JSON.parse(self.element.tm);
+
+											if (obj.type === URL_TYPE) {
+
+												window.open(obj.data, null, "width=500, height=500");
 											}
 										}
 									}
