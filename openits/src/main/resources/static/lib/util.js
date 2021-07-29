@@ -1174,7 +1174,51 @@ export let util = {
 				}
 			}
 		},
-		
+
+		setTitle(containerId, title, shortTitle) {
+
+			let container = $$(containerId);
+
+			if (container && container.config.view === "window") {
+
+				let head = container.getHead();
+
+				if (head) {
+
+					let titleView = head.queryView({ view: "label" });
+
+					if (titleView) {
+
+						titleView.setHTML(`<div>${title}</div>`);
+					}
+				}
+
+			} else if (container && container.getParentView().config.view === "multiview") {
+
+				let parent = container.getParentView();
+
+				if (parent.getParentView().config.view === "tabview") {
+
+					let topParent = parent.getParentView();
+					let tabs = $$(topParent.config.id).getTabbar();
+					let tabToChange = tabs.config.options.find(e => e.id === containerId);
+
+					if (tabToChange) {
+
+						let newTabTitle = (shortTitle) ? shortTitle : title;
+
+						tabToChange.value = `<div style='float: left; width: 250px;'>
+												<img class='tab-icon' src='img/module/default.png'/>
+												<span class='tab-text'>${newTabTitle}</span>
+												<span style='float: right; padding-top: 2px'>
+												<a href='#'><img src='./img/externalize_button.png'></a>
+												</span>
+											</div>`;
+					}
+				}
+			}
+		},
+
 		resizeWindow(winId, width, height) {
 			
 			let win = $$(winId);

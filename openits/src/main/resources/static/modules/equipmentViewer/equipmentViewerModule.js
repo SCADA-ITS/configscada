@@ -135,8 +135,9 @@ export default class EquipmentViewerModule extends GenericModule {
 				let container = $$(self.args.containerId);
 
 				if (container) {
-				
-					util.ui.setWindowTitle(container, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias);
+
+					util.ui.setTitle(container.config.id, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias, element.alias);
+					//util.ui.setWindowTitle(container, i18n.t(self.element.elementType.labelDescription) + " - " + element.alias);
 				}
 				
 				view = drawMain(self.element);
