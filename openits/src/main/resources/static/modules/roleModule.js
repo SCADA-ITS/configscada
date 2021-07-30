@@ -126,7 +126,7 @@ export default class RoleModule extends GenericModule {
 
 			if (container) {
 
-				util.ui.setWindowTitle(container, i18n.t("LBL_ROLE_ADD"));
+				util.ui.setTitle(container.config.id, i18n.t("LBL_ROLE_ADD"));
 			}
 
 			drawComponents();
@@ -159,7 +159,7 @@ export default class RoleModule extends GenericModule {
 
 							if (container) {
 
-								util.ui.setWindowTitle(container, i18n.t("LBL_ROLE_EDIT") + " - " + self.oldPermissions.alias);
+								util.ui.setTitle(container.config.id, i18n.t("LBL_ROLE_EDIT") + " - " + self.oldPermissions.alias);
 							}
 
 

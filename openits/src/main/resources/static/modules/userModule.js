@@ -141,7 +141,7 @@ export default class UserModule extends GenericModule {
 
 			if (container) {
 
-				util.ui.setWindowTitle(container, i18n.t("LBL_USER_ADD"));
+				util.ui.setTitle(container.config.id, i18n.t("LBL_USER_ADD"));
 			}
 
 			drawComponents();
@@ -178,7 +178,7 @@ export default class UserModule extends GenericModule {
 						let container = $$(self.args.containerId);
 
 						if (container) {
-							util.ui.setWindowTitle(container, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
+							util.ui.setTitle(container.config.id, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
 						}
 	
 						drawComponents();

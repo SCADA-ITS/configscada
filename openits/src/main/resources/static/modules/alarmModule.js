@@ -653,7 +653,7 @@ export default class AlarmModule extends GenericModule {
 
 		if (container) {
 		
-			util.ui.setWindowTitle(container, this.alarmConfigLabelAlias + " - " + this.targetElementAlias);
+			util.ui.setTitle(container.config.id, this.alarmConfigLabelAlias + " - " + this.targetElementAlias);
 		}
 
 		this.drawComponents();

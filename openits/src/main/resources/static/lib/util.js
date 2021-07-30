@@ -1214,6 +1214,8 @@ export let util = {
 												<a href='#'><img src='./img/externalize_button.png'></a>
 												</span>
 											</div>`;
+
+						$$(tabToChange.id).reconstruct();
 					}
 				}
 			}

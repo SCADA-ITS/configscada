@@ -230,11 +230,11 @@ export default class SignalingManagerModule extends GenericModule {
 							
 								if (elementIds.length === 1) {
 									
-									util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);		
+									util.ui.setTitle(container.config.id, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);		
 								}
 								else {
 
-									util.ui.setWindowTitle(container, i18n.t("LBL_SIGNALING_MANAGER") + " - " + elementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED"));
+									util.ui.setTitle(container.config.id, i18n.t("LBL_SIGNALING_MANAGER") + " - " + elementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED"));
 								}	
 							}
 						}
