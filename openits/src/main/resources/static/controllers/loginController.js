@@ -1,258 +1,387 @@
-import { RULE } from "../data/GLOBAL_PROPERTIES.js"
+import { CONFIG } from "./loginController_conf.js";
+
+let uid = webix.uid();
+
+const LANGUAGE = navigator.language || navigator.userLanguage;
+
+const LOGIN_MESSAGE = {
+	AUTHORIZED: "AUTHORIZED",
+	DENY_PASSWORD_EXPIRED: "DENY_PASSWORD_EXPIRED",
+	DENY_LOCKED: "DENY_LOCKED",
+	DENY_MULTI_SESSION_NOT_ALLOWED: "DENY_MULTI_SESSION_NOT_ALLOWED",
+	WRONG_USER_PASSWORD: "WRONG_USER_PASSWORD",
+	DENY_OTHERS: "DENY_OTHERS",
+	LOGOUT: "LOGOUT",
+	UNAUTHORIZED: "UNAUTHORIZED"
+}
 
 webix.ready(function() {
 
-	const language = webix.storage.session.get("app_user_language");
-	const language_default = "es";
-
-	if (language !== null) {
-		$.i18n().locale = language;
-	} else {
-		$.i18n().locale = language_default;
-	}
-
-	$.i18n().load({
-		"es": i18_es,
-		"en": i18_en
-	});
-
-	const userPlaceholder = "";//$.i18n("login.input.user");
-
-	var options = [
-		{ id: "es", value: "Español" },
-		{ id: "en", value: "English" }
-	];
-
 	webix.ui({
-		on: {
-			onKeyPress: function(code, e) {
-				if (code == 13) {
-					login()
-				}
-			}
-		},
-		rows: [{},
-		{
-			cols: [{},
+		css: { "background-image": "url(" + CONFIG.img.wallpaper + ")" },
+		rows: [
+			{},
 			{
-				view: "form",
-				id: "loginForm",
-				elementsConfig: {
-					bottomPadding: 18,
-					labelWidth: 150
-
-				},
-//				on: {
-//					onKeyPress: function(code, e) {
-//						if (code == 13) {
-//							login()
-//						}
-//					}
-//				},
-				elements: [
-					{ "template": "<span class='webix_icon fa-user-circle-o'></span>Login", type: "header" },
+				cols: [
+					{},
 					{
-						view: "text",
-						label: $.i18n("login.input.user"),
-						name: "user",
-						id: "user", placeholder: userPlaceholder,
-						required: true,
-						on: {
-							"onBlur": function() {
-								var result = this.validate()    // validate only this field and show warning message under field if invalid
-								if (this.$scope != null) {
-									this.$scope.validateForm()
-								}
-							}/*,
-							onKeyPress: function(code, e) {
-								if (code == 13) {
-									login()
-								}
-							}*/
-						}
-					},
-					{
-						view: "text",
-						type: "password",
-						label: $.i18n("login.input.password"),
-						name: "password",
-						required: true,
-						validate: webix.rules.isNotEmpty, invalidMessage: "Please enter your password!", validateEvent: "key",
-						on: {
-							"onBlur": function() {
-								this.validate()
-								if (this.$scope != null) {
-									this.$scope.validateForm()
-								}
-							}/*,
-							onKeyPress: function(code, e) {
-								if (code == 13) {
-									login()
-								}
-							}*/
-						}
-					},
-					{
-						margin: 10,
-						paddingX: 2,
-						borderless: true,
+						css: "rectangle",
+						width: 1138,
+						height: 394,
 						cols: [
 							{
-								view: "richselect",
-								value: language !== null ? language : language_default,
-								height: 40,
-								width: 150,
-								options: {
-									view: "datasuggest",
-									textValue: "value",
-									template: function(obj) {
-										return "<img src='./img/" + obj.id + ".png' width='25' height='16'></img>" + " " + obj.value;
-									},
-									body: {
-										xCount: 1,
-										template: function(obj) {
-											//return obj.value + "" + "<img src='./" + obj.value + ".png' width='100' height='67'></img>"; // "<img src='//docs.webix.com/samples/32_thirdparty/data/image00"+obj.id+".JPG'>";
-											return "<img src='./img/" + obj.id + ".png' width='25' height='16'></img>" + " " + obj.value;
-										},
-										type: {
-											height: 40, width: 150
-										},
-										data: options
-									},
-								},
-								on: {
-									'onChange': function(obj) {
-										switch (obj) {
-											case "sk":
-												webix.storage.session.put("app_user_language", "sk");
-												break;
-											case "en":
-												webix.storage.session.put("app_user_language", "en");
-												webix.i18n.setLocale("en-EN");
-												break;
-											case "es":
-												webix.storage.session.put("app_user_language", "es");
-												webix.i18n.setLocale("es-ES");
-												break;
-										}
-										window.location = "./login.html";
+								cols: [
+									{ width: 80 },
+									{
+										width: 445,
+										rows: [getLogos()]
 									}
-								}
+								]
 							},
-							{},
+							{ width: 176 },
 							{
-								view: "button", 
-								label: $.i18n("login.LoginButton"), 
-								type: "form", 
-								id: "loginFormSubmitButton", 
-								width: 150, 
-								hotkey: "enter",
-								click: function() {
-									login()
-								}
+								cols: [
+									{
+										width: 328,
+										rows: [
+											{ height: 77 },
+											getForm(),
+											{ height: 70 }
+										]
+									},
+									{ width: 109 }
+								]
 							}
 						]
-					}
-				],
-			}
-				, {}],
-		}, {}]
+					},
+					{}
+				]
+			},
+			{}
+		]
 	});
-	
-	webix.UIManager.setFocus("user"); //to set focus
+
+	showPassword();
+	webix.UIManager.setFocus($$("user-" + uid));
 
 });
 
-function login() {
-	
-	var form = $$('loginForm')
-    
-	if (form.validate()) {
-	
-		const encodedString = btoa((form.elements.user.data.value + ':' + form.elements.password.data.value).toString('utf8')).toString('base64');
-		let loginResponse = webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).sync().post(appConfig.restUrl + "auth/login");
-	
-		if (loginResponse != undefined) {
-	
-			let login = JSON.parse(loginResponse.responseText);
-	
-			if (login.access === "AUTHORIZED") {
-				
-				webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
-				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, login);
-	
-				//webix.storage.session.put("loginSession", login.sessionId);
-				//webix.storage.session.put("userId", login.userId);
-	
-				let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${login.userId}`);
-	
-				if (userResponse != undefined) {
-	
-					let userData = JSON.parse(userResponse.responseText);
-					
-					userData.password = undefined;
-					
-					webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
-	
-//					webix.storage.session.put("app_user_language", user.language);
-//					webix.storage.session.put("app_user_country", user.country);
-//					webix.storage.session.put("app_user_name", user.name);
-//					
-//					var isLogin = webix.storage.session.get("loginSession");
-					
-					userPermissions(userData);
-					//window.location = "./home.html";
+
+function getLogos() {
+
+	let logos = {
+		rows: [
+			{ height: 112 },
+			{
+				css: "product-logo",
+				template: `<img src='${CONFIG.img.product}'>`
+			},
+			{ height: 66 },
+			{
+				cols: [
+					{
+						css: "company-logo",
+						template: `<img src='${CONFIG.img.company}'>`
+					},
+					{ width: 65, height: 94 },
+					{
+						css: "project-logo",
+						template: `<img src='${CONFIG.img.project}'>`
+					}
+				]
+			}
+		]
+	}
+
+	return logos
+
+}
+
+
+function getForm() {
+
+	let buttonText = translateLabel("LBL_LOGIN");
+	let alertText = "";
+
+	let loginForm = {
+		id: "login-form-" + uid,
+		view: "form",
+		css: "form",
+		elementsConfig: { inputWidth: 328 },
+		elements: [
+			{
+				view: "text",
+				id: "user-" + uid,
+				name: "user",
+				inputHeight: 54,
+				css: "form-container",
+				template: `	<div class="input-container">
+							<div class="input-image" style="background-image: url(${CONFIG.img.user});"></div>   
+							<input class="input-text input-text-user" type='text' name='user'>
+							</div>`,
+				on: {
+					onEnter: function(ev) {
+						let validation = $$(loginForm.id).validate();
+
+						if (validation) {
+
+							login($$(loginForm.id).getValues());
+						}
+					},
+					onKeyPress: function(code, e) {
+						$$("alertText-" + uid).config.label = "";
+						$$("alertText-" + uid).refresh();
+					}
+				}
+			},
+			{
+				height: 40,
+				width: 328,
+				css: { "margin": "0px !important" }
+			},
+			{
+				view: "text",
+				id: "password-" + uid,
+				type: "password",
+				name: "password",
+				inputHeight: 54,
+				css: "form-container",
+				template: `	<div class="input-container">
+							<div class="input-image" style="background-image: url(${CONFIG.img.lock});"></div>   
+							<input id="password-input" class="input-text input-text-pass" type='password' name='password'>
+							<div id="show-icon" class="input-image-show" style="background-image: url(${CONFIG.img.show});"></div>   
+							</div>`,
+				on: {
+					onEnter: function(ev) {
+						let validation = $$(loginForm.id).validate();
+
+						if (validation) {
+
+							login($$(loginForm.id).getValues());
+						}
+					},
+					onKeyPress: function(code, e) {
+						$$("alertText-" + uid).config.label = "";
+						$$("alertText-" + uid).refresh();
+					}
+				}
+			},
+			{
+				id: "alertText-" + uid,
+				view: "label",
+				label: alertText,
+				css: "alert-text"
+			},
+			{
+				view: "button",
+				value: buttonText,
+				inputHeight: 54,
+				css: "form-button",
+				on: {
+					onItemClick: function() {
+
+						let validation = $$(loginForm.id).validate();
+
+						if (validation) {
+
+							login($$(loginForm.id).getValues());
+						}
+
+
+					},
+					onEnter: function(ev) {
+						let validation = $$(loginForm.id).validate();
+
+						if (validation) {
+
+							login($$(loginForm.id).getValues());
+						}
+					}
 				}
 			}
-			else if (login.access === "WRONG_USER_PASSWORD") {
-				webix.alert({ title: "WRONG USER PASSWORD", type: "alert-success", text: "ERROR" })
+		],
+		rules: {
+			"user": webix.rules.isNotEmpty
+		},
+		on: {
+			onValidationError: function(key, obj) {
+
+				if (key == "user") {
+
+					let messageTranslate = translateLabel("LBL_USER_CANT_BE_EMPTY");
+
+					if (messageTranslate) {
+						$$("alertText-" + uid).config.label = messageTranslate;
+						$$("alertText-" + uid).refresh();
+					}
+				}
 			}
-			else if (login.access === "DENY_PASSWORD_EXPIRED") {
-				webix.alert({ title: "DENY_PASSWORD_EXPIRED", type: "alert-success", text: "ERROR" })
+		}
+	}
+
+	return loginForm;
+
+}
+
+
+function login(values) {
+
+	const encodedString = btoa((values.user + ':' + values.password).toString('utf8')).toString('base64');
+	let loginResponse = webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).sync().post(appConfig.restUrl + "auth/login");
+
+	if (loginResponse != undefined) {
+
+		let loginData = JSON.parse(loginResponse.responseText);
+
+		if (loginData.access === LOGIN_MESSAGE.AUTHORIZED) {
+
+			webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
+			webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, loginData);
+
+			let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${loginData.userId}`);
+
+			if (userResponse != undefined) {
+
+				let userData = JSON.parse(userResponse.responseText);
+
+				userData.password = undefined;
+
+				webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+
+				let translateMessage = translateLabel("LBL_AUTHORIZED");
+
+				$$("alertText-" + uid).config.label = translateMessage;
+				webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+				$$("alertText-" + uid).refresh();
+
+				userPermissions(userData);
+
 			}
-			else if (login.access === "DENY_LOCKED") {
-				webix.alert({ title: "DENY_LOCKED", type: "alert-success", text: "ERROR" })
+
+		} else {
+
+			let labelAlertMessage = "LBL_UNKNOWN_ACCESS_ERROR";
+
+			switch (loginData.access) {
+
+				case LOGIN_MESSAGE.WRONG_USER_PASSWORD:
+					labelAlertMessage = "LBL_WRONG_USER_PASSWORD";
+					break;
+
+				case LOGIN_MESSAGE.DENY_PASSWORD_EXPIRED:
+					labelAlertMessage = "LBL_DENY_PASSWORD_EXPIRED";
+					break;
+
+				case LOGIN_MESSAGE.DENY_LOCKED:
+					labelAlertMessage = "LBL_DENY_LOCKED";
+					break;
+
+				case LOGIN_MESSAGE.DENY_MULTI_SESSION_NOT_ALLOWED:
+					labelAlertMessage = "LBL_DENY_MULTI_SESSION_NOT_ALLOWED";
+					break;
+
+				case LOGIN_MESSAGE.UNAUTHORIZED:
+					labelAlertMessage = "LBL_UNAUTHORIZED";
+					break;
+
+				case LOGIN_MESSAGE.DENY_OTHERS:
+					labelAlertMessage = "LBL_DENY_OTHERS";
+					break;
+
+				case LOGIN_MESSAGE.LOGOUT:
+					labelAlertMessage = "LBL_LOGOUT";
+					break;
 			}
-			else if (login.access === "DENY_MULTI_SESSION_NOT_ALLOWED") {
-				webix.alert({ title: "DENY_MULTI_SESSION_NOT_ALLOWED", type: "alert-success", text: "ERROR" })
-			}
-			else if (login.access === "DENY_OTHERS") {
-				webix.alert({ title: "DENY_OTHERS", type: "alert-success", text: "ERROR" })
-			}
-			else {
-				webix.alert({ title: "ERROR", type: "alert-success", text: "ERROR" })
-			}		
+
+			let translateMessage = translateLabel(labelAlertMessage);
+
+			$$("alertText-" + uid).config.label = translateMessage;
+			webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+			$$("alertText-" + uid).refresh();
+
+			$$("password-" + uid).getNode().querySelector('#password-input').focus();
+
 		}
 	}
 }
 
+
 function userPermissions(userData) {
-	
+
 	let permissions = [];
-    if (userData.role.rolePermissions)
-        userData.role.rolePermissions.forEach(item => {
-            permissions.push({
-                'id': item.id.split(":")[1],
-                'alias': item.alias
-            });
-        });
-    if (userData.userPermissions)
-        userData.userPermissions.forEach(item => {
-            permissions.push(item.id);
-        });
 
-    if (permissions)
-        try {
-            webix.storage.session.put("app_user_permissions", permissions);
-        } catch { }
+	if (userData.role.rolePermissions) {
 
-    if (checkUserPermission(RULE.LOGIN_ROLE)) {
-        window.location = "./home.html";
-    } else {
-        webix.alert({ title: "USER_LOGIN_DENY", type: "alert-success", text: "ERROR" })
-        webix.storage.session.put("loginSession", "");
-        webix.storage.session.put("userId", "");
-        webix.storage.session.put("app_user_name", "");
-        webix.storage.session.put("app_user_permissions", "");
-    }
+		userData.role.rolePermissions.forEach(item => {
+
+			permissions.push({
+				'id': item.id.split(":")[1],
+				'alias': item.alias
+			});
+		});
+	}
+
+	if (userData.userPermissions) {
+
+		userData.userPermissions.forEach(item => {
+			permissions.push(item.id);
+		});
+
+	}
+
+	if (permissions) {
+
+		webix.storage.session.put("app_user_permissions", permissions);
+
+	}
+
+	webix.delay(function() { window.location = "./home.html" }, null, null, 2000);
+
 }
+
+
+function translateLabel(labelToTranslate) {
+
+	let labelsArr = CONFIG.i18n.data;
+
+	let label = labelsArr.find(e => e.label === labelToTranslate);
+
+	if (label) {
+
+		let labelTranslated = (label[LANGUAGE] != undefined) ? label[LANGUAGE] : label["en-US"];
+
+		return labelTranslated;
+	}
+}
+
+
+function showPassword() {
+
+	const INPUT_TYPE = {
+		PASSWORD: "password",
+		TEXT: "text"
+	}
+
+	let icon = $$("login-form-" + uid).getNode().querySelector('#show-icon');
+	let password = $$("login-form-" + uid).getNode().querySelector('#password-input');
+
+	icon.addEventListener("mousedown", show);
+	icon.addEventListener("mouseup", show);
+
+	function show() {
+
+		if (password.type == INPUT_TYPE.PASSWORD) {
+
+			password.type = INPUT_TYPE.TEXT;
+			icon.style.backgroundImage = "url(" + CONFIG.img.show_light + ")";
+
+		} else {
+
+			password.type = INPUT_TYPE.PASSWORD;
+			icon.style.backgroundImage = "url(" + CONFIG.img.show + ")";
+		}
+	}
+}
+
+
+
