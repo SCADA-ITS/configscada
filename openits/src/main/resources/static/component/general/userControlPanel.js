@@ -86,7 +86,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 						onItemClick() {
 						
-							self.doAction(self.config.module.alarm.id, self.config.module.alarm.action.recognizeAll);
+							self.openModule(self.config.module.alarmMonitor.id);
 							self.hide();
 						}
 					}

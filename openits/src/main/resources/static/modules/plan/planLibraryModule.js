@@ -26,18 +26,10 @@ export default class PlanLibraryModule extends GenericModule {
 		
 		view = {
 			id: self.uid,
-			rows: [
-				drawHeader(),
-				{
-					cols: [				
-						drawTree(),
-						drawResizer(),
-						drawContent()
-					]		
-				},
-				{
-					height: 10
-				}
+			cols: [				
+				drawTree(),
+				drawResizer(),
+				drawContent()
 			]
 		}
 		
@@ -92,34 +84,6 @@ export default class PlanLibraryModule extends GenericModule {
 					}
 				}
 			});
-		}
-		
-		function drawHeader() {
-			
-			let viewHeader = {};
-			let label = i18n.t("LBL_PLAN_LIBRARY");
-			let description = i18n.t("LBL_PLAN_LIBRARY_DESCRIPTION");
-
-			viewHeader = {
-
-				css: "global-header",
-				cols: [
-					{
-						view: "label",
-						label: "<img src='img/books.png' class='grid-icon'/>",
-						height: 75,
-						css: "icon"
-					},
-					{
-						view: "label",
-						height: 75,
-						template: "<span>" + label + "</span> <br> <span style='font-size: 13px'>" + description + "</span>",
-						css: "label"
-					}
-				]
-			};
-
-			return viewHeader;
 		}
 		
 		function drawTree() {

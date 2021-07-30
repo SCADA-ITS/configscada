@@ -6,8 +6,8 @@ const NUM_OPTIONS = 3;
 
 export default class OptionDialogBox {
 
-	static get MODE_TOGGLE() { return 1 };
-	static get MODE_COMBO() { return 2 };
+	static get MODE_TOGGLE() { return 1 }
+	static get MODE_COMBO() { return 2 }
 
 	constructor(title, options, onChange, mode) {
 

@@ -12,6 +12,9 @@
 			"action": {
 				"recognizeAll": 100802
 			}
+		},
+		"alarmMonitor": {
+			"id": 1005
 		}
 	}
 }

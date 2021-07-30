@@ -18,7 +18,7 @@ const LOGIN_MESSAGE = {
 webix.ready(function() {
 
 	webix.ui({
-		css: { "background-image": "url(" + CONFIG.img.wallpaper + ")" },
+		css: { "background-image": "url(" + CONFIG.img.wallpaper + ")", "background-size": "100% 100%" },
 		rows: [
 			{},
 			{
