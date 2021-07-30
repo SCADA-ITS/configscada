@@ -72,6 +72,7 @@ export default class SplashScreen {
 		let view = {
 			id: "splashScreen",
 			type: "space",
+			css: "splash-screen-wallpaper",
 			rows: [
 				{
 					height: (document.documentElement.clientHeight - splashHeight) / 2

@@ -963,17 +963,17 @@ p, input, textarea {
 }
 
 .splash-screen {
-	
-	margin-top: 5px !important;
 	height: 95% !important;
-	background: var(--blue-strong);
-	border-radius: 5px;
+	background: white;
+	border-radius: 12px;
 	border-style: solid;
 	border-width: 0px !important;
-	/*box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.3) !important;*/
-	box-shadow: 0px 0px 5px 5px !important;
 	animation: zoomIn;
     animation-duration: 0.2s;
+}
+
+.splash-screen-wallpaper {
+	background: var(--blue-strong) !important;
 }
 
 .splash-screen-inner{
