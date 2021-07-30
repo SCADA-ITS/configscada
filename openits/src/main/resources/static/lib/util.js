@@ -250,7 +250,7 @@ export let util = {
 			let image = 'img/module/default.png';
 			let icon = 'img/module/default.png';
 			let color = '#464646';
-			let label = i18n.t('LBL_UNDEFINED');
+			let label = 'LBL_UNDEFINED';
 			let externalizable = true;
 			let tab_id = "tab_" + module.id + "_" + webix.uid();
 

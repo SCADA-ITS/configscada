@@ -5,8 +5,8 @@ const PARAM_SWITCH_COMMAND = "ElementTypeParam:57:2:1";
 
 const G_ID_SWITCH = "switch";
 
-const CMD_SWITCH_VALUE_MODE_OPEN = 'true';
-const CMD_SWITCH_VALUE_MODE_CLOSE = 'false';	
+const CMD_SWITCH_VALUE_MODE_OPEN = 'false';
+const CMD_SWITCH_VALUE_MODE_CLOSE = 'true';	
 
 const SWITCH_X_OPEN = 6.1692076
 const SWITCH_Y_OPEN = 14.114111
