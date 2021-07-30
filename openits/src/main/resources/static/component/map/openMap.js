@@ -1056,7 +1056,7 @@ export default class OpenMap extends GenericMap {
 				let viewButtonZones = {
 					view: "button",
 					type: "icon",
-					icon:"mdi mdi-vector-circle",
+					icon:"mdi mdi-map-search",
 					tooltip: i18n.t("LBL_SHOW_ZONES"),
 					css: "button",
 					width: 40, height: 40,
@@ -1068,7 +1068,7 @@ export default class OpenMap extends GenericMap {
 							
 							webix.html.removeCss( $$("map-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-actions");
 							webix.html.addCss( $$("map-window-actions-toolbar-" + self.uid).getNode(), "syn-panel-layers");
-							$$("map-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_ZONES"), icon: "mdi mdi-vector-circle"});
+							$$("map-window-actions-toolbar-title-" + self.uid).setValues({ title: i18n.t("LBL_ZONES"), icon: "mdi mdi-map-search"});
 						}
 					}
 				};
