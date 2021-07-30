@@ -27,9 +27,7 @@ export default class MapZone {
 
 		view = {
 			id: "map-zone-" + self.uid,
-			rows: [
-				{ height: 6 },
-				getListZones()]
+			rows: [getListZones()]
 		};
 
 		function getListZones() {
@@ -38,11 +36,7 @@ export default class MapZone {
 
 			events[ListView.EventTypes.ON_SELECT_ROW] = onSelectItem;
 
-			let options = {};
-
-			options[ListView.Options.Y_COUNT] = zones.length;
-
-			self.listZones = new ListView(zones, options, events);
+			self.listZones = new ListView(zones, null, events);
 
 			function onSelectItem(item) {
 
