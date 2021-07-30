@@ -1,4 +1,6 @@
-import { util } from "../../lib/util.js";
+import PlanLibraryPlan from "./planLibraryPlan.js";
+//import PlanLibraryOrder from "./planLibraryOrder.js";
+import { util } from "../../../lib/util.js";
 
 export default class PlanLibraryContent {
 
@@ -7,6 +9,8 @@ export default class PlanLibraryContent {
 		this.config = config;
 		this.plan = plan;
 		this.uid = uid;
+		
+		this.planLibraryPlan = undefined;
 	}
 	
 	getView() {
@@ -70,7 +74,16 @@ export default class PlanLibraryContent {
 												tooltip: i18n.t("LBL_EXECUTE_PLAN_DESCRIPTION"),
 												on: {
 													onItemClick() {
-								
+														
+														let module = util.module.getFromModuleAction(self.config.moduleAction.planExecutor);
+				
+														if (module) {
+									
+															let moduleAction = { id: self.config.moduleAction.planExecutor };
+															let args = { selectedPks: [self.plan.id] };
+									
+															util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+														}
 													}
 												} 
 											}
@@ -112,12 +125,55 @@ export default class PlanLibraryContent {
 					{
 						rows: [
 							{ height: 10 },
-							{},
+							drawPlanLibraryPlan(),
 							{ height: 10 }
 						]
 					},
 					{ width: 10 }
 				]
+			}
+			
+			function drawPlanLibraryPlan() {
+				
+				self.planLibraryPlan = new PlanLibraryPlan(self.config, self.uid, self.plan, onSelectPlanOrder);
+				
+				return self.planLibraryPlan.getView();
+			}
+			
+			function onSelectPlanOrder(planOrderId) {
+				
+				if (Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
+					
+					let planOrder = self.plan.planOrders.find(e => e.id === planOrderId);
+					
+					if (planOrder) {
+						
+						try {
+
+							const lazy = async _ => {
+								
+								let jsFile = util.getContextPath() + "/" + planOrder.planOrderType.jsFile;	
+		
+								const mod = await import(jsFile);
+								
+								let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, planOrder);
+
+								if (planLibraryOrder && planLibraryOrder.getView) {
+				
+									webix.ui(planLibraryOrder.getView(), $$("plan-order-lib-plan-" + self.uid));
+								}
+							}
+			
+							lazy();
+			
+						} catch (error) {
+			
+							console.log(error);
+						}
+					}
+				}
+				
+				return self.planLibraryPlan.getView();
 			}
 			
 			return viewPlan;
@@ -142,7 +198,7 @@ export default class PlanLibraryContent {
 					{
 						rows: [
 							{ height: 10 },
-							{},
+							{ id: "plan-order-lib-plan-" + self.uid, },
 							{ height: 10 }
 						]
 					},

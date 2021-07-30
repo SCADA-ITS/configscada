@@ -1,4 +1,7 @@
 {
+	"moduleAction": {
+	    "planExecutor": 102501
+	},
 	"restEndpoints": {
 		"plan": "plans/${id}",
 		"planNodes": "plans/nodes",
