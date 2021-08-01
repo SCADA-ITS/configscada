@@ -43,7 +43,6 @@ public class PasLibraryNode implements Serializable {
 	private PasLibrary pasLibrary;
 
 	// bi-directional many-to-one association to pasMessage
-	@JsonIgnore
 	@ManyToOne
 	private PasMessage pasMessage;
 

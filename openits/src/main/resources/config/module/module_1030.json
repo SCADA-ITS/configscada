@@ -1,0 +1,55 @@
+{
+	"moduleAction": {
+	    "megaphone": 102901,
+		"zone": 102902
+	},
+	"restEndpoints": {
+		"elementById": "elements/${id}",
+		"elementsByType": "element_types/${id}/elements",
+		"pasLibraries": "pas_libraries/element",
+		"pasLibraryByElement": "pas_libraries/element/${id}",
+		"command": "elements/send_command_element",
+		"saveNode": "pas_libraries/${id}/node/${parentNodeIds}",
+		"deleteNode": "pas_libraries/node/${id}"
+		
+	},
+	"topics": {
+		"zones" : "/topic/element.ElementType:16.>"
+	},
+	"pas": {
+		"type": "ElementType:5",
+		"paramOnAir": "ElementTypeParam:5:2:1"
+	},
+	"zone": {
+		"type": "ElementType:16",
+		"paramMessageId": "ElementTypeParam:16:2:1001",
+		"paramMessageAlias": "ElementTypeParam:16:2:1003",
+		"paramOnAir": "ElementTypeParam:16:2:1"
+	},
+	"commands":{
+		"SEND_MESSAGE" :{
+			"commandElementTypeId":"CommandElementType:2:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:5:1",
+					"value": null
+				},
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:2:5:2",
+					"value": null
+				}
+			]
+		},
+		"SWITCH_OFF" :{
+			"commandElementTypeId":"CommandElementType:1:5",
+			"elementId": null,
+			"commandElementValues": [
+				{
+					"commandElementTypeParamId": "CommandElementTypeParam:1:5:1",
+					"value": null
+				}
+			]
+		}
+	}
+}

@@ -11,6 +11,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for pas_messages database table.
  * 
@@ -34,6 +36,7 @@ public class PasMessage implements Serializable {
 
 	// bi-directional many-to-one association to PasLibrayNode
 	@OneToMany(mappedBy = "pasMessage")
+	@JsonIgnore
 	private List<PasLibraryNode> pasLibraryNodes;
 
 	public PasMessage() {
