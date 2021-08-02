@@ -1,6 +1,6 @@
 import { util } from "../../../lib/util.js";
 import DataTable from "../../../component/datatable.js";
-import SoundMessageDialogBox from "../../../component/soundMessageDialogBox.js";
+import PasLibraryComponent from "../../../component/pasLibraryComponent.js";
 import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
 
 export default class PasSignalingContent {
@@ -299,8 +299,8 @@ export default class PasSignalingContent {
 						});
 					}
 
-					let soundMessageDialogBox = new SoundMessageDialogBox(self.element, callBack);
-					soundMessageDialogBox.show();
+					let pasLibraryComponent = new PasLibraryComponent(self.pasLibraries.pasLibrary, callBack);
+					pasLibraryComponent.show();
 				}
 			});
 

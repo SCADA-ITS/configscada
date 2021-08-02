@@ -3297,3 +3297,5 @@ p, input, textarea {
 .dbllist .dbllist_button .webix_icon {
 	color: var(--blue-headers);
 }
+
+audio { width: 100% }
