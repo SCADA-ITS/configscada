@@ -8,8 +8,8 @@ const CIRCUIT_COMMAND_SEND_ON = "SEND_CIRCUIT_ON";
 const CIRCUIT_COMMAND_SEND_OFF = "SEND_CIRCUIT_OFF";
 
 const CircuitState = Object.freeze([
-	{ id: 1, value: "0", label: "LBL_CIRCUIT_STATE_OFF" },
-	{ id: 2, value: "1", label: "LBL_CIRCUIT_STATE_ON" }
+	{ id: 1, value: "false", label: "LBL_CIRCUIT_STATE_OFF" },
+	{ id: 2, value: "true", label: "LBL_CIRCUIT_STATE_ON" }
 ]);
 
 export default class TubeContent {
