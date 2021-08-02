@@ -22,7 +22,7 @@ export default class SoundPlayerDialogBox {
 				rows: [
 					{
 						view: "template",
-						template: `<audio controls>
+						template: `<audio controls autoplay>
 								<source src="${self.audio}" type="audio/mpeg">
 					  		</audio>`
 					}
