@@ -62,14 +62,20 @@ export default class MapLauncherModule extends GenericModule {
 
 							options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 
-							let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width , $$(self.args.containerId).$height, options);
+							let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width, $$(self.args.containerId).$height, options);
 
-							$$("loading-" + self.uid).hide();
-							$$(self.uid).show();
+							if (map) {
+								
+								let container = $$(self.args.containerId);
+								if (container) {
 
-							webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
-							
-							
+									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+								}
+								$$("loading-" + self.uid).hide();
+								$$(self.uid).show();
+
+								webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+							}
 						}
 					}
 				});
@@ -90,6 +96,7 @@ export default class MapLauncherModule extends GenericModule {
 
 						if (responseJson) {
 
+							console.log(responseJson);
 							let events = {};
 
 							let options = {};
@@ -98,10 +105,19 @@ export default class MapLauncherModule extends GenericModule {
 
 							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width, $$(self.args.containerId).$height, options);
 
-							$$("loading-" + self.uid).hide();
-							$$(self.uid).show();
+							if (synoptic) {
 
-							webix.ui(synoptic.getView(), $$(self.uid));
+								let container = $$(self.args.containerId);
+
+								if (container) {
+
+									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+								}
+								$$("loading-" + self.uid).hide();
+								$$(self.uid).show();
+
+								webix.ui(synoptic.getView(), $$(self.uid));
+							}
 						}
 					}
 				});
