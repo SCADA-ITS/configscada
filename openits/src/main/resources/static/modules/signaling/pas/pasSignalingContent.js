@@ -475,12 +475,12 @@ export default class PasSignalingContent {
 		let messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageId);
 		let messageDesc = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageDesc);
 
-		if(messageZoneId && messageZoneId.value){
+		if(messageZoneId && messageZoneId.value != undefined){
 			
 			element.messageZoneId = messageZoneId.value;
 		}
 
-		if(messageTag && messageTag.value){
+		if(messageTag && messageTag.value != undefined){
 			
 			element.onAir = "1";
 			element.messageTag = messageTag.value;
@@ -489,7 +489,7 @@ export default class PasSignalingContent {
 			element.onAir = "0";
 		}
 		
-		if(messageId && messageId.value){
+		if(messageId && messageId.value != undefined){
 			
 			element.messageId = messageId.value;
 
@@ -501,7 +501,7 @@ export default class PasSignalingContent {
 			}
 		}
 
-		if(messageDesc && messageDesc.value){
+		if(messageDesc && messageDesc.value != undefined){
 			
 			element.messageDesc = messageDesc.value;
 		}
