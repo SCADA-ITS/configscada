@@ -2,10 +2,9 @@ import ListView from "../../../component/listview.js";
 
 export default class PasSignalingList {
 	
-	constructor(elements, element, onSelectElement) {
+	constructor(elements, onSelectElement) {
 
 		this.elements = elements;
-		this.element = element;
 		this.onSelectElement = onSelectElement;
 		this.listView = undefined;
 	}

@@ -37,15 +37,27 @@ export default class VmsSignalingModule extends GenericModule {
 				self.elements = elementsResponse.json();
 				
 				if (Array.isArray(self.elements) && self.elements.length > 0) {
-					
-					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
+					if(self.moduleAction && self.moduleAction.id == self.config.moduleAction.pas){
+			
 						self.elements = self.elements.filter(element => self.args.selectedPks.includes(element.id));
 						self.currentElement = getElementFromElementId(self.args.selectedPks[0]);
-						
-						self.viewMainListHierarchyHidden = (self.args.selectedPks.length == 1);
-					} 
+					}
 					
+					if(self.moduleAction && self.moduleAction.id == self.config.moduleAction.zone){
+			
+						let elementsHierarchyResponse = webix.ajax().sync().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy);
+						let elementsHierarchy = JSON.parse(elementsHierarchyResponse.responseText);
+						let pasHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.pas.type);
+						pasHierarchy = pasHierarchy.filter(element => self.args.selectedPks.includes(element.child.id));
+						let elementsId = pasHierarchy.map(e => { return e.parent.id; }); 
+
+						self.elements = self.elements.filter(element => elementsId.includes(element.id));
+						self.currentElement = getElementFromElementId(elementsId[0]);
+					}
+					
+					self.viewMainListHierarchyHidden = (self.elements.length == 1);
+
 					load();	
 				}
 				else {
@@ -170,16 +182,11 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view = {};
 				
-				self.pasSignalingList = new PasSignalingList(self.elements, self.currentElement, onSelectElement);
+				self.pasSignalingList = new PasSignalingList(self.elements, onSelectElement);
 				
 				view = self.pasSignalingList.getView();
 				
 				return view;
-			}
-			
-			function getElementFromElementId(elementId) {
-				
-				return self.elements.find(e => e.id == elementId);
 			}
 			
 			function onSelectElement(elementId) {
@@ -212,9 +219,7 @@ export default class VmsSignalingModule extends GenericModule {
 				let previousViewContent = self.currentViewContent;
 
 				self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement);
-				
 				self.pasSignalingContent.loadData()			
-
 				view = self.pasSignalingContent.getView();
 			
 				self.currentViewContent = view.id;
@@ -225,6 +230,11 @@ export default class VmsSignalingModule extends GenericModule {
 			}
 			
 			return viewMain;
+		}
+
+		function getElementFromElementId(elementId) {
+				
+			return self.elements.find(e => e.id == elementId);
 		}
 	}
 }
