@@ -482,7 +482,14 @@ export default class PasSignalingContent {
 
 		if(messageTag && messageTag.value != undefined){
 			
-			element.onAir = "1";
+			if(messageTag.value) {
+
+				element.onAir = "1";
+			} else {
+
+				element.onAir = "0";
+			}
+
 			element.messageTag = messageTag.value;
 		}else {
 
