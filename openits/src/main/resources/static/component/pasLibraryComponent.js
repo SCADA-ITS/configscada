@@ -218,7 +218,7 @@ export default class PasLibraryComponent {
 									width: 600
 								}).then(function(res) {
 
-									self.callBack(self.selectedPasLibraryNode.pasMessage.id);
+									self.callBack(self.selectedPasLibraryNode.pasMessage.message);
 
 									let parentWindow = this.getTopParentView();
 									parentWindow.close();

@@ -16,14 +16,19 @@
 	"topics": {
 		"zones" : "/topic/element.ElementType:16.>"
 	},
+	"adapters": {
+		"element": "ws.element.update"
+	},
 	"pas": {
 		"type": "ElementType:5",
 		"paramOnAir": "ElementTypeParam:5:2:1"
 	},
 	"zone": {
 		"type": "ElementType:16",
+		"paramZoneId": "ElementTypeParam:16:1:5",
 		"paramMessageId": "ElementTypeParam:16:2:1001",
-		"paramMessageAlias": "ElementTypeParam:16:2:1003",
+		"paramMessageDesc": "ElementTypeParam:16:2:1002",
+		"paramMessageTag": "ElementTypeParam:16:2:1004",
 		"paramOnAir": "ElementTypeParam:16:2:1"
 	},
 	"commands":{
