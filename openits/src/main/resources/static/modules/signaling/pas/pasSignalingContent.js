@@ -2,6 +2,7 @@ import { util } from "../../../lib/util.js";
 import DataTable from "../../../component/datatable.js";
 import PasLibraryComponent from "../../../component/pasLibraryComponent.js";
 import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
+import { adapter } from "../../../lib/adapter.js";
 
 export default class PasSignalingContent {
 
