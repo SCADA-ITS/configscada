@@ -220,7 +220,6 @@ export default class VentilationModule extends GenericModule {
 						
 						webix.ui(tubeContent.getView(), $$("view-main-content-" + self.uid));
 						tubeContent.loadData();
-						self.selectedFansIds = undefined;
 					}
 					
 				};

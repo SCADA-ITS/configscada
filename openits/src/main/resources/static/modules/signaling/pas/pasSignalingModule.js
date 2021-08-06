@@ -16,6 +16,7 @@ export default class VmsSignalingModule extends GenericModule {
 		this.pasSignalingContent = undefined;
 		this.currentElement = undefined;
 		this.elements = undefined;
+		this.selectedChildElementsHierarchyMap = new Map();
 		this.currentViewContent = undefined;
 		this.viewMainListHierarchyHidden = false;		
 	}
@@ -48,10 +49,23 @@ export default class VmsSignalingModule extends GenericModule {
 			
 						let elementsHierarchyResponse = webix.ajax().sync().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy);
 						let elementsHierarchy = JSON.parse(elementsHierarchyResponse.responseText);
+						
 						let pasHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.pas.type);
 						pasHierarchy = pasHierarchy.filter(element => self.args.selectedPks.includes(element.child.id));
-						let elementsId = pasHierarchy.map(e => { return e.parent.id; }); 
+						pasHierarchy.array.forEach(element => {
 
+							if(self.args.selectedPks.includes(element.child.id) && !self.selectedChildElementsHierarchyMap.get(element.parent.id) ){
+
+								self.selectedChildElementsHierarchyMap.set(element.parent.id, []);
+							}
+
+							if(self.args.selectedPks.includes(element.child.id)){
+
+								self.selectedChildElementsHierarchyMap.get(element.parent.id).push(element.child.id);
+							}
+						});
+
+						let elementsId = pasHierarchy.map(e => { return e.parent.id; }); 
 						self.elements = self.elements.filter(element => elementsId.includes(element.id));
 						self.currentElement = getElementFromElementId(elementsId[0]);
 					}
@@ -218,7 +232,7 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let previousViewContent = self.currentViewContent;
 
-				self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement);
+				self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement, self.selectedChildElementsHierarchyMap.get(self.currentElement.id));
 				self.pasSignalingContent.loadData()			
 				view = self.pasSignalingContent.getView();
 			

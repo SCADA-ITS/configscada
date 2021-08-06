@@ -239,8 +239,6 @@ export default class LightingnModule extends GenericModule {
 					args.selectedPks = self.enabledSelectedPks;
 					args.tubeTableOption = self.tubeTableOption;
 					containerContent.loadData(args, drawContent);
-					self.enabledSelectedPks = undefined;
-					self.tubeTableOption = undefined;
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 

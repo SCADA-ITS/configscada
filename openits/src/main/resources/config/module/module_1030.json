@@ -15,6 +15,7 @@
 		
 	},
 	"topics": {
+		"pas" : "/topic/element.ElementType:5",
 		"zones" : "/topic/element.ElementType:16.>"
 	},
 	"adapters": {

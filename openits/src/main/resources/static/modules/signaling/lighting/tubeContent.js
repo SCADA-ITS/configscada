@@ -344,38 +344,6 @@ export default class TubeContent {
 							});
 							
 					}
-
-					//					webix.confirm({
-					//						title: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM"),
-					//						ok: i18n.t("LBL_ACCEPT"),
-					//						cancel: i18n.t("LBL_CANCEL"),
-					//						text: i18n.t("LBL_LIGHTING_CHANGE_MODE_CONFIRM_DESCRIPTION"),
-					//						width: 600
-					//					}).then(function() {
-					//						
-					//						let command = self.parent.config.commands.SEND_LIGHTING_MODE;
-					//						command.elementId = self.selectedTube.id;
-					//						command.commandElementValues[0].value = newv;
-					//
-					//						let body = {
-					//							commands: []
-					//						};
-					//						body.commands.push(command);
-					//
-					//						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-					//							
-					//							if (!data.json()){
-					//								
-					//								webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
-					//							}
-					//						});
-					//						
-					//					}).fail(() => {
-					//
-					//						this.blockEvent();
-					//						this.setValue(oldv); 
-					//						this.unblockEvent();
-					//					});
 				}
 			}
 		};
@@ -932,6 +900,8 @@ export default class TubeContent {
 						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
 						self.tubeCircuitsDataTable.update(item);
 					});
+
+					checkDisableChangeStatusButton();
 				}
 			});
 
@@ -945,6 +915,8 @@ export default class TubeContent {
 						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
 						self.tubeCircuitsDataTable.update(item);
 					});
+
+					checkDisableChangeStatusButton();
 				}
 			});
 
@@ -958,6 +930,8 @@ export default class TubeContent {
 						item.circuitStateToSendAlias = "-";
 						self.tubeCircuitsDataTable.update(item);
 					});
+
+					checkDisableChangeStatusButton();
 				}
 			});
 
@@ -1198,7 +1172,8 @@ export default class TubeContent {
 						align: "right",
 						css: "button-cta",
 						value: i18n.t("LBL_LIGHTING_CHANGE_STATUS"),
-						disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable,
+						disabled: true,
+						hidden: self.selectedTable === "action-panel-switcher-dali" + self.parent.uid,
 						click: function() {
 
 							webix.confirm({
@@ -1268,6 +1243,8 @@ export default class TubeContent {
 											self.tubeCircuitsDataTable.update(row);
 										});
 
+										checkDisableChangeStatusButton();
+
 										if (!data.json()) {
 
 											webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
@@ -1281,6 +1258,27 @@ export default class TubeContent {
 			};
 
 			return bottom;
+		}
+
+		function checkDisableChangeStatusButton(){
+
+			let changeStatusButton = $$("view-content-button-change-circuits-status-" + self.parent.uid);
+					
+			if(changeStatusButton) {
+
+				if (self.tubeCircuitsDataTable &&  self.tubeCircuitsDataTable.getAllItems() && Array.isArray(self.tubeCircuitsDataTable.getAllItems()) && self.tubeCircuitsDataTable.getAllItems().length > 0) {
+					
+					let enabled = self.tubeCircuitsDataTable.getAllItems().find(item => (item.circuitStateToSend != undefined && item.circuitStateToSend != null));
+					
+					if(enabled) {
+
+						changeStatusButton.enable();
+					} else {
+
+						changeStatusButton.disable();
+					}	
+				}
+			} 
 		}
 
 		return contentBody;
@@ -1324,41 +1322,6 @@ export default class TubeContent {
 				self.idStompSubscriptorDalis = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.dalis), onMessageDali, fields);
 			}
 		}
-
-		//		function onMessageTube(data) {
-		//
-		//			if (data) {
-		//
-		//				self.selectedTube = eval("adapter." + self.parent.config.adapters.element)(self.selectedTube, data);
-		//				self.currentRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.currentRegime);
-		//				self.proposedRegime = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.proposedRegime);
-		//				self.lightingModeValueParam = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingMode);
-		//
-		//				webix.ui(self.getContentHeader(), $$("view-content-header-" + self.parent.uid));
-		//				webix.ui(self.getContentToolbar(), $$("view-content-toolbar-" + self.parent.uid));
-		//				
-		//				let actualRegimeLabel = self.currentRegime.value ? self.currentRegime.labelAlias : "LBL_NO_REGIME";
-		//				let proposedRegimeLabel = self.proposedRegime.value ? self.proposedRegime.labelAlias : "LBL_NO_REGIME";
-		//
-		//				$$("label-regimen-1-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(actualRegimeLabel) + '</span></div>')
-		//				$$("label-regimen-2-" + self.parent.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(proposedRegimeLabel) + '</span></div>')
-		//
-		//			
-		//				if (!self.lightingModeValueParam || self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
-		//						
-		//					self.tubeCircuitsDataTable.disable();
-		//					self.tubeDalisDataTable.disable();
-		//					$$("view-content-button-change-regime-" + self.parent.uid).disable();
-		//					$$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
-		//				} else {
-		//
-		//					self.tubeCircuitsDataTable.enable();
-		//					self.tubeDalisDataTable.enable();
-		//					$$("view-content-button-change-regime-" + self.parent.uid).enable();
-		//					$$("view-content-button-change-circuits-status-" + self.parent.uid).enable();
-		//				}
-		//			}
-		//		}
 
 		function onMessageTube(data) {
 

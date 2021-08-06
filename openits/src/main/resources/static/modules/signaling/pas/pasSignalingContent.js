@@ -6,17 +6,19 @@ import { adapter } from "../../../lib/adapter.js";
 
 export default class PasSignalingContent {
 
-	constructor(config, element) {
+	constructor(config, element, selectedPks) {
 
 		this.config = config;
 		this.element = element;
 		this.uid = webix.uid();
+		this.selectedPks = selectedPks;
 		
 		this.pasLibraries;
 		
 		this.zones = undefined;
 		this.zonesDataTable = undefined;
 
+		this.idStompSubscriptorPas = undefined;
 		this.idStompSubscriptorZones = undefined;
 	}
 
@@ -26,7 +28,7 @@ export default class PasSignalingContent {
 		let view = {
 			id: "view-main-content-" + self.uid,
 			rows: [
-				getViewHeader(),
+				self.getViewHeader(),
 				{ height: 32 },
 				getViewBody(),
 				{}
@@ -38,44 +40,7 @@ export default class PasSignalingContent {
 				}
 			}
 		};
-		
-		function getViewHeader() {
-			
-			let viewHeader = {
-				id: "view-content-header-" + self.uid,
-				rows: [
-					{
-						id: "view-content-header-bar-color-" + self.uid,
-						height: 15,
-						css: { "background": util.element.getColor(getCurrentPasState()) }
-					},
-					{ height: 4 },
-					{
-						cols: [
-							{
-								borderless: true,
-								id: "view-content-header-info" + self.uid,
-								height: 80,
-								template: function() {
-
-									return `<image class="ims-incident-report-icon" src="./img/grid/element_type_05.png" />
-											<div class="ims-incident-report-title">
-												${self.element.alias}
-											</div>
-											<div class="ims-incident-report-title">
-												<span class="ims-incident-badge" style="background: ${util.element.getColor(getCurrentPasState())}; color: white;">${i18n.t(getCurrentPasState() ? getCurrentPasState().labelAlias : "LBL_UNKNOWN")}</span>
-											</div>`;
-								}
-							},
-							{ width: 24 }
-						]
-					}
-				]
-			};
-
-			return viewHeader;
-		}
-		
+				
 		function getViewBody() {
 
 			let viewBody = 
@@ -433,14 +398,54 @@ export default class PasSignalingContent {
 
 			return self.zonesDataTable.getView();
 		}
-		
+				
+		return view;
+	}
+
+	getViewHeader() {
+
+		let self = this;
+		let currentPasState = getCurrentPasState();
+			
+		let viewHeader = {
+			id: "view-content-header-" + self.uid,
+			rows: [
+				{
+					id: "view-content-header-bar-color-" + self.uid,
+					height: 15,
+					css: { "background": util.element.getColor(currentPasState) }
+				},
+				{ height: 4 },
+				{
+					cols: [
+						{
+							borderless: true,
+							id: "view-content-header-info" + self.uid,
+							height: 80,
+							template: function() {
+
+								return `<image class="ims-incident-report-icon" src="./img/grid/element_type_05.png" />
+										<div class="ims-incident-report-title">
+											${self.element.alias}
+										</div>
+										<div class="ims-incident-report-title">
+											<span class="ims-incident-badge" style="background: ${util.element.getColor(currentPasState)}; color: white;">${i18n.t(currentPasState ? currentPasState.labelAlias : "LBL_UNKNOWN")}</span>
+										</div>`;
+							}
+						},
+						{ width: 24 }
+					]
+				}
+			]
+		};
+
 		function getCurrentPasState() {
 
 			let currentPasState = self.element.elementTypeState;
-			return currentPasState && currentPasState.value ? window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", currentPasState.id) : undefined;
+			return currentPasState && currentPasState.id ? window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", currentPasState.id) : undefined;
 		}
-				
-		return view;
+
+		return viewHeader;
 	}
 	
 	loadData() {
@@ -521,6 +526,11 @@ export default class PasSignalingContent {
 			
 			this.zonesDataTable.callbacks();
 		}
+
+		if (this.selectedPks) {
+
+			this.zonesDataTable.select(this.selectedPks);
+		}
 	}
 
 	connectWS() {
@@ -530,6 +540,13 @@ export default class PasSignalingContent {
 		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
 		if (stompSubscriptorService) {
+
+			if (this.element) {
+
+				let topic = this.config.topics.pas + "." + this.element.id;
+				this.idStompSubscriptorPas = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessagePas);
+
+			}
 
 			if (this.zones && Array.isArray(this.zones) && this.zones.length > 0) {
 
@@ -541,6 +558,16 @@ export default class PasSignalingContent {
 				this.zones.forEach(element => fields[0].values.push(element.id));
 
 				this.idStompSubscriptorZones = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(this.config.topics.zones), onMessageZone, fields);
+			}
+		}
+
+		function onMessagePas(data) {
+
+			if (data) {
+
+				self.element = eval("adapter." + self.config.adapters.element)(self.element, data);
+
+				webix.ui(self.getViewHeader(), $$("view-content-header-" + self.uid));
 			}
 		}
 
@@ -569,6 +596,11 @@ export default class PasSignalingContent {
 		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 
 		if (stompSubscriptorService) {
+
+			if (this.idStompSubscriptorPas){
+
+				stompSubscriptorService.unsubscribe(this.idStompSubscriptorPas);
+			}
 
 			if (this.idStompSubscriptorZones){
 

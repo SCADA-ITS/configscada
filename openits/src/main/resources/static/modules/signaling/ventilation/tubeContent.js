@@ -974,6 +974,8 @@ export default class TubeContent {
 								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_START");
 								self.tubeFansDataTable.update(item);
 							});
+
+							checkDisableChangeStatusButton();
 						}
 					});
 
@@ -987,6 +989,8 @@ export default class TubeContent {
 								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_START_REVERSE");
 								self.tubeFansDataTable.update(item);
 							});
+
+							checkDisableChangeStatusButton();
 						}
 					});
 
@@ -1000,6 +1004,8 @@ export default class TubeContent {
 								item.fanStateToSendAlias = i18n.t("LBL_SEND_FAN_STOP");
 								self.tubeFansDataTable.update(item);
 							});
+
+							checkDisableChangeStatusButton();
 						}
 					});
 
@@ -1013,13 +1019,35 @@ export default class TubeContent {
 								item.fanStateToSendAlias = "-";
 								self.tubeFansDataTable.update(item);
 							});
+
+							checkDisableChangeStatusButton();
 						}
 					});
-
+		
 					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
 
 					return self.tubeFansDataTable.getView();
 				};
+
+				function checkDisableChangeStatusButton(){
+
+					let changeStatusButton = $$("view-content-button-change-fans-status-" + self.uid);
+							
+					if(changeStatusButton) {
+						if (self.tubeFansDataTable &&  self.tubeFansDataTable.getAllItems() && Array.isArray(self.tubeFansDataTable.getAllItems()) && self.tubeFansDataTable.getAllItems().length > 0) {
+							
+							let enabled = self.tubeFansDataTable.getAllItems().find(item => (item.fanStateToSend != undefined && item.fanStateToSend != null));
+							
+							if(enabled) {
+
+								changeStatusButton.enable();
+							} else {
+
+								changeStatusButton.disable();
+							}	
+						}
+					} 
+				}
 
 				function getBottom() {
 
@@ -1033,7 +1061,7 @@ export default class TubeContent {
 								align: "right",
 								css: "button-cta",
 								value: i18n.t("LBL_VENTILATION_CHANGE_STATUS"),
-								disabled: self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disable,
+								disabled: true,
 								click: function() {
 
 									webix.confirm({
@@ -1111,6 +1139,8 @@ export default class TubeContent {
 													row.fanStateToSendAlias = null;
 													self.tubeFansDataTable.update(row);
 												});
+
+												checkDisableChangeStatusButton();
 
 												if (!data.json()) {
 
