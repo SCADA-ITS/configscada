@@ -12,9 +12,9 @@ export default class PasSignalingContent {
 		this.element = element;
 		this.uid = webix.uid();
 		this.selectedPks = selectedPks;
-		
+
 		this.pasLibraries;
-		
+
 		this.zones = undefined;
 		this.zonesDataTable = undefined;
 
@@ -40,26 +40,26 @@ export default class PasSignalingContent {
 				}
 			}
 		};
-				
+
 		function getViewBody() {
 
-			let viewBody = 
+			let viewBody =
 			{
 				cols: [
-					{ width : 10},
+					{ width: 10 },
 					{
 						height: 540,
 						rows: getZonesTable()
 					},
-					{ width : 10}
+					{ width: 10 }
 				]
 			};
-			
+
 			return viewBody;
 		}
 
 		function getZonesTable() {
-			
+
 			let data = self.zones;
 
 			const defaultGridOptionValues = [
@@ -307,7 +307,7 @@ export default class PasSignalingContent {
 
 						command.elementId = self.element.id;
 						command.commandElementValues[0].value = selectedZonesValue;
-						command.commandElementValues[1].value = message;
+						command.commandElementValues[1].value = "[" + message + "]";
 
 						let body = {
 							commands: []
@@ -319,6 +319,13 @@ export default class PasSignalingContent {
 							if (!data.json()) {
 
 								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+							} else {
+								webix.alert({
+									title: i18n.t("LBL_COMMAND_SEND"),
+									ok: i18n.t("LBL_ACCEPT"),
+									text: i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"),
+									width: 600
+								})
 							}
 						});
 					}
@@ -369,7 +376,7 @@ export default class PasSignalingContent {
 
 								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 							}
-						});					
+						});
 					});
 				}
 			});
@@ -398,7 +405,7 @@ export default class PasSignalingContent {
 
 			return self.zonesDataTable.getView();
 		}
-				
+
 		return view;
 	}
 
@@ -406,7 +413,7 @@ export default class PasSignalingContent {
 
 		let self = this;
 		let currentPasState = getCurrentPasState();
-			
+
 		let viewHeader = {
 			id: "view-content-header-" + self.uid,
 			rows: [
@@ -447,20 +454,20 @@ export default class PasSignalingContent {
 
 		return viewHeader;
 	}
-	
+
 	loadData() {
 
 		let pasLibrariesResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.pasLibraryByElement, { id: this.element.id }));
 
 		if (pasLibrariesResponse != null) {
-						
+
 			this.pasLibraries = JSON.parse(pasLibrariesResponse.responseText);
 		}
-		
+
 		let elementResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.elementById, { id: this.element.id }));
-		
+
 		if (elementResponse != null) {
-	
+
 			this.element = JSON.parse(elementResponse.responseText);
 		}
 
@@ -475,20 +482,24 @@ export default class PasSignalingContent {
 	}
 
 	updateZone(element) {
+
+		element.messageAlias = undefined;
+		element.messageAudio = undefined;
+		element.messageDesc = undefined;
 		
 		let messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramZoneId);
 		let messageTag = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageTag);
 		let messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageId);
 		let messageDesc = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageDesc);
 
-		if(messageZoneId && messageZoneId.value != undefined){
-			
+		if (messageZoneId && messageZoneId.value != undefined) {
+
 			element.messageZoneId = messageZoneId.value;
 		}
 
-		if(messageTag && messageTag.value != undefined){
-			
-			if(messageTag.value) {
+		if (messageTag && messageTag.value != undefined) {
+
+			if (messageTag.value &&  messageTag.value != "" &&  messageTag.value != " ") {
 
 				element.onAir = "1";
 			} else {
@@ -497,33 +508,37 @@ export default class PasSignalingContent {
 			}
 
 			element.messageTag = messageTag.value;
-		}else {
+		} else {
 
 			element.onAir = "0";
 		}
+
+
 		
-		if(messageId && messageId.value != undefined){
-			
+		if (messageId && messageId.value != undefined) {
+
 			element.messageId = messageId.value;
+			element.messageId = element.messageId.replace('[', '');
+			element.messageId = element.messageId.replace(']', '');
 
 			let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.message == element.messageId);
-			if(passLibraryNode){
+			if (passLibraryNode) {
 
 				element.messageAlias = passLibraryNode.pasMessage.alias;
-				element.messageAudio = passLibraryNode.pasMessage.audio;	
+				element.messageAudio = passLibraryNode.pasMessage.audio;
 			}
 		}
 
-		if(messageDesc && messageDesc.value != undefined){
-			
+		if (messageDesc && messageDesc.value != undefined) {
+
 			element.messageDesc = messageDesc.value;
 		}
 	}
 
 	callbacks() {
 
-		if(this.zonesDataTable) {
-			
+		if (this.zonesDataTable) {
+
 			this.zonesDataTable.callbacks();
 		}
 
@@ -597,12 +612,12 @@ export default class PasSignalingContent {
 
 		if (stompSubscriptorService) {
 
-			if (this.idStompSubscriptorPas){
+			if (this.idStompSubscriptorPas) {
 
 				stompSubscriptorService.unsubscribe(this.idStompSubscriptorPas);
 			}
 
-			if (this.idStompSubscriptorZones){
+			if (this.idStompSubscriptorZones) {
 
 				stompSubscriptorService.unsubscribe(this.idStompSubscriptorZones);
 			}

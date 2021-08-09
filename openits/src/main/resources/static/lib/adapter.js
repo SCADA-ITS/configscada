@@ -157,18 +157,22 @@ export let adapter = {
 
 								if (Array.isArray(newItem[property])) {
 
-									for (let j in newItem[property]) {
+									if (oldItem[property]) {
+										for (let j in newItem[property]) {
 
-										let thisElementValuePosition = oldItem[property].findIndex(
-											(item) => item.id === newItem[property][j].id
-										);
+											let thisElementValuePosition = oldItem[property].findIndex(
+												(item) => item.id === newItem[property][j].id
+											);
 
-										if (newItem[property][j].id && newItem[property][j].id.includes("ElementValue") && newItem[property][j].value == undefined) {
+											if (newItem[property][j].id && newItem[property][j].id.includes("ElementValue") && newItem[property][j].value == undefined) {
 
-											newItem[property][j].value = null;
+												newItem[property][j].value = null;
+											}
+
+											oldItem[property][thisElementValuePosition] = updateObject(oldItem[property][thisElementValuePosition], newItem[property][j]);
 										}
-
-										oldItem[property][thisElementValuePosition] = updateObject(oldItem[property][thisElementValuePosition], newItem[property][j]);
+									}else{
+										oldItem[property] = newItem[property];
 									}
 
 								} else if (typeof newItem[property] === 'object' && newItem[property] !== null) {
@@ -203,7 +207,7 @@ export let adapter = {
 
 				// update only change fields without remove or modify UI extension params
 				let element = updateObject(oldData, newData);
-				
+
 				if (update_callback) {
 
 					update_callback(element);

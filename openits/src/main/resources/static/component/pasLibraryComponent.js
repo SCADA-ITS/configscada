@@ -200,6 +200,8 @@ export default class PasLibraryComponent {
 						value: i18n.t("LBL_SEND"),
 						click: function() {
 
+							let parentWindow = this.getTopParentView();
+							
 							if (!self.selectedPasLibraryNode || !self.selectedPasLibraryNode.pasMessage) {
 
 								webix.alert({
@@ -219,8 +221,6 @@ export default class PasLibraryComponent {
 								}).then(function(res) {
 
 									self.callBack(self.selectedPasLibraryNode.pasMessage.message);
-
-									let parentWindow = this.getTopParentView();
 									parentWindow.close();
 								});
 							}
