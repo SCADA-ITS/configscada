@@ -52,7 +52,9 @@ export default class VmsSignalingModule extends GenericModule {
 						
 						let pasHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.pas.type);
 						pasHierarchy = pasHierarchy.filter(element => self.args.selectedPks.includes(element.child.id));
-						pasHierarchy.array.forEach(element => {
+						
+						
+						pasHierarchy.forEach(element => {
 
 							if(self.args.selectedPks.includes(element.child.id) && !self.selectedChildElementsHierarchyMap.get(element.parent.id) ){
 
@@ -83,8 +85,8 @@ export default class VmsSignalingModule extends GenericModule {
 						container.close();
 						
 						webix.alert({
-							title: i18n.t("LBL_NO_VMS_AVAILABLE"),
-							text: i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"),
+							title: i18n.t("LBL_NO_PAS_AVAILABLE"),
+							text: i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"),
 							type: "alert-error",
 							width: 500
 						});

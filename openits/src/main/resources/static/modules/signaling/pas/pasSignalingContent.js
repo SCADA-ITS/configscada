@@ -506,7 +506,7 @@ export default class PasSignalingContent {
 			
 			element.messageId = messageId.value;
 
-			let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage.message == element.messageId);
+			let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.message == element.messageId);
 			if(passLibraryNode){
 
 				element.messageAlias = passLibraryNode.pasMessage.alias;
