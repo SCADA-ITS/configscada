@@ -32,5 +32,8 @@
 	"logIncidentType": "LogType:1",
 	"logIncidentSubTypes":["LogSubtype:17"],
 	"iReportLogValuesParamIdState": "LogTypeParam:1:1",
-	"iReportLogValuesParamIdComment": "LogTypeParam:1:2"
+	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
+	"action": {
+		"cctvScenario": 102002
+	}
 }

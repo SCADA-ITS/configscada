@@ -1,7 +1,7 @@
 {
 	"moduleAction": {
 	    "singleCam": 102001,
-	    "multiCam": 102002,
+	    "scenario": 102002,
 	    "equipmentViewer": 101401
 	},
 	"commands": {

@@ -42,12 +42,12 @@ export default class IncidentReportModule extends GenericModule {
 	getView() {
 
 		let view = undefined;
-		
+
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
 			return super.getViewCheckModuleActionAndSelectedPks();
 		}
-		
+
 		return view;
 	}
 
@@ -1015,6 +1015,28 @@ export default class IncidentReportModule extends GenericModule {
 
 			const marginActionPanel = 15;
 
+			function viewCameras() {
+
+				if (self.config && self.config.action && self.config.action.cctvScenario &&
+					self.incidentReport.scenario && self.incidentReport.scenario.id) {
+
+					let module = util.module.getFromModuleAction(self.config.action.cctvScenario);
+
+					if (module) {
+
+						let moduleAction = { id: self.config.action.cctvScenario };
+
+						let args = { selectedPks: [self.incidentReport.scenario.id] };
+
+						util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+					}
+
+				} else {
+
+					util.ui.notImplementedMessage();
+				}
+			}
+
 			const getLowerButtonsViewArray = () => {
 
 				let body = []
@@ -1680,7 +1702,7 @@ export default class IncidentReportModule extends GenericModule {
 
 																	self.restAction(endpoint);
 																}
-															
+
 															} else {
 
 																self.restAction(endpoint);
@@ -1734,10 +1756,10 @@ export default class IncidentReportModule extends GenericModule {
 											{
 												view: "button",
 												width: 135,
-												label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
-												tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
+												label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
+												tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
 												type: "iconTop",
-												icon: "mdi mdi-cctv",
+												icon: "mdi mdi-map-marker",
 												on: {
 
 													onItemClick() {
@@ -1750,15 +1772,16 @@ export default class IncidentReportModule extends GenericModule {
 											{
 												view: "button",
 												width: 135,
-												label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
-												tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
+												label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
+												tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
 												type: "iconTop",
-												icon: "mdi mdi-map-marker",
+												icon: "mdi mdi-cctv",
+												hidden: !self.incidentReport.scenario || !self.incidentReport.scenario.id,
 												on: {
 
 													onItemClick() {
 
-														util.ui.notImplementedMessage();
+														viewCameras();
 													}
 												}
 											}
