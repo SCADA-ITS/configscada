@@ -15,6 +15,9 @@
 		},
 		"alarmMonitor": {
 			"id": 1005
+		},
+		"incidentReportModule": {
+			"id": 1003
 		}
 	}
 }

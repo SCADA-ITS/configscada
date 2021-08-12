@@ -28,7 +28,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 		return this.mainView.config.hidden;
 	}
-	
+
 	logout() {
 
 		webix.modalbox({
@@ -71,25 +71,49 @@ export default class UserControlPanel extends GenericControlPanel {
 		let user_action_alarms = {
 			view: "toolbar",
 			css: "control-panel-button-toolbar",
-			height: 50,
+			height: 150,
 			elements: [
 				{},
 				{
-					view: "button",
-					id: "user-control-panel-alarms",
-					width: 350,
-					tooltip: i18n.t("LBL_ALARMS_RECOGNIZE"),
-					type: "icon",
-					icon: "webix_icon_btn mdi mdi-bell",
-					hidden: true,
-					on: {
+					rows: [
+						{
+							view: "button",
+							id: "user-control-panel-alarms",
+							width: 350,
+							height: 50,
+							tooltip: i18n.t("LBL_ALARMS_RECOGNIZE"),
+							type: "icon",
+							icon: "webix_icon_btn mdi mdi-bell",
+							hidden: true,
+							on: {
 
-						onItemClick() {
-						
-							self.openModule(self.config.module.alarmMonitor.id);
-							self.hide();
+								onItemClick() {
+
+									self.openModule(self.config.module.alarmMonitor.id);
+									self.hide();
+								}
+							}
+						},
+						{
+							view: "button",
+							id: "user-control-panel-incident",
+							width: 350,
+							height: 50,
+
+							tooltip: i18n.t("LBL_INCIDENTS_PENDING"),
+							type: "icon",
+							icon: "webix_icon_btn mdi mdi-alert",
+							hidden: true,
+							on: {
+
+								onItemClick() {
+
+									self.openModule(self.config.module.incidentReportModule.id);
+									self.hide();
+								}
+							}
 						}
-					}
+					]
 				},
 				{}
 			],
@@ -181,7 +205,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								on: {
 
 									onItemClick() {
-										
+
 										let args = { selectedPks: [util.user.auth().id] };
 
 										self.doAction(self.config.module.user.id, self.config.module.user.action.changePassword, args);
@@ -199,7 +223,7 @@ export default class UserControlPanel extends GenericControlPanel {
 								on: {
 
 									onItemClick() {
-										
+
 										let args = { selectedPks: [util.user.auth().id] };
 
 										self.doAction(self.config.module.user.id, self.config.module.user.action.settings, args);
@@ -243,31 +267,57 @@ export default class UserControlPanel extends GenericControlPanel {
 
 	updateData() {
 
-		let alarmService = window.sm.getService(Services.ALARM_SERVICE);
+		let pendingTasks = undefined;
 
+		let alarmService = window.sm.getService(Services.ALARM_SERVICE);
 		if (alarmService) {
 
 			let stats = alarmService.getData().stats;
-
 			if (stats) {
 
 				if (stats.noRecognizedAlarms > 0) {
 
 					$$("user-control-panel-alarms").show();
-					$$("user-control-panel-alarms").config.label = stats.noRecognizedAlarms + ' ' + i18n.t("LBL_ALARMS_NO_RECOGNIZED");
+					$$("user-control-panel-alarms").config.label = i18n.t("LBL_ALARMS_NO_RECOGNIZED") + " " + stats.noRecognizedAlarms;
 					$$("user-control-panel-alarms").refresh();
 
-					$$("icon-user-service").data.badge = " ";
-					$$("icon-user-service").refresh();
-				}
-				else {
+					pendingTasks = true;
 
+				} else {
 					$$("user-control-panel-alarms").hide();
-
-					$$("icon-user-service").data.badge = "";
-					$$("icon-user-service").refresh();
 				}
 			}
+		}
+
+		let incidentService = window.sm.getService(Services.INCIDENT_SERVICE);
+		if (incidentService) {
+
+			let stats = incidentService.getData().stats;
+			if (stats) {
+
+				if (stats.incidentPendingToConfirm > 0) {
+
+					$$("user-control-panel-incident").show();
+					$$("user-control-panel-incident").config.label = i18n.t("LBL_INCIDENTS_PENDING_CONFIRMATION") + " " + stats.incidentPendingToConfirm;
+					$$("user-control-panel-incident").refresh();
+
+					pendingTasks = true;
+
+				} else {
+					$$("user-control-panel-incident").hide();
+				}
+			}
+		}
+
+		if (pendingTasks) {
+
+			$$("icon-user-service").data.badge = " ";
+			$$("icon-user-service").refresh();
+
+		} else {
+
+			$$("icon-user-service").data.badge = "";
+			$$("icon-user-service").refresh();
 		}
 	}
 }

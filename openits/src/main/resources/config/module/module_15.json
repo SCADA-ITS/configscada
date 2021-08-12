@@ -1,0 +1,10 @@
+{
+	"stats": {
+		"restEndpoint": {
+			"incidentPendingToConfirm": "generic_datas/GenericData:5"
+		},
+		"topic": {
+			"incidentPendingToConfirm": "/topic/generic_data.GenericData:5"
+		}
+	}
+}
