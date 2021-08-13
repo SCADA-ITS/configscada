@@ -12,8 +12,10 @@
    viewBox="0 0 63.500004 55.562504"
    version="1.1"
    id="svg2"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="04_section.svg">
+  <defs
+     id="defs74" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -22,15 +24,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8166667"
-     inkscape:cx="100"
-     inkscape:cy="93.195268"
+     inkscape:cx="90.27737"
+     inkscape:cy="121.59763"
      inkscape:document-units="mm"
-     inkscape:current-layer="main"
+     inkscape:current-layer="g157"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
-     inkscape:window-x="3832"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
@@ -89,8 +91,10 @@
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861);"
          transform="matrix(1.165852,0,0,1.0236343,36.505082,-3.7078568)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan
-             style="font-size:6.88548px">(V/h)</tspan></tspan></text>
+           y="24.143533"
+           id="tspan10"><tspan
+             style="font-size:6.88548px"
+             id="tspan8">(V/h)</tspan></tspan></text>
       <path
          style="fill:none;stroke:#000000;stroke-width:0.303515px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          d="M 1.2211538,23.949819 H 63.398237 63.274619"
@@ -109,84 +113,106 @@
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5);"
          transform="matrix(1.165852,0,0,1.0236343,29.818153,6.3366555)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan
-             style="font-size:6.88548px">(Km/h)</tspan></tspan></text>
+           y="24.143533"
+           id="tspan18"><tspan
+             style="font-size:6.88548px"
+             id="tspan16">(Km/h)</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-3-7"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5-6);"
          transform="matrix(1.165852,0,0,1.0236343,41.416409,16.381168)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan
-             style="font-size:6.88548px">(%)</tspan></tspan></text>
+           y="24.143533"
+           id="tspan23"><tspan
+             style="font-size:6.88548px"
+             id="tspan21">(%)</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-3-7-8"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5-6-2);"
          transform="matrix(1.165852,0,0,1.0236343,36.951923,26.425681)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan
-             style="font-size:6.88548px">(%L)</tspan></tspan></text>
+           y="24.143533"
+           id="tspan28"><tspan
+             style="font-size:6.88548px"
+             id="tspan26">(%L)</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-9"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-72);"
          transform="matrix(1.165852,0,0,1.0236343,-3.559719,-3.8773315)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan>I</tspan></tspan></text>
+           y="24.143533"
+           id="tspan33"><tspan
+             id="tspan31">I</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-3-6"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5-1);"
          transform="matrix(1.165852,0,0,1.0236343,-3.559719,6.1671794)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan>V</tspan></tspan></text>
+           y="24.143533"
+           id="tspan38"><tspan
+             id="tspan36">V</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-3-7-0"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5-6-9);"
          transform="matrix(1.165852,0,0,1.0236343,-3.559719,16.21169)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan>O</tspan></tspan></text>
+           y="24.143533"
+           id="tspan43"><tspan
+             id="tspan41">O</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-3-7-8-5"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect861-5-6-2-0);"
          transform="matrix(1.165852,0,0,1.0236343,-3.559719,26.256199)"><tspan
            x="5.8242188"
-           y="24.143533"><tspan>C</tspan></tspan></text>
+           y="24.143533"
+           id="tspan48"><tspan
+             id="tspan46">C</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-9-9"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2);"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,-3.8772377)"><tspan
            x="14.26828"
-           y="24.143533"><tspan
-             style="direction:rtl">0</tspan></tspan></text>
+           y="24.143533"
+           id="tspan53"><tspan
+             style="direction:rtl"
+             id="intensity">0</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-9-9-08"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-6);"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,7.1679728)"><tspan
            x="14.26828"
-           y="24.143533"><tspan
-             style="direction:rtl">0</tspan></tspan></text>
+           y="24.143533"
+           id="tspan58"><tspan
+             style="direction:rtl"
+             id="speed">0</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-9-9-9"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-9);"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,17.154848)"><tspan
            x="14.26828"
-           y="24.143533"><tspan
-             style="direction:rtl">0</tspan></tspan></text>
+           y="24.143533"
+           id="tspan63"><tspan
+             style="direction:rtl"
+             id="occupancy">0</tspan></tspan></text>
       <text
          xml:space="preserve"
          id="text859-9-9-90"
          style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-80);"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,27.141723)"><tspan
            x="14.26828"
-           y="24.143533"><tspan
-             style="direction:rtl">0</tspan></tspan></text>
+           y="24.143533"
+           id="tspan68"><tspan
+             style="direction:rtl"
+             id="occupancy_long">0</tspan></tspan></text>
     </g>
   </g>
 </svg>
