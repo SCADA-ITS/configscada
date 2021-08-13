@@ -24,7 +24,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8166667"
-     inkscape:cx="90.27737"
+     inkscape:cx="-55.284758"
      inkscape:cy="121.59763"
      inkscape:document-units="mm"
      inkscape:current-layer="g157"
@@ -175,44 +175,44 @@
              id="tspan46">C</tspan></tspan></text>
       <text
          xml:space="preserve"
-         id="text859-9-9"
-         style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2);"
+         id="intensity"
+         style="font-size:6.88547993px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2)"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,-3.8772377)"><tspan
            x="14.26828"
-           y="24.143533"
+           y="24.143534"
            id="tspan53"><tspan
              style="direction:rtl"
-             id="intensity">0</tspan></tspan></text>
+             id="tspan54">0</tspan></tspan></text>
       <text
          xml:space="preserve"
-         id="text859-9-9-08"
-         style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-6);"
+         id="speed"
+         style="font-size:6.88547993px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-6)"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,7.1679728)"><tspan
            x="14.26828"
-           y="24.143533"
+           y="24.143534"
            id="tspan58"><tspan
              style="direction:rtl"
-             id="speed">0</tspan></tspan></text>
+             id="tspan59">0</tspan></tspan></text>
       <text
          xml:space="preserve"
-         id="text859-9-9-9"
-         style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-9);"
+         id="occupancy"
+         style="font-size:6.88547993px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-9)"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,17.154848)"><tspan
            x="14.26828"
-           y="24.143533"
+           y="24.143534"
            id="tspan63"><tspan
              style="direction:rtl"
-             id="occupancy">0</tspan></tspan></text>
+             id="tspan64">0</tspan></tspan></text>
       <text
          xml:space="preserve"
-         id="text859-9-9-90"
-         style="font-size:6.88548px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-80);"
+         id="occupancy_long"
+         style="font-size:6.88547993px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;direction:rtl;white-space:pre;shape-inside:url(#rect861-72-2-80)"
          transform="matrix(1.165852,0,0,1.0236343,14.782126,27.141723)"><tspan
            x="14.26828"
-           y="24.143533"
+           y="24.143534"
            id="tspan68"><tspan
              style="direction:rtl"
-             id="occupancy_long">0</tspan></tspan></text>
+             id="tspan69">0</tspan></tspan></text>
     </g>
   </g>
 </svg>
