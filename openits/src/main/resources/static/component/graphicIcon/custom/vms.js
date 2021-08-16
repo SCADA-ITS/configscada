@@ -551,7 +551,7 @@ export default class Vms extends GraphicIconCustomType {
 	
 					let gEditButton = g.image("img/graphic_icon/resources/pencil.svg", 
 												gZone.getBBox().cx + gZone.getBBox().width / 2 - (gZone.getBBox().height * 0.2) * 2, 
-												gZone.getBBox().height * 0.1,
+												gZone.getBBox().y,
 												gZone.getBBox().height * 0.2,
 												gZone.getBBox().height * 0.2);
 												
@@ -594,7 +594,7 @@ export default class Vms extends GraphicIconCustomType {
 	
 					let gDeleteButton = g.image("img/graphic_icon/resources/clear.svg", 
 												gZone.getBBox().cx + gZone.getBBox().width / 2 - (gZone.getBBox().height * 0.2) * 1, 
-												gZone.getBBox().height * 0.1,
+												gZone.getBBox().y,
 												gZone.getBBox().height * 0.2,
 												gZone.getBBox().height * 0.2);
 					gZone.append(gDeleteButton);
