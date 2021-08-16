@@ -261,7 +261,7 @@ export default class TubeContent {
 						});
 					}
 					
-					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_COMBO);
+					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_TOGGLE);
 					optionDialog.show(oldv);
 
 				 function changeMode(newModeId, callbackCloseDialog){
