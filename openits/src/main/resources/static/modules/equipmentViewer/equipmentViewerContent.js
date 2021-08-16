@@ -246,7 +246,25 @@ export default class EquipmentViewerContent {
 
 											if (obj.type === URL_TYPE) {
 
-												window.open(obj.data, null, "width=500, height=500");
+												let screenWidth = window.screen.width;
+												let screenHeight = window.screen.height;
+												let w = screenWidth;
+												let h = screenHeight;
+												let positionLeft = 0;
+												let positionTop = 0;
+
+												if (obj.data.features) {
+
+													w = obj.data.features.width;
+													h = obj.data.features.height;
+													positionLeft = screenWidth / 2 - obj.data.features.width / 2;
+													positionTop = screenHeight / 2 - obj.data.features.height / 2;
+
+												}
+												
+												let features = "width=" + w + " ,height=" + h + ", top=" + positionTop + ", left=" + positionLeft + ", toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no";
+
+												window.open(obj.data.url, null, features);
 											}
 										}
 									}
