@@ -45,7 +45,8 @@ export default class CCTVMulti {
 						return {
 							
 							nodeParentId: e.parent.id,
-							nodeChildId: e.child.id
+							nodeChildId: e.child.id,
+							scenarioId: e.child.scenario ? e.child.scenario.id: undefined 
 						}
 					});
 					
@@ -85,14 +86,21 @@ export default class CCTVMulti {
 				
 				if (self.scenarioId) {
 					
-					relationship = self.relationships.find(e => e.nodeChildId === self.scenarioId);
+					let node = self.nodes.find(e => e.scenario && e.scenario.id === self.scenarioId);
+					
+					if (node) {
+					
+						relationship = self.relationships.find(e => e.nodeChildId === node.id);
+					}
 				}
 				
 				let itemId = undefined;
 				
 				if (relationship) {
 					
-					itemId = relationship.nodeParentId + "_" + relationship.nodeChildId; 	
+					itemId = relationship.nodeParentId + "_" + relationship.nodeChildId;
+					
+					$$("view-cctv-tree-" + self.uid).hide();
 				}
 				else {
 					
@@ -257,7 +265,13 @@ export default class CCTVMulti {
 						// Put pager
 						viewPager = getViewPager();
 						webix.ui(viewPager, $$(viewPager.id));
-						
+					
+						let container = $$(self.parent.args.containerId);
+	
+						if (container && container.config.view === "window") {
+		
+							util.ui.setTitle(container.config.id, i18n.t("LBL_CCTV") + " - " + scenario.alias);
+						}
 					}
 					
 					function getMatrixView(page) {
