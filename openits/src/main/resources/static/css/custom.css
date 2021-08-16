@@ -49,6 +49,9 @@
   --blue-soft-opacity-9: rgba(146 171 207 / 0.9);
   
   --blue-text-default: rgb(71, 84, 102);
+
+  --white-text-default: white;
+  --white-text-not-sel: rgba(255 255 255 / 0.83);
 }
 
 /* Disable text selection hightlighting */
@@ -1648,6 +1651,7 @@ p, input, textarea {
 	height: 32px !important;
 	box-shadow: inset 0 -3px var(--blue-headers);
 	border-width: 0px !important;
+	background-color: transparent !important;
 }
 
 .secondary-tab .webix_all_tabs .webix_item_tab{
@@ -1656,7 +1660,7 @@ p, input, textarea {
 	font-size: 13px;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-	padding-bottom: 8px;
+	padding-bottom: 2px;
 }
 
 .secondary-tab .webix_all_tabs .webix_tab_filler {
@@ -1686,7 +1690,7 @@ p, input, textarea {
     border-top: 1px solid var(--blue-soft-opacity-2);
 }*/
 
-.secondary-tab .webix_item_tab:not(.webix_selected) {
+/*.secondary-tab .webix_item_tab:not(.webix_selected) {
 	width: 180px !important;
     background-color: var(--blue-headers-not-sel);
     color: #92abcf;
@@ -1695,6 +1699,17 @@ p, input, textarea {
 .secondary-tab .webix_item_tab:not(.webix_selected):hover {
 	color: white;
 	background-color: var(--blue-mid-opacity-6);
+}*/
+
+.secondary-tab .webix_item_tab:not(.webix_selected) {
+	width: 180px !important;
+    background-color: var(--blue-mid-opacity-4);
+    color: var(--white-text-not-sel);
+}
+
+.secondary-tab .webix_item_tab:not(.webix_selected):hover {
+	color: var(--white-text-default);
+	background-color: var(--blue-headers);
 }
 
 /*
@@ -2610,7 +2625,7 @@ p, input, textarea {
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_filler {
-	box-shadow: none;
+	box-shadow: none !important;
 	border: none;
     background-color: transparent;
 }
