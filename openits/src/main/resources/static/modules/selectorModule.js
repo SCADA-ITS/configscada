@@ -16,6 +16,7 @@ export default class SelectorModule extends GenericModule {
 		this.config = module.config;
 		this.treeNodes = undefined;
 		this.componentView = undefined;
+		this.treeView = undefined;
 	}
 
 	loadData() {
@@ -54,6 +55,14 @@ export default class SelectorModule extends GenericModule {
 
 		function loadModule(moduleId) {
 
+			let nodeToSelect = self.treeNodes.find(node => node.moduleId === moduleId);
+
+			if (nodeToSelect) {
+
+				self.treeView.select(nodeToSelect.id);
+				self.treeView.expand(nodeToSelect.id);
+			}
+			
 			if (moduleId) {
 
 				if (moduleId) {
@@ -100,6 +109,8 @@ export default class SelectorModule extends GenericModule {
 						if (node && node.moduleId) {
 
 							loadModule(node.moduleId);
+
+							util.ui.setTitle(self.args.containerId, i18n.t(node.label));
 						}
 					}
 				};
@@ -179,7 +190,9 @@ export default class SelectorModule extends GenericModule {
 					}
 				}
 
-				return new TreeView({}, data, events);
+				self.treeView = new TreeView({}, data, events);
+
+				return self.treeView;
 			}
 
 			let viewMain = {
