@@ -268,7 +268,7 @@ export default class CCTVMulti {
 					
 						let container = $$(self.parent.args.containerId);
 	
-						if (container && container.config.view === "window") {
+						if (container) {
 		
 							util.ui.setTitle(container.config.id, i18n.t("LBL_CCTV") + " - " + scenario.alias);
 						}
