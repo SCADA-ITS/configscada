@@ -3313,4 +3313,47 @@ p, input, textarea {
 	color: var(--blue-headers);
 }
 
-audio { width: 100% }
+.player-body {
+	height: 630px !important;
+}
+
+audio { 
+	width: 100%;
+	display: block;
+	margin: 0 auto; 
+	}
+	
+.audio-description {
+	width: 560px !important;
+	height: 85px !important;
+	font-size: 14px;
+	color: #475466; 
+	padding: 5px 0px;
+}
+
+.audio-description .webix_el_box {
+	width: 100% !important;
+	height: 100% !important;
+	padding: 0px !important;
+	line-height: 20px !important; 
+}
+
+.audio-description .webix_el_box .webix_inp_textarea {
+	width: 552px !important;
+	height: 100% !important;
+}
+
+.audio-player {
+	border-width: 0px !important;
+	margin: 0px !important;
+	background-color: #f7f9fc;
+}
+
+.audio-disable {
+	cursor: not-allowed;
+}
+
+.audio-disable > div > audio {
+	pointer-events: none;
+    opacity: 0.4;
+}

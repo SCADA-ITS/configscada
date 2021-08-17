@@ -264,7 +264,7 @@ export default class PasSignalingContent {
 						icon: "mdi mdi-stop-circle-outline",
 						label: "LBL_PAS_STOP",
 						multiselect: true,
-						position: 2,
+						position: 3,
 						showText: false,
 						itemRequired: true
 					},
@@ -274,7 +274,7 @@ export default class PasSignalingContent {
 						icon: "mdi mdi-play-circle-outline",
 						label: "LBL_PAS_PLAY",
 						multiselect: false,
-						position: 3,
+						position: 2,
 						showText: false,
 						itemRequired: true
 					}

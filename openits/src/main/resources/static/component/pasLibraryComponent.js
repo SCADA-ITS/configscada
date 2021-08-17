@@ -7,10 +7,10 @@ export default class PasLibraryComponent {
 
 		this.pasLibrary = pasLibrary;
 		this.callBack = callBack;
-		
+
 		this.treeView;
 		this.selectedPasLibraryNode;
-		
+
 		this.uid = webix.uid();
 	}
 
@@ -18,7 +18,7 @@ export default class PasLibraryComponent {
 
 		let self = this;
 
-		self.optionWindow = util.ui.loadWindow( i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER"), this.getView(), 600, 500, true);
+		self.optionWindow = util.ui.loadWindow(i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER"), this.getView(), 700, 600, true);
 	}
 
 	getView() {
@@ -26,15 +26,40 @@ export default class PasLibraryComponent {
 		let self = this;
 
 		let mainView = {
-			css: "dialog-general-custom",
+			css: "dialog-general-custom player-body",
 			rows: [
+				getHeader(),
 				getTreeView(),
-				{ height: 16 },
 				getMessageView(),
-				{ height: 4 },
 				getBottomView()
 			]
 		};
+
+		function getHeader() {
+
+			let header = {
+
+				id: "viewHeader-" + self.uid,
+				cols: [
+					{
+						view: "label",
+						label: "<img src='img/menu/play.png' class='grid-icon'/>",
+						height: 75,
+						css: "global-header-icon"
+					},
+					{
+						view: "label",
+						height: 75,
+						id: "label-bottom-" + self.uid,
+						template: "<span>" + i18n.t("LBL_PLAYER") + "</span> <br> <span style='font-size: 13px'>" + i18n.t("LBL_PLAYER_DESCRIPTION") + "</span>",
+						css: "global-header-label"
+					}
+				]
+			};
+
+			return header;
+		};
+
 
 		function getTreeView() {
 
@@ -43,55 +68,58 @@ export default class PasLibraryComponent {
 			let treeView = {
 				height: 300,
 				cols: [
-					{ width : 6 },
-					self.treeView.getView(),
-					{ width : 6 }
+					{ width: 25 },
+					{
+						css: { "border": "1px solid #c1c6ce", "box-sizing": "border-box", "padding": "10px 0px", "background-color": "white" },
+						cols: [self.treeView.getView()]
+					},
+					{ width: 25 }
 				]
 			};
 
 			return treeView;
 
 			function getTreeMetadata() {
-				
+
 				let metadata = {
 					id: 1,
 					label: "LBL_PAS_LIBRARIES",
 					treeOptionValues: [
-						{ treeOption: { id: 2}, value: false },	// multiselect
-						{ treeOption: { id: 3}, value: true }, 	// sorted
-						{ treeOption: { id: 4}, value: false }, // cmd_buttons
-						{ treeOption: { id: 5}, value: true }, // search
-						{ treeOption: { id: 6}, value: true },	// expand_all
-						{ treeOption: { id: 7}, value: false }	// check_all
+						{ treeOption: { id: 2 }, value: false },	// multiselect
+						{ treeOption: { id: 3 }, value: true }, 	// sorted
+						{ treeOption: { id: 4 }, value: false }, // cmd_buttons
+						{ treeOption: { id: 5 }, value: true }, // search
+						{ treeOption: { id: 6 }, value: true },	// expand_all
+						{ treeOption: { id: 7 }, value: false }	// check_all
 					]
 				};
-				
+
 				return metadata;
 			}
-	
+
 			function getTreeData() {
-				
-				let data = util.tree.getNodes(self.pasLibrary.pasLibraryNodes, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
-				
+
+				let data = util.tree.getNodes(self.pasLibrary.pasLibraryNodes, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, true);
+
 				return data;
 			}
-	
+
 			function getTreeEvents() {
-					
+
 				let events = {};
-	
-				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
+
+				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 
 					self.selectedPasLibraryNode = self.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.id == item.id_);
 					webix.ui(getMessageView(), $$("pass-library-message-" + self.uid));
 				};
-	
-				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
-					
+
+				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) {
+
 					self.selectedPasLibraryNode = self.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.id == item.id_);
 					webix.ui(getMessageView(), $$("pass-library-message-" + self.uid));
 				};
-				
+
 				return events;
 			}
 		}
@@ -101,23 +129,22 @@ export default class PasLibraryComponent {
 			let messageView = {
 				id: "pass-library-message-" + self.uid,
 				rows: [
-					{},
+					{ height: 83 },
 					{
 						view: "label",
 						label: i18n.t("LBL_PAS_LIBRARY_NO_MESSAGE"),
 						align: "center"
 					},
-					{}
+					{ height: 83 }
 				]
 			};
 
-			if(self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage){
+			if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage) {
 
 				messageView = {
 					id: "pass-library-message-" + self.uid,
 					rows: [
 						getMessageDetail(),
-						{},
 						getPlayer()
 					]
 				};
@@ -129,48 +156,64 @@ export default class PasLibraryComponent {
 
 				let messageDetail = {};
 
-				if(self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage) {
+				if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage) {
 
 					messageDetail = {
-						rows: [
+						height: 146,
+						cols: [
+							{ width: 25 },
 							{
-								view: "label",
-								label: self.selectedPasLibraryNode.pasMessage.alias,
-								align: "center",
-								css: { "color": "#475466", "font-size": "16px !important"}
+								rows: [
+									{
+										view: "label",
+										label: self.selectedPasLibraryNode.pasMessage.alias,
+										align: "left",
+										css: { "color": "#475466", "font-size": "16px !important", "padding-top": "12px" }
+									},
+									{
+										view: "textarea",
+										readonly: true,
+										css: "audio-description",
+										value: self.selectedPasLibraryNode.pasMessage.description
+									}
+								]
 							},
-							{
-								height: 88,
-								view: "label",
-								align:"right",
-								label: self.selectedPasLibraryNode.pasMessage.description,
-								css: { "font-size" : "14px", "line-height" : "20px !important", "color": "#475466", "padding" : "8px"}
-							}
+							{ width: 25 }
 						]
 					};
 				}
-	
+
 				return messageDetail;
 			}
 
 			function getPlayer() {
 
+				let audioFile = undefined;
+				let cssClass = "audio-player audio-disable";
+
+				if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage && self.selectedPasLibraryNode.pasMessage.audio) {
+
+					audioFile = self.selectedPasLibraryNode.pasMessage.audio;
+					cssClass = "audio-player";
+				}
+
 				let player = {
-					view: "label",
-					label: i18n.t("LBL_PAS_LIBRARY_NO_MESSAGE_AUDIO"),
-					align: "center"
+					cols: [
+						{ width: 75 },
+						{
+							id: "audio-player-" + self.uid,
+							view: "template",
+							align: "center",
+							height: 55,
+							css: cssClass,
+							template: `<audio controls>
+								<source src="${audioFile}" type="audio/mpeg">
+							  </audio>`
+						},
+						{ width: 75 }
+					]
 				};
 
-				if( self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage && self.selectedPasLibraryNode.pasMessage.audio){
-
-					player = {
-						view: "template",
-						template: `<audio controls autoplay>
-								<source src="${self.selectedPasLibraryNode.pasMessage.audio}" type="audio/mpeg">
-							  </audio>`
-					};
-				}
-	
 				return player;
 			}
 		}
@@ -178,55 +221,61 @@ export default class PasLibraryComponent {
 		function getBottomView() {
 
 			let bottomView = {
-				cols: [
-					{ width: 4 },
+				rows: [
+					{ height: 10 },
 					{
-						view: "button",
-						css: "dialog-button",
-						align: "right",
-						width: 105,
-						value: i18n.t("LBL_CANCEL"),
-						click: function() {
+						cols: [
+							{ width: 20 },
+							{
+								view: "button",
+								css: "dialog-cancel",
+								width: 130,
+								height: 35,
+								value: i18n.t("LBL_CANCEL"),
+								click: function() {
 
-							let parentWindow = this.getTopParentView();
-							parentWindow.close();
-						}
-					},
-					{ width: 286 },
-					{
-						view: "button",
-						align: "left",
-						css: "dialog-button",
-						value: i18n.t("LBL_SEND"),
-						click: function() {
-
-							let parentWindow = this.getTopParentView();
-							
-							if (!self.selectedPasLibraryNode || !self.selectedPasLibraryNode.pasMessage) {
-
-								webix.alert({
-									title: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED"),
-									text: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED_DESCRIPTION"),
-									type: "alert-warning",
-									width: 500
-								});
-							} else {
-		
-								webix.confirm({
-									title: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM"),
-									ok: i18n.t("LBL_ACCEPT"),
-									cancel: i18n.t("LBL_CANCEL"),
-									text: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION"),
-									width: 600
-								}).then(function(res) {
-
-									self.callBack(self.selectedPasLibraryNode.pasMessage.message);
+									let parentWindow = this.getTopParentView();
 									parentWindow.close();
-								});
-							}
-						}
-					}
-				]
+								}
+							},
+							{},
+							{
+								view: "button",
+								css: "dialog-accept",
+								width: 130,
+								height: 35,
+								value: i18n.t("LBL_SEND"),
+								click: function() {
+
+									let parentWindow = this.getTopParentView();
+
+									if (!self.selectedPasLibraryNode || !self.selectedPasLibraryNode.pasMessage) {
+
+										webix.alert({
+											title: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED"),
+											text: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED_DESCRIPTION"),
+											type: "alert-warning",
+											width: 500
+										});
+									} else {
+
+										webix.confirm({
+											title: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM"),
+											ok: i18n.t("LBL_ACCEPT"),
+											cancel: i18n.t("LBL_CANCEL"),
+											text: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION"),
+											width: 600
+										}).then(function(res) {
+
+											self.callBack(self.selectedPasLibraryNode.pasMessage.message);
+											parentWindow.close();
+										});
+									}
+								}
+							},
+							{ width: 20 }
+						]
+					}]
 			};
 
 			return bottomView;
