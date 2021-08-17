@@ -23,6 +23,7 @@ export default class PlanLibraryPlan {
 		
 		let view = {
 			id: "plan-lib-plan-" + self.uid,
+			height: 250,
 			rows: drawPlan()
 		};
 		
@@ -35,6 +36,18 @@ export default class PlanLibraryPlan {
 					if (self.planTable) {
 						
 						self.planTable.callbacks();
+						
+						if (Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
+				
+							self.plan.planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
+							
+							let planOrder = self.plan.planOrders[0];
+							
+							if (planOrder) {
+								
+								self.planTable.select(planOrder.id);
+							}
+						}
 					}
 				}
 			}
@@ -45,9 +58,12 @@ export default class PlanLibraryPlan {
 			let viewPlan = {};
 			
 			const defaultGridOptionValues = [
+				{ gridOption: { id: 2 }, value: "false" },
+				{ gridOption: { id: 3 }, value: "4" },
+				{ gridOption: { id: 4 }, value: "asc" },
 				{ gridOption: { id: 5 }, value: undefined },
 				{ gridOption: { id: 6 }, value: undefined },
-				{ gridOption: { id: 7 }, value: "true" },
+				{ gridOption: { id: 7 }, value: "false" },
 				{ gridOption: { id: 8 }, value: "false" },
 				{ gridOption: { id: 9 }, value: "true" },
 				{ gridOption: { id: 10 }, value: "true" },
@@ -65,6 +81,7 @@ export default class PlanLibraryPlan {
 					gridOptionValues: defaultGridOptionValues,
 					gridFields: [
 						{
+							id: 1,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -119,49 +136,6 @@ export default class PlanLibraryPlan {
 								return gridFieldIcons;
 								
 							}(),
-							
-//							gridFieldIcons: [
-//								{
-//									icon: "./img/plan/PlanOrderType_1.png",
-//									showValue: false,
-//									value: "PlanOrderType:1"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_2.png",
-//									showValue: false,
-//									value: "PlanOrderType:2"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_3.png",
-//									showValue: false,
-//									value: "PlanOrderType:3"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_4.png",
-//									showValue: false,
-//									value: "PlanOrderType:4"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_5.png",
-//									showValue: false,
-//									value: "PlanOrderType:5"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_6.png",
-//									showValue: false,
-//									value: "PlanOrderType:6"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_7.png",
-//									showValue: false,
-//									value: "PlanOrderType:7"
-//								},
-//								{
-//									icon: "./img/plan/PlanOrderType_8.png",
-//									showValue: false,
-//									value: "PlanOrderType:8"
-//								}
-//							]
 						},
 						{
 							id: 3,
@@ -186,6 +160,7 @@ export default class PlanLibraryPlan {
 							gridFieldIcons: []
 						},
 						{
+							id: 4,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -200,8 +175,8 @@ export default class PlanLibraryPlan {
 							widthPx: 150,
 							adjust: true,
 							gridFieldDataType: {
-								id: 1,
-								name: "string"
+								id: 2,
+								name: "int"
 							}
 						}
 					],
@@ -219,9 +194,9 @@ export default class PlanLibraryPlan {
 						{
 							id: 2,
 							default_: false,
-							icon: "mdi mdi-delete-outline",
-							label: "LBL_DELETE",
-							multiselect: true,
+							icon: "mdi mdi-arrow-up-bold",
+							label: "LBL_MOVE_UP",
+							multiselect: false,
 							position: 2,
 							showText: false,
 							itemRequired: true
@@ -229,8 +204,8 @@ export default class PlanLibraryPlan {
 						{
 							id: 3,
 							default_: false,
-							icon: "mdi mdi-arrow-up-bold",
-							label: "LBL_MOVE_UP",
+							icon: "mdi mdi-arrow-down-bold",
+							label: "LBL_MOVE_DOWN",
 							multiselect: false,
 							position: 3,
 							showText: false,
@@ -239,13 +214,14 @@ export default class PlanLibraryPlan {
 						{
 							id: 4,
 							default_: false,
-							icon: "mdi mdi-arrow-down-bold",
-							label: "LBL_MOVE_DOWN",
-							multiselect: false,
+							icon: "mdi mdi-delete-outline",
+							label: "LBL_DELETE",
+							multiselect: true,
 							position: 4,
 							showText: false,
 							itemRequired: true
 						}
+						
 					]
 				};
 				
@@ -275,22 +251,9 @@ export default class PlanLibraryPlan {
 					}
 				});
 	
-				// DELETE SELECT ORDERS
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 2,
-					function: (selectedIds) => {
-	
-						// TODO: Confirm and call to delete rest endpoint
-						if (Array.isArray(selectedIds) && selectedIds.length > 0) {
-							
-							deletePlanOrders(selectedIds);	
-						}
-					}
-				});
-	
 				// MOVE UP SELECTED ORDER
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 3,
+					commandId: 2,
 					function: (selectedIds) => {
 	
 						// TODO: Move up selected order
@@ -311,6 +274,19 @@ export default class PlanLibraryPlan {
 							
 							movePlanOrder(selectedIds[0], MOVE_PLAN_ORDER_POSITION_DOWN);
 						} 
+					}
+				});
+				
+				// DELETE SELECT ORDERS
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 4,
+					function: (selectedIds) => {
+	
+						// TODO: Confirm and call to delete rest endpoint
+						if (Array.isArray(selectedIds) && selectedIds.length > 0) {
+							
+							deletePlanOrders(selectedIds);	
+						}
 					}
 				});
 				

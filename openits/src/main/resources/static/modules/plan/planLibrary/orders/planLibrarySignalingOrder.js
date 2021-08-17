@@ -47,4 +47,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 		
 		return view;
 	}
+	
+	loadData() {
+		
+	}
 }	

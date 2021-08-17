@@ -19,4 +19,9 @@ export default class PlanLibraryOrder {
 		
 		throw new Error("Method 'getView()' must be implemented.");
 	}
+	
+	loadData() {
+		
+		throw new Error("Method 'loadData()' must be implemented.");
+	}
 }	

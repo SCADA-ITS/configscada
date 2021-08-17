@@ -82,6 +82,11 @@ export const CONFIG = {
 				"label": "LBL_UNKNOWN_ACCESS_ERROR",
 				"en-US": "Unknown access error",
 				"es-ES": "Error de acceso desconocido"
+			},
+			{
+				"label": "LBL_USER_AUTHENTICATION",
+				"en-US": "Validating credentials...",
+				"es-ES": "Validando credenciales..."
 			}
 		]
 	}

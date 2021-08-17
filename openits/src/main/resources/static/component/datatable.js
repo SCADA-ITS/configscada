@@ -5,8 +5,8 @@ const EMPTY_ICON = "./img/grid/empty.png";
 
 const DataType = {
 	STRING: { value: 1, filter: "textFilter", sort: "string" },
-	INT: { value: 2, filter: "numberFilter", sort: "decimal" },
-	DECIMAL: { value: 3, filter: "numberFilter", sort: "int" },
+	INT: { value: 2, filter: "numberFilter", sort: "int" },
+	DECIMAL: { value: 3, filter: "numberFilter", sort: "decimal" },
 	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" }
 };
 

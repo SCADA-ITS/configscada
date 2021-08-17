@@ -43,10 +43,11 @@ export default class PlanLibraryContent {
 								cols: [
 									{
 										view: "label",
-										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-view-headline"></i></div>`,
+										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-file-multiple"></i></div>`,
 										align: "center",
 										width: 30
 									},
+									{ width: 5 },
 									{
 										view: "label",
 										css: "alarm-view-header-details-text",
@@ -92,19 +93,18 @@ export default class PlanLibraryContent {
 									
 								]
 							},
-							{ height: 10 },
+							{ height: 5 },
 							{
 								height: 40,
 								cols: [
-									{ width: 50 },
+									{ width: 40 },
 									{
 										borderless: true,
 										view: "template",
 										template: `<div class="ventilation-description-box"><span > ${self.plan.description}</span></div>`		
 									}
 								]
-							},
-							{ height: 10 }
+							}
 						]
 					},
 					{ width: 10 }
@@ -161,6 +161,8 @@ export default class PlanLibraryContent {
 								if (planLibraryOrder && planLibraryOrder.getView) {
 				
 									webix.ui(planLibraryOrder.getView(), $$("plan-order-lib-plan-" + self.uid));
+									
+									planLibraryOrder.loadData();
 								}
 							}
 			

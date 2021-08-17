@@ -172,9 +172,13 @@ public class SessionBO extends GenericBO {
 						
 						userSession.setAccess(UserSessionUI.DENY_MULTI_SESSION_NOT_ALLOWED);
 					}
+					// Valid
 					else {
 						
 						userSession = activate(userSession, httpSession.getId(), sessionExpireTimeS);
+
+						// Reset session login retries for http session
+						sessionLoginRetries.remove(new ImmutablePair<>(httpSession.getId(), usr));
 					}
 					
 					break;
