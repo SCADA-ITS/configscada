@@ -227,6 +227,14 @@ export default class VmsSignalingModule extends GenericModule {
 				if (self.currentElement) {
 					
 					let subtypeElements = self.elements.filter(e => e.elementSubtype.id === self.currentElement.elementSubtype.id);
+					
+					if (Array.isArray(self.elementsSelected) && self.elementsSelected.length == 1){
+						
+					  	let currentArray = []
+						currentArray.push(self.currentElement);
+	
+						self.elementsSelected = currentArray;
+					}
 				
 					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected);
 					

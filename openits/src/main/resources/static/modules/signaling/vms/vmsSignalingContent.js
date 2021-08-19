@@ -75,6 +75,7 @@ export default class VmsSignalingContent {
 						width: 56
 					},
 					{
+						id: "elements-selected-label" + self.uid,
 						view: "label",
 						css: "alarm-view-header-details-text",
 						label: function() {
@@ -438,13 +439,27 @@ export default class VmsSignalingContent {
 								vmsSingalingMulti.show();
 								
 								function onAccept(selectedElements) {
-									
+
 									self.selectedElements = selectedElements;
-																				
+
+									$$("elements-selected-label" + self.uid).config.label = function(){
+											
+										let label = vmsSingalingMulti.currentElement.alias;
+											
+										if (Array.isArray(selectedElements) && selectedElements.length > 1) {
+											
+											label += " " + i18n.t("LBL_AND").toLowerCase() + " " + (selectedElements.length - 1) + " " + i18n.t("LBL_MORE_SELECTED") + " ...";
+										}
+							 
+										return `<span class="alarm-view-header-details-text">${label}</span>`;											
+										}();
+									
+									$$("elements-selected-label" + self.uid).refresh();	
+									
 									let btnMultisignaling = $$("btn-multisignaling-" + self.uid);
 									
 									if (btnMultisignaling) {
-										
+											
 										btnMultisignaling.config.badge = selectedElements.length;
 										btnMultisignaling.config.tooltip = i18n.t("LBL_VMS_SELECTED") + ": " + selectedElements.length;
 										
