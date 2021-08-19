@@ -114,6 +114,9 @@ export default class EquipmentViewerModule extends GenericModule {
 										
 										adjustWindow(element);
 										
+										$$("loading-" + self.uid).hide();
+										$$(self.uid).show();
+										
 										load(element);	
 									} 
 								});	
@@ -141,9 +144,6 @@ export default class EquipmentViewerModule extends GenericModule {
 				}
 				
 				view = drawMain(self.element);
-				
-				$$("loading-" + self.uid).hide();
-				$$(self.uid).show();
 				
 				webix.ui(view, $$(self.uid));
 				
@@ -345,6 +345,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				function doSelect(equipmentViewer) {
 				
 					$$("view-main-body-" + self.uid).show();
+					$$("view-main-loading-" + self.uid).hide();
 					
 					webix.ui(getViewContent(elem, equipmentViewer), $$("view-main-content-" + self.uid));
 					
@@ -352,8 +353,7 @@ export default class EquipmentViewerModule extends GenericModule {
 							
 						self.equipmentViewerContent.loadData();
 					}
-					
-					$$("view-main-loading-" + self.uid).hide();	
+
 				}
 			}
 			

@@ -334,7 +334,12 @@ export default class EquipmentViewerContent {
 
 				contentTabs.addView({
 					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
-					body: self.equipmentViewerInfo.getView()
+					body: {
+						id: "view-main-content-tab-info-" + self.uid,
+						height: 605,
+						cols: [self.equipmentViewerInfo.getView()]
+
+					}
 				});
 			}
 
@@ -395,7 +400,7 @@ export default class EquipmentViewerContent {
 		function addModule(module, equipViewerTab) {
 
 			let moduleAction = { id: equipViewerTab.moduleActionId };
-			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id };
+			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id, width: contentTabs.$width, height: contentTabs.$height - 32 };
 
 			util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args);
 
@@ -403,11 +408,21 @@ export default class EquipmentViewerContent {
 
 				let newContentTab = {
 					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
-					width: 1074,
+					height: 605,
 					cols: [view]
 				};
 
 				webix.ui(newContentTab, $$("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid));
+
+				contentTabs.getTabbar().hideOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
+				contentTabs.getTabbar().setValue("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
+				contentTabs.getTabbar().showOption("view-main-content-tab_body-" + moduleAction.id + "-" + self.uid);
+
+
+				if ($$("view-main-content-tab-info-" + self.uid) != undefined) {
+
+					contentTabs.getTabbar().setValue("view-main-content-tab-info-" + self.uid);
+				}
 
 				// Select initial tab for modules if configured
 				if (equipViewerTab.id === self.equipmentViewer.initialTab) {
