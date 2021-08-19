@@ -62,15 +62,15 @@ export default class MapLauncherModule extends GenericModule {
 
 							options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 
-							let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width, $$(self.args.containerId).$height, options);
+							let map = new OpenMap(responseJson.metadata, responseJson.data, events, self.args.width, self.args.height, options);
 
 							if (map) {
 								
-								let container = $$(self.args.containerId);
-								if (container) {
-
-									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
-								}
+//								let container = $$(self.args.containerId);
+//								if (container) {
+//
+//									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+//								}
 								$$("loading-" + self.uid).hide();
 								$$(self.uid).show();
 
@@ -103,16 +103,16 @@ export default class MapLauncherModule extends GenericModule {
 
 							options[Synoptic.Options.DEBUG_MODE] = DEBUG_MODE;
 
-							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, $$(self.args.containerId).$width, $$(self.args.containerId).$height, options);
+							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, self.args.width, self.args.height, options);
 
 							if (synoptic) {
 
-								let container = $$(self.args.containerId);
-
-								if (container) {
-
-									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
-								}
+//								let container = $$(self.args.containerId);
+//
+//								if (container) {
+//
+//									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+//								}
 								$$("loading-" + self.uid).hide();
 								$$(self.uid).show();
 

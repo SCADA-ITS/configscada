@@ -815,7 +815,7 @@ export default class AlarmMonitorModule extends GenericModule {
 								{ width: 6 }
 							]
 						},
-						{ view: "resizer" },
+						//{ view: "resizer" },
 						{ height: 6 }
 					]
 				};
