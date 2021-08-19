@@ -261,6 +261,7 @@ export default class EquipmentViewerModule extends GenericModule {
 				hidden: true,
 				rows: [
 					{
+						height: 770,
 						cols: [viewMainContent],
 						on: {
 							onAfterCollapse() {

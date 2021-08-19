@@ -806,7 +806,7 @@ export default class AlarmMonitorModule extends GenericModule {
 								{ width: 6 }
 							]
 						},
-						{ id: "resizer-dt-" + self.uid, view: "resizer" },
+						{ id: "resizer-dt-" + self.uid, view: "resizer", css: {"margin-top": "0px !important", "border": "none"}},
 						{
 							cols: [
 								{ width: 6 },
@@ -815,7 +815,6 @@ export default class AlarmMonitorModule extends GenericModule {
 								{ width: 6 }
 							]
 						},
-						//{ view: "resizer" },
 						{ height: 6 }
 					]
 				};

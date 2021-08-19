@@ -416,6 +416,7 @@ export default class SignalingManagerModule extends GenericModule {
 
 			let viewMainContent = {
 				id: "view-main-content-" + self.uid,
+				css: {"box-sizing": "border-box"},
 				body: {
 					rows: [
 						{

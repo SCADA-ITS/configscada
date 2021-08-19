@@ -149,7 +149,8 @@ export default class VmsSignalingModule extends GenericModule {
 				body: {
 					rows: [
 						{
-							id: self.currentViewContent		
+							id: self.currentViewContent,
+							css: {"box-sizing": "border-box", "border": "none !important"},		
 						}
 					]
 					
@@ -159,6 +160,7 @@ export default class VmsSignalingModule extends GenericModule {
 			let viewMainBody = {
 				id: "view-main-body-" + self.uid,
 				hidden: true,
+				css: {"box-sizing": "border-box"},
 				rows: [
 					{
 						id: "view-loading-panel-" + self.uid,
