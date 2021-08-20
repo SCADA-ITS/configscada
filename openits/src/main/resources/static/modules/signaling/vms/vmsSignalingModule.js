@@ -204,7 +204,7 @@ export default class VmsSignalingModule extends GenericModule {
 				$$("view-panel-" + self.uid).hide();
 				
 				self.currentElement = getElementFromElementId(elementId);
-				
+								
 				let previousViewContent = self.currentViewContent;
 				
 				webix.ui(getViewContent(), $$(previousViewContent));
@@ -232,10 +232,7 @@ export default class VmsSignalingModule extends GenericModule {
 					
 					if (Array.isArray(self.elementsSelected) && self.elementsSelected.length == 1){
 						
-					  	let currentArray = []
-						currentArray.push(self.currentElement);
-	
-						self.elementsSelected = currentArray;
+						self.elementsSelected = [self.currentElement];
 					}
 				
 					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected);

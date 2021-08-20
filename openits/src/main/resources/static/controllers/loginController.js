@@ -145,11 +145,12 @@ function getForm() {
 				type: "password",
 				name: "password",
 				inputHeight: 54,
+				keyPressTimeout: 1,
 				css: "form-container",
 				template: `	<div class="input-container">
 							<div class="input-image" style="background-image: url(${CONFIG.img.lock});"></div>   
 							<input id="password-input" class="input-text input-text-pass" type='password' name='password'>
-							<div id="show-icon" class="input-image-show" style="background-image: url(${CONFIG.img.show});"></div>   
+							<div id="show-icon" class="input-image-show" style="display:none; background-image: url(${CONFIG.img.show});"></div>   
 							</div>`,
 				on: {
 					onEnter: function(ev) {
@@ -161,8 +162,15 @@ function getForm() {
 						}
 					},
 					onKeyPress: function(code, e) {
+												
 						$$("alertText-" + uid).config.label = "";
 						$$("alertText-" + uid).refresh();
+					},
+					onTimedKeyPress: function() {
+						
+						let icon = $$("login-form-" + uid).getNode().querySelector('#show-icon');
+						
+						icon.style.display = (this.getValue() != "") ? "block" : "none";
 					}
 				}
 			},

@@ -82,6 +82,7 @@
 	background-color:#d8d8d8 !important; 									
 	border-radius: 0px !important;
 	border: none !important;
+	font-size: 18px !important;
 }
 
 .input-text-user {								
@@ -103,7 +104,8 @@
 }
 
 .form-button .webix_button, .form-button .webix_button:hover, .form-button .webix_button:focus {
-	background-color: #1f3263;	
+	background-color: #1f3263;
+	font-size: 16px !important;	
 }
 
 .alert-text {
@@ -118,7 +120,7 @@
 
 .alert-text .webix_el_box {
 	height: 57px !important;
-	font-size: 13px !important;	
+	font-size: 16px !important;	
 	padding-top: 15px;
 }
 

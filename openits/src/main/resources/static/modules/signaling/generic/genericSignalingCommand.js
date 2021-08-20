@@ -3,13 +3,14 @@ import InputDialogBox from "../../../component/inputDialogBox.js";
 
 export default class GenericSignalingCommand {
 
-	constructor(parent, selectedElementIds, commandElement) {
+	constructor(parent, selectedElementIds, commandElementType, isEditPlanOrder) {
 
-		this.uid = webix.uid();
 		this.parent = parent;
+		this.uid = parent.uid;
 		this.selectedElementIds = selectedElementIds;
-		this.commandElement = commandElement;
+		this.commandElementType = commandElementType;
 		this.dtParams = undefined;
+		this.isEditPlanOrder = isEditPlanOrder;
 	}
 
 	getView() {
@@ -18,8 +19,17 @@ export default class GenericSignalingCommand {
 
 		let view = {
 			
-			id: this.uid,
-			header: i18n.t(this.commandElement.labelAlias),
+			header: function() {
+
+				let tooltip = "";
+				
+				if (self.isEditPlanOrder && Array.isArray(self.commandElementType.commandElementTypeParams)) {
+					
+					tooltip = self.commandElementType.labelDescription ? i18n.t(self.commandElementType.labelDescription) : i18n.t(self.commandElementType.labelAlias);
+				}
+				
+				return `<div title="${self.isEditPlanOrder ? tooltip : ''}"><span>${i18n.t(self.commandElementType.labelAlias)}</span></div>`;
+			}(),
 			body: drawComponents()
 		}
 		
@@ -27,14 +37,25 @@ export default class GenericSignalingCommand {
 			
 			let viewComponents = {
 				
-				rows: [
-					{ height: 30 },
-					getViewInfo(),
-					{ height: 20 },
-					getViewParams(),
-					getViewActions()
-				]
+				id: "view-generic-signaling-command-body-" + self.commandElementType.id + "-" + self.uid,
+				commandElementTypeId: self.commandElementType.id,
+				rows: []
 			};
+			
+			viewComponents.rows.push({ height: 10 });
+			
+			if (!self.isEditPlanOrder || (self.isEditPlanOrder && !self.commandElementType.commandElementTypeParams)) {
+				
+				viewComponents.rows.push(getViewInfo());
+				viewComponents.rows.push({ height: 10 });
+			}
+			
+			viewComponents.rows.push(getViewParams());
+			
+			if (!self.isEditPlanOrder) {
+				
+				viewComponents.rows.push(getViewActions());	
+			}
 			
 			function getViewInfo() {
 				
@@ -68,14 +89,14 @@ export default class GenericSignalingCommand {
 								{
 									borderless: true,
 									width: 100,
-									template: `<image style="width: 90px; height: 90px; display: block; margin: 0 auto" src="img/${self.commandElement.image}" onerror="this.onerror=null;this.src='img/send-command-default.png';" />`
+									template: `<image style="width: 90px; height: 90px; display: block; margin: 0 auto" src="img/${self.commandElementType.image}" onerror="this.onerror=null;this.src='img/send-command-default.png';" />`
 								},
 								{ width: 20	},
 								{
 									view: "textarea",
 									readonly : true,
 									height: 100,
-									value: self.commandElement.labelDescription ? i18n.t(self.commandElement.labelDescription) : i18n.t(self.commandElement.labelAlias) 
+									value: self.commandElementType.labelDescription ? i18n.t(self.commandElementType.labelDescription) : i18n.t(self.commandElementType.labelAlias) 
 								}
 							]
 						}
@@ -89,7 +110,7 @@ export default class GenericSignalingCommand {
 				
 				let viewParams = {};
 				
-				if (Array.isArray(self.commandElement.commandElementTypeParams) && self.commandElement.commandElementTypeParams.length > 0) {
+				if (Array.isArray(self.commandElementType.commandElementTypeParams) && self.commandElementType.commandElementTypeParams.length > 0) {
 					
 					viewParams = {
 					
@@ -298,14 +319,26 @@ export default class GenericSignalingCommand {
 					
 					function getInitialData() {
 					
-						let gridData = self.commandElement.commandElementTypeParams.map(e => {
+						let gridData = self.commandElementType.commandElementTypeParams.map(e => {
+							
+							let value = undefined;
+							
+							if (Array.isArray(self.commandElementType.commandElementValues) && self.commandElementType.commandElementValues.length > 0) {
+								
+								let commandElementValue = self.commandElementType.commandElementValues.find(v => v.commandElementTypeParamId === e.id);
+								
+								if (commandElementValue) {
+									
+									value = commandElementValue.value; 
+								}
+							}
 							
 							return {
 								id: e.id,
 								param: i18n.t(e.labelAlias),
 								dataTypeId: e.dataType.id,
 								dataType: i18n.t(e.dataType.labelAlias),
-								value: undefined
+								value: value
 							}
 						});
 						
@@ -334,7 +367,6 @@ export default class GenericSignalingCommand {
 						{},
 						{ 
 							view: "button", 
-							id: "btn-send-" + self.uid,
 							css: "action-button",
 							width: 130,
 							height: 35,
@@ -346,12 +378,11 @@ export default class GenericSignalingCommand {
 										title: i18n.t("LBL_SEND_SIGNALING_CONFIRM"),
 										ok: i18n.t("LBL_YES"),
 										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : ""),
+										text: (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")),
 										width: 600
 									}).then(function() {
 										
 										sendCommandElement();
-										
 									});					
 								}
 							}
@@ -369,32 +400,7 @@ export default class GenericSignalingCommand {
 						
 						self.selectedElementIds.forEach(selectedElementId => {
 	
-							let command = {
-								elementId: selectedElementId,
-								commandElementTypeId: self.commandElement.id
-							}
-						
-							if (Array.isArray(self.commandElement.commandElementTypeParams) && self.commandElement.commandElementTypeParams.length > 0 &&
-							    self.dtParams) {
-							
-								let params = self.dtParams.getAllItems();
-								
-								if (Array.isArray(params) && params.length > 0) {
-									
-									command.commandElementValues = [];
-									
-									params.forEach(param => {
-										
-										command.commandElementValues.push({
-											
-											commandElementTypeParamId: param.id,
-											value: param.value
-										});	
-									});
-								}
-							}
-							
-							body.commands.push(command);	
+							body.commands.push(getCommandElementToSend(self.getCommandElement(selectedElementId)));	
 							
 						});
 						
@@ -410,6 +416,30 @@ export default class GenericSignalingCommand {
 								})
 							});	
 						}
+					}
+					
+					function getCommandElementToSend(commandElement) {
+						
+						let commandElementToSend = {
+							elementId: commandElement.element.id,
+							commandElementTypeId: commandElement.commandElementType.id,
+						}
+						
+						if (Array.isArray(commandElement.commandElementValues) && commandElement.commandElementValues.length > 0) {
+							
+							commandElementToSend.commandElementValues = [];
+							
+							commandElement.commandElementValues.forEach(commandElementValue => {
+							
+								commandElementToSend.commandElementValues.push({
+									
+									commandElementTypeParamId: commandElementValue.commandElementTypeParam.id,
+									value: commandElementValue.value
+								});	
+							});
+						}
+						
+						return commandElementToSend;
 					}
 				}
 				
@@ -428,5 +458,54 @@ export default class GenericSignalingCommand {
 			
 			this.dtParams.callbacks();
 		}
+	}
+	
+	getCommandElement(elementId) {
+	
+		let self = this;
+		let commandElement = undefined;
+		
+		if (!elementId && Array.isArray(self.selectedElementIds) && self.selectedElementIds.length > 0) {
+			
+			elementId = self.selectedElementIds[0];
+		}
+		
+		if (elementId) {
+			
+			commandElement = {
+				element: {
+					id: elementId 
+				},
+				commandElementType: {
+					id: self.commandElementType.id
+				},
+				id: self.commandElementType.id + ":" + elementId.substring(elementId.lastIndexOf(':') + 1)
+				
+			};
+			
+			if (Array.isArray(self.commandElementType.commandElementTypeParams) && self.commandElementType.commandElementTypeParams.length > 0 &&
+			    self.dtParams) {
+			
+				let params = self.dtParams.getAllItems();
+				
+				if (Array.isArray(params) && params.length > 0) {
+					
+					commandElement.commandElementValues = [];
+					
+					params.forEach(param => {
+						
+						commandElement.commandElementValues.push({
+							
+							commandElementTypeParam: {
+								id: param.id 
+							},
+							value: param.value
+						});	
+					});
+				}
+			}	
+		}
+						
+		return commandElement;
 	}
 }

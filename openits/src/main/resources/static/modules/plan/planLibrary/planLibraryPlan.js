@@ -1,4 +1,6 @@
 import DataTable from "../../../component/datatable.js";
+import SearchDialogBox from "../../../component/searchDialogBox.js";
+import PlanLibraryPersist from "./planLibraryPersist.js";
 import { util } from "../../../lib/util.js";
 
 const MOVE_PLAN_ORDER_POSITION_UP = 1;
@@ -6,15 +8,17 @@ const MOVE_PLAN_ORDER_POSITION_DOWN = 2;
 
 export default class PlanLibraryPlan {
 
-	constructor(config, uid, plan, onSelectPlanOrder) {
+	constructor(config, uid, plan, selectedPlanOrder, onSelectPlanOrder, onUpdate) {
 		
 		this.config = config;
 		this.plan = plan;
 		this.uid = uid;
 		
 		this.planTable = undefined;
-		this.selectedPlanOrder = undefined;
+		this.selectedPlanOrder = selectedPlanOrder;
 		this.onSelectPlanOrder = onSelectPlanOrder;
+		this.onUpdate = onUpdate;
+		this.planLibraryPersist = undefined;
 	}
 	
 	getView() {
@@ -37,25 +41,20 @@ export default class PlanLibraryPlan {
 						
 						self.planTable.callbacks();
 						
-						if (Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
-				
-							self.plan.planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
-							
-							let planOrder = self.plan.planOrders[0];
-							
-							if (planOrder) {
-								
-								self.planTable.select(planOrder.id);
-							}
-						}
+						webix.delay(function() {
+
+							self.planTable.select(self.selectedPlanOrder.id);
+						}, null, null, 100);
+						
+						
+						
+						self.planLibraryPersist = new PlanLibraryPersist(self.config);
 					}
 				}
 			}
 		})
 		
 		function drawPlan() {
-			
-			let viewPlan = {};
 			
 			const defaultGridOptionValues = [
 				{ gridOption: { id: 2 }, value: "false" },
@@ -237,7 +236,10 @@ export default class PlanLibraryPlan {
 
 					if (Array.isArray(rows) && rows.length === 1) {
 						
-						self.onSelectPlanOrder(rows[0]);
+						let planOrderId = rows[0];
+						self.onSelectPlanOrder(planOrderId);
+						
+						self.selectedPlanOrder = self.plan.planOrders.find(e => e.id == planOrderId);
 					}
 				};
 	
@@ -326,6 +328,57 @@ export default class PlanLibraryPlan {
 		// TODO: Pending implementation
 		function newPlanOrder() {
 			
+			let dialogPlanOrderTypes = webix.copy(SearchDialogBox.CUSTOM);
+			let label = i18n.t("LBL_PLAN_ORDER_TYPES");
+
+			let planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
+			
+			if (Array.isArray(planOrderTypes) && planOrderTypes.length > 0) {
+				
+				dialogPlanOrderTypes.data = [];
+
+				dialogPlanOrderTypes.pkField = "id"
+				dialogPlanOrderTypes.fields = ["idIcon=", "alias=LBL_PLAN_ORDER_TYPE_ALIAS", "description=LBL_PLAN_ORDER_TYPE_DESCRIPTION"];
+				dialogPlanOrderTypes.height = 600;
+				dialogPlanOrderTypes.width = 800;
+				dialogPlanOrderTypes.sortFieldId = 2; 
+				
+				dialogPlanOrderTypes.icons = {
+					idIcon: []
+				}
+				
+				planOrderTypes.forEach(planOrderType => {
+					
+					dialogPlanOrderTypes.icons.idIcon.push({
+						id: planOrderType.id,
+						icon: planOrderType.icon
+					});
+					
+					dialogPlanOrderTypes.data.push({
+						id: planOrderType.id,
+						idIcon: planOrderType.id,
+						alias: i18n.t(planOrderType.labelAlias),
+						description: i18n.t(planOrderType.labelDescription)
+					});
+				});
+				
+				let s = new SearchDialogBox(label, dialogPlanOrderTypes, function(items) {
+
+					if (Array.isArray(items) && items.length === 1) {
+	
+						let item = items[0];
+	
+						if (item && item.id) {
+	
+							
+						}
+					}
+				});
+	
+				s.show();
+			}
+
+			
 		}
 		
 		// TODO: Pending implementation
@@ -333,7 +386,18 @@ export default class PlanLibraryPlan {
 		
 			if (Array.isArray(planOrderIds) && planOrderIds.length > 0) {
 				
+				let deleteOrders = 0;
 				
+				planOrderIds.forEach(planOrderId => {
+				
+					self.planLibraryPersist.deletePlanOrder(planOrderId).then(function(response) {
+					
+						if (++deleteOrders == planOrderIds.length) {
+							
+							self.onUpdate(self.plan.id);
+						}
+					});
+				});
 			}
 		}		
 		

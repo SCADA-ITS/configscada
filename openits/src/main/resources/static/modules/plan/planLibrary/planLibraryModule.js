@@ -97,7 +97,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 					return `<div>
 								<span class='ico webix_icon mdi mdi-view-headline'></span>
-								<span>${i18n.t("LBL_CATEGORIES")}</span>
+								<span>${i18n.t("LBL_PLANS")}</span>
 							</div>`;
 				},
 				body: {

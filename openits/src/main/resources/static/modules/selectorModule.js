@@ -59,8 +59,15 @@ export default class SelectorModule extends GenericModule {
 
 			if (nodeToSelect) {
 
-				self.treeView.select(nodeToSelect.id);
-				self.treeView.expand(nodeToSelect.id);
+				if (self.treeView) {
+
+					self.treeView.select(nodeToSelect.id);
+					self.treeView.expand(nodeToSelect.id);
+	
+				} else {
+	
+					self.componentView.select(nodeToSelect.id);
+				}
 			}
 			
 			if (moduleId) {

@@ -1,10 +1,15 @@
 {
 	"moduleAction": {
-	    "planExecutor": 102501
-	},
+	    "planExecutor": 102501,
+	    "edit": 102901,
+	    "defaultPlanOrderEdit": 101902
+	},	
 	"restEndpoints": {
 		"plan": "plans/${id}",
 		"planNodes": "plans/nodes",
-		"planHierarchies": "plans/hierarchies"
+		"planHierarchies": "plans/hierarchies",
+		"createPlanOrder": "plans/createPlanOrder",
+		"updatePlanOrder": "plans/updatePlanOrder",
+		"deletePlanOrder": "plans/deletePlanOrder/${id}"
 	}
 }

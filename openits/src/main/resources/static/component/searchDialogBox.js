@@ -141,6 +141,8 @@ export default class SearchDialogBox {
 					const gridOptionValues = [
 						{ gridOption: { id: 1 }, value: "false" },
 						{ gridOption: { id: 2 }, value: "true" },
+						{ gridOption: { id: 3 }, value: dialogEntity.sortFieldId ? String(dialogEntity.sortFieldId) : undefined },
+						{ gridOption: { id: 4 }, value: "asc" },
 						{ gridOption: { id: 7 }, value: "false" },
 						{ gridOption: { id: 8 }, value: "false" },
 						{ gridOption: { id: 9 }, value: "true" },
@@ -162,16 +164,17 @@ export default class SearchDialogBox {
 						gridFields: []
 					};
 					
-					let position = 0;
+					let position = 1;
 					
 					gridMetadata.gridFields.push({
+						id: position,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
 						isPk: true,
 						needsTranslation: false,
 						parameterized: false,
-						position: ++position,
+						position: position,
 						required: true,
 						sourceField: dialogEntity.pkField,
 						visible: false,
@@ -194,7 +197,10 @@ export default class SearchDialogBox {
 						
 						let adjust = (position + 1 >= dialogEntity.fields.length);
 						
+						position++;
+						
 						gridMetadata.gridFields.push({
+							id: position,
 							extended: false,
 							filtered: false,
 							isEpochMilli: false,
@@ -202,7 +208,7 @@ export default class SearchDialogBox {
 							label: fieldLabel,
 							needsTranslation: needsTranslation,
 							parameterized: false,
-							position: ++position,
+							position: position,
 							required: true,
 							adjust: adjust,
 							sourceField: fieldName,
@@ -210,7 +216,28 @@ export default class SearchDialogBox {
 							gridFieldDataType: {
 								id: 1,
 								name: "string"
-							}
+							},
+							gridFieldIcons: function() {
+								
+								let gridFieldIcons = [];
+								
+								if (dialogEntity.icons && Array.isArray(dialogEntity.icons[fieldName])) {
+								
+									let icons = dialogEntity.icons[fieldName];
+									
+									gridFieldIcons = icons.map(e => {
+									
+										return {
+											
+											icon: e.icon,
+											showValue: false,
+											value: e.id
+										}	
+									});
+								}
+								
+								return gridFieldIcons;
+							}()
 						});
 					});
 				}

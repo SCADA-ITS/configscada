@@ -58,6 +58,8 @@ export let util = {
 					}
 				}
 			}
+			
+			return lazyClass;
 		},
 
 		loadInWindow(module, moduleAction, mod, args) {
@@ -240,7 +242,9 @@ export let util = {
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
 			
-			return winId;
+			util.ui.centerWindow(winId);
+			
+			return lazyClass;
 		},
 
 		loadInTab(module, moduleAction, mod, args) {
@@ -388,6 +392,8 @@ export let util = {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
+			
+			return lazyClass;
 		},
 		
 		getModuleOpenedId(moduleId) {
@@ -415,8 +421,10 @@ export let util = {
 			return undefined;
 		},
 
-		open(module, moduleAction, viewTypeId, drawCallback, args) {
+		open(module, moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
 
+			let instance = undefined;
+			
 			try {
 
 				const lazy = async _ => {
@@ -428,37 +436,36 @@ export let util = {
 
 					if (viewTypeId === VIEW_TYPE_CUSTOM && drawCallback) {
 
-						util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
+						instance = util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
 					}
 					else if (!viewTypeId && module.viewType) {
 
 						if (module.viewType.id === VIEW_TYPE_TAB ||
 							viewTypeId === VIEW_TYPE_TAB) {
 
-							util.module.loadInTab(module, moduleAction, mod, args);
+							instance = util.module.loadInTab(module, moduleAction, mod, args);
 						}
 						else if (module.viewType.id === VIEW_TYPE_WINDOW ||
 							viewTypeId === VIEW_TYPE_WINDOW) {
 
-							let winId = util.module.loadInWindow(module, moduleAction, mod, args);
-							
-							util.ui.centerWindow(winId);
+							instance = util.module.loadInWindow(module, moduleAction, mod, args);
 						}
 					}
 					else {
 
 						if (viewTypeId === VIEW_TYPE_TAB) {
 
-							util.module.loadInTab(module, moduleAction, mod, args);
+							instance = util.module.loadInTab(module, moduleAction, mod, args);
 						}
 						else if (viewTypeId === VIEW_TYPE_WINDOW) {
 
-							let winId = util.module.loadInWindow(module, moduleAction, mod, args);
-							
-							util.ui.centerWindow(winId);
+							instance = util.module.loadInWindow(module, moduleAction, mod, args);
 						}
-
-
+					}
+					
+					if (instance && instanceCallback) {
+						
+						instanceCallback(instance);
 					}
 				}
 

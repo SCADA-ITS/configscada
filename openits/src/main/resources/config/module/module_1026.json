@@ -1,6 +1,7 @@
 {
 	"moduleAction": {
-	    "elements": 102601
+	    "elements": 102601,
+	    "planOrderEdit": 102602
 	},
 	"restEndpoints": {
 		"elementsByType": "element_types/${id}/elements",

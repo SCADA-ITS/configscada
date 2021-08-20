@@ -2447,6 +2447,7 @@ export default class DataTable {
 				if (record != undefined) {
 
 					grid.select(id, preserve);
+					grid.showItem(id);
 				}
 			}
 		}

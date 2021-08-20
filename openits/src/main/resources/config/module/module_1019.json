@@ -1,6 +1,7 @@
 {
 	"moduleAction": {
-		"commandEquipments": 101901
+		"commandEquipments": 101901,
+		"planOrderEdit": 101902
 	},
 	"restEndpoints": {
 		"element": "elements/${id}",

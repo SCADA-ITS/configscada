@@ -6,7 +6,7 @@ export const CONFIG = {
 		project: "./img/logo-project-ausol.svg",
 		wallpaper: "./img/fondos-ppt.jpg",
 		user: "./img/login-user.png",
-		lock: "./img/login-lock.png",
+		lock: "./img/login-key.png",
 		show: "./img/login-show.png",
 		show_light: "./img/login-show-light.png"
 	},

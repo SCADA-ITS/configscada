@@ -24,7 +24,8 @@ export default class GenericSignalingModule extends GenericModule {
 		
 		let self = this;
 
-		if (self.moduleAction.id === self.config.moduleAction.commandEquipments &&
+		if ((self.moduleAction.id === self.config.moduleAction.commandEquipments || 
+			 self.moduleAction.id === self.config.moduleAction.planOrderEdit) && 
 			Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
 			if ($$(self.uid)) {
@@ -68,7 +69,6 @@ export default class GenericSignalingModule extends GenericModule {
 					id: self.uid,					
 					rows: [
 						getViewHeader(),
-						{ height: 20 },
 						{
 							cols: [
 								{ width: 20 },
@@ -134,7 +134,25 @@ export default class GenericSignalingModule extends GenericModule {
 						
 						self.element.commandElements.forEach(cmdElement => {
 							
-							let signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, cmdElement);
+							let commandElement = webix.copy(cmdElement);
+							let signalingCmd = undefined;
+							
+							if (self.moduleAction.id === self.config.moduleAction.commandEquipments) {
+								
+								signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement);
+							}
+							else if (self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+														
+								if (self.args.data && self.args.data.planOrder) {
+								
+									if (self.args.data.planOrder.commandElementValues) {
+										
+										commandElement.commandElementValues = webix.copy(self.args.data.planOrder.commandElementValues);	
+									}
+									
+									signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement, true);
+								}	
+							}
 							
 							viewTabs.cells.push(signalingCmd.getView());
 							
@@ -143,7 +161,7 @@ export default class GenericSignalingModule extends GenericModule {
 					}
 					else {
 						
-						viewTabs =util.ui.getViewNoData();
+						viewTabs = util.ui.getViewNoData();
 					}
 					
 		
@@ -159,8 +177,45 @@ export default class GenericSignalingModule extends GenericModule {
 						e.loadData();
 					});
 				}
+				
+				if (self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+
+					let signalingTabs = $$("view-tabs-" + self.uid);
+					
+					if (signalingTabs) {
+						
+						let commandElementTypeId = self.args.data.planOrder.comandElement.commandElementType.id;
+						
+						signalingTabs.getTabbar().setValue("view-generic-signaling-command-body-" + commandElementTypeId + "-" + self.uid);	
+					}					
+					
+				}
 			}
 		}
 	}
 
+	getSignaling() {
+		
+		let self = this;
+		let commandElement = undefined;
+		
+		let signalingTabs = $$("view-tabs-" + self.uid);
+		
+		if (signalingTabs) {
+					
+			let signalingTabSelected = $$(signalingTabs.getTabbar().getValue());
+			
+			if (signalingTabSelected) {
+				
+				let signalingCmd = this.signalingCmds.find(e => e.commandElementType.id === signalingTabSelected.config.commandElementTypeId);
+				
+				if (signalingCmd) {
+					
+					commandElement = signalingCmd.getCommandElement();
+				}
+			}
+		}
+		
+		return commandElement;
+	}
 }

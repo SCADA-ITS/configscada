@@ -1,54 +1,87 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
+import { util } from "../../../../lib/util.js";
 
 export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
-	constructor(config, uid, plan, planOrder) {
+	constructor(config, uid, plan, planOrder, onUpdate) {
 		
-		super(config, uid, plan, planOrder);
-	}
-	
-	getView() {
+		super(config, uid, plan, planOrder, onUpdate);
 		
-		let self = this;
-		
-		let view = {
-			id: "plan-order-lib-plan-" + self.uid,
-			rows: [
-				drawHeader(),
-				drawContent()
-			]
-		};
-		
-		function drawHeader() {
-			
-			let viewHeader = {
-				view: "toolbar",
-				height: 30,
-				borderless: true,
-				elements: [
-					{
-						view: "label",
-						label: "<img src='" + self.planOrder.planOrderType.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(self.planOrder.planOrderType.labelAlias) + "</span>" 
-					}
-				]
-			}
-			
-			return viewHeader;
-		}
-		
-		function drawContent() {
-			
-			let viewContent = {
-				
-			}
-			
-			return viewContent;
-		}
-		
-		return view;
+		this.signalingModuleInstance = undefined;
 	}
 	
 	loadData() {
+	
+		let self = this;
+
+		let moduleActionId = self.config.moduleAction.defaultPlanOrderEdit;
 		
+		if (self.planOrder && self.planOrder.comandElement && self.planOrder.comandElement.element) {
+			
+			if (self.planOrder.comandElement.element.planOrderSignalingModule) {
+			
+				moduleActionId = self.config.moduleAction.defaultPlanOrderEdit;
+			}
+			
+			let module = util.module.getFromModuleAction(moduleActionId);
+			
+			if (module) {
+	
+				let moduleAction = { id: moduleActionId };
+				let args = { 
+					selectedPks: [self.planOrder.comandElement.element.id],
+					data: {
+						planOrder: self.planOrder,
+						newPlanOrder: undefined
+					}
+				};
+	
+				util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args, function(instance) { self.signalingModuleInstance = instance });
+				
+				function drawTabContent(view) {
+
+					let newContentTab = {
+						id: "plan-order-signaling-content-" + self.uid,
+						cols: [view]
+					};
+	
+					webix.ui(newContentTab, $$("plan-order-signaling-content-" + self.uid));
+				}
+			}
+		}
+		
+		function saveOrder(commandElement) {
+			
+			// TODO: Implement saveOrder and call save method
+		}
+	}
+	
+	getContent() {
+			
+		let self = this;
+		
+		let viewContent = {
+			id: "plan-order-signaling-content-" + self.uid,
+		}
+		
+		return viewContent;
+	}
+	
+	getPlanOrder() {
+
+		let self = this;		
+		let planOrder = this.planOrder;
+		
+		if (self.signalingModuleInstance) {
+			
+			let commandElement = self.signalingModuleInstance.getSignaling();
+			
+			if (commandElement) {
+				
+				planOrder.comandElement = commandElement;
+			}
+		}
+		
+		return planOrder;
 	}
 }	

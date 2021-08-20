@@ -40,4 +40,34 @@ export default class PlanLibraryPersist {
 		
 		return data.json();
 	}
+	
+	async createPlanOrder(planId, planOrderTypeId) {
+		
+		let body = {
+			planId: planId,
+			planOrderTypeId: planOrderTypeId
+		};
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.createPlanOrder, body);
+		
+		return data.json();
+	}
+	
+	async updatePlanOrder(planOrder) {
+		
+		let body = {
+			planOrderTypeId: planOrder.planOrderType.id
+		};
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + this.config.restEndpoints.updatePlanOrder, body);
+		
+		return data.json();
+	}
+	
+	async deletePlanOrder(id) {
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).del(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.deletePlanOrder, { id: id }));
+		
+		return data.json();
+	}
 }	

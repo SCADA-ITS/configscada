@@ -1,5 +1,4 @@
 import PlanLibraryPlan from "./planLibraryPlan.js";
-//import PlanLibraryOrder from "./planLibraryOrder.js";
 import { util } from "../../../lib/util.js";
 
 export default class PlanLibraryContent {
@@ -11,6 +10,7 @@ export default class PlanLibraryContent {
 		this.uid = uid;
 		
 		this.planLibraryPlan = undefined;
+		this.selectedPlanOrder = undefined;
 	}
 	
 	getView() {
@@ -125,6 +125,17 @@ export default class PlanLibraryContent {
 					{
 						rows: [
 							{ height: 10 },
+							{
+								view: "toolbar",
+								height: 30,
+								borderless: true,
+								elements: [
+									{
+										view: "label",
+										label: "<img src='img/tree_document.png' class='grid-icon'/><span class='grid-title'>" + i18n.t("LBL_PLAN_ORDERS") + "</span>" 
+									}
+								]
+							},
 							drawPlanLibraryPlan(),
 							{ height: 10 }
 						]
@@ -134,8 +145,15 @@ export default class PlanLibraryContent {
 			}
 			
 			function drawPlanLibraryPlan() {
+
+				if (!self.selectedPlanOrder && Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 0) {
+					
+					self.plan.planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
+					
+					self.selectedPlanOrder = self.plan.planOrders[0]; 	
+				}
 				
-				self.planLibraryPlan = new PlanLibraryPlan(self.config, self.uid, self.plan, onSelectPlanOrder);
+				self.planLibraryPlan = new PlanLibraryPlan(self.config, self.uid, self.plan, self.selectedPlanOrder, onSelectPlanOrder, onUpdate);
 				
 				return self.planLibraryPlan.getView();
 			}
@@ -156,7 +174,7 @@ export default class PlanLibraryContent {
 		
 								const mod = await import(jsFile);
 								
-								let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, planOrder);
+								let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, planOrder, onUpdate);
 
 								if (planLibraryOrder && planLibraryOrder.getView) {
 				
@@ -176,6 +194,29 @@ export default class PlanLibraryContent {
 				}
 				
 				return self.planLibraryPlan.getView();
+			}
+			
+			function onUpdate(plan, planOrder) {
+				
+				$$("plan-lib-loading-" + self.uid).show();
+				$$("plan-lib-content-" + self.uid).hide();
+
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: plan.id })).then(function(response) {
+
+					let planResponse = response ? response.json() : undefined;
+
+					if (planResponse) {
+
+						self.plan = planResponse;
+						
+						self.selectedPlanOrder = planOrder;
+
+						webix.ui(self.getView(), $$("plan-lib-content-" + self.uid));
+
+						$$("plan-lib-loading-" + self.uid).hide();
+						$$("plan-lib-content-" + self.uid).show();
+					}
+				});
 			}
 			
 			return viewPlan;
