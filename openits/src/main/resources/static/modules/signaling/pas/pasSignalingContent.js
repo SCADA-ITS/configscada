@@ -251,11 +251,11 @@ export default class PasSignalingContent {
 					{
 						id: 1,
 						default_: false,
-						icon: "mdi mdi-send-circle-outline",
+						icon: "mdi mdi-send",
 						label: "LBL_PAS_SEND",
 						multiselect: true,
-						position: 1,
-						showText: false,
+						position: 3,
+						showText: true,
 						itemRequired: true
 					},
 					{
@@ -264,7 +264,7 @@ export default class PasSignalingContent {
 						icon: "mdi mdi-stop-circle-outline",
 						label: "LBL_PAS_STOP",
 						multiselect: true,
-						position: 3,
+						position: 2,
 						showText: false,
 						itemRequired: true
 					},
@@ -274,7 +274,7 @@ export default class PasSignalingContent {
 						icon: "mdi mdi-play-circle-outline",
 						label: "LBL_PAS_PLAY",
 						multiselect: false,
-						position: 2,
+						position: 1,
 						showText: false,
 						itemRequired: true
 					}
@@ -330,7 +330,7 @@ export default class PasSignalingContent {
 						});
 					}
 
-					let pasLibraryComponent = new PasLibraryComponent(self.pasLibraries.pasLibrary, callBack);
+					let pasLibraryComponent = new PasLibraryComponent(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
 					pasLibraryComponent.show();
 				}
 			});
@@ -339,45 +339,68 @@ export default class PasSignalingContent {
 				commandId: 2,
 				function: () => {
 
-					webix.confirm({
-						title: i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function(res) {
+					let selectedItems = self.zonesDataTable.getSelectedItems();
 
-						let selectedItems = self.zonesDataTable.getSelectedItems();
-						let selectedZonesValue = "[";
+					if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
-						for (var i = 0; i < selectedItems.length; i++) {
+						let onAirItems = selectedItems.filter(item => item.onAir == 1);
 
-							if (i > 0) {
-								selectedZonesValue += ", ";
-							}
-							selectedZonesValue += selectedItems[i].messageZoneId;
+						if (selectedItems.length === onAirItems.length) {
+
+							let labelDescription = (onAirItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + onAirItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
+
+							webix.confirm({
+								title: i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM"),
+								ok: i18n.t("LBL_ACCEPT"),
+								cancel: i18n.t("LBL_CANCEL"),
+								text: labelDescription,
+								width: 600
+							}).then(function(res) {
+
+								let selectedZonesValue = "[";
+
+								for (var i = 0; i < selectedItems.length; i++) {
+
+									if (i > 0) {
+										selectedZonesValue += ", ";
+									}
+									selectedZonesValue += selectedItems[i].messageZoneId;
+								}
+
+								selectedZonesValue += "]";
+
+								let command = self.config.commands.SWITCH_OFF;
+
+								command.elementId = self.element.id;
+								command.commandElementValues[0].value = selectedZonesValue;
+
+								let body = {
+									commands: []
+								};
+								body.commands.push(command);
+
+								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+
+									if (!data.json()) {
+
+										webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+									}
+								});
+							});
+
+						} else {
+
+							let label = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING");
+							let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING_DESCRIPTION");
+
+							webix.alert({
+								title: label,
+								text: labelDescription,
+								type: "alert-warning",
+								width: 600
+							});
 						}
-
-						selectedZonesValue += "]";
-
-						let command = self.config.commands.SWITCH_OFF;
-
-						command.elementId = self.element.id;
-						command.commandElementValues[0].value = selectedZonesValue;
-
-						let body = {
-							commands: []
-						};
-						body.commands.push(command);
-
-						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-
-							if (!data.json()) {
-
-								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-							}
-						});
-					});
+					}
 				}
 			});
 
@@ -486,7 +509,7 @@ export default class PasSignalingContent {
 		element.messageAlias = undefined;
 		element.messageAudio = undefined;
 		element.messageDesc = undefined;
-		
+
 		let messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramZoneId);
 		let messageTag = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageTag);
 		let messageId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramMessageId);
@@ -499,7 +522,7 @@ export default class PasSignalingContent {
 
 		if (messageTag && messageTag.value != undefined) {
 
-			if (messageTag.value &&  messageTag.value != "" &&  messageTag.value != " ") {
+			if (messageTag.value && messageTag.value != "" && messageTag.value != " ") {
 
 				element.onAir = "1";
 			} else {
@@ -514,7 +537,7 @@ export default class PasSignalingContent {
 		}
 
 
-		
+
 		if (messageId && messageId.value != undefined) {
 
 			element.messageId = messageId.value;

@@ -3,10 +3,11 @@ import TreeView from "./treeview.js";
 
 export default class PasLibraryComponent {
 
-	constructor(pasLibrary, callBack) {
+	constructor(pasLibrary, callBack, zones) {
 
 		this.pasLibrary = pasLibrary;
 		this.callBack = callBack;
+		this.zones = zones;
 
 		this.treeView;
 		this.selectedPasLibraryNode;
@@ -17,8 +18,9 @@ export default class PasLibraryComponent {
 	show() {
 
 		let self = this;
-
-		self.optionWindow = util.ui.loadWindow(i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER"), this.getView(), 700, 600, true);
+		let label = (self.zones > 1) ? i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER") + " - " + self.zones + " " + i18n.t("LBL_SELECTED_ZONES") : i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER");
+		
+		self.optionWindow = util.ui.loadWindow(label, this.getView(), 700, 600, true);
 	}
 
 	getView() {
@@ -126,6 +128,11 @@ export default class PasLibraryComponent {
 
 		function getMessageView() {
 
+			if ($$("button-accept" + self.uid) != undefined) {
+
+				$$("button-accept" + self.uid).disable();
+			}
+
 			let messageView = {
 				id: "pass-library-message-" + self.uid,
 				rows: [
@@ -191,10 +198,12 @@ export default class PasLibraryComponent {
 				let audioFile = undefined;
 				let cssClass = "audio-player audio-disable";
 
+
 				if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage && self.selectedPasLibraryNode.pasMessage.audio) {
 
 					audioFile = self.selectedPasLibraryNode.pasMessage.audio;
 					cssClass = "audio-player";
+					$$("button-accept" + self.uid).enable();
 				}
 
 				let player = {
@@ -240,37 +249,28 @@ export default class PasLibraryComponent {
 							},
 							{},
 							{
+								id: "button-accept" + self.uid,
 								view: "button",
 								css: "dialog-accept",
 								width: 130,
 								height: 35,
 								value: i18n.t("LBL_SEND"),
+								disabled: true,
 								click: function() {
 
 									let parentWindow = this.getTopParentView();
 
-									if (!self.selectedPasLibraryNode || !self.selectedPasLibraryNode.pasMessage) {
+									webix.confirm({
+										title: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM"),
+										ok: i18n.t("LBL_ACCEPT"),
+										cancel: i18n.t("LBL_CANCEL"),
+										text: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION"),
+										width: 600
+									}).then(function(res) {
 
-										webix.alert({
-											title: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED"),
-											text: i18n.t("LBL_PAS_LIBRARY_MESSAGE_NEEDED_DESCRIPTION"),
-											type: "alert-warning",
-											width: 500
-										});
-									} else {
-
-										webix.confirm({
-											title: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM"),
-											ok: i18n.t("LBL_ACCEPT"),
-											cancel: i18n.t("LBL_CANCEL"),
-											text: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION"),
-											width: 600
-										}).then(function(res) {
-
-											self.callBack(self.selectedPasLibraryNode.pasMessage.message);
-											parentWindow.close();
-										});
-									}
+										self.callBack(self.selectedPasLibraryNode.pasMessage.message);
+										parentWindow.close();
+									});
 								}
 							},
 							{ width: 20 }

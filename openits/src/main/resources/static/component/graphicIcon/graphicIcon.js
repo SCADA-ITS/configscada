@@ -286,20 +286,24 @@ export default class GraphicIcon {
 			}
 			
 			function onClick(e) {
-			
 				// Custom event
 				if (self.events && self.events[GraphicIcon.EventTypes.ON_CLIC]) {
 					
 					eval(self.events[GraphicIcon.EventTypes.ON_CLIC])();
 				}
 				else {
-				
+					
+					const LEFT_BUTTON = 0;
 					let gSel = self.g.select("#" + GraphicIcon.G_ID_SELBOX);
-			
+
 					if (gSel && gSel.attr("visibility") === "hidden") {
 						
 						self.select();	
-					}	
+
+					} else if (gSel && gSel.attr("visibility") === "visible" && e.button == LEFT_BUTTON) {
+						
+						self.unselect();	
+					}
 				}			
 			}
 			
