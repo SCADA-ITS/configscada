@@ -267,7 +267,8 @@ export default class SignalingManagerModule extends GenericModule {
 					let viewHeader;
 					let elementTypeLabelDescription;
 					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-
+					const _TRUE = "true";
+					
 					if (elementType) {
 						
 						elementTypeLabelDescription = elementType.labelDescription; 
@@ -277,7 +278,7 @@ export default class SignalingManagerModule extends GenericModule {
 					
 					if (Array.isArray(elementIds) && elementIds.length > 0) {
 					
-						if (elementIds.length > 1) {
+						if (elementIds.length > 1 && elementType.showSignalingManagerSelectedItems === _TRUE) {
 							
 							viewHeader = {
 								id: "view-main-content-signaling-header-" + self.uid,
