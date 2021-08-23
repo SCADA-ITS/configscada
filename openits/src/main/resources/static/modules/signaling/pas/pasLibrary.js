@@ -1,7 +1,7 @@
-import { util } from "../lib/util.js";
-import TreeView from "./treeview.js";
+import { util } from "../../../lib/util.js";
+import TreeView from "../../../component/treeview.js";
 
-export default class PasLibraryComponent {
+export default class PasLibrary {
 
 	constructor(pasLibrary, callBack, zones) {
 

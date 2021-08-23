@@ -1,6 +1,6 @@
 import { util } from "../../../lib/util.js";
 import DataTable from "../../../component/datatable.js";
-import PasLibraryComponent from "../../../component/pasLibraryComponent.js";
+import PasLibrary from "../pas/pasLibrary.js";
 import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
 import { adapter } from "../../../lib/adapter.js";
 
@@ -330,8 +330,8 @@ export default class PasSignalingContent {
 						});
 					}
 
-					let pasLibraryComponent = new PasLibraryComponent(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
-					pasLibraryComponent.show();
+					let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
+					pasLibrary.show();
 				}
 			});
 
