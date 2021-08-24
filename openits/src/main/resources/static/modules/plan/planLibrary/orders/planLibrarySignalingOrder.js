@@ -16,11 +16,11 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 		let moduleActionId = self.config.moduleAction.defaultPlanOrderEdit;
 		
-		if (self.planOrder && self.planOrder.comandElement && self.planOrder.comandElement.element) {
+		if (self.planOrder && self.planOrder.comandElement && self.planOrder.comandElement.element && self.planOrder.comandElement.element.elementType) {
 			
-			if (self.planOrder.comandElement.element.planOrderSignalingModule) {
+			if (self.planOrder.comandElement.element.elementType.planOrderSignalingModule) {
 			
-				moduleActionId = self.config.moduleAction.defaultPlanOrderEdit;
+				moduleActionId = parseInt(self.planOrder.comandElement.element.elementType.planOrderSignalingModule);
 			}
 			
 			let module = util.module.getFromModuleAction(moduleActionId);

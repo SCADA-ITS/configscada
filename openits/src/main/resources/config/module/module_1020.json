@@ -46,7 +46,7 @@
 		"command": "elements/send_command_element"
 	},
 	"multi": {
-		"fit": true
+		"fit": false
 	},
 	"single": {
 		"fit": false

@@ -23,7 +23,8 @@ export default class VmsSignalingModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let isModuleActionElements = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0); 
+		let isModuleActionElements = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0);
+		let isModuleActionPlanOrderEdit = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit); 
 
 		if ($$(this.uid)) {
 
@@ -81,7 +82,7 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			webix.ui(view, $$(self.uid));
 			
-			if (isModuleActionElements) {
+			if (isModuleActionElements || isModuleActionPlanOrderEdit) {
 				
 				self.currentElement = self.elements.find(e => e.id === self.args.selectedPks[0]);
 				self.elementsSelected = self.elements.filter(e => self.args.selectedPks.includes(e.id));
@@ -234,8 +235,15 @@ export default class VmsSignalingModule extends GenericModule {
 						
 						self.elementsSelected = [self.currentElement];
 					}
-				
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected);
+					
+					let currentCommandElement = undefined;
+									
+					if (self.args.data && self.args.data.planOrder && self.args.data.planOrder.comandElement) {
+						
+						currentCommandElement = self.args.data.planOrder.comandElement;
+					}
+								
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement);
 					
 					view = self.vmsSignalingContent.getView();
 					
@@ -247,6 +255,19 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			return viewMain;
 		}
+	}
+	
+	getSignaling() {
+		
+		let self = this;
+		let commandElement = undefined;
+		
+		if (self.vmsSignalingContent) {
+					
+			commandElement = self.vmsSignalingContent.getCommandElement();
+		}
+		
+		return commandElement;
 	}
 }
 

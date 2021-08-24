@@ -5,14 +5,26 @@ import { util } from "../../../lib/util.js";
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement) {
 
 		this.config = config;
 		this.element = element;
 		this.subtypeElements = subtypeElements;
 		this.selectedElements = selectedElements ? selectedElements : [element];
+		this.currentCommandElement = currentCommandElement;
+		this.isPlanOrderEdit = (currentCommandElement != undefined);
 		this.commandsElement = [];
-		this.selectedCommand = config.commands.sendMessage.commandElementTypeId;
+		
+		if (this.isPlanOrderEdit) {
+			
+			this.selectedCommand = this.currentCommandElement.id;
+		}
+		else {
+			
+			this.selectedCommand = config.commands.sendMessage.commandElementTypeId;
+		}
+		
+		
 		this.uid = webix.uid();
 		
 		this.panelMain = undefined;
@@ -31,23 +43,37 @@ export default class VmsSignalingContent {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
-				{ height: 20 },
+				{ height: !self.isPlanOrderEdit ? 20 : 1 },
 				{
 					cols: [
 						{ width: 20 },
 						{
-							rows: [
-					
-								getViewToolbar(),
-								{ height: 20 },
-								getViewComposer(),
-								{ height: 20 },
-								getViewPriority(),
-								{ height: 20 },
-								getViewSchedule(),
-								{ height: 20 },
-								{}
-							]
+							rows: function() {
+								
+								if (!self.isPlanOrderEdit) {
+									
+									return [
+										getViewToolbar(),
+										{ height: 20 },
+										getViewComposer(),
+										{ height: 20 },
+										getViewPriority(),
+										{ height: 20 },
+										getViewSchedule(),
+										{ height: 20 },
+										{}
+									]
+								}
+								else {
+									
+									return [
+										getViewToolbar(),
+										{ height: 1 },
+										getViewComposer(),
+										{}
+									]
+								}
+							}()
 						}
 					]
 				},
@@ -290,7 +316,17 @@ export default class VmsSignalingContent {
 				id: "view-signalling-commands-" + self.uid,
 				view: "radio",
 				vertical: false,
-				value: self.config.commands.sendMessage.commandElementTypeId,
+				value: function() {
+					
+					let commandElementTypeId = self.config.commands.sendMessage.commandElementTypeId;
+					
+					if (self.isPlanOrderEdit) {
+						
+						commandElementTypeId = self.currentCommandElement.commandElementType.id;
+					} 
+					
+					return commandElementTypeId;
+				}(),
 				options: self.commandsElement,
 				on: {
 					onChange: function(newv) {
@@ -323,8 +359,27 @@ export default class VmsSignalingContent {
 		function getViewComposer() {
 			
 			let viewComposer;
+			let initialJsonValue = undefined;
 			
-			self.composer = new VmsSignalingComposer(self.config, self.element, onUpdateComposer);
+			if (self.isPlanOrderEdit) { 
+				
+				if (Array.isArray(self.currentCommandElement.commandElementValues) && 
+					self.currentCommandElement.commandElementValues.length > 0) {
+					
+					let commandElementValue = self.currentCommandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.config.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
+				
+					if (commandElementValue) {
+						
+						initialJsonValue = JSON.parse(commandElementValue.value); 
+					}	
+				}
+				else {
+					
+					initialJsonValue = [];	
+				}
+			}
+			
+			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, onUpdateComposer);
 			
 			viewComposer = {
 				
@@ -355,6 +410,7 @@ export default class VmsSignalingContent {
 							{ width: 60 }	
 						]
 					},
+					{ height: 10 },
 					{
 						cols: [
 							{},
@@ -426,6 +482,7 @@ export default class VmsSignalingContent {
 						view: "button", 
 						id: "btn-multisignaling-" + self.uid,
 						css: "action-aux-button", 
+						hidden: self.isPlanOrderEdit,
 						width: 130, 
 						height: 35,
 						label: i18n.t("LBL_MULTISIGNALING"), 
@@ -474,6 +531,7 @@ export default class VmsSignalingContent {
 						id: "btn-send-" + self.uid,
 						css: "action-button",
 						disabled: true,
+						hidden: self.isPlanOrderEdit,
 						width: 130,
 						height: 35,
 						label: i18n.t("LBL_SEND"),
@@ -562,5 +620,59 @@ export default class VmsSignalingContent {
 		}
 				
 		return view;
+	}
+	
+	getCommandElement(elementId) {
+	
+		let self = this;
+		let commandElement = undefined;
+		
+		if (!elementId && Array.isArray(self.selectedElements) && self.selectedElements.length > 0) {
+			
+			elementId = self.selectedElements[0].id;
+		}
+		
+		if (elementId) {
+			
+			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+
+				let selectedCommandElement = self.element.commandElements.find(e => e.id === self.selectedCommand);
+				
+				if (selectedCommandElement) {
+					
+					commandElement = {
+						element: {
+							id: elementId 
+						},
+						commandElementType: {
+							id: selectedCommandElement.id
+						},
+						id: selectedCommandElement.id + ":" + elementId.substring(elementId.lastIndexOf(':') + 1)
+						
+					};
+					
+					if (Array.isArray(selectedCommandElement.commandElementTypeParams) && 
+						selectedCommandElement.commandElementTypeParams.length > 0) {
+							
+						// SEND MESSAGE
+						if (selectedCommandElement.id === self.config.sendMessage.commandElementTypeId &&
+							self.composer) {
+								
+							commandElement.commandElementValues = [];
+							
+							commandElement.commandElementValues.push({
+								
+								commandElementTypeParam: {
+									id: selectedCommandElement.commandElementTypeParams[0].id 
+								},
+								value: composer.jsonData
+							});
+						}
+					}
+				}				
+			}
+		}
+						
+		return commandElement;
 	}
 }	

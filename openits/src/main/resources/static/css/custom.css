@@ -918,7 +918,7 @@ p, input, textarea {
 
 .grid-icon {
 	display: inline-block;
-	margin-top: -4px;
+	margin-top: 0px;
 	width: 24px;
 	height: 24px;
 }
@@ -926,6 +926,7 @@ p, input, textarea {
 .grid-title {
 	vertical-align: top;
 	padding-left: 15px;
+	font-size: 14px;
 }
 
 .grid-button-text .webix_button {

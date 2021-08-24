@@ -29,7 +29,7 @@ export default class OptionButtonList {
 					cols: [
 						{ width: 25 },
 						{
-							css: { "border": "1px solid #dadee0 !important", "box-sizing": "border-box" },
+							//css: { "border": "1px solid #dadee0 !important", "box-sizing": "border-box" },
 							rows: getContent()
 						},
 						{ width: 25 }

@@ -27,7 +27,7 @@ export default class PlanLibraryPlan {
 		
 		let view = {
 			id: "plan-lib-plan-" + self.uid,
-			height: 250,
+			//height: 250,
 			rows: drawPlan()
 		};
 		
@@ -58,11 +58,11 @@ export default class PlanLibraryPlan {
 			
 			const defaultGridOptionValues = [
 				{ gridOption: { id: 2 }, value: "false" },
-				{ gridOption: { id: 3 }, value: "4" },
+				{ gridOption: { id: 3 }, value: "5" },
 				{ gridOption: { id: 4 }, value: "asc" },
 				{ gridOption: { id: 5 }, value: undefined },
 				{ gridOption: { id: 6 }, value: undefined },
-				{ gridOption: { id: 7 }, value: "false" },
+				{ gridOption: { id: 7 }, value: "true" },
 				{ gridOption: { id: 8 }, value: "false" },
 				{ gridOption: { id: 9 }, value: "true" },
 				{ gridOption: { id: 10 }, value: "true" },
@@ -150,7 +150,7 @@ export default class PlanLibraryPlan {
 							required: true,
 							sourceField: "orderType",
 							visible: true,
-							widthPx: 400,
+							widthPx: 200,
 							adjust: false,
 							gridFieldDataType: {
 								id: 1,
@@ -164,10 +164,30 @@ export default class PlanLibraryPlan {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
+							label: "LBL_ORDER",
+							labelTooltip: "LBL_PLAN_ORDER",
+							parameterized: false,
+							position: 4,
+							required: true,
+							sourceField: "alias",
+							visible: true,
+							widthPx: 300,
+							adjust: false,
+							gridFieldDataType: {
+								id: 2,
+								name: "int"
+							}
+						},
+						{
+							id: 5,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
 							label: "LBL_POSITION",
 							labelTooltip: "LBL_POSITION",
 							parameterized: false,
-							position: 4,
+							position: 5,
 							required: true,
 							sourceField: "position",
 							visible: true,
@@ -219,6 +239,16 @@ export default class PlanLibraryPlan {
 							position: 4,
 							showText: false,
 							itemRequired: true
+						},
+						{
+							id: 5,
+							default_: false,
+							icon: "mdi mdi-play",
+							label: "LBL_EXECUTE",
+							multiselect: true,
+							position: 5,
+							showText: true,
+							itemRequired: false
 						}
 						
 					]
@@ -292,6 +322,16 @@ export default class PlanLibraryPlan {
 					}
 				});
 				
+				// EXECUTE PLAN
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 5,
+					function: () => {
+	
+						executePlan();
+					}
+				});
+				
+				
 				return events;
 			}
 			
@@ -305,15 +345,14 @@ export default class PlanLibraryPlan {
 					
 					data = self.plan.planOrders.map(e => {
 						
-						let planOrder = {
+						return {
 							
 							id: e.id,
 							position: e.planOrderOrder,
 							orderTypeId: e.planOrderType.id,
-							orderType: i18n.t(e.planOrderType.labelAlias)
+							orderType: i18n.t(e.planOrderType.labelAlias),
+							alias: e.alias
 						}
-						
-						return planOrder;
 					})
 				} 
 				
@@ -404,6 +443,19 @@ export default class PlanLibraryPlan {
 		// TODO: Pending implementation
 		function movePlanOrder(planOrderId, movePlanOrder) {
 			
+		}
+		
+		function executePlan() {
+			
+			let module = util.module.getFromModuleAction(self.config.moduleAction.planExecutor);
+				
+			if (module) {
+
+				let moduleAction = { id: self.config.moduleAction.planExecutor };
+				let args = { selectedPks: [self.plan.id] };
+
+				util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+			}
 		}
 		
 		return view;

@@ -43,7 +43,7 @@ export default class PlanLibraryContent {
 								cols: [
 									{
 										view: "label",
-										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-file-multiple"></i></div>`,
+										label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-file-outline"></i></div>`,
 										align: "center",
 										width: 30
 									},
@@ -51,60 +51,34 @@ export default class PlanLibraryContent {
 									{
 										view: "label",
 										css: "alarm-view-header-details-text",
+										autowidth: true,
 										label: function() {
 											
-											let label = self.plan.alias;
+											let title = self.plan.alias;
 											 
-											return `<span class="alarm-view-header-details-text">${label}</span>`;
+											if (self.plan.description) {
+												
+												title += " - " + self.plan.description;
+											}
+											 
+											return `<span class="alarm-view-header-details-text">${title}</span>`;
 										}(),
 										align: "left",
 									},
-									{},
 									{
-										id: "tbMain-" + self.uid,
-										height: 39,
-										css: {"margin-left":"2px !important"},
-										cols: [
-											{ 
-												view: "button", 
-												type: "icon", 
-												icon: "mdi mdi-play-circle", 
-												css: "toolbar-button-text", 
-												width: TOOLBAR_BUTTONS_WIDTH, 
-												label: i18n.t("LBL_EXECUTE"), 
-												tooltip: i18n.t("LBL_EXECUTE_PLAN_DESCRIPTION"),
-												on: {
-													onItemClick() {
-														
-														let module = util.module.getFromModuleAction(self.config.moduleAction.planExecutor);
-				
-														if (module) {
-									
-															let moduleAction = { id: self.config.moduleAction.planExecutor };
-															let args = { selectedPks: [self.plan.id] };
-									
-															util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-														}
-													}
-												} 
+										view: "icon",
+										icon: "mdi mdi-pencil",
+										tooltip: i18n.t("LBL_EDIT_PLAN_NAME"),
+										on: {
+											onItemClick: function() {
+												
 											}
-										]
+										}
 									},
-									
+									{}
 								]
 							},
-							{ height: 5 },
-							{
-								height: 40,
-								cols: [
-									{ width: 40 },
-									{
-										borderless: true,
-										view: "template",
-										template: `<div class="ventilation-description-box"><span > ${self.plan.description}</span></div>`		
-									}
-								]
-							}
+							{ height: 5 }
 						]
 					},
 					{ width: 10 }
@@ -120,22 +94,12 @@ export default class PlanLibraryContent {
 			let viewPlan = {};
 			
 			viewPlan = {
+				height: 270,
 				cols: [
 					{ width: 10 },
 					{
 						rows: [
 							{ height: 10 },
-							{
-								view: "toolbar",
-								height: 30,
-								borderless: true,
-								elements: [
-									{
-										view: "label",
-										label: "<img src='img/tree_document.png' class='grid-icon'/><span class='grid-title'>" + i18n.t("LBL_PLAN_ORDERS") + "</span>" 
-									}
-								]
-							},
 							drawPlanLibraryPlan(),
 							{ height: 10 }
 						]

@@ -752,7 +752,7 @@ export default class DataTable {
 		toolbar.elements = [];
 		toolbar.elements.push({ width: 4 })
 
-		toolbar.elements.push({ view: "label", label: "<img src='" + resultIcon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(metadata.label) + "</span>" });
+		toolbar.elements.push({ view: "label", label: `<img src="${resultIcon} class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png'" /><span class="grid-title">${i18n.t(metadata.label)}</span>` });
 
 		toolbar.elements.push({ minWidth: 4 });
 

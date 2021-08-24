@@ -10,7 +10,7 @@ const TEXT_ALIGN_RIGHT = "right";
 
 export default class VmsSignalingComposer {
 
-	constructor(config, element, onUpdate, onAfterRender) {
+	constructor(config, element, initialJsonData, onUpdate, onAfterRender) {
 		
 		const jsonDataFakeArray = [
 			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE","alternance":"REDUZCA"},{"id":2,"value":"A 3 KM EN","alternance":"LA VELOCIDAD"},{"id":3,"value":"CARRIL DER.","alternance":"USE CAR. IZD"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
@@ -27,8 +27,20 @@ export default class VmsSignalingComposer {
 		this.jsonDataFake = jsonDataFakeArray[(new Date()).getSeconds() % jsonDataFakeArray.length];
 		
 		this.graphicIconInstance = undefined;
+		this.jsonData = this.getJsonDataClear();
 		
-		this.jsonData = [];
+		if (initialJsonData) {
+			
+			if (Array.isArray(initialJsonData) && initialJsonData.length > 0) {
+				
+				this.initialJsonData = initialJsonData;
+				this.jsonData = initialJsonData;	
+			}
+			else {
+				
+				this.initialJsonData = this.getJsonDataClear();
+			}
+		}
 	}
 
 	getView() {
@@ -37,14 +49,14 @@ export default class VmsSignalingComposer {
 				
 		let view = {
 			id: "vms-composer-" + self.uid,
-			height: 250,
+			height: !self.initialJsonData ? 250 : 100,
 			width: 625,
 			borderless: true,
 			template: function() {
 					
 				return `<div>
 							<!--<svg id=${"vms-composer-svg-" + self.uid} style="display: none"></svg>-->
-							<svg id=${"vms-composer-svg-" + self.uid}></svg>
+							<svg id=${"vms-composer-svg-" + self.uid} height="${!self.initialJsonData ? 250 : 100}px"></svg>
 						</div>`
 			},
 			on: {
@@ -314,25 +326,25 @@ export default class VmsSignalingComposer {
 	
 	getCurrentSignalingJsonData() {
 		
-		let jsonData = undefined;
-				
-		if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
-			
-			jsonData = this.getJsonDataClear();
-			
-			let elementValueJsonData = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonData);
+//		let jsonData = undefined;
+//				
+//		if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
+//			
+//			jsonData = this.getJsonDataClear();
+//			
+//			let elementValueJsonData = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonData);
+//		
+//			if (elementValueJsonData && elementValueJsonData.value) {
+//				
+//				jsonData = JSON.parse(elementValueJsonData.value);
+//			}
+//			else {
+//				
+//				jsonData = USE_VMS_FAKE_DATA ? this.jsonDataFake : undefined;
+//			}	
+//		}
 		
-			if (elementValueJsonData && elementValueJsonData.value) {
-				
-				jsonData = JSON.parse(elementValueJsonData.value);
-			}
-			else {
-				
-				jsonData = USE_VMS_FAKE_DATA ? this.jsonDataFake : undefined;
-			}	
-		}
-		
-		return jsonData;
+		return this.jsonData;
 	}
 	
 	update(jsonData) {

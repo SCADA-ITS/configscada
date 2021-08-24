@@ -34,16 +34,37 @@ export default class PlanLibraryOrder {
 		function drawHeader() {
 			
 			let viewHeader = {
-				view: "toolbar",
-				height: 30,
-				borderless: true,
-				elements: [
+				cols: [
+					{ width: 10 },
 					{
-						view: "label",
-						label: "<img src='" + self.planOrder.planOrderType.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(self.planOrder.planOrderType.labelAlias) + "</span>" 
-					}
+						rows: [
+							{
+								cols: [
+									{
+										view: "label",
+										label: "<img src='" + self.planOrder.planOrderType.icon + "' class='grid-icon'/><span class='grid-title'>" + i18n.t(self.planOrder.planOrderType.labelAlias) + " - " + self.planOrder.alias + "</span>",
+										autowidth: true
+									},
+									{ width: 5 },
+									{
+										view: "icon",
+										icon: "mdi mdi-pencil",
+										tooltip: i18n.t("LBL_EDIT_PLAN_ORDER_NAME"),
+										on: {
+											onItemClick: function() {
+												
+											}
+										}
+									},
+									{}
+								]
+							}
+						]
+					},
+					{ width: 10 }
 				]
-			}
+				
+			};
 			
 			return viewHeader;
 		}

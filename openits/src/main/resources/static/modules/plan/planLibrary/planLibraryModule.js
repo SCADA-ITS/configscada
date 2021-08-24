@@ -2,6 +2,7 @@ import GenericModule from "../../genericModule.js";
 import PlanLibraryPersist from "./planLibraryPersist.js";
 import PlanLibraryContent from "./planLibraryContent.js";
 import TreeView from "../../../component/treeview.js";
+import OptionButtonList from "../../../component/optionButtonList.js";
 import { util } from "../../../lib/util.js";
 
 const TREE_PANEL_WIDTH = 325;
@@ -15,6 +16,7 @@ export default class PlanLibraryModule extends GenericModule {
 		this.config = module.config;
 		this.planLibraryPersist = undefined;
 		this.treeView = undefined;
+		this.optionButtonList = undefined;
 	}
 
 	loadData() {
@@ -30,6 +32,7 @@ export default class PlanLibraryModule extends GenericModule {
 				drawTree(),
 				drawResizer(),
 				drawContent(),
+				getViewOptionButtonList(),
 				drawLoading()
 			]
 		}
@@ -86,6 +89,82 @@ export default class PlanLibraryModule extends GenericModule {
 				}
 			});
 		}
+		
+		function getViewOptionButtonList() {
+
+			let viewOptionButtonList;
+			let actions = getMetadata().treeCommands;
+
+			if (Array.isArray(actions) && actions.length > 0) {
+
+				let options = [];
+
+				for (let action of actions) {
+					
+					options.push({
+						id: action.id,
+						label: i18n.t(action.label),
+						description: i18n.t(action.label.toUpperCase() + "_DESCRIPTION"),
+						default: action.default,
+						icon: action.icon
+					});
+				}
+
+				self.optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+
+				viewOptionButtonList = {
+					id: "view-option-dialog-" + self.uid,
+					css: { "background-color": "white" },
+					rows: [
+						{ height: 10 },
+						{
+							cols: [
+								{ width: 10 },
+								{
+									view: "label",
+									label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-folder-outline"></i></div>`,
+									align: "center",
+									width: 30
+								},
+								{ width: 5 },
+								{
+									view: "label",
+									id: "label-plan-lib-selected-" + self.uid,
+									css: "alarm-view-header-details-text",
+									align: "left"
+								},
+								{}
+							]
+						},
+						{ height: 5 },
+						{						
+							cols: [
+								{ width: 20 },
+								self.optionButtonList.getView(),
+								{}
+							]
+						},
+						{},							
+					]
+				}
+
+				return viewOptionButtonList;
+			}
+
+		}
+		
+		function onAceptOptionButtonList(buttonId){
+			
+			let actions = getMetadata().treeCommands;
+			let itemsSelected = self.treeView.getSelected();
+			let callbackAction = actions.find(e => e.id === buttonId);
+			let selectedPks = [];
+			
+			if (callbackAction){
+				selectedPks.push(itemsSelected[0].id_);
+				callbackAction.callbacks[0].function(selectedPks);
+			}
+		}
 
 		function drawTree() {
 
@@ -125,16 +204,20 @@ export default class PlanLibraryModule extends GenericModule {
 			function getEvents() {
 
 				let events = {};
-
+				
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 
 					let planNode = items.find(e => e.id === item.id_);
 
 					if (planNode && planNode.plan) {
-
+					
 						$$("plan-lib-loading-" + self.uid).show();
+						$$("view-option-dialog-" + self.uid).hide();
+						$$("plan-lib-resizer-" + self.uid).hide();
 						$$("plan-lib-content-" + self.uid).hide();
-
+												
+						
+						
 						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: planNode.plan.id })).then(function(response) {
 
 							let plan = response ? response.json() : undefined;
@@ -147,13 +230,20 @@ export default class PlanLibraryModule extends GenericModule {
 
 								$$("plan-lib-loading-" + self.uid).hide();
 								$$("plan-lib-content-" + self.uid).show();
+								$$("plan-lib-resizer-" + self.uid).show();
 							}
 						});
 					}
 				};
 
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(folder) {
-
+					
+					$$("plan-lib-loading-" + self.uid).hide();
+					$$("plan-lib-content-" + self.uid).hide();
+					$$("plan-lib-resizer-" + self.uid).show();
+					$$("view-option-dialog-" + self.uid).show();
+					
+					$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);
 				}
 
 				return events;
@@ -364,6 +454,7 @@ export default class PlanLibraryModule extends GenericModule {
 			let viewResizer = {};
 
 			viewResizer = {
+				id: "plan-lib-resizer-" + self.uid,
 				view: "resizer"
 			}
 
@@ -374,7 +465,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 			let viewContent = {
 				id: "plan-lib-content-" + self.uid,
-				css: { "background-color": "white" }
+				css: { "background-color": "white" }		
 			};
 
 			return viewContent;
@@ -386,7 +477,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 			viewLoading.id = "plan-lib-loading-" + self.uid;
 			viewLoading.hidden = true;
-
+			
 			return viewLoading;
 		}
 
