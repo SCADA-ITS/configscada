@@ -40,6 +40,7 @@ export default class GraphicIcon {
 		
 		this.g = undefined;
 		this.ratio = undefined;
+		this.unselectEnabled = true;
 	}
 	
 	loadRender(onRenderReady) {
@@ -298,11 +299,20 @@ export default class GraphicIcon {
 
 					if (gSel && gSel.attr("visibility") === "hidden") {
 						
-						self.select();	
+						self.select();
+						
+						self.unselectEnabled = true;	
 
 					} else if (gSel && gSel.attr("visibility") === "visible" && e.button == LEFT_BUTTON) {
 						
-						self.unselect();	
+						webix.delay(function() {
+
+							if (self.unselectEnabled){
+							
+								self.unselect();	
+							}
+							
+						}, null, null, 100);
 					}
 				}			
 			}
@@ -313,6 +323,8 @@ export default class GraphicIcon {
 				if (self.events && self.events[GraphicIcon.EventTypes.ON_DBL_CLIC]) {
 					
 					eval(self.events[GraphicIcon.EventTypes.ON_DBL_CLIC])();
+					
+					self.unselectEnabled = false;
 				}	
 			}
 		}
