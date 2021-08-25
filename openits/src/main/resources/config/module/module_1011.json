@@ -3,7 +3,8 @@
 	    "add": 101101,
 		"edit": 101102,
 		"remove": 101103,
-		"lock": 101104
+		"lock": 101104,
+		"changePassword": 101105
 	},
 	"actionEndpoints": {
 		"add": "users/create",

@@ -49,7 +49,9 @@ export default class UserModule extends GenericModule {
 		}
 
 
-		if (this.userSystem && this.moduleAction.id === this.config.moduleAction.edit) {
+		if (this.userSystem &&
+			(this.moduleAction.id === this.config.moduleAction.edit ||
+				this.moduleAction.id === this.config.moduleAction.changePassword)) {
 
 			webix.alert({
 				title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
@@ -57,7 +59,9 @@ export default class UserModule extends GenericModule {
 				type: "alert-error",
 				width: 600
 			});
-		} else if (this.moduleAction.id === this.config.moduleAction.add || this.moduleAction.id === this.config.moduleAction.edit) {
+		} else if (this.moduleAction.id === this.config.moduleAction.add ||
+			this.moduleAction.id === this.config.moduleAction.edit ||
+			this.moduleAction.id === this.config.moduleAction.changePassword) {
 
 			view = {
 				css: "custom_window",
@@ -114,7 +118,8 @@ export default class UserModule extends GenericModule {
 
 			add();
 		}
-		else if (this.moduleAction.id === this.config.moduleAction.edit) {
+		else if (this.moduleAction.id === this.config.moduleAction.edit ||
+			this.moduleAction.id === this.config.moduleAction.changePassword) {
 
 			edit();
 		}
@@ -130,6 +135,11 @@ export default class UserModule extends GenericModule {
 		if (this.dtPermissions) {
 
 			this.dtPermissions.callbacks();
+
+			if (this.moduleAction.id === this.config.moduleAction.changePassword) {
+
+				this.dtPermissions.disable();
+			}
 		}
 
 
@@ -180,13 +190,17 @@ export default class UserModule extends GenericModule {
 						if (container) {
 							util.ui.setTitle(container.config.id, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
 						}
-	
+
 						drawComponents();
 						setVal(self.oldUser);
 
 						if (self.dtPermissions) {
 
 							self.dtPermissions.callbacks();
+							if (self.moduleAction.id === self.config.moduleAction.changePassword) {
+
+								self.dtPermissions.disable();
+							}
 						}
 					}
 				});
@@ -445,7 +459,8 @@ export default class UserModule extends GenericModule {
 					label = "LBL_NEW_USER";
 					description = "LBL_NEW_USER_DESCRIPTION";
 
-				} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+				} else if (self.moduleAction.id === self.config.moduleAction.edit ||
+					self.moduleAction.id === self.config.moduleAction.changePassword) {
 
 					label = "LBL_EDIT_USER";
 					description = "LBL_EDIT_USER_DESCRIPTION";
@@ -510,17 +525,17 @@ export default class UserModule extends GenericModule {
 						elementsConfig: { labelAlign: "left" },
 						css: "global-form",
 						elements: [
-							{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, inputWidth: 600 },
+							{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
 							{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275, inputWidth: 600 },
 							{ view: "text", id: "password_conf-" + self.uid, name: "confirmPass", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD_CONFIRM"), labelWidth: 275, inputWidth: 600 },
-							{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, inputWidth: 600 },
-							{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, inputWidth: 600 },
+							{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
+							{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
 							{
 								cols: [
 									{ view: "text", id: "localeId-" + self.uid, name: "localeId", hidden: true },
 									{ view: "text", id: "locale-" + self.uid, name: "localeName", required: true, label: i18n.t("LBL_USER_LOCALE"), disabled: true, labelWidth: 275 },
 									{
-										view: "icon", icon: "wxi-search",
+										view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 										on: {
 											onItemClick: function() {
 
@@ -537,9 +552,9 @@ export default class UserModule extends GenericModule {
 							{
 								cols: [
 									{ view: "text", id: "roleId-" + self.uid, name: "roleId", hidden: true },
-									{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275 },
+									{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
 									{
-										view: "icon", icon: "wxi-search",
+										view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 										on: {
 											onItemClick: function() {
 
@@ -561,6 +576,7 @@ export default class UserModule extends GenericModule {
 								labelWidth: 275,
 								inputWidth: 600,
 								value: true,
+								disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 							},
 
 						],
@@ -592,7 +608,7 @@ export default class UserModule extends GenericModule {
 
 
 					function selectRole(selection) {
-						
+
 						if (Array.isArray(selection) && selection.length > 0) {
 
 							if (selection[0].id === self.config.systemRole) {
@@ -641,7 +657,6 @@ export default class UserModule extends GenericModule {
 							},
 						]
 					};
-
 
 					function getTable() {
 
@@ -1059,10 +1074,10 @@ export default class UserModule extends GenericModule {
 				let perm = allPermissions.find(e => e.id === permission);
 
 				if (perm) {
-					
+
 					perm.labelAlias = i18n.t(perm.labelAlias);
 					perm.labelDescription = i18n.t(perm.labelDescription);
-					
+
 					permissionsToAdd.push(perm);
 				}
 
@@ -1075,7 +1090,7 @@ export default class UserModule extends GenericModule {
 			});
 
 			if (self.dtPermissions) {
-				
+
 				self.dtPermissions.clear();
 				self.dtPermissions.add(permissionsToAdd);
 			}
