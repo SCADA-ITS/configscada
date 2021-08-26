@@ -255,13 +255,13 @@ export default class PasSignalingContent {
 						label: "LBL_PAS_SEND",
 						multiselect: true,
 						position: 3,
-						showText: true,
+						showText: false,
 						itemRequired: true
 					},
 					{
 						id: 2,
 						default_: false,
-						icon: "mdi mdi-stop-circle-outline",
+						icon: "mdi mdi-stop",
 						label: "LBL_PAS_STOP",
 						multiselect: true,
 						position: 2,
@@ -271,8 +271,8 @@ export default class PasSignalingContent {
 					{
 						id: 3,
 						default_: false,
-						icon: "mdi mdi-play-circle-outline",
-						label: "LBL_PAS_PLAY",
+						icon: "mdi mdi-volume-high",
+						label: "LBL_PAS_LISTEN_PLAYED_AUDIO",//"LBL_PAS_PLAY"
 						multiselect: false,
 						position: 1,
 						showText: false,

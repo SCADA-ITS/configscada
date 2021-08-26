@@ -19,7 +19,7 @@ export default class PasLibrary {
 
 		let self = this;
 		let label = (self.zones > 1) ? i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER") + " - " + self.zones + " " + i18n.t("LBL_SELECTED_ZONES") : i18n.t("LBL_PAS_LIBRARY_PLAYER_HEADER");
-		
+
 		self.optionWindow = util.ui.loadWindow(label, this.getView(), 700, 600, true);
 	}
 
@@ -32,7 +32,7 @@ export default class PasLibrary {
 			rows: [
 				getHeader(),
 				getTreeView(),
-				getMessageView(),
+				getFolderView(),
 				getBottomView()
 			]
 		};
@@ -92,7 +92,8 @@ export default class PasLibrary {
 						{ treeOption: { id: 4 }, value: false }, // cmd_buttons
 						{ treeOption: { id: 5 }, value: true }, // search
 						{ treeOption: { id: 6 }, value: true },	// expand_all
-						{ treeOption: { id: 7 }, value: false }	// check_all
+						{ treeOption: { id: 7 }, value: false }, // check_all
+						{ treeOption: { id: 9 }, value: true }	// no_show_empty_folders
 					]
 				};
 
@@ -101,7 +102,40 @@ export default class PasLibrary {
 
 			function getTreeData() {
 
-				let data = util.tree.getNodes(self.pasLibrary.pasLibraryNodes, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, true);
+				let nodeList = webix.copy(self.pasLibrary.pasLibraryNodes);
+				let itemsWithoutMessages = nodeList.filter(item => (item.pasMessage) && (item.pasMessage.message === ""));
+
+				if (Array.isArray(itemsWithoutMessages) && itemsWithoutMessages.length > 0) {
+
+					for (let item of itemsWithoutMessages) {
+
+						let itemIdx = nodeList.indexOf(item);
+
+						if (itemIdx !== -1) {
+
+							nodeList.splice(itemIdx, 1);
+						}
+
+						let folderToDelete = self.pasLibrary.pasLibraryHierarchies.find(e => e.nodeChildId == item.id);
+
+						if (folderToDelete) {
+
+							let nodeFolderToDelete = nodeList.find(e => e.id == folderToDelete.nodeParentId);
+
+							if (nodeFolderToDelete) {
+
+								let folderIdx = nodeList.indexOf(nodeFolderToDelete);
+
+								if (folderIdx !== -1) {
+
+									nodeList.splice(folderIdx, 1);
+								}
+							}
+						}
+					}
+				}
+
+				let data = util.tree.getNodes(nodeList, self.pasLibrary.pasLibraryHierarchies, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, true);
 
 				return data;
 			}
@@ -119,7 +153,7 @@ export default class PasLibrary {
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) {
 
 					self.selectedPasLibraryNode = self.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.id == item.id_);
-					webix.ui(getMessageView(), $$("pass-library-message-" + self.uid));
+					webix.ui(getFolderView(), $$("pass-library-message-" + self.uid));
 				};
 
 				return events;
@@ -130,32 +164,17 @@ export default class PasLibrary {
 
 			if ($$("button-accept" + self.uid) != undefined) {
 
-				$$("button-accept" + self.uid).disable();
+				$$("button-accept" + self.uid).enable();
 			}
 
 			let messageView = {
 				id: "pass-library-message-" + self.uid,
 				rows: [
-					{ height: 83 },
-					{
-						view: "label",
-						label: i18n.t("LBL_PAS_LIBRARY_NO_MESSAGE"),
-						align: "center"
-					},
-					{ height: 83 }
+					getMessageDetail(),
+					getPlayer()
 				]
 			};
 
-			if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage) {
-
-				messageView = {
-					id: "pass-library-message-" + self.uid,
-					rows: [
-						getMessageDetail(),
-						getPlayer()
-					]
-				};
-			}
 
 			return messageView;
 
@@ -163,7 +182,10 @@ export default class PasLibrary {
 
 				let messageDetail = {};
 
-				if (self.selectedPasLibraryNode && self.selectedPasLibraryNode.pasMessage) {
+				if (self.selectedPasLibraryNode) {
+
+					let label = (self.selectedPasLibraryNode.pasMessage) ? self.selectedPasLibraryNode.pasMessage.alias : i18n.t("LBL_NO_SIGNALING_MESSAGE");
+					let description = (self.selectedPasLibraryNode.pasMessage) ? self.selectedPasLibraryNode.pasMessage.description : i18n.t("LBL_NO_SIGNALING_MESSAGE_DESCRIPTION");
 
 					messageDetail = {
 						height: 146,
@@ -173,7 +195,7 @@ export default class PasLibrary {
 								rows: [
 									{
 										view: "label",
-										label: self.selectedPasLibraryNode.pasMessage.alias,
+										label: label,
 										align: "left",
 										css: { "color": "#475466", "font-size": "16px !important", "padding-top": "12px" }
 									},
@@ -181,7 +203,7 @@ export default class PasLibrary {
 										view: "textarea",
 										readonly: true,
 										css: "audio-description",
-										value: self.selectedPasLibraryNode.pasMessage.description
+										value: description
 									}
 								]
 							},
@@ -225,6 +247,31 @@ export default class PasLibrary {
 
 				return player;
 			}
+		}
+
+
+		function getFolderView() {
+
+			if ($$("button-accept" + self.uid) != undefined) {
+
+				$$("button-accept" + self.uid).disable();
+			}
+
+			let folderView = {
+				id: "pass-library-message-" + self.uid,
+				rows: [
+					{ height: 83 },
+					{
+						view: "label",
+						label: i18n.t("LBL_PAS_LIBRARY_NO_MESSAGE"),
+						align: "center"
+					},
+					{ height: 83 }
+				]
+			};
+
+			return folderView;
+
 		}
 
 		function getBottomView() {
