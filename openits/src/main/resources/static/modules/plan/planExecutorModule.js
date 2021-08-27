@@ -446,7 +446,7 @@ export default class PlanExecutor extends GenericModule {
 										value: "PlanOrderStateType:2"
 									},
 									{
-										icon: "./img/grid/critical.png'",
+										icon: "./img/grid/critical.png",
 										showValue: false,
 										value: "PlanOrderStateType:3"
 									}

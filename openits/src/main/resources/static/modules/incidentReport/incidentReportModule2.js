@@ -1,9 +1,9 @@
-import GenericModule from "../modules/genericModule.js";
-import DataTable from "../component/datatable.js";
-import SearchDialogBox from "../component/searchDialogBox.js";
-import InputDialogBox from "../component/inputDialogBox.js";
-import FilesManager from "../component/filesManager.js";
-import { util } from "../lib/util.js";
+import GenericModule from "../../modules/genericModule.js";
+import DataTable from "../../component/datatable.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
+import InputDialogBox from "../../component/inputDialogBox.js";
+import FilesManager from "../../component/filesManager.js";
+import { util } from "../../lib/util.js";
 
 
 
