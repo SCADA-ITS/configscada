@@ -9,10 +9,11 @@ const TreeOptions = {
 	SEARCH: 5,
 	EXPAND_ALL: 6,
 	CHECK_ALL: 7,
-	ROOT_NODE: 8
+	ROOT_NODE: 8,
+	NO_SHOW_EMPTY_FOLDERS: 9
 };
 
-const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false };
+const DefOptionValues = { 2: false, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false, 9: false };
 const DefProperties = {
 	TRANSLATE: {
 		name: "translate",
@@ -186,11 +187,24 @@ export default class TreeView {
 		
 		view.rows.push(drawTree());
 		
-		function applyProperties(data) {
+		function applyProperties(data, level) {
+			
+			let noShowEmptyFolders = self.getTreeOptions(TreeOptions.NO_SHOW_EMPTY_FOLDERS);
+			
+			let res = undefined;
+			
+			if (!level) {
+				
+				level = 1;
+			}
+			else {
+				
+				level++;
+			}
 			
 			if (Array.isArray(data) && data.length > 0) {
 				
-				return data.map(e => {
+				res = data.map(e => {
 					
 					let item = {};
 					
@@ -203,14 +217,39 @@ export default class TreeView {
 					
 					if (item.data && Array.isArray(item.data) && item.data.length > 0) {
 					
-						item.data = applyProperties(item.data);	
-					}
+						item.data = applyProperties(item.data, level);	
+						
+						if (noShowEmptyFolders && Array.isArray(item.data)) {
+							
+							let isAllEmpty = true;
+							
+							for (let i = 0; isAllEmpty && i < item.data.length; i++) {
+								
+								isAllEmpty &= (item.data[i].data.length == 0 && item.data[i].props.folder);
+							}
+							
+							if (isAllEmpty) {
+								
+								item.data = [];
+							}
+						}
+					} 
 					
 					item.image = getItemProps(item, DefProperties.IMAGE); 
 					item.disabled = getItemProps(item, DefProperties.DISABLED);
-
+					
 					return item;
 				});
+				
+				if (noShowEmptyFolders && level === 1) {
+					
+					if (Array.isArray(res)) {
+						
+						res = res.filter(r => Array.isArray(r.data) && r.data.length > 0)
+					}							
+				}
+				
+				return res;
 			}
 		}
 		
