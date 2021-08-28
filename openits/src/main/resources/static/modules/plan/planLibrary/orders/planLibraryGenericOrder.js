@@ -179,10 +179,28 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_VALUE",
+						label: "LBL_PLAN_ORDER_VALUE_ID",
 						needsTranslation: false,
 						parameterized: false,
 						position: 4,
+						required: true,
+						sourceField: "planOrderValueId",
+						visible: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						}	
+					},
+					{
+						id: 5,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "LBL_VALUE",
+						needsTranslation: false,
+						parameterized: false,
+						position: 5,
 						required: true,
 						sourceField: "value",
 						visible: true,
@@ -225,16 +243,11 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 					
 					gridData = planOrderType.planOrderTypeParams.map(e => {
 					
-						let value = undefined;
+						let planOrderValue = undefined;
 						
 						if (Array.isArray(self.planOrder.planOrderValues) && self.planOrder.planOrderValues.length > 0) {
 							
-							let planOrderValue = self.planOrder.planOrderValues.find(p => p.planOrderTypeParam.id === e.id);
-							
-							if (planOrderValue) {
-								
-								value = planOrderValue.value;
-							}
+							planOrderValue = self.planOrder.planOrderValues.find(p => p.planOrderTypeParam.id === e.id);
 						}
 						
 						return {
@@ -242,7 +255,8 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 							param: i18n.t(e.labelAlias),
 							dataTypeId: e.dataType.id,
 							dataType: i18n.t(e.dataType.labelAlias),
-							value: value
+							planOrderValueId: planOrderValue ? planOrderValue.id : undefined,
+							value: planOrderValue ? planOrderValue.value : undefined 
 						}
 					});	
 				}
@@ -260,11 +274,62 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 		return viewParams;
 	}
 	
+	createCustomPlanOrder(newPlanOrder) {
+		
+		if (newPlanOrder) {
+			
+			let planOrderType = window.em.getByField(EntityType.PLAN_ORDER_TYPE, "id", newPlanOrder.planOrderTypeId);
+				
+			if (planOrderType && Array.isArray(planOrderType.planOrderTypeParams)) {
+				
+				let planOrderValues = planOrderType.planOrderTypeParams.map(e => {
+					
+					return {
+
+						planOrderTypeParamId: e.id,
+						value: "" 
+					}
+				});
+				
+				newPlanOrder.planOrderValues = planOrderValues;
+			}
+		}
+	}
+	
 	getPlanOrder() {
 		
-		let planOrder = this.planOrder;
+		let self = this;		
+		let planOrder;
 		
-		
+		if (self.planOrder) {
+			
+			planOrder = {
+				
+				id: self.planOrder.id,
+				planOrderTypeId: self.planOrder.planOrderType.id
+			}
+			
+			if (self.dtParams) {
+			
+				let dtParamRows = self.dtParams.getAllItems();
+				
+				if (Array.isArray(dtParamRows) && dtParamRows.length > 0) {
+					
+					planOrder.planOrderValues = [];
+					
+					dtParamRows.forEach(row => {
+					
+						let planOrderValue = {
+							id: row.planOrderValueId,
+							planOrderTypeParamId: row.id,
+							value: row.value
+						}
+						
+						planOrder.planOrderValues.push(planOrderValue);
+					});	
+				}
+			}
+		}
 		
 		return planOrder;
 	}

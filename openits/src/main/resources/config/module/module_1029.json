@@ -5,9 +5,15 @@
 	    "defaultPlanOrderEdit": 101902
 	},	
 	"restEndpoints": {
+		"elementType": "element_types/${id}",
 		"plan": "plans/${id}",
 		"planNodes": "plans/nodes",
+		"createNode": "plans/node",
+		"deleteNode": "plans/node/${id}",
 		"planHierarchies": "plans/hierarchies",
+		"createPlan": "plans/createPlan",
+		"updatePlan": "plans/updatePlan",
+		"deletePlan": "plans/deletePlan/${id}",
 		"createPlanOrder": "plans/createPlanOrder",
 		"updatePlanOrder": "plans/updatePlanOrder",
 		"deletePlanOrder": "plans/deletePlanOrder/${id}"

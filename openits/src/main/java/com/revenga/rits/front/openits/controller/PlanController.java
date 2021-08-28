@@ -368,7 +368,7 @@ public class PlanController {
 	@DeleteMapping(value = "/node/{id}")
 	@ApiOperation(value = "Delete plan node", notes = "Delete plan node")
 	public ResponseEntity<Map<String, Object>> deletePlanNode(
-			@ApiParam(name = "id", type = "Integer", value = "PlanNode id", example = "1", required = true) @PathVariable Integer id) {
+			@ApiParam(name = "id", type = "Integer", value = "PlanNode id", example = "PlanNode:1", required = true) @PathVariable String id) {
 
 		return new ResponseEntity<>(planBO.deletePlanNode(id), HttpStatus.OK);
 	}

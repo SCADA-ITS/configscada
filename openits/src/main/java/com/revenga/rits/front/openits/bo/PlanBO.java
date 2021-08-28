@@ -138,11 +138,11 @@ public class PlanBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_NODE).getFieldId(), createdPlan);
 	}
 
-	public Map<String, Object> deletePlanNode(Integer id) {
+	public Map<String, Object> deletePlanNode(String id) {
 
 		Map<String, Object> input = new HashMap<>();
 
-		input.put("nodeId", id);
+		input.put("planNodeId", id);
 
 		Map<String, Object> deletedPlanNode = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_NODE, input);
 

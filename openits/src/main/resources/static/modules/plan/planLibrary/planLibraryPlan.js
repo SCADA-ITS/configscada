@@ -42,8 +42,12 @@ export default class PlanLibraryPlan {
 						self.planTable.callbacks();
 						
 						webix.delay(function() {
-
-							self.planTable.select(self.selectedPlanOrder.id);
+	
+							if (self.selectedPlanOrder) {
+								
+								self.planTable.select(self.selectedPlanOrder.id);
+							}
+							
 						}, null, null, 100);
 						
 						
@@ -63,9 +67,7 @@ export default class PlanLibraryPlan {
 				{ gridOption: { id: 5 }, value: undefined },
 				{ gridOption: { id: 6 }, value: undefined },
 				{ gridOption: { id: 7 }, value: "true" },
-				{ gridOption: { id: 8 }, value: "false" },
-				{ gridOption: { id: 9 }, value: "true" },
-				{ gridOption: { id: 10 }, value: "true" },
+				{ gridOption: { id: 9 }, value: "false" },
 				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
 				{ gridOption: { id: 21 }, value: "custom" },
 				{ gridOption: { id: 23 }, value: "true" }
@@ -73,7 +75,9 @@ export default class PlanLibraryPlan {
 			
 			function getMetadata() {
 				
-				let metadata = {
+				let metadata;
+				
+				metadata = {
 					filter: true,
 					label: "LBL_PLAN_ORDERS",
 					visible: true,
@@ -127,7 +131,8 @@ export default class PlanLibraryPlan {
 											
 											icon: e.icon,
 											showValue: false,
-											value: e.id
+											value: e.id,
+											labelValue: e.labelAlias
 										}							
 									});
 								} 
@@ -364,7 +369,21 @@ export default class PlanLibraryPlan {
 			return self.planTable.getView();
 		}
 		
-		// TODO: Pending implementation
+		function getNextPosition() {
+			
+			let position = 0;
+			
+			if (self.plan && Array.isArray(self.plan.planOrders)) {
+				
+				self.plan.planOrders.forEach(planOrder => {
+					
+					position = planOrder.planOrderOrder > position ? planOrder.planOrderOrder : position;  
+				});
+			}
+			
+			return ++position;
+		}
+		
 		function newPlanOrder() {
 			
 			let dialogPlanOrderTypes = webix.copy(SearchDialogBox.CUSTOM);
@@ -397,7 +416,8 @@ export default class PlanLibraryPlan {
 						id: planOrderType.id,
 						idIcon: planOrderType.id,
 						alias: i18n.t(planOrderType.labelAlias),
-						description: i18n.t(planOrderType.labelDescription)
+						description: i18n.t(planOrderType.labelDescription),
+						jsFile: planOrderType.jsFile
 					});
 				});
 				
@@ -405,11 +425,34 @@ export default class PlanLibraryPlan {
 
 					if (Array.isArray(items) && items.length === 1) {
 	
-						let item = items[0];
+						let planOrderType = planOrderTypes.find(e => e.id == items[0].id);
 	
-						if (item && item.id) {
+						if (planOrderType) {
 	
-							
+							try {
+
+								const lazy = async _ => {
+									
+									let jsFile = util.getContextPath() + "/" + planOrderType.jsFile;	
+			
+									const mod = await import(jsFile);
+									
+									let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, undefined, self.onUpdate);
+									
+									let newPlanOrder = {
+										planOrderType: webix.copy(planOrderType),
+										planOrderOrder: getNextPosition()
+									}
+									
+									planLibraryOrder.createPlanOrder(newPlanOrder);
+								}
+				
+								lazy();
+				
+							} catch (error) {
+				
+								console.log(error);
+							}
 						}
 					}
 				});
@@ -420,29 +463,148 @@ export default class PlanLibraryPlan {
 			
 		}
 		
-		// TODO: Pending implementation
 		function deletePlanOrders(planOrderIds) {
 		
 			if (Array.isArray(planOrderIds) && planOrderIds.length > 0) {
 				
-				let deleteOrders = 0;
+				webix.confirm({
+					title: i18n.t("LBL_DIALOG_DELETE_SELECTED_ORDERS"),
+					ok: i18n.t("LBL_YES"),
+					cancel: i18n.t("LBL_NO"),
+					text: i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"),
+					width: 600
+				}).then(function() {
+
+					let deleteOrders = 0;
 				
-				planOrderIds.forEach(planOrderId => {
-				
-					self.planLibraryPersist.deletePlanOrder(planOrderId).then(function(response) {
+					planOrderIds.forEach(planOrderId => {
 					
-						if (++deleteOrders == planOrderIds.length) {
-							
-							self.onUpdate(self.plan.id);
-						}
+						self.planLibraryPersist.deletePlanOrder(planOrderId).then(function(response) {
+						
+							if (++deleteOrders == planOrderIds.length) {
+								
+								self.onUpdate(self.plan);
+							}
+						});
 					});
 				});
 			}
 		}		
 		
-		// TODO: Pending implementation
-		function movePlanOrder(planOrderId, movePlanOrder) {
+		function movePlanOrder(planOrderId, movePlanOrderType) {
 			
+			let planOrders = webix.copy(self.plan.planOrders);
+
+			if (Array.isArray(planOrders) && planOrders.length > 0) {
+				
+				planOrders.sort((a, b) => (a.planOrderOrder > b.planOrderOrder) ? 1 : ((b.planOrderOrder > a.planOrderOrder) ? -1 : 0));
+				
+				let idxSelectedPlanOrder = planOrders.findIndex(e => e.id === planOrderId);
+				
+				if (idxSelectedPlanOrder > -1) {
+					
+					let selectedPlanOrder = planOrders[idxSelectedPlanOrder];
+					let previousPlanOrder = (idxSelectedPlanOrder > 0) ? planOrders[idxSelectedPlanOrder - 1] : undefined;
+					let nextPlanOrder = idxSelectedPlanOrder < (planOrders.length -1) ? planOrders[idxSelectedPlanOrder + 1] : undefined; 
+					
+					let selectedPlanOrderUpdated = undefined;
+					let otherPlanOrderUpdated = undefined;
+					
+					let allowMoveUp = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder);
+					let allowMoveDown = (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder);
+					
+					if (allowMoveUp || allowMoveDown) {
+						
+						webix.confirm({
+							title: i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER"),
+							ok: i18n.t("LBL_YES"),
+							cancel: i18n.t("LBL_NO"),
+							text: i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"),
+							width: 600
+						}).then(function() {
+							
+							if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder) {
+						
+								selectedPlanOrderUpdated = {
+									
+									id: selectedPlanOrder.id,
+									planOrderOrder: previousPlanOrder.planOrderOrder,
+									planOrderTypeId: selectedPlanOrder.planOrderType.id
+								}
+								
+								otherPlanOrderUpdated = {
+									
+									id: previousPlanOrder.id,
+									planOrderOrder: selectedPlanOrder.planOrderOrder,
+									planOrderTypeId: previousPlanOrder.planOrderType.id
+								}
+							} 	
+							else if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_DOWN && nextPlanOrder) {
+								
+								selectedPlanOrderUpdated = {
+									
+									id: selectedPlanOrder.id,
+									planOrderOrder: nextPlanOrder.planOrderOrder,
+									planOrderTypeId: selectedPlanOrder.planOrderType.id
+								}
+								
+								otherPlanOrderUpdated = {
+									
+									id: nextPlanOrder.id,
+									planOrderOrder: selectedPlanOrder.planOrderOrder,
+									planOrderTypeId: nextPlanOrder.planOrderType.id
+								}
+							}
+							
+							if (selectedPlanOrderUpdated && otherPlanOrderUpdated) {
+								
+								self.planLibraryPersist.updatePlanOrder(selectedPlanOrderUpdated)
+								.then(function(updatedSelPlanOrder) {
+									
+									if (updatedSelPlanOrder) {
+										
+										self.planLibraryPersist.updatePlanOrder(otherPlanOrderUpdated)
+										.then(function(updatedOtherPlanOrder) {
+										
+											if (updatedOtherPlanOrder) {
+												
+												self.onUpdate(self.plan, updatedSelPlanOrder);	
+											}
+											else {
+												
+												webix.alert({
+													title: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER"),
+													text: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"),
+													type: "alert-error",
+													width: 500
+												});
+											}
+										});	
+									}
+									else {
+										
+										webix.alert({
+											title: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER"),
+											text: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"),
+											type: "alert-error",
+											width: 500
+										});
+									}
+								});
+							}
+						});
+					}
+					else {
+						
+						webix.alert({
+							title: i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER"),
+							text: i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"),
+							type: "alert-warning",
+							width: 500
+						});
+					}
+				} 
+			}
 		}
 		
 		function executePlan() {
@@ -459,5 +621,18 @@ export default class PlanLibraryPlan {
 		}
 		
 		return view;
+	}
+	
+	update(plan) {
+		
+		let self = this;
+		
+		if (self.planLibraryPersist) {
+			
+			self.planLibraryPersist.updatePlan(plan).then(function(response) {
+					
+				self.onUpdate(plan);
+			});	
+		}
 	}
 }	

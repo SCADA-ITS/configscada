@@ -1,13 +1,15 @@
 import PlanLibraryPlan from "./planLibraryPlan.js";
+import InputDialogBox from "../../../component/inputDialogBox.js";
 import { util } from "../../../lib/util.js";
 
 export default class PlanLibraryContent {
 
-	constructor(config, uid, plan) {
+	constructor(config, uid, plan, onUpdate) {
 		
 		this.config = config;
 		this.plan = plan;
 		this.uid = uid;
+		this.onUpdate = onUpdate;
 		
 		this.planLibraryPlan = undefined;
 		this.selectedPlanOrder = undefined;
@@ -33,7 +35,9 @@ export default class PlanLibraryContent {
 			
 			const TOOLBAR_BUTTONS_WIDTH = 130;
 			
-			let viewHeader = {
+			let viewHeader;
+			
+			viewHeader = {
 				cols: [
 					{ width: 10 },
 					{
@@ -70,8 +74,32 @@ export default class PlanLibraryContent {
 										icon: "mdi mdi-pencil",
 										tooltip: i18n.t("LBL_EDIT_PLAN_NAME"),
 										on: {
+											
 											onItemClick: function() {
 												
+												let planAlias = self.plan.alias;
+												let planDescription = self.plan.description;
+												
+												(new InputDialogBox(i18n.t("LBL_PLAN_NAME"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newAlias) {
+						
+													(new InputDialogBox(i18n.t("LBL_PLAN_DESCRIPTION"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newDescription) {
+						
+														if (planAlias != newAlias || planDescription != newDescription) {
+															
+															let updatedPlan = {
+																id: self.plan.id,
+																alias: newAlias,
+																description: newDescription,
+																planModeType: self.plan.planModeType,
+																planSubtypeId: self.plan.planSubtype.id
+															}
+															
+															self.planLibraryPlan.update(updatedPlan);
+														}
+														
+													}, false, planDescription)).show();
+													
+												}, true, planAlias)).show();
 											}
 										}
 									},
@@ -162,25 +190,35 @@ export default class PlanLibraryContent {
 			
 			function onUpdate(plan, planOrder) {
 				
-				$$("plan-lib-loading-" + self.uid).show();
-				$$("plan-lib-content-" + self.uid).hide();
-
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: plan.id })).then(function(response) {
-
-					let planResponse = response ? response.json() : undefined;
-
-					if (planResponse) {
-
-						self.plan = planResponse;
+				if (plan) {
+				
+					if (!planOrder) {
 						
-						self.selectedPlanOrder = planOrder;
-
-						webix.ui(self.getView(), $$("plan-lib-content-" + self.uid));
-
-						$$("plan-lib-loading-" + self.uid).hide();
-						$$("plan-lib-content-" + self.uid).show();
+						self.onUpdate(plan);	
 					}
-				});
+					else {
+						
+						$$("plan-lib-loading-" + self.uid).show();
+						$$("plan-lib-content-" + self.uid).hide();
+		
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: plan.id })).then(function(response) {
+		
+							let planResponse = response ? response.json() : undefined;
+		
+							if (planResponse) {
+		
+								self.plan = planResponse;
+								
+								self.selectedPlanOrder = planOrder;
+		
+								webix.ui(self.getView(), $$("plan-lib-content-" + self.uid));
+		
+								$$("plan-lib-loading-" + self.uid).hide();
+								$$("plan-lib-content-" + self.uid).show();
+							}
+						});
+					}
+				}
 			}
 			
 			return viewPlan;
@@ -199,7 +237,9 @@ export default class PlanLibraryContent {
 		
 		function drawOrder() {
 			
-			let viewOrder = {
+			let viewOrder; 
+			
+			viewOrder = {
 				cols: [
 					{ width: 10 },
 					{

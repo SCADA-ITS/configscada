@@ -10,9 +10,13 @@ export default class PlanLibraryPersist {
 	async createFolder(folderName, parentNodeId) {
 
 		let body = {
-			alias: folderName,
-			description: folderName,
-			parentId: parentNodeId
+			planNode: {
+				
+				alias: folderName,
+				description: folderName,
+				parentId: parentNodeId	
+			}
+			
 		};
 		
 		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.createNode, body);
@@ -20,13 +24,17 @@ export default class PlanLibraryPersist {
 		return data.json();
 	}
 	
-	async createItem(itemName, parentNodeId) {
+	async createItem(itemName, parentNodeId, planId) {
 		
 		let body = {
-			alias: itemName,
-			description: itemName,
-			planId: -1,
-			parentId: parentNodeId
+			planNode: {
+				
+				alias: itemName,
+				description: itemName,
+				planId: planId,
+				parentId: parentNodeId	
+			}
+			
 		};
 		
 		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.createNode, body);
@@ -41,11 +49,39 @@ export default class PlanLibraryPersist {
 		return data.json();
 	}
 	
-	async createPlanOrder(planId, planOrderTypeId) {
+	async createPlan(plan) {
 		
 		let body = {
-			planId: planId,
-			planOrderTypeId: planOrderTypeId
+			plan: webix.copy(plan) 
+		}
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.createPlan, body);
+		
+		return data.json();
+	}
+	
+	async updatePlan(plan) {
+		
+		let body = {
+			plan: webix.copy(plan) 
+		}
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + this.config.restEndpoints.updatePlan, body);
+		
+		return data.json();
+	}
+	
+	async deletePlan(id) {
+		
+		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).del(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.deletePlan, { id: id }));
+		
+		return data.json();
+	}
+
+	async createPlanOrder(planOrder) {
+		
+		let body = {
+			planOrder: webix.copy(planOrder)
 		};
 		
 		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + this.config.restEndpoints.createPlanOrder, body);
@@ -56,7 +92,7 @@ export default class PlanLibraryPersist {
 	async updatePlanOrder(planOrder) {
 		
 		let body = {
-			planOrderTypeId: planOrder.planOrderType.id
+			planOrder: webix.copy(planOrder)
 		};
 		
 		let data = await webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + this.config.restEndpoints.updatePlanOrder, body);

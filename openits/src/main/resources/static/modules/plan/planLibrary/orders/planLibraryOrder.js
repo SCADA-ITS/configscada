@@ -1,5 +1,5 @@
-import { util } from "../../../../lib/util.js";
 import PlanLibraryPersist from "../planLibraryPersist.js";
+import InputDialogBox from "../../../../component/inputDialogBox.js";
 
 export default class PlanLibraryOrder {
 	
@@ -33,7 +33,9 @@ export default class PlanLibraryOrder {
 		
 		function drawHeader() {
 			
-			let viewHeader = {
+			let viewHeader;
+			
+			viewHeader = {
 				cols: [
 					{ width: 10 },
 					{
@@ -53,6 +55,22 @@ export default class PlanLibraryOrder {
 										on: {
 											onItemClick: function() {
 												
+												let planOrderAlias = self.planOrder.alias;
+												
+												(new InputDialogBox(i18n.t("LBL_PLAN_ORDER_ALIAS"), i18n.t("LBL_ENTER_NEW_PLAN_ORDER_ALIAS"), function(newPlanOrderAlias) {
+					
+													if (planOrderAlias != newPlanOrderAlias) {
+														
+														let updatedPlanOrder = {
+															id: self.planOrder.id,
+															alias: newPlanOrderAlias,
+															planOrderTypeId: self.planOrder.planOrderType.id
+														}
+														
+														self.savePlanOrder(updatedPlanOrder);
+													}
+													
+												}, true, planOrderAlias)).show();
 											}
 										}
 									},
@@ -96,7 +114,7 @@ export default class PlanLibraryOrder {
 									width: 600
 								}).then(function() {
 									
-									savePlanOrder();
+									self.savePlanOrder();
 								});					
 							}
 						}
@@ -105,19 +123,7 @@ export default class PlanLibraryOrder {
 			};		
 
 			
-			function savePlanOrder() {
-				
-				let planLibraryPersist = new PlanLibraryPersist(self.config);
-				let newPlanOrder = self.getPlanOrder();
-				
-				if (newPlanOrder) {
-					
-					planLibraryPersist.updatePlanOrder(newPlanOrder).then(result => {
-						
-						self.onUpdate(self.plan, newPlanOrder);	
-					});
-				}
-			}
+			
 			
 			return viewActions;
 		}
@@ -138,5 +144,63 @@ export default class PlanLibraryOrder {
 	getPlanOrder() {
 		
 		throw new Error("Method 'getPlanOrder()' must be implemented.");
+	}
+	
+	createCustomPlanOrder(newPlanOrder) {
+		
+		throw new Error("Method 'createCustomPlanOrder()' must be implemented.");
+	}
+	
+	createPlanOrder(planOrder) {
+		
+		let self = this;
+		
+		if (planOrder && self.plan) {
+			
+			let planLibraryPersist = new PlanLibraryPersist(self.config);
+		
+			let newPlanOrder = {
+				planId: self.plan.id,
+				alias: planOrder.planOrderType.alias,
+				description: planOrder.planOrderType.alias,
+				planOrderTypeId: planOrder.planOrderType.id,
+				planOrderOrder: planOrder.planOrderOrder
+			}
+			
+			self.createCustomPlanOrder(newPlanOrder);
+			
+			if (newPlanOrder) {
+				
+				planLibraryPersist.createPlanOrder(newPlanOrder).then(result => {
+					
+					self.onUpdate(self.plan, result);	
+				});
+			}	
+		}
+	}
+	
+	savePlanOrder(planOrder) {
+				
+		let self = this;
+		let planLibraryPersist = new PlanLibraryPersist(self.config);
+		let newPlanOrder;
+		
+		if (!planOrder) {
+			
+			newPlanOrder = self.getPlanOrder();
+		}
+		else {
+			
+			newPlanOrder = webix.copy(planOrder);
+		}
+		
+		
+		if (newPlanOrder) {
+			
+			planLibraryPersist.updatePlanOrder(newPlanOrder).then(result => {
+				
+				self.onUpdate(self.plan, result);	
+			});
+		}
 	}
 }	

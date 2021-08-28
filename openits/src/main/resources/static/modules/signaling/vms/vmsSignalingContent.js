@@ -17,7 +17,7 @@ export default class VmsSignalingContent {
 		
 		if (this.isPlanOrderEdit) {
 			
-			this.selectedCommand = this.currentCommandElement.id;
+			this.selectedCommand = this.currentCommandElement.commandElementType.id;
 		}
 		else {
 			
@@ -655,7 +655,7 @@ export default class VmsSignalingContent {
 						selectedCommandElement.commandElementTypeParams.length > 0) {
 							
 						// SEND MESSAGE
-						if (selectedCommandElement.id === self.config.sendMessage.commandElementTypeId &&
+						if (selectedCommandElement.id === self.config.commands.sendMessage.commandElementTypeId &&
 							self.composer) {
 								
 							commandElement.commandElementValues = [];
@@ -665,7 +665,7 @@ export default class VmsSignalingContent {
 								commandElementTypeParam: {
 									id: selectedCommandElement.commandElementTypeParams[0].id 
 								},
-								value: composer.jsonData
+								value: self.composer.jsonData
 							});
 						}
 					}

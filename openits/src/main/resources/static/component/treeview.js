@@ -277,7 +277,9 @@ export default class TreeView {
 			
 			data = self.getTreeOptions(TreeOptions.ROOT_NODE) ? addRootNode(data) : data; 
 			
-			let treeView = {
+			let treeView;
+			
+			treeView = {
 				id: "tree-" + self.uid,
 				view: "tree",
 				borderless: true,
@@ -442,7 +444,14 @@ export default class TreeView {
 							
 							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
 						}
+					},
+					onAfterRender: function() {
+						
+						let tree = $$("tree-" + self.uid).$view;
+						
+						tree.addEventListener("contextmenu", e => e.preventDefault());
 					}
+					
 				}
 			};
 			
@@ -708,6 +717,75 @@ export default class TreeView {
 		return checkedItems;
 	}
 	
+	getChilds(fromFolder, itemType) {
+	
+		let self = this;
+		let childs = [];
+		let sourceData = undefined;
+		
+		if (fromFolder && fromFolder.props.folder) {
+		
+			calculateSourceData();
+			
+			if (sourceData) {
+				
+				getChilds(sourceData);	
+			}
+		}
+		
+		function calculateSourceData(data) {
+			
+			if (!data) {
+				
+				data = self.data;
+			}
+			
+			if (Array.isArray(data)) {
+				
+				for (let i = 0; !sourceData && i < data.length; i++) {
+					
+					let item = data[i];
+					
+					if (Array.isArray(item.data) && item.data.length > 0) {
+						
+						if (item.id === fromFolder.id) {
+							
+							sourceData = item;
+						}
+						else {
+							
+							calculateSourceData(item.data);
+						}
+					}
+				}
+			}
+		}
+		
+		function getChilds(item) {
+			
+			if (item && item.props && item.props.folder && Array.isArray(item.data) && item.data.length > 0) {
+				
+				item.data.forEach(subData => {
+					
+					if (subData.props.folder && Array.isArray(subData.data) && subData.data.length > 0) {
+						
+						getChilds(subData);
+					}
+					
+					let isChild = (itemType === TreeView.ItemTypes.FOLDER && subData.props.folder);
+					isChild |= (itemType === TreeView.ItemTypes.ITEM && !subData.props.folder);
+					
+					if (isChild) {
+			
+						childs.push(subData);
+					}	
+				});
+			}
+		}
+		
+		return childs;
+	}
+	
 	getFirstItem(fromItem) {
 		
 		let firstItem = undefined;
@@ -939,6 +1017,24 @@ Object.defineProperty(TreeView.Modes, "SINGLE", {
 });
 
 Object.defineProperty(TreeView.Modes, "MULTI", {
+    value: 2,
+	writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView, "ItemTypes", {
+	value: {}
+});
+
+Object.defineProperty(TreeView.ItemTypes, "FOLDER", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(TreeView.ItemTypes, "ITEM", {
     value: 2,
 	writable : false,
     enumerable : true,

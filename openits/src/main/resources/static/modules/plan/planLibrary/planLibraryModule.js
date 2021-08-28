@@ -7,6 +7,12 @@ import { util } from "../../../lib/util.js";
 
 const TREE_PANEL_WIDTH = 325;
 
+const PLAN_MODE_TYPE_AUTO = 1;
+const PLAN_MODE_TYPE_SEMI = 2;
+const PLAN_MODE_TYPE_MANUAL = 3;
+
+const PLAN_SUBTYPE_FIXED_ID = "PlanSubtype:1";
+
 export default class PlanLibraryModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -17,6 +23,9 @@ export default class PlanLibraryModule extends GenericModule {
 		this.planLibraryPersist = undefined;
 		this.treeView = undefined;
 		this.optionButtonList = undefined;
+		
+		this.planNodes = undefined;
+		this.planHierarchies = undefined;
 	}
 
 	loadData() {
@@ -46,14 +55,14 @@ export default class PlanLibraryModule extends GenericModule {
 
 			webix.promise.all(promises).then(function(responses) {
 
-				let planNodes = responses[0] ? responses[0].json() : undefined;
-				let planHierarchies = responses[1] ? responses[1].json() : undefined;
+				self.planNodes = responses[0] ? responses[0].json() : undefined;
+				self.planHierarchies = responses[1] ? responses[1].json() : undefined;
 
-				if (planNodes && planHierarchies && $$(self.uid)) {
+				if (self.planNodes && self.planHierarchies && $$(self.uid)) {
 
 					self.planLibraryPersist = new PlanLibraryPersist(self.config);
 
-					drawViewTree(planNodes, planHierarchies);
+					drawViewTree();
 
 					if (self.treeView) {
 
@@ -192,7 +201,7 @@ export default class PlanLibraryModule extends GenericModule {
 			return viewTree;
 		}
 
-		function drawViewTree(items, relationships) {
+		function drawViewTree() {
 
 			let treeView = {
 				id: "view-tree-" + self.uid,
@@ -207,7 +216,7 @@ export default class PlanLibraryModule extends GenericModule {
 				
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 
-					let planNode = items.find(e => e.id === item.id_);
+					let planNode = self.planNodes.find(e => e.id === item.id_);
 
 					if (planNode && planNode.plan) {
 					
@@ -224,7 +233,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 							if (plan) {
 
-								let planLibraryContent = new PlanLibraryContent(self.config, self.uid, plan);
+								let planLibraryContent = new PlanLibraryContent(self.config, self.uid, plan, onUpdate);
 
 								webix.ui(planLibraryContent.getView(), $$("plan-lib-content-" + self.uid));
 
@@ -245,6 +254,18 @@ export default class PlanLibraryModule extends GenericModule {
 					
 					$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);
 				}
+				
+				function onUpdate() {
+					
+					let itemsSelected = self.treeView.getSelected();
+		
+					if (Array.isArray(itemsSelected) && itemsSelected.length > 0) {
+		
+						let selected = itemsSelected[0];
+							
+						load(selected.id);
+					}
+				}
 
 				return events;
 			}
@@ -253,7 +274,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 				let data = [];
 
-				let itemsTree = items.map(e => {
+				let itemsTree = self.planNodes.map(e => {
 
 					return {
 
@@ -264,7 +285,7 @@ export default class PlanLibraryModule extends GenericModule {
 					}
 				});
 
-				let itemRelationships = relationships.map(e => {
+				let itemRelationships = self.planHierarchies.map(e => {
 
 					return {
 
@@ -335,20 +356,20 @@ export default class PlanLibraryModule extends GenericModule {
 				},
 				width: 600,
 
-			}).then(function(result) {
+			}).then(function(folderName) {
 
 				// TODO: POST with result
 
 				if (self.planLibraryPersist) {
 
-					self.planLibraryPersist.createFolder(result, parent.id_)
-						.then(function(data) {
+					self.planLibraryPersist.createFolder(folderName, parent.id_)
+					.then(function(data) {
 
-							load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-						})
-						.catch(function() {
+						load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
+					})
+					.catch(function() {
 
-						});
+					});
 				}
 
 
@@ -383,16 +404,34 @@ export default class PlanLibraryModule extends GenericModule {
 				},
 				width: 600,
 
-			}).then(function(result) {
+			}).then(function(planName) {
+				
+				let newPlan = {
+					alias: planName,
+					description: planName,
+					planModeType: PLAN_MODE_TYPE_AUTO,
+					planSubtypeId: PLAN_SUBTYPE_FIXED_ID
+				}
+				
+				self.planLibraryPersist.createPlan(newPlan)
+				.then(function(resultPlan) {
 
-				self.planLibraryPersist.createItem(result, parent.id_)
-					.then(function(data) {
+					if (resultPlan && resultPlan.id) {
+						
+						self.planLibraryPersist.createItem(planName, parent.id_, resultPlan.id)
+						.then(function(resultItem) {
+	
+							load((parent && parent.id != "root") ? parent.id_ + "_" + resultItem.id : resultItem.id + "_" + resultItem.id);
+						})
+						.catch(function() {
+	
+						});	
+					}
+				})
+				.catch(function() {
 
-						load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-					})
-					.catch(function() {
-
-					});
+				});	
+				
 
 			}).fail(function() {
 
@@ -433,20 +472,142 @@ export default class PlanLibraryModule extends GenericModule {
 						}
 
 						if (selected.id_ === selectedPks[0]) {
+							
+							if (selected.props.folder) {
+							
+								let childFolders = self.treeView.getChilds(selected, TreeView.ItemTypes.FOLDER);
+								let childItems = self.treeView.getChilds(selected, TreeView.ItemTypes.ITEM);
+								
+								let deletedFolders = 0;
+								let deletedItems = 0;
+								let deletedPlans = 0;
+								
+								childFolders.push(selected);
+								
+								let foldersCount = Array.isArray(childFolders) ? childFolders.length : 0;;
+								let itemsCount = Array.isArray(childItems) ? childItems.length : 0;
+								let plansCount = itemsCount;
+								
+								deleteTreeItems();
+								
+								function deleteTreeItems() {
+									
+									if (Array.isArray(childItems) && childItems.length > 0) {
+										
+										childItems.forEach(childItem => {
+											
+											self.planLibraryPersist.deleteItem(childItem.id_)
+											.then(function(data) {
+												
+												console.log("TREE ITEM DELETE => " + childItem.value);
+			
+												if (++deletedItems === itemsCount) {
+													
+													deleteTreeFolders();
+													deletePlans();
+												}
+											})
+											.catch(function() {
+			
+											});
+										});
+									}
+									else {
+										
+										deleteTreeFolders();
+									}
+								}
+								
+								function deleteTreeFolders() {
+									
+									if (Array.isArray(childFolders) && childFolders.length > 0) {
+										
+										childFolders.forEach(childFolder => {
+											
+											self.planLibraryPersist.deleteItem(childFolder.id_)
+											.then(function(data) {
+												
+												console.log("TREE FOLDER DELETE => " + childFolder.value);
+			
+												deletedFolders++;
+												
+												doWhenAsyncEnds();						
+											})
+											.catch(function() {
+			
+											});
+										});
+									}
+								}
+								
+								function deletePlans() {
+								
+									if (Array.isArray(childItems) && childItems.length > 0) {
+										
+										childItems.forEach(childItem => {
+											
+											let planNode = self.planNodes.find(p => p.id === childItem.id_);
+										
+											if (planNode && planNode.plan && planNode.plan.id) {
+												
+												self.planLibraryPersist.deletePlan(planNode.plan.id)
+												.then(function(data) {
+													
+													console.log("PLAN DELETE => " + planNode.plan.id);
+			
+													deletedPlans++;
+														
+													doWhenAsyncEnds();
+												})
+												.catch(function() {
+				
+												});
+											}
+										});
+									}
+								}
+								
+								function doWhenAsyncEnds() {
+									
+									if (deletedFolders === foldersCount && deletedItems === itemsCount && deletedPlans === plansCount) {
+									
+										load(parent ? parent.id : undefined);	
+									}
+								}
+							}
+							else {
+								
+								let planNode = self.planNodes.find(p => p.id === selected.id_);
+										
+								if (planNode && planNode.plan && planNode.plan.id) {
+									
+									self.planLibraryPersist.deleteItem(selected.id_)
+									.then(function(data) {
+										
+										console.log("TREE ITEM DELETE => " + selected.id_);
+										
+										self.planLibraryPersist.deletePlan(planNode.plan.id)
+										.then(function(data) {
+											
+											console.log("PLAN DELETE => " + planNode.plan.id);
+											
+											load(parent ? parent.id : undefined);	
 
-							self.planLibraryPersist.deleteItem(selected.id_)
-								.then(function(data) {
-
-									load(parent ? parent.id : undefined);
-								})
-								.catch(function() {
-
-								});
+										})
+										.catch(function() {
+		
+										});
+									})
+									.catch(function() {
+	
+									})
+									
+								}
+							}
 						}
 					});
 				}
 			}
-
 		}
 
 		function drawResizer() {

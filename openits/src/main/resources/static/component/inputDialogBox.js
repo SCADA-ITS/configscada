@@ -7,6 +7,7 @@ export default class InputDialogBox {
 		this.onAccept = onAccept;
 		this.requiredValue = requiredValue;
 		this.currentValue = currentValue;
+		this.uid = webix.uid();
 	}
 
 	show() {
