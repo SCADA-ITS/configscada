@@ -15,7 +15,8 @@ export default class IncidentReportTabLog {
 	getView() {
 
 		let self = this;
-
+		this.dtLogs = undefined;
+		
 		let tabLogs = {
 			id: "tab-logs-" + self.uid,
 			borderless: true,

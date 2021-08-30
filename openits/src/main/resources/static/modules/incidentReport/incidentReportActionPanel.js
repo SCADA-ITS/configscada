@@ -601,6 +601,37 @@ export default class IncidentReportActionPanel {
 								},
 								{ width: MARGIN_ACTION_PANEL }
 							]
+						},
+						{
+							cols: [
+								{ width: MARGIN_ACTION_PANEL },
+								{
+									view: "toolbar",
+									height: 75,
+									css: "tb-actions",
+									elements: [
+										{
+											view: "button",
+											width: 135,
+											hidden: self.incidentReport.confirm,
+											label: i18n.t("LBL_INCIDENT_CHANGE_LOCATION"),
+											tooltip: i18n.t("LBL_INCIDENT_CHANGE_LOCATION_DESCRIPTION"),
+											type: "iconTop",
+											icon: "mdi mdi-map-marker",
+											on: {
+
+												onItemClick() {
+
+													util.ui.notImplementedMessage();
+												}
+											}
+										},
+										{}
+									],
+									borderless: true
+								},
+								{ width: MARGIN_ACTION_PANEL }
+							]
 						}
 					]
 				},

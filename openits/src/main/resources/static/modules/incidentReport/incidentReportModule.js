@@ -18,9 +18,6 @@ export default class IncidentReportModule extends GenericModule {
 		this.closed = false;
 		this.config = module.config;
 		this.incidentReportContent = undefined;
-		this.selectedTabId = undefined;
-		
-		this.currentTask = [null, null];
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
@@ -218,7 +215,7 @@ export default class IncidentReportModule extends GenericModule {
 			}
 
 			if (this.incidentReportContent) {
-				
+
 				this.incidentReportContent.init();
 			}
 
@@ -264,7 +261,11 @@ export default class IncidentReportModule extends GenericModule {
 		this.dtTasks = undefined;
 
 		let incidentReportActionPanel = new IncidentReportActionPanel(self);
-		this.incidentReportContent = new IncidentReportContent(self);
+
+		if (!this.incidentReportContent) {
+			
+			this.incidentReportContent = new IncidentReportContent(self);
+		}
 
 		let viewMain = {
 			id: this.uid,

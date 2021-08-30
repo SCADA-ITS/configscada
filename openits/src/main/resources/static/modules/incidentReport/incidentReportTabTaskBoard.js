@@ -3,32 +3,41 @@ import DataTable from "../../component/datatable.js";
 
 export default class IncidentReportTabTaskBoard {
 
-	constructor(parent, taskStates, index) {
+	constructor(parent, index) {
 
 		this.index = index;
 		this.parent = parent;
-		this.tasks = taskStates;
 
 		this.uid = parent.uid;
 		this.config = parent.config;
-		this.incidentReport = parent.incidentReport;
+		this.incidentReport = undefined;
 
 		this.dtTasks = undefined;
-
-		if (Array.isArray(this.tasks) && this.tasks.length) {
-
-			this.tasks.sort((a, b) => (a.incidentTypeTask.position > b.incidentTypeTask.position) ? 1 : ((b.incidentTypeTask.position > a.incidentTypeTask.position) ? -1 : 0));
-
-			this.parent.currentTask[this.index] = this.tasks.find(e => {
-
-				return !e.completedAt;
-			});
-		}
+		this.tasks = undefined;
+		this.currentTask = undefined;
 	}
 
-	getView() {
+	getView(taskStates) {
 
 		let self = this;
+
+		this.incidentReport = this.parent.incidentReport;
+		this.tasks = taskStates;
+		this.dtTasks = undefined;
+		
+		if (Array.isArray(this.tasks) && this.tasks.length) {
+
+			if (!this.currentTask || !this.tasks.find(e => { return (e.id === this.currentTask.id) })) {
+
+				this.tasks.sort((a, b) => (a.incidentTypeTask.position > b.incidentTypeTask.position) ? 1 : ((b.incidentTypeTask.position > a.incidentTypeTask.position) ? -1 : 0));
+
+				this.currentTask = this.tasks.find(e => {
+
+					return !e.completedAt;
+				});
+			}
+
+		}
 
 		function getTaskDetails(incidentTypeTaskId) {
 
@@ -36,9 +45,9 @@ export default class IncidentReportTabTaskBoard {
 			let task = undefined;
 			let taskDetails = {};
 
-			if (!incidentTypeTaskId && self.parent.currentTask[self.index]) {
+			if (!incidentTypeTaskId && self.currentTask) {
 
-				task = self.parent.currentTask[self.index];
+				task = self.currentTask;
 			} else {
 
 				if (Array.isArray(self.tasks) && self.tasks.length) {
@@ -53,7 +62,7 @@ export default class IncidentReportTabTaskBoard {
 						task = self.tasks[0];
 					}
 
-					self.parent.currentTask[self.index] = task;
+					self.currentTask = task;
 				}
 			}
 
@@ -174,6 +183,8 @@ export default class IncidentReportTabTaskBoard {
 									})(),
 									height: 41,
 									width: 130,
+									disabled: !self.incidentReport.confirm,
+									hidden: task.incidentTypeTask.auto || task.completedAt,
 									label: (function() {
 
 										return i18n.t("LBL_INCIDENT_END_TASK");
@@ -188,10 +199,11 @@ export default class IncidentReportTabTaskBoard {
 
 													let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
 														id: self.incidentReport.id,
-														taskId: self.parent.currentTask[self.index].incidentTypeTask.id
+														taskId: self.currentTask.incidentTypeTask.id
 													});
 
 													self.parent.restAction(endpoint);
+													self.currentTask = undefined;
 												}
 											}
 										}
@@ -455,9 +467,9 @@ export default class IncidentReportTabTaskBoard {
 
 			this.dtTasks.callbacks();
 
-			if (this.parent.currentTask[self.index]) {
+			if (this.currentTask) {
 
-				this.dtTasks.select(this.parent.currentTask[self.index].incidentTypeTask.id);
+				this.dtTasks.select(this.currentTask.incidentTypeTask.id);
 
 			} else {
 

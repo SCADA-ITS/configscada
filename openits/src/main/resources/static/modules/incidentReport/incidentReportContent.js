@@ -13,8 +13,9 @@ export default class IncidentReportContent {
 		this.parent = parent;
 		this.uid = parent.uid;
 		this.config = parent.config;
-		this.incidentReport = parent.incidentReport;
-		this.currentSequenceOfState = parent.currentSequenceOfState;
+
+		this.incidentReport = undefined;
+		this.currentSequenceOfState = undefined;
 
 		this.tabInfoViewId = undefined;
 		this.tabLogsViewId = undefined;
@@ -24,11 +25,16 @@ export default class IncidentReportContent {
 		this.incidentReportTabLogs = undefined;
 		this.incidentReportTabTaskBoard = undefined;
 		this.incidentReportTabTaskBoardIncident = undefined;
+
+		this.selectedTabId = undefined;
 	}
 
 	getView() {
 
 		let self = this;
+		let tasks = undefined;
+		this.incidentReport = this.parent.incidentReport;
+		this.currentSequenceOfState = this.parent.currentSequenceOfState;
 
 		let contentTabs = {
 			view: "tabview",
@@ -42,7 +48,7 @@ export default class IncidentReportContent {
 				on: {
 					onBeforeTabClick: function(id) {
 
-						self.parent.selectedTabId = id;
+						self.selectedTabId = id;
 
 						return $$(id).isEnabled();
 					}
@@ -67,19 +73,27 @@ export default class IncidentReportContent {
 		}
 
 		// TAB TASK OF STATE
-		let tasks = self.currentSequenceOfState.taskStates;
-		if (Array.isArray(tasks) && tasks.length) {
+		if (self.incidentReport.confirm) {
 
-			self.incidentReportTabTaskBoard = new IncidentReportTabTaskBoard(self.parent, tasks, INDEX_TASK_BOARD_STATE);
+			tasks = self.currentSequenceOfState.taskStates;
+			if (Array.isArray(tasks) && tasks.length) {
 
-			let tabTaskBoardView = self.incidentReportTabTaskBoard.getView();
+				if (!self.incidentReportTabTaskBoard) {
 
-			if (tabTaskBoardView) {
-				self.tabTaskBoardId = tabTaskBoardView.id;
-				contentTabs.cells.push({
-					header: i18n.t("LBL_TASK_BOARD"),
-					body: tabTaskBoardView
-				});
+					self.incidentReportTabTaskBoard = new IncidentReportTabTaskBoard(self.parent, INDEX_TASK_BOARD_STATE);
+				}
+
+				let tabTaskBoardView = self.incidentReportTabTaskBoard.getView(tasks);
+				if (tabTaskBoardView) {
+
+					self.tabTaskBoardId = tabTaskBoardView.id;
+					contentTabs.cells.push({
+						header: i18n.t("LBL_TASK_BOARD"),
+						body: tabTaskBoardView
+					});
+				}
+			} else {
+				self.incidentReportTabTaskBoard = undefined;
 			}
 		}
 
@@ -87,9 +101,11 @@ export default class IncidentReportContent {
 		tasks = self.incidentReport.taskStates;
 		if (Array.isArray(tasks) && tasks.length) {
 
-			self.incidentReportTabTaskBoardIncident = new IncidentReportTabTaskBoard(self.parent, tasks, INDEX_TASK_BOARD_INCIDENT);
+			if (!self.incidentReportTabTaskBoardIncident) {
+				self.incidentReportTabTaskBoardIncident = new IncidentReportTabTaskBoard(self.parent, INDEX_TASK_BOARD_INCIDENT);
+			}
 
-			let tabTaskBoardView = self.incidentReportTabTaskBoardIncident.getView();
+			let tabTaskBoardView = self.incidentReportTabTaskBoardIncident.getView(tasks);
 
 			if (tabTaskBoardView) {
 				self.tabTabTaskBoardIncidentId = tabTaskBoardView.id;
@@ -98,21 +114,26 @@ export default class IncidentReportContent {
 					body: tabTaskBoardView
 				});
 			}
+		} else {
+			 self.incidentReportTabTaskBoardIncident = undefined; 
 		}
 
 		// TAB LOGS
-		self.incidentReportTabLogs = new IncidentReportTabLogs(self.parent);
-		if (self.incidentReportTabLogs) {
+		if (self.incidentReport.confirm) {
 
-			let tabLogsView = self.incidentReportTabLogs.getView();
+			self.incidentReportTabLogs = new IncidentReportTabLogs(self.parent);
+			if (self.incidentReportTabLogs) {
 
-			if (tabLogsView) {
+				let tabLogsView = self.incidentReportTabLogs.getView();
 
-				self.tabLogsViewId = tabLogsView.id;
-				contentTabs.cells.push({
-					header: i18n.t("LBL_LOGS"),
-					body: tabLogsView
-				});
+				if (tabLogsView) {
+
+					self.tabLogsViewId = tabLogsView.id;
+					contentTabs.cells.push({
+						header: i18n.t("LBL_LOGS"),
+						body: tabLogsView
+					});
+				}
 			}
 		}
 
@@ -139,12 +160,11 @@ export default class IncidentReportContent {
 
 		let tabViewContent = $$("tabview-content" + this.uid);
 		if (tabViewContent) {
-			
+
 			let tabDetails = this.tabInfoViewId ? $$(this.tabInfoViewId) : undefined;
 			let tabTaskBoard = this.tabTaskBoardId ? $$(this.tabTaskBoardId) : undefined;
-			let tabTaskBoardIncident = this.tabTabTaskBoardIncidentId ? $$(this.tabTabTaskBoardIncidentId) : undefined;
 			let tabLogs = this.tabLogsViewId ? $$(this.tabLogsViewId) : undefined;
-			
+
 			if (this.incidentReportTabLogs) {
 
 				this.incidentReportTabLogs.init();
@@ -159,12 +179,12 @@ export default class IncidentReportContent {
 
 				this.incidentReportTabTaskBoardIncident.init();
 			}
-			
-			if (this.parent.selectedTabId) {
 
-				if (tabViewContent.getTabbar().getOption(this.parent.selectedTabId)) {
+			if (this.selectedTabId) {
 
-					tabViewContent.getTabbar().setValue(this.parent.selectedTabId);
+				if (tabViewContent.getTabbar().getOption(this.selectedTabId)) {
+
+					tabViewContent.getTabbar().setValue(this.selectedTabId);
 
 				} else {
 
@@ -177,7 +197,7 @@ export default class IncidentReportContent {
 
 			if (this.incidentReport.confirm) {
 
-				if (!this.parent.selectedTabId && tabTaskBoard) {
+				if (!this.selectedTabId && tabTaskBoard) {
 
 					tabViewContent.getTabbar().setValue(tabTaskBoard.config.id);
 				}
@@ -188,11 +208,6 @@ export default class IncidentReportContent {
 					tabTaskBoard.disable();
 				}
 
-				if (tabTaskBoardIncident) {
-
-					tabTaskBoardIncident.disable();
-				}
-				
 				if (tabLogs) {
 
 					tabLogs.disable();
