@@ -39,6 +39,8 @@ export default class SelectorModule extends GenericModule {
 						let treeSelector = dat.json();
 
 						self.treeNodes = treeSelector.treeNodes;
+						
+						self.treeNodes.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 						drawComponents(treeSelector);
 
@@ -117,7 +119,7 @@ export default class SelectorModule extends GenericModule {
 
 							loadModule(node.moduleId);
 
-							util.ui.setTitle(self.args.containerId, i18n.t(node.label));
+							util.ui.setTitle(self.args.containerId, i18n.t(node.label), undefined, node.image ? "img/" + node.image : undefined);
 						}
 					}
 				};

@@ -1182,7 +1182,7 @@ export let util = {
 			}
 		},
 
-		setTitle(containerId, title, shortTitle) {
+		setTitle(containerId, title, shortTitle, icon) {
 
 			let container = $$(containerId);
 
@@ -1212,10 +1212,11 @@ export let util = {
 
 					if (tabToChange) {
 
+						let newIcon = icon ? icon: "img/module/default.png";
 						let newTabTitle = (shortTitle) ? shortTitle : title;
 						
 						tabToChange.value = `<div style='float: left; width: 250px;'>
-												<img class='tab-icon' src='img/module/default.png'/>
+												<img class='tab-icon' src='${newIcon}'/>
 												<span class='tab-text'>${newTabTitle}</span>
 												<span style='float: right; padding-top: 2px'>
 												<a href='#'><img src='./img/externalize_button.png'></a>

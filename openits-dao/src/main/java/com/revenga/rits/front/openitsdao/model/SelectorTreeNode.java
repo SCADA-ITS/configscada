@@ -33,6 +33,8 @@ public class SelectorTreeNode implements Serializable {
 	
 	private String image;
 	
+	private Integer position;
+	
 	private Boolean visible;
 
 	// bi-directional many-to-one association to Tree
@@ -102,4 +104,11 @@ public class SelectorTreeNode implements Serializable {
 		this.image = image;
 	}
 
+	public Integer getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
 }

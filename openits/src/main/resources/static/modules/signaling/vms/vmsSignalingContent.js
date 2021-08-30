@@ -413,7 +413,7 @@ export default class VmsSignalingContent {
 					{ height: 10 },
 					{
 						cols: [
-							{},
+							{ width: 60 },
 							self.composer.getView(),
 							{}
 						]
