@@ -2,6 +2,7 @@ import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
 import TreeView from "../component/treeview.js";
+import Queue from "../component/queue.js";
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
@@ -13,6 +14,9 @@ const ALARM_TYPE_MANUAL = 2;
 
 const MODE_TYPE = 1;
 const MODE_ELEMENTS = 2;
+
+const TIME_SLEEP_PROCESS_MESSAGES_MS = 100;
+const MAX_MESSAGES_TO_PROC = 5;
 
 export default class AlarmMonitorModule extends GenericModule {
 
@@ -44,6 +48,9 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.elementIdsSelected = [ELEMENT_ALL];
 
 		this.config = module.config;
+		
+		this.intervalAlarmMonitor = undefined;
+		this.queue = new Queue();
 	}
 
 	loadData() {
@@ -187,21 +194,28 @@ export default class AlarmMonitorModule extends GenericModule {
 	
 						connectWS();
 	
-						$$(self.uid).attachEvent("onDestruct", function() {
-	
-							let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
-							if (stompSubscriptorService) {
-	
-								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
-							}
-						});
+						$$(self.uid).attachEvent("onDestruct", onDestruct);
 	
 						$$("loading-" + self.uid).hide();
 						$$(self.uid).show();
 						
 						$$("loading-switcher-" + self.uid).hide();
 						$$("switcher-views-" + self.uid).show();
+					}
+				}
+				
+				function onDestruct() {
+					
+					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+					if (stompSubscriptorService) {
+
+						stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+					}
+					
+					if (self.intervalAlarmMonitor) {
+			
+						clearInterval(self.intervalAlarmMonitor);	
 					}
 				}
 			}
@@ -1430,6 +1444,8 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 
 				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage, fields);
+				
+				timerMessages();
 			}
 
 			let updateStats = function() {
@@ -1550,8 +1566,41 @@ export default class AlarmMonitorModule extends GenericModule {
 
 				updateLevelStats();
 			}
-
+			
 			function onMessage(be) {
+			
+				self.queue.push(be);
+				
+				console.log("[" + (new Date()).toISOString() + "] " + "[AlarmMonitor] Message queued");
+			}
+			
+			function timerMessages() {
+				
+				self.intervalAlarmMonitor = setInterval(function(){
+					
+//					let messagesProc = 0;
+
+					let message = self.queue.pop();
+					
+					if (message) {
+						
+						processMessage(message);	
+					}
+					
+//					while (messagesProc < MAX_MESSAGES_TO_PROC && message) {
+//
+//						processMessage(message);
+//						
+//						message = self.queue.pop();
+//						messagesProc++;
+//						
+//						console.log("[" + (new Date()).toISOString() + "] " + "[AlarmMonitor] Queue size = " + self.queue.length);
+//					}
+			
+				}, TIME_SLEEP_PROCESS_MESSAGES_MS);
+			}
+
+			function processMessage(be) {
 
 				let flattenedData = eval("adapter." + self.config.adapter)([be], null);
 

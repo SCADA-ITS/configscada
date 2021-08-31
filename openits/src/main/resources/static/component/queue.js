@@ -7,23 +7,29 @@ export default class Queue {
 		this.tailIndex = 0;
 	}
 
-	enqueue(item) {
+	push(item) {
 		
-		this.items[this.tailIndex] = item;
-		this.tailIndex++;
+		if (item) {
+			
+			this.items[this.tailIndex] = item;
+			this.tailIndex++;	
+		}
 	}
 
-	dequeue() {
+	pop() {
 		
 		const item = this.items[this.headIndex];
 		
-		delete this.items[this.headIndex];
-		this.headIndex++;
+		if (item) {
+			
+			delete this.items[this.headIndex];
+			this.headIndex++;	
+		}	
 		
 		return item;
 	}
 
-	peek() {
+	front() {
 		
 		return this.items[this.headIndex];
 	}
