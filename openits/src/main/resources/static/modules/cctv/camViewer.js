@@ -4,6 +4,11 @@ import { util } from "../../lib/util.js";
 const SIZE_SINGLE = 30;
 const SIZE_MULTI = 50;
 
+const DEFAULT_TIME_CHECK_STREAM_MS = 60000;
+const DEFAULT_TIMEOUT_CONNECT_STREAM_MS = 5000;
+
+const NO_VIDEO_IMAGE = './img/no-video.jpg';
+
 export default class CamViewer {
 
 	static get MODE_SINGLE() { return 1 }
@@ -27,6 +32,15 @@ export default class CamViewer {
 		this.zoom = false;
 		
 		this.fullScreen = fullScreen;
+		
+		this.img = new Image();
+		this.isOnline = true;
+		this.isReconnecting = true;
+		this.timeCheckStream = undefined;
+		this.timeoutCheckStream = undefined;
+		
+		this.timeCheckStreamMs = config.camConf && config.camConf.timeCheckStreamMs ? config.camConf.timeCheckStreamMs : DEFAULT_TIME_CHECK_STREAM_MS;
+		this.timeoutCheckStreamMs = config.camConf && config.camConf.timeoutConnectStreamMs ? config.camConf.timeoutConnectStreamMs : DEFAULT_TIMEOUT_CONNECT_STREAM_MS;
 	}
 
 	getView() {
@@ -36,17 +50,67 @@ export default class CamViewer {
 		let view = {
 			view: "abslayout",
 			cells: [
-				{
-					id: "camviewer-" + self.uid,
-					relative: true
-				},
+//				{
+//					id: "camviewer-" + self.uid,
+//					relative: true
+//				},
+				getViewNoImage(),
 				{ id: "camviewer-name-" + self.uid },
 				{ id: "camviewer-buttons-" + self.uid },
 				{ id: "cam-controls-" + self.uid }
 			]
+			, on: {
+
+				onDestruct: function() {
+					
+					if (self.timeCheckStream) {
+	
+						clearInterval(self.timeCheckStream);	
+					}
+					
+					if (self.timeoutCheckStream) {
+		
+						clearInterval(self.timeoutCheckStream);	
+					}
+				}
+			}
 		}
 
 		getViewStream();
+		
+		function getViewNoImage() {
+							
+			let viewNoImage;
+			
+			viewNoImage = {
+				id: "camviewer-" + self.uid,
+				relative: true,
+				template: function() {
+
+					let w = self.fit ? "width: 100%" : "";
+					let imgStyle = `max-width:100%;height:${self.h}px;${w}`;
+
+					return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img align='center' style="${imgStyle}" src="${NO_VIDEO_IMAGE}"></div>`;
+				}
+				, on: {
+
+					onDestruct: onDestruct
+				}
+			};
+			
+			return viewNoImage;
+		}
+		
+		function onDestruct() {
+			
+			if (!self.isReconnecting) {
+				
+				if (self.img.src != NO_VIDEO_IMAGE) {
+				
+					self.img.src = '';	
+				}
+			}
+		}
 
 		function getViewStream() {
 
@@ -75,11 +139,16 @@ export default class CamViewer {
 				if (url) {
 
 					if (!webix.env.isWebKit) {
+						
+						//self.img = new Image();
 
-						let img = new Image();
-
-						img.onload = function() {
-
+						self.img.onload = startStreaming;
+						
+						function startStreaming() {
+							
+							self.isOnline = true;
+							console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection success for cam: " + url);
+														
 							let viewStreamMjpeg = {
 								id: "camviewer-" + self.uid,
 								relative: true,
@@ -88,24 +157,74 @@ export default class CamViewer {
 									let w = self.fit ? "width: 100%" : "";
 									let imgStyle = `max-width:100%;height:${self.h}px;${w}`;
 
-									return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img align='center' style="${imgStyle}" src="${img.src}"></div>`;
+									return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
 								}
 								, on: {
 
-									onDestruct: function(obj) {
-
-										img.src = '';
-									}
+									onDestruct: onDestruct
 								}
 							};
-
+							
 							webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
-							viewButtons(img.width, img.height);
-
-							img.onload = undefined;
-						};
-
-						img.src = url;
+							viewButtons();
+							self.img.onload = undefined;
+							self.isReconnecting = false;
+							
+						}
+						
+						function startKeepAliveStream() {
+							
+							self.timeCheckStream = setInterval(function() {
+								
+								//console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Check connection for cam: " + url);
+								
+								self.timeoutCheckStream = setInterval(function() {
+								
+									if (!self.isOnline) {
+										
+										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] No Connection for cam: " + url);
+										
+										self.isReconnecting = true;
+										
+										if ($$("camviewer-" + self.uid)) {
+											
+											webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));	
+										}
+										
+										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] Trying to connect to: " + url);
+										
+										self.img.onload = startStreaming;
+										
+										self.img.src = url;
+										
+										if (self.timeoutCheckStream) {
+						
+											clearInterval(self.timeoutCheckStream);	
+										}
+									}
+									
+								}, self.timeoutCheckStreamMs);
+								
+								self.isOnline = false;	
+					
+								self.img.onload = function() {
+							
+									//console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection response for cam: " + url);
+									self.isOnline = true;
+									self.img.onload = undefined;	
+									
+									if (self.timeoutCheckStream) {
+						
+										clearInterval(self.timeoutCheckStream);	
+									}		
+								}; 
+						
+							}, self.timeCheckStreamMs);
+						}
+						
+						self.img.src = url;
+						
+						startKeepAliveStream();
 					}
 					else {
 
@@ -132,8 +251,11 @@ export default class CamViewer {
 				}
 			}
 
-			function viewButtons(imgWidth, imgHeight) {
+			function viewButtons() {
 
+				let imgWidth = self.img.width;
+				let imgHeight = self.img.height;
+				
 				let margin = 10
 
 				if (!self.fit) {
@@ -153,7 +275,9 @@ export default class CamViewer {
 
 		function getCamName(marginLeft) {
 
-			let viewCamName = {
+			let viewCamName;
+			
+			viewCamName = {
 				id: "camviewer-name-" + self.uid,
 				left: marginLeft,
 				bottom: 10,
@@ -247,7 +371,9 @@ export default class CamViewer {
 
 			function getButtonCamControls() {
 
-				let viewButtonCamControls = {
+				let viewButtonCamControls; 
+				
+				viewButtonCamControls = {
 
 					view: "button",
 					type: "icon",
@@ -290,7 +416,9 @@ export default class CamViewer {
 
 			function getButtonFullScreen() {
 
-				let viewButtonFullScreen = {
+				let viewButtonFullScreen;
+				
+				viewButtonFullScreen = {
 
 					view: "button",
 					type: "icon",
@@ -411,7 +539,9 @@ export default class CamViewer {
 
 			function getBtnUp() {
 
-				let viewBtnUp = {
+				let viewBtnUp;
+				
+				viewBtnUp = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -434,7 +564,9 @@ export default class CamViewer {
 
 			function getBtnDown() {
 
-				let viewBtnDown = {
+				let viewBtnDown;
+				
+				viewBtnDown = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -457,7 +589,9 @@ export default class CamViewer {
 
 			function getBtnLeft() {
 
-				let viewBtnLeft = {
+				let viewBtnLeft;
+				
+				viewBtnLeft = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -480,7 +614,9 @@ export default class CamViewer {
 
 			function getBtnRight() {
 
-				let viewBtnRight = {
+				let viewBtnRight;
+				
+				viewBtnRight = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -503,7 +639,9 @@ export default class CamViewer {
 
 			function getBtnStop() {
 
-				let viewBtnStop = {
+				let viewBtnStop;
+				
+				viewBtnStop = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -525,7 +663,9 @@ export default class CamViewer {
 
 			function getBtnZoomOut() {
 
-				let viewBtnZoomOut = {
+				let viewBtnZoomOut;
+				
+				viewBtnZoomOut = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -548,7 +688,9 @@ export default class CamViewer {
 
 			function getBtnZoomIn() {
 
-				let viewBtnZoomIn = {
+				let viewBtnZoomIn;
+				
+				viewBtnZoomIn = {
 
 					view: "button",
 					css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-controls" : "cam-viewer-controls-small",
@@ -571,7 +713,9 @@ export default class CamViewer {
 
 			function getBtnPresets() {
 
-				let viewBtnPresets = {
+				let viewBtnPresets;
+				
+				viewBtnPresets = {
 
 					view: "button",
 					css: (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-controls-preset" : "cam-viewer-controls-preset-small",
@@ -594,12 +738,12 @@ export default class CamViewer {
 
 							if (Array.isArray(presets) && presets.length > 0) {
 
-								presets.forEach(preset => {
+								presets.forEach(p => {
 
 									dialogPresets.data.push({
-										id: preset.id,
-										alias: preset.alias,
-										description: preset.description
+										id: p.id,
+										alias: p.alias,
+										description: p.description
 									})
 								});
 							}

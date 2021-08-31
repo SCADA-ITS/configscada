@@ -1570,32 +1570,18 @@ export default class AlarmMonitorModule extends GenericModule {
 			function onMessage(be) {
 			
 				self.queue.push(be);
-				
-				console.log("[" + (new Date()).toISOString() + "] " + "[AlarmMonitor] Message queued");
 			}
 			
 			function timerMessages() {
 				
 				self.intervalAlarmMonitor = setInterval(function(){
 					
-//					let messagesProc = 0;
-
 					let message = self.queue.pop();
 					
 					if (message) {
 						
 						processMessage(message);	
 					}
-					
-//					while (messagesProc < MAX_MESSAGES_TO_PROC && message) {
-//
-//						processMessage(message);
-//						
-//						message = self.queue.pop();
-//						messagesProc++;
-//						
-//						console.log("[" + (new Date()).toISOString() + "] " + "[AlarmMonitor] Queue size = " + self.queue.length);
-//					}
 			
 				}, TIME_SLEEP_PROCESS_MESSAGES_MS);
 			}

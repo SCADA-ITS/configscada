@@ -52,6 +52,8 @@
 		"fit": false
 	},
 	"camConf": {
+		"timeCheckStreamMs": 60000,
+		"timeoutConnectStreamMs": 5000,
 		"presetConfigJson": "ElementTypeParam:2:1:11",
 		"featuresPTZ": "ElementTypeParam:2:1:12",
 		"stream_mjpeg": {
