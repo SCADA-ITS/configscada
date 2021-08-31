@@ -992,7 +992,7 @@ export default class UserModule extends GenericModule {
 															self.args.callbacks[0]();
 														});
 
-													} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+													} else if (self.moduleAction.id === self.config.moduleAction.edit || self.moduleAction.id === self.config.moduleAction.changePassword) {
 
 														body[0].user.id = self.oldUser.id;
 
