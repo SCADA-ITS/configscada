@@ -328,6 +328,44 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 	
 								},
 								{
+									id: (!alternance ? "keyboard-button-main-" : "keyboard-button-alt-") + lineData.id + "-" + self.uid,
+									view: "button",
+									type: "icon",
+									icon: "mdi mdi-keyboard",
+									css: "keyboard-text-editor",
+									width: 40,
+									height: 35,
+									hidden: (!self.config.properties.specialCharacters || self.config.properties.specialCharacters.length == 0) ? true : false,
+									on: {
+										onItemClick(obj) {
+
+											let numberOfButtons = self.data.texts.length;
+											let buttonId = !alternance ? "keyboard-button-main-" : "keyboard-button-alt-";
+
+											if ($$("popup-id-" + obj)) {
+
+												$$("popup-id-" + obj).destructor();
+
+												for (let i = 1; i <= numberOfButtons; i++) {
+
+													$$(buttonId + i + "-" + self.uid).enable();
+												}
+
+											} else {
+
+												for (let i = 1; i <= numberOfButtons; i++) {
+
+													$$(buttonId + i + "-" + self.uid).disable();
+												}
+
+												$$(obj).enable();
+												createPopup(obj, buttonId, numberOfButtons);
+
+											}
+										}
+									}
+								},
+								{
 									id: (!alternance ? "view-signalling-text-editor-main-color-" : "view-signalling-text-editor-alt-color-") + lineData.id + "-" + self.uid,
 									view: "colorpicker",
 									hidden: !self.config.properties.textColor,
@@ -359,12 +397,101 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 						
 						return viewTextEditorLine;
 					}
-					
+
+					function createPopup(obj, buttonId, numberOfButtons) {
+
+						let sizes = calculateSizes();
+
+						drawPopup();
+						drawCharacters();
+
+						function calculateSizes() {
+
+							let windowPosition = $$(obj).getTopParentView().getNode().getBoundingClientRect();
+							let buttonPosition = $$(obj).getNode().getBoundingClientRect();
+							let bottonWindow = windowPosition.top + windowPosition.height;
+							let bottonPopup = buttonPosition.top + 225;
+
+							let top = ((bottonPopup - bottonWindow) < 0) ? buttonPosition.top : ((bottonPopup - bottonWindow) < 50) ? buttonPosition.top - 95 : buttonPosition.top - 190;
+							let left = buttonPosition.left + 50;
+
+							return { top, left };
+						}
+
+						function drawPopup() {
+
+							let top = sizes.top;
+							let left = sizes.left;
+
+							webix.ui({
+								view: "popup",
+								id: "popup-id-" + obj,
+								width: 300,
+								height: 225,
+								top: top,
+								left: left,
+								body: {
+									template: `<div style="height: 225px; display:flex; justify-content:center; flex-wrap: wrap; background-color:#eef2f8;">
+															<div style="margin: 12px 0px 0px"><span class="special-character-title">${i18n.t("LBL_SPECIAL_CHARACTERS")}</span></div>
+															<div id="characters-listId" class="special-characters-list"></div>
+														</div>`
+								},
+								on: {
+									onHide: function() {
+
+										$$("popup-id-" + obj).destructor();
+
+										for (let i = 1; i <= numberOfButtons; i++) {
+
+											$$(buttonId + i + "-" + self.uid).enable();
+										}
+									}
+								}
+							}).show();
+						}
+
+						function drawCharacters() {
+
+							let popUp = $$("popup-id-" + obj).getNode().querySelector('#characters-listId');
+
+							if (Array.isArray( self.config.properties.specialCharacters)  &&  self.config.properties.specialCharacters.length > 0) {
+
+								let arrCharacters = self.config.properties.specialCharacters;
+								let fontFamily = self.config.fontInfo["font-family"];								
+
+								for (let character of arrCharacters) {
+							
+									let transformCharacter = (typeof(character === "string")) ? parseInt(character) : character;
+									let newCharacter = document.createElement("span");
+
+									newCharacter.textContent = String.fromCharCode(transformCharacter);
+									newCharacter.setAttribute("class", "special-character");
+									newCharacter.setAttribute("style", "font-family:" + fontFamily);
+								
+									popUp.appendChild(newCharacter);
+
+									newCharacter.addEventListener("click", function() { characterSelected(newCharacter.textContent, obj) });
+
+								}
+							}
+						}
+					}
+
+					function characterSelected(character, obj) {
+
+						let buttonId = !alternance ? "keyboard-button-main-" : "keyboard-button-alt-";
+						let inputId = !alternance ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-";
+
+						let inputContainer = obj.replace(buttonId, inputId);
+						let oldValue = $$(inputContainer).getValue();
+
+						$$(inputContainer).setValue(oldValue + character);
+
+					}
+
 					return viewLines;
 				}
-				
-				
-				
+
 				return viewTextEditor;
 			}
 			
