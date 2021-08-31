@@ -82,7 +82,9 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		
 		function drawOptionModes() {
 			
-			let viewOptionModes = {
+			let viewOptionModes;
+			
+			viewOptionModes = {
 				
 				cols: [
 					{
@@ -289,7 +291,9 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					function drawTextEditorLine() {
 					
-						let viewTextEditorLine = {
+						let viewTextEditorLine;
+						
+						viewTextEditorLine = {
 							
 							cols: [
 								{},
@@ -454,17 +458,16 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
 							let popUp = $$("popup-id-" + obj).getNode().querySelector('#characters-listId');
 
-							if (Array.isArray( self.config.properties.specialCharacters)  &&  self.config.properties.specialCharacters.length > 0) {
+							if (Array.isArray(self.config.properties.specialCharacters)  &&  self.config.properties.specialCharacters.length > 0) {
 
-								let arrCharacters = self.config.properties.specialCharacters;
+								let asciiCodes = self.config.properties.specialCharacters;
 								let fontFamily = self.config.fontInfo["font-family"];								
 
-								for (let character of arrCharacters) {
+								for (let asciiCode of asciiCodes) {
 							
-									let transformCharacter = (typeof(character === "string")) ? parseInt(character) : character;
 									let newCharacter = document.createElement("span");
 
-									newCharacter.textContent = String.fromCharCode(transformCharacter);
+									newCharacter.textContent = String.fromCharCode(asciiCode);
 									newCharacter.setAttribute("class", "special-character");
 									newCharacter.setAttribute("style", "font-family:" + fontFamily);
 								

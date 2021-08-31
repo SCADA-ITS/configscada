@@ -62,7 +62,7 @@
 			"textColor": true,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": true,
-			"specialCharacters": ["0216", "0181", "0222", "0230", "0240", "0162", "0208",  "0163", "0164", "0165", "0177", "0190"]
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
 			},
 		{
 			"id": "ElementSubtype:9:71",
