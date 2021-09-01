@@ -277,9 +277,10 @@ export default class SignalingManagerModule extends GenericModule {
 					let label = i18n.t("LBL_EQUIPMENT_SELECTED") + ": " + elementIds.length + " " + i18n.t(element.elementType.labelAlias) + (elementTypeLabelDescription ? " (" + i18n.t(elementTypeLabelDescription) + ")" : ""); 
 					
 					if (Array.isArray(elementIds) && elementIds.length > 0) {
-					
-						if (elementIds.length > 1 && elementType.showSignalingManagerSelectedItems === _TRUE) {
-							
+
+						if ((elementIds.length > 1 && !elementType.showSignalingManagerSelectedItems)  || 
+						(elementIds.length > 1 && elementType.showSignalingManagerSelectedItems && elementType.showSignalingManagerSelectedItems === _TRUE)) {
+
 							viewHeader = {
 								id: "view-main-content-signaling-header-" + self.uid,
 								cols: [
