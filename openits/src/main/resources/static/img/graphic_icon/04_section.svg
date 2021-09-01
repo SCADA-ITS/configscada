@@ -24,7 +24,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8166667"
-     inkscape:cx="-55.284758"
+     inkscape:cx="61.33634"
      inkscape:cy="121.59763"
      inkscape:document-units="mm"
      inkscape:current-layer="g157"
@@ -77,8 +77,8 @@
          ry="5"
          rx="5" />
       <rect
-         style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1.79579;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill"
-         id="lol"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:none;stroke-width:1.79578996;stroke-linecap:square;stroke-linejoin:round;paint-order:stroke markers fill"
+         id="lolmain"
          width="60.854168"
          height="10.583333"
          x="1.3229166"
@@ -213,6 +213,15 @@
            id="tspan68"><tspan
              style="direction:rtl"
              id="tspan69">0</tspan></tspan></text>
+      <rect
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1.41279054;stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1;paint-order:stroke markers fill"
+         id="lol"
+         width="57.205177"
+         height="6.9682207"
+         x="3.0709887"
+         y="3.1388788"
+         ry="3.2920732"
+         rx="4.7001858" />
     </g>
   </g>
 </svg>

@@ -2,21 +2,22 @@ import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
 const PARAM_SECTION_INTESITY = "ElementTypeParam:4:2:5";
-const PARAM_SECTION_SPEED = "ElementTypeParam:4:2:6";
-const PARAM_SECTION_LENGHT_1 = "ElementTypeParam:4:2:60";
-const PARAM_SECTION_LENGHT_2 = "ElementTypeParam:4:2:61";
+const PARAM_SECTION_SPEED = "ElementTypeParam:4:2:9";
+const PARAM_SECTION_LENGHT_1 = "ElementTypeParam:4:2:100";
+const PARAM_SECTION_LENGHT_2 = "ElementTypeParam:4:2:101";
 const PARAM_LEVEL_OF_SERVICE = "ElementTypeParam:4:2:12";
 
 const G_ID_INTESITY = "intensity";
 const G_ID_SPEED = "speed";
 const G_ID_OCCUPANCY = "occupancy";
 const G_ID_OCCUPANCY_LONG = "occupancy_long";
+const G_ID_HEADER = "lol";
 
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:4:0","ElementTypeState:4:2"];
 
-const SECTION_COLOR_WHITE = "#b3b6b7";
+const SECTION_COLOR_WHITE = "white";
 const SECTION_COLOR_GREEN = "green";
-const SECTION_COLOR_GOLD = "#7d6608";
+const SECTION_COLOR_GOLD = "gold";
 const SECTION_COLOR_RED = "red";
 
 export default class Section extends GraphicIconCustomType {
@@ -30,6 +31,8 @@ export default class Section extends GraphicIconCustomType {
         this.speed = this.g.select("#" + G_ID_SPEED);
         this.occupancy = this.g.select("#" + G_ID_OCCUPANCY);
         this.occupancy_long = this.g.select("#" + G_ID_OCCUPANCY_LONG);
+        this.header = this.g.select("#" + G_ID_HEADER);
+     
 
 	}
 	
@@ -76,13 +79,13 @@ export default class Section extends GraphicIconCustomType {
 
 			}
 			if(levelOfService == 1){
-				this.gState.attr({ fill: SECTION_COLOR_WHITE });
+				this.header.attr({ fill: SECTION_COLOR_WHITE });
 			} else if(levelOfService == 2){
-				this.gState.attr({ fill: SECTION_COLOR_GREEN });
+				this.header.attr({ fill: SECTION_COLOR_GREEN });
 			} else if(levelOfService == 3){
-				this.gState.attr({ fill: SECTION_COLOR_GOLD });
+				this.header.attr({ fill: SECTION_COLOR_GOLD });
 			} else if(levelOfService == 4){
-				this.gState.attr({ fill: SECTION_COLOR_RED });
+				this.header.attr({ fill: SECTION_COLOR_RED });
 			}
 			
 		}
