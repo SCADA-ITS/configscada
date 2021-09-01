@@ -30,4 +30,15 @@ export default class VmsSignalingZoneEditor {
 
 		throw new Error("Method 'getView()' must be implemented.");
 	}
+	
+	delete() {
+	
+		let data = {
+			zone: this.data.zone,
+			texts:  [],
+			graphics: []
+		};
+		
+		this.onZoneDataChange(data);
+	}
 }	

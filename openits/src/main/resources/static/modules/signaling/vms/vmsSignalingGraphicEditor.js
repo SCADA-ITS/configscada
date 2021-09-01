@@ -431,30 +431,31 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 		initialize();
 	}
 	
-	delete() {
-		
-		let self = this;
-	
-		let data = {
-			zone: this.data.zone,
-			graphic: function() {
-				
-				let graphicArray = [];
-				
-				if (Array.isArray(self.data.graphics) && self.data.graphics.length > 0) {
-					
-					let id = 0;
-					
-					while (id++ < self.data.graphics.length) {
-					
-						graphicArray.push({id: id});	
-					} 
-				}
-				
-				return graphicArray;
-			}()
-		};
-		
-		this.onZoneDataChange(data);
-	}
+//	delete() {
+//		
+//		let self = this;
+//	
+//		let data = {
+//			zone: this.data.zone,
+//			texts:  this.data.texts,
+//			graphics: function() {
+//				
+//				let graphicArray = [];
+//				
+//				if (Array.isArray(self.data.graphics) && self.data.graphics.length > 0) {
+//					
+//					let id = 0;
+//					
+//					while (id++ < self.data.graphics.length) {
+//					
+//						graphicArray.push({id: id});	
+//					} 
+//				}
+//				
+//				return graphicArray;
+//			}()
+//		};
+//		
+//		this.onZoneDataChange(data);
+//	}
 }	

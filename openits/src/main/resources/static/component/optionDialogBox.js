@@ -93,31 +93,35 @@ export default class OptionDialogBox {
 									for (let opt of content.options) {
 
 										let button = $$("button-" + opt.id + "-" + content.uid);
-										let value = button.getValue();
 
-										if (value == 1) {
+										if (button) {
 
-											let selectionId = button.config.name;
+											let value = button.getValue();
 
-											if (selectionId === oldSelection) {
+											if (value == 1) {
 
-												webix.alert({
-													title: i18n.t("LBL_SAME_MODE_SELECTED"),
-													text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
-													type: "alert-warning",
-													width: 600
-												});
+												let selectionId = button.config.name;
 
-											} else {
+												if (selectionId === oldSelection) {
 
-												let res = self.onChange(selectionId, function(close) {
+													webix.alert({
+														title: i18n.t("LBL_SAME_MODE_SELECTED"),
+														text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
+														type: "alert-warning",
+														width: 600
+													});
 
-													console.log(res)
+												} else {
 
-													if (close === undefined || close === true) {
-														$$(self.optionWindow).close();
-													}
-												});
+													let res = self.onChange(selectionId, function(close) {
+
+														console.log(res)
+
+														if (close === undefined || close === true) {
+															$$(self.optionWindow).close();
+														}
+													});
+												}
 											}
 										}
 									}

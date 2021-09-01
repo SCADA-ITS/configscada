@@ -282,12 +282,16 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					
 					let inputWidth = (DEFAULT_INPUT_FONT_SIZE * (self.config.w - self.config.w * 0.1)) / parseFloat(self.config.fontInfo["font-size"]);
 					
-					while (lineData = self.data.texts.find(e => e.id === lineNum)) {
+					if (Array.isArray(self.data.texts)) {
 						
-						viewLines.cols[0].elements.push(drawTextEditorLine());
-
-						lineNum++;
-					}
+						while (lineData = self.data.texts.find(e => e.id === lineNum)) {
+						
+							viewLines.cols[0].elements.push(drawTextEditorLine());
+	
+							lineNum++;
+						}	
+					} 
+					
 					
 					function drawTextEditorLine() {
 					
@@ -735,9 +739,12 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 			let lineNum = 1;
 			let h = self.height;
 			
-			while (self.data.texts.find(e => e.id === lineNum)) {
+			if (Array.isArray(self.data.texts)) {
+				
+				while (self.data.texts.find(e => e.id === lineNum)) {
 						
-				lineNum++; 
+					lineNum++; 
+				}	
 			}
 			
 			h += lineNum * 30;
@@ -750,30 +757,31 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 		initialize();
 	}
 	
-	delete() {
-		
-		let self = this;
-	
-		let data = {
-			zone: this.data.zone,
-			texts: function() {
-				
-				let textArray = [];
-				
-				if (Array.isArray(self.data.texts) && self.data.texts.length > 0) {
-					
-					let id = 0;
-					
-					while (id++ < self.data.texts.length) {
-					
-						textArray.push({id: id});	
-					} 
-				}
-				
-				return textArray;
-			}()
-		};
-		
-		this.onZoneDataChange(data);
-	}
+//	delete() {
+//		
+//		let self = this;
+//	
+//		let data = {
+//			zone: this.data.zone,
+//			graphics:  this.data.graphics,
+//			texts: function() {
+//				
+//				let textArray = [];
+//				
+//				if (Array.isArray(self.data.texts) && self.data.texts.length > 0) {
+//					
+//					let id = 0;
+//					
+//					while (id++ < self.data.texts.length) {
+//					
+//						textArray.push({id: id});	
+//					} 
+//				}
+//				
+//				return textArray;
+//			}()
+//		};
+//		
+//		this.onZoneDataChange(data);
+//	}
 }	

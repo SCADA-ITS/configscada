@@ -563,14 +563,27 @@ export default class Vms extends GraphicIconCustomType {
 					
 					gEditButton.click(function(e) {
 						
-						let zoneData = getZoneData(zoneId);
+						let zoneData = webix.copy(getZoneData(zoneId));
+						let zoneDataInitialized = self.getZoneDataInitialized(zoneId);
 						
 						let zoneDataWithTexts = zoneData && Array.isArray(zoneData.texts) && zoneData.texts.length > 0;
 						let zoneDataWithGraphics = zoneData && Array.isArray(zoneData.graphics) && zoneData.graphics.length > 0;  
 						
 						if (!zoneData || (zoneData && !zoneDataWithTexts && !zoneDataWithGraphics)) {
 							
-							zoneData = self.getZoneDataInitialized(zoneId);
+							zoneData = zoneDataInitialized;
+						}
+						else {
+							
+							if (!zoneData.graphics) {
+							
+								zoneData.graphics = zoneDataInitialized.graphics;
+							}
+							
+							if (!zoneData.texts) {
+							
+								zoneData.texts = zoneDataInitialized.texts;
+							}
 						}
 						
 						let fontInfo = getFontInfo(zoneId);

@@ -169,19 +169,17 @@ export default class VmsSignalingComposer {
 						
 						let zoneEditor;
 						
-						if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_TEXT) {
+						if (eventType === GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC) {
 
-							zoneEditor = drawTextEditor();
+							if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_TEXT)  {
 
-						} else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
+								zoneEditor = drawTextEditor();
 
-							zoneEditor = drawGraphicEditor();
+							} else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
 
-						} else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
+								zoneEditor = drawGraphicEditor();
 
-							let optionDialogBox;
-
-							if (eventType === GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC) {
+							} else if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
 
 								let options = [
 									{
@@ -201,56 +199,53 @@ export default class VmsSignalingComposer {
 
 								];
 
-								optionDialogBox = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, onAccept, OptionDialogBox.MODE_TOGGLE)
+								let optionDialogBox = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, onAccept, OptionDialogBox.MODE_TOGGLE)
 								optionDialogBox.show();
 
-							} else if (eventType === GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC && self.dualZoneEditor != undefined) {
 
-								self.dualZoneEditor.delete();
-							}
+								function onAccept(obj) {
 
+									if (obj === VmsSignalingZoneEditor.TYPE_TEXT) {
 
-							function onAccept(obj) {
+										zoneEditor = drawTextEditor();
 
-								if (obj === VmsSignalingZoneEditor.TYPE_TEXT) {
+									} else if (obj === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
 
-									zoneEditor = drawTextEditor();
-
-								} else if (obj === VmsSignalingZoneEditor.TYPE_GRAPHIC) {
-
-									zoneEditor = drawGraphicEditor();
-								}
-
-								if (zoneEditor) {
+										zoneEditor = drawGraphicEditor();
+									}
 
 									$$(optionDialogBox.optionWindow).close();
-									self.dualZoneEditor = zoneEditor;
-
-									if (eventType === GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC) {
-
-										zoneEditor.show();
-									}
+									zoneEditor.show();
 								}
+
+							} else {
+
+								webix.alert({
+									title: i18n.t("LBL_UNKNOWN_ZONE_TYPE"),
+									text: i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type,
+									type: "alert-error",
+									width: 500
+								});
 							}
 
-						} else {
-
-							webix.alert({
-								title: i18n.t("LBL_UNKNOWN_ZONE_TYPE"),
-								text: i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type,
-								type: "alert-error",
-								width: 500
-							});
-						}
-
-						if (zoneEditor) {
-
-							if (eventType === GraphicIcon.EventTypes.ON_ZONE_EDIT_CLIC) {
+							if (zoneEditor) {
 
 								zoneEditor.show();
 							}
-							else if (eventType === GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC) {
 
+						} else if (eventType === GraphicIcon.EventTypes.ON_ZONE_DELETE_CLIC) {
+
+							if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_TEXT || zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
+
+								zoneEditor = drawTextEditor();
+								
+								zoneEditor.delete();
+							}
+
+							if (zoneConfig.type === VmsSignalingZoneEditor.TYPE_GRAPHIC || zoneConfig.type === VmsSignalingZoneEditor.TYPE_DUAL) {
+
+								zoneEditor = drawGraphicEditor();
+								
 								zoneEditor.delete();
 							}
 						}
