@@ -1,9 +1,13 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
+const ELEMENT_TYPE_ID = "ElementType:18";
+
 const PARAM_GROUP_COMMAND = "ElementTypeParam:18:2:1";
 
 const G_ID_ARROW = "arrow";
+const G_ID_TEXT_VALUE = "textValue";
+const G_ID_TEXT_UNIT = "textUnit";
 
 const ARROW_COLOR_DISABLED = "transparent";
 const ARROW_COLOR_ENABLED = "#df646e";
@@ -20,7 +24,8 @@ export default class InAnemometer extends GraphicIconCustomType {
 
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
         this.gArrow = this.g.select("#" + G_ID_ARROW);
-
+		this.gTextValue = this.g.select("#" + G_ID_TEXT_VALUE);
+		this.gTextUnit = this.g.select("#" + G_ID_TEXT_UNIT);
 	}
 	
 	render(elementInfo) {
@@ -37,6 +42,8 @@ export default class InAnemometer extends GraphicIconCustomType {
 			let cmdGroupValue = this.getValue(PARAM_GROUP_COMMAND);
 			
 			if (cmdGroupValue && treatmentValue) {
+
+				this.gTextValue.attr("text", cmdGroupValue);
                 
 				let cmd = parseInt(cmdGroupValue);
 
@@ -58,6 +65,9 @@ export default class InAnemometer extends GraphicIconCustomType {
             
             }
 
+			let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", ELEMENT_TYPE_ID);
+			let elementTypeParam = elementType.elementTypeParams.find(e => { return e.id == PARAM_GROUP_COMMAND });
+			this.gTextUnit.attr("text", i18n.t(elementTypeParam.labelUnit));
 		}
 		
 	}
