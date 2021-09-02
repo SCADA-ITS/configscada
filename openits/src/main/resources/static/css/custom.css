@@ -3404,4 +3404,11 @@ audio {
 	transform: scale(2, 2);
 }
 
+.camviewer-matrix .webix_template{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #9e9e9e;
+}
+
 

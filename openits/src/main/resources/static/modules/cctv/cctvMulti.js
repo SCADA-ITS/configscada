@@ -263,7 +263,7 @@ export default class CCTVMulti {
 						loadCameras();
 						
 						// Put pager
-						viewPager = getViewPager();
+						viewPager = getViewPager(scenario);
 						webix.ui(viewPager, $$(viewPager.id));
 					
 						let container = $$(self.parent.args.containerId);
@@ -288,7 +288,7 @@ export default class CCTVMulti {
 
 								let cell = { 
 									id: "cell-" + (position++) + "-" + self.uid,
-									css: { "background-color": "#9e9e9e", "border": "2px solid" } 
+									css: { "background-color": "#9e9e9e", "border": "2px solid", "box-sizing": "border-box" } 
 								}
 								
 								rowView.cols.push(cell);
@@ -316,8 +316,9 @@ export default class CCTVMulti {
 					function loadCamera(elementId, pos) {
 						
 						let w = $$("cell-1-" + self.uid).$width;
-						let h = $$("cell-1-" + self.uid).$height;
-						
+						let h = $$("cell-1-" + self.uid).$height;						
+						let fit = (h > w) ? true: self.parent.config.multi.fit;
+
 						if ($$("cell-" + pos + "-" + self.uid)) {
 							
 							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
@@ -327,15 +328,14 @@ export default class CCTVMulti {
 									let element = elementResponse.json();
 							
 									if (element) {
-										
-										
-								
-										let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_MULTI, self.parent.config.multi.fit);
+																		
+										let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_MULTI, fit);
 							
 										let viewCamViewer = camViewer.getView();
 										
 										let newViewCamViewer = {
 											id: "cell-" + pos + "-" + self.uid,
+											css: { "background-color": "#9e9e9e" },
 											rows: [
 												viewCamViewer
 											]
@@ -349,7 +349,12 @@ export default class CCTVMulti {
 					}
 				});
 				
-				function getViewPager() {
+				function getViewPager(scenario) {
+					
+					let numberOfCameras = scenario.elements.length;
+					let numberOfCells = scenario.nColumns * scenario.nRows;
+					
+					let showPager = (numberOfCameras > numberOfCells) ? false : true;
 					
 					let viewToolbarPager = {
 						id: "view-cctv-pager-" + self.uid,
@@ -359,6 +364,7 @@ export default class CCTVMulti {
 						top: 10, 
 						left: 10,
 						height: 100,
+						hidden: showPager,
 						cols: [
 							{ width: 1 }
 						]

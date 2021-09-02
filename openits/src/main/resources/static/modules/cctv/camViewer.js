@@ -26,6 +26,7 @@ export default class CamViewer {
 		this.fit = fit ? fit : false;
 
 		this.controlsVisible = false;
+		this.expandCam = false;
 
 		this.pan = false;
 		this.tilt = false;
@@ -55,7 +56,8 @@ export default class CamViewer {
 //					relative: true
 //				},
 				getViewNoImage(),
-				{ id: "camviewer-name-" + self.uid },
+				getCamName(10, 10),
+				//{ id: "camviewer-name-" + self.uid },
 				{ id: "camviewer-buttons-" + self.uid },
 				{ id: "cam-controls-" + self.uid }
 			]
@@ -90,7 +92,9 @@ export default class CamViewer {
 					let w = self.fit ? "width: 100%" : "";
 					let imgStyle = `max-width:100%;height:${self.h}px;${w}`;
 
-					return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img align='center' style="${imgStyle}" src="${NO_VIDEO_IMAGE}"></div>`;
+					return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;">
+								<img align='center' style="${imgStyle}" src="${NO_VIDEO_IMAGE}">
+							</div>`;
 				}
 				, on: {
 
@@ -152,12 +156,23 @@ export default class CamViewer {
 							let viewStreamMjpeg = {
 								id: "camviewer-" + self.uid,
 								relative: true,
+								css: "camviewer-matrix",
 								template: function() {
 
-									let w = self.fit ? "width: 100%" : "";
-									let imgStyle = `max-width:100%;height:${self.h}px;${w}`;
+									let imgStyle;
 
-									return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
+									if (self.w > self.h) {
+
+										let w = self.fit ? "width: 100%" : "";
+										imgStyle = `max-width:100%;height:${self.h}px;${w}`;
+									}
+									else {
+
+										let h = self.fit ? "height: 100%" : "";
+										imgStyle = `max-height:100%;width:${self.w}px;${h}`;
+									}
+
+									return `<div class="camviewer-div" style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img class="camviewer-img" align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
 								}
 								, on: {
 
@@ -166,7 +181,7 @@ export default class CamViewer {
 							};
 							
 							webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
-							viewButtons();
+							drawButtons();
 							self.img.onload = undefined;
 							self.isReconnecting = false;
 							
@@ -188,7 +203,8 @@ export default class CamViewer {
 										
 										if ($$("camviewer-" + self.uid)) {
 											
-											webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));	
+											webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));
+											$$("camviewer-buttons-" + self.uid).hide();
 										}
 										
 										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] Trying to connect to: " + url);
@@ -251,36 +267,46 @@ export default class CamViewer {
 				}
 			}
 
-			function viewButtons() {
 
-				let imgWidth = self.img.width;
-				let imgHeight = self.img.height;
-				
-				let margin = 10
-
-				if (!self.fit) {
-
-					let ratio = self.h / imgHeight;
-					let w = Math.floor(imgWidth * ratio);
-
-					margin = Math.floor((self.w - w) / 2);
-				}
-
-				webix.ui(getCamName(margin), $$("camviewer-name-" + self.uid));
-				webix.ui(getCamControls(margin), $$("cam-controls-" + self.uid));
-				webix.ui(getButtons(margin), $$("camviewer-buttons-" + self.uid));
-			}
 
 		}
+		
+		function drawButtons() {
 
-		function getCamName(marginLeft) {
+			let imgWidth = self.img.width;
+			let imgHeight = self.img.height;
+			
+			let margin = 10
+			let bottom = 10;
+			
+			if ((self.h > self.w) && !self.expandCam) {
+
+				bottom = 80;
+			}
+
+			if (!self.fit) {
+
+				let ratio = self.h / imgHeight;
+				let w = Math.floor(imgWidth * ratio);
+
+				margin = Math.floor((self.w - w) / 2);
+	
+			}
+			
+			webix.ui(getCamControls(margin), $$("cam-controls-" + self.uid));
+			webix.ui(getButtons(margin, bottom), $$("camviewer-buttons-" + self.uid));							
+			webix.ui(getCamName(margin, bottom), $$("camviewer-name-" + self.uid));					
+			
+		}
+
+		function getCamName(marginLeft, bottom) {
 
 			let viewCamName;
 			
 			viewCamName = {
 				id: "camviewer-name-" + self.uid,
 				left: marginLeft,
-				bottom: 10,
+				bottom: bottom,
 				width: self.w / 2,
 				css: self.mode === CamViewer.MODE_SINGLE ? "cam-viewer-name" : "cam-viewer-name-small",
 				view: "label",
@@ -305,11 +331,11 @@ export default class CamViewer {
 			return viewCamName;
 		}
 
-		function getButtons(marginRight) {
+		function getButtons(marginRight, bottom) {
 
 			let viewButtons = {
 				id: "camviewer-buttons-" + self.uid,
-				bottom: 10,
+				bottom: bottom,
 				right: marginRight,
 				cols: [
 					{ width: 1 }
@@ -331,6 +357,7 @@ export default class CamViewer {
 
 				let viewButtonCamControls = getButtonCamControls();
 				let viewButtonFullScreen = getButtonFullScreen();
+				let viewButtonExpandCam = getButtonExpandCam();
 
 				viewButtonCamControls.height = SIZE_MULTI;
 				viewButtonCamControls.width = SIZE_MULTI;
@@ -340,11 +367,17 @@ export default class CamViewer {
 				viewButtonFullScreen.width = SIZE_MULTI;
 				viewButtonFullScreen.css = "cam-viewer-button";
 
+				viewButtonExpandCam.height = SIZE_MULTI;
+				viewButtonExpandCam.width = SIZE_MULTI;
+				viewButtonExpandCam.css = "cam-viewer-button";
+
 				if (self.pan || self.tilt || self.zoom)
 					viewButtons.cols.push(viewButtonCamControls);
 					
 				if(!self.fullScreen)
 					viewButtons.cols.push(viewButtonFullScreen);
+					
+				viewButtons.cols.push(viewButtonExpandCam);	
 			}
 
 			function getViewButtonsMultiMode() {
@@ -353,6 +386,7 @@ export default class CamViewer {
 
 				let viewButtonCamControls = getButtonCamControls();
 				let viewButtonFullScreen = getButtonFullScreen();
+				let viewButtonExpandCam = getButtonExpandCam();
 
 				viewButtonCamControls.height = SIZE_SINGLE;
 				viewButtonCamControls.width = SIZE_SINGLE;
@@ -362,11 +396,17 @@ export default class CamViewer {
 				viewButtonFullScreen.width = SIZE_SINGLE;
 				viewButtonFullScreen.css = "cam-viewer-button-small";
 
+				viewButtonExpandCam.height = SIZE_SINGLE;
+				viewButtonExpandCam.width = SIZE_SINGLE;
+				viewButtonExpandCam.css = "cam-viewer-button-small";
+
 				if (self.pan || self.tilt || self.zoom)
 					viewButtons.cols.push(viewButtonCamControls);
 					
 				if(!self.fullScreen)
 					viewButtons.cols.push(viewButtonFullScreen);
+
+				viewButtons.cols.push(viewButtonExpandCam);
 			}
 
 			function getButtonCamControls() {
@@ -443,6 +483,79 @@ export default class CamViewer {
 				return viewButtonFullScreen;
 			}
 
+			function getButtonExpandCam() {
+
+				let viewButtonExpandCam;
+				
+				viewButtonExpandCam = {
+					id: "cam-expand-button" + self.uid,
+					view: "button",
+					type: "icon",
+					icon: "mdi mdi-arrow-expand",
+					tooltip: i18n.t("LBL_EXPAND_CAM"),
+					on: {
+						onItemClick: function(obj) {
+							
+							let taller = undefined;
+							let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
+							let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
+							let className = "webix_view webix_control webix_el_button webix_secondary ";
+							
+							taller = (self.h > self.w) ? true : false;
+
+							if (camViewerContainer && camViewerImg) {
+
+								if (taller) {
+
+									if (self.expandCam) {
+
+										camViewerContainer.style.height = "initial";
+										self.expandCam = false;
+
+									} else {
+
+										camViewerContainer.style.height = "100%";
+										self.expandCam = true;
+									}
+
+								} else {
+																											
+									if (self.expandCam) {
+										
+										camViewerContainer.style.width = "inherit";
+										camViewerImg.style.width = "inherit";
+										self.expandCam = false;
+
+									} else {
+										
+										camViewerContainer.style.width = "100%";
+										camViewerImg.style.width = "100%";
+										self.expandCam = true;
+									}							
+								
+								self.fit = !self.fit;
+								}
+								
+								drawButtons();	
+								
+								if (self.expandCam) {
+
+									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button-pressed" : "cam-viewer-button-pressed-small";
+									$$(obj)._contentobj.className = className;
+							
+								} else {
+
+									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button" : "cam-viewer-button-small";
+									$$(obj)._contentobj.className = className;
+								}
+							}
+						}
+					}
+				}
+
+				return viewButtonExpandCam;
+			}
+
 			return viewButtons;
 		}
 
@@ -450,6 +563,8 @@ export default class CamViewer {
 
 			const CTRL_ROWS = 5;
 			const CTRL_COLS = 3;
+			let sizeCorrection = (self.h > self.w) ? 0.6 : 1;
+			let top = (self.h > self.w) ? 100 : 50;
 
 			let presets = [];
 
@@ -480,13 +595,13 @@ export default class CamViewer {
 					presets = JSON.parse(presetConfigJson);
 				}
 			}
-
-			let btnWidth = Math.floor((self.h / 2) / CTRL_ROWS);
+			
+			let btnWidth = Math.floor((self.h / 2) / CTRL_ROWS) * sizeCorrection;
 			let btnHeight = btnWidth;
 
 			let viewCamControls = {
 				id: "cam-controls-" + self.uid,
-				top: 50,
+				top: top,
 				right: marginRight,
 				hidden: true,
 				rows: [
@@ -496,7 +611,7 @@ export default class CamViewer {
 						cols: [
 							{ width: 1 },
 							{
-								width: Math.floor((CTRL_COLS * (self.h / 2)) / CTRL_ROWS),
+								width: Math.floor((CTRL_COLS * (self.h / 2)) / CTRL_ROWS)* sizeCorrection,
 								css: { "background-color": "transparent" },
 								rows: [
 									{
