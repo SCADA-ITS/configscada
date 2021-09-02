@@ -35,7 +35,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.502526"
-     inkscape:cx="250.11666"
+     inkscape:cx="146.89511"
      inkscape:cy="203.19759"
      inkscape:document-units="mm"
      inkscape:current-layer="zone1"
@@ -53,7 +53,7 @@
      fit-margin-right="0"
      fit-margin-bottom="0">
     <sodipodi:guide
-       position="-215.71885,96.384257"
+       position="-285.91331,96.384265"
        orientation="0,-1"
        id="guide44" />
   </sodipodi:namedview>
@@ -61,16 +61,15 @@
      inkscape:label="main"
      inkscape:groupmode="layer"
      id="main"
-     style="display:inline"
-     transform="translate(-35.09722)">
+     style="display:inline">
     <path
        id="state"
        style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.667763"
-       d="m 35.09722,0 h 87.26756 V 26.011224 H 35.09722 Z" />
+       d="M 0,0 H 87.26756 V 26.011224 H 0 Z" />
     <path
        id="path283"
        style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.609808"
-       d="M 36.482051,1.531 H 121.00681 V 23.92717 H 36.482051 Z" />
+       d="M 1.384831,1.531 H 85.90959 V 23.92717 H 1.384831 Z" />
     <g
        inkscape:groupmode="layer"
        id="zone1"
@@ -79,11 +78,11 @@
       <text
          xml:space="preserve"
          style="font-size:7.40833px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
-         x="78.512245"
+         x="43.415028"
          y="14.49837"
          id="line1"><tspan
            sodipodi:role="line"
-           x="78.512245"
+           x="43.415028"
            y="14.49837"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.40833px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.465;stroke-miterlimit:4;stroke-dasharray:none"
            id="tspan24-6">ABGCDEFGHIJLMNOPQR</tspan></text>

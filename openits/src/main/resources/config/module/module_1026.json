@@ -63,7 +63,7 @@
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": true,
 			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
-			},
+		},
 		{
 			"id": "ElementSubtype:9:71",
 			"graphicIcon": {
@@ -86,7 +86,7 @@
 			"graphicIcon": {
 				
 				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
-				"svgFile": "img/graphic_icon/71_vms_clv.svg",
+				"svgFile": "img/graphic_icon/71_vms_clv_af.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
@@ -99,11 +99,11 @@
 			"textAlign": false
 		},
 		{
-			"id": "ElementSubtype:12:71",
+			"id": "ElementSubtype:16:71",
 			"graphicIcon": {
 				
 				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
-				"svgFile": "img/graphic_icon/71_vms_af.svg",
+				"svgFile": "img/graphic_icon/71_vms_dgt_txt_1line.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
