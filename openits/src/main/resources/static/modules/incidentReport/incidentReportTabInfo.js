@@ -56,7 +56,7 @@ export default class IncidentReportTabInfo {
 								cols: [
 									{
 										view: "label",
-										width: 250,
+										width: 400,
 										template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>`
 									},
 									{
@@ -160,7 +160,7 @@ export default class IncidentReportTabInfo {
 								cols: [
 									{
 										view: "label",
-										width: 250,
+										width: 400,
 										template: `<div><span class="${e.icon}"></span><span class="field">${i18n.t(e.label)}</span></div>`
 									},
 									{

@@ -792,6 +792,9 @@ p, input, textarea {
   	background: transparent;
   	color: #babdb6;
 	font-size: 13px;
+	overflow: hidden; 
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .segment-custom-2 .webix_segment_0:hover, 
@@ -1330,7 +1333,7 @@ p, input, textarea {
 
 .ims-incident-report-tab-details .value {
 	position: absolute;
-    padding-left: 375px;
+    padding-left: 225px;
     font-size: 13px;
     padding-top: 4px;
 }

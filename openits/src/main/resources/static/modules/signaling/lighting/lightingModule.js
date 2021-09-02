@@ -289,7 +289,7 @@ export default class LightingnModule extends GenericModule {
 						id: "view-tree-" + self.uid,
 						header: i18n.t("LBL_TUNNELS"),
 						body: {
-							width: 250,
+							width: 230,
 							rows: [
 								{
 									cols: [
@@ -302,8 +302,8 @@ export default class LightingnModule extends GenericModule {
 					{ view: "resizer" },
 					{
 						id: "view-content-" + self.uid,
-						rows: [],
-						hidden: true
+						//rows: [],
+						//hidden: true
 					},
 					{
 						id: "view-content-loading-" + self.uid,

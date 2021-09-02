@@ -171,23 +171,25 @@ export default class TubeContent {
 
 	getView() {
 
+
 		let viewContent = {
 			css: { "background-color": "white" },
 			rows: [
+				{ height: 6 },
 				this.getContentHeader(),
+				{ height: 12 },
 				{
-					borderless: true,
 					cols: [
-						{ width: 15 },
+						{ width: 3 },
 						this.getContentToolbar(),
-						{ width: 15 }
+						{ width: 3 }
 					]
 				},
 				{
-					css: { "border-width": "0px !important" },
-					type: "form",
 					cols: [
+						{ width: 3 },
 						this.getContentBody(),
+						{ width: 3 }
 					]
 				}
 			],
@@ -198,6 +200,35 @@ export default class TubeContent {
 				}
 			}
 		};
+
+		//		let viewContent = {
+		//			css: { "background-color": "white" },
+		//			rows: [
+		//				this.getContentHeader(),
+		//				{height: 15},
+		//				{
+		//					borderless: true,
+		//					cols: [
+		//						{ width: 3 },
+		//						this.getContentToolbar(),
+		//						{ width: 3 }
+		//					]
+		//				},
+		//				{
+		//					css: { "border-width": "0px !important" },
+		//					type: "form",
+		//					cols: [
+		//						this.getContentBody(),
+		//					]
+		//				}
+		//			],
+		//			on: {
+		//				onDestruct: (obj) => {
+		//
+		//					this.disConnectWS();
+		//				}
+		//			}
+		//		};
 
 		return viewContent;
 	}
@@ -271,6 +302,7 @@ export default class TubeContent {
 			id: "view-content-toolbar-" + self.parent.uid,
 			view: "toolbar",
 			height: 28,
+			css: { "box-sizing": "border-box" },
 			elements: [],
 			borderless: true
 		}
@@ -279,7 +311,7 @@ export default class TubeContent {
 			view: "segmented",
 			css: "segment-custom-2",
 			value: self.lightingModeValueParam.value,
-			width: 330,
+			width: 500,
 			options: lightingModeOptions,
 			tooltip: true,
 			on: {
@@ -309,7 +341,7 @@ export default class TubeContent {
 
 
 					function changeMode(newModeId, callbackCloseDialog) {
-						
+
 						webix.confirm({
 							title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
 							ok: i18n.t("LBL_ACCEPT"),
@@ -359,9 +391,9 @@ export default class TubeContent {
 		let self = this;
 
 		let contentBody = {
-			//css: { "margin-top" : "0px !important" },
 			view: "form",
 			id: "view-content-body-" + self.parent.uid,
+			css: { "box-sizing": "border-box", "border": "1px solid #dadee0 !important"},
 			rows: [
 				getRegime(),
 				getButtons(),
@@ -412,11 +444,12 @@ export default class TubeContent {
 						rows: [
 							{ height: 26 },
 							{
+								width: 500,
 								cols: [
 									{
 										view: "label",
 										height: 24,
-										width: 180,
+										//width: 180,
 										template: "<span>" + i18n.t("LBL_ACTUAL_REGIME") + "</span>",
 										css: "global-text"
 									},
@@ -424,7 +457,7 @@ export default class TubeContent {
 									{
 										view: "label",
 										height: 24,
-										width: 180,
+										//width: 180,
 										template: "<span>" + i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
 										css: "global-text"
 									},
@@ -432,7 +465,7 @@ export default class TubeContent {
 									{
 										view: "label",
 										height: 24,
-										width: 180,
+										//width: 180,
 										template: "<span>" + i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
 										css: "global-text"
 									}
@@ -440,10 +473,11 @@ export default class TubeContent {
 							},
 							{ height: 12 },
 							{
+								width: 500,
 								cols: [
 									{
 										view: "label",
-										width: 180,
+										//width: 180,
 										height: 24,
 										id: "label-regimen-1-" + self.parent.uid,
 										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getCurrentRegime() ? self.getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
@@ -452,7 +486,7 @@ export default class TubeContent {
 									{ width: 12 },
 									{
 										view: "label",
-										width: 180,
+										//width: 180,
 										height: 24,
 										id: "label-regimen-2-" + self.parent.uid,
 										template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(self.getProposedRegime() ? self.getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
@@ -461,10 +495,9 @@ export default class TubeContent {
 									{ width: 12 },
 									{
 										id: "label-regimen-3-" + self.parent.uid,
-										width: 180,
+										//width: 180,
 										height: 28,
 										view: "combo",
-										// css: {"margin-top": "-5px"},
 										value: self.getCurrentRegime() ? self.getCurrentRegime().id : undefined,
 										options: availableRegimes,
 										on: {
@@ -483,7 +516,7 @@ export default class TubeContent {
 							{}
 						]
 					},
-					{ width: 20 },
+					{},
 					{
 						rows: [
 							getViewDocument(),
@@ -564,7 +597,7 @@ export default class TubeContent {
 							{
 								height: 26,
 								align: "right",
-								width: 500,
+								//width: 500,
 								view: "button",
 								type: "icon",
 								label: self.infoRegime.documentName + " " + self.infoRegime.documentType,
@@ -1154,15 +1187,15 @@ export default class TubeContent {
 
 			//return {height: 338,rows:self.tubeDalisDataTable.getView()};
 			return { rows: self.tubeDalisDataTable.getView() };
-		
-		
-		
+
+
+
 		};
 
 		function getBottom() {
 
 			let bottom = {
-				height: 40,
+				//height: 40,
 				cols: [
 					{},
 					{
@@ -1451,7 +1484,7 @@ export default class TubeContent {
 				}
 
 				if (newItemData) {
-					
+
 					self.tubeDalisDataTable.update(newItemData);
 				}
 			}
