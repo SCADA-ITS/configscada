@@ -68,7 +68,7 @@ export default class IncidentReportModule extends GenericModule {
 
 			self.args.selectedPks.forEach(e => {
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoint, { id: e })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
 
 					if (dat != null) {
 
@@ -159,7 +159,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				this.requestReport = false;
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoint, { id: self.incidentReportId })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.incidentReport, { id: self.incidentReportId })).then(function(dat) {
 
 					if (dat != null) {
 

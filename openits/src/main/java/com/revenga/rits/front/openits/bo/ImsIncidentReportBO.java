@@ -81,6 +81,9 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE_ID = "incidentTypeCauseId";
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE = "incidentTypeCause";
+	
+	static final String FIELD_LOCATION_ID = "locationId";
+	static final String FIELD_AFFECTION_STRETCH_ID = "affectionStretchId";
 
 	@SuppressWarnings("unchecked")
 	private Object getIncidentStateLabelAlias(final Map<String, Object> incidentReport) {
@@ -709,6 +712,24 @@ public class ImsIncidentReportBO extends GenericBO {
 			addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_CAUSE, null,
 			getCauseAlias(incidentReport, causeId), null);
 		}
+		return res;
+	}
+
+	public Object changeLocation(String id, String locationId, String stretchId) {
+		
+		Boolean res = false;
+
+		Map<String, Object> input = new HashMap<>();
+
+		input.put(FIELD_INCIDENT_REPORT_ID, id);
+		input.put(FIELD_LOCATION_ID, locationId);
+		input.put(FIELD_AFFECTION_STRETCH_ID, stretchId);
+
+		Map<String, Object> incidentReport = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_LOCATION_INCIDENT_REPORT, input);
+
+		res = checkMapIsBoolean(incidentReport);
+
 		return res;
 	}
 		

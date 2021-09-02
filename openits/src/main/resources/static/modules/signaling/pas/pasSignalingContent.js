@@ -13,7 +13,7 @@ export default class PasSignalingContent {
 		this.uid = webix.uid();
 		this.selectedPks = selectedPks;
 
-		this.pasLibraries;
+		this.pasLibraries = undefined;
 
 		this.zones = undefined;
 		this.zonesDataTable = undefined;
@@ -330,8 +330,21 @@ export default class PasSignalingContent {
 						});
 					}
 
-					let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
-					pasLibrary.show();
+					if (self.pasLibraries && self.pasLibraries.pasLibrary) {
+
+						let pasLibrary = new PasLibrary(self.pasLibraries.pasLibrary, callBack, selectedItems.length);
+						pasLibrary.show();
+						
+					} else {
+
+						webix.alert({
+							title: i18n.t("LBL_NOT_FOUND_PAS_LIBRARY"),
+							text: i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"),
+							type: "alert-error",
+							width: 600
+						});
+					}
+
 				}
 			});
 
@@ -482,14 +495,14 @@ export default class PasSignalingContent {
 
 		let pasLibrariesResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.pasLibraryByElement, { id: this.element.id }));
 
-		if (pasLibrariesResponse != null) {
+		if (pasLibrariesResponse && pasLibrariesResponse.responseText) {
 
 			this.pasLibraries = JSON.parse(pasLibrariesResponse.responseText);
 		}
 
 		let elementResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.elementById, { id: this.element.id }));
 
-		if (elementResponse != null) {
+		if (elementResponse && elementResponse.responseText) {
 
 			this.element = JSON.parse(elementResponse.responseText);
 		}
@@ -544,12 +557,16 @@ export default class PasSignalingContent {
 			element.messageId = element.messageId.replace('[', '');
 			element.messageId = element.messageId.replace(']', '');
 
-			let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.message == element.messageId);
-			if (passLibraryNode) {
+			if (this.pasLibraries && this.pasLibraries.pasLibrary && Array.isArray(this.pasLibraries.pasLibrary.pasLibraryNodes) && this.pasLibraries.pasLibrary.pasLibraryNodes.length > 0) {
 
-				element.messageAlias = passLibraryNode.pasMessage.alias;
-				element.messageAudio = passLibraryNode.pasMessage.audio;
+				let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.message == element.messageId);
+				if (passLibraryNode) {
+
+					element.messageAlias = passLibraryNode.pasMessage.alias;
+					element.messageAudio = passLibraryNode.pasMessage.audio;
+				}
 			}
+
 		}
 
 		if (messageDesc && messageDesc.value != undefined) {

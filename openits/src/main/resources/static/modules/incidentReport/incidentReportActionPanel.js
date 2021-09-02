@@ -3,6 +3,8 @@ import FilesManager from "../../component/filesManager.js";
 import DataTable from "../../component/datatable.js";
 import { util } from "../../lib/util.js";
 
+import IncidentReportChangeLocationAction from "./incidentReportChangeLocationAction.js";
+
 const MARGIN_ACTION_PANEL = 15;
 
 export default class IncidentReportActionPanel {
@@ -46,6 +48,298 @@ export default class IncidentReportActionPanel {
 			}
 		}
 
+		function changeUser() {
+
+			function resultSearch(data) {
+
+				let body = {
+					id: self.incidentReport.id,
+					userId: data[0].id
+				};
+				let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+				self.parent.restAction(endpoint);
+
+			}
+
+			let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
+
+			s.show();
+		}
+
+		function showAlarms() {
+
+			if (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0) {
+
+				const defaultGridOptionValues = [
+					{ gridOption: { id: 1 }, value: "true" },
+					{ gridOption: { id: 2 }, value: "true" },
+					{ gridOption: { id: 3 }, value: undefined },
+					{ gridOption: { id: 4 }, value: undefined },
+					{ gridOption: { id: 5 }, value: undefined },
+					{ gridOption: { id: 6 }, value: undefined },
+					{ gridOption: { id: 7 }, value: "false" },
+					{ gridOption: { id: 8 }, value: "false" },
+					{ gridOption: { id: 9 }, value: "true" },
+					{ gridOption: { id: 10 }, value: "true" },
+					{ gridOption: { id: 11 }, value: "false" },
+					{ gridOption: { id: 12 }, value: "false" },
+					{ gridOption: { id: 13 }, value: "true" },
+					{ gridOption: { id: 14 }, value: "false" },
+					{ gridOption: { id: 15 }, value: "false" },
+					{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+				];
+
+				let metadata = {
+					filter: true,
+					label: "LBL_INCIDENT_REPORT_ALARMS",
+					visible: true,
+					gridOptionValues: defaultGridOptionValues,
+					gridFields: [
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: true,
+							needsTranslation: false,
+							parameterized: false,
+							position: 1,
+							required: true,
+							sourceField: "id",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: true,
+							isPk: false,
+							needsTranslation: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "activation",
+							visible: true,
+							label: "LBL_ALARM_ACTIVATION",
+							widthPx: 165,
+							gridFieldDataType: {
+								id: 4,
+								name: "date"
+							}
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							needsTranslation: true,
+							parameterized: false,
+							position: 3,
+							required: true,
+							sourceField: "alarmConfigAlias",
+							visible: true,
+							label: "LBL_ALARM_CONFIG_ALIAS",
+							widthPx: 255,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							needsTranslation: true,
+							parameterized: false,
+							position: 4,
+							required: true,
+							sourceField: "elementTypeLabelAlias",
+							visible: true,
+							label: "LBL_ELEMENT_TYPE_ALIAS",
+							widthPx: 175,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							needsTranslation: false,
+							parameterized: false,
+							position: 5,
+							required: true,
+							sourceField: "elementAlias",
+							visible: true,
+							label: "LBL_ELEMENT_ALIAS",
+							widthPx: 125,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						}
+
+					]
+				};
+
+
+				let data = [];
+
+				if (Array.isArray(self.incidentReport.alarms) && self.incidentReport.alarms.length) {
+
+					let alarms = self.incidentReport.alarms;
+
+					for (let i = 0; i < alarms.length; i++) {
+						let row = {};
+						row.id = i;
+						row.activation = alarms[i].activation;
+						row.alarmConfigAlias = alarms[i].alarmConfig.labelAlias;
+						row.elementTypeLabelAlias = alarms[i].element.elementType.labelAlias;
+						row.elementAlias = alarms[i].element.alias;
+
+						data.push(row);
+					}
+				}
+
+				self.tableAlarms = new DataTable(null, null, metadata, data);
+				let h = 500;
+				let w = 800;
+
+				let body = {
+
+					cols: [
+						{ width: 20 },
+						{
+							rows: [
+								{ height: 20 },
+								{
+									height: 375,
+									widht: 750,
+									rows: self.tableAlarms.getView()
+								},
+								{ height: 20 },
+								{
+									cols: [
+										{},
+										{
+											view: "button",
+											css: "dialog-cancel",
+											height: 41,
+											width: 130,
+											label: i18n.t("LBL_CLOSE"),
+											on: {
+
+												onItemClick() {
+
+													$$(alarmsWindow).close();
+												}
+											}
+										}
+
+									]
+								},
+								{ height: 7 }
+							]
+						},
+						{ width: 20 }
+					]
+				}
+
+				let alarmsWindow = util.ui.loadWindow(
+					i18n.t("LBL_INCIDENT_REPORT_ALARMS") + " - " + self.incidentReport.incidentType.alias,
+					body,
+					h,
+					w
+				);
+
+				if (self.tableAlarms) {
+					self.tableAlarms.callbacks();
+				}
+			}
+		}
+
+		function showOperationalPlan() {
+			let h = document.documentElement.clientHeight - 200;
+			let w = document.documentElement.clientWidth - 500;
+			const img = new Image();
+
+			img.onload = function() {
+
+				h = this.height + 50;
+				w = this.width;
+
+				let body = {
+					rows: [
+						{
+							template: function() {
+
+								return `<div><img style="max-width:100%;width:auto;height:auto;" src="${img.src}"></div> `
+							}
+						}
+					]
+				};
+
+				util.ui.loadWindow(
+					i18n.t("LBL_OPERATION_PLAN"),
+					body,
+					h,
+					w
+				);
+			};
+
+			img.src = self.incidentReport.operationalPlanUrl;
+		}
+
+		function showDocuments() {
+			let files = [];
+
+			files = self.incidentType.incidentTypeDocuments.map(incidentTypeDocument => {
+
+				return {
+					file: incidentTypeDocument.alias,
+					description: incidentTypeDocument.description,
+					documentUrl: incidentTypeDocument.documentUrl
+				};
+			});
+
+			let fileManager = new FilesManager(self.incidentType.alias, files, null);
+			fileManager.show();
+
+		}
+
+
+		function cancelIncidentReport() {
+
+			webix.confirm({
+
+				title: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL"),
+				ok: i18n.t("LBL_YES"),
+				cancel: i18n.t("LBL_NO"),
+				text: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"),
+				width: 600
+
+			}).then(function() {
+
+				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
+					id: self.incidentReport.id
+				});
+
+				self.parent.restAction(endpoint);
+			});
+		}
+
+		function changeLocation(){
+			
+			let changeLocationAction = new IncidentReportChangeLocationAction(self.config, self.incidentReport);
+			changeLocationAction.show();
+		}
+		
 		function getLowerButtonsViewArray() {
 
 			let body = []
@@ -64,42 +358,13 @@ export default class IncidentReportActionPanel {
 
 							onItemClick() {
 
-								let h = document.documentElement.clientHeight - 200;
-								let w = document.documentElement.clientWidth - 500;
-								const img = new Image();
-
-								img.onload = function() {
-
-									h = this.height + 50;
-									w = this.width;
-
-									let body = {
-										rows: [
-											{
-												template: function() {
-
-													return `<div><img style="max-width:100%;width:auto;height:auto;" src="${img.src}"></div> `
-												}
-											}
-										]
-									};
-
-									util.ui.loadWindow(
-										i18n.t("LBL_OPERATION_PLAN"),
-										body,
-										h,
-										w
-									);
-								};
-
-								img.src = self.incidentReport.operationalPlanUrl;
+								showOperationalPlan();
 							}
 						}
 					}
 				);
 
 				body.push({ height: 10 });
-
 			}
 
 			if (self.incidentType.incidentTypeDocuments !== undefined && self.incidentType.incidentTypeDocuments.length > 0 ? true : false) {
@@ -118,20 +383,7 @@ export default class IncidentReportActionPanel {
 
 							onItemClick() {
 
-								let files = [];
-
-								files = self.incidentType.incidentTypeDocuments.map(incidentTypeDocument => {
-
-									return {
-										file: incidentTypeDocument.alias,
-										description: incidentTypeDocument.description,
-										documentUrl: incidentTypeDocument.documentUrl
-									};
-								});
-
-								let fileManager = new FilesManager(self.incidentType.alias, files, null);
-								fileManager.show();
-
+								showDocuments();
 							}
 						}
 					});
@@ -319,7 +571,7 @@ export default class IncidentReportActionPanel {
 											label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
 											tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
 											type: "iconTop",
-											icon: "mdi mdi-map-marker",
+											icon: "mdi mdi-map",
 											on: {
 
 												onItemClick() {
@@ -364,26 +616,14 @@ export default class IncidentReportActionPanel {
 											width: 135,
 											label: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 											tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
+											disabled: !self.incidentReport.confirm,
 											type: "iconTop",
 											icon: "mdi mdi-account",
 											on: {
 
 												onItemClick() {
 
-													function resultSearch(data) {
-
-														let body = {
-															id: self.incidentReport.id,
-															userId: data[0].id
-														};
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
-														self.parent.restAction(endpoint);
-
-													}
-
-													let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
-
-													s.show();
+													changeUser();
 												}
 											}
 										},
@@ -394,205 +634,13 @@ export default class IncidentReportActionPanel {
 											label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
 											tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
 											type: "iconTop",
-											hidden: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
+											disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
 											icon: "mdi mdi-bell",
 											on: {
 
 												onItemClick() {
-													if (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0) {
 
-														const defaultGridOptionValues = [
-															{ gridOption: { id: 1 }, value: "true" },
-															{ gridOption: { id: 2 }, value: "true" },
-															{ gridOption: { id: 3 }, value: undefined },
-															{ gridOption: { id: 4 }, value: undefined },
-															{ gridOption: { id: 5 }, value: undefined },
-															{ gridOption: { id: 6 }, value: undefined },
-															{ gridOption: { id: 7 }, value: "false" },
-															{ gridOption: { id: 8 }, value: "false" },
-															{ gridOption: { id: 9 }, value: "true" },
-															{ gridOption: { id: 10 }, value: "true" },
-															{ gridOption: { id: 11 }, value: "false" },
-															{ gridOption: { id: 12 }, value: "false" },
-															{ gridOption: { id: 13 }, value: "true" },
-															{ gridOption: { id: 14 }, value: "false" },
-															{ gridOption: { id: 15 }, value: "false" },
-															{ gridOption: { id: 16 }, value: "img/grid/default.png" }
-														];
-
-														let metadata = {
-															filter: true,
-															label: "LBL_INCIDENT_REPORT_ALARMS",
-															visible: true,
-															gridOptionValues: defaultGridOptionValues,
-															gridFields: [
-																{
-																	extended: false,
-																	filtered: false,
-																	isEpochMilli: false,
-																	isPk: true,
-																	needsTranslation: false,
-																	parameterized: false,
-																	position: 1,
-																	required: true,
-																	sourceField: "id",
-																	visible: false,
-																	widthPx: 1,
-																	gridFieldDataType: {
-																		id: 1,
-																		name: "string"
-																	}
-																},
-																{
-																	extended: false,
-																	filtered: false,
-																	isEpochMilli: true,
-																	isPk: false,
-																	needsTranslation: false,
-																	parameterized: false,
-																	position: 2,
-																	required: true,
-																	sourceField: "activation",
-																	visible: true,
-																	label: "LBL_ALARM_ACTIVATION",
-																	widthPx: 165,
-																	gridFieldDataType: {
-																		id: 4,
-																		name: "date"
-																	}
-																},
-																{
-																	extended: false,
-																	filtered: false,
-																	isEpochMilli: false,
-																	isPk: false,
-																	needsTranslation: true,
-																	parameterized: false,
-																	position: 3,
-																	required: true,
-																	sourceField: "alarmConfigAlias",
-																	visible: true,
-																	label: "LBL_ALARM_CONFIG_ALIAS",
-																	widthPx: 255,
-																	gridFieldDataType: {
-																		id: 1,
-																		name: "string"
-																	}
-																},
-																{
-																	extended: false,
-																	filtered: false,
-																	isEpochMilli: false,
-																	isPk: false,
-																	needsTranslation: true,
-																	parameterized: false,
-																	position: 4,
-																	required: true,
-																	sourceField: "elementTypeLabelAlias",
-																	visible: true,
-																	label: "LBL_ELEMENT_TYPE_ALIAS",
-																	widthPx: 175,
-																	gridFieldDataType: {
-																		id: 1,
-																		name: "string"
-																	}
-																},
-																{
-																	extended: false,
-																	filtered: false,
-																	isEpochMilli: false,
-																	isPk: false,
-																	needsTranslation: false,
-																	parameterized: false,
-																	position: 5,
-																	required: true,
-																	sourceField: "elementAlias",
-																	visible: true,
-																	label: "LBL_ELEMENT_ALIAS",
-																	widthPx: 125,
-																	gridFieldDataType: {
-																		id: 1,
-																		name: "string"
-																	}
-																}
-
-															]
-														};
-
-
-														let data = [];
-
-														if (Array.isArray(self.incidentReport.alarms) && self.incidentReport.alarms.length) {
-
-															let alarms = self.incidentReport.alarms;
-
-															for (let i = 0; i < alarms.length; i++) {
-																let row = {};
-																row.id = i;
-																row.activation = alarms[i].activation;
-																row.alarmConfigAlias = alarms[i].alarmConfig.labelAlias;
-																row.elementTypeLabelAlias = alarms[i].element.elementType.labelAlias;
-																row.elementAlias = alarms[i].element.alias;
-
-																data.push(row);
-															}
-														}
-
-														self.tableAlarms = new DataTable(null, null, metadata, data);
-														let h = 500;
-														let w = 800;
-
-														let body = {
-
-															cols: [
-																{ width: 20 },
-																{
-																	rows: [
-																		{ height: 20 },
-																		{
-																			height: 375,
-																			widht: 750,
-																			rows: self.tableAlarms.getView()
-																		},
-																		{ height: 20 },
-																		{
-																			cols: [
-																				{},
-																				{
-																					view: "button",
-																					css: "dialog-cancel",
-																					height: 41,
-																					width: 130,
-																					label: i18n.t("LBL_CLOSE"),
-																					on: {
-
-																						onItemClick() {
-
-																							$$(alarmsWindow).close();
-																						}
-																					}
-																				}
-
-																			]
-																		},
-																		{ height: 7 }
-																	]
-																},
-																{ width: 20 }
-															]
-														}
-
-														let alarmsWindow = util.ui.loadWindow(
-															i18n.t("LBL_INCIDENT_REPORT_ALARMS") + " - " + self.incidentReport.incidentType.alias,
-															body,
-															h,
-															w
-														);
-
-														if (self.tableAlarms) {
-															self.tableAlarms.callbacks();
-														}
-													}
+													showAlarms();
 												}
 											}
 										}
@@ -622,7 +670,7 @@ export default class IncidentReportActionPanel {
 
 												onItemClick() {
 
-													util.ui.notImplementedMessage();
+													changeLocation();
 												}
 											}
 										},
@@ -672,20 +720,7 @@ export default class IncidentReportActionPanel {
 
 								onItemClick() {
 
-									webix.confirm({
-										title: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-
-										let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
-											id: self.incidentReport.id
-										});
-
-										self.parent.restAction(endpoint);
-									});
+									cancelIncidentReport();
 								}
 							}
 						},
