@@ -92,16 +92,23 @@ class MeasureItem {
 					if (elementValue.value) {
 						
 						value = elementValue.value;
-					
-						if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.decimal && 
-						    elementValue.elementTypeParam.precision) {
+						
+						if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.decimal) { 
+						    
+							let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : 0; 
 							
 							value = value.replace(",", ".");
 							
 							let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
 							
-							value = parseValue.toFixed(elementValue.elementTypeParam.precision);
-						}	
+							value = parseValue.toFixed(precision);
+						}
+						else if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.timestamp) {
+							
+							let parseValue = (typeof(value) === "string") ? parseInt(value) : value;
+							
+							value = util.toLocaleString(parseValue / 1000);
+						}
 					}	
 					
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
@@ -110,7 +117,9 @@ class MeasureItem {
 					
 					this.currentValue = value;
 								
-					let res = `<div class="measure-box" style="background: ${stateValueBackColor}">
+					let res;
+					
+					res = `<div class="measure-box" style="background: ${stateValueBackColor}">
 									<image class="image" src="img/${icon}" />
 									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
 									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${label}">${label}</span></div>
@@ -223,7 +232,7 @@ class MeasureGroup {
 			return {
 				view: "carousel",
 				borderless: true,
-			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.uid,
+			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
 				navigation:{
 				    type: "side",
 				    items: true,
@@ -291,6 +300,7 @@ export default class EquipmentViewerInfoMeasure {
 				viewSegmented.options.push({
 					
 					id: VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid,
+					measureGroupId: measureGroup.id,
 					width: 150,
 					value: i18n.t(measureGroup.label)
 				});
@@ -306,12 +316,12 @@ export default class EquipmentViewerInfoMeasure {
 			viewSegmented.on = {
 				onChange(id) {
 					
-					let viewInfoMeasureCarousel = VIEW_INFO_MEASURE_CAROUSEL + "-" + self.uid; 
-					let viewInfoMeasureCarouselItem = id.replace(VIEW_INFO_MEASURE_SEGMENTED_ITEM, VIEW_INFO_MEASURE_CAROUSEL_ITEM);
+					let option = this.config.options.find(e => e.id === id);
+					let measureMultiview = $$(VIEW_INFO_MEASURE_MULTIVIEW + "-" + self.uid);
 					
-					if ($$(viewInfoMeasureCarousel) && $$(viewInfoMeasureCarouselItem)) {
-						
-						$$(viewInfoMeasureCarousel).setActive(viewInfoMeasureCarouselItem);
+					if (option && measureMultiview) {
+													
+						measureMultiview.setValue(VIEW_INFO_MEASURE_CAROUSEL + "-" + option.measureGroupId + "-" + self.uid);	
 					}
 				}
 			};
@@ -417,6 +427,7 @@ export default class EquipmentViewerInfoMeasure {
 		
 			return {
 				view: "multiview",
+				animate: false,
 			    id: VIEW_INFO_MEASURE_MULTIVIEW + "-" + self.uid,
 			    cells: []
 			};

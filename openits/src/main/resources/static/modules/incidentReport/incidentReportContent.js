@@ -28,6 +28,10 @@ export default class IncidentReportContent {
 
 		this.selectedTabId = undefined;
 	}
+	
+	refresh() {
+		
+	}
 
 	getView() {
 

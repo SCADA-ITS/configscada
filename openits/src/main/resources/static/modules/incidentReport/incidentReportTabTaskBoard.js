@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
+import IncidentReportTaskContent from "./incidentReportTaskContent.js";
 
 export default class IncidentReportTabTaskBoard {
 
@@ -15,6 +16,8 @@ export default class IncidentReportTabTaskBoard {
 		this.dtTasks = undefined;
 		this.tasks = undefined;
 		this.currentTask = undefined;
+		
+		this.incidentReportTaskContent = undefined;
 	}
 
 	getView(taskStates) {
@@ -38,17 +41,17 @@ export default class IncidentReportTabTaskBoard {
 			}
 
 		}
-
+		
 		function getTaskDetails(incidentTypeTaskId) {
-
-			let taskDetailsBody = {};
+			
 			let task = undefined;
 			let taskDetails = {};
 
 			if (!incidentTypeTaskId && self.currentTask) {
 
 				task = self.currentTask;
-			} else {
+			} 
+			else {
 
 				if (Array.isArray(self.tasks) && self.tasks.length) {
 
@@ -67,157 +70,194 @@ export default class IncidentReportTabTaskBoard {
 			}
 
 			if (task) {
-
-				taskDetailsBody = {
-					id: "taskDetailsBody-" + self.index + "-" + self.uid,
-					borderless: true,
-					css: "ims-incident-report-tab-details",
-					rows: [
-						{ height: 40 },
-						{
-							cols: [
-								{ width: 40 },
-								{
-									borderless: true,
-									rows: [
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-format-list-bulleted-type"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
-												   <div class="value">${i18n.t(task.incidentTypeTask.taskType.labelAlias)}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-form-textbox"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_ALIAS")}</span></div>
-												   <div class="value">${task.incidentTypeTask.alias}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-image-text"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_DESCRIPTION")}</span></div>
-												   <div class="value">${task.incidentTypeTask.description}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: function() {
-
-												let typeTask = i18n.t("LBL_INCICENT_TASK_MANUAL");
-
-												if (task.incidentTypeTask.auto) {
-
-													typeTask = i18n.t("LBL_INCICENT_TASK_AUTO");
-												}
-
-												return `<div><span class="ico webix_icon mdi mdi-animation"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
-												   	<div class="value">${typeTask}</div>`;
-											}
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: `<div><span class="ico webix_icon mdi mdi-asterisk"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_REQUIRED")}</span></div>
-												   <div class="value">${task.incidentTypeTask.mandatory ? i18n.t("LBL_YES") : i18n.t("LBL_NO")}</div>`
-										},
-										{
-											height: 50,
-											borderless: true,
-											template: function() {
-
-												let completedAt = i18n.t("LBL_INCIDENT_TASK_NO_COMPLETED");
-
-												if (task.completedAt) {
-
-													completedAt = util.toLocaleString(task.completedAt / 1000);
-												}
-
-												return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_COMPLETED")}</span></div>
-												   <div class="value">${completedAt}</div>`
-											}
-										}
-									]
-								},
-								{ width: 40 }
-							]
-						},
-						{}
-					]
-				};
-
-				taskDetails = {
-
-					id: "taskDetails-" + self.index + "-" + self.uid,
-					borderless: true,
-					rows: [
-						{ height: 5 },
-						{
-							view: "toolbar",
-							cols: [
-								{ width: 4 },
-								{
-									view: "label",
-									label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t("LBL_TASK_DETAILS")}</span>`
-								}
-							]
-						},
-						taskDetailsBody,
-						{
-							view: "toolbar",
-							height: 45,
-							cols: [
-								{},
-								{
-									view: "button",
-									css: (function() {
-
-										if (!task.incidentTypeTask.auto && !task.completedAt) {
-
-											return "action-button"
-										}
-										else {
-
-											return "action-button-dis";
-										}
-
-									})(),
-									height: 41,
-									width: 130,
-									disabled: !self.incidentReport.confirm,
-									hidden: task.incidentTypeTask.auto || task.completedAt,
-									label: (function() {
-
-										return i18n.t("LBL_INCIDENT_END_TASK");
-									})(),
-									on: {
-
-										onItemClick() {
-
-											if (task) {
-
-												if (!task.incidentTypeTask.auto && !task.completedAt) {
-
-													let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
-														id: self.incidentReport.id,
-														taskId: self.currentTask.incidentTypeTask.id
-													});
-
-													self.parent.restAction(endpoint);
-													self.currentTask = undefined;
-												}
-											}
-										}
-									}
-								},
-							]
-						},
-						{ height: 5 },
-					]
-				};
+				
+				self.incidentReportTaskContent = new IncidentReportTaskContent(self.config, self.currentTask, self.incidentReport, task, self.index, self.uid);
+				
+				taskDetails = self.incidentReportTaskContent.getView();
 			}
-
+			
 			return taskDetails;
 		}
+
+//		function getTaskDetails(incidentTypeTaskId) {
+//
+//			let taskDetailsBody = {};
+//			let task = undefined;
+//			let taskDetails = {};
+//
+//			if (!incidentTypeTaskId && self.currentTask) {
+//
+//				task = self.currentTask;
+//			} else {
+//
+//				if (Array.isArray(self.tasks) && self.tasks.length) {
+//
+//					task = self.tasks.find(e => {
+//
+//						return e.incidentTypeTask.id === incidentTypeTaskId;
+//					});
+//
+//					if (!task) {
+//
+//						task = self.tasks[0];
+//					}
+//
+//					self.currentTask = task;
+//				}
+//			}
+//
+//			if (task) {
+//
+//				taskDetailsBody = {
+//					id: "taskDetailsBody-" + self.index + "-" + self.uid,
+//					borderless: true,
+//					css: "ims-incident-report-tab-details",
+//					rows: [
+//						{ height: 40 },
+//						{
+//							cols: [
+//								{ width: 40 },
+//								{
+//									borderless: true,
+//									rows: [
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: `<div><span class="ico webix_icon mdi mdi-format-list-bulleted-type"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
+//												   <div class="value">${i18n.t(task.incidentTypeTask.taskType.labelAlias)}</div>`
+//										},
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: `<div><span class="ico webix_icon mdi mdi-form-textbox"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_ALIAS")}</span></div>
+//												   <div class="value">${task.incidentTypeTask.alias}</div>`
+//										},
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: `<div><span class="ico webix_icon mdi mdi-image-text"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_DESCRIPTION")}</span></div>
+//												   <div class="value">${task.incidentTypeTask.description}</div>`
+//										},
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: function() {
+//
+//												let typeTask = i18n.t("LBL_INCICENT_TASK_MANUAL");
+//
+//												if (task.incidentTypeTask.auto) {
+//
+//													typeTask = i18n.t("LBL_INCICENT_TASK_AUTO");
+//												}
+//
+//												return `<div><span class="ico webix_icon mdi mdi-animation"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>
+//												   	<div class="value">${typeTask}</div>`;
+//											}
+//										},
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: `<div><span class="ico webix_icon mdi mdi-asterisk"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_REQUIRED")}</span></div>
+//												   <div class="value">${task.incidentTypeTask.mandatory ? i18n.t("LBL_YES") : i18n.t("LBL_NO")}</div>`
+//										},
+//										{
+//											height: 50,
+//											borderless: true,
+//											template: function() {
+//
+//												let completedAt = i18n.t("LBL_INCIDENT_TASK_NO_COMPLETED");
+//
+//												if (task.completedAt) {
+//
+//													completedAt = util.toLocaleString(task.completedAt / 1000);
+//												}
+//
+//												return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_COMPLETED")}</span></div>
+//												   <div class="value">${completedAt}</div>`
+//											}
+//										}
+//									]
+//								},
+//								{ width: 40 }
+//							]
+//						},
+//						{}
+//					]
+//				};
+//
+//				taskDetails = {
+//
+//					id: "taskDetails-" + self.index + "-" + self.uid,
+//					borderless: true,
+//					rows: [
+//						{ height: 5 },
+//						{
+//							view: "toolbar",
+//							cols: [
+//								{ width: 4 },
+//								{
+//									view: "label",
+//									label: `<span class="ico webix_icon mdi mdi-format-list-bulleted"></span><span class="grid-title">${i18n.t("LBL_TASK_DETAILS")}</span>`
+//								}
+//							]
+//						},
+//						taskDetailsBody,
+//						{
+//							view: "toolbar",
+//							height: 45,
+//							cols: [
+//								{},
+//								{
+//									view: "button",
+//									css: (function() {
+//
+//										if (!task.incidentTypeTask.auto && !task.completedAt) {
+//
+//											return "action-button"
+//										}
+//										else {
+//
+//											return "action-button-dis";
+//										}
+//
+//									})(),
+//									height: 41,
+//									width: 130,
+//									disabled: !self.incidentReport.confirm,
+//									hidden: task.incidentTypeTask.auto || task.completedAt,
+//									label: (function() {
+//
+//										return i18n.t("LBL_INCIDENT_END_TASK");
+//									})(),
+//									on: {
+//
+//										onItemClick() {
+//
+//											if (task) {
+//
+//												if (!task.incidentTypeTask.auto && !task.completedAt) {
+//
+//													let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
+//														id: self.incidentReport.id,
+//														taskId: self.currentTask.incidentTypeTask.id
+//													});
+//
+//													self.parent.restAction(endpoint);
+//													self.currentTask = undefined;
+//												}
+//											}
+//										}
+//									}
+//								},
+//							]
+//						},
+//						{ height: 5 },
+//					]
+//				};
+//			}
+//
+//			return taskDetails;
+//		}
 
 		let tabTasksBoard = {
 			id: "tab-task-board-" + self.index + "-" + self.uid,
@@ -442,11 +482,13 @@ export default class IncidentReportTabTaskBoard {
 
 				if (Array.isArray(rows) && rows.length) {
 
-					let taskDetailsBody = $$("taskDetails-" + self.index + "-" + self.uid);
+					//let taskDetailsBody = $$("taskDetails-" + self.index + "-" + self.uid);
+					
+					let taskContent = $$(self.incidentReportTaskContent.getView().id);
 
-					if (taskDetailsBody) {
+					if (taskContent) {
 
-						webix.ui(getTaskDetails(rows[0]), taskDetailsBody);
+						webix.ui(getTaskDetails(rows[0]), taskContent);
 					}
 
 				}
