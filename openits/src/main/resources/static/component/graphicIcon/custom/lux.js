@@ -1,10 +1,10 @@
-import GraphicIconCustomTypeValue from "../GraphicIconCustomTypeValue.js";
+import GraphicIconCustomTypeValue from "../graphicIconCustomTypeValue.js";
 
 const ELEMENT_TYPE_ID = "ElementType:12";
 
 const PARAM_COMMAND_VALUE_ID = "ElementTypeParam:12:2:1";
 
-const ELEMENT_TYPE_STATES_NO_TREATMENT = [];
+const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:12:0","ElementTypeState:12:2"];
 
 export default class Lux extends GraphicIconCustomTypeValue {
 	

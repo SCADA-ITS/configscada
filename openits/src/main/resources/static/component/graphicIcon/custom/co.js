@@ -1,11 +1,10 @@
-import GraphicIconCustomTypeValue from "../GraphicIconCustomTypeValue.js";
+import GraphicIconCustomTypeValue from "../graphicIconCustomTypeValue.js";
 
 const ELEMENT_TYPE_ID = "ElementType:19";
 
 const PARAM_COMMAND_VALUE_ID = "ElementTypeParam:19:2:1";
 
-const ELEMENT_TYPE_STATES_NO_TREATMENT = [];
-// const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:19:0","ElementTypeState:19:2"];
+const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:19:0","ElementTypeState:19:2"];
 
 export default class Co extends GraphicIconCustomTypeValue {
 	
