@@ -110,6 +110,31 @@ export default class TubeContent {
 				}
 			});
 		}
+		
+		function checkDisableChangeStatusButton(){
+
+			let changeStatusButton = $$("view-content-button-change-fans-status-" + self.uid);
+					
+			if(changeStatusButton) {
+				
+				let ventilationMode = getVentilationMode();
+				
+				let modeEnableFanActions = !(!ventilationMode || self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disable);
+				
+				if (self.tubeFansDataTable && self.tubeFansDataTable.getAllItems() && Array.isArray(self.tubeFansDataTable.getAllItems()) && self.tubeFansDataTable.getAllItems().length > 0 && modeEnableFanActions) {
+					
+					let enabled = self.tubeFansDataTable.getAllItems().find(item => (item.fanStateToSend != undefined && item.fanStateToSend != null));
+					
+					if(enabled) {
+
+						changeStatusButton.enable();
+					} else {
+
+						changeStatusButton.disable();
+					}	
+				}
+			} 
+		}
 
 		function getCurrentVentilationState() {
 
@@ -176,7 +201,9 @@ export default class TubeContent {
 
 		function getContentHeader() {
 
-			let header = {
+			let header;
+			 
+			header = {
 				id: "view-content-header-" + self.uid,
 				rows: [
 					{
@@ -244,94 +271,61 @@ export default class TubeContent {
 				on: {
 					onChange(newv, oldv) {
 												
-					this.blockEvent();
-					this.setValue(oldv);
-					this.unblockEvent();					
-					
-					let options = [];
-					
-					for (let modeOption of ventilationModeOptions){
-
-					let newSelection = modeOption.id === newv ? true : false;
-															
-						 options.push({
-							id: modeOption.id,
-							label: modeOption.value,
-							description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_DESCRIPTION"),
-							default: newSelection
-						});
-					}
-					
-					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_TOGGLE);
-					optionDialog.show(oldv);
-
-				 function changeMode(newModeId, callbackCloseDialog){
-					
-					webix.confirm({
-					title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-					ok: i18n.t("LBL_ACCEPT"),
-					cancel: i18n.t("LBL_CANCEL"),
-					text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-					width: 600
-					}).then(function(res) {
+						this.blockEvent();
+						this.setValue(oldv);
+						this.unblockEvent();					
 						
-						callbackCloseDialog(true);		
+						let options = [];
+						
+						for (let modeOption of ventilationModeOptions){
+	
+						let newSelection = modeOption.id === newv ? true : false;
+																
+							 options.push({
+								id: modeOption.id,
+								label: modeOption.value,
+								description: i18n.t("LBL_MODE_" + modeOption.value.toUpperCase() + "_DESCRIPTION"),
+								default: newSelection
+							});
+						}
+						
+						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeMode, OptionDialogBox.MODE_TOGGLE);
+						optionDialog.show(oldv);
+
+						function changeMode(newModeId, callbackCloseDialog){
 							
-						let command = self.parent.config.commands.SEND_VENTILATION_MODE;
-						command.elementId = self.selectedTube.id;
-						command.commandElementValues[0].value = newModeId;
-			
-						let body = {
-								commands: []
-								};
+							webix.confirm({
+								title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
+								ok: i18n.t("LBL_ACCEPT"),
+								cancel: i18n.t("LBL_CANCEL"),
+								text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
+								width: 600
+								}).then(function(res) {
 									
-						body.commands.push(command);
+									callbackCloseDialog(true);		
+										
+									let command = self.parent.config.commands.SEND_VENTILATION_MODE;
+									command.elementId = self.selectedTube.id;
+									command.commandElementValues[0].value = newModeId;
 						
-						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-						console.log(data.json())
-							if (!data.json()){
-								webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
-							}
-						},() => {
-							this.blockEvent();
-							this.setValue(oldv); 
-							this.unblockEvent();				
-						});						
-				
-				});
-				}
-
-//						webix.confirm({
-//							title: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM"),
-//							ok: i18n.t("LBL_ACCEPT"),
-//							cancel: i18n.t("LBL_CANCEL"),
-//							text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
-//							width: 600
-//						}).then(function() {
-//
-//							let command = self.parent.config.commands.SEND_VENTILATION_MODE;
-//							command.elementId = self.selectedTube.id;
-//							command.commandElementValues[0].value = newv;
-//
-//							let body = {
-//								commands: []
-//							};
-//							body.commands.push(command);
-//
-//							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-//
-//								if (!data.json()) {
-//
-//									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-//								}
-//							});
-//
-//						}).fail(() => {
-//
-//							this.blockEvent();
-//							this.setValue(oldv);
-//							this.unblockEvent();
-//						});
+									let body = {
+											commands: []
+											};
+												
+									body.commands.push(command);
+									
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+										console.log(data.json())
+											if (!data.json()){
+												webix.message({type:"error", text:i18n.t("LBL_ERROR_OPERATION")});
+											}
+										},() => {
+											this.blockEvent();
+											this.setValue(oldv); 
+											this.unblockEvent();				
+										});						
+								});
+						}
 					}
 				}
 			};
@@ -385,7 +379,7 @@ export default class TubeContent {
 
 						self.tubeFansDataTable.disable();
 						$$("view-content-button-change-regime-" + self.uid).disable();
-						$$("view-content-button-change-fans-status-" + self.uid).disable();
+						//$$("view-content-button-change-fans-status-" + self.uid).disable();
 
 					} else {
 
@@ -399,8 +393,10 @@ export default class TubeContent {
 						}
 
 						self.tubeFansDataTable.enable();
-						$$("view-content-button-change-fans-status-" + self.uid).enable();
+						//$$("view-content-button-change-fans-status-" + self.uid).enable();
 					}
+					
+					checkDisableChangeStatusButton();
 				}
 			}
 
@@ -555,7 +551,7 @@ export default class TubeContent {
 												id: "label-regimen-3-" + self.uid,
 												//width: 180,
 												height: 28,
-												view: "combo",
+												view: "richselect",
 												value: getCurrentRegime() ? getCurrentRegime().id : undefined,
 												options: availableRegimes,
 												on: {
@@ -572,7 +568,7 @@ export default class TubeContent {
 									{}
 								]
 							},
-							{},
+							{ width: 50 },
 							{
 								rows: [
 									getViewDocument(),
@@ -650,7 +646,6 @@ export default class TubeContent {
 							viewDocument = {
 								id: "view-content-regime-document-" + self.uid,
 								cols: [
-									{},
 									{
 										height: 26,
 										align: "right",
@@ -711,7 +706,9 @@ export default class TubeContent {
 
 				function getButtons() {
 
-					let buttons = {
+					let buttons;
+					
+					buttons = {
 						cols: [
 							{
 								view: "segmented",
@@ -811,6 +808,12 @@ export default class TubeContent {
 									name: "string"
 								},
 								gridFieldIcons: [
+									{
+										icon: "./img/state/stateUnknown.png",
+										showValue: false,
+										value: "ElementTypeState:9:0",
+										labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+									},
 									{
 										icon: "./img/state/stateUp.png",
 										showValue: false,
@@ -925,7 +928,7 @@ export default class TubeContent {
 								id: 1,
 								default_: false,
 								icon: "mdi mdi-rotate-right",
-								label: "LBL_FAN_PLAY",
+								label: "LBL_SEND_FAN_START_DIRECT",
 								multiselect: true,
 								position: 1,
 								showText: false,
@@ -935,7 +938,7 @@ export default class TubeContent {
 								id: 2,
 								default_: false,
 								icon: "mdi mdi-rotate-left",
-								label: "LBL_FAN_REVERSE",
+								label: "LBL_SEND_FAN_START_REVERSE",
 								multiselect: true,
 								position: 2,
 								showText: false,
@@ -944,8 +947,8 @@ export default class TubeContent {
 							{
 								id: 3,
 								default_: false,
-								icon: "mdi mdi-stop-circle-outline",
-								label: "LBL_FAN_STOP",
+								icon: "mdi mdi-stop",
+								label: "LBL_SEND_FAN_STOP",
 								multiselect: true,
 								position: 3,
 								showText: false,
@@ -954,8 +957,8 @@ export default class TubeContent {
 							{
 								id: 4,
 								default_: false,
-								icon: "mdi mdi-cancel",
-								label: "LBL_CLEAR",
+								icon: "mdi mdi-broom",
+								label: "LBL_CLEAN",
 								multiselect: true,
 								position: 4,
 								showText: false,
@@ -1033,29 +1036,11 @@ export default class TubeContent {
 					return self.tubeFansDataTable.getView();
 				};
 
-				function checkDisableChangeStatusButton(){
-
-					let changeStatusButton = $$("view-content-button-change-fans-status-" + self.uid);
-							
-					if(changeStatusButton) {
-						if (self.tubeFansDataTable &&  self.tubeFansDataTable.getAllItems() && Array.isArray(self.tubeFansDataTable.getAllItems()) && self.tubeFansDataTable.getAllItems().length > 0) {
-							
-							let enabled = self.tubeFansDataTable.getAllItems().find(item => (item.fanStateToSend != undefined && item.fanStateToSend != null));
-							
-							if(enabled) {
-
-								changeStatusButton.enable();
-							} else {
-
-								changeStatusButton.disable();
-							}	
-						}
-					} 
-				}
-
 				function getBottom() {
 
-					let bottom = {
+					let bottom;
+					
+					bottom = {
 						cols: [
 							{},
 							{
