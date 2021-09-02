@@ -292,7 +292,7 @@ export default class SignalingManagerModule extends GenericModule {
 												view: "label",
 												label: label, 
 												align: "center",
-												width: 350,
+												//width: 350,
 												css: "label-window-alarms",
 												on: {
 													onItemClick: function(id) {
@@ -379,7 +379,7 @@ export default class SignalingManagerModule extends GenericModule {
 				header: i18n.t("LBL_EQUIPMENT_SELECTED"),
 				hidden: (self.args.selectedPks.length === 1),
 				body: {
-					width: 350,
+					width: 340,
 					rows: [
 
 					]

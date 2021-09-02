@@ -228,6 +228,7 @@ export default class TubeContent {
 				id: "view-content-toolbar-" + self.uid,
 				view: "toolbar",
 				height: 28,
+				css: {"box-sizing": "border-box"},
 				elements: [],
 				borderless: true
 			}
@@ -434,16 +435,16 @@ export default class TubeContent {
 					{ height: 12 },
 					{
 						cols: [
-							{ width: 6 },
+							{ width: 3 },
 							getContentToolbar(),
-							{ width: 6 }
+							{ width: 3 }
 						]
 					},
 					{
 						cols: [
-							{ width: 6 },
+							{ width: 3 },
 							getContentBody(),
-							{ width: 6 }
+							{ width: 3 }
 						]
 					}
 				]
@@ -456,6 +457,7 @@ export default class TubeContent {
 				let contentBody = {
 					view: "form",
 					id: "view-content-body-" + self.uid,
+					css: { "box-sizing": "border-box" },
 					rows: [
 						getRegime(),
 						getButtons(),
@@ -499,11 +501,12 @@ export default class TubeContent {
 								rows: [
 									{ height: 26 },
 									{
+										width: 500,
 										cols: [
 											{
 												view: "label",
 												height: 24,
-												width: 180,
+												//width: 180,
 												template: "<span>" + i18n.t("LBL_CURRENT_REGIME") + "</span>",
 												css: "global-text"
 											},
@@ -511,7 +514,7 @@ export default class TubeContent {
 											{
 												view: "label",
 												height: 24,
-												width: 180,
+												//width: 180,
 												template: "<span>" + i18n.t("LBL_PROPOSED_REGIME") + "</span> ",
 												css: "global-text"
 											},
@@ -519,7 +522,7 @@ export default class TubeContent {
 											{
 												view: "label",
 												height: 24,
-												width: 180,
+												//width: 180,
 												template: "<span>" + i18n.t("LBL_CHANGE_REGIME_TO") + "</span>",
 												css: "global-text"
 											}
@@ -527,10 +530,11 @@ export default class TubeContent {
 									},
 									{ height: 12 },
 									{
+										width: 500,
 										cols: [
 											{
 												view: "label",
-												width: 180,
+												//width: 180,
 												height: 24,
 												id: "label-regimen-1-" + self.uid,
 												template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getCurrentRegime() ? getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
@@ -539,7 +543,7 @@ export default class TubeContent {
 											{ width: 12 },
 											{
 												view: "label",
-												width: 180,
+												//width: 180,
 												height: 24,
 												id: "label-regimen-2-" + self.uid,
 												template: '<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getProposedRegime() ? getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>',
@@ -549,7 +553,7 @@ export default class TubeContent {
 											{ width: 12 },
 											{
 												id: "label-regimen-3-" + self.uid,
-												width: 180,
+												//width: 180,
 												height: 28,
 												view: "combo",
 												value: getCurrentRegime() ? getCurrentRegime().id : undefined,
@@ -650,7 +654,7 @@ export default class TubeContent {
 									{
 										height: 26,
 										align: "right",
-										width: 500,
+										//width: 500,
 										view: "button",
 										type: "icon",
 										label: self.infoRegime.documentName + " " + self.infoRegime.documentType,
@@ -673,7 +677,7 @@ export default class TubeContent {
 						return {
 							id: "view-content-regime-document-text-" + self.uid,
 							height: 60,
-							width: 500,
+							//width: 500,
 							borderless: true,
 							view: "template",
 							template: `<div class="ventilation-description-box"><span > ${self.infoRegime.description}</span></div>`
@@ -1023,7 +1027,7 @@ export default class TubeContent {
 							checkDisableChangeStatusButton();
 						}
 					});
-		
+
 					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
 
 					return self.tubeFansDataTable.getView();

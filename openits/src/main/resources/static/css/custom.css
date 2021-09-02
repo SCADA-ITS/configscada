@@ -792,6 +792,9 @@ p, input, textarea {
   	background: transparent;
   	color: #babdb6;
 	font-size: 13px;
+	overflow: hidden; 
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .segment-custom-2 .webix_segment_0:hover, 
