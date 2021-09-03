@@ -54,7 +54,7 @@ export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 	
 					try {
 						
-						let regExp = new RegExp('^-?\\d+(?:\.\\d{0,' + (precision || -1) + '})?');
+						let regExp = new RegExp('^-?\\d+(?:\.\\d{0,' + (parseInt(precision) || -1) + '})?');
 						cmdValue = cmdValue.match(regExp)[0];
 
 					} catch (error) {
