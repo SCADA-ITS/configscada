@@ -133,6 +133,10 @@ export default class TubeContent {
 						changeStatusButton.disable();
 					}	
 				}
+				else {
+					
+					changeStatusButton.disable();
+				}
 			} 
 		}
 

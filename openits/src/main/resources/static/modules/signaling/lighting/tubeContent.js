@@ -1,5 +1,4 @@
 import { util } from "../../../lib/util.js";
-import DaliRegimeDialogBox from "./daliRegimeDialogBox.js";
 import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import { adapter } from "../../../lib/adapter.js";
@@ -22,16 +21,52 @@ export default class TubeContent {
 
 		this.selectedTube = undefined;
 		this.selectedTable = "action-panel-switcher-circuit" + this.parent.uid;
-		this.lightingModeValueParam;
+		this.lightingModeValueParam = undefined;
 
-		this.tubeCircuits;
-		this.tubeCircuitsDataTable;
-		this.tubeDalis;
-		this.tubeDalisDataTable;
+		this.tubeCircuits = undefined;
+		this.tubeCircuitsDataTable = undefined;
+		this.tubeDalis = undefined;
+		this.tubeDalisDataTable = undefined;
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorCircuits = undefined;
 		this.idStompSubscriptorDalis = undefined;
+	}
+	
+		getView() {
+
+		let viewContent;
+		
+		viewContent = {
+			css: { "background-color": "white" },
+			rows: [
+				{ height: 6 },
+				this.getContentHeader(),
+				{ height: 12 },
+				{
+					cols: [
+						{ width: 3 },
+						this.getContentToolbar(),
+						{ width: 3 }
+					]
+				},
+				{
+					cols: [
+						{ width: 3 },
+						this.getContentBody(),
+						{ width: 3 }
+					]
+				}
+			],
+			on: {
+				onDestruct: (obj) => {
+
+					this.disConnectWS();
+				}
+			}
+		};
+
+		return viewContent;
 	}
 
 	loadData(args, drawContent) {
@@ -107,12 +142,12 @@ export default class TubeContent {
 								circuit[elementValue.elementTypeParam.id] = elementValue.value;
 
 								if (elementValue.elementTypeParam.id === self.parent.config.params.circuitState) {
+									
+									let circuitStateLabel = CircuitState.find(e => e.value == elementValue.value);
 
-									let circuitState = CircuitState.find(e => e.value == elementValue.value);
-
-									if (circuitState) {
-
-										circuit["circuitStateLabel"] = i18n.t(circuitState.label);
+									if (circuitStateLabel) {
+		
+										circuit["circuitStateLabel"]  = i18n.t(circuitStateLabel.label);
 									}
 								}
 							});
@@ -169,70 +204,6 @@ export default class TubeContent {
 	}
 
 
-	getView() {
-
-
-		let viewContent = {
-			css: { "background-color": "white" },
-			rows: [
-				{ height: 6 },
-				this.getContentHeader(),
-				{ height: 12 },
-				{
-					cols: [
-						{ width: 3 },
-						this.getContentToolbar(),
-						{ width: 3 }
-					]
-				},
-				{
-					cols: [
-						{ width: 3 },
-						this.getContentBody(),
-						{ width: 3 }
-					]
-				}
-			],
-			on: {
-				onDestruct: (obj) => {
-
-					this.disConnectWS();
-				}
-			}
-		};
-
-		//		let viewContent = {
-		//			css: { "background-color": "white" },
-		//			rows: [
-		//				this.getContentHeader(),
-		//				{height: 15},
-		//				{
-		//					borderless: true,
-		//					cols: [
-		//						{ width: 3 },
-		//						this.getContentToolbar(),
-		//						{ width: 3 }
-		//					]
-		//				},
-		//				{
-		//					css: { "border-width": "0px !important" },
-		//					type: "form",
-		//					cols: [
-		//						this.getContentBody(),
-		//					]
-		//				}
-		//			],
-		//			on: {
-		//				onDestruct: (obj) => {
-		//
-		//					this.disConnectWS();
-		//				}
-		//			}
-		//		};
-
-		return viewContent;
-	}
-
 	getContentHeader() {
 
 		let self = this;
@@ -248,7 +219,9 @@ export default class TubeContent {
 			}
 		}
 
-		let header = {
+		let header;
+		
+		header = {
 			id: "view-content-header-" + self.parent.uid,
 			rows: [
 				{
@@ -389,8 +362,9 @@ export default class TubeContent {
 	getContentBody() {
 
 		let self = this;
-
-		let contentBody = {
+		let contentBody;
+		
+		contentBody = {
 			view: "form",
 			id: "view-content-body-" + self.parent.uid,
 			css: { "box-sizing": "border-box", "border": "1px solid #dadee0 !important"},
@@ -438,7 +412,9 @@ export default class TubeContent {
 				console.error("El Json de regimenes no esta correctamente formateado.")
 			}
 
-			let regime = {
+			let regime;
+			
+			regime = {
 				cols: [
 					{
 						rows: [
@@ -497,7 +473,7 @@ export default class TubeContent {
 										id: "label-regimen-3-" + self.parent.uid,
 										//width: 180,
 										height: 28,
-										view: "combo",
+										view: "richselect",
 										value: self.getCurrentRegime() ? self.getCurrentRegime().id : undefined,
 										options: availableRegimes,
 										on: {
@@ -505,7 +481,6 @@ export default class TubeContent {
 
 												updateInfoRegime(self.getLightingRegime(newv));
 
-												//updateProposedRegime(newv, lightingRegimeConfig.regimes);
 												webix.ui(getViewDocumentText(), $$("view-content-regime-document-text-" + self.parent.uid));
 												webix.ui(getViewDocument(), $$("view-content-regime-document-" + self.parent.uid));
 											}
@@ -516,7 +491,7 @@ export default class TubeContent {
 							{}
 						]
 					},
-					{},
+					{ width: 50 },
 					{
 						rows: [
 							getViewDocument(),
@@ -582,8 +557,10 @@ export default class TubeContent {
 			};
 
 			function getViewDocument() {
-
-				let viewDocument = {
+				
+				let viewDocument;
+				
+				viewDocument = {
 					id: "view-content-regime-document-" + self.parent.uid,
 					height: 26
 				};
@@ -593,7 +570,6 @@ export default class TubeContent {
 					viewDocument = {
 						id: "view-content-regime-document-" + self.parent.uid,
 						cols: [
-							{},
 							{
 								height: 26,
 								align: "right",
@@ -617,7 +593,10 @@ export default class TubeContent {
 			}
 
 			function getViewDocumentText() {
-				return {
+				
+				let viewDocumentText;
+				
+				viewDocumentText = {
 					id: "view-content-regime-document-text-" + self.parent.uid,
 					height: 60,
 					//width: 500,
@@ -625,6 +604,8 @@ export default class TubeContent {
 					view: "template",
 					template: `<div class="ventilation-description-box"><span > ${self.infoRegime.description}</span></div>`
 				};
+				
+				return viewDocumentText;
 			}
 
 			function updateInfoRegime(lightingRegime) {
@@ -654,7 +635,9 @@ export default class TubeContent {
 
 		function getButtons() {
 
-			let buttons = {
+			let buttons;
+			
+			buttons = {
 				cols: [
 					{
 						view: "segmented",
@@ -670,11 +653,7 @@ export default class TubeContent {
 							{
 								id: "action-panel-switcher-dali" + self.parent.uid,
 								value: "<span>" + i18n.t("LBL_DALI") + "</span>",
-							},
-							// {
-							// 	id: "action-panel-switcher-tube" + self.parent.uid,
-							// 	value: "<span>" + i18n.t("LBL_TUBE") + "</span>",
-							// }
+							}
 						],
 						on: {
 							onChange(newv, oldv) {
@@ -685,20 +664,14 @@ export default class TubeContent {
 
 									$$("view-content-body-dali-dt-" + self.parent.uid).hide();
 									$$("view-content-body-circuit-dt-" + self.parent.uid).show();
-									// $$("view-content-button-change-circuits-status-" + self.parent.uid).enable();
 									$$("view-content-button-change-circuits-status-" + self.parent.uid).show();
 								}
 								else if (newv === "action-panel-switcher-dali" + self.parent.uid) {
 
 									$$("view-content-body-circuit-dt-" + self.parent.uid).hide();
 									$$("view-content-body-dali-dt-" + self.parent.uid).show();
-									// $$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
 									$$("view-content-button-change-circuits-status-" + self.parent.uid).hide();
 								}
-								// else if (newv === "action-panel-switcher-tube" + self.parent.uid) {
-
-								// 	webix.message("show-tube");
-								// }
 							}
 						}
 					},
@@ -764,6 +737,12 @@ export default class TubeContent {
 							name: "string"
 						},
 						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUnknown.png",
+								showValue: false,
+								value: "ElementTypeState:84:0",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+							},
 							{
 								icon: "./img/state/stateUp.png",
 								showValue: false,
@@ -870,8 +849,8 @@ export default class TubeContent {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_CIRCUIT_SEND_STATUS",
-						labelTooltip: "LBL_CIRCUIT_SEND_STATUS",
+						label: "LBL_CIRCUIT_STATE_TO_SEND",
+						labelTooltip: "LBL_CIRCUIT_STATE_TO_SEND",
 						parameterized: false,
 						position: 7,
 						required: true,
@@ -899,7 +878,7 @@ export default class TubeContent {
 					{
 						id: 2,
 						default_: false,
-						icon: "mdi mdi-toggle-switch-off-outline",
+						icon: "mdi mdi-toggle-switch-off",
 						label: "LBL_SWITCH_OFF",
 						multiselect: true,
 						position: 2,
@@ -909,8 +888,8 @@ export default class TubeContent {
 					{
 						id: 3,
 						default_: false,
-						icon: "mdi mdi-cancel",
-						label: "LBL_CLEAR",
+						icon: "mdi mdi-broom",
+						label: "LBL_CLEAN",
 						multiselect: true,
 						position: 3,
 						showText: false,
@@ -934,7 +913,7 @@ export default class TubeContent {
 						self.tubeCircuitsDataTable.update(item);
 					});
 
-					checkDisableChangeStatusButton();
+					self.checkDisableChangeStatusButton();
 				}
 			});
 
@@ -949,7 +928,7 @@ export default class TubeContent {
 						self.tubeCircuitsDataTable.update(item);
 					});
 
-					checkDisableChangeStatusButton();
+					self.checkDisableChangeStatusButton();
 				}
 			});
 
@@ -964,14 +943,14 @@ export default class TubeContent {
 						self.tubeCircuitsDataTable.update(item);
 					});
 
-					checkDisableChangeStatusButton();
+					self.checkDisableChangeStatusButton();
 				}
 			});
 
 			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 
 			return { rows: self.tubeCircuitsDataTable.getView() };
-		};
+		}
 
 		function getDalisTable() {
 
@@ -1028,6 +1007,12 @@ export default class TubeContent {
 							name: "string"
 						},
 						gridFieldIcons: [
+							{
+								icon: "./img/state/stateUnknown.png",
+								showValue: false,
+								value: "ElementTypeState:85:0",
+								labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+							},
 							{
 								icon: "./img/state/stateUp.png",
 								showValue: false,
@@ -1129,7 +1114,7 @@ export default class TubeContent {
 				function: () => {
 
 					let options = [];
-					let dali = self.tubeDalis.find(dali => dali.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+					let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
 
 					let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
 					daliRegimeConfig = JSON.parse(daliRegimeConfig);
@@ -1145,9 +1130,6 @@ export default class TubeContent {
 
 					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime, OptionDialogBox.MODE_TOGGLE);
 					optionDialog.show();
-
-					//					let daliRegimeDialogBox = new DaliRegimeDialogBox(dali, self.parent)
-					//					daliRegimeDialogBox.show();
 				}
 			});
 
@@ -1165,7 +1147,7 @@ export default class TubeContent {
 							
 							callbackCloseDialog(true);
 							let command = self.parent.config.commands.SEND_DALI_REGIME;
-							let dali = self.tubeDalis.find(dali => dali.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+							let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
 				
 							command.elementId = dali.id;
 							command.commandElementValues[0].value = newRegimeId;
@@ -1185,7 +1167,6 @@ export default class TubeContent {
 						});
 					}
 
-			//return {height: 338,rows:self.tubeDalisDataTable.getView()};
 			return { rows: self.tubeDalisDataTable.getView() };
 
 
@@ -1194,8 +1175,10 @@ export default class TubeContent {
 
 		function getBottom() {
 
-			let bottom = {
-				//height: 40,
+			let bottom;
+			
+			bottom = {
+				height: 40,
 				cols: [
 					{},
 					{
@@ -1276,7 +1259,7 @@ export default class TubeContent {
 											self.tubeCircuitsDataTable.update(row);
 										});
 
-										checkDisableChangeStatusButton();
+										self.checkDisableChangeStatusButton();
 
 										if (!data.json()) {
 
@@ -1293,28 +1276,40 @@ export default class TubeContent {
 			return bottom;
 		}
 
-		function checkDisableChangeStatusButton(){
 
-			let changeStatusButton = $$("view-content-button-change-circuits-status-" + self.parent.uid);
-					
-			if(changeStatusButton) {
-
-				if (self.tubeCircuitsDataTable &&  self.tubeCircuitsDataTable.getAllItems() && Array.isArray(self.tubeCircuitsDataTable.getAllItems()) && self.tubeCircuitsDataTable.getAllItems().length > 0) {
-					
-					let enabled = self.tubeCircuitsDataTable.getAllItems().find(item => (item.circuitStateToSend != undefined && item.circuitStateToSend != null));
-					
-					if(enabled) {
-
-						changeStatusButton.enable();
-					} else {
-
-						changeStatusButton.disable();
-					}	
-				}
-			} 
-		}
 
 		return contentBody;
+	}
+	
+	checkDisableChangeStatusButton() {
+		
+		let self = this;
+
+		let changeStatusButton = $$("view-content-button-change-circuits-status-" + self.parent.uid);
+
+		if (changeStatusButton) {
+
+			let lightingMode = self.getLightingMode();
+
+			let modeEnableLightingActions = !(!lightingMode || self.parent.config.lightingModeOptions.find(option => option.id == lightingMode).disable);
+
+			if (self.tubeCircuitsDataTable && self.tubeCircuitsDataTable.getAllItems() && Array.isArray(self.tubeCircuitsDataTable.getAllItems()) && self.tubeCircuitsDataTable.getAllItems().length > 0 && modeEnableLightingActions) {
+
+				let enabled = self.tubeCircuitsDataTable.getAllItems().find(item => (item.circuitStateToSend != undefined && item.circuitStateToSend != null));
+
+				if (enabled) {
+
+					changeStatusButton.enable();
+				} else {
+
+					changeStatusButton.disable();
+				}
+			}
+			else {
+				
+				changeStatusButton.disable();
+			}
+		}
 	}
 
 	connectWS() {
@@ -1374,15 +1369,15 @@ export default class TubeContent {
 					self.tubeCircuitsDataTable.disable();
 					self.tubeDalisDataTable.disable();
 					$$("view-content-button-change-regime-" + self.parent.uid).disable();
-					$$("view-content-button-change-circuits-status-" + self.parent.uid).disable();
 
 				} else {
 
 					self.tubeCircuitsDataTable.enable();
 					self.tubeDalisDataTable.enable();
 					$$("view-content-button-change-regime-" + self.parent.uid).enable();
-					$$("view-content-button-change-circuits-status-" + self.parent.uid).enable();
 				}
+				
+				self.checkDisableChangeStatusButton();
 			}
 		}
 
