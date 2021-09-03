@@ -46,12 +46,13 @@ export default class PasSignalingContent {
 			let viewBody =
 			{
 				cols: [
-					{ width: 10 },
+					{ width: 6 },
 					{
 						height: 540,
+						css: {"box-sizing":"border-box"},
 						rows: getZonesTable()
 					},
-					{ width: 10 }
+					{ width: 6 }
 				]
 			};
 
@@ -476,7 +477,7 @@ export default class PasSignalingContent {
 										</div>`;
 							}
 						},
-						{ width: 24 }
+						//{ width: 24 }
 					]
 				}
 			]

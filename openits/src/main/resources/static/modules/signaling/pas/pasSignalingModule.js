@@ -3,7 +3,7 @@ import PasSignalingContent from "./pasSignalingContent.js";
 import PasSignalingList from "./pasSignalingList.js";
 import { util } from "../../../lib/util.js";
 
-const LIST_PANEL_WIDTH = 325;
+const LIST_PANEL_WIDTH = 300;
 
 export default class VmsSignalingModule extends GenericModule {
 
