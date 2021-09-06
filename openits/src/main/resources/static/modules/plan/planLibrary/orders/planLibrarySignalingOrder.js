@@ -199,6 +199,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				
 				if (Array.isArray(elementTypes) && elementTypes.length > 0) {
 					
+					elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
+					
 					dialogElementTypes.data = [];
 	
 					dialogElementTypes.pkField = "id"
