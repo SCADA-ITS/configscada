@@ -766,11 +766,12 @@ export default class AlarmModule extends GenericModule {
 			return view;
 		};
 
-		const getAlarmTypeIcon = (levelId) => {
+		const getAlarmTypeIcon = (typeId) => {
 
-			let isManual = this.config.alarmTypeAuto.includes(levelId) ? false : true; 
+			let isManual = this.config.alarmTypeAuto.includes(typeId) ? false : true; 
 			let icon = isManual ? "./img/grid/manual.png" : "./img/grid/auto.png";
 			let vlabel = isManual ? "LBL_ALARM_MANUAL" : "LBL_ALARM_AUTO";
+			let numType = typeId.charAt(typeId.length - 1);
 			let view;
 			
 			view = {
@@ -781,9 +782,9 @@ export default class AlarmModule extends GenericModule {
 						template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
 					},
 					{
-						width: 130,
+						width: 365,
 						view: "label",
-						label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`,
+						label: `<span class="alarm-view-text">${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}</span>`,
 						align: "left",
 						height: 27
 					},
@@ -1120,7 +1121,7 @@ export default class AlarmModule extends GenericModule {
 										{ height: 24 },
 										getAlarmLevelIcon(this.alarmLevelId),
 										{ height: 24 },
-										getAlarmTypeIcon(this.alarmLevelId),
+										getAlarmTypeIcon(this.alarmConfig.alarmType.id),
 										{ height: 24 },
 										getAlarmDeactivationIcon(this.alarm)
 									]
