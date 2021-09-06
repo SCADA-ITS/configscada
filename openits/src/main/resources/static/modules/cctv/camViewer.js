@@ -294,9 +294,9 @@ export default class CamViewer {
 			}
 			
 			webix.ui(getCamControls(margin), $$("cam-controls-" + self.uid));
-			webix.ui(getButtons(margin, bottom), $$("camviewer-buttons-" + self.uid));							
-			webix.ui(getCamName(margin, bottom), $$("camviewer-name-" + self.uid));					
-			
+			webix.ui(getButtons(margin, bottom), $$("camviewer-buttons-" + self.uid));
+			webix.ui(getCamName(margin, bottom), $$("camviewer-name-" + self.uid));
+
 		}
 
 		function getCamName(marginLeft, bottom) {
@@ -488,20 +488,22 @@ export default class CamViewer {
 				let viewButtonExpandCam;
 				
 				viewButtonExpandCam = {
-					id: "cam-expand-button" + self.uid,
+					id: "cam-expand-button-" + self.uid,
 					view: "button",
 					type: "icon",
 					icon: "mdi mdi-arrow-expand",
 					tooltip: i18n.t("LBL_EXPAND_CAM"),
+					css: "buttonExpand",
 					on: {
 						onItemClick: function(obj) {
-							
+
 							let taller = undefined;
+							let containerId = $$("camviewer-" + self.uid);
 							let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
 							let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
 							let className = "webix_view webix_control webix_el_button webix_secondary ";
-							
-							taller = (self.h > self.w) ? true : false;
+
+							taller = ($$(containerId).$height > $$(containerId).$width) ? true : false;
 
 							if (camViewerContainer && camViewerImg) {
 
@@ -515,34 +517,36 @@ export default class CamViewer {
 									} else {
 
 										camViewerContainer.style.height = "100%";
+										camViewerContainer.style.width = "100%";
+										camViewerImg.style.width = "100%";
 										self.expandCam = true;
 									}
 
 								} else {
-																											
+
 									if (self.expandCam) {
-										
+
 										camViewerContainer.style.width = "inherit";
 										camViewerImg.style.width = "inherit";
 										self.expandCam = false;
 
 									} else {
-										
+
 										camViewerContainer.style.width = "100%";
 										camViewerImg.style.width = "100%";
 										self.expandCam = true;
-									}							
-								
-								self.fit = !self.fit;
+									}
+
+									self.fit = !self.fit;
 								}
-								
-								drawButtons();	
-								
+
+								drawButtons();
+
 								if (self.expandCam) {
 
 									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button-pressed" : "cam-viewer-button-pressed-small";
 									$$(obj)._contentobj.className = className;
-							
+
 								} else {
 
 									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button" : "cam-viewer-button-small";
@@ -941,5 +945,15 @@ export default class CamViewer {
 		}
 
 		return view;
+	}
+
+	resize(arrCamViewers) {
+
+		for (let camViewer of arrCamViewers) {
+
+			let obj = "cam-expand-button-" + camViewer.uid;
+			webix.html.triggerEvent($$(obj).getInputNode(), "MouseEvents", "click");
+			webix.html.triggerEvent($$(obj).getInputNode(), "MouseEvents", "click");
+		}
 	}
 }

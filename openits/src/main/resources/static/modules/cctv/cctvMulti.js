@@ -17,8 +17,9 @@ export default class CCTVMulti {
 		this.nodes = undefined;
 		this.relationships = undefined;
 		this.scenario = undefined;
-		
-		this.treeScenes = undefined; 
+		this.arrCamViewer = [];
+
+		this.treeScenes = undefined;
 	}
 
 	loadData() {
@@ -134,9 +135,41 @@ export default class CCTVMulti {
 								id: "view-cctv-pager-" + self.uid
 							}
 						]
-						 
+
 					}
-				]
+				],
+				on: {
+					onAfterCollapse: function() {
+
+						if ($$("view-cctv-content-" + self.uid)) {
+
+							let newCells = $$("view-cctv-content-" + self.uid).getChildViews()[0].getNode().querySelector('.camviewer-matrix');
+
+							for (let camViewer of self.arrCamViewer) {
+
+								camViewer.w = newCells.clientWidth;
+								camViewer.h = newCells.clientHeight;
+							}
+
+							CamViewer.prototype.resize(self.arrCamViewer);
+						}
+					},
+					onAfterExpand: function() {
+
+						if ($$("view-cctv-content-" + self.uid)) {
+
+							let newCells = $$("view-cctv-content-" + self.uid).getChildViews()[0].getNode().querySelector('.camviewer-matrix');
+
+							for (let camViewer of self.arrCamViewer) {
+
+								camViewer.w = newCells.clientWidth;
+								camViewer.h = newCells.clientHeight;
+							}
+
+							CamViewer.prototype.resize(self.arrCamViewer);
+						}
+					}
+				}
 			}
 			
 			function drawTree() {
@@ -220,6 +253,7 @@ export default class CCTVMulti {
 				let viewContent;
 				let viewPager;
 				let pages = 1;
+				self.arrCamViewer = [];
 				
 				self.scenarioId = scenarioId;
 				
@@ -333,6 +367,8 @@ export default class CCTVMulti {
 							
 										let viewCamViewer = camViewer.getView();
 										
+										self.arrCamViewer.push(camViewer);
+
 										let newViewCamViewer = {
 											id: "cell-" + pos + "-" + self.uid,
 											css: { "background-color": "#9e9e9e" },
