@@ -737,8 +737,6 @@ export default class DataTable {
 	drawMainToolbar() {
 
 		let metadata = this.metadata;
-		//		let resultSegmented = this.getGridOptions(GridOptions.TB_MAIN_SEGMENTED);
-		//		let resultDetails = this.getGridOptions(GridOptions.SHOW_DETAILS);
 		let resultIcon = this.getGridOptions(GridOptions.ICON);
 
 		let toolbar = {
@@ -755,28 +753,6 @@ export default class DataTable {
 		toolbar.elements.push({ view: "label", label: `<img src="${resultIcon} class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png'" /><span class="grid-title">${i18n.t(metadata.label)}</span>` });
 
 		toolbar.elements.push({ minWidth: 4 });
-
-		//		if (resultSegmented) {
-		//
-		//			let segmentViews = {
-		//				view: "segmented", minWidth: 333,
-		//				id: "seg-" + this.uid,
-		//				options: [
-		//					{ id: "seg-basic-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_BASIC") },
-		//					{ id: "seg-details-" + this.uid, css: "table-tab-button", value: i18n.t("LBL_TABLE_DETAILED") }
-		//				]
-		//			}
-		//
-		//			if (resultDetails) {
-		//
-		//				segmentViews.value = "seg-details-" + this.uid;
-		//
-		//			} else {
-		//
-		//				segmentViews.value = "seg-basic-" + this.uid;
-		//			}
-		//			toolbar.elements.push(segmentViews)
-		//		}
 
 		toolbar.elements.push({ width: 8 });
 
@@ -955,12 +931,6 @@ export default class DataTable {
 
 		if (resultSelRows) {
 
-//			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
-//			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/", value: "Ninguna fila seleccionada", css: "sel_label_selected", width: 36, height: 13, tooltip: true });
-			
-//			toolbar.elements.push({ view: "label", id: "lb-" + this.uid, label: "Sel", width: 20, height: 15, css: "sel_label" });
-//			toolbar.elements.push({ view: "label", id: "lb-sel" + this.uid, label: "0/10000", value: "Ninguna fila seleccionada", css: "sel_label_selected", height: 13, tooltip: true });
-			
 			toolbar.elements.push(
 				{ 
 					id: "template-sel-" + this.uid,
@@ -1951,7 +1921,14 @@ export default class DataTable {
 						if (gridCommand.moduleAction) {
 						
 							let module = this.find_module(gridCommand.moduleAction.id);
-							util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);	
+							util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
+							
+							let grid = $$("dt-" + this.uid);
+
+							if (grid && gridCommand.unselectAllAfter) {
+					
+								grid.unselectAll();
+							}	
 						}
 					}
 				}

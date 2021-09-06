@@ -50,6 +50,9 @@ public class GridCommand implements Serializable {
 	
 	private String args;
 	
+	@Column(name="unselect_all_after")
+	private Boolean unselectAllAfter;
+	
 	//uni-directional many-to-one association to ViewType
 	@ManyToOne
 	@JoinColumn(name="view_type_id")
@@ -160,5 +163,13 @@ public class GridCommand implements Serializable {
 
 	public void setGrouped(Boolean grouped) {
 		this.grouped = grouped;
+	}
+
+	public Boolean getUnselectAllAfter() {
+		return unselectAllAfter;
+	}
+
+	public void setUnselectAllAfter(Boolean unselectAllAfter) {
+		this.unselectAllAfter = unselectAllAfter;
 	}
 }

@@ -176,7 +176,9 @@ export default class AlarmModule extends GenericModule {
 			
 			function drawHeader() {
 
-			let header = {
+			let header;
+			
+			header = {
 					id: "viewHeader-" + self.uid,
 					rows: [
 						{height: 10},
@@ -386,8 +388,8 @@ export default class AlarmModule extends GenericModule {
 	
 					let elementTypeId = element.elementType.id;
 					let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-					let alarmsConfigManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
-					let aconfitArray = alarmsConfigManual.filter(e => e.elementType && e.elementType.id  === elementTypeId && (!e.element || (e.element && e.element.id === element.id)));
+					let alarmsCfgManual = alarmConfig.filter(e => self.config.alarmTypeManual.includes(e.alarmType.id));
+					let aconfitArray = alarmsCfgManual.filter(e => e.elementType && e.elementType.id  === elementTypeId && (!e.element || (e.element && e.element.id === element.id)));
 					
 					if (Array.isArray(aconfitArray) && aconfitArray.length > 0 && aconfitArray != undefined) {
 						
@@ -693,7 +695,9 @@ export default class AlarmModule extends GenericModule {
 			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "";
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 
-			let view = {
+			let view;
+			
+			view = {
 				cols:[
 					{	width: 34,
 						borderless: true,
@@ -733,7 +737,9 @@ export default class AlarmModule extends GenericModule {
 			let userName = user !== null ? window.em.getByField(EntityType.USER, "id", user.id).name : "" ;
 			let userLabel = userName + " " + new Date(this.alarm.recognized).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 
-			let view = {
+			let view;
+			
+			view = {
 				cols:[
 					{	width: 34,
 						borderless: true,
@@ -765,7 +771,9 @@ export default class AlarmModule extends GenericModule {
 			let isManual = this.config.alarmTypeAuto.includes(levelId) ? false : true; 
 			let icon = isManual ? "./img/grid/manual.png" : "./img/grid/auto.png";
 			let vlabel = isManual ? "LBL_ALARM_MANUAL" : "LBL_ALARM_AUTO";
-			let view = {
+			let view;
+			
+			view = {
 				cols:[
 					{	width: 34,
 						borderless: true,
@@ -800,7 +808,9 @@ export default class AlarmModule extends GenericModule {
 			let labelCritical = "LBL_ALARM_LEVEL_CRITICAL";
 			let icon = isCritical ? iconCritical : isWarn ? iconWarn : isInfo ? iconInfo : "" ;
 			let vlabel = isCritical ? labelCritical : isWarn ? labelWarn : isInfo ? labelInfo : "" ;
-			let view = {
+			let view;
+			
+			view = {
 				cols:[
 					{	width: 34,
 						borderless: true,
@@ -819,263 +829,6 @@ export default class AlarmModule extends GenericModule {
 			};
 			return view;
 		}
-
-		//		let viewMain = {
-		//			id: this.uid,
-		//			cols: [
-		//				{
-		//					//height: 250,
-		//					rows: [
-		//						{
-		//			
-		//							cols: [
-		//								{																			
-		//									view:"label", 
-		//									label: `<div class="title"><i style="color:#92abcf; font-size: 2em;" class="mdi mdi-view-headline"></i></div>`, 
-		//									align:"center",
-		//									height: 50,
-		//									width: 56 
-		//								},
-		//								{   
-		//									view:"label", 
-		//									css: "alarm-view-header-details-text",
-		//									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_DETAILS_DESCRIPTION")}</span>`, 
-		//									align:"left",
-		//									height: 50
-		//								},
-		//								{}
-		//							]
-		//						},
-		//						{ height: 20 },
-		//						{
-		//							cols:[
-		//								{
-		//									width: 56
-		//								},
-		//								{
-		//									width: 194,
-		//									rows: [
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_ACTIVATION")}</span></div>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_CONFIG_ALIAS")}</span></div>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE_ALIAS")}</span></div>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_RECOGNIZED")}</span></div>`, 
-		//											align:"left",
-		//											height: 27
-		//										},
-		//									]
-		//								},
-		//								{
-		//									rows: [
-		//										{
-		//											view:"label", 
-		//											label: `<span class="alarm-view-text">${new Date(this.alarm.activation).toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES) }</span>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											label: `<span class="alarm-view-text">${this.alarmConfigLabelAlias}</span>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											label: `<span class="alarm-view-text">${this.targetElementTypeAlias}</span>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											label: `<span class="alarm-view-text">${this.targetElementAlias}</span>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											label: `<span class="alarm-view-text">${i18n.t(this.alarmLevelAlias)}</span>`, 
-		//											align:"left",
-		//											height: 20
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										getAlarmRecognizedIcon(this.alarm)
-		//									]
-		//								},
-		//								{}
-		//							]
-		//						},
-		//						{ height: 20 },
-		//						{
-		//							height: 45,
-		//							cols:[
-		//								{
-		//									width: 56
-		//								},
-		//								{
-		//									cols:[
-		//										{
-		//											css: "alarm-view-rectangle-back",
-		//											template: `<div class="alarm-view-comments">${this.alarm.recognizedComments}</div>`, 
-		//											hidden: this.alarm.recognizedComments !== undefined && this.alarm.recognizedComments !== null ? false : true ,
-		//										},
-		//										{
-		//											width: 20
-		//										}
-		//									]
-		//								}
-		//							]
-		//						},
-		//						{ height: 10 },
-		//						{
-		//							cols:[
-		//								{
-		//									width: 56
-		//								},
-		//								{
-		//									width: 194,
-		//									rows: [
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`, 
-		//											align:"left",
-		//											height: 27
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
-		//											align:"left",
-		//											height: 27
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//										{
-		//											view:"label", 
-		//											css:"alarm-view-title-label",
-		//											label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_STATE")}</span></div>`, 
-		//											align:"left",
-		//											height: 27
-		//										},
-		//										{
-		//											height: 10
-		//										},
-		//									]
-		//								},
-		//								{
-		//									rows: [
-		//										getAlarmLevelIcon(this.alarmLevelId),
-		//										{
-		//											height: 10
-		//										},
-		//										getAlarmTypeIcon(this.alarmLevelId),
-		//										{
-		//											height: 10
-		//										},
-		//										getAlarmDeactivationIcon(this.alarm),
-		//										{
-		//											height: 10
-		//										}
-		//									]
-		//								},
-		//								{}
-		//							]
-		//						},
-		//						{ height: 20 },
-		//						{
-		//							height: 45,
-		//							cols:[
-		//								{
-		//									width: 56
-		//								},
-		//								{
-		//									cols:[
-		//										{
-		//											css: "alarm-view-rectangle-back",
-		//											template: `<div class="alarm-view-comments">${this.alarm.deactivationComments}</div>`, 	
-		//											hidden: this.alarm.deactivationComments !== undefined && this.alarm.deactivationComments !== null ? false : true ,	
-		//										},
-		//										{
-		//											width: 20
-		//										}
-		//									]
-		//								}
-		//							]
-		//						},
-		//						{ height: 10 },
-		//						{ width: 680 }
-		//					]
-		//				},
-		//			]
-		//		};
-
 
 		function paintFieldRecognizedComments(alarm) {
 
