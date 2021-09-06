@@ -7,7 +7,7 @@ const G_ID_TEXT_UNIT = "textUnit";
 const PARAM_DATA_TYPE_DECIMAL = "DataType:3";
 
 const DEFAULT_NO_VALUE_DATA = "-";
-const DEFAULT_PRECION = 0;
+const DEFAULT_PRECISION = 0;
 
 export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 	
@@ -26,7 +26,7 @@ export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 		let treatmentValue = (this.elementTypeStatesNoTreatment.indexOf(elementInfo.state.id) === -1);
 		let elementType;
 		let elementTypeParam;
-		let precision = DEFAULT_PRECION;
+		let precision = DEFAULT_PRECISION;
 
 		if(this.elementTypeId && this.paramCommandValueId){
 
@@ -42,7 +42,8 @@ export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 		if (this.gTextValue && this.paramCommandValueId) {
 
 			let cmdValue = this.getValue(this.paramCommandValueId);
-
+			
+			
 			if (cmdValue && treatmentValue) {
 
 				if (cmdValue && elementTypeParam && elementTypeParam.dataType && elementTypeParam.dataType.id == PARAM_DATA_TYPE_DECIMAL){
@@ -53,9 +54,8 @@ export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 					}
 	
 					try {
-						
-						let regExp = new RegExp('^-?\\d+(?:\.\\d{0,' + (parseInt(precision) || -1) + '})?');
-						cmdValue = cmdValue.match(regExp)[0];
+						let cmdFloatValue =  parseFloat(cmdValue).toFixed(parseInt(precision));
+						cmdValue = cmdFloatValue.toString();
 
 					} catch (error) {
 						
@@ -72,13 +72,16 @@ export default class GraphicIconCustomTypeValue extends GraphicIconCustomType {
 
 		}
 
-		if (this.gTextUnit && elementTypeParam) {
+		if (this.gTextUnit) {
 		
-			this.gTextUnit.attr("text", i18n.t(elementTypeParam.labelUnit));
-		
-		} else {
+			if (elementTypeParam) {
+			
+				this.gTextUnit.attr("text", i18n.t(elementTypeParam.labelUnit));
+			
+			} else {
 
-			this.gTextUnit.attr("text", "");
+				this.gTextUnit.attr("text", "");
+			}
 		}
 	}
 }

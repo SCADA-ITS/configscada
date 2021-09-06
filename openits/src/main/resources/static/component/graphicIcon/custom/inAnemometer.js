@@ -67,7 +67,10 @@ export default class InAnemometer extends GraphicIconCustomType {
 
 			let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", ELEMENT_TYPE_ID);
 			let elementTypeParam = elementType.elementTypeParams.find(e => { return e.id == PARAM_GROUP_COMMAND });
-			this.gTextUnit.attr("text", i18n.t(elementTypeParam.labelUnit));
+			if(this.gTextUnit){
+				this.gTextUnit.attr("text", i18n.t(elementTypeParam.labelUnit));
+			}
+			
 		}
 		
 	}
