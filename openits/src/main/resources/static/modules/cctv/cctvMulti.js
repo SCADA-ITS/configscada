@@ -149,9 +149,10 @@ export default class CCTVMulti {
 
 								camViewer.w = newCells.clientWidth;
 								camViewer.h = newCells.clientHeight;
+								camViewer.resize(camViewer.uid);
 							}
 
-							CamViewer.prototype.resize(self.arrCamViewer);
+
 						}
 					},
 					onAfterExpand: function() {
@@ -164,9 +165,10 @@ export default class CCTVMulti {
 
 								camViewer.w = newCells.clientWidth;
 								camViewer.h = newCells.clientHeight;
+								camViewer.resize(camViewer.uid);
 							}
 
-							CamViewer.prototype.resize(self.arrCamViewer);
+							
 						}
 					}
 				}
@@ -491,6 +493,11 @@ export default class CCTVMulti {
 														if (multiview && page) {
 															
 															multiview.setValue(page.config.id);
+															
+															for(let camViewer of self.arrCamViewer){
+																
+																camViewer.resize(camViewer.uid);
+															}
 														}
 												 	}
 												}
