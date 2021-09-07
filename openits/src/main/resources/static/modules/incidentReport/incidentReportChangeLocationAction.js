@@ -37,7 +37,7 @@ export default class IncidentReportChangeLocationAction {
 
 		function getBottomView() {
 
-			let bottomView = {
+			return {
 				rows: [
 					{ height: 10 },
 					{
@@ -99,8 +99,6 @@ export default class IncidentReportChangeLocationAction {
 						]
 					}]
 			};
-
-			return bottomView;
 		}
 
 		function getBody() {
@@ -297,8 +295,7 @@ export default class IncidentReportChangeLocationAction {
 				return viewLocations;
 			}
 
-			let body = {
-
+			return {
 				rows: [
 					{
 						cols: [
@@ -325,8 +322,7 @@ export default class IncidentReportChangeLocationAction {
 					}
 				]
 			};
-
-			return body;
+			
 		}
 
 		let view = {

@@ -71,7 +71,7 @@ export default class IncidentReportTabTaskBoard {
 
 			if (task) {
 				
-				self.incidentReportTaskContent = new IncidentReportTaskContent(self.config, self.currentTask, self.incidentReport, task, self.index, self.uid);
+				self.incidentReportTaskContent = new IncidentReportTaskContent(self, task);
 				
 				taskDetails = self.incidentReportTaskContent.getView();
 			}
@@ -164,12 +164,14 @@ export default class IncidentReportTabTaskBoard {
 							{
 								icon: "./img/grid/confirmed.png",
 								showValue: false,
-								value: "confirmed"
+								value: "confirmed",
+								labelValue: "LBL_INCIDENT_TASK_COMPLETED"
 							},
 							{
 								icon: "./img/grid/not_confirmed.png",
 								showValue: false,
-								value: "not_confirmed"
+								value: "not_confirmed",
+								labelValue: ""
 							}
 						]
 					},
@@ -195,7 +197,7 @@ export default class IncidentReportTabTaskBoard {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_TASK",
+						label: "",
 						labelTooltip: "LBL_TASK",
 						needsTranslation: false,
 						parameterized: false,
@@ -214,7 +216,7 @@ export default class IncidentReportTabTaskBoard {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_TYPE",
+						label: "",
 						labelTooltip: "LBL_TYPE",
 						needsTranslation: false,
 						parameterized: false,
@@ -231,12 +233,14 @@ export default class IncidentReportTabTaskBoard {
 							{
 								icon: "./img/grid/auto.png",
 								showValue: false,
-								value: "auto"
+								value: "auto",
+								labelValue: "LBL_AUTO"
 							},
 							{
 								icon: "./img/grid/manual.png",
 								showValue: false,
-								value: "manual"
+								value: "manual",
+								labelValue: "LBL_MANUAL"
 							}
 						]
 					},
@@ -246,7 +250,7 @@ export default class IncidentReportTabTaskBoard {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_REQUIRED",
+						label: "",
 						labelTooltip: "LBL_REQUIRED",
 						needsTranslation: false,
 						parameterized: false,
@@ -263,12 +267,14 @@ export default class IncidentReportTabTaskBoard {
 							{
 								icon: "./img/grid/required.png",
 								showValue: false,
-								value: "yes"
+								value: "yes",
+								labelValue: "LBL_REQUIRED"
 							},
 							{
 								icon: "./img/grid/not_confirmed.png",
 								showValue: false,
-								value: "no"
+								value: "no",
+								labelValue: ""
 							}
 						]
 					}

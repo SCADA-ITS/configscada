@@ -313,7 +313,6 @@ export default class IncidentReportActionPanel {
 
 		}
 
-
 		function cancelIncidentReport() {
 
 			webix.confirm({
@@ -334,12 +333,12 @@ export default class IncidentReportActionPanel {
 			});
 		}
 
-		function changeLocation(){
-			
+		function changeLocation() {
+
 			let changeLocationAction = new IncidentReportChangeLocationAction(self.config, self.incidentReport);
 			changeLocationAction.show();
 		}
-		
+
 		function getLowerButtonsViewArray() {
 
 			let body = []
@@ -412,7 +411,7 @@ export default class IncidentReportActionPanel {
 			return body;
 		}
 
-		let viewActionPanel = {
+		return {
 
 			id: "viewActionPanel-" + self.uid,
 			width: 300,
@@ -431,6 +430,23 @@ export default class IncidentReportActionPanel {
 									disabled: (function() {
 
 										if (!self.closed && self.incidentReport.confirm === true) {
+
+											// Mandatory tasks with state must be completed in penultimate state
+											if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
+
+												let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
+
+												if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
+
+													let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+													let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+													if (tasksCompleted.length < tasksMandatory.length) {
+
+														return true;
+													}
+												}
+											}
 
 											if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 
@@ -750,9 +766,6 @@ export default class IncidentReportActionPanel {
 				}
 			]
 		};
-
-		return viewActionPanel;
-
 	}
 
 }

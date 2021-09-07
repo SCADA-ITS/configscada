@@ -5,14 +5,14 @@ import IncidentReportTaskPlan from "./incidentReportTaskPlan.js";
 
 export default class IncidentReportTaskContent {
 
-	constructor(config, currentTask, incidentReport, taskState, index, uid) {
+	constructor(parent, taskState) {
 
-		this.config = config;
-		this.currentTask = currentTask;
-		this.incidentReport = incidentReport; 
+		this.config = parent.config;
+		this.parent = parent;
+		this.incidentReport = parent.incidentReport; 
 		this.taskState = taskState;
-		this.index = index;
-		this.uid = uid;
+		this.index = parent.index;
+		this.uid = parent.uid;
 	}
 
 	getView() {
@@ -149,14 +149,14 @@ export default class IncidentReportTaskContent {
 	
 										let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
 											id: self.incidentReport.id,
-											taskId: self.currentTask.incidentTypeTask.id
+											taskId: self.parent.currentTask.incidentTypeTask.id
 										});
 
 										console.log("Incident report action => " + endpoint);
 
 										webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
 
-											self.currentTask = undefined;
+											self.parent.currentTask = undefined;
 
 										}, function(response) { util.ajax.handleError(response); });
 									}	

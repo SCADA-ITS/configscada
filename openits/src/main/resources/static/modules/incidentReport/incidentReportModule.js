@@ -343,7 +343,7 @@ export default class IncidentReportModule extends GenericModule {
 						borderless: true,
 						template: function() {
 
-							if (self.incidentReport.confirm && self.incidentReport.confirm == true) {
+							if (self.incidentReport.confirm) {
 
 								let steps = `<div class="progressbar-wrapper">
 										      <ul class="progressbar">`;

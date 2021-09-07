@@ -71,7 +71,7 @@ export default class IncidentReportTabLog {
 						id: 1,
 						value: "LBL_ADD",
 						icon: "wxi-plus",
-						default_: true,
+						default_: false,
 						label: "LBL_CMD_ADD",
 						//showText: true,
 						position: 1
@@ -185,7 +185,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogSubtype",
 						visible: true,
-						widthPx: 120,
+						widthPx: 180,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -248,7 +248,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogValueArg1",
 						visible: true,
-						widthPx: 600,
+						widthPx: 550,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
