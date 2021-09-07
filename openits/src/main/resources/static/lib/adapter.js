@@ -478,7 +478,9 @@ export let adapter = {
 		plan: {
 
 			getList(data, update_callback) {
-
+				
+				const PLAN_STATE_VALUES = ["PlanStateType:2", "PlanStateType:4", "PlanStateType:5"];
+				
 				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
 
 					let gridData = {};
@@ -486,34 +488,36 @@ export let adapter = {
 					gridData.data = [];
 					gridData.action = data.action;
 
-					data.basicElementsVO.forEach(plan => {
+					data.basicElementsVO.forEach(be => {
 
 						let dataItem = {};
-						dataItem.id = plan.id;
+						dataItem.id = be.id;
 
 						if (gridData.action === 'UPDATE') {
 
-							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + plan.id).then(function(dat) {
+							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + be.id).then(function(dat) {
 
 								if (dat != null) {
 
 									let plan = dat.json();
-
-
-									dataItem.alias = plan.alias;
-									dataItem.description = plan.description;
-									dataItem.planStateTypeLabelAlias = plan.planStateType ? plan.planStateType.labelAlias : undefined;
-									dataItem.planSubtypeAlias = plan.planSubtype ? plan.planSubtype.alias : undefined;
-									dataItem.planSubtypePlanTypeAlias = plan.planSubtype && plan.planSubtype.planType ? plan.planSubtype.planType.alias : undefined;
-									dataItem.currentPlanOrderAlias = plan.currentPlanOrder ? plan.currentPlanOrder.alias : undefined;
-									dataItem.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder ? plan.currentPlanOrder.planOrderOrder : undefined;
-
-									gridData.data.push(dataItem);
-
-									count--;
-
-									if (count == 0)
-										update_callback(gridData);
+									
+									if (PLAN_STATE_VALUES.includes(plan.planStateType.id)) {
+									
+										dataItem.alias = plan.alias;
+										dataItem.description = plan.description;
+										dataItem.planStateTypeLabelAlias = plan.planStateType ? plan.planStateType.labelAlias : undefined;
+										dataItem.planSubtypeAlias = plan.planSubtype ? plan.planSubtype.alias : undefined;
+										dataItem.planSubtypePlanTypeAlias = plan.planSubtype && plan.planSubtype.planType ? plan.planSubtype.planType.alias : undefined;
+										dataItem.currentPlanOrderAlias = plan.currentPlanOrder ? plan.currentPlanOrder.alias : undefined;
+										dataItem.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder ? plan.currentPlanOrder.planOrderOrder : undefined;
+	
+										gridData.data.push(dataItem);
+	
+										count--;
+	
+										if (count == 0)
+											update_callback(gridData);	
+									}
 								}
 
 							}, function(response) { util.ajax.handleError(response); });

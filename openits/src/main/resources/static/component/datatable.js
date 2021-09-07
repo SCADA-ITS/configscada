@@ -2150,7 +2150,6 @@ export default class DataTable {
 			self = this;
 		}
 
-
 		if (delay) {
 			millis = delay;
 		} 
@@ -2160,53 +2159,55 @@ export default class DataTable {
 		
 		let grid = $$("dt-" + self.uid);
 		
-			grid.showProgress({
+		grid.showProgress({
 
-					hide: false, type: "bottom"
-			});	
+				hide: false, type: "bottom"
+		});	
 		
-		setTimeout( function (){
+		webix.delay(function() {
 			
-		if (!webix.isUndefined(grid)) {
-		 
-			if (this.dataGridParams) {
-
-				url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
-			}
-			else {
-
-				url = appConfig.restUrl + "grids/" + self.dataGridId;
-			}
-
-			webix.ajax(url).then(function(dat) {
-
-						grid.clearAll();
-
-				webix.delay(function() {
-
-					if (dat && dat.json) {
-
-						let data = dat.json();
-
-						
-						if (data && data.data) {
-
-							self.translateFieldValues(data.data);
-							self.convertDate(data.data);
-
-							grid.parse(data.data);
-
-							self.restoreSort();
-							self.restoreFilters();
+			if (!webix.isUndefined(grid)) {
+			 
+				if (self.dataGridParams) {
+	
+					url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
+				}
+				else {
+	
+					url = appConfig.restUrl + "grids/" + self.dataGridId;
+				}
+	
+				webix.ajax(url).then(function(dat) {
+	
+					grid.clearAll();
+	
+					webix.delay(function() {
+	
+						if (dat && dat.json) {
+	
+							let data = dat.json();
+	
+							if (data && data.data) {
+	
+								self.translateFieldValues(data.data);
+								self.convertDate(data.data);
+	
+								grid.parse(data.data);
+	
+								self.restoreSort();
+								self.restoreFilters();
+							}
 						}
-					}
-
-					self.getGridOptions(GridOptions.REFRESH_BUTTON) ? grid.hideProgress() : null;
-		
-				}, null, null, 1);
-			});
-		}
-		}, millis)
+	
+						if (self.getGridOptions(GridOptions.REFRESH_BUTTON)) {
+							
+							grid.hideProgress();
+						}
+			
+					}, null, null, 1);
+				});
+			}
+		}, null, null, millis)
 
 
 	}
