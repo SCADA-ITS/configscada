@@ -101,35 +101,64 @@ export default class TreeView {
 		
 		if (multiSelect) {
 			
-			let viewSelectAll = { 
-				id: "tb_btn-select-all-" + this.uid, 
-				view: "icon", 
-				icon: "mdi mdi-check-box-outline", 
-				value: i18n.t("LBL_SELECT_ALL"), 
-				tooltip: true,
-				on: {
-					onItemClick: function() {
-						
-						$$("tree-" + self.uid).checkAll();				
-					}
-				}
-			}; 
+//			let viewSelectAll = { 
+//				id: "tb_btn-select-all-" + this.uid, 
+//				view: "icon", 
+//				icon: "mdi mdi-check-box-outline", 
+//				value: i18n.t("LBL_SELECT_ALL"), 
+//				tooltip: true,
+//				on: {
+//					onItemClick: function() {
+//						
+//						$$("tree-" + self.uid).checkAll();				
+//					}
+//				}
+//			}; 
 			
 			let viewUnselectAll = { 
 				id: "tb_btn-unselect-all-" + this.uid, 
 				view: "icon", 
 				icon: "mdi mdi-checkbox-blank-outline", 
 				value: i18n.t("LBL_UNSELECT_ALL"), 
-				tooltip: true,
+				tooltip: function(obj){
+					
+					let tooltip = i18n.t("LBL_NO_ITEMS_TO_SELECT");
+					
+					if($$("tree-"+ self.uid).count() > 0){
+					
+						const ICON_ALL_SELECTED = "mdi mdi-check-box-outline";	
+						tooltip = (obj.icon === ICON_ALL_SELECTED) ? i18n.t("LBL_UNSELECT_ALL") : i18n.t("LBL_SELECT_ALL");
+					} 
+					
+					return tooltip;		
+					
+				},
 				on: {
-					onItemClick: function() {
+					onItemClick: function(obj) {
 						
-						$$("tree-" + self.uid).uncheckAll();				
+						let treeView = $$("tree-" + self.uid); 
+						let icon = $$(obj);
+						
+						if (treeView && icon){
+						
+							if(treeView.count() == treeView.getChecked().length){
+							
+								treeView.uncheckAll();									
+								icon.config.icon = "mdi mdi-checkbox-blank-outline";
+								icon.refresh();
+
+							} else {
+								treeView.checkAll();									
+								icon.config.icon = "mdi mdi-check-box-outline";
+								icon.refresh();							
+							
+							}	
+						}		
 					}
 				}
 			};
 			
-			tbActionView.elements.push(viewSelectAll);
+			//tbActionView.elements.push(viewSelectAll);
 			tbActionView.elements.push(viewUnselectAll);
 		}
 		
@@ -437,12 +466,28 @@ export default class TreeView {
 					onItemCheck: function(id) {
 						
 						let item = this.getItem(id);
+						let treeView = $$("tree-" + self.uid); 
+						let icon = $$("tb_btn-unselect-all-" + self.uid);
 						
 						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
 									
 							let checkedList = self.getSelected();
 							
 							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
+						}
+						
+						if (treeView && icon){
+						
+							if(treeView.count() == treeView.getChecked().length){
+							
+								icon.config.icon = "mdi mdi-check-box-outline";
+								icon.refresh();
+
+							} else {
+								
+								icon.config.icon = "mdi mdi-checkbox-blank-outline";
+								icon.refresh();							
+							}	
 						}
 					},
 					onAfterRender: function() {

@@ -823,8 +823,25 @@ export default class DataTable {
 
 		if (resultMulti && resultSelect) {
 
-			toolbar.elements.push({ id: "tb_btn-select-all-" + this.uid, view: "icon", icon: "mdi mdi-check-box-outline", value: i18n.t("LBL_SELECT_ALL"), tooltip: true });
-			toolbar.elements.push({ id: "tb_btn-unselect-all-" + this.uid, view: "icon", icon: "mdi mdi-checkbox-blank-outline", value: i18n.t("LBL_UNSELECT_ALL"), tooltip: true });
+			toolbar.elements.push({ 
+				id: "tb_btn-select-all-" + this.uid, 
+				view: "icon", 
+				icon: "mdi mdi-checkbox-blank-outline",
+				value: i18n.t("LBL_SELECT_ALL"), 
+				tooltip: function(obj){
+					
+					let tooltip = i18n.t("LBL_NO_ITEMS_TO_SELECT");
+					
+					if($$("dt-"+ self.uid).count() > 0){
+					
+						const ICON_ALL_SELECTED = "mdi mdi-check-box-outline";	
+						tooltip = (obj.icon === ICON_ALL_SELECTED) ? i18n.t("LBL_UNSELECT_ALL") : i18n.t("LBL_SELECT_ALL");
+					} 
+					
+					return tooltip;				
+				}});
+				
+			//toolbar.elements.push({ id: "tb_btn-unselect-all-" + this.uid, view: "icon", icon: "mdi mdi-checkbox-blank-outline", value: i18n.t("LBL_UNSELECT_ALL"), tooltip: true });
 		}
 
 		if (resultCommons) {
@@ -1014,7 +1031,8 @@ export default class DataTable {
 		let datatable = $$("dt-" + this.uid);
 		let rowsSelected = this.rowsSelected;
 		let labelSelected = $$("template-sel-" + this.uid);
-		const Selected = { ZERO: 0, ONE: 1 }
+		let selectAllButton = $$("tb_btn-select-all-" + this.uid);
+		const Selected = { ZERO: 0, ONE: 1 };
 
 		datatable.attachEvent("onAfterSelect", function(selection, preserve) {
 
@@ -1033,11 +1051,11 @@ export default class DataTable {
 
 		});
 
-		datatable.attachEvent("onBeforeUnSelect", function(selection) {
+		datatable.attachEvent("onAfterUnSelect", function(selection) {
 
 			if (!self.disabledUnselectEvent && rowsSelected.size > 0) {;
 				
-				rowsSelected.delete(selection.id);
+				rowsSelected.delete(selection.row);
 			}
 
 		});
@@ -1048,6 +1066,22 @@ export default class DataTable {
 				
 				labelSelected.setValues({ selected: rowsSelected.size, total: datatable.count() });
 			}
+			
+			if(selectAllButton){
+			
+				let allSelected = ((rowsSelected.size == datatable.count()) && (rowsSelected.size > 0)) ? true: false;
+				
+				if(allSelected){
+				
+					selectAllButton.config.icon = "mdi mdi-check-box-outline";
+					selectAllButton.refresh();
+						
+				} else {
+						
+					selectAllButton.config.icon = "mdi mdi-checkbox-blank-outline";
+					selectAllButton.refresh();
+				}				
+			}	
 		});
 
 	}
@@ -1730,7 +1764,7 @@ export default class DataTable {
 		this.datatableCapture();
 		this.search_callback();
 		this.select_all_callback();
-		this.unselect_all_callback();
+		//this.unselect_all_callback();
 		this.refresh_callback();
 		this.print_callback();
 		this.export_pdf_callback();
@@ -2041,35 +2075,49 @@ export default class DataTable {
 
 		let selectAllButton = $$("tb_btn-select-all-" + this.uid);
 		let grid = $$("dt-" + this.uid);
+		let rowsSelected = this.rowsSelected;
 
 		if (!webix.isUndefined(grid) && !webix.isUndefined(selectAllButton)) {
-
+			
 			selectAllButton.attachEvent("onItemClick", function(id, e) {
 
 				if (grid.getFirstId()) {
-
-					grid.selectAll();
-				}
+					
+					let allSelected = ((rowsSelected.size == grid.count()) && (rowsSelected.size > 0) ) ? true: false;
+					
+					if(allSelected){
+						
+						grid.unselectAll();
+						selectAllButton.config.icon = "mdi mdi-checkbox-blank-outline";
+						selectAllButton.refresh();
+						
+					} else {
+						
+						grid.selectAll();		
+						selectAllButton.config.icon = "mdi mdi-check-box-outline";
+						selectAllButton.refresh();
+					}				
+				} 
 			});
 		}
 	}
 
-	unselect_all_callback() {
-
-		let unselectAllButton = $$("tb_btn-unselect-all-" + this.uid);
-		let grid = $$("dt-" + this.uid);
-
-		if (!webix.isUndefined(grid) && !webix.isUndefined(unselectAllButton)) {
-
-			unselectAllButton.attachEvent("onItemClick", function(id, e) {
-
-				if (grid.getFirstId()) {
-
-					grid.unselectAll();
-				}
-			});
-		}
-	}
+//	unselect_all_callback() {
+//
+//		let unselectAllButton = $$("tb_btn-unselect-all-" + this.uid);
+//		let grid = $$("dt-" + this.uid);
+//
+//		if (!webix.isUndefined(grid) && !webix.isUndefined(unselectAllButton)) {
+//
+//			unselectAllButton.attachEvent("onItemClick", function(id, e) {
+//
+//				if (grid.getFirstId()) {
+//
+//					grid.unselectAll();
+//				}
+//			});
+//		}
+//	}
 
 	refresh_callback() {
 
