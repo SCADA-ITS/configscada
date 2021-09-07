@@ -61,16 +61,23 @@ export default class MapLauncherModule extends GenericModule {
 							let options = {};
 
 							options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
+							
+							let w = self.args.width;
+							let h = self.args.height;
+							let container = $$(self.args.containerId);
+							
+							if (container && (!w || !h)) {
+								
+								w = container.$width;
+								h = container.$height;
+								
+								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+							}
 
-							let map = new OpenMap(responseJson.metadata, responseJson.data, events, self.args.width, self.args.height, options);
+							let map = new OpenMap(responseJson.metadata, responseJson.data, events, w, h, options);
 
 							if (map) {
 								
-//								let container = $$(self.args.containerId);
-//								if (container) {
-//
-//									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
-//								}
 								$$("loading-" + self.uid).hide();
 								$$(self.uid).show();
 
@@ -102,17 +109,23 @@ export default class MapLauncherModule extends GenericModule {
 							let options = {};
 
 							options[Synoptic.Options.DEBUG_MODE] = DEBUG_MODE;
+							
+							let w = self.args.width;
+							let h = self.args.height;
+							let container = $$(self.args.containerId);
+							
+							if (container && (!w || !h)) {
+								
+								w = container.$width;
+								h = container.$height;
+								
+								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+							}
 
-							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, self.args.width, self.args.height, options);
+							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, w, h, options);
 
 							if (synoptic) {
 
-//								let container = $$(self.args.containerId);
-//
-//								if (container) {
-//
-//									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
-//								}
 								$$("loading-" + self.uid).hide();
 								$$(self.uid).show();
 
