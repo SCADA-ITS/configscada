@@ -58,7 +58,7 @@ export default class PlanLibraryModule extends GenericModule {
 				self.planNodes = responses[0] ? responses[0].json() : undefined;
 				self.planHierarchies = responses[1] ? responses[1].json() : undefined;
 
-				if (self.planNodes && self.planHierarchies && $$(self.uid)) {
+				if ($$(self.uid)) {
 
 					self.planLibraryPersist = new PlanLibraryPersist(self.config);
 
@@ -208,8 +208,6 @@ export default class PlanLibraryModule extends GenericModule {
 				cols: []
 			};
 
-			self.treeView = new TreeView(getMetadata(), getTreeData(), getEvents());
-
 			function getEvents() {
 
 				let events = {};
@@ -273,27 +271,35 @@ export default class PlanLibraryModule extends GenericModule {
 			function getTreeData() {
 
 				let data = [];
+				let itemsTree = [];
+				let itemRelationships = [];
+				
+				if (Array.isArray(self.planNodes)) {
+					
+					itemsTree = self.planNodes.map(e => {
 
-				let itemsTree = self.planNodes.map(e => {
+						return {
+	
+							id: e.id,
+							label: e.alias,
+							plan: e.plan,
+							folder: !e.plan
+						}
+					});	
+				}
+				
+				if (Array.isArray(self.planHierarchies)) {
+					
+					itemRelationships = self.planHierarchies.map(e => {
 
-					return {
-
-						id: e.id,
-						label: e.alias,
-						plan: e.plan,
-						folder: !e.plan
-					}
-				});
-
-				let itemRelationships = self.planHierarchies.map(e => {
-
-					return {
-
-						id: e.id,
-						nodeParentId: e.parent.id,
-						nodeChildId: e.child.id
-					}
-				});
+						return {
+	
+							id: e.id,
+							nodeParentId: e.parent.id,
+							nodeChildId: e.child.id
+						}
+					});	
+				}
 
 				data = util.tree.getNodes(itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
 

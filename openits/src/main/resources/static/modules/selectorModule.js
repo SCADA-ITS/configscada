@@ -44,7 +44,7 @@ export default class SelectorModule extends GenericModule {
 
 						drawComponents(treeSelector);
 
-						loadModule(parseInt(treeSelector.defaultModuleId));
+						selectModule(parseInt(treeSelector.defaultModuleId));
 
 						$$("loading-" + self.uid).hide();
 						$$(self.uid).show();
@@ -54,24 +54,9 @@ export default class SelectorModule extends GenericModule {
 			}
 
 		}
-
+		
 		function loadModule(moduleId) {
 
-			let nodeToSelect = self.treeNodes.find(node => node.moduleId === moduleId);
-
-			if (nodeToSelect) {
-
-				if (self.treeView) {
-
-					self.treeView.select(nodeToSelect.id);
-					self.treeView.expand(nodeToSelect.id);
-	
-				} else {
-	
-					self.componentView.select(nodeToSelect.id);
-				}
-			}
-			
 			if (moduleId) {
 
 				if (moduleId) {
@@ -101,6 +86,24 @@ export default class SelectorModule extends GenericModule {
 							}
 						}
 					}
+				}
+			}
+		}
+
+		function selectModule(moduleId) {
+
+			let nodeToSelect = self.treeNodes.find(node => node.moduleId === moduleId);
+
+			if (nodeToSelect) {
+
+				if (self.treeView) {
+
+					self.treeView.select(nodeToSelect.id);
+					self.treeView.expand(nodeToSelect.id);
+	
+				} else {
+	
+					self.componentView.select(nodeToSelect.id);
 				}
 			}
 		}

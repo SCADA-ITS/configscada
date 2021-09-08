@@ -294,7 +294,7 @@ export default class TreeView {
 				props: {
 					folder: true
 				},
-				data: webix.copy(data)
+				data: data ? webix.copy(data) : []
 			});
 			
 			return dat;
