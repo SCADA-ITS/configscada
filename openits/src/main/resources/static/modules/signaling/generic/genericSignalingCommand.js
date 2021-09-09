@@ -189,9 +189,9 @@ export default class GenericSignalingCommand {
 							},
 							{
 								id: 2,
-								value: "LBL_CLEAR_ALL",
-								icon: "wxi-trash",
-								label: "LBL_CLEAR_ALL",
+								value: "LBL_UNDO_ALL",
+								icon: "mdi mdi-undo",
+								label: "LBL_UNDO_ALL",
 								default_: false,
 								showText: true,
 								position: 2,
@@ -212,10 +212,10 @@ export default class GenericSignalingCommand {
 							function: function() {
 								
 								webix.confirm({
-									title: i18n.t("LBL_DIALOG_RESET_COMMAND_PARAMS"),
+									title: i18n.t("LBL_DIALOG_UNDO_COMMAND_PARAMS"),
 									ok: i18n.t("LBL_YES"),
 									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_ARE_YOU_SURE_RESET_COMMAND_PARAMS"),
+									text: i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMAND_PARAMS"),
 									width: 600
 								}).then(function() {
 								
@@ -319,13 +319,15 @@ export default class GenericSignalingCommand {
 					
 					function getInitialData() {
 					
-						let gridData = self.commandElementType.commandElementTypeParams.map(e => {
+						let gridData;
+						
+						gridData = self.commandElementType.commandElementTypeParams.map(e => {
 							
 							let value = undefined;
 							
 							if (Array.isArray(self.commandElementType.commandElementValues) && self.commandElementType.commandElementValues.length > 0) {
 								
-								let commandElementValue = self.commandElementType.commandElementValues.find(v => v.commandElementTypeParamId === e.id);
+								let commandElementValue = self.commandElementType.commandElementValues.find(v => v.commandElementTypeParam.id === e.id);
 								
 								if (commandElementValue) {
 									

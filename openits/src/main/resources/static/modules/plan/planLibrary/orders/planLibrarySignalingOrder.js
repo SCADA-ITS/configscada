@@ -100,10 +100,21 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 							
 								commandElementValues = commandElement.commandElementValues.map(e => {
 								
+									let value = undefined;
+									
+									if (e.value && typeof e.value === 'object') {
+										
+										value = JSON.stringify(e.value);
+									}
+									else {
+										
+										value = e.value;
+									}
+									
 									return {
 										
 										commandElementTypeParamId: e.commandElementTypeParam.id,
-										value: JSON.stringify(e.value)
+										value: value
 									}
 								});	
 							}

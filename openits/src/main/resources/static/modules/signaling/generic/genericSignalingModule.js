@@ -143,15 +143,13 @@ export default class GenericSignalingModule extends GenericModule {
 							}
 							else if (self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
 														
-								if (self.args.data && self.args.data.planOrder) {
-								
-									if (self.args.data.planOrder.commandElementValues) {
+								if (self.args.data && self.args.data.planOrder && self.args.data.planOrder.comandElement && 
+									self.args.data.planOrder.comandElement.commandElementValues) {
 										
-										commandElement.commandElementValues = webix.copy(self.args.data.planOrder.commandElementValues);	
-									}
+									commandElement.commandElementValues = webix.copy(self.args.data.planOrder.comandElement.commandElementValues);	
+								}
 									
-									signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement, true);
-								}	
+								signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement, true);
 							}
 							
 							viewTabs.cells.push(signalingCmd.getView());
