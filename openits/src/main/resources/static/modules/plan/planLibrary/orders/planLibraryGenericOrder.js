@@ -1,6 +1,7 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import DataTable from "../../../../component/datatable.js";
 import InputDialogBox from "../../../../component/inputDialogBox.js";
+import { util } from "../../../../lib/util.js";
 
 export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 
@@ -44,6 +45,7 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 			function getMetadata() {
 		
 				let gridMetadata = {};
+				let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);
 
 				const gridOptionValues = [
 					{ gridOption: { id: 1 }, value: "false" },
@@ -68,32 +70,35 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 					gridFields: [],
 					gridCommands: []
 				};
-				
-				gridMetadata.gridCommands = [
-					{
-						id: 1,
-						value: "LBL_EDIT",
-						icon: "mdi mdi-pencil",
-						default_: true,
-						label: "LBL_EDIT",
-						showText: true,
-						position: 1,
-						multiselect: false,
-						itemRequired: true
-					},
-					{
-						id: 2,
-						value: "LBL_UNDO_ALL",
-						icon: "mdi mdi-undo",
-						label: "LBL_UNDO_ALL",
-						default_: false,
-						showText: true,
-						position: 2,
-						multiselect: false,
-						itemRequired: false
-					}
-				]
-				
+
+				if (editPermission) {
+
+					gridMetadata.gridCommands.push(
+						{
+							id: 1,
+							value: "LBL_EDIT",
+							icon: "mdi mdi-pencil",
+							default_: true,
+							label: "LBL_EDIT",
+							showText: true,
+							position: 1,
+							multiselect: false,
+							itemRequired: true
+						},
+						{
+							id: 2,
+							value: "LBL_UNDO_ALL",
+							icon: "mdi mdi-undo",
+							label: "LBL_UNDO_ALL",
+							default_: false,
+							showText: true,
+							position: 2,
+							multiselect: false,
+							itemRequired: false
+						}
+					);
+				}
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({

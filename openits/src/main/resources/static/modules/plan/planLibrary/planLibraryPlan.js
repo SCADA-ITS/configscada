@@ -76,7 +76,9 @@ export default class PlanLibraryPlan {
 			function getMetadata() {
 				
 				let metadata;
-				
+				let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);
+				let executePermission = util.module.isAllowedPermission(self.config.requiredPermissions.signalling);
+
 				metadata = {
 					filter: true,
 					label: "LBL_PLAN_ORDERS",
@@ -204,7 +206,12 @@ export default class PlanLibraryPlan {
 							}
 						}
 					],
-					gridCommands: [
+					gridCommands: []
+				};
+
+				if (editPermission) {
+
+					metadata.gridCommands.push(
 						{
 							id: 1,
 							default_: false,
@@ -244,21 +251,26 @@ export default class PlanLibraryPlan {
 							position: 4,
 							showText: false,
 							itemRequired: true
-						},
-						{
-							id: 5,
-							default_: false,
-							icon: "mdi mdi-play",
-							label: "LBL_EXECUTE",
-							multiselect: true,
-							position: 5,
-							showText: true,
-							itemRequired: false
 						}
-						
-					]
-				};
-				
+					);
+
+
+				}
+
+				if (executePermission) {
+
+					metadata.gridCommands.push({
+						id: 5,
+						default_: false,
+						icon: "mdi mdi-play",
+						label: "LBL_EXECUTE",
+						multiselect: true,
+						position: 5,
+						showText: true,
+						itemRequired: false
+					});
+				}
+
 				return metadata;
 			}
 			function getEvents() {

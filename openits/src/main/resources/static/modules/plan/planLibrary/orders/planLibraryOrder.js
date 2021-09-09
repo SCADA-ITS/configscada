@@ -1,5 +1,6 @@
 import PlanLibraryPersist from "../planLibraryPersist.js";
 import InputDialogBox from "../../../../component/inputDialogBox.js";
+import { util } from "../../../../lib/util.js";
 
 export default class PlanLibraryOrder {
 	
@@ -20,7 +21,8 @@ export default class PlanLibraryOrder {
 	getView() {
 		
 		let self = this;
-		
+		let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);	
+
 		let view = {
 			id: "plan-order-lib-plan-" + self.uid,
 			rows: [
@@ -34,7 +36,38 @@ export default class PlanLibraryOrder {
 		function drawHeader() {
 			
 			let viewHeader;
-			
+			let pencilIcon = {};
+
+			if (editPermission) {
+
+				pencilIcon = {
+					view: "icon",
+					icon: "mdi mdi-pencil",
+					tooltip: i18n.t("LBL_EDIT_PLAN_ORDER_NAME"),
+					on: {
+						onItemClick: function() {
+
+							let planOrderAlias = self.planOrder.alias;
+
+							(new InputDialogBox(i18n.t("LBL_PLAN_ORDER_ALIAS"), i18n.t("LBL_ENTER_NEW_PLAN_ORDER_ALIAS"), function(newPlanOrderAlias) {
+
+								if (planOrderAlias != newPlanOrderAlias) {
+
+									let updatedPlanOrder = {
+										id: self.planOrder.id,
+										alias: newPlanOrderAlias,
+										planOrderTypeId: self.planOrder.planOrderType.id
+									}
+
+									self.savePlanOrder(updatedPlanOrder);
+								}
+
+							}, true, planOrderAlias)).show();
+						}
+					}
+				}
+			}
+
 			viewHeader = {
 				cols: [
 					{ width: 10 },
@@ -48,32 +81,7 @@ export default class PlanLibraryOrder {
 										autowidth: true
 									},
 									{ width: 5 },
-									{
-										view: "icon",
-										icon: "mdi mdi-pencil",
-										tooltip: i18n.t("LBL_EDIT_PLAN_ORDER_NAME"),
-										on: {
-											onItemClick: function() {
-												
-												let planOrderAlias = self.planOrder.alias;
-												
-												(new InputDialogBox(i18n.t("LBL_PLAN_ORDER_ALIAS"), i18n.t("LBL_ENTER_NEW_PLAN_ORDER_ALIAS"), function(newPlanOrderAlias) {
-					
-													if (planOrderAlias != newPlanOrderAlias) {
-														
-														let updatedPlanOrder = {
-															id: self.planOrder.id,
-															alias: newPlanOrderAlias,
-															planOrderTypeId: self.planOrder.planOrderType.id
-														}
-														
-														self.savePlanOrder(updatedPlanOrder);
-													}
-													
-												}, true, planOrderAlias)).show();
-											}
-										}
-									},
+									pencilIcon,
 									{}
 								]
 							}
@@ -81,50 +89,50 @@ export default class PlanLibraryOrder {
 					},
 					{ width: 10 }
 				]
-				
+
 			};
-			
+
 			return viewHeader;
 		}
-		
+
 		function drawActions() {
-			
-			let viewActions = {};
-			
-			viewActions = {
-				view: "toolbar",
-				height: 45,
-				borderless: true,
-				elements: [
-					{},
-					{ 
-						view: "button", 
-						css: "action-button",
-						width: 130,
-						height: 35,
-						label: i18n.t("LBL_SAVE"),
-						on: {
-							onItemClick() {
-		
-								webix.confirm({
-									title: i18n.t("LBL_SAVE_ORDER_CHANGES"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"),
-									width: 600
-								}).then(function() {
-									
-									self.savePlanOrder();
-								});					
+
+			let viewActions = { height: 45 };
+
+			if (editPermission) {
+
+				viewActions = {
+					view: "toolbar",
+					height: 45,
+					borderless: true,
+					elements: [
+						{},
+						{
+							view: "button",
+							css: "action-button",
+							width: 130,
+							height: 35,
+							label: i18n.t("LBL_SAVE"),
+							on: {
+								onItemClick() {
+
+									webix.confirm({
+										title: i18n.t("LBL_SAVE_ORDER_CHANGES"),
+										ok: i18n.t("LBL_YES"),
+										cancel: i18n.t("LBL_NO"),
+										text: i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"),
+										width: 600
+									}).then(function() {
+
+										self.savePlanOrder();
+									});
+								}
 							}
 						}
-					}
-				]
-			};		
+					]
+				};
+			}
 
-			
-			
-			
 			return viewActions;
 		}
 		

@@ -746,6 +746,38 @@ export let util = {
 
 				return module.isAllowed;
 			}
+		},
+		
+		isAllowedPermission(permissionToCheck){
+			
+			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			let rolePermissions = userData.role.rolePermissions;
+			let userPermissions = userData.userPermissions;
+			let permissionsOK = false;
+			
+			let allPermissions = new Set(rolePermissions);
+
+			if (Array.isArray(userPermissions) && userPermissions.length > 0) {
+
+				userPermissions.forEach(userPermission => {
+
+					allPermissions.add(userPermission);
+				});
+			}
+
+			let arrAllPermissions = Array.from(allPermissions);
+
+			if (Array.isArray(arrAllPermissions) && arrAllPermissions.length > 0) {
+				
+					let validPermission = arrAllPermissions.find(permission => permission.id === permissionToCheck);
+																	
+					if (validPermission) {
+				
+						permissionsOK = true;									
+					}
+				}
+
+			return permissionsOK;			
 		}
 	},
 

@@ -101,7 +101,10 @@ export default class PlanLibraryModule extends GenericModule {
 		
 		function getViewOptionButtonList() {
 
-			let viewOptionButtonList;
+			let viewOptionButtonList = {
+				id: "view-option-dialog-" + self.uid
+				};
+				
 			let actions = getMetadata().treeCommands;
 
 			if (Array.isArray(actions) && actions.length > 0) {
@@ -157,9 +160,9 @@ export default class PlanLibraryModule extends GenericModule {
 					]
 				}
 
-				return viewOptionButtonList;
+				
 			}
-
+				return viewOptionButtonList;
 		}
 		
 		function onAceptOptionButtonList(buttonId){
@@ -314,9 +317,10 @@ export default class PlanLibraryModule extends GenericModule {
 		}
 
 		function getMetadata() {
-
-			return {
-
+			
+			let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);
+						
+			let metadata = {
 				id: -1,
 				label: "LBL_LIBRARY",
 				treeOptionValues: [
@@ -327,12 +331,19 @@ export default class PlanLibraryModule extends GenericModule {
 					{ value: false, treeOption: { id: 6 } },
 					{ value: true, treeOption: { id: 8 } }
 				],
-				treeCommands: [
+				treeCommands: []
+			}
+			
+			if(editPermission){
+				
+				metadata.treeCommands = [
 					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
-				]
-			}
+				]				
+			}		
+			
+			return metadata;
 		}
 
 

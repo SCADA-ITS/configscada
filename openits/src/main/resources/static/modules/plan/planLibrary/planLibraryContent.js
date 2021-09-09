@@ -34,9 +34,49 @@ export default class PlanLibraryContent {
 		function drawHeader() {
 			
 			const TOOLBAR_BUTTONS_WIDTH = 130;
-			
-			let viewHeader;
-			
+						
+			let viewHeader;				
+			let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);	
+			let iconPencil = {};
+
+			if (editPermission) {
+
+				iconPencil = {
+					view: "icon",
+					icon: "mdi mdi-pencil",
+					tooltip: i18n.t("LBL_EDIT_PLAN_NAME"),
+					on: {
+
+						onItemClick: function() {
+
+							let planAlias = self.plan.alias;
+							let planDescription = self.plan.description;
+
+							(new InputDialogBox(i18n.t("LBL_PLAN_NAME"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newAlias) {
+
+								(new InputDialogBox(i18n.t("LBL_PLAN_DESCRIPTION"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newDescription) {
+
+									if (planAlias != newAlias || planDescription != newDescription) {
+
+										let updatedPlan = {
+											id: self.plan.id,
+											alias: newAlias,
+											description: newDescription,
+											planModeType: self.plan.planModeType,
+											planSubtypeId: self.plan.planSubtype.id
+										}
+
+										self.planLibraryPlan.update(updatedPlan);
+									}
+
+								}, false, planDescription)).show();
+
+							}, true, planAlias)).show();
+						}
+					}
+				}
+			}
+
 			viewHeader = {
 				cols: [
 					{ width: 10 },
@@ -69,40 +109,7 @@ export default class PlanLibraryContent {
 										}(),
 										align: "left",
 									},
-									{
-										view: "icon",
-										icon: "mdi mdi-pencil",
-										tooltip: i18n.t("LBL_EDIT_PLAN_NAME"),
-										on: {
-											
-											onItemClick: function() {
-												
-												let planAlias = self.plan.alias;
-												let planDescription = self.plan.description;
-												
-												(new InputDialogBox(i18n.t("LBL_PLAN_NAME"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newAlias) {
-						
-													(new InputDialogBox(i18n.t("LBL_PLAN_DESCRIPTION"), i18n.t("LBL_ENTER_NEW_PLAN_NAME"), function(newDescription) {
-						
-														if (planAlias != newAlias || planDescription != newDescription) {
-															
-															let updatedPlan = {
-																id: self.plan.id,
-																alias: newAlias,
-																description: newDescription,
-																planModeType: self.plan.planModeType,
-																planSubtypeId: self.plan.planSubtype.id
-															}
-															
-															self.planLibraryPlan.update(updatedPlan);
-														}
-														
-													}, false, planDescription)).show();
-													
-												}, true, planAlias)).show();
-											}
-										}
-									},
+									iconPencil,
 									{}
 								]
 							},

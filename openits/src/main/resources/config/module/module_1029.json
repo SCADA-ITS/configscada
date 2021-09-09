@@ -17,5 +17,10 @@
 		"createPlanOrder": "plans/createPlanOrder",
 		"updatePlanOrder": "plans/updatePlanOrder",
 		"deletePlanOrder": "plans/deletePlanOrder/${id}"
-	}
+	},
+	"requiredPermissions": {
+		"signalling": "SystemPermission:5",
+		"edit": "SystemPermission:4"
+	 }
+	
 }
