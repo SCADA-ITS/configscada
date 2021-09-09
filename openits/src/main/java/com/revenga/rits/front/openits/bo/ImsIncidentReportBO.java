@@ -315,7 +315,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 						List<?> sequenceOfStates = (List<?>) objSequenceOfStates;
 
-						if (sequenceOfStates.isEmpty()) {
+						if (!sequenceOfStates.isEmpty()) {
 
 							// Current state not is the last
 

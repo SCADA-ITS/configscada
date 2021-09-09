@@ -263,8 +263,8 @@ export default class IncidentWizardAction {
 					let strechs = dat.json();
 					
 					if (Array.isArray(strechs) && strechs.length > 0) {
-						
-						stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+
+						strechs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 						let dataStrechs = strechs.map(e => {
 							
 							return {
