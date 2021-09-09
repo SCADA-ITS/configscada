@@ -36,7 +36,7 @@ export default class EquipmentViewerContent {
 				{ height: 3 },
 				{
 					cols: [
-						{ width: 20 },
+						{ width: 10 },
 						{
 							rows: [
 								{ height: 20 },
@@ -44,7 +44,7 @@ export default class EquipmentViewerContent {
 								{ height: 20 }
 							]
 						},
-						{ width: 20 }
+						{ width: 10 }
 					]
 				}
 			]

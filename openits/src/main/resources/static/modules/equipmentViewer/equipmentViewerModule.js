@@ -3,7 +3,7 @@ import EquipmentViewerTreeHierarchy from "./equipmentViewerTreeHierarchy.js";
 import EquipmentViewerContent  from "./equipmentViewerContent.js";
 import { util } from "../../lib/util.js";
 
-const TREE_PANEL_WIDTH = 275;
+const TREE_PANEL_WIDTH = 240;
 
 export default class EquipmentViewerModule extends GenericModule {
 	
