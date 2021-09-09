@@ -14,7 +14,7 @@
    version="1.1"
    id="svg2"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="19_co.svg">
+   sodipodi:docname="20_no.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -97,17 +97,6 @@
            id="tspan318"
            x="27.623533"
            y="64.833336">-</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#666666;fill-opacity:1;stroke:none;stroke-width:0.86580598"
-         x="42.549923"
-         y="47.13813"
-         id="textUnit"><tspan
-           style="stroke-width:0.86580598"
-           sodipodi:role="line"
-           id="tspan71"
-           x="42.549923"
-           y="47.13813">-</tspan></text>
     </g>
   </g>
 </svg>
