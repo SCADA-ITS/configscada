@@ -444,7 +444,7 @@ export default class PlanLibraryPlan {
 
 				if (Array.isArray(items) && items.length === 1) {
 
-					let planOrderType = planOrderTypes.find(e => e.id == items[0]);
+					let planOrderType = planOrderTypes.find(e => e.id == items[0].id);
 
 					if (planOrderType) {
 

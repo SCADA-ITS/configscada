@@ -239,7 +239,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 					if (Array.isArray(items) && items.length === 1) {
 						
-						onSelectElementType(items[0]);
+						onSelectElementType(items[0].id);
 					}
 				});
 	
@@ -288,7 +288,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 					if (Array.isArray(items) && items.length === 1) {
 
-						onSelectElement(items[0]);
+						onSelectElement(items[0].id);
 					}
 				});
 	

@@ -27,16 +27,29 @@ export default class SearchDialogBox {
 
 		let self = this;
 		
-		let acceptCallback = function(selectedIds) {
+		let acceptCallback = function() {
 			
 			try {
-			
-				if (self.onAccept && Array.isArray(selectedIds) && selectedIds.length > 0) {
-									
-					let res = self.onAccept(selectedIds);
+				
+				let selectedIds = undefined;
+				
+				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+						
+					selectedIds = self.searchDataTable.getSelectedItems();
+				}
+				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
 					
+					// TODO
+				}
+				
+				let res = undefined;
+				
+				if (self.onAccept && Array.isArray(selectedIds) && selectedIds.length > 0) { 
+					
+					res = self.onAccept(selectedIds);
+				
 					if (res === undefined || res === true) {
-					
+						
 						$$(self.containerId).close();	
 					}
 				}
@@ -372,7 +385,7 @@ export default class SearchDialogBox {
 							
 							if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
 							
-								acceptCallback(self.searchDataTable.getSelectedItems());	
+								acceptCallback();	
 							}
 						}
 					}
