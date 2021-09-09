@@ -148,31 +148,22 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 			
 			searchDialogElementType();
 			
-			function onSelectElementType(elementTypeId) {
+			function onSelectElementType(elementType) {
 				
-				if (elementTypeId) {
+				elementTypeSelected = elementType;
+				
+				if (elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
+								
+					searchDialogElement();
+				}
+				else {
 					
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementType, { id: elementTypeId })).then(function(elementTypeResponse) {
-			
-						if (elementTypeResponse != null) {
-							
-							elementTypeSelected = elementTypeResponse.json();
-							
-							if (elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
-								
-								searchDialogElement();
-							}
-							else {
-								
-								webix.alert({
-									title: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS"),
-									text: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"),
-									type: "alert-warning",
-									width: 500
-								});							
-							}
-						}
-					});	
+					webix.alert({
+						title: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS"),
+						text: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"),
+						type: "alert-warning",
+						width: 500
+					});							
 				}
 			}
 			
@@ -206,6 +197,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				let dialogElementTypes = webix.copy(SearchDialogBox.CALLBACK);
 				let label = i18n.t("LBL_STEP_1_OF_2_SELECT_ELEMENT_TYPE");
 				let elementTypes;
+				let elements;
 				
 				dialogElementTypes.height = 600;
 				dialogElementTypes.width = 800;
@@ -214,10 +206,16 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				function fillDialogEntity(dialogEntity) {
 					
 					elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+					elements = window.em.getAll(EntityType.ELEMENT);
 				
 					if (Array.isArray(elementTypes) && elementTypes.length > 0) {
 						
 						elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
+						
+						if (Array.isArray(elements) && elements.length > 0) {
+							
+							elementTypes = elementTypes.filter(elementType => (elements.findIndex(element => element.elementType.id === elementType.id) !== -1));
+						}
 						
 						dialogEntity.data = [];
 		
@@ -250,7 +248,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 					if (Array.isArray(items) && items.length === 1) {
 						
-						onSelectElementType(items[0].id);
+						onSelectElementType(elementTypes.find(elementType => elementType.id == items[0].id));
 					}
 				});
 	
