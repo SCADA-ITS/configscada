@@ -192,95 +192,107 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 			
 			function searchDialogElementType() {
 				
-				let dialogElementTypes = webix.copy(SearchDialogBox.CUSTOM);
+				let dialogElementTypes = webix.copy(SearchDialogBox.CALLBACK);
 				let label = i18n.t("LBL_STEP_1_OF_2_SELECT_ELEMENT_TYPE");
-	
-				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+				let elementTypes;
 				
-				if (Array.isArray(elementTypes) && elementTypes.length > 0) {
+				dialogElementTypes.height = 600;
+				dialogElementTypes.width = 800;
+				dialogElementTypes.fillDialogEntity = fillDialogEntity;
+				
+				function fillDialogEntity(dialogEntity) {
 					
-					elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
-					
-					dialogElementTypes.data = [];
-	
-					dialogElementTypes.pkField = "id"
-					dialogElementTypes.fields = ["idIcon=", "alias=LBL_ELEMENT_TYPE_ALIAS", "description=LBL_ELEMENT_TYPE_DESCRIPTION"];
-					dialogElementTypes.height = 600;
-					dialogElementTypes.width = 800;
-					dialogElementTypes.sortFieldId = 3; 
-					
-					dialogElementTypes.icons = {
-						idIcon: []
-					}
-					
-					elementTypes.forEach(elementType => {
+					elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+				
+					if (Array.isArray(elementTypes) && elementTypes.length > 0) {
 						
-						dialogElementTypes.icons.idIcon.push({
-							id: elementType.id,
-							icon: "img/" + elementType.elementTypePhoto
-						});
+						elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
 						
-						dialogElementTypes.data.push({
-							id: elementType.id,
-							idIcon: elementType.id,
-							alias: i18n.t(elementType.labelAlias),
-							description: i18n.t(elementType.labelDescription)
-						});
-					});
-					
-					let s = new SearchDialogBox(label, dialogElementTypes, function(items) {
-	
-						if (Array.isArray(items) && items.length === 1) {
-							
-							onSelectElementType(items[0].id);
-						}
-					});
+						dialogEntity.data = [];
 		
-					s.show();
+						dialogEntity.pkField = "id"
+						dialogEntity.fields = ["idIcon=", "alias=LBL_ELEMENT_TYPE_ALIAS", "description=LBL_ELEMENT_TYPE_DESCRIPTION"];
+						dialogEntity.sortFieldId = 3; 
+						
+						dialogEntity.icons = {
+							idIcon: []
+						}
+						
+						elementTypes.forEach(elementType => {
+							
+							dialogEntity.icons.idIcon.push({
+								id: elementType.id,
+								icon: "img/" + elementType.elementTypePhoto
+							});
+							
+							dialogEntity.data.push({
+								id: elementType.id,
+								idIcon: elementType.id,
+								alias: i18n.t(elementType.labelAlias),
+								description: i18n.t(elementType.labelDescription)
+							});
+						});
+					}
 				}
+					
+				let s = new SearchDialogBox(label, dialogElementTypes, function(items) {
+
+					if (Array.isArray(items) && items.length === 1) {
+						
+						onSelectElementType(items[0]);
+					}
+				});
+	
+				s.show();
 			}
 			
 			function searchDialogElement() {
 				
-				let dialogElements = webix.copy(SearchDialogBox.CUSTOM);
+				let dialogElements = webix.copy(SearchDialogBox.CALLBACK);
 				let label = i18n.t("LBL_STEP_2_OF_2_SELECT_ELEMENT");
+				let elements;
 				
-				let elements = window.em.getAll(EntityType.ELEMENT);
+				dialogElements.height = 600;
+				dialogElements.width = 800;
+				dialogElements.fillDialogEntity = fillDialogEntity;
 				
-				if (Array.isArray(elements) && elements.length > 0) {
+				function fillDialogEntity(dialogEntity) {
 					
-					elements = elements.filter(e => e.elementType.id === elementTypeSelected.id); 
+					elements = window.em.getAll(EntityType.ELEMENT);
 				
 					if (Array.isArray(elements) && elements.length > 0) {
 						
-						dialogElements.data = [];
-		
-						dialogElements.pkField = "id"
-						dialogElements.fields = ["alias=LBL_ELEMENT_ALIAS", "description=LBL_ELEMENT_DESCRIPTION"];
-						dialogElements.height = 600;
-						dialogElements.width = 800;
-						dialogElements.sortFieldId = 2; 
-						
-						elements.forEach(element => {
+						elements = elements.filter(e => e.elementType.id === elementTypeSelected.id); 
+					
+						if (Array.isArray(elements) && elements.length > 0) {
 							
-							dialogElements.data.push({
-								id: element.id,
-								alias: element.alias,
-								description: element.description
-							});
-						});
-						
-						let s = new SearchDialogBox(label, dialogElements, function(items) {
-		
-							if (Array.isArray(items) && items.length === 1) {
-	
-								onSelectElement(items[0].id);
-							}
-						});
+							dialogEntity.data = [];
 			
-						s.show();
-					}	
+							dialogEntity.pkField = "id"
+							dialogEntity.fields = ["alias=LBL_ELEMENT_ALIAS", "description=LBL_ELEMENT_DESCRIPTION"];
+							dialogEntity.sortFieldId = 2; 
+							
+							elements.forEach(element => {
+								
+								dialogEntity.data.push({
+									id: element.id,
+									alias: element.alias,
+									description: element.description
+								});
+							});
+						}
+					}
 				}
+						
+				let s = new SearchDialogBox(label, dialogElements, function(items) {
+
+					if (Array.isArray(items) && items.length === 1) {
+
+						onSelectElement(items[0]);
+					}
+				});
+	
+				s.show();
 			}
 		}
 	}

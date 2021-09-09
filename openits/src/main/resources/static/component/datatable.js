@@ -1874,6 +1874,16 @@ export default class DataTable {
 				
 				self.restoreSort();
 			});
+			
+			let resultCommons = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMONS);
+			let resultCommands = this.getGridOptions(GridOptions.TB_ACTIONS_BUTTONS_COMMANDS);
+			let resultSearch = this.getGridOptions(GridOptions.SEARCH);
+			let showOnlySearchBar = !resultCommons && !resultCommands && resultSearch;
+			
+			if (showOnlySearchBar) {
+				
+				txtSearch.focus();
+			}
 		}
 	}
 

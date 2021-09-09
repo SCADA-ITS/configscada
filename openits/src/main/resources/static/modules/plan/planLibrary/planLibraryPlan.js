@@ -386,81 +386,85 @@ export default class PlanLibraryPlan {
 		
 		function newPlanOrder() {
 			
-			let dialogPlanOrderTypes = webix.copy(SearchDialogBox.CUSTOM);
+			let dialogPlanOrderTypes = webix.copy(SearchDialogBox.CALLBACK);
 			let label = i18n.t("LBL_PLAN_ORDER_TYPES");
-
-			let planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
+			let planOrderTypes;
 			
-			if (Array.isArray(planOrderTypes) && planOrderTypes.length > 0) {
+			dialogPlanOrderTypes.fillDialogEntity = fillDialogEntity;
+			dialogPlanOrderTypes.height = 600;
+			dialogPlanOrderTypes.width = 800;
 				
-				dialogPlanOrderTypes.data = [];
-
-				dialogPlanOrderTypes.pkField = "id"
-				dialogPlanOrderTypes.fields = ["idIcon=", "alias=LBL_PLAN_ORDER_TYPE_ALIAS", "description=LBL_PLAN_ORDER_TYPE_DESCRIPTION"];
-				dialogPlanOrderTypes.height = 600;
-				dialogPlanOrderTypes.width = 800;
-				dialogPlanOrderTypes.sortFieldId = 2; 
-				
-				dialogPlanOrderTypes.icons = {
-					idIcon: []
-				}
-				
-				planOrderTypes.forEach(planOrderType => {
-					
-					dialogPlanOrderTypes.icons.idIcon.push({
-						id: planOrderType.id,
-						icon: planOrderType.icon
-					});
-					
-					dialogPlanOrderTypes.data.push({
-						id: planOrderType.id,
-						idIcon: planOrderType.id,
-						alias: i18n.t(planOrderType.labelAlias),
-						description: i18n.t(planOrderType.labelDescription),
-						jsFile: planOrderType.jsFile
-					});
-				});
-				
-				let s = new SearchDialogBox(label, dialogPlanOrderTypes, function(items) {
-
-					if (Array.isArray(items) && items.length === 1) {
-	
-						let planOrderType = planOrderTypes.find(e => e.id == items[0].id);
-	
-						if (planOrderType) {
-	
-							try {
-
-								const lazy = async _ => {
-									
-									let jsFile = util.getContextPath() + "/" + planOrderType.jsFile;	
+			function fillDialogEntity(dialogEntity) {
 			
-									const mod = await import(jsFile);
-									
-									let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, undefined, self.onUpdate);
-									
-									let newPlanOrder = {
-										planOrderType: webix.copy(planOrderType),
-										planOrderOrder: getNextPosition()
-									}
-									
-									planLibraryOrder.createPlanOrder(newPlanOrder);
+				planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
+		
+				if (Array.isArray(planOrderTypes) && planOrderTypes.length > 0) {
+					
+					dialogEntity.data = [];
+	
+					dialogEntity.pkField = "id"
+					dialogEntity.fields = ["idIcon=", "alias=LBL_PLAN_ORDER_TYPE_ALIAS", "description=LBL_PLAN_ORDER_TYPE_DESCRIPTION"];
+					dialogEntity.sortFieldId = 2; 
+					
+					dialogEntity.icons = {
+						idIcon: []
+					}
+					
+					planOrderTypes.forEach(planOrderType => {
+						
+						dialogEntity.icons.idIcon.push({
+							id: planOrderType.id,
+							icon: planOrderType.icon
+						});
+						
+						dialogEntity.data.push({
+							id: planOrderType.id,
+							idIcon: planOrderType.id,
+							alias: i18n.t(planOrderType.labelAlias),
+							description: i18n.t(planOrderType.labelDescription),
+							jsFile: planOrderType.jsFile
+						});
+					});
+				}		
+			}
+			
+			let s = new SearchDialogBox(label, dialogPlanOrderTypes, function(items) {
+
+				if (Array.isArray(items) && items.length === 1) {
+
+					let planOrderType = planOrderTypes.find(e => e.id == items[0]);
+
+					if (planOrderType) {
+
+						try {
+
+							const lazy = async _ => {
+								
+								let jsFile = util.getContextPath() + "/" + planOrderType.jsFile;	
+		
+								const mod = await import(jsFile);
+								
+								let planLibraryOrder = new mod.default(self.config, self.uid, self.plan, undefined, self.onUpdate);
+								
+								let planOrderToCreate = {
+									planOrderType: webix.copy(planOrderType),
+									planOrderOrder: getNextPosition()
 								}
-				
-								lazy();
-				
-							} catch (error) {
-				
-								console.log(error);
+								
+								planLibraryOrder.createPlanOrder(planOrderToCreate);
 							}
+			
+							lazy();
+			
+						} catch (error) {
+			
+							console.log(error);
 						}
 					}
-				});
-	
-				s.show();
-			}
+				}
+			});
 
-			
+			s.show();
 		}
 		
 		function deletePlanOrders(planOrderIds) {

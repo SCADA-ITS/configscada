@@ -1,6 +1,4 @@
-//import { EventTypes } from "../component/datatable.js";
 import DataTable from "../component/datatable.js";
-//import DialogEntitiesRepository from "../managers/dialogEntitiesRepository.js";
 import { util } from "../lib/util.js";
 
 const DIALOG_DATA_TYPE_TABLE = 1;
@@ -9,6 +7,7 @@ const DIALOG_DATA_TYPE_TREE = 2;
 const DIALOG_ENDPOINT_TYPE_REST = 1;
 const DIALOG_ENDPOINT_TYPE_EM = 2;
 const DIALOG_ENDPOINT_TYPE_CUSTOM = 3;
+const DIALOG_ENDPOINT_TYPE_CALLBACK = 4;
 	
 export default class SearchDialogBox {
 	
@@ -55,10 +54,15 @@ export default class SearchDialogBox {
 			
 		};
 		
-		let getDialogInfo = function(dialogEntity) {
+		let getDialogInfo = function() {
 		
 			let data = undefined;
 			let metadata = undefined;
+			
+			if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+				
+				self.dialogEntity.fillDialogEntity(self.dialogEntity);
+			}
 			
 			let getFieldName = function(field) {
 					
@@ -97,19 +101,23 @@ export default class SearchDialogBox {
 				
 				let entities;
 	
-				if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
+				if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
 						
-					entities = getFromEntitiesManager(EntityType[dialogEntity.endpoint]);
+					entities = getFromEntitiesManager(EntityType[self.dialogEntity.endpoint]);
 				}
-				else if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
+				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
 					
-					let response = webix.ajax().sync().get(appConfig.restUrl + dialogEntity.endpoint);
+					let response = webix.ajax().sync().get(appConfig.restUrl + self.dialogEntity.endpoint);
 
 					entities = JSON.parse(response.responseText);
 				}
-				else if (dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM) {
+				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM) {
 					
-					entities = dialogEntity.data;
+					entities = self.dialogEntity.data;
+				}
+				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+					
+					entities = self.dialogEntity.data;
 				}
 				
 				if (Array.isArray(entities) && entities.length > 0) {
@@ -118,9 +126,9 @@ export default class SearchDialogBox {
 						
 						let output = {};
 						
-						output.id = e[dialogEntity.pkField];
+						output.id = e[self.dialogEntity.pkField];
 						
-						dialogEntity.fields.forEach(field => {
+						self.dialogEntity.fields.forEach(field => {
 							
 							let fieldName = getFieldName(field); 
 							
@@ -136,12 +144,12 @@ export default class SearchDialogBox {
 				
 				let gridMetadata = {};
 				
-				if (dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
 					
 					const gridOptionValues = [
 						{ gridOption: { id: 1 }, value: "false" },
 						{ gridOption: { id: 2 }, value: "true" },
-						{ gridOption: { id: 3 }, value: dialogEntity.sortFieldId ? String(dialogEntity.sortFieldId) : undefined },
+						{ gridOption: { id: 3 }, value: self.dialogEntity.sortFieldId ? String(self.dialogEntity.sortFieldId) : undefined },
 						{ gridOption: { id: 4 }, value: "asc" },
 						{ gridOption: { id: 7 }, value: "false" },
 						{ gridOption: { id: 8 }, value: "false" },
@@ -176,7 +184,7 @@ export default class SearchDialogBox {
 						parameterized: false,
 						position: position,
 						required: true,
-						sourceField: dialogEntity.pkField,
+						sourceField: self.dialogEntity.pkField,
 						visible: false,
 						gridFieldDataType: {
 							id: 1,
@@ -184,18 +192,18 @@ export default class SearchDialogBox {
 						}
 					});
 					
-					dialogEntity.fields.forEach(field => {
+					self.dialogEntity.fields.forEach(field => {
 								
 						let fieldName = getFieldName(field);
 						let fieldLabel = getFieldLabel(field);
 						let needsTranslation = false;
 						
-						if (Array.isArray(dialogEntity.translate)) {
+						if (Array.isArray(self.dialogEntity.translate)) {
 							
-							needsTranslation = dialogEntity.translate.includes(fieldName);
+							needsTranslation = self.dialogEntity.translate.includes(fieldName);
 						}
 						
-						let adjust = (position + 1 >= dialogEntity.fields.length);
+						let adjust = (position + 1 >= self.dialogEntity.fields.length);
 						
 						position++;
 						
@@ -221,9 +229,9 @@ export default class SearchDialogBox {
 								
 								let gridFieldIcons = [];
 								
-								if (dialogEntity.icons && Array.isArray(dialogEntity.icons[fieldName])) {
+								if (self.dialogEntity.icons && Array.isArray(self.dialogEntity.icons[fieldName])) {
 								
-									let icons = dialogEntity.icons[fieldName];
+									let icons = self.dialogEntity.icons[fieldName];
 									
 									gridFieldIcons = icons.map(e => {
 									
@@ -248,10 +256,17 @@ export default class SearchDialogBox {
 			data = getData();
 			metadata = getMetadata();
 			
-			return { type: dialogEntity.dataType, data: data, metadata: metadata };
+			return { type: self.dialogEntity.dataType, data: data, metadata: metadata };
 		};
-
+		
 		let body = {
+			id: "search-dialog-" + this.uid,
+			cols: [util.ui.getViewDrawLoading()]
+		}
+		
+		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
+
+		body = {
 			id: "search-dialog-" + this.uid,
 			cols: [
 				{ width: 20 },
@@ -268,7 +283,7 @@ export default class SearchDialogBox {
 			]
 		};
 		
-		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
+		webix.ui(body, $$("search-dialog-" + this.uid));
 		
 		// Post draw views actions
 		if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
@@ -278,7 +293,7 @@ export default class SearchDialogBox {
 		
 		function getSearchComponent() {
 			
-			self.dialogInfo = getDialogInfo(self.dialogEntity);
+			self.dialogInfo = getDialogInfo();
 			
 			if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
 			
@@ -299,7 +314,7 @@ export default class SearchDialogBox {
 			function getDataTable() {
 				
 				let events = {};
-
+				
 				events[DataTable.EventTypes.ON_ITEM_DBL_CLIC] = acceptCallback;
 				
 				self.searchDataTable = new DataTable(null, null, self.dialogInfo.metadata, self.dialogInfo.data, events);
@@ -406,6 +421,13 @@ Object.defineProperty(SearchDialogBox, 'PLANS', {
 
 Object.defineProperty(SearchDialogBox, 'CUSTOM', {
 	value: { id: 6, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_CUSTOM },
+	writable: false,
+	enumerable: true,
+	configurable: false
+});
+
+Object.defineProperty(SearchDialogBox, 'CALLBACK', {
+	value: { id: 7, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_CALLBACK },
 	writable: false,
 	enumerable: true,
 	configurable: false
