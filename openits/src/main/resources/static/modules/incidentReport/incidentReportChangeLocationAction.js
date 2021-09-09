@@ -123,6 +123,8 @@ export default class IncidentReportChangeLocationAction {
 
 				if (Array.isArray(stretchs) && stretchs.length > 0) {
 
+					stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+
 					let stretchData = stretchs.map(e => {
 
 						return {
@@ -165,6 +167,7 @@ export default class IncidentReportChangeLocationAction {
 
 								if (Array.isArray(locations) && locations.length > 0) {
 
+									locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 									let dataLocations = locations.map(e => {
 
 										return {
@@ -322,7 +325,7 @@ export default class IncidentReportChangeLocationAction {
 					}
 				]
 			};
-			
+
 		}
 
 		let view = {

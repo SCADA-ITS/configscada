@@ -48,7 +48,6 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
 	static final String LOG_TYPE_PARAM_STATE = "LogTypeParam:1:1";
 	static final String LOG_TYPE_PARAM_ARG_1 = "LogTypeParam:1:2";
-	static final String LOG_TYPE_PARAM_ARG_2 = "LogTypeParam:1:3";
 
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CREATED = "LogSubtype:7";
 	static final String LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED = "LogSubtype:8";
@@ -60,6 +59,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = "LogSubtype:14";
 	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = "LogSubtype:15";
 	static final String LOG_SUBTYPE_DELETED_DOCUMENT = "LogSubtype:16";
+	static final String LOG_SUBTYPE_LOCATION_CHANGED = "LogSubtype:18";
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -80,8 +80,8 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LBL_IMS_INCIDENT_STATE_CANCELED = "LBL_IMS_INCIDENT_STATE_CANCELED";
 
 	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE_ID = "incidentTypeCauseId";
-	static final String FIELD_IMS_INCIDENT_TYPE_CAUSE = "incidentTypeCause";
-	
+	static final String FIELD_IMS_INCIDENT_TYPE_CAUSES = "incidentTypeCauses";
+
 	static final String FIELD_LOCATION_ID = "locationId";
 	static final String FIELD_AFFECTION_STRETCH_ID = "affectionStretchId";
 
@@ -109,49 +109,88 @@ public class ImsIncidentReportBO extends GenericBO {
 	@SuppressWarnings("unchecked")
 	private Object getIncidentTypeTaskAlias(final Map<String, Object> incidentReport, final String incidentTypeTaskId) {
 
-		if (incidentReport != null && incidentTypeTaskId != null
-				&& incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)) {
+		if (incidentReport != null && incidentTypeTaskId != null) {
 
-			Object objSequenceOfStates = incidentReport.get(FIELD_SEQUENCE_OF_STATES);
+			
+			if (incidentReport.containsKey(FIELD_TASK_STATES)) {
 
-			if (objSequenceOfStates instanceof List) {
+				Object objectTaskStates = incidentReport.get(FIELD_TASK_STATES);
 
-				List<?> sequenceOfStates = (List<?>) objSequenceOfStates;
+				if (objectTaskStates instanceof List) {
 
-				for (Object objSequenceOfState : sequenceOfStates) {
+					List<?> taskStates = (List<?>) objectTaskStates;
 
-					if (objSequenceOfState instanceof Map) {
+					for (Object objTaskState : taskStates) {
 
-						Map<String, Object> sequenceOfState = (Map<String, Object>) objSequenceOfState;
+						if (objTaskState instanceof Map) {
 
-						if (sequenceOfState.containsKey(FIELD_TASK_STATES)) {
+							Map<String, Object> taskState = (Map<String, Object>) objTaskState;
 
-							Object ObjectTaskStates = sequenceOfState.get(FIELD_TASK_STATES);
+							if (taskState.containsKey(FIELD_INCIDENT_TYPE_TASK)) {
 
-							if (ObjectTaskStates instanceof List) {
+								Object objIncidentTypeTask = taskState.get(FIELD_INCIDENT_TYPE_TASK);
 
-								List<?> taskStates = (List<?>) ObjectTaskStates;
+								if (objIncidentTypeTask instanceof Map) {
 
-								for (Object objTaskState : taskStates) {
+									Map<String, Object> incidentTypeTask = (Map<String, Object>) objIncidentTypeTask;
 
-									if (objTaskState instanceof Map) {
+									Object objIncidentTypeTaskId = incidentTypeTask.get(FIELD_ID);
 
-										Map<String, Object> taskState = (Map<String, Object>) objTaskState;
+									if (objIncidentTypeTaskId != null && incidentTypeTaskId
+											.equals(objIncidentTypeTaskId)) {
 
-										if (taskState.containsKey(FIELD_INCIDENT_TYPE_TASK)) {
+										return incidentTypeTask.get(FIELD_ALIAS);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			if (incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)) {
 
-											Object ObjIncidentTypeTask = taskState.get(FIELD_INCIDENT_TYPE_TASK);
+				Object objSequenceOfStates = incidentReport.get(FIELD_SEQUENCE_OF_STATES);
 
-											if (ObjIncidentTypeTask instanceof Map) {
+				if (objSequenceOfStates instanceof List) {
 
-												Map<String, Object> incidentTypeTask = (Map<String, Object>) ObjIncidentTypeTask;
+					List<?> sequenceOfStates = (List<?>) objSequenceOfStates;
 
-												Object objIncidentTypeTaskId = incidentTypeTask.get(FIELD_ID);
+					for (Object objSequenceOfState : sequenceOfStates) {
 
-												if (objIncidentTypeTaskId != null
-														&& incidentTypeTaskId.equals((String) objIncidentTypeTaskId)) {
+						if (objSequenceOfState instanceof Map) {
 
-													return incidentTypeTask.get(FIELD_ALIAS);
+							Map<String, Object> sequenceOfState = (Map<String, Object>) objSequenceOfState;
+
+							if (sequenceOfState.containsKey(FIELD_TASK_STATES)) {
+
+								Object objectTaskStates = sequenceOfState.get(FIELD_TASK_STATES);
+
+								if (objectTaskStates instanceof List) {
+
+									List<?> taskStates = (List<?>) objectTaskStates;
+
+									for (Object objTaskState : taskStates) {
+
+										if (objTaskState instanceof Map) {
+
+											Map<String, Object> taskState = (Map<String, Object>) objTaskState;
+
+											if (taskState.containsKey(FIELD_INCIDENT_TYPE_TASK)) {
+
+												Object objIncidentTypeTask = taskState.get(FIELD_INCIDENT_TYPE_TASK);
+
+												if (objIncidentTypeTask instanceof Map) {
+
+													Map<String, Object> incidentTypeTask = (Map<String, Object>) objIncidentTypeTask;
+
+													Object objIncidentTypeTaskId = incidentTypeTask.get(FIELD_ID);
+
+													if (objIncidentTypeTaskId != null && incidentTypeTaskId
+															.equals(objIncidentTypeTaskId)) {
+
+														return incidentTypeTask.get(FIELD_ALIAS);
+													}
 												}
 											}
 										}
@@ -164,6 +203,7 @@ public class ImsIncidentReportBO extends GenericBO {
 			}
 		}
 		return null;
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -186,11 +226,11 @@ public class ImsIncidentReportBO extends GenericBO {
 
 						if (sequenceOfState.containsKey(FIELD_TASK_STATES)) {
 
-							Object ObjectTaskStates = sequenceOfState.get(FIELD_TASK_STATES);
+							Object objectTaskStates = sequenceOfState.get(FIELD_TASK_STATES);
 
-							if (ObjectTaskStates instanceof List) {
+							if (objectTaskStates instanceof List) {
 
-								List<?> taskStates = (List<?>) ObjectTaskStates;
+								List<?> taskStates = (List<?>) objectTaskStates;
 
 								for (Object objTaskState : taskStates) {
 
@@ -200,11 +240,11 @@ public class ImsIncidentReportBO extends GenericBO {
 
 										if (taskState.containsKey(FIELD_TASK_PLAN_STATES)) {
 
-											Object ObjTaskPlanStates = taskState.get(FIELD_TASK_PLAN_STATES);
+											Object objTaskPlanStates = taskState.get(FIELD_TASK_PLAN_STATES);
 
-											if (ObjTaskPlanStates instanceof List) {
+											if (objTaskPlanStates instanceof List) {
 
-												List<?> taskPlanStates = (List<?>) ObjTaskPlanStates;
+												List<?> taskPlanStates = (List<?>) objTaskPlanStates;
 
 												for (Object objTaskPlanState : taskPlanStates) {
 
@@ -214,18 +254,18 @@ public class ImsIncidentReportBO extends GenericBO {
 
 														if (taskPlanState.containsKey(FIELD_INCIDENT_TASK_PLAN)) {
 
-															Object ObjIncidentTaskPlan = taskPlanState
+															Object objIncidentTaskPlan = taskPlanState
 																	.get(FIELD_INCIDENT_TASK_PLAN);
 
-															if (ObjIncidentTaskPlan instanceof Map) {
+															if (objIncidentTaskPlan instanceof Map) {
 
-																Map<String, Object> incidentTaskPlan = (Map<String, Object>) ObjIncidentTaskPlan;
+																Map<String, Object> incidentTaskPlan = (Map<String, Object>) objIncidentTaskPlan;
 
 																Object objIncidentTaskPlanId = incidentTaskPlan
 																		.get(FIELD_ID);
 
 																if (objIncidentTaskPlanId != null && incidentTaskPlanId
-																		.equals((String) objIncidentTaskPlanId)) {
+																		.equals(objIncidentTaskPlanId)) {
 
 																	return incidentTaskPlan.containsKey(FIELD_PLAN)
 																			&& incidentTaskPlan
@@ -275,7 +315,7 @@ public class ImsIncidentReportBO extends GenericBO {
 
 						List<?> sequenceOfStates = (List<?>) objSequenceOfStates;
 
-						if (sequenceOfStates.size() > 0) {
+						if (sequenceOfStates.isEmpty()) {
 
 							// Current state not is the last
 
@@ -347,55 +387,57 @@ public class ImsIncidentReportBO extends GenericBO {
 	@SuppressWarnings("unchecked")
 	private Object getCauseAlias(final Map<String, Object> incidentReport, final String incidentTypeCauseId) {
 
-		if (incidentReport != null && incidentTypeCauseId != null
-			&& incidentReport.containsKey(FIELD_INCIDENT_TYPE)) {
+		if (incidentReport != null && incidentTypeCauseId != null && incidentReport.containsKey(FIELD_INCIDENT_TYPE)) {
 
-				Object objIncidentType = incidentReport.get(FIELD_INCIDENT_TYPE);
+			Object objIncidentType = incidentReport.get(FIELD_INCIDENT_TYPE);
 
-				if (objIncidentType instanceof Map) {
+			if (objIncidentType instanceof Map) {
 
-					Map<String, Object> incidentType = (Map<String, Object>) objIncidentType;
+				Map<String, Object> incidentType = (Map<String, Object>) objIncidentType;
 
-					Object objIncidentTypeId = incidentType.get(FIELD_ID);
+				Object objIncidentTypeId = incidentType.get(FIELD_ID);
 
-					if (objIncidentTypeId != null) {
-					
-						Map<String, Object> incidentTypeReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE,new Object[] { (String) objIncidentTypeId  });
-						
-						Object objIncidentTypeCause = incidentTypeReport.get(FIELD_IMS_INCIDENT_TYPE_CAUSE);
+				if (objIncidentTypeId != null) {
 
-						if (objIncidentTypeCause instanceof List) {
-			
-							List<?> sequenceOfCauses = (List<?>) objIncidentTypeCause;
-			
-							for (Object objSequenceOfCauses : sequenceOfCauses) {
-			
-								if (objSequenceOfCauses instanceof Map) {
+					Map<String, Object> incidentTypeReport = voDataSourceAdapter.get(
+							VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE,
+							new Object[] { (String) objIncidentTypeId });
 
-									Map<String, Object> sequenceOfCause = (Map<String, Object>) objSequenceOfCauses;
-									Object objIncidentTypeCauseId = sequenceOfCause.get(FIELD_ID);
+					Object objIncidentTypeCause = incidentTypeReport.get(FIELD_IMS_INCIDENT_TYPE_CAUSES);
 
-									if (objIncidentTypeCauseId != null && incidentTypeCauseId
-											.equals((String) objIncidentTypeCauseId)) {
-									
-										return sequenceOfCause.get(FIELD_ALIAS);
-												
-									}
+					if (objIncidentTypeCause instanceof List) {
+
+						List<?> sequenceOfCauses = (List<?>) objIncidentTypeCause;
+
+						for (Object objSequenceOfCauses : sequenceOfCauses) {
+
+							if (objSequenceOfCauses instanceof Map) {
+
+								Map<String, Object> sequenceOfCause = (Map<String, Object>) objSequenceOfCauses;
+								Object objIncidentTypeCauseId = sequenceOfCause.get(FIELD_ID);
+
+								if (objIncidentTypeCauseId != null
+										&& incidentTypeCauseId.equals(objIncidentTypeCauseId)) {
+
+									return sequenceOfCause.get(FIELD_ALIAS);
+
 								}
-						
 							}
+
 						}
-					
 					}
+
 				}
 			}
-		
+		}
+
 		return null;
 	}
 
-
 	private Boolean addLog(final Map<String, Object> incidentReport, final String incidentReportId,
-			final String logSubtypeId, final Object stateLabel, final Object arg1, final Object arg2) {
+			final String logSubtypeId, final Object stateLabel, final Object arg1) {
+
+		Boolean res = false;
 
 		if (incidentReport != null) {
 
@@ -418,7 +460,7 @@ public class ImsIncidentReportBO extends GenericBO {
 						Map<String, Object> input = new HashMap<>();
 
 						List<Map<String, Object>> incidentReportLogs = new ArrayList<>();
-						Map<String, Object> incidentReportLog = new HashMap<String, Object>();
+						Map<String, Object> incidentReportLog = new HashMap<>();
 
 						incidentReportLog.put(FIELD_INCIDENT_REPORT_ID, incidentReportId);
 						incidentReportLog.put(FIELD_LOG_SUBTYPE_ID, logSubtypeId);
@@ -427,25 +469,17 @@ public class ImsIncidentReportBO extends GenericBO {
 
 						List<Map<String, Object>> incidentReportLogValues = new ArrayList<>();
 
-						Map<String, Object> incidentReportLogValueState = new HashMap<String, Object>();
+						Map<String, Object> incidentReportLogValueState = new HashMap<>();
 						incidentReportLogValueState.put(FIELD_VALUE, objIncidentStateLabelAlias);
 						incidentReportLogValueState.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_STATE);
 						incidentReportLogValues.add(incidentReportLogValueState);
 
 						if (arg1 != null) {
 
-							Map<String, Object> incidentReportLogValueArg1 = new HashMap<String, Object>();
+							Map<String, Object> incidentReportLogValueArg1 = new HashMap<>();
 							incidentReportLogValueArg1.put(FIELD_VALUE, arg1);
 							incidentReportLogValueArg1.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_ARG_1);
 							incidentReportLogValues.add(incidentReportLogValueArg1);
-						}
-
-						if (arg2 != null) {
-
-							Map<String, Object> incidentReportLogValueArg2 = new HashMap<String, Object>();
-							incidentReportLogValueArg2.put(FIELD_VALUE, arg2);
-							incidentReportLogValueArg2.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_ARG_2);
-							incidentReportLogValues.add(incidentReportLogValueArg2);
 						}
 
 						incidentReportLog.put(FIELD_INCIDENT_REPORT_LOG_VALUES, incidentReportLogValues);
@@ -459,6 +493,39 @@ public class ImsIncidentReportBO extends GenericBO {
 			}
 		}
 
+		return res;
+	}
+
+	private Object getLocationAlias(String locationId) {
+
+		if (locationId != null) {
+
+			Map<String, Object> location = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION,
+					new Object[] { locationId });
+
+			if (location != null && location.containsKey(FIELD_ALIAS)) {
+
+				return location.get(FIELD_ALIAS);
+
+			}
+		}
+
+		return null;
+	}
+
+	private Object getStretchAlias(String stretchId) {
+
+		if (stretchId != null) {
+
+			Map<String, Object> location = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH,
+					new Object[] { stretchId });
+
+			if (location != null && location.containsKey(FIELD_ALIAS)) {
+
+				return location.get(FIELD_ALIAS);
+
+			}
+		}
 		return null;
 	}
 
@@ -495,14 +562,15 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	@SuppressWarnings("unchecked")
 	public Object create(Object input) {
-		
-		Boolean res = false;
-	    
-	    Map<String, Object> createIncidentReport = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_REPORT, (Map<String, Object>) input);
-	    
-	    res = checkMapIsBoolean(createIncidentReport);
 
-	    return res;
+		Boolean res = false;
+
+		Map<String, Object> createIncidentReport = voDataSourceAdapter
+				.put(VODataSourceAdapter.DATA_SOURCE_CREATE_INCIDENT_REPORT, (Map<String, Object>) input);
+
+		res = checkMapIsBoolean(createIncidentReport);
+
+		return res;
 	}
 
 	public Boolean confirm(String id) {
@@ -518,12 +586,12 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		res = checkMapIsBoolean(incidentReport);
 
-		if (res) {
+		if (Boolean.TRUE.equals(res)) {
 
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
-			res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED, null, null, null);
+			res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CONFIRMED, null, null);
 		}
 		return res;
 	}
@@ -545,10 +613,10 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			res = checkMapIsBoolean(incidentReportRes);
 
-			if (res) {
+			if (Boolean.TRUE.equals(res)) {
 
 				res = addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_FORWARDED,
-						getNextStateLabelAlias(incidentReport), null, getIncidentStateLabelAlias(incidentReport));
+						getNextStateLabelAlias(incidentReport), null);
 			}
 		}
 
@@ -572,10 +640,9 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			res = checkMapIsBoolean(incidentReportRes);
 
-			if (res) {
+			if (Boolean.TRUE.equals(res)) {
 
-				addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CANDELED, LBL_IMS_INCIDENT_STATE_CANCELED, null,
-						getIncidentStateLabelAlias(incidentReport));
+				addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CANDELED, LBL_IMS_INCIDENT_STATE_CANCELED, null);
 			}
 		}
 
@@ -599,12 +666,12 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			res = checkMapIsBoolean(incidentReport);
 
-			if (res) {
+			if (Boolean.TRUE.equals(res)) {
 
 				incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 						new Object[] { id });
 
-				addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_USER, null, user.get(FIELD_NAME), null);
+				addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_USER, null, user.get(FIELD_NAME));
 			}
 		}
 
@@ -625,13 +692,13 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		res = checkMapIsBoolean(incidentReport);
 
-		if (res) {
+		if (Boolean.TRUE.equals(res)) {
 
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
 			addLog(incidentReport, id, LOG_SUBTYPE_FINALIZED_TASK, null,
-					getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId), null);
+					getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId));
 		}
 		return res;
 	}
@@ -650,13 +717,13 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		res = checkMapIsBoolean(incidentReport);
 
-		if (res) {
+		if (Boolean.TRUE.equals(res)) {
 
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
 			addLog(incidentReport, id, LOG_SUBTYPE_EXECUTED_TASK_PLAN, null,
-					getPlanAlias(incidentReport, incidentTaskPlanId), null);
+					getPlanAlias(incidentReport, incidentTaskPlanId));
 		}
 		return res;
 	}
@@ -681,7 +748,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		input.put("incidentReportLogId", id);
 
 		Boolean res = false;
-		
+
 		Map<String, Object> deleteLog = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_DELETE_LOG_INCIDENT_INCIDENT_REPORT, input);
 
@@ -704,19 +771,18 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		res = checkMapIsBoolean(incidentReport);
 
-		if (res) {
+		if (Boolean.TRUE.equals(res)) {
 
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
-			addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_CAUSE, null,
-			getCauseAlias(incidentReport, causeId), null);
+			addLog(incidentReport, id, LOG_SUBTYPE_ASSIGNED_CAUSE, null, getCauseAlias(incidentReport, causeId));
 		}
 		return res;
 	}
 
 	public Object changeLocation(String id, String locationId, String stretchId) {
-		
+
 		Boolean res = false;
 
 		Map<String, Object> input = new HashMap<>();
@@ -730,7 +796,16 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		res = checkMapIsBoolean(incidentReport);
 
+		if (Boolean.TRUE.equals(res)) {
+
+			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
+					new Object[] { id });
+
+			addLog(incidentReport, id, LOG_SUBTYPE_LOCATION_CHANGED, null,
+					getStretchAlias(stretchId) + "->" + getLocationAlias(locationId));
+		}
+
 		return res;
 	}
-		
+
 }

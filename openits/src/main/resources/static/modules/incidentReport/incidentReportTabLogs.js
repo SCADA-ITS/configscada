@@ -185,7 +185,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogSubtype",
 						visible: true,
-						widthPx: 180,
+						widthPx: 200,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -206,7 +206,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogUser",
 						visible: true,
-						widthPx: 100,
+						widthPx: 150,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -227,7 +227,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogValueState",
 						visible: true,
-						widthPx: 100,
+						widthPx: 120,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -248,28 +248,7 @@ export default class IncidentReportTabLog {
 						required: true,
 						sourceField: "incidentLogValueArg1",
 						visible: true,
-						widthPx: 550,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-						]
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LOG_IMS_PARAM_ARG2",
-						labelTooltip: "LOG_IMS_PARAM_ARG2",
-						needsTranslation: true,
-						parameterized: false,
-						position: 8,
-						required: true,
-						sourceField: "incidentLogValueArg2",
-						visible: true,
-						widthPx: 150,
+						widthPx: 600,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -297,12 +276,10 @@ export default class IncidentReportTabLog {
 
 					row["incidentLogValueState"] = null;
 					row["incidentLogValueArg1"] = null;
-					row["incidentLogValueArg2"] = null;
 
 					element.incidentReportLogValues.forEach(e => {
 						e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE ? row["incidentLogValueState"] = e.value : null;
 						e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1 ? row["incidentLogValueArg1"] = e.value : null;
-						e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG2 ? row["incidentLogValueArg2"] = e.value : null;
 					});
 
 					data.push(row);
@@ -405,7 +382,6 @@ export default class IncidentReportTabLog {
 												};
 
 												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody).then(function(data) {
-													//console.log(data);
 												});
 
 												window.close();
