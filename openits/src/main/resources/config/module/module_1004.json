@@ -2,7 +2,8 @@
 	"moduleAction": {
 		"edit": 100401,
 		"confirm": 100402,
-		"cancel": 100403
+		"cancel": 100403,
+		"executePlanFromIncident": 102502
 	},
 	"restEndpoints": {
 	 	"incidentReport": "incidents/reports/${id}",

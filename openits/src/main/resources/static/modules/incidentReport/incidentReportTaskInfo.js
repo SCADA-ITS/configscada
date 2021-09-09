@@ -16,7 +16,7 @@ export default class IncidentReportTaskInfo {
 		
 		viewInfo = {
 
-			id: "taskDetailsBody-" + self.index + "-" + self.uid,
+			id: "task-details-info-" + self.index + "-" + self.uid,
 			borderless: true,
 			css: "ims-incident-report-tab-details",
 			rows: [

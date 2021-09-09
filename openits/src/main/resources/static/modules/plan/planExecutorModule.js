@@ -6,7 +6,6 @@ import { adapter } from "../../lib/adapter.js";
 import { util } from "../../lib/util.js";
 
 const PLAN_ORDER_ACTION_PLAY = "PLAY";
-const PLAN_ORDER_ACTION_STOP = "STOP";
 const PLAN_ORDER_ACTION_CANCEL = "CANCEL";
 
 export default class PlanExecutor extends GenericModule {
@@ -19,8 +18,8 @@ export default class PlanExecutor extends GenericModule {
 		this.data = null;
 		this.orders = null;
 		this.config = module.config;
-		this.ordersDataTable;
-		this.idStompSubscriptor;
+		this.ordersDataTable = null;
+		this.idStompSubscriptor = null;
 	}
 
 	getView() {
@@ -64,7 +63,7 @@ export default class PlanExecutor extends GenericModule {
 					return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
 				}
 			}
-		};
+		}
 
 		return view;
 	}
@@ -106,6 +105,14 @@ export default class PlanExecutor extends GenericModule {
 						stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 					}
 				});
+				
+				if (self.moduleAction.id === self.config.moduleAction.fromIncident) {
+					
+					let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
+					btnConfig.confirm = false;
+
+					open_module(btnConfig);
+				}
 			}
 		});
 
@@ -283,7 +290,7 @@ export default class PlanExecutor extends GenericModule {
 				};
 
 				return header;
-			};
+			}
 
 			function getActionButtons() {
 
@@ -326,7 +333,6 @@ export default class PlanExecutor extends GenericModule {
 					button.tooltip = i18n.t(btnConfig.label);
 					button.icon = btnConfig.icon;
 					button.disabled = btnConfig.disabled;
-					//button.css = btnConfig.css;
 
 					return button;
 				}
@@ -614,7 +620,7 @@ export default class PlanExecutor extends GenericModule {
 					self.ordersDataTable = new DataTable(null, null, metadata, data, null);
 
 					return self.ordersDataTable.getView();
-				};
+				}
 
 				return dataTable;
 			}
@@ -622,7 +628,9 @@ export default class PlanExecutor extends GenericModule {
 
 			function getCancelButton() {
 
-				let cancelButton = {
+				let cancelButton; 
+				
+				cancelButton = {
 					rows: [
 						{ height: 10 },
 						{

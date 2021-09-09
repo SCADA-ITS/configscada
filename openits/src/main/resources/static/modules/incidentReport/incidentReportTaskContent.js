@@ -25,6 +25,7 @@ export default class IncidentReportTaskContent {
 			css: { "border-width": "1px !important" },
 			rows: [
 				getViewHeader(),
+				{ height: 10 },
 				{
 					css: { "border-width": "0px !important" },
 					cols: [
@@ -45,7 +46,7 @@ export default class IncidentReportTaskContent {
 			
 			viewHeader = {
 				view: "toolbar",
-				css: { "margin-left": "1px !important" },
+				css: { "background": "#F4F5F9", "margin-left": "1px !important" },
 				borderless: true,
 				cols: [
 					{ width: 4 },
@@ -76,9 +77,9 @@ export default class IncidentReportTaskContent {
 				}	
 			}
 			
-			if (Array.isArray(self.taskState.taskPlanState) && self.taskState.taskPlanState.length > 0) {
+			if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0) {
 				
-				incidentReportTaskPlan = new IncidentReportTaskPlan(self.taskState, self.index, self.uid);
+				incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PLANS"),
@@ -87,8 +88,17 @@ export default class IncidentReportTaskContent {
 			}
 			
 			// TODO: Task param
-			
-			// ...
+			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
+				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) && 
+				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0) {
+				
+				incidentReportTaskParam = new IncidentReportTaskParam(self.taskState, self.index, self.uid);
+				
+				viewBody.cells.push({
+					header: i18n.t("LBL_PARAMS"),
+					body: incidentReportTaskParam.getView()
+				});
+			}
 			
 			// END
 

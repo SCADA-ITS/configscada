@@ -2623,7 +2623,7 @@ p, input, textarea {
 }
 
 .auxiliary-tab .webix_all_tabs .webix_item_tab {
-	width: 150px !important;
+	width: 180px !important;
 	background-color: transparent;
 	font-size: 13px;
 }
