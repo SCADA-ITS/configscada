@@ -79,8 +79,6 @@ export default class TreeView {
 			
 								return obj.value.toLowerCase().indexOf(value) != -1;
 							});
-							
-							//$$("tree-" + self.uid).filter("#value#", this.getValue());
 						}
 					}
 				},
@@ -100,20 +98,6 @@ export default class TreeView {
 		let multiSelect = self.getTreeOptions(TreeOptions.MULTISELECT);
 		
 		if (multiSelect) {
-			
-//			let viewSelectAll = { 
-//				id: "tb_btn-select-all-" + this.uid, 
-//				view: "icon", 
-//				icon: "mdi mdi-check-box-outline", 
-//				value: i18n.t("LBL_SELECT_ALL"), 
-//				tooltip: true,
-//				on: {
-//					onItemClick: function() {
-//						
-//						$$("tree-" + self.uid).checkAll();				
-//					}
-//				}
-//			}; 
 			
 			let viewUnselectAll = { 
 				id: "tb_btn-unselect-all-" + this.uid, 
@@ -158,7 +142,6 @@ export default class TreeView {
 				}
 			};
 			
-			//tbActionView.elements.push(viewSelectAll);
 			tbActionView.elements.push(viewUnselectAll);
 		}
 		
@@ -201,8 +184,6 @@ export default class TreeView {
 			id: "treeview-" + this.uid,
 			rows: []
 		};
-		
-		//view.rows.push({ height: 6 });
 		
 		if (self.getTreeOptions(TreeOptions.SEARCH)) {
 			
@@ -466,7 +447,7 @@ export default class TreeView {
 					onItemCheck: function(id) {
 						
 						let item = this.getItem(id);
-						let treeView = $$("tree-" + self.uid); 
+						let treeVw = $$("tree-" + self.uid); 
 						let icon = $$("tb_btn-unselect-all-" + self.uid);
 						
 						if (item && multiSelect && self.events && self.events[TreeView.EventTypes.ON_CHECK_ITEM]) {
@@ -476,9 +457,9 @@ export default class TreeView {
 							eval(self.events[TreeView.EventTypes.ON_CHECK_ITEM])(checkedList);
 						}
 						
-						if (treeView && icon){
+						if (treeVw && icon){
 						
-							if(treeView.count() == treeView.getChecked().length){
+							if(treeVw.count() == treeVw.getChecked().length){
 							
 								icon.config.icon = "mdi mdi-check-box-outline";
 								icon.refresh();
@@ -873,6 +854,16 @@ export default class TreeView {
 		}
 		
 		return firstItem;
+	}
+	
+	update(id, item) {
+		
+		let tree = $$("tree-" + this.uid);
+			
+		if (tree) {
+		
+			tree.updateItem(id, item);	
+		}
 	}
 	
 	enable(value, context) {

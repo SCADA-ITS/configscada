@@ -6,6 +6,7 @@
 	},	
 	"restEndpoints": {
 		"elementType": "element_types/${id}",
+		"plans": "plans",
 		"plan": "plans/${id}",
 		"planNodes": "plans/nodes",
 		"createNode": "plans/node",

@@ -52,11 +52,13 @@ export default class PlanLibraryModule extends GenericModule {
 
 			promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planNodes));
 			promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planHierarchies));
+			promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.plans));
 
 			webix.promise.all(promises).then(function(responses) {
 
 				self.planNodes = responses[0] ? responses[0].json() : undefined;
 				self.planHierarchies = responses[1] ? responses[1].json() : undefined;
+				self.plans = responses[2] ? responses[2].json() : undefined;
 
 				if ($$(self.uid)) {
 
@@ -78,6 +80,8 @@ export default class PlanLibraryModule extends GenericModule {
 							if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 
 								let selectedItem = selectedItems[0];
+								
+								self.treeView.update(planNodeId, selectedItem);
 
 								if (selectedItem.props && selectedItem.props.folder) {
 
@@ -277,14 +281,16 @@ export default class PlanLibraryModule extends GenericModule {
 				let itemsTree = [];
 				let itemRelationships = [];
 				
-				if (Array.isArray(self.planNodes)) {
+				if (Array.isArray(self.planNodes) && Array.isArray(self.plans)) {
 					
 					itemsTree = self.planNodes.map(e => {
 
+						let plan = self.plans.find(p => (e.plan && p.id === e.plan.id));
+						
 						return {
 	
 							id: e.id,
-							label: e.alias,
+							label: plan ? plan.alias : e.alias,
 							plan: e.plan,
 							folder: !e.plan
 						}
