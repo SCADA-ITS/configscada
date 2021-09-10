@@ -1,11 +1,16 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
+import InputDialogBox from "../../component/inputDialogBox.js";
 
+const PLAN_EXECUTED = "1";
+const PLAN_NO_EXECUTED = "0";
+			
 export default class IncidentReportTaskPlan {
 
-	constructor(config, taskState, index, uid) {
+	constructor(config, incidentReport, taskState, index, uid) {
 
 		this.config = config;
+		this.incidentReport = incidentReport;
 		this.taskState = taskState;
 		this.index = index;
 		this.uid = uid;
@@ -25,27 +30,44 @@ export default class IncidentReportTaskPlan {
 					borderless: true,
 					height: 20,
 					on: {
-						onAfterRender: function() {
-			
-							if (self.dtPlans) {
-								
-								self.dtPlans.callbacks();
-								
-								if (self.taskState.completedAt) {
-									
-									//self.dtPlans.disable();
-								}
-							}
-						}
+						onAfterRender: initDataTable
 					}
 				}
 			]
 		};
 		
+		function initDataTable() {
+			
+			if (self.dtPlans) {
+								
+				self.dtPlans.callbacks();
+				
+				if (self.taskState.completedAt) {
+					
+					self.dtPlans.disable();
+				}
+				else {
+					
+					let dtItems = self.dtPlans.getAllItems();
+					
+					if (Array.isArray(dtItems) && dtItems.length > 0) {
+						
+						let planNoExecuted = dtItems.find(dtItem => dtItem.status == PLAN_NO_EXECUTED);
+						
+						if (planNoExecuted) {
+							
+							self.dtPlans.select(planNoExecuted.id);
+						}
+					}
+				}
+			}
+		}
 		
 		viewPlans.rows.push(...getTablePlans());
 				
 		function getTablePlans() {
+			
+			
 			
 			function getMetadata() {
 				
@@ -93,11 +115,42 @@ export default class IncidentReportTaskPlan {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
+							needsTranslation: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "status",
+							visible: true,
+							widthPx: 35,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: [
+								{
+									icon: "./img/grid/confirmed.png",
+									showValue: false,
+									value: PLAN_EXECUTED,
+									labelValue: "LBL_INCIDENT_TASK_COMPLETED"
+								},
+								{
+									icon: "./img/grid/not_confirmed.png",
+									showValue: false,
+									value: PLAN_NO_EXECUTED,
+									labelValue: ""
+								}
+							]
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
 							label: "LBL_POSITION",
 							labelTooltip: "LBL_POSITION",
 							needsTranslation: false,
 							parameterized: false,
-							position: 2,
+							position: 3,
 							required: true,
 							sourceField: "position",
 							visible: true,
@@ -116,7 +169,7 @@ export default class IncidentReportTaskPlan {
 							labelTooltip: "LBL_PLAN",
 							needsTranslation: false,
 							parameterized: false,
-							position: 3,
+							position: 4,
 							required: true,
 							sourceField: "plan",
 							visible: true,
@@ -129,53 +182,15 @@ export default class IncidentReportTaskPlan {
 						{
 							extended: false,
 							filtered: false,
-							isEpochMilli: false,
+							isEpochMilli: true,
 							isPk: false,
-							label: "LBL_PLAN_STATUS",
-							labelTooltip: "LBL_PLAN_STATUS",
-							needsTranslation: false,
-							parameterized: false,
-							position: 4,
-							required: true,
-							sourceField: "status",
-							visible: true,
-							widthPx: 25,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_CURRENT_PLAN_ORDER",
-							labelTooltip: "LBL_CURRENT_PLAN_ORDER",
+							label: "LBL_LAST_EXECUTION",
+							labelTooltip: "LBL_LAST_EXECUTION",
 							needsTranslation: false,
 							parameterized: false,
 							position: 5,
 							required: true,
-							sourceField: "currentPlanOrder",
-							visible: true,
-							widthPx: 25,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: true,
-							isPk: false,
-							label: "LBL_LAST_UPDATE",
-							labelTooltip: "LBL_LAST_UPDATE",
-							needsTranslation: false,
-							parameterized: false,
-							position: 6,
-							required: true,
-							sourceField: "lastUpdate",
+							sourceField: "lastExecution",
 							visible: true,
 							widthPx: 25,
 							gridFieldDataType: {
@@ -192,7 +207,7 @@ export default class IncidentReportTaskPlan {
 							labelTooltip: "",
 							needsTranslation: false,
 							parameterized: false,
-							position: 7,
+							position: 6,
 							required: true,
 							sourceField: "incidentTaskPlanId",
 							visible: false,
@@ -252,9 +267,8 @@ export default class IncidentReportTaskPlan {
 							id: taskPlanState.incidentTaskPlan.plan.id,
 							position: position++,
 							plan: taskPlanState.incidentTaskPlan.plan.alias,
-							status: i18n.t(taskPlanState.incidentTaskPlan.plan.planStateType.labelAlias),
-							currentPlanOrder: taskPlanState.incidentTaskPlan.plan.currentPlanOrder ? taskPlanState.incidentTaskPlan.plan.currentPlanOrder.alias : undefined,
-							lastUpdate: taskPlanState.completedAt,
+							status: taskPlanState.completedAt ? PLAN_EXECUTED : PLAN_NO_EXECUTED,
+							lastExecution: taskPlanState.completedAt,
 							incidentTaskPlanId: taskPlanState.incidentTaskPlan.id 
 						}
 						
@@ -266,22 +280,45 @@ export default class IncidentReportTaskPlan {
 			}
 			
 			function onExecutePlan() {
-						
+				
 				let selectedItems = self.dtPlans.getSelectedItems()
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
 					let selectedItem = selectedItems[0];
 					
-					let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
-					
-					if (module) {
+					webix.confirm({
+						title:  selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM"),
+						ok: i18n.t("LBL_YES"),
+						cancel: i18n.t("LBL_NO"),
+						text: selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"),
+						width: 600
+					}).then(function() {
 						
-						let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
-						let args = { selectedPks: [selectedItem.id] };
-
-						util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
-					}
+						let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
+						
+						if (module) {
+							
+							let planId = selectedItem.id;
+							let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
+							
+							let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
+								id: self.incidentReport.id,
+								taskPlanId: incidentTaskPlanId
+							});
+							
+							console.log("Incident report action => " + endpoint);
+		
+							webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
+								
+								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
+								let args = { selectedPks: [planId] };
+			
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+		
+							}, function(response) { util.ajax.handleError(response); });
+						}
+					});	
 				}
 			}
 

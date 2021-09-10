@@ -106,12 +106,15 @@ export default class PlanExecutor extends GenericModule {
 					}
 				});
 				
-				if (self.moduleAction.id === self.config.moduleAction.fromIncident) {
+				if (self.moduleAction.id === self.config.moduleAction.executeTaskPlan) {
 					
-					let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
-					btnConfig.confirm = false;
+					self.config.actionButtons.forEach(btnConfig => {
 
-					open_module(btnConfig);
+						if (btnConfig.visible) {
+
+							$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
+						}
+					});
 				}
 			}
 		});
@@ -142,20 +145,24 @@ export default class PlanExecutor extends GenericModule {
 						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(updateData.planStateType));
 						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(updateData.planStateType));
 						//Update buttons enable/disable
-						self.config.actionButtons.forEach(btnConfig => {
-
-							if (btnConfig.visible) {
-
-								if (self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)) {
-
-									$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
-
-								} else {
-
-									$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
+						
+						if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
+					
+							self.config.actionButtons.forEach(btnConfig => {
+	
+								if (btnConfig.visible) {
+	
+									if (self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)) {
+	
+										$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
+	
+									} else {
+	
+										$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
+									}
 								}
-							}
-						});
+							});
+						}
 
 						//Update orders table
 						let ids = [];

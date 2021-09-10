@@ -22,7 +22,8 @@
 		"addLogIncidentReport": "incidents/add_log_incident_report",
 		"deleteLogIncidentReport": "incidents/delete_log_incident_report/${id}",
 		"assignCauseIncidentReport": "incidents/reports/${id}/cause/${causeId}",
-		"changeLocation": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}"
+		"changeLocation": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}",
+		"executeTaskPlan": "/incidents/reports/${id}/execute_task_plan/${taskPlanId}"
 	},
 	"infoFields": [
 		{ "position": 1, "icon": "ico webix_icon mdi mdi-identifier", "label": "LBL_INCIDENT_REPORT_ID", "objField": "fieldId" },

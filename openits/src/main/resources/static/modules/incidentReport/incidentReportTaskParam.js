@@ -135,7 +135,7 @@ export default class IncidentReportTaskParam {
 							position: 3,
 							required: true,
 							sourceField: "newValue",
-							visible: true,
+							visible: (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt),
 							widthPx: 25,
 							gridFieldDataType: {
 								id: 1,

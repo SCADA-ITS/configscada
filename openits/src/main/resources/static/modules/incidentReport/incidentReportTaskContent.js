@@ -80,7 +80,7 @@ export default class IncidentReportTaskContent {
 			
 			if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0) {
 				
-				self.incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.taskState, self.index, self.uid);
+				self.incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.incidentReport, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PLANS"),

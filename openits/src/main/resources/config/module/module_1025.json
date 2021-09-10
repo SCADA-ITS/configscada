@@ -1,7 +1,7 @@
 {
 	"moduleAction": {
 		"executor": 102501,
-	    "fromIncident": 102502
+	    "executeTaskPlan": 102502
 	},
 	"restEndpoints": {
 		"plan": "plans/${id}"
