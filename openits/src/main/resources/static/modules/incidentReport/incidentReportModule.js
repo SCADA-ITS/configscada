@@ -287,7 +287,9 @@ export default class IncidentReportModule extends GenericModule {
 
 		function getViewHeader() {
 
-			let viewHeader = {
+			let viewHeader;
+			
+			viewHeader = {
 
 				id: "viewHeader-" + self.uid,
 				borderless: true,
@@ -398,22 +400,12 @@ export default class IncidentReportModule extends GenericModule {
 
 		console.log("Incident report action => " + endpoint);
 
-		webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
-
-			if (dat != null) {
-
-				let resAction = dat.json();
-			}
-		}, function(response) { util.ajax.handleError(response); });
+		webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
 	}
 
 	connect_ws() {
 
 		let self = this;
-
-		function on_connected() {
-
-		}
 
 		function on_message(message) {
 
@@ -451,7 +443,7 @@ export default class IncidentReportModule extends GenericModule {
 		let url = appConfig.stompUrl;
 		let topic = this.config.topic + "." + this.incidentReportId;
 
-		this.stompClient = util.stomp.connect(url, topic, on_connected, on_message);
+		this.stompClient = util.stomp.connect(url, topic, undefined, on_message);
 	}
 
 	disconnect_ws() {

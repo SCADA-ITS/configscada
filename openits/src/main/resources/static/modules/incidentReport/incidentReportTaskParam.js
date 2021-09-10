@@ -30,6 +30,11 @@ export default class IncidentReportTaskParam {
 							if (self.dtParams) {
 								
 								self.dtParams.callbacks();
+								
+								if (self.taskState.incidentTypeTask.auto || self.taskState.completedAt) {
+									
+									self.dtParams.disable();
+								}
 							}
 						}
 					}
@@ -228,7 +233,18 @@ export default class IncidentReportTaskParam {
 					taskTypeParams.forEach(taskTypeParam => {
 						
 						let row;
-						let value = undefined;
+						let newValue = undefined;
+						let currentValue = undefined;
+						
+						if (Array.isArray(self.taskState.incidentReportTaskValues)) {
+							
+							let incidentTypeTaskValueResult = self.taskState.incidentReportTaskValues.find(incidentTypeTaskValue => incidentTypeTaskValue.taskTypeParam.id === taskTypeParam.id);
+							
+							if (incidentTypeTaskValueResult) {
+								
+								currentValue = incidentTypeTaskValueResult.value; 
+							}
+						}
 						
 						if (Array.isArray(self.taskState.incidentTypeTask.incidentTypeTaskValues)) {
 							
@@ -236,15 +252,15 @@ export default class IncidentReportTaskParam {
 							
 							if (incidentTypeTaskValueResult) {
 								
-								value = incidentTypeTaskValueResult.value; 
+								newValue = incidentTypeTaskValueResult.value; 
 							}
 						}
 						
 						row = {
 							id: taskTypeParam.id,
 							param: i18n.t(taskTypeParam.labelAlias),
-							currentValue: value,
-							newValue: undefined,
+							currentValue: currentValue,
+							newValue:  (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) ? newValue : undefined,
 							paramTypeId: taskTypeParam.paramTypeId						
 						}
 						
@@ -270,7 +286,7 @@ export default class IncidentReportTaskParam {
 						newItem.newValue = value;
 						self.dtParams.update(newItem);
 						
-					}, true, selectedItem.value)).show();
+					}, true, selectedItem.newValue)).show();
 				}
 			}
 
@@ -280,5 +296,32 @@ export default class IncidentReportTaskParam {
 		}
 		
 		return viewParams;
+	}
+	
+	getIncidentTypePaskValues() {
+		
+		let self = this;
+		let incidentTypePaskValues = undefined;
+		
+		if (self.dtParams) {
+			
+			let dtItems = self.dtParams.getAllItems();
+			
+			if (Array.isArray(dtItems)) {
+				
+				incidentTypePaskValues = dtItems.filter(e => e.currentValue != e.newValue); 
+				
+				incidentTypePaskValues = incidentTypePaskValues.map(e => {
+						
+					return {
+						
+						taskTypeParamId: e.id,
+						value: e.newValue
+					}	
+				});
+			}
+		}
+		
+		return incidentTypePaskValues;
 	}
 }

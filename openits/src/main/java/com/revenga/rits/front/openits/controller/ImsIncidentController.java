@@ -140,9 +140,10 @@ public class ImsIncidentController {
 	@ApiOperation(value = "Finalize task Incident Report", notes = "Finalize task Incident Report")
 	public ResponseEntity<Object> finalizeTaskIncidentReport(
 			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id,
-			@ApiParam(name = "taskId", type = "String", value = "Incident type task", example = "ImsIncidentTypeTask:701", required = true) @PathVariable String taskId) {
+			@ApiParam(name = "taskId", type = "String", value = "Incident type task", example = "ImsIncidentTypeTask:701", required = true) @PathVariable String taskId,
+			@RequestBody Object incidentTypeTaskValues) {
 
-		return new ResponseEntity<>(imsIncidentReportBO.finalizeTask(id, taskId), HttpStatus.OK);
+		return new ResponseEntity<>(imsIncidentReportBO.finalizeTask(id, taskId, incidentTypeTaskValues), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/reports/{id}/execute_task_plan/{taskPlanId}")

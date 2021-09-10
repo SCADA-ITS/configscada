@@ -13,6 +13,10 @@ export default class IncidentReportTaskContent {
 		this.taskState = taskState;
 		this.index = parent.index;
 		this.uid = parent.uid;
+		
+		this.incidentReportTaskPlan = undefined;
+		this.incidentReportTaskParam = undefined;
+		this.incidentReportTaskInfo = undefined;
 	}
 
 	getView() {
@@ -63,9 +67,6 @@ export default class IncidentReportTaskContent {
 		function getViewBody() {
 			
 			let viewBody;
-			let incidentReportTaskPlan;
-			let incidentReportTaskParam;
-			let incidentReportTaskInfo;
 			
 			viewBody = {
 				view: "tabview",
@@ -79,11 +80,11 @@ export default class IncidentReportTaskContent {
 			
 			if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0) {
 				
-				incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.taskState, self.index, self.uid);
+				self.incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PLANS"),
-					body: incidentReportTaskPlan.getView()
+					body: self.incidentReportTaskPlan.getView()
 				});
 			}
 			
@@ -92,22 +93,22 @@ export default class IncidentReportTaskContent {
 				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) && 
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0) {
 				
-				incidentReportTaskParam = new IncidentReportTaskParam(self.taskState, self.index, self.uid);
+				self.incidentReportTaskParam = new IncidentReportTaskParam(self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PARAMS"),
-					body: incidentReportTaskParam.getView()
+					body: self.incidentReportTaskParam.getView()
 				});
 			}
 			
 			// END
 
 			
-			incidentReportTaskInfo = new IncidentReportTaskInfo(self.taskState, self.index, self.uid);
+			self.incidentReportTaskInfo = new IncidentReportTaskInfo(self.taskState, self.index, self.uid);
 			
 			viewBody.cells.push({
 				header: i18n.t("LBL_INFO"),
-				body: incidentReportTaskInfo.getView()
+				body: self.incidentReportTaskInfo.getView()
 			});
 			
 			return viewBody;			
@@ -161,10 +162,17 @@ export default class IncidentReportTaskContent {
 											id: self.incidentReport.id,
 											taskId: self.parent.currentTask.incidentTypeTask.id
 										});
-
+										
+										let body = {};
+										
+										if (self.incidentReportTaskParam) {
+										
+											body = { incidentTypeTaskValues: self.incidentReportTaskParam.getIncidentTypePaskValues() };	
+										}
+		
 										console.log("Incident report action => " + endpoint);
 
-										webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
+										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, body).then(function(dat) {
 
 											self.parent.currentTask = undefined;
 

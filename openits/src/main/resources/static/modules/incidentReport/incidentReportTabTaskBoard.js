@@ -343,6 +343,11 @@ export default class IncidentReportTabTaskBoard {
 
 				this.dtTasks.select(this.tasks[0].incidentTypeTask.id);
 			}
+			
+			if (!(Array.isArray(this.dtTasks.getSelectedItems()) && this.dtTasks.getSelectedItems().length > 0)) {
+				
+				this.dtTasks.select(this.tasks[0].incidentTypeTask.id);
+			}
 		}
 	}
 }

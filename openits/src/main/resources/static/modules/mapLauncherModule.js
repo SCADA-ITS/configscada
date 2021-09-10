@@ -68,8 +68,8 @@ export default class MapLauncherModule extends GenericModule {
 							
 							if (container && (!w || !h)) {
 								
-								w = container.$width;
-								h = container.$height;
+								w = container.$width - 10;
+								h = container.$height - 10;
 								
 								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
 							}
@@ -116,8 +116,8 @@ export default class MapLauncherModule extends GenericModule {
 							
 							if (container && (!w || !h)) {
 								
-								w = container.$width;
-								h = container.$height;
+								w = container.$width - 10;
+								h = container.$height - 10;
 								
 								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
 							}

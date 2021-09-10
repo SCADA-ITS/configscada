@@ -84,6 +84,8 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	static final String FIELD_LOCATION_ID = "locationId";
 	static final String FIELD_AFFECTION_STRETCH_ID = "affectionStretchId";
+	
+	static final String FIELD_INCIDENT_TYPE_TASK_VALUES = "incidentTypeTaskValues";
 
 	@SuppressWarnings("unchecked")
 	private Object getIncidentStateLabelAlias(final Map<String, Object> incidentReport) {
@@ -678,7 +680,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		return res;
 	}
 
-	public Boolean finalizeTask(String id, String incidentTypeTaskId) {
+	public Boolean finalizeTask(String id, String incidentTypeTaskId, Object incidentTypeTaskValues) {
 
 		Boolean res = false;
 
@@ -686,6 +688,17 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		input.put(FIELD_INCIDENT_REPORT_ID, id);
 		input.put(FIELD_INCIDENT_TYPE_TASK_ID, incidentTypeTaskId);
+		
+		if (incidentTypeTaskValues instanceof Map) {
+			
+			@SuppressWarnings("unchecked")
+			Map<String, Object> mapIncidentTypeTaskValues = (Map<String, Object>) incidentTypeTaskValues;
+
+			if (mapIncidentTypeTaskValues.containsKey(FIELD_INCIDENT_TYPE_TASK_VALUES)) {
+				
+				input.put(FIELD_INCIDENT_TYPE_TASK_VALUES, mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES));
+			}
+		}
 
 		Map<String, Object> incidentReport = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT, input);
