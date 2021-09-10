@@ -243,12 +243,12 @@ export default class EquipmentViewerInfo {
 							template: function(data) {
 
 								let labelType = i18n.t("LBL_ELEMENT_TYPE");
-								let labelTypeValue = i18n.t(self.element.elementType.labelDescription);
+								let labelTypeValue = i18n.t(self.element.elementType.labelDescription ? self.element.elementType.labelDescription : self.element.elementType.labelAlias);
 
 								if (self.element.elementSubtype) {
 
 									labelType += " (" + i18n.t("LBL_ELEMENT_SUBTYPE") + ")";
-									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription) + ")";
+									labelTypeValue += " (" + i18n.t(self.element.elementSubtype.labelDescription ? self.element.elementSubtype.labelDescription : self.element.elementSubtype.labelAlias) + ")";
 								}
 
 								return `<div class="equip-viewer-info">

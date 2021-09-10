@@ -230,7 +230,7 @@ export default class EquipmentViewerModule extends GenericModule {
 					
 					return `<div>
 								<span class='ico webix_icon mdi mdi-view-headline'></span>
-								<span>${i18n.t("LBL_COMPOSITION")}</span>
+								<span>${i18n.t("LBL_EQUIPMENT_S")}</span>
 							</div>`;
 				},
 				body: {
