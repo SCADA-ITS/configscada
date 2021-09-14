@@ -115,7 +115,9 @@ export default class IncidentReportTabInfo {
 
 													let endpoint = util.fillTemplate(self.config.actionEndpoints.assignCauseIncidentReport, body);
 													self.parent.restAction(endpoint);
-
+													$$("loading-" + self.uid).show();
+													$$(self.uid).hide();
+													
 													$$("fieldCause-combo-" + self.uid).hide();
 													$$("fieldCause-save-" + self.uid).hide();
 													$$("fieldCause-cancel-" + self.uid).hide();

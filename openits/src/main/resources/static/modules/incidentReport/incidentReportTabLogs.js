@@ -16,7 +16,7 @@ export default class IncidentReportTabLog {
 
 		let self = this;
 		this.dtLogs = undefined;
-		
+
 		let tabLogs = {
 			id: "tab-logs-" + self.uid,
 			borderless: true,
@@ -367,7 +367,7 @@ export default class IncidentReportTabLog {
 																"incidentReportLogValues": [
 																	{
 																		"logTypeParamId": iReportLogValuesParamIdState,
-																		"value": "LBL_IMS_INCIDENT_STATE_INITIAL"
+																		"value": self.incidentReport.incidentState ? self.incidentReport.incidentState.labelAlias : "-"
 																	},
 																	{
 																		"logTypeParamId": iReportLogValuesParamIdComment,
@@ -382,7 +382,12 @@ export default class IncidentReportTabLog {
 												};
 
 												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody).then(function(data) {
+
+													$$("loading-" + self.uid).show();
+													$$(self.uid).hide();
+
 												});
+
 
 												window.close();
 											}
@@ -406,7 +411,9 @@ export default class IncidentReportTabLog {
 
 					let rowsSelected = self.dtLogs.rowsSelected;
 					let control = false;
+
 					self.dtLogs.rowsSelected.forEach(e => {
+
 						let row = self.dtLogs.data.find(dato => dato.id === e);
 						console.log(self.config.logIncidentSubTypes.includes(row.incidentLogSubtypeId));
 						!self.config.logIncidentSubTypes.includes(row.incidentLogSubtypeId) ? control = true : null;
@@ -429,6 +436,8 @@ export default class IncidentReportTabLog {
 								});
 
 								self.parent.restAction(endpoint);
+								$$("loading-" + self.uid).show();
+								$$(self.uid).hide();
 							});
 
 						});
@@ -436,7 +445,7 @@ export default class IncidentReportTabLog {
 					} else {
 						webix.alert({
 							title: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR"),
-							ok: i18n.t("LBL_YES"),
+							ok: i18n.t("LBL_ACCEPT"),
 							text: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"),
 							type: "alert-warning",
 							width: 600

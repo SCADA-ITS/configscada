@@ -87,7 +87,6 @@ export default class IncidentReportChangeLocationAction {
 										webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
 
 											if (dat != null) {
-
 												parentWindow.close();
 											}
 										}, function(response) { util.ajax.handleError(response); });
@@ -122,6 +121,10 @@ export default class IncidentReportChangeLocationAction {
 				}
 
 				if (Array.isArray(stretchs) && stretchs.length > 0) {
+
+					stretchs = stretchs.filter(e => {
+						return (self.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
+					});
 
 					stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 
@@ -167,6 +170,10 @@ export default class IncidentReportChangeLocationAction {
 
 								if (Array.isArray(locations) && locations.length > 0) {
 
+									locations = locations.filter(e => {
+										return (self.config.locationTypes.indexOf(e.locationType.id) !== -1)
+									});
+									
 									locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 									let dataLocations = locations.map(e => {
 

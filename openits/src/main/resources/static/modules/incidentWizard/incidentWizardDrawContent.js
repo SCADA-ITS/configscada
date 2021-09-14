@@ -20,13 +20,13 @@ export default class IncidentWizardDrawContent {
 
 			let viewStretchs = {};
 			let stretchs;
-			
+
 			if (parent.incidentData.incidentTypeId) {
-				
+
 				let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId }))
-				
+
 				if (stretchsResponse) {
-					
+
 					stretchs = JSON.parse(stretchsResponse.responseText);
 				}
 			} else {
@@ -34,6 +34,10 @@ export default class IncidentWizardDrawContent {
 			}
 
 			if (Array.isArray(stretchs) && stretchs.length > 0) {
+
+				stretchs = stretchs.filter(e => {
+					return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
+				});
 
 				stretchs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 
@@ -75,6 +79,10 @@ export default class IncidentWizardDrawContent {
 							let locations = dat.json();
 
 							if (Array.isArray(locations) && locations.length > 0) {
+
+								locations = locations.filter(e => {
+									return (parent.config.locationTypes.indexOf(e.locationType.id) !== -1)
+								});
 
 								locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 								let dataLocations = locations.map(e => {
@@ -578,7 +586,7 @@ export default class IncidentWizardDrawContent {
 		let drawStepStretchAndLocation = function() {
 
 			let viewStepStretchAndLocation;
-			
+
 			viewStepStretchAndLocation = {
 
 				rows: [

@@ -9,7 +9,6 @@
 	 	"incidentReport": "incidents/reports/${id}",
 		"locationsByStretch": "locations/locations/stretch/${id}",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
-		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes"		
 	},
 	"topic": "/topic/incidentReport",
@@ -44,5 +43,7 @@
 	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
 	"action": {
 		"cctvScenario": 102002
-	}
+	},
+	"locationTypes":["LocationType:1", "LocationType:2"],
+	"stretchTypes":["StretchType:1", "StretchType:2"]
 }

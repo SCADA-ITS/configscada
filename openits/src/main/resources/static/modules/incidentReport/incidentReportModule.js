@@ -107,7 +107,7 @@ export default class IncidentReportModule extends GenericModule {
 
 							webix.alert({
 								title: i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM"),
-								ok: i18n.t("LBL_YES"),
+								ok: i18n.t("LBL_ACCEPT"),
 								text: i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"),
 								type: "alert-warning",
 								width: 600
@@ -263,7 +263,7 @@ export default class IncidentReportModule extends GenericModule {
 		let incidentReportActionPanel = new IncidentReportActionPanel(self);
 
 		if (!this.incidentReportContent) {
-			
+
 			this.incidentReportContent = new IncidentReportContent(self);
 		}
 
@@ -288,7 +288,7 @@ export default class IncidentReportModule extends GenericModule {
 		function getViewHeader() {
 
 			let viewHeader;
-			
+
 			viewHeader = {
 
 				id: "viewHeader-" + self.uid,
@@ -397,10 +397,13 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 	restAction(endpoint) {
-
+		
 		console.log("Incident report action => " + endpoint);
 
-		webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+		webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) {
+				
+				util.ajax.handleError(response);
+			});
 	}
 
 	connect_ws() {
@@ -413,7 +416,7 @@ export default class IncidentReportModule extends GenericModule {
 
 			self.disconnectStomp = false;
 
-			if (data.action === "UPDATE" && !self.closed) {
+			if (data.action === "UPDATE") {
 
 				console.log(data);
 

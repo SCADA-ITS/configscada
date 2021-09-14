@@ -175,6 +175,8 @@ export default class IncidentReportTaskContent {
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, body).then(function(dat) {
 
 											self.parent.currentTask = undefined;
+											$$("loading-" + self.uid).show();
+											$$(self.uid).hide();
 
 										}, function(response) { util.ajax.handleError(response); });
 									}	

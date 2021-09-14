@@ -311,6 +311,9 @@ export default class IncidentReportTaskPlan {
 		
 							webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
 								
+								$$("loading-" + self.uid).show();
+								$$(self.uid).hide();
+								
 								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
 								let args = { selectedPks: [planId] };
 			

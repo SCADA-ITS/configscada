@@ -58,6 +58,8 @@ export default class IncidentReportActionPanel {
 				};
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
 				self.parent.restAction(endpoint);
+				$$("loading-" + self.uid).show();
+				$$(self.uid).hide();
 
 			}
 
@@ -330,6 +332,8 @@ export default class IncidentReportActionPanel {
 				});
 
 				self.parent.restAction(endpoint);
+				$$("loading-" + self.uid).show();
+				$$(self.uid).hide();
 			});
 		}
 
@@ -503,7 +507,7 @@ export default class IncidentReportActionPanel {
 
 															webix.alert({
 																title: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED"),
-																ok: i18n.t("LBL_YES"),
+																ok: i18n.t("LBL_ACCEPT"),
 																text: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"),
 																type: "alert-warning",
 																width: 600
@@ -529,21 +533,37 @@ export default class IncidentReportActionPanel {
 															if (tasksCompleted.length === tasksMandatory.length) {
 
 																self.parent.restAction(endpoint);
+																$$("loading-" + self.uid).show();
+																$$(self.uid).hide();
 															}
 
 														} else {
 
 															self.parent.restAction(endpoint);
+															$$("loading-" + self.uid).show();
+															$$(self.uid).hide();
 														}
 													}
 
 												} else {
 
-													let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
-														id: self.incidentReport.id
+													webix.confirm({
+														title: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM"),
+														ok: i18n.t("LBL_YES"),
+														cancel: i18n.t("LBL_NO"),
+														text: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"),
+														width: 600
+													}).then(function() {
+
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
+															id: self.incidentReport.id
+														});
+
+														self.parent.restAction(endpoint);
+														$$("loading-" + self.uid).show();
+														$$(self.uid).hide();
 													});
 
-													self.parent.restAction(endpoint);
 												}
 
 											} else {
@@ -704,7 +724,8 @@ export default class IncidentReportActionPanel {
 					view: "label",
 					css: "section",
 					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
-					borderless: true
+					borderless: true,
+					hidden: !self.incidentReport.confirm 
 				},
 				{ height: 20 },
 				{
@@ -712,6 +733,7 @@ export default class IncidentReportActionPanel {
 					cols: [
 						{ width: 15 },
 						{
+							hidden: !self.incidentReport.confirm,
 							rows: getLowerButtonsViewArray()
 						},
 						{ width: 15 }
