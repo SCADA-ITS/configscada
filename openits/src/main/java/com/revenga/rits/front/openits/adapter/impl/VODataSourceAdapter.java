@@ -205,7 +205,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_SEND_EXECUTE_TASK_PLAN_INCIDENT_REPORT = getPropertyInt("send_execute_task_plan_incident_report");
 
 	public static final int DATA_SOURCE_SEND_ASSING_CAUSE_INCIDENT_REPORT = getPropertyInt("send_assign_cause_incident_report");
-	public static final int DATA_SOURCE_SEND_CHANGE_LOCATION_INCIDENT_REPORT = getPropertyInt("send_change_location_incident_report");
+	public static final int DATA_SOURCE_SEND_CHANGE_INCIDENT_REPORT = getPropertyInt("send_change_incident_report");
 	
 	public static final int DATA_SOURCE_GET_SYSTEM_PARAMS = getPropertyInt("get_system_params");
 	public static final int DATA_SOURCE_GET_HIERARCHIES = getPropertyInt("get_hierarchies");

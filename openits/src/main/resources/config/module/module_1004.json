@@ -9,6 +9,7 @@
 	 	"incidentReport": "incidents/reports/${id}",
 		"locationsByStretch": "locations/locations/stretch/${id}",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
+		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes"		
 	},
 	"topic": "/topic/incidentReport",
@@ -21,7 +22,7 @@
 		"addLogIncidentReport": "incidents/add_log_incident_report",
 		"deleteLogIncidentReport": "incidents/delete_log_incident_report/${id}",
 		"assignCauseIncidentReport": "incidents/reports/${id}/cause/${causeId}",
-		"changeLocation": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}",
+		"changeIncident": "incidents/reports/${id}/location/${locationId}/affection_stretch/${stretchId}/type/${incidentTypeId}",
 		"executeTaskPlan": "/incidents/reports/${id}/execute_task_plan/${taskPlanId}"
 	},
 	"infoFields": [

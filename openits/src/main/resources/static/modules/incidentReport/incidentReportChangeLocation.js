@@ -5,17 +5,19 @@ import { util } from "../../lib/util.js";
 const FIELD_LOCATION_ID = "id";
 const FIELD_LOCATION_ALIAS = "alias";
 
-export default class IncidentReportChangeLocationAction {
+export default class IncidentReportChangeLocation {
 
-	constructor(config, incidentReport) {
+	constructor(config, incidentReport, selectedIncidentTypeId, onAccept) {
 
 		this.config = config;
 		this.incidentReport = incidentReport;
+		this.selectedIncidentTypeId = selectedIncidentTypeId;
 		this.uid = webix.uid();
 		this.listViewStrechs = undefined;
 		this.dtLocations = undefined;
 		this.selectedStretchId = undefined;
 		this.selectedLocationId = undefined;
+		this.onAccept = onAccept;
 	}
 
 	show() {
@@ -24,14 +26,28 @@ export default class IncidentReportChangeLocationAction {
 
 		function checkButtonAccept() {
 
-			if (self.selectedStretchId && self.selectedLocationId &&
-				(self.selectedStretchId != self.incidentReport.affectionStretch.id
-					|| self.selectedLocationId != self.incidentReport.location.id)) {
+			if (self.selectedIncidentTypeId) {
 
-				$$("button-accept-" + self.uid).enable();
+				if (self.selectedStretchId && self.selectedLocationId &&
 
+					(self.selectedStretchId != self.incidentReport.affectionStretch.id
+						|| self.selectedLocationId != self.incidentReport.location.id || self.selectedIncidentTypeId != self.incidentReport.incidentType.id)) {
+
+					$$("button-accept-" + self.uid).enable();
+
+				} else {
+					$$("button-accept-" + self.uid).disable();
+				}
+				
 			} else {
-				$$("button-accept-" + self.uid).disable();
+				
+				if (self.selectedStretchId && self.selectedLocationId) {
+					
+					$$("button-accept-" + self.uid).enable();
+
+				} else {
+					$$("button-accept-" + self.uid).disable();
+				}
 			}
 		}
 
@@ -62,36 +78,17 @@ export default class IncidentReportChangeLocationAction {
 								css: "dialog-accept",
 								width: 130,
 								height: 35,
-								value: i18n.t("LBL_SEND"),
+								value: i18n.t("LBL_ACCEPT"),
 								disabled: true,
 								click: function() {
 
+									if (self.onAccept && self.selectedStretchId && self.selectedLocationId) {
+
+										self.onAccept(self.selectedStretchId, self.selectedLocationId);
+									}
+
 									let parentWindow = this.getTopParentView();
-
-									webix.confirm({
-										title: i18n.t("LBL_CHANGE_LOCATION_CONFIRM"),
-										ok: i18n.t("LBL_ACCEPT"),
-										cancel: i18n.t("LBL_CANCEL"),
-										text: i18n.t("LBL_CHANGE_LOCATION_CONFIRM_DESCRIPTION"),
-										width: 600
-									}).then(function(res) {
-
-										let body = {
-											id: self.incidentReport.id,
-											locationId: self.selectedLocationId,
-											stretchId: self.selectedStretchId
-										};
-
-										let endpoint = util.fillTemplate(self.config.actionEndpoints.changeLocation, body);
-
-										webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
-
-											if (dat != null) {
-												parentWindow.close();
-											}
-										}, function(response) { util.ajax.handleError(response); });
-
-									});
+									parentWindow.close();
 								}
 							},
 							{ width: 20 }
@@ -107,9 +104,19 @@ export default class IncidentReportChangeLocationAction {
 				let viewStretchs = {};
 				let stretchs;
 
-				if (self.incidentReport.incidentType && self.incidentReport.incidentType.id) {
+				if (self.selectedIncidentTypeId || self.incidentReport.incidentType.id) {
 
-					let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.stretchsByIncidentType, { id: self.incidentReport.incidentType.id }))
+					let typeId = undefined;
+
+					if (self.selectedIncidentTypeId) {
+
+						typeId = self.selectedIncidentTypeId;
+
+					} else {
+						typeId = self.incidentReport.incidentType.id;
+					}
+
+					let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.stretchsByIncidentType, { id: typeId }))
 
 					if (stretchsResponse) {
 
@@ -145,6 +152,8 @@ export default class IncidentReportChangeLocationAction {
 
 					events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 
+						self.selectedStretchId = data;
+
 						if (callbackEnable) {
 
 							callbackEnable(false);
@@ -162,6 +171,7 @@ export default class IncidentReportChangeLocationAction {
 							self.dtLocations.clear();
 						}
 
+
 						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.locationsByStretch, { id: data })).then(function(dat) {
 
 							if (dat != null) {
@@ -173,7 +183,7 @@ export default class IncidentReportChangeLocationAction {
 									locations = locations.filter(e => {
 										return (self.config.locationTypes.indexOf(e.locationType.id) !== -1)
 									});
-									
+
 									locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 									let dataLocations = locations.map(e => {
 
@@ -184,6 +194,12 @@ export default class IncidentReportChangeLocationAction {
 									});
 
 									self.dtLocations.add(dataLocations);
+									self.selectedLocationId = undefined;
+
+									if (self.incidentReport && self.incidentReport.location && self.incidentReport.location.id) {
+
+										self.dtLocations.select(self.incidentReport.location.id);
+									}
 								}
 
 								$$("view-locations-" + self.uid).hideProgress();
@@ -194,8 +210,6 @@ export default class IncidentReportChangeLocationAction {
 								callbackEnable(true);
 							}
 
-							self.selectedStretchId = data;
-							self.selectedLocationId = undefined;
 							checkButtonAccept();
 						});
 					};
@@ -353,6 +367,7 @@ export default class IncidentReportChangeLocationAction {
 		if (self.listViewStrechs && self.incidentReport && self.incidentReport.affectionStretch && self.incidentReport.affectionStretch.id) {
 			self.listViewStrechs.select(self.incidentReport.affectionStretch.id);
 		}
+
 	}
 }
 

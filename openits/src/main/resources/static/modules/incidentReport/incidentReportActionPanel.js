@@ -4,7 +4,8 @@ import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import { util } from "../../lib/util.js";
 
-import IncidentReportChangeLocationAction from "./incidentReportChangeLocationAction.js";
+import IncidentReportChangeLocation from "./incidentReportChangeLocation.js";
+import IncidentReportChangeType from "./incidentReportChangeType.js";
 
 const MARGIN_ACTION_PANEL = 15;
 
@@ -315,11 +316,11 @@ export default class IncidentReportActionPanel {
 			fileManager.show();
 
 		}
-		
+
 		function showAttachments() {
-			
+
 			let fileManager = new FileManager(i18n.t("LBL_INCIDENT_ATTACHMENTS"), self.incidentType.alias + " - " + self.incidentType.description, ["test"], FileManager.MODE_DOWNLOAD_UPLOAD);
-			
+
 			fileManager.show();
 		}
 
@@ -345,10 +346,43 @@ export default class IncidentReportActionPanel {
 			});
 		}
 
-		function changeLocation() {
 
-			let changeLocationAction = new IncidentReportChangeLocationAction(self.config, self.incidentReport);
-			changeLocationAction.show();
+		function changeIncident() {
+
+			let changeLocationType = new IncidentReportChangeType(self.config, self.incidentReport, undefined, onAcceptChangeType);
+			changeLocationType.show();
+
+			function onAcceptChangeType(selectedIncidentTypeId) {
+
+				let changeLocation = new IncidentReportChangeLocation(self.config, self.incidentReport, selectedIncidentTypeId, onAcceptChangeLocation);
+				changeLocation.show();
+
+				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
+
+					webix.confirm({
+						title: i18n.t("LBL_CHANGE_CONFIRM"),
+						ok: i18n.t("LBL_ACCEPT"),
+						cancel: i18n.t("LBL_CANCEL"),
+						text: i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"),
+						width: 600
+					}).then(function(res) {
+
+						let body = {
+							id: self.incidentReport.id,
+							locationId: selectedLocationId,
+							stretchId: selectedStretchId,
+							incidentTypeId: selectedIncidentTypeId
+						};
+
+						let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
+
+						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+
+						$$("loading-" + self.uid).show();
+						$$(self.uid).hide();
+					});
+				}
+			}
 		}
 
 		function getLowerButtonsViewArray() {
@@ -703,18 +737,18 @@ export default class IncidentReportActionPanel {
 									css: "tb-actions",
 									elements: [
 										{
-											view: "button",
+										view: "button",
 											width: 135,
 											hidden: self.incidentReport.confirm,
-											label: i18n.t("LBL_INCIDENT_CHANGE_LOCATION"),
-											tooltip: i18n.t("LBL_INCIDENT_CHANGE_LOCATION_DESCRIPTION"),
+											label: i18n.t("LBL_INCIDENT_CHANGE"),
+											tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
 											type: "iconTop",
-											icon: "mdi mdi-map-marker",
+											icon: "mdi mdi-pen",
 											on: {
 
 												onItemClick() {
 
-													changeLocation();
+													changeIncident();
 												}
 											}
 										},
@@ -733,7 +767,7 @@ export default class IncidentReportActionPanel {
 					css: "section",
 					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
 					borderless: true,
-					hidden: !self.incidentReport.confirm 
+					hidden: !self.incidentReport.confirm
 				},
 				{ height: 20 },
 				{
