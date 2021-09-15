@@ -1,5 +1,6 @@
 import SearchDialogBox from "../../component/searchDialogBox.js";
 import FilesManager from "../../component/filesManager.js";
+import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import { util } from "../../lib/util.js";
 
@@ -314,6 +315,13 @@ export default class IncidentReportActionPanel {
 			fileManager.show();
 
 		}
+		
+		function showAttachments() {
+			
+			let fileManager = new FileManager(i18n.t("LBL_INCIDENT_ATTACHMENTS"), self.incidentType.alias + " - " + self.incidentType.description, ["test"], FileManager.MODE_DOWNLOAD_UPLOAD);
+			
+			fileManager.show();
+		}
 
 		function cancelIncidentReport() {
 
@@ -406,7 +414,7 @@ export default class IncidentReportActionPanel {
 
 						onItemClick() {
 
-							util.ui.notImplementedMessage();
+							showAttachments();
 						}
 					}
 				}

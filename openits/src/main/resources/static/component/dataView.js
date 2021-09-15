@@ -1,8 +1,8 @@
-import { util } from "../lib/util.js";
-
 const DefOptionValues = { 1: false, 2: true, 3: false, 4: true, 5: 48, 6: false };
 const _TRUE = "true";
 const _FALSE = "false";
+const TOOLBAR_BUTTONS_WIDTH_TEXT = 130;
+const TOOLBAR_BUTTONS_WIDTH_ICON = 40;
 
 export default class DataView {
 	
@@ -84,30 +84,72 @@ export default class DataView {
 						elements.push(drawComboGroup());	
 					}
 					
-					//elements.push({ width: 4 });
-					
 					if (getOptions(DataView.Options.SEARCH)) {
 						
-						elements.push(drawSearchBox());	
+						elements.push(drawSearchBox());
 					}
 					
-					//elements.push({ width: 4 });
-					
 					return elements;
-				}(),
-//				elements: [
-//					{ width: 4 },
-//					drawCommandButtons(),
-//					{},
-//					drawSearchBox(),
-//					{ width: 4 }
-//				]
+				}()
 			};
 			
 			function drawCommandButtons() {
 				
 				let viewCommandButtons = {
+					cols: []
+				}
+				
+				if (self.metadata && Array.isArray(self.metadata.commands)) {
 					
+					self.metadata.commands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+					
+					self.metadata.commands.forEach(cmd => {
+					
+						let button = {
+							view: "button", 
+							type: "icon", 
+							icon: cmd.icon, 
+							css: "toolbar-button-text", 
+							width: TOOLBAR_BUTTONS_WIDTH_TEXT, 
+							label: (cmd.showText && cmd.label) ? i18n.t(cmd.label) : undefined, 
+							tooltip: i18n.t(cmd.label),
+							on: {
+								
+								onItemClick: function() {
+									
+									execCommand(cmd);
+								}
+							} 
+						}
+											
+						viewCommandButtons.cols.push(button);
+					});
+				}
+				
+				function execCommand(cmd) {
+							
+					let selectedIds = self.getSelectedIds();
+					
+					if (cmd.itemRequired) {
+						
+						if (Array.isArray(selectedIds) && selectedIds.length > 0) {
+							
+							cmd.callback(selectedIds);	
+						}
+						else {
+							
+							webix.alert({
+								title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
+								text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
+								type: "alert-warning",
+								width: 500
+							});	
+						}
+					}
+					else {
+						
+						cmd.callback();								
+					}
 				}
 				
 				return viewCommandButtons;
@@ -115,7 +157,9 @@ export default class DataView {
 			
 			function drawComboGroup() {
 			
-				let viewComboGroup ={
+				let viewComboGroup;
+				
+				viewComboGroup = {
 					
 					view: "richselect",
 					id: "cboGroup-" + self.uid,
@@ -172,7 +216,9 @@ export default class DataView {
 			
 			function drawSearchBox() {
 				
-				let viewSearchBox = {
+				let viewSearchBox;
+				
+				viewSearchBox = {
 					
 					view: "search",
 					id: "txtSearch-" + self.uid,
@@ -208,8 +254,6 @@ export default class DataView {
 									return obj.value.toLowerCase().indexOf(value) != -1;
 								}
 							});
-							
-							//$$("tree-" + self.uid).filter("#value#", this.getValue());
 						}
 					}
 				}
@@ -224,7 +268,9 @@ export default class DataView {
 			
 			let iconSize = getOptions(DataView.Options.ICON_SIZE);
 			
-			let viewDataView = {
+			let viewDataView;
+			
+			viewDataView = {
 				
 				view: "dataview",
 				id: "dataview-" + self.uid,
@@ -236,10 +282,10 @@ export default class DataView {
 				},
   				template: function(obj) {
 					
-					let html = `<image style="margin: 10px auto 0px; display: block; height: ${iconSize}px; width: ${iconSize}px" src="${obj.image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+					let html = `<image title="${obj.value}" style="margin: 10px auto 0px; display: block; height: ${iconSize}px; width: ${iconSize}px" src="${obj.image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
 					
-					html += `<div style="text-align: center; font-weight: 500">
-						  		<span>${obj.value} </span>
+					html += `<div title="${obj.value}" style="text-align: center; font-weight: 500; width: ${iconSize + 40}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+						  		<span>${obj.value}</span>
 							</div>`; 
 
 					return html;
@@ -253,7 +299,15 @@ export default class DataView {
 							
 							this.sort("#value#", "asc");	
 						}
-					}	
+					},
+					
+					onAfterSelect: function(id) {
+						
+						if (self.events && self.events[DataView.EventTypes.ON_SELECT_ITEM]) {
+							
+							eval(self.events[DataView.EventTypes.ON_SELECT_ITEM])(this.getItem(id));	
+						}
+					}
 				}
 			}
 			
@@ -308,6 +362,19 @@ export default class DataView {
 		}	
 		
 		return selectedIds;
+	}
+	
+	getSelectedItems() {
+
+		let dataView = $$("dataview-" + this.uid);
+		let selectedItems;
+		
+		if (dataView) {
+			
+			selectedItems = dataView.getSelectedItem(true);	
+		}	
+		
+		return selectedItems;
 	}
 	
 	select(ids) {

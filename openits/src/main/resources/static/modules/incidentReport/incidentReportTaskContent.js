@@ -49,7 +49,7 @@ export default class IncidentReportTaskContent {
 			let viewHeader;
 			
 			viewHeader = {
-				view: "toolbar",
+				//view: "toolbar",
 				css: { "background": "#F4F5F9", "margin-left": "1px !important" },
 				borderless: true,
 				cols: [
