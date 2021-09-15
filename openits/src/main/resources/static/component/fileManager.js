@@ -6,6 +6,7 @@ const WINDOW_WIDTH = 1200;
 
 const REST_ENDPOINT_FILES_DIR = "files/getFiles";
 const REST_ENDPOINT_DOWNLOAD_FILE = "files/downloadFile/${path}/${fileName}";
+const REST_ENDPOINT_UPLOAD_FILE = "files/uploadFile/${path}";
 const ICON_SIZE = 48; 
 
 export default class FileManager {
@@ -13,7 +14,7 @@ export default class FileManager {
 	static get MODE_DOWNLOAD() { return 1 }
 	static get MODE_DOWNLOAD_UPLOAD() { return 2 }
 
-	constructor(title, description, paths, mode) {
+	constructor(title, description, paths, mode, events) {
 
 		this.uid = webix.uid();
 		this.title = title;
@@ -57,13 +58,15 @@ export default class FileManager {
 							drawHeader(),
 							{ height: 10 },
 							drawDataView(),
+							drawUpload(),
 							{ height: 10 },
 							drawDetails(),
 							{ height: 10 },
 							drawFooter()
 						]		
 					},
-					{ width: 10 }
+					{ width: 10 },
+					drawUploader()
 				]
 			}
 			
@@ -114,11 +117,20 @@ export default class FileManager {
 						],
 						commands: [
 							{
+								value: "LBL_REFRESH",
+								icon: "mdi mdi-refresh",
+								label: "LBL_REFRESH",
+								showText: true,
+								position: 1,
+								itemRequired: false,
+								callback: loadFiles
+							},
+							{
 								value: "LBL_DOWNLOAD",
 								icon: "mdi mdi-download",
 								label: "LBL_DOWNLOAD",
 								showText: true,
-								position: 1,
+								position: 2,
 								itemRequired: true,
 								callback: downloadFile
 							}
@@ -133,7 +145,7 @@ export default class FileManager {
 							icon: "mdi mdi-upload",
 							label: "LBL_UPLOAD",
 							showText: true,
-							position: 2,
+							position: 3,
 							itemRequired: false,
 							callback: uploadFile
 						});
@@ -152,7 +164,8 @@ export default class FileManager {
 						
 							return {
 								id: e.id,
-								image: "./img/" + e.fileExtension + ".png",
+								image: "./img/extensions/" + e.fileExtension + ".png",
+								imageDefault: "./img/extensions/default.png", 
 								value: e.fileName
 							};
 						});
@@ -179,10 +192,16 @@ export default class FileManager {
 					let labelFileDescription = $$("label-file-description-" + self.uid);
 					let labelFileModified = $$("label-file-modified-" + self.uid);
 					let labelFileAuthor = $$("label-file-author-" + self.uid);
+					let labelFile = $$("label-file-" + self.uid);
 					
 					let file = self.files.find(e => e.id == item.id);
 					
 					if (file) {
+						
+						if (labelFile) {
+							
+							labelFile.setValues(file);
+						}
 						
 						if (labelFileTitle) {
 							
@@ -208,12 +227,67 @@ export default class FileManager {
 							
 							labelFileAuthor.setValues(file);
 						}
+						
+						$$("viewDetails-" + self.uid).show();
 					}
 				}
 				
 				let dataViewFiles = new DataView(getMetadata(), getData(), getEvents());
 				
-				return dataViewFiles.getView();
+				return {
+					
+					id: "viewDataView-" + self.uid,
+					cols: [
+						dataViewFiles.getView()
+					]
+				}
+			}
+			
+			function drawUpload() {
+				
+				let header = {
+					height: 45,
+					cols: [
+						{
+							type: "header",
+							css: "webix_dark",  
+							template: i18n.t("LBL_DROP_FILES_HERE"), 
+							
+						},
+						{
+							view: "icon",
+							width: 50,
+							css: { "background": "#657584", "color": "#FFFFFF" },
+							icon: "mdi mdi-close",
+							tooltip: i18n.t("LBL_CLOSE"),
+							on: {
+								onItemClick: function(id) {
+							
+									$$("viewUpload-" + self.uid).hide();
+									$$("viewDataView-" + self.uid).show();
+									
+									loadFiles();
+								}
+							}
+						}
+					],
+					borderless: true
+				};
+				
+				return {
+					
+					id: "viewUpload-" + self.uid,
+					hidden: true,
+					rows:[
+						header,
+					    { 
+							view: "list", 
+							id: "upload-list-" + self.uid, 
+							type: "uploader",
+							scroll: false 
+					    }
+					]
+				}
 			}
 			
 			function drawDetails() {
@@ -221,39 +295,54 @@ export default class FileManager {
 				let viewDetails;
 				
 				viewDetails = {
+					id: "viewDetails-" + self.uid,
 					css: { "border-width": "1px !important" },
-					rows: [
-						{ height: 10 },
-						getViewDetailsTitle(),
-						{ height: 20 },
-						getViewDetailsContent(),
-						{ height: 10 }
+					hidden: true,
+					cols: [
+						{
+							rows: [
+								{ height: 3, css: { "background": "#475466" } },
+								{ height: 10 },
+								getViewDetailsTitle(),
+								{ height: 20 },
+								getViewDetailsContent(),
+								{ height: 10 }
+							]
+						},
+						{ width: 2, css: { "background": "#DADEE0" } }
 					]
 				};
-				
 				
 				function getViewDetailsTitle() {
 					
 					let viewDetailsTitle;
 					
 					viewDetailsTitle = {
+						height: 60,
+						borderless: true,
 						cols: [
-							{ width: 10 },
+							{ width: 25 },
 							{
-								view: "label",
-								label: `<div class="title"><i style="color:#94a1b3;; font-size: 2em;" class="mdi mdi-view-headline"></i></div>`,
-								align: "left",
-								height: 25,
-								width: 25
-							},
-							{ width: 11 },
-							{
-								id: "label-file-title-" + self.uid,
-								view: "label",
-								label: `<div class="title"><span class="section-text" style="color:#475466; font-size: 14px;">${i18n.t("LBL_DETAILS")}</span></div>`,
-								height: 17
-							},
-							{}
+								id: "label-file-" + self.uid,
+								borderless: true,
+								template: function(file) {
+									
+									let html = `<div class="text" style="margin-top: 0px"></div>`
+									
+									if (file.fileName) {
+										
+										let imageDefault = "./img/extensions/default.png";
+										
+										html = `<image class="list-photo" src="${'./img/extensions/' + file.fileExtension + '.png'}" onerror="this.onerror=null;this.src='${imageDefault}';" />`;
+										html += `<div class="text" style="margin-top: 0px">
+											  		<span class="list-first-line">${file.fileName ? file.fileName : '-'} </span>
+											  		<span class="list-second-line">${file.alias ? file.alias : '-'} </span>
+												</div>`;	
+									}
+									
+									return html;		
+								}
+							}
 						]
 					}
 					
@@ -311,7 +400,6 @@ export default class FileManager {
 										id: "label-file-description-" + self.uid,
 										borderless: true,
 										css: { "margin": "0px" },
-										width: WINDOW_WIDTH-650,
 										height: 90,
 										scroll: "auto",
 										template: function(file) { 
@@ -356,6 +444,23 @@ export default class FileManager {
 				});
 				
 				return viewFooter;
+			}
+			
+			function drawUploader() {
+				
+				let viewUploader;
+				
+				viewUploader = {
+					view: "uploader", 
+				    id: "uploader-" + self.uid,
+				    apiOnly: true,
+					//autosend: false,
+					hidden: true,
+					link: "upload-list-" + self.uid,
+					upload: appConfig.restUrl + util.fillTemplate(REST_ENDPOINT_UPLOAD_FILE, { path: self.paths[0] })
+				}
+				
+				return viewUploader;
 			}
 			
 			return viewContent;
@@ -426,6 +531,14 @@ export default class FileManager {
 		function uploadFile() {
 			
 			// TODO: Implemetation
+			
+			let url = appConfig.restUrl + util.fillTemplate(REST_ENDPOINT_UPLOAD_FILE, { path: self.paths[0] });
+			
+			$$("viewUpload-" + self.uid).show();
+			$$("viewDataView-" + self.uid).hide();
+			$$("viewDetails-" + self.uid).hide();
+			
+			$$("uploader-" + self.uid).addDropZone($$("upload-list-" + self.uid).$view, i18n.t("LBL_DROP_FILES_HERE"));
 		}
 		
 		self.containerId = util.ui.loadWindow(self.title, body, WINDOW_HEIGHT, WINDOW_WIDTH, true);
@@ -433,3 +546,21 @@ export default class FileManager {
 		loadFiles();
 	}
 }
+
+Object.defineProperty(FileManager, 'EventTypes', {
+    value: {}
+});
+
+Object.defineProperty(FileManager.EventTypes, "ON_UPLOAD_FILE", {
+    value: 1,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});
+
+Object.defineProperty(FileManager.EventTypes, "ON_DOWNLOAD_FILE", {
+    value: 2,
+    writable : false,
+    enumerable : true,
+    configurable : false
+});

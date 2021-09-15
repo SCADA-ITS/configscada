@@ -282,7 +282,8 @@ export default class DataView {
 				},
   				template: function(obj) {
 					
-					let html = `<image title="${obj.value}" style="margin: 10px auto 0px; display: block; height: ${iconSize}px; width: ${iconSize}px" src="${obj.image}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />`;
+					let imageDefault = obj.imageDefault ? obj.imageDefault : "img/not_found_50.png";
+					let html = `<image title="${obj.value}" style="margin: 10px auto 0px; display: block; height: ${iconSize}px; width: ${iconSize}px" src="${obj.image}" onerror="this.onerror=null;this.src='${imageDefault}';" />`;
 					
 					html += `<div title="${obj.value}" style="text-align: center; font-weight: 500; width: ${iconSize + 40}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
 						  		<span>${obj.value}</span>
