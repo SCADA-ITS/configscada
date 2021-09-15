@@ -8,6 +8,7 @@
 		"elementType": "element_types/${id}",
 		"plans": "plans",
 		"plan": "plans/${id}",
+		"order": "plans/plan_orders/${id}",
 		"planNodes": "plans/nodes",
 		"createNode": "plans/node",
 		"deleteNode": "plans/node/${id}",
