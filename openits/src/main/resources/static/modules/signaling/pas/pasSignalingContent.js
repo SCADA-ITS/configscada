@@ -252,11 +252,11 @@ export default class PasSignalingContent {
 					{
 						id: 1,
 						default_: false,
-						icon: "mdi mdi-send",
+						icon: "mdi mdi-play",
 						label: "LBL_PAS_SEND",
 						multiselect: true,
 						position: 3,
-						showText: false,
+						showText: true,
 						itemRequired: true
 					},
 					{
