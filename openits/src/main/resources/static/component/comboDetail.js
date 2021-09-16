@@ -21,9 +21,12 @@ export default class ComboDetail {
 				id: item.id,
 				value: item.label,
 				description: item.description,
+				disabled: item.disabled,
 				default: item.default
 			}
 		});
+		
+		optionsArr = optionsArr.filter(e => !e.disabled);
 
 		optionsArr.unshift({
 			id: NON_SELECTED,

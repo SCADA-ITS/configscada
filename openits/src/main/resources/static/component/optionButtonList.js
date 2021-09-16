@@ -65,6 +65,9 @@ export default class OptionButtonList {
 
 
 			for (let option of self.options) {
+								
+				let labelColor = (option.disabled) ? "#9098a2" : "#313131";
+				let descriptionColor = (option.disabled) ? "#9098a2" : "#475466";
 
 				let contentDetail = {
 					rows: [
@@ -78,15 +81,15 @@ export default class OptionButtonList {
 										{
 											id: "text" + option.id + "-" + self.uid,
 											view: "label",
-											css: { "padding-left": "10px", "height": "25px" },
-											label: `<span>${option.label}</span>`
+											css: { "padding-left": "10px" },
+											label: `<span style="color:${labelColor}">${option.label}</span>`
 										},
 										{
 											id: "desc-" + option.id + "-" + self.uid,
 											height: 35,
 											scroll: "auto",
 											css: { "padding-left": "10px !important", "border": "none" },
-											template: `<span style="font-size: 13px !important; line-height: 15px">${option.description}</span>`
+											template: `<span style="font-size: 13px !important; line-height: 15px; color:${descriptionColor};">${option.description}</span>`
 										}
 									]
 								}
@@ -128,6 +131,7 @@ export default class OptionButtonList {
 					view: "button",
 					width: 75,
 					height: 75,
+					disabled: option.disabled,
 					type: "icon",
 					icon: icon,
 					css: "toggle-option-list",
@@ -146,6 +150,7 @@ export default class OptionButtonList {
 					view: "toggle",
 					width: 75,
 					height: 75,
+					disabled: option.disabled,
 					type: "icon",
 					icon: icon,
 					value: (option.default) ? 1 : 0,

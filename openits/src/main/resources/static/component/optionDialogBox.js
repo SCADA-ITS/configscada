@@ -14,7 +14,19 @@ export default class OptionDialogBox {
 		this.title = title;
 		this.options = options;
 		this.onChange = onChange;
-		this.mode = mode;
+		this.mode = OptionDialogBox.MODE_TOGGLE;
+		
+		if (mode === OptionDialogBox.MODE_COMBO || mode === OptionDialogBox.MODE_TOGGLE) {
+			
+			this.mode = mode;	
+		}
+		else {
+			
+			if (options.length > NUM_OPTIONS) {
+				
+				this.mode = OptionDialogBox.MODE_COMBO;
+			}
+		}
 
 		this.uid = webix.uid();
 
@@ -35,19 +47,8 @@ export default class OptionDialogBox {
 
 			content = new ComboDetail(self.options, self.onChange);
 
-		} else {
-
-			if (self.options.length > NUM_OPTIONS) {
-
-				content = new ComboDetail(self.options, self.onChange);
-
-			} else {
-
-				content = new OptionButtonList(self.options, self.onChange, OptionButtonList.MODE_TOGGLE);
-
-			}
 		}
-
+		
 		let body = content.getView();
 
 		body.rows.push(getToolbarActions());

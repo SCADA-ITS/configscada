@@ -26,6 +26,7 @@ export default class PlanLibraryModule extends GenericModule {
 		
 		this.planNodes = undefined;
 		this.planHierarchies = undefined;
+		this.editPermission = util.module.isAllowedPermission(module.config.requiredPermissions.edit);
 	}
 
 	loadData() {
@@ -107,9 +108,13 @@ export default class PlanLibraryModule extends GenericModule {
 
 			let viewOptionButtonList = {
 				id: "view-option-dialog-" + self.uid
-				};
-				
-			let actions = getMetadata().treeCommands;
+			};
+
+			let actions = [
+					{ id: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false },
+					{ id: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false },
+					{ id: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false }
+				];
 
 			if (Array.isArray(actions) && actions.length > 0) {
 
@@ -122,6 +127,7 @@ export default class PlanLibraryModule extends GenericModule {
 						label: i18n.t(action.label),
 						description: i18n.t(action.label.toUpperCase() + "_DESCRIPTION"),
 						default: action.default,
+						disabled: !self.editPermission, 
 						icon: action.icon
 					});
 				}
@@ -163,10 +169,9 @@ export default class PlanLibraryModule extends GenericModule {
 						{},							
 					]
 				}
-
-				
 			}
-				return viewOptionButtonList;
+				
+			return viewOptionButtonList;
 		}
 		
 		function onAceptOptionButtonList(buttonId){
@@ -324,8 +329,6 @@ export default class PlanLibraryModule extends GenericModule {
 
 		function getMetadata() {
 			
-			let editPermission = util.module.isAllowedPermission(self.config.requiredPermissions.edit);
-						
 			let metadata = {
 				id: -1,
 				label: "LBL_LIBRARY",
@@ -340,13 +343,13 @@ export default class PlanLibraryModule extends GenericModule {
 				treeCommands: []
 			}
 			
-			if(editPermission){
+			if(self.editPermission){
 				
 				metadata.treeCommands = [
 					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
-				]				
+				];				
 			}		
 			
 			return metadata;
