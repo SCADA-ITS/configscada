@@ -1,4 +1,5 @@
 import GenericModule from "../modules/genericModule.js";
+//Simport Draw {} from '../lib/ol/ol.js';
 
 const CIRCLES = [
 	{
@@ -49,6 +50,8 @@ export default class TestMap extends GenericModule {
 		this.drawButtonPressed = false;
 		this.drawMark;
 		this.drawLine;
+		this.drawBox;
+		this.polygon = undefined;
 		this.zoomIn = false;
 		this.zoomOut = true;
 		this.svgPrincipalLayer;
@@ -170,7 +173,7 @@ export default class TestMap extends GenericModule {
 						borderless: true,
 						top: 10,
 						right: 10,
-						width: 120,
+						width: 160,
 						height: 85,
 						rows: [
 							{ height: 23 },
@@ -259,6 +262,40 @@ export default class TestMap extends GenericModule {
 													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.un('singleclick', singleClick);
 													map.removeInteraction(self.drawLine);
+												}
+											}
+										}
+									},
+									{
+										id: "drawArea-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-drag",
+										tooltip: i18n.t("LBL_DRAW_AREA"),
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												if (!self.drawButtonPressed) {
+
+													self.drawButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
+													map.on('singleclick', singleClick);
+													addSquare();
+
+												} else {
+
+													self.drawButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
+													map.un('singleclick', singleClick);
+													map.removeInteraction(self.drawBox);
 												}
 											}
 										}
@@ -381,7 +418,7 @@ export default class TestMap extends GenericModule {
 
 				newZoom = map.getView().getZoom();
 				console.log(newZoom)
-				
+
 				if (actualZoom != newZoom) {
 
 					if (newZoom >= ZOOM_LEVEL) {
@@ -561,14 +598,121 @@ export default class TestMap extends GenericModule {
 
 			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
-			webix.alert({
-				title: "COORDENADAS",
-				text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
-				type: "alert-warning",
-				width: 500
-			});
+
+			// CON INTERSECTSCOODINATE() SE CONFIRMA SI UNAS COORDENADAS SE ENCUENTRAN DENTRO DE UN AREA SIENDO SELF.POLYGON LA ULTIMA AREA PINTADA.
+			if (self.polygon) {
+				console.log("El punto se encuentra dentro del último área pintada: " + self.polygon.intersectsCoordinate(evt.coordinate))
+
+			}
+			console.log("LAT: " + coor[1] + " - " + "LON: " + coor[0])
+			//			webix.alert({
+			//				title: "COORDENADAS",
+			//				text: "LAT: " + coor[1] + " - " + "LON: " + coor[0],
+			//				type: "alert-warning",
+			//				width: 500
+			//			});
 
 			evt.preventDefault();
+
+		}
+
+
+		function addSquare(evt) {
+
+			if (self.drawBox) {
+
+				self.drawBox.source_.clear();
+			}
+
+			let source = new ol.source.Vector();
+
+			let boxLayer = new ol.layer.Vector({
+				source: source,
+				style: new ol.style.Style({
+					fill: new ol.style.Fill({
+						color: 'rgba(255, 255, 255, 0.2)'
+					}),
+					stroke: new ol.style.Stroke({
+						color: '#ffcc33',
+						width: 2
+					}),
+					image: new ol.style.Circle({
+						radius: 5,
+						fill: new ol.style.Fill({
+							color: '#ffcc33'
+						})
+					})
+				})
+			});
+
+			map.addLayer(boxLayer);
+
+			let modify = new ol.interaction.Modify({ source: source });
+
+			map.addInteraction(modify);
+
+			function addInteractions() {
+
+				self.drawBox = new ol.interaction.Draw({
+					source: source,
+					type: "Circle",
+					geometryFunction: ol.interaction.Draw.createBox(),
+				});
+
+				map.addInteraction(self.drawBox);
+
+				self.snap = new ol.interaction.Snap({ source: source });
+				map.addInteraction(self.snap);
+			}
+
+
+			function formatGeodesicArea(polygon) {
+
+				const area = ol.sphere.getArea(polygon);
+
+				let output;
+				if (area > 10000) {
+					output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km2';
+				} else {
+					output = Math.round(area * 100) / 100 + ' ' + 'm2';
+				}
+
+				// HAY GRAN DIFERENCIA ENTRE EL AREA DEL PLANO Y EL AREA GEODESICA
+				console.log("area geodesica: " + output)
+
+			}
+
+
+			function formatArea(area) {
+
+				let output;
+				if (area > 10000) {
+					output = Math.round((area / 1000000) * 100) / 100 + ' ' + 'km2';
+				} else {
+					output = Math.round(area * 100) / 100 + ' ' + 'm2';
+				}
+				console.log("area en plano: " + output)
+			}
+
+			addInteractions();
+
+			self.drawBox.on('drawend', function(e) {
+
+				let coordinates = e.feature.getGeometry().getExtent();
+				let coord01 = [coordinates[0], coordinates[3]];
+				let coord02 = [coordinates[2], coordinates[1]];
+
+				let startCoordinates = ol.proj.transform(coord01, 'EPSG:3857', 'EPSG:4326');
+				let endCoordinates = ol.proj.transform(coord02, 'EPSG:3857', 'EPSG:4326');
+
+				console.log("start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0]);
+				console.log("end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0]);
+
+
+				self.polygon = e.feature.getGeometry();
+				formatGeodesicArea(e.feature.getGeometry());
+				formatArea(e.feature.getGeometry().getArea());
+			});
 
 		}
 
@@ -576,8 +720,6 @@ export default class TestMap extends GenericModule {
 		map.on('dblclick', function(evt) {
 
 			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-
-			console.log(coor);
 
 			webix.alert({
 				title: "COORDENADAS",
