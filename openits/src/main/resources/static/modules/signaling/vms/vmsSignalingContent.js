@@ -382,33 +382,50 @@ export default class VmsSignalingContent {
 			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, onUpdateComposer);
 			
 			viewComposer = {
-				
 				rows: [
 					{
-						cols: [
-							{
-								view: "label",
-								label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-cog"></i></div>`,
-								align: "center",
-								height: 50,
-								width: 56
-							},
-							{
-								view: "label",
-								css: "alarm-view-header-details-text",
-								label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING")}</span>`,
-								align: "left",
-								height: 50
-							},
-							{}
-						]
+						cols: function() {
+
+							let labels = [
+								{
+									view: "label",
+									label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-cog"></i></div>`,
+									align: "center",
+									height: 50,
+									width: 56
+								},
+								{
+									view: "label",
+									css: "alarm-view-header-details-text",
+									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING")}</span>`,
+									align: "left",
+									height: 50
+								}
+							];
+
+							if (self.isPlanOrderEdit) {
+								
+								let radioButtons = getViewCommands();
+								radioButtons.css = {"margin-left": "-35% !important", "line-height": "44px" };
+
+								labels.push(radioButtons);
+							}
+
+							return labels;
+						}()
 					},
 					{
-						cols: [
-							{ width: 60 },
-							getViewCommands(),
-							{ width: 60 }	
-						]
+						cols: function() {
+
+							if (!self.isPlanOrderEdit) {
+
+								return [
+									{ width: 60 },
+									getViewCommands(),
+									{ width: 60 }
+								];
+							}
+						}()
 					},
 					{ height: 10 },
 					{
