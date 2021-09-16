@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,54 +40,59 @@ public class FileController {
 
 	@Autowired
 	FileBO fileBO;
-	
+
 	@GetMapping(value = "getFiles")
 	@ApiOperation(value = "Get all files", notes = "Get all files")
-	public ResponseEntity<List<FileUI>> getFiles(
-			@RequestParam("paths") List<String> paths) {
+	public ResponseEntity<List<FileUI>> getFiles(@RequestParam("paths") List<String> paths) {
 
-		return new ResponseEntity<>(fileBO.getFiles(paths.stream().toArray(String[]::new)), HttpStatus.OK);
+		return new ResponseEntity<>(fileBO.getFiles(paths), HttpStatus.OK);
 	}
-	
-	@PostMapping("/uploadFile/{path}")
+
+	@PostMapping("/uploadFile")
 	public ResponseEntity<FileUI> uploadFile(
-			@ApiParam(name = "path", type = "String", value = "Path", example = "incidents/1", required = true) @PathVariable String path,
+			@ApiParam(name = "path", type = "String", value = "Path", example = "incidents/1", required = true) @RequestParam String path,
 			@RequestParam("upload") MultipartFile multipartFile) {
 
 		return new ResponseEntity<>(fileBO.uploadFile(path, multipartFile), HttpStatus.OK);
 	}
-	
-	@GetMapping("/downloadFile/{path}/{fileName}")
-    public ResponseEntity<Resource> downloadFile(
-    		@ApiParam(name = "path", type = "String", value = "Path", example = "incidents/1", required = true) @PathVariable String path,
-    		@ApiParam(name = "fileName", type = "String", value = "fileName", example = "test.txt", required = true) @PathVariable String fileName, 
-    		HttpServletRequest request) {
-        // Load file as Resource
-        Resource resource = fileBO.loadFileAsResource(path, fileName);
 
-        // Try to determine file's content type
-        String contentType = null;
-        
-        try {
-        	
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-            
-        } catch (IOException e) {
-        	
-            log.error("Could not determine file type.");
-            log.error(e.getMessage());
+	@GetMapping("/downloadFile")
+	public ResponseEntity<Resource> downloadFile(
+			@ApiParam(name = "path", type = "String", value = "Path", example = "incidents/1", required = true) @RequestParam String path,
+			@ApiParam(name = "fileName", type = "String", value = "fileName", example = "test.txt", required = true) @RequestParam String fileName,
+			HttpServletRequest request) {
+		// Load file as Resource
+		Resource resource = fileBO.loadFileAsResource(path, fileName);
+
+		// Try to determine file's content type
+		String contentType = null;
+
+		try {
+
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+
+		} catch (IOException e) {
+
+			log.error("Could not determine file type.");
+			log.error(e.getMessage());
 			log.debug(ExceptionUtils.getStackTrace(e));
-        }
+		}
 
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-        	
-            contentType = "application/octet-stream";
-        }
+		// Fallback to the default content type if type could not be determined
+		if (contentType == null) {
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
-    }
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
+	@DeleteMapping(value = "deleteFiles")
+	@ApiOperation(value = "Delete files", notes = "Delete files")
+	public ResponseEntity<List<FileUI>> deleteFiles(@RequestParam("paths") List<String> paths) {
+
+		return new ResponseEntity<>(fileBO.deleteFiles(paths), HttpStatus.OK);
+	}
 }

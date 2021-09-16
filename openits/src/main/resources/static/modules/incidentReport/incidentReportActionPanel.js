@@ -1,5 +1,4 @@
 import SearchDialogBox from "../../component/searchDialogBox.js";
-import FilesManager from "../../component/filesManager.js";
 import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import { util } from "../../lib/util.js";
@@ -296,29 +295,91 @@ export default class IncidentReportActionPanel {
 
 			img.src = self.incidentReport.operationalPlanUrl;
 		}
-
+		
 		function showDocuments() {
-			let files = [];
-
-			files = self.incidentType.incidentTypeDocuments.map(incidentTypeDocument => {
-
-				return {
-					file: incidentTypeDocument.alias,
-					description: incidentTypeDocument.description,
-					documentUrl: incidentTypeDocument.documentUrl
-				};
-			});
-
-			let fileManager = new FilesManager(self.incidentType.alias, files, null);
-			fileManager.show();
-
+			
+			let paths;
+			
+			if (Array.isArray(self.config.defaultDocDirs) && self.config.defaultDocDirs.length > 0) {
+				
+				paths = self.config.defaultDocDirs.map(path => {
+					
+					return util.fillTemplate(path, { incidentTypeId: util.getDirNameFromBasicElementId(self.incidentType.id) });
+				})
+				
+				let fileManager = new FileManager(i18n.t("LBL_INCIDENT_DOCUMENTS"), self.incidentType.alias + " - " + self.incidentType.description, paths, FileManager.MODE_DOWNLOAD);
+				
+				fileManager.show();
+			} 
 		}
-
+		
 		function showAttachments() {
-
-			let fileManager = new FileManager(i18n.t("LBL_INCIDENT_ATTACHMENTS"), self.incidentType.alias + " - " + self.incidentType.description, ["test"], FileManager.MODE_DOWNLOAD_UPLOAD);
-
-			fileManager.show();
+			
+			if (self.config.defaultAttachmentDir) {
+				
+				let events = {};
+				let path = util.fillTemplate(self.config.defaultAttachmentDir, { incidentReportId: util.getDirNameFromBasicElementId(self.incidentReport.id) });
+				
+				events[FileManager.EventTypes.ON_TRACE_FILES] = onTraceFile;
+				
+				let fileManager = new FileManager(i18n.t("LBL_INCIDENT_ATTACHMENTS"), self.incidentType.alias + " - " + self.incidentType.description, [path], FileManager.MODE_DOWNLOAD_UPLOAD, events);
+				
+				fileManager.show();	
+			}
+			
+			function onTraceFile(logFiles) {
+				
+				if (Array.isArray(logFiles) && logFiles.length > 0) {
+					
+					let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+					let body = { "incidentReportLogs": [] };
+					
+					logFiles.forEach(logFile => {
+						
+						let logSubtypeId = undefined;
+						
+						if (logFile.file && logFile.action) {
+							
+							if (logFile.action == FileManager.FILE_UPLOADED) {
+							
+								logSubtypeId = self.config.logIncidentSubTypeAttachmentUploaded;	
+							}
+							else if (logFile.action == FileManager.FILE_DELETED) {
+								
+								logSubtypeId = self.config.logIncidentSubTypeAttachmentDeleted;
+							} 
+							
+							if (logSubtypeId) {
+								
+								body.incidentReportLogs.push({
+									"incidentReportId": self.incidentReport.id,
+									"incidentReportLogValues": [
+										{
+											"logTypeParamId": self.config.iReportLogValuesParamIdState,
+											"value": self.incidentReport.incidentState ? self.incidentReport.incidentState.labelAlias : "-"
+										},
+										{
+											"logTypeParamId": self.config.iReportLogValuesParamIdComment,
+											"value": logFile.file.fileName + " - " + util.fileSize(logFile.file.size) 
+										}
+									],
+									"level": "INFO",
+									"logSubtypeId": logSubtypeId,
+									"userId": userData.id
+								});	
+							}
+						}
+					});
+					
+					if (Array.isArray(body.incidentReportLogs) && body.incidentReportLogs.length > 0) {
+						
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.addLogIncidentReport, body).then(function(data) {
+		
+							
+						});	
+					}
+				}
+			}
 		}
 
 		function cancelIncidentReport() {

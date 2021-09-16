@@ -1653,6 +1653,30 @@ export let util = {
 		
 		return window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 	},
+	
+	getDirNameFromBasicElementId(id) {
+		
+		let dir;
+		
+		if (typeof id === 'string') {
+			
+			dir = id.replace(":", "_");
+		}
+		
+		return dir;
+	},
+	
+	fileSize(b) {
+		let u = 0;
+		let s = 1024;
+	    
+		while (b >= s || -b >= s) {
+	        b /= s;
+	        u++;
+	    }
+
+	    return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
+	},
 
 	getSimpleId(key) {
 

@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.ArrayUtils;
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -40,13 +41,28 @@ public class FileBO {
 	@Autowired
 	private Environment env;
 	
-	public List<FileUI> getFiles(String [] paths) {
+	@PostConstruct
+	private void postConstruct() {
+		
+		File baseDir = new File(env.getProperty(FILE_BASEDIR));
+		
+		if (baseDir.exists() && baseDir.isDirectory()) {
+			
+			log.info("Resources directory is: " + baseDir.getAbsolutePath());
+		}
+		else {
+			
+			log.error("Resources directory " + baseDir.getAbsolutePath() + " not found. Create it and reset app");
+		}
+	}
+	
+	public List<FileUI> getFiles(List<String> paths) {
 		
 		List<FileUI> files = new ArrayList<>();
 		
-		if (!ArrayUtils.isEmpty(paths)) {
+		if (!CollectionUtils.isEmpty(paths)) {
 			
-			Arrays.stream(paths).forEach(path -> files.addAll(getFiles(path)));
+			paths.forEach(path -> files.addAll(getFiles(path)));
 		}
 		
 		return files;
@@ -54,36 +70,11 @@ public class FileBO {
 	
 	public List<FileUI> getFiles(String path) {
 		
-		List<FileUI> files = new ArrayList<>();
-		File folder = new File(env.getProperty(FILE_BASEDIR) + File.separator + path);
-		
-		List<FileMetadataUI> metadatas = getMetadatas(folder);
-		
-		File[] listOfFiles = folder.listFiles();
-
-		for (File file : listOfFiles) {
-		    
-			if (file.isFile() && !file.getName().equals(FileMetadataUI.FILE_NAME)) {
-				
-				FileUI fileUI = new FileUI();
-				
-				fileUI.setFileName(file.getName());
-				fileUI.setFilePath(path);
-				fileUI.setFileExtension(getFileExtension(file));
-				fileUI.setSize(getFileSize(file));
-				fileUI.setLastModified(file.lastModified());
-				fileUI.setMetadata(getMetadata(metadatas, file));
-
-				files.add(fileUI);
-		    }
-		} 
-		
-		return files;
+		return getFiles(path, null);
 	}
 	
 	public FileUI uploadFile(String path, MultipartFile multipartFile) {
 		
-		// Normalize file name
 		FileUI fileUI = null;
 		
 		try {
@@ -94,6 +85,14 @@ public class FileBO {
 				
 				// Check if the file's name contains invalid characters
 	            if(!fileName.contains("..")) {
+	            	
+	            	// Check if target directory exists
+	            	File targetDir = new File(env.getProperty(FILE_BASEDIR) + File.separator + path);
+	            	
+	            	if (!targetDir.exists()) {
+	            		
+	            		targetDir.mkdirs();
+	            	}
 	            	
 	                Path targetLocation = Path.of(env.getProperty(FILE_BASEDIR) + File.separator + path + File.separator + fileName);
 	                Files.copy(multipartFile.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -149,6 +148,86 @@ public class FileBO {
 		
 		return null;
     }
+	
+	public List<FileUI> deleteFiles(List<String> paths) {
+		
+		List<FileUI> filesDeleted = new ArrayList<>();
+		
+		if (!CollectionUtils.isEmpty(paths)) {
+			
+			for (String path : paths) {
+				
+				Path pathFile = Path.of(env.getProperty(FILE_BASEDIR) + File.separator + path); 
+				
+				try {
+					
+					File fileDelete = pathFile.toFile();
+					
+					if (fileDelete.exists() && fileDelete.isFile()) {
+						
+						FileUI fileUI = new FileUI();
+						
+	                    fileUI.setFileName(fileDelete.getName());
+	                    fileUI.setFilePath(fileDelete.getAbsolutePath());
+	                    fileUI.setFileExtension(getFileExtension(fileDelete));
+	                    fileUI.setSize(getFileSize(fileDelete));
+	                    fileUI.setLastModified(fileDelete.lastModified());
+						
+	                    Files.delete(pathFile);
+	                    	
+	                    filesDeleted.add(fileUI);
+					}
+					
+				} catch (IOException e) {
+					
+					log.error(e.getMessage());
+					log.debug(ExceptionUtils.getStackTrace(e));
+				}
+			}
+		}
+		
+		return filesDeleted;
+	}
+	
+	private List<FileUI> getFiles(String path, List<FileUI> files) {
+		
+		if (files == null) {
+			
+			files = new ArrayList<>();
+		}
+		
+		File folder = new File(env.getProperty(FILE_BASEDIR) + File.separator + path);
+		
+		if (folder.exists()) {
+			
+			List<FileMetadataUI> metadatas = getMetadatas(folder);
+			
+			File[] listOfFiles = folder.listFiles();
+
+			for (File file : listOfFiles) {
+			    
+				if (file.isFile() && !file.getName().equals(FileMetadataUI.FILE_NAME)) {
+					
+					FileUI fileUI = new FileUI();
+					
+					fileUI.setFileName(file.getName());
+					fileUI.setFilePath(path);
+					fileUI.setFileExtension(getFileExtension(file));
+					fileUI.setSize(getFileSize(file));
+					fileUI.setLastModified(file.lastModified());
+					fileUI.setMetadata(getMetadata(metadatas, file));
+
+					files.add(fileUI);
+			    }
+				else if (file.isDirectory()) {
+					
+					getFiles(path + File.separator + file.getName(), files);
+				}
+			}
+		}
+		
+		return files;
+	}
 	
 	private String getFileExtension(File file) {
 	    

@@ -40,11 +40,15 @@
 	],
 	"logIncidentType": "LogType:1",
 	"logIncidentSubTypes":["LogSubtype:17"],
+	"logIncidentSubTypeAttachmentUploaded": "LogSubtype:15",
+	"logIncidentSubTypeAttachmentDeleted": "LogSubtype:16",
 	"iReportLogValuesParamIdState": "LogTypeParam:1:1",
 	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
 	"action": {
 		"cctvScenario": 102002
 	},
 	"locationTypes":["LocationType:1", "LocationType:2"],
-	"stretchTypes":["StretchType:1", "StretchType:2"]
+	"stretchTypes":["StretchType:1", "StretchType:2"],
+	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
+	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}"
 }

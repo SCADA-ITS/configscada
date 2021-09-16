@@ -285,9 +285,11 @@ export default class DataView {
 					let imageDefault = obj.imageDefault ? obj.imageDefault : "img/not_found_50.png";
 					let html = `<image title="${obj.value}" style="margin: 10px auto 0px; display: block; height: ${iconSize}px; width: ${iconSize}px" src="${obj.image}" onerror="this.onerror=null;this.src='${imageDefault}';" />`;
 					
-					html += `<div title="${obj.value}" style="text-align: center; font-weight: 500; width: ${iconSize + 40}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-						  		<span>${obj.value}</span>
-							</div>`; 
+					html += `<div title="${obj.value}" >
+						  		<p style="text-align: center; font-size: 12px; font-weight: 100; width: ${iconSize + 32}px; display: -webkit-box; overflow : hidden; text-overflow: ellipsis;-webkit-line-clamp: 2; -webkit-box-orient: vertical; line-height: 1; margin-top: 4px; height: 23px; margin-left: -5px;">${obj.value}</p>
+							</div>`;    
+							
+							 
 
 					return html;
 				},

@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 
 @Entity
@@ -22,5 +20,4 @@ public class FileMetadataUI implements Serializable {
 	private String fileName;
 	private String alias;
 	private String description;
-	private String author;
 }
