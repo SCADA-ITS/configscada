@@ -397,13 +397,13 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 	restAction(endpoint) {
-		
+
 		console.log("Incident report action => " + endpoint);
 
 		webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) {
-				
-				util.ajax.handleError(response);
-			});
+
+			util.ajax.handleError(response);
+		});
 	}
 
 	connect_ws() {
@@ -440,6 +440,14 @@ export default class IncidentReportModule extends GenericModule {
 					self.closed = true;
 					self.refresh();
 				}
+			} else if (data.action === "BLOCK") {
+
+				console.log(data);
+
+				self.requestReport = true;
+
+				$$("loading-" + self.uid).show();
+				$$(self.uid).hide();
 			}
 		}
 

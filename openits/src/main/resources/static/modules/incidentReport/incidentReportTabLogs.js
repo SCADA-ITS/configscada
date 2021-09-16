@@ -381,14 +381,7 @@ export default class IncidentReportTabLog {
 														]
 												};
 
-												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody).then(function(data) {
-
-													$$("loading-" + self.uid).show();
-													$$(self.uid).hide();
-
-												});
-
-
+												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody);
 												window.close();
 											}
 										},
@@ -436,8 +429,6 @@ export default class IncidentReportTabLog {
 								});
 
 								self.parent.restAction(endpoint);
-								$$("loading-" + self.uid).show();
-								$$(self.uid).hide();
 							});
 
 						});

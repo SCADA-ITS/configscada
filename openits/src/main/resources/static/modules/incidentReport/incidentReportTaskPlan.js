@@ -1,6 +1,5 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
-import InputDialogBox from "../../component/inputDialogBox.js";
 
 const PLAN_EXECUTED = "1";
 const PLAN_NO_EXECUTED = "0";
@@ -66,8 +65,6 @@ export default class IncidentReportTaskPlan {
 		viewPlans.rows.push(...getTablePlans());
 				
 		function getTablePlans() {
-			
-			
 			
 			function getMetadata() {
 				
@@ -310,9 +307,6 @@ export default class IncidentReportTaskPlan {
 							console.log("Incident report action => " + endpoint);
 		
 							webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
-								
-								$$("loading-" + self.uid).show();
-								$$(self.uid).hide();
 								
 								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
 								let args = { selectedPks: [planId] };

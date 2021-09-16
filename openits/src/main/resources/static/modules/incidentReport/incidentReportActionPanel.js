@@ -60,9 +60,6 @@ export default class IncidentReportActionPanel {
 				};
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
 				self.parent.restAction(endpoint);
-				$$("loading-" + self.uid).show();
-				$$(self.uid).hide();
-
 			}
 
 			let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
@@ -341,8 +338,6 @@ export default class IncidentReportActionPanel {
 				});
 
 				self.parent.restAction(endpoint);
-				$$("loading-" + self.uid).show();
-				$$(self.uid).hide();
 			});
 		}
 
@@ -377,9 +372,6 @@ export default class IncidentReportActionPanel {
 						let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
 
 						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
-
-						$$("loading-" + self.uid).show();
-						$$(self.uid).hide();
 					});
 				}
 			}
@@ -575,15 +567,11 @@ export default class IncidentReportActionPanel {
 															if (tasksCompleted.length === tasksMandatory.length) {
 
 																self.parent.restAction(endpoint);
-																$$("loading-" + self.uid).show();
-																$$(self.uid).hide();
 															}
 
 														} else {
 
 															self.parent.restAction(endpoint);
-															$$("loading-" + self.uid).show();
-															$$(self.uid).hide();
 														}
 													}
 
@@ -602,8 +590,6 @@ export default class IncidentReportActionPanel {
 														});
 
 														self.parent.restAction(endpoint);
-														$$("loading-" + self.uid).show();
-														$$(self.uid).hide();
 													});
 
 												}

@@ -80,7 +80,7 @@ export default class IncidentReportTabInfo {
 										view: "icon",
 										id: "fieldCause-edit-" + self.uid,
 										icon: "mdi mdi-pencil",
-										//width: 0,
+										hidden:  !self.incidentReport.confirm,
 										on: {
 											onItemClick: function() {
 												$$("fieldCause-combo-" + self.uid).show();
@@ -115,8 +115,6 @@ export default class IncidentReportTabInfo {
 
 													let endpoint = util.fillTemplate(self.config.actionEndpoints.assignCauseIncidentReport, body);
 													self.parent.restAction(endpoint);
-													$$("loading-" + self.uid).show();
-													$$(self.uid).hide();
 													
 													$$("fieldCause-combo-" + self.uid).hide();
 													$$("fieldCause-save-" + self.uid).hide();
