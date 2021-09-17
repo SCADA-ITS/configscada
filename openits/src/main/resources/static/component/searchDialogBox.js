@@ -426,7 +426,7 @@ Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
 });
 
 Object.defineProperty(SearchDialogBox, 'PLANS', {
-	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "PLAN", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
+	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "plans", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false
