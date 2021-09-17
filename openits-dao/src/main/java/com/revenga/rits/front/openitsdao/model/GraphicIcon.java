@@ -36,6 +36,9 @@ public class GraphicIcon implements Serializable {
 	
 	@Column(name="js_draw_file")
 	private String jsDrawFile;
+	
+	@Column(name="keep_aspect_ratio")
+	private Boolean keepAspectRatio;
 
 	private Boolean measures;
 
@@ -90,6 +93,14 @@ public class GraphicIcon implements Serializable {
 
 	public void setJsCustomTypeRender(String jsCustomTypeRender) {
 		this.jsCustomTypeRender = jsCustomTypeRender;
+	}
+
+	public Boolean getKeepAspectRatio() {
+		return keepAspectRatio;
+	}
+
+	public void setKeepAspectRatio(Boolean keepAspectRatio) {
+		this.keepAspectRatio = keepAspectRatio;
 	}
 
 	public String getJsDrawFile() {

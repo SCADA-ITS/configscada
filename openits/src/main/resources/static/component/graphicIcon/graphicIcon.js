@@ -53,7 +53,7 @@ export default class GraphicIcon {
 		let self = this;
 		let s = self.container.obj;
 		let graphicIcon = self.layerElement.graphicIcon;
-		
+		let wRatio, hRatio;
 		let svgFile = graphicIcon.svgFile;
 		
 		if (!svgFile || svgFile == '' || !util.resourceExist(svgFile)) {
@@ -79,6 +79,18 @@ export default class GraphicIcon {
 				
 					gWidth = svg2.attr("viewBox").width;
 					gHeight = svg2.attr("viewBox").height;	
+				}
+				
+				wRatio = graphicIcon.width ? (graphicIcon.width / gWidth) : undefined;
+				hRatio = graphicIcon.height ? (graphicIcon.height / gHeight) : undefined;
+				
+				if (graphicIcon.keepAspectRatio !== false) {
+				
+					self.ratio = wRatio > hRatio ? hRatio : wRatio;
+				}
+				else {
+					
+					self.ratio = wRatio ? wRatio : hRatio;
 				}
 				
 				self.g = f.select("#main");
@@ -204,33 +216,32 @@ export default class GraphicIcon {
 				
 				gName.attr({ fontSize: GraphicIcon.FONT_SIZE + "px",fontFamily: "monospace", fontWeight: "bold", fill: textColor, "dominant-baseline": "middle", "text-anchor": "middle" });
 				
-				gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / self.ratio) + "," + (1 / self.ratio)));
-				//gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / self.ratio)));
+				if (graphicIcon.keepAspectRatio !== false) {
+					
+					gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / self.ratio) + "," + (1 / self.ratio)));
+				}
+				else {
+					
+					gName.transform("s" + (self.layerElement.horizontalFlip ? "-" : "") + ((1 / wRatio) + "," + (1 / hRatio)));					
+				}
 				
 				self.g.append(gName);
 			}
 		}
 		
 		function placeInContainer(gWidth, gHeight) {
-			
-			let wRatio = graphicIcon.width / gWidth;
-			let hRatio = graphicIcon.height / gHeight;
-
-			//self.ratio = graphicIcon.width < graphicIcon.height ? wRatio : hRatio;
-			//self.ratio = gWidth > gHeight ?  wRatio : hRatio;
-			
-			self.ratio = wRatio > hRatio ? hRatio : wRatio;
+					
 			let x = self.layerElement.x ? self.layerElement.x : 0;
 			let y = self.layerElement.y ? self.layerElement.y : 0;
 			
 			if (self.container.type !== GraphicIcon.CONTAINER_TYPE_SNAP) {
 				
-				x = (self.absWidth - (gWidth * self.ratio)) / 2;
+				x = (self.absWidth - (gWidth * self.ratio)) / 2;	
 			}
 			
 			if (self.layerElement.horizontalFlip) {
 					
-				x += (gWidth * self.ratio);
+				x += (gWidth * self.ratio);	
 			}
 
 			// Center y
@@ -239,14 +250,22 @@ export default class GraphicIcon {
 				if (gHeight * self.ratio < graphicIcon.height) {
 					
 					y = (graphicIcon.height - (gHeight * self.ratio)) / 2;
-				}
+				}	
 			}
 			
 			let position = "t" + [x, y].join();
 			
-			let scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (self.ratio + "," + self.ratio);
+			let scale;
 			
-			//self.g.attr( { transform: "rotateY( 180deg )" });
+			if (graphicIcon.keepAspectRatio !== false) {
+				
+				scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (self.ratio + "," + self.ratio);
+			}
+			else {
+				
+				scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (wRatio + "," + hRatio);
+			}
+			
 			self.g.transform(position + ',' + scale);
 			
 			self.g.attr({
