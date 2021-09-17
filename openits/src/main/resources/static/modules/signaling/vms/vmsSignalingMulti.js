@@ -125,22 +125,35 @@ export default class VmsSignalingMulti {
 						onChange() {
 								
 							let selectedValuesStr = this.getValue();
-							
-							this.blockEvent();
-														
-							if (selectedValuesStr) {
+							let acceptButton = $$("btn-accept-" + self.uid);
+
+							if(acceptButton){
 								
-								if (!selectedValuesStr.split(",").includes(self.currentElement.id)) {
-									
-									this.select(self.currentElement.id, true);
-								}
-							}
-							else {
+								if(selectedValuesStr == "") {
 								
-								this.select(self.currentElement.id, true);
+									acceptButton.disable();	
+
+								} else {
+
+									acceptButton.enable();
+								}								
 							}
 							
-							this.unblockEvent();
+//							this.blockEvent();
+//														
+//							if (selectedValuesStr) {
+//								
+//								if (!selectedValuesStr.split(",").includes(self.currentElement.id)) {
+//									
+//									this.select(self.currentElement.id, true);
+//								}
+//							}
+//							else {
+//								
+//								this.select(self.currentElement.id, true);
+//							}
+//							
+//							this.unblockEvent();
 							
 						}
 					}

@@ -243,7 +243,7 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.planOrder.comandElement;
 					}
 								
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement);
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate);
 					
 					view = self.vmsSignalingContent.getView();
 					
@@ -251,6 +251,29 @@ export default class VmsSignalingModule extends GenericModule {
 				}
 				
 				return view;
+			}
+			
+			function onUpdate(selectedElements){
+				
+				if(!isModuleActionElements && !isModuleActionPlanOrderEdit && Array.isArray(selectedElements)) {
+					
+					let actualSelection = self.vmsSignalingTree.treeView.getSelected();
+					
+					actualSelection.forEach(actual => {
+						
+						let sameElement = selectedElements.find(el => el.id === actual.id_);
+						
+						if(!sameElement){
+							
+							let newElement = selectedElements.find(el => el.id != actual.id_);
+							
+							if(newElement){
+							
+								self.vmsSignalingTree.select(newElement);			
+							}							
+						}
+					});
+				}
 			}
 			
 			return viewMain;

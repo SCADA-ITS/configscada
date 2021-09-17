@@ -5,7 +5,7 @@ import { util } from "../../../lib/util.js";
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements, currentCommandElement) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate) {
 
 		this.config = config;
 		this.element = element;
@@ -14,7 +14,8 @@ export default class VmsSignalingContent {
 		this.currentCommandElement = currentCommandElement;
 		this.isPlanOrderEdit = (currentCommandElement != undefined);
 		this.commandsElement = [];
-		
+		this.onUpdate = onUpdate;
+
 		if (this.isPlanOrderEdit) {
 			
 			this.selectedCommand = this.currentCommandElement.commandElementType.id;
@@ -514,11 +515,14 @@ export default class VmsSignalingContent {
 								
 								function onAccept(selectedElements) {
 
+									let sameElement = selectedElements.find(element => element.id === self.element.id);
+
 									self.selectedElements = selectedElements;
 
 									$$("elements-selected-label" + self.uid).config.label = function(){
 											
-										let label = vmsSingalingMulti.currentElement.alias;
+										let label = (sameElement) ? sameElement.alias : selectedElements[0].alias;
+										//let label = vmsSingalingMulti.currentElement.alias;
 											
 										if (Array.isArray(selectedElements) && selectedElements.length > 1) {
 											
@@ -539,6 +543,8 @@ export default class VmsSignalingContent {
 										
 										btnMultisignaling.refresh();	
 									}
+									
+									self.onUpdate(selectedElements);
 								}
 							}
 						} 

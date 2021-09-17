@@ -172,8 +172,11 @@ p, input, textarea {
 	background-color: #33425e;
 }
 
+.dialog-input-custom {
+	width: 600px !important;
+}
+
 .dialog-input-custom .webix_header {
-	
 	box-shadow: inset 0 4px #1CA1C1;
 }
 
@@ -186,6 +189,10 @@ p, input, textarea {
 
 .dialog-input-custom .webix_secondary .webix_button:hover {
     opacity: 0.9 !important;
+}
+
+.inputdialogbox-counter .webix_inp_counter_value {
+	width: 70px !important;
 }
 
 .webix_modal_cover {
