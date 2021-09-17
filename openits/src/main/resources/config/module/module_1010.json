@@ -2,16 +2,16 @@
     "moduleAction": {
         "add": 100901,
         "edit": 100902,
-        "play": 100903,
-        "pause": 100904,
-        "stop": 100905
+        "enable": 100903,
+        "disable": 100904,
+        "delete": 100905
     },
     "restEndpoint": "plans/plan_schedules/${id}",
     "topic": "/topic/planSchedules",
     "actionEndpoints": {
         "save": "plans/send_plan_schedules",
-        "play": "plans/send_plan_schedules",
-        "pause": "plans/send_plan_schedules",
-        "stop": "plans/send_plan_schedules"
+        "enable": "plans/send_plan_schedules",
+        "disable": "plans/send_plan_schedules",
+        "delete": "plans/send_plan_schedules"
     }
 }
