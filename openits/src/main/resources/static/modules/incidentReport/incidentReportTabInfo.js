@@ -101,7 +101,7 @@ export default class IncidentReportTabInfo {
 											onItemClick: function() {
 
 												webix.confirm({
-													title: i18n.t("LBL_IMS_CAUSE_CONFIRM"),
+													title: i18n.t("LBL_CONFIRM"),
 													ok: i18n.t("LBL_YES"),
 													cancel: i18n.t("LBL_NO"),
 													text: i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"),

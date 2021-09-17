@@ -149,7 +149,7 @@ export default class IncidentReportTaskContent {
 							onItemClick() {
 								
 								webix.confirm({
-									title: i18n.t("LBL_INCIDENT_CONFIRM_END_TASK"),
+									title: i18n.t("LBL_CONFIRM"),
 									ok: i18n.t("LBL_YES"),
 									cancel: i18n.t("LBL_NO"),
 									text: i18n.t("LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION"),

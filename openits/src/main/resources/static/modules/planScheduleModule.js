@@ -132,7 +132,7 @@ export default class PlanScheduleModule extends GenericModule {
 				let planScheduleList = self.args.selectedPks;
 
 				webix.confirm({
-					title: i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE"),
+					title: i18n.t("LBL_CONFIRM"),
 					ok: i18n.t("LBL_YES"),
 					cancel: i18n.t("LBL_NO"),
 					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION"),
@@ -151,7 +151,7 @@ export default class PlanScheduleModule extends GenericModule {
 				let planScheduleList = self.args.selectedPks;
 
 				webix.confirm({
-					title: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE"),
+					title: i18n.t("LBL_CONFIRM"),
 					ok: i18n.t("LBL_YES"),
 					cancel: i18n.t("LBL_NO"),
 					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION"),
@@ -170,7 +170,7 @@ export default class PlanScheduleModule extends GenericModule {
 				let planScheduleList = self.args.selectedPks;
 
 				webix.confirm({
-					title: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE"),
+					title: i18n.t("LBL_CONFIRM"),
 					ok: i18n.t("LBL_YES"),
 					cancel: i18n.t("LBL_NO"),
 					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION"),

@@ -415,7 +415,7 @@ export default class IncidentReportTabLog {
 					if (!control) {
 
 						webix.confirm({
-							title: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM"),
+							title: i18n.t("LBL_CONFIRM"),
 							ok: i18n.t("LBL_YES"),
 							cancel: i18n.t("LBL_NO"),
 							text: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"),

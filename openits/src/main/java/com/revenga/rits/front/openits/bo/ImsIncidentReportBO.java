@@ -59,7 +59,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String LOG_SUBTYPE_EXECUTED_TASK_PLAN = "LogSubtype:14";
 	static final String LOG_SUBTYPE_ATTACHED_DOCUMENT = "LogSubtype:15";
 	static final String LOG_SUBTYPE_DELETED_DOCUMENT = "LogSubtype:16";
-	static final String LOG_SUBTYPE_LOCATION_CHANGED = "LogSubtype:18";
+	static final String LOG_SUBTYPE_INCIDENT_REPORT_CHANGED = "LogSubtype:18";
 
 	static final String FIELD_INCIDENT_STATE = "incidentState";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
@@ -816,7 +816,7 @@ public class ImsIncidentReportBO extends GenericBO {
 			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
 					new Object[] { id });
 
-			addLog(incidentReport, id, LOG_SUBTYPE_LOCATION_CHANGED, null,
+			addLog(incidentReport, id, LOG_SUBTYPE_INCIDENT_REPORT_CHANGED, null,
 					getStretchAlias(stretchId) + "->" + getLocationAlias(locationId));
 		}
 

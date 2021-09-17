@@ -85,7 +85,7 @@ export default class IncidentReportModule extends GenericModule {
 						if (incidentReportsToConfirm.length > 0) {
 
 							webix.confirm({
-								title: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM"),
+								title: i18n.t("LBL_CONFIRM"),
 								ok: i18n.t("LBL_YES"),
 								cancel: i18n.t("LBL_NO"),
 								text: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"),

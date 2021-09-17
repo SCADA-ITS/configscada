@@ -285,7 +285,7 @@ export default class IncidentReportTaskPlan {
 					let selectedItem = selectedItems[0];
 					
 					webix.confirm({
-						title:  selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM"),
+						title:   i18n.t("LBL_CONFIRM"),
 						ok: i18n.t("LBL_YES"),
 						cancel: i18n.t("LBL_NO"),
 						text: selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"),

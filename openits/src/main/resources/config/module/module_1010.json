@@ -1,10 +1,10 @@
 {
     "moduleAction": {
-        "add": 100901,
-        "edit": 100902,
-        "enable": 100903,
-        "disable": 100904,
-        "delete": 100905
+        "add": 101001,
+        "edit": 101002,
+        "enable": 101003,
+        "disable": 101004,
+        "delete": 101005
     },
     "restEndpoint": "plans/plan_schedules/${id}",
     "topic": "/topic/planSchedules",

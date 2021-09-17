@@ -416,7 +416,7 @@ export default class IncidentReportActionPanel {
 				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
 
 					webix.confirm({
-						title: i18n.t("LBL_CHANGE_CONFIRM"),
+						title: i18n.t("LBL_CONFIRM"),
 						ok: i18n.t("LBL_ACCEPT"),
 						cancel: i18n.t("LBL_CANCEL"),
 						text: i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"),
@@ -639,7 +639,7 @@ export default class IncidentReportActionPanel {
 												} else {
 
 													webix.confirm({
-														title: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM"),
+														title: i18n.t("LBL_CONFIRM"),
 														ok: i18n.t("LBL_YES"),
 														cancel: i18n.t("LBL_NO"),
 														text: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"),
