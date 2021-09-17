@@ -288,7 +288,7 @@ export default class PlanExecutor extends GenericModule {
 									height: 75,
 									width: 420,
 									id: "label-boddy-" + self.uid,
-									template: "<span>" + self.data.planSubtype.planType.alias + " > " + self.data.planSubtype.alias + " > " + self.data.alias + "</span> <br> <span style='font-size: 13px'>" + self.data.description + "</span>",
+									template: "<span>" + self.data.alias + "</span> <br> <span style='font-size: 13px'>" + self.data.description + "</span>",
 									css: "global-header-label"
 								}
 							]

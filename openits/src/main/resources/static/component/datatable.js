@@ -246,7 +246,7 @@ export default class DataTable {
 
 									if (eval("util.datatable." + field.replacementFunction)) {
 										
-										value = eval("util.datatable." + field.replacementFunction)(obj[field.sourceField]);
+										value = eval("util.datatable." + field.replacementFunction)(obj[field.sourceField], obj);
 									}
 								}
 								
@@ -2382,12 +2382,7 @@ export default class DataTable {
 
 										grid.remove(record.id);
 										rowsUpdated++;
-									}
-									else if (gridData.action == 'CREATE') {
-
-										grid.add(dataItem);
-										rowsUpdated++;
-
+										
 									} else if (record != undefined) {
 
 										var keys = Object.keys(dataItem);
@@ -2405,6 +2400,13 @@ export default class DataTable {
 												}
 											});
 										}
+										
+										console.log (record);
+									} else {
+
+										grid.add(dataItem);
+										rowsUpdated++;
+
 									}
 									rowsUpdated++;
 								});
