@@ -252,7 +252,13 @@ export default class PlanLibraryContent {
 					{
 						rows: [
 							{ height: 10 },
-							{ id: "plan-order-lib-plan-" + self.uid, },
+							{ 
+								view:"scrollview",
+								scroll: "y",
+								body: {
+									rows:[{id: "plan-order-lib-plan-" + self.uid}]									
+								}
+							},
 							{ height: 10 }
 						]
 					},
