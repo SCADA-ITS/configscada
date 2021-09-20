@@ -227,14 +227,14 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 					
 					let selectedItem = selectedItems[0];
 					
-					(new InputDialogBox(selectedItem.param, i18n.t("LBL_ENTER_VALUE_OF_TYPE") + ": " + selectedItem.dataType, function(value) {
+					(new InputDialogBox(selectedItem.param, i18n.t("LBL_ENTER_VALUE"), function(value) {
 						
 						let newItem = webix.copy(selectedItem);
 						
 						newItem.value = value;
 						self.dtParams.update(newItem);
 						
-					}, true, selectedItem.value)).show();
+					}, true, selectedItem.value, selectedItem.dataTypeId)).show();
 				}
 			}
 			

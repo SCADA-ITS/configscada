@@ -360,7 +360,7 @@ export default class ChangeParamDialogBox {
 
 			function getWindowValueSelected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED"), i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED_DESCRIPTION"), onAccept, false, self.planOrderValue);
+				let i = new InputDialogBox(i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED"), i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED_DESCRIPTION"), onAccept, true, self.planOrderValue, self.elementTypeParam.dataType.id);
 	
 				i.show();
 

@@ -66,6 +66,15 @@ const Services = Object.freeze({
 	INCIDENT_SERVICE: 15
 });
 
+// DataTypes
+const DataType = Object.freeze({
+	INTEGER: "DataType:1",
+	ALPHANUMERIC: "DataType:2",
+	DECIMAL: "DataType:3",
+	TIMESTAMP: "DataType:4",
+	BOOLEAN: "DataType:5",
+});
+
 const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
 
 // Type of entities to load
