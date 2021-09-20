@@ -58,7 +58,7 @@ export let util = {
 					}
 				}
 			}
-			
+
 			return lazyClass;
 		},
 
@@ -96,9 +96,9 @@ export let util = {
 
 				}
 			}
-			
+
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
-			
+
 			if (moduleOpenedId && !allowMultipleInstances) {
 
 				window.wm.activateWindow(moduleOpenedId);
@@ -215,17 +215,17 @@ export let util = {
 							viewModule
 						]
 					},
-//					position: function(state) {
-//						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
-//						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
-//					},
+					//					position: function(state) {
+					//						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
+					//						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
+					//					},
 					on: {
 						onBeforeShow: function() {
-								
+
 							window.wm.add(winId);
 						},
 						onDestruct: function() {
-							
+
 							window.wm.delete(winId);
 						}
 					}
@@ -241,9 +241,9 @@ export let util = {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
-			
+
 			util.ui.centerWindow(winId);
-			
+
 			return lazyClass;
 		},
 
@@ -276,11 +276,11 @@ export let util = {
 				}
 			}
 
-//			let tab_body_id = "tab_body_" + module.id;
-//
-//			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
-//
-//			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
+			//			let tab_body_id = "tab_body_" + module.id;
+			//
+			//			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+			//
+			//			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
 
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
 
@@ -392,39 +392,39 @@ export let util = {
 
 				lazyClass.runOne(module.jsMethodCallbacks)
 			}
-			
+
 			return lazyClass;
 		},
-		
+
 		getModuleOpenedId(moduleId) {
-			
+
 			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
 			let winItems = Array.from(window.wm.getAll());
-			
+
 			if (tabItems) {
-				
+
 				let tabBodyId = "tab_body_" + moduleId;
 				let tabBody = tabItems.find(e => e.config.id.indexOf(tabBodyId) !== -1);
-				
+
 				if (tabBody) {
-				
-					return tabBody.config.id;	
+
+					return tabBody.config.id;
 				}
 			}
-			
+
 			if (winItems) {
-				
+
 				let winId = "win_" + moduleId;
-				return winItems.find(e => e.indexOf(winId) !== -1);	
+				return winItems.find(e => e.indexOf(winId) !== -1);
 			}
-			
+
 			return undefined;
 		},
 
 		open(module, moduleAction, viewTypeId, drawCallback, args, instanceCallback) {
 
 			let instance = undefined;
-			
+
 			try {
 
 				const lazy = async _ => {
@@ -462,9 +462,9 @@ export let util = {
 							instance = util.module.loadInWindow(module, moduleAction, mod, args);
 						}
 					}
-					
+
 					if (instance && instanceCallback) {
-						
+
 						instanceCallback(instance);
 					}
 				}
@@ -476,37 +476,37 @@ export let util = {
 				console.log(error);
 			}
 		},
-		
+
 		executeCommand(command, allPks, selectedPksCallback, cmdCallbacks) {
-			
+
 			let selectedPks = [];
-			
+
 			if (selectedPksCallback) {
-				
+
 				selectedPks = selectedPksCallback();
 			}
-			
+
 			if (command && !commandExecCallback() && command.moduleAction) {
-				
-				open_module();	
+
+				open_module();
 			}
-			
+
 			function open_module() {
 
 				let processPks = selectedPks;
 				let viewTypeId = undefined;
 				let executeModule = false;
-	
+
 				if (command.viewType) {
-	
+
 					viewTypeId = command.viewType.id;
 				}
-	
+
 				if (processPks.length > 0) {
-	
+
 					// Multiselect not allowed with 2 o more selected
 					if (processPks.length > 1 && command.multiselect === false) {
-	
+
 						webix.alert({
 							title: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"),
 							text: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"),
@@ -516,7 +516,7 @@ export let util = {
 					}
 					// One or more selected and multiselect allowed
 					else {
-	
+
 						executeModule = true;
 					}
 				}
@@ -537,77 +537,77 @@ export let util = {
 						processPks = allPks;
 					}
 				}
-				
+
 				let args = {};
-				
+
 				if (executeModule) {
-					
+
 					args.selectedPks = [];
-					
+
 					if (command.args != undefined) {
 
 						try {
 							args = JSON.parse(command.args);
-		
+
 						} catch (error) {
-		
+
 							console.error(error);
 							args = {};
 						}
 					}
-					
-					if (Array.isArray(args.selectedPks) && args.selectedPks.length == 0 && 
+
+					if (Array.isArray(args.selectedPks) && args.selectedPks.length == 0 &&
 						Array.isArray(processPks) && processPks.length > 0) {
-						
-						args.selectedPks = processPks;	
+
+						args.selectedPks = processPks;
 					}
 
-					executeCommand();	
+					executeCommand();
 				}
-				
+
 				// Only single selection
 				function executeCommand() {
-					
+
 					let cmd = command;
-					
+
 					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
-						
+
 						let selectedPk = args.selectedPks[0];
 						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType;
-						
-						let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === elementType.id); 
-						
+
+						let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === elementType.id);
+
 						if (elementTypeCommand) {
-							
+
 							cmd = elementTypeCommand;
-							
+
 							if (cmd.viewType) {
-								
-								viewTypeId = cmd.viewType.id;	
+
+								viewTypeId = cmd.viewType.id;
 							}
-						} 
+						}
 					}
-					
+
 					let module = util.module.getFromModuleAction(cmd.moduleAction.id);
-						
+
 					util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
 				}
 			}
-			
+
 			function commandExecCallback() {
-		
+
 				let cmdCallback = undefined;
-				
+
 				if (Array.isArray(cmdCallbacks) && cmdCallbacks.length > 0) {
-					
+
 					cmdCallback = cmdCallbacks.find(cmdCall => cmdCall.commandId === command.id);
-				
+
 					if (cmdCallback) {
-					
+
 						cmdCallback.function(selectedPks);
-					}	
+					}
 				}
-						
+
 				return cmdCallback != undefined;
 			}
 		},
@@ -703,14 +703,14 @@ export let util = {
 
 			let moduleAction = undefined;
 
-			if (modules &&	moduleActionId) {
+			if (modules && moduleActionId) {
 
 				for (let i = 0; i < modules.length && !moduleAction; i++) {
 
 					moduleAction = modules[i].moduleActions.find(item => item.id == moduleActionId);
 				}
 			}
-			
+
 			if (!moduleAction) {
 
 				return false;
@@ -733,13 +733,13 @@ export let util = {
 
 				module = modules.find(item => item.id == moduleId);
 			}
-			
+
 			if (!module) {
 
 				return false;
 
 			} else if (module.isAllowed == null) {
-				
+
 				return true;
 
 			} else {
@@ -747,14 +747,14 @@ export let util = {
 				return module.isAllowed;
 			}
 		},
-		
-		isAllowedPermission(permissionToCheck){
-			
+
+		isAllowedPermission(permissionToCheck) {
+
 			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 			let rolePermissions = userData.role.rolePermissions;
 			let userPermissions = userData.userPermissions;
 			let permissionsOK = false;
-			
+
 			let allPermissions = new Set(rolePermissions);
 
 			if (Array.isArray(userPermissions) && userPermissions.length > 0) {
@@ -768,16 +768,16 @@ export let util = {
 			let arrAllPermissions = Array.from(allPermissions);
 
 			if (Array.isArray(arrAllPermissions) && arrAllPermissions.length > 0) {
-				
-					let validPermission = arrAllPermissions.find(permission => permission.id === permissionToCheck);
-																	
-					if (validPermission) {
-				
-						permissionsOK = true;									
-					}
-				}
 
-			return permissionsOK;			
+				let validPermission = arrAllPermissions.find(permission => permission.id === permissionToCheck);
+
+				if (validPermission) {
+
+					permissionsOK = true;
+				}
+			}
+
+			return permissionsOK;
 		}
 	},
 
@@ -921,11 +921,11 @@ export let util = {
 	},
 
 	ui: {
-		
+
 		dataDialog: {
-			
+
 			elements(ids) {
-				
+
 				let viewMain = {
 					id: "equipment-selected" + webix.uid(),
 					cols: [
@@ -1142,17 +1142,17 @@ export let util = {
 				},
 				on: {
 					onBeforeShow: function() {
-						
+
 						if (!modal) {
-							
-							window.wm.add(winId);	
-						}	
+
+							window.wm.add(winId);
+						}
 					},
 					onDestruct: function() {
-						
+
 						if (!modal) {
-						
-							window.wm.delete(winId);	
+
+							window.wm.delete(winId);
 						}
 					}
 				}
@@ -1160,15 +1160,15 @@ export let util = {
 
 			return winId;
 		},
-		
+
 		loadTab(title, body) {
-			
+
 			let tabId = "tab_aux_" + webix.uid();
 			let mainTab = $$(MAIN_TAB_ID);
 			let icon = 'img/module/default.png';
-			
+
 			if (mainTab) {
-			
+
 				mainTab.addView({
 					id: tabId,
 					header: `<div style='float: left; width: 250px;'>
@@ -1189,17 +1189,17 @@ export let util = {
 						]
 					}
 				});
-	
-				mainTab.getTabbar().setValue(tabId.replace("tab", "tab_body"));	
+
+				mainTab.getTabbar().setValue(tabId.replace("tab", "tab_body"));
 			}
 		},
 
 		setWindowTitle(winId, title) {
 
 			let win = $$(winId);
-			
+
 			if (win && win.config.view === "window") {
-				
+
 				let head = win.getHead();
 
 				if (head) {
@@ -1244,9 +1244,9 @@ export let util = {
 
 					if (tabToChange) {
 
-						let newIcon = icon ? icon: "img/module/default.png";
+						let newIcon = icon ? icon : "img/module/default.png";
 						let newTabTitle = (shortTitle) ? shortTitle : title;
-						
+
 						tabToChange.value = `<div style='float: left; width: 250px;'>
 												<img class='tab-icon' src='${newIcon}'/>
 												<span class='tab-text'>${newTabTitle}</span>
@@ -1254,7 +1254,7 @@ export let util = {
 												<a href='#'><img src='./img/externalize_button.png'></a>
 												</span>
 											</div>`;
-											
+
 						tabs.render();
 
 					}
@@ -1263,34 +1263,34 @@ export let util = {
 		},
 
 		resizeWindow(winId, width, height) {
-			
+
 			let win = $$(winId);
-			
+
 			if (win && win.config.view === "window") {
-				
+
 				let prevWidth = win.config.width;
 				let prevHeight = win.config.height;
-				
+
 
 				win.config.width = width ? width : win.config.width;
 				win.config.height = height ? height : win.config.height;
-				
+
 				if (prevWidth != win.config.width || prevHeight != win.config.height) {
-				
-					win.resize();	
+
+					win.resize();
 				}
 			}
 		},
-		
+
 		centerWindow(winId) {
-			
+
 			let win = $$(winId);
-			
+
 			if (win && win.config.view === "window") {
-				
+
 				let x = (document.documentElement.clientWidth / 2) - (win.config.width / 2);
 				let y = (document.documentElement.clientHeight / 2) - (win.config.height / 2);
-							 
+
 				win.setPosition(Math.floor(x), Math.floor(y));
 			}
 		},
@@ -1305,7 +1305,7 @@ export let util = {
 				}
 			}
 		},
-		
+
 		getViewNoData(noText) {
 
 			return {
@@ -1316,83 +1316,83 @@ export let util = {
 				}
 			}
 		},
-		
+
 		calculateTextWidth(text, fontFamily, fontSize, letterSpacing) {
-				
+
 			let width = 0;
-			
+
 			let dText = document.createElement("div");
 			dText.id = webix.uid();
 			dText.style.fontSize = fontSize;
-			
+
 			if (letterSpacing) {
-				
-				dText.style.letterSpacing = letterSpacing;	
+
+				dText.style.letterSpacing = letterSpacing;
 			}
-			
+
 			dText.style.fontFamily = fontFamily;
 			dText.style.position = "absolute";
 			dText.style.visibility = "hidden";
 			dText.style.whiteSpace = "nowrap";
 			dText.innerHTML = text;
 			document.body.appendChild(dText);
-			
+
 			width = dText.clientWidth;
-			
+
 			dText.remove();
-			
+
 			return width;
 		}
 	},
-	
+
 	element: {
-		
+
 		getElementTypeParamId(elementValueId) {
-			
+
 			const ELEMENT_TYPE_PARAM = "ElementTypeParam";
 			let elementTypeParamArray = [];
 			let elementTypeParamId = undefined;
-			
+
 			if (elementValueId) {
-				
+
 				let elementValueArray = elementValueId.split(":");
-				
+
 				if (elementValueArray.length === 5) {
-					
+
 					elementTypeParamArray.push(ELEMENT_TYPE_PARAM);
 					elementTypeParamArray.push(elementValueArray[1]);
 					elementTypeParamArray.push(elementValueArray[4]);
 					elementTypeParamArray.push(elementValueArray[3]);
-					
-					elementTypeParamId = elementTypeParamArray.join(":"); 
+
+					elementTypeParamId = elementTypeParamArray.join(":");
 				}
 			}
-			
+
 			return elementTypeParamId;
 		},
-		
+
 		getColor(elementTypeState) {
-			
+
 			let colors = ["#ffcc00", "#008000", "#800080", "#ff0000"]
-			let color = colors[0]; 
-			
+			let color = colors[0];
+
 			if (elementTypeState) {
-				
+
 				if (elementTypeState.color) {
-					
-					color = elementTypeState.color	
+
+					color = elementTypeState.color
 				}
 				else if (elementTypeState.id) {
-					
+
 					let idx = elementTypeState.id.substring(elementTypeState.id.lastIndexOf(":") + 1);
-				
+
 					if (!isNaN(idx)) {
-						
-						let colorPos = parseInt(idx, 10); 
-						
+
+						let colorPos = parseInt(idx, 10);
+
 						if (colorPos < colors.length) {
-						
-							color = colors [colorPos];	
+
+							color = colors[colorPos];
 						}
 					}
 				}
@@ -1435,51 +1435,75 @@ export let util = {
 		cronDescription(cronExpression) {
 
 			let translate = prettyCron.toString(cronExpression, true);
-	
+
 			if (translate != undefined) {
-	
+
 				return translate;
 			}
-	
+
 		},
 		getNextExec(cronExpression) {
 
 			let nextDate = moment(prettyCron.getNextDate(cronExpression, true)).format("DD/MM/YYYY HH:mm:ss");
-	
+
 			if (nextDate != undefined) {
-	
+
 				return nextDate
 			}
 		},
 		hasData(data) {
-			
+
 			return (data !== null && data !== undefined) ? "true" : "false";
-			
+
 		},
 		boolToString(data) {
 
-			return ((data !== null && data !== undefined) ? (data !== true ? "false" : "true") : "false" );
-			
+			return ((data !== null && data !== undefined) ? (data !== true ? "false" : "true") : "false");
+
 		},
-		
-		getLabelToFanState(fanState){
-			
+
+		getLabelToFanState(fanState) {
+
 			return i18n.t(FanSate.find(e => e.value === fanState).label);
+		},
+
+		getCurrentPlanOrderAlias(planOrderId, obj) {
+		
+			let planOrder = undefined;
+			
+			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length){
+				
+				 planOrder = obj.planOrders.find(e => e.id == planOrderId);
+			}
+			
+			return planOrder ? planOrder.alias : "-";
+		},
+
+		getCurrentPlanOrderOrder(planOrderId, obj) {
+			
+			let planOrder = undefined;
+			
+			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length){
+				
+				 planOrder = obj.planOrders.find(e => e.id == planOrderId);
+			}
+			
+			return planOrder ? planOrder.planOrderOrder : "-";
 		}
 	},
-	
+
 	tree: {
-		
+
 		getNodes(items, relationships, remapedFields, translate) {
-			
+
 			const PARENT_ID_IDX = 0;
 			const CHILD_ID_IDX = 1;
-					
+
 			let nodes = [];
 			let mapNodes = new Map();
-			
+
 			if (Array.isArray(items) && items.length > 0) {
-			
+
 				items.forEach(item => {
 
 					let node = {
@@ -1493,87 +1517,87 @@ export let util = {
 							folder: item.folder ? item.folder : false
 						}
 					};
-					
+
 					mapNodes.set(node.id, node);
 				});
-				
-				let hierarchies = relationships.map(e => { 
-					
+
+				let hierarchies = relationships.map(e => {
+
 					let hierarchy = undefined;
 					let parentNodeId = e[remapedFields.parentNodeId] + "_" + e[remapedFields.parentNodeId];
 					let childNodeId = e[remapedFields.childNodeId] + "_" + e[remapedFields.childNodeId];
-					
+
 					if (parentNodeId && childNodeId) {
-						
-						hierarchy = { 
-							id: e.id, 
-							parentNode: mapNodes.get(parentNodeId), 
+
+						hierarchy = {
+							id: e.id,
+							parentNode: mapNodes.get(parentNodeId),
 							childNode: mapNodes.get(childNodeId)
-						}; 
+						};
 					}
-					
+
 					return hierarchy;
 				});
-				
+
 				let childNodeIds = fillNodes(hierarchies);
-				
+
 				childNodeIds.forEach(childNodeId => {
-			
+
 					mapNodes.delete(childNodeId);
 				});
-				
+
 				mapNodes.forEach(function(value) { // Full params => function(value, key, map) 
-					
+
 					nodes.push(value);
 				});
 			}
-			
+
 			function fillNodes(hierarchies) {
-			
+
 				let childNodeIds = [];
-				
+
 				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
-					
+
 					hierarchies.forEach(hierarchy => {
-						
-						let parentNode =  hierarchy.parentNode;
-						let childNode =  hierarchy.childNode;
-						
+
+						let parentNode = hierarchy.parentNode;
+						let childNode = hierarchy.childNode;
+
 						if (parentNode && childNode) {
-			
-							let parentNodeId =  parentNode.id;
-							let childNodeId =  childNode.id;
-							
+
+							let parentNodeId = parentNode.id;
+							let childNodeId = childNode.id;
+
 							if (parentNodeId && childNodeId) {
-								
+
 								let parentTreeData = mapNodes.get(parentNodeId);
 								let childTreeData = mapNodes.get(childNodeId);
-								
+
 								if (parentTreeData && childTreeData) {
-									
+
 									parentTreeData.props.folder = true;
-									
+
 									let newChild = webix.copy(childTreeData);
-					
+
 									newChild.id = parentTreeData.id.split("_")[CHILD_ID_IDX] + "_" + childTreeData.id.split("_")[CHILD_ID_IDX];
 									parentTreeData.data.push(newChild);
-									
+
 									mapNodes.set(childNodeId, newChild)
-									
+
 									childNodeIds.push(childNodeId);
 								}
 							}
 						}
 					});
 				}
-				
+
 				return childNodeIds;
 			}
-			
+
 			return nodes;
 		}
 	},
-	
+
 
 	toLocaleString(ts) {
 
@@ -1610,13 +1634,13 @@ export let util = {
 
 		return date;
 	},
-	
+
 	resourceExist(url) {
-		
+
 		var http = new XMLHttpRequest();
-	    http.open('HEAD', url, false);
-	    http.send();
-	    return http.status!=404;
+		http.open('HEAD', url, false);
+		http.send();
+		return http.status != 404;
 	},
 
 	toLocaleTimeString(ts) {
@@ -1648,34 +1672,34 @@ export let util = {
 
 		return hash;
 	},
-	
+
 	getContextPath() {
-		
+
 		return window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 	},
-	
+
 	getDirNameFromBasicElementId(id) {
-		
+
 		let dir;
-		
+
 		if (typeof id === 'string') {
-			
+
 			dir = id.replace(":", "_");
 		}
-		
+
 		return dir;
 	},
-	
+
 	fileSize(b) {
 		let u = 0;
 		let s = 1024;
-	    
-		while (b >= s || -b >= s) {
-	        b /= s;
-	        u++;
-	    }
 
-	    return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
+		while (b >= s || -b >= s) {
+			b /= s;
+			u++;
+		}
+
+		return (u ? b.toFixed(1) + ' ' : b) + ' KMGTPEZY'[u] + 'B';
 	},
 
 	getSimpleId(key) {

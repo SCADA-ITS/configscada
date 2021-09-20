@@ -171,7 +171,7 @@ export let adapter = {
 
 											oldItem[property][thisElementValuePosition] = updateObject(oldItem[property][thisElementValuePosition], newItem[property][j]);
 										}
-									}else{
+									} else {
 										oldItem[property] = newItem[property];
 									}
 
@@ -424,52 +424,80 @@ export let adapter = {
 					let gridData = {};
 					gridData.data = [];
 					gridData.action = data.action;
-
+					let count = data.basicElementsVO.length;
 
 					data.basicElementsVO.forEach(planSchedule => {
-
 
 						let dataItem = {};
 						dataItem.id = planSchedule.id;
 
-						if (gridData.action == 'CREATE') {
+						if (planSchedule.plan && (gridData.action == 'CREATE' || gridData.action == 'UPDATE')) {
 
-							let plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id);
+							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + planSchedule.plan.id).then(function(dat) {
 
-							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
-							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
-							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
-							planSchedule.plan !== undefined ? dataItem.planAlias = plan.alias : null;
+								if (dat != null) {
+
+									let plan = dat.json();
+									let planScheduleStateType = planSchedule.planScheduleStateType ? window.em.getByField(EntityType.PLAN_SCHEDULE_STATE, "id", planSchedule.planScheduleStateType.id) : null;
+
+									if (planSchedule.alias)
+										dataItem.alias = planSchedule.alias;
+
+									if (planSchedule.description)
+										dataItem.description = planSchedule.description;
+
+									if (planSchedule.cronExpression)
+										dataItem.cronExpression = planSchedule.cronExpression;
+
+									if (plan)
+										dataItem.planAlias = plan.alias;
+
+									if (planScheduleStateType) {
+										dataItem.planScheduleStateTypeLabelAlias = planScheduleStateType.labelAlias;
+									}
+
+									gridData.data.push(dataItem);
+
+									count--;
+
+									if (count == 0)
+										update_callback(gridData);
+								}
+							});
+
+						} else if (gridData.action == 'DELETE') {
 
 							gridData.data.push(dataItem);
 
-						}
+							count--;
 
-						if (gridData.action == 'UPDATE') {
+							if (count == 0)
+								update_callback(gridData);
 
-							let planScheduleStateType = null;
-							let plan = null;
-							planSchedule.planScheduleStateType !== undefined ? planScheduleStateType = window.em.getByField(EntityType.PLAN_SCHEDULE_STATE, "id", planSchedule.planScheduleStateType.id) : null;
-							planSchedule.plan !== undefined ? plan = window.em.getByField(EntityType.PLAN, "id", planSchedule.plan.id) : null;
+						} else {
 
-							planSchedule.alias !== undefined ? dataItem.alias = planSchedule.alias : null;
-							planSchedule.description !== undefined ? dataItem.description = planSchedule.description : null;
-							planSchedule.cronExpression !== undefined ? dataItem.cronExpression = planSchedule.cronExpression : null;
-							plan !== null ? dataItem.planAlias = plan.alias : null;
-							planScheduleStateType !== null ? dataItem.planScheduleStateTypeLabelAlias = planScheduleStateType.labelAlias : null;
+							let planScheduleStateType = planSchedule.planScheduleStateType ? window.em.getByField(EntityType.PLAN_SCHEDULE_STATE, "id", planSchedule.planScheduleStateType.id) : null;
+							if (planScheduleStateType) {
+								dataItem.planScheduleStateTypeLabelAlias = planScheduleStateType.labelAlias;
+							}
+
+							if (planSchedule.alias)
+								dataItem.alias = planSchedule.alias;
+
+							if (planSchedule.description)
+								dataItem.description = planSchedule.description;
+
+							if (planSchedule.cronExpression)
+								dataItem.cronExpression = planSchedule.cronExpression;
 
 							gridData.data.push(dataItem);
 
+							count--;
+
+							if (count == 0)
+								update_callback(gridData)
 						}
-
-						if (gridData.action == 'DELETE') {
-
-							gridData.data.push(dataItem);
-						}
-
 					});
-
-					update_callback(gridData);
 				}
 
 			}
@@ -478,60 +506,44 @@ export let adapter = {
 		plan: {
 
 			getList(data, update_callback) {
-				
+
 				const PLAN_STATE_VALUES = ["PlanStateType:2", "PlanStateType:4", "PlanStateType:5"];
-				
+
 				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
 
 					let gridData = {};
-					let count = data.basicElementsVO.length;
 					gridData.data = [];
 					gridData.action = data.action;
 
-					data.basicElementsVO.forEach(be => {
+					data.basicElementsVO.forEach(plan => {
 
 						let dataItem = {};
-						dataItem.id = be.id;
+						dataItem.id = plan.id;
 
 						if (gridData.action === 'UPDATE') {
 
-							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + be.id).then(function(dat) {
+							if (plan.planStateType) {
 
-								if (dat != null) {
+								dataItem.filterPlanState = PLAN_STATE_VALUES.indexOf(plan.planStateType.id) != -1 ? "0" : "-1";
 
-									let plan = dat.json();
-									
-									if (PLAN_STATE_VALUES.includes(plan.planStateType.id)) {
-									
-										dataItem.alias = plan.alias;
-										dataItem.description = plan.description;
-										dataItem.planStateTypeLabelAlias = plan.planStateType ? plan.planStateType.labelAlias : undefined;
-										dataItem.planSubtypeAlias = plan.planSubtype ? plan.planSubtype.alias : undefined;
-										dataItem.planSubtypePlanTypeAlias = plan.planSubtype && plan.planSubtype.planType ? plan.planSubtype.planType.alias : undefined;
-										dataItem.currentPlanOrderAlias = plan.currentPlanOrder ? plan.currentPlanOrder.alias : undefined;
-										dataItem.currentPlanOrderPlanOrderOrder = plan.currentPlanOrder ? plan.currentPlanOrder.planOrderOrder : undefined;
-	
-										gridData.data.push(dataItem);
-	
-										count--;
-	
-										if (count == 0)
-											update_callback(gridData);	
-									}
+								let planStateType = window.em.getByField(EntityType.PLAN_STATE_TYPE, "id", plan.planStateType.id);
+								if (planStateType) {
+									dataItem.planStateTypeLabelAlias = planStateType.labelAlias;
 								}
 
-							}, function(response) { util.ajax.handleError(response); });
+							}
 
-						} else if (gridData.action === 'DELETE') {
+							if (plan.currentPlanOrder) {
+								dataItem.currentPlanOrderAlias = plan.currentPlanOrder.id;
+								dataItem.currentPlanOrderOrder = plan.currentPlanOrder.id;
+							}
 
 							gridData.data.push(dataItem);
-
-							count--;
-
-							if (count == 0)
-								update_callback(gridData);
 						}
 					});
+
+					update_callback(gridData);
+
 				}
 			}
 		},

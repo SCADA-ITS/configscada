@@ -18,14 +18,14 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 class AdapterGridPlanMonitor extends AdapterGrid {
 
 	static final String FIELD_PLAN_STATE_TYPE = "planStateType";
-	static final String FIELD_PLAN_STATE_TYPE_ALIAS = "planStateTypeLabelAlias";
+	static final String FIELD_PLAN_STATE_TYPE_LABEL_ALIAS = "planStateTypeLabelAlias";
 	static final String FIELD_LABEL_ALIAS = "labelAlias";
 	static final String FIELD_FILTER_PLAN_STATE = "filterPlanState";
 	static final String FIELD_CURRENT_PLAN_ORDER = "currentPlanOrder";
 	static final String FIELD_ID = "id";
 
 	static final String FIELD_CURRENT_PLAN_ORDER_ALIAS = "currentPlanOrderAlias";
-	static final String FIELD_CURRENT_PLAN_ORDER_ORDER = "currentPlanOrderPlanOrderOrder";
+	static final String FIELD_CURRENT_PLAN_ORDER_ORDER = "currentPlanOrderOrder";
 
 	static final List<String> PLAN_STATE_VALUES = new ArrayList<String>() {
 		{
@@ -84,7 +84,7 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 
 				} else {
 
-					dataRow.put(FIELD_FILTER_PLAN_STATE, "1");
+					dataRow.put(FIELD_FILTER_PLAN_STATE, "-1");
 				}
 			}
 		}
@@ -116,7 +116,7 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 
 				Map<String, Object> map = (Map<String, Object>) obj;
 
-				dataRow.put(FIELD_PLAN_STATE_TYPE_ALIAS, map.get(FIELD_LABEL_ALIAS));
+				dataRow.put(FIELD_PLAN_STATE_TYPE_LABEL_ALIAS, map.get(FIELD_LABEL_ALIAS));
 			}
 
 			dataRow.remove(FIELD_PLAN_STATE_TYPE);

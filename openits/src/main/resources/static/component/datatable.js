@@ -1439,7 +1439,7 @@ export default class DataTable {
 		let self = this;
 		let grid = $$("dt-" + this.uid);
 
-		if (this.filteredFields) {
+		if (Array.isArray(this.filteredFields) && this.filteredFields.length > 0)  {
 
 			var fields = Object.keys(this.filteredFields);
 
@@ -1449,7 +1449,7 @@ export default class DataTable {
 
 				fields.forEach(field => {
 
-					if (self.filteredFields[field]) {
+					if (res === true && self.filteredFields[field]) {
 
 						let metadataField = self.metadata.gridFields.find(f => {
 
@@ -2203,7 +2203,8 @@ export default class DataTable {
 								self.convertDate(data.data);
 	
 								grid.parse(data.data);
-	
+
+								self.filterDatatable();
 								self.restoreSort();
 								self.restoreFilters();
 							}
@@ -2414,6 +2415,7 @@ export default class DataTable {
 								if (rowsUpdated > 0) {
 
 									grid.refresh();
+									self.filterDatatable();
 								}
 							}
 						}
