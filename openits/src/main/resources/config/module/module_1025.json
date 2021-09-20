@@ -44,8 +44,7 @@
 		"PlanStateType:4": {
 			"color": "#FF8927",
 			"actions": [
-				"PLAY",
-				"STOP"
+				"PLAY"
 			]
 		},
 		"PlanStateType:5": {

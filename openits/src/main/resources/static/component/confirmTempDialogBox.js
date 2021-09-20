@@ -77,7 +77,7 @@ export default class ConfirmTempDialogBox {
 						self.timeSec--;
 						$$("temp-count-" + self.uid).setValue(self.description + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"));
 
-						if (self.timeSec == 0) {
+						if (self.timeSec <= 0) {
 							clearInterval(self.interval);
 							self.defaultCallBack();
 							let parentWindow = this.getTopParentView();
