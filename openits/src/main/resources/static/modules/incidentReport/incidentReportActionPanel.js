@@ -295,62 +295,62 @@ export default class IncidentReportActionPanel {
 
 			img.src = self.incidentReport.operationalPlanUrl;
 		}
-		
+
 		function showDocuments() {
-			
+
 			let paths;
-			
+
 			if (Array.isArray(self.config.defaultDocDirs) && self.config.defaultDocDirs.length > 0) {
-				
+
 				paths = self.config.defaultDocDirs.map(path => {
-					
+
 					return util.fillTemplate(path, { incidentTypeId: util.getDirNameFromBasicElementId(self.incidentType.id) });
 				})
-				
+
 				let fileManager = new FileManager(i18n.t("LBL_INCIDENT_DOCUMENTS"), self.incidentType.alias + " - " + self.incidentType.description, paths, FileManager.MODE_DOWNLOAD);
-				
+
 				fileManager.show();
-			} 
+			}
 		}
-		
+
 		function showAttachments() {
-			
+
 			if (self.config.defaultAttachmentDir) {
-				
+
 				let events = {};
 				let path = util.fillTemplate(self.config.defaultAttachmentDir, { incidentReportId: util.getDirNameFromBasicElementId(self.incidentReport.id) });
-				
+
 				events[FileManager.EventTypes.ON_TRACE_FILES] = onTraceFile;
-				
+
 				let fileManager = new FileManager(i18n.t("LBL_INCIDENT_ATTACHMENTS"), self.incidentType.alias + " - " + self.incidentType.description, [path], FileManager.MODE_DOWNLOAD_UPLOAD, events);
-				
-				fileManager.show();	
+
+				fileManager.show();
 			}
-			
+
 			function onTraceFile(logFiles) {
-				
+
 				if (Array.isArray(logFiles) && logFiles.length > 0) {
-					
+
 					let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 					let body = { "incidentReportLogs": [] };
-					
+
 					logFiles.forEach(logFile => {
-						
+
 						let logSubtypeId = undefined;
-						
+
 						if (logFile.file && logFile.action) {
-							
+
 							if (logFile.action == FileManager.FILE_UPLOADED) {
-							
-								logSubtypeId = self.config.logIncidentSubTypeAttachmentUploaded;	
+
+								logSubtypeId = self.config.logIncidentSubTypeAttachmentUploaded;
 							}
 							else if (logFile.action == FileManager.FILE_DELETED) {
-								
+
 								logSubtypeId = self.config.logIncidentSubTypeAttachmentDeleted;
-							} 
-							
+							}
+
 							if (logSubtypeId) {
-								
+
 								body.incidentReportLogs.push({
 									"incidentReportId": self.incidentReport.id,
 									"incidentReportLogValues": [
@@ -360,23 +360,23 @@ export default class IncidentReportActionPanel {
 										},
 										{
 											"logTypeParamId": self.config.iReportLogValuesParamIdComment,
-											"value": logFile.file.fileName + " - " + util.fileSize(logFile.file.size) 
+											"value": logFile.file.fileName + " - " + util.fileSize(logFile.file.size)
 										}
 									],
 									"level": "INFO",
 									"logSubtypeId": logSubtypeId,
 									"userId": userData.id
-								});	
+								});
 							}
 						}
 					});
-					
+
 					if (Array.isArray(body.incidentReportLogs) && body.incidentReportLogs.length > 0) {
-						
+
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.addLogIncidentReport, body).then(function(data) {
-		
-							
-						});	
+
+
+						});
 					}
 				}
 			}
@@ -465,28 +465,25 @@ export default class IncidentReportActionPanel {
 				body.push({ height: 10 });
 			}
 
-			if (self.incidentType.incidentTypeDocuments !== undefined && self.incidentType.incidentTypeDocuments.length > 0 ? true : false) {
+			body.push(
+				{
+					view: "button",
+					heigth: 50,
+					css: "panel-button",
+					label: i18n.t("LBL_INCIDENT_DOCUMENTS"),
+					tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
+					type: "icon",
+					icon: "mdi mdi-file-document-multiple-outline",
+					on: {
 
-				body.push(
-					{
-						view: "button",
-						heigth: 50,
-						css: "panel-button",
-						label: i18n.t("LBL_INCIDENT_DOCUMENTS"),
-						tooltip: i18n.t("LBL_INCIDENT_DOCUMENTS_DESCRIPTION"),
-						type: "icon",
-						icon: "mdi mdi-file-document-multiple-outline",
-						disabled: self.incidentType.incidentTypeDocuments !== undefined && self.incidentType.incidentTypeDocuments.length > 0 ? false : true,
-						on: {
+						onItemClick() {
 
-							onItemClick() {
-
-								showDocuments();
-							}
+							showDocuments();
 						}
-					});
-				body.push({ height: 10 });
-			}
+					}
+				});
+			body.push({ height: 10 });
+
 
 			body.push(
 				{
@@ -784,7 +781,7 @@ export default class IncidentReportActionPanel {
 									css: "tb-actions",
 									elements: [
 										{
-										view: "button",
+											view: "button",
 											width: 135,
 											hidden: self.incidentReport.confirm,
 											label: i18n.t("LBL_INCIDENT_CHANGE"),
