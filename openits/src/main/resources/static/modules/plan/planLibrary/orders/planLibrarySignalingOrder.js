@@ -203,7 +203,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				dialogElementTypes.width = 800;
 				dialogElementTypes.fillDialogEntity = fillDialogEntity;
 				
-				function fillDialogEntity(dialogEntity) {
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 					
 					elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
 					elements = window.em.getAll(EntityType.ELEMENT);
@@ -242,6 +242,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 							});
 						});
 					}
+					
+					onFilledDialogEntity(dialogEntity);
 				}
 					
 				let s = new SearchDialogBox(label, dialogElementTypes, function(items) {
@@ -265,7 +267,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				dialogElements.width = 800;
 				dialogElements.fillDialogEntity = fillDialogEntity;
 				
-				function fillDialogEntity(dialogEntity) {
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 					
 					elements = window.em.getAll(EntityType.ELEMENT);
 				
@@ -291,6 +293,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 							});
 						}
 					}
+					
+					onFilledDialogEntity(dialogEntity);
 				}
 						
 				let s = new SearchDialogBox(label, dialogElements, function(items) {

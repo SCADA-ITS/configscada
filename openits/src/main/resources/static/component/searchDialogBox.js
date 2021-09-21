@@ -1,4 +1,5 @@
 import DataTable from "../component/datatable.js";
+import TreeView from "../component/treeview.js";
 import { util } from "../lib/util.js";
 
 const DIALOG_DATA_TYPE_TABLE = 1;
@@ -31,53 +32,59 @@ export default class SearchDialogBox {
 			
 			try {
 				
-				let selectedIds = undefined;
+				let selected = undefined;
 				
 				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
 						
-					selectedIds = self.searchDataTable.getSelectedItems();
+					selected = self.searchDataTable.getSelectedItems();
 				}
 				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
 					
-					// TODO
+					selected = self.searchTreeVuew.getSelected();
 				}
 				
 				let res = undefined;
 				
-				if (self.onAccept && Array.isArray(selectedIds) && selectedIds.length > 0) { 
+				if (self.onAccept && Array.isArray(selected) && selected.length > 0) { 
 					
-					res = self.onAccept(selectedIds);
+					res = self.onAccept(selected);
 				
 					if (res === undefined || res === true) {
 						
 						$$(self.containerId).close();	
 					}
 				}
-				else {
-					
-					webix.alert({
-						title: i18n.t("LBL_ROW_NOT_SELECTED"),
-						text: i18n.t("LBL_ROW_NOT_SELECTED_DESCRIPTION"),
-						type: "alert-error",
-						width: 500
-					});
-				}
+
 			}
 			catch {}
 			
 		};
 		
-		let getDialogInfo = function() {
+		function getDialogInfo(onGetDialogInfo) {
 		
-			let data = undefined;
-			let metadata = undefined;
-			
 			if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
 				
-				self.dialogEntity.fillDialogEntity(self.dialogEntity);
+				self.dialogEntity.fillDialogEntity(self.dialogEntity, onFilledDialogEntity);
+			}
+			else {
+				
+				onFilledDialogEntity(self.dialogEntity);
 			}
 			
-			let getFieldName = function(field) {
+			function onFilledDialogEntity(dialogEntity) {
+				
+				let data = undefined;
+				let metadata = undefined;
+				
+				self.dialogEntity = dialogEntity;
+				
+				data = getData();
+				metadata = getMetadata();
+			
+				onGetDialogInfo({ type: self.dialogEntity.dataType, data: data, metadata: metadata });
+			}
+			
+			function getFieldName(field) {
 					
 				if (field) {
 				
@@ -92,7 +99,7 @@ export default class SearchDialogBox {
 				return field;
 			};
 			
-			let getFieldLabel = function(field) {
+			function getFieldLabel(field) {
 				
 				if (field) {
 				
@@ -105,57 +112,83 @@ export default class SearchDialogBox {
 				}
 			};
 			
-			let getData = function() {
+			function getData() {
 				
-				let getFromEntitiesManager = function(em_type) {
-	
-					return window.em.getAll(em_type);
-				};
+				let dat = [];
 				
-				let entities;
-	
-				if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
-						
-					entities = getFromEntitiesManager(EntityType[self.dialogEntity.endpoint]);
-				}
-				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
+				function getDataTable() {
 					
-					let response = webix.ajax().sync().get(appConfig.restUrl + self.dialogEntity.endpoint);
-
-					entities = JSON.parse(response.responseText);
-				}
-				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM) {
-					
-					entities = self.dialogEntity.data;
-				}
-				else if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
-					
-					entities = self.dialogEntity.data;
-				}
+					let dataTable;
 				
-				if (Array.isArray(entities) && entities.length > 0) {
+					if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
 						
-					return entities.map(function(e) {
+						dataTable = window.em.getAll(EntityType[self.dialogEntity.endpoint]);
+					}
+					else {
 						
-						let output = {};
-						
-						output.id = e[self.dialogEntity.pkField];
-						
-						self.dialogEntity.fields.forEach(field => {
+						dataTable = self.dialogEntity.data;
+					}
+					
+					if (Array.isArray(dataTable) && dataTable.length > 0) {
 							
-							let fieldName = getFieldName(field); 
+						return dataTable.map(function(e) {
 							
-							output[fieldName] = e[fieldName];
+							let output = {};
+							
+							output.id = e[self.dialogEntity.pkField];
+							
+							self.dialogEntity.fields.forEach(field => {
+								
+								let fieldName = getFieldName(field); 
+								
+								output[fieldName] = e[fieldName];
+							});
+	
+							return output;
 						});
-
-						return output;
-					});
+					}	
 				}
+				
+				function getDataTree() {
+					
+					let dataTree = [];
+										
+					if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM ||
+					    self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+						
+						
+						if (self.dialogEntity.treeData) {
+						
+							dataTree = util.tree.getNodes(
+													self.dialogEntity.treeData.nodes,
+													self.dialogEntity.treeData.relationships, 
+													{ 
+														parentNodeId: self.dialogEntity.treeData.nodeParentId, 
+														childNodeId: self.dialogEntity.treeData.nodeChildId 
+													}, 
+													false);	
+						}
+							
+					}
+					
+					return dataTree;
+				}
+				
+				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+					
+					dat = getDataTable();
+				}
+				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				
+					dat = getDataTree();
+				}
+	
+				return dat;
 			};
 			
-			let getMetadata = function() {
+			function getMetadata() {
 				
-				let gridMetadata = {};
+				let meta = {};
 				
 				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
 					
@@ -177,9 +210,9 @@ export default class SearchDialogBox {
 						{ gridOption: { id: 21 }, value: "auto" }
 					];
 					
-					gridMetadata = {
+					meta = {
 						filter: true,
-						label: "LBL_LOGS",
+						label: "",
 						visible: true,
 						gridOptionValues: gridOptionValues,
 						gridFields: []
@@ -187,7 +220,7 @@ export default class SearchDialogBox {
 					
 					let position = 1;
 					
-					gridMetadata.gridFields.push({
+					meta.gridFields.push({
 						id: position,
 						extended: false,
 						filtered: false,
@@ -220,7 +253,7 @@ export default class SearchDialogBox {
 						
 						position++;
 						
-						gridMetadata.gridFields.push({
+						meta.gridFields.push({
 							id: position,
 							extended: false,
 							filtered: false,
@@ -262,14 +295,20 @@ export default class SearchDialogBox {
 						});
 					});
 				}
+				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+					
+					meta = {
+							
+						id: -1,
+						label: "",
+						treeOptionValues: [
+							{ value: true, treeOption: { id: 6 } }
+						]
+					}
+				}
 				
-				return gridMetadata;
+				return meta;
 			};
-			
-			data = getData();
-			metadata = getMetadata();
-			
-			return { type: self.dialogEntity.dataType, data: data, metadata: metadata };
 		};
 		
 		let body = {
@@ -279,65 +318,109 @@ export default class SearchDialogBox {
 		
 		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
 
-		body = {
-			id: "search-dialog-" + this.uid,
-			cols: [
-				{ width: 20 },
-				{
-					rows: [
-						{ height: 20 },
-						getSearchComponent(),
-						{ height: 20 },
-						getToolbarActions(),
-						{ height: 10 },			
-					]
-				},	
-				{ width: 20 },
-			]
-		};
-		
-		webix.ui(body, $$("search-dialog-" + this.uid));
-		
-		// Post draw views actions
-		if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
-		
-			self.searchDataTable.callbacks();
+		if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
+				
+			webix.ajax().get(appConfig.restUrl + self.dialogEntity.endpoint).then(
+				
+				function(response) {
+					
+					if (response) {
+						
+						self.dialogEntity.data = response.json();
+						
+						doActions();
+					}
+				}
+			);
+		}
+		else {
+			
+			doActions();
 		}
 		
-		function getSearchComponent() {
+		function doActions() {
 			
-			self.dialogInfo = getDialogInfo();
+			getSearchComponent(onGetSearchComponent);
 			
-			if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
-			
-				return {
-					
+			function onGetSearchComponent(viewSearchComponent) {
+				
+				body = {
+					id: "search-dialog-" + self.uid,
 					cols: [
+						{ width: 20 },
 						{
-							rows: getDataTable()
-						}
-					]  
+							rows: [
+								{ height: 20 },
+								viewSearchComponent,
+								{ height: 20 },
+								getToolbarActions(),
+								{ height: 10 },			
+							]
+						},	
+						{ width: 20 },
+					]
 				};
-			}	
-			else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
-			
-				return getTreeView();
+				
+				webix.ui(body, $$("search-dialog-" + self.uid));
+				
+				// Post draw views actions
+				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
+				
+					self.searchDataTable.callbacks();
+				}	
 			}
+		}
+		
+		function getSearchComponent(onSearchComponent) {
 			
-			function getDataTable() {
-				
-				let events = {};
-				
-				events[DataTable.EventTypes.ON_ITEM_DBL_CLIC] = acceptCallback;
-				
-				self.searchDataTable = new DataTable(null, null, self.dialogInfo.metadata, self.dialogInfo.data, events);
-				
-				return self.searchDataTable.getView();
-			}
+			getDialogInfo(onGetDialogInfo);
 			
-			function getTreeView() {
+			function onGetDialogInfo(dialogInfo) {
 				
-				return {};
+				let v;
+				
+				self.dialogInfo = dialogInfo;
+				
+				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+			
+					v = {
+						
+						cols: [
+							{
+								rows: getDataTable()
+							}
+						]  
+					};
+				}	
+				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				
+					v = getTreeView();
+				}
+				
+				if (v) {
+					
+					onSearchComponent(v);
+				}
+				
+				function getDataTable() {
+					
+					let events = {};
+					
+					events[DataTable.EventTypes.ON_ITEM_DBL_CLIC] = acceptCallback;
+					
+					self.searchDataTable = new DataTable(null, null, self.dialogInfo.metadata, self.dialogInfo.data, events);
+					
+					return self.searchDataTable.getView();
+				}
+				
+				function getTreeView() {
+					
+					let events = {};
+					
+					self.searchTreeView = new TreeView(self.dialogInfo.metadata, self.dialogInfo.data, events);
+					
+					return self.searchTreeView.getView();
+				}
 			}
 		}
 		
@@ -426,7 +509,7 @@ Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
 });
 
 Object.defineProperty(SearchDialogBox, 'PLANS', {
-	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "plans", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
+	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "plans/summary", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false

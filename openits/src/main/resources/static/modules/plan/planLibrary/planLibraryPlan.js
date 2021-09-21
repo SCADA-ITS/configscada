@@ -406,7 +406,7 @@ export default class PlanLibraryPlan {
 			dialogPlanOrderTypes.height = 600;
 			dialogPlanOrderTypes.width = 800;
 				
-			function fillDialogEntity(dialogEntity) {
+			function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 			
 				planOrderTypes = window.em.getAll(EntityType.PLAN_ORDER_TYPE);
 		
@@ -437,7 +437,9 @@ export default class PlanLibraryPlan {
 							jsFile: planOrderType.jsFile
 						});
 					});
-				}		
+				}
+				
+				onFilledDialogEntity(dialogEntity);		
 			}
 			
 			let s = new SearchDialogBox(label, dialogPlanOrderTypes, function(items) {
