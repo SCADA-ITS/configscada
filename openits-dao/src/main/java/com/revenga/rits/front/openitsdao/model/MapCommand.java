@@ -32,9 +32,6 @@ public class MapCommand implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="apply_all")
-	private Boolean applyAll;
-
 	@Column(name="default")
 	private Boolean default_;
 
@@ -104,13 +101,6 @@ public class MapCommand implements Serializable {
 
 	public void setContext(Boolean context) {
 		this.context = context;
-	}
-	public Boolean getApplyAll() {
-		return applyAll;
-	}
-
-	public void setApplyAll(Boolean applyAll) {
-		this.applyAll = applyAll;
 	}
 
 	public Boolean getDefault_() {
