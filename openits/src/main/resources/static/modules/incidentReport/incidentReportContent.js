@@ -28,10 +28,6 @@ export default class IncidentReportContent {
 
 		this.selectedTabId = undefined;
 	}
-	
-	refresh() {
-		
-	}
 
 	getView() {
 
@@ -77,7 +73,7 @@ export default class IncidentReportContent {
 		}
 
 		// TAB TASK OF STATE
-		if (self.incidentReport.confirm) {
+		if (self.incidentReport.confirm && self.incidentReport.incidentState && !self.incidentReport.incidentState.finalState) {
 
 			tasks = self.currentSequenceOfState.taskStates;
 			if (Array.isArray(tasks) && tasks.length) {
@@ -98,29 +94,41 @@ export default class IncidentReportContent {
 				}
 			} else {
 				self.incidentReportTabTaskBoard = undefined;
+				self.tabTaskBoardId = undefined;
 			}
+		} else {
+			self.incidentReportTabTaskBoard = undefined;
+			self.tabTaskBoardId =undefined;
 		}
 
 		// TAB TASK OF INCIDENT
-		tasks = self.incidentReport.taskStates;
-		if (Array.isArray(tasks) && tasks.length) {
+		if (self.incidentReport.incidentState && !self.incidentReport.incidentState.finalState) {
 
-			if (!self.incidentReportTabTaskBoardIncident) {
-				self.incidentReportTabTaskBoardIncident = new IncidentReportTabTaskBoard(self.parent, INDEX_TASK_BOARD_INCIDENT);
-			}
+			tasks = self.incidentReport.taskStates;
+			if (Array.isArray(tasks) && tasks.length) {
 
-			let tabTaskBoardView = self.incidentReportTabTaskBoardIncident.getView(tasks);
+				if (!self.incidentReportTabTaskBoardIncident) {
+					self.incidentReportTabTaskBoardIncident = new IncidentReportTabTaskBoard(self.parent, INDEX_TASK_BOARD_INCIDENT);
+				}
 
-			if (tabTaskBoardView) {
-				self.tabTabTaskBoardIncidentId = tabTaskBoardView.id;
-				contentTabs.cells.push({
-					header: i18n.t("LBL_TASK_BOARD-INCIDENT"),
-					body: tabTaskBoardView
-				});
+				let tabTaskBoardView = self.incidentReportTabTaskBoardIncident.getView(tasks);
+
+				if (tabTaskBoardView) {
+					self.tabTaskBoardIncidentId = tabTaskBoardView.id;
+					contentTabs.cells.push({
+						header: i18n.t("LBL_TASK_BOARD-INCIDENT"),
+						body: tabTaskBoardView
+					});
+				}
+			} else {
+				self.incidentReportTabTaskBoardIncident = undefined;
+				self.tabTaskBoardIncidentId = undefined;
 			}
 		} else {
-			 self.incidentReportTabTaskBoardIncident = undefined; 
+			self.incidentReportTabTaskBoardIncident = undefined;
+			self.tabTaskBoardIncidentId = undefined;
 		}
+
 
 		// TAB LOGS
 		if (self.incidentReport.confirm) {
@@ -141,7 +149,8 @@ export default class IncidentReportContent {
 			}
 		}
 
-		let viewContent = {
+		let viewContent = undefined;
+		viewContent = {
 
 			id: "viewContent-" + self.uid,
 			rows: [

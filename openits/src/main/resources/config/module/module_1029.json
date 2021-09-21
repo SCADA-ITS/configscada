@@ -6,7 +6,7 @@
 	},	
 	"restEndpoints": {
 		"elementType": "element_types/${id}",
-		"plans": "plans",
+		"plans": "plans/summary",
 		"plan": "plans/${id}",
 		"order": "plans/plan_orders/${id}",
 		"planNodes": "plans/nodes",
