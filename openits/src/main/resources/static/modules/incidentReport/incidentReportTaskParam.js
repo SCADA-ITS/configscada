@@ -116,7 +116,7 @@ export default class IncidentReportTaskParam {
 							position: 3,
 							required: true,
 							sourceField: "currentValue",
-							visible: true,
+							visible: self.taskState.completedAt,
 							widthPx: 25,
 							gridFieldDataType: {
 								id: 1,
