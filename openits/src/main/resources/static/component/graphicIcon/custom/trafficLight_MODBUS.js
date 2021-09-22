@@ -47,21 +47,18 @@ export default class TrafficLight extends GraphicIconCustomType {
 
 			
 			if (treatmentValue) {
+				switchOff();
 				if(redLight == "true"){
-					switchOff();
+				
 					this.gRed.attr({ fill: GROUP_COLOR_RED });
-
 				}else if (amberLight == "true"){
-					switchOff();
+				
 					this.gAmber.attr({ fill: GROUP_COLOR_YELLOW });
 
 				}else if(greenLight == "true"){
-					switchOff();
+				
 					this.gGreen.attr({ fill: GROUP_COLOR_GREEN });
 
-				}else{
-					
-					console.error("graphicicon/custom/TrafficLight_MODBUS.js => " + elementInfo.id + " TRAFFIC_LIGHT WITHOUT VALUE");
 				}
 			}
 			else {
