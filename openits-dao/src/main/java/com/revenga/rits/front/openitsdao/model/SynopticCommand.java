@@ -35,9 +35,6 @@ public class SynopticCommand implements Serializable {
 	@Column(name="default")
 	private Boolean default_;
 
-	@ManyToOne
-	private SynopticCommandGroup commandGroup;
-
 	private Boolean context;
 
 	private String icon;
@@ -85,14 +82,6 @@ public class SynopticCommand implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public SynopticCommandGroup getCommandGroup() {
-		return commandGroup;
-	}
-
-	public void setCommandGroup(SynopticCommandGroup commandGroup) {
-		this.commandGroup = commandGroup;
 	}
 
 	public Boolean getContext() {

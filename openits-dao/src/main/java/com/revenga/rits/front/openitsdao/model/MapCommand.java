@@ -35,9 +35,6 @@ public class MapCommand implements Serializable {
 	@Column(name="default")
 	private Boolean default_;
 
-	@ManyToOne
-	private MapCommandGroup commandGroup;
-
 	private Boolean context;
 
 	private String icon;
@@ -85,14 +82,6 @@ public class MapCommand implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public MapCommandGroup getCommandGroup() {
-		return commandGroup;
-	}
-
-	public void setCommandGroup(MapCommandGroup commandGroup) {
-		this.commandGroup = commandGroup;
 	}
 
 	public Boolean getContext() {
