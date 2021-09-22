@@ -270,12 +270,6 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 				let gridData = [];
 				
-				let orderResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.order, { id: self.planOrder.id }));
-				
-				if (orderResponse && orderResponse.responseText) {
-
-					self.planOrder = JSON.parse(orderResponse.responseText);
-
 					if(self.planOrder.planOrderElementValues && Array.isArray(self.planOrder.planOrderElementValues) && self.planOrder.planOrderElementValues.length > 0){
 
 						gridData = self.planOrder.planOrderElementValues.map(e => {
@@ -288,7 +282,6 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 							}
 						});
 					}	
-				}
 				
 				return gridData;
 			}
@@ -335,28 +328,22 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 			planOrder = {
 				
 				id: self.planOrder.id,
-				planOrderTypeId: self.planOrder.planOrderType.id
+				planOrderTypeId: self.planOrder.planOrderType.id,
+				planOrderElementValues: []
 			}
 			
-			if (self.dtParams) {
-			
-				let dtParamRows = self.dtParams.getAllItems();
+			if (Array.isArray(self.planOrder.planOrderElementValues) && self.planOrder.planOrderElementValues.length > 0) {
+								
+				self.planOrder.planOrderElementValues.forEach(row => {
 				
-				if (Array.isArray(dtParamRows) && dtParamRows.length > 0) {
+					let planOrderElementValue = {
+						value: row.value,
+						elementId: row.element.id,
+						elementTypeParamId: row.elementTypeParam.id
+					}
 					
-					planOrder.planOrderValues = [];
-					
-					dtParamRows.forEach(row => {
-					
-						let planOrderValue = {
-							id: row.planOrderValueId,
-							planOrderTypeParamId: row.id,
-							value: row.value
-						}
-						
-						planOrder.planOrderValues.push(planOrderValue);
-					});	
-				}
+					planOrder.planOrderElementValues.push(planOrderElementValue);
+				});	
 			}
 		}
 		
