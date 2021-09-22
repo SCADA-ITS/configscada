@@ -1,5 +1,4 @@
 import { util } from "../../lib/util.js";
-import GenericMap from "./genericMap.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const MARGIN_BETWEEN_COMMANDS = 10;
@@ -13,37 +12,8 @@ export default class MapAction {
 		this.allPks = allPks;
 		this.selectedPksCallback = selectedPksCallback;
 		this.cmdCallbacks = cmdCallbacks;
-		
-		let commandGroups = [];
-        let commandsGrpMap = new Map();
-
-		initialize();
-		
-		this.commandGroups = commandGroups;
-		this.commandsGrpMap = commandsGrpMap;
-
-		function initialize() {
-			
-			if(commands){
-				commands.forEach(cmd => {
-					let tempCommandGrpId;
-					if(cmd.commandGroup){
-						tempCommandGrpId = cmd.commandGroup.id;
-						commandGroups[cmd.commandGroup.position]=cmd.commandGroup;
-					}else{
-						commandGroups[undefined]=true;
-					}
-					let tempCommands = commandsGrpMap.get(tempCommandGrpId);
-					if(!tempCommands){
-						tempCommands = [];
-					}
-					tempCommands[cmd.position]=cmd;
-					commandsGrpMap.set(tempCommandGrpId, tempCommands);
-				});
-			}
-		}
 	}
-
+	
 	getView() {
 
 		let self = this;
@@ -52,32 +22,15 @@ export default class MapAction {
 			id: "map-action-" + self.uid,
 			css: { "background": "white" }, 
 			rows:[]};
+			
+		let componentRows = [];
 		
-		if(self.commandGroups[undefined]){
-			let componentRows = [
-				/*getHeaderGrpCommand(),
-				{ height: 20 }*/
-			];
-			self.commandsGrpMap.get(undefined).forEach(command => {
-				componentRows.push(getRowCommand(command));
-				componentRows.push({ height: MARGIN_BETWEEN_COMMANDS });
-			});
-			
-			view.rows.push(getBodyComponent(componentRows));
-		}
-
-		self.commandGroups.forEach(commandGrp => {
-			let componentRows = [
-				getHeaderGrpCommand(commandGrp),
-				{ height: 20 }
-			];
-			self.commandsGrpMap.get(commandGrp.id).forEach(command => {
-				componentRows.push(getRowCommand(command));
-				componentRows.push({ height: MARGIN_BETWEEN_COMMANDS });
-			});
-			
-			view.rows.push(getBodyComponent(componentRows));
+		self.commands.forEach(command => {
+			componentRows.push(getRowCommand(command));
+			componentRows.push({ height: MARGIN_BETWEEN_COMMANDS });
 		});
+		
+		view.rows.push(getBodyComponent(componentRows));
 		
 		view.rows.push({ height: 20 });
 		
@@ -105,21 +58,11 @@ export default class MapAction {
 			return row;
 		}
 		
-		function getHeaderGrpCommand(commandGrp){
+		function getBodyComponent(compRows){
 		
-			let header = {
-				view: "label",
-				css: "section",
-				label: `<div class="title"><span class="section-text">${i18n.t(commandGrp.label)}</span></div>`,
-				borderless: true
-			};
-	
-			return header;
-		}
-		
-		function getBodyComponent(componentRows){
-		
-			let body = {
+			let body;
+			
+			body = {
 				width: 200,
 				css: "panel-action",
 				rows: [
@@ -128,7 +71,7 @@ export default class MapAction {
 						cols: [
 							{ width: MARGIN_ACTION_PANEL },
 							{
-								rows: componentRows
+								rows: compRows
 							},		
 							{ width: MARGIN_ACTION_PANEL }
 						]
