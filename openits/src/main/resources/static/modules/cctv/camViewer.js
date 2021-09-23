@@ -31,15 +31,15 @@ export default class CamViewer {
 		this.pan = false;
 		this.tilt = false;
 		this.zoom = false;
-		
+
 		this.fullScreen = fullScreen;
-		
+
 		this.img = new Image();
 		this.isOnline = true;
 		this.isReconnecting = true;
 		this.timeCheckStream = undefined;
 		this.timeoutCheckStream = undefined;
-		
+
 		this.timeCheckStreamMs = config.camConf && config.camConf.timeCheckStreamMs ? config.camConf.timeCheckStreamMs : DEFAULT_TIME_CHECK_STREAM_MS;
 		this.timeoutCheckStreamMs = config.camConf && config.camConf.timeoutConnectStreamMs ? config.camConf.timeoutConnectStreamMs : DEFAULT_TIMEOUT_CONNECT_STREAM_MS;
 	}
@@ -51,10 +51,10 @@ export default class CamViewer {
 		let view = {
 			view: "abslayout",
 			cells: [
-//				{
-//					id: "camviewer-" + self.uid,
-//					relative: true
-//				},
+				//				{
+				//					id: "camviewer-" + self.uid,
+				//					relative: true
+				//				},
 				getViewNoImage(),
 				self.getCamName(10, 10),
 				//{ id: "camviewer-name-" + self.uid },
@@ -64,26 +64,26 @@ export default class CamViewer {
 			, on: {
 
 				onDestruct: function() {
-					
+
 					if (self.timeCheckStream) {
-	
-						clearInterval(self.timeCheckStream);	
+
+						clearInterval(self.timeCheckStream);
 					}
-					
+
 					if (self.timeoutCheckStream) {
-		
-						clearInterval(self.timeoutCheckStream);	
+
+						clearInterval(self.timeoutCheckStream);
 					}
 				}
 			}
 		}
 
 		getViewStream();
-		
+
 		function getViewNoImage() {
-							
+
 			let viewNoImage;
-			
+
 			viewNoImage = {
 				id: "camviewer-" + self.uid,
 				relative: true,
@@ -101,17 +101,17 @@ export default class CamViewer {
 					onDestruct: onDestruct
 				}
 			};
-			
+
 			return viewNoImage;
 		}
-		
+
 		function onDestruct() {
-			
+
 			if (!self.isReconnecting) {
-				
+
 				if (self.img.src != NO_VIDEO_IMAGE) {
-				
-					self.img.src = '';	
+
+					self.img.src = '';
 				}
 			}
 		}
@@ -143,16 +143,14 @@ export default class CamViewer {
 				if (url) {
 
 					if (!webix.env.isWebKit) {
-						
-						//self.img = new Image();
 
 						self.img.onload = startStreaming;
-						
+
 						function startStreaming() {
-							
+
 							self.isOnline = true;
 							console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection success for cam: " + url);
-														
+
 							let viewStreamMjpeg = {
 								id: "camviewer-" + self.uid,
 								relative: true,
@@ -179,67 +177,64 @@ export default class CamViewer {
 									onDestruct: onDestruct
 								}
 							};
-							
+
 							webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
 							self.drawButtons();
 							self.img.onload = undefined;
 							self.isReconnecting = false;
-							
+
 						}
-						
+
 						function startKeepAliveStream() {
-							
+
 							self.timeCheckStream = setInterval(function() {
-								
-								//console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Check connection for cam: " + url);
-								
+
 								self.timeoutCheckStream = setInterval(function() {
-								
+
 									if (!self.isOnline) {
-										
+
 										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] No Connection for cam: " + url);
-										
+
 										self.isReconnecting = true;
-										
+
 										if ($$("camviewer-" + self.uid)) {
-											
+
 											webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));
 											$$("camviewer-buttons-" + self.uid).hide();
 										}
-										
+
 										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] Trying to connect to: " + url);
-										
+
 										self.img.onload = startStreaming;
-										
+
 										self.img.src = url;
-										
+
 										if (self.timeoutCheckStream) {
-						
-											clearInterval(self.timeoutCheckStream);	
+
+											clearInterval(self.timeoutCheckStream);
 										}
 									}
-									
+
 								}, self.timeoutCheckStreamMs);
-								
-								self.isOnline = false;	
-					
+
+								self.isOnline = false;
+
 								self.img.onload = function() {
-							
-									//console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection response for cam: " + url);
+
 									self.isOnline = true;
-									self.img.onload = undefined;	
-									
+									self.img.onload = undefined;
+
 									if (self.timeoutCheckStream) {
-						
-										clearInterval(self.timeoutCheckStream);	
-									}		
-								}; 
-						
+
+										clearInterval(self.timeoutCheckStream);
+									}
+								};
+
 							}, self.timeCheckStreamMs);
 						}
-						
+
 						self.img.src = url;
-						
+
 						startKeepAliveStream();
 					}
 					else {
@@ -322,11 +317,11 @@ export default class CamViewer {
 		webix.ui(self.getCamName(margin, bottom, containerId), $$("camviewer-name-" + self.uid));
 
 
-		function getButtons(marginRight, bottom) {
+		function getButtons(marginRight, btm) {
 
 			let viewButtons = {
 				id: "camviewer-buttons-" + self.uid,
-				bottom: bottom,
+				bottom: btm,
 				right: marginRight,
 				cols: [
 					{ width: 1 }
@@ -346,58 +341,94 @@ export default class CamViewer {
 
 				viewButtons.height = SIZE_MULTI;
 
-				let viewButtonCamControls = getButtonCamControls();
-				let viewButtonFullScreen = getButtonFullScreen();
 				let viewButtonExpandCam = getButtonExpandCam();
-
-				viewButtonCamControls.height = SIZE_MULTI;
-				viewButtonCamControls.width = SIZE_MULTI;
-				viewButtonCamControls.css = "cam-viewer-button";
-
-				viewButtonFullScreen.height = SIZE_MULTI;
-				viewButtonFullScreen.width = SIZE_MULTI;
-				viewButtonFullScreen.css = "cam-viewer-button";
 
 				viewButtonExpandCam.height = SIZE_MULTI;
 				viewButtonExpandCam.width = SIZE_MULTI;
 				viewButtonExpandCam.css = "cam-viewer-button";
 
-				if (self.pan || self.tilt || self.zoom)
-					viewButtons.cols.push(viewButtonCamControls);
+				if (self.pan || self.tilt || self.zoom) {
 
-				if (!self.fullScreen)
+					let viewButtonCamControls = getButtonCamControls();
+
+					viewButtonCamControls.height = SIZE_MULTI;
+					viewButtonCamControls.width = SIZE_MULTI;
+					viewButtonCamControls.css = "cam-viewer-button";
+
+					viewButtons.cols.push(viewButtonCamControls);
+				}
+
+				if (!self.fullScreen) {
+
+					let viewButtonFullScreen = getButtonFullScreen();
+
+					viewButtonFullScreen.height = SIZE_MULTI;
+					viewButtonFullScreen.width = SIZE_MULTI;
+					viewButtonFullScreen.css = "cam-viewer-button";
 					viewButtons.cols.push(viewButtonFullScreen);
+				}
 
 				viewButtons.cols.push(viewButtonExpandCam);
+
+				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
+					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId)) {
+
+					let viewButtonLock = getButtonLock();
+
+					viewButtonLock.height = SIZE_MULTI;
+					viewButtonLock.width = SIZE_MULTI;
+					viewButtonLock.css = "cam-viewer-button";
+					viewButtons.cols.push(viewButtonLock);
+				}
+
+
 			}
 
 			function getViewButtonsMultiMode() {
 
 				viewButtons.height = SIZE_SINGLE;
 
-				let viewButtonCamControls = getButtonCamControls();
-				let viewButtonFullScreen = getButtonFullScreen();
 				let viewButtonExpandCam = getButtonExpandCam();
-
-				viewButtonCamControls.height = SIZE_SINGLE;
-				viewButtonCamControls.width = SIZE_SINGLE;
-				viewButtonCamControls.css = "cam-viewer-button-small";
-
-				viewButtonFullScreen.height = SIZE_SINGLE;
-				viewButtonFullScreen.width = SIZE_SINGLE;
-				viewButtonFullScreen.css = "cam-viewer-button-small";
 
 				viewButtonExpandCam.height = SIZE_SINGLE;
 				viewButtonExpandCam.width = SIZE_SINGLE;
 				viewButtonExpandCam.css = "cam-viewer-button-small";
 
-				if (self.pan || self.tilt || self.zoom)
-					viewButtons.cols.push(viewButtonCamControls);
+				if (self.pan || self.tilt || self.zoom) {
 
-				if (!self.fullScreen)
+					let viewButtonCamControls = getButtonCamControls();
+
+					viewButtonCamControls.height = SIZE_SINGLE;
+					viewButtonCamControls.width = SIZE_SINGLE;
+					viewButtonCamControls.css = "cam-viewer-button-small";
+
+					viewButtons.cols.push(viewButtonCamControls);
+				}
+
+				if (!self.fullScreen) {
+
+					let viewButtonFullScreen = getButtonFullScreen();
+
+					viewButtonFullScreen.height = SIZE_SINGLE;
+					viewButtonFullScreen.width = SIZE_SINGLE;
+					viewButtonFullScreen.css = "cam-viewer-button-small";
+
 					viewButtons.cols.push(viewButtonFullScreen);
+				}
 
 				viewButtons.cols.push(viewButtonExpandCam);
+
+				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
+					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId)) {
+
+					let viewButtonLock = getButtonLock();
+
+					viewButtonLock.height = SIZE_SINGLE;
+					viewButtonLock.width = SIZE_SINGLE;
+					viewButtonLock.css = "cam-viewer-button-small";
+					viewButtons.cols.push(viewButtonLock);
+				}
+
 			}
 
 			function getButtonCamControls() {
@@ -489,12 +520,12 @@ export default class CamViewer {
 						onItemClick: function(obj) {
 
 							let taller = undefined;
-							let containerId = $$("camviewer-" + self.uid);
+							let contId = $$("camviewer-" + self.uid);
 							let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
 							let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
 							let className = "webix_view webix_control webix_el_button webix_secondary ";
 
-							taller = ($$(containerId).$height > $$(containerId).$width) ? true : false;
+							taller = ($$(contId).$height > $$(contId).$width) ? true : false;
 
 							if (camViewerContainer && camViewerImg) {
 
@@ -531,7 +562,7 @@ export default class CamViewer {
 									self.fit = !self.fit;
 								}
 
-								self.drawButtons(containerId);
+								self.drawButtons(contId);
 
 								if (self.expandCam) {
 
@@ -551,19 +582,61 @@ export default class CamViewer {
 				return viewButtonExpandCam;
 			}
 
+			function getButtonLock() {
+
+				let viewButtonLock;
+
+				viewButtonLock = {
+
+					view: "button",
+					type: "icon",
+					icon: "mdi mdi-send",
+					tooltip: i18n.t("LBL_SEND_TO_VIDEO_WALL"),
+					
+					on: {
+						onItemClick: function() {
+
+							webix.confirm({
+								title: i18n.t("LBL_CONFIRM"),
+								ok: i18n.t("LBL_YES"),
+								cancel: i18n.t("LBL_NO"),
+								text: i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias,
+								width: 600
+							}).then(function() {
+								
+								if (self.config.commands.lock) {
+
+									let body = {
+										commands: []
+									};
+
+									let sendMessageCmd = webix.copy(self.config.commands.lock);
+
+									sendMessageCmd.elementId = self.element.id;
+									body.commands.push(webix.copy(sendMessageCmd));
+
+									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
+								}
+							});
+						}
+					}
+				}
+
+				return viewButtonLock;
+			}
 			return viewButtons;
 		}
 
-		function getCamControls(marginRight, containerId) {
+		function getCamControls(marginRight, contId) {
 
 			const CTRL_ROWS = 5;
 			const CTRL_COLS = 3;
 
-			let w = (self.w == 0) ? containerId.$width : self.w;
-			let h = (self.h == 0) ? containerId.$height : self.h;
+			let width = (self.w == 0) ? contId.$width : self.w;
+			let height = (self.h == 0) ? contId.$height : self.h;
 
-			let sizeCorrection = (h > w) ? 0.6 : 1;
-			let top = (h > w) ? 100 : 50;
+			let sizeCorrection = (height > width) ? 0.6 : 1;
+			let top = (height > width) ? 100 : 50;
 
 			let presets = [];
 
@@ -654,7 +727,7 @@ export default class CamViewer {
 			function getBtnUp() {
 
 				let viewBtnUp;
-				
+
 				viewBtnUp = {
 
 					view: "button",
@@ -679,7 +752,7 @@ export default class CamViewer {
 			function getBtnDown() {
 
 				let viewBtnDown;
-				
+
 				viewBtnDown = {
 
 					view: "button",
@@ -704,7 +777,7 @@ export default class CamViewer {
 			function getBtnLeft() {
 
 				let viewBtnLeft;
-				
+
 				viewBtnLeft = {
 
 					view: "button",
@@ -729,7 +802,7 @@ export default class CamViewer {
 			function getBtnRight() {
 
 				let viewBtnRight;
-				
+
 				viewBtnRight = {
 
 					view: "button",
@@ -754,7 +827,7 @@ export default class CamViewer {
 			function getBtnStop() {
 
 				let viewBtnStop;
-				
+
 				viewBtnStop = {
 
 					view: "button",
@@ -778,7 +851,7 @@ export default class CamViewer {
 			function getBtnZoomOut() {
 
 				let viewBtnZoomOut;
-				
+
 				viewBtnZoomOut = {
 
 					view: "button",
@@ -803,7 +876,7 @@ export default class CamViewer {
 			function getBtnZoomIn() {
 
 				let viewBtnZoomIn;
-				
+
 				viewBtnZoomIn = {
 
 					view: "button",
@@ -828,7 +901,7 @@ export default class CamViewer {
 			function getBtnPresets() {
 
 				let viewBtnPresets;
-				
+
 				viewBtnPresets = {
 
 					view: "button",
