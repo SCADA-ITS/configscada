@@ -51,6 +51,9 @@ export default class TestMap extends GenericModule {
 		this.drawMark;
 		this.drawLine;
 		this.drawBox;
+		this.marksLayer = [];
+		this.interact;
+		this.source = undefined;
 		this.polygon = undefined;
 		this.zoomIn = false;
 		this.zoomOut = true;
@@ -173,7 +176,7 @@ export default class TestMap extends GenericModule {
 						borderless: true,
 						top: 10,
 						right: 10,
-						width: 160,
+						width: 350,
 						height: 85,
 						rows: [
 							{ height: 23 },
@@ -203,7 +206,7 @@ export default class TestMap extends GenericModule {
 										view: "button",
 										type: "icon",
 										icon: "wxi-radiobox-marked",
-										tooltip: i18n.t("LBL_ADD"),
+										tooltip: "AÑADIR MARCADOR",
 										css: "button-zoom-reset",
 										width: 40, height: 40,
 										on: {
@@ -215,6 +218,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-add-pressed");
 													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
 													$$(obj).refresh();
+
 													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN MARCADORES.													
 													map.on('singleclick', singleClick);
 													addMarker();
@@ -225,6 +229,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-zoom-reset");
 													webix.html.removeCss($$(obj).$view, "button-add-pressed");
 													$$(obj).refresh();
+
 													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.removeInteraction(self.drawMark);
 													map.un('singleclick', singleClick);
@@ -237,7 +242,7 @@ export default class TestMap extends GenericModule {
 										view: "button",
 										type: "icon",
 										icon: "wxi-pencil",
-										tooltip: i18n.t("LBL_DRAW"),
+										tooltip: "PINTAR LINEA",
 										css: "button-zoom-reset",
 										width: 40, height: 40,
 										on: {
@@ -249,6 +254,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-add-pressed");
 													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
 													$$(obj).refresh();
+
 													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
 													map.on('singleclick', singleClick);
 													addPolyline();
@@ -259,6 +265,7 @@ export default class TestMap extends GenericModule {
 													webix.html.addCss($$(obj).$view, "button-zoom-reset");
 													webix.html.removeCss($$(obj).$view, "button-add-pressed");
 													$$(obj).refresh();
+
 													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.un('singleclick', singleClick);
 													map.removeInteraction(self.drawLine);
@@ -270,8 +277,51 @@ export default class TestMap extends GenericModule {
 										id: "drawArea-" + self.uid,
 										view: "button",
 										type: "icon",
-										icon: "wxi-drag",
-										tooltip: i18n.t("LBL_DRAW_AREA"),
+										icon: "wxi-checkbox-blank",
+										tooltip: "PINTAR AREA",
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												let mapLayer = $$("mapDetail-" + self.uid).getNode().querySelector("#map-" + self.uid);
+
+												if (!self.drawButtonPressed) {
+
+													self.drawButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
+													map.on('singleclick', singleClick);
+													addSquare();
+
+													//CAMBIO DE CURSOR
+													mapLayer.style.cursor = 'crosshair';
+												} else {
+
+													self.drawButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
+													map.un('singleclick', singleClick);
+													map.removeInteraction(self.drawBox);
+
+													//CAMBIO DE CURSOR
+													mapLayer.style.cursor = 'auto';
+												}
+											}
+										}
+									},
+									{
+										id: "changeMarkers-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-plus-circle",
+										tooltip: "CAMBIAR DISEÑO MARCADORES",
 										css: "button-zoom-reset",
 										width: 40, height: 40,
 										on: {
@@ -285,7 +335,8 @@ export default class TestMap extends GenericModule {
 													$$(obj).refresh();
 													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
 													map.on('singleclick', singleClick);
-													addSquare();
+													changeMarkers(true);
+
 
 												} else {
 
@@ -295,7 +346,128 @@ export default class TestMap extends GenericModule {
 													$$(obj).refresh();
 													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
 													map.un('singleclick', singleClick);
-													map.removeInteraction(self.drawBox);
+													changeMarkers(false);
+												}
+											}
+										}
+									},
+									{
+										id: "delete-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-trash",
+										tooltip: "ELIMINAR",
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												if (!self.drawButtonPressed) {
+
+													self.drawButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
+													map.on('singleclick', singleClick);
+													deleteMarker();
+
+
+
+												} else {
+
+													self.drawButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
+													map.un('singleclick', singleClick);
+													map.removeInteraction(self.interact);
+												}
+											}
+										}
+									},
+									{
+										id: "visibility-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-eye",
+										tooltip: "VISIBILIDAD",
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												if (!self.drawButtonPressed) {
+
+													self.drawButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+
+													// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
+													map.on('singleclick', singleClick);
+													visibleMarker();
+
+
+
+												} else {
+
+													self.drawButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+
+													// DESACTIVAR EL LISTENER SINGLECLICK Y ELIMINAR LA INTERACCION DE DIBUJADO.
+													map.un('singleclick', singleClick);
+													visibleMarker();
+												}
+											}
+										}
+									},
+									{
+										id: "alert-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-dots",
+										tooltip: "PINTAR MARCADORES PROGRAMATICAMENTE",
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												drawMarkFromCoor();
+											}
+										}
+									},
+									{
+										id: "ol-" + self.uid,
+										view: "button",
+										type: "icon",
+										icon: "wxi-drag",
+										tooltip: "CREAR/ELIMINAR OVERLAYS",
+										css: "button-zoom-reset",
+										width: 40, height: 40,
+										on: {
+											onItemClick: function(obj) {
+
+												if (!self.addButtonPressed) {
+
+													self.addButtonPressed = true;
+													webix.html.addCss($$(obj).$view, "button-add-pressed");
+													webix.html.removeCss($$(obj).$view, "button-zoom-reset");
+													$$(obj).refresh();
+
+													drawOverlay();
+
+												} else {
+
+													self.addButtonPressed = false;
+													webix.html.addCss($$(obj).$view, "button-zoom-reset");
+													webix.html.removeCss($$(obj).$view, "button-add-pressed");
+													$$(obj).refresh();
+
+													drawOverlay();
 												}
 											}
 										}
@@ -483,37 +655,36 @@ export default class TestMap extends GenericModule {
 
 
 		// FUNCION PARA AÑADIR MARCADORES.
-
 		function addMarker() {
 
 			// SE CREA LA "SOURCE".
-			let source = new ol.source.Vector();
+			self.source = new ol.source.Vector();
 
-			// SE CREA LA CAPA TIPO "VECTOR".
-			let marksLayer = new ol.layer.Vector({
-				source: source,
-				style: new ol.style.Style({
-					fill: new ol.style.Fill({
-						color: 'rgba(255, 255, 255, 0.2)'
-					}),
-					stroke: new ol.style.Stroke({
-						color: '#ffcc33',
-						width: 2
-					}),
-					image: new ol.style.Circle({
-						radius: 7,
-						fill: new ol.style.Fill({
-							color: '#ffcc33'
+			// SE CREA LA CAPA TIPO "VECTOR" Y SE INCLUYE EL ESTILO.
+			let newMark = new ol.layer.Vector({
+				source: self.source,
+				style:
+					new ol.style.Style({
+						image: new ol.style.Circle({
+							radius: 7,
+							fill: new ol.style.Fill({
+								color: '#1BE47E'
+							}),
+							stroke: new ol.style.Stroke({
+								color: '#ADE4C8',
+								radius: 10,
+								width: 5
+							})
 						})
 					})
-				})
 			});
 
 			// SE AÑADE LA CAPA AL MAPA.
-			map.addLayer(marksLayer);
+			map.addLayer(newMark);
+			self.marksLayer.push(newMark);
 
 			// SE CREA LA INTERACION QUE PERMITE MODIFICAR LOS MARCADORES Y SE AÑADE LA INTERACCCION AL MAPA.
-			let modify = new ol.interaction.Modify({ source: source });
+			let modify = new ol.interaction.Modify({ source: self.source });
 
 			map.addInteraction(modify);
 
@@ -521,19 +692,17 @@ export default class TestMap extends GenericModule {
 			function addInteractions() {
 
 				self.drawMark = new ol.interaction.Draw({
-					source: source,
+					source: self.source,
 					type: "Point"
 				});
 
 				map.addInteraction(self.drawMark);
 
-				self.snap = new ol.interaction.Snap({ source: source });
+				self.snap = new ol.interaction.Snap({ source: self.source });
 				map.addInteraction(self.snap);
-
 			}
 
 			addInteractions();
-
 		}
 
 
@@ -543,15 +712,15 @@ export default class TestMap extends GenericModule {
 			// SE CREA LA "SOURCE".
 			let source = new ol.source.Vector();
 
-			// SE CREA LA CAPA TIPO "VECTOR".
+			// SE CREA LA CAPA TIPO "VECTOR" Y SE INYECTA EL ESTILO.
 			let lineLayer = new ol.layer.Vector({
 				source: source,
 				style: new ol.style.Style({
 					fill: new ol.style.Fill({
-						color: 'rgba(255, 255, 255, 0.2)'
+						color: '#900C3F'
 					}),
-					stroke: new ol.style.Stroke({
-						color: '#ffcc33',
+					stroke: new ol.style.Stroke({  // COLOR DE LA LINEA
+						color: '#33FFF4',
 						width: 2
 					}),
 					image: new ol.style.Circle({
@@ -596,8 +765,9 @@ export default class TestMap extends GenericModule {
 		// VER SUS COORDENADAS.
 		function singleClick(evt) {
 
-			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+			console.log(evt.coordinate)
 
+			let coor = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
 			// CON INTERSECTSCOODINATE() SE CONFIRMA SI UNAS COORDENADAS SE ENCUENTRAN DENTRO DE UN AREA SIENDO SELF.POLYGON LA ULTIMA AREA PINTADA.
 			if (self.polygon) {
@@ -617,46 +787,47 @@ export default class TestMap extends GenericModule {
 		}
 
 
-		function addSquare(evt) {
+		// PINTAR AREA EN EL MAPA
+		function addSquare() {
 
-			if (self.drawBox) {
-
-				self.drawBox.source_.clear();
-			}
+			// SI YA EXISTE UN AREA, SE BORRA
+			//			if (self.drawBox) {
+			//
+			//				self.drawBox.source_.clear();
+			//			}
 
 			let source = new ol.source.Vector();
 
+			// SEA CREA LA CAPA, SE APLICA ESTILO DEL AREA UNA VEZ PINTADA Y SE AÑADE LA CAPA AL MAPA
 			let boxLayer = new ol.layer.Vector({
 				source: source,
 				style: new ol.style.Style({
 					fill: new ol.style.Fill({
-						color: 'rgba(255, 255, 255, 0.2)'
+						color: 'rgba(255, 255, 255, 0.2)'  // COLOR DEL RELLENO DEL AREA
 					}),
 					stroke: new ol.style.Stroke({
-						color: '#ffcc33',
-						width: 2
-					}),
-					image: new ol.style.Circle({
-						radius: 5,
-						fill: new ol.style.Fill({
-							color: '#ffcc33'
-						})
+						color: '#ffcc33', // COLOR DE LA LINEA DEL AREA
+						width: 3
 					})
 				})
 			});
 
 			map.addLayer(boxLayer);
 
-			let modify = new ol.interaction.Modify({ source: source });
+			// PARA PERMITIR MODIFICAR EL AREA DIBUJADA
+			//			let modify = new ol.interaction.Modify({ source: source });
+			//
+			//			map.addInteraction(modify);
 
-			map.addInteraction(modify);
 
 			function addInteractions() {
 
-				self.drawBox = new ol.interaction.Draw({
+				// PINTADO DEL AREA CON EL ESTILO MIENTRAS SE PINTA 
+				self.drawBox = new ol.interaction.DragBox({
 					source: source,
 					type: "Circle",
 					geometryFunction: ol.interaction.Draw.createBox(),
+					onBoxEnd: dragEnd  // FUNCION QUE SE EJECUTA TRAS TERMINAR EL PINTADO
 				});
 
 				map.addInteraction(self.drawBox);
@@ -666,6 +837,7 @@ export default class TestMap extends GenericModule {
 			}
 
 
+			// CALCULO DEL AREA GEODESICA
 			function formatGeodesicArea(polygon) {
 
 				const area = ol.sphere.getArea(polygon);
@@ -682,7 +854,7 @@ export default class TestMap extends GenericModule {
 
 			}
 
-
+			// CALCULO DEL AREA EN PLANO
 			function formatArea(area) {
 
 				let output;
@@ -696,9 +868,10 @@ export default class TestMap extends GenericModule {
 
 			addInteractions();
 
-			self.drawBox.on('drawend', function(e) {
+			// EVENTOS AL TERMINAR DE PINTAR EL AREA
+			function dragEnd() {
 
-				let coordinates = e.feature.getGeometry().getExtent();
+				let coordinates = self.drawBox.getGeometry().getExtent();
 				let coord01 = [coordinates[0], coordinates[3]];
 				let coord02 = [coordinates[2], coordinates[1]];
 
@@ -707,14 +880,318 @@ export default class TestMap extends GenericModule {
 
 				console.log("start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0]);
 				console.log("end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0]);
+				console.log(startCoordinates, endCoordinates)
+
+				webix.alert({
+					title: "COORDENADAS",
+					text: "start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0],
+					type: "alert-warning",
+					width: 440
+				}).then(function() {
+
+					// TRAS ACEPTAR EL ALERT SE DISPARA EL EVENTO CLICK SOBRE EL BOTON DE PINTAR AREA DEJANDOLO RESETEADO
+					webix.html.triggerEvent($$("drawArea-" + self.uid).getInputNode(), "MouseEvents", "click");
+				});
+
+				self.polygon = self.drawBox.getGeometry();
+				formatGeodesicArea(self.polygon);
+				formatArea(self.polygon.getArea());
+			}
+		}
 
 
-				self.polygon = e.feature.getGeometry();
-				formatGeodesicArea(e.feature.getGeometry());
-				formatArea(e.feature.getGeometry().getArea());
+		// FUNCION PARA CAMBIAR ESTILO DE MARCADORES INCLUIDOS CON EL RATON
+		function changeMarkers(change) {
+
+			self.marksLayer.forEach(marker => {
+
+				if (change) {
+
+					marker.setStyle(
+						new ol.style.Style({
+							image: new ol.style.Icon({
+								src: './img/incident_level/ausol/incident_level_1.png',
+								scale: 1
+							})
+						})
+					);
+
+				} else {
+
+					marker.setStyle(
+						new ol.style.Style({
+							image: new ol.style.Circle({
+								radius: 7,
+								fill: new ol.style.Fill({
+									color: '#37FF33'
+								}),
+								stroke: new ol.style.Stroke({
+									color: '#F61B64',
+									radius: 10,
+									width: 5
+								})
+							})
+						})
+					);
+				}
 			});
 
 		}
+
+		// FUNCION PARA ELIMINAR MARCADORES INCLUIDOS CON EL RATON
+		function deleteMarker() {
+
+			self.interact = new ol.interaction.Select({ condition: ol.events.condition.click });
+			map.addInteraction(self.interact);
+
+			self.interact.on('select', function(evt) {
+
+				if (evt.selected[0].values_.features) {
+
+					self.marksLayer.forEach(marker => {
+
+						let selectedFeature = evt.selected[0].values_.features[0];
+						let source = marker.getSource();
+
+						source.removeFeature(selectedFeature);
+
+						// BORRARIA TODOS LOS MARCADORES DE UNA VEZ
+						//source.clear();  
+
+					});
+				}
+			});
+		}
+
+		// MOSTRAR/OCULTAR LOS MARCADORES INCLUIDOS CON EL RATON
+		function visibleMarker() {
+
+			self.marksLayer.forEach(marker => {
+
+				let isVisible = marker.getVisible();
+
+				if (isVisible) {
+
+					marker.setVisible(false);
+
+				} else {
+
+					marker.setVisible(true);
+				}
+			});
+		}
+
+
+		// PINTAR MARCADORES PROGRAMATICAMENTE
+		function drawMarkFromCoor() {
+
+			// COORDENADAS DE CADA UNO DE LOS MARCADORES A PINTAR
+			let coordinates = [
+				[-4.883959713719608, 36.51421291340994],
+				[-4.8787899903346, 36.51975507063943],
+				[-4.899193187322238, 36.51423723063747],
+				[-4.919092123430723, 36.51180551524055],
+				[-4.912730669840885, 36.524025671074426],
+				[-4.8647867459141825, 36.51108459050563]
+			];
+
+			let markList = [];
+
+			// PARA CADA UNO DE LOS MARCADORES...
+			for (let coord of coordinates) {
+
+				// SE CREA EL MARCADOR EN LAS COORDENADAS INDICADAS
+				let mark = new ol.Feature({
+					geometry: new ol.geom.Point(
+						ol.proj.fromLonLat([coord[0], coord[1]])
+					),
+				});
+
+				// SE LE APLICA UN ESTILO
+				mark.setStyle(new ol.style.Style({
+					image: new ol.style.Circle({
+						radius: 7,
+						fill: new ol.style.Fill({
+							color: '#3A4A85'
+						}),
+						stroke: new ol.style.Stroke({
+							color: '#8DA1EA',
+							radius: 10,
+							width: 5
+						})
+					})
+				}));
+
+				// SE INYECTA EL ID (EN ESTE CASO COMO EJEMPLO UNA DE LAS COORDENADAS)
+				mark.setId(coord[0]);
+
+				// SE INCLUYE EN EL ARRAY DE MARCADORES 
+				markList.push(mark);
+			}
+
+			// SE CREA LA CAPA CON EL ARRAY DE MARCADORES Y SE AÑADE AL MAPA
+			let newLayer = new ol.layer.Vector({
+				source: new ol.source.Vector({
+					features: markList
+				})
+			});
+
+			map.addLayer(newLayer);
+
+
+			// SE INYECTA EL EVENTO ONCLICK
+			let select = new ol.interaction.Select({ condition: ol.events.condition.click });
+			map.addInteraction(select);
+
+			select.on('select', function(evt) {
+
+				// SI HEMOS CLICADO EN UN ELEMENTO Y ADEMAS TIENE UNA ID INYECTADA SE PINTA LA VENTANA
+				if (evt.selected[0] && evt.selected[0].getId()) {
+
+					let id = evt.selected[0].getId();
+
+					webix.ui({
+						view: "window",
+						close: true,
+						position: "center",
+						head: "Nueva ventana",
+						body: "Has pinchado en el id " + id
+					}).show();
+				}
+
+			});
+
+			drawTooltip();
+
+		}
+
+
+		// PINTAR TOOLTIP
+		function drawTooltip() {
+
+			let tooltipId = undefined;
+
+			//EVENTO POINTERMOVE PARA TODO EL MAPA
+			map.on('pointermove', function(e) {
+
+				// SI YA EXISTE TOOLTIP LO DESTRUIMOS Y LE ASIGNAMOS COMO UNDEFINED
+				if (tooltipId) {
+
+					$$(tooltipId).destructor();
+					tooltipId = undefined;
+				}
+
+				// EVENTO PARA CAPTURAR CUANDO EL PUNTERO PASA POR ENCIMA DE UN MARCADOR O FEATURE DEL MAPA
+				map.forEachFeatureAtPixel(e.pixel, function(f) {
+
+					//SI TIENE ID INYECTADO MOSTRAMOS EL TOOLTIP
+					if (f.id_) {
+
+						webix.ui({
+							id: f.id_,
+							view: "tooltip",
+							template: "My #value#",
+							height: 100
+						}).show({ id: 1, value: f.id_ }, { x: event.clientX, y: event.clientY });
+
+						tooltipId = f.id_;
+						return true;
+					}
+
+				});
+
+			});
+
+		}
+
+		// CREAR/BORRAR OVERLAYS
+		function drawOverlay() {
+
+			let win = $$("win");
+
+			if (win) {
+				win.destructor();
+			}
+
+			let overLay = $$("mapDetail-" + self.uid).getNode().querySelector("#overlay-" + self.uid);
+			let pos = [-4.883959713719608, 36.51421291340994];
+
+			// SI NO EXISTE EL DIV DEL QUE DEPENDE EL OVERLAY LO CREAMOS
+			if (overLay === null) {
+
+				let newOverlay = document.createElement('div');
+
+				newOverlay.setAttribute("id", "overlay-" + self.uid);
+				document.querySelector("#map-" + self.uid).appendChild(newOverlay);
+
+				//CREAMOS EL OVERLAY Y SE AÑADE AL MAPA
+				let marker = new ol.Overlay({
+					id: pos[0],
+					element: newOverlay,
+					position: pos
+				});
+
+				map.addOverlay(marker);
+
+
+			} else {
+				// SI EXISTE LO BORRAMOS
+				let olId = map.getOverlayById(pos[0]);
+				map.removeOverlay(olId);
+			}
+
+
+			// MOSTRAMOS EN VENTANA EL NUMERO DE OVERLAYS QUE TIENE EL MAPA
+			let num = map.getOverlays().getArray().length;
+
+			webix.ui({
+				id: "win",
+				view: "window",
+				position: "center",
+				close: true,
+				head: "nueva ventana",
+				body: "Numero de Overlays: " + num
+			}).show();
+
+		}
+
+		//		function drawPolygonFromCoor() {
+		//
+		//			//			start: LAT: 36.6161497043787 - LON: -4.964760280502155 
+		//			//			end: LAT: 36.55415911675141 - LON: -4.811272821466046
+		//			//let coordinates = [-5.094085418538154, 36.87499727607941, -4.555755340413153, 36.62742178736384];
+		//			let coordinates = [-578842.2972050244, 4396167.345315769, -528240.9844802377, 4423837.549555004];
+		//
+		//			let polygon = new ol.Feature(
+		//				new ol.geom.Polygon(coordinates).transform('EPSG:4326', 'EPSG:3857'));
+		//
+		//
+		//			let source = new ol.source.Vector({
+		//				features: [polygon]
+		//			});
+		//
+		//			var layer = new ol.layer.Vector({
+		//				source: source,
+		//				style: new ol.style.Style({
+		//					fill: new ol.style.Fill({
+		//						color: 'rgba(255, 255, 255, 0.2)'  // COLOR DEL RELLENO DEL AREA
+		//					}),
+		//					stroke: new ol.style.Stroke({
+		//						color: '#ffcc33', // COLOR DE LA LINEA DEL AREA
+		//						width: 2
+		//					}),
+		//					image: new ol.style.Circle({
+		//						radius: 0,
+		//						fill: new ol.style.Fill({
+		//							color: 'rgba(255, 255, 255, 0.9)',  // COLOR DEL MARCADOR
+		//							opacity: 10
+		//						})
+		//					})
+		//				})
+		//			});
+		//
+		//			map.addLayer(layer);
+		//		}
 
 
 		map.on('dblclick', function(evt) {
