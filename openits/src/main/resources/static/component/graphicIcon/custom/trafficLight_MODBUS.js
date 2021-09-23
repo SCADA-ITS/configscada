@@ -5,10 +5,16 @@ const PARAM_RED_LIGHT = "ElementTypeParam:13:2:2";
 const PARAM_AMBER_LIGHT = "ElementTypeParam:13:2:3";
 const PARAM_GREEN_LIGHT = "ElementTypeParam:13:2:4";
 
-
 const G_ID_GROUP_GREEN = "green";
 const G_ID_GROUP_RED = "red";
-const G_ID_GROUP_YELLOW = "yellow";	
+const G_ID_GROUP_YELLOW = "yellow";
+const G_ID_GROUP_YELLOW_FLASH = "yellowFlash";
+
+const CMD_GROUP_OFF = 7;
+const CMD_GROUP_RED = 1;	
+const CMD_GROUP_YELLOW = 2;	
+const CMD_GROUP_GREEN = 4;	
+const CMD_GROUP_FLASING_YELLOW = 0;	
 
 const GROUP_COLOR_OFF = "#b3b3b3";
 const GROUP_COLOR_RED = "#eb5569";
@@ -24,9 +30,14 @@ export default class TrafficLight extends GraphicIconCustomType {
 		super(s, g, elementInfo, events);
 
 		this.gState = this.g.select("#" + GraphicIcon.G_ID_STATE);
-		this.gRed = this.g.select("#" + G_ID_GROUP_RED);
-		this.gGreen = this.g.select("#" + G_ID_GROUP_GREEN);
-		this.gAmber = this.g.select("#" + G_ID_GROUP_YELLOW)
+
+		this.groups = [
+			{ cmd: CMD_GROUP_OFF },
+			{ cmd: CMD_GROUP_RED, obj: this.g.select("#" + G_ID_GROUP_RED), color: GROUP_COLOR_RED },
+			{ cmd: CMD_GROUP_GREEN, obj: this.g.select("#" + G_ID_GROUP_GREEN), color: GROUP_COLOR_GREEN },
+			{ cmd: CMD_GROUP_YELLOW, obj: this.g.select("#" + G_ID_GROUP_YELLOW_FLASH), color: GROUP_COLOR_YELLOW },
+			{ cmd: CMD_GROUP_FLASING_YELLOW, obj: this.g.select("#" + G_ID_GROUP_YELLOW_FLASH), color: GROUP_COLOR_YELLOW }
+		]
 	}
 	
 	render(elementInfo) {
@@ -41,24 +52,45 @@ export default class TrafficLight extends GraphicIconCustomType {
 			
 			let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
 
-			let redLight = this.getValue(PARAM_RED_LIGHT);
-			let amberLight = this.getValue(PARAM_AMBER_LIGHT);
-			let greenLight = this.getValue(PARAM_GREEN_LIGHT);
-
+			let cmdGroupValue;
 			
-			if (treatmentValue) {
-				switchOff();
-				if(redLight == "true"){
+			if(this.getValue(PARAM_RED_LIGHT) === "true"){
+				cmdGroupValue = CMD_GROUP_RED;
+			}else if(this.getValue(PARAM_AMBER_LIGHT) === "true"){
+				cmdGroupValue = CMD_GROUP_YELLOW;
+			}else if(this.getValue(PARAM_GREEN_LIGHT) === "true"){
+				cmdGroupValue = CMD_GROUP_GREEN;
+			}
+			
+			if (cmdGroupValue && treatmentValue) {
 				
-					this.gRed.attr({ fill: GROUP_COLOR_RED });
-				}else if (amberLight == "true"){
-				
-					this.gAmber.attr({ fill: GROUP_COLOR_YELLOW });
-
-				}else if(greenLight == "true"){
-				
-					this.gGreen.attr({ fill: GROUP_COLOR_GREEN });
-
+				let group = undefined;
+				let cmd = parseInt(cmdGroupValue);
+					
+				if (group = this.groups.find(e => e.cmd === cmd)) {
+					
+					switchOff();
+						
+					
+					// Switch on selected traffic light group
+					if (group.obj) {
+						if(cmd === CMD_GROUP_FLASING_YELLOW){
+							group.obj.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_YELLOW });	
+							
+						}else if (cmd === CMD_GROUP_YELLOW){
+							group.obj.attr({ from: GROUP_COLOR_YELLOW, to: GROUP_COLOR_YELLOW });	
+						}
+						else{
+							group.obj.attr( { fill: group.color });	
+							
+						}
+						
+						
+					}
+				}
+				else {
+					
+					console.error("graphicicon/custom/TrafficLight.js => " + elementInfo.id + " PARAM_GROUP_COMMAND = " + cmdGroupValue + " is out of range");
 				}
 			}
 			else {
@@ -69,11 +101,14 @@ export default class TrafficLight extends GraphicIconCustomType {
 		
 		function switchOff() {
 			
-			self.gRed.attr({ fill: GROUP_COLOR_OFF });
-			self.gAmber.attr({ fill: GROUP_COLOR_OFF });
-			self.gGreen.attr({ fill: GROUP_COLOR_OFF });
-
+			self.groups.forEach(gr => { 
+				if (gr.obj) { 
+					gr.obj.attr( { fill: GROUP_COLOR_OFF } );
+					gr.obj.attr({ from: GROUP_COLOR_OFF, to: GROUP_COLOR_OFF });	
+					
+				}
+			});
+			
 		}
 	}
 }
-

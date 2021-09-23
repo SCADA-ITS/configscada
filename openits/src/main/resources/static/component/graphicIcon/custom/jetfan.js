@@ -14,7 +14,7 @@ const SPEED_FAN = 10; // From 1 to 10. Lower value is more slow
 const MAX_TIME_ROTATE = 10;
 const FAN_START_POSITION = "0 246 413";
 const FAN_END_POSITION = "360 246 413";
-const ARROW_COLOR_ENABLED = "#ffcc00";
+const ARROW_COLOR_ENABLED = "#323232";
 const ARROW_COLOR_DISABLED = "transparent";
 
 const ELEMENT_TYPE_STATES_NO_TREATMENT = ["ElementTypeState:9:0", "ElementTypeState:9:2"];
