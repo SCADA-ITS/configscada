@@ -308,92 +308,111 @@ export default class IncidentReportTabLog {
 					let iReportLogValuesParamIdState = self.config.iReportLogValuesParamIdState;
 					let iReportLogValuesParamIdComment = self.config.iReportLogValuesParamIdComment;
 
-					let body = {
-						view: "window",
-						modal: true,
-						height: 350,
-						width: 600,
-						css: "dialog-input-custom",
-						head: title,
-						position: "center",
-						body: {
-							rows: [
-								{
-									view: "combo",
-									id: "combo-dialog-" + self.uid,
-									label: i18n.t('LBL_INCIDENTREPORT_LOG_SUBTYPE'),
-									labelWidth: 100,
-									value: options[0],
-									options: options
-								},
-								{ height: 10 },
-								{ template: text, borderless: true },
-								{
-									view: "textarea",
-									id: "txt-dialog-" + self.uid,
-									height: 80,
-									placeholder: i18n.t("LBL_COMMENTS_HERE_OPTIONAL")
-								},
-								{},
-								{
-									cols: [
-										{},
-										{
-											view: "button",
-											value: i18n.t("LBL_NO"),
-											width: 100,
-											click: function() {
+					let comboOptions = {};
+					let oneOption = false;
 
-												const window = this.getTopParentView();
-												window.close();
-											}
-										},
-										{ width: 5 },
-										{
-											view: "button",
-											value: i18n.t("LBL_YES"),
-											width: 100,
-											click: function() {
+					comboOptions = {
+						view: "richselect",
+						id: "combo-dialog-" + self.uid,
+						label: i18n.t('LBL_INCIDENTREPORT_LOG_SUBTYPE'),
+						labelWidth: 100,
+						css: "new-log-window",
+						value: options[0],
+						options: options
+					};
 
-												const window = this.getTopParentView();
-												const logComment = $$("txt-dialog-" + self.uid).getValue();
-												const logType = $$("combo-dialog-" + self.uid).getValue();
+					if (options.length === 1) {
 
-												let mutationBody = {
-													"incidentReportLogs":
-														[
-															{
-																"incidentReportId": incidentReportId,
-																"incidentReportLogValues": [
-																	{
-																		"logTypeParamId": iReportLogValuesParamIdState,
-																		"value": self.incidentReport.incidentState ? self.incidentReport.incidentState.labelAlias : "-"
-																	},
-																	{
-																		"logTypeParamId": iReportLogValuesParamIdComment,
-																		"value": logComment
-																	}
-																],
-																"level": "INFO",
-																"logSubtypeId": logType,
-																"userId": userData.id
-															}
-														]
-												};
+						comboOptions = {
+							view: "text",
+							id: "combo-dialog-" + self.uid,
+							label: i18n.t('LBL_INCIDENTREPORT_LOG_SUBTYPE'),
+							readonly: true,
+							labelWidth: 100,
+							css: "new-log-window",
+							value: options[0].value
+						};
 
-												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody);
-												window.close();
-											}
-										},
-										{}
-									]
-								}
-							],
-							type: "form"
-						}
+						oneOption = true;
 					}
 
-					webix.ui(body).show();
+					let body = {
+						rows: [
+							comboOptions,
+							{ height: 10 },
+							{
+								template: text,
+								height: 25,
+								css: "new-log-window",
+								borderless: true
+							},
+							{
+								view: "textarea",
+								id: "txt-dialog-" + self.uid,
+								height: 105,
+								placeholder: i18n.t("LBL_COMMENTS_HERE")
+							},
+							{},
+							{
+								cols: [
+									{
+										view: "button",
+										css: "dialog-cancel",
+										width: 130,
+										height: 40,
+										label: i18n.t("LBL_CANCEL"),
+										click: function() {
+
+											const window = this.getTopParentView();
+											window.close();
+										}
+									},
+									{},
+									{
+										view: "button",
+										css: "dialog-accept",
+										width: 130,
+										height: 40,
+										label: i18n.t("LBL_ACCEPT"),
+										click: function() {
+
+											const window = this.getTopParentView();
+											const logComment = $$("txt-dialog-" + self.uid).getValue();
+											let logType = (oneOption) ? options[0].id : $$("combo-dialog-" + self.uid).getValue();
+
+											let mutationBody = {
+												"incidentReportLogs":
+													[
+														{
+															"incidentReportId": incidentReportId,
+															"incidentReportLogValues": [
+																{
+																	"logTypeParamId": iReportLogValuesParamIdState,
+																	"value": self.incidentReport.incidentState ? self.incidentReport.incidentState.labelAlias : "-"
+																},
+																{
+																	"logTypeParamId": iReportLogValuesParamIdComment,
+																	"value": logComment
+																}
+															],
+															"level": "INFO",
+															"logSubtypeId": logType,
+															"userId": userData.id
+														}
+													]
+											};
+
+											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + addLogIncidentReportEndPoint, mutationBody);
+											window.close();
+										}
+									}
+								]
+							}
+						],
+						type: "form"
+					}
+
+					util.ui.loadWindow(title, body, 325, 600, true);
 
 				}
 			});

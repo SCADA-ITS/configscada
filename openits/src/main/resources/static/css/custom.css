@@ -3430,3 +3430,9 @@ audio {
 	justify-content: center;
 	align-items: center;
 }
+
+.new-log-window .webix_inp_label,  .new-log-window .webix_template {
+	color: #475466 !important;
+	font-size: 14px;
+	font-weight: 500;
+}
