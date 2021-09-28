@@ -3,6 +3,8 @@ import GraphicIcon from "../graphicIcon.js";
 
 const PARAM_DIRECT_STATE = "ElementTypeParam:9:2:19";
 const PARAM_INVERSE_STATE = "ElementTypeParam:9:2:20";
+const PARAM_STOP_STATE = "ElementTypeParam:9:2:21";
+
 
 
 const G_ID_ANIMATION = "animation";
@@ -11,6 +13,7 @@ const G_ID_FAN = "fan";
 
 const CMD_FAN_VALUE_MODE_DIRECT = "true";
 const CMD_FAN_VALUE_MODE_INVERSE = "true";
+const CMD_FAN_VALUE_MODE_STOP = "true";
 
 const SPEED_FAN = 10; // From 1 to 10. Lower value is more slow
 const MAX_TIME_ROTATE = 10;
@@ -47,25 +50,36 @@ export default class Fan extends GraphicIconCustomType {
 			// Update others
 			let cmdFanValueDirect = this.getValue(PARAM_DIRECT_STATE);
 			let cmdFanValueInverse = this.getValue(PARAM_INVERSE_STATE);
+			let cmdFanValueStop = this.getValue(PARAM_STOP_STATE);
 			let treatmentValue = (ELEMENT_TYPE_STATES_NO_TREATMENT.indexOf(elementInfo.state.id) === -1);
 
 			
-			if (cmdFanValueDirect && cmdFanValueInverse && treatmentValue) {
-				if(cmdFanValueDirect == CMD_FAN_VALUE_MODE_DIRECT){
-					this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
-					this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_END_POSITION });
-					this.gArrow.transform("r0," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
-				}else if(cmdFanValueInverse  == CMD_FAN_VALUE_MODE_INVERSE){
-					this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
-					this.gAnimation.attr({ dur: timeFanRotate, from: FAN_END_POSITION, to: FAN_START_POSITION });
-					this.gArrow.transform("r180," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
-				}else{
+			if (cmdFanValueDirect && cmdFanValueInverse && cmdFanValueStop && treatmentValue) {
+
+				if(cmdFanValueStop == CMD_FAN_VALUE_MODE_STOP){
+
 					this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
 					this.gArrow.attr({ fill: ARROW_COLOR_DISABLED });
+				}else{
+					if(cmdFanValueDirect == CMD_FAN_VALUE_MODE_DIRECT){
+
+						this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_END_POSITION });
+						this.gArrow.transform("r0," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
+					}else if(cmdFanValueInverse  == CMD_FAN_VALUE_MODE_INVERSE){
+
+						this.gArrow.attr({ fill: ARROW_COLOR_ENABLED });
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_END_POSITION, to: FAN_START_POSITION });
+						this.gArrow.transform("r180," + this.gArrow.getBBox().cx + "," + this.gArrow.getBBox().cy);
+					}else{
+
+						this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
+						this.gArrow.attr({ fill: ARROW_COLOR_DISABLED });
+					}
 				}
 			}
 			else {
-			
+
 				this.gAnimation.attr({ dur: timeFanRotate, from: FAN_START_POSITION, to: FAN_START_POSITION });
 				this.gArrow.attr({ fill: ARROW_COLOR_DISABLED });
 			}
