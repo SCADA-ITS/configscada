@@ -52,14 +52,15 @@ export default class VmsSignalingComposer {
 				
 		let view = {
 			id: "vms-composer-" + self.uid,
-			height: !self.initialJsonData ? 250 : 100,
+			//height: !self.initialJsonData ? 250 : 100,
+			height: 250,
 			width: 625,
 			borderless: true,
 			template: function() {
 					
 				return `<div>
 							<!--<svg id=${"vms-composer-svg-" + self.uid} style="display: none"></svg>-->
-							<svg id=${"vms-composer-svg-" + self.uid} height="${!self.initialJsonData ? 250 : 100}px"></svg>
+							<svg id=${"vms-composer-svg-" + self.uid} height=250px"></svg>
 						</div>`
 			},
 			on: {

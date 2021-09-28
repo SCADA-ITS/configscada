@@ -76,7 +76,7 @@ class Subscriptor {
 
 						if (!e.fields) {
 	
-							e.callback(be);
+							e.callback(be, data.action, data.timestamp);
 						}
 						else {
 	
@@ -87,7 +87,7 @@ class Subscriptor {
 								
 								if (match) {
 		
-									e.callback(be);
+									e.callback(be, data.action, data.timestamp);
 								}
 							}
 						}
@@ -114,6 +114,10 @@ class Subscriptor {
 
 export default class StompSubscriptorService extends GenericModule {
 
+	static get ACTION_CREATE() { return "CREATE" }
+	static get ACTION_UPDATE() { return "UPDATE" }
+	static get ACTION_DELETE() { return "DELETE" }
+		
 	constructor(module, mod) {
 
 		super(module, null, null);

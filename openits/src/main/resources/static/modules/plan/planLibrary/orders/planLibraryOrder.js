@@ -28,8 +28,8 @@ export default class PlanLibraryOrder {
 			rows: [
 				drawHeader(),
 				{ height: 10 },
-				self.getContent(),
-				drawActions()
+				self.getContent()
+//				drawActions()
 			] 
 		};
 		
@@ -82,7 +82,8 @@ export default class PlanLibraryOrder {
 									},
 									{ width: 5 },
 									pencilIcon,
-									{}
+									{},
+									drawActions()
 								]
 							}
 						]

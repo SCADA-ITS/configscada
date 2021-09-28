@@ -541,6 +541,15 @@ public class ImsIncidentReportBO extends GenericBO {
 		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS).getFieldId(), incidentReports);
 	}
+	
+	public List<Map<String, Object>> getSummaryList() {
+
+		List<Map<String, Object>> incidentReports = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY,
+				null);
+
+		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
+				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY).getFieldId(), incidentReports);
+	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {

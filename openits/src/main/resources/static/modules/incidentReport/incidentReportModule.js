@@ -307,9 +307,9 @@ export default class IncidentReportModule extends GenericModule {
 							let incidentIcon = self.incidentReport.incidentType.icon;
 
 							if (incidentIcon == undefined) {
-								incidentIcon = "not_found_50.png";
+								incidentIcon = "undefined.png";
 							}
-							return `<image class="ims-incident-report-icon" src="img/${incidentIcon}" />
+							return `<image class="ims-incident-report-icon" src="img/incident_type/${incidentIcon}" />
 									<div class="ims-incident-report-title">
 										${self.incidentReport.incidentType.alias} ${self.incidentReport.incidentType.description}
 									</div>

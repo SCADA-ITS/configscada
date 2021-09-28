@@ -379,6 +379,20 @@ export default class VmsSignalingContent {
 					initialJsonValue = [];	
 				}
 			}
+			else if (Array.isArray(self.selectedElements) && self.selectedElements.length === 1) {
+				
+				let vmsSingle = self.selectedElements[0];
+				
+				if (Array.isArray(vmsSingle.elementValues) && vmsSingle.elementValues.length > 0) {
+					
+					let vmsSingleElementValue = vmsSingle.elementValues.find(e => e.elementTypeParam.id == self.config.vms.jsonData);
+					
+					if (vmsSingleElementValue && vmsSingleElementValue.value) {
+					
+						initialJsonValue = JSON.parse(vmsSingleElementValue.value);	
+					}
+				}
+			}
 			
 			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, onUpdateComposer);
 			
@@ -404,13 +418,13 @@ export default class VmsSignalingContent {
 								}
 							];
 
-							if (self.isPlanOrderEdit) {
-								
-								let radioButtons = getViewCommands();
-								radioButtons.css = {"margin-left": "-35% !important", "line-height": "44px" };
-
-								labels.push(radioButtons);
-							}
+//							if (self.isPlanOrderEdit) {
+//								
+//								let radioButtons = getViewCommands();
+//								radioButtons.css = {"margin-left": "-35% !important", "line-height": "44px" };
+//
+//								labels.push(radioButtons);
+//							}
 
 							return labels;
 						}()
@@ -418,14 +432,11 @@ export default class VmsSignalingContent {
 					{
 						cols: function() {
 
-							if (!self.isPlanOrderEdit) {
-
-								return [
-									{ width: 60 },
-									getViewCommands(),
-									{ width: 60 }
-								];
-							}
+							return [
+								{ width: 60 },
+								getViewCommands(),
+								{ width: 60 }
+							];
 						}()
 					},
 					{ height: 10 },

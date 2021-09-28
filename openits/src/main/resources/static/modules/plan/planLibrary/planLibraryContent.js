@@ -254,7 +254,7 @@ export default class PlanLibraryContent {
 							{ height: 10 },
 							{ 
 								view:"scrollview",
-								scroll: "y",
+								scroll: "auto",
 								body: {
 									rows:[{id: "plan-order-lib-plan-" + self.uid}]									
 								}

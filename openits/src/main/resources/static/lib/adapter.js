@@ -1,6 +1,6 @@
 import { util } from "../lib/util.js";
 
-const INCIDENT_REPORT_END_POINT = "incidents/summary"
+const INCIDENT_REPORT_SUMMARY_END_POINT = "incidents/reports/${id}/summary"
 const PLAN_END_POINT = "plans"
 
 
@@ -304,14 +304,14 @@ export let adapter = {
 					gridData.data = [];
 					gridData.action = data.action;
 
-					data.basicElementsVO.forEach(incidentReport => {
+					data.basicElementsVO.forEach(be => {
 
 						let dataItem = {};
-						dataItem.id = incidentReport.id;
+						dataItem.id = be.id;
 
 						if (gridData.action != 'DELETE') {
 
-							webix.ajax().get(appConfig.restUrl + INCIDENT_REPORT_END_POINT + "/" + incidentReport.id).then(function(dat) {
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(INCIDENT_REPORT_SUMMARY_END_POINT, { id: be.id })).then(function(dat) {
 
 								if (dat != null) {
 

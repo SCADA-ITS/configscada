@@ -1,0 +1,345 @@
+import GraphicIconIncident from "../graphicIcon/graphicIconIncident.js";
+import { util } from "../../lib/util.js";
+import StompSubscriptorService from "../../services/stompSubscriptorService.js";
+
+const TOPIC_INCIDENT_REPORTS = "/topic/incidentReport.>"
+const REST_ENDPOINT_INCIDENT_REPORTS_SUMMARY = "incidents/reports/summary"
+const REST_ENDPOINT_INCIDENT_REPORT_SUMMARY = "incidents/reports/${id}/summary"
+
+export default class MapIncident {
+
+	constructor(parent) {
+		
+		this.parent = parent;
+		this.olMap = parent.olMap;
+		this.uid = parent.uid;
+		this.metadata = parent.metadata;
+		this.idStompSubscriptor = undefined;
+		this.incidentReports = new Map();
+		this.graphicIcons = new Map();
+	}
+	
+	load() {
+		
+		let self = this;
+		
+		loadIncidents();
+		
+		function loadIncidents() {
+			
+			webix.ajax().get(appConfig.restUrl + REST_ENDPOINT_INCIDENT_REPORTS_SUMMARY).then(
+				
+				function(dat) {
+
+					if (dat != null) {
+
+						let allIncidentReports = dat.json();
+						
+						if (Array.isArray(allIncidentReports) && allIncidentReports.length > 0) {
+							
+							let filteredIncidentReports = allIncidentReports.filter(e => {
+							
+								let res = false;
+								
+								if (e.location && e.location.lon && e.location.lat) {
+								
+									res = isInside(e.location.lon, e.location.lat);	
+								}
+								
+								return res;
+							});
+							
+							if (Array.isArray(filteredIncidentReports) && filteredIncidentReports.length > 0) {
+								
+								self.incidentReports = new Map(filteredIncidentReports.map(filteredIncidentReport => [filteredIncidentReport.id, filteredIncidentReport]));
+								
+								loadGraphicIcons();	
+							}
+						}
+					}
+					
+					connectWS();
+				}
+			);
+		}
+		
+		function isInside(lon, lat) {
+			
+			let res = true;
+			let ext, point, elementPoint, feature, coordsFeatures;
+					
+			if (self.metadata.limitInitLon && self.metadata.limitInitLat && self.metadata.limitEndLon && self.metadata.limitEndLat) {
+	
+				let destLoc = [self.metadata.limitEndLon, self.metadata.limitEndLat];
+				let currentLoc = [self.metadata.limitInitLon, self.metadata.limitInitLat];
+				
+				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
+				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+				
+				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+				elementPoint = new ol.geom.Point(point);
+				feature = new ol.Feature(elementPoint);
+				coordsFeatures = feature.getGeometry().getCoordinates();
+				
+				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
+			}
+			
+			return res;
+		}
+		
+		function loadGraphicIcons() {
+			
+			if (self.incidentReports) {
+				
+				self.incidentReports.forEach(incidentReport => {
+					
+					loadGraphicIcon(incidentReport);
+				})
+			}
+		}
+		
+		function unloadGraphicIcon(incidentReportId) {
+			
+			let graphicIcon = self.graphicIcons.get(incidentReportId);
+			
+			if (graphicIcon) {
+			
+				self.graphicIcons.delete(incidentReportId);
+				
+				let svgId = `svg-${util.getSimpleId(incidentReportId)}-${self.uid}`;
+				
+				let olOverlay = self.olMap.getOverlayById(svgId.replace("svg", "ol-overlay"),);
+			    
+				if (olOverlay) {
+			       
+					self.olMap.removeOverlay(olOverlay);
+			    }
+			} 
+		}
+		
+		function loadGraphicIcon(incidentReport) {
+				
+			let layerIncident = {
+				id: incidentReport.id + "-" + self.uid,
+				incidentId: incidentReport.id,
+				horizontalFlip: false,
+				label: incidentReport.incidentType.alias,
+				showText: true,
+				tooltip: true,
+				graphicIcon: self.metadata.mapIncident.incidentGraphicIcon,
+				incidentReportModuleAction: self.metadata.mapIncident.incidentReportModuleAction
+			};
+			
+			let s = Snap("#" + createSvgIcon());
+			
+			let container = { 
+				type: GraphicIconIncident.CONTAINER_TYPE_OPEN_LAYER,
+				obj: s
+			};
+					
+			createGraphicIcon(incidentReport, onLoadGraphicIcon);
+									
+			function onLoadGraphicIcon(graphicIcon) {
+				
+				// Hidden
+				graphicIcon.hide();
+				self.graphicIcons.set(incidentReport.id, graphicIcon);
+				
+				let olOverlay = new ol.Overlay({
+								id: graphicIcon.container.obj.node.id.replace("svg", "ol-overlay"),
+								position: ol.proj.fromLonLat([incidentReport.location.lon, incidentReport.location.lat]),
+								positioning: 'center-center',
+								element: graphicIcon.container.obj.node,
+								stopEvent: false
+							});
+							
+				self.olMap.addOverlay(olOverlay);
+				
+				updateGraphicIcon(incidentReport);
+				
+				graphicIcon.show();
+			}
+			
+			function createGraphicIcon(incident, onCreate) {
+				
+				let events = {};
+				
+				events[GraphicIconIncident.EventTypes.ON_DBL_CLIC] = onDblClic;
+				events[GraphicIconIncident.EventTypes.ON_MOUSE_OVER] = onMouseOver;
+				events[GraphicIconIncident.EventTypes.ON_MOUSE_OUT] = onMouseOut;
+				events[GraphicIconIncident.EventTypes.ON_MOUSE_WHEEL] = onMouseWheel;
+				
+				let graphicIconInstance = new GraphicIconIncident(layerIncident, incident, container, events);
+				
+				graphicIconInstance.load(function() {
+							
+					graphicIconInstance.loadRender(function() {
+						
+						onLoaded(graphicIconInstance);	
+					});
+				});
+				
+				function onMouseOver() {
+					
+					self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
+					self.parent.mouseOverSvg = true;
+				}
+				
+				function onMouseOut() {
+					
+					self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+					self.parent.mouseOverSvg = false;						
+				}
+				
+				function onMouseWheel() {
+					
+					self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
+					self.parent.mouseOverSvg = false;							
+				}
+				
+				function onDblClic() {
+					
+					if (self.mapAction) {
+						
+						// TODO
+					} 
+				}
+				
+				function onLoaded() {
+					
+					onCreate(graphicIconInstance);
+				}
+			}
+			
+			function createSvgIcon() {
+				
+				let svgId = `svg-${util.getSimpleId(layerIncident.id)}`;
+				let svgGraphicIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+				let w = layerIncident.graphicIcon.width;
+				let h = layerIncident.graphicIcon.height;
+				
+				svgGraphicIcon.setAttribute("id", svgId);
+				svgGraphicIcon.setAttribute("width", w);
+				svgGraphicIcon.setAttribute("height", h);
+				
+				document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
+				
+				return svgId;
+			}
+		}
+		
+		function connectWS() {
+
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+			if (stompSubscriptorService) {
+				
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(TOPIC_INCIDENT_REPORTS), onMessage);
+			}
+			
+			function onMessage(be, action) {
+
+				if (be && action) {
+					
+					if (action === StompSubscriptorService.ACTION_CREATE) {
+
+						createIncident(be.id);						
+					}
+					else if (action === StompSubscriptorService.ACTION_UPDATE) {
+
+						updateIncident(be.id);						
+					}
+					else if (action === StompSubscriptorService.ACTION_DELETE) {
+						
+						deleteIncident(be.id);
+					}
+				}
+			}
+		}
+		
+		function createIncident(incidentReportId) {
+			
+			getIncident(incidentReportId, function(incidentReport) {
+				
+				self.incidentReports.set(incidentReport.id, incidentReport);
+				
+				loadGraphicIcon(incidentReport);	
+			});	
+		}
+		
+		function updateIncident(incidentReportId) {
+			
+			getIncident(incidentReportId, function(incidentReport) {
+				
+				self.incidentReports.set(incidentReport.id, incidentReport);
+				
+				updateGraphicIcon(incidentReport);
+			});
+		}
+		
+		function deleteIncident(incidentReportId) {
+		
+			if (self.incidentReports.delete(incidentReportId)) {
+				
+				unloadGraphicIcon(incidentReportId);				
+			}
+		}
+		
+		function getIncident(incidentReportId, onResponse) {
+			
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(REST_ENDPOINT_INCIDENT_REPORT_SUMMARY, { id: incidentReportId })).then(
+
+				function(dat) {
+					
+					if (dat) {
+						
+						let incidentReport = dat.json();
+					
+						if (onResponse && incidentReport) {
+						
+							onResponse(incidentReport);	
+						}	
+					}
+				}
+			);	
+		}
+		
+		function updateGraphicIcon(incidentReport) {
+			
+			let graphicIcon = self.graphicIcons.get(incidentReport.id); 
+			
+			if (graphicIcon && incidentReport) {
+				
+				graphicIcon.updateIncident(incidentReport);
+			}
+		}
+	}
+	
+	unload() {
+		
+		let self = this;
+	
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+			
+		if (stompSubscriptorService && self.idStompSubscriptor) {
+
+			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+		}		
+	}
+	
+	show() {
+		
+		if (Array.isArray(this.graphicIcons) && this.graphicIcons.length > 0) {
+		
+			this.graphicIcons.forEach(graphicIcon => graphicIcon.show());
+		}
+	}
+	
+	hide() {
+		
+		if (Array.isArray(this.graphicIcons) && this.graphicIcons.length > 0) {
+		
+			this.graphicIcons.forEach(graphicIcon => graphicIcon.hide());
+		}
+	}
+} 

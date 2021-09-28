@@ -6,6 +6,7 @@ import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
 import MapZone from "./mapZone.js";
 import GraphicIcon from "../graphicIcon/graphicIcon.js";
+import MapIncident from "./mapIncident.js"; 
 
 const TOPIC_ELEMENTS = "/topic/element.>";
 
@@ -42,8 +43,10 @@ export default class OpenMap extends GenericMap {
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
 		this.mapZone = undefined;
+		this.mapIncident = undefined;
 		
 		this.afterRenderCallback = undefined;
+		
 	}
 
 	getView(afterRenderCallback) {
@@ -62,8 +65,9 @@ export default class OpenMap extends GenericMap {
 					id: "view-map-" + self.uid,
 					template: function() {
 									
-						// <!--<div id="map-${self.uid}" style="height: 100vh; width: 100vw"></div>-->				
-						let t = `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
+						let t;
+						
+						t = `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
 									<div id="map-${self.uid}" style="height: ${self.h}px; width: ${self.w}px">
 									<div id="svg-main-container-${self.uid}" style="display: none;"></div>
 								 </div>`;
@@ -77,6 +81,7 @@ export default class OpenMap extends GenericMap {
 							self.olMap = createMap();
 							
 							loadGraphicIcons();
+							loadIncidents();
 						},
 						onDestruct: function() {
 		
@@ -85,6 +90,11 @@ export default class OpenMap extends GenericMap {
 							if (stompSubscriptorService && self.idStompSubscriptor) {
 		
 								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+							}
+							
+							if (self.mapIncident) {
+								
+								self.mapIncident.unload();
 							}	
 							
 							stop();				
@@ -118,7 +128,9 @@ export default class OpenMap extends GenericMap {
 			
 		function getSvgId(layerElement, layerElementZoom) {
 			
-			let id = `svg-${layerElement.id}-${layerElementZoom ? layerElementZoom.id : 0}-${self.uid}`;
+			let id;
+			
+			id = `svg-${layerElement.id}-${layerElementZoom ? layerElementZoom.id : 0}-${self.uid}`;
 				
 			return id;
 		}
@@ -166,7 +178,7 @@ export default class OpenMap extends GenericMap {
 				interactions : ol.interaction.defaults({doubleClickZoom :false}),
 				layers: [
 					new ol.layer.Tile({
-						// TODO: Implements other source URL's
+
 						source: new ol.source.OSM()
 					})
 				],
@@ -198,12 +210,7 @@ export default class OpenMap extends GenericMap {
 			
 			
 			map.on('moveend', onChangeZoom);
-			
-//			map.on('postcompose',function(e){
-//			
-//				darkMode();
-//			});
-			
+						
 			if (self.options && self.options[Map.Options.DEBUG_MODE]) {
 			
 				map.on('singleclick', function(evt) {
@@ -438,7 +445,6 @@ export default class OpenMap extends GenericMap {
 					layerElem.horizontalFlip = layerElementZoom.horizontalFlip;
 					layerElem.rotate = layerElementZoom.rotate;
 					layerElem.tooltip = layerElementZoom.tooltip;
-					layerElem.tooltip = layerElementZoom.tooltip;
 					layerElem.showText = layerElementZoom.showText;
 					layerElem.textColor = layerElementZoom.textColor;
 				}
@@ -477,11 +483,9 @@ export default class OpenMap extends GenericMap {
 							text.style.height = "auto";
 							text.style.width = "auto";
 							text.style.whiteSpace = "nowrap";
-							//text.setAttribute("style", "position: absolute; visibility: hidden; height: auto; width: auto; white-space: nowrap;");
 							text.innerHTML = element.alias;
 							document.body.appendChild(text);
 							
-							let height = (text.clientHeight + 1);
 							let width = (text.clientWidth + fontSize);
 							
 							w = width > w ? width : w;
@@ -494,18 +498,7 @@ export default class OpenMap extends GenericMap {
 					svgGraphicIcon.setAttribute("height", h);
 					
 					document.querySelector("#svg-main-container-" + self.uid).appendChild(svgGraphicIcon);
-					
-//					svgGraphicIcon.onmouseover = function() {
-//						
-//					    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
-//					    self.mouseOverSvg = true;
-//					};
-					
-//					svgGraphicIcon.onmouseout = function() {
-//					    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
-//					    self.mouseOverSvg = false;
-//					};
-					
+										
 					return svgId;
 				}
 			}
@@ -524,20 +517,29 @@ export default class OpenMap extends GenericMap {
 			}
 		}
 		
+		function loadIncidents() {
+			
+			if (self.metadata.mapIncident) {
+				
+				self.mapIncident = new MapIncident(self);
+				
+				self.mapIncident.load();
+			}
+		}
+		
 		function loadElementInfo() {
 			
 			let loadedElements = 0;
 
 			self.zoomLevelGraphicIcons.forEach((value, key) => {
 				
-				let zoomLevel = key;
 				let graphicIcons = value;
 				
 				if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
 					
 					graphicIcons.forEach(graphicIcon => {
 						
-						let element = self.data.find(element => element.id === graphicIcon.element.id);
+						let element = self.data.find(e => e.id === graphicIcon.element.id);
 						
 						try {
 	
@@ -602,32 +604,15 @@ export default class OpenMap extends GenericMap {
 							
 							self.olMap.addOverlay(olOverlay);
 							
-							let olOverlayDiv = undefined;
+							let olOverlayDiv = graphicIcon.container.obj.node.parentNode;
 							
-							if (olOverlayDiv = graphicIcon.container.obj.node.parentNode) {
+							if (olOverlayDiv) {
 							
 								if (graphicIcon.layerElement.layerElementZoom) {
 								
 									olOverlayDiv.style.zIndex = self.maxZoomLevel - graphicIcon.layerElement.layerElementZoom.zoomLower;
 								}
 							}
-								
-//							graphicIcon.container.obj.node.onmouseover = function() {
-//				
-//								if (graphicIcon.isVisible()) {
-//								
-//									self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(false);});
-//							    	self.mouseOverSvg = true;	
-//								}
-//							};
-							
-//							graphicIcon.container.obj.node.onmouseout = function() {
-//								
-//								if (graphicIcon.isVisible()) {
-//								    self.olMap.getInteractions().forEach(function(interaction){interaction.setActive(true);});
-//								    self.mouseOverSvg = false;
-//								}
-//							};
 						});
 					}
 				});
@@ -651,9 +636,9 @@ export default class OpenMap extends GenericMap {
 				
 		function addGraphicIcon(layerElement, graphicIcon) {
 		
-			let arrGraphicIcons;
+			let arrGraphicIcons = self.graphicIcons.get(layerElement.elementId);
 			
-			if (arrGraphicIcons = self.graphicIcons.get(layerElement.elementId)) {
+			if (arrGraphicIcons) {
 				
 				arrGraphicIcons.push(graphicIcon);
 			}
@@ -1051,7 +1036,7 @@ export default class OpenMap extends GenericMap {
 				]
 			};
 			
-			if(Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0){
+			if (Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0) {
 				
 				let viewButtonZones = {
 					view: "button",
@@ -1172,7 +1157,9 @@ export default class OpenMap extends GenericMap {
 		
 		function getPanelActions() {
 			
-			let viewPanelActions = {
+			let viewPanelActions;
+			
+			viewPanelActions = {
 				id: "map-window-actions-" + self.uid,
 				//css: "syn-window-actions",
 				hidden: true,
@@ -1330,7 +1317,9 @@ export default class OpenMap extends GenericMap {
 	
 					graphicIcon.select();
 					
-					if (selected = graphicIcon.isSelected()) {
+					selected = graphicIcon.isSelected()
+					
+					if (selected) {
 						
 						self.goto(graphicIcon, self.currentZoomLevel);
 					}
@@ -1343,7 +1332,6 @@ export default class OpenMap extends GenericMap {
 		function selectInOtherZooms() {
 			
 			let zoomLevels = Array.from(self.zoomLevelGraphicIcons.keys());
-			//zoomLevels.sort((a, b) => b - a); // Descending sort. Select max zoom level for element
 			
 			// Ascending sort. Select min zoom level for element...
 			zoomLevels.sort((a, b) => a - b); 

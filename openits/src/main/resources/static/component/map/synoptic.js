@@ -503,7 +503,9 @@ export default class Synoptic extends GenericMap {
 		
 		function getPanelActions() {
 			
-			let viewPanelActions = {
+			let viewPanelActions;
+			
+			viewPanelActions = {
 				id: "syn-window-actions-" + self.uid,
 				//css: "syn-window-actions",
 				hidden: true,
@@ -648,26 +650,7 @@ export default class Synoptic extends GenericMap {
 	
 					const lazy = async _ => {
 						
-						let graphicIcons = getGraphicIcons(element.id);
-						
-						if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-							
-							graphicIcons.forEach(graphicIcon => {
-								
-								if (element.elementTypeState) {
-									
-									graphicIcon.updateState(element.elementTypeState);	
-								}
-								
-								if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-									
-									graphicIcon.updateValues(element.elementValues);
-								}
-								
-								// TODO: Alarms
-
-							});	
-						}
+						updateGraphicIcons(element);
 						
 						if (++loadedElements === self.data.length) {
 							
@@ -693,9 +676,9 @@ export default class Synoptic extends GenericMap {
 				
 		function addGraphicIcon(elementId, graphicIcon) {
 		
-			let arrGraphicIcons;
+			let arrGraphicIcons = self.graphicIcons.get(elementId);
 			
-			if (arrGraphicIcons = self.graphicIcons.get(elementId)) {
+			if (arrGraphicIcons) {
 				
 				arrGraphicIcons.push(graphicIcon);
 			}
@@ -800,7 +783,6 @@ export default class Synoptic extends GenericMap {
 	
 				const lazy = async _ => {
 		
-					//let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsDrawFile;
 					let jsFile = util.getContextPath() + "/" + graphicIcon.jsDrawFile;
 		
 					const mod = await import(jsFile);
@@ -840,6 +822,30 @@ export default class Synoptic extends GenericMap {
 			function onLoaded(graphicIconInstance) {
 				
 				onCreate(graphicIconInstance);
+			}
+		}
+		
+		function updateGraphicIcons(element) {
+			
+			let graphicIcons = getGraphicIcons(element.id);
+						
+			if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
+				
+				graphicIcons.forEach(graphicIcon => {
+					
+					if (element.elementTypeState) {
+						
+						graphicIcon.updateState(element.elementTypeState);	
+					}
+					
+					if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+						
+						graphicIcon.updateValues(element.elementValues);
+					}
+					
+					// TODO: Alarms
+
+				});	
 			}
 		}
 		
@@ -891,25 +897,7 @@ export default class Synoptic extends GenericMap {
 					
 					if (element) {
 						
-						let graphicIcons = getGraphicIcons(element.id);
-					
-						if (Array.isArray(graphicIcons) && graphicIcons.length > 0) {
-							
-							graphicIcons.forEach(graphicIcon => {
-							
-								if (element.elementTypeState) {
-									
-									graphicIcon.updateState(element.elementTypeState);
-								}
-								
-								if (Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-									
-									graphicIcon.updateValues(element.elementValues);
-								}
-								
-								// TODO ALARMS
-							});
-						}
+						updateGraphicIcons(element);
 					}
 				}
 			}

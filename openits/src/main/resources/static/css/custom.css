@@ -2539,6 +2539,7 @@ p, input, textarea {
 }
 
 .graphic-icon-tooltip{
+	color: var(--blue-text-default);
 	background: cornsilk;
 	border: 1px solid black;
 	border-radius: 5px;
@@ -2567,6 +2568,38 @@ p, input, textarea {
 	letter-spacing: 1px;
     padding-top: 50px;
     padding-left: 15px;
+}
+
+.graphic-icon-tooltip .text_title {
+	letter-spacing: 1px;
+    padding-top: 50px;
+    padding-left: 15px;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.graphic-icon-tooltip .text_details {
+	padding-left: 25px;
+	padding-top: 8px;
+}
+
+.graphic-icon-tooltip .text_details .ico {
+    font-size: 20px;
+    margin-top: -2px;
+}
+
+.graphic-icon-tooltip .text_details .field {
+	font-weight: 500;
+    padding-left: 20px;
+    font-size: 13px;
+    padding-top: 3px;
+}
+
+.graphic-icon-tooltip .text_details .value {
+	position: absolute;
+    padding-left: 225px;
+    font-size: 13px;
+    margin-top: -15px;
 }
 
 .graphic-icon-tooltip .badge {
