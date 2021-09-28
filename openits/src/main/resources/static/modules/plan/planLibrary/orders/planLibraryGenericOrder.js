@@ -234,7 +234,11 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 						newItem.value = value;
 						self.dtParams.update(newItem);
 						
-					}, true, selectedItem.value, selectedItem.dataTypeId)).show();
+					}, true, selectedItem.value, 
+						{id: selectedItem.dataTypeId,
+						labelUnit: selectedItem.labelUnit,
+						threshold1: selectedItem.threshold1,
+						threshold2: selectedItem.threshold2})).show();
 				}
 			}
 			
@@ -259,6 +263,9 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 							id: e.id,
 							param: i18n.t(e.labelAlias),
 							dataTypeId: e.dataType.id,
+							labelUnit: e.labelUnit,
+							threshold1: e.threshold1,
+							threshold2: e.threshold2,
 							dataType: i18n.t(e.dataType.labelAlias),
 							planOrderValueId: planOrderValue ? planOrderValue.id : undefined,
 							value: planOrderValue ? planOrderValue.value : undefined 

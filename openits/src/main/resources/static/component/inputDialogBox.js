@@ -1,3 +1,5 @@
+const DEFAULT_MIN_INT_VALUE = -65535;
+
 export default class InputDialogBox {
 
 	constructor(title, text, onAccept, requiredValue, currentValue, dataType) {
@@ -7,7 +9,8 @@ export default class InputDialogBox {
 		this.onAccept = onAccept;
 		this.requiredValue = requiredValue;
 		this.currentValue = currentValue;
-		this.dataType = dataType ? dataType : DataType.ALPHANUMERIC;
+		this.valid = true;
+		this.dataType = dataType && dataType.id ? dataType : { id: DataType.ALPHANUMERIC };
 		this.uid = webix.uid();
 	}
 
@@ -15,7 +18,7 @@ export default class InputDialogBox {
 
 		let self = this;
 
-		let height = (self.dataType === DataType.TIMESTAMP) ? 425 : 250;
+		let height = (self.dataType.id === DataType.TIMESTAMP) ? 425 : 250;
 
 		webix.ui({
 			view: "window",
@@ -29,7 +32,9 @@ export default class InputDialogBox {
 				rows: [
 					{ template: self.text, borderless: true },
 					getBody(),
-					{},
+					{
+						id: "alertText-" + self.uid
+					},
 					{
 						cols: [
 							{},
@@ -49,44 +54,76 @@ export default class InputDialogBox {
 								id: "button-accept-" + self.uid,
 								value: self.requiredValue ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_YES"),
 								width: 100,
+
 								click: function() {
 
-									const window = this.getTopParentView();
-									const txtDialogReconize = $$("input-dialog-" + self.uid);
+									function getAlert() {
 
-									let valueToSend = txtDialogReconize.getValue();
-									
-									if (valueToSend) {
-										
-										if (self.dataType === DataType.DECIMAL) {
-											
-											valueToSend = parseFloat(valueToSend);
+										let alert = {};
+										let label = undefined;
+
+										if (self.dataType.id === DataType.DECIMAL) {
+
+											label = i18n.t("LBL_VALUE_OUTSIDE_THRESHOLS") +
+												" [" + (self.dataType.threshold1 ? self.dataType.threshold1 : "-") +
+												(self.dataType.threshold2 ? ", " + self.dataType.threshold2 : "-") + "]";
+
+										} else if (self.dataType.id === DataType.ALPHANUMERIC) {
+
+											label = i18n.t("LBL_INVALID_VALUE");
 										}
-										else if (self.dataType === DataType.BOOLEAN) {
-											
-											valueToSend = (valueToSend == 1);
+
+										if (label) {
+											alert = {
+												id: "alertText-" + self.uid,
+												view: "label",
+												label: `<div"><i style="color:#e8596e; font-size: 16px">` + label + `</i></div>`
+											}
 										}
+										return alert;
 									}
-									
 
-									self.onAccept(valueToSend);
-									window.close();
+									if (validate()) {
+
+										const window = this.getTopParentView();
+										const txtDialogReconize = $$("input-dialog-" + self.uid);
+
+										let valueToSend = txtDialogReconize.getValue();
+
+										if (valueToSend) {
+
+											if (self.dataType.id === DataType.DECIMAL) {
+
+												valueToSend = parseFloat(valueToSend);
+
+											} else if (self.dataType.id === DataType.BOOLEAN) {
+
+												valueToSend = (valueToSend == 1);
+											}
+										}
+
+										self.onAccept(valueToSend);
+										window.close();
+
+									} else {
+
+										webix.ui(getAlert(), $$("alertText-" + self.uid));
+									}
 								}
 							},
 							{}
 						]
 					}
-				],
-				type: "form"
+				]
 			}
 		}).show();
 
-		if (self.dataType != DataType.TIMESTAMP) {
+		if (self.dataType.id != DataType.TIMESTAMP) {
 
 			$$("input-dialog-" + self.uid).focus();
 		}
 		else {
-			
+
 			$$("input-dialog-" + self.uid).setValue(self.currentValue instanceof Date ? self.currentValue : new Date());
 		}
 
@@ -94,19 +131,19 @@ export default class InputDialogBox {
 
 			let body = {};
 
-			if (self.dataType === DataType.INTEGER) {
+			if (self.dataType.id === DataType.INTEGER) {
 
 				body = getIntegerBody();
 
-			} else if (self.dataType === DataType.BOOLEAN) {
+			} else if (self.dataType.id === DataType.BOOLEAN) {
 
 				body = getBooleanBody();
 
-			} else if (self.dataType === DataType.DECIMAL) {
+			} else if (self.dataType.id === DataType.DECIMAL) {
 
 				body = getDecimalBody();
 
-			} else if (self.dataType === DataType.TIMESTAMP) {
+			} else if (self.dataType.id === DataType.TIMESTAMP) {
 
 				body = getDateBody();
 
@@ -119,66 +156,101 @@ export default class InputDialogBox {
 			function getIntegerBody() {
 
 				let integerBody;
-				
+
+				const r = /^-?[0-9]([0-9])*$/;
+
 				integerBody = {
-					view: "counter",
-					id: "input-dialog-" + self.uid,
-					css: "inputdialogbox-counter",
-					width: 140,
-					height: 40,
-					step: 1,
-					align: "center",
-					value: self.currentValue ? self.currentValue : 0,
-					on: {
-						onKeyPress: function(code, e) {
+					view: "form",
+					cols:
+						[
+							{},
+							{
+								view: "counter",
+								id: "input-dialog-" + self.uid,
+								css: "inputdialogbox-counter",
+								width: 140,
+								height: 40,
+								step: 1,
+								align: "center",
+								value: self.currentValue ? self.currentValue : 0,
+								min: self.dataType.threshold1 ? self.dataType.threshold1 : DEFAULT_MIN_INT_VALUE,
+								max: self.dataType.threshold2 ? self.dataType.threshold2 : undefined,
+								on: {
+									onKeyPress: function(code, e) {
 
-							const r = /^([0-9])*$/;
+										if (e.key === "Dead") {
 
-							if (e.key === "Dead") {
+											this.disable();
+											this.enable();
+											this.focus();
+										}
 
-								this.disable();
-								this.enable();
-								this.focus();
-							}
+										this.config.previousValue = this.getValue();
+										return code == 46 || code == 8 || (code >= 35 && code <= 40) || (code >= 48 && code <= 57) || code == 173;
+									},
+									onTimedKeyPress: function() {
 
-							return code == 46 || code == 8 || (code >= 35 && code <= 40) || r.test(this.getValue() + e.key);
-						},
-						onAfterRender: function() {
-							
-							this.focus();
-							
-							if (this.getValue() !== undefined) {
-							
-								this.getInputNode().setSelectionRange(0, String(this.getValue()).length);	
-							}
-						}
-					}
+										if (!r.test(this.getValue())) {
+
+											this.setValue(this.config.previousValue);
+											this.focus();
+											this.getInputNode().setSelectionRange(this.getValue().length, this.getValue().length);
+										}
+									},
+									onAfterRender: function() {
+
+										this.focus();
+
+										if (this.getValue() !== undefined) {
+
+											this.getInputNode().setSelectionRange(0, String(this.getValue()).length);
+										}
+									}
+								}
+							},
+							{
+								width: 20,
+								view: "label",
+								label: "<span class='grid-title'>" + self.dataType.labelUnit ? i18n.t(self.dataType.labelUnit) : "" + "</span>",
+							},
+							{}
+						]
 				};
-
 				return integerBody;
 			}
 
 			function getStringBody() {
 
 				let stringBody;
-				
+
 				stringBody = {
-					view: "textarea",
-					id: "input-dialog-" + self.uid,
-					height: 80,
-					placeholder: self.requiredValue ? "" : i18n.t("LBL_COMMENTS_HERE_OPTIONAL"),
-					value: self.currentValue ? self.currentValue : undefined,
-					on: {
-						onAfterRender: function() {
-							
-							this.focus();
-							
-							if (this.getValue()) {
-							
-								this.getInputNode().setSelectionRange(0, this.getValue().length);	
+					view: "form",
+					cols: [{
+						view: "textarea",
+						id: "input-dialog-" + self.uid,
+						name: "input-dialog-" + self.uid,
+						height: 80,
+						placeholder: self.requiredValue ? "" : i18n.t("LBL_COMMENTS_HERE_OPTIONAL"),
+						value: self.currentValue ? self.currentValue : undefined,
+
+						validate: function(value) {
+
+							let regEx = self.dataType.threshold1 ? new RegExp(self.dataType.threshold1) : undefined;
+
+							return (!regEx || regEx.test(value));
+						},
+						on: {
+							onAfterRender: function() {
+
+								this.focus();
+
+								if (this.getValue()) {
+
+									this.getInputNode().setSelectionRange(0, this.getValue().length);
+								}
 							}
 						}
-					}
+					}]
 				};
 
 				return stringBody;
@@ -186,23 +258,33 @@ export default class InputDialogBox {
 
 			function getDecimalBody() {
 
-				const r = /^(?:(?:0|[1-9][0-9]*)(?:\.[0-9]*)?|\.[0-9]+)$/;
+				const r = /^-?(?:(?:0|[1-9][0-9]*)(?:\.[0-9]*)?|\.[0-9]+)$/;
 
 				let decimalBody;
-				
+
 				decimalBody = {
+					view: "form",
 					cols: [
 						{},
 						{
 							view: "text",
 							id: "input-dialog-" + self.uid,
+							name: "input-dialog-" + self.uid,
 							width: 140,
 							height: 40,
 							css: "inputdialogbox-counter",
 							align: "center",
 							previousValue: "",
-							value: self.currentValue ? self.currentValue : 0,
+							value: self.currentValue && self.currentValue != "0" ? self.currentValue : "0.0",
 							keyPressTimeout: 10,
+							validate: function(value) {
+
+								let floatValue = parseFloat(value);
+								let floatThreshold1 = self.dataType.threshold1 ? parseFloat(self.dataType.threshold1) : undefined;
+								let floatThreshold2 = self.dataType.threshold2 ? parseFloat(self.dataType.threshold2) : undefined;
+
+								return (!floatThreshold1 || floatThreshold1 <= floatValue) && (!floatThreshold2 || floatThreshold2 >= floatValue);
+							},
 							on: {
 								onKeyPress: function(code, e) {
 
@@ -214,27 +296,34 @@ export default class InputDialogBox {
 									}
 
 									this.config.previousValue = this.getValue();
-									return code == 46 || code == 8 || (code >= 35 && code <= 40) || r.test(this.getValue() + e.key);
+									console.log(e.key);
+									console.log(code);
+									return code == 46 || code == 8 || (code >= 35 && code <= 40) || (code >= 48 && code <= 57) || code == 190 || code == 173;
 								},
 								onTimedKeyPress: function() {
 
-									if (this.getValue() != "" && !r.test(this.getValue())) {
+									if (this.getValue() != "" && this.getValue() != "-" && !r.test(this.getValue())) {
 
 										this.setValue(this.config.previousValue);
 										this.focus();
-										this.getInputNode().setSelectionRange(0, 0);
+										this.getInputNode().setSelectionRange(this.getValue().length, this.getValue().length);
 									}
 								},
 								onAfterRender: function() {
-									
+
 									this.focus();
-									
+
 									if (this.getValue()) {
-									
-										this.getInputNode().setSelectionRange(0, this.getValue().length);	
+
+										this.getInputNode().setSelectionRange(0, this.getValue().length);
 									}
 								}
 							}
+						},
+						{
+							width: 20,
+							view: "label",
+							label: "<span class='grid-title'>" + self.dataType.labelUnit ? i18n.t(self.dataType.labelUnit) : "" + "</span>",
 						},
 						{}
 					]
@@ -246,7 +335,7 @@ export default class InputDialogBox {
 			function getDateBody() {
 
 				let dateBody;
-				
+
 				dateBody = {
 					id: "input-dialog-" + self.uid,
 					view: "calendar",
@@ -263,8 +352,9 @@ export default class InputDialogBox {
 			function getBooleanBody() {
 
 				let booleanBody;
-				
+
 				booleanBody = {
+					view: "form",
 					css: { "border": "1px solid #dadee0 !important" },
 					cols: [
 						{ width: 150 },
@@ -286,6 +376,22 @@ export default class InputDialogBox {
 			}
 
 			return body;
+		}
+
+		function validate() {
+
+			let valid = true;
+
+			if (self.dataType.id === DataType.DECIMAL || self.dataType.id === DataType.ALPHANUMERIC) {
+
+				let inputDialog = $$("input-dialog-" + self.uid)
+
+				if (inputDialog) {
+
+					valid &= inputDialog.validate();
+				}
+			}
+			return valid;
 		}
 	}
 }

@@ -261,7 +261,11 @@ export default class IncidentReportTaskParam {
 							param: i18n.t(taskTypeParam.labelAlias),
 							currentValue: currentValue,
 							newValue:  (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) ? newValue : undefined,
-							paramTypeId: taskTypeParam.paramTypeId						
+							paramTypeId: taskTypeParam.paramTypeId	,
+							dataTypeId: taskTypeParam.dataType.id,
+							labelUnit: taskTypeParam.labelUnit,
+							threshold1: taskTypeParam.threshold1,
+							threshold2: taskTypeParam.threshold2				
 						}
 						
 						data.push(row);
@@ -286,7 +290,11 @@ export default class IncidentReportTaskParam {
 						newItem.newValue = value;
 						self.dtParams.update(newItem);
 						
-					}, true, selectedItem.newValue)).show();
+					}, true, selectedItem.newValue, 
+						{id: selectedItem.dataTypeId,
+						labelUnit: selectedItem.labelUnit,
+						threshold1: selectedItem.threshold1,
+						threshold2: selectedItem.threshold2})).show();
 				}
 			}
 
