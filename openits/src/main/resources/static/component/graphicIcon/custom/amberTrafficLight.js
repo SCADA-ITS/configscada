@@ -9,8 +9,6 @@ const G_ID_LOWER_LIGHT = "lowerLight";
 const GROUP_COLOR_OFF = "#b3b3b3";
 const GROUP_COLOR_ON = "#fec165";
 
-const CMD_CHANGE_VALUE = "true";
-
 const CMD_GROUP_OFF = "1";
 const CMD_GROUP_AMBER_ALTERNANT = "0";	
 const CMD_GROUP_AMBER_FLASHING = "2";	

@@ -1,12 +1,12 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
-const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:2";
+const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:1";
 
 const G_ID_UPPER_LIGHT = "upperLight";
 const G_ID_LOWER_LIGHT = "lowerLight";	
 
-const CMD_CHANGE_VALUE = "true";
+const CMD_GROUP_ON = "0";	
 
 const GROUP_COLOR_OFF = "#b3b3b3";
 const GROUP_COLOR_ON = "#eb5569";
@@ -42,7 +42,7 @@ export default class RedTrafficLight extends GraphicIconCustomType {
 
 				let cmd = cmdGroupValue;
 
-				if(cmd === CMD_CHANGE_VALUE) {
+				if(cmd === CMD_GROUP_ON) {
 
 					this.gUpperLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });
 					this.gLowerLight.attr({ from: GROUP_COLOR_ON, to: GROUP_COLOR_ON });

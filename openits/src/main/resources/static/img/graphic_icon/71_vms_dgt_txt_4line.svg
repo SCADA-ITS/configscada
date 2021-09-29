@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="87.990433mm"
+   height="30.834938mm"
+   viewBox="0 0 87.990434 30.834937"
+   version="1.1"
+   id="svg2"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="71_vms_dgt_txt_4line.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.9256081"
+     inkscape:cx="165.45525"
+     inkscape:cy="71.619353"
+     inkscape:document-units="px"
+     inkscape:current-layer="zone1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="1912"
+     inkscape:window-y="179"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:pagecheckerboard="0">
+    <sodipodi:guide
+       position="-180.62161,101.20796"
+       orientation="0,-1"
+       id="guide44" />
+    <sodipodi:guide
+       position="-135.79389,48.523413"
+       orientation="0,-1"
+       id="guide46" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="main"
+     inkscape:groupmode="layer"
+     id="main"
+     style="display:inline">
+    <path
+       id="state"
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.730055"
+       d="M 0,0 H 87.990434 V 30.834937 H 0 Z" />
+    <path
+       id="path283"
+       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.686682"
+       d="M 1.087,1.531 H 87.016155 V 29.465473 H 1.087 Z" />
+    <g
+       inkscape:groupmode="layer"
+       id="zone1"
+       inkscape:label="zone1"
+       style="display:inline">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.65619"
+         d="M 2.2421495,2.397778 H 85.878831 V 28.604643 H 2.2421495 Z"
+         id="path195" />
+      <text
+         xml:space="preserve"
+         style="font-size:7.76111px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+         x="40.549801"
+         y="7.9757419"
+         id="line1-1"><tspan
+           sodipodi:role="line"
+           x="40.549801"
+           y="7.9757419"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6">PANEL EN PRUEBAS</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:7.7611px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+         x="40.549755"
+         y="14.408298"
+         id="line1-2"><tspan
+           sodipodi:role="line"
+           x="40.549755"
+           y="14.408298"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.7611px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6-0">PANEL EN PRUEBAS</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:7.7611px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+         x="40.549755"
+         y="20.840858"
+         id="line1-3"><tspan
+           sodipodi:role="line"
+           x="40.549755"
+           y="20.840858"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.7611px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6-3">PANEL EN PRUEBAS</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:7.7611px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+         x="40.549755"
+         y="27.273417"
+         id="line1-4"><tspan
+           sodipodi:role="line"
+           x="40.549755"
+           y="27.273417"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.7611px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.87521;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6-30">PANEL EN PRUEBAS</tspan></text>
+    </g>
+  </g>
+</svg>
