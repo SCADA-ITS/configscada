@@ -1,7 +1,6 @@
 import GenericModule from "../../../modules/genericModule.js";
 import { util } from "../../../lib/util.js";
 import GenericSignalingCommand from "./genericSignalingCommand.js";
-import SearchDialogBox from "../../../component/searchDialogBox.js";
 
 export default class GenericSignalingModule extends GenericModule {
 

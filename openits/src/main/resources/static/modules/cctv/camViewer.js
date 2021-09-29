@@ -664,7 +664,15 @@ export default class CamViewer {
 
 				if (presetConfigJson) {
 
-					presets = JSON.parse(presetConfigJson);
+					try {
+
+						presets = JSON.parse(presetConfigJson);
+
+					} catch (e) {
+
+						presets = undefined;
+						console.error(e);
+					}
 				}
 			}
 

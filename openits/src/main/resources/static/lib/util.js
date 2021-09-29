@@ -1,6 +1,3 @@
-import { synopticData } from "../data/synoptics.js";
-import { mapsData } from "../data/mapsData.js";
-
 // Params for windowed ui
 const WindowParam = Object.freeze({
 	HAS_MIN_BUTTON: 1,
@@ -105,74 +102,17 @@ export let util = {
 				return;
 			}
 
-			// TODO: Remove this block in future
-			if (module.jsMethodCallbacks === "DEPRECATED") {
+			if (!args) {
 
-				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
-
-					viewModule = mod[module.jsMethodDraw]();
-				}
-				else {
-
-					if (module.moduleValues) {
-
-						if (module.moduleType.id === MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
-
-							let synopticConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_SYNOPTIC_ID).value;
-							let item = synopticData.find(e => e.id === synopticConfigId);
-							let synId = "syn-" + webix.uid();
-							let syn = new mod.default(item, synId);
-
-							viewModule = {
-								rows: [{
-									view: "template",
-									id: syn.synopticDiv,
-									url: function() {
-										syn.init();
-									}
-								}],
-								on: {
-									onDestruct: function(obj) {
-										syn.on_destroy();
-									}, onViewShow: () => {
-										syn.on_show();
-									}
-								}
-							};
-						}
-						else if (module.moduleType.id === MODULE_TYPE_GENERIC_MAP_WINDOW) {
-
-							let mapConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_MAP_ID).value;
-							let item = mapsData.find(e => e.id === mapConfigId);
-							let mapId = "map-" + webix.uid();
-							let map = new mod.default(item, undefined, mapId);
-
-							viewModule = {
-								rows: [{
-									view: "template",
-									id: map.synopticDiv,
-									url: function() {
-										map.init();
-									}
-								}]
-							};
-						}
-					}
-				}
+				args = {};
 			}
-			else {
 
-				if (!args) {
+			args.containerId = winId;
 
-					args = {};
-				}
+			lazyClass = new mod.default(module, moduleAction, args);
 
-				args.containerId = winId;
+			viewModule = lazyClass.runOne(module.jsMethodDraw)
 
-				lazyClass = new mod.default(module, moduleAction, args);
-
-				viewModule = lazyClass.runOne(module.jsMethodDraw)
-			}
 
 			if (viewModule) {
 
@@ -276,11 +216,6 @@ export let util = {
 				}
 			}
 
-			//			let tab_body_id = "tab_body_" + module.id;
-			//
-			//			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
-			//
-			//			let moduleOpened = tabItems.find(e => e.config.id.indexOf(tab_body_id) !== -1);
 
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
 
@@ -291,79 +226,21 @@ export let util = {
 				return;
 			}
 
-			// TODO: Remove this block in future
-			if (module.jsMethodCallbacks === "DEPRECATED") {
+			if (!args) {
 
-				if (module.moduleType.id !== MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW &&
-					module.moduleType.id !== MODULE_TYPE_GENERIC_MAP_WINDOW) {
-					viewModule = mod[module.jsMethodDraw]();
-				}
-				else {
-
-					if (module.moduleValues) {
-
-						if (module.moduleType.id === MODULE_TYPE_GENERIC_SYNOPTIC_WINDOW) {
-
-							let synopticConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_SYNOPTIC_ID).value;
-							let item = synopticData.find(e => e.id === synopticConfigId);
-							let synId = "syn-" + webix.uid();
-							let syn = new mod.default(item, synId);
-
-							viewModule = {
-								rows: [{
-									view: "template",
-									id: syn.synopticDiv,
-									url: function() {
-										syn.init();
-									}
-								}],
-								on: {
-									onDestruct: function(obj) {
-										syn.on_destroy();
-									},
-									onViewShow: () => {
-										syn.on_show();
-									}
-								}
-							};
-						}
-						else if (module.moduleType.id === MODULE_TYPE_GENERIC_MAP_WINDOW) {
-
-							let mapConfigId = module.moduleValues.find(e => e.moduleParam.id === MODULE_PARAM_MAP_ID).value;
-							let item = mapsData.find(e => e.id === mapConfigId);
-							let mapId = "map-" + webix.uid();
-							let map = new mod.default(item, undefined, mapId);
-
-							viewModule = {
-								rows: [{
-									view: "template",
-									id: map.synopticDiv,
-									url: function() {
-										map.init();
-									}
-								}]
-							};
-						}
-					}
-				}
+				args = {};
 			}
-			else {
 
-				if (!args) {
+			args.containerId = tab_id.replace("tab", "tab_body");
 
-					args = {};
-				}
+			lazyClass = new mod.default(module, moduleAction, args);
 
-				args.containerId = tab_id.replace("tab", "tab_body");
-
-				lazyClass = new mod.default(module, moduleAction, args);
-
-				viewModule = lazyClass.runOne(module.jsMethodDraw)
-			}
+			viewModule = lazyClass.runOne(module.jsMethodDraw)
 
 			if (viewModule) {
 
 				$$(MAIN_TAB_ID).addView({
+
 					id: tab_id,
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
@@ -429,7 +306,6 @@ export let util = {
 
 				const lazy = async _ => {
 
-					//let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
 
 					const mod = await import(jsFile);
@@ -1073,7 +949,8 @@ export let util = {
 
 					self.tableEquipmentSelected = new DataTable(null, null, metadata, data);
 
-					let table = {
+					let table;
+					table = {
 						rows:
 							self.tableEquipmentSelected.getView()
 					}
@@ -1414,7 +1291,6 @@ export let util = {
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			let actualTimeMs = timeService.getEpoch();
 
-			//return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data ) ? 1 : 0;		
 			return (data instanceof Date ? actualTimeMs > data.getTime() : actualTimeMs > data) ? 0 : 1;
 		},
 
@@ -1468,35 +1344,48 @@ export let util = {
 		},
 
 		getCurrentPlanOrderAlias(planOrderId, obj) {
-		
+
 			let planOrder = undefined;
-			
-			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length){
-				
-				 planOrder = obj.planOrders.find(e => e.id == planOrderId);
+
+			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length) {
+
+				planOrder = obj.planOrders.find(e => e.id == planOrderId);
 			}
-			
+
 			return planOrder ? planOrder.alias : "-";
 		},
 
 		getCurrentPlanOrderOrder(planOrderId, obj) {
-			
+
 			let planOrder = undefined;
-			
-			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length){
-				
-				 planOrder = obj.planOrders.find(e => e.id == planOrderId);
+
+			if (planOrderId && obj && Array.isArray(obj.planOrders) && obj.planOrders.length) {
+
+				planOrder = obj.planOrders.find(e => e.id == planOrderId);
 			}
-			
+
 			return planOrder ? planOrder.planOrderOrder : "-";
+		},
+
+		getLocalDateString(value, obj) {
+
+			if (obj["dataTypeId"] == DataType.TIMESTAMP) {
+
+				return util.toLocaleString(value / 1000);
+
+			} else {
+
+				return value;
+			}
 		}
+
+
 	},
 
 	tree: {
 
 		getNodes(items, relationships, remapedFields, translate) {
 
-			const PARENT_ID_IDX = 0;
 			const CHILD_ID_IDX = 1;
 
 			let nodes = [];

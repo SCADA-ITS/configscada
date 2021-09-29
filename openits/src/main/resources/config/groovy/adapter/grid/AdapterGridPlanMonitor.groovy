@@ -56,8 +56,6 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 				filterPlanState(dataRow);
 				currentPlanOrder(dataRow);
 				flattenPlanStateType(dataRow);
-				
-				data.add(vo2uiAdapter.convert(fieldId, dataRow));
 			}
 
 		} catch (IllegalArgumentException e) {
@@ -87,6 +85,9 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 					dataRow.put(FIELD_FILTER_PLAN_STATE, "-1");
 				}
 			}
+			
+		} else {
+			dataRow.put(FIELD_FILTER_PLAN_STATE, "-1");
 		}
 	}
 
@@ -119,7 +120,7 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 				dataRow.put(FIELD_PLAN_STATE_TYPE_LABEL_ALIAS, map.get(FIELD_LABEL_ALIAS));
 			}
 
-			dataRow.remove(FIELD_PLAN_STATE_TYPE);
+			dataRow.remove(FIELD_PLAN_STATE_TYPE);	
 		}
 	}
 }

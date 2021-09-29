@@ -204,6 +204,7 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 						isPk: false,
 						label: "LBL_VALUE",
 						needsTranslation: false,
+						replacementFunction: "getLocalDateString",
 						parameterized: false,
 						position: 5,
 						required: true,

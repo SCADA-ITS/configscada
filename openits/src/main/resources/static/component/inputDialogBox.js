@@ -1,4 +1,5 @@
 const DEFAULT_MIN_INT_VALUE = -65535;
+const DEFAULT_MAX_INT_VALUE = 65535;
 
 export default class InputDialogBox {
 
@@ -99,9 +100,12 @@ export default class InputDialogBox {
 											} else if (self.dataType.id === DataType.BOOLEAN) {
 
 												valueToSend = (valueToSend == 1);
+
+											} else if (self.dataType.id === DataType.TIMESTAMP) {
+
+												valueToSend = valueToSend.getTime();
 											}
 										}
-
 										self.onAccept(valueToSend);
 										window.close();
 
@@ -160,7 +164,6 @@ export default class InputDialogBox {
 				const r = /^-?[0-9]([0-9])*$/;
 
 				integerBody = {
-					view: "form",
 					cols:
 						[
 							{},
@@ -168,13 +171,14 @@ export default class InputDialogBox {
 								view: "counter",
 								id: "input-dialog-" + self.uid,
 								css: "inputdialogbox-counter",
+								borderless: true,
 								width: 140,
 								height: 40,
 								step: 1,
 								align: "center",
 								value: self.currentValue ? self.currentValue : 0,
 								min: self.dataType.threshold1 ? self.dataType.threshold1 : DEFAULT_MIN_INT_VALUE,
-								max: self.dataType.threshold2 ? self.dataType.threshold2 : undefined,
+								max: self.dataType.threshold2 ? self.dataType.threshold2 : DEFAULT_MAX_INT_VALUE,
 								on: {
 									onKeyPress: function(code, e) {
 
@@ -229,6 +233,7 @@ export default class InputDialogBox {
 						view: "textarea",
 						id: "input-dialog-" + self.uid,
 						name: "input-dialog-" + self.uid,
+						borderless: true,
 						height: 80,
 						placeholder: self.requiredValue ? "" : i18n.t("LBL_COMMENTS_HERE_OPTIONAL"),
 						value: self.currentValue ? self.currentValue : undefined,
@@ -270,6 +275,7 @@ export default class InputDialogBox {
 							view: "text",
 							id: "input-dialog-" + self.uid,
 							name: "input-dialog-" + self.uid,
+							borderless: true,
 							width: 140,
 							height: 40,
 							css: "inputdialogbox-counter",
@@ -339,6 +345,7 @@ export default class InputDialogBox {
 				dateBody = {
 					id: "input-dialog-" + self.uid,
 					view: "calendar",
+					borderless: true,
 					date: self.currentValue instanceof Date ? self.currentValue : new Date(),
 					timepicker: true,
 					width: 300,
@@ -354,7 +361,6 @@ export default class InputDialogBox {
 				let booleanBody;
 
 				booleanBody = {
-					view: "form",
 					css: { "border": "1px solid #dadee0 !important" },
 					cols: [
 						{ width: 150 },
