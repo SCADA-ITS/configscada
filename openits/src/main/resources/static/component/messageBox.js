@@ -20,6 +20,8 @@ export default class MessageBox {
 		this.message = message;
 		this.onAccept = onAccept;
 		this.onCancel = onCancel;
+
+		this.uid = webix.uid();
 	}
 
 
@@ -60,6 +62,7 @@ export default class MessageBox {
 
 
 		webix.ui({
+			id: "alert-" + self.uid,
 			view: "window",
 			modal: true,
 			height: 250,
@@ -86,15 +89,12 @@ export default class MessageBox {
 
 									if (oneButton) {
 
-										self.onAccept();
+										execute(self.onAccept);
 
 									} else {
 
-										self.onCancel();
+										execute(self.onCancel);
 									}
-
-									const window = this.getTopParentView();
-									window.close();
 								}
 							}
 						]
@@ -110,7 +110,7 @@ export default class MessageBox {
 							{ width: 35 },
 							{
 								width: 95,
-								css: { "border": "0px !important"},
+								css: { "border": "0px !important" },
 								template: `<div><img style='padding: 15px 15px 15px 0px;' src=${icon}></div>`
 							},
 							{
@@ -123,7 +123,7 @@ export default class MessageBox {
 									{ height: 10 },
 								]
 							},
-							{width: 105}
+							{ width: 105 }
 						]
 					},
 					{ height: 5 },
@@ -154,9 +154,7 @@ export default class MessageBox {
 						width: 100,
 						click: function() {
 
-							self.onAccept();
-							const window = this.getTopParentView();
-							window.close();
+							execute(self.onAccept);
 						}
 					},
 					{}
@@ -172,9 +170,7 @@ export default class MessageBox {
 						width: 100,
 						click: function() {
 
-							self.onCancel();
-							const window = this.getTopParentView();
-							window.close();
+							execute(self.onCancel);
 						}
 					},
 					{
@@ -183,9 +179,7 @@ export default class MessageBox {
 						width: 100,
 						click: function() {
 
-							self.onAccept();
-							const window = this.getTopParentView();
-							window.close();
+							execute(self.onAccept);
 						}
 					},
 					{}
@@ -195,6 +189,17 @@ export default class MessageBox {
 			toolbar.cols = buttons;
 
 			return toolbar;
+		}
+
+		function execute(command) {
+
+			if (command) {
+
+				command();
+			}
+
+			$$("alert-" + self.uid).close();
+
 		}
 
 	}
