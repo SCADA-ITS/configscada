@@ -610,12 +610,6 @@ export default class VmsSignalingContent {
 											
 											self.composer.clear();
 											self.hasMessage = false;
-											let radioCommands = $$("view-signalling-commands-" + self.uid);
-											
-											if (radioCommands) {
-												
-												radioCommands.setValue(self.config.commands.sendMessage.commandElementTypeId);	
-											}
 										}
 										
 										if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
