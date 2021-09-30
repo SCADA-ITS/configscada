@@ -329,7 +329,7 @@ export default class MapIncident {
 	
 	show() {
 		
-		if (Array.isArray(this.graphicIcons) && this.graphicIcons.length > 0) {
+		if (this.graphicIcons && this.graphicIcons.size > 0) {
 		
 			this.graphicIcons.forEach(graphicIcon => graphicIcon.show());
 		}
@@ -337,7 +337,7 @@ export default class MapIncident {
 	
 	hide() {
 		
-		if (Array.isArray(this.graphicIcons) && this.graphicIcons.length > 0) {
+		if (this.graphicIcons && this.graphicIcons.size > 0) {
 		
 			this.graphicIcons.forEach(graphicIcon => graphicIcon.hide());
 		}

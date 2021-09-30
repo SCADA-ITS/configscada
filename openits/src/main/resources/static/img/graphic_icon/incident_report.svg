@@ -82,21 +82,21 @@
        inkscape:transform-center-y="-6.2539226" />
     <image
        xlink:href="../../../project/ausol/img/pictograms/80.bmp"
-       width="23.788212"
-       height="24.07173"
-       preserveAspectRatio="none"
-       id="type"
-       x="15.571664"
+       style="display:inline"
        y="19.895306"
-       style="display:inline" />
+       x="15.571664"
+       id="type"
+       preserveAspectRatio="none"
+       height="24.07173"
+       width="23.788212" />
     <image
        xlink:href="../../../project/ausol/img/pictograms/80.bmp"
-       width="18.330498"
-       height="18.330498"
-       preserveAspectRatio="none"
-       id="status"
-       x="37.508839"
+       style="display:inline"
        y="37.57972"
-       style="display:inline" />
+       x="37.508839"
+       id="status"
+       preserveAspectRatio="none"
+       height="18.330498"
+       width="18.330498" />
   </g>
 </svg>

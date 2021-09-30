@@ -105,8 +105,29 @@ export default class Synoptic extends GenericMap {
 			let cells = [];
 			
 			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
-				self.mapLayer = new MapLayer(self.metadata.layers, self.metadata.layerRelationships, function(layersId) {
-					showLayers(layersId)
+				
+				let dataMapLayer = [{
+					layers: self.metadata.layers,
+					layerRelationships: self.metadata.layerRelationships,
+					layerType: MapLayer.TYPE_ELEMENT
+				}]
+				
+				self.mapLayer = new MapLayer(dataMapLayer, function(layersId) {
+					
+					let elementLayerIds = [];
+					
+					if (Array.isArray(layersId) && layersId.length > 0) {
+						
+						let elementLayerIdsFiltered = layersId.filter(layerId => layerId.includes(MapLayer.TYPE_ELEMENT.prefix) && !layerId.includes("ROOT"));
+						
+						if (Array.isArray(elementLayerIdsFiltered) && elementLayerIdsFiltered.length > 0) {
+							
+							elementLayerIds = elementLayerIdsFiltered.map(elementLayerId => parseInt(elementLayerId.replace(MapLayer.TYPE_ELEMENT.prefix, '')));
+						}
+					}
+					
+					showLayers(elementLayerIds);
+					//showLayers(layersId)
 				});
 				cells.push(self.mapLayer.getView());	
 			}

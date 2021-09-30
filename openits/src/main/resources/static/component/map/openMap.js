@@ -138,33 +138,98 @@ export default class OpenMap extends GenericMap {
 		function getMultiViewCellActions() {
 			
 			let cells = [];
+
+			addCellLayers();
+			addCellCommands();
+			addCellZones();
 			
-			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
-				self.mapLayer = new MapLayer(self.metadata.layers, self.metadata.layerRelationships, function(layersId) {
-					showLayers(layersId)
-				});
-				cells.push(self.mapLayer.getView());	
-			}
+			function addCellLayers() {
 			
-			if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
+				let dataMapLayer = [];
 				
-				let cmdCallbacks = undefined;
+				if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
 				
-				if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
-					self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
-						
-					cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+					dataMapLayer.push({
+						layers: self.metadata.layers,
+						layerRelationships: self.metadata.layerRelationships,
+						layerType: MapLayer.TYPE_ELEMENT
+					});	
 				}
 				
-				self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
-				cells.push(self.mapAction.getView());
+				if (self.metadata.mapIncident) {
+					
+					dataMapLayer.push({
+						layers: [],
+						layerRelationships: [],
+						layerType: MapLayer.TYPE_INCIDENT
+					});
+				}
+				
+				self.mapLayer = new MapLayer(dataMapLayer, function(layersId) {
+					
+					let elementLayerIds = [];
+					let indidentLayerSelected = false;
+					
+					if (Array.isArray(layersId) && layersId.length > 0) {
+						
+						let elementLayerIdsFiltered = layersId.filter(layerId => layerId.includes(MapLayer.TYPE_ELEMENT.prefix) && !layerId.includes("ROOT"));
+						
+						if (Array.isArray(elementLayerIdsFiltered) && elementLayerIdsFiltered.length > 0) {
+							
+							elementLayerIds = elementLayerIdsFiltered.map(elementLayerId => parseInt(elementLayerId.replace(MapLayer.TYPE_ELEMENT.prefix, '')));
+						}
+					}
+					
+					showLayers(elementLayerIds);
+					
+					if (self.mapIncident) {
+						
+						if (Array.isArray(layersId) && layersId.length > 0) {
+						
+							indidentLayerSelected = layersId.find(layerId => layerId.includes(MapLayer.TYPE_INCIDENT.prefix)) != undefined;	
+						}	
+						
+						if (indidentLayerSelected) {
+							
+							self.mapIncident.show();	
+						}
+						else {
+							
+							self.mapIncident.hide();
+						}
+					}
+				});
+				
+				cells.push(self.mapLayer.getView());
 			}
 			
-			if(Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0){
-				self.mapZone = new MapZone(self.metadata.mapZones, function(zoneCoor) {
-					gotoZone(zoneCoor)
-				});
-				cells.push(self.mapZone.getView());
+			function addCellCommands() {
+				
+				if (Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0) {
+				
+					let cmdCallbacks = undefined;
+					
+					if (self.events && Array.isArray(self.events[GenericMap.EventTypes.ON_COMMAND_EXEC]) && 
+						self.events[GenericMap.EventTypes.ON_COMMAND_EXEC].length > 0) {
+							
+						cmdCallbacks = self.events[GenericMap.EventTypes.ON_COMMAND_EXEC];
+					}
+					
+					self.mapAction = new MapAction(self.metadata.commands, getAllPks(), getSelectedPks, cmdCallbacks);
+					cells.push(self.mapAction.getView());
+				}
+			}
+			
+			function addCellZones() {
+			
+				if (Array.isArray(self.metadata.mapZones) && self.metadata.mapZones.length > 0) {
+					
+					self.mapZone = new MapZone(self.metadata.mapZones, function(zoneCoor) {
+						gotoZone(zoneCoor)
+					});
+					
+					cells.push(self.mapZone.getView());
+				}	
 			}
 			
 			return cells;
