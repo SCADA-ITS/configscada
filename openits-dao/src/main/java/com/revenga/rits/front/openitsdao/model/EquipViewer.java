@@ -54,6 +54,9 @@ public class EquipViewer implements Serializable {
 	@Column(name="show_info_tab")
 	private Boolean showInfoTab;
 	
+	@Column(name="no_show_measures")
+	private Boolean noShowMeasures;
+	
 	//bi-directional many-to-one association to EquipViewerConfig
 	@OneToMany(mappedBy="equipViewer")
 	private List<EquipViewerConfig> equipViewerConfigs;
@@ -176,6 +179,14 @@ public class EquipViewer implements Serializable {
 
 	public void setShowInfoTab(Boolean showInfoTab) {
 		this.showInfoTab = showInfoTab;
+	}
+	
+	public Boolean getNoShowMeasures() {
+		return this.noShowMeasures;
+	}
+
+	public void setNoShowMeasures(Boolean noShowMeasures) {
+		this.noShowMeasures = noShowMeasures;
 	}
 	
 	public List<EquipViewerConfig> getEquipViewerConfigs() {

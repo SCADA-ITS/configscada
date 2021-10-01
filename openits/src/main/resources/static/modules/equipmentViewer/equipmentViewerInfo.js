@@ -23,13 +23,19 @@ export default class EquipmentViewerInfo {
 
 		let self = this;
 		let view = {};
+		let viewMeasures = {};
 
-		this.equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(this.parent, this.element, this.equipmentViewer);
+		if (!self.equipmentViewer.noShowMeasures) {
+
+			this.equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(this.parent, this.element, this.equipmentViewer);
+			viewMeasures = this.equipmentViewerInfoMeasure.getView();
+
+		} 
 
 		view = {
 			rows: [
 				getViewMain(),
-				this.equipmentViewerInfoMeasure.getView()
+				viewMeasures
 			]
 		}
 
