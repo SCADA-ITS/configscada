@@ -73,7 +73,7 @@ export default class TunnelContent {
 				self.selectedTunnel = data.json();
 			}
 
-			let module = findModuleByIdAction(self.parent.config.containerAction.tunnel);
+			let module = util.module.getFromModuleAction(self.parent.config.containerAction.tunnel);
 			let moduleAction = { id: self.parent.config.containerAction.tunnel };
 
 			if (module.moduleActions) {

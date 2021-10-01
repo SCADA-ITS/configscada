@@ -674,7 +674,7 @@ export default class PlanExecutor extends GenericModule {
 
 		function open_module(btnConfig) {
 
-			let module = findModuleByIdAction(btnConfig.moduleAction.id);
+			let module = util.module.getFromModuleAction(btnConfig.moduleAction.id);
 			let args = {};
 			args.selectedPks = [self.planId];
 			args.planAction = btnConfig.action;
