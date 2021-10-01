@@ -928,8 +928,8 @@ export default class CamViewer {
 
 							dialogPresets.pkField = "id"
 							dialogPresets.fields = ["alias=LBL_PRESET_ALIAS", "description=LBL_PRESET_DESCRIPTION"];
-							dialogPresets.height = 600;
-							dialogPresets.width = 800;
+							dialogPresets.height = 350;
+							dialogPresets.width = 400;
 
 							if (Array.isArray(presets) && presets.length > 0) {
 
