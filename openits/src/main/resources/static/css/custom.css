@@ -2408,6 +2408,31 @@ p, input, textarea {
 	background-color: var(--blue-mid2-opacity-5);
 }
 
+.syn-toolbar-actions .button-pressed .webix_button{
+    height:35px;
+    border-radius: 30%;
+    color: grey;
+    background:  #cc0000;
+}
+
+.syn-toolbar-actions .button-pressed .webix_button .webix_icon_btn {
+	font-size: 19px;
+	color: grey;
+	margin-left: 3px;
+}
+
+.syn-toolbar-actions .button-pressed .webix_button:hover {
+  	background: #cc0000;
+}
+
+.syn-toolbar-actions .button-pressed .webix_button:focus {
+	background-color: #ef2929;
+}
+
+.syn-toolbar-actions  .button-pressed .webix_button:active {
+	background-color: #ef2929;
+}
+
 .syn-toolbar-zoom{
 	background: transparent;
 	margin-top: -20px;
@@ -3459,7 +3484,7 @@ audio {
 }
 
 .messagebox .webix_template {
-	display: flex; 
+	display: flex;
 	justify-content: center;
 	align-items: center;
 }

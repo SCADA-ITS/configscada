@@ -17,6 +17,10 @@ export default class MapIncident {
 		this.idStompSubscriptor = undefined;
 		this.incidentReports = new Map();
 		this.graphicIcons = new Map();
+		
+		this.snap = undefined;
+		this.drawBox = undefined;
+		this.polygon = undefined;
 	}
 	
 	load() {
@@ -325,6 +329,85 @@ export default class MapIncident {
 
 			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 		}		
+	}
+	
+	// PINTAR AREA EN EL MAPA
+	addSquare(btnDrawArea) {
+		
+		let self = this;
+		
+		// ACTIVAR EL LISTENER SINGLECLICK DEL MAPA MIENTRAS SE AÑADEN LINEAS.
+		self.olMap.on('singleclick', function(evt) { evt.preventDefault() });
+
+		let source = new ol.source.Vector();
+
+		// SEA CREA LA CAPA, SE APLICA ESTILO DEL AREA UNA VEZ PINTADA Y SE AÑADE LA CAPA AL MAPA
+		let boxLayer = new ol.layer.Vector({
+			source: source,
+			style: new ol.style.Style({
+				fill: new ol.style.Fill({
+					color: 'rgba(255, 255, 255, 0.2)'  // COLOR DEL RELLENO DEL AREA
+				}),
+				stroke: new ol.style.Stroke({
+					color: '#ffcc33', // COLOR DE LA LINEA DEL AREA
+					width: 3
+				})
+			})
+		});
+
+		self.olMap.addLayer(boxLayer);
+
+		addInteractions();
+		
+		function addInteractions() {
+
+			// PINTADO DEL AREA CON EL ESTILO MIENTRAS SE PINTA 
+			self.drawBox = new ol.interaction.DragBox({
+				source: source,
+				type: "Circle",
+				geometryFunction: ol.interaction.Draw.createBox(),
+				onBoxEnd: dragEnd  // FUNCION QUE SE EJECUTA TRAS TERMINAR EL PINTADO
+			});
+
+			self.olMap.addInteraction(self.drawBox);
+
+			self.snap = new ol.interaction.Snap({ source: source });
+			self.olMap.addInteraction(self.snap);
+		}
+
+		// EVENTOS AL TERMINAR DE PINTAR EL AREA
+		function dragEnd() {
+
+			let coordinates = self.drawBox.getGeometry().getExtent();
+			let coord01 = [coordinates[0], coordinates[3]];
+			let coord02 = [coordinates[2], coordinates[1]];
+
+			let startCoordinates = ol.proj.transform(coord01, 'EPSG:3857', 'EPSG:4326');
+			let endCoordinates = ol.proj.transform(coord02, 'EPSG:3857', 'EPSG:4326');
+
+			console.log("start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0]);
+
+			webix.alert({
+				title: "COORDENADAS",
+				text: "start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0],
+				type: "alert-warning",
+				width: 440
+			}).then(function() {
+
+				// TRAS ACEPTAR EL ALERT SE DISPARA EL EVENTO CLICK SOBRE EL BOTON DE PINTAR AREA DEJANDOLO RESETEADO
+				webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
+			});
+
+			self.polygon = self.drawBox.getGeometry();
+		}
+	}
+	
+	removeSquare() {
+		
+		let self = this;
+		
+		self.olMap.un('singleclick', function(evt) { evt.preventDefault() });
+		self.olMap.removeInteraction(self.drawBox);
 	}
 	
 	show() {

@@ -6,7 +6,8 @@ import MapAction from "./mapAction.js";
 import MapContextMenu from "./mapContextMenu.js";
 import MapZone from "./mapZone.js";
 import GraphicIcon from "../graphicIcon/graphicIcon.js";
-import MapIncident from "./mapIncident.js"; 
+import MapIncident from "./mapIncident.js";
+import MessageBox from "../messageBox.js";  
 
 const TOPIC_ELEMENTS = "/topic/element.>";
 
@@ -46,6 +47,8 @@ export default class OpenMap extends GenericMap {
 		this.mapIncident = undefined;
 		
 		this.afterRenderCallback = undefined;
+		
+		this.drawButtonPressed = false;
 		
 	}
 
@@ -1149,6 +1152,57 @@ export default class OpenMap extends GenericMap {
 				};
 				
 				viewToolbarActions.cols.push(viewButtonLayers);	
+			}
+			
+			if (self.mapIncident) {
+				
+				let viewButtonIncidents = {
+					view: "button",
+					type: "icon",
+					icon:"mdi mdi-alert-outline",
+					tooltip: i18n.t("LBL_ADD_INCIDENT"),
+					css: "button",
+					width: 40, height: 40,
+					on: {
+						onItemClick: function(obj) {
+							
+							let mapLayer = document.querySelector("#map-" + self.uid);
+
+							if (!self.drawButtonPressed) {
+								
+								webix.html.addCss($$(obj).$view, "button-pressed");
+								self.drawButtonPressed = true;
+								$$(obj).refresh();
+								
+								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CONFIRM_CREATE_INCIDENT_FROM_MAP"),
+								
+									// onAccept
+									function() {
+										
+										self.mapIncident.addSquare($$(obj));
+										mapLayer.style.cursor = 'crosshair';
+									},
+									// onCancel
+									function() {
+										
+										webix.html.removeCss($$(obj).$view, "button-pressed");
+									}
+								)).show();
+							} 
+							else {
+
+								self.drawButtonPressed = false;
+								webix.html.removeCss($$(obj).$view, "button-pressed");
+								$$(obj).refresh();
+
+								self.mapIncident.removeSquare();
+								mapLayer.style.cursor = 'auto';
+							}
+						}
+					}
+				};
+				
+				viewToolbarActions.cols.push(viewButtonIncidents);
 			}
 			
 			if (self.metadata.darkMode) {

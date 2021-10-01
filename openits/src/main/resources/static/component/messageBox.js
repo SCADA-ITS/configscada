@@ -1,22 +1,13 @@
-
-const BAR_COLOR = {
-	MODE_INFO: "#3498db",
-	MODE_WARN: "#fdbf4c",
-	MODE_ERROR: "#ff5c4c",
-	MODE_QUESTION: "#3498db"
-}
-
 export default class MessageBox {
 
-	static get MODE_INFO() { return 1 };
-	static get MODE_WARN() { return 2 };
-	static get MODE_ERROR() { return 3 };
-	static get MODE_QUESTION() { return 4 };
-
-
+	static get INFO() { return { id: 1, color: "#3498db", icon: "./img/info.png", title: "LBL_INFO" } }
+	static get WARN() { return { id: 2, color: "#fdbf4c", icon: "./img/warn.png", title: "LBL_WARN" } }
+	static get ERROR() { return { id: 3, color: "#ff5c4c", icon: "./img/error.png", title: "LBL_ERROR" } }
+	static get CONFIRM() { return { id: 4, color: "#3498db", icon: "./img/question.png", title: "LBL_CONFIRM" } }
+	
 	constructor(type, message, onAccept, onCancel) {
 
-		this.type = (type) ? type : MessageBox.MODE_INFO;
+		this.type = (type) ? type : MessageBox.INFO;
 		this.message = message;
 		this.onAccept = onAccept;
 		this.onCancel = onCancel;
@@ -24,60 +15,27 @@ export default class MessageBox {
 		this.uid = webix.uid();
 	}
 
-
 	show() {
 
 		let self = this;
-
-		let title = undefined;
-		let barColor = undefined;
-		let icon = undefined;
-		let oneButton = true;
-
-		if (self.type === MessageBox.MODE_WARN) {
-
-			title = "LBL_WARN";
-			barColor = BAR_COLOR.MODE_WARN;
-			icon = "./img/warn.png";
-
-		} else if (self.type === MessageBox.MODE_ERROR) {
-
-			title = "LBL_ERROR";
-			barColor = BAR_COLOR.MODE_ERROR;
-			icon = "./img/error.png";
-
-		} else if (self.type === MessageBox.MODE_QUESTION) {
-
-			title = "LBL_QUESTION";
-			barColor = BAR_COLOR.MODE_QUESTION;
-			icon = "./img/question.png";
-			oneButton = false;
-
-		} else if (self.type === MessageBox.MODE_INFO) {
-
-			title = "LBL_INFO";
-			barColor = BAR_COLOR.MODE_INFO;
-			icon = "./img/info.png";
-		}
-
 
 		webix.ui({
 			id: "alert-" + self.uid,
 			view: "window",
 			modal: true,
-			height: 250,
+			height: 160,
 			width: 600,
 			position: "center",
 			head: {
 				view: "toolbar",
 				rows: [
-					{ height: 4, css: { "margin": "0px !important", "background-color": barColor, "width": "600px !important" } },
+					{ height: 4, css: { "margin": "0px !important", "background-color": self.type.color, "width": "600px !important" } },
 					{
 						css: { "margin-top": "0px !important" },
 						cols: [
 							{
 								view: "label",
-								label: i18n.t(title),
+								label: i18n.t(self.type.title),
 								align: "center",
 								css: { "padding-left": "3%" }
 							},
@@ -87,7 +45,7 @@ export default class MessageBox {
 								align: 'right',
 								click: function() {
 
-									if (oneButton) {
+									if (self.type.id != MessageBox.CONFIRM.id) {
 
 										execute(self.onAccept);
 
@@ -105,13 +63,13 @@ export default class MessageBox {
 				rows: [
 					{ height: 10 },
 					{
-						height: 105,
+						//height: 105,
 						cols: [
 							{ width: 35 },
 							{
-								width: 95,
+								width: 70,
 								css: { "border": "0px !important" },
-								template: `<div><img style='padding: 15px 15px 15px 0px;' src=${icon}></div>`
+								template: `<div><img style='width: 40px; padding: 0px 15px 15px 0px;' src=${self.type.icon}></div>`
 							},
 							{
 								rows: [
@@ -119,15 +77,15 @@ export default class MessageBox {
 										view: "template",
 										template: `<p style='font-size: 14px; color: #475466;'>${self.message}</p>`,
 										css: "messagebox"
-									},
-									{ height: 10 },
+									}
 								]
 							},
-							{ width: 105 }
+							{ width: 50 }
 						]
 					},
-					{ height: 5 },
-					getButtons()
+					{ height: 10 },
+					getButtons(),
+					{ height: 5 }
 				]
 			}
 
@@ -140,11 +98,11 @@ export default class MessageBox {
 
 			let toolbar = {
 				view: "toolbar",
-				height: 38,
+				height: 40,
 				css: "dialog-input-custom messagebox"
 			};
 
-			if (oneButton) {
+			if (self.type.id != MessageBox.CONFIRM.id) {
 
 				buttons = [
 					{},
@@ -163,16 +121,7 @@ export default class MessageBox {
 			} else {
 
 				buttons = [
-					{},
-					{
-						view: "button",
-						value: i18n.t("LBL_NO"),
-						width: 100,
-						click: function() {
-
-							execute(self.onCancel);
-						}
-					},
+					{},				
 					{
 						view: "button",
 						value: i18n.t("LBL_YES"),
@@ -180,6 +129,15 @@ export default class MessageBox {
 						click: function() {
 
 							execute(self.onAccept);
+						}
+					},
+					{
+						view: "button",
+						value: i18n.t("LBL_NO"),
+						width: 100,
+						click: function() {
+
+							execute(self.onCancel);
 						}
 					},
 					{}
@@ -199,9 +157,6 @@ export default class MessageBox {
 			}
 
 			$$("alert-" + self.uid).close();
-
 		}
-
 	}
-
 }
