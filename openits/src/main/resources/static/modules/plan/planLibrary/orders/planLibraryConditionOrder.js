@@ -1,6 +1,9 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
-import ChangeConditionDialogBox from "./changeConditionDialogBox.js";
+import ConditionDialogBox from "./conditionDialogBox.js";
 import DataTable from "../../../../component/datatable.js";
+
+const MOVE_PLAN_ORDER_POSITION_UP = 1;
+const MOVE_PLAN_ORDER_POSITION_DOWN = 2;
 
 export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
@@ -93,12 +96,32 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					},
 					{
 						id: 3,
+						default_: false,
+						icon: "mdi mdi-arrow-up-bold",
+						label: "LBL_MOVE_UP",
+						multiselect: false,
+						position: 3,
+						showText: false,
+						itemRequired: true
+					},
+					{
+						id: 4,
+						default_: false,
+						icon: "mdi mdi-arrow-down-bold",
+						label: "LBL_MOVE_DOWN",
+						multiselect: false,
+						position: 4,
+						showText: false,
+						itemRequired: true
+					},
+					{
+						id: 5,
 						value: "LBL_DELETE",
 						icon: "mdi mdi-delete-outline",
 						label: "LBL_DELETE",
 						default_: false,
 						showText: true,
-						position: 3,
+						position: 5,
 						multiselect: false,
 						itemRequired: true
 					}
@@ -115,9 +138,31 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					commandId: 2,
 					function: onEdit
 				});
-				
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 3,
+					function: (selectedIds) => {
+	
+						if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+							
+							movePlanOrderCondition(selectedIds[0], MOVE_PLAN_ORDER_POSITION_UP);
+						} 
+					}
+				});
+				
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 4,
+					function: (selectedIds) => {
+	
+						if (Array.isArray(selectedIds) && selectedIds.length === 1) {
+							
+							movePlanOrderCondition(selectedIds[0], MOVE_PLAN_ORDER_POSITION_DOWN);
+						} 
+					}
+				});
+				
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 5,
 					function: function() {
 						
 						webix.confirm({
@@ -284,18 +329,39 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 			
 			function onCreate() {
 
-				(new ChangeConditionDialogBox(null, function (planOrderCondition){
+				(new ConditionDialogBox(null, self.config, function (planOrderCondition){
+
+					if (!self.planOrder.planOrderConditions || !Array.isArray(self.planOrder.planOrderConditions)){
+
+						self.planOrder.planOrderConditions = [];
+					}
 				
-					planOrderCondition.id = "PlanOrderCondition:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderCondition.thresholdOperation.id.substr(planOrderCondition.thresholdOperation.id.indexOf(":"), planOrderCondition.thresholdOperation.id.length);
+					planOrderCondition.planOrderConditionOrder = self.planOrder.planOrderConditions.length;
+
+					planOrderCondition.id = "PlanOrderCondition:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderCondition.planOrderConditionOrder;
 					
 					self.planOrder.planOrderConditions.push(planOrderCondition);
 				
 					let newItem ={};				
 					newItem.id = planOrderCondition.id;
 					newItem.elementAlias = planOrderCondition.element.alias;
-					newItem.parameter =  i18n.t(planOrderCondition.elementTypeParam.labelAlias);
-					newItem.elementState =  i18n.t(planOrderCondition.elementTypeState.labelAlias);
-					newItem.operation = i18n.t(planOrderCondition.thresholdOperation.labelAlias);
+					
+					if(planOrderCondition.elementTypeParam){
+					
+						newItem.parameter =  i18n.t(planOrderCondition.elementTypeParam.labelAlias);
+					}
+					
+					if(planOrderCondition.elementTypeState){
+					
+						newItem.elementState =  i18n.t(planOrderCondition.elementTypeState.labelAlias);
+					}
+					
+					if(planOrderCondition.thresholdOperation){
+					
+						newItem.operation = i18n.t(planOrderCondition.thresholdOperation.labelAlias);
+					}
+					
+					newItem.planOrderConditionOrder = planOrderCondition.planOrderConditionOrder;
 					newItem.operationVal1 = planOrderCondition.thresholdVal1;
 					newItem.operationVal2 = planOrderCondition.thresholdVal2;
 					newItem.nexusOperator = (planOrderCondition.nexusAnd?"And":"Or");
@@ -313,7 +379,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					
 					let selectedItem = self.planOrder.planOrderConditions.find(e => e.id == selectedItems[0].id);
 
-					(new ChangeConditionDialogBox(selectedItem, function (planOrderCondition){
+					(new ConditionDialogBox(selectedItem, self.config, function (planOrderCondition){
 				
 						selectedItem.element = planOrderCondition.element;
 						selectedItem.elementTypeParam = planOrderCondition.elementTypeParam;
@@ -332,6 +398,10 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 	
 					})).show();
 				}
+			}
+
+			function movePlanOrderCondition(planOrderConditionId, movePlanOrderType) {
+
 			}
 
 			function onRemove() {

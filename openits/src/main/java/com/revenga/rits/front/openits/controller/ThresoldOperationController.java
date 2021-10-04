@@ -19,8 +19,8 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
-@RequestMapping(value = "/api/v1/thresoldOperations", produces = { "application/json", "application/xml" })
-@Api(value = "ThresoldOperations", tags = { "THRESOLD OPERATIONS" })
+@RequestMapping(value = "/api/v1/thresholdOperations", produces = { "application/json", "application/xml" })
+@Api(value = "ThresholdOperations", tags = { "THRESOLD OPERATIONS" })
 public class ThresoldOperationController {
 	
 	@Autowired

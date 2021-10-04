@@ -6,14 +6,15 @@ import InputDialogBox from "../../../../component/inputDialogBox.js";
 const CHANGE_DIALOG_BOX_WIDTH = 700;
 const CHANGE_DIALOG_BOX_HEIGHT = 500;
 	
-export default class ChangeConditionDialogBox {
+export default class ConditionDialogBox {
 	
-	constructor(planOrderCondition, onAccept) {
+	constructor(planOrderCondition, config, onAccept) {
 
 		this.uid = webix.uid();
 		this.planOrderCondition = planOrderCondition;
 		this.onAccept = onAccept;
 		this.containerId = undefined;
+		this.config = config;
 
 		this.element = undefined;
 		this.elementTypeParam = undefined;
@@ -65,7 +66,7 @@ export default class ChangeConditionDialogBox {
 						getBodyComponent(),
 						{ height: 20 },
 						getToolbarActions(),
-						{ height: 10 },			
+						{ height: 20 },			
 					]
 				},	
 				{ width: 20 }
@@ -77,7 +78,10 @@ export default class ChangeConditionDialogBox {
 		function getBodyComponent() {
 
 			let bodyComponent = {
-				rows: [
+				view: "form",
+				elementsConfig: { labelAlign: "left" },
+				css: "global-form",
+				elements: [
 					getElemenRow(),
 					getElementTypeParamRow(),
 					getElementTypeStateRow(),
@@ -90,103 +94,53 @@ export default class ChangeConditionDialogBox {
 
 			function getElemenRow() {
 
-				let elementLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT") + "</span>";
+				let equipmentRow;
 
-				if(self.element && self.element.id != null){
-
-					elementLabel = "<img src='img/" + self.element.elementType.elementTypePhoto + "' class='grid-icon'/><span class='grid-title'>" + self.element.alias + "</span>"
-				}
-
-				let elementRow = {
+				equipmentRow = {
 					id: "change-condition-element-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", name: "equipmentName", value: (self.element?self.element.alias:""), required: true, label: i18n.t("LBL_EQUIPMENT"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: elementLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_CONDITION_EQUIPMENT"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowElementSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: false,
+							on: {
+								onItemClick: function() {
+
+									getWindowElementSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
-				return elementRow;
+				return equipmentRow;
 			}
 
 			function getElementTypeParamRow() {
 
-				let disabled = true;
-				let elementTypeParamLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT_TYPE_PARAM") + "</span>";
+				let elementTypeParamRow;
 
+				let disabled = true;				
 				if(self.element && self.element.id != null) {
 
 					disabled = false;
-				} else {
+				} 
 
-					disabled = true;
-				}
-
-				if(self.elementTypeParam && self.elementTypeParam.id != null){
-
-					elementTypeParamLabel = "<span class='grid-title'>" + i18n.t(self.elementTypeParam.labelAlias) + "</span>"
-				}
-
-				let elementTypeParamRow = {
+				elementTypeParamRow = {
 					id: "change-condition-element-type-param-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: false, label: i18n.t("LBL_EQUIPMENT_TYPE_PARAM"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: elementTypeParamLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											disabled: disabled,
-											tooltip: i18n.t("LBL_EDIT_CHANGE_CONDITION_EQUIPMENT_TYPE_PARAM"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowElementTypeParamSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowElementTypeParamSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return elementTypeParamRow;
@@ -194,56 +148,29 @@ export default class ChangeConditionDialogBox {
 
 			function getElementTypeStateRow() {
 
-				let disabled = true;
-				let elementTypeStateLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT_TYPE_STATE") + "</span>";
+				let elementTypeStateRow;
 
+				let disabled = true;				
 				if(self.element && self.element.id != null) {
 
 					disabled = false;
-				} else {
+				} 
 
-					disabled = true;
-				}
-
-				if(self.elementTypeState && self.elementTypeState.id != null){
-
-					elementTypeStateLabel = "<span class='grid-title'>" + i18n.t(self.elementTypeState.labelAlias) + "</span>"
-				}
-
-				let elementTypeStateRow = {
+				elementTypeStateRow = {
 					id: "change-condition-element-type-state-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: false, label: i18n.t("LBL_EQUIPMENT_TYPE_STATE"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: elementTypeStateLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											disabled: disabled,
-											tooltip: i18n.t("LBL_EDIT_CHANGE_CONDITION_EQUIPMENT_STATE"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowElementTypeStateSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowElementTypeStateSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return elementTypeStateRow;
@@ -251,46 +178,29 @@ export default class ChangeConditionDialogBox {
 
 			function getThresholdOperationRow() {
 
-				let thresholdOperationLabel = "<span class='grid-title'>  " + i18n.t("LBL_TRESHOLD_OPERATION") + "</span>";
+				let thresholdOperationRow;
 
-				if(self.element && self.element.id != null){
+				let disabled = true;				
+				if(self.elementTypeParam && self.elementTypeParam.id != null) {
 
-					thresholdOperationLabel = "<span class='grid-title'>" + i18n.t(self.thresholdOperation.labelAlias) + "</span>"
+					disabled = false;
 				}
 
-				let thresholdOperationRow = {
+				thresholdOperationRow = {
 					id: "change-condition-threshold-operation-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: (self.thresholdOperation?i18n.t(self.thresholdOperation.labelAlias):""), required: false, label: i18n.t("LBL_TRESHOLD_OPERATION"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: thresholdOperationLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_CONDITION_THRESHOLD_OPERATION"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowThresholdOperationSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowThresholdOperationSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return thresholdOperationRow;
@@ -298,46 +208,29 @@ export default class ChangeConditionDialogBox {
 
 			function getThresholdVal1Row() {
 
-				let thresholdVal1Label = "<span class='grid-title'>  " + i18n.t("LBL_THRESHOLD_VAL_ONE") + "</span>";
+				let thresholdVal1Row;
 
-				if(self.thresholdVal1){
+				let disabled = true;				
+				if(self.elementTypeParam && self.elementTypeParam.id != null) {
 
-					thresholdVal1Label = "<span class='grid-title'>" + self.thresholdVal1 + "</span>"
+					disabled = false;
 				}
 
-				let thresholdVal1Row = {
+				thresholdVal1Row = {
 					id: "change-threshold-value-one-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: self.thresholdVal1, required: false, label: i18n.t("LBL_THRESHOLD_VAL_ONE"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: thresholdVal1Label,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_THRESHOLD_VALUE_ONE"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowThresholdVal1Selected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowThresholdVal1Selected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return thresholdVal1Row;
@@ -345,46 +238,29 @@ export default class ChangeConditionDialogBox {
 
 			function getThresholdVal2Row() {
 
-				let thresholdVal2Label = "<span class='grid-title'>  " + i18n.t("LBL_THRESHOLD_VAL_TWO") + "</span>";
+				let thresholdVal2Row;
 
-				if(self.thresholdVal2){
+				let disabled = true;				
+				if(self.elementTypeParam && self.elementTypeParam.id != null) {
 
-					thresholdVal2Label = "<span class='grid-title'>" + self.thresholdVal2 + "</span>"
+					disabled = false;
 				}
 
-				let thresholdVal2Row = {
+				thresholdVal2Row = {
 					id: "change-threshold-value-two-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: self.thresholdVal2, required: false, label: i18n.t("LBL_THRESHOLD_VAL_TWO"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: thresholdVal2Label,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_THRESHOLD_VALUE_TWO"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowThresholdVal2Selected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowThresholdVal2Selected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return thresholdVal2Row;
@@ -392,49 +268,32 @@ export default class ChangeConditionDialogBox {
 
 			function getNexusAndRow() {
 
-				let nexusAndLabel = "<span class='grid-title'>  " + i18n.t("LBL_NEXUS_OPERATOR") + "</span>";
+				let nexusAndRow;
 
-				if(self.nexusAnd){
-
-					nexusAndLabel = "<span class='grid-title'>" + self.nexusAnd + "</span>"
-				}
-
-				let valueRow = {
+				nexusAndRow = {
 					id: "change-nexus-operator-row-" + self.uid,
 					cols: [
-						{ width: 10 },
-						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: nexusAndLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_NEXUS_OPERATOR"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowNexusAndSelected();
-												}
-											}
-										},
-										{}
-									]
-								}
-							]
-						},
-						{ width: 10 }
-					]
+						{ 
+							view: "switch", 
+							value: self.nexusAnd, 
+							label: i18n.t("LBL_NEXUS_OPERATOR"), 
+							labelWidth: 325, 
+							on:{
+								onChange: function (newVal, oldVal) {
+
+									self.nexusAnd = newVal;
 					
+									webix.ui(getNexusAndRow(), $$("change-nexus-operator-row-" + self.uid));
+								}
+							},
+							onLabel: i18n.t("LBL_AND"),
+      						offLabel: i18n.t("LBL_OR")
+						},
+						{ width: 90 }
+					]
 				};
 
-				return valueRow;
+				return nexusAndRow;
 			}
 
 			function getWindowElementSelected() {
@@ -492,8 +351,8 @@ export default class ChangeConditionDialogBox {
 						self.elementTypeParam = null;
 						webix.ui(getElementTypeParamRow(), $$("change-condition-element-type-param-row-" + self.uid));
 						
-						self.planOrderValue = null;
-						webix.ui(getNexusAndRow(), $$("change-param-value-row-" + self.uid));
+						self.elementTypeState = null;
+						webix.ui(getElementTypeStateRow(), $$("change-condition-element-type-state-row-" + self.uid));
 					}
 				}
 			}
@@ -533,13 +392,13 @@ export default class ChangeConditionDialogBox {
 
 				function onAccept(selectedIds) {
 
-					let updateValueRow = false;
+					let updateRows = false;
 
 					if (selectedIds && Array.isArray(selectedIds) && selectedIds.length > 0){
 
 						if(!self.elementTypeParam || self.elementTypeParam.id != selectedIds[0].id){
 
-							updateValueRow = true;
+							updateRows = true;
 						}
 
 						self.elementTypeParam = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id).elementTypeParams.find(e => e.id == selectedIds[0].id);
@@ -547,15 +406,21 @@ export default class ChangeConditionDialogBox {
 					} else {
 						
 						self.elementTypeParam = null;
-						updateValueRow = true;
+						updateRows = true;
 					}
 					
 					webix.ui(getElementTypeParamRow(), $$("change-condition-element-type-param-row-" + self.uid));
 
-					if(updateValueRow){
+					if(updateRows){
 
-						self.planOrderValue = null;
-						webix.ui(getNexusAndRow(), $$("change-param-value-row-" + self.uid));
+						self.thresholdOperation = null;
+						webix.ui(getThresholdOperationRow(), $$("change-condition-threshold-operation-row-" + self.uid));
+						
+						self.thresholdVal1 = null;
+						webix.ui(getThresholdVal1Row(), $$("change-threshold-value-one-row-" + self.uid));
+
+						self.thresholdVal2 = null;
+						webix.ui(getThresholdVal2Row(), $$("change-threshold-value-two-row-" + self.uid));						
 					}
 				}
 			}
@@ -572,16 +437,19 @@ export default class ChangeConditionDialogBox {
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
 
-				let elements = window.em.getAll(EntityType.ELEMENT_TYPE_STATE);
+				let elementTypeStates = window.em.getAll(EntityType.ELEMENT_TYPE_STATE);
 				
-				if (Array.isArray(elements) && elements.length > 0) {
+				if (Array.isArray(elementTypeStates) && elementTypeStates.length > 0) {
 						
-					elements.forEach(el => {
+					elementTypeStates.forEach(el => {
 
-						dialogEntity.data.push({
-							id: el.id,
-							state: i18n.t(el.labelAlias)
-						});						
+						if (el.id.split(":")[1] == self.element.elementType.id.split(":")[1]){
+
+							dialogEntity.data.push({
+								id: el.id,
+								state: i18n.t(el.labelAlias)
+							});						
+						}
 					});
 				}
 					
@@ -616,15 +484,15 @@ export default class ChangeConditionDialogBox {
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
 
-				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.thresoldOperations).then(function(dat){
+				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.thresholdOperations).then(function(dat){
 				
 					if (dat != null) {
 
-						let elements = dat.json();
+						let thresholdOperations = dat.json();
 				
-						if (Array.isArray(elements) && elements.length > 0) {
+						if (Array.isArray(thresholdOperations) && thresholdOperations.length > 0) {
 								
-							elements.forEach(el => {
+							thresholdOperations.forEach(el => {
 
 								dialogEntity.data.push({
 									id: el.id,
@@ -641,14 +509,14 @@ export default class ChangeConditionDialogBox {
 
 							if (selectedIds && Array.isArray(selectedIds) && selectedIds.length > 0){
 
-								self.thresholdOperation = selectedIds[0];
+								self.thresholdOperation = thresholdOperations.find(e => e.id == selectedIds[0].id);
 							
 							} else {
 								
 								self.thresholdOperation = null;
 							}
 							
-							webix.ui(getElementTypeStateRow(), $$("change-condition-threshold-operation-row-" + self.uid));
+							webix.ui(getThresholdOperationRow(), $$("change-condition-threshold-operation-row-" + self.uid));
 						}
 					}
 				});				
@@ -656,7 +524,7 @@ export default class ChangeConditionDialogBox {
 			
 			function getWindowThresholdVal1Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal1);
+				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal1, self.elementTypeParam.dataType.id);
 	
 				i.show();
 
@@ -670,7 +538,7 @@ export default class ChangeConditionDialogBox {
 
 			function getWindowThresholdVal2Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal2);
+				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal2, self.elementTypeParam.dataType.id);
 	
 				i.show();
 
@@ -682,20 +550,6 @@ export default class ChangeConditionDialogBox {
 				}
 			}
 
-			function getWindowNexusAndSelected() {
-					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED"), i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED_DESCRIPTION"), onAccept, false, self.planOrderValue);
-	
-				i.show();
-
-				function onAccept(inputValue) {
-
-					self.planOrderValue = inputValue;
-
-					webix.ui(getNexusAndRow(), $$("change-param-value-row-" + self.uid));
-				}
-			}
-			
 			return bodyComponent;
 		}
 		

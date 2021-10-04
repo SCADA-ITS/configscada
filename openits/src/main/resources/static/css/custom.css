@@ -2114,9 +2114,16 @@ p, input, textarea {
 	font-family: Roboto;
 }
 
-.global-form {
+.user-form {
 	width: 724px !important;
 	height: 375px !important;
+	border: 1px solid var(--blue-mid-opacity-3) !important;
+	margin: 6px 0px;
+	font-size: 13px;
+	padding-bottom: 12px;
+}
+
+.global-form {
 	border: 1px solid var(--blue-mid-opacity-3) !important;
 	margin: 6px 0px;
 	font-size: 13px;

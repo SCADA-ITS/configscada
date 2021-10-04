@@ -8,7 +8,7 @@
 		"elementType": "element_types/${id}",
 		"plans": "plans/summary",
 		"plan": "plans/${id}",
-		"thresoldOperations": "thresoldOperations",
+		"thresholdOperations": "thresholdOperations",
 		"planNodes": "plans/nodes",
 		"createNode": "plans/node",
 		"deleteNode": "plans/node/${id}",

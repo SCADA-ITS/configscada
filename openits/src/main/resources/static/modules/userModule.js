@@ -523,7 +523,7 @@ export default class UserModule extends GenericModule {
 						view: "form",
 						height: 400,
 						elementsConfig: { labelAlign: "left" },
-						css: "global-form",
+						css: "user-form",
 						elements: [
 							{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
 							{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275, inputWidth: 600 },
@@ -646,7 +646,7 @@ export default class UserModule extends GenericModule {
 					let dataTable = {
 						id: "dt-" + self.uid,
 						height: 401,
-						css: "global-form",
+						css: "user-form",
 						rows: [
 							{
 								cols: [

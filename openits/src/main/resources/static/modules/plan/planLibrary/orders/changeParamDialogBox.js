@@ -52,7 +52,7 @@ export default class ChangeParamDialogBox {
 						getBodyComponent(),
 						{ height: 20 },
 						getToolbarActions(),
-						{ height: 10 },			
+						{ height: 20 },			
 					]
 				},	
 				{ width: 20 }
@@ -64,10 +64,11 @@ export default class ChangeParamDialogBox {
 		function getBodyComponent() {
 
 			let bodyComponent = {
+				view: "form",
+				elementsConfig: { labelAlign: "left" },
+				css: "global-form",
 				rows: [
-					// { height: 20 },
 					getEquipmentRow(),
-					// { height: 20 },
 					getEquipmentTypeParamRow(),
 					getValueRow()
 				]
@@ -75,46 +76,23 @@ export default class ChangeParamDialogBox {
 
 			function getEquipmentRow() {
 
-				let equipmentLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT") + "</span>";
+				let equipmentRow;
 
-				if(self.element && self.element.id != null){
-
-					equipmentLabel = "<img src='img/" + self.element.elementType.elementTypePhoto + "' class='grid-icon'/><span class='grid-title'>" + self.element.alias + "</span>"
-				}
-
-				let equipmentRow = {
+				equipmentRow = {
 					id: "change-param-equipment-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: (self.element?self.element.alias:""), required: true, label: i18n.t("LBL_EQUIPMENT"), disabled: true, labelWidth: 275 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: equipmentLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_PARAM_EQUIPMENT"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowEquipmentSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: false,
+							on: {
+								onItemClick: function() {
+
+									getWindowEquipmentSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return equipmentRow;
@@ -122,114 +100,60 @@ export default class ChangeParamDialogBox {
 
 			function getEquipmentTypeParamRow() {
 
-				let disabled = true;
-				let equipmentTypeParamLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT_TYPE_PARAM") + "</span>";
+				let elementTypeParamRow;
 
+				let disabled = true;				
 				if(self.element && self.element.id != null) {
 
 					disabled = false;
-				} else {
+				} 
 
-					disabled = true;
-				}
-
-				if(self.elementTypeParam && self.elementTypeParam.id != null){
-
-					equipmentTypeParamLabel = "<span class='grid-title'>" + i18n.t(self.elementTypeParam.labelAlias) + "</span>"
-				}
-
-				let equipmentTypeParamRow = {
+				elementTypeParamRow = {
 					id: "change-param-equipment-type-param-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: true, label: i18n.t("LBL_EQUIPMENT_TYPE_PARAM"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: equipmentTypeParamLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											disabled: disabled,
-											tooltip: i18n.t("LBL_EDIT_CHANGE_PARAM_EQUIPMENT_TYPE_PARAM"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowEquipmentTypeParamSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowEquipmentTypeParamSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
-				return equipmentTypeParamRow;
+				return elementTypeParamRow;
 			}
 
 			function getValueRow() {
+				
+				let valueRow;
 
-				let disabled = true;
-				let planOrderValueLabel = "<span class='grid-title'>  " + i18n.t("LBL_VALUE") + "</span>";
-
+				let disabled = true;				
 				if(self.element && self.element.id != null
 					&& self.elementTypeParam && self.elementTypeParam.id != null) {
 
 					disabled = false;
-				} else {
+				} 
 
-					disabled = true;
-				}
-
-				if(self.planOrderValue){
-
-					planOrderValueLabel = "<span class='grid-title'>" + self.planOrderValue + "</span>"
-				}
-
-				let valueRow = {
+				valueRow = {
 					id: "change-param-value-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", value: self.planOrderValue, required: true, label: i18n.t("LBL_VALUE"), disabled: true, labelWidth: 325 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: planOrderValueLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											disabled: disabled,
-											tooltip: i18n.t("LBL_EDIT_CHANGE_PARAM_VALUE"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowValueSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
+							on: {
+								onItemClick: function() {
+
+									getWindowValueSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return valueRow;

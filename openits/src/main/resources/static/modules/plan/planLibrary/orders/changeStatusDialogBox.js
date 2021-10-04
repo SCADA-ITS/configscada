@@ -4,7 +4,7 @@ import InputDialogBox from "../../../../component/inputDialogBox.js";
 
 
 const CHANGE_DIALOG_BOX_WIDTH = 700;
-const CHANGE_DIALOG_BOX_HEIGHT = 500;
+const CHANGE_DIALOG_BOX_HEIGHT = 540;
 	
 export default class ChangeStatusDialogBox {
 	
@@ -46,7 +46,7 @@ export default class ChangeStatusDialogBox {
 						getBodyComponent(),
 						{ height: 20 },
 						getToolbarActions(),
-						{ height: 10 },			
+						{ height: 20 },			
 					]
 				},	
 				{ width: 20 }
@@ -58,7 +58,10 @@ export default class ChangeStatusDialogBox {
 		function getBodyComponent() {
 
 			let bodyComponent = {
-				rows: [
+				view: "form",
+				elementsConfig: { labelAlign: "left" },
+				css: "global-form",
+				elements: [
 					getEquipmentRow(),
 					getElementTypeStateRow()
 				]
@@ -66,46 +69,23 @@ export default class ChangeStatusDialogBox {
 
 			function getEquipmentRow() {
 
-				let equipmentLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT") + "</span>";
+				let equipmentRow;
 
-				if(self.element && self.element.id != null){
-
-					equipmentLabel = "<img src='img/" + self.element.elementType.elementTypePhoto + "' class='grid-icon'/><span class='grid-title'>" + self.element.alias + "</span>"
-				}
-
-				let equipmentRow = {
+				equipmentRow = {
 					id: "change-status-equipment-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", name: "equipmentName", value: (self.element?self.element.alias:""), required: true, label: i18n.t("LBL_EQUIPMENT"), disabled: true, labelWidth: 275 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: equipmentLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											tooltip: i18n.t("LBL_EDIT_CHANGE_STATUS_EQUIPMENT"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowEquipmentSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: false,
+							on: {
+								onItemClick: function() {
+
+									getWindowEquipmentSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
+						{ width: 90 }
 					]
-					
 				};
 
 				return equipmentRow;
@@ -113,56 +93,29 @@ export default class ChangeStatusDialogBox {
 
 			function getElementTypeStateRow() {
 
-				let disabled = true;
-				let equipmentTypeStateLabel = "<span class='grid-title'>  " + i18n.t("LBL_EQUIPMENT_TYPE") + "</span>";
+				let elementTypeStateRow;
+				let equipmentTypeDisable = true;
 
-				if(self.element && self.element.id != null) {
+				if(self.element && self.element.id != null){
 
-					disabled = false;
-				} else {
-
-					disabled = true;
+					equipmentTypeDisable = false;
 				}
 
-				if(self.elementTypeState && self.elementTypeState.id != null){
-
-					equipmentTypeStateLabel = "<span class='grid-title'>" + i18n.t(self.elementTypeState.labelAlias) + "</span>"
-				}
-
-				let elementTypeStateRow = {
+				elementTypeStateRow = {
 					id: "change-status-element-type-state-row-" + self.uid,
 					cols: [
-						{ width: 10 },
+						{ view: "text", name: "equipmentTypeName", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: true, label: i18n.t("LBL_EQUIPMENT_TYPE_STATE"), disabled: true, labelWidth: 275 },
 						{
-							rows: [
-								{
-									cols: [
-										{
-											view: "label",
-											label: equipmentTypeStateLabel,
-											autowidth: true
-										},
-										{ width: 5 },
-										{
-											view: "icon",
-											icon: "mdi mdi-pencil",
-											disabled: disabled,
-											tooltip: i18n.t("LBL_EDIT_CHANGE_STATUS_ELEMENT_TYPE_STATE"),
-											on: {
-												onItemClick: function() {
-													
-													getWindowElementTypeStateSelected();
-												}
-											}
-										},
-										{}
-									]
+							view: "icon", icon: "wxi-search", disabled: equipmentTypeDisable,
+							on: {
+								onItemClick: function() {
+
+									getWindowElementTypeStateSelected();
 								}
-							]
+							}
 						},
-						{ width: 10 }
-					]
-					
+						{ width: 90 }
+					]	
 				};
 
 				return elementTypeStateRow;
@@ -241,13 +194,16 @@ export default class ChangeStatusDialogBox {
 				let elements = window.em.getAll(EntityType.ELEMENT_TYPE_STATE);
 				
 				if (Array.isArray(elements) && elements.length > 0) {
-						
+
 					elements.forEach(el => {
-					
-						dialogEntity.data.push({
-							id: el.id,
-							state: i18n.t(el.labelAlias)
-						});						
+				
+						if (el.id.split(":")[1] == self.element.elementType.id.split(":")[1]){
+
+							dialogEntity.data.push({
+								id: el.id,
+								state: i18n.t(el.labelAlias)
+							});
+						}						
 					});
 				}
 					
