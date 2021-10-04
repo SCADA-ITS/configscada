@@ -1,7 +1,7 @@
 import GraphicIconCustomType from "../graphicIconCustomType.js";
 import GraphicIcon from "../graphicIcon.js";
 
-const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:3";
+const PARAM_GROUP_COMMAND = "ElementTypeParam:53:2:1";
 
 const G_ID_UPPER_LIGHT = "upperLight";
 const G_ID_LOWER_LIGHT = "lowerLight";	
