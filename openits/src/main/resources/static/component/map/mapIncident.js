@@ -385,18 +385,35 @@ export default class MapIncident {
 			let startCoordinates = ol.proj.transform(coord01, 'EPSG:3857', 'EPSG:4326');
 			let endCoordinates = ol.proj.transform(coord02, 'EPSG:3857', 'EPSG:4326');
 
-			console.log("start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0]);
+			console.log("start: LON: " + startCoordinates[0] + " - " + "LON: " + startCoordinates[1] + "   " + "end: LON: " + endCoordinates[0] + " - " + "LAT: " + endCoordinates[1]);
 
-			webix.alert({
-				title: "COORDENADAS",
-				text: "start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0],
-				type: "alert-warning",
-				width: 440
-			}).then(function() {
-
-				// TRAS ACEPTAR EL ALERT SE DISPARA EL EVENTO CLICK SOBRE EL BOTON DE PINTAR AREA DEJANDOLO RESETEADO
-				webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
-			});
+//			webix.alert({
+//				title: "COORDENADAS",
+//				text: "start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0],
+//				type: "alert-warning",
+//				width: 440
+//			}).then(function() {
+//
+//				// TRAS ACEPTAR EL ALERT SE DISPARA EL EVENTO CLICK SOBRE EL BOTON DE PINTAR AREA DEJANDOLO RESETEADO
+//				webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
+//			});
+			
+			if (self.metadata.mapIncident.incidentWizardModuleAction) {
+			
+				let module = util.module.getFromModuleAction(self.metadata.mapIncident.incidentWizardModuleAction.id);
+				
+				let args = {
+					
+					selectedArea: {
+						startCoordinates: startCoordinates,
+						endCoordinates: endCoordinates
+					}
+				}
+				
+				util.module.open(module, self.metadata.mapIncident.incidentWizardModuleAction, VIEW_TYPE_WINDOW, null, args);	
+			}
+			
+			webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
 
 			self.polygon = self.drawBox.getGeometry();
 		}

@@ -1186,6 +1186,8 @@ export default class OpenMap extends GenericMap {
 									function() {
 										
 										webix.html.removeCss($$(obj).$view, "button-pressed");
+										self.drawButtonPressed = true;
+										$$(obj).refresh();
 									}
 								)).show();
 							} 

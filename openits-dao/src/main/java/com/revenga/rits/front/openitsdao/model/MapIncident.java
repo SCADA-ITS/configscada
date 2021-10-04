@@ -38,6 +38,11 @@ public class MapIncident implements Serializable {
 	@JoinColumn(name="incident_report_module_action_id")
 	private ModuleAction incidentReportModuleAction;
 	
+	//uni-directional many-to-one association to ModuleAction
+	@ManyToOne
+	@JoinColumn(name="incident_wizard_module_action_id")
+	private ModuleAction incidentWizardModuleAction;
+	
 	public MapIncident() {
 	}
 
@@ -63,5 +68,13 @@ public class MapIncident implements Serializable {
 
 	public void setIncidentReportModuleAction(ModuleAction incidentReportModuleAction) {
 		this.incidentReportModuleAction = incidentReportModuleAction;
+	}
+
+	public ModuleAction getIncidentWizardModuleAction() {
+		return incidentWizardModuleAction;
+	}
+
+	public void setIncidentWizardModuleAction(ModuleAction incidentWizardModuleAction) {
+		this.incidentWizardModuleAction = incidentWizardModuleAction;
 	}
 }

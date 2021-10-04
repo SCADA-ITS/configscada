@@ -5,26 +5,26 @@ import { util } from "../../lib/util.js";
 
 export default class IncidentWizardModule extends GenericModule {
 	
-	static get FIELD_STRETCH_ID() { return "id" };
-	static get FIELD_STRETCH_ALIAS() { return "alias" };
+	static get FIELD_STRETCH_ID() { return "id" }
+	static get FIELD_STRETCH_ALIAS() { return "alias" }
 	
-	static get FIELD_LOCATION_ID() { return "id" };
-	static get FIELD_LOCATION_ALIAS() { return "alias" };
+	static get FIELD_LOCATION_ID() { return "id" }
+	static get FIELD_LOCATION_ALIAS() { return "alias" }
 	
-	static get FIELD_INCIDENT_GROUP_ID() { return "id" };
-	static get FIELD_INCIDENT_GROUP_ALIAS() { return "alias" };
+	static get FIELD_INCIDENT_GROUP_ID() { return "id" }
+	static get FIELD_INCIDENT_GROUP_ALIAS() { return "alias" }
 	
-	static get FIELD_INCIDENT_TYPE_ID() { return "id" };
-	static get FIELD_INCIDENT_TYPE_ALIAS() { return "alias" };
-	static get FIELD_INCIDENT_TYPE_DESCRIPTION() { return "description" };
+	static get FIELD_INCIDENT_TYPE_ID() { return "id" }
+	static get FIELD_INCIDENT_TYPE_ALIAS() { return "alias" }
+	static get FIELD_INCIDENT_TYPE_DESCRIPTION() { return "description" }
 	
-	static get FIELD_INCIDENT_LEVEL_ID() { return "levelId" };
-	static get FIELD_INCIDENT_LEVEL_LABEL_ALIAS() { return "levelLabelAlias" };
-	static get FIELD_INCIDENT_LEVEL_ICON() { return "levelIcon" };
-	static get FIELD_INCIDENT_LEVEL_COLOR() { return "levelColor" };
+	static get FIELD_INCIDENT_LEVEL_ID() { return "levelId" }
+	static get FIELD_INCIDENT_LEVEL_LABEL_ALIAS() { return "levelLabelAlias" }
+	static get FIELD_INCIDENT_LEVEL_ICON() { return "levelIcon" }
+	static get FIELD_INCIDENT_LEVEL_COLOR() { return "levelColor" }
 	
-	static get FIELD_INCIDENT_USER_ID() { return "userId" };
-	static get FIELD_INCIDENT_USER() { return "user" };
+	static get FIELD_INCIDENT_USER_ID() { return "userId" }
+	static get FIELD_INCIDENT_USER() { return "user" }
 
 	constructor(module, moduleAction, args) {
 
@@ -97,7 +97,9 @@ export default class IncidentWizardModule extends GenericModule {
 					maxWidthLabels = container.config.width - 200;
 				}
 				
-				let viewHeader = {
+				let viewHeader;
+				
+				viewHeader = {
 					css: { "background": "#567eba" },
 					rows: [
 						{
@@ -140,7 +142,9 @@ export default class IncidentWizardModule extends GenericModule {
 				
 				let labelNoCss = false;
 				
-				let viewSteps = {
+				let viewSteps;
+				
+				viewSteps = {
 					rows: [
 						{ height: 5 },
 						{
@@ -323,7 +327,9 @@ export default class IncidentWizardModule extends GenericModule {
 		
 		let fromMap = function() {
 
-			util.ui.notImplementedMessage();
+			self.steps = webix.copy(self.config.steps.fromMap);
+		
+			return drawMain();
 		};
 		
 		let fromSynoptic = function() {
