@@ -524,7 +524,7 @@ export default class VmsSignalingLibrary {
 								if (self.composer) {
 									
 									webix.confirm({
-										title: i18n.t("LBL_DIALOG_SAVE_CHANGES"),
+										title: i18n.t("LBL_CONFIRM"),
 										ok: i18n.t("LBL_YES"),
 										cancel: i18n.t("LBL_NO"),
 										text: i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"),

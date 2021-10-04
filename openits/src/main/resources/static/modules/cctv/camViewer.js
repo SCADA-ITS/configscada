@@ -661,7 +661,6 @@ export default class CamViewer {
 			if (elementValuePresetConfigJson) {
 
 				let presetConfigJson = elementValuePresetConfigJson.value;
-
 				if (presetConfigJson) {
 
 					try {
@@ -704,7 +703,7 @@ export default class CamViewer {
 									{
 										cols: [
 											getBtnLeft(),
-											getBtnStop(),
+											Array.isArray(presets) && presets.length > 0 && presets.find(e => e.default) ? getBtnDefaultPreset() : {},
 											getBtnRight()
 										]
 									},
@@ -832,7 +831,7 @@ export default class CamViewer {
 				return viewBtnRight;
 			}
 
-			function getBtnStop() {
+			function getBtnDefaultPreset() {
 
 				let viewBtnStop;
 
@@ -844,11 +843,10 @@ export default class CamViewer {
 					height: btnHeight,
 					type: "icon",
 					icon: "mdi mdi-circle-medium",
-					tooltip: i18n.t("LBL_CAM_STOP"),
+					tooltip: i18n.t("LBL_DEFAULT_PRESET"),
 					on: {
 						onItemClick: function() {
-
-							move(self.config.ptzValue.stop);
+							preset(presets.find(e => e.default).id);
 						}
 					}
 				};
