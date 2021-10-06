@@ -40,9 +40,11 @@ export default class IncidentWizardModule extends GenericModule {
 		this.dtLocations = undefined;
 		this.listViewIncidentGroups = undefined;
 		this.dtIncidentTypes = undefined;
+		this.mapLocationSelected = undefined;
 
 		this.drawContent = new IncidentWizardDrawContent(this);		
 		this.incidentWizardAction = new IncidentWizardAction(this);
+		
 		
 		this.incidentData = {
 			stretchId: undefined,
@@ -59,7 +61,8 @@ export default class IncidentWizardModule extends GenericModule {
 			incidentLevelIcon: undefined,
 			incidentLevelColor: undefined,
 			userId: undefined,
-			user: undefined
+			user: undefined,
+			stretchs: undefined
 		}
 	}
 
@@ -71,10 +74,60 @@ export default class IncidentWizardModule extends GenericModule {
 	loadData() {
 
 		let self = this;
+		let viewMain = undefined;
+		
+		$$("loading-" + this.uid).show();
+		$$(this.uid).hide();
+
+		if (this.moduleAction.id === this.config.moduleAction.fromMap) {
+
+			viewMain = fromMap();
+		}
+		else if (this.moduleAction.id === this.config.moduleAction.fromSynoptic) {
+
+			viewMain = fromSynoptic();
+		}
+		else if (this.moduleAction.id === this.config.moduleAction.fromIncidentsNoMap) {
+
+			viewMain = fromIncidentsNoMap();
+		}
+		else if (this.moduleAction.id === this.config.moduleAction.fromIncidentsMap) {
+
+			viewMain = fromIncidentsMap();
+		}
+		else if (this.moduleAction.id === this.config.moduleAction.fromAlarms) {
+
+			viewMain = fromAlarms();
+		}
+		
+		setTimeout(function() {
 			
+			$$("loading-" + self.uid).hide();
+			$$(self.uid).show();
+			
+			if (viewMain) {
 		
+				webix.ui(viewMain, $$(self.uid));
+				
+				if (self.dtLocations) {
+					self.dtLocations.callbacks();
+				}	
+				
+				if (self.dtIncidentTypes) {
+					self.dtIncidentTypes.callbacks();
+				}
+				
+				loadDataIncidentSteps();
+				
+				if (self.listViewStrechs) {
+					
+					self.listViewStrechs.selectByIndex(0);	
+				}
+			}
+				
+		}, 500);
 		
-		let drawMain = function() {
+		function drawMain() {
 			
 			let multiView = {
 				
@@ -84,7 +137,7 @@ export default class IncidentWizardModule extends GenericModule {
 				cells: []
 			};
 			
-			let drawHeader = function(position) {
+			function drawHeader(position) {
 				
 				let step = self.incidentWizardAction.getStep(position);
 				
@@ -138,7 +191,7 @@ export default class IncidentWizardModule extends GenericModule {
 				return viewHeader;
 			};
 			
-			let drawProgressBar = function(position) {
+			function drawProgressBar(position) {
 				
 				let labelNoCss = false;
 				
@@ -199,8 +252,7 @@ export default class IncidentWizardModule extends GenericModule {
 				return viewSteps;
 			}
 		
-		
-			let drawToolbarActions = function(position) {
+			function drawToolbarActions(position) {
 
 				let firstStep = false;
 				let lastStep = false;
@@ -325,85 +377,41 @@ export default class IncidentWizardModule extends GenericModule {
 			return multiView;
 		}
 		
-		let fromMap = function() {
+		function loadDataIncidentSteps() {
+			
+			if (self.drawContent && Array.isArray(self.steps) && self.steps.length > 0) {
+				
+				self.steps.forEach(e => self.drawContent.load(e.position));
+			}
+		}
+		
+		function fromMap() {
 
 			self.steps = webix.copy(self.config.steps.fromMap);
 		
 			return drawMain();
 		};
 		
-		let fromSynoptic = function() {
+		function fromSynoptic() {
 
 			util.ui.notImplementedMessage();
 		};
 
-		let fromIncidentsNoMap = function() {
+		function fromIncidentsNoMap() {
 			
 			self.steps = webix.copy(self.config.steps.fromIncidentsNoMap);
 		
 			return drawMain();
 		}
 		
-		let fromIncidentsMap = function() {
+		function fromIncidentsMap() {
 			
 			util.ui.notImplementedMessage();
 		};
 
-		let fromAlarms = function() {
+		function fromAlarms() {
 
 			util.ui.notImplementedMessage();
 		};
-		
-		let viewMain = undefined;
-		
-		$$("loading-" + this.uid).show();
-		$$(this.uid).hide();
-
-		if (this.moduleAction.id === this.config.moduleAction.fromMap) {
-
-			viewMain = fromMap();
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.fromSynoptic) {
-
-			viewMain = fromSynoptic();
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.fromIncidentsNoMap) {
-
-			viewMain = fromIncidentsNoMap();
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.fromIncidentsMap) {
-
-			viewMain = fromIncidentsMap();
-		}
-		else if (this.moduleAction.id === this.config.moduleAction.fromAlarms) {
-
-			viewMain = fromAlarms();
-		}
-		
-		setTimeout(function() {
-			
-			$$("loading-" + self.uid).hide();
-			$$(self.uid).show();
-			
-			if (viewMain) {
-		
-				webix.ui(viewMain, $$(self.uid));
-				
-				if (self.dtLocations) {
-					self.dtLocations.callbacks();
-				}	
-				
-				if (self.dtIncidentTypes) {
-					self.dtIncidentTypes.callbacks();
-				}
-				
-				if (self.listViewStrechs) {
-					
-					self.listViewStrechs.selectByIndex(0);	
-				}
-				
-			}
-				
-		}, 500);
 	}
 }	

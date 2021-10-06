@@ -296,4 +296,8 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 
 		return viewStepIncidentType;
 	}
+	
+	loadData() {
+		
+	}
 }	

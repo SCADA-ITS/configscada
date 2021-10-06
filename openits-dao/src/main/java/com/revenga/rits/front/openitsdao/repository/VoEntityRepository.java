@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.revenga.rits.front.openitsdao.model.VoEntity;
+import com.revenga.rits.front.openitsdao.model.VoEntityType;
 
 @Repository
 public interface VoEntityRepository extends JpaRepository<VoEntity, Long> {
 
 	VoEntity findById(String id);
 	List<VoEntity> findAll();
+	List<VoEntity> findByVoEntityType(VoEntityType voEntityType);
 }

@@ -8,6 +8,8 @@ export default class IncidentWizardDrawContent {
 	constructor(parent) {
 
 		this.parent = parent;
+		
+		this.stepsMap = new Map();
 	}
 
 	draw(position) {
@@ -16,26 +18,40 @@ export default class IncidentWizardDrawContent {
 
 		let step = parent.incidentWizardAction.getStep(position);
 
-		let drawStepIncidentType = function() {
-
-			return (new IncidentWizardDrawStepIncidentType(parent, step)).getView();
+		function drawStepIncidentType() {
+			
+			return new IncidentWizardDrawStepIncidentType(parent, step);
 		}
 
-		let drawStepStretchAndLocation = function() {
+		function drawStepStretchAndLocation() {
 			
-			return (new IncidentWizardDrawStepStretchAndLocation(parent, step)).getView();
+			return new IncidentWizardDrawStepStretchAndLocation(parent, step);
 		}
 
 		let drawStepSummary = function() {
 			
-			return (new IncidentWizardDrawStepSummary(parent, step)).getView();
+			return new IncidentWizardDrawStepSummary(parent, step);
 		}
 		
 		let drawStepLocationFromMap = function() {
 			
-			return (new IncidentWizardDrawStepLocationFromMap(parent, step)).getView();
+			return new IncidentWizardDrawStepLocationFromMap(parent, step);
 		}
+		
+		let incidentWizardDrawStep = eval(step.drawFunction)();
+		
+		this.stepsMap.set(position, incidentWizardDrawStep); 
 
-		return eval(step.drawFunction)();
+		return incidentWizardDrawStep.getView();
+	}
+	
+	load(position) {
+		
+		let incidentWizardDrawStep = this.stepsMap.get(position);
+		
+		if (incidentWizardDrawStep) {
+			
+			incidentWizardDrawStep.loadData();
+		}
 	}
 }	

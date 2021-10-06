@@ -9,7 +9,10 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 	constructor(parent, step) {
 
 		super(parent, step);
+		
+		this.stretchs = [];
 	}
+
 	
 	getView() {
 		
@@ -56,15 +59,20 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 			let viewStretchs = {};
 			let stretchs;
 
-			if (parent.incidentData.incidentTypeId) {
+//			if (parent.incidentData.incidentTypeId) {
+//
+//				let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId }))
+//
+//				if (stretchsResponse) {
+//
+//					stretchs = JSON.parse(stretchsResponse.responseText);
+//				}
+//			} else {
+//				stretchs = window.em.getAll(EntityType.STRETCH);
+//			}
 
-				let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId }))
+			if (!parent.incidentData.stretchs) {
 
-				if (stretchsResponse) {
-
-					stretchs = JSON.parse(stretchsResponse.responseText);
-				}
-			} else {
 				stretchs = window.em.getAll(EntityType.STRETCH);
 			}
 
@@ -248,5 +256,9 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 		}
 
 		return viewStepStretchAndLocation;
+	}
+	
+	loadData() {
+		
 	}
 }	

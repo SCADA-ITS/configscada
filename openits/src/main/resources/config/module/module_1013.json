@@ -11,6 +11,8 @@
 	},
 	"restEndpoints": {
 		"locationsByStretch": "locations/locations/stretch/${id}",
+		"locations": "locations",
+		"location": "locations/${id}",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
 		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes"		

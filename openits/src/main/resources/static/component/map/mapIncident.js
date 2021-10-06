@@ -47,7 +47,11 @@ export default class MapIncident {
 								
 								if (e.location && e.location.lon && e.location.lat) {
 								
-									res = isInside(e.location.lon, e.location.lat);	
+									//res = isInside(e.location.lon, e.location.lat);
+									
+									let limitCoordinates = [self.metadata.limitInitLon, self.metadata.limitInitLat, self.metadata.limitEndLon, self.metadata.limitEndLat];
+									
+									res = util.ui.isInside(limitCoordinates, e.location.lon, e.location.lat);	
 								}
 								
 								return res;
@@ -67,29 +71,29 @@ export default class MapIncident {
 			);
 		}
 		
-		function isInside(lon, lat) {
-			
-			let res = true;
-			let ext, point, elementPoint, feature, coordsFeatures;
-					
-			if (self.metadata.limitInitLon && self.metadata.limitInitLat && self.metadata.limitEndLon && self.metadata.limitEndLat) {
-	
-				let destLoc = [self.metadata.limitEndLon, self.metadata.limitEndLat];
-				let currentLoc = [self.metadata.limitInitLon, self.metadata.limitInitLat];
-				
-				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
-				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-				
-				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
-				elementPoint = new ol.geom.Point(point);
-				feature = new ol.Feature(elementPoint);
-				coordsFeatures = feature.getGeometry().getCoordinates();
-				
-				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
-			}
-			
-			return res;
-		}
+//		function isInside(lon, lat) {
+//			
+//			let res = true;
+//			let ext, point, elementPoint, feature, coordsFeatures;
+//					
+//			if (self.metadata.limitInitLon && self.metadata.limitInitLat && self.metadata.limitEndLon && self.metadata.limitEndLat) {
+//	
+//				let destLoc = [self.metadata.limitEndLon, self.metadata.limitEndLat];
+//				let currentLoc = [self.metadata.limitInitLon, self.metadata.limitInitLat];
+//				
+//				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
+//				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+//				
+//				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+//				elementPoint = new ol.geom.Point(point);
+//				feature = new ol.Feature(elementPoint);
+//				coordsFeatures = feature.getGeometry().getCoordinates();
+//				
+//				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
+//			}
+//			
+//			return res;
+//		}
 		
 		function loadGraphicIcons() {
 			
@@ -346,7 +350,7 @@ export default class MapIncident {
 			source: source,
 			style: new ol.style.Style({
 				fill: new ol.style.Fill({
-					color: 'rgba(255, 255, 255, 0.2)'  // COLOR DEL RELLENO DEL AREA
+					color: 'rgba(255 204 51 / 0.6)'  // COLOR DEL RELLENO DEL AREA
 				}),
 				stroke: new ol.style.Stroke({
 					color: '#ffcc33', // COLOR DE LA LINEA DEL AREA
@@ -387,17 +391,6 @@ export default class MapIncident {
 
 			console.log("start: LON: " + startCoordinates[0] + " - " + "LON: " + startCoordinates[1] + "   " + "end: LON: " + endCoordinates[0] + " - " + "LAT: " + endCoordinates[1]);
 
-//			webix.alert({
-//				title: "COORDENADAS",
-//				text: "start: LAT: " + startCoordinates[1] + " - " + "LON: " + startCoordinates[0] + "   " + "end: LAT: " + endCoordinates[1] + " - " + "LON: " + endCoordinates[0],
-//				type: "alert-warning",
-//				width: 440
-//			}).then(function() {
-//
-//				// TRAS ACEPTAR EL ALERT SE DISPARA EL EVENTO CLICK SOBRE EL BOTON DE PINTAR AREA DEJANDOLO RESETEADO
-//				webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
-//			});
-			
 			if (self.metadata.mapIncident.incidentWizardModuleAction) {
 			
 				let module = util.module.getFromModuleAction(self.metadata.mapIncident.incidentWizardModuleAction.id);
@@ -416,6 +409,8 @@ export default class MapIncident {
 			webix.html.triggerEvent(btnDrawArea.getInputNode(), "MouseEvents", "click");
 
 			self.polygon = self.drawBox.getGeometry();
+			
+			document.querySelector("#map-" + self.uid).querySelector('canvas').style.filter="brightness(100%)";
 		}
 	}
 	

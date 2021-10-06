@@ -7,7 +7,7 @@ import MapContextMenu from "./mapContextMenu.js";
 import MapZone from "./mapZone.js";
 import GraphicIcon from "../graphicIcon/graphicIcon.js";
 import MapIncident from "./mapIncident.js";
-import MessageBox from "../messageBox.js";  
+//import MessageBox from "../messageBox.js";  
 
 const TOPIC_ELEMENTS = "/topic/element.>";
 
@@ -1160,7 +1160,7 @@ export default class OpenMap extends GenericMap {
 					view: "button",
 					type: "icon",
 					icon:"mdi mdi-alert-outline",
-					tooltip: i18n.t("LBL_ADD_INCIDENT"),
+					tooltip: i18n.t("LBL_CREATE_INCIDENT"),
 					css: "button",
 					width: 40, height: 40,
 					on: {
@@ -1174,22 +1174,29 @@ export default class OpenMap extends GenericMap {
 								self.drawButtonPressed = true;
 								$$(obj).refresh();
 								
-								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CONFIRM_CREATE_INCIDENT_FROM_MAP"),
-								
-									// onAccept
-									function() {
+//								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CONFIRM_CREATE_INCIDENT_FROM_MAP"),
+//								
+//									// onAccept
+//									function() {
+//										
+//										self.mapIncident.addSquare($$(obj));
+//										mapLayer.style.cursor = 'crosshair';
+//										
+//										document.querySelector("#map-" + self.uid).querySelector('canvas').style.filter="brightness(90%)";
+//									},
+//									// onCancel
+//									function() {
+//										
+//										webix.html.removeCss($$(obj).$view, "button-pressed");
+//										self.drawButtonPressed = true;
+//										$$(obj).refresh();
+//									}
+//								)).show();
+
+								self.mapIncident.addSquare($$(obj));
+								mapLayer.style.cursor = 'crosshair';
 										
-										self.mapIncident.addSquare($$(obj));
-										mapLayer.style.cursor = 'crosshair';
-									},
-									// onCancel
-									function() {
-										
-										webix.html.removeCss($$(obj).$view, "button-pressed");
-										self.drawButtonPressed = true;
-										$$(obj).refresh();
-									}
-								)).show();
+								document.querySelector("#map-" + self.uid).querySelector('canvas').style.filter="brightness(85%)";
 							} 
 							else {
 
@@ -1199,6 +1206,8 @@ export default class OpenMap extends GenericMap {
 
 								self.mapIncident.removeSquare();
 								mapLayer.style.cursor = 'auto';
+								
+								document.querySelector("#map-" + self.uid).querySelector('canvas').style.filter="brightness(100%)";
 							}
 						}
 					}

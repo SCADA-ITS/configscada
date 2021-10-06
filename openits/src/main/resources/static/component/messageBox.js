@@ -23,7 +23,7 @@ export default class MessageBox {
 			id: "alert-" + self.uid,
 			view: "window",
 			modal: true,
-			height: 160,
+			height: 165,
 			width: 600,
 			position: "center",
 			head: {
@@ -67,7 +67,7 @@ export default class MessageBox {
 						cols: [
 							{ width: 35 },
 							{
-								width: 70,
+								width: 45,
 								css: { "border": "0px !important" },
 								template: `<div><img style='width: 40px; padding: 0px 15px 15px 0px;' src=${self.type.icon}></div>`
 							},
@@ -75,15 +75,15 @@ export default class MessageBox {
 								rows: [
 									{
 										view: "template",
-										template: `<p style='font-size: 14px; color: #475466;'>${self.message}</p>`,
+										template: `<p style='font-size: 14px; color: #475466; text-align: center'>${self.message}</p>`,
 										css: "messagebox"
 									}
 								]
 							},
-							{ width: 50 }
+							{ width: 60 }
 						]
 					},
-					{ height: 10 },
+					{ height: 15 },
 					getButtons(),
 					{ height: 5 }
 				]

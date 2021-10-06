@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openitsdao.model.VoEntity;
+import com.revenga.rits.front.openitsdao.model.VoEntityType;
 import com.revenga.rits.front.openitsdao.repository.VoEntityRepository;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
@@ -26,6 +27,10 @@ public class VoEntityImpl implements VoEntityService {
 		
 		return voEntityRepository.findById(id);
 	}
-	
 
+	@Override
+	public List<VoEntity> getByVoEntityType(VoEntityType voEntityType) {
+		
+		return voEntityRepository.findByVoEntityType(voEntityType);
+	}
 }

@@ -1193,6 +1193,32 @@ export let util = {
 				}
 			}
 		},
+		
+		isInside(limits, lon, lat) {
+			
+			let res = true;
+			const Limit = { LON_INI: 0, LAT_INI: 1, LON_END: 2, LAT_END: 3 }
+			
+			let ext, point, elementPoint, feature, coordsFeatures;
+					
+			if (Array.isArray(limits) && limits.length === 4) {
+	
+				let destLoc = [limits[Limit.LON_END], limits[Limit.LAT_END]];
+				let currentLoc = [limits[Limit.LON_INI], limits[Limit.LAT_INI]];
+				
+				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
+				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+				
+				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
+				elementPoint = new ol.geom.Point(point);
+				feature = new ol.Feature(elementPoint);
+				coordsFeatures = feature.getGeometry().getCoordinates();
+				
+				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
+			}
+			
+			return res;
+		},
 
 		calculateTextWidth(text, fontFamily, fontSize, letterSpacing) {
 

@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,16 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.LocationCoodinateUI;
 import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.model.VoEntityHierarchy;
+import com.revenga.rits.front.openitsdao.model.VoEntityType;
 import com.revenga.rits.front.openitsdao.model.VoEntityValue;
 import com.revenga.rits.front.openitsdao.service.VoEntityHierarchyService;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
+import com.revenga.rits.front.openitsdao.service.VoEntityTypeService;
 
 @Service
 public class LocationBO extends GenericBO {
 
-	private static final String FIELD_LOCATION = "location";
-	private static final String FIELD_LOCATION_ID = "id";
+	private static final String ENTITY_TYPE_LOCATION = "LocationUI";
 	private static final String PARAM_ID = "id";
 	private static final String PARAM_LATTITUDE = "lat";
 	private static final String PARAM_LONGITUDE = "lon";
@@ -36,6 +38,9 @@ public class LocationBO extends GenericBO {
 	VoEntityService voEntityService;
 	
 	@Autowired
+	VoEntityTypeService voEntityTypeService;
+	
+	@Autowired
 	VoEntityHierarchyService voEntityHierarchyService;
 	
 	@Autowired 
@@ -43,6 +48,9 @@ public class LocationBO extends GenericBO {
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
+	
+	private List<VoEntity> voEntityLocations;
+	private List<VoEntityHierarchy> voEntityHierarchies;
 	
 	@Override
 	public List<Map<String, Object>> getList() {
@@ -71,47 +79,22 @@ public class LocationBO extends GenericBO {
 				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH).getFieldId(), locations));
 	}
 	
-	public List<Map<String, Object>> replaceLocations(List<Map<String, Object>> elements) {
-		
-		List<Map<String, Object>> elementsRes = new ArrayList<>();
-		
-		if (!CollectionUtils.isEmpty(elements)) {
-			
-			for (Map<String, Object> element : elements) {
-				
-				elementsRes.add(replaceLocation(element));
-			}
-		}
-		
-		return elementsRes;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> replaceLocation(Map<String, Object> element) {
-		
-		// TODO: replaceLocation
-		if (element.containsKey(FIELD_LOCATION)) {
-			
-			if (element.get(FIELD_LOCATION) instanceof Map) {
-				
-				Map<String, Object> locationElement = (Map<String, Object>) element.get(FIELD_LOCATION);
-				
-				if (locationElement != null) {
-				
-					Map<String, Object> location = getItem(locationElement.get(FIELD_LOCATION_ID).toString());
-					
-					if (location != null) {
-						
-						element.put(FIELD_LOCATION, location);
-					}
-				}
-			}
-		}
-		
-		return element;
-	}
-	
 	private List<Map<String, Object>> assignCoordinates(List<Map<String, Object>> locations) {
+		
+		if (voEntityLocations == null) {
+			
+			VoEntityType voEntityTypeLocation = voEntityTypeService.getById(ENTITY_TYPE_LOCATION);
+			
+			if (voEntityTypeLocation != null) {
+				
+				voEntityLocations = voEntityService.getByVoEntityType(voEntityTypeLocation);
+			}
+		}
+		
+		if (voEntityHierarchies == null) {
+			
+			voEntityHierarchies = voEntityHierarchyService.getAll();
+		}
 		
 		List<Map<String, Object>> locationsRes = new ArrayList<>();
 		
@@ -140,45 +123,47 @@ public class LocationBO extends GenericBO {
 		
 		if (!location.containsKey(PARAM_LATTITUDE) && !location.containsKey(PARAM_LONGITUDE)) {
 			
-			//List<VoEntityHierarchy> voEntityHierarchies = voEntityHierarchyService.getByParentId(location.get(PARAM_ID).toString());
+			VoEntity voEntityParent = voEntityLocations.stream()
+					.filter(e -> e.getId().equals(location.get(PARAM_ID).toString())).findFirst().orElse(null);
 			
-			VoEntity voEntityParent = voEntityService.getById(location.get(PARAM_ID).toString());
-			
-			List<VoEntityHierarchy> voEntityHierarchies = voEntityHierarchyService
-					.getByVoEntityParent(voEntityParent);
-			
-			Collections.sort(voEntityHierarchies, new Comparator<VoEntityHierarchy>() {
-				@Override
-				public int compare(VoEntityHierarchy o1, VoEntityHierarchy o2) {
-					return o1.getPosition().compareTo(o2.getPosition());
-				}
-			});
-			
-			if (!CollectionUtils.isEmpty(voEntityHierarchies)) {
-			
-				for (VoEntityHierarchy voEntityHierarchy : voEntityHierarchies) {
+			if (voEntityParent != null) {
+				
+				List<VoEntityHierarchy> voEntityHierarchiesByParent = voEntityHierarchies.stream()
+						.filter(e -> e.getVoEntityParent().getId().equals(voEntityParent.getId())).collect(Collectors.toList());
+				
+				if (!CollectionUtils.isEmpty(voEntityHierarchiesByParent)) {
 					
-					List<VoEntityValue> voEntityValues = voEntityHierarchy.getVoEntityChild().getVoEntityValues();
-					
-					if (!CollectionUtils.isEmpty(voEntityValues)) {
-						
-						VoEntityValue latEntityValue = voEntityValues.stream()
-								.filter(e -> e.getVoEntityField().getId().equals(PARAM_LATTITUDE_ID)).findFirst().orElse(null);
-						VoEntityValue lonEntityValue = voEntityValues.stream()
-								.filter(e -> e.getVoEntityField().getId().equals(PARAM_LONGITUDE_ID)).findFirst().orElse(null);
-						
-						if (latEntityValue != null && lonEntityValue != null) {
-						
-							locationCoordinates.add(new LocationCoodinateUI(
-									Double.parseDouble(latEntityValue.getValue()),
-									Double.parseDouble(lonEntityValue.getValue()), voEntityHierarchy.getPosition()));
+					Collections.sort(voEntityHierarchiesByParent, new Comparator<VoEntityHierarchy>() {
+						@Override
+						public int compare(VoEntityHierarchy o1, VoEntityHierarchy o2) {
+							return o1.getPosition().compareTo(o2.getPosition());
 						}
-						else {
+					});
+				
+					for (VoEntityHierarchy voEntityHierarchy : voEntityHierarchiesByParent) {
+						
+						List<VoEntityValue> voEntityValues = voEntityHierarchy.getVoEntityChild().getVoEntityValues();
+						
+						if (!CollectionUtils.isEmpty(voEntityValues)) {
 							
-							Map<String, Object> newLocation = new HashMap<>();
-							newLocation.put(PARAM_ID, locationCoordinates);
+							VoEntityValue latEntityValue = voEntityValues.stream()
+									.filter(e -> e.getVoEntityField().getId().equals(PARAM_LATTITUDE_ID)).findFirst().orElse(null);
+							VoEntityValue lonEntityValue = voEntityValues.stream()
+									.filter(e -> e.getVoEntityField().getId().equals(PARAM_LONGITUDE_ID)).findFirst().orElse(null);
 							
-							assignCoordinates(newLocation, locationCoordinates);
+							if (latEntityValue != null && lonEntityValue != null) {
+							
+								locationCoordinates.add(new LocationCoodinateUI(
+										Double.parseDouble(latEntityValue.getValue()),
+										Double.parseDouble(lonEntityValue.getValue()), voEntityHierarchy.getPosition()));
+							}
+							else {
+								
+								Map<String, Object> newLocation = new HashMap<>();
+								newLocation.put(PARAM_ID, locationCoordinates);
+								
+								assignCoordinates(newLocation, locationCoordinates);
+							}
 						}
 					}
 				}
@@ -197,5 +182,4 @@ public class LocationBO extends GenericBO {
 		
 		return location;
 	}
-
 }

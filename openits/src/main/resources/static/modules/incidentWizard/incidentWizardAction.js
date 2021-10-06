@@ -1,5 +1,6 @@
 import IncidentWizardModule from "./incidentWizardModule.js";
 import { util } from "../../lib/util.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentWizardAction {
 
@@ -11,31 +12,30 @@ export default class IncidentWizardAction {
 	createIncident() {
 
 		let parent = this.parent;
-
-		webix.confirm({
-			title: i18n.t("LBL_DIALOG_CREATE_INCIDENT"),
-			ok: i18n.t("LBL_YES"),
-			cancel: i18n.t("LBL_NO"),
-			text: i18n.t("LBL_ARE_YOU_SURE_CREATE_INCIDENT"),
-			width: 600
-		}).then(function() {
-
-			let body = {
-				incidentTypeId: parent.incidentData.incidentTypeId,
-				locationId: parent.incidentData.locationId
-			};
-
-			webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
-				console.log(data);
-
-				let container = $$(parent.args.containerId);
-
-				if (container) {
-
-					container.close();
-				}
-			});
-		});
+		let self = this;
+		
+		(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CREATE_INCIDENT"),
+								
+			// onAccept
+			function() {
+				
+				let body = {
+					incidentTypeId: parent.incidentData.incidentTypeId,
+					locationId: parent.incidentData.locationId
+				};
+	
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
+					console.log(data);
+	
+					let container = $$(parent.args.containerId);
+	
+					if (container) {
+	
+						container.close();
+					}
+				});
+			}
+		)).show();
 	}
 
 	getCurrentStep() {
@@ -84,6 +84,7 @@ export default class IncidentWizardAction {
 	validateStep(step) {
 
 		let parent = this.parent;
+		let self = this;
 
 		let valid = false;
 		let summaryIncidentType = $$("summary-incident-" + parent.uid);
@@ -92,7 +93,7 @@ export default class IncidentWizardAction {
 		let summaryUser = $$("summary-user-" + parent.uid);
 		let summaryLevel = $$("summary-level-" + parent.uid);
 
-		let validateStepStretchAndLocation = function() {
+		function validateStepStretchAndLocation(onValid) {
 
 			let stretchsSelected = parent.listViewStrechs.getSelectedItems();
 
@@ -121,8 +122,49 @@ export default class IncidentWizardAction {
 
 			valid = parent.incidentData.stretchId && parent.incidentData.locationId;
 		}
+		
+		function validateStepLocationFromMap(onValid) {
 
-		let validateStepIncidentType = function() {
+			if (parent.mapLocationSelected) {
+				
+				parent.incidentData.locationId = parent.mapLocationSelected.id;
+				
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.location, { id: parent.mapLocationSelected.id })).then(
+						
+					function(dat) {
+
+						if (dat != null) {
+		
+							let location = dat.json();
+							
+							if (location) {
+								
+								parent.incidentData.location = location.alias;
+								
+								if (Array.isArray(location.stretchs) && location.stretchs.length > 0) {
+									
+									parent.incidentData.stretchs = location.stretchs;
+									parent.incidentData.stretchId = location.stretchs[0].id;
+									parent.incidentData.stretch = location.stretchs[0].alias;	
+								}
+								
+								valid = true;
+							
+								onValid(valid);
+							}
+						}
+					}
+				);
+			}
+			else {
+				
+				onValid(valid);
+			}
+			
+			
+		}
+
+		function validateStepIncidentType(onValid) {
 
 			let incidentGroupsSelected = parent.listViewIncidentGroups.getSelectedItems();
 
@@ -140,8 +182,7 @@ export default class IncidentWizardAction {
 			let incidentTypesSelected = parent.dtIncidentTypes.getSelectedItems();
 
 			if (Array.isArray(incidentTypesSelected) && incidentTypesSelected.length > 0) {
-
-				parent.incidentData.incidentTypeId = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_TYPE_ID];
+				
 				parent.incidentData.incidentType = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_TYPE_ALIAS];
 				parent.incidentData.incidentTypeDesc = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_TYPE_DESCRIPTION];
 
@@ -152,64 +193,92 @@ export default class IncidentWizardAction {
 
 				parent.incidentData.userId = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_USER_ID];
 				parent.incidentData.user = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_USER];
+				
+				parent.incidentData.incidentTypeId = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_TYPE_ID];
+				
+				if (parent.incidentData.incidentTypeId) {
+
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(
+						
+						function(dat) {
+
+							if (dat != null) {
+			
+								let stretchs = dat.json();
+								
+								parent.incidentData.stretchs = stretchs;
+							}
+							
+							valid = parent.incidentData.incidentGroupId && parent.incidentData.incidentTypeId;
+							
+							onValid(valid);
+						}
+					);
+				}
 			}
 			else {
 
 				parent.incidentData.incidentTypeId = undefined;
+				parent.incidentData.stretchs = undefined;
 				parent.incidentData.incidentType = undefined;
 				parent.incidentData.incidentTypeDesc = undefined;
 				parent.incidentData.userId = undefined;
 				parent.incidentData.user = undefined;
+				
+				onValid(false);
 			}
-
-			valid = parent.incidentData.incidentGroupId && parent.incidentData.incidentTypeId;
 		}
 
-		let validateStepSummary = function() {
+		function validateStepSummary(onValid) {
+			
+			 onValid(true);
 
 		}
 
 		if (step) {
 
-			eval(step.validateFunction)();
+			eval(step.validateFunction)(onValidate);
+			
+			function onValidate(v) {
+				
+				step.valid = v;
 
-			step.valid = valid;
-
-			if (valid) {
-
-				if (summaryIncidentType) {
-
-					summaryIncidentType.setValues({ incidentType: parent.incidentData.incidentType, incidentTypeDesc: parent.incidentData.incidentTypeDesc });
+				if (v) {
+	
+					if (summaryIncidentType) {
+	
+						summaryIncidentType.setValues({ incidentType: parent.incidentData.incidentType, incidentTypeDesc: parent.incidentData.incidentTypeDesc });
+					}
+	
+					if (summaryLocation) {
+	
+						summaryLocation.setValues({ location: parent.incidentData.location });
+					}
+	
+					if (summaryStretch) {
+	
+						summaryStretch.setValues({ stretch: parent.incidentData.stretch });
+					}
+	
+					if (summaryUser) {
+	
+						summaryUser.setValues({ user: parent.incidentData.user });
+					}
+	
+					if (summaryLevel) {
+	
+						summaryLevel.setValues({ level: parent.incidentData.incidentLevelLabelAlias, levelColor: parent.incidentData.incidentLevelColor });
+					}
+	
+					$$("button-next-" + step.position + "-" + parent.uid).enable();
 				}
-
-				if (summaryLocation) {
-
-					summaryLocation.setValues({ location: parent.incidentData.location });
+				else {
+	
+					$$("button-next-" + step.position + "-" + parent.uid).disable();
 				}
-
-				if (summaryStretch) {
-
-					summaryStretch.setValues({ stretch: parent.incidentData.stretch });
-				}
-
-				if (summaryUser) {
-
-					summaryUser.setValues({ user: parent.incidentData.user });
-				}
-
-				if (summaryLevel) {
-
-					summaryLevel.setValues({ level: parent.incidentData.incidentLevelLabelAlias, levelColor: parent.incidentData.incidentLevelColor });
-				}
-
-				$$("button-next-" + step.position + "-" + parent.uid).enable();
+	
+				self.resetFromStep(step);
 			}
-			else {
-
-				$$("button-next-" + step.position + "-" + parent.uid).disable();
-			}
-
-			this.resetFromStep(step);
 		}
 	}
 
@@ -217,7 +286,7 @@ export default class IncidentWizardAction {
 
 		let parent = this.parent;
 
-		let resetStepStretchAndLocation = function() {
+		function resetStepStretchAndLocation() {
 
 			parent.incidentData.stretchId = undefined;
 			parent.incidentData.stretch = undefined;
@@ -228,7 +297,7 @@ export default class IncidentWizardAction {
 			parent.dtLocations.clear();
 		}
 
-		let resetStepIncidentType = function() {
+		function resetStepIncidentType() {
 
 			parent.incidentData.incidentGroupId = undefined;
 			parent.incidentData.incidentGroup = undefined;
@@ -242,7 +311,7 @@ export default class IncidentWizardAction {
 			parent.dtIncidentTypes.clear();
 		}
 
-		let resetStepStretchAndLocationFromIncidentType = function() {
+		function resetStepStretchAndLocationFromIncidentType() {
 
 			parent.incidentData.stretchId = undefined;
 			parent.incidentData.stretch = undefined;
@@ -288,8 +357,18 @@ export default class IncidentWizardAction {
 
 			parent.dtLocations.clear();
 		}
+		
+		function resetStepLocationFromMap() {
 
-		let resetStepSummary = function() {
+			parent.mapLocationSelected = undefined;
+			
+			parent.incidentData.stretchId = undefined;
+			parent.incidentData.stretch = undefined;
+			parent.incidentData.locationId = undefined;
+			parent.incidentData.location = undefined;			
+		}
+
+		function resetStepSummary() {
 
 		}
 

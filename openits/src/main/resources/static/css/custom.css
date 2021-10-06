@@ -2416,28 +2416,24 @@ p, input, textarea {
 }
 
 .syn-toolbar-actions .button-pressed .webix_button{
-    height:35px;
-    border-radius: 30%;
-    color: grey;
-    background:  #cc0000;
+    background:  var(--blue-strong);
 }
 
 .syn-toolbar-actions .button-pressed .webix_button .webix_icon_btn {
 	font-size: 19px;
-	color: grey;
 	margin-left: 3px;
 }
 
 .syn-toolbar-actions .button-pressed .webix_button:hover {
-  	background: #cc0000;
+  	background: var(--blue-strong);
 }
 
 .syn-toolbar-actions .button-pressed .webix_button:focus {
-	background-color: #ef2929;
+	background-color: var(--blue-strong);
 }
 
 .syn-toolbar-actions  .button-pressed .webix_button:active {
-	background-color: #ef2929;
+	background-color: var(--blue-strong);
 }
 
 .syn-toolbar-zoom{
