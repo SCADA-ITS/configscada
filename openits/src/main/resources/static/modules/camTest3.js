@@ -81,19 +81,19 @@ export default class CamTest2 extends GenericModule {
 							id: "cam-1" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55616/stream)")]
 						},
 						{
 							id: "cam-2" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55617/stream")]
 						},
 						{
 							id: "cam-3" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55618/stream")]
 						}
 					]
 				},
@@ -104,19 +104,19 @@ export default class CamTest2 extends GenericModule {
 							id: "cam-4" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55619/stream")]
 						},
 						{
 							id: "cam-5" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:50058/stream")]
 						},
 						{
 							id: "cam-6" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://admin:(R4D7)Revenga@192.168.88.251/cgi-bin/mjpg/video.cgi?channel=1&subtype=1")]
 						}
 					]
 				},
@@ -125,11 +125,11 @@ export default class CamTest2 extends GenericModule {
 		}
 
 
-		function getContent() {
+		function getContent(url) {
 			
 			let camImg = {
 				view: "iframe",
-				src: SRC_CAM
+				src: url
 			}
 
 			return camImg;

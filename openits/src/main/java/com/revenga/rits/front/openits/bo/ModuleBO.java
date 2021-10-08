@@ -2,8 +2,8 @@ package com.revenga.rits.front.openits.bo;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.util.ConversionUtil;
-import com.revenga.rits.front.openits.util.ResourcesUtil;
 import com.revenga.rits.front.openitsdao.model.Module;
 import com.revenga.rits.front.openitsdao.service.ModuleService;
 
@@ -27,12 +27,19 @@ import lombok.extern.log4j.Log4j2;
 public class ModuleBO extends GenericBO {
 	
 	private static final String FIELD_CONFIG = "config";
-	private static final String MODULE_FILE_DIR = "static/modules_conf";
 	private static final String MODULE_FILE_TEMPLATE = "module_%d.json";
 	
 	@Autowired
 	ModuleService moduleService;
 	
+	private static final String STATIC_FOLDER = "static";
+	private static final String PROJECT_FOLDER = "project";
+	private static final String MODULES_CONF_FOLDER = "modules_conf";
+	private static final String ACTIVE_PROFILE = "spring.profiles.active";
+	
+	@Autowired
+	private Environment env;
+		
 	@Override
 	public List<Map<String, Object>> getList() {
 		
@@ -100,13 +107,18 @@ public class ModuleBO extends GenericBO {
 	private Map<String, Object> getModuleConfig(Integer moduleId) {
 		
 		Map<String, Object> map = null;
-		File fileConfig;
+		InputStream is;
 		
-		fileConfig = ResourcesUtil.getFile(MODULE_FILE_DIR + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
+		is = this.getClass().getClassLoader().getResourceAsStream(PROJECT_FOLDER + File.separator + env.getProperty(ACTIVE_PROFILE) + File.separator + MODULES_CONF_FOLDER + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
 		
-		if (fileConfig.exists()) {
+		if (is == null) {
 		
-			try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(fileConfig)))) {
+			is = this.getClass().getClassLoader().getResourceAsStream(STATIC_FOLDER + File.separator + File.separator + MODULES_CONF_FOLDER + File.separator + String.format(MODULE_FILE_TEMPLATE, moduleId));
+		}
+		
+		if (is != null) {
+		
+			try (BufferedReader buf = new BufferedReader(new InputStreamReader(is))) {
 				
 				String line = buf.readLine(); 
 				StringBuilder sb = new StringBuilder();
@@ -125,6 +137,10 @@ public class ModuleBO extends GenericBO {
 				log.error(e.getMessage());
 				log.debug(ExceptionUtils.getStackTrace(e));
 			}
+		}
+		else {
+			
+			log.warn("Not found module json config file: " + String.format(MODULE_FILE_TEMPLATE, moduleId));
 		}
 
 		return map;

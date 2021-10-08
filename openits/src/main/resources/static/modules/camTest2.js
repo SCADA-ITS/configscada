@@ -81,19 +81,19 @@ export default class CamTest2 extends GenericModule {
 							id: "cam-1" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						},
 						{
 							id: "cam-2" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						},
 						{
 							id: "cam-3" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						}
 					]
 				},
@@ -104,19 +104,19 @@ export default class CamTest2 extends GenericModule {
 							id: "cam-4" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						},
 						{
 							id: "cam-5" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						},
 						{
 							id: "cam-6" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent(SRC_CAM)]
 						}
 					]
 				},
@@ -125,10 +125,10 @@ export default class CamTest2 extends GenericModule {
 		}
 
 
-		function getContent() {
+		function getContent(url) {
 
 			let camImg = {
-				template: `<iframe width="600" height="300" src="${SRC_CAM}"></iframe>`
+				template: `<iframe width="600" height="300" src="${url}"></iframe>`
 			};
 			
 			return camImg;

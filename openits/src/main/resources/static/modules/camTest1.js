@@ -2,6 +2,7 @@ import GenericModule from "./genericModule.js";
 import {util} from "../lib/util.js";
 
 const NO_VIDEO_IMAGE = './img/no-video.jpg';
+const SRC_CAM = "http://admin:(R4D7)Revenga@192.168.88.251/cgi-bin/mjpg/video.cgi?channel=1&subtype=1";
 
 export default class CamTest1 extends GenericModule {
 
@@ -80,19 +81,19 @@ export default class CamTest1 extends GenericModule {
 							id: "cam-1" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55616/stream)")]
 						},
 						{
 							id: "cam-2" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55617/stream")]
 						},
 						{
 							id: "cam-3" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55618/stream")]
 						}
 					]
 				},
@@ -103,19 +104,19 @@ export default class CamTest1 extends GenericModule {
 							id: "cam-4" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55619/stream")]
 						},
 						{
 							id: "cam-5" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:50058/stream")]
 						},
 						{
 							id: "cam-6" + self.uid,
 							width: 600,
 							height: 300,
-							cols: [getContent()]
+							cols: [getContent("http://192.168.0.198:55611/stream")]
 						}
 					]
 				},
@@ -124,10 +125,10 @@ export default class CamTest1 extends GenericModule {
 		}
 
 
-		function getContent() {
+		function getContent(url) {
 
 			let camImg = {
-				template: `<img align='center' style="width:100%; height: 100%;" src="${NO_VIDEO_IMAGE}">`
+				template: `<img align='center' style="width:100%; height: 100%;" src="${url}">`
 			};
 
 			return camImg;
