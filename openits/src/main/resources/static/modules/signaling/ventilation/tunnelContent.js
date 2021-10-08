@@ -102,12 +102,15 @@ export default class TunnelContent {
 					function onMessageTunnel(data) {
 
 						if (data) {
+							
+							$$("view-content-toolbar-" + self.uid).show();
 
 							self.selectedTunnel = eval("adapter." + self.parent.config.adapters.element)(self.selectedTunnel, data);
 
 							if (self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP")) {
 
 								$$("view-content-ventilation-stop-" + self.uid).enable();
+								
 							} else {
 
 								$$("view-content-ventilation-stop-" + self.uid).disable();
@@ -136,10 +139,12 @@ export default class TunnelContent {
 							rows: [
 								{},
 								{
+									id: "view-content-toolbar-" + self.uid,
 									view: "toolbar",
 									height: 70,
 									borderless: true,
 									css: "equip-viewer-header-actions",
+									hidden: self.parent.config.hiddenTunnelButton && (self.parent.config.hiddenTunnelButton.indexOf(self.selectedTunnel.elementTypeState.id) !== -1),
 									elements: [
 										{
 											id: "view-content-ventilation-stop-" + self.uid,

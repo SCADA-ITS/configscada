@@ -380,8 +380,7 @@ export default class GraphicIcon {
 	}
 	
 	stop() {
-		
-		throw new Error("Method 'stop()' must be implemented.");
+	
 	}
 
 	hide() {
