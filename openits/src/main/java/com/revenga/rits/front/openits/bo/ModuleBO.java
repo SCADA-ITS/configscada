@@ -138,10 +138,6 @@ public class ModuleBO extends GenericBO {
 				log.debug(ExceptionUtils.getStackTrace(e));
 			}
 		}
-		else {
-			
-			log.warn("Not found module json config file: " + String.format(MODULE_FILE_TEMPLATE, moduleId));
-		}
 
 		return map;
 	}
