@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class ModuleBO extends GenericBO {
 	
 	private static final String FIELD_CONFIG = "config";
-	private static final String MODULE_FILE_DIR = "config/module";
+	private static final String MODULE_FILE_DIR = "static/modules_conf";
 	private static final String MODULE_FILE_TEMPLATE = "module_%d.json";
 	
 	@Autowired
