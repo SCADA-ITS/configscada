@@ -5,6 +5,7 @@ import StompSubscriptorService from "../../services/stompSubscriptorService.js";
 const TOPIC_INCIDENT_REPORTS = "/topic/incidentReport.>"
 const REST_ENDPOINT_INCIDENT_REPORTS_SUMMARY = "incidents/reports/summary"
 const REST_ENDPOINT_INCIDENT_REPORT_SUMMARY = "incidents/reports/${id}/summary"
+const INCIDENT_Z_INDEX_BASE = 1000
 
 export default class MapIncident {
 
@@ -71,30 +72,6 @@ export default class MapIncident {
 			);
 		}
 		
-//		function isInside(lon, lat) {
-//			
-//			let res = true;
-//			let ext, point, elementPoint, feature, coordsFeatures;
-//					
-//			if (self.metadata.limitInitLon && self.metadata.limitInitLat && self.metadata.limitEndLon && self.metadata.limitEndLat) {
-//	
-//				let destLoc = [self.metadata.limitEndLon, self.metadata.limitEndLat];
-//				let currentLoc = [self.metadata.limitInitLon, self.metadata.limitInitLat];
-//				
-//				ext = ol.extent.boundingExtent([destLoc, currentLoc]);
-//				ext = ol.proj.transformExtent(ext, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-//				
-//				point = ol.proj.fromLonLat([parseFloat(lon), parseFloat(lat)]);
-//				elementPoint = new ol.geom.Point(point);
-//				feature = new ol.Feature(elementPoint);
-//				coordsFeatures = feature.getGeometry().getCoordinates();
-//				
-//				res = ol.extent.containsXY(ext, coordsFeatures[0], coordsFeatures[1]);
-//			}
-//			
-//			return res;
-//		}
-		
 		function loadGraphicIcons() {
 			
 			if (self.incidentReports) {
@@ -160,7 +137,7 @@ export default class MapIncident {
 								element: graphicIcon.container.obj.node,
 								stopEvent: false
 							});
-							
+													
 				self.olMap.addOverlay(olOverlay);
 				
 				updateGraphicIcon(incidentReport);
@@ -319,6 +296,30 @@ export default class MapIncident {
 			if (graphicIcon && incidentReport) {
 				
 				graphicIcon.updateIncident(incidentReport);
+				
+				let svgId = `svg-${util.getSimpleId(incidentReport.id)}-${self.uid}`;
+				
+				let olOverlay = self.olMap.getOverlayById(svgId.replace("svg", "ol-overlay"),);
+			    
+				if (olOverlay) {
+					
+					let incidentLevels = window.em.getAll(EntityType.IMS_INCIDENT_LEVEL);
+							
+					if (Array.isArray(incidentLevels)  && incidentLevels.length > 0 && !incidentReport.confirm) {
+						
+						let maxPriority = Math.max.apply(Math, incidentLevels.map(e => e.priority));
+						
+						olOverlay.element.style.zIndex = INCIDENT_Z_INDEX_BASE + maxPriority + incidentReport.incidentLevel.priority + 1;
+					}
+					else if (incidentReport.incidentState.finalState === true) {
+						
+						olOverlay.element.style.zIndex = INCIDENT_Z_INDEX_BASE - 1;
+					}
+					else {
+						
+						olOverlay.element.style.zIndex = (INCIDENT_Z_INDEX_BASE + incidentReport.incidentLevel.priority); 
+					}					
+				}
 			}
 		}
 	}
@@ -435,6 +436,28 @@ export default class MapIncident {
 		if (this.graphicIcons && this.graphicIcons.size > 0) {
 		
 			this.graphicIcons.forEach(graphicIcon => graphicIcon.hide());
+		}
+	}
+	
+	showIncidentTypes(incidentTypes) {
+		
+		if (Array.isArray(incidentTypes) && incidentTypes.length > 0) {
+			
+			this.graphicIcons.forEach(graphicIcon => {
+				
+				if (incidentTypes.includes(graphicIcon.incident.incidentType.id)) {
+					
+					graphicIcon.show();
+				}
+				else {
+					
+					graphicIcon.hide();
+				}
+			});
+		}
+		else {
+	
+			this.hide();		
 		}
 	}
 } 

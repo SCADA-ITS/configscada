@@ -26,7 +26,6 @@ export default class GraphicIconCustom extends GraphicIcon {
 			
 			const lazy = async _ => {
 
-				//let jsFile = window.location.protocol + '//' + window.location.host + '/' + graphicIcon.jsCustomTypeRender;
 				let jsFile = util.getContextPath() + "/" + graphicIcon.jsCustomTypeRender;
 
 				const mod = await import(jsFile);

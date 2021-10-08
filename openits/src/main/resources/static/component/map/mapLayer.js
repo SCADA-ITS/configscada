@@ -73,44 +73,59 @@ export default class MapLayer {
 						
 						self.data.forEach(dat => {
 							
-							let srcLayers = getLayersWithPrefix(dat.layers, dat.layerType.prefix);
-							let srcLayersRel = getLayersRelWithPrefix(dat.layerRelationships, dat.layerType.prefix);
-							
-							layers.push(...srcLayers);
-							
-							layers.push({
-								id: dat.layerType.id,
-								label: dat.layerType.label
-							});
-							
-							layerRelationships.push(...srcLayersRel);
-							
-							let setChildLayers = new Set(srcLayersRel.map(e => e.childLayerId));
-							let setParentLayers = new Set(srcLayersRel.map(e => e.parentLayerId));
-							
-							if (setChildLayers.size > 0 && setParentLayers.size > 0) {
+							if (Array.isArray(dat.layers) && dat.layers.length > 0) {
 								
-								let allLayers = new Set([...setChildLayers, ...setParentLayers]);
-
-								let rootLayers = Array.from(allLayers).filter(childLayer => setParentLayers.has(childLayer) && !setChildLayers.has(childLayer));
-							
-								if (Array.isArray(rootLayers) && rootLayers.length > 0) {
+								let srcLayers = getLayersWithPrefix(dat.layers, dat.layerType.prefix);
+								let srcLayersRel = getLayersRelWithPrefix(dat.layerRelationships, dat.layerType.prefix);
+								
+								layers.push(...srcLayers);
+								
+								layers.push({
+									id: dat.layerType.id,
+									label: dat.layerType.label
+								});
+								
+								layerRelationships.push(...srcLayersRel);
+								
+								let setChildLayers = new Set(srcLayersRel.map(e => e.childLayerId));
+								let setParentLayers = new Set(srcLayersRel.map(e => e.parentLayerId));
+								
+								if (setChildLayers.size > 0 && setParentLayers.size > 0) {
+									
+									let allLayers = new Set([...setChildLayers, ...setParentLayers]);
 	
-									rootLayers.forEach(rootLayer => {
+									let rootLayers = Array.from(allLayers).filter(childLayer => setParentLayers.has(childLayer) && !setChildLayers.has(childLayer));
+								
+									if (Array.isArray(rootLayers) && rootLayers.length > 0) {
+		
+										rootLayers.forEach(rootLayer => {
+											
+											layerRelationships.push({
+											
+												id: webix.uid(),
+												parentLayerId: dat.layerType.id,
+												childLayerId: rootLayer
+											});
+										})
+									}
+								}
+								else {
+										
+									srcLayers.forEach(srcLayer => {
 										
 										layerRelationships.push({
-										
+											
 											id: webix.uid(),
 											parentLayerId: dat.layerType.id,
-											childLayerId: rootLayer
-										});
-									})
+											childLayerId: srcLayer.id
+										});	
+									});
 								}	
-							}
+							} 
 						})
 					}
 				
-					data = util.tree.getNodes(layers, layerRelationships, { parentNodeId: "parentLayerId", childNodeId: "childLayerId" }, true);	
+					data = util.tree.getNodes(layers, layerRelationships, { parentNodeId: "parentLayerId", childNodeId: "childLayerId" }, false);	
 				}
 				
 				function getLayersWithPrefix(srcLayers, prefix) {

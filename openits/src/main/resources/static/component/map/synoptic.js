@@ -106,8 +106,17 @@ export default class Synoptic extends GenericMap {
 			
 			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
 				
+				let elementLayers = self.metadata.layers.map(layer => {
+						
+					let newLayer = webix.copy(layer);
+					
+					newLayer.label = i18n.t(newLayer.label);
+					
+					return newLayer;
+				})
+				
 				let dataMapLayer = [{
-					layers: self.metadata.layers,
+					layers: elementLayers,
 					layerRelationships: self.metadata.layerRelationships,
 					layerType: MapLayer.TYPE_ELEMENT
 				}]

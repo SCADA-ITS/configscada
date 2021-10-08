@@ -1,10 +1,10 @@
 import GraphicIconIncident from "../graphicIconIncident.js";
 
-const PICTOGRAM_STATUS_CONFIRMED = "img/incident_status/confirmed.png";
 const PICTOGRAM_STATUS_NO_CONFIRMED = "img/incident_status/no_confirmed.png";
 const PICTOGRAM_STATUS_IS_FINAL = "img/incident_status/is_final.png";
 const PICTOGRAM_TYPE_PATH = "img/incident_type";
-const PICTOGRAM_UNKNOWN_TYPE = "img/incident_type/undefined.png"; 
+const PICTOGRAM_UNKNOWN_TYPE = "img/incident_type/undefined.png";
+const NO_PICTOGRAM = "img/undefined.png"; 
 
 export default class IncidentReport {
 	
@@ -52,7 +52,7 @@ export default class IncidentReport {
 			}
 			else {
 				
-				this.gStatus.attr( { "xlink:href": this.incident.confirm === true ? PICTOGRAM_STATUS_CONFIRMED : PICTOGRAM_STATUS_NO_CONFIRMED });
+				this.gStatus.attr( { "xlink:href": this.incident.confirm === true ? NO_PICTOGRAM : PICTOGRAM_STATUS_NO_CONFIRMED });
 			}
 		}
 	}

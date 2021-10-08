@@ -79,7 +79,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 												borderless: true,
 												template: function(obj) {
 													return `<div><span class="ico webix_icon mdi mdi-signal-cellular-3"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div>
-														    <div class="ims-incident-report-title" style="position: absolute; padding-left: 375px !important; margin-top: -15px !important;">
+														    <div class="ims-incident-report-title" style="position: absolute; padding-left: 226px !important; margin-top: -15px !important;">
 																<span class="ims-incident-badge" style="background: ${obj.levelColor}; color: white;">${obj.level}</span>
 															</div>`
 												}

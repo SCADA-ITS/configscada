@@ -269,7 +269,6 @@ export default class GraphicIcon {
 			self.g.transform(position + ',' + scale);
 			
 			self.g.attr({
-		        visibility: "visible",
 				cursor: ((self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) ? "pointer" : "auto"
 		    });
 
@@ -281,7 +280,6 @@ export default class GraphicIcon {
 			if (self.g && self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) {
 				
 				self.g.click(onClick);
-				//self.g.touchstart(onClick);
 				self.g.dblclick(onDblClick);
 				
 				if (self.container.type === GraphicIcon.CONTAINER_TYPE_OPEN_LAYER && s &&
@@ -365,10 +363,12 @@ export default class GraphicIcon {
 	}
 
 	show() {
-
-		if (this.g.attr("visibility") != "visible") {
+		
+		let graphic = (this.container.type === GraphicIcon.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") == "none") {
 			
-			this.g.attr({ visibility: "visible" });
+			graphic.attr({ display: "inline" });
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
@@ -381,13 +381,16 @@ export default class GraphicIcon {
 	
 	stop() {
 		
+		throw new Error("Method 'stop()' must be implemented.");
 	}
 
 	hide() {
 		
-		if (this.g.attr("visibility") != "hidden") {
+		let graphic = (this.container.type === GraphicIcon.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") != "none") {
 			
-			this.g.attr({ visibility: "hidden" });
+			graphic.attr({ display: "none" });
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
@@ -400,7 +403,9 @@ export default class GraphicIcon {
 	
 	isVisible() {
 		
-		return (this.g.attr("visibility") === "visible");
+		let graphic = (this.container.type === GraphicIcon.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		return (graphic.attr("display") != "none");
 	}
 	
 	isSelected() {
@@ -419,7 +424,9 @@ export default class GraphicIcon {
     
 	select() {
 		
-		if (this.g.attr("visibility") === "visible") {
+		let graphic = (this.container.type === GraphicIcon.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") != "none") {
 			
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 			
@@ -432,7 +439,9 @@ export default class GraphicIcon {
 
 	unselect() {
 		
-		if (this.g.attr("visibility") === "visible") {
+		let graphic = (this.container.type === GraphicIcon.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") != "none") {
 		
 			let gSel = this.g.select("#" + GraphicIcon.G_ID_SELBOX);
 		

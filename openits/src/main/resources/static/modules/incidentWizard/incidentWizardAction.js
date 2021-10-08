@@ -120,7 +120,9 @@ export default class IncidentWizardAction {
 				parent.incidentData.location = undefined;
 			}
 
-			valid = parent.incidentData.stretchId && parent.incidentData.locationId;
+			valid = parent.incidentData.stretchId != null && parent.incidentData.locationId != null;
+			
+			onValid(valid);
 		}
 		
 		function validateStepLocationFromMap(onValid) {
@@ -209,7 +211,7 @@ export default class IncidentWizardAction {
 								parent.incidentData.stretchs = stretchs;
 							}
 							
-							valid = parent.incidentData.incidentGroupId && parent.incidentData.incidentTypeId;
+							valid = parent.incidentData.incidentGroupId != null && parent.incidentData.incidentTypeId != null;
 							
 							onValid(valid);
 						}

@@ -53,6 +53,8 @@ export default class TreeView {
 		this.stomp = {};
 		this.uid = webix.uid();
 		this.events = events;
+		
+		this.filterValue = undefined;
 	}
 
 	getView() {
@@ -73,11 +75,11 @@ export default class TreeView {
 					on: {
 						onTimedKeyPress: function() {
 							
-							let value = this.getValue().toLowerCase(); // input data is derived
+							self.filterValue = this.getValue().toLowerCase(); // input data is derived
 							
 							$$("tree-" + self.uid).filter(function(obj) {  // here it filters all titles from the dataset
 			
-								return obj.value.toLowerCase().indexOf(value) != -1;
+								return obj.value.toLowerCase().indexOf(self.filterValue) != -1;
 							});
 						}
 					}
@@ -712,12 +714,19 @@ export default class TreeView {
 		
 		let tree = $$("tree-" + this.uid);
 		let checkedItems = [];
+		let self = this;
 		
 		if (tree) {
 			
 			let multiSelect = this.getTreeOptions(TreeOptions.MULTISELECT);
 			
 			if (multiSelect) {
+				
+				// Clear filter
+				if (self.filterValue) {
+					
+					tree.filter();	
+				}
 				
 				let checkedList = tree.getChecked();
 				
@@ -727,6 +736,15 @@ export default class TreeView {
 						
 						checkedItems.push(tree.getItem(e));
 					})
+				}
+				
+				// Restore filter
+				if (self.filterValue) {
+					
+					tree.filter(function(obj) {  // here it filters all titles from the dataset
+			
+						return obj.value.toLowerCase().indexOf(self.filterValue) != -1;
+					});	
 				}
 			}
 			else {

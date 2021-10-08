@@ -151,9 +151,18 @@ export default class OpenMap extends GenericMap {
 				let dataMapLayer = [];
 				
 				if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
+					
+					let elementLayers = self.metadata.layers.map(layer => {
+						
+						let newLayer = webix.copy(layer);
+						
+						newLayer.label = i18n.t(newLayer.label);
+						
+						return newLayer;
+					})
 				
 					dataMapLayer.push({
-						layers: self.metadata.layers,
+						layers: elementLayers,
 						layerRelationships: self.metadata.layerRelationships,
 						layerType: MapLayer.TYPE_ELEMENT
 					});	
@@ -161,8 +170,27 @@ export default class OpenMap extends GenericMap {
 				
 				if (self.metadata.mapIncident) {
 					
+					let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
+					let incidentTypeLayers = [];
+					
+					if (Array.isArray(incidentTypes) && incidentTypes.length > 0) {
+						
+						incidentTypeLayers = incidentTypes.map(incidentType => {
+							
+							return {
+								
+								id: incidentType.id,
+								label: incidentType.alias,
+								description: incidentType.description,
+								name: incidentType.alias,
+								layerElements: [],
+								visible: incidentType.visible
+							}
+						});
+					} 
+					
 					dataMapLayer.push({
-						layers: [],
+						layers: incidentTypeLayers,
 						layerRelationships: [],
 						layerType: MapLayer.TYPE_INCIDENT
 					});
@@ -171,7 +199,7 @@ export default class OpenMap extends GenericMap {
 				self.mapLayer = new MapLayer(dataMapLayer, function(layersId) {
 					
 					let elementLayerIds = [];
-					let indidentLayerSelected = false;
+					let indidentTypeLayersSelected = [];
 					
 					if (Array.isArray(layersId) && layersId.length > 0) {
 						
@@ -187,19 +215,14 @@ export default class OpenMap extends GenericMap {
 					
 					if (self.mapIncident) {
 						
-						if (Array.isArray(layersId) && layersId.length > 0) {
+						if (Array.isArray(layersId)) {
 						
-							indidentLayerSelected = layersId.find(layerId => layerId.includes(MapLayer.TYPE_INCIDENT.prefix)) != undefined;	
+							indidentTypeLayersSelected = layersId.filter(layerId => layerId.includes(MapLayer.TYPE_INCIDENT.prefix));
+							
+							let incidentTypes = indidentTypeLayersSelected.map(e => e.replace(MapLayer.TYPE_INCIDENT.prefix, ""));
+								
+							self.mapIncident.showIncidentTypes(incidentTypes)
 						}	
-						
-						if (indidentLayerSelected) {
-							
-							self.mapIncident.show();	
-						}
-						else {
-							
-							self.mapIncident.hide();
-						}
 					}
 				});
 				

@@ -31,13 +31,11 @@ export default class GraphicIconDefault extends GraphicIcon {
 	updateValues(elementValues) {
 		
 		super.updateValues(elementValues);
-		//console.error("Cannot set values with GraphicIconDefault renderer");
 	}
 	
 	updateAlarms(alarms) {
 		
 		super.updateAlarms(alarms);
-		//console.error("Cannot set alarms with GraphicIconDefault renderer");
 	}
 }
 

@@ -173,7 +173,6 @@ export default class GraphicIconIncident {
 			if (tooltip) {
 				
 				let incidentTitle = i18n.t("LBL_INCIDENT_REPORT") + " [" + util.getSimpleId(self.incident.id) + "]" + " - " + self.incident.incidentType.alias;
-				let incidentAlias = self.incident.incidentType.alias;
 				let incidentDescription = self.incident.incidentType.description;
 				let incidentIcon = self.incident.incidentType.icon ? PICTOGRAM_TYPE_PATH + "/" + self.incident.incidentType.icon : PICTOGRAM_UNKNOWN_TYPE;
 				let incidentLevelAlias = i18n.t(self.incident.incidentLevel.labelAlias);
@@ -300,7 +299,6 @@ export default class GraphicIconIncident {
 			self.g.transform(position + ',' + scale);
 			
 			self.g.attr({
-		        visibility: "visible",
 				cursor: (self.container.type !== GraphicIconIncident.CONTAINER_TYPE_WEBIX_VIEW) ? "pointer" : "auto"
 		    });
 
@@ -345,24 +343,30 @@ export default class GraphicIconIncident {
 	}
 	
 	show() {
-
-		if (this.g.attr("visibility") != "visible") {
+		
+		let graphic = (this.container.type === GraphicIconIncident.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") == "none") {
 			
-			this.g.attr({ visibility: "visible" });
+			graphic.attr({ display: "inline" });
 		}
 	}
 	
 	hide() {
 		
-		if (this.g.attr("visibility") != "hidden") {
+		let graphic = (this.container.type === GraphicIconIncident.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		if (graphic.attr("display") != "none") {
 			
-			this.g.attr({ visibility: "hidden" });
+			graphic.attr({ display: "none" });
 		}
 	}
 	
 	isVisible() {
 		
-		return (this.g.attr("visibility") === "visible");
+		let graphic = (this.container.type === GraphicIconIncident.CONTAINER_TYPE_SNAP ? this.g : this.container.obj);
+		
+		return (graphic.attr("display") != "none");
 	}
 
 	runOne(method) {
