@@ -135,15 +135,9 @@
       <text
          xml:space="preserve"
          style="font-size:6.13608px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:1.18001px;word-spacing:0px;text-anchor:middle;display:inline;fill:#ffffff;fill-opacity:1;stroke-width:1.15248;stroke-miterlimit:4;stroke-dasharray:none"
-         x="95.640762"
-         y="29.065516"
-         id="line4-1"
-         transform="scale(0.59564129,1.6788628)"><tspan
-           sodipodi:role="line"
-           x="96.230766"
-           y="29.065516"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke-width:1.15248;stroke-miterlimit:4;stroke-dasharray:none"
-           id="tspan24-6">123456789012</tspan></text>
+         x="61.640762"
+         y="49.065516"
+         id="line4-1">
     </g>
   </g>
 </svg>
