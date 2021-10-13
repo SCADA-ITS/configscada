@@ -43,6 +43,47 @@ export default class CamViewer {
 		this.timeCheckStreamMs = config.camConf && config.camConf.timeCheckStreamMs ? config.camConf.timeCheckStreamMs : DEFAULT_TIME_CHECK_STREAM_MS;
 		this.timeoutCheckStreamMs = config.camConf && config.camConf.timeoutConnectStreamMs ? config.camConf.timeoutConnectStreamMs : DEFAULT_TIMEOUT_CONNECT_STREAM_MS;
 	}
+	
+	stop() {
+		
+		let viewNoImage;
+		let self = this;
+
+		viewNoImage = {
+			id: "camviewer-" + self.uid,
+			relative: true,
+			template: function() {
+
+				let w = self.fit ? "width: 100%" : "";
+				let imgStyle = `max-width:100%;height:${self.h}px;${w}`;
+
+				return `<div style="background-color: #9e9e9e; border: 2px solid; text-align: center;">
+							<img align='center' style="${imgStyle}" src="${NO_VIDEO_IMAGE}">
+						</div>`;
+			}
+		};
+
+		if (self.timeCheckStream) {
+
+			clearInterval(self.timeCheckStream);
+		}
+
+		if (self.timeoutCheckStream) {
+
+			clearInterval(self.timeoutCheckStream);
+		}
+		
+		let img = document.getElementById("img-" + self.element.id + "-" + self.uid);
+				
+		if (img) {
+
+			img.src = '';
+			
+			webix.ui(viewNoImage, $$("camviewer-" + self.uid));
+			
+			console.log("Stopped camera: " + self.element.id);
+		}
+	}
 
 	getView() {
 
@@ -50,28 +91,26 @@ export default class CamViewer {
 
 		let view = {
 			view: "abslayout",
+			id: "camviewer-" + self.element.id + "-" + self.uid,
 			cells: [
-				//				{
-				//					id: "camviewer-" + self.uid,
-				//					relative: true
-				//				},
 				getViewNoImage(),
 				self.getCamName(10, 10),
-				//{ id: "camviewer-name-" + self.uid },
 				{ id: "camviewer-buttons-" + self.uid },
 				{ id: "cam-controls-" + self.uid }
 			]
 			, on: {
-
+				
 				onDestruct: function() {
-
+					
+					self.img.src = '';
+					
 					if (self.timeCheckStream) {
 
 						clearInterval(self.timeCheckStream);
 					}
-
+			
 					if (self.timeoutCheckStream) {
-
+			
 						clearInterval(self.timeoutCheckStream);
 					}
 				}
@@ -108,10 +147,12 @@ export default class CamViewer {
 		function onDestruct() {
 
 			if (!self.isReconnecting) {
+				
+				let img = document.getElementById("img-" + self.element.id + "-" + self.uid);
+				
+				if (img) {
 
-				if (self.img.src != NO_VIDEO_IMAGE) {
-
-					self.img.src = '';
+					img.src = '';
 				}
 			}
 		}
@@ -142,144 +183,103 @@ export default class CamViewer {
 
 				if (url) {
 
-					if (!webix.env.isWebKit) {
+					self.img.onload = startStreaming;
 
-						self.img.onload = startStreaming;
+					function startStreaming() {
 
-						function startStreaming() {
+						self.isOnline = true;
+						console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection success for cam: " + url);
 
-							self.isOnline = true;
-							console.log("[" + (new Date()).toISOString() + "] " + "[CamViewer] Connection success for cam: " + url);
+						let viewStreamMjpeg = {
+							id: "camviewer-" + self.uid,
+							relative: true,
+							css: "camviewer-matrix",
+							template: function() {
 
-							let viewStreamMjpeg = {
-								id: "camviewer-" + self.uid,
-								relative: true,
-								css: "camviewer-matrix",
-								template: function() {
+								let imgStyle;
 
-									let imgStyle;
+								if (self.w > self.h) {
 
-									if (self.w > self.h) {
-
-										let w = self.fit ? "width: 100%" : "";
-										imgStyle = `max-width:100%;height:${self.h}px;${w}`;
-									}
-									else {
-
-										let h = self.fit ? "height: 100%" : "";
-										imgStyle = `max-height:100%;width:${self.w}px;${h}`;
-									}
-
-									return `<div class="camviewer-div" style="background-color: #9e9e9e; border: 2px solid; text-align: center;"><img class="camviewer-img" align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
+									let w = self.fit ? "width: 100%" : "";
+									imgStyle = `max-width:100%;height:${self.h}px;${w}`;
 								}
-								, on: {
+								else {
 
-									onDestruct: onDestruct
+									let h = self.fit ? "height: 100%" : "";
+									imgStyle = `max-height:100%;width:${self.w}px;${h}`;
 								}
-							};
 
-							webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
-							self.drawButtons();
-							self.img.onload = undefined;
-							self.isReconnecting = false;
+								return `<div id="cam-${self.element.id}-${self.uid}" class="camviewer-div" style="background-color: #9e9e9e; border: 2px solid; text-align: center; overflow: hidden"><img id="img-${self.element.id}-${self.uid}" class="camviewer-img" align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
+							}
+							, on: {
 
-						}
+								onDestruct: onDestruct
+							}
+						};
 
-						function startKeepAliveStream() {
+						webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
+						self.drawButtons();
+						self.img.onload = undefined;
+						self.isReconnecting = false;
 
-							self.timeCheckStream = setInterval(function() {
+					}
 
-								self.timeoutCheckStream = setInterval(function() {
+					function startKeepAliveStream() {
 
-									if (!self.isOnline) {
+						self.timeCheckStream = setInterval(function() {
 
-										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] No Connection for cam: " + url);
+							self.timeoutCheckStream = setInterval(function() {
 
-										self.isReconnecting = true;
+								if (!self.isOnline) {
 
-										if ($$("camviewer-" + self.uid)) {
+									console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] No Connection for cam: " + url);
 
-											webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));
-											$$("camviewer-buttons-" + self.uid).hide();
-										}
+									self.isReconnecting = true;
 
-										console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] Trying to connect to: " + url);
+									if ($$("camviewer-" + self.uid)) {
 
-										self.img.onload = startStreaming;
-
-										self.img.src = url;
-
-										if (self.timeoutCheckStream) {
-
-											clearInterval(self.timeoutCheckStream);
-										}
+										webix.ui(getViewNoImage(), $$("camviewer-" + self.uid));
+										$$("camviewer-buttons-" + self.uid).hide();
 									}
 
-								}, self.timeoutCheckStreamMs);
+									console.warn("[" + (new Date()).toISOString() + "] " + "[CamViewer] Trying to connect to: " + url);
 
-								self.isOnline = false;
+									self.img.onload = startStreaming;
 
-								self.img.onload = function() {
-
-									self.isOnline = true;
-									self.img.onload = undefined;
+									self.img.src = url;
 
 									if (self.timeoutCheckStream) {
 
 										clearInterval(self.timeoutCheckStream);
 									}
-								};
+								}
 
-							}, self.timeCheckStreamMs);
-						}
+							}, self.timeoutCheckStreamMs);
 
-						self.img.src = url;
+							self.isOnline = false;
 
-						startKeepAliveStream();
+							self.img.onload = function() {
+
+								self.isOnline = true;
+								self.img.onload = undefined;
+
+								if (self.timeoutCheckStream) {
+
+									clearInterval(self.timeoutCheckStream);
+								}
+							};
+
+						}, self.timeCheckStreamMs);
 					}
-					else {
 
-						let viewStreamMjpeg = {
-							id: "camviewer-" + self.uid,
-							view: "iframe",
-							relative: true,
-							src: getUrlWithoutAuth(url)
-						};
+					self.img.src = url;
 
-						viewStreamMjpeg.height = self.h;
-
-						webix.delay(function() {
-
-							let camViewer = $$("camviewer-" + self.uid);
-
-							if (camViewer) {
-
-								webix.ui(viewStreamMjpeg, $$("camviewer-" + self.uid));
-							}
-
-						}, null, null, 1000);
-					}
+					startKeepAliveStream();
 				}
 			}
 
 
 
-		}
-
-
-		function getUrlWithoutAuth(url) {
-
-			let offset = url.indexOf('@');
-			let urlWithoutAuth = url;
-
-			if (offset !== -1) {
-
-				let protocol = url.substring(0, url.indexOf('//') + 2);
-
-				urlWithoutAuth = protocol + url.substring(offset + 1);
-			}
-
-			return urlWithoutAuth;
 		}
 
 		return view;
@@ -300,7 +300,12 @@ export default class CamViewer {
 
 		if ((h > w) && !self.expandCam) {
 
-			bottom = 80;
+			let img = document.getElementById("img-" + self.element.id + "-" + self.uid);
+			
+			if (img) {
+				
+				bottom += (h - img.height) / 2;	
+			}
 		}
 
 		if (!self.fit) {
@@ -634,8 +639,8 @@ export default class CamViewer {
 
 			let width = (self.w == 0) ? contId.$width : self.w;
 			let height = (self.h == 0) ? contId.$height : self.h;
-
-			let sizeCorrection = (height > width) ? 0.6 : 1;
+			//let sizeCorrection = (height > width) ? 0.6 : 1;
+			let sizeCorrection = (height > 500 || width > 500) ? 1 : 0.6;
 			let top = (height > width) ? 100 : 50;
 
 			let presets = [];
@@ -670,7 +675,7 @@ export default class CamViewer {
 					} catch (e) {
 
 						presets = undefined;
-						console.error(e);
+						//console.error(e);
 					}
 				}
 			}

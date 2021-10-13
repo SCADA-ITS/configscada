@@ -207,12 +207,23 @@ export default class CCTVMulti {
 						
 						events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
 							
-							let node = self.nodes.find(e => e.id === item.id_);
-							
-							if (node && node.scenario) {
-								
-								loadContent(node.scenario.id);	
+							for(let camViewer of self.arrCamViewer){
+																
+								camViewer.stop();
 							}
+							
+							self.arrCamViewer = [];
+							
+							setTimeout(function() {
+			
+								let node = self.nodes.find(e => e.id === item.id_);
+							
+								if (node && node.scenario) {
+									
+									loadContent(node.scenario.id);	
+								}
+									
+							}, 200);
 						};
 						
 						return events;	
@@ -270,6 +281,7 @@ export default class CCTVMulti {
 						viewContent = { 
 							id: "view-cctv-content-" + self.uid,
 							view: "multiview",
+							keepViews:true,
 							relative: true,
 							animate: false,
 							cells: [{}]
