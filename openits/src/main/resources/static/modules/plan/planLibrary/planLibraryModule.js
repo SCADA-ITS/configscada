@@ -1,9 +1,11 @@
+import { util } from "../../../lib/util.js";
 import GenericModule from "../../genericModule.js";
 import PlanLibraryPersist from "./planLibraryPersist.js";
 import PlanLibraryContent from "./planLibraryContent.js";
 import TreeView from "../../../component/treeview.js";
 import OptionButtonList from "../../../component/optionButtonList.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
+import InputDialogBox from "../../../component/inputDialogBox.js";
 
 const TREE_PANEL_WIDTH = 325;
 
@@ -38,6 +40,7 @@ export default class PlanLibraryModule extends GenericModule {
 
 		view = {
 			id: self.uid,
+			hidden: true,
 			cols: [
 				drawTree(),
 				drawResizer(),
@@ -99,6 +102,9 @@ export default class PlanLibraryModule extends GenericModule {
 								}
 							}
 						}
+						
+						afterLoad();
+						
 					}
 				}
 			});
@@ -173,15 +179,15 @@ export default class PlanLibraryModule extends GenericModule {
 				
 			return viewOptionButtonList;
 		}
-		
-		function onAceptOptionButtonList(buttonId){
-			
+
+		function onAceptOptionButtonList(buttonId) {
+
 			let actions = getMetadata().treeCommands;
 			let itemsSelected = self.treeView.getSelected();
 			let callbackAction = actions.find(e => e.id === buttonId);
 			let selectedPks = [];
-			
-			if (callbackAction){
+
+			if (callbackAction) {
 				selectedPks.push(itemsSelected[0].id_);
 				callbackAction.callbacks[0].function(selectedPks);
 			}
@@ -257,14 +263,17 @@ export default class PlanLibraryModule extends GenericModule {
 
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(folder) {
 					
-					$$("plan-lib-loading-" + self.uid).hide();
-					$$("plan-lib-content-" + self.uid).hide();
-					$$("plan-lib-resizer-" + self.uid).show();
-					$$("view-option-dialog-" + self.uid).show();
-					
-					$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);
+					if (!self.moduleAction) {
+						
+						$$("plan-lib-loading-" + self.uid).hide();
+						$$("plan-lib-content-" + self.uid).hide();
+						$$("plan-lib-resizer-" + self.uid).show();
+						$$("view-option-dialog-" + self.uid).show();
+	
+						$$("label-plan-lib-selected-" + self.uid).setValue(`<span class="alarm-view-header-details-text">${folder.value}</span>`);	
+					}
 				}
-				
+
 				function onUpdate() {
 					
 					let itemsSelected = self.treeView.getSelected();
@@ -342,9 +351,9 @@ export default class PlanLibraryModule extends GenericModule {
 				],
 				treeCommands: []
 			}
-			
-			if(self.editPermission){
-				
+
+			if (self.editPermission) {
+
 				metadata.treeCommands = [
 					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
@@ -475,67 +484,61 @@ export default class PlanLibraryModule extends GenericModule {
 
 				if (selected.id === "root") {
 
-					webix.alert({
-						title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
-						text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
-						type: "alert-warning",
-						width: 500
-					});
+					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null);
+					ms.show();
+					
 				}
 				else {
 
-					webix.confirm({
-						title: i18n.t("LBL_DIALOG_DELETE_PLAN"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: i18n.t("LBL_DIALOG_DELETE_PLAN_DESCRIPTION"),
-						width: 600
-					}).then(function(result) {
-
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_PLAN_DESCRIPTION"), onAccept, null);
+					ms.show();
+					
+					function onAccept() {
+					
 						if (selected.id_ === selectedPks[0]) {
 
 							parent = self.treeView.getParent(selected);
 						}
 
 						if (selected.id_ === selectedPks[0]) {
-							
+
 							if (selected.props.folder) {
-							
+
 								let childFolders = self.treeView.getChilds(selected, TreeView.ItemTypes.FOLDER);
 								let childItems = self.treeView.getChilds(selected, TreeView.ItemTypes.ITEM);
-								
+
 								let deletedFolders = 0;
 								let deletedItems = 0;
 								let deletedPlans = 0;
-								
+
 								childFolders.push(selected);
-								
+
 								let foldersCount = Array.isArray(childFolders) ? childFolders.length : 0;;
 								let itemsCount = Array.isArray(childItems) ? childItems.length : 0;
 								let plansCount = itemsCount;
-								
+
 								deleteTreeItems();
-								
+
 								function deleteTreeItems() {
-									
+
 									if (Array.isArray(childItems) && childItems.length > 0) {
-										
+
 										childItems.forEach(childItem => {
-											
+
 											self.planLibraryPersist.deleteItem(childItem.id_)
-											.then(function(data) {
-												
-												console.log("TREE ITEM DELETE => " + childItem.value);
-			
-												if (++deletedItems === itemsCount) {
-													
-													deleteTreeFolders();
-													deletePlans();
-												}
-											})
-											.catch(function() {
-			
-											});
+												.then(function(data) {
+
+													console.log("TREE ITEM DELETE => " + childItem.value);
+
+													if (++deletedItems === itemsCount) {
+
+														deleteTreeFolders();
+														deletePlans();
+													}
+												})
+												.catch(function() {
+
+												});
 										});
 									}
 									else {
@@ -608,30 +611,31 @@ export default class PlanLibraryModule extends GenericModule {
 								if (planNode && planNode.plan && planNode.plan.id) {
 									
 									self.planLibraryPersist.deleteItem(selected.id_)
-									.then(function(data) {
-										
-										console.log("TREE ITEM DELETE => " + selected.id_);
-										
-										self.planLibraryPersist.deletePlan(planNode.plan.id)
 										.then(function(data) {
-											
-											console.log("PLAN DELETE => " + planNode.plan.id);
-											
-											load(parent ? parent.id : undefined);	
 
+											console.log("TREE ITEM DELETE => " + selected.id_);
+
+											self.planLibraryPersist.deletePlan(planNode.plan.id)
+												.then(function(data) {
+
+													console.log("PLAN DELETE => " + planNode.plan.id);
+
+													load(parent ? parent.id : undefined);
+
+												})
+												.catch(function() {
+
+												});
 										})
 										.catch(function() {
-		
-										});
-									})
-									.catch(function() {
-	
-									})
-									
+
+										})
+
 								}
 							}
-						}
-					});
+						}						
+					};
+		
 				}
 			}
 		}
@@ -667,14 +671,9 @@ export default class PlanLibraryModule extends GenericModule {
 			
 			return viewLoading;
 		}
-
-		$$("loading-" + self.uid).hide();
-		webix.ui(view, $$(self.uid));
-
-		load();
-
-		webix.delay(function() {
-
+		
+		function afterLoad() {
+			
 			let viewComposer = $$("view-composer-" + self.uid);
 
 			if (viewComposer) {
@@ -684,10 +683,28 @@ export default class PlanLibraryModule extends GenericModule {
 
 			if (self.treeView) {
 
-				self.treeView.select("root");
-				self.treeView.expand("root");
+				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.edit) {
+
+					let planId = self.args.selectedPks[0];
+					let node = self.planHierarchies.find(hierarchy => hierarchy.child.plan && hierarchy.child.plan.id === planId);
+
+					if (node) {
+
+						let treeNodeId = node.parent.id + "_" + node.child.id;
+
+						self.treeView.select(treeNodeId);
+						$$("view-plan-lib-tree-" + self.uid).hide();	
+					}
+				}
 			}
 
-		}, null, null, 300);
+			$$("loading-" + self.uid).hide();
+			$$(self.uid).show();	
+		}
+
+		webix.ui(view, $$(self.uid));
+
+		load();
+		
 	}
 }	

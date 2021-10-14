@@ -1,7 +1,8 @@
-import PlanLibraryOrder from "./planLibraryOrder.js";
-import SearchDialogBox from "../../../../component/searchDialogBox.js";
-import PlanLibraryPersist from "../planLibraryPersist.js";
 import { util } from "../../../../lib/util.js";
+import PlanLibraryOrder from "./planLibraryOrder.js";
+import PlanLibraryPersist from "../planLibraryPersist.js";
+import SearchDialogBox from "../../../../component/searchDialogBox.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
@@ -44,9 +45,14 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 					let newContentTab = {
 						id: "plan-order-signaling-content-" + self.uid,
-						cols: [view]
+						view: "scrollview",
+						scroll: "y",
+						body: {
+							cols: [view]
+						}
+//						cols: [view]
 					};
-	
+
 					webix.ui(newContentTab, $$("plan-order-signaling-content-" + self.uid));
 				}
 			}
@@ -158,12 +164,15 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				}
 				else {
 					
-					webix.alert({
-						title: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS"),
-						text: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"),
-						type: "alert-warning",
-						width: 500
-					});							
+					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"), null, null);
+					ms.show();
+					
+//					webix.alert({
+//						title: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS"),
+//						text: i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"),
+//						type: "alert-warning",
+//						width: 500
+//					});							
 				}
 			}
 			
