@@ -2271,12 +2271,16 @@ p, input, textarea {
     font-weight: 500;
     vertical-align: -5px;
     margin-left: 5px;
+    animation-name: measure-update;
+  	animation-duration: 1s;
 }
 
 .equip-viewer-header .clock-text {
 	font-size: 15px;
     font-weight: 500;
     margin-left: 5px;
+    animation-name: measure-update;
+  	animation-duration: 1s;
 }
 
 .equip-viewer-header-actions {

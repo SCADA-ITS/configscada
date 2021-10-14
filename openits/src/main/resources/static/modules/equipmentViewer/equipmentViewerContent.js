@@ -138,7 +138,6 @@ export default class EquipmentViewerContent {
 
 									let elementTypeStateLabel = i18n.t(self.currentElementTypeState.labelAlias);
 									let color = util.element.getColor(self.currentElementTypeState);
-									let timeService = window.sm.getService(Services.TIME_SERVICE);
 
 									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis}>
@@ -146,9 +145,22 @@ export default class EquipmentViewerContent {
 											</div>
 											<div class="equip-viewer-header">
 												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
-												<!-- <span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
-												<span class="clock-text">${util.toLocaleString(Math.round(timeService.getEpoch() / 1000))}</span> -->
 											</div>`;
+
+									if (data.clockUpdate) {
+										
+										let timeService = window.sm.getService(Services.TIME_SERVICE);
+
+										res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis}>
+												${elementLabelDescription + ' - ' + self.element.alias}
+											</div>
+											<div class="equip-viewer-header">
+												<span class="badge" style="background: ${color}; ">${elementTypeStateLabel}</span>
+												<span class='clock-ico ico webix_icon mdi mdi-clock-time-four-outline'></span>
+												<span class='clock-text'>${util.toLocaleString(Math.round(timeService.getEpoch() / 1000))}</span>
+											</div>`;
+									}
 
 									return res;
 								}
@@ -171,15 +183,22 @@ export default class EquipmentViewerContent {
 				let commandsModuleActionId;
 				let commandsModule;
 				let isAllowedCommands = false;
-				
+				let noProperties = true;
+
 				if (self.parent.config.moduleAction.commandEquipments) {
 
 					commandsModuleActionId = self.parent.config.moduleAction.commandEquipments;
 					commandsModule = util.module.getFromModuleAction(commandsModuleActionId);
-					
+
 					isAllowedCommands = util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), commandsModuleActionId);
 				}
-				
+
+				if ((self.equipmentViewer.equipViewerConfigs && self.equipmentViewer.equipViewerConfigs.length > 0) || self.element.elementValues) {
+
+					noProperties = false;
+				}
+
+
 				let viewHeaderButtons = {
 					rows: [
 						{},
@@ -198,11 +217,14 @@ export default class EquipmentViewerContent {
 									tooltip: i18n.t("LBL_EQUIP_VIEWER_PROPERTIES_DESCRIPTION"),
 									type: "iconTop",
 									icon: "mdi mdi-information",
+									hidden: noProperties,
 									on: {
-		
+
 										onItemClick() {
+
 											let propertiesWindow = new EquipmentViewerProperties(self.parent, self.element, self.equipmentViewer);
 											propertiesWindow.loadData();
+
 										}
 									}
 								},
@@ -461,6 +483,7 @@ export default class EquipmentViewerContent {
 					if (elementHeader) {
 
 						elementHeader.setValues({});
+						elementHeader.setValues({ clockUpdate: true });
 					}
 
 					if (element.elementTypeState) {
