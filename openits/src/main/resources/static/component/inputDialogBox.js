@@ -1,3 +1,5 @@
+import { util } from "../lib/util.js";
+
 const DEFAULT_MIN_INT_VALUE = -65535;
 const DEFAULT_MAX_INT_VALUE = 65535;
 
@@ -20,140 +22,140 @@ export default class InputDialogBox {
 		let self = this;
 
 		let height = (self.dataType.id === DataType.TIMESTAMP) ? 425 : 250;
+		let alertHeight = (self.dataType.id === DataType.ALPHANUMERIC || self.dataType.id === DataType.TIMESTAMP) ? 23 : 57;
 
-		webix.ui({
-			view: "window",
-			modal: true,
+		let body = {
+			width: 600,
 			height: height,
 			css: "dialog-input-custom",
-			head: self.title,
-			position: "center",
-			body: {
-				width: 600,
-				rows: [
-					{ template: self.text, borderless: true },
-					getBody(),
-					{
-						id: "alertText-" + self.uid
-					},
-					{
-						cols: [
-							{},
-							{
-								view: "button",
-								value: self.requiredValue ? i18n.t("LBL_CANCEL") : i18n.t("LBL_NO"),
-								width: 100,
-								click: function() {
+			rows: [
+				{
+					template: (self.dataType.id === DataType.ALPHANUMERIC || self.dataType.id === DataType.TIMESTAMP) ? self.text : "",
+					height: 40,
+					borderless: true,
+					css: "dialog-input-text"
+				},
+				getBody(),
+				{
+					id: "alertText-" + self.uid,
+					height: alertHeight
+				},
+				{
+					height: 41,
+					cols: [
+						{ width: 20 },
+						{
+							view: "button",
+							css: "dialog-cancel",
+							width: 130,
+							height: 35,
+							label: i18n.t("LBL_CANCEL"),
+							value: self.requiredValue ? i18n.t("LBL_CANCEL") : i18n.t("LBL_NO"),
+							click: function() {
+
+								const window = this.getTopParentView();
+								window.close();
+							}
+						},
+						{},
+						{
+							view: "button",
+							id: "button-accept-" + self.uid,
+							css: "dialog-accept",
+							width: 130,
+							height: 35,
+							label: i18n.t("LBL_ACCEPT"),
+							value: self.requiredValue ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_YES"),
+							click: function() {
+
+								function getAlert() {
+
+									let alert = {};
+									let label = undefined;
+
+									if (self.dataType.id === DataType.DECIMAL) {
+
+										label = i18n.t("LBL_VALUE_OUTSIDE_THRESHOLS") +
+											" [" + (self.dataType.threshold1 ? self.dataType.threshold1 : "-") +
+											(self.dataType.threshold2 ? ", " + self.dataType.threshold2 : "-") + "]";
+
+									} else if (self.dataType.id === DataType.ALPHANUMERIC) {
+
+										label = i18n.t("LBL_INVALID_VALUE");
+									}
+
+									if (label) {
+										alert = {
+											id: "alertText-" + self.uid,
+											view: "label",
+											label: `<div"><i style="color:#e8596e; font-size: 16px">` + label + `</i></div>`
+										}
+									}
+									return alert;
+								}
+
+								if (validate()) {
 
 									const window = this.getTopParentView();
-									window.close();
-								}
-							},
-							{ width: 5 },
-							{
-								view: "button",
-								id: "button-accept-" + self.uid,
-								value: self.requiredValue ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_YES"),
-								width: 100,
+									const txtDialogReconize = $$("input-dialog-" + self.uid);
 
-								click: function() {
+									let valueToSend = txtDialogReconize.getValue();
 
-									function getAlert() {
-
-										let alert = {};
-										let label = undefined;
+									if (valueToSend) {
 
 										if (self.dataType.id === DataType.DECIMAL) {
 
-											label = i18n.t("LBL_VALUE_OUTSIDE_THRESHOLS") +
-												" [" + (self.dataType.threshold1 ? self.dataType.threshold1 : "-") +
-												(self.dataType.threshold2 ? ", " + self.dataType.threshold2 : "-") + "]";
+											valueToSend = parseFloat(valueToSend);
 
-										} else if (self.dataType.id === DataType.ALPHANUMERIC) {
+										} else if (self.dataType.id === DataType.BOOLEAN) {
 
-											label = i18n.t("LBL_INVALID_VALUE");
+											valueToSend = (valueToSend == 1);
+
+										} else if (self.dataType.id === DataType.TIMESTAMP) {
+
+											valueToSend = valueToSend.getTime();
 										}
-
-										if (label) {
-											alert = {
-												id: "alertText-" + self.uid,
-												view: "label",
-												label: `<div"><i style="color:#e8596e; font-size: 16px">` + label + `</i></div>`
-											}
-										}
-										return alert;
 									}
+									self.onAccept(valueToSend);
+									window.close();
 
-									if (validate()) {
+								} else {
 
-										const window = this.getTopParentView();
-										const txtDialogReconize = $$("input-dialog-" + self.uid);
-
-										let valueToSend = txtDialogReconize.getValue();
-
-										if (valueToSend) {
-
-											if (self.dataType.id === DataType.DECIMAL) {
-
-												valueToSend = parseFloat(valueToSend);
-
-											} else if (self.dataType.id === DataType.BOOLEAN) {
-
-												valueToSend = (valueToSend == 1);
-
-											} else if (self.dataType.id === DataType.TIMESTAMP) {
-
-												valueToSend = valueToSend.getTime();
-											}
-										}
-										self.onAccept(valueToSend);
-										window.close();
-
-									} else {
-
-										webix.ui(getAlert(), $$("alertText-" + self.uid));
-									}
+									webix.ui(getAlert(), $$("alertText-" + self.uid));
 								}
-							},
-							{}
-						]
-					}
-				]
-			}
-		}).show();
+							}
+						},
+						{ width: 20 }
+					]
+				},
+				{ height: 15 }
+			]
+		};
 
-		if (self.dataType.id != DataType.TIMESTAMP) {
-
-			$$("input-dialog-" + self.uid).focus();
-		}
-		else {
-
-			$$("input-dialog-" + self.uid).setValue(self.currentValue instanceof Date ? self.currentValue : new Date());
-		}
 
 		function getBody() {
 
-			let body = {};
+			let bodyContent = {};
 
 			if (self.dataType.id === DataType.INTEGER) {
 
-				body = getIntegerBody();
+				bodyContent = getIntegerBody();
 
 			} else if (self.dataType.id === DataType.BOOLEAN) {
 
-				body = getBooleanBody();
+				bodyContent = getBooleanBody();
 
 			} else if (self.dataType.id === DataType.DECIMAL) {
 
-				body = getDecimalBody();
+				bodyContent = getDecimalBody();
 
 			} else if (self.dataType.id === DataType.TIMESTAMP) {
 
-				body = getDateBody();
+				bodyContent = getDateBody();
 
 			} else {
 
-				body = getStringBody();
+				bodyContent = getStringBody();
 			}
 
 
@@ -164,9 +166,18 @@ export default class InputDialogBox {
 				const r = /^-?[0-9]([0-9])*$/;
 
 				integerBody = {
+					view: "form",
+					borderless: true,
 					cols:
 						[
-							{},
+							{ width: 20 },
+							{
+								view: "label",
+								label: self.text,
+								width: 260,
+								tooltip: true,
+								css: "dialog-input-labeltext"
+							},
 							{
 								view: "counter",
 								id: "input-dialog-" + self.uid,
@@ -229,13 +240,14 @@ export default class InputDialogBox {
 
 				stringBody = {
 					view: "form",
+					borderless: true,
+					height: 110,
 					cols: [{
 						view: "textarea",
 						id: "input-dialog-" + self.uid,
 						name: "input-dialog-" + self.uid,
-						borderless: true,
 						height: 80,
-						placeholder: self.requiredValue ? "" : i18n.t("LBL_COMMENTS_HERE_OPTIONAL"),
+						placeholder: self.text,
 						value: self.currentValue ? self.currentValue : undefined,
 
 						validate: function(value) {
@@ -269,13 +281,20 @@ export default class InputDialogBox {
 
 				decimalBody = {
 					view: "form",
+					borderless: true,
 					cols: [
-						{},
+						{ width: 20 },
+						{
+							view: "label",
+							label: self.text,
+							width: 260,
+							tooltip: true,
+							css: "dialog-input-labeltext"
+						},
 						{
 							view: "text",
 							id: "input-dialog-" + self.uid,
 							name: "input-dialog-" + self.uid,
-							borderless: true,
 							width: 140,
 							height: 40,
 							css: "inputdialogbox-counter",
@@ -361,27 +380,32 @@ export default class InputDialogBox {
 				let booleanBody;
 
 				booleanBody = {
-					css: { "border": "1px solid #dadee0 !important" },
+					view: "form",
+					borderless: true,
 					cols: [
-						{ width: 150 },
+						{
+							view: "label",
+							label: self.text,
+							tooltip: true,
+							css: "dialog-input-labeltext"
+						},
 						{
 							id: "input-dialog-" + self.uid,
+							name: "input-dialog-" + self.uid,
 							view: "radio",
-							width: 300,
 							value: self.currentValue === true ? 1 : 2,
 							options: [
 								{ id: 1, value: i18n.t("LBL_TRUE") },
 								{ id: 2, value: i18n.t("LBL_FALSE") }
 							]
-						},
-						{}
+						}
 					]
 				};
 
 				return booleanBody;
 			}
 
-			return body;
+			return bodyContent;
 		}
 
 		function validate() {
@@ -398,6 +422,19 @@ export default class InputDialogBox {
 				}
 			}
 			return valid;
+		}
+
+		let windowHeight = (self.dataType.id === DataType.TIMESTAMP) ? 400 : 258;
+
+		util.ui.loadWindow(self.title, body, windowHeight, 600, true);
+
+		if (self.dataType.id != DataType.TIMESTAMP) {
+
+			$$("input-dialog-" + self.uid).focus();
+		}
+		else {
+
+			$$("input-dialog-" + self.uid).setValue(self.currentValue instanceof Date ? self.currentValue : new Date());
 		}
 	}
 }

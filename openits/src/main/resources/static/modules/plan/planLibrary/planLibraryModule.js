@@ -379,38 +379,25 @@ export default class PlanLibraryModule extends GenericModule {
 					parent = selected.props.folder ? selected : self.treeView.getParent(selected);
 				}
 			}
+			
+			let i = new InputDialogBox (i18n.t("LBL_NEW_FOLDER"), i18n.t("LBL_NEW_FOLDER_DESCRIPTION"), onAccept, true, null, {id: DataType.ALPHANUMERIC});
+			i.show();
 
-			webix.prompt({
-				title: i18n.t("LBL_NEW_FOLDER"),
-				text: i18n.t("LBL_NEW_FOLDER_DESCRIPTION"),
-				ok: i18n.t("LBL_ACCEPT"),
-				cancel: i18n.t("LBL_CANCEL"),
-				input: {
-					required: true,
-					placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
-				},
-				width: 600,
-
-			}).then(function(folderName) {
-
+			function onAccept(folderName) {
+				
 				// TODO: POST with result
 
 				if (self.planLibraryPersist) {
 
-					self.planLibraryPersist.createFolder(folderName, parent.id_)
-					.then(function(data) {
+					self.planLibraryPersist.createFolder(folderName, parent.id_).then(function(data) {
 
 						load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
 					})
 					.catch(function() {
 
 					});
-				}
-
-
-			}).fail(function() {
-
-			});
+				}				
+			}
 		}
 
 		function onNewItem(selectedPks) {
@@ -428,28 +415,19 @@ export default class PlanLibraryModule extends GenericModule {
 				}
 			}
 
-			webix.prompt({
-				title: i18n.t("LBL_NEW_PLAN"),
-				text: i18n.t("LBL_NEW_PLAN_DESCRIPTION"),
-				ok: i18n.t("LBL_ACCEPT"),
-				cancel: i18n.t("LBL_CANCEL"),
-				input: {
-					required: true,
-					placeholder: i18n.t("LBL_NEW_PLAN_NAME")
-				},
-				width: 600,
+			let i = new InputDialogBox (i18n.t("LBL_NEW_PLAN"), i18n.t("LBL_NEW_PLAN_DESCRIPTION"), onAccept, true, null, {id: DataType.ALPHANUMERIC});
+			i.show();
+			
+			function onAccept(planName){
 
-			}).then(function(planName) {
-				
 				let newPlan = {
 					alias: planName,
 					description: planName,
 					planModeType: PLAN_MODE_TYPE_AUTO,
 					planSubtypeId: PLAN_SUBTYPE_FIXED_ID
-				}
+				};				
 				
-				self.planLibraryPersist.createPlan(newPlan)
-				.then(function(resultPlan) {
+				self.planLibraryPersist.createPlan(newPlan).then(function(resultPlan) {
 
 					if (resultPlan && resultPlan.id) {
 						
@@ -462,15 +440,8 @@ export default class PlanLibraryModule extends GenericModule {
 	
 						});	
 					}
-				})
-				.catch(function() {
-
-				});	
-				
-
-			}).fail(function() {
-
-			});
+				});				
+			}
 		}
 
 		function onDelete(selectedPks) {
