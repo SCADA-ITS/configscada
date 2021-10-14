@@ -53,7 +53,7 @@ export default class OptionDialogBox {
 
 		body.rows.push(getToolbarActions());
 
-		self.optionWindow = util.ui.loadWindow(self.title, body, 500, 650, true);
+		self.optionWindow = util.ui.loadWindow(self.title, body, 650, 650, true);
 
 
 		function getToolbarActions() {

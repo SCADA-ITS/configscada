@@ -426,7 +426,7 @@ export default class TubeContent {
 										view: "label",
 										height: 24,
 										//width: 180,
-										template: "<span>" + i18n.t("LBL_ACTUAL_REGIME") + "</span>",
+										template: "<span>" + i18n.t("LBL_CURRENT_REGIME") + "</span>",
 										css: "global-text"
 									},
 									{ width: 12 },

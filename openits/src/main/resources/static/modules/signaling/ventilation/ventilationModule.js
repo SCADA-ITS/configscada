@@ -135,7 +135,7 @@ export default class VentilationModule extends GenericModule {
 
 			let data = await webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByIdType, { id: self.config.elementTypeTunnel}));
 			let ventilations = data.json();
-			
+						
 			self.nodes = [];
 			self.hierarchy = [];
 

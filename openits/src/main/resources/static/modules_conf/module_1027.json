@@ -52,10 +52,9 @@
 		"currentVentilationState" : "ElementTypeParam:2000:2:7"
 	},
 	"ventilationModeOptions" :[
-		{"id": "1", "label" : "LBL_AUTO", "disable" : true},
-		{"id": "2", "label" : "LBL_AUTO_MAINTENANCE", "disable" : true},
-		{"id": "0", "label" : "LBL_MANUAL", "disable" : false}
-	],
+		{"id": "1", "label" : "LBL_AUTO", "disableRegimeChange" : true, "disableFanChange" : true},
+		{"id": "2", "label" : "LBL_AUTO_MAINTENANCE",  "disableRegimeChange" : true, "disableFanChange" : true},
+		{"id": "0", "label" : "LBL_MANUAL",  "disableRegimeChange" : false, "disableFanChange" : false}
 	"commands":{
 		"SEND_VENTILATION_STOP" :{
 			"commandElementTypeId":"CommandElementType:1:2001",
