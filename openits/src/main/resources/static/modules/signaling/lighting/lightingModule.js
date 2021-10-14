@@ -13,16 +13,16 @@ export default class LightingnModule extends GenericModule {
 
 		this.config = module.config;
 		
-		this.treeView;
-		this.nodes;
-		this.hierarchy;
-		this.tunnels;
+		this.treeView = undefined;
+		this.nodes = undefined;
+		this.hierarchy = undefined;
+		this.tunnels = undefined;
 
-		this.selectedTunnelId;
-		this.selectedTubeId;
+		this.selectedTunnelId = undefined;
+		this.selectedTubeId = undefined;
 		
-		this.enabledSelectedPks;
-		this.tubeTableOption;
+		this.enabledSelectedPks = undefined;
+		this.tubeTableOption = undefined;
 	}
 
 	loadData() {
@@ -186,9 +186,10 @@ export default class LightingnModule extends GenericModule {
 
 			function getTreeMetadata() {
 				
-				let metadata = {
+				let metadata;
+				metadata = {
 					id: 1,
-					label: "LBL_TUNNELS",
+					label: "LBL_LIGHTING_ZONES",
 					treeOptionValues: [
 						{ treeOption: { id: 2}, value: false },	// multiselect
 						{ treeOption: { id: 3}, value: true }, 	// sorted
@@ -265,13 +266,6 @@ export default class LightingnModule extends GenericModule {
 
 					let containerContent = new LightingContent(self);
 					containerContent.loadData(args, drawContent);
-
-					// let childs = self.treeView.data.find(e =>e.id==item.id);
-
-					// if (childs && childs.data && childs.data[0]) {
-
-					// 	self.treeView.select(childs.data[0].id);
-					// }
 				};
 				
 				return events;
@@ -287,7 +281,7 @@ export default class LightingnModule extends GenericModule {
 				cols: [
 					{
 						id: "view-tree-" + self.uid,
-						header: i18n.t("LBL_TUNNELS"),
+						header: i18n.t("LBL_LIGHTING_ZONES"),
 						body: {
 							width: 230,
 							rows: [

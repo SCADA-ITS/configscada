@@ -39,8 +39,8 @@
 		"tubeState": "ElementTypeParam:2000:2:8"
 	},
 	"lightingModeOptions" :[
-		{"id": "1", "label" : "LBL_AUTO", "disable" : true},
-		{"id": "0", "label" : "LBL_MANUAL", "disable" : false}
+		{"id": "1", "label" : "LBL_MODE_AUTO", "disable" : true},
+		{"id": "0", "label" : "LBL_MODE_MANUAL", "disable" : false}
 	],
 	"commands":{
 		"SEND_CIRCUIT_ON" :{

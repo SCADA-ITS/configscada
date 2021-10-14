@@ -32,11 +32,11 @@ export default class TubeContent {
 		this.idStompSubscriptorCircuits = undefined;
 		this.idStompSubscriptorDalis = undefined;
 	}
-	
-		getView() {
+
+	getView() {
 
 		let viewContent;
-		
+
 		viewContent = {
 			css: { "background-color": "white" },
 			rows: [
@@ -82,8 +82,11 @@ export default class TubeContent {
 				self.selectedTable = args.tubeTableOption;
 			}
 
-			loadDataCircuits();
-			loadDataDalis();
+			if (self.selectedTube.childs && Array.isArray(self.selectedTube.childs)) {
+
+				loadDataCircuits();
+				loadDataDalis();
+			}
 
 			self.connectWS();
 
@@ -142,12 +145,12 @@ export default class TubeContent {
 								circuit[elementValue.elementTypeParam.id] = elementValue.value;
 
 								if (elementValue.elementTypeParam.id === self.parent.config.params.circuitState) {
-									
+
 									let circuitStateLabel = CircuitState.find(e => e.value == elementValue.value);
 
 									if (circuitStateLabel) {
-		
-										circuit["circuitStateLabel"]  = i18n.t(circuitStateLabel.label);
+
+										circuit["circuitStateLabel"] = i18n.t(circuitStateLabel.label);
 									}
 								}
 							});
@@ -220,7 +223,7 @@ export default class TubeContent {
 		}
 
 		let header;
-		
+
 		header = {
 			id: "view-content-header-" + self.parent.uid,
 			rows: [
@@ -321,33 +324,33 @@ export default class TubeContent {
 							cancel: i18n.t("LBL_CANCEL"),
 							text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
 							width: 600
-							}).then(function(res) {
-				
-								callbackCloseDialog(true);								
-								let command = self.parent.config.commands.SEND_LIGHTING_MODE;
-								command.elementId = self.selectedTube.id;
-								command.commandElementValues[0].value = newModeId;
-		
-								let body = {
-									commands: []
-								};
-		
-								body.commands.push(command);
-		
-								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-									console.log(data.json())
-									if (!data.json()) {
-										webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-									}
-								}, () => {
-									this.blockEvent();
-									this.setValue(oldv);
-									this.unblockEvent();
-								});
-	
-								
+						}).then(function(res) {
+
+							callbackCloseDialog(true);
+							let command = self.parent.config.commands.SEND_LIGHTING_MODE;
+							command.elementId = self.selectedTube.id;
+							command.commandElementValues[0].value = newModeId;
+
+							let body = {
+								commands: []
+							};
+
+							body.commands.push(command);
+
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+								console.log(data.json())
+								if (!data.json()) {
+									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+								}
+							}, () => {
+								this.blockEvent();
+								this.setValue(oldv);
+								this.unblockEvent();
 							});
-							
+
+
+						});
+
 					}
 				}
 			}
@@ -363,11 +366,11 @@ export default class TubeContent {
 
 		let self = this;
 		let contentBody;
-		
+
 		contentBody = {
 			view: "form",
 			id: "view-content-body-" + self.parent.uid,
-			css: { "box-sizing": "border-box", "border": "1px solid #dadee0 !important"},
+			css: { "box-sizing": "border-box", "border": "1px solid #dadee0 !important" },
 			rows: [
 				getRegime(),
 				getButtons(),
@@ -393,27 +396,29 @@ export default class TubeContent {
 
 			let lightingRegimeConfig = self.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.parent.config.params.lightingRegimeConfig);
 			let availableRegimes;
+			let regime;
 
-			try {
+			if (lightingRegimeConfig) {
 
-				lightingRegimeConfig = JSON.parse(lightingRegimeConfig.value);
+				try {
 
-				availableRegimes = lightingRegimeConfig.regimes.map(function(regime) {
-					return {
-						id: regime.id,
-						value: i18n.t(regime.labelAlias)
-					};
-				});
+					lightingRegimeConfig = JSON.parse(lightingRegimeConfig.value);
 
-				updateInfoRegime(self.getCurrentRegime());
+					availableRegimes = lightingRegimeConfig.regimes.map(function(regime) {
+						return {
+							id: regime.id,
+							value: i18n.t(regime.labelAlias)
+						};
+					});
 
-			} catch (error) {
+					updateInfoRegime(self.getCurrentRegime());
 
-				console.error("El Json de regimenes no esta correctamente formateado.")
+				} catch (error) {
+
+					console.error("El Json de regimenes no esta correctamente formateado.")
+				}
 			}
 
-			let regime;
-			
 			regime = {
 				cols: [
 					{
@@ -557,9 +562,9 @@ export default class TubeContent {
 			};
 
 			function getViewDocument() {
-				
+
 				let viewDocument;
-				
+
 				viewDocument = {
 					id: "view-content-regime-document-" + self.parent.uid,
 					height: 26
@@ -593,9 +598,9 @@ export default class TubeContent {
 			}
 
 			function getViewDocumentText() {
-				
+
 				let viewDocumentText;
-				
+
 				viewDocumentText = {
 					id: "view-content-regime-document-text-" + self.parent.uid,
 					height: 60,
@@ -604,7 +609,7 @@ export default class TubeContent {
 					view: "template",
 					template: `<div class="ventilation-description-box"><span > ${self.infoRegime.description}</span></div>`
 				};
-				
+
 				return viewDocumentText;
 			}
 
@@ -636,7 +641,7 @@ export default class TubeContent {
 		function getButtons() {
 
 			let buttons;
-			
+
 			buttons = {
 				cols: [
 					{
@@ -648,11 +653,11 @@ export default class TubeContent {
 						options: [
 							{
 								id: "action-panel-switcher-circuit" + self.parent.uid,
-								value: "<span>" + i18n.t("LBL_CIRCUIT") + "</span>",
+								value: "<span>" + i18n.t("LBL_CIRCUITS") + "</span>",
 							},
 							{
 								id: "action-panel-switcher-dali" + self.parent.uid,
-								value: "<span>" + i18n.t("LBL_DALI") + "</span>",
+								value: "<span>" + i18n.t("LBL_DALIS") + "</span>",
 							}
 						],
 						on: {
@@ -768,8 +773,8 @@ export default class TubeContent {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_CIRCUIT_ALIAS",
-						labelTooltip: "LBL_CIRCUIT_ALIAS",
+						label: "LBL_CIRCUIT",
+						labelTooltip: "LBL_CIRCUIT",
 						parameterized: false,
 						position: 3,
 						required: false,
@@ -1038,8 +1043,8 @@ export default class TubeContent {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_DALI_ALIAS",
-						labelTooltip: "LBL_DALI_ALIAS",
+						label: "LBL_DALI",
+						labelTooltip: "LBL_DALI",
 						parameterized: false,
 						position: 3,
 						required: false,
@@ -1137,35 +1142,35 @@ export default class TubeContent {
 
 			function changeRegime(newRegimeId, callbackCloseDialog) {
 
-					webix.confirm({
-						title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-						width: 600
-						}).then(function(res) {
-							
-							callbackCloseDialog(true);
-							let command = self.parent.config.commands.SEND_DALI_REGIME;
-							let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
-				
-							command.elementId = dali.id;
-							command.commandElementValues[0].value = newRegimeId;
-			
-							let body = {
-								commands: []
-							};
-							body.commands.push(command);
-			
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-								console.log(data.json())
-								if (!data.json()) {
-			
-									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-								}
-							});				
-						});
-					}
+				webix.confirm({
+					title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
+					ok: i18n.t("LBL_ACCEPT"),
+					cancel: i18n.t("LBL_CANCEL"),
+					text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
+					width: 600
+				}).then(function(res) {
+
+					callbackCloseDialog(true);
+					let command = self.parent.config.commands.SEND_DALI_REGIME;
+					let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+
+					command.elementId = dali.id;
+					command.commandElementValues[0].value = newRegimeId;
+
+					let body = {
+						commands: []
+					};
+					body.commands.push(command);
+
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+						console.log(data.json())
+						if (!data.json()) {
+
+							webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+						}
+					});
+				});
+			}
 
 			return { rows: self.tubeDalisDataTable.getView() };
 
@@ -1176,7 +1181,7 @@ export default class TubeContent {
 		function getBottom() {
 
 			let bottom;
-			
+
 			bottom = {
 				height: 40,
 				cols: [
@@ -1280,9 +1285,9 @@ export default class TubeContent {
 
 		return contentBody;
 	}
-	
+
 	checkDisableChangeStatusButton() {
-		
+
 		let self = this;
 
 		let changeStatusButton = $$("view-content-button-change-circuits-status-" + self.parent.uid);
@@ -1306,7 +1311,7 @@ export default class TubeContent {
 				}
 			}
 			else {
-				
+
 				changeStatusButton.disable();
 			}
 		}
@@ -1376,7 +1381,7 @@ export default class TubeContent {
 					self.tubeDalisDataTable.enable();
 					$$("view-content-button-change-regime-" + self.parent.uid).enable();
 				}
-				
+
 				self.checkDisableChangeStatusButton();
 			}
 		}

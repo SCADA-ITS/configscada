@@ -660,7 +660,7 @@ export default class TubeContent {
 							height: 26
 						};
 
-						if (self.infoRegime.documentUrl) {
+						if (self.infoRegime && self.infoRegime.documentUrl) {
 
 							viewDocument = {
 								id: "view-content-regime-document-" + self.uid,
@@ -668,7 +668,6 @@ export default class TubeContent {
 									{
 										height: 26,
 										align: "right",
-										//width: 500,
 										view: "button",
 										type: "icon",
 										label: self.infoRegime.documentName + " " + self.infoRegime.documentType,
@@ -737,7 +736,7 @@ export default class TubeContent {
 								options: [
 									{
 										id: "action-panel-switcher-fan" + self.uid,
-										value: "<span>" + i18n.t("LBL_FAN") + "</span>",
+										value: "<span>" + i18n.t("LBL_FANS") + "</span>",
 									}
 
 								],
@@ -745,7 +744,7 @@ export default class TubeContent {
 
 									if (obj.id === "action-panel-switcher-fan" + self.uid) {
 
-										return i18n.t("LBL_FAN");
+										return i18n.t("LBL_FANS");
 									}
 
 								},
