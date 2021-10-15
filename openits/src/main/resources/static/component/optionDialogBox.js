@@ -1,6 +1,7 @@
+import { util } from "../lib/util.js";
 import OptionButtonList from "./optionButtonList.js";
 import ComboDetail from "./comboDetail.js";
-import { util } from "../lib/util.js";
+import MessageBox from "./messageBox.js";
 
 const NUM_OPTIONS = 3;
 
@@ -105,12 +106,8 @@ export default class OptionDialogBox {
 
 												if (selectionId === oldSelection) {
 
-													webix.alert({
-														title: i18n.t("LBL_SAME_MODE_SELECTED"),
-														text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
-														type: "alert-warning",
-														width: 600
-													});
+													let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+													ms.show();
 
 												} else {
 
@@ -133,13 +130,9 @@ export default class OptionDialogBox {
 
 									if (selectionId === oldSelection) {
 
-										webix.alert({
-											title: i18n.t("LBL_SAME_MODE_SELECTED"),
-											text: i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"),
-											type: "alert-warning",
-											width: 600
-										});
-
+										let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+										ms.show();
+			
 									} else {
 
 										let res = self.onChange(selectionId, function(close) {

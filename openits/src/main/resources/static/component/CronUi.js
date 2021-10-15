@@ -1,4 +1,5 @@
 import { util } from "../lib/util.js";
+import MessageBox from "./messageBox.js";
 
 const DAYS_ARR = [i18n.t("LBL_SUNDAY"), i18n.t("LBL_MONDAY"), i18n.t("LBL_TUESDAY"), i18n.t("LBL_WEDNESDAY"), i18n.t("LBL_THURSDAY"), i18n.t("LBL_FRIDAY"), i18n.t("LBL_SATURDAY")];
 const DAYSCRON_ARR = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -1884,13 +1885,9 @@ export default class CronUi {
 										let translate = prettyCron.toString(cronEx, true);
 
 										if (cronEx === CRON_EXPRESSION_NULL) {
-
-											webix.alert({
-												title: i18n.t("LBL_CRON_EXPRESSION_IS_NULL"),
-												text: i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"),
-												type: "alert-error",
-												width: 600
-											});
+											
+											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"), null, null);
+											ms.show();
 
 										} else {
 											$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);

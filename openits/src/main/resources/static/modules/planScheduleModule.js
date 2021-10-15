@@ -1,8 +1,8 @@
-import GenericModule from "../modules/genericModule.js";
 import { util } from "../lib/util.js";
+import GenericModule from "../modules/genericModule.js";
 import CronUi from "../component/CronUi.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
-
+import MessageBox from "../component/messageBox.js";
 
 export default class PlanScheduleModule extends GenericModule {
 
@@ -131,16 +131,13 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				webix.confirm({
-					title: i18n.t("LBL_CONFIRM"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION"),
-					width: 600
-				}).then(function() {
-
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_ENABLE_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
 					actionExecution("PLAY", planScheduleList, self.config.actionEndpoints.enable);
-				});
+				};
 			}
 		}
 
@@ -150,16 +147,13 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				webix.confirm({
-					title: i18n.t("LBL_CONFIRM"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION"),
-					width: 600
-				}).then(function() {
-
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DISABLE_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
 					actionExecution("PAUSE", planScheduleList, self.config.actionEndpoints.disable);
-				});
+				}
 			}
 		}
 
@@ -169,16 +163,13 @@ export default class PlanScheduleModule extends GenericModule {
 
 				let planScheduleList = self.args.selectedPks;
 
-				webix.confirm({
-					title: i18n.t("LBL_CONFIRM"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION"),
-					width: 600
-				}).then(function() {
-
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_PLANSCHEDULE_CONFIRM_DELETE_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
 					actionExecution("STOP", planScheduleList, self.config.actionEndpoints.delete);
-				});
+				};
 			}
 		}
 
@@ -566,13 +557,10 @@ export default class PlanScheduleModule extends GenericModule {
 												}
 
 											} else {
+												
+												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+												ms.show();
 
-												webix.alert({
-													title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
-													text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
-													type: "alert-error",
-													width: 600
-												});
 											}
 										}
 									}

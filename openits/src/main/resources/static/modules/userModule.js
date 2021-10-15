@@ -1,8 +1,9 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
 import CalendarDialogBox from "../component/calendarDialogBox.js";
-import { util } from "../lib/util.js";
+import MessageBox from "../component/messageBox.js";
 
 export default class UserModule extends GenericModule {
 
@@ -53,12 +54,9 @@ export default class UserModule extends GenericModule {
 			(this.moduleAction.id === this.config.moduleAction.edit ||
 				this.moduleAction.id === this.config.moduleAction.changePassword)) {
 
-			webix.alert({
-				title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-				text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
-				type: "alert-error",
-				width: 600
-			});
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+			ms.show();
+
 		} else if (this.moduleAction.id === this.config.moduleAction.add ||
 			this.moduleAction.id === this.config.moduleAction.edit ||
 			this.moduleAction.id === this.config.moduleAction.changePassword) {
@@ -214,29 +212,22 @@ export default class UserModule extends GenericModule {
 
 				if (self.args.selectedPks[0] === self.config.systemUser) {
 
-					webix.alert({
-						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
-						type: "alert-error",
-						width: 600
-					});
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+					ms.show();
+
 				} else {
 
-					webix.confirm({
-						title: i18n.t("LBL_CONFIRM_DELETE_USER"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"),
-						width: 600
-					}).then(function() {
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_USER_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+					function onAccept() {
+
 						self.args.selectedPks.forEach(e => {
 							webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
 							self.args.callbacks[0]();
 						});
-					});
-
+					}
 				}
-
 			}
 		};
 
@@ -249,12 +240,9 @@ export default class UserModule extends GenericModule {
 
 				if (self.args.selectedPks[0] === self.config.systemUser) {
 
-					webix.alert({
-						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"),
-						type: "alert-error",
-						width: 600
-					});
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
+					ms.show();
+
 				} else {
 
 					let timeService = window.sm.getService(Services.TIME_SERVICE);
@@ -292,26 +280,19 @@ export default class UserModule extends GenericModule {
 						}
 						else {
 
-							webix.confirm({
-								title: i18n.t("LBL_CONFIRM_UNLOCK_USER"),
-								ok: i18n.t("LBL_YES"),
-								cancel: i18n.t("LBL_NO"),
-								text: i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"),
-								width: 600
-							}).then(function() {
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"), onAccept, null);
+							ms.show();
+
+							function onAccept() {
 
 								unlockUsers(users);
-							});
+							}
 						}
 					}
 					else {
 
-						webix.alert({
-							title: i18n.t("LBL_INCOMPATIBLE_SELECTION"),
-							text: i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"),
-							type: "alert-error",
-							width: 600
-						});
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"), null, null);
+						ms.show();
 					}
 
 					function lockUsers(users) {
@@ -552,7 +533,7 @@ export default class UserModule extends GenericModule {
 							{
 								cols: [
 									{ view: "text", id: "roleId-" + self.uid, name: "roleId", hidden: true },
-									{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
+									{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275 },
 									{
 										view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
 										on: {
@@ -613,12 +594,8 @@ export default class UserModule extends GenericModule {
 
 							if (selection[0].id === self.config.systemRole) {
 
-								webix.alert({
-									title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-									text: i18n.t("LBL_NOT_ALLOWED_TO SELECT_SYSTEM_ROLE_DESCRIPTION"),
-									type: "alert-error",
-									width: 600
-								});
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+								ms.show();
 
 								return false;
 
@@ -829,12 +806,8 @@ export default class UserModule extends GenericModule {
 
 								if (permInherited) {
 
-									webix.alert({
-										title: i18n.t("LBL_DELETION_NOT_ALOWED"),
-										text: i18n.t("LBL_PERMISSION_INHERITED_FROM_A_ROLE_DESCRIPTION"),
-										type: "alert-error",
-										width: 600
-									});
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_INHERITED_FROM_A_ROLE_DESCRIPTION"), null, null);
+									ms.show();
 
 								} else {
 
@@ -888,12 +861,8 @@ export default class UserModule extends GenericModule {
 
 						if (repeatRolePermission || repeatUserPermission) {
 
-							webix.alert({
-								title: i18n.t("LBL_PERMISSION_CANNOT_BE_SET"),
-								text: i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"),
-								type: "alert-error",
-								width: 600
-							});
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null);
+							ms.show();
 
 							return false;
 
@@ -1002,21 +971,16 @@ export default class UserModule extends GenericModule {
 														});
 													}
 												} else {
-													webix.alert({
-														title: i18n.t("LBL_FIELDS_NOT_COMPLETE"),
-														text: i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"),
-														type: "alert-error",
-														width: 600
-													});
-												}
-											} else {
-												webix.alert({
-													title: i18n.t("LBL_PASSWORDS_DO_NOT_MATCH"),
-													text: i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"),
-													type: "alert-error",
-													width: 600
-												});
 
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+													ms.show();
+
+												}
+												
+											} else {
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"), null, null);
+												ms.show();
 											}
 										}
 								},
