@@ -341,21 +341,45 @@ export default class ChangeParamDialogBox {
 					on: {
 						onItemClick() {
 							
-							if(!self.planOrderElement){
+							if(isValidForm()){
 
-								self.planOrderElement = {};
+								if(!self.planOrderElement){
+
+									self.planOrderElement = {};
+								}
+	
+								self.planOrderElement.element = self.element;
+								self.planOrderElement.elementTypeParam = self.elementTypeParam;
+								self.planOrderElement.value = self.planOrderValue;
+	
+								self.onAccept(self.planOrderElement);
+	
+								$$(self.containerId).close();
+							
+							} else{
+
+								webix.alert({
+									title: i18n.t("LBL_CHANGE_PARAM_DIALOG_BOX_REQUIRED_PARAMS"),
+									text: i18n.t("LBL_CHANGE_PARAM_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"),
+									type: "alert-warning",
+									width: 500
+								});
 							}
-
-							self.planOrderElement.element = self.element;
-							self.planOrderElement.elementTypeParam = self.elementTypeParam;
-							self.planOrderElement.value = self.planOrderValue;
-
-							self.onAccept(self.planOrderElement);
-
-							$$(self.containerId).close();
 						}
 					}
 				});
+			}
+
+			function isValidForm(){
+
+				let result = true;
+
+				if(!self.element || !self.elementTypeParam || !self.planOrderValue){
+
+					result = false;
+				}
+
+				return result;
 			}
 			
 			return viewToolbarActions;	

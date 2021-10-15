@@ -198,7 +198,7 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 									
 					planOrderElementTypeState.id = "PlanOrderElementTypeState:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderElementTypeState.elementTypeState.id.substr(planOrderElementTypeState.elementTypeState.id.indexOf(":"), planOrderElementTypeState.elementTypeState.id.length);
 
-					if(!self.planOrder.planOrderElementTypeStates || !Array.isArray(selectedItems)){
+					if(!self.planOrder.planOrderElementTypeStates || !Array.isArray(self.planOrder.planOrderElementTypeStates)){
 
 						self.planOrder.planOrderElementTypeStates = [];	
 					}
@@ -243,6 +243,8 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
+					let rowIndexRemove = self.planOrder.planOrderElementTypeStates.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrder.planOrderElementTypeStates.splice(rowIndexRemove, 1);
 					self.dtParams.delete(selectedItems);
 				}
 			}

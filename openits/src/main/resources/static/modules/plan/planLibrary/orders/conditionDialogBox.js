@@ -281,9 +281,7 @@ export default class ConditionDialogBox {
 							on:{
 								onChange: function (newVal, oldVal) {
 
-									self.nexusAnd = newVal;
-					
-									webix.ui(getNexusAndRow(), $$("change-nexus-operator-row-" + self.uid));
+									updateNexusAnd(newVal);
 								}
 							},
 							onLabel: i18n.t("LBL_AND"),
@@ -328,31 +326,31 @@ export default class ConditionDialogBox {
 
 				function onAccept(selectedIds) {
 
-					let updateEquipmentTypeParamRow = false;
+					let updateRows = false;
 
 					if (selectedIds && Array.isArray(selectedIds) && selectedIds.length > 0){
 
 						if(!self.element || self.element.id != selectedIds[0].id){
 
-							updateEquipmentTypeParamRow = true;
+							updateRows = true;
 						}
 
 						self.element = window.em.getByField(EntityType.ELEMENT, "id", selectedIds[0].id);
 					} else {
 
 						self.element = null;
-						updateEquipmentTypeParamRow = true;
+						updateRows = true;
 					}
 					
-					webix.ui(getElemenRow(), $$("change-condition-element-row-" + self.uid));
+					updateElement(self.element);
 
-					if(updateEquipmentTypeParamRow) {
+					if(updateRows) {
 
-						self.elementTypeParam = null;
-						webix.ui(getElementTypeParamRow(), $$("change-condition-element-type-param-row-" + self.uid));
-						
-						self.elementTypeState = null;
-						webix.ui(getElementTypeStateRow(), $$("change-condition-element-type-state-row-" + self.uid));
+						updateElementTypeParam(null);
+						updateThresholdOperation(null);
+						updateThresholdVal1(null);
+						updateThresholdVal2(null);
+						updateElementTypeState(null);
 					}
 				}
 			}
@@ -409,18 +407,13 @@ export default class ConditionDialogBox {
 						updateRows = true;
 					}
 					
-					webix.ui(getElementTypeParamRow(), $$("change-condition-element-type-param-row-" + self.uid));
+					updateElementTypeParam(self.elementTypeParam)
 
 					if(updateRows){
 
-						self.thresholdOperation = null;
-						webix.ui(getThresholdOperationRow(), $$("change-condition-threshold-operation-row-" + self.uid));
-						
-						self.thresholdVal1 = null;
-						webix.ui(getThresholdVal1Row(), $$("change-threshold-value-one-row-" + self.uid));
-
-						self.thresholdVal2 = null;
-						webix.ui(getThresholdVal2Row(), $$("change-threshold-value-two-row-" + self.uid));						
+						updateThresholdOperation();
+						updateThresholdVal1();
+						updateThresholdVal2();						
 					}
 				}
 			}
@@ -437,19 +430,16 @@ export default class ConditionDialogBox {
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
 
-				let elementTypeStates = window.em.getAll(EntityType.ELEMENT_TYPE_STATE);
+				let elementTypeStates = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id).elementTypeStates;
 				
 				if (Array.isArray(elementTypeStates) && elementTypeStates.length > 0) {
 						
 					elementTypeStates.forEach(el => {
 
-						if (el.id.split(":")[1] == self.element.elementType.id.split(":")[1]){
-
-							dialogEntity.data.push({
-								id: el.id,
-								state: i18n.t(el.labelAlias)
-							});						
-						}
+						dialogEntity.data.push({
+							id: el.id,
+							state: i18n.t(el.labelAlias)
+						});						
 					});
 				}
 					
@@ -468,7 +458,7 @@ export default class ConditionDialogBox {
 						self.elementTypeState = null;
 					}
 					
-					webix.ui(getElementTypeStateRow(), $$("change-condition-element-type-state-row-" + self.uid));
+					updateElementTypeState(self.elementTypeState)
 				}
 			}
 
@@ -516,7 +506,7 @@ export default class ConditionDialogBox {
 								self.thresholdOperation = null;
 							}
 							
-							webix.ui(getThresholdOperationRow(), $$("change-condition-threshold-operation-row-" + self.uid));
+							updateThresholdOperation(self.thresholdOperation);
 						}
 					}
 				});				
@@ -524,31 +514,69 @@ export default class ConditionDialogBox {
 			
 			function getWindowThresholdVal1Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal1, self.elementTypeParam.dataType.id);
+				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal1, self.elementTypeParam.dataType);
 	
 				i.show();
 
 				function onAccept(inputValue) {
 
-					self.thresholdVal1 = inputValue;
-
-					webix.ui(getThresholdVal1Row(), $$("change-threshold-value-one-row-" + self.uid));
+					updateThresholdVal1(inputValue);
 				}
 			}
 
 			function getWindowThresholdVal2Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal2, self.elementTypeParam.dataType.id);
+				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal2, self.elementTypeParam.dataType);
 	
 				i.show();
 
 				function onAccept(inputValue) {
 
-					self.thresholdVal2 = inputValue;
-
-					webix.ui(getThresholdVal2Row(), $$("change-threshold-value-two-row-" + self.uid));
+					updateThresholdVal2(inputValue);
 				}
 			}
+
+
+			function updateElement(value){
+
+				self.element = value;
+				webix.ui(getElemenRow(), $$("change-condition-element-row-" + self.uid));
+			}
+			
+			function updateElementTypeParam(value){
+
+				self.elementTypeParam = value;
+				webix.ui(getElementTypeParamRow(), $$("change-condition-element-type-param-row-" + self.uid));
+			}
+
+			function updateElementTypeState(value){
+
+				self.elementTypeState = value;
+				webix.ui(getElementTypeStateRow(), $$("change-condition-element-type-state-row-" + self.uid));
+			}
+
+			function updateThresholdOperation(value){
+
+				self.thresholdOperation = value;
+				webix.ui(getThresholdOperationRow(), $$("change-condition-threshold-operation-row-" + self.uid));
+			}
+
+			function updateThresholdVal1(value){
+
+				self.thresholdVal1 = value;
+				webix.ui(getThresholdVal1Row(), $$("change-threshold-value-one-row-" + self.uid));
+			}
+
+			function updateThresholdVal2(value){
+
+				self.thresholdVal2 = value;
+				webix.ui(getThresholdVal2Row(), $$("change-threshold-value-two-row-" + self.uid));
+			}
+
+			function updateNexusAnd(value){
+
+				self.nexusAnd = value;
+				webix.ui(getNexusAndRow(), $$("change-nexus-operator-row-" + self.uid));			}
 
 			return bodyComponent;
 		}
@@ -594,22 +622,50 @@ export default class ConditionDialogBox {
 					label: i18n.t("LBL_ACCEPT"),
 					on: {
 						onItemClick() {
+
+							if(isValidForm()){
+
+								if(!self.planOrderCondition){
+
+									self.planOrderCondition = {};
+								}
+	
+								self.planOrderCondition.element = self.element;
+								self.planOrderCondition.elementTypeParam = self.elementTypeParam;
+								self.planOrderCondition.elementTypeState = self.elementTypeState;
+								self.planOrderCondition.thresholdOperation = self.thresholdOperation;
+								self.planOrderCondition.thresholdVal1 = self.thresholdVal1;
+								self.planOrderCondition.thresholdVal2 = self.thresholdVal2;
+								self.planOrderCondition.nexusAnd = self.nexusAnd;
+	
+								self.onAccept(self.planOrderCondition);
+	
+								$$(self.containerId).close();
 							
-							if(!self.planOrderCondition){
+							} else{
 
-								self.planOrderCondition = {};
+								webix.alert({
+									title: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS"),
+									text: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"),
+									type: "alert-warning",
+									width: 500
+								});
 							}
-
-							self.planOrderCondition.element = self.element;
-							self.planOrderCondition.elementTypeParam = self.elementTypeParam;
-							self.planOrderCondition.value = self.planOrderValue;
-
-							self.onAccept(self.planOrderCondition);
-
-							$$(self.containerId).close();
 						}
 					}
 				});
+			}
+
+			function isValidForm(){
+
+				let result = true;
+
+				if(!self.element){
+
+					result = false;
+				}
+
+				return result;
 			}
 			
 			return viewToolbarActions;	

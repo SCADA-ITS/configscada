@@ -51,7 +51,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 				const gridOptionValues = [
 					{ gridOption: { id: 1 }, value: "false" },
 					{ gridOption: { id: 2 }, value: "false" },
-					{ gridOption: { id: 3 }, value: "1" },
+					{ gridOption: { id: 3 }, value: "9" },
 					{ gridOption: { id: 4 }, value: "asc" },
 					{ gridOption: { id: 7 }, value: "false" },
 					{ gridOption: { id: 8 }, value: "false" },
@@ -287,7 +287,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						}	
 					},
 					{
-						id: 5,
+						id: 57,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -305,7 +305,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						}	
 					},
 					{
-						id: 5,
+						id: 8,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -313,7 +313,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						label: "LBL_NEXUS_OPERATOR",
 						needsTranslation: false,
 						parameterized: false,
-						position: 5,
+						position: 8,
 						required: false,
 						sourceField: "nexusOperator",
 						visible: true,
@@ -321,7 +321,24 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 							id: 1,
 							name: "string"
 						}	
-					}
+					},
+					{
+						id: 9,
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						needsTranslation: false,
+						parameterized: false,
+						position: 9,
+						required: false,
+						sourceField: "planOrderConditionOrder",
+						visible: false,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						}	
+					},
 				];
 				
 				return gridMetadata;
@@ -364,7 +381,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					newItem.planOrderConditionOrder = planOrderCondition.planOrderConditionOrder;
 					newItem.operationVal1 = planOrderCondition.thresholdVal1;
 					newItem.operationVal2 = planOrderCondition.thresholdVal2;
-					newItem.nexusOperator = (planOrderCondition.nexusAnd?"And":"Or");
+					newItem.nexusOperator = (planOrderCondition.nexusAnd?i18n.t("LBL_AND"):i18n.t("LBL_OR"));
 					
 					self.dtParams.add(newItem);
 
@@ -385,14 +402,38 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						selectedItem.elementTypeParam = planOrderCondition.elementTypeParam;
 						selectedItem.elementTypeState = planOrderCondition.elementTypeState;
 						selectedItem.thresholdOperation = planOrderCondition.thresholdOperation;
-					
+						selectedItem.thresholdVal1 = planOrderCondition.thresholdVal1;
+						selectedItem.thresholdVal2 = planOrderCondition.thresholdVal2;
+						selectedItem.nexusAnd = planOrderCondition.nexusAnd;
+						selectedItem.planOrderConditionOrder = planOrderCondition.planOrderConditionOrder;
+
 						selectedItems[0].elementAlias = selectedItem.element.alias;
-						selectedItems[0].parameter =  i18n.t(selectedItem.elementTypeParam.labelAlias);
-						selectedItems[0].elementState =  i18n.t(selectedItem.elementTypeState.labelAlias);
-						selectedItems[0].operation = i18n.t(selectedItem.thresholdOperation.labelAlias);
+						
+						let parameter = "";
+						if(selectedItem.elementTypeParam && selectedItem.elementTypeParam.labelAlias){
+							
+							parameter = i18n.t(selectedItem.elementTypeParam.labelAlias);
+						}
+						selectedItems[0].parameter =  parameter;
+						
+						let elementState = "";
+						if(selectedItem.elementTypeState && selectedItem.elementTypeState.labelAlias){
+							
+							elementState = i18n.t(selectedItem.elementTypeState.labelAlias);
+						}
+						selectedItems[0].elementState =  elementState;
+
+						let operation = "";
+						if(selectedItem.thresholdOperation && selectedItem.thresholdOperation.labelAlias){
+							
+							operation = i18n.t(selectedItem.thresholdOperation.labelAlias);
+						}
+						selectedItems[0].operation = operation;
+
 						selectedItems[0].operationVal1 = selectedItem.thresholdVal1;
 						selectedItems[0].operationVal2 = selectedItem.thresholdVal2;
-						selectedItems[0].nexusOperator = (selectedItem.nexusAnd?"And":"Or");
+						selectedItems[0].nexusOperator = (selectedItem.nexusAnd!=1?i18n.t("LBL_OR"):i18n.t("LBL_AND"));
+						selectedItems[0].planOrderConditionOrder = selectedItem.planOrderConditionOrder;
 
 						self.dtParams.update(selectedItems[0]);
 	
@@ -402,6 +443,42 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 			function movePlanOrderCondition(planOrderConditionId, movePlanOrderType) {
 
+				let selectedItem = self.planOrder.planOrderConditions.find(e => e.id == planOrderConditionId);
+				
+				let newOrder = selectedItem.planOrderConditionOrder;
+
+				if(MOVE_PLAN_ORDER_POSITION_UP == movePlanOrderType) {
+
+					newOrder--;
+				
+				} else {
+
+					newOrder++;
+				}
+				
+				let oldPositionItem = self.planOrder.planOrderConditions.find(e => e.planOrderConditionOrder == newOrder);
+
+				if(oldPositionItem){
+
+					oldPositionItem.planOrderConditionOrder = selectedItem.planOrderConditionOrder;
+					selectedItem.planOrderConditionOrder = newOrder;
+
+					let oldPositionRow =  self.dtParams.getItem(oldPositionItem.id);
+					oldPositionRow.planOrderConditionOrder = oldPositionItem.planOrderConditionOrder;
+					let selectedRow = self.dtParams.getItem(selectedItem.id);
+					selectedRow.planOrderConditionOrder = selectedItem.planOrderConditionOrder;
+
+					self.dtParams.update([oldPositionRow,selectedRow]);
+
+				} else {
+
+					webix.alert({
+						title: i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER"),
+						text: i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER_DESCRIPTION"),
+						type: "alert-warning",
+						width: 500
+					});
+				}
 			}
 
 			function onRemove() {
@@ -410,6 +487,8 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
+					let rowIndexRemove = self.planOrder.planOrderConditions.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrder.planOrderConditions.splice(rowIndexRemove, 1);
 					self.dtParams.delete(selectedItems);
 				}
 			}
@@ -422,15 +501,34 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 					gridData = self.planOrder.planOrderConditions.map(e => {
 						
+						let parameter = "";
+						if(e.elementTypeParam && e.elementTypeParam.labelAlias){
+
+							parameter = i18n.t(e.elementTypeParam.labelAlias); 
+						}
+
+						let elementState = "";
+						if(e.elementTypeState && e.elementTypeState.labelAlias){
+
+							elementState = i18n.t(e.elementTypeState.labelAlias); 
+						}
+
+						let operation = "";
+						if(e.thresholdOperation && e.thresholdOperation.labelAlias){
+
+							operation = i18n.t(e.thresholdOperation.labelAlias); 
+						}
+
 						return {
 							id: e.id,
 							elementAlias: e.element.alias,
-							parameter: i18n.t(e.elementTypeParam.labelAlias),
-							parameter: i18n.t(e.elementTypeState.labelAlias),
-							operation: i18n.t(e.thresholdOperation.labelAlias),
+							parameter: parameter,
+							elementState: elementState,
+							operation: operation,
 							operationVal1: e.thresholdVal1,
 							operationVal2: e.thresholdVal2,
-							nexusOperator: (e.nexusAnd?"And":"Or")
+							nexusOperator: (e.nexusAnd?i18n.t("LBL_AND"):i18n.t("LBL_OR")),
+							planOrderConditionOrder: e.planOrderConditionOrder
 						}
 					});
 				}
@@ -489,13 +587,13 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 				self.planOrder.planOrderConditions.forEach(row => {
 				
 					let planOrderCondition = {
-						value: row.value,
 						elementId: row.element.id,
 						elementTypeParamId: row.elementTypeParam.id,
 						thresholdOperationId: row.thresholdOperation.id,
 						thresholdVal1: row.thresholdVal1,
 						thresholdVal2: row.thresholdVal2,
-						nexusAnd: row.nexusAnd
+						nexusAnd: (row.nexusAnd==1),
+						planOrderConditionOrder : row.planOrderConditionOrder
 					}
 					
 					planOrder.planOrderConditions.push(planOrderCondition);

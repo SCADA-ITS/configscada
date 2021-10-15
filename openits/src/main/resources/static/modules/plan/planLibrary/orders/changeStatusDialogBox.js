@@ -1,7 +1,5 @@
 import { util } from "../../../../lib/util.js";
 import SearchDialogBox from "../../../../component/searchDialogBox.js";
-import InputDialogBox from "../../../../component/inputDialogBox.js";
-
 
 const CHANGE_DIALOG_BOX_WIDTH = 700;
 const CHANGE_DIALOG_BOX_HEIGHT = 540;
@@ -191,19 +189,16 @@ export default class ChangeStatusDialogBox {
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
 
-				let elements = window.em.getAll(EntityType.ELEMENT_TYPE_STATE);
+				let elementTypeStates = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id).elementTypeStates;
 				
-				if (Array.isArray(elements) && elements.length > 0) {
+				if (Array.isArray(elementTypeStates) && elementTypeStates.length > 0) {
+						
+					elementTypeStates.forEach(el => {
 
-					elements.forEach(el => {
-				
-						if (el.id.split(":")[1] == self.element.elementType.id.split(":")[1]){
-
-							dialogEntity.data.push({
-								id: el.id,
-								state: i18n.t(el.labelAlias)
-							});
-						}						
+						dialogEntity.data.push({
+							id: el.id,
+							state: i18n.t(el.labelAlias)
+						});						
 					});
 				}
 					
@@ -270,22 +265,45 @@ export default class ChangeStatusDialogBox {
 					label: i18n.t("LBL_ACCEPT"),
 					on: {
 						onItemClick() {
+
+							if(isValidForm()){
+
+								if(!self.planOrderElementTypeState){
+
+									self.planOrderElementTypeState = {};
+								}
+	
+								self.planOrderElementTypeState.element = self.element;
+								self.planOrderElementTypeState.elementTypeState = self.elementTypeState;
+	
+								self.onAccept(self.planOrderElementTypeState);
+	
+								$$(self.containerId).close();
 							
-							if(!self.planOrderElementTypeState){
+							} else{
 
-								self.planOrderElementTypeState = {};
+								webix.alert({
+									title: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS"),
+									text: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"),
+									type: "alert-warning",
+									width: 500
+								});
 							}
-
-							self.planOrderElementTypeState.element = self.element;
-							self.planOrderElementTypeState.elementTypeState = self.elementTypeState;
-							self.planOrderElementTypeState.value = self.planOrderValue;
-
-							self.onAccept(self.planOrderElementTypeState);
-
-							$$(self.containerId).close();
 						}
 					}
 				});
+			}
+
+			function isValidForm(){
+
+				let result = true;
+
+				if(!self.element || !self.elementTypeState){
+
+					result = false;
+				}
+
+				return result;
 			}
 			
 			return viewToolbarActions;	

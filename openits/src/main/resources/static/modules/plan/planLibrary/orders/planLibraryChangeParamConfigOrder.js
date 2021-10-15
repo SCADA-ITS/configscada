@@ -1,9 +1,6 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import ChangeParamDialogBox from "./changeParamDialogBox.js";
 import DataTable from "../../../../component/datatable.js";
-import SearchDialogBox from "../../../../component/searchDialogBox.js";
-import InputDialogBox from "../../../../component/inputDialogBox.js";
-import { util } from "../../../../lib/util.js";
 
 export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder {
 
@@ -219,6 +216,11 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 				
 					planOrderElement.id = "PlanOrderElementValue:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderElement.elementTypeParam.id.substr(planOrderElement.elementTypeParam.id.indexOf(":"), planOrderElement.elementTypeParam.id.length);
 					
+					if(!self.planOrder.planOrderElementValues || !Array.isArray(self.planOrder.planOrderElementValues)){
+
+						self.planOrder.planOrderElementValues = [];	
+					}
+
 					self.planOrder.planOrderElementValues.push(planOrderElement);
 				
 					let newItem ={};				
@@ -262,6 +264,8 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
+					let rowIndexRemove = self.planOrder.planOrderElementValues.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrder.planOrderElementValues.splice(rowIndexRemove, 1)
 					self.dtParams.delete(selectedItems);
 				}
 			}
