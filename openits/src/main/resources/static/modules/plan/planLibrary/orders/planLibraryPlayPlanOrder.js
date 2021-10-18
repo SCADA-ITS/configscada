@@ -6,7 +6,11 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 	constructor(config, uid, plan, planOrder, onUpdate) {
 		
 		super(config, uid, plan, planOrder, onUpdate);
-		this.nextPlan = planOrder.nextPlan;
+		
+		this.nextPlan = undefined;
+		if(planOrder){
+			this.nextPlan = planOrder.nextPlan;
+		}
 	}
 	
 	loadData() {
@@ -26,7 +30,8 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 						{ width : 30},
 						{
 							rows: [
-								getNextPlayPlanRow()
+								getNextPlayPlanRow(),
+								{}
 							]
 						}
 					]	
@@ -43,7 +48,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 			nextPlayPlanRow = {
 				id: "next-plan-row-" + self.uid,
 				cols: [
-					{ view: "text", value: (self.nextPlan?self.nextPlan.alias:""), required: false, label: i18n.t("LBL_NEXT_PLAN_PLAY_ORDER"), disabled: true, labelWidth: 275 },
+					{ view: "text", value: (self.nextPlan?self.nextPlan.alias:""), required: true, label: i18n.t("LBL_NEXT_PLAN_PLAY_ORDER"), disabled: true, labelWidth: 275 },
 					{
 						view: "icon", icon: "wxi-search", disabled: false,
 						on: {
@@ -76,7 +81,24 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 		
 		return viewParams;
 	}
+
+	createCustomPlanOrder(newPlanOrder) {
+
+	}
 	
+	validateBeforeSavePlanOrder() {
+
+		let self = this;		
+
+		let validate = true;
+
+		if(!self.nextPlan || !self.nextPlan.id){
+			validate = false;
+		}
+
+		return validate;
+	}
+
 	getPlanOrder() {
 		
 		let self = this;		

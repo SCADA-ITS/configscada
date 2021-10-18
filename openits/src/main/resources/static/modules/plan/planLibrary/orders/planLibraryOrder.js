@@ -158,6 +158,11 @@ export default class PlanLibraryOrder {
 		throw new Error("Method 'createCustomPlanOrder()' must be implemented.");
 	}
 	
+	validateBeforeSavePlanOrder() {
+
+		return true;
+	}
+
 	createPlanOrder(planOrder) {
 		
 		let self = this;
@@ -189,24 +194,36 @@ export default class PlanLibraryOrder {
 	savePlanOrder(planOrder) {
 				
 		let self = this;
-		let planLibraryPersist = new PlanLibraryPersist(self.config);
-		let newPlanOrder;
-		
-		if (!planOrder) {
+
+		if (self.validateBeforeSavePlanOrder()){
+
+			let planLibraryPersist = new PlanLibraryPersist(self.config);
+			let newPlanOrder;
 			
-			newPlanOrder = self.getPlanOrder();
-		}
-		else {
-			
-			newPlanOrder = webix.copy(planOrder);
-		}
-		
-		
-		if (newPlanOrder) {
-			
-			planLibraryPersist.updatePlanOrder(newPlanOrder).then(result => {
+			if (!planOrder) {
 				
-				self.onUpdate(self.plan, result);	
+				newPlanOrder = self.getPlanOrder();
+			}
+			else {
+				
+				newPlanOrder = webix.copy(planOrder);
+			}
+				
+			if (newPlanOrder) {
+				
+				planLibraryPersist.updatePlanOrder(newPlanOrder).then(result => {
+					
+					self.onUpdate(self.plan, result);
+				});
+			}
+
+		} else {
+
+			webix.alert({
+				title: i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS"),
+				text: i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS_DESCRIPTION"),
+				type: "alert-warning",
+				width: 500
 			});
 		}
 	}

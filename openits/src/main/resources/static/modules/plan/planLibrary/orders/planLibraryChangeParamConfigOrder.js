@@ -300,24 +300,6 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 	
 	createCustomPlanOrder(newPlanOrder) {
 		
-		if (newPlanOrder) {
-			
-			let planOrderType = window.em.getByField(EntityType.PLAN_ORDER_TYPE, "id", newPlanOrder.planOrderTypeId);
-				
-			if (planOrderType && Array.isArray(planOrderType.planOrderTypeParams)) {
-				
-				let planOrderValues = planOrderType.planOrderTypeParams.map(e => {
-					
-					return {
-
-						planOrderTypeParamId: e.id,
-						value: "" 
-					}
-				});
-				
-				newPlanOrder.planOrderValues = planOrderValues;
-			}
-		}
 	}
 	
 	getPlanOrder() {
