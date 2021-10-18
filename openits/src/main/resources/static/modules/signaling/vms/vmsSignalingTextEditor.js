@@ -1,5 +1,6 @@
-import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
+import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const DEFAULT_INPUT_FONT_SIZE = "14";
 const TEXT_ALIGN_CENTER = "center";
@@ -547,12 +548,8 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 								}
 								else {
 									
-									webix.alert({
-										title: i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED"),
-										text: i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED_DESCRIPTION"),
-										type: "alert-error",
-										width: 500
-									});
+									let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_VMS_MAX_CHARS_EXCEEDED_DESCRIPTION"), null, null);
+									ms.show();
 								}
 							}
 						}

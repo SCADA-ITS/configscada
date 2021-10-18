@@ -1,6 +1,7 @@
-import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js"
 import { util } from "../../../lib/util.js";
+import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js";
 import DataView from "../../../component/dataView.js";
+import MessageBox from "../../../component/messageBox.js";
 
 export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 	
@@ -313,12 +314,8 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 								}
 								else {
 									
-									webix.alert({
-										title: i18n.t("LBL_WRONG_SELECTION"),
-										text: i18n.t("LBL_WRONG_SELECTION_DESCRIPTION"),
-										type: "alert-error",
-										width: 500
-									});
+									let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_WRONG_SELECTION_DESCRIPTION"), null, null);
+									ms.show();
 								}
 							}
 						}

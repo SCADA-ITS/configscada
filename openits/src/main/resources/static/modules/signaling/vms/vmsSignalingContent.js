@@ -1,7 +1,8 @@
+import { util } from "../../../lib/util.js";
 import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibrary from "./vmsSignalingLibrary.js";
 import VmsSignalingMulti from "./vmsSignalingMulti.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
 
 export default class VmsSignalingContent {
 
@@ -151,14 +152,11 @@ export default class VmsSignalingContent {
 	
 							if (self.composer) {
 								
-								webix.confirm({
-									title: i18n.t("LBL_DIALOG_NEW_VMS_CONFIG"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_DIALOG_NEW_VMS_CONFIG_DESCRIPTION"),
-									width: 600
-								}).then(function() {
-	
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_NEW_VMS_CONFIG_DESCRIPTION"), onAccept, null);
+								ms.show();
+								
+								function onAccept() {
+								
 									self.composer.clear();
 									self.hasMessage = false;
 									let radioCommands = $$("view-signalling-commands-" + self.uid);
@@ -175,8 +173,8 @@ export default class VmsSignalingContent {
 										
 										btnSend.disable();
 										btnUndo.disable();
-									}
-								});
+									}									
+								};
 							}
 						}
 					} 
@@ -219,14 +217,11 @@ export default class VmsSignalingContent {
 	
 							if (self.composer) {
 								
-								webix.confirm({
-									title: i18n.t("LBL_DIALOG_UNDO_CHANGES"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"),
-									width: 600
-								}).then(function() {
-	
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), onAccept, null);
+								ms.show();
+								
+								function onAccept() {
+
 									if (self.undoJsonData) {
 										
 										self.composer.update(self.undoJsonData);
@@ -241,8 +236,8 @@ export default class VmsSignalingContent {
 											
 											btnSend.disable();
 										}	
-									}
-								});
+									}									
+								};
 							}
 						}
 					} 
@@ -571,22 +566,16 @@ export default class VmsSignalingContent {
 						label: i18n.t("LBL_SEND"),
 						on: {
 							onItemClick() {
-		
-								webix.confirm({
-									title: function() {
-									
-										let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
-										let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
-										
-										title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
-										
-										return title;
-									}(),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM_DESCRIPTION"),
-									width: 600
-								}).then(function() {
+
+								let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
+								let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
+								
+								title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
+								
+								let ms = new MessageBox (MessageBox.CONFIRM, title, onAccept, null);
+								ms.show();
+								
+								function onAccept() {
 									
 									let isCmdSendMessage = (self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId);
 										
@@ -628,16 +617,12 @@ export default class VmsSignalingContent {
 									if (Array.isArray(body.commands) && body.commands.length > 0) {
 										
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-												
-											webix.alert({
-												title: i18n.t("LBL_COMMAND_SEND"),
-											  	ok: i18n.t("LBL_ACCEPT"),
-											  	text: i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"),
-												width: 600
-											})
+										
+											let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+											ms.show();
 										});	
-									}	
-								});					
+									}										
+								};				
 							}
 						}
 					}

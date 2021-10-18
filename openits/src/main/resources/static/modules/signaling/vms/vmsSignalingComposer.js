@@ -1,9 +1,10 @@
+import { util } from "../../../lib/util.js";
 import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
 import VmsSignalingZoneEditor from "./vmsSignalingZoneEditor.js";
 import VmsSignalingTextEditor from "./vmsSignalingTextEditor.js";
 import VmsSignalingGraphicEditor from "./vmsSignalingGraphicEditor.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const TEXT_ALIGN_CENTER = "center";
 const TEXT_ALIGN_LEFT = "left";
@@ -221,12 +222,8 @@ export default class VmsSignalingComposer {
 
 							} else {
 
-								webix.alert({
-									title: i18n.t("LBL_UNKNOWN_ZONE_TYPE"),
-									text: i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type,
-									type: "alert-error",
-									width: 500
-								});
+								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_UNKNOWN_ZONE_TYPE_DESCRIPTION") + " " + zoneConfig.type, null, null);
+								ms.show();
 							}
 
 							if (zoneEditor) {
@@ -284,12 +281,8 @@ export default class VmsSignalingComposer {
 							}
 							else {
 
-								webix.alert({
-									title: i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE"),
-									text: i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE_DESCRIPTION") + " " + zoneConfig.vms_group_id,
-									type: "alert-error",
-									width: 500
-								});
+								let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_PICTOGRAMS_ASSOCIATED_TO_ZONE_DESCRIPTION") + " " + zoneConfig.vms_group_id, null, null);
+								ms.show();
 							}
 						}
 					}

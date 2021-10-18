@@ -1,8 +1,10 @@
+import { util } from "../../../lib/util.js";
 import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibraryPersist from "./vmsSignalingLibraryPersist.js";
 import TreeView from "../../../component/treeview.js";
 import OptionButtonList from "../../../component/optionButtonList.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
+import InputDialogBox from "../../../component/inputDialogBox.js";
 
 const TREE_PANEL_WIDTH = 325;
 
@@ -309,19 +311,11 @@ export default class VmsSignalingLibrary {
 					}
 				}
 
-				webix.prompt({
-					title: i18n.t("LBL_NEW_FOLDER"),
-					text: i18n.t("LBL_NEW_FOLDER_DESCRIPTION"),
-					ok: i18n.t("LBL_ACCEPT"),
-					cancel: i18n.t("LBL_CANCEL"),
-					input: {
-						required: true,
-						placeholder: i18n.t("LBL_NEW_FOLDER_NAME")
-					},
-					width: 600,
-
-				}).then(function(result) {
-
+				let i = new InputDialogBox (i18n.t("LBL_NEW_FOLDER"), i18n.t("LBL_NEW_FOLDER_DESCRIPTION"), onAccept, true, null, DataType.ALPHANUMERIC);
+				i.show();
+				
+				function onAccept(result){
+					
 					// TODO: POST with result
 
 					if (self.vmsSignalingLibraryPersist) {
@@ -336,10 +330,7 @@ export default class VmsSignalingLibrary {
 							});
 					}
 
-
-				}).fail(function() {
-
-				});
+				};
 			}
 
 			function onNewItem(selectedPks) {
@@ -357,19 +348,11 @@ export default class VmsSignalingLibrary {
 					}
 				}
 
-				webix.prompt({
-					title: i18n.t("LBL_NEW_SIGNALING"),
-					text: i18n.t("LBL_NEW_SIGNALING_DESCRIPTION"),
-					ok: i18n.t("LBL_ACCEPT"),
-					cancel: i18n.t("LBL_CANCEL"),
-					input: {
-						required: true,
-						placeholder: i18n.t("LBL_NEW_SIGNALING_NAME")
-					},
-					width: 600,
-
-				}).then(function(result) {
-
+				let i = new InputDialogBox (i18n.t("LBL_NEW_SIGNALING"), i18n.t("LBL_NEW_SIGNALING_DESCRIPTION"), onAccept, true, null, DataType.ALPHANUMERIC);
+				i.show();
+				
+				function onAccept(result) {
+					
 					self.vmsSignalingLibraryPersist.saveItem(undefined, result, JSON.stringify(self.composer.getJsonDataClear()), parent.id_)
 						.then(function(data) {
 
@@ -378,10 +361,7 @@ export default class VmsSignalingLibrary {
 						.catch(function() {
 
 						});
-
-				}).fail(function() {
-
-				});
+				};
 			}
 
 			function onDelete(selectedPks) {
@@ -395,22 +375,15 @@ export default class VmsSignalingLibrary {
 
 					if (selected.id === "root") {
 
-						webix.alert({
-							title: i18n.t("LBL_ROOT_CANNOT_BE_DELETED"),
-							text: i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"),
-							type: "alert-warning",
-							width: 500
-						});
-					}
-					else {
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ROOT_CANNOT_BE_DELETED_DESCRIPTION"), null, null);
+						ms.show();
 
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"),
-							width: 600
-						}).then(function(result) {
+					} else {
+
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"), onAccept, null);
+						ms.show();
+						
+						function onAccept(result) {
 
 							if (selected.id_ === selectedPks[0]) {
 
@@ -427,8 +400,8 @@ export default class VmsSignalingLibrary {
 									.catch(function() {
 
 									});
-							}
-						});
+							}							
+						};
 					}
 				}
 
@@ -523,14 +496,11 @@ export default class VmsSignalingLibrary {
 		
 								if (self.composer) {
 									
-									webix.confirm({
-										title: i18n.t("LBL_CONFIRM"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-		
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_SAVE_CHANGES_DESCRIPTION"), onAccept, null);
+									ms.show();
+									
+									function onAccept() {
+
 										if (self.composer) {
 											
 											let currentJsonData = self.composer.jsonData;
@@ -570,8 +540,8 @@ export default class VmsSignalingLibrary {
 												
 												btnUndo.disable();
 											}
-										}
-									});
+										}										
+									};															
 								}
 							}
 						} 
@@ -594,14 +564,11 @@ export default class VmsSignalingLibrary {
 		
 								if (self.composer) {
 									
-									webix.confirm({
-										title: i18n.t("LBL_DIALOG_UNDO_CHANGES"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-		
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_UNDO_CHANGES_DESCRIPTION"), onAccept, null);
+									ms.show();
+									
+									function onAccept() {
+
 										if (self.undoJsonData) {
 											
 											self.composer.update(self.undoJsonData);
@@ -618,8 +585,8 @@ export default class VmsSignalingLibrary {
 												
 												btnUndo.disable();
 											}
-										}
-									});
+										}																			
+									};								
 								}
 							}
 						} 

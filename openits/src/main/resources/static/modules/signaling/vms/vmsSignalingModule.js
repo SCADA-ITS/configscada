@@ -1,7 +1,8 @@
+import { util } from "../../../lib/util.js";
 import GenericModule from "../../../modules/genericModule.js";
 import VmsSignalingContent from "./vmsSignalingContent.js";
 import VmsSignalingTree from "./vmsSignalingTree.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const TREE_PANEL_WIDTH = 325;
 
@@ -55,12 +56,8 @@ export default class VmsSignalingModule extends GenericModule {
 						
 						container.close();
 						
-						webix.alert({
-							title: i18n.t("LBL_NO_VMS_AVAILABLE"),
-							text: i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"),
-							type: "alert-error",
-							width: 500
-						});
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_VMS_AVAILABLE_DESCRIPTION"), null, null);
+						ms.show();
 					}
 				}
 			}
