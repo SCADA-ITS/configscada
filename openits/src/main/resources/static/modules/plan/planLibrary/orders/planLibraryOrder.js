@@ -1,6 +1,7 @@
+import { util } from "../../../../lib/util.js";
 import PlanLibraryPersist from "../planLibraryPersist.js";
 import InputDialogBox from "../../../../component/inputDialogBox.js";
-import { util } from "../../../../lib/util.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 export default class PlanLibraryOrder {
 	
@@ -116,17 +117,14 @@ export default class PlanLibraryOrder {
 							label: i18n.t("LBL_SAVE"),
 							on: {
 								onItemClick() {
-
-									webix.confirm({
-										title: i18n.t("LBL_SAVE_ORDER_CHANGES"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-
+									
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SAVE_ORDER_CHANGES_DESCRIPTION"), onAccept, null);
+									ms.show();
+									
+									function onAccept() {
+									
 										self.savePlanOrder();
-									});
+									};
 								}
 							}
 						}

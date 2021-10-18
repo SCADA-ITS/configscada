@@ -1,6 +1,7 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import ChangeStatusDialogBox from "./changeStatusDialogBox.js";
 import DataTable from "../../../../component/datatable.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 
@@ -120,16 +121,13 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 					commandId: 3,
 					function: function() {
 						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_REMOVE_CHANGE_PARAM_CONFIG"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_ARE_YOU_SURE_REMOVE_CHANGE_PARAM_CONFIG"),
-							width: 600
-						}).then(function() {
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CHANGE_PARAM_CONFIG"), onAccept, null);
+						ms.show();
 						
+						function onAccept() {
+							
 							onRemove();
-						});
+						};
 					}
 				});
 				

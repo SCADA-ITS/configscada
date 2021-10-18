@@ -1,7 +1,8 @@
+import { util } from "../../../../lib/util.js";
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import DataTable from "../../../../component/datatable.js";
 import InputDialogBox from "../../../../component/inputDialogBox.js";
-import { util } from "../../../../lib/util.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 
@@ -110,17 +111,14 @@ export default class PlanLibraryGenericOrder extends PlanLibraryOrder {
 					commandId: 2,
 					function: function() {
 						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_UNDO_ALL_VALUES"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_ARE_YOU_SURE_UNDO_ALL_VALUES"),
-							width: 600
-						}).then(function() {
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_ALL_VALUES"), onAccept, null);
+						ms.show();
 						
+						function onAccept() {
+
 							self.dtParams.clear();
-							self.dtParams.add(getInitialData());
-						});
+							self.dtParams.add(getInitialData());							
+						};
 					}
 				});
 				

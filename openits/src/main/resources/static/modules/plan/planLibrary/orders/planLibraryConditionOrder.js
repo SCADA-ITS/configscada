@@ -1,6 +1,7 @@
 import PlanLibraryOrder from "./planLibraryOrder.js";
 import ConditionDialogBox from "./conditionDialogBox.js";
 import DataTable from "../../../../component/datatable.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 const MOVE_PLAN_ORDER_POSITION_UP = 1;
 const MOVE_PLAN_ORDER_POSITION_DOWN = 2;
@@ -165,16 +166,13 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					commandId: 5,
 					function: function() {
 						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_REMOVE_CONDITION"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_ARE_YOU_SURE_REMOVE_CONDITION"),
-							width: 600
-						}).then(function() {
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_REMOVE_CONDITION"), onAccept, null);
+						ms.show();
 						
+						function onAccept() {
+							
 							onRemove();
-						});
+						};
 					}
 				});
 				

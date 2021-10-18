@@ -1,5 +1,5 @@
 import GenericModule from "../genericModule.js";
-
+import MessageBox from "../../component/messageBox.js";
 
 export default class PlanModule extends GenericModule {
 
@@ -32,14 +32,11 @@ export default class PlanModule extends GenericModule {
 		
 				if(self.args.confirm == undefined || self.args.confirm){
 	
-					webix.confirm({
-						title: self.args.confirmTitle ? i18n.t(self.args.confirmTitle) :  i18n.t("LBL_PLAN_CONFIRM_EXECUTE"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: self.args.confirmDescription ? i18n.t(self.args.confirmDescription) :i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"),
-						width: 600
-					}).then(function() {
-						
+					let ms = new MessageBox (MessageBox.CONFIRM,  self.args.confirmDescription ? i18n.t(self.args.confirmDescription) :i18n.t("LBL_PLAN_CONFIRM_EXECUTE_DESCRIPTION"), onAccept, null);
+					ms.show();
+					
+					function onAccept() {
+					
 						let body = prepareData(self.args);
 	
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.execute, body).then(function(data) {
@@ -47,8 +44,8 @@ export default class PlanModule extends GenericModule {
 	
 								self.args.callbacks[0]();
 							}*/
-						});
-					});
+						});						
+					};
 	
 				} else {
 					

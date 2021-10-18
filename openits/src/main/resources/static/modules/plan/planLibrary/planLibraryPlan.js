@@ -1,7 +1,8 @@
+import { util } from "../../../lib/util.js";
+import PlanLibraryPersist from "./planLibraryPersist.js";
 import DataTable from "../../../component/datatable.js";
 import SearchDialogBox from "../../../component/searchDialogBox.js";
-import PlanLibraryPersist from "./planLibraryPersist.js";
-import { util } from "../../../lib/util.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const MOVE_PLAN_ORDER_POSITION_UP = 1;
 const MOVE_PLAN_ORDER_POSITION_DOWN = 2;
@@ -485,14 +486,11 @@ export default class PlanLibraryPlan {
 		
 			if (Array.isArray(planOrderIds) && planOrderIds.length > 0) {
 				
-				webix.confirm({
-					title: i18n.t("LBL_DIALOG_DELETE_SELECTED_ORDERS"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"),
-					width: 600
-				}).then(function() {
-
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_SELECT_ORDERS_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
 					let deleteOrders = 0;
 				
 					planOrderIds.forEach(planOrderId => {
@@ -504,8 +502,8 @@ export default class PlanLibraryPlan {
 								self.onUpdate(self.plan);
 							}
 						});
-					});
-				});
+					});					
+				};
 			}
 		}		
 		
@@ -533,13 +531,10 @@ export default class PlanLibraryPlan {
 					
 					if (allowMoveUp || allowMoveDown) {
 						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"),
-							width: 600
-						}).then(function() {
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_MOVE_SELECTED_ORDER_DESCRIPTION"), onAccept, null);
+						ms.show();
+						
+						function onAccept() {
 							
 							if (movePlanOrderType === MOVE_PLAN_ORDER_POSITION_UP && previousPlanOrder) {
 						
@@ -590,36 +585,24 @@ export default class PlanLibraryPlan {
 											}
 											else {
 												
-												webix.alert({
-													title: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER"),
-													text: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"),
-													type: "alert-error",
-													width: 500
-												});
+												let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null);
+												ms.show();
 											}
 										});	
 									}
 									else {
 										
-										webix.alert({
-											title: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER"),
-											text: i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"),
-											type: "alert-error",
-											width: 500
-										});
+										let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_ERROR_UPDATING_PLAN_ORDER_DESCRIPTION"), null, null);
+										ms.show();
 									}
 								});
-							}
-						});
-					}
-					else {
+							}							
+						};
 						
-						webix.alert({
-							title: i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER"),
-							text: i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"),
-							type: "alert-warning",
-							width: 500
-						});
+					} else {
+						
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAN_NOT_MOVE_SELECTED_ORDER_DESCRIPTION"), null, null);
+						ms.show();
 					}
 				} 
 			}
