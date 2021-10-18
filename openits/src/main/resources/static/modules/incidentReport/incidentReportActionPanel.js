@@ -1,10 +1,10 @@
+import { util } from "../../lib/util.js";
+import IncidentReportChangeLocation from "./incidentReportChangeLocation.js";
+import IncidentReportChangeType from "./incidentReportChangeType.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
 import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
-import { util } from "../../lib/util.js";
-
-import IncidentReportChangeLocation from "./incidentReportChangeLocation.js";
-import IncidentReportChangeType from "./incidentReportChangeType.js";
+import MessageBox from "../../component/messageBox.js";
 
 const MARGIN_ACTION_PANEL = 15;
 
@@ -384,22 +384,17 @@ export default class IncidentReportActionPanel {
 
 		function cancelIncidentReport() {
 
-			webix.confirm({
-
-				title: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL"),
-				ok: i18n.t("LBL_YES"),
-				cancel: i18n.t("LBL_NO"),
-				text: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"),
-				width: 600
-
-			}).then(function() {
-
+			let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+			ms.show();
+			
+			function onAccept() {
+				
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
 					id: self.incidentReport.id
 				});
 
-				self.parent.restAction(endpoint);
-			});
+				self.parent.restAction(endpoint);				
+			};
 		}
 
 
@@ -415,14 +410,11 @@ export default class IncidentReportActionPanel {
 
 				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
 
-					webix.confirm({
-						title: i18n.t("LBL_CONFIRM"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function(res) {
-
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+					
+					function onAccept(res) {
+						
 						let body = {
 							id: self.incidentReport.id,
 							locationId: selectedLocationId,
@@ -432,8 +424,8 @@ export default class IncidentReportActionPanel {
 
 						let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
 
-						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
-					});
+						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });						
+					};
 				}
 			}
 		}
@@ -596,18 +588,15 @@ export default class IncidentReportActionPanel {
 														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
 
 														if (comboCauseValue === "") {
+															
+															let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
+															ms.show();
+															
+															function onAccept (){
 
-															webix.alert({
-																title: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED"),
-																ok: i18n.t("LBL_ACCEPT"),
-																text: i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"),
-																type: "alert-warning",
-																width: 600
-															}).then(function() {
 																$$("tab-details-" + self.uid).show();
-
-																bCancel = true;
-															});
+																bCancel = true;																														
+															};
 														}
 													}
 
@@ -635,21 +624,17 @@ export default class IncidentReportActionPanel {
 
 												} else {
 
-													webix.confirm({
-														title: i18n.t("LBL_CONFIRM"),
-														ok: i18n.t("LBL_YES"),
-														cancel: i18n.t("LBL_NO"),
-														text: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"),
-														width: 600
-													}).then(function() {
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+													ms.show();
+													
+													function onAccept() {
 
 														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
 															id: self.incidentReport.id
 														});
 
-														self.parent.restAction(endpoint);
-													});
-
+														self.parent.restAction(endpoint);														
+													};
 												}
 
 											} else {

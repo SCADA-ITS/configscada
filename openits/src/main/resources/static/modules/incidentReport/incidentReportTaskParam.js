@@ -1,6 +1,6 @@
-import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import InputDialogBox from "../../component/inputDialogBox.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTaskParam {
 
@@ -208,17 +208,14 @@ export default class IncidentReportTaskParam {
 					commandId: 2,
 					function: function() {
 						
-						webix.confirm({
-							title: i18n.t("LBL_DIALOG_UNDO_TASK_PARAMS"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_ARE_YOU_SURE_UNDO_TASK_PARAMS"),
-							width: 600
-						}).then(function() {
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_TASK_PARAMS"), onAccept, null);
+						ms.show();
 						
+						function onAccept() {
+
 							self.dtParams.clear();
-							self.dtParams.add(getInitialData());
-						});
+							self.dtParams.add(getInitialData());							
+						};
 					}
 				});
 				

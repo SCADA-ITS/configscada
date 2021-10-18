@@ -1,7 +1,8 @@
-import GenericModule from "../../modules/genericModule.js";
 import { util } from "../../lib/util.js";
+import GenericModule from "../../modules/genericModule.js";
 import IncidentReportActionPanel from "./incidentReportActionPanel.js";
 import IncidentReportContent from "./incidentReportContent.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportModule extends GenericModule {
 
@@ -84,14 +85,11 @@ export default class IncidentReportModule extends GenericModule {
 
 						if (incidentReportsToConfirm.length > 0) {
 
-							webix.confirm({
-								title: i18n.t("LBL_CONFIRM"),
-								ok: i18n.t("LBL_YES"),
-								cancel: i18n.t("LBL_NO"),
-								text: i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"),
-								width: 600
-							}).then(function() {
-
+							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+							ms.show();
+							
+							function onAccept() {
+								
 								incidentReportsToConfirm.forEach(incidentReportToConfirmId => {
 
 									let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, { id: incidentReportToConfirmId });
@@ -100,18 +98,13 @@ export default class IncidentReportModule extends GenericModule {
 
 									self.restAction(endpoint);
 
-								});
-							});
-						}
-						else {
-
-							webix.alert({
-								title: i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM"),
-								ok: i18n.t("LBL_ACCEPT"),
-								text: i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"),
-								type: "alert-warning",
-								width: 600
-							});
+								});								
+							};
+						
+						} else {
+							
+							let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+							ms.show();
 						}
 					}
 				});
@@ -125,13 +118,10 @@ export default class IncidentReportModule extends GenericModule {
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
-			webix.confirm({
-				title: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL"),
-				ok: i18n.t("LBL_YES"),
-				cancel: i18n.t("LBL_NO"),
-				text: i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"),
-				width: 600
-			}).then(function() {
+			let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+			ms.show();
+			
+			function onAccept() {
 
 				self.args.selectedPks.forEach(e => {
 
@@ -141,8 +131,8 @@ export default class IncidentReportModule extends GenericModule {
 
 					self.restAction(endpoint);
 
-				});
-			});
+				});					
+			};
 		}
 	}
 
@@ -224,13 +214,8 @@ export default class IncidentReportModule extends GenericModule {
 
 			if (this.closed) {
 
-				webix.alert({
-					title: i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE"),
-					ok: i18n.t("LBL_YES"),
-					text: i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"),
-					type: "alert-warning",
-					width: 600
-				});
+				let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_CANCEL_OR_DELETE_DESCRIPTION"), null, null);
+				ms.show();
 			}
 		}
 	}

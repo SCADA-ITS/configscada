@@ -1,5 +1,6 @@
-import SearchDialogBox from "../../component/searchDialogBox.js";
 import { util } from "../../lib/util.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
+import MessageBox from "../../component/messageBox.js";
 
 const SIZE_SINGLE = 30;
 const SIZE_MULTI = 50;
@@ -601,14 +602,11 @@ export default class CamViewer {
 					on: {
 						onItemClick: function() {
 
-							webix.confirm({
-								title: i18n.t("LBL_CONFIRM"),
-								ok: i18n.t("LBL_YES"),
-								cancel: i18n.t("LBL_NO"),
-								text: i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias,
-								width: 600
-							}).then(function() {
-								
+							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_TO_VIDEO_WALL_CONFIRM_DESCRIPTION") + ": " + self.element.alias, onAccept, null);
+							ms.show();
+							
+							function onAccept() {
+
 								if (self.config.commands.lock) {
 
 									let body = {
@@ -621,8 +619,8 @@ export default class CamViewer {
 									body.commands.push(webix.copy(sendMessageCmd));
 
 									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body);
-								}
-							});
+								}								
+							};
 						}
 					}
 				}

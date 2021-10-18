@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTabLog {
 
@@ -433,14 +434,11 @@ export default class IncidentReportTabLog {
 
 					if (!control) {
 
-						webix.confirm({
-							title: i18n.t("LBL_CONFIRM"),
-							ok: i18n.t("LBL_YES"),
-							cancel: i18n.t("LBL_NO"),
-							text: i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"),
-							width: 600
-						}).then(() => {
-
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_LOG_DELETE_CONFIRM_DESCRIPTION"), onAccept, null);
+						ms.show();
+						
+						function onAccept() {
+							
 							rowsSelected.forEach(e => {
 
 								let endpoint = util.fillTemplate(deleteLogIncidentReportEndPoint, {
@@ -448,18 +446,13 @@ export default class IncidentReportTabLog {
 								});
 
 								self.parent.restAction(endpoint);
-							});
-
-						});
+							});							
+						};
 
 					} else {
-						webix.alert({
-							title: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR"),
-							ok: i18n.t("LBL_ACCEPT"),
-							text: i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"),
-							type: "alert-warning",
-							width: 600
-						});
+						
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_LOG_SUBTYPE_ERROR_DESCRIPTION"), null, null);
+						ms.show();
 					}
 				}
 			});

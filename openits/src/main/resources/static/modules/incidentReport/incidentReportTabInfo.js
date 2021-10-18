@@ -1,4 +1,5 @@
 import { util } from "../../lib/util.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTabInfo {
 
@@ -100,13 +101,10 @@ export default class IncidentReportTabInfo {
 										on: {
 											onItemClick: function() {
 
-												webix.confirm({
-													title: i18n.t("LBL_CONFIRM"),
-													ok: i18n.t("LBL_YES"),
-													cancel: i18n.t("LBL_NO"),
-													text: i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"),
-													width: 600
-												}).then(function() {
+												let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"), onAccept, null);
+												ms.show();
+												
+												function onAccept() {
 
 													let body = {
 														id: self.incidentReport.id,
@@ -120,9 +118,8 @@ export default class IncidentReportTabInfo {
 													$$("fieldCause-save-" + self.uid).hide();
 													$$("fieldCause-cancel-" + self.uid).hide();
 													$$("fieldCause-edit-" + self.uid).show();
-													$$("fieldCause-label-" + self.uid).show();
-
-												});
+													$$("fieldCause-label-" + self.uid).show();													
+												};
 											}
 										}
 									},

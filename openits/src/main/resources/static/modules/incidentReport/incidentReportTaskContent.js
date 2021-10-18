@@ -2,6 +2,7 @@ import { util } from "../../lib/util.js";
 import IncidentReportTaskInfo from "./incidentReportTaskInfo.js";
 import IncidentReportTaskParam from "./incidentReportTaskParam.js";
 import IncidentReportTaskPlan from "./incidentReportTaskPlan.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTaskContent {
 
@@ -148,14 +149,11 @@ export default class IncidentReportTaskContent {
 
 							onItemClick() {
 								
-								webix.confirm({
-									title: i18n.t("LBL_CONFIRM"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION"),
-									width: 600
-								}).then(function() {
-	
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION"), onAccept, null);
+								ms.show();
+								
+								function onAccept() {
+									
 									if (self.taskState && !self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) {
 	
 										let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
@@ -177,8 +175,8 @@ export default class IncidentReportTaskContent {
 											self.parent.currentTask = undefined
 
 										}, function(response) { util.ajax.handleError(response); });
-									}	
-								});
+									}										
+								};
 							}
 						}
 					},

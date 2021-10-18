@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
+import MessageBox from "../../component/messageBox.js";
 
 const PLAN_EXECUTED = "1";
 const PLAN_NO_EXECUTED = "0";
@@ -284,13 +285,10 @@ export default class IncidentReportTaskPlan {
 					
 					let selectedItem = selectedItems[0];
 					
-					webix.confirm({
-						title:   i18n.t("LBL_CONFIRM"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function() {
+					let ms = new MessageBox (MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+					
+					function onAccept() {
 						
 						let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
 						
@@ -314,8 +312,8 @@ export default class IncidentReportTaskPlan {
 								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
 		
 							}, function(response) { util.ajax.handleError(response); });
-						}
-					});	
+						}						
+					};
 				}
 			}
 
