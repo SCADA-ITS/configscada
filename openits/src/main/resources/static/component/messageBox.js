@@ -124,20 +124,20 @@ export default class MessageBox {
 					{},				
 					{
 						view: "button",
-						value: i18n.t("LBL_YES"),
-						width: 100,
-						click: function() {
-
-							execute(self.onAccept);
-						}
-					},
-					{
-						view: "button",
 						value: i18n.t("LBL_NO"),
 						width: 100,
 						click: function() {
 
 							execute(self.onCancel);
+						}
+					},
+					{
+						view: "button",
+						value: i18n.t("LBL_YES"),
+						width: 100,
+						click: function() {
+
+							execute(self.onAccept);
 						}
 					},
 					{}

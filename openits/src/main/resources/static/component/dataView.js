@@ -1,3 +1,5 @@
+import MessageBox from "./messageBox.js";
+
 const DefOptionValues = { 1: false, 2: true, 3: false, 4: true, 5: 48, 6: false };
 const _TRUE = "true";
 const _FALSE = "false";
@@ -138,12 +140,8 @@ export default class DataView {
 						}
 						else {
 							
-							webix.alert({
-								title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
-								text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
-								type: "alert-warning",
-								width: 500
-							});	
+							let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+							ms.show();
 						}
 					}
 					else {
