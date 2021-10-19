@@ -3,13 +3,12 @@ import GenericModule from "../modules/genericModule.js";
 
 export default class IncidentService extends GenericModule {
 
-	constructor(module, mod) {
+	constructor(module) {
 
 		super(module, null, null);
 
 		this.module = module;
 		this.config = module.config;
-		this.mod = mod;
 
 		this.stomp = {};
 		this.incidents = {

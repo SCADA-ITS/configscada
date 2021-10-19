@@ -4,11 +4,14 @@ export default class MainToolbar {
 
 	constructor() {
 
+		// This is intentional
 	}
 
 	getView() {
 
-		let view = {
+		let view;
+		
+		view = {
 			id: MAIN_TOOLBAR_ID,
 			view: "toolbar",
 			height: 46,

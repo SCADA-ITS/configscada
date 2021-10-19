@@ -5,12 +5,11 @@ const TRACE_TIME_EACH_MIN = 5;
 
 export default class TimeService extends GenericModule {
 	
-	constructor(module, mod){
+	constructor(module){
 		
 		super(module, null, null);
 		
 		this.module = module;
-		this.mod = mod;
 		
 		this.serverTime = undefined;
 		this.serverTimeMs = undefined;

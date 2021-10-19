@@ -169,13 +169,20 @@ export default class Synoptic extends GenericMap {
 						
 				self.s.append(self.synoptic);
 				
-				self.synoptic.mouseup(onMouseUp);
-				self.synoptic.mousemove(function() { self.flagMouseMove = true });
-				self.synoptic.mousedown(function() { self.flagMouseMove = false });
+				if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
+					
+					self.synoptic.mouseup(onMouseUp);
+					self.synoptic.mousemove(function() { self.flagMouseMove = true });
+					self.synoptic.mousedown(function() { self.flagMouseMove = false });
+					
+					loadLayerBase();
+					
+					loadGraphicIcons();
+				}
+				else {
 				
-				loadLayerBase();
-				
-				loadGraphicIcons();		
+					onBeforeLoadGraphicIcon();
+				}
 			});
 			
 			function onMouseUp(e) {
@@ -307,6 +314,7 @@ export default class Synoptic extends GenericMap {
 					{
 						css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
 						height: 35,
+						hidden: (self.graphicIcons || (Array.isArray(self.graphicIcons) && self.graphicIcons.length === 0)),
 						cols: [
 							{
 								view: "button",
@@ -643,14 +651,31 @@ export default class Synoptic extends GenericMap {
 			
 			addGraphicIcon(elementId, graphicIconInstance);
 			
-			if (++self.layerElementsLoaded === self.layerElements) {
+			onBeforeLoadGraphicIcon();
+		}
+		
+		function onBeforeLoadGraphicIcon() {
+			
+			if (self.layerElements > 0) {
+				
+				if (++self.layerElementsLoaded === self.layerElements) {
+				
+					self.panZoomTrigger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
+					
+					self.panZoomTrigger.setBeforePan(beforePan);
+					
+					loadElementInfo();	
+				}	
+			}
+			else {
 				
 				self.panZoomTrigger = svgPanZoom("#svg-syn-" + self.uid, OPTIONS_PAN_ZOOM);
-				
+					
 				self.panZoomTrigger.setBeforePan(beforePan);
-				
-				loadElementInfo();
+						
+				webix.ui(getToolbarMain(), $$("syn-toolbar-main-" + self.uid));
 			}
+			
 
 	        function beforePan(oldPan, newPan) {
 		
@@ -675,7 +700,7 @@ export default class Synoptic extends GenericMap {
 			let loadedElements = 0;
 			
 			self.data.forEach(element => {
-				
+			
 				try {
 	
 					const lazy = async _ => {
@@ -701,7 +726,6 @@ export default class Synoptic extends GenericMap {
 					console.log(error);
 				}	
 			});
-			 
 		}
 				
 		function addGraphicIcon(elementId, graphicIcon) {

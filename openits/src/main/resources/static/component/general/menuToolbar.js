@@ -11,7 +11,9 @@ export default class MenuToolbar {
 
 	getView() {
 
-		let view = {
+		let view;
+		
+		view = {
 			id: MENU_TOOLBAR_ID,
 			css: "head-color menu-toolbar",
 			view: "toolbar",

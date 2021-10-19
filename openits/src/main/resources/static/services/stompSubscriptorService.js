@@ -118,12 +118,11 @@ export default class StompSubscriptorService extends GenericModule {
 	static get ACTION_UPDATE() { return "UPDATE" }
 	static get ACTION_DELETE() { return "DELETE" }
 		
-	constructor(module, mod) {
+	constructor(module) {
 
 		super(module, null, null);
 
 		this.module = module;
-		this.mod = mod;
 		this.subscriptors = [];
 	}
 

@@ -8,13 +8,12 @@ const LATEST_ALARMS_MAX = 10;
 
 export default class AlarmService extends GenericModule {
 
-	constructor(module, mod) {
+	constructor(module) {
 
 		super(module, null, null);
 
 		this.module = module;
 		this.config = module.config;
-		this.mod = mod;
 
 		//this.recentAlarmCount = 0;
 		this.stomp = {};
@@ -68,10 +67,14 @@ export default class AlarmService extends GenericModule {
 				window.alarmControlPanel = new AlarmControlPanel(this.config);
 			}
 
-			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
+			if ($$("icon-alarm-service")) {
+				
+				$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
 
-				self.callAlarmControlPanel();
-			});
+					self.callAlarmControlPanel();
+				});	
+			}
+			
 
 			this.alarms.stats = {};
 

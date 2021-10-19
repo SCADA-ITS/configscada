@@ -1,22 +1,3 @@
-// Params for windowed ui
-const WindowParam = Object.freeze({
-	HAS_MIN_BUTTON: 1,
-	HAS_MAX_BUTTON: 2,
-	IS_MAXIMIZED: 3,
-	HEIGHT: 4,
-	WIDTH: 5,
-	X: 6,
-	Y: 7,
-	ALLOW_MULTIPLE_INSTANCES: 8,
-	IMAGE: 9,
-	ICON: 10,
-	COLOR: 11,
-	LABEL: 12,
-	RESIZABLE: 13,
-	EXTERNALIZABLE: 14,
-	MODAL: 15
-});
-
 export let util = {
 
 	module: {
@@ -72,6 +53,7 @@ export let util = {
 			let width = 1280;
 			let modal = false;
 			let winId = "win_" + module.id + "_" + webix.uid();
+			let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
 
 			let lazyClass;
 
@@ -118,14 +100,42 @@ export let util = {
 
 				let head = {
 					view: "toolbar",
-					css: "default-window-head",
+					css: "active-window-head",
 					//height: 35,
 					cols: [
 						{
-
+							id: winId + "-label",
 							view: "label",
 							//css: "notification-center-title", 
 							label: i18n.t(label)
+						},
+						{
+							view: "icon",
+							hidden: !taskManagerService,
+							icon: "mdi mdi-open-in-new",
+							on: {
+								onItemClick: function(id) {
+									
+									if (taskManagerService) {
+								
+										taskManagerService.externalize(winId, lazyClass);
+									}
+								}
+							}
+						},
+						{
+							view: "icon",
+							hidden: !taskManagerService,
+							icon: "mdi mdi-window-minimize",
+							on: {
+								onItemClick: function(id) {
+									
+									if (taskManagerService) {
+								
+										taskManagerService.minimize(winId);
+									}
+								}
+							}
 						},
 						{
 							view: "icon",
@@ -146,6 +156,7 @@ export let util = {
 					id: winId,
 					move: true,
 					modal: modal,
+					toFront: true,
 					css: "default-window",
 					head: head,
 					height: height,
@@ -163,10 +174,20 @@ export let util = {
 						onBeforeShow: function() {
 
 							window.wm.add(winId);
+
+							if (taskManagerService) {
+								
+								taskManagerService.add(winId, lazyClass);
+							}
 						},
 						onDestruct: function() {
 
 							window.wm.delete(winId);
+							
+							if (taskManagerService) {
+								
+								taskManagerService.remove(winId);
+							}
 						}
 					}
 				});
@@ -275,7 +296,13 @@ export let util = {
 
 		getModuleOpenedId(moduleId) {
 
-			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+			let tabItems = undefined;
+			
+			if ($$(MAIN_TAB_ID)) {
+				
+				tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+			}
+			
 			let winItems = Array.from(window.wm.getAll());
 
 			if (tabItems) {
@@ -983,7 +1010,7 @@ export let util = {
 
 			let head = {
 				view: "toolbar",
-				css: "default-window-head",
+				css: "active-window-head",
 				elements: [
 					{
 						view: "label",

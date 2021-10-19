@@ -473,48 +473,45 @@ export default class OpenMap extends GenericMap {
 	
 		function loadGraphicIcons() {
 			
-			if (Array.isArray(self.metadata.layers) && self.metadata.layers.length > 0) {
+			self.metadata.layers.forEach(layer => {
 			
-				self.metadata.layers.forEach(layer => {
-				
-					layer.layerElements.forEach(layerElement => {
-						
-						if (Array.isArray(layerElement.layerElementZooms) && layerElement.layerElementZooms.length > 0) {
-						
-							layerElement.layerElementZooms.forEach(layerElementZoom => {
-								
-								// Check if zoom layer element zoom config is between map zoom limits
-								let isLayerElementZoomBetweenLimits = layerElementZoom.zoomLower >= self.minZoomLevel && layerElementZoom.zoomUpper <= self.maxZoomLevel;
-								
-								// Check if lon or lat is equals to 0
-								if (layerElementZoom.longitude == 0 || layerElementZoom.latitude == 0) {
-									
-									let lonLat = ol.proj.transform(self.olMap.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
-									layerElementZoom.longitude = lonLat[0];
-									layerElementZoom.latitude = lonLat[1]; 
-								}
-								
-								if (isLayerElementZoomBetweenLimits) {
-									
-									loadGraphicIcon(layerElement, layerElementZoom);	
-								}
-							});
-						}
-						else {
+				layer.layerElements.forEach(layerElement => {
+					
+					if (Array.isArray(layerElement.layerElementZooms) && layerElement.layerElementZooms.length > 0) {
+					
+						layerElement.layerElementZooms.forEach(layerElementZoom => {
+							
+							// Check if zoom layer element zoom config is between map zoom limits
+							let isLayerElementZoomBetweenLimits = layerElementZoom.zoomLower >= self.minZoomLevel && layerElementZoom.zoomUpper <= self.maxZoomLevel;
 							
 							// Check if lon or lat is equals to 0
-							if (layerElement.longitude == 0 || layerElement.latitude == 0) {
+							if (layerElementZoom.longitude == 0 || layerElementZoom.latitude == 0) {
 								
 								let lonLat = ol.proj.transform(self.olMap.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
-								layerElement.longitude = lonLat[0];
-								layerElement.latitude = lonLat[1]; 
+								layerElementZoom.longitude = lonLat[0];
+								layerElementZoom.latitude = lonLat[1]; 
 							}
 							
-							loadGraphicIcon(layerElement);
+							if (isLayerElementZoomBetweenLimits) {
+								
+								loadGraphicIcon(layerElement, layerElementZoom);	
+							}
+						});
+					}
+					else {
+						
+						// Check if lon or lat is equals to 0
+						if (layerElement.longitude == 0 || layerElement.latitude == 0) {
+							
+							let lonLat = ol.proj.transform(self.olMap.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+							layerElement.longitude = lonLat[0];
+							layerElement.latitude = lonLat[1]; 
 						}
-					});
-				});	
-			}
+						
+						loadGraphicIcon(layerElement);
+					}
+				});
+			});	
 			
 			function loadGraphicIcon(layerElement, layerElementZoom) {
 				
@@ -601,10 +598,26 @@ export default class OpenMap extends GenericMap {
 			
 				addGraphicIcon(layerElement, graphicIconInstance);
 				
+				onBeforeLoadGraphicIcon()
+				
+				
+			}
+		}
+		
+		function onBeforeLoadGraphicIcon() {
+			
+			if (self.layerElements > 0) {
+				
 				if (++self.layerElementsLoaded === self.layerElements) {
-					
+				
 					loadElementInfo();
-				}
+				}	
+			}
+			else {
+				
+				webix.ui(getToolbarMain(), $$("map-toolbar-main-" + self.uid));
+				webix.ui(getToolbarActions(), $$("map-toolbar-actions-" + self.uid));
+				webix.ui(getPanelActions(), $$("map-window-actions-" + self.uid));
 			}
 		}
 		
@@ -615,6 +628,11 @@ export default class OpenMap extends GenericMap {
 				self.mapIncident = new MapIncident(self);
 				
 				self.mapIncident.load();
+				
+				if (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)) {
+					
+					onBeforeLoadGraphicIcon();
+				}
 			}
 		}
 		
@@ -977,6 +995,7 @@ export default class OpenMap extends GenericMap {
 					{
 						css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
 						height: 35,
+						hidden: (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)),
 						cols: [
 							{
 								view: "button",
@@ -1131,6 +1150,7 @@ export default class OpenMap extends GenericMap {
 				
 				let viewButtonZones = {
 					view: "button",
+					hidden: (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)),
 					type: "icon",
 					icon:"mdi mdi-map-search",
 					tooltip: i18n.t("LBL_SHOW_ZONES"),
@@ -1156,6 +1176,7 @@ export default class OpenMap extends GenericMap {
 				
 				let viewButtonLayers = {
 					view: "button",
+					hidden: (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)),
 					type: "icon",
 					icon:"mdi mdi-layers",
 					tooltip: i18n.t("LBL_SHOW_LAYERS"),
@@ -1196,25 +1217,6 @@ export default class OpenMap extends GenericMap {
 								webix.html.addCss($$(obj).$view, "button-pressed");
 								self.drawButtonPressed = true;
 								$$(obj).refresh();
-								
-//								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CONFIRM_CREATE_INCIDENT_FROM_MAP"),
-//								
-//									// onAccept
-//									function() {
-//										
-//										self.mapIncident.addSquare($$(obj));
-//										mapLayer.style.cursor = 'crosshair';
-//										
-//										document.querySelector("#map-" + self.uid).querySelector('canvas').style.filter="brightness(90%)";
-//									},
-//									// onCancel
-//									function() {
-//										
-//										webix.html.removeCss($$(obj).$view, "button-pressed");
-//										self.drawButtonPressed = true;
-//										$$(obj).refresh();
-//									}
-//								)).show();
 
 								self.mapIncident.addSquare($$(obj));
 								mapLayer.style.cursor = 'crosshair';
@@ -1264,6 +1266,7 @@ export default class OpenMap extends GenericMap {
 				let viewButtonActions = {
 					view: "button",
 					type: "icon",
+					hidden: (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)),
 					icon:"mdi mdi-dots-vertical",
 					tooltip: i18n.t("LBL_SHOW_ACTIONS"),
 					css: "button",

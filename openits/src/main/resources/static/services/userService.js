@@ -3,13 +3,12 @@ import UserControlPanel  from "../component/general/userControlPanel.js";
 
 export default class UserService extends GenericModule {
 	
-	constructor(module, mod){
+	constructor(module){
 		
 		super(module, null, null);
 		
 		this.module = module;
 		this.config = module.config;
-		this.mod = mod;
 		
 		this.userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		
@@ -58,10 +57,14 @@ export default class UserService extends GenericModule {
 				window.userControlPanel = new UserControlPanel(this.config);
 			}
 			
-			$$("icon-user-service").attachEvent("onItemClick", function(id, e) {
+			if ($$("icon-user-service")) {
+				
+				$$("icon-user-service").attachEvent("onItemClick", function(id, e) {
 
-				self.callUserControlPanel();
-			});
+					self.callUserControlPanel();
+				});	
+			}
+			
 			
 			this.users.stats = {};
 			

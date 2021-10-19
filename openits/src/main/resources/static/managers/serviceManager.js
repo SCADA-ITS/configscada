@@ -18,14 +18,17 @@ function compareByPriority(a, b) {
 	return 0;
 }
 
-function load(service) {
+function load(service, onLoaded) {
+	
+	let onLoadedCallback = onLoaded;
 
 	webix.ajax(appConfig.restUrl + "module_types/" + MODULE_TYPE_SERVICE + "/modules").then(function(data) {
 
 		let svcs = data.json();
 
 		if (Array.isArray(svcs) && svcs.length > 0) {
-			//console.log(svcs);
+			
+			svcs = svcs.filter(svc => svc.enabled);
 
 			svcs.sort(compareByPriority);
 			
@@ -43,7 +46,7 @@ function load(service) {
 			
 			webix.delay(function() {
 
-				while (!runServices(service));
+				while (!runServices(service, onLoadedCallback));
 				
 			}, null, null, 1000);
 		}
@@ -56,11 +59,10 @@ function drawService(service, module) {
 
 		const lazy = async _ => {
 
-			//let jsFile = window.location.protocol + '//' + window.location.host + '/' + module.jsFile;
 			let jsFile = util.getContextPath() + "/" + module.jsFile;
 			const mod = await import(jsFile);
 
-			let lazyClass = new mod.default(module, mod);
+			let lazyClass = new mod.default(module);
 	
 			if (lazyClass) {
 				
@@ -69,12 +71,7 @@ function drawService(service, module) {
 					views: module.jsMethodDraw ? lazyClass.runOne(module.jsMethodDraw) : undefined,
 					object: lazyClass
 				}
-				
-//				if (module.jsMethodCallbacks) {
-//				
-//					lazyClass.runOne(module.jsMethodCallbacks)	
-//				}
-				
+								
 				service.services.push(serviceItem);
 			}
 		}
@@ -87,7 +84,9 @@ function drawService(service, module) {
 	}
 }
 
-function runServices(service) {
+function runServices(service, onLoaded) {
+	
+	let onLoadedCallback = onLoaded;
 	
 	if (service.services.length < servicesCount) {
 		
@@ -134,17 +133,22 @@ function runServices(service) {
 		toolbar.addView({width: 1});
 	}
 	
+	if (onLoadedCallback) {
+		
+		onLoadedCallback();	
+	}
+	
 	return true;
 }
 
 export default class ServiceManager {
 
-	constructor() {
+	constructor(onLoaded) {
 
 		this.services = [];
-		this.isLoaded = false;
+		this.onLoaded = onLoaded;
 
-		load(this);
+		load(this, onLoaded);
 	}
 
 	getAll() {

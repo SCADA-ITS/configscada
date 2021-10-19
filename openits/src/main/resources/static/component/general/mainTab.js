@@ -2,11 +2,14 @@ export default class MainTab {
 
 	constructor() {
 	
+		// This is intentional
 	}
 	
 	getView() {
 		
-		let view = {
+		let view; 
+		
+		view = {
 			view: "tabview",
 			css: "main-tab",
 			borderless: 1,
@@ -34,7 +37,6 @@ export default class MainTab {
 		
 			$$(MAIN_TAB_ID).getTabbar().attachEvent("onBeforeTabClose", function(id, e) {
 
-				//webix.message("Close tab: " + id);
 				for(let l of $$(id).getNode().getElementsByTagName("img")) { 
           			l.src = "";
         		}

@@ -2,12 +2,11 @@ import GenericModule from "../modules/genericModule.js";
 
 export default class NotificationService extends GenericModule {
 	
-	constructor(module, mod){
+	constructor(module){
 		
 		super(module, null, null);
 		
 		this.module = module;
-		this.mod = mod;
 		
 		this.stomp = {};
 		this.notifications = {};

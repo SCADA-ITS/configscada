@@ -98,7 +98,7 @@ window.app = {
 
 			if (userData != undefined) {
 
-				i18n.load(`${userData.language}_${userData.country}`);
+				i18n.load(userData.locale.code);
 
 				this.createToolbar();
 				

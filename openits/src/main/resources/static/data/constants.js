@@ -1,6 +1,7 @@
 const MAIN_TAB_ID = "tabs";
 const MAIN_TOOLBAR_ID = "mainToolbar";
 const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
+const TASKBAR_ID = "taskbar";
 
 const START_ON_MONDAY = true;
 
@@ -56,6 +57,25 @@ const VIEW_TYPE_CUSTOM = 3;
 const ENTITY_TYPE_MODE_PERMANENT = 1;
 const ENTITY_TYPE_MODE_TEMPORARY = 2;
 
+// Params for windowed ui
+const WindowParam = Object.freeze({
+	HAS_MIN_BUTTON: 1,
+	HAS_MAX_BUTTON: 2,
+	IS_MAXIMIZED: 3,
+	HEIGHT: 4,
+	WIDTH: 5,
+	X: 6,
+	Y: 7,
+	ALLOW_MULTIPLE_INSTANCES: 8,
+	IMAGE: 9,
+	ICON: 10,
+	COLOR: 11,
+	LABEL: 12,
+	RESIZABLE: 13,
+	EXTERNALIZABLE: 14,
+	MODAL: 15
+});
+
 // Services
 const Services = Object.freeze({
 	USER_SERVICE: 10,
@@ -63,7 +83,8 @@ const Services = Object.freeze({
 	NOTIFICATION_SERVICE: 12,
 	TIME_SERVICE: 13,
 	STOMP_SUBSCRIPTOR_SERVICE: 14,
-	INCIDENT_SERVICE: 15
+	INCIDENT_SERVICE: 15,
+	TASK_MANAGER_SERVICE: 16
 });
 
 // DataTypes

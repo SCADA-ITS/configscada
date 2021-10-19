@@ -4,11 +4,14 @@ export default class MainMenu {
 
 	constructor() {
 
+		// This is intentional
 	}
 
 	getView() {
 
-		let view = {
+		let view;
+		
+		view = {
 			id: "mainMenu",
 			view: "menu",
 			data: this.getMainMenuData(),
@@ -73,37 +76,37 @@ export default class MainMenu {
 
 				menus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-				for (var menuIdx = 0; menuIdx < menus.length; menuIdx++) {
+				menus.forEach(menu => {
 
 					var mainMenu = {};
 
-					mainMenu.id = menus[menuIdx].id;
-					mainMenu.value = i18n.t(menus[menuIdx].label);
+					mainMenu.id = menu.id;
+					mainMenu.value = i18n.t(menu.label);
 					mainMenu.config = { css: "menu-custom" };
 
-					var submenu = menus[menuIdx].menuItems;
+					var submenus = menu.menuItems;
 
-					if (Array.isArray(submenu)) {
+					if (Array.isArray(submenus)) {
 
-						submenu.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+						submenus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 						mainMenu.submenu = [];
 
-						for (var submenuIdx = 0; submenuIdx < submenu.length; submenuIdx++) {
+						submenus.forEach(submenu => {
 
-							if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu[submenuIdx].module.id)) {
+							if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
 
 								var mainSubmenu = {};
 
-								mainSubmenu.id = mainMenu.id + "." + submenu[submenuIdx].id;
-								mainSubmenu.value = i18n.t(submenu[submenuIdx].label);
-								mainSubmenu.moduleId = submenu[submenuIdx].module.id;
-								mainSubmenu.icon = submenu[submenuIdx].icon;
+								mainSubmenu.id = mainMenu.id + "." + submenu.id;
+								mainSubmenu.value = i18n.t(submenu.label);
+								mainSubmenu.moduleId = submenu.module.id;
+								mainSubmenu.icon = submenu.icon;
 
 								mainMenu.submenu.push(mainSubmenu);
 							}
 
-						}
+						});
 					}
 
 					if (mainMenu.submenu.length > 0) {
@@ -111,7 +114,7 @@ export default class MainMenu {
 						menuResponse.push(mainMenu);
 					}
 
-				}
+				});
 			}
 		}
 

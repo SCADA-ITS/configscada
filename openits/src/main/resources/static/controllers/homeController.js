@@ -58,7 +58,10 @@ function initialize() {
 		css: "main-footer",
 		id: "mainFooter",
 		height: 40,
-		elements: [
+		cols: [
+			{
+				id: TASKBAR_ID
+			},
 			{},
 			{
 				view: "label",

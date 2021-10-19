@@ -669,13 +669,22 @@ export default class TubeContent {
 
 									$$("view-content-body-dali-dt-" + self.parent.uid).hide();
 									$$("view-content-body-circuit-dt-" + self.parent.uid).show();
-									$$("view-content-button-change-circuits-status-" + self.parent.uid).show();
+									
+									if (self.tubeCircuitsDataTable) {
+										
+										$$("view-content-button-change-circuits-status-" + self.parent.uid).show();	
+									}
+									
 								}
 								else if (newv === "action-panel-switcher-dali" + self.parent.uid) {
 
 									$$("view-content-body-circuit-dt-" + self.parent.uid).hide();
 									$$("view-content-body-dali-dt-" + self.parent.uid).show();
-									$$("view-content-button-change-circuits-status-" + self.parent.uid).hide();
+									
+									if (self.tubeCircuitsDataTable) {
+										
+										$$("view-content-button-change-circuits-status-" + self.parent.uid).hide();	
+									}
 								}
 							}
 						}
@@ -689,494 +698,514 @@ export default class TubeContent {
 
 		function getCircuitsTable() {
 
+			let viewCircuits;
+			
 			let data = self.tubeCircuits;
-
-			const defaultGridOptionValues = [
-				{ gridOption: { id: 5 }, value: undefined },
-				{ gridOption: { id: 6 }, value: undefined },
-				{ gridOption: { id: 7 }, value: "false" },
-				{ gridOption: { id: 8 }, value: "false" },
-				{ gridOption: { id: 9 }, value: "true" },
-				{ gridOption: { id: 10 }, value: "true" },
-				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-				{ gridOption: { id: 21 }, value: "custom" },
-				{ gridOption: { id: 23 }, value: "true" }
-			];
-
-			let metadata = {
-				filter: true,
-				label: "LBL_CIRCUIT",
-				visible: true,
-				gridOptionValues: defaultGridOptionValues,
-				gridFields: [
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: true,
-						parameterized: false,
-						position: 1,
-						required: true,
-						sourceField: "id",
-						visible: false,
-						widthPx: 1,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						}
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						parameterized: false,
-						position: 2,
-						required: true,
-						sourceField: "state",
-						visible: true,
-						widthPx: 30,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								icon: "./img/state/stateUnknown.png",
-								showValue: false,
-								value: "ElementTypeState:84:0",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
-							},
-							{
-								icon: "./img/state/stateUp.png",
-								showValue: false,
-								value: "ElementTypeState:84:1",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
-							},
-							{
-								icon: "./img/state/stateDown.png",
-								showValue: false,
-								value: "ElementTypeState:84:2",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
-							},
-							{
-								icon: "./img/state/stateAlarm.png",
-								showValue: false,
-								value: "ElementTypeState:84:3",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+			
+			if (Array.isArray(data) && data.length > 0) {
+				
+				const defaultGridOptionValues = [
+					{ gridOption: { id: 5 }, value: undefined },
+					{ gridOption: { id: 6 }, value: undefined },
+					{ gridOption: { id: 7 }, value: "false" },
+					{ gridOption: { id: 8 }, value: "false" },
+					{ gridOption: { id: 9 }, value: "true" },
+					{ gridOption: { id: 10 }, value: "true" },
+					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+					{ gridOption: { id: 21 }, value: "custom" },
+					{ gridOption: { id: 23 }, value: "true" }
+				];
+	
+				let metadata = {
+					filter: true,
+					label: "LBL_CIRCUIT",
+					visible: true,
+					gridOptionValues: defaultGridOptionValues,
+					gridFields: [
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: true,
+							parameterized: false,
+							position: 1,
+							required: true,
+							sourceField: "id",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
 							}
-						]
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_CIRCUIT",
-						labelTooltip: "LBL_CIRCUIT",
-						parameterized: false,
-						position: 3,
-						required: false,
-						sourceField: "alias",
-						visible: true,
-						widthPx: 200,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
 						},
-						gridFieldIcons: []
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "",
-						labelTooltip: "LBL_CIRCUIT_STATE",
-						parameterized: false,
-						position: 4,
-						required: true,
-						sourceField: self.parent.config.params.circuitState,
-						visible: true,
-						widthPx: 1,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						}
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_CIRCUIT_STATE",
-						labelTooltip: "LBL_CIRCUIT_STATE",
-						parameterized: false,
-						position: 5,
-						required: true,
-						sourceField: "circuitStateLabel",
-						visible: true,
-						widthPx: 250,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "state",
+							visible: true,
+							widthPx: 30,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: [
+								{
+									icon: "./img/state/stateUnknown.png",
+									showValue: false,
+									value: "ElementTypeState:84:0",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+								},
+								{
+									icon: "./img/state/stateUp.png",
+									showValue: false,
+									value: "ElementTypeState:84:1",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+								},
+								{
+									icon: "./img/state/stateDown.png",
+									showValue: false,
+									value: "ElementTypeState:84:2",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+								},
+								{
+									icon: "./img/state/stateAlarm.png",
+									showValue: false,
+									value: "ElementTypeState:84:3",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+								}
+							]
 						},
-						gridFieldIcons: [
-							{
-								showValue: false,
-								badgeColor: true,
-								avatar: false,
-								enabled: true
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_CIRCUIT",
+							labelTooltip: "LBL_CIRCUIT",
+							parameterized: false,
+							position: 3,
+							required: false,
+							sourceField: "alias",
+							visible: true,
+							widthPx: 200,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "",
+							labelTooltip: "LBL_CIRCUIT_STATE",
+							parameterized: false,
+							position: 4,
+							required: true,
+							sourceField: self.parent.config.params.circuitState,
+							visible: true,
+							widthPx: 1,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
 							}
-						]
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						parameterized: false,
-						position: 6,
-						required: false,
-						sourceField: "circuitStateToSend",
-						visible: false,
-						widthPx: 1,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_CIRCUIT_STATE",
+							labelTooltip: "LBL_CIRCUIT_STATE",
+							parameterized: false,
+							position: 5,
+							required: true,
+							sourceField: "circuitStateLabel",
+							visible: true,
+							widthPx: 250,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: [
+								{
+									showValue: false,
+									badgeColor: true,
+									avatar: false,
+									enabled: true
+								}
+							]
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							parameterized: false,
+							position: 6,
+							required: false,
+							sourceField: "circuitStateToSend",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_CIRCUIT_STATE_TO_SEND",
+							labelTooltip: "LBL_CIRCUIT_STATE_TO_SEND",
+							parameterized: false,
+							position: 7,
+							required: true,
+							sourceField: "circuitStateToSendAlias",
+							visible: true,
+							widthPx: 400,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
 						}
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_CIRCUIT_STATE_TO_SEND",
-						labelTooltip: "LBL_CIRCUIT_STATE_TO_SEND",
-						parameterized: false,
-						position: 7,
-						required: true,
-						sourceField: "circuitStateToSendAlias",
-						visible: true,
-						widthPx: 400,
-						adjust: false,
-						gridFieldDataType: {
+					],
+					gridCommands: [
+						{
 							id: 1,
-							name: "string"
+							default_: false,
+							icon: "mdi mdi-toggle-switch",
+							label: "LBL_SWITCH_ON",
+							multiselect: true,
+							position: 1,
+							showText: true,
+							itemRequired: true
+						},
+						{
+							id: 2,
+							default_: false,
+							icon: "mdi mdi-toggle-switch-off",
+							label: "LBL_SWITCH_OFF",
+							multiselect: true,
+							position: 2,
+							showText: true,
+							itemRequired: true
+						},
+						{
+							id: 3,
+							default_: false,
+							icon: "mdi mdi-broom",
+							label: "LBL_CLEAN",
+							multiselect: true,
+							position: 3,
+							showText: false,
+							itemRequired: true
 						}
+					]
+	
+				};
+	
+				let events = {};
+				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+	
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 1,
+					function: () => {
+	
+						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+	
+							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_ON;
+							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
+							self.tubeCircuitsDataTable.update(item);
+						});
+	
+						self.checkDisableChangeStatusButton();
 					}
-				],
-				gridCommands: [
-					{
-						id: 1,
-						default_: false,
-						icon: "mdi mdi-toggle-switch",
-						label: "LBL_SWITCH_ON",
-						multiselect: true,
-						position: 1,
-						showText: true,
-						itemRequired: true
-					},
-					{
-						id: 2,
-						default_: false,
-						icon: "mdi mdi-toggle-switch-off",
-						label: "LBL_SWITCH_OFF",
-						multiselect: true,
-						position: 2,
-						showText: true,
-						itemRequired: true
-					},
-					{
-						id: 3,
-						default_: false,
-						icon: "mdi mdi-broom",
-						label: "LBL_CLEAN",
-						multiselect: true,
-						position: 3,
-						showText: false,
-						itemRequired: true
+				});
+	
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 2,
+					function: () => {
+	
+						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+	
+							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_OFF;
+							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
+							self.tubeCircuitsDataTable.update(item);
+						});
+	
+						self.checkDisableChangeStatusButton();
 					}
-				]
+				});
+	
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 3,
+					function: () => {
+	
+						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
+	
+							item.circuitStateToSend = null;
+							item.circuitStateToSendAlias = "-";
+							self.tubeCircuitsDataTable.update(item);
+						});
+	
+						self.checkDisableChangeStatusButton();
+					}
+				});
+	
+				self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
+				
+				viewCircuits = { rows: self.tubeCircuitsDataTable.getView() };
+			}
+			else {
+				
+				viewCircuits = util.ui.getViewNoData();
+			}
 
-			};
+			
 
-			let events = {};
-			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-
-			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-				commandId: 1,
-				function: () => {
-
-					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-
-						item.circuitStateToSend = CIRCUIT_COMMAND_SEND_ON;
-						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
-						self.tubeCircuitsDataTable.update(item);
-					});
-
-					self.checkDisableChangeStatusButton();
-				}
-			});
-
-			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-				commandId: 2,
-				function: () => {
-
-					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-
-						item.circuitStateToSend = CIRCUIT_COMMAND_SEND_OFF;
-						item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
-						self.tubeCircuitsDataTable.update(item);
-					});
-
-					self.checkDisableChangeStatusButton();
-				}
-			});
-
-			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-				commandId: 3,
-				function: () => {
-
-					self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-
-						item.circuitStateToSend = null;
-						item.circuitStateToSendAlias = "-";
-						self.tubeCircuitsDataTable.update(item);
-					});
-
-					self.checkDisableChangeStatusButton();
-				}
-			});
-
-			self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
-
-			return { rows: self.tubeCircuitsDataTable.getView() };
+			return viewCircuits;
 		}
 
 		function getDalisTable() {
 
+			let viewDalis;
 			let data = self.tubeDalis;
-
-			const defaultGridOptionValues = [
-				{ gridOption: { id: 5 }, value: undefined },
-				{ gridOption: { id: 6 }, value: undefined },
-				{ gridOption: { id: 7 }, value: "false" },
-				{ gridOption: { id: 8 }, value: "false" },
-				{ gridOption: { id: 9 }, value: "true" },
-				{ gridOption: { id: 10 }, value: "true" },
-				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-				{ gridOption: { id: 21 }, value: "custom" },
-				{ gridOption: { id: 23 }, value: "true" }
-			];
-
-			let metadata = {
-				filter: true,
-				label: "LBL_DALI",
-				visible: true,
-				gridOptionValues: defaultGridOptionValues,
-				gridFields: [
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: true,
-						parameterized: false,
-						position: 1,
-						required: true,
-						sourceField: "id",
-						visible: false,
-						widthPx: 1,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						}
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						parameterized: false,
-						position: 2,
-						required: true,
-						sourceField: "state",
-						visible: true,
-						widthPx: 30,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								icon: "./img/state/stateUnknown.png",
-								showValue: false,
-								value: "ElementTypeState:85:0",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
-							},
-							{
-								icon: "./img/state/stateUp.png",
-								showValue: false,
-								value: "ElementTypeState:85:1",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
-							},
-							{
-								icon: "./img/state/stateDown.png",
-								showValue: false,
-								value: "ElementTypeState:85:2",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
-							},
-							{
-								icon: "./img/state/stateAlarm.png",
-								showValue: false,
-								value: "ElementTypeState:85:3",
-								labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+			
+			if (Array.isArray(data) && data.length > 0) {
+				
+				const defaultGridOptionValues = [
+					{ gridOption: { id: 5 }, value: undefined },
+					{ gridOption: { id: 6 }, value: undefined },
+					{ gridOption: { id: 7 }, value: "false" },
+					{ gridOption: { id: 8 }, value: "false" },
+					{ gridOption: { id: 9 }, value: "true" },
+					{ gridOption: { id: 10 }, value: "true" },
+					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+					{ gridOption: { id: 21 }, value: "custom" },
+					{ gridOption: { id: 23 }, value: "true" }
+				];
+	
+				let metadata = {
+					filter: true,
+					label: "LBL_DALI",
+					visible: true,
+					gridOptionValues: defaultGridOptionValues,
+					gridFields: [
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: true,
+							parameterized: false,
+							position: 1,
+							required: true,
+							sourceField: "id",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
 							}
-						]
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_DALI",
-						labelTooltip: "LBL_DALI",
-						parameterized: false,
-						position: 3,
-						required: false,
-						sourceField: "alias",
-						visible: true,
-						widthPx: 200,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
 						},
-						gridFieldIcons: []
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						parameterized: false,
-						position: 4,
-						required: true,
-						sourceField: self.parent.config.params.daliState,
-						visible: false,
-						widthPx: 1,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "state",
+							visible: true,
+							widthPx: 30,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: [
+								{
+									icon: "./img/state/stateUnknown.png",
+									showValue: false,
+									value: "ElementTypeState:85:0",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
+								},
+								{
+									icon: "./img/state/stateUp.png",
+									showValue: false,
+									value: "ElementTypeState:85:1",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
+								},
+								{
+									icon: "./img/state/stateDown.png",
+									showValue: false,
+									value: "ElementTypeState:85:2",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
+								},
+								{
+									icon: "./img/state/stateAlarm.png",
+									showValue: false,
+									value: "ElementTypeState:85:3",
+									labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
+								}
+							]
 						},
-						gridFieldIcons: []
-					},
-					{
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						label: "LBL_DALI_REGIME",
-						labelTooltip: "LBL_DALI_REGIME",
-						parameterized: false,
-						position: 5,
-						required: true,
-						sourceField: "daliStateAlias",
-						visible: true,
-						widthPx: 250,
-						adjust: false,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_DALI",
+							labelTooltip: "LBL_DALI",
+							parameterized: false,
+							position: 3,
+							required: false,
+							sourceField: "alias",
+							visible: true,
+							widthPx: 200,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
 						},
-						gridFieldIcons: []
-					}
-				],
-				gridCommands: [
-					{
-						id: 1,
-						default_: false,
-						icon: "mdi mdi-pen",
-						label: "LBL_CHANGE_REGIME",
-						multiselect: false,
-						position: 1,
-						showText: true,
-						itemRequired: true
-					}
-				]
-
-			};
-
-			let events = {};
-			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-
-			events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-				commandId: 1,
-				function: () => {
-
-					let options = [];
-					let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
-
-					let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
-					daliRegimeConfig = JSON.parse(daliRegimeConfig);
-
-					for (let regime of daliRegimeConfig.regimes) {
-						options.push({
-							id: regime.id,
-							label: regime.alias,
-							description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
-							default: null
-						});
-					}
-
-					let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime, OptionDialogBox.MODE_TOGGLE);
-					optionDialog.show();
-				}
-			});
-
-			self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
-
-			function changeRegime(newRegimeId, callbackCloseDialog) {
-
-				webix.confirm({
-					title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-					ok: i18n.t("LBL_ACCEPT"),
-					cancel: i18n.t("LBL_CANCEL"),
-					text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-					width: 600
-				}).then(function(res) {
-
-					callbackCloseDialog(true);
-					let command = self.parent.config.commands.SEND_DALI_REGIME;
-					let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
-
-					command.elementId = dali.id;
-					command.commandElementValues[0].value = newRegimeId;
-
-					let body = {
-						commands: []
-					};
-					body.commands.push(command);
-
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-						console.log(data.json())
-						if (!data.json()) {
-
-							webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							parameterized: false,
+							position: 4,
+							required: true,
+							sourceField: self.parent.config.params.daliState,
+							visible: false,
+							widthPx: 1,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_DALI_REGIME",
+							labelTooltip: "LBL_DALI_REGIME",
+							parameterized: false,
+							position: 5,
+							required: true,
+							sourceField: "daliStateAlias",
+							visible: true,
+							widthPx: 250,
+							adjust: false,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
 						}
-					});
+					],
+					gridCommands: [
+						{
+							id: 1,
+							default_: false,
+							icon: "mdi mdi-pen",
+							label: "LBL_CHANGE_REGIME",
+							multiselect: false,
+							position: 1,
+							showText: true,
+							itemRequired: true
+						}
+					]
+	
+				};
+	
+				let events = {};
+				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
+	
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 1,
+					function: () => {
+	
+						let options = [];
+						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+	
+						let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
+						daliRegimeConfig = JSON.parse(daliRegimeConfig);
+	
+						for (let regime of daliRegimeConfig.regimes) {
+							options.push({
+								id: regime.id,
+								label: regime.alias,
+								description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
+								default: null
+							});
+						}
+	
+						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime, OptionDialogBox.MODE_TOGGLE);
+						optionDialog.show();
+					}
 				});
+	
+				self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
+				
+				viewDalis = { rows: self.tubeDalisDataTable.getView() };
+	
+				function changeRegime(newRegimeId, callbackCloseDialog) {
+	
+					webix.confirm({
+						title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
+						ok: i18n.t("LBL_ACCEPT"),
+						cancel: i18n.t("LBL_CANCEL"),
+						text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
+						width: 600
+					}).then(function(res) {
+	
+						callbackCloseDialog(true);
+						let command = self.parent.config.commands.SEND_DALI_REGIME;
+						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+	
+						command.elementId = dali.id;
+						command.commandElementValues[0].value = newRegimeId;
+	
+						let body = {
+							commands: []
+						};
+						body.commands.push(command);
+	
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+							console.log(data.json())
+							if (!data.json()) {
+	
+								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
+							}
+						});
+					});
+				}
+			}
+			else {
+				
+				viewDalis = util.ui.getViewNoData();
 			}
 
-			return { rows: self.tubeDalisDataTable.getView() };
-
-
-
-		};
+			return viewDalis;
+		}
 
 		function getBottom() {
 
@@ -1194,7 +1223,7 @@ export default class TubeContent {
 						css: "button-cta",
 						value: i18n.t("LBL_LIGHTING_CHANGE_STATUS"),
 						disabled: true,
-						hidden: self.selectedTable === "action-panel-switcher-dali" + self.parent.uid,
+						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable,
 						click: function() {
 
 							webix.confirm({
