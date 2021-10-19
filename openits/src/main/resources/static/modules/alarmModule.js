@@ -1,8 +1,9 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import InputDialogBox from "../component/inputDialogBox.js";
 import TreeView from "../component/treeview.js";
 import DataTable from "../component/datatable.js";
-import { util } from "../lib/util.js";
+import MessageBox from "../component/messageBox.js";
 
 export default class AlarmModule extends GenericModule {
 
@@ -160,12 +161,9 @@ export default class AlarmModule extends GenericModule {
 						}
 						else {
 							
-							webix.alert({
-								title: i18n.t("LBL_DEACTIVATE_ALARMS_ERROR"),
-								text: i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"),
-								type: "alert-error",
-								width: 500
-							});									
+							let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_DEACTIVATE_ALARMS_ERROR_SELECTED_AUTO_ALARMS_NOT_COMPATIBLE"), null, null);
+							ms.show();
+												
 						}
 					}
 				});
@@ -497,13 +495,9 @@ export default class AlarmModule extends GenericModule {
 														})).show();
 		
 													} else {
-		
-														webix.alert({
-															title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
-															text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
-															type: "alert-warning",
-															width: 500
-														}); 
+														
+														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+														ms.show();
 		
 													}
 												}

@@ -1,4 +1,5 @@
 import { util } from "../lib/util.js";
+import MessageBox from "../component/messageBox.js";
 
 export default class GenericModule {
 
@@ -10,24 +11,16 @@ export default class GenericModule {
 		}
 
 		if (moduleAction &&	!util.module.isAllowedModuleAction(window.em.getAll(EntityType.MODULE), moduleAction.id)) {
-
-			webix.alert({
-				title: i18n.t("LBL_MODULE_ACTION_NOT_ALLOWED"),
-				text: i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"),
-				type: "alert-error",
-				width: 600
-			});
-
+			
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null);
+			ms.show();
+			
 			throw new Error("Module action not allowed");
 
 		} else if (!util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), module.id)) {
 
-			webix.alert({
-				title: i18n.t("LBL_MODULE_NOT_ALLOWED"),
-				text: i18n.t("LBL_THE_MODULE_IS_NOT_ALLOWED"),
-				type: "alert-error",
-				width: 600
-			});
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_THE_MODULE_ACTION_IS_NOT_ALLOWED"), null, null);
+			ms.show();
 
 			throw new Error("Module not allowed");
 		}
@@ -54,12 +47,9 @@ export default class GenericModule {
 		}
 		else {
 			
-			webix.alert({
-				title: i18n.t("LBL_MODULE_OPEN_ERROR"),
-				text: i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION"),
-				type: "alert-error",
-				width: 500
-			});
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION"), null, null);
+			ms.show();
+			
 		}
 		
 		return view;
@@ -75,12 +65,9 @@ export default class GenericModule {
 		}
 		else {
 			
-			webix.alert({
-				title: i18n.t("LBL_MODULE_OPEN_ERROR"),
-				text: i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION_OR_IDS"),
-				type: "alert-error",
-				width: 500
-			});
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_MODULE_OPEN_ERROR_NO_MODULE_ACTION_OR_IDS"), null, null);
+			ms.show();
+
 		}
 		
 		return view;

@@ -1,7 +1,8 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
-import { util } from "../lib/util.js";
+import MessageBox from "../component/messageBox.js";
 
 export default class RoleModule extends GenericModule {
 
@@ -43,12 +44,9 @@ export default class RoleModule extends GenericModule {
 
 		if (this.roleSystem && this.moduleAction.id === this.config.moduleAction.edit) {
 
-			webix.alert({
-				title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-				text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
-				type: "alert-error",
-				width: 600
-			});
+			let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+			ms.show();
+
 		} else if (this.moduleAction.id === this.config.moduleAction.add || this.moduleAction.id === this.config.moduleAction.edit) {
 
 			view = {
@@ -165,7 +163,7 @@ export default class RoleModule extends GenericModule {
 
 							drawComponents();
 							setVal();
-														
+
 							if (self.dtPermissions) {
 
 								self.dtPermissions.callbacks();
@@ -183,26 +181,21 @@ export default class RoleModule extends GenericModule {
 
 				if (self.args.selectedPks[0] === self.config.systemRole) {
 
-					webix.alert({
-						title: i18n.t("LBL_SELECTION_NOT_ALLOWED"),
-						text: i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"),
-						type: "alert-error",
-						width: 600
-					});
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
+					ms.show();
+
 				} else {
 
-					webix.confirm({
-						title: i18n.t("LBL_CONFIRM_DELETE_ROLE"),
-						ok: i18n.t("LBL_YES"),
-						cancel: i18n.t("LBL_NO"),
-						text: i18n.t("LBL_QUESTION_DELETE_ROLE_DESCRIPTION"),
-						width: 600
-					}).then(function() {
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_DELETE_ROLE_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+					function onAccept() {
+
 						self.args.selectedPks.forEach(e => {
 							webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
 							self.args.callbacks[0]();
 						});
-					})
+					}
 				}
 			};
 		};
@@ -307,7 +300,10 @@ export default class RoleModule extends GenericModule {
 							{ view: "text", id: "rolName-" + self.uid, name: "roleName", required: true, label: i18n.t("LBL_ROLE_NAME"), labelWidth: 275, inputWidth: 600 },
 							{ view: "textarea", height: 180, id: "rolDesc-" + self.uid, name: "roleDesc", label: i18n.t("LBL_ROLE_DESCRIPTION"), labelWidth: 275, inputWidth: 600 },
 							{ height: 20 }
-						]
+						],
+						rules: {
+							"roleName": webix.rules.isNotEmpty
+						}
 					}
 
 					self.form = form;
@@ -501,12 +497,8 @@ export default class RoleModule extends GenericModule {
 
 						if (samePermission || repeatPermission) {
 
-							webix.alert({
-								title: i18n.t("LBL_PERMISSION_CANNOT_BE_SET"),
-								text: i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"),
-								type: "alert-error",
-								width: 600
-							});
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PERMISSION_IS_ALREADY_IN_USE_DESCRIPTION"), null, null);
+							ms.show();
 
 							return false;
 
@@ -547,35 +539,43 @@ export default class RoleModule extends GenericModule {
 									click:
 										function() {
 
-
 											let values = $$(form.id).getValues();
-											let permissions = self.selectPermissions.concat(self.rolPermissions);
+											let validation = $$(form.id).validate();
 
-											let body = {
-												role: {
-													alias: values.roleName,
-													description: values.roleDesc,
-													preset: false,
-													rolePermissionIds: permissions
+											if (validation) {
 
+												let permissions = self.selectPermissions.concat(self.rolPermissions);
+
+												let body = {
+													role: {
+														alias: values.roleName,
+														description: values.roleDesc,
+														preset: false,
+														rolePermissionIds: permissions
+													}
 												}
-											}
 
-											if (self.moduleAction.id === self.config.moduleAction.add) {
+												if (self.moduleAction.id === self.config.moduleAction.add) {
 
-												webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body).then(function(data) {
-													$$(self.args.containerId).close();
-													self.args.callbacks[0]();
-												});
+													webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body).then(function(data) {
+														$$(self.args.containerId).close();
+														self.args.callbacks[0]();
+													});
 
-											} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+												} else if (self.moduleAction.id === self.config.moduleAction.edit) {
 
-												body.role.id = self.oldPermissions.id;
+													body.role.id = self.oldPermissions.id;
 
-												webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body).then(function(data) {
-													$$(self.args.containerId).close();
-													self.args.callbacks[0]();
-												});
+													webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body).then(function(data) {
+														$$(self.args.containerId).close();
+														self.args.callbacks[0]();
+													});
+												}
+												
+											} else {
+
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+												ms.show();
 											}
 										}
 								},

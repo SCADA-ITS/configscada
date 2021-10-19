@@ -1,3 +1,5 @@
+import MessageBox from "../component/messageBox.js";
+
 export let util = {
 
 	module: {
@@ -410,12 +412,9 @@ export let util = {
 					// Multiselect not allowed with 2 o more selected
 					if (processPks.length > 1 && command.multiselect === false) {
 
-						webix.alert({
-							title: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"),
-							text: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"),
-							type: "alert-error",
-							width: 500
-						});
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null);
+						ms.show();
+				
 					}
 					// One or more selected and multiselect allowed
 					else {
@@ -427,12 +426,10 @@ export let util = {
 				else {
 					// Required one or more selected
 					if (command.itemRequired) {
-						webix.alert({
-							title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
-							text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
-							type: "alert-warning",
-							width: 500
-						});
+						
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+						ms.show();
+
 					}
 					// No required select rows
 					else {
@@ -996,12 +993,9 @@ export let util = {
 
 		notImplementedMessage() {
 
-			webix.alert({
-				title: i18n.t("LBL_NOT IMPLEMENTED"),
-				text: i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"),
-				type: "alert-error",
-				width: 500
-			});
+			let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT IMPLEMENTED_DESCRIPTION"), null, null);
+			ms.show();
+
 		},
 
 		loadWindow(title, body, height, width, modal) {
