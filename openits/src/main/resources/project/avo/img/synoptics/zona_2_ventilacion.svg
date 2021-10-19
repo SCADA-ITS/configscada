@@ -13,8 +13,10 @@
    viewBox="0 0 1920 1080"
    version="1.1"
    id="svg2"
-   sodipodi:docname="zona_2_ventacion.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   sodipodi:docname="zona_2_ventilacion.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <defs
+     id="defs8130" />
   <metadata
      id="metadata16148">
     <rdf:RDF>
@@ -23,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,22 +38,25 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1868"
-     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
      id="namedview16146"
      showgrid="false"
      units="px"
      borderlayer="false"
      showborder="true"
-     inkscape:zoom="0.14864359"
-     inkscape:cx="2931.9467"
-     inkscape:cy="-1528.5384"
-     inkscape:window-x="52"
-     inkscape:window-y="27"
+     inkscape:zoom="0.70763753"
+     inkscape:cx="959.87561"
+     inkscape:cy="564.66509"
+     inkscape:window-x="3832"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg16144" />
-  <defs
-     id="defs241">
+     inkscape:current-layer="g8127"
+     inkscape:document-rotation="0" />
+  <g
+     id="g8127"
+     style="stroke-width:0.22499999;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="matrix(1.6191412,0,0,2.6639161,-11.81707,-557.03714)">
     <g
        id="main">
       <symbol
@@ -854,11 +859,6 @@
          id="path280-7"
          inkscape:connector-curvature="0" />
     </clipPath>
-  </defs>
-  <g
-     id="surface1"
-     style="stroke-width:0.22499999;stroke-miterlimit:4;stroke-dasharray:none"
-     transform="matrix(1.6191412,0,0,2.6639161,-11.81707,-557.03714)">
     <g
        clip-path="url(#clip1)"
        id="g245"
@@ -50350,18 +50350,5 @@
        transform="matrix(0,-0.06,-0.06,0,1191,842)"
        id="path16141"
        inkscape:connector-curvature="0" />
-  </g>
-  <g
-     transform="matrix(1.1403074,0,0,1.6904754,-0.27767986,-476.39532)"
-     clip-path="url(#clip3-5)"
-     id="g8760"
-     style="clip-rule:nonzero">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:24;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
-       d="M 26558.984,0 V 56123.958 H 13123.958 V 16874.815 0"
-       transform="matrix(0,-0.03,-0.03,0,1684,1191)"
-       id="path8758"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

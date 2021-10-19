@@ -14,7 +14,9 @@
    version="1.1"
    id="svg2"
    sodipodi:docname="zona_3_ventilacion.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <defs
+     id="defs8799" />
   <metadata
      id="metadata17516">
     <rdf:RDF>
@@ -23,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,22 +38,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1868"
-     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
      id="namedview17514"
      showgrid="false"
      units="px"
      inkscape:zoom="0.29728718"
      inkscape:cx="1387.8281"
-     inkscape:cy="-157.81004"
-     inkscape:window-x="52"
-     inkscape:window-y="27"
+     inkscape:cy="380.39009"
+     inkscape:window-x="3832"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
-  <defs
-     id="defs205">
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0" />
+  <g
+     id="main"
+     transform="matrix(1.6241639,0,0,1.9340423,-14.379207,-272.83947)">
     <g
-       id="main">
+       id="g9624">
       <symbol
          overflow="visible"
          id="glyph0-0"
@@ -734,10 +738,6 @@
          id="path280-7-4"
          inkscape:connector-curvature="0" />
     </clipPath>
-  </defs>
-  <g
-     id="surface1"
-     transform="matrix(1.6241639,0,0,1.9340423,-14.379207,-272.83947)">
     <g
        clip-path="url(#clip1)"
        id="g209"
@@ -53319,18 +53319,10 @@
        transform="matrix(0,-0.06,-0.06,0,1191,842)"
        id="path17509"
        inkscape:connector-curvature="0" />
-  </g>
-  <g
-     transform="matrix(1.1399264,0,0,1.7366457,-0.27853105,-494.59504)"
-     clip-path="url(#clip3-5-7)"
-     id="g8760"
-     style="clip-rule:nonzero">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:24;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
-       d="M 26558.984,0 V 56123.958 H 13123.958 V 16874.815 0"
-       transform="matrix(0,-0.03,-0.03,0,1684,1191)"
-       id="path8758"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
+    <g
+       transform="matrix(1.1399264,0,0,1.7366457,-0.27853105,-494.59504)"
+       clip-path="url(#clip3-5-7)"
+       id="g8760"
+       style="clip-rule:nonzero" />
   </g>
 </svg>

@@ -13,8 +13,10 @@
    height="1080"
    viewBox="0 0 1920 1079.9999"
    version="1.1"
-   sodipodi:docname="XREF_PL_ESQUEMA TRAZADO_S1-Model_00001.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   sodipodi:docname="zona_1_ventilacion.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <defs
+     id="defs7801" />
   <metadata
      id="metadata15423">
     <rdf:RDF>
@@ -23,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,22 +38,24 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1868"
-     inkscape:window-height="1016"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
      id="namedview15421"
      showgrid="false"
      units="px"
      inkscape:zoom="0.42042755"
      inkscape:cx="1357.7417"
      inkscape:cy="574.98638"
-     inkscape:window-x="52"
-     inkscape:window-y="27"
+     inkscape:window-x="3832"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
-  <defs
-     id="defs525">
+     inkscape:current-layer="svg2"
+     inkscape:document-rotation="0" />
+  <g
+     id="main"
+     transform="matrix(1.6122431,0,0,4.219506,0.5920734,-1236.9606)">
     <g
-       id="main">
+       id="g20546">
       <symbol
          overflow="visible"
          id="glyph0-0"
@@ -1541,10 +1545,6 @@
          id="path522"
          inkscape:connector-curvature="0" />
     </clipPath>
-  </defs>
-  <g
-     id="surface1"
-     transform="matrix(1.6122431,0,0,4.219506,0.5920734,-1236.9606)">
     <path
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
        d="m 6612.0117,3531.9987 v -11.0026 l 25.9766,11.0026 z m 0,-11.0026 25.9766,11.0026 v -11.0026 z m 0,0"
