@@ -1,7 +1,8 @@
+import { util } from "../../lib/util.js";
 import CalendarDialogBox from "../../component/calendarDialogBox.js";
 import TreeView from "../../component/treeview.js";
 import DataTable from "../../component/datatable.js";
-import { util } from "../../lib/util.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class AlarmFilteredWizard {
 
@@ -646,13 +647,10 @@ export default class AlarmFilteredWizard {
 
 							} else {
 
-								webix.confirm({
-									title: i18n.t("LBL_CREATE_ALARMS_FILTER_CONFIRM"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"),
-									width: 600
-								}).then(function() {
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+								ms.show();
+								
+								function onAccept() {
 
 									let filteredAlarms = [];
 
@@ -681,8 +679,8 @@ export default class AlarmFilteredWizard {
 											$$(self.createView).close();
 
 										});
-									}
-								});
+									}									
+								};
 							}
 						}
 					}

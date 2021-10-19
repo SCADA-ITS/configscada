@@ -1,13 +1,15 @@
 import { util } from "../../../lib/util.js";
 import TreeView from "../../../component/treeview.js";
+import MessageBox from "../../../component/messageBox.js";
 
 export default class PasLibrary {
 
-	constructor(pasLibrary, callBack, zones) {
+	constructor(pasLibrary, callBack, zones, orderEdit) {
 
 		this.pasLibrary = pasLibrary;
 		this.callBack = callBack;
 		this.zones = zones;
+		this.orderEdit = orderEdit;
 
 		this.treeView;
 		this.selectedPasLibraryNode;
@@ -276,6 +278,8 @@ export default class PasLibrary {
 
 		function getBottomView() {
 
+			let label = (self.orderEdit) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND");
+
 			let bottomView = {
 				rows: [
 					{ height: 10 },
@@ -286,7 +290,7 @@ export default class PasLibrary {
 								view: "button",
 								css: "dialog-cancel",
 								width: 130,
-								height: 35,
+								height: 40,
 								value: i18n.t("LBL_CANCEL"),
 								click: function() {
 
@@ -300,24 +304,30 @@ export default class PasLibrary {
 								view: "button",
 								css: "dialog-accept",
 								width: 130,
-								height: 35,
-								value: i18n.t("LBL_SEND"),
+								height: 40,
+								value: label,
 								disabled: true,
 								click: function() {
 
 									let parentWindow = this.getTopParentView();
+									let textMessage = (self.orderEdit) ? i18n.t("LBL_PAS_LIBRARY_ADD_CONFIRM_DESCRIPTION") : i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION");
+									
+									let ms = new MessageBox (MessageBox.CONFIRM, textMessage, onAccept, null);
+									ms.show();
+									
+									function onAccept(res) {
+									
+										if (self.orderEdit) {
 
-									webix.confirm({
-										title: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM"),
-										ok: i18n.t("LBL_ACCEPT"),
-										cancel: i18n.t("LBL_CANCEL"),
-										text: i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION"),
-										width: 600
-									}).then(function(res) {
+											self.callBack(self.selectedPasLibraryNode);
 
-										self.callBack(self.selectedPasLibraryNode.pasMessage.message);
-										parentWindow.close();
-									});
+										} else {
+
+											self.callBack(self.selectedPasLibraryNode.pasMessage.message);
+										}
+
+										parentWindow.close();										
+									};
 								}
 							},
 							{ width: 20 }

@@ -1,5 +1,6 @@
-import CalendarDialogBox from "../../component/calendarDialogBox.js";
 import { util } from "../../lib/util.js";
+import CalendarDialogBox from "../../component/calendarDialogBox.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class AlarmFilteredMute {
 
@@ -40,16 +41,13 @@ export default class AlarmFilteredMute {
 
 						if (counter === arrAlarms.length) {
 
-							webix.confirm({
-								title: i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM"),
-								ok: i18n.t("LBL_YES"),
-								cancel: i18n.t("LBL_NO"),
-								text: i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"),
-								width: 600
-							}).then(function() {
-
+							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ALARM_REMOVE_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+							ms.show();
+							
+							function onAccept() {
+								
 								deleteFilters(action, filterAlarms);
-							});
+							};
 						}
 					});
 				});

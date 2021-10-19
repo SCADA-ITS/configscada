@@ -1,6 +1,6 @@
 import { util } from "../../../lib/util.js";
 import { adapter } from "../../../lib/adapter.js";
-
+import MessageBox from "../../../component/messageBox.js";
 
 export default class TunnelContent {
 
@@ -158,14 +158,11 @@ export default class TunnelContent {
 											on: {
 												onItemClick() {
 
-													webix.confirm({
-														title: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM"),
-														ok: i18n.t("LBL_ACCEPT"),
-														cancel: i18n.t("LBL_CANCEL"),
-														text: i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"),
-														width: 600
-													}).then(function() {
-
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_STOP_CONFIRM_DESCRIPTION"), onAccept, null);
+													ms.show();
+													
+													function onAccept() {
+														
 														let command = self.parent.config.commands.SEND_VENTILATION_STOP;
 														command.elementId = self.tunnelId;
 
@@ -180,8 +177,8 @@ export default class TunnelContent {
 
 																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 															}
-														});
-													});
+														});														
+													};
 												}
 											}
 										},
@@ -197,14 +194,11 @@ export default class TunnelContent {
 											disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START"),
 											on: {
 												onItemClick() {
-
-													webix.confirm({
-														title: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM"),
-														ok: i18n.t("LBL_ACCEPT"),
-														cancel: i18n.t("LBL_CANCEL"),
-														text: i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"),
-														width: 600
-													}).then(function() {
+													
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_START_CONFIRM_DESCRIPTION"), onAccept, null);
+													ms.show();
+													
+													function onAccept() {
 
 														let command = self.parent.config.commands.SEND_VENTILATION_START;
 														command.elementId = self.tunnelId;
@@ -220,8 +214,8 @@ export default class TunnelContent {
 
 																webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 															}
-														});
-													});
+														});														
+													};
 												}
 											}
 										}

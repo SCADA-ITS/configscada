@@ -1,5 +1,6 @@
 import DataTable from "../../../component/datatable.js";
 import InputDialogBox from "../../../component/inputDialogBox.js";
+import MessageBox from "../../../component/messageBox.js";
 
 export default class GenericSignalingCommand {
 
@@ -211,17 +212,14 @@ export default class GenericSignalingCommand {
 							commandId: 2,
 							function: function() {
 
-								webix.confirm({
-									title: i18n.t("LBL_DIALOG_UNDO_COMMAND_PARAMS"),
-									ok: i18n.t("LBL_YES"),
-									cancel: i18n.t("LBL_NO"),
-									text: i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMAND_PARAMS"),
-									width: 600
-								}).then(function() {
-
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMAND_PARAMS"), onAccept, null);
+								ms.show();
+								
+								function onAccept() {
+									
 									self.dtParams.clear();
-									self.dtParams.add(getInitialData());
-								});
+									self.dtParams.add(getInitialData());									
+								};
 							}
 						});
 
@@ -385,16 +383,13 @@ export default class GenericSignalingCommand {
 							on: {
 								onItemClick() {
 
-									webix.confirm({
-										title: i18n.t("LBL_SEND_SIGNALING_CONFIRM"),
-										ok: i18n.t("LBL_YES"),
-										cancel: i18n.t("LBL_NO"),
-										text: (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")),
-										width: 600
-									}).then(function() {
-
+									let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
+									ms.show();
+									
+									function onAccept() {
+										
 										sendCommandElement();
-									});
+									};
 								}
 							}
 						}
@@ -419,12 +414,8 @@ export default class GenericSignalingCommand {
 
 							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
 
-								webix.alert({
-									title: i18n.t("LBL_COMMAND_SEND"),
-									ok: i18n.t("LBL_ACCEPT"),
-									text: i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"),
-									width: 600
-								})
+								let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+								ms.show();
 							});
 						}
 					}

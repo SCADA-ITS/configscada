@@ -1,5 +1,5 @@
 import GenericModule from "../modules/genericModule.js";
-
+import MessageBox from "../component/messageBox.js";
 
 export default class AuditLogModule extends GenericModule {
 
@@ -30,22 +30,18 @@ export default class AuditLogModule extends GenericModule {
 
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
-				webix.confirm({
-					title: i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM"),
-					ok: i18n.t("LBL_YES"),
-					cancel: i18n.t("LBL_NO"),
-					text: i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"),
-					width: 600
-
-				}).then(function() {
-
+				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), onAccept, null);
+				ms.show();
+				
+				function onAccept() {
+					
 					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.recognize, { "auditLogIds": self.args.selectedPks }).then(function(data) {
 						if (self.args.callbacks.length > 0) {
 
 							self.args.callbacks[0]();
 						}
-					});
-				});
+					});				
+				};
 			}
 		}
 
