@@ -56,6 +56,8 @@ class AdapterGridPlanMonitor extends AdapterGrid {
 				filterPlanState(dataRow);
 				currentPlanOrder(dataRow);
 				flattenPlanStateType(dataRow);
+				
+				data.add(dataRow);
 			}
 
 		} catch (IllegalArgumentException e) {

@@ -290,18 +290,17 @@ export default class CamViewer {
 	drawButtons(containerId) {
 
 		let self = this;
-		let imgWidth = self.img.width;
-		let imgHeight = self.img.height;
+		//let imgWidth = self.img.width;
+		//let imgHeight = self.img.height;
+		let img = document.getElementById("img-" + self.element.id + "-" + self.uid);
 
-		let margin = 10
+		let marginRight = 10
 		let bottom = 10;
 
 		let w = (self.w == 0) ? containerId.$width : self.w;
 		let h = (self.h == 0) ? containerId.$height : self.h;
 
 		if ((h > w) && !self.expandCam) {
-
-			let img = document.getElementById("img-" + self.element.id + "-" + self.uid);
 			
 			if (img) {
 				
@@ -309,25 +308,21 @@ export default class CamViewer {
 			}
 		}
 
-		if (!self.fit) {
-
-			let ratio = h / imgHeight;
-			let wRatio = Math.floor(imgWidth * ratio);
-
-			margin = Math.floor((w - wRatio) / 2);
-
+		if (img) {
+			
+			marginRight += (w - img.width) / 2;	
 		}
 
-		webix.ui(getCamControls(margin, containerId), $$("cam-controls-" + self.uid));
-		webix.ui(getButtons(margin, bottom), $$("camviewer-buttons-" + self.uid));
-		webix.ui(self.getCamName(margin, bottom, containerId), $$("camviewer-name-" + self.uid));
+		webix.ui(getCamControls(), $$("cam-controls-" + self.uid));
+		webix.ui(getButtons(), $$("camviewer-buttons-" + self.uid));
+		webix.ui(self.getCamName(marginRight, bottom, containerId), $$("camviewer-name-" + self.uid));
 
 
-		function getButtons(marginRight, btm) {
+		function getButtons() {
 
 			let viewButtons = {
 				id: "camviewer-buttons-" + self.uid,
-				bottom: btm,
+				bottom: bottom,
 				right: marginRight,
 				cols: [
 					{ width: 1 }
@@ -630,16 +625,14 @@ export default class CamViewer {
 			return viewButtons;
 		}
 
-		function getCamControls(marginRight, contId) {
+		function getCamControls() {
 
 			const CTRL_ROWS = 5;
 			const CTRL_COLS = 3;
 
-			let width = (self.w == 0) ? contId.$width : self.w;
-			let height = (self.h == 0) ? contId.$height : self.h;
-			//let sizeCorrection = (height > width) ? 0.6 : 1;
-			let sizeCorrection = (height > 500 || width > 500) ? 1 : 0.6;
-			let top = (height > width) ? 100 : 50;
+			let sizeCorrection = (img.width / h) * 0.6;
+
+			let top = bottom;
 
 			let presets = [];
 
@@ -687,9 +680,9 @@ export default class CamViewer {
 				right: marginRight,
 				hidden: true,
 				rows: [
-					{},
+				//	{ height : top },
 					{
-						height: Math.floor(h / 2),
+						height: img.height * 0.7,
 						cols: [
 							{ width: 1 },
 							{
