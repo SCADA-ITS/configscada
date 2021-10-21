@@ -1400,14 +1400,30 @@ export default class TubeContent {
 
 				if (!lightingMode || self.parent.config.lightingModeOptions.find(option => option.id == lightingMode).disable) {
 
-					self.tubeCircuitsDataTable.disable();
-					self.tubeDalisDataTable.disable();
+					if (self.tubeCircuitsDataTable) {
+						
+						self.tubeCircuitsDataTable.disable();	
+					}
+					
+					if (self.tubeDalisDataTable) {
+					
+						self.tubeDalisDataTable.disable();	
+					}
+					
 					$$("view-content-button-change-regime-" + self.parent.uid).disable();
 
 				} else {
 
-					self.tubeCircuitsDataTable.enable();
-					self.tubeDalisDataTable.enable();
+					if (self.tubeCircuitsDataTable) {
+						
+						self.tubeCircuitsDataTable.enable();	
+					}
+					
+					if (self.tubeDalisDataTable) {
+					
+						self.tubeDalisDataTable.enable();	
+					}
+					
 					$$("view-content-button-change-regime-" + self.parent.uid).enable();
 				}
 
