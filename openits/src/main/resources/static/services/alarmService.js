@@ -252,7 +252,7 @@ export default class AlarmService extends GenericModule {
 
 					if (alarmLevel.notification === 'true' && !isFiltered(be) && !isRecognized(be)) {
 
-						let notification = new Notification(NotificationType.ALARM, date, equipment, alarmConfig.alias, alarmLevel.sound, undefined);
+						let notification = new Notification(NotificationType.ALARM, date, equipment, i18n.t(alarmConfig.labelAlias), alarmLevel.sound, undefined);
 
 						let winNotif = webix.ui(notification.getView());
 
