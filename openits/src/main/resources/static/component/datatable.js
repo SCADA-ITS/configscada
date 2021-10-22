@@ -1,5 +1,6 @@
 import { util } from "../lib/util.js";
 import { adapter } from "../lib/adapter.js";
+import MessageBox from "./messageBox.js";
 
 const EMPTY_ICON = "./img/grid/empty.png"; 
 
@@ -1436,43 +1437,44 @@ export default class DataTable {
 
 	restoreFilters() {
 
-		let self = this;
 		let grid = $$("dt-" + this.uid);
 
-		if (Array.isArray(this.filteredFields) && this.filteredFields.length > 0)  {
+		grid.filterByAll();
 
-			var fields = Object.keys(this.filteredFields);
-
-			grid.filter(function(data) {
-
-				let res = true;
-
-				fields.forEach(field => {
-
-					if (res === true && self.filteredFields[field]) {
-
-						let metadataField = self.metadata.gridFields.find(f => {
-
-							return f.sourceField === field;
-						});
-
-						if (metadataField) {
-
-							if ((metadataField.parameterized)) {
-
-								res &= (data[field].toString() === self.filteredFields[field]);
-							}
-							else {
-
-								res &= (data[field].toString().toLowerCase().indexOf(self.filteredFields[field].toString().toLowerCase())) != -1;
-							}
-						}
-					}
-				});
-
-				return res;
-			});
-		}
+		//		if (Array.isArray(this.filteredFields) && this.filteredFields.length > 0)  {
+		//
+		//		var fields = Object.keys(this.filteredFields);
+		//
+		//		grid.filter(function(data) {
+		//
+		//			let res = true;
+		//
+		//			fields.forEach(field => {
+		//
+		//				if (res === true && self.filteredFields[field]) {
+		//
+		//					let metadataField = self.metadata.gridFields.find(f => {
+		//
+		//						return f.sourceField === field;
+		//					});
+		//
+		//					if (metadataField) {
+		//
+		//						if ((metadataField.parameterized)) {
+		//
+		//							res &= (data[field].toString() === self.filteredFields[field]);
+		//						}
+		//						else {
+		//
+		//							res &= (data[field].toString().toLowerCase().indexOf(self.filteredFields[field].toString().toLowerCase())) != -1;
+		//						}
+		//					}
+		//				}
+		//			});
+		//
+		//			return res;
+		//		});
+		//}
 	}
 
 
@@ -1606,9 +1608,111 @@ export default class DataTable {
 	}
 
 	datatableCapture() {
+
 		let self = this;
 		let datatable = $$("dt-" + this.uid);
 		let sortedByField = this.sortedByField;
+
+		datatable.filterByAll = function() {
+
+			let filteredValues = [];
+			let gridOptionsFilterFieldId = self.getGridOptions(GridOptions.FILTER_FIELD_ID)
+			let gridOptionsFilterFieldValue = self.getGridOptions(GridOptions.FILTER_FIELD_VALUE)
+			let existsInitFilter = (gridOptionsFilterFieldId && gridOptionsFilterFieldValue) ? true :false;
+			let txtSearch = $$("txtSearch-" + self.uid);
+
+			// gets filter values
+			self.metadata.gridFields.forEach(gridField => {
+
+				if (datatable.getFilter(gridField.sourceField) && datatable.getFilter(gridField.sourceField).value) {
+					
+					filteredValues.push({
+						sourceField: gridField.sourceField,
+						value: datatable.getFilter(gridField.sourceField).value.toLowerCase()
+					});
+				}
+			});
+			
+			// unfilters the table if values were not selected and init filters not exists
+			if (filteredValues.length === 0 && !existsInitFilter && (!txtSearch || (txtSearch && !txtSearch.getValue()))) {
+					
+				datatable.filter();
+			}
+			else {
+			
+				datatable.filter(function(obj) {
+
+					let res = check_search_filter(obj);
+	
+					for (let i = 0; res && i < filteredValues.length; i++) {
+	
+						let filteredValue = filteredValues[i];
+	
+						res &= ((obj[filteredValue.sourceField]).toLowerCase().indexOf(filteredValue.value) !== -1);
+					}
+	
+					res = res & checkInitFilter(obj);
+	
+					return res;
+				});	
+			}
+			
+
+			function checkInitFilter(row) {
+
+				let res = true;
+
+				if (existsInitFilter) {
+
+					let gridField = self.metadata.gridFields.find(e => e.id == gridOptionsFilterFieldId);
+
+					if (gridField) {
+
+						if (row) {
+
+							res &= ((row[gridField.sourceField]).indexOf(gridOptionsFilterFieldValue) !== -1);
+						}
+					}
+				}
+
+				return res;
+			}
+			
+			function check_search_filter(row) {
+		
+				let txtSearch = $$("txtSearch-" + self.uid);
+				let grid = $$("dt-" + self.uid);
+				
+				let res = false;
+				
+				if (grid && txtSearch && txtSearch.getValue()) {
+					
+					let value = txtSearch.getValue().toLowerCase();
+									
+					grid.config.columns.forEach(col => {
+						
+						if (col.id != undefined && row[col.id]) {
+		
+							if (col.sort === DataType.DATE.sort) {
+		
+								res |= (row[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);
+							}
+							else {
+		
+								res |= (String(row[col.id]).toLowerCase().indexOf(value) !== -1);
+							}
+						}
+					});
+				}
+				else {
+					
+					res = true;
+				}
+				
+				return res;
+			}
+
+		};
 
 		datatable.attachEvent("onAfterSort", function(by, dir, as) {
 
@@ -1841,37 +1945,55 @@ export default class DataTable {
 			}
 		}
 	}
-
+	
 	search_callback() {
 
 		let self = this;
 		let grid = $$("dt-" + this.uid);
 		let txtSearch = $$("txtSearch-" + this.uid);
+		let gridOptionsFilterFieldId = self.getGridOptions(GridOptions.FILTER_FIELD_ID)
+		let gridOptionsFilterFieldValue = self.getGridOptions(GridOptions.FILTER_FIELD_VALUE)
+		let existsInitFilter = (gridOptionsFilterFieldId && gridOptionsFilterFieldValue) ? true : false;
 
 		if (!webix.isUndefined(grid) && !webix.isUndefined(txtSearch)) {
 
 			txtSearch.attachEvent("onTimedKeyPress", function() {
-				let value = this.getValue().toLowerCase(); // input data is derived
-				grid.filter(function(obj) {  // here it filters all titles from the dataset
-
-					let res = false;
-					grid.config.columns.forEach(col => {
-						if (col.id != undefined && obj[col.id]) {
-
-							if (col.sort === DataType.DATE.sort) {
-
-								res |= (obj[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);
-							}
-							else {
-
-								res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);
-							}
-						}
-					});
-
-					return res;
-				});
 				
+				grid.filterByAll();
+//				let value = this.getValue().toLowerCase(); // input data is derived
+//				grid.filter(function(obj) {  // here it filters all titles from the dataset
+//
+//					let res = false;
+//					grid.config.columns.forEach(col => {
+//						if (col.id != undefined && obj[col.id]) {
+//
+//							if (col.sort === DataType.DATE.sort) {
+//
+//								res |= (obj[col.id].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES).indexOf(value) !== -1);
+//							}
+//							else {
+//
+//								res |= (String(obj[col.id]).toLowerCase().indexOf(value) !== -1);
+//
+//								if (existsInitFilter) {
+//
+//									let gridField = self.metadata.gridFields.find(e => e.id == gridOptionsFilterFieldId);
+//
+//									if (gridField) {
+//
+//										if (obj) {
+//
+//											res &= ((obj[gridField.sourceField]).indexOf(gridOptionsFilterFieldValue) !== -1);
+//										}
+//									}
+//								}
+//							}
+//						}
+//					});
+//
+//					return res;
+//				});
+//				
 				self.restoreSort();
 			});
 			
@@ -1948,12 +2070,15 @@ export default class DataTable {
 				// Multiselect not allowed with 2 o more selected
 				if (selectedPks.length > 1 && gridCommand.multiselect === false) {
 
-					webix.alert({
-						title: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"),
-						text: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"),
-						type: "alert-error",
-						width: 500
-					});
+					let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"), null, null);
+					ms.show();
+					
+//					webix.alert({
+//						title: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"),
+//						text: i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT_DESCRIPTION"),
+//						type: "alert-error",
+//						width: 500
+//					});
 				}
 				// One or more selected and multiselect allowed
 				else {
@@ -1981,12 +2106,16 @@ export default class DataTable {
 			else {
 				// Required one or more selected
 				if (gridCommand.itemRequired) {
-					webix.alert({
-						title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
-						text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
-						type: "alert-warning",
-						width: 500
-					});
+					
+					let ms = new MessageBox (MessageBox.WARN,i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"), null, null);
+					ms.show();
+					
+//					webix.alert({
+//						title: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED"),
+//						text: i18n.t("LBL_COMMAND_NO_ROWS_SELECTED_DESCRIPTION"),
+//						type: "alert-warning",
+//						width: 500
+//					});
 				}
 				// No required select rows
 				else {
@@ -2232,12 +2361,15 @@ export default class DataTable {
 
 			printButton.attachEvent("onItemClick", function(id, e) {
 
-				webix.alert({
-					title: i18n.t("LBL_NOT_IMPLEMENTED"),
-					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
-					type: "alert-error",
-					width: 500
-				});
+				let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"), null, null);
+				ms.show();
+				
+//				webix.alert({
+//					title: i18n.t("LBL_NOT_IMPLEMENTED"),
+//					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
+//					type: "alert-error",
+//					width: 500
+//				});
 			});
 		}
 	}
@@ -2282,12 +2414,15 @@ export default class DataTable {
 
 			xlsButton.attachEvent("onItemClick", function(id, e) {
 
-				webix.alert({
-					title: i18n.t("LBL_NOT_IMPLEMENTED"),
-					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
-					type: "alert-error",
-					width: 500
-				});
+				let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"), null, null);
+				ms.show();
+				
+//				webix.alert({
+//					title: i18n.t("LBL_NOT_IMPLEMENTED"),
+//					text: i18n.t("LBL_NOT_IMPLEMENTED_DESCRIPTION"),
+//					type: "alert-error",
+//					width: 500
+//				});
 			});
 		}
 	}

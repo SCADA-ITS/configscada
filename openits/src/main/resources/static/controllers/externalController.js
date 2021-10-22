@@ -4,82 +4,101 @@ import EntitiesManager from "../managers/entitiesManager.js";
 import WindowManager from "../managers/windowManager.js";
 import ServiceManager from "../managers/serviceManager.js";
 
-var userData = util.user.auth();
 
-if (!userData) {
-	window.location = "#";
-}
-
-document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
-
-window.i18n = new I18n(userData.locale);
 
 window.onload = function() {
-
-	webix.delay(function() {
-
-		initialize();
-	}, null, null, 1000);
-}
-
-function initialize() {
-
-	let main_screen = {};
-	window.em = new EntitiesManager();
-	window.wm = new WindowManager();
-	util.module.checkSystemPermissions(window.em.getAll(EntityType.MODULE), userData);
 	
-	window.sm = new ServiceManager(onLoad);
-	
-	main_screen = {
+	var userData = util.user.auth();
+
+	if (userData) {
 		
-		id: "main-view",
-		cols: [util.ui.getViewDrawLoading()]
+		initialize();
+	}
+	else {
+		
+		window.location = "#";
 	}
 	
-	main_screen = {
-		id: "main-view",
-		type: "space",
-		rows: [
-			{
-				id: "loading-main",
-				cols: util.ui.getViewDrawLoading() 
-			},
-			{ 
-				id: "view-main",
-				hidden: true 
-			}
-		],
-		borderless: 0
-	};
-	
-	webix.ui(main_screen);
-	
-	function onLoad() {
-	
+	function initialize() {
+		
+		document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
+		
 		const queryString = window.location.search;
 		console.log(queryString);
 		const urlParams = new URLSearchParams(queryString);
-		
-		const moduleId = parseInt(urlParams.get('module'));
-		const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
-		const args = urlParams.get('args') ? JSON.parse(urlParams.get('args')) : undefined;
-		
-		let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
-		let moduleAction = moduleActionId ? { id: moduleActionId } : undefined; 
-		
-		if (module) {
+				
+		const height = urlParams.get('height') ? parseInt(urlParams.get('height')) : 1024;
+		const width = urlParams.get('width') ? parseInt(urlParams.get('width')) : 768;
 	
-			$$("loading-main").hide();
-			$$("view-main").show();
+		let main_screen = {
+			id: "main-view",
+			type: "space",
+			rows: [
+				{},
+				{ 
+					height: height,
+					cols: [
+						{},
+						{
+							id: "loading-main",
+							width: width,
+							rows: [util.ui.getViewDrawLoading(true)] 
+						},
+						{ 
+							id: "view-content",
+							width: width,
+							hidden: true,
+							rows: [{ id: "view-module"}]
+							
+						},
+						{}
+					] 
+				},
+				{}
+			],
+			borderless: 0
+		};
+		
+		webix.ui(main_screen);
+		
+		window.i18n = new I18n(userData.locale, onLoadI18n);
+		
+		window.isExternal = true;
+		
+		function onLoadI18n() {
+		
+			window.em = new EntitiesManager();
+			window.wm = new WindowManager();
+			util.module.checkSystemPermissions(window.em.getAll(EntityType.MODULE), userData);
 			
-			util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawView, args);
+			window.sm = new ServiceManager(onLoadServiceManager);
 			
-			function drawView(view) {
-	
-				webix.ui(view, $$("view-main"));
-			}
+			function onLoadServiceManager() {
+			
+				const moduleId = parseInt(urlParams.get('module'));
+				const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
+				
+				let args = urlParams.get('args') ? urlParams.get('args') : {};
+				
+				args.containerId = "view-content";
+				
+				let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
+				let moduleAction = moduleActionId ? { id: moduleActionId } : undefined; 
+				
+				if (module) {
+			
+					$$("loading-main").hide();
+					$$("view-content").show();
+					
+					util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawView, args);
+					
+					function drawView(view) {
+			
+						webix.ui(view, $$("view-module"));
+					}
+				}	
+			}	
 		}	
 	}
-	
 }
+

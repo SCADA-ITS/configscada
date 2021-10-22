@@ -107,14 +107,31 @@ export let util = {
 					cols: [
 						{
 							id: winId + "-label",
+							css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
 							view: "label",
 							//css: "notification-center-title", 
 							label: i18n.t(label)
 						},
 						{
 							view: "icon",
-							hidden: !taskManagerService,
-							icon: "mdi mdi-open-in-new",
+							hidden: !taskManagerService || !externalizable || window.isExternal,
+							icon: "mdi mdi-dock-window",
+							tooltip: i18n.t("LBL_WINDOW_DOCK"),
+							on: {
+								onItemClick: function(id) {
+									
+									if (taskManagerService) {
+								
+										taskManagerService.dock(winId, lazyClass);
+									}
+								}
+							}
+						},
+						{
+							view: "icon",
+							hidden: !taskManagerService || !externalizable,
+							icon: "mdi mdi-monitor",
+							tooltip: i18n.t("LBL_WINDOW_EXTERNALIZE"),
 							on: {
 								onItemClick: function(id) {
 									
@@ -127,8 +144,9 @@ export let util = {
 						},
 						{
 							view: "icon",
-							hidden: !taskManagerService,
+							hidden: !taskManagerService || !externalizable || window.isExternal,
 							icon: "mdi mdi-window-minimize",
+							tooltip: i18n.t("LBL_WINDOW_MINIMIZE"),
 							on: {
 								onItemClick: function(id) {
 									
@@ -143,6 +161,7 @@ export let util = {
 							view: "icon",
 							//css: "notification-center-close-btn",
 							icon: "mdi mdi-close",
+							tooltip: i18n.t("LBL_WINDOW_CLOSE"),
 							on: {
 								onItemClick: function(id) {
 									$$(winId).close();
@@ -261,14 +280,25 @@ export let util = {
 			viewModule = lazyClass.runOne(module.jsMethodDraw)
 
 			if (viewModule) {
+				
+				let genericModule = {
+					module: module,
+					moduleAction: moduleAction,
+					args: args
+				}
 
 				$$(MAIN_TAB_ID).addView({
 
 					id: tab_id,
+//					header: `<div style='float: left; width: 250px;'>
+//								<img class='tab-icon' src='${icon}'/>
+//								<span class='tab-text'>${i18n.t(label)}</span>
+//								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
+//							</div>`,
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
 								<span class='tab-text'>${i18n.t(label)}</span>
-								<span style='float: right; padding-top: 2px'><a href='#'><img src='./img/externalize_button.png'></a></span>
+								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
 						autoheight: true,
@@ -284,6 +314,18 @@ export let util = {
 						]
 					}
 				});
+				
+				let closeButtons = $$(MAIN_TAB_ID).getNode().getElementsByClassName('webix_tab_close');
+			
+				if (closeButtons) {
+					
+					let closeButtonsArray = Array.from(closeButtons);
+					
+					closeButtonsArray.forEach(closeButton => {
+						
+						closeButton.title = i18n.t("LBL_TAB_CLOSE");
+					});
+				}
 
 				$$(MAIN_TAB_ID).getTabbar().setValue(tab_id.replace("tab", "tab_body"));
 			}
@@ -1008,6 +1050,7 @@ export let util = {
 				elements: [
 					{
 						view: "label",
+						css: "window-head-title-wo-buttons",
 						label: title
 					},
 					{
@@ -1066,13 +1109,12 @@ export let util = {
 			let icon = 'img/module/default.png';
 
 			if (mainTab) {
-
+				
 				mainTab.addView({
 					id: tabId,
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
 								<span class='tab-text'>${title}</span>
-								<span style='float: right; padding-top: 2px'><a href='#'><img src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
 						autoheight: true,
@@ -1112,7 +1154,7 @@ export let util = {
 			}
 		},
 
-		setTitle(containerId, title, shortTitle, icon) {
+		setTitle(containerId, title, shortTitle) {
 
 			let container = $$(containerId);
 
@@ -1142,19 +1184,18 @@ export let util = {
 
 					if (tabToChange) {
 
-						let newIcon = icon ? icon : "img/module/default.png";
 						let newTabTitle = (shortTitle) ? shortTitle : title;
-
-						tabToChange.value = `<div style='float: left; width: 250px;'>
-												<img class='tab-icon' src='${newIcon}'/>
-												<span class='tab-text'>${newTabTitle}</span>
-												<span style='float: right; padding-top: 2px'>
-												<a href='#'><img src='./img/externalize_button.png'></a>
-												</span>
-											</div>`;
-
-						tabs.render();
-
+						let tabTexts = Array.from(tabs.getNode().getElementsByClassName("tab-text"));
+						
+						if (Array.isArray(tabTexts)) {
+							
+							let tabText = tabTexts.find(e => e.parentNode && e.parentNode.parentNode && e.parentNode.parentNode.getAttribute("button_id") == containerId);
+							
+							if (tabText) {
+								
+								tabText.innerText = newTabTitle;
+							}
+						}
 					}
 				}
 			}

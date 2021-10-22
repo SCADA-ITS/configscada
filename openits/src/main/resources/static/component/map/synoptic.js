@@ -314,7 +314,7 @@ export default class Synoptic extends GenericMap {
 					{
 						css: { "background": "var(--blue-mid2-opacity-5) !important", "border-radius": "10px !important" },
 						height: 35,
-						hidden: (self.graphicIcons || (Array.isArray(self.graphicIcons) && self.graphicIcons.length === 0)),
+						hidden: (Array.isArray(self.graphicIcons) && self.graphicIcons.length === 0),
 						cols: [
 							{
 								view: "button",

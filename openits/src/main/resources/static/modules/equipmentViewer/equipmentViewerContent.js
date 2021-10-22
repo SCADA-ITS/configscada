@@ -46,7 +46,8 @@ export default class EquipmentViewerContent {
 						},
 						{ width: 10 }
 					]
-				}
+				},
+				{}
 			]
 		}
 

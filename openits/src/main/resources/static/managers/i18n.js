@@ -1,24 +1,9 @@
 const I18N_ENDPOINT_TRANSLATIONS = appConfig.restUrl + "i18n/translations";
 const I18N_MODULE = 1;
 
-function load(i18n) {
+function load(i18n, onLoad) {
 			
 	let translations;
-	
-//	let translationsResponse = webix.ajax().sync().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`);
-//	
-//	if (translationsResponse && translationsResponse.responseText) {
-//						
-//		translations = JSON.parse(translationsResponse.responseText);
-//		
-//		if (translations != undefined && Array.isArray(translations)) {
-//			
-//			translations.forEach(e => {
-//				
-//				i18n.labels[e.label] = e.translation;
-//			});
-//		}
-//	}
 	
 	webix.ajax().get(`${I18N_ENDPOINT_TRANSLATIONS}/${i18n.localeId}/${I18N_MODULE}`).then(function(dat){
 		
@@ -34,6 +19,11 @@ function load(i18n) {
 				});
 			}
 		}
+		
+		if (onLoad) {
+			
+			onLoad();
+		}
 	});
 	
 	webix.i18n.setLocale(i18n.localeCode);
@@ -42,13 +32,13 @@ function load(i18n) {
 
 export default class I18n {
 
-	constructor(locale) {
+	constructor(locale, onLoad) {
 	
 		this.localeId = locale.id;
 		this.localeCode = locale.code.replace("_", "-");
 		this.labels = {};
 		
-		load(this);
+		load(this, onLoad);
 	}
 	
 	getLocale() {

@@ -1,7 +1,7 @@
 import { util } from "../lib/util.js";
 
 const INCIDENT_REPORT_SUMMARY_END_POINT = "incidents/reports/${id}/summary"
-const PLAN_END_POINT = "plans"
+const PLAN_END_POINT = "plans/${id}"
 
 
 export let adapter = {
@@ -433,7 +433,7 @@ export let adapter = {
 
 						if (planSchedule.plan && (gridData.action == 'CREATE' || gridData.action == 'UPDATE')) {
 
-							webix.ajax().get(appConfig.restUrl + PLAN_END_POINT + "/" + planSchedule.plan.id).then(function(dat) {
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(PLAN_END_POINT, { id: planSchedule.plan.id })).then(function(dat) {
 
 								if (dat != null) {
 
@@ -512,6 +512,7 @@ export let adapter = {
 				if (data != undefined && Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
 
 					let gridData = {};
+					let timestamp = data.timestamp;
 					gridData.data = [];
 					gridData.action = data.action;
 
@@ -519,6 +520,7 @@ export let adapter = {
 
 						let dataItem = {};
 						dataItem.id = plan.id;
+						dataItem.lastUpdate = new Date(timestamp);
 
 						if (gridData.action === 'UPDATE') {
 

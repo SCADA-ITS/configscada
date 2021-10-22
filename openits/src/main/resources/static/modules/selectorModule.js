@@ -122,7 +122,7 @@ export default class SelectorModule extends GenericModule {
 
 							loadModule(node.moduleId);
 
-							util.ui.setTitle(self.args.containerId, i18n.t(node.label), undefined, node.image ? "img/" + node.image : undefined);
+							util.ui.setTitle(self.args.containerId, i18n.t(node.label));
 						}
 					}
 				};

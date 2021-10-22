@@ -1,6 +1,8 @@
 import GenericModule from "../modules/genericModule.js";
 import Taskbar from "../component/general/taskbar.js";
 import Task from "../component/general/task.js";
+import { util } from "../lib/util.js"
+
 
 export default class TaskManagerService extends GenericModule {
 	
@@ -85,44 +87,110 @@ export default class TaskManagerService extends GenericModule {
 		}
 	}
 	
-	externalize(id, genericModule) {
+	dock(id, genericModule) {
 		
 		let win = $$(id);
 		
 		if (win) {
 			
-			let screenWidth = window.screen.width;
-			let screenHeight = window.screen.height;
+			util.module.open(genericModule.module, genericModule.moduleAction, VIEW_TYPE_TAB, null, genericModule.args);
+			this.remove(id);
+			win.close();
+		}
+	}
+	
+	undock(id, genericModule) {
+		
+		if ($$(MAIN_TAB_ID)) {
+			
+			let tabItems = $$(MAIN_TAB_ID).getMultiview().getChildViews();
+
+			if (tabItems) {
+
+				let tabBodyId = id.replace("tab", "tab_body")
+				let tabBody = tabItems.find(e => e.config.id.indexOf(tabBodyId) !== -1);
+
+				if (tabBody) {
+			
+					$$(MAIN_TAB_ID).removeView(tabBodyId);
+					
+					util.module.open(genericModule.module, genericModule.moduleAction, VIEW_TYPE_WINDOW, null, genericModule.args);		
+				}
+			}
+		}
+	}
+	
+	externalize(id, genericModule) {
+		
+		const CONTAINER_MARGIN = 20;
+		let win = $$(id);
+		
+		if (win) {
+			
+			let screenWidth = window.screen.availWidth;
+			let screenHeight = window.screen.availHeight;
 			let w = screenWidth;
 			let h = screenHeight;
 			let positionLeft = 0;
 			let positionTop = 0;
-	
-	
-			w = win.$width + 20;
-			h = win.height + 20;
+			let labelWindowParam  = genericModule.module.windowValues ? genericModule.module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL) : undefined;
+			let label = labelWindowParam ? labelWindowParam.value : 'LBL_UNDEFINED';
+			let isMaximizedWindowParam  = genericModule.module.windowValues ? genericModule.module.windowValues.find(e => e.windowParam.id === WindowParam.IS_MAXIMIZED) : undefined;
+			let isMaximized = false;
+			
+			if (isMaximizedWindowParam) {
+				
+				isMaximized = isMaximizedWindowParam.value == "true" || isMaximizedWindowParam.value == "1";
+			}
+			
+			w = isMaximized ? screenWidth : win.$width + (CONTAINER_MARGIN * 2);
+			h = isMaximized ? screenHeight : win.$height + (CONTAINER_MARGIN * 2);
 			positionLeft = screenWidth / 2 - w / 2;
 			positionTop = screenHeight / 2 - h / 2;
-	
 			
-			let features = "width=" + w + " ,height=" + h + ", top=" + positionTop + ", left=" + positionLeft + ", toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no";
+			if (genericModule.args && genericModule.args.containerId) {
+				
+				delete genericModule.args.containerId;
+			}
 			
 			let params = {
-				module: genericModule.module.id,
-				moduleAction: genericModule.moduleAction ? genericModule.moduleAction.id : "",
-			  	args: genericModule.args ? JSON.stringify(genericModule.args) : ""
+				width: w - (CONTAINER_MARGIN * 2),
+				height: isMaximized ? h - CONTAINER_MARGIN - 100 : h - CONTAINER_MARGIN,
+				module: genericModule.module.id
 			};
+			
+			if (genericModule.moduleAction && Object.keys(genericModule.moduleAction).length > 0 && Object.getPrototypeOf(genericModule.moduleAction) === Object.prototype) {
+				
+				params.moduleAction = genericModule.moduleAction.id;
+			}
+			
+			if (genericModule.args && Object.keys(genericModule.args).length > 0 && Object.getPrototypeOf(genericModule.args) === Object.prototype) {
+				
+				params.args = JSON.stringify(genericModule.args);
+			}
 			
 			let searchParams = new URLSearchParams(params);
 			
-			window.open("./external.html?" + searchParams.toString(), null, features);
-													
-			this.remove(id);
+			let features = `toolbar=no,
+							scrollbars=no,
+			    			location=no,
+			    			statusbar=no,
+			    			menubar=no,
+			    			resizable=0,
+			    			width=${w},
+			    			height=${h},
+			    			left=${positionLeft},
+			    			top=${positionTop}`;
 			
-			win.close();
+			let browser = window.open("./external.html?" + searchParams.toString(), i18n.t(label), features);
+			
+			if (browser) {
+				
+				browser.focus();
+				this.remove(id);
+				win.close();	
+			}
 		}
-		
-		
 	}
 	
 	remove(id) {

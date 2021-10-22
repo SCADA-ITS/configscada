@@ -19,6 +19,16 @@ window.i18n = new I18n(userData.locale);
 
 window.splashScreen = new SplashScreen(null);
 
+//window.extenalizeTab = function(tabId, module, moduleAction, args) {
+//	
+//	util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+//	
+//	if ($$(MAIN_TAB_ID)) {
+//		
+//		$$(MAIN_TAB_ID).removeView(tabId.replace("tab", "tab_body"));
+//	}
+//}
+
 window.onload = function() {
 
 	$.ajaxSetup({
