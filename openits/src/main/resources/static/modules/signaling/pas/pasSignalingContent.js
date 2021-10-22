@@ -1,8 +1,9 @@
 import { util } from "../../../lib/util.js";
-import DataTable from "../../../component/datatable.js";
-import PasLibrary from "../pas/pasLibrary.js";
-import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
 import { adapter } from "../../../lib/adapter.js";
+import PasLibrary from "../pas/pasLibrary.js";
+import DataTable from "../../../component/datatable.js";
+import SoundPlayerDialogBox from "../../../component/soundPlayerDialogBox.js";
+import MessageBox from "../../../component/messageBox.js";
 
 export default class PasSignalingContent {
 
@@ -321,12 +322,9 @@ export default class PasSignalingContent {
 
 								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 							} else {
-								webix.alert({
-									title: i18n.t("LBL_COMMAND_SEND"),
-									ok: i18n.t("LBL_ACCEPT"),
-									text: i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"),
-									width: 600
-								})
+								
+								let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+								ms.show();
 							}
 						});
 					}
@@ -337,13 +335,9 @@ export default class PasSignalingContent {
 						pasLibrary.show();
 						
 					} else {
-
-						webix.alert({
-							title: i18n.t("LBL_NOT_FOUND_PAS_LIBRARY"),
-							text: i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"),
-							type: "alert-error",
-							width: 600
-						});
+						
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NOT_FOUND_PAS_LIBRARY_TEXT"), null, null);
+						ms.show();
 					}
 
 				}
@@ -363,13 +357,10 @@ export default class PasSignalingContent {
 
 							let labelDescription = (onAirItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + onAirItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
 
-							webix.confirm({
-								title: i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM"),
-								ok: i18n.t("LBL_ACCEPT"),
-								cancel: i18n.t("LBL_CANCEL"),
-								text: labelDescription,
-								width: 600
-							}).then(function(res) {
+							let ms = new MessageBox (MessageBox.CONFIRM, labelDescription, onAccept, null);
+							ms.show();
+							
+							function onAccept(res) {
 
 								let selectedZonesValue = "[";
 
@@ -399,20 +390,15 @@ export default class PasSignalingContent {
 
 										webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 									}
-								});
-							});
-
+								});								
+							};
+					
 						} else {
 
-							let label = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING");
 							let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_NOT_ALL_SELECTED_ZONES_ARE_PLAYING_DESCRIPTION") : i18n.t("LBL_SELECTED_ZONE_IS_NOT_PLAYING_DESCRIPTION");
 
-							webix.alert({
-								title: label,
-								text: labelDescription,
-								type: "alert-warning",
-								width: 600
-							});
+							let ms = new MessageBox (MessageBox.WARN, labelDescription, null, null);
+							ms.show();
 						}
 					}
 				}
@@ -424,12 +410,9 @@ export default class PasSignalingContent {
 
 					if (!self.zonesDataTable.getSelectedItems()[0].messageAudio) {
 
-						webix.alert({
-							title: i18n.t("LBL_PAS_ZONE_NOT_AUDIO"),
-							text: i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION"),
-							type: "alert-warning",
-							width: 500
-						});
+						let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PAS_ZONE_NOT_AUDIO_DESCRIPTION"), null, null);
+						ms.show();
+
 					} else {
 
 						let soundPlayerDialogBox = new SoundPlayerDialogBox(self.zonesDataTable.getSelectedItems()[0].messageAudio);
@@ -501,19 +484,22 @@ export default class PasSignalingContent {
 			this.pasLibraries = JSON.parse(pasLibrariesResponse.responseText);
 		}
 
-		let elementResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.elementById, { id: this.element.id }));
+		let elementResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.elementById, { id:this.element.id }));
 
 		if (elementResponse && elementResponse.responseText) {
 
 			this.element = JSON.parse(elementResponse.responseText);
 		}
+		
+		if (this.element.childs) {
+	
+			this.zones = this.element.childs.filter(element => element.elementType.id == this.config.zone.type);
 
-		this.zones = this.element.childs.filter(element => element.elementType.id == this.config.zone.type);
+			this.zones.forEach(element => {
 
-		this.zones.forEach(element => {
-
-			this.updateZone(element);
-		});
+				this.updateZone(element);
+			});			
+		}
 
 		this.connectWS();
 	}

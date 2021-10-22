@@ -1,7 +1,9 @@
+import { util } from "../../../lib/util.js";
 import GenericModule from "../../genericModule.js";
 import PasSignalingContent from "./pasSignalingContent.js";
 import PasSignalingList from "./pasSignalingList.js";
-import { util } from "../../../lib/util.js";
+import PasSignalingOrderEdit from "./pasSignalingOrderEdit.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const LIST_PANEL_WIDTH = 300;
 
@@ -12,8 +14,10 @@ export default class VmsSignalingModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
+		this.args = args;
 		this.pasSignalingList = undefined;
 		this.pasSignalingContent = undefined;
+		this.pasSignalingOrderEdit = undefined;
 		this.currentElement = undefined;
 		this.elements = undefined;
 		this.selectedChildElementsHierarchyMap = new Map();
@@ -71,8 +75,13 @@ export default class VmsSignalingModule extends GenericModule {
 						self.elements = self.elements.filter(element => elementsId.includes(element.id));
 						self.currentElement = getElementFromElementId(elementsId[0]);
 					}
+	
+					self.viewMainListHierarchyHidden = (self.elements.length == 1);				
 					
-					self.viewMainListHierarchyHidden = (self.elements.length == 1);
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+						
+						self.viewMainListHierarchyHidden = true;
+					}
 
 					load();	
 				}
@@ -84,12 +93,8 @@ export default class VmsSignalingModule extends GenericModule {
 						
 						container.close();
 						
-						webix.alert({
-							title: i18n.t("LBL_NO_PAS_AVAILABLE"),
-							text: i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"),
-							type: "alert-error",
-							width: 500
-						});
+						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"), null, null);
+						ms.show();
 					}
 				}
 			}
@@ -233,16 +238,32 @@ export default class VmsSignalingModule extends GenericModule {
 				let view = {};
 				
 				let previousViewContent = self.currentViewContent;
+				
+				if(self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit){
+					
+					self.pasSignalingOrderEdit = new PasSignalingOrderEdit(self.config, self.currentElement, self.args);
+					self.pasSignalingOrderEdit.loadData();
+					view = self.pasSignalingOrderEdit.getView();
 
-				self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement, self.selectedChildElementsHierarchyMap.get(self.currentElement.id));
-				self.pasSignalingContent.loadData()			
-				view = self.pasSignalingContent.getView();
-			
+				} else {
+
+					self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement, self.selectedChildElementsHierarchyMap.get(self.currentElement.id));
+					self.pasSignalingContent.loadData();			
+					view = self.pasSignalingContent.getView();					
+				}
+
 				self.currentViewContent = view.id;
 				
 				webix.ui(view, $$(previousViewContent));
+				
+				if(self.pasSignalingContent){
 
-				self.pasSignalingContent.callbacks();
+					self.pasSignalingContent.callbacks();	
+
+				} else if (self.pasSignalingOrderEdit){
+					
+					self.pasSignalingOrderEdit.callbacks();
+				}
 			}
 			
 			return viewMain;
@@ -252,6 +273,19 @@ export default class VmsSignalingModule extends GenericModule {
 				
 			return self.elements.find(e => e.id == elementId);
 		}
+	}
+	
+		getSignaling() {
+		
+		let self = this;
+		let commandElement = undefined;
+		
+		if (self.pasSignalingOrderEdit) {
+					
+			commandElement = self.pasSignalingOrderEdit.getCommandElement();
+		}
+		
+		return commandElement;
 	}
 }
 

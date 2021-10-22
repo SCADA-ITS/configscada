@@ -310,24 +310,25 @@ export default class PasLibrary {
 								click: function() {
 
 									let parentWindow = this.getTopParentView();
-									let textMessage = (self.orderEdit) ? i18n.t("LBL_PAS_LIBRARY_ADD_CONFIRM_DESCRIPTION") : i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION");
-									
-									let ms = new MessageBox (MessageBox.CONFIRM, textMessage, onAccept, null);
-									ms.show();
-									
-									function onAccept(res) {
-									
-										if (self.orderEdit) {
 
-											self.callBack(self.selectedPasLibraryNode);
+									if (self.orderEdit) {
 
-										} else {
+										self.callBack(self.selectedPasLibraryNode);
+										parentWindow.close();
+										
+									} else {
+
+										let textMessage = (self.orderEdit) ? i18n.t("LBL_PAS_LIBRARY_ADD_CONFIRM_DESCRIPTION") : i18n.t("LBL_PAS_LIBRARY_SEND_CONFIRM_DESCRIPTION");
+
+										let ms = new MessageBox(MessageBox.CONFIRM, textMessage, onAccept, null);
+										ms.show();
+
+										function onAccept(res) {
 
 											self.callBack(self.selectedPasLibraryNode.pasMessage.message);
-										}
-
-										parentWindow.close();										
-									};
+											parentWindow.close();
+										};
+									}
 								}
 							},
 							{ width: 20 }

@@ -1,7 +1,8 @@
 {
 	"moduleAction": {
 	    "pas": 103001,
-		"zone": 103002
+		"zone": 103002,
+		"planOrderEdit": 103003
 	},
 	"restEndpoints": {
 		"elementById": "elements/${id}",
