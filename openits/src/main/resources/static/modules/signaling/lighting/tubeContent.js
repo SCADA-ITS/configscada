@@ -1,7 +1,8 @@
 import { util } from "../../../lib/util.js";
+import { adapter } from "../../../lib/adapter.js";
 import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
-import { adapter } from "../../../lib/adapter.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const CIRCUIT_COMMAND_SEND_ON = "SEND_CIRCUIT_ON";
 const CIRCUIT_COMMAND_SEND_OFF = "SEND_CIRCUIT_OFF";
@@ -318,14 +319,11 @@ export default class TubeContent {
 
 					function changeMode(newModeId, callbackCloseDialog) {
 
-						webix.confirm({
-							title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-							ok: i18n.t("LBL_ACCEPT"),
-							cancel: i18n.t("LBL_CANCEL"),
-							text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-							width: 600
-						}).then(function(res) {
-
+						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+						ms.show();
+						
+						function onAccept(res) {
+							
 							callbackCloseDialog(true);
 							let command = self.parent.config.commands.SEND_LIGHTING_MODE;
 							command.elementId = self.selectedTube.id;
@@ -347,10 +345,8 @@ export default class TubeContent {
 								this.setValue(oldv);
 								this.unblockEvent();
 							});
-
-
-						});
-
+							
+						}
 					}
 				}
 			}
@@ -521,26 +517,20 @@ export default class TubeContent {
 
 											if (!command.commandElementValues[0].value || command.commandElementValues[0].value == 0) {
 
-												webix.alert({
-													title: i18n.t("LBL_NO_REGIME_SELECTED"),
-													text: i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"),
-													type: "alert-warning",
-													width: 500
-												});
+												let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+												ms.show();
 
 											} else {
 
-												webix.confirm({
-													title: i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM"),
-													ok: i18n.t("LBL_ACCEPT"),
-													cancel: i18n.t("LBL_CANCEL"),
-													text: i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"),
-													width: 600
-												}).then(function() {
+												let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"), onAccept, null);
+												ms.show();
+												
+												function onAccept() {
 
 													let body = {
 														commands: []
 													};
+													
 													body.commands.push(command);
 
 													webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
@@ -549,8 +539,8 @@ export default class TubeContent {
 
 															webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 														}
-													});
-												});
+													});													
+												};
 											}
 										}
 									}
@@ -1169,14 +1159,11 @@ export default class TubeContent {
 	
 				function changeRegime(newRegimeId, callbackCloseDialog) {
 	
-					webix.confirm({
-						title: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM"),
-						ok: i18n.t("LBL_ACCEPT"),
-						cancel: i18n.t("LBL_CANCEL"),
-						text: i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"),
-						width: 600
-					}).then(function(res) {
-	
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+					
+					function onAccept(res){
+
 						callbackCloseDialog(true);
 						let command = self.parent.config.commands.SEND_DALI_REGIME;
 						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
@@ -1195,11 +1182,11 @@ export default class TubeContent {
 	
 								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 							}
-						});
-					});
+						});							
+					}
 				}
-			}
-			else {
+				
+			} else {
 				
 				viewDalis = util.ui.getViewNoData();
 			}
@@ -1226,14 +1213,11 @@ export default class TubeContent {
 						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable,
 						click: function() {
 
-							webix.confirm({
-								title: i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM"),
-								ok: i18n.t("LBL_ACCEPT"),
-								cancel: i18n.t("LBL_CANCEL"),
-								text: i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
-								width: 600
-							}).then(function() {
-
+							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+							ms.show();
+							
+							function onAccept() {
+								
 								let allTableItems = self.tubeCircuitsDataTable.getAllItems();
 
 								let circuitsOnCommand = [];
@@ -1300,8 +1284,8 @@ export default class TubeContent {
 											webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 										}
 									});
-								}
-							});
+								}								
+							}
 						}
 					}
 				]
@@ -1309,8 +1293,6 @@ export default class TubeContent {
 
 			return bottom;
 		}
-
-
 
 		return contentBody;
 	}

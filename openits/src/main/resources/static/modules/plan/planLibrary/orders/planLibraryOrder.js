@@ -219,12 +219,8 @@ export default class PlanLibraryOrder {
 
 		} else {
 
-			webix.alert({
-				title: i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS"),
-				text: i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS_DESCRIPTION"),
-				type: "alert-warning",
-				width: 500
-			});
+			let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+			ms.show();
 		}
 	}
 }	

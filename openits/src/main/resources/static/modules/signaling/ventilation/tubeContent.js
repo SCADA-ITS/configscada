@@ -1,7 +1,8 @@
 import { util } from "../../../lib/util.js";
+import { adapter } from "../../../lib/adapter.js";
 import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
-import { adapter } from "../../../lib/adapter.js";
+import MessageBox from "../../../component/messageBox.js";
 
 const FAN_COMMAND_SEND_FANS_STOP = "SEND_FANS_STOP";
 const FAN_COMMAND_SEND_FANS_START = "SEND_FANS_START";
@@ -299,14 +300,11 @@ export default class TubeContent {
 
 						function changeMode(newModeId, callbackCloseDialog) {
 
-							webix.confirm({
-								title: i18n.t("LBL_CONFIRM"),
-								ok: i18n.t("LBL_ACCEPT"),
-								cancel: i18n.t("LBL_CANCEL"),
-								text: i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"),
-								width: 600
-							}).then(function(res) {
-
+							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), onAccept, null);
+							ms.show();
+							
+							function onAccept(res) {
+								
 								callbackCloseDialog(true);
 
 								let command = self.parent.config.commands.SEND_VENTILATION_MODE;
@@ -328,8 +326,8 @@ export default class TubeContent {
 									this.blockEvent();
 									this.setValue(oldv);
 									this.unblockEvent();
-								});
-							});
+								});								
+							}
 						}
 					}
 				}
@@ -613,26 +611,20 @@ export default class TubeContent {
 
 													if (!command.commandElementValues[0].value || command.commandElementValues[0].value == 0) {
 
-														webix.alert({
-															title: i18n.t("LBL_NO_REGIME_SELECTED"),
-															text: i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"),
-															type: "alert-warning",
-															width: 500
-														});
+														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+														ms.show();
 
 													} else {
 
-														webix.confirm({
-															title: i18n.t("LBL_CONFIRM"),
-															ok: i18n.t("LBL_ACCEPT"),
-															cancel: i18n.t("LBL_CANCEL"),
-															text: i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"),
-															width: 600
-														}).then(function() {
-
+														let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"), onAccept, null);
+														ms.show();
+														
+														function onAccept() {
+															
 															let body = {
 																commands: []
 															};
+															
 															body.commands.push(command);
 
 															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
@@ -641,8 +633,8 @@ export default class TubeContent {
 
 																	webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 																}
-															});
-														});
+															});															
+														}
 													}
 												}
 											}
@@ -1071,14 +1063,11 @@ export default class TubeContent {
 								disabled: true,
 								click: function() {
 
-									webix.confirm({
-										title: i18n.t("LBL_CONFIRM"),
-										ok: i18n.t("LBL_ACCEPT"),
-										cancel: i18n.t("LBL_CANCEL"),
-										text: i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"),
-										width: 600
-									}).then(function() {
-
+									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+									ms.show();
+									
+									function onAccept(){
+										
 										let allTableItems = self.tubeFansDataTable.getAllItems();
 
 										let fansStopCommand = [];
@@ -1154,8 +1143,8 @@ export default class TubeContent {
 													webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 												}
 											});
-										}
-									});
+										}										
+									}
 								}
 							}
 						]

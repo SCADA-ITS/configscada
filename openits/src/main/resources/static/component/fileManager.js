@@ -274,51 +274,6 @@ export default class FileManager {
 											}
 										});										
 									}
-									
-//									webix.confirm({
-//										title: i18n.t("LBL_FILE_CONFIRM_DELETE") + ": " + file.fileName,
-//										ok: i18n.t("LBL_YES"),
-//										cancel: i18n.t("LBL_NO"),
-//										text: i18n.t("LBL_FILE_CONFIRM_DELETE_DESCRIPTION"),
-//										width: 600
-//									}).then(function() {
-//
-//										let fileObj = {
-//											paths: encodeURIComponent(file.filePath + "/" + file.fileName)
-//										}
-//										
-//										var params = Object.keys(fileObj).map(key => {
-//										  return key + '=' + fileObj[key];
-//										}).join('&');
-//					
-//										let url = appConfig.restUrl + util.fillTemplate(REST_ENDPOINT_DELETE_FILES, { params: params });
-//										
-//										$$("loading-" + self.uid).show();
-//										$$(self.uid).hide();
-//										
-//										webix.ajax().del(url).then(response => {
-//											
-//											if (response) {
-//										
-//												let files = response.json();
-//												
-//												if (Array.isArray(files) && files.length > 0) {
-//													
-//													files.forEach(file => {
-//														
-//														self.logFiles.push({
-//								
-//															file: file,
-//															action: FileManager.FILE_DELETED	
-//														});
-//													})
-//													
-//													
-//													loadFiles();	
-//												}
-//											}
-//										});
-//									});
 								}
 							}
 						}

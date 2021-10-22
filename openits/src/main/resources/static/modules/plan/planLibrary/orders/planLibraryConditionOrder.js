@@ -470,12 +470,8 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 				} else {
 
-					webix.alert({
-						title: i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER"),
-						text: i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER_DESCRIPTION"),
-						type: "alert-warning",
-						width: 500
-					});
+					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_CONDITION_ORDER_NO_POSIBLE_CHANGE_ORDER_DESCRIPTION"), null, null);
+					ms.show();
 				}
 			}
 

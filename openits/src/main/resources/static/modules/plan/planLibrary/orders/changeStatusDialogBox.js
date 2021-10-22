@@ -1,5 +1,6 @@
 import { util } from "../../../../lib/util.js";
 import SearchDialogBox from "../../../../component/searchDialogBox.js";
+import MessageBox from "../../../../component/messageBox.js";
 
 const CHANGE_DIALOG_BOX_WIDTH = 700;
 const CHANGE_DIALOG_BOX_HEIGHT = 540;
@@ -282,12 +283,9 @@ export default class ChangeStatusDialogBox {
 							
 							} else{
 
-								webix.alert({
-									title: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS"),
-									text: i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"),
-									type: "alert-warning",
-									width: 500
-								});
+								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+								ms.show();
+
 							}
 						}
 					}
