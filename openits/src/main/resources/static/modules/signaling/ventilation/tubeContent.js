@@ -496,7 +496,7 @@ export default class TubeContent {
 
 						availableRegimes = ventilationRegimesConfig.ventilationRegimes.map(function(regime) {
 							return {
-								id: regime.id,
+								id: regime.id.toString(),
 								value: i18n.t(regime.labelAlias)
 							};
 						});
@@ -609,7 +609,7 @@ export default class TubeContent {
 													command.elementId = self.tubeId;
 													command.commandElementValues[0].value = $$("label-regimen-3-" + self.uid).getValue();
 
-													if (!command.commandElementValues[0].value || command.commandElementValues[0].value == 0) {
+													if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
 
 														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
 														ms.show();

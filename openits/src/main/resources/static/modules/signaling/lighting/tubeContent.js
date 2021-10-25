@@ -402,7 +402,7 @@ export default class TubeContent {
 
 					availableRegimes = lightingRegimeConfig.regimes.map(function(regime) {
 						return {
-							id: regime.id,
+							id: regime.id.toString(),
 							value: i18n.t(regime.labelAlias)
 						};
 					});
@@ -515,7 +515,7 @@ export default class TubeContent {
 											command.elementId = self.tubeId;
 											command.commandElementValues[0].value = $$("label-regimen-3-" + self.parent.uid).getValue();
 
-											if (!command.commandElementValues[0].value || command.commandElementValues[0].value == 0) {
+											if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
 
 												let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
 												ms.show();
@@ -540,7 +540,7 @@ export default class TubeContent {
 															webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 														}
 													});													
-												};
+												}
 											}
 										}
 									}
