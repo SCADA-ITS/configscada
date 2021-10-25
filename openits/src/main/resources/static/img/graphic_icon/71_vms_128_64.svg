@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.925608"
-     inkscape:cx="117.60123"
-     inkscape:cy="96.80703"
+     inkscape:zoom="4.1374345"
+     inkscape:cx="132.40109"
+     inkscape:cy="75.747023"
      inkscape:document-units="px"
-     inkscape:current-layer="main"
+     inkscape:current-layer="zone1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
-     inkscape:window-x="1912"
-     inkscape:window-y="179"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="3832"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -87,11 +87,45 @@
          id="path191" />
       <image
          xlink:href="../../../project/ausol/img/pictograms/80.bmp"
-         y="1.984375"
-         x="1.984375"
-         id="graphic1-1"
+         width="69.188538"
+         height="35.454166"
          preserveAspectRatio="none"
-         height="33.866665"
-         width="67.73333" />
+         id="graphic1-1"
+         x="1.3229167"
+         y="1.3229167" />
+      <text
+         xml:space="preserve"
+         style="font-size:8.46667px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0.529167px;word-spacing:0px;text-anchor:middle;display:inline;fill:#241f1c;fill-opacity:1;stroke-width:2.17271;stroke-miterlimit:4;stroke-dasharray:none"
+         x="35.627811"
+         y="9.2399111"
+         id="line1-1"><tspan
+           sodipodi:role="line"
+           x="35.892395"
+           y="9.2399111"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#241f1c;fill-opacity:1;stroke-width:2.17271;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6">123456789012</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:8.46667px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0.529167px;word-spacing:0px;text-anchor:middle;display:inline;fill:#241f1c;fill-opacity:1;stroke-width:1.69905;stroke-miterlimit:4;stroke-dasharray:none"
+         x="35.6278"
+         y="20.505291"
+         id="line1-2"><tspan
+           sodipodi:role="line"
+           x="35.89238"
+           y="20.505291"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#241f1c;fill-opacity:1;stroke-width:1.69905;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6-1">123456789012</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:8.46667px;line-height:1.25;font-family:monospace;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0.529167px;word-spacing:0px;text-anchor:middle;display:inline;fill:#241f1c;fill-opacity:1;stroke-width:1.69905;stroke-miterlimit:4;stroke-dasharray:none"
+         x="35.6278"
+         y="31.770672"
+         id="line1-3"><tspan
+           sodipodi:role="line"
+           x="35.89238"
+           y="31.770672"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#241f1c;fill-opacity:1;stroke-width:1.69905;stroke-miterlimit:4;stroke-dasharray:none"
+           id="tspan24-6-6">123456789012</tspan></text>
     </g>
+  </g>
 </svg>

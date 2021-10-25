@@ -3,7 +3,7 @@ export const CONFIG = {
 	img: {
 		product: "./img/open_its_full.png",
 		company: "./img/logo_revenga.png",
-		project: "./img/logo-project-ausol.svg",
+		project: "./img/logo-project.svg",
 		wallpaper: "./img/fondos-ppt.jpg",
 		user: "./img/login-user.png",
 		lock: "./img/login-key.png",
