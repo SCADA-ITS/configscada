@@ -17,14 +17,13 @@ export default class CronUi {
 		this.windowLabel = undefined;
 		this.daysOfWeek = [];
 		this.daysOfWeekCron = [];
-		this.checkedSecs = [];
 		this.checkedMins = [];
 		this.checkedHours = [];
 		this.checkedDays = [];
 		this.checkedDaysWeek = [];
 		this.checkedMonths = [];
 		this.checkedYears = [];
-		this.cronExpressionArr = ["0", "0", "0", "?", "*", "*", "*"];
+		this.cronExpressionArr = ["0", "*", "*", "?", "*", "*", "*"];
 		this.cronExpressionEditArr = [];
 		this.currentTab = undefined;
 	}
@@ -144,12 +143,11 @@ export default class CronUi {
 					css: { "width": "780px !important" },
 					tabMargin: 6,
 					options: [
-						{ id: "cronUi_seconds-" + self.uid, value: $.i18n("cronUi.popup.tab.seconds") },
-						{ id: "cronUi_minutes-" + self.uid, value: $.i18n("cronUi.popup.tab.minutes") },
-						{ id: "cronUi_hours-" + self.uid, value: $.i18n("cronUi.popup.tab.hours") },
-						{ id: "cronUi_days-" + self.uid, value: $.i18n("cronUi.popup.tab.days") },
-						{ id: "cronUi_months-" + self.uid, value: $.i18n("cronUi.popup.tab.months") },
-						{ id: "cronUi_years-" + self.uid, value: $.i18n("cronUi.popup.tab.years") }
+						{ id: "cronUi_minutes-" + self.uid, value: i18n.t("LBL_MINUTES") },
+						{ id: "cronUi_hours-" + self.uid, value: i18n.t("LBL_HOURS") },
+						{ id: "cronUi_days-" + self.uid, value: i18n.t("LBL_DAYS") },
+						{ id: "cronUi_months-" + self.uid, value: i18n.t("LBL_MONTHS") },
+						{ id: "cronUi_years-" + self.uid, value: i18n.t("LBL_YEARS") }
 					],
 					on: {
 						onChange: function(newv, oldv) {
@@ -158,61 +156,6 @@ export default class CronUi {
 					}
 				},
 				cells: [
-					{
-						view: "form",
-						id: "cronUi_seconds-" + self.uid,
-						elements: [
-							{
-								css: { "border": "1px solid #dadee0", "box-sizing": "border-box" },
-								cols: [
-									{ width: 5 },
-									{
-										width: 250,
-										height: 250,
-										rows: [
-											{ height: 55 },
-											{
-												view: "radio",
-												id: "secondsOpt-" + self.uid,
-												width: 245,
-												value: "secondsOpt03",
-												vertical: true,
-												multiview: true,
-												on: {
-													onChange: function(newv, oldv) {
-														$$(newv).show();
-														calculateSeconds(newv);
-													}
-												}
-												,
-												options: [
-													{ id: "secondsOpt01", value: i18n.t("LBL_EVERY_SECOND") },
-													{ id: "secondsOpt02", value: i18n.t("LBL_EVERY_X_SECOND") },
-													{ id: "secondsOpt03", value: i18n.t("LBL_SPECIFIC_SECOND") },
-													{ id: "secondsOpt04", value: i18n.t("LBL_EVERY_SECOND_BETWEEN") }
-												]
-											}]
-									},
-									{
-										view: "multiview",
-										height: 250,
-										width: 500,
-										id: "multi_seconds-" + self.uid,
-										animate: false,
-										scroll: "auto",
-										borderless: true,
-										css: { "border-left": "1px solid #dadee0" },
-										cells: [
-											{ id: "secondsOpt03", view: "form", elements: drawMultiview("secondsOpt03") },
-											{ id: "secondsOpt01", view: "form", elements: drawMultiview("secondsOpt01") },
-											{ id: "secondsOpt02", view: "form", elements: drawMultiview("secondsOpt02") },
-											{ id: "secondsOpt04", view: "form", elements: drawMultiview("secondsOpt04") }
-										]
-									}
-								]
-							}
-						]
-					},
 					{
 						view: "form",
 						id: "cronUi_minutes-" + self.uid,
@@ -230,7 +173,7 @@ export default class CronUi {
 												view: "radio",
 												id: "minutesOpt-" + self.uid,
 												width: 245,
-												value: "minutesOpt03",
+												value: "minutesOpt01",
 												vertical: true,
 												multiview: true,
 												on: {
@@ -258,8 +201,8 @@ export default class CronUi {
 										borderless: true,
 										css: { "border-left": "1px solid #dadee0" },
 										cells: [
-											{ id: "minutesOpt03", view: "form", elements: drawMultiview("minutesOpt03") },
 											{ id: "minutesOpt01", view: "form", elements: drawMultiview("minutesOpt01") },
+											{ id: "minutesOpt03", view: "form", elements: drawMultiview("minutesOpt03") },
 											{ id: "minutesOpt02", view: "form", elements: drawMultiview("minutesOpt02") },
 											{ id: "minutesOpt04", view: "form", elements: drawMultiview("minutesOpt04") }
 										]
@@ -285,7 +228,7 @@ export default class CronUi {
 												view: "radio",
 												id: "hoursOpt-" + self.uid,
 												width: 245,
-												value: "hoursOpt03",
+												value: "hoursOpt01",
 												vertical: true,
 												multiview: true,
 												on: {
@@ -313,8 +256,8 @@ export default class CronUi {
 										borderless: true,
 										css: { "border-left": "1px solid #dadee0" },
 										cells: [
-											{ id: "hoursOpt03", view: "form", elements: drawMultiview("hoursOpt03") },
 											{ id: "hoursOpt01", view: "form", elements: drawMultiview("hoursOpt01") },
+											{ id: "hoursOpt03", view: "form", elements: drawMultiview("hoursOpt03") },
 											{ id: "hoursOpt02", view: "form", elements: drawMultiview("hoursOpt02") },
 											{ id: "hoursOpt04", view: "form", elements: drawMultiview("hoursOpt04") }
 										]
@@ -500,10 +443,6 @@ export default class CronUi {
 		function drawMultiview(id) {
 
 			let view = [{ rows: [{ cols: [] }] }];
-			const SECONDS_OPT01 = "secondsOpt01";
-			const SECONDS_OPT02 = "secondsOpt02";
-			const SECONDS_OPT03 = "secondsOpt03";
-			const SECONDS_OPT04 = "secondsOpt04";
 			const MINUTES_OPT01 = "minutesOpt01";
 			const MINUTES_OPT02 = "minutesOpt02";
 			const MINUTES_OPT03 = "minutesOpt03";
@@ -513,9 +452,9 @@ export default class CronUi {
 			const HOURS_OPT03 = "hoursOpt03";
 			const HOURS_OPT04 = "hoursOpt04";
 
-			if (id === SECONDS_OPT03 || id === MINUTES_OPT03 || id === HOURS_OPT03) {
+			if (id === MINUTES_OPT03 || id === HOURS_OPT03) {
 
-				let ids = (id === SECONDS_OPT03) ? SECONDS_OPT03 : (id === MINUTES_OPT03) ? MINUTES_OPT03 : HOURS_OPT03;
+				let ids = (id === MINUTES_OPT03) ? MINUTES_OPT03 : HOURS_OPT03;
 
 				let row1 = [{ rows: [] }];
 				let row2 = [{ rows: [] }];
@@ -659,7 +598,7 @@ export default class CronUi {
 					column6.push(check);
 				}
 
-				if (id === SECONDS_OPT03 || id === MINUTES_OPT03) {
+				if (id === MINUTES_OPT03) {
 
 					row1 = [{ cols: column1 }];
 					row2 = [{ cols: column2 }];
@@ -707,14 +646,13 @@ export default class CronUi {
 					view[0].rows[2] = rowHour[0];
 				}
 
+			} else if (id === MINUTES_OPT02 || id === HOURS_OPT02) {
 
-
-			} else if (id === SECONDS_OPT02 || id === MINUTES_OPT02 || id === HOURS_OPT02) {
-
-				let ids = (id === SECONDS_OPT02) ? SECONDS_OPT02 : (id === MINUTES_OPT02) ? MINUTES_OPT02 : HOURS_OPT02;
-				let label = (id === SECONDS_OPT02) ? "LBL_SECOND(S)_STARTING_AT_SECOND" : (id === MINUTES_OPT02) ? "LBL_MINUTE(S)_STARTING_AT_MINUTE" : "LBL_HOUR(S)_STARTING_AT_HOUR";
+				let ids = (id === MINUTES_OPT02) ? MINUTES_OPT02 : HOURS_OPT02;
+				let label = (id === MINUTES_OPT02) ? "LBL_MINUTE(S)_STARTING_AT_MINUTE" : "LBL_HOUR(S)_STARTING_AT_HOUR";
 				let max1 = (id === HOURS_OPT02) ? 24 : 60;
 				let max2 = (id === HOURS_OPT02) ? 23 : 59;
+
 				view = [
 					{
 						rows: [
@@ -778,11 +716,11 @@ export default class CronUi {
 					}
 				]
 
-			} else if (id === SECONDS_OPT04 || id === MINUTES_OPT04 || id === HOURS_OPT04) {
+			} else if (id === MINUTES_OPT04 || id === HOURS_OPT04) {
 
-				let ids = (id === SECONDS_OPT04) ? SECONDS_OPT04 : (id === MINUTES_OPT04) ? MINUTES_OPT04 : HOURS_OPT04;
-				let label1 = (id === SECONDS_OPT04) ? "LBL_EVERY_SECOND_BETWEEN_SECOND" : (id === MINUTES_OPT04) ? "LBL_EVERY_MINUTE_BETWEEN_MINUTE" : "LBL_EVERY_HOUR_BETWEEN_HOUR";
-				let label2 = (id === SECONDS_OPT04) ? "LBL_AND_SECOND" : (id === MINUTES_OPT04) ? "LBL_AND_MINUTE" : "LBL_AND_HOUR";
+				let ids = (id === MINUTES_OPT04) ? MINUTES_OPT04 : HOURS_OPT04;
+				let label1 = (id === MINUTES_OPT04) ? "LBL_EVERY_MINUTE_BETWEEN_MINUTE" : "LBL_EVERY_HOUR_BETWEEN_HOUR";
+				let label2 = (id === MINUTES_OPT04) ? "LBL_AND_MINUTE" : "LBL_AND_HOUR";
 				let max = (id === HOURS_OPT04) ? 23 : 59;
 
 				view = [
@@ -847,9 +785,10 @@ export default class CronUi {
 							}]
 					}
 				]
-			} else if (id === SECONDS_OPT01 || id === MINUTES_OPT01 || id === HOURS_OPT01) {
 
-				let label = (id === SECONDS_OPT01) ? "LBL_EVERY_SECOND" : (id === MINUTES_OPT01) ? "LBL_EVERY_MINUTE" : "LBL_EVERY_HOUR";
+			} else if (id === MINUTES_OPT01 || id === HOURS_OPT01) {
+
+				let label = (id === MINUTES_OPT01) ? "LBL_EVERY_MINUTE" : "LBL_EVERY_HOUR";
 
 				view = [
 					{
@@ -1722,8 +1661,8 @@ export default class CronUi {
 										height: 30,
 										css: "cron-expression",
 										id: "cronExpression" + self.uid,
-										value: "0 0 0 ? * * *",
-										label: "0 0 0 ? * * *"
+										value: "0 * * ? * * *",
+										label: "0 * * ? * * *"
 									}
 								]
 							},
@@ -1851,20 +1790,17 @@ export default class CronUi {
 										$$("tabview_CronUi-" + self.uid).reconstruct();
 										$$("resume" + self.uid).reconstruct();
 
-										self.checkedSecs = [];
 										self.checkedMins = [];
 										self.checkedHours = [];
 										self.checkedDays = [];
 										self.checkedDaysWeek = [];
 										self.checkedMonths = [];
 										self.checkedYears = [];
-										self.cronExpressionArr = ["0", "0", "0", "?", "*", "*", "*"];
+										self.cronExpressionArr = ["0", "*", "*", "?", "*", "*", "*"];
 
-										$$("secondsOpt03-0").setValue(1);
 										$$("minutesOpt03-0").setValue(1);
 										$$("hoursOpt03-0").setValue(1);
 
-										self.checkedSecs.push("0");
 										self.checkedMins.push("0");
 										self.checkedHours.push("0");
 
@@ -1880,22 +1816,21 @@ export default class CronUi {
 								click:
 									function() {
 
-										const CRON_EXPRESSION_NULL = "* * * ? * * *";
+										const CRON_EXPRESSION_NULL = "0 * * ? * * *";
 										let cronEx = $$("cronExpression" + self.uid).getValue();
 										let translate = prettyCron.toString(cronEx, true);
 
 										if (cronEx === CRON_EXPRESSION_NULL) {
-											
+
 											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"), null, null);
 											ms.show();
 
 										} else {
+
 											$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
 											$$(self.cronWindow).close();
 
 										}
-
-
 									}
 							},
 							{ width: 20 }
@@ -1909,76 +1844,6 @@ export default class CronUi {
 		}
 
 
-		function calculateSeconds(id) {
-
-			const SECONDS_OPT01 = "secondsOpt01";
-			const SECONDS_OPT02 = "secondsOpt02";
-			const SECONDS_OPT03 = "secondsOpt03";
-			const SECONDS_OPT04 = "secondsOpt04";
-			const MAX1 = 60;
-			const MAX2 = 59;
-
-			let seconds = '';
-
-			if (id.startsWith(SECONDS_OPT01)) {
-
-				seconds = '*';
-
-			} else if (id.startsWith(SECONDS_OPT02)) {
-
-				seconds = ($$("secondsOpt02_counter02").getValue() > MAX2) ? MAX2 : $$("secondsOpt02_counter02").getValue();
-				seconds += '/';
-				seconds += ($$("secondsOpt02_counter01").getValue() > MAX1) ? MAX1 : $$("secondsOpt02_counter01").getValue();
-
-			} else if (id.startsWith(SECONDS_OPT03)) {
-
-				if (id.includes("-")) {
-					let checkId = id.split("-", 2);
-
-					if ($$(id).getValue() === 1) {
-						self.checkedSecs.push(checkId[1]);
-
-					} else {
-
-						let deleteCheck = self.checkedSecs.indexOf(checkId[1]);
-
-						if (deleteCheck != -1) {
-							self.checkedSecs.splice(deleteCheck, 1);
-						}
-
-					}
-
-					self.checkedSecs.sort(function(a, b) { return a - b })
-					seconds = self.checkedSecs.join();
-
-					if (self.checkedSecs.length === 0) {
-						seconds = "0";
-					}
-
-				} else {
-
-					if (self.checkedSecs.length > 0) {
-						seconds = self.checkedSecs.join();
-
-					} else {
-						seconds = "0";
-					}
-				}
-
-			} else if (id.startsWith(SECONDS_OPT04)) {
-
-				seconds = ($$("secondsOpt04_counter01").getValue() > MAX2) ? MAX2 : $$("secondsOpt04_counter01").getValue();
-				seconds += '-';
-				seconds += ($$("secondsOpt04_counter02").getValue() > MAX2) ? MAX2 : $$("secondsOpt04_counter02").getValue();
-
-			}
-
-			self.cronExpressionArr[0] = seconds;
-			setCronExpression();
-			setCronDescription();
-		}
-
-
 		function calculateMinutes(id) {
 
 			const MINUTES_OPT01 = "minutesOpt01";
@@ -1987,7 +1852,6 @@ export default class CronUi {
 			const MINUTES_OPT04 = "minutesOpt04";
 			const MAX1 = 60;
 			const MAX2 = 59;
-
 
 			let minutes = '';
 
@@ -2199,18 +2063,19 @@ export default class CronUi {
 
 			} else if (id.startsWith(DAYS_OPT04)) {
 
-				let transformDays = $$("daysOpt04_counter02").getValue();
+				let transformDays02 = $$("daysOpt04_counter02").getValue();
+				let transformDays01 = $$("daysOpt04_counter01").getValue();
 
-				if (transformDays.value) {
-
-					days = transformDays.value.slice(0, -2);
-				} else {
-
-					days = transformDays.slice(0, -2);
-				}
-
+				//				if (transformDays02.value ) {
+				//
+				//					days = transformDays.value.slice(0, -2);
+				//				} else {
+				//
+				//					days = transformDays.slice(0, -2);
+				//				}
+				days += (transformDays02 > MAX2) ? MAX2 : transformDays02;
 				days += '/';
-				days += ($$("daysOpt04_counter01").getValue() > MAX2) ? MAX2 : $$("daysOpt04_counter01").getValue();
+				days += (transformDays01 > MAX2) ? MAX2 : transformDays01;
 
 			} else if (id.startsWith(DAYS_OPT05)) {
 
@@ -2436,18 +2301,13 @@ export default class CronUi {
 
 		function timeSelector(id) {
 
-			const SECONDS = "seconds";
 			const MINUTES = "minutes";
 			const HOURS = "hours";
 			const DAYS = "days";
 			const MONTHS = "months";
 			const YEARS = "years";
 
-			if (id.startsWith(SECONDS)) {
-
-				calculateSeconds(id);
-
-			} else if (id.startsWith(MINUTES)) {
+			if (id.startsWith(MINUTES)) {
 
 				calculateMinutes(id);
 
@@ -2488,7 +2348,6 @@ export default class CronUi {
 
 				let nextDate = moment(prettyCron.getNextDate(cronEx, true));
 				let dateToEpoch = Math.floor(new Date(nextDate._d).getTime()) / 1000;
-
 				let localeDate = util.toLocaleDateString(dateToEpoch);
 				let localeHour = util.toLocaleTimeString(dateToEpoch);
 
@@ -2541,11 +2400,9 @@ export default class CronUi {
 
 		} else {
 
-			$$("secondsOpt03-0").setValue(1);
 			$$("minutesOpt03-0").setValue(1);
 			$$("hoursOpt03-0").setValue(1);
 
-			this.checkedSecs.push("0");
 			this.checkedMins.push("0");
 			this.checkedHours.push("0");
 		}
@@ -2555,11 +2412,10 @@ export default class CronUi {
 	setCronValues(cronExp) {
 
 		let self = this;
-		let timesArr = ["secondsOpt", "minutesOpt", "hoursOpt", "daysOpt", "monthsOpt", "daysOpt", "yearsOpt"];
+		let timesArr = ["minutesOpt", "hoursOpt", "daysOpt", "monthsOpt", "daysOpt", "yearsOpt"];
 		let monthsOfYear = [i18n.t("LBL_JANUARY"), i18n.t("LBL_FEBRUARY"), i18n.t("LBL_MARCH"), i18n.t("LBL_APRIL"), i18n.t("LBL_MAY"), i18n.t("LBL_JUNE"), i18n.t("LBL_JULY"), i18n.t("LBL_AUGUST"), i18n.t("LBL_SEPTEMBER"), i18n.t("LBL_OCTOBER"), i18n.t("LBL_NOVEMBER"), i18n.t("LBL_DECEMBER")];
 		let monthsOfYearCron = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-		const SECONDS = 0;
 		const MINUTES = 1;
 		const HOURS = 2;
 		const DAYS_MONTH = 3;
@@ -2620,12 +2476,7 @@ export default class CronUi {
 
 				for (let check of checkList) {
 
-					if (i === SECONDS) {
-
-						$$(timesArr[i] + "03-" + check).setValue(1);
-						self.checkedSecs.push(check);
-
-					} else if (i === MINUTES) {
+					if (i === MINUTES) {
 
 						$$(timesArr[i] + "03-" + check).setValue(1);
 						self.checkedMins.push(check);
@@ -2663,12 +2514,7 @@ export default class CronUi {
 
 				if (editCronExpressionArr[i] != "*" && editCronExpressionArr[i] != "?") {
 
-					if (i === SECONDS) {
-
-						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
-						self.checkedSecs.push(editCronExpressionArr[i]);
-
-					} else if (i === MINUTES) {
+					if (i === MINUTES) {
 
 						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
 						self.checkedMins.push(editCronExpressionArr[i]);
@@ -2702,664 +2548,6 @@ export default class CronUi {
 
 					}
 				}
-			}
-		}
-	}
-
-
-	loadData() {
-		let valor = $$(this.input).getValue();
-		let valorList = valor.split(" ");
-		let controlSecond = "";
-		let controlMinute = "";
-		let controlHour = "";
-		let controlDay = "";
-		let controlMonth = "";
-		let controlYear = "";
-
-		let controlTotal = true;
-
-		if (valorList.length !== 7) {
-			//ERROR
-			console.log("ERROR DE TAMAÑO DE FORMATO");
-		} else {
-			if (valorList[0] === "*") {
-				//EVERY YEAR
-				controlSecond = "secondsOpt01";
-			} else {
-				if (valorList[0].search("/") > 0) {
-					let control = true;
-					let valores = valorList[0].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false;
-					}
-
-					if (control) {
-						controlSecond = "secondsOpt02";
-						$$("secondsOpt02_counter01").setValue(valor2);
-						$$("secondsOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						//console.log("ERROR FALLO / SEC 02");
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.second") });
-					}
-				} else {
-					if (valorList[0].search("-") > 0) {
-						let control = true;
-						let valores = valorList[0].split("-");
-						let valor1 = null;
-						let valor2 = null;
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false;
-						}
-
-						if (control) {
-							controlSecond = "secondsOpt04";
-							$$("secondsOpt04_counter01").setValue(valor2);
-							$$("secondsOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.second") });
-							//console.log("ERROR FALLO - SEC 04");
-						}
-					} else {
-						if (valorList[0].search(",") > 0) {
-							let control = true;
-							let valores = valorList[0].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1 = parseInt(item);
-								});
-							} catch (e) {
-								control = false;
-							}
-
-							if (control) {
-								controlSecond = "secondsOpt03";
-								$$("secondsOpt03_combo").setValue(valorList[0]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.second") });
-								//console.log("ERROR FALLO , SEC 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(valorList[0]);
-							} catch (e) {
-								console.log(e);
-								control = false;
-							}
-
-							if (control) {
-								controlSecond = "secondsOpt03";
-								$$("secondsOpt03_combo").setValue(valorList[0]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.second") });
-								//console.log("ERROR FALLO , SEC 03_2");
-							}
-						}
-					}
-				}
-			}
-
-			if (valorList[1] === "*") {
-				//EVERY minute
-				controlMinute = "minsOpt01";
-			} else {
-				if (valorList[1].search("/") > 0) {
-					let control = true;
-					let valores = valorList[1].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false
-					}
-
-					if (control) {
-						controlMinute = "minsOpt02";
-						$$("minsOpt02_counter01").setValue(valor2);
-						$$("minsOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.minute") });
-						//console.log("ERROR FALLO / MIN 02");
-					}
-				} else {
-					if (valorList[1].search("-") > 0) {
-						let control = true;
-						let valores = valorList[1].split("-");
-						let valor1 = null;
-						let valor2 = null;
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false
-						}
-
-						if (control) {
-							controlMinute = "minsOpt04";
-							$$("minsOpt04_counter01").setValue(valor2);
-							$$("minsOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.minute") });
-							//console.log("ERROR FALLO - MIN 03");
-						}
-					} else {
-						if (valorList[1].search(",") > 0) {
-							let control = true;
-							let valores = valorList[1].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1 = parseInt(item);
-								});
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlMinute = "minsOpt03";
-								$$("minsOpt03_combo").setValue(valorList[1]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.minute") });
-								//console.log("ERROR FALLO , MIN 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(valorList[1]);
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlMinute = "minsOpt03";
-								$$("minsOpt03_combo").setValue(valorList[1]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.minute") });
-								//console.log("ERROR FALLO , MIN 03_2");
-							}
-						}
-					}
-				}
-			}
-
-			if (valorList[2] === "*") {
-				//EVERY minute
-				controlHour = "hoursOpt01";
-			} else {
-				if (valorList[2].search("/") > 0) {
-					let control = true;
-					let valores = valorList[2].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false
-					}
-
-					if (control) {
-						controlHour = "hoursOpt02";
-						$$("hoursOpt02_counter01").setValue(valor2);
-						$$("hoursOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.hour") });
-						//console.log("ERROR FALLO / HOUR 02");
-					}
-				} else {
-					if (valorList[2].search("-") > 0) {
-						let control = true;
-						let valores = valorList[2].split("-");
-						let valor1 = null;
-						let valor2 = null;
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false
-						}
-
-						if (control) {
-							controlHour = "hoursOpt04";
-							$$("hoursOpt04_counter01").setValue(valor2);
-							$$("hoursOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.hour") });
-							//console.log("ERROR FALLO - HOUR 04");
-						}
-					} else {
-						if (valorList[2].search(",") > 0) {
-							let control = true;
-							let valores = valorList[2].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1 = parseInt(item);
-								});
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlHour = "hoursOpt03";
-								$$("hoursOpt03_combo").setValue(valorList[2]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.hour") });
-								//console.log("ERROR FALLO , HOUR 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(valorList[2]);
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlHour = "hoursOpt03";
-								$$("hoursOpt03_combo").setValue(valorList[2]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.hour") });
-								//console.log("ERROR FALLO , HOUR 03");
-							}
-						}
-					}
-				}
-			}
-
-			if (valorList[3] === "*") {
-				//EVERY minute
-				controlDay = "daysOpt01";
-			} else {
-				if (valorList[3].search("/") > 0) {
-					let control = true;
-					let valores = valorList[3].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false
-					}
-
-					if (control) {
-						controlDay = "daysOpt02";
-						$$("daysOpt02_counter01").setValue(valor2);
-						$$("daysOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						//console.log("ERROR FALLO / DAY 02");
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.day") });
-					}
-				} else {
-					if (valorList[3].search(" ? ") > 0) {
-						let control = true;
-						//let valores = valorList[3];
-
-						/*
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false
-						}
-						*/
-
-						if (control) {
-							controlDay = "daysOpt05";
-							//$$("daysOpt04_counter01").setValue(valor2);
-							//$$("daysOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.day") });
-							//console.log("ERROR FALLO ? DAY 02");
-						}
-					} else {
-						if (valorList[3].search(",") > 0) {
-							let control = true;
-							let valores = valorList[3].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1 = parseInt(item);
-								});
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlDay = "daysOpt03";
-								$$("daysOpt03_combo").setValue(valorList[3]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.day") });
-								//console.log("ERROR FALLO , DAY 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(valorList[3]);
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlDay = "daysOpt03";
-								$$("daysOpt03_combo").setValue(valorList[3]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.day") });
-								//console.log("ERROR FALLO , DAY 03_01");
-							}
-						}
-					}
-				}
-			}
-
-			if (valorList[4] === "*") {
-				//EVERY minute
-				controlMonth = "monthsOpt01";
-			} else {
-				if (valorList[4].search("/") > 0) {
-					let control = true;
-					let valores = valorList[4].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false
-					}
-
-					if (control) {
-						controlMonth = "monthsOpt02";
-						$$("monthsOpt02_counter01").setValue(valor2);
-						$$("monthsOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.month") });
-						//console.log("ERROR FALLO / MON 02");
-					}
-				} else {
-					if (valorList[4].search("-") > 0) {
-						let control = true;
-						let valores = valorList[4].split("-");
-						let valor1 = null;
-						let valor2 = null;
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false
-						}
-
-						if (control) {
-							controlMonth = "monthsOpt04";
-							$$("monthsOpt04_counter01").setValue(valor2);
-							$$("monthsOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.month") });
-							//console.log("ERROR FALLO - MON 04");
-						}
-					} else {
-						if (valorList[4].search(",") > 0) {
-							let control = true;
-							let valores = valorList[4].split(",");
-							let valor1 = [];
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1.push(parseInt(v_month3[item]).toString());
-								});
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlMonth = "monthsOpt03";
-								$$("monthsOpt03_combo").setValue(valor1.toString());
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.month") });
-								//console.log("ERROR FALLO , MON 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(v_month3[valorList[4]]);
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlMonth = "monthsOpt03";
-								$$("monthsOpt03_combo").setValue(valor1.toString());
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.month") });
-								//console.log("ERROR FALLO , MON 03_02");
-							}
-						}
-					}
-				}
-			}
-
-			if (valorList[6] === "*") {
-				//EVERY YEAR
-				controlYear = "yearsOpt01";
-			} else {
-				if (valorList[6].search("/") > 0) {
-					let control = true;
-					let valores = valorList[6].split("/");
-					let valor1 = null;
-					let valor2 = null;
-					try {
-						valor1 = parseInt(valores[0]);
-						valor2 = parseInt(valores[1]);
-					} catch (e) {
-						control = false
-					}
-
-					if (control) {
-						controlYear = "yearsOpt02";
-						$$("yearsOpt02_counter01").setValue(valor2);
-						$$("yearsOpt02_counter02").setValue(valor1);
-					} else {
-						//ERROR 
-						controlTotal = false;
-						webix.message({ type: "error", text: $.i18n("cronUi.popup.error.year") });
-						//console.log("ERROR FALLO / YEA 02");
-					}
-				} else {
-					if (valorList[6].search("-") > 0) {
-						let control = true;
-						let valores = valorList[6].split("-");
-						let valor1 = null;
-						let valor2 = null;
-						try {
-							valor1 = parseInt(valores[0]);
-							valor2 = parseInt(valores[1]);
-						} catch (e) {
-							control = false
-						}
-
-						if (control) {
-							controlYear = "yearsOpt04";
-							$$("yearsOpt04_counter01").setValue(valor2);
-							$$("yearsOpt04_counter02").setValue(valor1);
-						} else {
-							//ERROR 
-							controlTotal = false;
-							webix.message({ type: "error", text: $.i18n("cronUi.popup.error.year") });
-							//console.log("ERROR FALLO - YEA 04");
-						}
-					} else {
-						if (valorList[6].search(",") > 0) {
-							let control = true;
-							let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valores.forEach(item => {
-									valor1 = parseInt(item);
-								});
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlYear = "yearsOpt03";
-								$$("yearsOpt03_combo").setValue(valorList[6]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.year") });
-								//console.log("ERROR FALLO , YEA 03");
-							}
-						} else {
-							//un año individual
-							let control = true;
-							//let valores = valorList[6].split(",");
-							let valor1 = null;
-							let valor2 = null;
-							try {
-								valor1 = parseInt(valorList[6]);
-							} catch (e) {
-								control = false
-							}
-
-							if (control) {
-								controlYear = "yearsOpt03";
-								$$("yearsOpt03_combo").setValue(valorList[6]);
-							} else {
-								//ERROR 
-								controlTotal = false;
-								webix.message({ type: "error", text: $.i18n("cronUi.popup.error.year") });
-								//console.log("ERROR FALLO , YEA 03_01");
-							}
-						}
-					}
-				}
-			}
-
-			if (controlTotal) {
-				$$("secondsOpt01").setValue(0);
-				$$("secondsOpt02").setValue(0);
-				$$("secondsOpt03").setValue(0);
-				$$("secondsOpt04").setValue(0);
-
-				$$("minsOpt01").setValue(0);
-				$$("minsOpt02").setValue(0);
-				$$("minsOpt03").setValue(0);
-				$$("minsOpt04").setValue(0);
-
-				$$("hoursOpt01").setValue(0);
-				$$("hoursOpt02").setValue(0);
-				$$("hoursOpt03").setValue(0);
-				$$("hoursOpt04").setValue(0);
-
-				$$("daysOpt01").setValue(0);
-				$$("daysOpt02").setValue(0);
-				$$("daysOpt03").setValue(0);
-				//$$("daysOpt04").setValue(0);
-				$$("daysOpt05").setValue(0);
-
-				$$("monthsOpt01").setValue(0);
-				$$("monthsOpt02").setValue(0);
-				$$("monthsOpt03").setValue(0);
-				$$("monthsOpt04").setValue(0);
-
-				$$("yearsOpt01").setValue(0);
-				$$("yearsOpt02").setValue(0);
-				$$("yearsOpt03").setValue(0);
-				$$("yearsOpt04").setValue(0);
-
-				$$(controlSecond).setValue(1);
-				$$(controlMinute).setValue(1);
-				$$(controlHour).setValue(1);
-				$$(controlDay).setValue(1);
-				$$(controlMonth).setValue(1);
-				$$(controlYear).setValue(1);
-
-				$$("inputsHeaderSeconds").setValue(valorList[0]);
-				$$("inputsHeaderMinutes").setValue(valorList[1]);
-				$$("inputsHeaderHours").setValue(valorList[2]);
-				$$("inputsHeaderDays").setValue(valorList[3]);
-				$$("inputsHeaderMonths").setValue(valorList[4]);
-				$$("inputsHeaderYears").setValue(valorList[6]);
-			} else {
-				webix.message({ type: "error", text: $.i18n("cronUi.popup.error.total") });
 			}
 		}
 	}

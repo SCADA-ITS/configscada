@@ -1,6 +1,6 @@
 import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
-import CronUi from "../component/CronUi.js";
+import CronUi from "../component/cronUi.js";
 import SearchDialogBox from "../component/searchDialogBox.js";
 import MessageBox from "../component/messageBox.js";
 
