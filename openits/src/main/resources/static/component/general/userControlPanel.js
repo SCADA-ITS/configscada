@@ -143,7 +143,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						css: "user-avatar",
 						template: function() {
 
-							return `<img src="https://avatars.dicebear.com/4.5/api/initials/${userData.name}.svg"/>`;
+							return `<img src="${util.generateAvatar(userData.name)}"/>`;
 						},
 						borderless: true
 

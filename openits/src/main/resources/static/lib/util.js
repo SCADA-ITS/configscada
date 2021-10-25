@@ -1697,5 +1697,71 @@ export let util = {
 	fillTemplate(templateString, templateVars) {
 		var func = new Function(...Object.keys(templateVars), "return `" + templateString + "`;")
 		return func(...Object.values(templateVars));
+	},
+
+	generateAvatar(text) {
+
+		const canvas = document.createElement("canvas");
+		const context = canvas.getContext("2d");
+	
+		canvas.width = 250;
+		canvas.height = 250;
+
+		// Get color
+		let hashValue = this.getHash(text);
+		let color;
+		let mod = Math.abs(hashValue) % 10;
+		switch (mod) {
+
+			case 0:
+				color = '#008000';
+				break;
+			case 1:
+				color = '#0000ff';
+				break;
+			case 2:
+				color = '#a52a2a';
+				break;
+			case 3:
+				color = '#009688';
+				break;
+			case 4:
+				color = '#ffa500';
+				break;
+			case 5:
+				color = '#ff00ff';
+				break;
+			case 6:
+				color = '#800080';
+				break;
+			case 7:
+				color = '#000000';
+				break;
+			case 8:
+				color = '#808080';
+				break;
+			case 9:
+				color = '#6495ed';
+				break;
+		}
+
+		// Get value
+		let textValue = "";
+		if(text && text.trim().length > 0){
+			textValue= text.trim().substring(0,2).toUpperCase();
+		}
+	
+		// Draw background
+		context.fillStyle = color + '3b';
+		context.fillRect(0, 0, canvas.width, canvas.height);
+	
+		// Draw text
+		context.font = "bold 140px Assistant";
+		context.fillStyle = color + 'a0';
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText(textValue, canvas.width / 2, canvas.height / 2);
+	
+		return canvas.toDataURL("image/png");
 	}
 };

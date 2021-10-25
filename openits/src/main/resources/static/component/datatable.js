@@ -417,12 +417,12 @@ export default class DataTable {
 
 									if (!showValue) {
 
-										return `<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>`;
+										return `<img class="table-field-icons" src="${util.generateAvatar(value)}"/>`;
 									}
 									else {
 
 										return `<div style="width: ${field.widthPx}">	
-													<img class="table-field-icons" src="https://avatars.dicebear.com/4.5/api/initials/${value}.svg"/>
+													<img class="table-field-icons" src="${util.generateAvatar(value)}"/>
 													<span>${value}</span>
 												</div>`
 									}
