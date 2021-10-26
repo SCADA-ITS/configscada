@@ -27,8 +27,7 @@ export default class PasSignalingOrderEdit {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
-				getViewBody(),
-				{}
+				getViewBody()
 			]
 		};
 
@@ -87,9 +86,8 @@ export default class PasSignalingOrderEdit {
 		function getViewBody() {
 
 			getZonesTable();
+
 			let viewBody = {};
-			let zonesDataTableSent = self.zonesDataTableSent.getView();
-			let zonesDataTableStop = self.zonesDataTableStop.getView();
 
 			viewBody = {
 				view: "form",
@@ -118,9 +116,11 @@ export default class PasSignalingOrderEdit {
 									{
 										view: "multiview",
 										keepViews: true,
+										animate: false,
+										scroll: "auto",
 										cells: [
-											{ id: 1, view: "form", elements: [{ height: 300, rows: zonesDataTableSent }] },
-											{ id: 2, view: "form", elements: [{ height: 300, rows: zonesDataTableStop }] }
+											{ id: 1, rows: self.zonesDataTableSent.getView() },
+											{ id: 2, rows: self.zonesDataTableStop.getView() }
 										]
 									}
 								]
@@ -130,9 +130,6 @@ export default class PasSignalingOrderEdit {
 					}
 				]
 			};
-
-			zonesDataTableSent[1].multiselect = "touch";
-			zonesDataTableStop[1].multiselect = "touch";
 
 			return viewBody;
 		}
@@ -203,37 +200,6 @@ export default class PasSignalingOrderEdit {
 						isEpochMilli: false,
 						isPk: false,
 						parameterized: false,
-						position: 3,
-						required: false,
-						sourceField: "onSent",
-						visible: true,
-						widthPx: 60,
-						gridFieldDataType: {
-							id: 1,
-							name: "string"
-						},
-						gridFieldIcons: [
-							{
-								icon: "./img/grid/play.png",
-								showValue: false,
-								value: "1",
-								labelValue: "LBL_PAS_SENT"
-							},
-							{
-								icon: "./img/grid/stop.png",
-								showValue: false,
-								value: "0",
-								labelValue: "LBL_PAS_STOP"
-							},
-						]
-					},
-					{
-						id: 4,
-						extended: false,
-						filtered: false,
-						isEpochMilli: false,
-						isPk: false,
-						parameterized: false,
 						position: 4,
 						required: false,
 						sourceField: "messageId",
@@ -246,7 +212,7 @@ export default class PasSignalingOrderEdit {
 						gridFieldIcons: []
 					},
 					{
-						id: 5,
+						id: 4,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -266,7 +232,7 @@ export default class PasSignalingOrderEdit {
 						gridFieldIcons: []
 					},
 					{
-						id: 6,
+						id: 5,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -284,7 +250,7 @@ export default class PasSignalingOrderEdit {
 						gridFieldIcons: []
 					},
 					{
-						id: 9,
+						id: 6,
 						extended: false,
 						filtered: false,
 						isEpochMilli: false,
@@ -326,6 +292,31 @@ export default class PasSignalingOrderEdit {
 					filtered: false,
 					isEpochMilli: false,
 					isPk: false,
+					parameterized: false,
+					position: 3,
+					required: false,
+					sourceField: "onSent",
+					visible: true,
+					widthPx: 60,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},
+					gridFieldIcons: [
+						{
+							icon: "./img/grid/play.png",
+							showValue: false,
+							value: "1",
+							labelValue: "LBL_PAS_SENT"
+						}
+					]
+				},
+				{
+					id: 8,
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
 					label: "LBL_PAS_ACTION",
 					labelTooltip: "LBL_PAS_ACTION",
 					parameterized: false,
@@ -341,7 +332,7 @@ export default class PasSignalingOrderEdit {
 					gridFieldIcons: []
 				},
 				{
-					id: 8,
+					id: 9,
 					extended: false,
 					filtered: false,
 					isEpochMilli: false,
@@ -359,8 +350,7 @@ export default class PasSignalingOrderEdit {
 						name: "string"
 					},
 					gridFieldIcons: []
-				},
-			);
+				});
 
 			metadataSent.gridCommands.push(
 				{
@@ -372,8 +362,34 @@ export default class PasSignalingOrderEdit {
 					position: 1,
 					showText: true,
 					itemRequired: true
-				}
-			);
+				});
+
+			metadataStop.gridFields.push(
+				{
+					id: 10,
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					parameterized: false,
+					position: 3,
+					required: false,
+					sourceField: "onStop",
+					visible: true,
+					widthPx: 60,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},
+					gridFieldIcons: [
+						{
+							icon: "./img/grid/stop.png",
+							showValue: false,
+							value: "1",
+							labelValue: "LBL_PAS_STOP"
+						}
+					]
+				});
 
 			metadataStop.gridCommands.push(
 				{
@@ -384,9 +400,8 @@ export default class PasSignalingOrderEdit {
 					multiselect: true,
 					position: 1,
 					showText: true,
-					itemRequired: false
-				}
-			);
+					itemRequired: true
+				});
 
 			let events = {};
 			events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
@@ -396,27 +411,61 @@ export default class PasSignalingOrderEdit {
 				function: () => {
 
 					let radioButtonsValue = $$("radioButtons-" + self.uid).getValue();
-					let zoneDataTable = (radioButtonsValue == 1) ? self.zonesDataTableSent : self.zonesDataTableStop;
+					let sent = (radioButtonsValue == 1);
+					let zoneDataTable = (sent) ? self.zonesDataTableSent : self.zonesDataTableStop;
 					let selectedItems = zoneDataTable.getSelectedItems();
 					let arrayItems = (Array.isArray(selectedItems) && selectedItems.length > 0) ? selectedItems : zoneDataTable.getAllItems();
 					let itemsToUpdate = [];
 
-					for (let item of arrayItems) {
+					if (sent) {
 
-						let it = {
-							id: item.id,
-							messageId: "-",
-							messageAction: "-",
-							messageAlias: "-",
-							messageSent: false,
-							message: " ",
-							onSent: " "
-						};
+						let itemsNotClean = arrayItems.find(item => (item.onSent));
 
-						itemsToUpdate.push(it);
+						if (itemsNotClean) {
+
+							self.selectedCommand = self.config.commands.SEND_MESSAGE.commandElementTypeId;
+
+							for (let item of arrayItems) {
+
+								let it = {
+									id: item.id,
+									messageId: "-",
+									messageAction: "-",
+									messageAlias: "-",
+									messageSent: " ",
+									message: " ",
+									onSent: " "
+								};
+
+								itemsToUpdate.push(it);
+							}
+
+							zoneDataTable.update(itemsToUpdate);
+						}
+
+					} else {
+
+						let itemsNotClean = arrayItems.find(item => (item.onStop));
+
+						if (itemsNotClean) {
+
+							self.selectedCommand = self.config.commands.SWITCH_OFF.commandElementTypeId;
+
+							for (let item of arrayItems) {
+
+								let it = {
+									id: item.id,
+									messageId: "-",
+									messageSent: " ",
+									onStop: " "
+								};
+
+								itemsToUpdate.push(it);
+							}
+
+							zoneDataTable.update(itemsToUpdate);
+						}
 					}
-
-					zoneDataTable.update(itemsToUpdate);
 				}
 			});
 
@@ -472,40 +521,29 @@ export default class PasSignalingOrderEdit {
 
 					if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
-						let itemsSents = selectedItems.filter(e => (e.messageSent));
+						let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + selectedItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
 
-						if (selectedItems.length === itemsSents.length) {
+						let ms = new MessageBox(MessageBox.CONFIRM, labelDescription, onAccept, null);
+						ms.show();
 
-							let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + selectedItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
+						function onAccept() {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, labelDescription, onAccept, null);
-							ms.show();
+							let itemsToUpdate = [];
 
-							function onAccept() {
+							for (let item of selectedItems) {
 
-								let itemsToUpdate = [];
+								let it = {
+									id: item.id,
+									messageId: "0",
+									messageSent: false,
+									onStop: "1"
+								};
 
-								for (let item of selectedItems) {
+								itemsToUpdate.push(it);
+							}
 
-									let it = {
-										id: item.id,
-										messageId: "0",
-										messageAction: i18n.t("LBL_PAS_STOP_MESSAGE"),
-										messageSent: false,
-										onSent: "0"
-									};
-
-									itemsToUpdate.push(it);
-								}
-
-								self.zonesDataTableStop.update(itemsToUpdate);
-							};
-
-						} else {
-
-							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NOT_ALL_ZONES_HAVE_MESSAGES_SENT"), null, null);
-							ms.show();
-						}
+							self.zonesDataTableStop.update(itemsToUpdate);
+						};
 					}
 				}
 			});
@@ -521,103 +559,121 @@ export default class PasSignalingOrderEdit {
 
 	loadData() {
 
-		let pasLibrariesResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.pasLibraryByElement, { id: this.element.id }));
+		let self = this;
 
-		if (pasLibrariesResponse && pasLibrariesResponse.responseText) {
+		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.pasLibraryByElement, { id: self.element.id })).then(function(librariesResponse) {
 
-			this.pasLibraries = JSON.parse(pasLibrariesResponse.responseText);
-		}
+			if (librariesResponse != null) {
 
-		let elementResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.elementById, { id: this.element.id }));
+				let pasLibrariesResponse = librariesResponse.json();
 
-		if (elementResponse && elementResponse.responseText) {
+				if (pasLibrariesResponse) {
 
-			this.element = JSON.parse(elementResponse.responseText);
-		}
+					self.pasLibraries = pasLibrariesResponse;
+				}
 
-		if (this.element.childs) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementById, { id: self.element.id })).then(function(elResponse) {
 
-			this.zones = this.element.childs.filter(element => element.elementType.id == this.config.zone.type);
+					if (elResponse != null) {
 
-			this.zones.forEach(element => {
+						let elementResponse = elResponse.json();
 
-				this.updateZone(element);
-			});
-		}
-	}
+						if (elementResponse) {
 
-	updateZone(element) {
+							self.element = elementResponse;
+						}
 
-		let commandElementValues = this.args.data.planOrder.comandElement.commandElementValues;
-		let arrayZonesId = [];
-		let arrayMessagesId = [];
-		let messageId = undefined;
-		let messageZoneId = undefined;
-		let zoneId = undefined;
+						if (self.element.childs) {
 
-		messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.config.zone.paramZoneId);
+							self.zones = self.element.childs.filter(element => element.elementType.id == self.config.zone.type);
 
-		if (messageZoneId && messageZoneId.value != undefined) {
+							self.zones.forEach(element => {
 
-			element.messageZoneId = messageZoneId.value;
-		}
-
-		if (commandElementValues) {
-
-			for (let elementValue of commandElementValues) {
-
-				if (elementValue.value) {
-
-					if (elementValue.commandElementTypeParam.id === this.config.commands.SEND_MESSAGE.commandElementValues[0].commandElementTypeParamId) {
-
-						arrayZonesId = JSON.parse(elementValue.value);
+								updateZone(element);
+								self.zonesDataTableSent.add(element);
+								self.zonesDataTableStop.add(element);
+							});
+						}
 					}
+				});
+			}
+		});
 
-					if (elementValue.commandElementTypeParam.id === this.config.commands.SWITCH_OFF.commandElementValues[0].commandElementTypeParamId) {
 
-						arrayZonesId = JSON.parse(elementValue.value);
-					}
+		function updateZone(element) {
 
-					if (elementValue.commandElementTypeParam.id === this.config.commands.SEND_MESSAGE.commandElementValues[1].commandElementTypeParamId) {
+			let commandElementValues = self.args.data.planOrder.comandElement.commandElementValues;
+			let arrayZonesId = [];
+			let arrayMessagesId = [];
+			let messageId = undefined;
+			let messageZoneId = undefined;
+			let zoneId = undefined;
 
-						arrayMessagesId = JSON.parse(elementValue.value);
+			messageZoneId = element.elementValues.find(elementValue => elementValue.elementTypeParam.id == self.config.zone.paramZoneId);
+
+			if (messageZoneId && messageZoneId.value != undefined) {
+
+				element.messageZoneId = messageZoneId.value;
+			}
+
+			if (commandElementValues) {
+
+				for (let elementValue of commandElementValues) {
+
+					if (elementValue.value) {
+
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE.commandElementValues[0].commandElementTypeParamId) {
+
+							arrayZonesId = JSON.parse(elementValue.value);
+						}
+
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SWITCH_OFF.commandElementValues[0].commandElementTypeParamId) {
+
+							arrayZonesId = JSON.parse(elementValue.value);
+						}
+
+						if (elementValue.commandElementTypeParam.id === self.config.commands.SEND_MESSAGE.commandElementValues[1].commandElementTypeParamId) {
+
+							arrayMessagesId = JSON.parse(elementValue.value);
+						}
 					}
 				}
 			}
-		}
 
-		zoneId = arrayZonesId.find(zone => zone === element.id);
+			zoneId = arrayZonesId.find(zone => zone === element.id);
 
-		if (zoneId) {
+			if (zoneId) {
 
-			let index = arrayZonesId.indexOf(zoneId);
+				let index = arrayZonesId.indexOf(zoneId);
 
-			messageId = (arrayMessagesId[index]) ? arrayMessagesId[index] : false;
-		}
-
-		if (messageId) {
-
-			element.messageId = messageId;
-
-			if (this.pasLibraries && this.pasLibraries.pasLibrary && Array.isArray(this.pasLibraries.pasLibrary.pasLibraryNodes) && this.pasLibraries.pasLibrary.pasLibraryNodes.length > 0) {
-
-				let passLibraryNode = this.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.id == element.messageId);
-
-				if (passLibraryNode) {
-
-					element.messageAlias = passLibraryNode.pasMessage.alias;
-					element.messageAction = i18n.t("LBL_PAS_SEND_MESSAGE");
-					element.messageSent = true;
-					element.onSent = "1";
-				}
+				messageId = (arrayMessagesId[index]) ? arrayMessagesId[index] : false;
 			}
 
-		} else if (messageId === false) {
+			if (messageId) {
 
-			element.messageSent = false;
-			element.onSent = "0";
+				element.messageId = messageId;
+
+				if (self.pasLibraries && self.pasLibraries.pasLibrary && Array.isArray(self.pasLibraries.pasLibrary.pasLibraryNodes) && self.pasLibraries.pasLibrary.pasLibraryNodes.length > 0) {
+
+					let passLibraryNode = self.pasLibraries.pasLibrary.pasLibraryNodes.find(pasLibraryNode => pasLibraryNode.pasMessage && pasLibraryNode.pasMessage.id == element.messageId);
+
+					if (passLibraryNode) {
+
+						element.messageAlias = passLibraryNode.pasMessage.alias;
+						element.messageAction = i18n.t("LBL_PAS_SEND_MESSAGE");
+						element.messageSent = true;
+						element.onSent = "1";
+					}
+				}
+
+			} else if (messageId === false) {
+
+				element.messageSent = false;
+				element.onStop = "1";
+			}
 		}
 	}
+
 
 	callbacks() {
 
@@ -625,11 +681,6 @@ export default class PasSignalingOrderEdit {
 
 			this.zonesDataTableSent.callbacks();
 			this.zonesDataTableStop.callbacks();
-		}
-
-		if (this.selectedPks) {
-
-			this.zonesDataTableSent.select(this.selectedPks);
 		}
 	}
 
@@ -655,7 +706,6 @@ export default class PasSignalingOrderEdit {
 
 						// PLAY
 						if (row["messageSent"] === true) {
-							console.log(row)
 
 							let ms = {
 								id: row.id,
@@ -671,7 +721,6 @@ export default class PasSignalingOrderEdit {
 
 						// STOP
 						else if (row["messageSent"] === false) {
-							console.log(row)
 
 							let ms = {
 								id: row.id,
@@ -695,18 +744,6 @@ export default class PasSignalingOrderEdit {
 
 						let elementId = self.element.id;
 
-						commandElement = {
-							element: {
-								id: elementId
-							},
-							commandElementType: {
-								id: selectedCommandElement.id
-							},
-							id: selectedCommandElement.id + ":" + elementId.substring(elementId.lastIndexOf(':') + 1)
-						};
-
-						commandElement.commandElementValues = [];
-
 						// SEND MESSAGE
 						if (selectedCommandElement.id === self.config.commands.SEND_MESSAGE.commandElementTypeId) {
 
@@ -718,6 +755,18 @@ export default class PasSignalingOrderEdit {
 								zoneValue.push(element.messageZoneId);
 								messageValue.push(element.messageId.toString());
 							}
+
+							commandElement = {
+								element: {
+									id: elementId
+								},
+								commandElementType: {
+									id: selectedCommandElement.id
+								},
+								id: selectedCommandElement.id + ":" + elementId.substring(elementId.lastIndexOf(':') + 1)
+							};
+
+							commandElement.commandElementValues = [];
 
 							commandElement.commandElementValues.push(
 								{
@@ -740,6 +789,18 @@ export default class PasSignalingOrderEdit {
 
 								zoneValue.push(element.messageZoneId);
 							}
+
+							commandElement = {
+								element: {
+									id: elementId
+								},
+								commandElementType: {
+									id: selectedCommandElement.id
+								},
+								id: selectedCommandElement.id + ":" + elementId.substring(elementId.lastIndexOf(':') + 1)
+							};
+
+							commandElement.commandElementValues = [];
 
 							commandElement.commandElementValues.push(
 								{

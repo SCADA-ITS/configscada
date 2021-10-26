@@ -36,64 +36,66 @@ export default class VmsSignalingModule extends GenericModule {
 		}
 		
 		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.pas.type })).then(function(elementsResponse) {
-			
+
 			if (elementsResponse != null) {
-						
+
 				self.elements = elementsResponse.json();
-				
+
 				if (Array.isArray(self.elements) && self.elements.length > 0) {
 
-					if(self.moduleAction && self.moduleAction.id == self.config.moduleAction.pas){
-			
+					if (self.moduleAction && self.moduleAction.id == self.config.moduleAction.pas) {
+
 						self.elements = self.elements.filter(element => self.args.selectedPks.includes(element.id));
 						self.currentElement = getElementFromElementId(self.args.selectedPks[0]);
-					}
-					
-					if(self.moduleAction && self.moduleAction.id == self.config.moduleAction.zone){
-			
-						let elementsHierarchyResponse = webix.ajax().sync().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy);
-						let elementsHierarchy = JSON.parse(elementsHierarchyResponse.responseText);
-						
-						let pasHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.pas.type);
-						pasHierarchy = pasHierarchy.filter(element => self.args.selectedPks.includes(element.child.id));
-						
-						
-						pasHierarchy.forEach(element => {
 
-							if(self.args.selectedPks.includes(element.child.id) && !self.selectedChildElementsHierarchyMap.get(element.parent.id) ){
+						load();
 
-								self.selectedChildElementsHierarchyMap.set(element.parent.id, []);
-							}
+					} else if (self.moduleAction && self.moduleAction.id == self.config.moduleAction.zone) {
 
-							if(self.args.selectedPks.includes(element.child.id)){
+						webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(hierarchyResponse) {
 
-								self.selectedChildElementsHierarchyMap.get(element.parent.id).push(element.child.id);
+							if (hierarchyResponse != null) {
+
+								let elementsHierarchy = hierarchyResponse.json();
+
+								let pasHierarchy = elementsHierarchy.filter(element => element.parent.elementType.id == self.config.pas.type);
+								pasHierarchy = pasHierarchy.filter(element => self.args.selectedPks.includes(element.child.id));
+
+								pasHierarchy.forEach(element => {
+
+									if (self.args.selectedPks.includes(element.child.id) && !self.selectedChildElementsHierarchyMap.get(element.parent.id)) {
+
+										self.selectedChildElementsHierarchyMap.set(element.parent.id, []);
+									}
+
+									if (self.args.selectedPks.includes(element.child.id)) {
+
+										self.selectedChildElementsHierarchyMap.get(element.parent.id).push(element.child.id);
+									}
+								});
+
+								let elementsId = pasHierarchy.map(e => { return e.parent.id; });
+								self.elements = self.elements.filter(element => elementsId.includes(element.id));
+								self.currentElement = getElementFromElementId(elementsId[0]);
+
+								load();
 							}
 						});
-
-						let elementsId = pasHierarchy.map(e => { return e.parent.id; }); 
-						self.elements = self.elements.filter(element => elementsId.includes(element.id));
-						self.currentElement = getElementFromElementId(elementsId[0]);
-					}
-	
-					self.viewMainListHierarchyHidden = (self.elements.length == 1);				
-					
-					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
-						
-						self.viewMainListHierarchyHidden = true;
 					}
 
-					load();	
-				}
-				else {
-					
+					self.viewMainListHierarchyHidden = (self.elements.length == 1);
+
+					load();
+
+				} else {
+
 					let container = $$(self.args.containerId);
-					
+
 					if (container) {
-						
+
 						container.close();
-						
-						let ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"), null, null);
+
+						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_PAS_AVAILABLE_DESCRIPTION"), null, null);
 						ms.show();
 					}
 				}
@@ -238,12 +240,15 @@ export default class VmsSignalingModule extends GenericModule {
 				let view = {};
 				
 				let previousViewContent = self.currentViewContent;
-				
-				if(self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit){
-					
+
+				if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+
+					$$("view-main-list-hierarchy-" + self.uid).hide();
+					$$("view-main-resizer-" + self.uid).hide();
+
 					self.pasSignalingOrderEdit = new PasSignalingOrderEdit(self.config, self.currentElement, self.args);
-					self.pasSignalingOrderEdit.loadData();
 					view = self.pasSignalingOrderEdit.getView();
+					self.pasSignalingOrderEdit.loadData();
 
 				} else {
 
