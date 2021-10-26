@@ -518,7 +518,9 @@ export default class RoleModule extends GenericModule {
 
 				let form = self.form;
 
-				let buttons = {
+				let buttons;
+				
+				buttons = {
 					id: "buttons-" + self.uid,
 					borderless: true,
 					rows: [
@@ -538,44 +540,52 @@ export default class RoleModule extends GenericModule {
 									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 41, css: "dialog-accept",
 									click:
 										function() {
-
-											let values = $$(form.id).getValues();
-											let validation = $$(form.id).validate();
-
-											if (validation) {
-
-												let permissions = self.selectPermissions.concat(self.rolPermissions);
-
-												let body = {
-													role: {
-														alias: values.roleName,
-														description: values.roleDesc,
-														preset: false,
-														rolePermissionIds: permissions
-													}
-												}
-
-												if (self.moduleAction.id === self.config.moduleAction.add) {
-
-													webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body).then(function(data) {
-														$$(self.args.containerId).close();
-														self.args.callbacks[0]();
-													});
-
-												} else if (self.moduleAction.id === self.config.moduleAction.edit) {
-
-													body.role.id = self.oldPermissions.id;
-
-													webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body).then(function(data) {
-														$$(self.args.containerId).close();
-														self.args.callbacks[0]();
-													});
-												}
+											
+											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_ROLE_DESCRIPTION"), onAccept, null);
+											msgboxAccept.show();
+						
+											function onAccept() {
 												
-											} else {
-
-												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
-												ms.show();
+												$$(self.args.containerId).hide();
+											
+												let values = $$(form.id).getValues();
+												let validation = $$(form.id).validate();
+	
+												if (validation) {
+	
+													let permissions = self.selectPermissions.concat(self.rolPermissions);
+	
+													let body = {
+														role: {
+															alias: values.roleName,
+															description: values.roleDesc,
+															preset: false,
+															rolePermissionIds: permissions
+														}
+													}
+	
+													if (self.moduleAction.id === self.config.moduleAction.add) {
+	
+														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body).then(function(data) {
+															$$(self.args.containerId).close();
+															self.args.callbacks[0]();
+														});
+	
+													} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+	
+														body.role.id = self.oldPermissions.id;
+	
+														webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body).then(function(data) {
+															$$(self.args.containerId).close();
+															self.args.callbacks[0]();
+														});
+													}
+													
+												} else {
+	
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+													ms.show();
+												}	
 											}
 										}
 								},

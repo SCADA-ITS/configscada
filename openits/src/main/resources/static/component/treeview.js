@@ -507,6 +507,7 @@ export default class TreeView {
 							icon: treeCommand.icon, 
 							value: i18n.t(treeCommand.label), 
 							tooltip: true,
+							hidden: (treeCommand.disabled === true),
 							on: {
 								onItemClick: function() {
 								
@@ -567,6 +568,7 @@ export default class TreeView {
 					id: webix.uid(),		
 					value: i18n.t(treeCommand.label),
 					icon: treeCommand.icon,
+					hidden: (treeCommand.disabled === true),
 					treeCommandId: treeCommand.id  
 				});
 			}

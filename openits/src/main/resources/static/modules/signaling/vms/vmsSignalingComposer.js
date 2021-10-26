@@ -386,24 +386,6 @@ export default class VmsSignalingComposer {
 	
 	getCurrentSignalingJsonData() {
 		
-//		let jsonData = undefined;
-//				
-//		if (this.element && Array.isArray(this.element.elementValues) && this.element.elementValues.length > 0) {
-//			
-//			jsonData = this.getJsonDataClear();
-//			
-//			let elementValueJsonData = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.vms.jsonData);
-//		
-//			if (elementValueJsonData && elementValueJsonData.value) {
-//				
-//				jsonData = JSON.parse(elementValueJsonData.value);
-//			}
-//			else {
-//				
-//				jsonData = USE_VMS_FAKE_DATA ? this.jsonDataFake : undefined;
-//			}	
-//		}
-		
 		return this.jsonData;
 	}
 	
@@ -426,10 +408,14 @@ export default class VmsSignalingComposer {
 			value: JSON.stringify(jsonDataCopy)
 		}
 		
-		this.graphicIconInstance.updateState({
-			id: "ElementTypeState:71:1"
-		});
-		this.graphicIconInstance.updateValues([elementValueJsonData]);
+		if (this.graphicIconInstance) {
+			
+			this.graphicIconInstance.updateState({
+				id: "ElementTypeState:71:1"
+			});
+			
+			this.graphicIconInstance.updateValues([elementValueJsonData]);	
+		}
 		
 		
 		if (this.onUpdate) {

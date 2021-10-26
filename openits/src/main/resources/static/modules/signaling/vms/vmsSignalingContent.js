@@ -41,6 +41,9 @@ export default class VmsSignalingContent {
 	getView() {
 
 		let self = this;
+		
+		let editPanelPermission = util.module.isAllowedPermission(self.config.requiredPermissions.editPanel);
+		
 		let view = {
 			id: "view-main-content-" + self.uid,
 			rows: [
@@ -93,7 +96,9 @@ export default class VmsSignalingContent {
 		
 		function getViewHeader() {
 			
-			let viewHeader = {
+			let viewHeader;
+			
+			viewHeader = {
 				cols: [
 					{
 						view: "label",
@@ -174,7 +179,7 @@ export default class VmsSignalingContent {
 										btnSend.disable();
 										btnUndo.disable();
 									}									
-								};
+								}
 							}
 						}
 					} 
@@ -237,7 +242,7 @@ export default class VmsSignalingContent {
 											btnSend.disable();
 										}	
 									}									
-								};
+								}
 							}
 						}
 					} 
@@ -289,7 +294,10 @@ export default class VmsSignalingContent {
 					
 					self.composer.update(jsonData);
 					
-					
+					if (!self.editPanelPermission) {
+						
+						onUpdateComposer(jsonData);
+					}
 				}
 			}
 		}
@@ -308,7 +316,9 @@ export default class VmsSignalingContent {
 				})
 			}
 			
-			let viewCommands = {
+			let viewCommands;
+			
+			viewCommands = {
 				id: "view-signalling-commands-" + self.uid,
 				view: "radio",
 				vertical: false,
@@ -389,14 +399,23 @@ export default class VmsSignalingContent {
 				}
 			}
 			
-			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, onUpdateComposer);
+			
+			
+			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, editPanelPermission ? onUpdateComposer : undefined);
+			
+			if (!editPanelPermission && Array.isArray(initialJsonValue) && initialJsonValue.length > 0) {
+				
+				onUpdateComposer(initialJsonValue);
+			}
 			
 			viewComposer = {
 				rows: [
 					{
 						cols: function() {
 
-							let labels = [
+							let labels; 
+							
+							labels= [
 								{
 									view: "label",
 									label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-cog"></i></div>`,
@@ -412,14 +431,6 @@ export default class VmsSignalingContent {
 									height: 50
 								}
 							];
-
-//							if (self.isPlanOrderEdit) {
-//								
-//								let radioButtons = getViewCommands();
-//								radioButtons.css = {"margin-left": "-35% !important", "line-height": "44px" };
-//
-//								labels.push(radioButtons);
-//							}
 
 							return labels;
 						}()
@@ -455,7 +466,6 @@ export default class VmsSignalingContent {
 				if (!self.undoJsonData) {
 				
 					self.undoJsonData = webix.copy(self.composer.jsonData);
-					
 					return;
 				}
 				
@@ -476,7 +486,9 @@ export default class VmsSignalingContent {
 		
 		function getViewPriority() {
 			
-			let viewPriority = {
+			let viewPriority;
+			
+			viewPriority = {
 				
 			};
 			
@@ -528,7 +540,6 @@ export default class VmsSignalingContent {
 									$$("elements-selected-label" + self.uid).config.label = function(){
 											
 										let label = (sameElement) ? sameElement.alias : selectedElements[0].alias;
-										//let label = vmsSingalingMulti.currentElement.alias;
 											
 										if (Array.isArray(selectedElements) && selectedElements.length > 1) {
 											
@@ -622,7 +633,7 @@ export default class VmsSignalingContent {
 											ms.show();
 										});	
 									}										
-								};				
+								}				
 							}
 						}
 					}

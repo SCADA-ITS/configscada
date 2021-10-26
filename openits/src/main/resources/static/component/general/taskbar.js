@@ -129,14 +129,14 @@ export default class Taskbar {
 					onAfterRender: function() {
 			
 						let taskButton = this;
-			
+									
 						if (taskbar) {
 							
 							taskbar.addView(this);
 							
 							setTimeout(function() {
 								
-								if (!taskButton.config.miniature) {
+								if (!taskButton.config.miniature && $$(task.id)) {
 									
 									html2canvas($$(task.id).getNode()).then(canvas => {
 										taskButton.config.miniature = canvas 				    

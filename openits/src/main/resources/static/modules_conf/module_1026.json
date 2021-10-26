@@ -11,6 +11,10 @@
 		"deleteNode": "vms_libraries/node/${id}"
 		
 	},
+	"requiredPermissions": {
+		"editPanel": "SystemPermission:13",
+		"editLibrary": "SystemPermission:14"
+	},
 	"commands":{
 		"reset" :{
 			"commandElementTypeId":"CommandElementType:1:71"

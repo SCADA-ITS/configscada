@@ -78,7 +78,7 @@ window.onload = function() {
 				const moduleId = parseInt(urlParams.get('module'));
 				const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
 				
-				let args = urlParams.get('args') ? urlParams.get('args') : {};
+				let args = urlParams.get('args') ? JSON.parse(urlParams.get('args')) : {};
 				
 				args.containerId = "view-content";
 				
@@ -91,6 +91,17 @@ window.onload = function() {
 					$$("view-content").show();
 					
 					util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawView, args);
+					
+					if (module.windowValues) {
+						
+						let windowParamValue = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL);
+						
+						if (windowParamValue) {
+						
+							document.title = i18n.t(windowParamValue.value);	
+						}
+					}
+					
 					
 					function drawView(view) {
 			

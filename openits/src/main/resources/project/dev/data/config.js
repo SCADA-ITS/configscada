@@ -8,5 +8,7 @@ const appConfig = {
 	// stompUrl: 'ws://192.168.88.170:61614',
 }
 
+const APP_TITLE = "OpenITS - DEV";
+
 // APP properties
 const APP_DEVMODE_ON = true;

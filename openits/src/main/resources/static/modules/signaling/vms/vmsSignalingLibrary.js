@@ -24,6 +24,9 @@ export default class VmsSignalingLibrary {
 		this.composer = undefined;
 		this.undoJsonData = undefined;
 		this.optionButtonList = undefined;
+		
+		this.editLibraryPermission = util.module.isAllowedPermission(config.requiredPermissions.editLibrary);
+		//this.editLibraryPermission = true;
 	}
 
 	show() {
@@ -275,7 +278,9 @@ export default class VmsSignalingLibrary {
 
 		function getMetadata() {
 
-			return {
+			let metadata;
+			
+			metadata = {
 
 				id: -1,
 				label: "LBL_LIBRARY",
@@ -288,13 +293,11 @@ export default class VmsSignalingLibrary {
 					{ value: true, treeOption: { id: 8 } }
 				],
 				treeCommands: [
-					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
-					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
-					{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
+					{ id: 1, callbacks: [{ commandId: 1, function: onNewFolder }], position: 1, label: "LBL_NEW_FOLDER", icon: "mdi mdi-folder-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false, disabled: !self.editLibraryPermission },
+					{ id: 2, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false, disabled: !self.editLibraryPermission },
+					{ id: 3, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false, disabled: !self.editLibraryPermission }
 				]
 			}
-		}
-		
 		
 			function onNewFolder(selectedPks) {
 
@@ -316,21 +319,16 @@ export default class VmsSignalingLibrary {
 				
 				function onAccept(result){
 					
-					// TODO: POST with result
-
 					if (self.vmsSignalingLibraryPersist) {
 
 						self.vmsSignalingLibraryPersist.createFolder(result, parent.id_)
 							.then(function(data) {
 
 								load(parent.id_ ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-							})
-							.catch(function() {
-
 							});
 					}
 
-				};
+				}
 			}
 
 			function onNewItem(selectedPks) {
@@ -357,11 +355,8 @@ export default class VmsSignalingLibrary {
 						.then(function(data) {
 
 							load((parent && parent.id != "root") ? parent.id_ + "_" + data.id : data.id + "_" + data.id);
-						})
-						.catch(function() {
-
 						});
-				};
+				}
 			}
 
 			function onDelete(selectedPks) {
@@ -383,7 +378,7 @@ export default class VmsSignalingLibrary {
 						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_DIALOG_DELETE_VMS_SIGNALING_DESCRIPTION"), onAccept, null);
 						ms.show();
 						
-						function onAccept(result) {
+						function onAccept() {
 
 							if (selected.id_ === selectedPks[0]) {
 
@@ -396,16 +391,16 @@ export default class VmsSignalingLibrary {
 									.then(function(data) {
 
 										load(parent ? parent.id : undefined);
-									})
-									.catch(function() {
-
 									});
-							}							
-						};
+							}		
+						}
 					}
 				}
 
 			}
+			
+			return metadata;
+		}
 
 		function drawResizer() {
 
@@ -442,7 +437,9 @@ export default class VmsSignalingLibrary {
 
 			function getViewContentHeader() {
 			
-				let viewContentHeader = {
+				let viewContentHeader;
+				
+				viewContentHeader = {
 					id: "headerMain-" + self.uid,
 					hidden: true,
 					cols: [
@@ -522,9 +519,6 @@ export default class VmsSignalingLibrary {
 													.then(function(data) {
 														
 														load(parentId ? parentId + "_" + data.id : data.id + "_" + data.id);
-													})
-													.catch(function() {
-														
 													});
 											}
 										
@@ -541,7 +535,7 @@ export default class VmsSignalingLibrary {
 												btnUndo.disable();
 											}
 										}										
-									};															
+									}														
 								}
 							}
 						} 
@@ -586,7 +580,7 @@ export default class VmsSignalingLibrary {
 												btnUndo.disable();
 											}
 										}																			
-									};								
+									}							
 								}
 							}
 						} 
@@ -631,13 +625,16 @@ export default class VmsSignalingLibrary {
 							label: i18n.t(action.label),
 							description: i18n.t(action.label.toUpperCase() + "_DESCRIPTION"),
 							default: action.default,
+							disabled: action.disabled,
 							icon: action.icon
 						});
 					}
 
-					self.optionButtonList = new OptionButtonList(options, onAceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
+					self.optionButtonList = new OptionButtonList(options, onAcceptOptionButtonList, OptionButtonList.MODE_BUTTONS);
 
-					let viewOptionButtonList = {
+					let viewOptionButtonList;
+					
+					viewOptionButtonList = {
 						id: "view-option-dialog-" + self.uid,
 						rows: [
 							{height: 30},
@@ -658,7 +655,7 @@ export default class VmsSignalingLibrary {
 			return viewContent;
 		}
 		
-		function onAceptOptionButtonList(buttonId){
+		function onAcceptOptionButtonList(buttonId){
 			
 			let actions = getMetadata().treeCommands;
 			let itemsSelected = self.treeView.getSelected();

@@ -884,7 +884,9 @@ export default class UserModule extends GenericModule {
 				const TRUE = 1;
 				const FALSE = 0;
 
-				let buttons = {
+				let buttons;
+				
+				buttons = {
 					id: "buttons-" + self.uid,
 					borderless: true,
 					rows: [
@@ -904,84 +906,94 @@ export default class UserModule extends GenericModule {
 									view: "button", value: i18n.t("LBL_ACCEPT"), width: 130, height: 41, css: "dialog-accept",
 									click:
 										function() {
-
-											let values = $$(form.id).getValues();
-
-											if (values.password === values.confirmPass) {
-
-												let validation = $$(form.id).validate({ disabled: true });
-
-												if (validation) {
-
-													let permissionsIds = [];
-
-													if (values.allowMultipleSessions === TRUE) {
-
-														values.allowMultipleSessions = true;
-
-													} else if (values.allowMultipleSessions === FALSE) {
-
-														values.allowMultipleSessions = false;
-													}
-
-													self.userPermissions.forEach(permission => {
-
-														let rolOperator = undefined;
-														let repeatPermissions = undefined;
-
-														if (self.rolPermissions.length > 0 && self.rolPermissions[0].rolePermissions) {
-
-															rolOperator = self.rolPermissions[0].rolePermissions;
-														} else if (self.rolPermissions.length > 0) {
-
-															rolOperator = self.rolPermissions;
-														}
-
-														if (rolOperator != undefined) {
-
-															repeatPermissions = rolOperator.find(e => e.id === permission.id);
-														}
-
-														if (repeatPermissions) {
-
-															self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
-														} else {
-
-															permissionsIds.push(permission.id);
-														}
-													});
-
-													let body = adapterUserToUpdate(values);
-													body[0].user.userPermissionIds = permissionsIds;
-
-													if (self.moduleAction.id === self.config.moduleAction.add) {
-
-														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
-															$$(self.args.containerId).close();
-															self.args.callbacks[0]();
-														});
-
-													} else if (self.moduleAction.id === self.config.moduleAction.edit || self.moduleAction.id === self.config.moduleAction.changePassword) {
-
-														body[0].user.id = self.oldUser.id;
-
-														webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
-															$$(self.args.containerId).close();
-															self.args.callbacks[0]();
-														});
-													}
-												} else {
-
-													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
-													ms.show();
-
-												}
+											
+											let msgboxAccept = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_SAVE_USER_DESCRIPTION"), onAccept, null);
+											msgboxAccept.show();
+						
+											function onAccept() {
 												
-											} else {
+												$$(self.args.containerId).hide();
+						
+												let values = $$(form.id).getValues();
 
-												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"), null, null);
-												ms.show();
+												if (values.password === values.confirmPass) {
+	
+													let validation = $$(form.id).validate({ disabled: true });
+	
+													if (validation) {
+	
+														let permissionsIds = [];
+	
+														if (values.allowMultipleSessions === TRUE) {
+	
+															values.allowMultipleSessions = true;
+	
+														} else if (values.allowMultipleSessions === FALSE) {
+	
+															values.allowMultipleSessions = false;
+														}
+	
+														self.userPermissions.forEach(permission => {
+	
+															let rolOperator = undefined;
+															let repeatPermissions = undefined;
+	
+															if (self.rolPermissions.length > 0 && self.rolPermissions[0].rolePermissions) {
+	
+																rolOperator = self.rolPermissions[0].rolePermissions;
+															} else if (self.rolPermissions.length > 0) {
+	
+																rolOperator = self.rolPermissions;
+															}
+	
+															if (rolOperator != undefined) {
+	
+																repeatPermissions = rolOperator.find(e => e.id === permission.id);
+															}
+	
+															if (repeatPermissions) {
+	
+																self.userPermissions.splice(self.userPermissions.indexOf(repeatPermissions), 1);
+															} else {
+	
+																permissionsIds.push(permission.id);
+															}
+														});
+	
+														let body = adapterUserToUpdate(values);
+														body[0].user.userPermissionIds = permissionsIds;
+	
+														if (self.moduleAction.id === self.config.moduleAction.add) {
+	
+															webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.actionEndpoints.add, body[0]).then(function(data) {
+																$$(self.args.containerId).close();
+																self.args.callbacks[0]();
+															});
+	
+														} else if (self.moduleAction.id === self.config.moduleAction.edit || self.moduleAction.id === self.config.moduleAction.changePassword) {
+	
+															body[0].user.id = self.oldUser.id;
+	
+															webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, body[0]).then(function(data) {
+																$$(self.args.containerId).close();
+																self.args.callbacks[0]();
+															});
+														}
+													} else {
+	
+														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_REQUIRED_FIELDS_NOT_COMPLETED_DESCRIPTION"), null, null);
+														ms.show();
+	
+													}
+													
+												} else {
+	
+													let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_PASSWORD_AND_CONFIRM_PASSWORD_MUST_BE_THE_SAME_DESCRIPTION"), null, null);
+													ms.show();
+												}
 											}
+
+											
 										}
 								},
 								{ width: 15 }

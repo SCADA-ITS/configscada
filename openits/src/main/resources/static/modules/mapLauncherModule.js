@@ -70,8 +70,6 @@ export default class MapLauncherModule extends GenericModule {
 								
 								w = container.$width - 10;
 								h = container.$height - 10;
-								
-								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
 							}
 
 							let map = new OpenMap(responseJson.metadata, responseJson.data, events, w, h, options);
@@ -82,6 +80,11 @@ export default class MapLauncherModule extends GenericModule {
 								$$(self.uid).show();
 
 								webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+								
+								if (container) {
+									
+									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+								}
 							}
 						}
 					}
@@ -118,8 +121,6 @@ export default class MapLauncherModule extends GenericModule {
 								
 								w = container.$width - 10;
 								h = container.$height - 10;
-								
-								util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
 							}
 
 							let synoptic = new Synoptic(responseJson.metadata, responseJson.data, events, w, h, options);
@@ -130,6 +131,11 @@ export default class MapLauncherModule extends GenericModule {
 								$$(self.uid).show();
 
 								webix.ui(synoptic.getView(), $$(self.uid));
+								
+								if (container) {
+									
+									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
+								}
 							}
 						}
 					}

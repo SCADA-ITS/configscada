@@ -110,7 +110,7 @@ export let util = {
 							css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
 							view: "label",
 							//css: "notification-center-title", 
-							label: i18n.t(label)
+							label: label ? i18n.t(label): ""
 						},
 						{
 							view: "icon",
@@ -297,7 +297,7 @@ export let util = {
 //							</div>`,
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
-								<span class='tab-text'>${i18n.t(label)}</span>
+								<span class='tab-text'>${label ? i18n.t(label) : ''}</span>
 								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
@@ -1756,7 +1756,7 @@ export let util = {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 	
 		// Draw text
-		context.font = "bold 140px Assistant";
+		context.font = "500 140px Roboto, sans-serif";
 		context.fillStyle = color + 'a0';
 		context.textAlign = "center";
 		context.textBaseline = "middle";
