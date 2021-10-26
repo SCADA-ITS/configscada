@@ -7,8 +7,14 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 	constructor(config, uid, plan, planOrder, onUpdate) {
 		
-		super(config, uid, plan, planOrder, onUpdate);		
+		super(config, uid, plan, planOrder, onUpdate);	
+
 		this.dtParams = undefined;
+
+		this.planOrderElementValues = [];
+		if(this.planOrder){
+			this.planOrderElementValues = webix.copy(this.planOrder.planOrderElementValues);
+		}
 	}
 	
 	loadData() {
@@ -214,12 +220,12 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 				
 					planOrderElement.id = "PlanOrderElementValue:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderElement.elementTypeParam.id.substr(planOrderElement.elementTypeParam.id.indexOf(":"), planOrderElement.elementTypeParam.id.length);
 					
-					if(!self.planOrder.planOrderElementValues || !Array.isArray(self.planOrder.planOrderElementValues)){
+					if(!self.planOrderElementValues || !Array.isArray(self.planOrderElementValues)){
 
-						self.planOrder.planOrderElementValues = [];	
+						self.planOrderElementValues = [];	
 					}
 
-					self.planOrder.planOrderElementValues.push(planOrderElement);
+					self.planOrderElementValues.push(planOrderElement);
 				
 					let newItem ={};				
 					newItem.id = planOrderElement.id;
@@ -238,7 +244,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
-					let selectedPlanOrder = self.planOrder.planOrderElementValues.find(e => e.id == selectedItems[0].id);
+					let selectedPlanOrder = self.planOrderElementValues.find(e => e.id == selectedItems[0].id);
 
 					(new ChangeParamDialogBox(selectedPlanOrder, function (planOrderElement){
 				
@@ -262,8 +268,8 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
-					let rowIndexRemove = self.planOrder.planOrderElementValues.findIndex(e => e.id == selectedItems[0].id);
-					self.planOrder.planOrderElementValues.splice(rowIndexRemove, 1)
+					let rowIndexRemove = self.planOrderElementValues.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrderElementValues.splice(rowIndexRemove, 1)
 					self.dtParams.delete(selectedItems);
 				}
 			}
@@ -272,9 +278,9 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 				let gridData = [];
 				
-					if(self.planOrder.planOrderElementValues && Array.isArray(self.planOrder.planOrderElementValues) && self.planOrder.planOrderElementValues.length > 0){
+					if(self.planOrderElementValues && Array.isArray(self.planOrderElementValues) && self.planOrderElementValues.length > 0){
 
-						gridData = self.planOrder.planOrderElementValues.map(e => {
+						gridData = self.planOrderElementValues.map(e => {
 							
 							return {
 								id: e.id,
@@ -316,9 +322,9 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 				planOrderElementValues: []
 			}
 			
-			if (Array.isArray(self.planOrder.planOrderElementValues) && self.planOrder.planOrderElementValues.length > 0) {
+			if (Array.isArray(self.planOrderElementValues) && self.planOrderElementValues.length > 0) {
 								
-				self.planOrder.planOrderElementValues.forEach(row => {
+				self.planOrderElementValues.forEach(row => {
 				
 					let planOrderElementValue = {
 						value: row.value,

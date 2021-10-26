@@ -10,8 +10,14 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 	constructor(config, uid, plan, planOrder, onUpdate) {
 		
-		super(config, uid, plan, planOrder, onUpdate);		
+		super(config, uid, plan, planOrder, onUpdate);
+
 		this.dtParams = undefined;
+		
+		this.planOrderConditions = [];
+		if(this.planOrder){
+			this.planOrderConditions = webix.copy(this.planOrder.planOrderConditions);
+		}
 	}
 	
 	loadData() {
@@ -346,16 +352,16 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 				(new ConditionDialogBox(null, self.config, function (planOrderCondition){
 
-					if (!self.planOrder.planOrderConditions || !Array.isArray(self.planOrder.planOrderConditions)){
+					if (!self.planOrderConditions || !Array.isArray(self.planOrderConditions)){
 
-						self.planOrder.planOrderConditions = [];
+						self.planOrderConditions = [];
 					}
 				
-					planOrderCondition.planOrderConditionOrder = self.planOrder.planOrderConditions.length;
+					planOrderCondition.planOrderConditionOrder = self.planOrderConditions.length;
 
 					planOrderCondition.id = "PlanOrderCondition:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderCondition.planOrderConditionOrder;
 					
-					self.planOrder.planOrderConditions.push(planOrderCondition);
+					self.planOrderConditions.push(planOrderCondition);
 				
 					let newItem ={};				
 					newItem.id = planOrderCondition.id;
@@ -392,7 +398,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
-					let selectedItem = self.planOrder.planOrderConditions.find(e => e.id == selectedItems[0].id);
+					let selectedItem = self.planOrderConditions.find(e => e.id == selectedItems[0].id);
 
 					(new ConditionDialogBox(selectedItem, self.config, function (planOrderCondition){
 				
@@ -441,7 +447,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 			function movePlanOrderCondition(planOrderConditionId, movePlanOrderType) {
 
-				let selectedItem = self.planOrder.planOrderConditions.find(e => e.id == planOrderConditionId);
+				let selectedItem = self.planOrderConditions.find(e => e.id == planOrderConditionId);
 				
 				let newOrder = selectedItem.planOrderConditionOrder;
 
@@ -454,7 +460,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					newOrder++;
 				}
 				
-				let oldPositionItem = self.planOrder.planOrderConditions.find(e => e.planOrderConditionOrder == newOrder);
+				let oldPositionItem = self.planOrderConditions.find(e => e.planOrderConditionOrder == newOrder);
 
 				if(oldPositionItem){
 
@@ -481,8 +487,8 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
-					let rowIndexRemove = self.planOrder.planOrderConditions.findIndex(e => e.id == selectedItems[0].id);
-					self.planOrder.planOrderConditions.splice(rowIndexRemove, 1);
+					let rowIndexRemove = self.planOrderConditions.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrderConditions.splice(rowIndexRemove, 1);
 					self.dtParams.delete(selectedItems);
 				}
 			}
@@ -491,9 +497,9 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 				let gridData = [];
 
-				if(self.planOrder.planOrderConditions && Array.isArray(self.planOrder.planOrderConditions) && self.planOrder.planOrderConditions.length > 0){
+				if(self.planOrderConditions && Array.isArray(self.planOrderConditions) && self.planOrderConditions.length > 0){
 
-					gridData = self.planOrder.planOrderConditions.map(e => {
+					gridData = self.planOrderConditions.map(e => {
 						
 						let parameter = "";
 						if(e.elementTypeParam && e.elementTypeParam.labelAlias){
@@ -558,18 +564,26 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 				planOrderConditions: []
 			}
 			
-			if (Array.isArray(self.planOrder.planOrderConditions) && self.planOrder.planOrderConditions.length > 0) {
+			if (Array.isArray(self.planOrderConditions) && self.planOrderConditions.length > 0) {
 								
-				self.planOrder.planOrderConditions.forEach(row => {
+				self.planOrderConditions.forEach(row => {
 				
 					let planOrderCondition = {
 						elementId: row.element.id,
-						elementTypeParamId: row.elementTypeParam.id,
-						thresholdOperationId: row.thresholdOperation.id,
 						thresholdVal1: row.thresholdVal1,
 						thresholdVal2: row.thresholdVal2,
 						nexusAnd: (row.nexusAnd==1),
 						planOrderConditionOrder : row.planOrderConditionOrder
+					}
+
+					if(row.elementTypeParam && row.elementTypeParam.id){
+
+						planOrderCondition.elementTypeParamId = row.elementTypeParam.id;
+					}
+
+					if(row.thresholdOperation && row.thresholdOperation.id){
+
+						planOrderCondition.thresholdOperationId = row.thresholdOperation.id;
 					}
 					
 					planOrder.planOrderConditions.push(planOrderCondition);

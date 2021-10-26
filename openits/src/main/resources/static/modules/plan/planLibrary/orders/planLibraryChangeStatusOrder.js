@@ -8,7 +8,13 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 	constructor(config, uid, plan, planOrder, onUpdate) {
 		
 		super(config, uid, plan, planOrder, onUpdate);		
+		
 		this.dtParams = undefined;
+
+		this.planOrderElementTypeStates = [];		
+		if(planOrder){
+			this.planOrderElementTypeStates = webix.copy(this.planOrder.planOrderElementTypeStates);
+		}
 	}
 	
 	loadData() {
@@ -196,12 +202,12 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 									
 					planOrderElementTypeState.id = "PlanOrderElementTypeState:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderElementTypeState.elementTypeState.id.substr(planOrderElementTypeState.elementTypeState.id.indexOf(":"), planOrderElementTypeState.elementTypeState.id.length);
 
-					if(!self.planOrder.planOrderElementTypeStates || !Array.isArray(self.planOrder.planOrderElementTypeStates)){
+					if(!self.planOrderElementTypeStates || !Array.isArray(self.planOrderElementTypeStates)){
 
-						self.planOrder.planOrderElementTypeStates = [];	
+						self.planOrderElementTypeStates = [];	
 					}
 
-					self.planOrder.planOrderElementTypeStates.push(planOrderElementTypeState);
+					self.planOrderElementTypeStates.push(planOrderElementTypeState);
 				
 					let newItem ={};				
 					newItem.id = planOrderElementTypeState.id;
@@ -219,7 +225,7 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
-					let selectedPlanOrder = self.planOrder.planOrderElementTypeStates.find(e => e.id == selectedItems[0].id);
+					let selectedPlanOrder = self.planOrderElementTypeStates.find(e => e.id == selectedItems[0].id);
 
 					(new ChangeStatusDialogBox(selectedPlanOrder, function (planOrderElementTypeState){
 				
@@ -241,8 +247,8 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 				
-					let rowIndexRemove = self.planOrder.planOrderElementTypeStates.findIndex(e => e.id == selectedItems[0].id);
-					self.planOrder.planOrderElementTypeStates.splice(rowIndexRemove, 1);
+					let rowIndexRemove = self.planOrderElementTypeStates.findIndex(e => e.id == selectedItems[0].id);
+					self.planOrderElementTypeStates.splice(rowIndexRemove, 1);
 					self.dtParams.delete(selectedItems);
 				}
 			}
@@ -251,9 +257,9 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 
 				let gridData = [];
 
-				if(self.planOrder.planOrderElementTypeStates && Array.isArray(self.planOrder.planOrderElementTypeStates) && self.planOrder.planOrderElementTypeStates.length > 0){
+				if(self.planOrderElementTypeStates && Array.isArray(self.planOrderElementTypeStates) && self.planOrderElementTypeStates.length > 0){
 
-					gridData = self.planOrder.planOrderElementTypeStates.map(e => {
+					gridData = self.planOrderElementTypeStates.map(e => {
 						
 						return {
 							id: e.id,
@@ -294,9 +300,9 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 				planOrderElementTypeStates: []
 			}
 			
-			if (Array.isArray(self.planOrder.planOrderElementTypeStates) && self.planOrder.planOrderElementTypeStates.length > 0) {
+			if (Array.isArray(self.planOrderElementTypeStates) && self.planOrderElementTypeStates.length > 0) {
 								
-				self.planOrder.planOrderElementTypeStates.forEach(row => {
+				self.planOrderElementTypeStates.forEach(row => {
 				
 					let planOrderElementTypeState = {
 						elementId: row.element.id,

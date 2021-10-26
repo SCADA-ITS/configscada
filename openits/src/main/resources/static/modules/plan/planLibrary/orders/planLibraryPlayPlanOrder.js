@@ -9,12 +9,13 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 		
 		this.nextPlan = undefined;
 		if(planOrder){
-			this.nextPlan = planOrder.nextPlan;
+			this.nextPlan = webix.copy(planOrder.nextPlan);
 		}
 	}
 	
 	loadData() {
 		
+		//
 	}
 	
 	getContent() {

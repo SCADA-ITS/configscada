@@ -11,11 +11,11 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 		super(config, uid, plan, planOrder, onUpdate);
 		
 		this.planOrderValueLoopTimes = undefined;
-		if(planOrder && planOrder.planOrderValues && Array.isArray(planOrder.planOrderValues) && planOrder.planOrderValues.length > 0){
+		if(this.planOrder && this.planOrder.planOrderValues && Array.isArray(this.planOrder.planOrderValues) && this.planOrder.planOrderValues.length > 0){
 
-			this.planOrderValueLoopTimes = planOrder.planOrderValues.find(e => e.planOrderTypeParam.id == PLAN_ORDER_PARAM_TYPE_LOOP_TIMES);
+			this.planOrderValueLoopTimes = webix.copy(this.planOrder.planOrderValues.find(e => e.planOrderTypeParam.id == PLAN_ORDER_PARAM_TYPE_LOOP_TIMES));
 
-		} else if(planOrder) {
+		} else if(this.planOrder) {
 			
 			this.planOrderValueLoopTimes = {
 				id: "PlanOrderValue" + this.plan.id.split(":")[1] + this.planOrder.id.split(":")[1] + "8:1",
@@ -26,7 +26,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 		this.nextPlanOrder = undefined;
 		if(planOrder){
 
-			this.nextPlanOrder = planOrder.nextPlanOrder;
+			this.nextPlanOrder = webix.copy(planOrder.nextPlanOrder);
 		}
 	}
 	
