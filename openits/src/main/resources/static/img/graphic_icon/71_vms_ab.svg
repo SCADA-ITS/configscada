@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="39.6875mm"
-   height="76.067711mm"
-   viewBox="0 0 39.687501 76.067711"
+   height="40.978134mm"
+   viewBox="0 0 39.687501 40.978134"
    version="1.1"
    id="svg2"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="71_vms_ab.svg">
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="71_vms_ab.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,16 +25,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.462804"
-     inkscape:cx="11.90382"
-     inkscape:cy="106.76684"
+     inkscape:cx="11.279707"
+     inkscape:cy="106.98631"
      inkscape:document-units="px"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="837"
-     inkscape:window-x="1912"
-     inkscape:window-y="179"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="false"
      inkscape:guide-bbox="true"
@@ -61,12 +61,12 @@
      style="display:inline">
     <path
        id="state"
-       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.770098"
-       d="M 0,0 H 39.687501 V 76.06771 H 0 Z" />
+       style="fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.565226"
+       d="M 0,0 H 39.687501 V 40.978137 H 0 Z" />
     <path
        id="path283"
-       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.730923"
-       d="M 1.3229167,1.3229167 H 38.364584 V 74.744793 H 1.3229167 Z" />
+       style="display:inline;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke-width:0.521863"
+       d="M 1.3229167,1.3229167 H 38.364584 V 38.750849 H 1.3229167 Z" />
     <g
        inkscape:groupmode="layer"
        id="zone1"
@@ -89,20 +89,6 @@
        inkscape:groupmode="layer"
        id="zone2"
        inkscape:label="zone2"
-       style="display:inline">
-      <path
-         style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.500631"
-         d="M 1.984375,38.364584 H 37.703126 V 74.083335 H 1.984375 Z"
-         id="path191-6" />
-      <image
-         xlink:href="../../../project/ausol/img/pictograms/80.bmp"
-         style="display:inline"
-         y="39.026043"
-         x="2.6458335"
-         id="graphic2-1"
-         preserveAspectRatio="none"
-         height="34.395836"
-         width="34.395836" />
-    </g>
+       style="display:inline" />
   </g>
 </svg>
