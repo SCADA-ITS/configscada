@@ -357,7 +357,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						self.planOrderConditions = [];
 					}
 				
-					planOrderCondition.planOrderConditionOrder = self.planOrderConditions.length;
+					planOrderCondition.planOrderConditionOrder = self.planOrderConditions.length + 1;
 
 					planOrderCondition.id = "PlanOrderCondition:" + self.planOrder.id.substr(self.planOrder.id.indexOf(":"), self.planOrder.id.length) + planOrderCondition.planOrderConditionOrder;
 					
