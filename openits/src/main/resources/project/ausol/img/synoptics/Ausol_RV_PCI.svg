@@ -40,9 +40,9 @@
      inkscape:window-height="1017"
      id="namedview770"
      showgrid="false"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="2484.4578"
-     inkscape:cy="633.38997"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="2193.8523"
+     inkscape:cy="623.1164"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -2464,15 +2464,13 @@
        id="path731"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:#cf9cc7;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="m 1923.0143,2623.0143 h -10.026 l 10.026,-1135.026 z m -10.026,0 10.026,-1135.026 -10.026,11.0026 z m 10.026,-1135.026 -10.026,11.0026 -288.9974,-11.0026 z m -10.026,11.0026 -288.9974,-11.0026 v 11.0026 z m 0,0"
-       transform="matrix(0,-0.12,-0.12,0,1191,842)"
+       style="fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:#cf9cc7;stroke-width:0.15057924;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+       d="m 824.7869,607.83161 v 1.37196 l 188.0706,-1.37196 z m 0,1.37196 188.0706,-1.37196 -1.8232,1.37196 z m 188.0706,-1.37196 -1.8232,1.37196 1.8232,39.5466 z m -1.8232,1.37196 1.8232,39.5466 h -1.8232 z m 0,0"
        id="path733"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:#cf9cc7;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
-       d="m 1918.0013,1958.9844 v -9.9935 l 3226.9857,9.9935 z m 0,-9.9935 3226.9857,9.9935 10.026,-9.9935 z m 3226.9857,9.9935 10.026,-9.9935 -10.026,674.0234 z m 10.026,-9.9935 -10.026,674.0234 h 10.026 z m 0,0"
-       transform="matrix(0,-0.12,-0.12,0,1191,842)"
+       style="fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:#cf9cc7;stroke-width:0.15044776;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+       d="m 955.06562,608.60277 h 1.91059 l -1.91059,-382.05056 z m 1.91059,0 -1.91059,-382.05056 1.91059,-1.18699 z m -1.91059,-382.05056 1.91059,-1.18699 -128.86135,1.18699 z m 1.91059,-1.18699 -128.86135,1.18699 v -1.18699 z m 0,0"
        id="path735"
        inkscape:connector-curvature="0" />
     <path
