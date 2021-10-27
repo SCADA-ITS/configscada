@@ -46,8 +46,7 @@ export default class EquipmentViewerContent {
 						},
 						{ width: 10 }
 					]
-				},
-				{}
+				}
 			]
 		}
 
@@ -77,7 +76,9 @@ export default class EquipmentViewerContent {
 
 			function getViewHeaderBarState() {
 
-				let viewHeaderBarState = {
+				let viewHeaderBarState;
+				
+				viewHeaderBarState = {
 					id: "view-main-content-header-bar-state-" + self.uid,
 					borderless: true,
 					height: 15,
@@ -200,7 +201,9 @@ export default class EquipmentViewerContent {
 				}
 
 
-				let viewHeaderButtons = {
+				let viewHeaderButtons;
+				
+				viewHeaderButtons = {
 					rows: [
 						{},
 						{
