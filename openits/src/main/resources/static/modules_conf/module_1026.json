@@ -181,11 +181,11 @@
 			},
 			"alternance": true,
 			"defaultAlternanceMs": 5000,
-			"blinking": false,
+			"blinking": true,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
-			"defaultTextColor": "#FFFFFF",
+			"defaultTextColor": "#FF7E00",
 			"textAlign": false
 		}
 	],
