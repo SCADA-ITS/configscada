@@ -59,7 +59,7 @@ export default class ChangeParamDialogBox {
 			]
 		};
 		
-		self.containerId = util.ui.loadWindow(i18n.t("LBL_CHANGE_PARAM_DIALOG_BOX_TITLE"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
+		self.containerId = util.ui.loadWindow(i18n.t("LBL_PLAN_ORDER_TYPE_CHANGE_ELEMENT_PARAM_CONFIG"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
 		
 		function getBodyComponent() {
 
@@ -111,7 +111,7 @@ export default class ChangeParamDialogBox {
 				elementTypeParamRow = {
 					id: "change-param-equipment-type-param-row-" + self.uid,
 					cols: [
-						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: true, label: i18n.t("LBL_EQUIPMENT_TYPE_PARAM"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: true, label: i18n.t("LBL_PARAM"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "wxi-search", disabled: disabled,
 							on: {
@@ -185,7 +185,7 @@ export default class ChangeParamDialogBox {
 					});
 				}
 					
-				let s = new SearchDialogBox(i18n.t("LBL_EQUIPMENT_SELECTED"), dialogEntity, onAccept);
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_EQUIPMENT"), dialogEntity, onAccept);
 	
 				s.show();
 
@@ -249,7 +249,7 @@ export default class ChangeParamDialogBox {
 					});
 				}
 					
-				let s = new SearchDialogBox(i18n.t("LBL_EQUIPMENT_SELECTED"), dialogEntity, onAccept);
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_PARAM"), dialogEntity, onAccept);
 	
 				s.show();
 
@@ -284,7 +284,7 @@ export default class ChangeParamDialogBox {
 
 			function getWindowValueSelected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED"), i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED_DESCRIPTION"), onAccept, true, self.planOrderValue, self.elementTypeParam.dataType);
+				let i = new InputDialogBox(i18n.t("LBL_VALUE"), i18n.t("LBL_ENTER_VALUE"), onAccept, true, self.planOrderValue, self.elementTypeParam.dataType);
 	
 				i.show();
 
@@ -358,7 +358,7 @@ export default class ChangeParamDialogBox {
 							
 							} else {
 								
-								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CHANGE_PARAM_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
 								ms.show();
 
 							}

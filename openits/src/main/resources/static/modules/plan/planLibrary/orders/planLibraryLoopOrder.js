@@ -109,7 +109,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 
 		function getWindowLoopTimesSelected() {
 				
-			let i = new InputDialogBox(i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED"), i18n.t("LBL_CHANGE_PARAM_VALUE_SELECTED_DESCRIPTION"), onAccept, true, self.planOrderValueLoopTimes.value, self.planOrderValueLoopTimes.planOrderTypeParam.dataType);
+			let i = new InputDialogBox(i18n.t("LBL_PLAN_ORDER_TYPE_PARAM_NUMBER_OF_TIMES"), i18n.t("LBL_ENTER_VALUE"), onAccept, true, self.planOrderValueLoopTimes.value, self.planOrderValueLoopTimes.planOrderTypeParam.dataType);
 
 			i.show();
 
@@ -148,7 +148,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 				});
 			}
 				
-			let s = new SearchDialogBox(i18n.t("LBL_PLAN_ORDER_SELECTED"), dialogEntity, onAccept);
+			let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN_ORDER"), dialogEntity, onAccept);
 
 			s.show();
 

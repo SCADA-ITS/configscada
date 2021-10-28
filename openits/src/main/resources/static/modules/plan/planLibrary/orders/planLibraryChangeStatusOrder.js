@@ -179,7 +179,7 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_ELEMENT_STATE",
+						label: "LBL_STATE_LABEL",
 						needsTranslation: false,
 						parameterized: false,
 						position: 3,

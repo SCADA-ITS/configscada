@@ -52,7 +52,7 @@ export default class ChangeStatusDialogBox {
 			]
 		};
 		
-		self.containerId = util.ui.loadWindow(i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_TITLE"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
+		self.containerId = util.ui.loadWindow(i18n.t("LBL_PLAN_ORDER_TYPE_CHANGE_STATUS"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
 		
 		function getBodyComponent() {
 
@@ -103,7 +103,7 @@ export default class ChangeStatusDialogBox {
 				elementTypeStateRow = {
 					id: "change-status-element-type-state-row-" + self.uid,
 					cols: [
-						{ view: "text", name: "equipmentTypeName", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: true, label: i18n.t("LBL_EQUIPMENT_TYPE_STATE"), disabled: true, labelWidth: 275 },
+						{ view: "text", name: "equipmentTypeName", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: true, label: i18n.t("LBL_STATE_LABEL"), disabled: true, labelWidth: 275 },
 						{
 							view: "icon", icon: "wxi-search", disabled: equipmentTypeDisable,
 							on: {
@@ -283,7 +283,7 @@ export default class ChangeStatusDialogBox {
 							
 							} else{
 
-								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
 								ms.show();
 
 							}

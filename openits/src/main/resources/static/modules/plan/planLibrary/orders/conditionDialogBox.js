@@ -73,7 +73,7 @@ export default class ConditionDialogBox {
 			]
 		};
 		
-		self.containerId = util.ui.loadWindow(i18n.t("LBL_CHANGE_PARAM_DIALOG_BOX_TITLE"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
+		self.containerId = util.ui.loadWindow(i18n.t("LBL_PLAN_ORDER_TYPE_CONDITION"), body, CHANGE_DIALOG_BOX_HEIGHT, CHANGE_DIALOG_BOX_WIDTH, true);
 		
 		function getBodyComponent() {
 
@@ -129,7 +129,7 @@ export default class ConditionDialogBox {
 				elementTypeParamRow = {
 					id: "change-condition-element-type-param-row-" + self.uid,
 					cols: [
-						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: false, label: i18n.t("LBL_EQUIPMENT_TYPE_PARAM"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: false, label: i18n.t("LBL_PARAM"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "wxi-search", disabled: disabled,
 							on: {
@@ -159,7 +159,7 @@ export default class ConditionDialogBox {
 				elementTypeStateRow = {
 					id: "change-condition-element-type-state-row-" + self.uid,
 					cols: [
-						{ view: "text", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: false, label: i18n.t("LBL_EQUIPMENT_TYPE_STATE"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: (self.elementTypeState?i18n.t(self.elementTypeState.labelAlias):""), required: false, label: i18n.t("LBL_STATE_LABEL"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "wxi-search", disabled: disabled,
 							on: {
@@ -320,7 +320,7 @@ export default class ConditionDialogBox {
 					});
 				}
 					
-				let s = new SearchDialogBox(i18n.t("LBL_EQUIPMENT_SELECTED"), dialogEntity, onAccept);
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_EQUIPMENT"), dialogEntity, onAccept);
 	
 				s.show();
 
@@ -384,7 +384,7 @@ export default class ConditionDialogBox {
 					});
 				}
 					
-				let s = new SearchDialogBox(i18n.t("LBL_EQUIPMENT_SELECTED"), dialogEntity, onAccept);
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_PARAM"), dialogEntity, onAccept);
 	
 				s.show();
 
@@ -443,7 +443,7 @@ export default class ConditionDialogBox {
 					});
 				}
 					
-				let s = new SearchDialogBox(i18n.t("LBL_ELEMENT_TYPE_STATE_SELECTED"), dialogEntity, onAccept);
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_STATE"), dialogEntity, onAccept);
 	
 				s.show();
 
@@ -491,7 +491,7 @@ export default class ConditionDialogBox {
 							});
 						}
 							
-						let s = new SearchDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_SELECTED"), dialogEntity, onAccept);
+						let s = new SearchDialogBox(i18n.t("LBL_SELECT_THRESHOLD_OPERATION"), dialogEntity, onAccept);
 			
 						s.show();
 
@@ -514,7 +514,7 @@ export default class ConditionDialogBox {
 			
 			function getWindowThresholdVal1Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_1_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal1, self.elementTypeParam.dataType);
+				let i = new InputDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_ONE"), i18n.t("LBL_ENTER_VALUE"), onAccept, false, self.thresholdVal1, self.elementTypeParam.dataType);
 	
 				i.show();
 
@@ -526,7 +526,7 @@ export default class ConditionDialogBox {
 
 			function getWindowThresholdVal2Selected() {
 					
-				let i = new InputDialogBox(i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED"), i18n.t("LBL_CHANGE_THRESHOLD_VAL_2_SELECTED_DESCRIPTION"), onAccept, false, self.thresholdVal2, self.elementTypeParam.dataType);
+				let i = new InputDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_TWO"), i18n.t("LBL_ENTER_VALUE"), onAccept, false, self.thresholdVal2, self.elementTypeParam.dataType);
 	
 				i.show();
 
@@ -644,7 +644,7 @@ export default class ConditionDialogBox {
 							
 							} else {
 								
-								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CHANGE_STATUS_DIALOG_BOX_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+								let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
 								ms.show();
 
 							}
