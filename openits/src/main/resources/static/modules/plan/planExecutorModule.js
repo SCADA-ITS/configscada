@@ -20,6 +20,7 @@ export default class PlanExecutor extends GenericModule {
 		this.config = module.config;
 		this.ordersDataTable = null;
 		this.idStompSubscriptor = null;
+		this.orderConfirm = undefined;
 	}
 
 	getView() {
@@ -105,9 +106,9 @@ export default class PlanExecutor extends GenericModule {
 						stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 					}
 				});
-				
+
 				if (self.moduleAction.id === self.config.moduleAction.executeTaskPlan) {
-					
+
 					self.config.actionButtons.forEach(btnConfig => {
 
 						if (btnConfig.visible) {
@@ -145,19 +146,19 @@ export default class PlanExecutor extends GenericModule {
 						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(updateData.planStateType));
 						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(updateData.planStateType));
 						//Update buttons enable/disable
-						
+
 						if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
-					
+
 							self.config.actionButtons.forEach(btnConfig => {
-	
+
 								if (btnConfig.visible) {
-	
+
 									if (self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)) {
-	
+
 										$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
-	
+
 									} else {
-	
+
 										$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
 									}
 								}
@@ -166,10 +167,10 @@ export default class PlanExecutor extends GenericModule {
 
 						//Update orders table
 						let ids = [];
+
 						self.data.planOrders.forEach(order => {
 
 							let updateOrder = updateData.planOrders.find(e => e.id === order.id);
-
 							if (updateOrder.planOrderStateType.id != order.planOrderStateType.id || !order.orderExecutedAt) {
 
 								if (updateOrder.planOrderStateType.id === self.config.planOrderStateTypes.running) {
@@ -184,31 +185,33 @@ export default class PlanExecutor extends GenericModule {
 
 									updateOrder.orderExecutedAt = new Date(Date.now());
 									order.orderExecutedAt = new Date(Date.now());
+
 								}
 
 								updateOrder = eval("adapter." + self.config.adapters.orders)([updateOrder], null);
 
 								self.ordersDataTable.update(updateOrder);
-
 								if (self.config.confirmationOrder.typeId === order.planOrderType.id &&
-									order.planOrderStateType.id === self.config.planOrderStateTypes.success) {
+									order.planOrderStateType.id === self.config.planOrderStateTypes.success && order.orderExecutedAt) {
 
 									let waitingTime = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamWaitingTimeId) : undefined;
 									let message = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamMessageId) : undefined;
-
-									if (waitingTime && message && waitingTime.value && message.value) {
+									
+									if (waitingTime && message && waitingTime.value && message.value && Array.isArray(self.orderConfirm) && !self.orderConfirm.find(e => e == order.id)) {
 
 										let confirmWindow = new ConfirmTempDialogBox(
 											i18n.t("LBL_PLAN_ORDER_TYPE_CONFIRM"),
-											i18n.t(message.value),
+											message.value,
 											waitingTime.value,
 											callBackAccept,
 											callBackCancel,
 											callBackAccept);
+											
+										self.orderConfirm.push(order.id);
 
 										function callBackAccept() {
 
-											let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY);
+											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY));
 											btnConfig.confirm = false;
 
 											open_module(btnConfig);
@@ -216,7 +219,7 @@ export default class PlanExecutor extends GenericModule {
 
 										function callBackCancel() {
 
-											let btnConfig = self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL);
+											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL));
 											btnConfig.confirm = false;
 
 											open_module(btnConfig);
@@ -240,7 +243,6 @@ export default class PlanExecutor extends GenericModule {
 								order.orderExecutedAt = undefined;
 							});
 						}
-
 					});
 				}
 			}
@@ -303,7 +305,7 @@ export default class PlanExecutor extends GenericModule {
 
 				let buttonsGrid = {
 					id: "btns-" + self.uid,
-					css: {"margin-left":"2px !important"},
+					css: { "margin-left": "2px !important" },
 					cols: [
 					]
 				};
@@ -326,6 +328,11 @@ export default class PlanExecutor extends GenericModule {
 						width: 130,
 						on: {
 							onItemClick: () => {
+
+								if (btnConfig.action == PLAN_ORDER_ACTION_PLAY) {
+
+									self.orderConfirm = [];
+								}
 
 								if (btnConfig.moduleAction) {
 
@@ -635,8 +642,8 @@ export default class PlanExecutor extends GenericModule {
 
 			function getCancelButton() {
 
-				let cancelButton; 
-				
+				let cancelButton;
+
 				cancelButton = {
 					rows: [
 						{ height: 10 },
@@ -699,7 +706,7 @@ export default class PlanExecutor extends GenericModule {
 		}
 
 		function getHeaderLineTemplate(planStateType) {
-			console.log(planStateType)
+
 			let planHeaderLineTemplate = '<div> </div>';
 
 			if (planStateType) {

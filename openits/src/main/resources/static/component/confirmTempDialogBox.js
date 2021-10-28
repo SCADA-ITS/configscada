@@ -89,9 +89,9 @@ export default class ConfirmTempDialogBox {
 				},
 				onDestruct: () => {
 
-					if (this.interval) {
+					if (self.interval) {
 
-						clearInterval(this.interval);
+						clearInterval(self.interval);
 					}
 				}
 			}
