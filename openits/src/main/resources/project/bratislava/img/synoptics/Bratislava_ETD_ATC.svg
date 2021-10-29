@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -42,14 +42,24 @@
      showgrid="false"
      units="px"
      inkscape:zoom="0.43333385"
-     inkscape:cx="707.8789"
-     inkscape:cy="553.1298"
+     inkscape:cx="1137.1092"
+     inkscape:cy="590.05283"
      inkscape:window-x="1912"
      inkscape:window-y="179"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="svg2"
+     inkscape:document-rotation="0" />
   <defs
-     id="defs73">
+     id="defs73" />
+  <g
+     id="main"
+     transform="matrix(1.6127368,0,0,1.6127903,0,-139.08882)">
+    <clipPath
+       id="clip1">
+      <path
+         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
+         id="path70" />
+    </clipPath>
     <g
        id="g68">
       <symbol
@@ -229,16 +239,6 @@
            id="path65" />
       </symbol>
     </g>
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
-         id="path70" />
-    </clipPath>
-  </defs>
-  <g
-     id="main"
-     transform="matrix(1.6127368,0,0,1.6127903,0,-139.08882)">
     <g
        id="main-0"
        transform="matrix(0.65881797,0,0,0.65879613,0,86.241106)">

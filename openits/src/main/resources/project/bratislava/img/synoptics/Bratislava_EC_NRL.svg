@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1920"
    height="1080"
    viewBox="0 0 1920 1080"
    version="1.1"
    id="svg2"
    sodipodi:docname="Bratislava_EC_NRL.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata1667">
     <rdf:RDF>
@@ -37,20 +37,30 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1600"
-     inkscape:window-height="837"
+     inkscape:window-height="1137"
      id="namedview1665"
      showgrid="false"
      units="px"
      inkscape:zoom="0.3064133"
-     inkscape:cx="1603.993"
-     inkscape:cy="557.03054"
-     inkscape:window-x="1912"
-     inkscape:window-y="179"
+     inkscape:cx="1604.0426"
+     inkscape:cy="556.43799"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
-     inkscape:document-rotation="0" />
+     inkscape:current-layer="main"
+     inkscape:document-rotation="0"
+     inkscape:pagecheckerboard="0" />
   <defs
-     id="defs118">
+     id="defs118" />
+  <g
+     id="main"
+     transform="matrix(1.6127368,0,0,1.6127903,0,-139.08882)">
+    <clipPath
+       id="clip1">
+      <path
+         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
+         id="path115" />
+    </clipPath>
     <g
        id="g113">
       <symbol
@@ -350,16 +360,6 @@
            id="path110" />
       </symbol>
     </g>
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
-         id="path115" />
-    </clipPath>
-  </defs>
-  <g
-     id="main"
-     transform="matrix(1.6127368,0,0,1.6127903,0,-139.08882)">
     <g
        id="main-0"
        transform="matrix(0.65881797,0,0,0.65879613,0,86.241106)">
