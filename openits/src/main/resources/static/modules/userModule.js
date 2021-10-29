@@ -15,7 +15,7 @@ export default class UserModule extends GenericModule {
 
 		this.config = module.config;
 
-		this.module = moduleAction;
+		this.moduleAction = moduleAction;
 
 		this.args = args;
 
@@ -65,6 +65,7 @@ export default class UserModule extends GenericModule {
 				css: "custom_window",
 				cols: [
 					{
+						css: { "background-color": "white" },
 						rows: [
 							{ height: 6 },
 							{
@@ -417,6 +418,7 @@ export default class UserModule extends GenericModule {
 
 			let viewMain = {
 				id: self.uid,
+				css: { "box-sizing": "border-box" },
 				rows: [
 					getHeader(),
 					getTabs(),
@@ -448,7 +450,6 @@ export default class UserModule extends GenericModule {
 				}
 
 				header = {
-
 					id: "viewHeader-" + self.uid,
 					cols: [
 						{
@@ -502,64 +503,71 @@ export default class UserModule extends GenericModule {
 					let form = {
 						id: "form-" + self.uid,
 						view: "form",
-						height: 400,
+						css: "user-role-form",
 						elementsConfig: { labelAlign: "left" },
-						css: "user-form",
 						elements: [
-							{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
-							{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275, inputWidth: 600 },
-							{ view: "text", id: "password_conf-" + self.uid, name: "confirmPass", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD_CONFIRM"), labelWidth: 275, inputWidth: 600 },
-							{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
-							{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, inputWidth: 600, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
 							{
 								cols: [
-									{ view: "text", id: "localeId-" + self.uid, name: "localeId", hidden: true },
-									{ view: "text", id: "locale-" + self.uid, name: "localeName", required: true, label: i18n.t("LBL_USER_LOCALE"), disabled: true, labelWidth: 275 },
+									{ width: 45 },
 									{
-										view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
-										on: {
-											onItemClick: function() {
+										rows: [
+											{},
+											{ view: "text", id: "name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_USER_NAME"), labelWidth: 275, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
+											{ view: "text", id: "password-" + self.uid, name: "password", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD"), labelWidth: 275 },
+											{ view: "text", id: "password_conf-" + self.uid, name: "confirmPass", type: "password", required: true, label: i18n.t("LBL_USER_PASSWORD_CONFIRM"), labelWidth: 275, },
+											{ view: "text", id: "fullName-" + self.uid, name: "fullName", label: i18n.t("LBL_USER_FULL_NAME"), labelWidth: 275, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
+											{ view: "text", id: "email-" + self.uid, name: "email", type: "email", label: i18n.t("LBL_USER_EMAIL"), labelWidth: 275, disabled: self.moduleAction.id === self.config.moduleAction.changePassword },
+											{
+												cols: [
+													{ view: "text", id: "localeId-" + self.uid, name: "localeId", hidden: true },
+													{ view: "text", id: "locale-" + self.uid, name: "localeName", required: true, label: i18n.t("LBL_USER_LOCALE"), disabled: true, labelWidth: 275, },
+													{
+														view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
+														on: {
+															onItemClick: function() {
 
-												newUser = $$(form.id).getValues();
-												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_LOCALE"), SearchDialogBox.LOCALES, selectLocale);
+																newUser = $$(form.id).getValues();
+																let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_LOCALE"), SearchDialogBox.LOCALES, selectLocale);
 
-												dialogBox.show();
-											}
-										}
+																dialogBox.show();
+															}
+														}
+													}
+												]
+											},
+											{
+												cols: [
+													{ view: "text", id: "roleId-" + self.uid, name: "roleId", hidden: true },
+													{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275 },
+													{
+														view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
+														on: {
+															onItemClick: function() {
+
+																newUser = $$(form.id).getValues();
+																let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_ROLE"), SearchDialogBox.ROLES, selectRole);
+
+																dialogBox.show();
+															}
+														}
+													}
+												]
+											},
+											{
+												view: "checkbox",
+												id: "allowMultipleSessions-" + self.uid,
+												name: "allowMultipleSessions",
+												label: i18n.t("LBL_ALLOW_MULTIPLE_SESSIONS"),
+												labelWidth: 275,
+												value: true,
+												disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
+											},
+											{}
+										]
 									},
-									{ width: 90 }
+									{ width: 45 }
 								]
-							},
-							{
-								cols: [
-									{ view: "text", id: "roleId-" + self.uid, name: "roleId", hidden: true },
-									{ view: "text", id: "role-" + self.uid, name: "role", required: true, label: i18n.t("LBL_USER_ROLE"), disabled: true, labelWidth: 275 },
-									{
-										view: "icon", icon: "wxi-search", disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
-										on: {
-											onItemClick: function() {
-
-												newUser = $$(form.id).getValues();
-												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_ROLE"), SearchDialogBox.ROLES, selectRole);
-
-												dialogBox.show();
-											}
-										}
-									},
-									{ width: 90 }
-								]
-							},
-							{
-								view: "checkbox",
-								id: "allowMultipleSessions-" + self.uid,
-								name: "allowMultipleSessions",
-								label: i18n.t("LBL_ALLOW_MULTIPLE_SESSIONS"),
-								labelWidth: 275,
-								inputWidth: 600,
-								value: true,
-								disabled: self.moduleAction.id === self.config.moduleAction.changePassword,
-							},
-
+							}
 						],
 						rules: {
 							"name": webix.rules.isNotEmpty,
@@ -622,17 +630,8 @@ export default class UserModule extends GenericModule {
 
 					let dataTable = {
 						id: "dt-" + self.uid,
-						height: 401,
-						css: "user-form",
-						rows: [
-							{
-								cols: [
-									{
-										rows: getTable()
-									}
-								]
-							},
-						]
+						css: "user-role-form user-role-dt",
+						rows: getTable()
 					};
 
 					function getTable() {
@@ -885,12 +884,12 @@ export default class UserModule extends GenericModule {
 				const FALSE = 0;
 
 				let buttons;
-				
+
 				buttons = {
 					id: "buttons-" + self.uid,
 					borderless: true,
+					css: {"margin-top": "1px !important"},
 					rows: [
-						{ height: 10 },
 						{
 							cols: [
 								{ width: 15 },
@@ -992,8 +991,6 @@ export default class UserModule extends GenericModule {
 													ms.show();
 												}
 											}
-
-											
 										}
 								},
 								{ width: 15 }

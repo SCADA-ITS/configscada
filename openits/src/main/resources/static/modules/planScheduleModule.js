@@ -28,6 +28,7 @@ export default class PlanScheduleModule extends GenericModule {
 				css: "custom_window",
 				cols: [
 					{
+						css: { "background-color": "white" },
 						rows: [
 							{ height: 6 },
 							{
@@ -204,39 +205,37 @@ export default class PlanScheduleModule extends GenericModule {
 		function drawComponents() {
 
 			let newPlan = self.newPlan;
+			let viewMain = {};
+			let label = undefined;
+			let description = undefined;
+			let type = undefined;
 
-			let viewMain = {
+			if (self.moduleAction.id === self.config.moduleAction.add) {
+
+				label = "LBL_NEW_PLANSCHEDULE";
+				description = "LBL_NEW_PLANSCHEDULE_DESCRIPTION";
+				type = "add";
+
+			} else if (self.moduleAction.id === self.config.moduleAction.edit) {
+
+				label = "LBL_EDIT_PLANSCHEDULE";
+				description = "LBL_EDIT_PLANSCHEDULE_DESCRIPTION";
+				type = "edit";
+			}
+
+			viewMain = {
 				id: self.uid,
-				cols: [
-					{
-						rows: [
-							getViewHeader(),
-							{ height: 20 },
-							getViewContent(),
-							{ height: 20 },
-							getToolbarActions(),
-							{ height: 10 },
-						]
-					},
+				css: { "box-sizing": "border-box" },
+				rows: [
+					getViewHeader(),
+					getViewContent(),
+					getToolbarActions(),
 				]
 			};
 
 			function getViewHeader() {
 
 				let header = {};
-				let label = undefined;
-				let description = undefined;
-
-				if (self.moduleAction.id === self.config.moduleAction.add) {
-
-					label = "LBL_NEW_PLANSCHEDULE";
-					description = "LBL_NEW_PLANSCHEDULE_DESCRIPTION";
-
-				} else if (self.moduleAction.id === self.config.moduleAction.edit) {
-
-					label = "LBL_EDIT_PLANSCHEDULE";
-					description = "LBL_EDIT_PLANSCHEDULE_DESCRIPTION";
-				}
 
 				header = {
 					id: "viewHeader-" + self.uid,
@@ -262,220 +261,150 @@ export default class PlanScheduleModule extends GenericModule {
 
 			function getViewContent() {
 
-				let viewContent = {
-					id: "viewContent-" + self.uid,
+				let form = {};
+				let cronExpressionDesc = undefined;
+
+				if (self.planSchedule && self.planSchedule != undefined) {
+
+					let translate = prettyCron.toString(self.planSchedule.cronExpression, true);
+
+					if (translate != undefined) {
+
+						cronExpressionDesc = translate;
+					}
+				}
+
+				form = {
+					view: "form",
+					id: "form-edit-core-" + self.uid,
+					elementsConfig: { labelAlign: "left" },
 					css: "plan-form",
-					rows: [
+					elements: [
 						{
 							cols: [
-								{ width: 15 },
-								self.moduleAction.id === self.config.moduleAction.edit ? getFormEdit() : getFormAdd(),
-								{ width: 15 }
+								{ width: 45 },
+								{
+									rows: [
+										{},
+										{
+											view: "text",
+											label: i18n.t("LBL_ALIAS"),
+											name: "alias",
+											value: type === "edit" ? self.planSchedule.alias : "",
+											required: true,
+											labelWidth: 275
+										},
+										{
+											view: "text",
+											label: i18n.t("LBL_DESCRIPTION"),
+											name: "description",
+											value: type === "edit" ? self.planSchedule.description : "",
+											required: true,
+											labelWidth: 275
+										},
+										{
+											cols: [
+												{
+													view: "text",
+													label: i18n.t("LBL_SCHEDULER"),
+													name: "cronExpressionDescription",
+													id: "cronExpressionDescription",
+													value: type === "edit" ? cronExpressionDesc : "",
+													required: true,
+													labelWidth: 275,
+													disabled: true
+												},
+												{
+													view: "text",
+													label: i18n.t("LBL_PLAN_CRON"),
+													name: "cronExpression",
+													id: "cronExpression",
+													value: type === "edit" ? self.planSchedule.cronExpression : "",
+													required: true,
+													labelWidth: 275,
+													hidden: true
+												},
+												{
+													view: "icon", icon: "wxi-search",
+													on: {
+														onItemClick: () => {
+
+															let popupid = "cronUiPopup" + self.uid;
+															let box = $$("form-edit-core-" + self.uid);
+															let cron = new CronUi(box.config.id, popupid);
+
+															let cronExpression = (self.planSchedule != undefined) ? self.planSchedule.cronExpression : ($$("cronExpression").getValue()) ? ($$("cronExpression").getValue()) : null;
+
+															cron.getComponent(cronExpression);
+														}
+													}
+												}
+											]
+
+										},
+										{
+											cols: [
+												{
+													view: "text",
+													label: i18n.t("LBL_PLAN_ID"),
+													name: "planId",
+													value: type === "edit" ? self.planSchedule.plan.id : "",
+													hidden: true,
+													disabled: true,
+													required: true
+												},
+												{
+													view: "text",
+													label: i18n.t("LBL_PLAN"),
+													name: "plan",
+													value: type === "edit" ? self.planSchedule.plan.alias : "",
+													required: true,
+													labelWidth: 275,
+													disabled: true
+												},
+												{
+													view: "icon", icon: "wxi-search",
+													on: {
+														onItemClick: function() {
+
+															newPlan = $$(form.id).getValues();
+															let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), SearchDialogBox.PLANS, selectPlan);
+															dialogBox.show();
+														}
+													}
+												}
+											]
+										},
+										{}
+									]
+								},
+								{ width: 45 }
 							]
-						},
-						{ height: 2 }
-					]
+						}
+					],
+					rules: {
+						"alias": webix.rules.isNotEmpty,
+						"description": webix.rules.isNotEmpty,
+						"cronExpression": webix.rules.isNotEmpty,
+						"planId": webix.rules.isNotEmpty,
+						"plan": webix.rules.isNotEmpty
+					}
 				};
 
-				function getPlanScheduleForm(type) {
+				self.form = form;
+				return form;
 
-					let cronExpressionDesc = undefined;
-
-					if (self.planSchedule && self.planSchedule != undefined) {
-
-						let translate = prettyCron.toString(self.planSchedule.cronExpression, true);
-
-						if (translate != undefined) {
-
-							cronExpressionDesc = translate;
-						}
-					}
-
-					let form = {
-						view: "form",
-						id: "form-edit-core-" + self.uid,
-						elementsConfig: { labelAlign: "left" },
-						css: { "padding-left": "0px !important" },
-						elements: [
-							{
-								view: "text",
-								label: i18n.t("LBL_ALIAS"),
-								name: "alias",
-								value: type === "edit" ? self.planSchedule.alias : "",
-								required: true,
-								labelWidth: 200
-							},
-							{
-								view: "text",
-								label: i18n.t("LBL_DESCRIPTION"),
-								name: "description",
-								value: type === "edit" ? self.planSchedule.description : "",
-								required: true,
-								labelWidth: 200
-							},
-							{
-								cols: [
-									{
-										view: "text",
-										label: i18n.t("LBL_SCHEDULER"),
-										name: "cronExpressionDescription",
-										id: "cronExpressionDescription",
-										value: type === "edit" ? cronExpressionDesc : "",
-										required: true,
-										labelWidth: 200,
-										disabled: true
-									},
-									{
-										view: "text",
-										label: i18n.t("LBL_PLAN_CRON"),
-										name: "cronExpression",
-										id: "cronExpression",
-										value: type === "edit" ? self.planSchedule.cronExpression : "",
-										required: true,
-										labelWidth: 200,
-										hidden: true
-									},
-									{
-										view: "icon", icon: "wxi-search",
-										on: {
-											onItemClick: () => {
-
-												let popupid = "cronUiPopup" + self.uid;
-												let box = $$("form-edit-core-" + self.uid);
-												let cron = new CronUi(box.config.id, popupid);
-
-												let cronExpression = (self.planSchedule != undefined) ? self.planSchedule.cronExpression : ($$("cronExpression").getValue()) ? ($$("cronExpression").getValue()) : null;
-
-												cron.getComponent(cronExpression);
-											}
-										}
-									}
-								]
-
-							},
-							{
-								cols: [
-									{
-										view: "text",
-										label: i18n.t("LBL_PLAN_ID"),
-										name: "planId",
-										value: type === "edit" ? self.planSchedule.plan.id : "",
-										hidden: true,
-										disabled: true,
-										required: true
-									},
-									{
-										view: "text",
-										label: i18n.t("LBL_PLAN"),
-										name: "plan",
-										value: type === "edit" ? self.planSchedule.plan.alias : "",
-										required: true,
-										labelWidth: 200,
-										disabled: true
-									},
-									{
-										view: "icon", icon: "wxi-search",
-										on: {
-											onItemClick: function() {
-
-												newPlan = $$(form.id).getValues();
-												let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), SearchDialogBox.PLANS, selectPlan);
-												dialogBox.show();
-											}
-										}
-									}
-								]
-
-							}
-						],
-						rules: {
-							"alias": webix.rules.isNotEmpty,
-							"description": webix.rules.isNotEmpty,
-							"cronExpression": webix.rules.isNotEmpty,
-							"planId": webix.rules.isNotEmpty,
-							"plan": webix.rules.isNotEmpty
-						}
-					}
-
-					self.form = form;
-					return form;
-				}
-
-				function getFormEdit() {
-
-					let formEdit = {
-						id: "form-edit-" + self.uid,
-						borderless: true,
-						css: "ims-incident-report-tab-details",
-						rows: [
-							{ height: 40 },
-							{
-								cols: [
-									{ width: 60 },
-									{
-										borderless: true,
-										rows: [
-											getPlanScheduleForm("edit")
-										]
-									},
-									{ width: 60 }
-								]
-							},
-							{ height: 40 }
-						]
-					};
-
-					return formEdit;
-				}
-
-				function getFormAdd() {
-
-					let formAdd = {
-						id: "form-add-" + self.uid,
-						borderless: true,
-						css: "ims-incident-report-tab-details",
-						rows: [
-							{ height: 40 },
-							{
-								cols: [
-									{ width: 60 },
-									{
-										borderless: true,
-										rows: [
-											getPlanScheduleForm("add")
-										]
-									},
-									{ width: 60 }
-								]
-							},
-							{ height: 40 }
-						]
-					};
-
-					return formAdd;
-				}
-
-				return viewContent;
 			}
 
-			function selectPlan(selection) {
-
-				newPlan.plan = selection[0].alias;
-				newPlan.planId = selection[0].id;
-				self.newPlan = newPlan;
-
-				$$(self.form.id).setValues(self.newPlan);
-			}
 
 			function getToolbarActions() {
 
 				let viewToolbarActions = {
-					height: 45,
 					borderless: true,
 					rows: [
 						{
 							cols: [
-								{ width: 20 },
+								{ width: 15 },
 								{
 									view: "button",
 									css: "dialog-cancel",
@@ -565,14 +494,22 @@ export default class PlanScheduleModule extends GenericModule {
 										}
 									}
 								},
-								{ width: 20 }
+								{ width: 15 }
 							]
-						},
-						{}
+						}
 					]
 				};
 
 				return viewToolbarActions;
+			}
+
+			function selectPlan(selection) {
+
+				newPlan.plan = selection[0].alias;
+				newPlan.planId = selection[0].id;
+				self.newPlan = newPlan;
+
+				$$(self.form.id).setValues(self.newPlan);
 			}
 
 			webix.ui(viewMain, $$(self.uid));

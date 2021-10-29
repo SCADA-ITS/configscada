@@ -14,6 +14,8 @@ export default class RoleModule extends GenericModule {
 
 		this.config = module.config;
 
+		this.moduleAction = moduleAction;
+
 		this.form;
 
 		this.data = null;
@@ -53,6 +55,7 @@ export default class RoleModule extends GenericModule {
 				css: "custom_window",
 				cols: [
 					{
+						css: { "background-color": "white" },
 						rows: [
 							{ height: 6 },
 							{
@@ -209,6 +212,7 @@ export default class RoleModule extends GenericModule {
 
 			let viewMain = {
 				id: self.uid,
+				css: { "box-sizing": "border-box" },
 				rows: [
 					getHeader(),
 					getTabs(),
@@ -275,13 +279,11 @@ export default class RoleModule extends GenericModule {
 
 				tabs.cells.push({
 					header: i18n.t("LBL_ROLE_INFO"),
-					width: 100,
 					body: getForm()
 				});
 
 				tabs.cells.push({
 					header: i18n.t("LBL_ROLE_PERMISSIONS"),
-					width: 100,
 					body: getDataTable()
 				});
 
@@ -293,13 +295,23 @@ export default class RoleModule extends GenericModule {
 					let form = {
 						id: "form-" + self.uid,
 						view: "form",
-						css: "role-form",
+						css: "user-role-form",
 						elementsConfig: { labelAlign: "left" },
 						elements: [
-							{ height: 38 },
-							{ view: "text", id: "rolName-" + self.uid, name: "roleName", required: true, label: i18n.t("LBL_ROLE_NAME"), labelWidth: 275, inputWidth: 600 },
-							{ view: "textarea", height: 180, id: "rolDesc-" + self.uid, name: "roleDesc", label: i18n.t("LBL_ROLE_DESCRIPTION"), labelWidth: 275, inputWidth: 600 },
-							{ height: 20 }
+							{
+								cols: [
+									{ width: 45 },
+									{
+										rows: [
+											{},
+											{ view: "text", id: "rolName-" + self.uid, name: "roleName", required: true, label: i18n.t("LBL_ROLE_NAME"), labelWidth: 275 },
+											{ view: "textarea", height: 180, id: "rolDesc-" + self.uid, name: "roleDesc", label: i18n.t("LBL_ROLE_DESCRIPTION"), labelWidth: 275 },
+											{}
+										]
+									},
+									{ width: 45 }
+								]
+							}
 						],
 						rules: {
 							"roleName": webix.rules.isNotEmpty
@@ -316,17 +328,8 @@ export default class RoleModule extends GenericModule {
 
 					let dataTable = {
 						id: "dt-" + self.uid,
-						height: 335,
-						css: "role-form",
-						rows: [
-							{
-								cols: [
-									{
-										rows: getTable()
-									}
-								]
-							},
-						]
+						css: "user-role-form user-role-dt",
+						rows: getTable()
 					};
 
 
@@ -519,12 +522,12 @@ export default class RoleModule extends GenericModule {
 				let form = self.form;
 
 				let buttons;
-				
+
 				buttons = {
 					id: "buttons-" + self.uid,
 					borderless: true,
+					css: {"margin-top": "1px !important"},
 					rows: [
-						{ height: 14 },
 						{
 							cols: [
 								{ width: 15 },

@@ -522,11 +522,16 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			};
 
-			let viewMainResizer = {
-				id: "view-main-resizer-" + self.uid,
+			let viewMainResizerLeft = {
+				id: "view-main-resizer-left" + self.uid,
 				view: "resizer"
 			};
-
+			
+			let viewMainResizerRight = {
+				id: "view-main-resizer-right" + self.uid,
+				view: "resizer"
+			};
+			
 			let viewMainContent = {
 				id: "view-main-content-" + self.uid,
 				body: getViewContent()
@@ -547,7 +552,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			if (!self.moduleAction) {
 
-				viewMain.cols = [viewMainListEquipments, viewMainResizer, viewMainContent, viewMainActionPanel];
+				viewMain.cols = [viewMainListEquipments, viewMainResizerLeft, viewMainContent, viewMainResizerRight, viewMainActionPanel];
 			}
 			else {
 

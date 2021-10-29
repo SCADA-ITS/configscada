@@ -31,8 +31,7 @@ export default class PasSignalingContent {
 			rows: [
 				self.getViewHeader(),
 				{ height: 32 },
-				getViewBody(),
-				{}
+				getViewBody()
 			],
 			on: {
 				onDestruct: (obj) => {
@@ -49,7 +48,6 @@ export default class PasSignalingContent {
 				cols: [
 					{ width: 6 },
 					{
-						height: 540,
 						css: {"box-sizing":"border-box"},
 						rows: getZonesTable()
 					},

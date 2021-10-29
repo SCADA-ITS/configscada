@@ -79,6 +79,7 @@ export default class GenericModule {
 			css: "custom_window",
 			cols: [
 				{
+					css: {"background-color": "white"},
 					rows: [
 						{ height: 6 },
 						{

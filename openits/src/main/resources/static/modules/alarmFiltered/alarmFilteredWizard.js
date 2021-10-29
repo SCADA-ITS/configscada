@@ -45,14 +45,14 @@ export default class AlarmFilteredWizard {
 			]
 		};
 
-		let h = document.documentElement.clientHeight - 270;
-		let w = document.documentElement.clientWidth - 750;
+//		let h = document.documentElement.clientHeight - 270;
+//		let w = document.documentElement.clientWidth - 750;
 
 		this.createView = util.ui.loadWindow(
 			i18n.t("LBL_CREATE_ALARMS_FILTER"),
 			view,
-			h,
-			w,
+			700,
+			1200,
 			true
 		);
 

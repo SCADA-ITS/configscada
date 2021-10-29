@@ -29,6 +29,7 @@ export default class PlanExecutor extends GenericModule {
 			css: "custom_window",
 			cols: [
 				{
+					css: { "background-color": "white" },
 					rows: [
 						{ height: 6 },
 						{
@@ -369,11 +370,8 @@ export default class PlanExecutor extends GenericModule {
 
 				let dataTable = {
 					id: "dt-" + self.uid,
-					height: 391,
 					rows: [
-						{
-							height: 5
-						},
+						{ height: 5 },
 						{
 							cols: [
 								{ width: 5 },
@@ -383,9 +381,7 @@ export default class PlanExecutor extends GenericModule {
 								{ width: 5 }
 							]
 						},
-						{
-							height: 5
-						}
+						{ height: 5 }
 					]
 				};
 

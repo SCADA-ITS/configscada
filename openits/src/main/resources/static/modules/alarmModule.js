@@ -519,6 +519,7 @@ export default class AlarmModule extends GenericModule {
 				height: 545,
 				cols: [
 					{
+						css: {"background-color": "white"},
 						rows: [
 							{
 								id: "custom_window" + self.uid,
