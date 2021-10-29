@@ -11,10 +11,6 @@
 		"deleteNode": "vms_libraries/node/${id}"
 		
 	},
-	"requiredPermissions": {
-		"editPanel": "SystemPermission:13",
-		"editLibrary": "SystemPermission:14"
-	},
 	"commands":{
 		"reset" :{
 			"commandElementTypeId":"CommandElementType:1:71"
@@ -55,7 +51,61 @@
 			"graphicIcon": {
 				
 				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
-				"svgFile": "img/graphic_icon/71_vms_dgt.svg",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_3lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": true,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": true,
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+		},
+		{
+			"id": "ElementSubtype:2:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_5lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": true,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": true,
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+		},
+		{
+			"id": "ElementSubtype:3:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_ac_bd_2lcs.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": true,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": true,
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+		},
+		{
+			"id": "ElementSubtype:4:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_192_64.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": true,
@@ -73,7 +123,7 @@
 			"graphicIcon": {
 				
 				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
-				"svgFile": "img/graphic_icon/71_vms_temp.svg",
+				"svgFile": "img/graphic_icon/71_vms_128_64.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
 			"alternance": false,
@@ -81,9 +131,46 @@
 			"blinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
+			"textColor": false,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": false,
+			"specialCharacters": [216,24]
+		},
+		{
+			"id": "ElementSubtype:6:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_.clv_af.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
 			"textColor": true,
 			"defaultTextColor": "#FFFFFF",
-			"textAlign": false
+			"textAlign": true,
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+		},
+		{
+			"id": "ElementSubtype:7:71",
+			"graphicIcon": {
+				
+				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
+				"svgFile": "img/graphic_icon/71_vms_temp.svg",
+				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
+			},
+			"alternance": true,
+			"defaultAlternanceMs": 5000,
+			"blinking": true,
+			"defaultFlashingOnMs":1000,
+			"defaultFlashingOffMs":1000,
+			"textColor": true,
+			"defaultTextColor": "#FFFFFF",
+			"textAlign": true,
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
 		},
 		{
 			"id": "ElementSubtype:9:71",
@@ -154,14 +241,14 @@
 			"textAlign": false
 		},
 		{
-			"id": "ElementSubtype:5:71",
+			"id": "ElementSubtype:17:71",
 			"graphicIcon": {
 				
 				"jsDrawFile": "component/graphicIcon/graphicIconCustom.js",
-				"svgFile": "img/graphic_icon/71_vms_128_64.svg",
+				"svgFile": "img/graphic_icon/71_vms_ab.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
-			"alternance": false,
+			"alternance": true,
 			"defaultAlternanceMs": 5000,
 			"blinking": false,
 			"defaultFlashingOnMs":1000,
@@ -169,7 +256,7 @@
 			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": false,
-			"specialCharacters": [216,24]
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
 		},
 		{
 			"id": "ElementSubtype:19:71",
@@ -181,11 +268,11 @@
 			},
 			"alternance": true,
 			"defaultAlternanceMs": 5000,
-			"blinking": true,
+			"blinking": false,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
-			"defaultTextColor": "#FF7E00",
+			"defaultTextColor": "#FFFFFF",
 			"textAlign": false
 		}
 	],
