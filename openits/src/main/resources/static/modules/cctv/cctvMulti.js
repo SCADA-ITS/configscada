@@ -1,6 +1,6 @@
 import TreeView from "../../component/treeview.js";
 import { util } from "../../lib/util.js";
-import CamViewer from "./camViewer.js";
+import CamViewer from "./camviewer/camViewer.js";
 
 const TREE_PANEL_WIDTH = 325;
 

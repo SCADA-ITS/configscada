@@ -1,4 +1,4 @@
-import CamViewer from "./camViewer.js";
+import CamViewer from "./camviewer/camViewer.js";
 import { util } from "../../lib/util.js";
 
 
