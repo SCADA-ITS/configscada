@@ -12,7 +12,7 @@ export default class PlanLibraryChangeStatusOrder extends PlanLibraryOrder {
 		this.dtParams = undefined;
 
 		this.planOrderElementTypeStates = [];		
-		if(planOrder){
+		if(this.planOrder && this.planOrder.planOrderElementTypeStates && Array.isArray(this.planOrder.planOrderElementTypeStates)){
 			this.planOrderElementTypeStates = webix.copy(this.planOrder.planOrderElementTypeStates);
 		}
 	}

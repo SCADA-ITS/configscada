@@ -12,7 +12,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 		this.dtParams = undefined;
 
 		this.planOrderElementValues = [];
-		if(this.planOrder){
+		if(this.planOrder && this.planOrder.planOrderElementValues && Array.isArray(this.planOrder.planOrderElementValues)){
 			this.planOrderElementValues = webix.copy(this.planOrder.planOrderElementValues);
 		}
 	}

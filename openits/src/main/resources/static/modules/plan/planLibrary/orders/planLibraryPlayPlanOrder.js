@@ -8,8 +8,8 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 		super(config, uid, plan, planOrder, onUpdate);
 		
 		this.nextPlan = undefined;
-		if(planOrder){
-			this.nextPlan = webix.copy(planOrder.nextPlan);
+		if(planOrder && this.planOrder.nextPlan){
+			this.nextPlan = webix.copy(this.planOrder.nextPlan);
 		}
 	}
 	

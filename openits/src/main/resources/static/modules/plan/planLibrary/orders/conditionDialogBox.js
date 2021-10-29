@@ -189,7 +189,7 @@ export default class ConditionDialogBox {
 				thresholdOperationRow = {
 					id: "change-condition-threshold-operation-row-" + self.uid,
 					cols: [
-						{ view: "text", value: (self.thresholdOperation?i18n.t(self.thresholdOperation.labelAlias):""), required: false, label: i18n.t("LBL_TRESHOLD_OPERATION"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: (self.thresholdOperation?i18n.t(self.thresholdOperation.labelAlias):""), required: false, label: i18n.t("LBL_THRESHOLD_OPERATION"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "wxi-search", disabled: disabled,
 							on: {
@@ -219,7 +219,7 @@ export default class ConditionDialogBox {
 				thresholdVal1Row = {
 					id: "change-threshold-value-one-row-" + self.uid,
 					cols: [
-						{ view: "text", value: self.thresholdVal1, required: false, label: i18n.t("LBL_THRESHOLD_VAL_ONE"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: self.thresholdVal1, required: false, label: i18n.t("LBL_THRESHOLD_OPERATION_ONE"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
 							on: {
@@ -249,7 +249,7 @@ export default class ConditionDialogBox {
 				thresholdVal2Row = {
 					id: "change-threshold-value-two-row-" + self.uid,
 					cols: [
-						{ view: "text", value: self.thresholdVal2, required: false, label: i18n.t("LBL_THRESHOLD_VAL_TWO"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: self.thresholdVal2, required: false, label: i18n.t("LBL_THRESHOLD_OPERATION_TWO"), disabled: true, labelWidth: 325 },
 						{
 							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
 							on: {

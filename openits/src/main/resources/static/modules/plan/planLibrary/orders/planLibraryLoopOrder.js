@@ -24,7 +24,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 		}
 		
 		this.nextPlanOrder = undefined;
-		if(planOrder){
+		if(planOrder && planOrder.nextPlanOrder){
 
 			this.nextPlanOrder = webix.copy(planOrder.nextPlanOrder);
 		}

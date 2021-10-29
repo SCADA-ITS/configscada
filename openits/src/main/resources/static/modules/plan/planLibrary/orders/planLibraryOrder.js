@@ -219,7 +219,7 @@ export default class PlanLibraryOrder {
 
 		} else {
 
-			let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_ORDER_REQUIRED_PARAMS_DESCRIPTION"), null, null);
+			let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_PLAN_LIBRARY_REQUIRED_PARAMS"), null, null);
 			ms.show();
 		}
 	}

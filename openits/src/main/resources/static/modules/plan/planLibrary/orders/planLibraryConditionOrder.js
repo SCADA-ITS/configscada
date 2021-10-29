@@ -15,7 +15,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 		this.dtParams = undefined;
 		
 		this.planOrderConditions = [];
-		if(this.planOrder){
+		if(this.planOrder && this.planOrder.planOrderConditions && Array.isArray(this.planOrder.planOrderConditions)){
 			this.planOrderConditions = webix.copy(this.planOrder.planOrderConditions);
 		}
 	}
