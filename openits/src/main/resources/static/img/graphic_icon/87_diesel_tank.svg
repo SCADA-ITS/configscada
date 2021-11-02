@@ -9,11 +9,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="55mm"
-   height="55mm"
-   viewBox="0 0 55 55"
+   height="70mm"
+   viewBox="0 0 55 70"
    version="1.1"
    id="svg2"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    sodipodi:docname="87_diesel_tank.svg">
   <defs
      id="defs1087">
@@ -56,15 +56,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.9171155"
      inkscape:cx="50.071685"
-     inkscape:cy="10.258705"
+     inkscape:cy="135.44678"
      inkscape:document-units="mm"
      inkscape:current-layer="main"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-height="980"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata1090">
@@ -83,13 +83,13 @@
      inkscape:groupmode="layer"
      id="main">
     <rect
-       style="fill:#ffcc00;stroke:none;stroke-width:1.3915;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       style="fill:#ffcc00;fill-opacity:1;stroke:none;stroke-width:1.56982;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="state"
        width="55"
-       height="55"
+       height="70"
        x="0"
        y="0"
-       ry="5" />
+       ry="6.3636365" />
     <rect
        style="fill:#cccccc;stroke:none;stroke-width:1.265;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1658"
@@ -101,12 +101,12 @@
     <polygon
        transform="matrix(0.09967378,0,0,0.07107684,1.4641063,11.022608)"
        style="fill:#d1e7f8"
-       points="411.826,0 100.174,0 100.174,478.609 133.565,478.609 133.565,512 378.435,512 378.435,478.609 411.826,478.609 "
+       points="100.174,478.609 133.565,478.609 133.565,512 378.435,512 378.435,478.609 411.826,478.609 411.826,0 100.174,0 "
        id="polygon2" />
     <polygon
        transform="matrix(0.09920427,0,0,0.0701803,1.5268164,11.380981)"
        style="fill:#ffd370"
-       points="100.174,478.609 133.565,478.609 133.565,512 378.435,512 378.435,478.609 411.826,478.609 411.826,111.304 100.174,111.304 "
+       points="133.565,512 378.435,512 378.435,478.609 411.826,478.609 411.826,111.304 100.174,111.304 100.174,478.609 133.565,478.609 "
        id="polygon4" />
     <rect
        x="11.464504"
@@ -114,12 +114,31 @@
        width="31.223896"
        height="2.6120157"
        id="rect8"
-       style="stroke-width:0.09987319" />
+       style="stroke-width:0.0998732" />
     <polygon
-       points="133.565,478.609 133.565,33.391 378.435,33.391 378.435,478.609 411.826,478.609 411.826,33.391 411.826,0 378.435,0 133.565,0 100.174,0 100.174,33.391 100.174,478.609 "
+       points="378.435,33.391 378.435,478.609 411.826,478.609 411.826,33.391 411.826,0 378.435,0 133.565,0 100.174,0 100.174,33.391 100.174,478.609 133.565,478.609 133.565,33.391 "
        id="polygon6"
        transform="matrix(0.12273393,0,0,0.08118095,-3.9501315,8.4445359)"
-       style="stroke-width:1.31079257;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="stroke-width:1.31079;stroke-miterlimit:4;stroke-dasharray:none" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.196104;stroke-linecap:square;stroke-linejoin:round"
+       id="rectValue"
+       width="45"
+       height="15"
+       x="5"
+       y="52.5"
+       ry="5" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Verdana, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.865807"
+       x="27.623985"
+       y="65.891624"
+       id="textValue"><tspan
+         sodipodi:role="line"
+         id="tspan318"
+         x="27.623985"
+         y="65.891624"
+         style="stroke-width:0.865807">-</tspan></text>
   </g>
   <style
      type="text/css"
