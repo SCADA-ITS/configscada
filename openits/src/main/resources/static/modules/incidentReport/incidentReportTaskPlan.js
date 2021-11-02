@@ -227,6 +227,17 @@ export default class IncidentReportTaskPlan {
 							position: 1,
 							multiselect: false,
 							itemRequired: true
+						},
+						{
+							id: 2,
+							value: "LBL_EDIT_PLAN",
+							icon: "mdi mdi-pencil",
+							default_: false,
+							label: "LBL_EDIT_PLAN",
+							showText: true,
+							position: 2,
+							multiselect: false,
+							itemRequired: true
 						}
 					]
 				};
@@ -244,7 +255,12 @@ export default class IncidentReportTaskPlan {
 					commandId: 1,
 					function: onExecutePlan
 				});
-				
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 2,
+					function: onEditPlan
+				});
+
 				return events;
 			}
 			
@@ -279,7 +295,7 @@ export default class IncidentReportTaskPlan {
 			
 			function onExecutePlan() {
 				
-				let selectedItems = self.dtPlans.getSelectedItems()
+				let selectedItems = self.dtPlans.getSelectedItems();
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
@@ -314,6 +330,30 @@ export default class IncidentReportTaskPlan {
 							}, function(response) { util.ajax.handleError(response); });
 						}						
 					};
+				}
+			}
+
+			function onEditPlan() {
+
+				let selectedItems = self.dtPlans.getSelectedItems();
+
+				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_TASK_PLAN_EDIT_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+					function onAccept() {
+
+						let module = util.module.getFromModuleAction(self.config.moduleAction.editPlanFromIncident);
+
+						if (module) {
+
+							let moduleAction = { id: self.config.moduleAction.editPlanFromIncident };
+							let args = { selectedPks: [selectedItems[0].id] };
+
+							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+						}
+					}
 				}
 			}
 

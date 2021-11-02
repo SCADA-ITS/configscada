@@ -191,9 +191,9 @@ export default class SearchDialogBox {
 				let meta = {};
 				
 				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
-					
+										
 					const gridOptionValues = [
-						{ gridOption: { id: 1 }, value: "false" },
+						{ gridOption: { id: 1 }, value: (self.dialogEntity.multiselect) ? String(self.dialogEntity.multiselect) : "false" },
 						{ gridOption: { id: 2 }, value: "true" },
 						{ gridOption: { id: 3 }, value: self.dialogEntity.sortFieldId ? String(self.dialogEntity.sortFieldId) : undefined },
 						{ gridOption: { id: 4 }, value: "asc" },

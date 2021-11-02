@@ -3,7 +3,8 @@
 		"edit": 100401,
 		"confirm": 100402,
 		"cancel": 100403,
-		"executePlanFromIncident": 102502
+		"executePlanFromIncident": 102502,
+		"editPlanFromIncident": 102901
 	},
 	"restEndpoints": {
 	 	"incidentReport": "incidents/reports/${id}",
