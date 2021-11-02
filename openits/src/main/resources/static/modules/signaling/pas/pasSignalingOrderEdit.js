@@ -14,6 +14,7 @@ export default class PasSignalingOrderEdit {
 		this.zonesDataTableStop = undefined;
 		this.zones = undefined;
 		this.selectedCommand = undefined;
+		this.stopOption = false;
 
 		this.uid = webix.uid();
 	}
@@ -389,6 +390,26 @@ export default class PasSignalingOrderEdit {
 							labelValue: "LBL_PAS_STOP"
 						}
 					]
+				},
+				{
+					id: 11,
+					extended: false,
+					filtered: false,
+					isEpochMilli: false,
+					isPk: false,
+					label: "LBL_PAS_ACTION",
+					labelTooltip: "LBL_PAS_ACTION",
+					parameterized: false,
+					position: 7,
+					required: false,
+					sourceField: "messageActionStop",
+					visible: true,
+					widthPx: 250,
+					gridFieldDataType: {
+						id: 1,
+						name: "string"
+					},
+					gridFieldIcons: []
 				});
 
 			metadataStop.gridCommands.push(
@@ -457,7 +478,8 @@ export default class PasSignalingOrderEdit {
 									id: item.id,
 									messageId: "-",
 									messageSent: " ",
-									onStop: " "
+									onStop: " ",
+									messageActionStop: "-"
 								};
 
 								itemsToUpdate.push(it);
@@ -521,29 +543,23 @@ export default class PasSignalingOrderEdit {
 
 					if (Array.isArray(selectedItems) && selectedItems.length > 0) {
 
-						let labelDescription = (selectedItems.length > 1) ? i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_OF_THE") + " " + selectedItems.length + " " + i18n.t("LBL_SELECTED_ZONES_DESCRIPTION") : i18n.t("LBL_PAS_SWITCH_OFF_CONFIRM_DESCRIPTION");
+						let itemsToUpdate = [];
 
-						let ms = new MessageBox(MessageBox.CONFIRM, labelDescription, onAccept, null);
-						ms.show();
+						for (let item of selectedItems) {
 
-						function onAccept() {
+							let it = {
+								id: item.id,
+								messageId: "0",
+								messageSent: false,
+								onStop: "1",
+								messageActionStop: i18n.t("LBL_PAS_STOP_MESSAGE"),
+							};
 
-							let itemsToUpdate = [];
+							itemsToUpdate.push(it);
+						}
 
-							for (let item of selectedItems) {
+						self.zonesDataTableStop.update(itemsToUpdate);
 
-								let it = {
-									id: item.id,
-									messageId: "0",
-									messageSent: false,
-									onStop: "1"
-								};
-
-								itemsToUpdate.push(it);
-							}
-
-							self.zonesDataTableStop.update(itemsToUpdate);
-						};
 					}
 				}
 			});
@@ -593,6 +609,11 @@ export default class PasSignalingOrderEdit {
 								self.zonesDataTableSent.add(element);
 								self.zonesDataTableStop.add(element);
 							});
+							
+							if(self.stopOption){
+								
+								$$("radioButtons-" + self.uid).setValue(2);
+							}
 						}
 					}
 				});
@@ -669,7 +690,10 @@ export default class PasSignalingOrderEdit {
 			} else if (messageId === false) {
 
 				element.messageSent = false;
+				element.messageActionStop = i18n.t("LBL_PAS_STOP_MESSAGE");
 				element.onStop = "1";
+				
+				self.stopOption = true;
 			}
 		}
 	}
