@@ -339,21 +339,15 @@ export default class IncidentReportTaskPlan {
 
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 
-					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_TASK_PLAN_EDIT_CONFIRM_DESCRIPTION"), onAccept, null);
-					ms.show();
-
-					function onAccept() {
-
-						let module = util.module.getFromModuleAction(self.config.moduleAction.editPlanFromIncident);
-
-						if (module) {
-
-							let moduleAction = { id: self.config.moduleAction.editPlanFromIncident };
-							let args = { selectedPks: [selectedItems[0].id] };
-
-							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-						}
-					}
+					let module = util.module.getFromModuleAction(self.config.moduleAction.editPlanFromIncident);
+	
+					if (module) {
+	
+						let moduleAction = { id: self.config.moduleAction.editPlanFromIncident };
+						let args = { selectedPks: [selectedItems[0].id] };
+	
+						util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+					}			
 				}
 			}
 
