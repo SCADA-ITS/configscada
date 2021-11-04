@@ -126,11 +126,7 @@
          sodipodi:role="line"
          id="tspan318"
          x="75.248573"
-         y="66.420837">-
-		  <animate
-			attributeName="x" from="5" to="150"
-			dur="5s" repeatCount="indefinite" />
-		 </tspan></text>
+         y="66.420837">-</tspan></text>
   </g>
   <style
      type="text/css"

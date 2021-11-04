@@ -49,10 +49,10 @@ export default class Valve extends GraphicIconCustomType {
 
 				
 				if(cmdGroupValue == CMD_VALVE_ON){
-					this.gWaterFill.attr({ "fill-opacity": 1 });
+					//this.gWaterFill.attr({ "fill-opacity": 1 });
 					this.gArrow.attr({ "fill-opacity": 1 });
 				}else {
-					this.gWaterFill.attr({ "fill-opacity": 0 });
+					//this.gWaterFill.attr({ "fill-opacity": 0 });
 					this.gArrow.attr({ "fill-opacity": 0 });
 				}
 			}
