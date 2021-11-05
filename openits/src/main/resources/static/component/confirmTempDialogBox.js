@@ -19,6 +19,7 @@ export default class ConfirmTempDialogBox {
 
 		webix.ui({
 			view: "window",
+			id: "confirm-temp-dialog-box-" + self.uid,
 			modal: true,
 			height: 126,
 			width: 600,
@@ -134,5 +135,14 @@ export default class ConfirmTempDialogBox {
 
 	}
 
+	close() {
+
+		let thisComponent = $$("confirm-temp-dialog-box-" + this.uid);
+
+		if(thisComponent) {
+
+			thisComponent.close();
+		}
+	}
 }
 

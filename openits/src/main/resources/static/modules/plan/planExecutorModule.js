@@ -20,7 +20,7 @@ export default class PlanExecutor extends GenericModule {
 		this.config = module.config;
 		this.ordersDataTable = null;
 		this.idStompSubscriptor = null;
-		this.orderConfirm = undefined;
+		this.confirmWindow = undefined;
 	}
 
 	getView() {
@@ -139,14 +139,20 @@ export default class PlanExecutor extends GenericModule {
 
 				if (stompData) {
 
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: self.planId })).then((data) => {
+					//Update header plan state
+					if(stompData.planStateType && stompData.planStateType.id) {
 
-						let updateData = data.json();
+						//Check for opened confirm window 
+						if(self.confirmWindow && stompData.planStateType.id != "PlanStateType:5"){
 
-						//Update header plan state
-						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(updateData.planStateType));
-						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(updateData.planStateType));
-						//Update buttons enable/disable
+							self.confirmWindow.close();
+							self.confirmWindow = undefined;
+						}
+
+						let planStateType = window.em.getByField(EntityType.PLAN_STATE_TYPE, "id", stompData.planStateType.id);
+
+						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(planStateType));
+						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(planStateType));	
 
 						if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
 
@@ -154,7 +160,7 @@ export default class PlanExecutor extends GenericModule {
 
 								if (btnConfig.visible) {
 
-									if (self.config.planStateTypes[updateData.planStateType.id].actions.includes(btnConfig.action)) {
+									if (self.config.planStateTypes[planStateType.id].actions.includes(btnConfig.action)) {
 
 										$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
 
@@ -165,42 +171,48 @@ export default class PlanExecutor extends GenericModule {
 								}
 							});
 						}
+					}
+					//Update buttons enable/disable
 
-						//Update orders table
-						let ids = [];
+					//Update orders table
+					let ids = [];
+
+					if (stompData.planOrders && Array.isArray(stompData.planOrders)){
 
 						self.data.planOrders.forEach(order => {
 
-							let updateOrder = updateData.planOrders.find(e => e.id === order.id);
-							if (updateOrder.planOrderStateType.id != order.planOrderStateType.id || !order.orderExecutedAt) {
+							let updateOrder = stompData.planOrders.find(e => e.id === order.id);
+							if (updateOrder && (updateOrder.planOrderStateType.id != order.planOrderStateType.id || !order.orderExecutedAt)) {
 
-								if (updateOrder.planOrderStateType.id === self.config.planOrderStateTypes.running) {
-
+								let planOrderStateType = window.em.getByField(EntityType.PLAN_ORDER_STATE_TYPE, "id", updateOrder.planOrderStateType.id);
+	
+								if (planOrderStateType.id === self.config.planOrderStateTypes.running) {
+	
 									ids.push(order.id);
 								}
+	
 
-								order.planOrderStateType = updateOrder.planOrderStateType;
-
-								if (updateOrder.planOrderStateType.id != self.config.planOrderStateTypes.unknown &&
-									updateOrder.planOrderStateType.id != self.config.planOrderStateTypes.running) {
-
-									updateOrder.orderExecutedAt = new Date(Date.now());
+								order.planOrderStateType = planOrderStateType;
+								order.orderStatusId = planOrderStateType.id;
+								order.orderResult = i18n.t(planOrderStateType.labelAlias);
+	
+								if (order.planOrderStateType.id != self.config.planOrderStateTypes.unknown &&
+									order.planOrderStateType.id != self.config.planOrderStateTypes.running) {
+	
 									order.orderExecutedAt = new Date(Date.now());
-
 								}
-
-								updateOrder = eval("adapter." + self.config.adapters.orders)([updateOrder], null);
-
-								self.ordersDataTable.update(updateOrder);
+		
+								self.ordersDataTable.update(order);
 								if (self.config.confirmationOrder.typeId === order.planOrderType.id &&
 									order.planOrderStateType.id === self.config.planOrderStateTypes.success && order.orderExecutedAt) {
-
+	
 									let waitingTime = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamWaitingTimeId) : undefined;
 									let message = order.planOrderValues ? order.planOrderValues.find(e => e.planOrderTypeParam.id === self.config.confirmationOrder.typeParamMessageId) : undefined;
 									
-									if (waitingTime && message && waitingTime.value && message.value && Array.isArray(self.orderConfirm) && !self.orderConfirm.find(e => e == order.id)) {
-
-										let confirmWindow = new ConfirmTempDialogBox(
+									//&& Array.isArray(self.orderConfirm) && !self.orderConfirm.find(e => e == order.id)
+									if (waitingTime && message && waitingTime.value && message.value) {
+	
+										self.confirmWindow = new ConfirmTempDialogBox(
 											i18n.t("LBL_PLAN_ORDER_TYPE_CONFIRM"),
 											message.value,
 											waitingTime.value,
@@ -208,43 +220,42 @@ export default class PlanExecutor extends GenericModule {
 											callBackCancel,
 											callBackAccept);
 											
-										self.orderConfirm.push(order.id);
-
+	
 										function callBackAccept() {
-
+	
 											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY));
 											btnConfig.confirm = false;
-
+	
 											open_module(btnConfig);
 										}
-
+	
 										function callBackCancel() {
-
+	
 											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL));
 											btnConfig.confirm = false;
-
+	
 											open_module(btnConfig);
 										}
-										confirmWindow.show();
+										self.confirmWindow.show();
 									}
-
-
+	
+	
 								}
 							}
 						});
+					}
 
-						if (ids && ids.length > 0) {
+					if (ids && ids.length > 0) {
 
-							self.ordersDataTable.select(ids);
-						}
+						self.ordersDataTable.select(ids);
+					}
 
-						if (self.config.resetTimer.includes(updateData.planStateType.id)) {
-							self.data.planOrders.forEach(order => {
+					if (stompData.planStateType && stompData.planStateType.id && self.config.resetTimer.includes(stompData.planStateType.id)) {
+						self.data.planOrders.forEach(order => {
 
-								order.orderExecutedAt = undefined;
-							});
-						}
-					});
+							order.orderExecutedAt = undefined;
+						});
+					}
 				}
 			}
 		}
@@ -330,10 +341,6 @@ export default class PlanExecutor extends GenericModule {
 						on: {
 							onItemClick: () => {
 
-								if (btnConfig.action == PLAN_ORDER_ACTION_PLAY) {
-
-									self.orderConfirm = [];
-								}
 
 								if (btnConfig.moduleAction) {
 

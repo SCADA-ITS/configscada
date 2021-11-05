@@ -116,7 +116,8 @@ const EntityType = Object.freeze({
 	STRETCH: {id: 15, mode: ENTITY_TYPE_MODE_PERMANENT,syncLoad: false, endpoint: appConfig.restUrl + "locations/stretchs", load: true },
 	ELEMENT_VALUE_STATE: { id: 16, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "element_type_states/element_values_states", load: true },
 	PLAN_STATE_TYPE: { id: 17, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_state_types", load: true },
-	PLAN_ORDER_TYPE: { id: 18, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: true }
+	PLAN_ORDER_TYPE: { id: 18, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_types", load: true },
+	PLAN_ORDER_STATE_TYPE:  { id: 19, mode: ENTITY_TYPE_MODE_PERMANENT, syncLoad: false, endpoint: appConfig.restUrl + "plans/plan_order_state_types", load: true }
 });
 
 
