@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1920"
    height="1080"
    viewBox="0 0 1919.9999 1080"
    version="1.1"
    id="svg2"
-   sodipodi:docname="Bratislava_VMS_S1F2_6-11-L.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+   sodipodi:docname="Bratislava_VMS_S1F2_6-11_L.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata1371">
     <rdf:RDF>
@@ -37,20 +37,30 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1600"
-     inkscape:window-height="837"
+     inkscape:window-height="1137"
      id="namedview1369"
      showgrid="false"
      units="px"
      inkscape:zoom="0.84453782"
-     inkscape:cx="813.89407"
-     inkscape:cy="714.67612"
-     inkscape:window-x="1912"
-     inkscape:window-y="179"
+     inkscape:cx="617.49751"
+     inkscape:cy="482.51244"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
-     inkscape:document-rotation="0" />
+     inkscape:document-rotation="0"
+     inkscape:pagecheckerboard="0" />
   <defs
-     id="defs214">
+     id="defs214" />
+  <g
+     id="main"
+     transform="matrix(2.5755597,0,0,2.5761321,-124.99438,-226.5413)">
+    <clipPath
+       id="clip1">
+      <path
+         d="M 48.558594,87.921875 H 794 V 507.19922 H 48.558594 Z m 0,0"
+         id="path211" />
+    </clipPath>
     <g
        id="g209">
       <symbol
@@ -606,16 +616,6 @@
            id="path206" />
       </symbol>
     </g>
-    <clipPath
-       id="clip1">
-      <path
-         d="M 48.558594,87.921875 H 794 V 507.19922 H 48.558594 Z m 0,0"
-         id="path211" />
-    </clipPath>
-  </defs>
-  <g
-     id="main"
-     transform="matrix(2.5755597,0,0,2.5761321,-124.99438,-226.5413)">
     <g
        id="main-5"
        transform="matrix(0.41253169,0,0,0.41244003,48.530958,87.938542)">
@@ -1267,126 +1267,6 @@
          x="248.04337"
          y="278.23999"
          id="use382"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g402">
-      <use
-         xlink:href="#glyph2-1"
-         x="233.24001"
-         y="236.36"
-         id="use386"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-2"
-         x="235.5508"
-         y="236.36"
-         id="use388"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="237.8616"
-         y="236.36"
-         id="use390"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-4"
-         x="238.82472"
-         y="236.36"
-         id="use392"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-5"
-         x="240.75096"
-         y="236.36"
-         id="use394"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-7"
-         x="241.71408"
-         y="236.36"
-         id="use396"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-13"
-         x="243.64032"
-         y="236.36"
-         id="use398"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-13"
-         x="245.56657"
-         y="236.36"
-         id="use400"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g420">
-      <use
-         xlink:href="#glyph2-1"
-         x="233.24001"
-         y="231.44"
-         id="use404"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="235.5508"
-         y="231.44"
-         id="use406"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-9"
-         x="237.8616"
-         y="231.44"
-         id="use408"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="239.59383"
-         y="231.44"
-         id="use410"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-10"
-         x="241.90463"
-         y="231.44"
-         id="use412"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-11"
-         x="243.83087"
-         y="231.44"
-         id="use414"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-6"
-         x="245.75711"
-         y="231.44"
-         id="use416"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-12"
-         x="247.68336"
-         y="231.44"
-         id="use418"
          width="100%"
          height="100%" />
     </g>
@@ -2666,11 +2546,6 @@
        id="path804" />
     <path
        style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
-       d="m 2905.013,4491.0156 v 190.9831 h -641.0156 v 20.9961"
-       transform="matrix(0,-0.12,-0.12,0,794,581)"
-       id="path806" />
-    <path
-       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
        d="m 3241.0156,4491.0156 v 190.9831 h -977.0182 v 76.0091"
        transform="matrix(0,-0.12,-0.12,0,794,581)"
        id="path808" />
@@ -2679,11 +2554,6 @@
        d="m 1958.0078,4590.0065 h 305.9896 V 2808.9844 h 1658.0078 v -189.974"
        transform="matrix(0,-0.12,-0.12,0,794,581)"
        id="path810" />
-    <path
-       style="fill:none;stroke:#ff0000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
-       d="m 3584.9935,4491.0156 v 190.9831 H 2263.9974 v 94.0104 h -322.0052"
-       transform="matrix(0,-0.12,-0.12,0,794,581)"
-       id="path812" />
     <g
        style="fill:#000000;fill-opacity:1"
        id="g832">
@@ -3094,235 +2964,6 @@
          x="472.97592"
          y="287.35999"
          id="use934"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g956">
-      <use
-         xlink:href="#glyph2-1"
-         x="233.60001"
-         y="149"
-         id="use938"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="235.9108"
-         y="149"
-         id="use940"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-9"
-         x="238.2216"
-         y="149"
-         id="use942"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="239.95383"
-         y="149"
-         id="use944"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-10"
-         x="242.26463"
-         y="149"
-         id="use946"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-11"
-         x="244.19087"
-         y="149"
-         id="use948"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-7"
-         x="246.11711"
-         y="149"
-         id="use950"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-22"
-         x="248.04337"
-         y="149"
-         id="use952"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-12"
-         x="249.9696"
-         y="149"
-         id="use954"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g984">
-      <use
-         xlink:href="#glyph2-1"
-         x="233.60001"
-         y="154.88"
-         id="use958"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-2"
-         x="235.9108"
-         y="154.88"
-         id="use960"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="238.2216"
-         y="154.88"
-         id="use962"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="239.18472"
-         y="154.88"
-         id="use964"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-16"
-         x="240.14784"
-         y="154.88"
-         id="use966"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-5"
-         x="242.07408"
-         y="154.88"
-         id="use968"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-13"
-         x="243.0372"
-         y="154.88"
-         id="use970"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-21"
-         x="244.96346"
-         y="154.88"
-         id="use972"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-19"
-         x="246.88969"
-         y="154.88"
-         id="use974"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="248.81593"
-         y="154.88"
-         id="use976"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="249.77905"
-         y="154.88"
-         id="use978"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="250.74217"
-         y="154.88"
-         id="use980"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-3"
-         x="251.70529"
-         y="154.88"
-         id="use982"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g1004">
-      <use
-         xlink:href="#glyph2-1"
-         x="233.60001"
-         y="143.96001"
-         id="use986"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="235.9108"
-         y="143.96001"
-         id="use988"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-9"
-         x="238.2216"
-         y="143.96001"
-         id="use990"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-8"
-         x="239.95383"
-         y="143.96001"
-         id="use992"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-10"
-         x="242.26463"
-         y="143.96001"
-         id="use994"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-11"
-         x="244.19087"
-         y="143.96001"
-         id="use996"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-7"
-         x="246.11711"
-         y="143.96001"
-         id="use998"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-23"
-         x="248.04337"
-         y="143.96001"
-         id="use1000"
-         width="100%"
-         height="100%" />
-      <use
-         xlink:href="#glyph2-12"
-         x="249.9696"
-         y="143.96001"
-         id="use1002"
          width="100%"
          height="100%" />
     </g>

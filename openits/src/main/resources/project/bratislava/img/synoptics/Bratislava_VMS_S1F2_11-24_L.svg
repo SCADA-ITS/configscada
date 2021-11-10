@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1920"
    height="1080"
    viewBox="0 0 1920 1080"
    version="1.1"
-   id="svg1806"
-   sodipodi:docname="PANELS S1F2 (11-24)-L-PK_v02.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+   id="svg2"
+   sodipodi:docname="Bratislava_VMS_S1F2_11-24_L.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata
      id="metadata1810">
     <rdf:RDF>
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,25 +37,35 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1600"
-     inkscape:window-height="837"
+     inkscape:window-height="1137"
      id="namedview1808"
      showgrid="false"
      showguides="false"
      units="px"
      inkscape:zoom="0.42226891"
-     inkscape:cx="823.5496"
-     inkscape:cy="509.96565"
-     inkscape:window-x="1912"
-     inkscape:window-y="179"
+     inkscape:cx="822.93532"
+     inkscape:cy="510.33831"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg1806">
+     inkscape:current-layer="svg2"
+     inkscape:pagecheckerboard="0">
     <sodipodi:guide
        position="209.5821,566.5821"
        orientation="0,-1"
        id="guide2635" />
   </sodipodi:namedview>
   <defs
-     id="defs127">
+     id="defs127" />
+  <g
+     id="main"
+     transform="matrix(2.5755597,0,0,2.5761321,-124.99438,-226.5413)">
+    <clipPath
+       id="clip1">
+      <path
+         d="M 48.558594,87.921875 H 794 V 507.19922 H 48.558594 Z m 0,0"
+         id="path124" />
+    </clipPath>
     <g
        id="g122">
       <symbol
@@ -379,16 +389,6 @@
            id="path119" />
       </symbol>
     </g>
-    <clipPath
-       id="clip1">
-      <path
-         d="M 48.558594,87.921875 H 794 V 507.19922 H 48.558594 Z m 0,0"
-         id="path124" />
-    </clipPath>
-  </defs>
-  <g
-     id="main"
-     transform="matrix(2.5755597,0,0,2.5761321,-124.99438,-226.5413)">
     <g
        id="main-2"
        transform="matrix(0.41253169,0,0,0.41244003,48.530958,87.938542)">

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    viewBox="0 0 1920 1080"
    height="1080"
    width="1920"
    xml:space="preserve"
    id="svg2"
    version="1.1"
-   sodipodi:docname="PANELS-S3-pk-P_v0.3.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><sodipodi:namedview
+   sodipodi:docname="Bratislava_VMS_S3_P.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1"
@@ -24,20 +24,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
      id="namedview194"
      showgrid="false"
-     inkscape:zoom="0.59679331"
-     inkscape:cx="794"
-     inkscape:cy="561.33337"
+     inkscape:zoom="0.4219966"
+     inkscape:cx="797.3998"
+     inkscape:cy="65.166402"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" /><metadata
+     inkscape:current-layer="g14"
+     inkscape:pagecheckerboard="0" /><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs6"><clipPath
        id="clipPath18"
        clipPathUnits="userSpaceOnUse"><path
@@ -329,21 +330,9 @@
            id="path212"
            style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
            d="M 3558,7901 V 1885 h 4796 v 8418 h 769" /><path
-           id="path214"
-           style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           d="M 3558,7941 V 1885 h 4796 v 9657 h 771" /><path
            id="path216"
            style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           d="M 3558,7847 V 1885 h 4796 v 7362 h 768" /><path
-           id="path218"
-           style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           d="M 3559,7951 H 1506 350 V 4666 h 774" /><path
-           id="path220"
-           style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           d="M 3571,7896 H 1506 350 v -971 h 774" /><path
-           id="path222"
-           style="fill:none;stroke:#0000ff;stroke-width:12.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-           d="M 3571,7895 H 1506 350 V 5849 h 774" /></g></g><g
+           d="M 3558,7847 V 1885 h 4796 v 7362 h 768" /></g></g><g
        id="g224"><g
          clip-path="url(#clipPath230)"
          id="g226"><text
@@ -504,55 +493,13 @@
      id="tspan328"
      y="0"
      x="0 61.508526 123.01705 148.65329 179.36145 204.99768 256.27017 281.9064 333.17886 384.45135">PK - 0,383</tspan></text>
-<text
-   id="text334"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,461,5877)"><tspan
-     id="tspan332"
-     y="0"
-     x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141 481.73996">NRSPK22Pb</tspan></text>
-<text
-   id="text338"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,461,5742)"><tspan
-     id="tspan336"
-     y="0"
-     x="0 61.508526 123.01705 148.65329 199.92577 225.56201 276.83447 328.10696">PK 0,044</tspan></text>
-<text
-   id="text342"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,461,5998)"><tspan
-     id="tspan340"
-     y="0"
-     x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141 481.73996">NRSPK22Pa</tspan></text>
-<text
-   id="text346"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,458,4695)"><tspan
-     id="tspan344"
-     y="0"
-     x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141">NRSPK21P</tspan></text>
-<text
-   id="text350"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,458,4559)"><tspan
-     id="tspan348"
-     y="0"
-     x="0 61.508526 123.01705 148.65329 199.92577 225.56201 276.83447 328.10696">PK 0,495</tspan></text>
-<text
-   id="text354"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,460,6952)"><tspan
-     id="tspan352"
-     y="0"
-     x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141">NRSPK06P</tspan></text>
-<text
-   id="text358"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,460,6816)"><tspan
-     id="tspan356"
-     y="0"
-     x="0 61.508526 123.01705 148.65329 199.92577 225.56201 276.83447 328.10696 379.37943">PK 0,0287</tspan></text>
+
+
+
+
+
+
+
 <text
    id="text362"
    style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -588,18 +535,6 @@
      id="tspan376"
      y="0"
      x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141 481.73996">NRSPK07Pa</tspan></text>
-<text
-   id="text382"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,8468,11567)"><tspan
-     id="tspan380"
-     y="0"
-     x="0 66.580444 133.16089 194.66942 256.17795 317.68646 368.95895 420.23141">NRSPK04P</tspan></text>
-<text
-   id="text386"
-   style="font-variant:normal;font-weight:normal;font-size:115.299px;font-family:Arial;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-   transform="matrix(0.7998047,0,0,-1,8468,11431)"><tspan
-     id="tspan384"
-     y="0"
-     x="0 61.508526 123.01705 148.65329 199.92577 225.56201 276.83447 328.10696">PK 0,700</tspan></text>
+
+
 </g></g></g></svg>
