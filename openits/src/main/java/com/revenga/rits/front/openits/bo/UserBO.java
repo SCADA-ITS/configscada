@@ -4,51 +4,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlTypeAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class UserBO extends GenericBO {
-	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-	
+		
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
 	
-	@Override
-	public List<Map<String, Object>> getList() {
-
-		List<Map<String, Object>> users = voDataSourceAdapter
-				.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS, null);
+	@PostConstruct
+	private void initialize() {
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USERS).getFieldId(), users);
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_USERS;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_USER;
 	}
-
+	
 	public List<Map<String, Object>> getListWithRole() {
 
 		List<Map<String, Object>> users = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE).getFieldId(), users);
-	}
-	
-	@Override
-	public Map<String, Object> getItem(String id) {
-
-		Map<String, Object> user = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_USER, new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_USER).getFieldId(), user);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_USERS_WITH_ROLE, users);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -56,8 +38,7 @@ public class UserBO extends GenericBO {
 		
 		Map<String, Object> createdUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, (Map<String, Object>) input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_USER).getFieldId(), createdUser);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_USER, createdUser);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -65,8 +46,7 @@ public class UserBO extends GenericBO {
 			
 		Map<String, Object> updatedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, (Map<String, Object>) input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER).getFieldId(), updatedUser);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, updatedUser);
 	}
 	
 	public Map<String, Object> deleteUser(String id) {
@@ -77,8 +57,7 @@ public class UserBO extends GenericBO {
 		
 		Map<String, Object> deletedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_USER, input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_USER).getFieldId(), deletedUser);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_USER, deletedUser);
 	}
 	
 	@SuppressWarnings("unchecked")

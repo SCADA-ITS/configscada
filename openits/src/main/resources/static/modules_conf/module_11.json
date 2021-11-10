@@ -9,5 +9,21 @@
 				"recognizeAll": 100802
 			}
 		}
+	},
+	"rest": {
+		"active_alarms": "generic_datas/GenericData:1",
+		"no_recognized_alarms": "generic_datas/GenericData:2",
+		"filtered_alarms": "generic_datas/GenericData:3",
+		"alarms": "alarms"
+	},
+	"ws": {
+		"alarms": "/topic/alarm.>",
+		"active_alarms":"/topic/generic_data.GenericData:1",
+		"no_recognized_alarms":"/topic/generic_data.GenericData:2",
+		"filtered_alarms":"/topic/generic_data.GenericData:3"
+	},
+	"notification": {
+		"timeoutNotificationMs": 30000,
+		"recognize": 100802
 	}
 }

@@ -909,7 +909,7 @@ export default class AlarmMonitorModule extends GenericModule {
 						view: "segmented",
 						css: "segment-custom-2",
 						value: "action-panel-switcher-show-all-" + self.uid,
-						width: 200,
+						width: 250,
 						options: [
 							{
 								id: "action-panel-switcher-show-all-" + self.uid,
@@ -996,7 +996,8 @@ export default class AlarmMonitorModule extends GenericModule {
 
 					if (self.moduleAction != null && self.args.selectedPks && self.args.selectedPks.length > 1) {
 						viewContentToolbar.elements.push(equipmentSelected);
-						viewContentToolbar.elements.push({width: 262});
+						//viewContentToolbar.elements.push({width: 262});
+						viewContentToolbar.elements.push({});
 					}
 
 				

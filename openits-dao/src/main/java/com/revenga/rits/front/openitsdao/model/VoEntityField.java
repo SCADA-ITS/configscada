@@ -1,7 +1,18 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,6 +50,11 @@ public class VoEntityField implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="vo_entity_type_id")
 	private VoEntityType voEntityType;
+
+	//bi-directional many-to-one association to VoEntityValue
+	@JsonIgnore
+	@OneToMany(mappedBy="voEntityField")
+	private List<VoEntityValue> voEntityValues;
 
 	public VoEntityField() {
 	}
@@ -105,6 +121,28 @@ public class VoEntityField implements Serializable {
 
 	public void setVoEntityType(VoEntityType voEntityType) {
 		this.voEntityType = voEntityType;
+	}
+
+	public List<VoEntityValue> getVoEntityValues() {
+		return this.voEntityValues;
+	}
+
+	public void setVoEntityValues(List<VoEntityValue> voEntityValues) {
+		this.voEntityValues = voEntityValues;
+	}
+
+	public VoEntityValue addVoEntityValue(VoEntityValue voEntityValue) {
+		getVoEntityValues().add(voEntityValue);
+		voEntityValue.setVoEntityField(this);
+
+		return voEntityValue;
+	}
+
+	public VoEntityValue removeVoEntityValue(VoEntityValue voEntityValue) {
+		getVoEntityValues().remove(voEntityValue);
+		voEntityValue.setVoEntityField(null);
+
+		return voEntityValue;
 	}
 
 }

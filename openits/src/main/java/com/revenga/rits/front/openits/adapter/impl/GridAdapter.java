@@ -114,7 +114,7 @@ public class GridAdapter {
 								@SuppressWarnings("unchecked")
 								List<Map<String, Object>> gridData = (List<Map<String, Object>>) groovyObj.invokeMethod(
 										METHOD_TO_GRID_DATA,
-										new Object[] { dataSourceGraphQL.getFieldId(), items });
+										new Object[] { dataSourceGraphQL.getId(), items });
 								
 								if (gridData != null) {
 									

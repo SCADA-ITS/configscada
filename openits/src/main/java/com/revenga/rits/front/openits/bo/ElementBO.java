@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -16,30 +17,11 @@ public class ElementBO extends GenericBO {
 	@Autowired
 	LocationBO locationBO;
 
-	@Autowired
-	VO2UIAdapter vo2uiAdapter;
-
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-
-	@Override
-	public List<Map<String, Object>> getList() {
-
-		List<Map<String, Object>> elements = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS,
-				null);
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS).getFieldId(), elements);
-	}
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-
-		Map<String, Object> element = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT,
-				new Object[] { id });
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT).getFieldId(), element);
+	@PostConstruct
+	private void initialize() {
+		
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT;
 	}
 
 	public List<Map<String, Object>> getElements(List<String> ids) {
@@ -47,8 +29,7 @@ public class ElementBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, new Object[] { ids });
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, elements);
 	}
 
 	public List<Map<String, Object>> getHierarchies() {
@@ -56,8 +37,7 @@ public class ElementBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES, null);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_HIERARCHIES, elements);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -66,8 +46,7 @@ public class ElementBO extends GenericBO {
 		Map<String, Object> createdElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_ELEMENT,
 				(Map<String, Object>) input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_ELEMENT).getFieldId(), createdElement);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_ELEMENT, createdElement);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -76,8 +55,7 @@ public class ElementBO extends GenericBO {
 		Map<String, Object> updatedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_ELEMENT,
 				(Map<String, Object>) input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_ELEMENT).getFieldId(), updatedElement);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_ELEMENT, updatedElement);
 	}
 
 	public Map<String, Object> cloneElement(String id) {
@@ -89,8 +67,7 @@ public class ElementBO extends GenericBO {
 		Map<String, Object> clonedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CLONE_ELEMENT,
 				input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CLONE_ELEMENT).getFieldId(), clonedElement);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CLONE_ELEMENT, clonedElement);
 	}
 
 	public Map<String, Object> deleteElement(String id) {
@@ -102,8 +79,7 @@ public class ElementBO extends GenericBO {
 		Map<String, Object> deletedElement = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_ELEMENT,
 				input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_ELEMENT).getFieldId(), deletedElement);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_ELEMENT, deletedElement);
 	}
 
 	@SuppressWarnings("unchecked")

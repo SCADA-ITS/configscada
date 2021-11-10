@@ -10,7 +10,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.MapUI;
 import com.revenga.rits.front.openitsdao.model.MapLayer;
@@ -25,12 +24,6 @@ public class MapBO extends GenericBO {
 	
 	@Autowired
 	LocationBO locationBO;
-	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
 	
 	public List<MapUI> getMaps() {
 		
@@ -113,8 +106,7 @@ public class MapBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MAP, elements);
 	}
 	
 	private List<Map<String, Object>> getElementsStatesMeasures(List<String> ids) {
@@ -122,8 +114,7 @@ public class MapBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_MAP, elements);
 	}
 
 	private List<Map<String, Object>> getElementsStatesAlarms(List<String> ids) {
@@ -131,8 +122,7 @@ public class MapBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_MAP, elements);
 	}
 
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
@@ -140,8 +130,7 @@ public class MapBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_MAP, elements);
 	}
 	
 	private void getElementIds(com.revenga.rits.front.openitsdao.model.Map map, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasures, Set<String> elementsWithStatesAlarms, Set<String> elementsWithStatesMeasuresAlarms) {

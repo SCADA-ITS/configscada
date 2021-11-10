@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,6 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
-
-	@Autowired
-	VO2UIAdapter vo2uiAdapter;
-
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
 
 	@Autowired
 	SessionBO sessionBO;
@@ -87,6 +82,13 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_AFFECTION_STRETCH_ID = "affectionStretchId";
 	
 	static final String FIELD_INCIDENT_TYPE_TASK_VALUES = "incidentTypeTaskValues";
+	
+	@PostConstruct
+	private void initialize() {
+		
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT;
+	}
 
 	@SuppressWarnings("unchecked")
 	private Object getIncidentStateLabelAlias(final Map<String, Object> incidentReport) {
@@ -532,33 +534,12 @@ public class ImsIncidentReportBO extends GenericBO {
 		return null;
 	}
 
-	@Override
-	public List<Map<String, Object>> getList() {
-
-		List<Map<String, Object>> incidentReports = voDataSourceAdapter
-				.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS, null);
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS).getFieldId(), incidentReports);
-	}
-	
 	public List<Map<String, Object>> getSummaryList() {
 
 		List<Map<String, Object>> incidentReports = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY,
 				null);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY).getFieldId(), incidentReports);
-	}
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-
-		Map<String, Object> incidentReport = voDataSourceAdapter
-				.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT, new Object[] { id });
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT).getFieldId(), incidentReport);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY, incidentReports);
 	}
 
 	public Map<String, Object> getItemSumary(String id) {
@@ -567,8 +548,7 @@ public class ImsIncidentReportBO extends GenericBO {
 				.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY, new Object[] { id });
 
 		return vo2uiAdapter.convert(
-				voDataSourceAdapter.getDataSourceService()
-						.getById(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY).getFieldId(),
+				VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY,
 				incidentReport);
 	}
 

@@ -489,6 +489,91 @@ p, input, textarea {
 	}
 }
 
+.notification-list {
+    background: transparent;
+}
+
+.notification-list .webix_list_item {
+	height: 50px !important;
+	margin-top: 5px;
+}
+
+.notification-list .webix_list_item.webix_selected{
+	box-shadow: none;
+	background-color: rgba(255 0 0 / 0.2) ;
+}
+
+.notification-list .state-enabled{
+	border-left: 3px solid #ef2929;
+	float: left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-list .state-disabled{
+	border-left: 3px solid var(--blue-soft);
+	float:left;
+	margin-top: 5px;
+	height: 36px;
+}
+
+.notification-list .image{
+	width:36px;
+	height:36px;
+	float:left;
+	padding-top: 5px;
+}
+
+.notification-list .level{
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+
+.notification-list .sound{
+	width: 20px;
+    height: 20px;
+    line-height: 22px;
+    float: left;
+    margin-top: 12px;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    padding-left: 5px;
+}
+
+
+.notification-list .first-line{
+	font-size:14px;
+	font-weight: 500;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+.notification-list .second-line{
+	font-size:14px;
+	letter-spacing:0.2px;
+	line-height:15px;
+	display:block;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	padding-top: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+}
+
 .control-panel-main .section-title {
 	/*display: flex;*/
     background: transparent;
@@ -1360,7 +1445,6 @@ p, input, textarea {
 
 .notification-alarm-window-head {
     height: 32px !important;
-    /*background: linear-gradient(45deg, red, rgba(255 0 0 / 0.4));*/
     -webkit-animation: notification-alarm-window-head-animation 1s infinite;  /* Safari 4+ */
 	-moz-animation: notification-alarm-window-head-animation 1s infinite;  /* Fx 5+ */
 	-o-animation: notification-alarm-window-head-animation 1s infinite;  /* Opera 12+ */
@@ -1369,10 +1453,10 @@ p, input, textarea {
 
 @-webkit-keyframes notification-alarm-window-head-animation {
   0%, 49% {
-    background-color: rgba(255 0 0 / 0.7);
+    background-color: rgb(240, 0, 0);
   }
   50%, 100% {
-    background-color: red;
+    background-color: rgb(204, 0, 0);
   }
 }
 
@@ -1400,6 +1484,21 @@ p, input, textarea {
 	transform: scale(0.70);
 	margin-top: -6px;
 	margin-left: 2px;
+}
+
+.notification-icon {
+	width: 36px;
+    height: 36px;
+    float: left;
+    padding-left: 15px;
+}
+
+.notification-title {
+    padding-left: 5px;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
 }
 
 .ims-incident-report-icon {

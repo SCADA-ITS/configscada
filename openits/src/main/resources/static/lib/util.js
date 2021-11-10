@@ -5,13 +5,29 @@ export let util = {
 	module: {
 
 		getParamValue(module, param) {
-
-			return module.moduleValues.find(e => e.moduleParam.id === param).value;
+			
+			let value = undefined;
+			let paramValue = module.moduleValues.find(e => e.moduleParam.id === param);
+			
+			if (paramValue) {
+				
+				value = paramValue.value;
+			}
+			
+			return value;
 		},
 
-		getWindowParamValue(module, param) {
+		getWindowParamValue(module, param, defaultValue) {
 
-			return module.windowValues.find(e => e.windowParam.id === param).value;
+			let value = defaultValue;
+			let windowValue = module.windowValues.find(e => e.windowParam.id === param);
+			
+			if (windowValue) {
+			
+				value = windowValue.value;	
+			}
+			
+			return value;
 		},
 
 		loadInCustom(module, moduleAction, mod, args, drawCallback) {
@@ -61,21 +77,15 @@ export let util = {
 
 			if (module.windowValues) {
 
-				try {
-
-					allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
-					image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
-					icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
-					color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
-					label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
-					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
-					height = module.windowValues.find(e => e.windowParam.id === WindowParam.HEIGHT).value;
-					width = module.windowValues.find(e => e.windowParam.id === WindowParam.WIDTH).value;
-					modal = module.windowValues.find(e => e.windowParam.id === WindowParam.MODAL).value === 'true';
-				}
-				catch {
-
-				}
+				allowMultipleInstances = util.module.getWindowParamValue(module, WindowParam.ALLOW_MULTIPLE_INSTANCES, allowMultipleInstances) === 'true';
+				image = util.module.getWindowParamValue(module, WindowParam.IMAGE, image);
+				icon = util.module.getWindowParamValue(module, WindowParam.ICON, icon);
+				color = util.module.getWindowParamValue(module, WindowParam.COLOR, color);
+				label = util.module.getWindowParamValue(module, WindowParam.LABEL, label);
+				externalizable = util.module.getWindowParamValue(module, WindowParam.EXTERNALIZABLE, externalizable) === 'true';
+				height = util.module.getWindowParamValue(module, WindowParam.HEIGHT, height);
+				width = util.module.getWindowParamValue(module, WindowParam.WIDTH, width);
+				modal = util.module.getWindowParamValue(module, WindowParam.MODAL, modal) === 'true';
 			}
 
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
@@ -99,6 +109,10 @@ export let util = {
 
 
 			if (viewModule) {
+				
+				let hideIconDock = !taskManagerService || !externalizable || window.isExternal;
+				let hideIconExternalize = !taskManagerService || !externalizable;
+				let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal;
 
 				let head = {
 					view: "toolbar",
@@ -114,7 +128,7 @@ export let util = {
 						},
 						{
 							view: "icon",
-							hidden: !taskManagerService || !externalizable || window.isExternal,
+							hidden: hideIconDock,
 							icon: "mdi mdi-dock-window",
 							tooltip: i18n.t("LBL_WINDOW_DOCK"),
 							on: {
@@ -129,7 +143,7 @@ export let util = {
 						},
 						{
 							view: "icon",
-							hidden: !taskManagerService || !externalizable,
+							hidden: hideIconExternalize,
 							icon: "mdi mdi-monitor",
 							tooltip: i18n.t("LBL_WINDOW_EXTERNALIZE"),
 							on: {
@@ -144,7 +158,7 @@ export let util = {
 						},
 						{
 							view: "icon",
-							hidden: !taskManagerService || !externalizable || window.isExternal,
+							hidden: hideIconMinimize,
 							icon: "mdi mdi-window-minimize",
 							tooltip: i18n.t("LBL_WINDOW_MINIMIZE"),
 							on: {
@@ -159,7 +173,6 @@ export let util = {
 						},
 						{
 							view: "icon",
-							//css: "notification-center-close-btn",
 							icon: "mdi mdi-close",
 							tooltip: i18n.t("LBL_WINDOW_CLOSE"),
 							on: {
@@ -187,10 +200,6 @@ export let util = {
 							viewModule
 						]
 					},
-					//					position: function(state) {
-					//						state.left = (document.documentElement.clientWidth / 2) - (width / 2);
-					//						state.top = (document.documentElement.clientHeight / 2) - (height / 2);
-					//					},
 					on: {
 						onBeforeShow: function() {
 
@@ -244,20 +253,13 @@ export let util = {
 
 			if (module.windowValues && module.windowValues.length > 0) {
 
-				try {
-
-					allowMultipleInstances = module.windowValues.find(e => e.windowParam.id === WindowParam.ALLOW_MULTIPLE_INSTANCES).value === 'true';
-					image = module.windowValues.find(e => e.windowParam.id === WindowParam.IMAGE).value;
-					icon = module.windowValues.find(e => e.windowParam.id === WindowParam.ICON).value;
-					color = module.windowValues.find(e => e.windowParam.id === WindowParam.COLOR).value;
-					label = module.windowValues.find(e => e.windowParam.id === WindowParam.LABEL).value;
-					externalizable = module.windowValues.find(e => e.windowParam.id === WindowParam.EXTERNALIZABLE).value === 'true';
-				}
-				catch {
-
-				}
+				allowMultipleInstances = util.module.getWindowParamValue(module, WindowParam.ALLOW_MULTIPLE_INSTANCES, allowMultipleInstances) === 'true';
+				image = util.module.getWindowParamValue(module, WindowParam.IMAGE, image);
+				icon = util.module.getWindowParamValue(module, WindowParam.ICON, icon);
+				color = util.module.getWindowParamValue(module, WindowParam.COLOR, color);
+				label = util.module.getWindowParamValue(module, WindowParam.LABEL, label);
+				externalizable = util.module.getWindowParamValue(module, WindowParam.EXTERNALIZABLE, externalizable) === 'true';
 			}
-
 
 			let moduleOpenedId = util.module.getModuleOpenedId(module.id);
 

@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
 public class ElementTypeStateBO extends GenericBO {
@@ -22,12 +20,6 @@ public class ElementTypeStateBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
-	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
 	
 	@Override
 	public List<Map<String, Object>> getList() {

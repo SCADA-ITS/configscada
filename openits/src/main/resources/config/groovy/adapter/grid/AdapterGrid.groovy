@@ -16,5 +16,5 @@ public abstract class AdapterGrid {
 		this.log = log;
 	}
 	
-	public abstract List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities);
+	public abstract List<Map<String, Object>> toGridData(Integer datasourceId, List<Map<String, Object>> entities);
 }

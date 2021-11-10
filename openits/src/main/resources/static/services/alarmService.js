@@ -1,8 +1,7 @@
 import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import AlarmControlPanel from "../component/general/alarmControlPanel.js";
-import Notification from "../component/notification.js";
-import { NotificationType } from "../component/notification.js";
+import Notification from "./notification.js";
 
 const LATEST_ALARMS_MAX = 10;
 
@@ -15,7 +14,6 @@ export default class AlarmService extends GenericModule {
 		this.module = module;
 		this.config = module.config;
 
-		//this.recentAlarmCount = 0;
 		this.stomp = {};
 		this.alarms = {
 			config: undefined,
@@ -25,9 +23,16 @@ export default class AlarmService extends GenericModule {
 					noRecognizedAlarms: 0,
 					filteredAlarms: 0
 				},
-				latest: []
+				latest: [],
+				notifications: []
 			}
 		};
+		this.notification = undefined;
+	}
+	
+	getNotification() {
+		
+		return this.notification;
 	}
 	
 	getData() {
@@ -43,7 +48,6 @@ export default class AlarmService extends GenericModule {
 			id: "icon-alarm-service",
 			view: "icon",
 			css: "alarm-template",
-			//width: 75,
 			badge: 0,
 			icon: "mdi mdi-bell",
 			value: "Alert",
@@ -58,251 +62,323 @@ export default class AlarmService extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let moduleValue = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_SERVICE_CONFIG);
-
-		if (moduleValue != undefined) {
 			
-			if (!window.alarmControlPanel) {
+		if (!window.alarmControlPanel) {
 
-				window.alarmControlPanel = new AlarmControlPanel(this.config);
-			}
+			window.alarmControlPanel = new AlarmControlPanel(self.config);
+		}
 
-			if ($$("icon-alarm-service")) {
-				
-				$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
-
-					self.callAlarmControlPanel();
-				});	
-			}
+		if ($$("icon-alarm-service")) {
 			
+			$$("icon-alarm-service").attachEvent("onItemClick", function(id, e) {
 
-			this.alarms.stats = {};
-
-			if (moduleValue.value) {
-
-				this.alarms.config = JSON.parse(moduleValue.value);
-			}
-
-			self.updateStatistics();
+				callAlarmControlPanel();
+			});	
 		}
-	}
 
-	updateStatistics() {
-
-		this.updateActiveAlarms();
-		this.updateNoRecognizedAlarms();
-		this.updateFilteredAlarms();
-		this.updateAlarms();
-	}
-
-	updateActiveAlarms() {
-
-		let self = this;
-
-		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.active_alarms).then(function(data) {
-
-			if (data.json() != undefined) {
-				
-				let activeAlarms = data.json().value;
-
-				self.alarms.data.stats.activeAlarms = activeAlarms;
-//				$$("icon-alarm-service").data.badge = activeAlarms;
-//				$$("icon-alarm-service").refresh();
-				
-				window.alarmControlPanel.updateData();
-
-//				$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${activeAlarms}</span>`);
-//				$$("alarm-control-panel-box-active").refresh();
-
-				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.active_alarms, null, on_message);
-
-				function on_message(message) {
-
-					var dat = JSON.parse(JSON.parse(message.body));
-					
-					self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
-
-//					$$("icon-alarm-service").data.badge = dat.basicElementsVO[0].value;
-//					$$("icon-alarm-service").refresh();
-					
-					window.alarmControlPanel.updateData();
-
-//					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
-//					$$("alarm-control-panel-box-active").refresh();
-				}
-			}
-		});
-	}
-
-	updateNoRecognizedAlarms() {
-
-		let self = this;
-
-		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.no_recognized_alarms).then(function(data) {
-
-			if (data.json() != undefined) {
-				
-				let noRecognizedAlarms = data.json().value;
-
-				self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
-				
-				window.alarmControlPanel.updateData();
-				window.userControlPanel.updateData();
-
-//				$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${noRecognizedAlarms}</span>`);
-//				$$("alarm-control-panel-box-no-recognized").refresh();
-
-				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.no_recognized_alarms, null, on_message);
-
-				function on_message(message) {
-
-					var dat = JSON.parse(JSON.parse(message.body));
-					
-					self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
-					
-					window.alarmControlPanel.updateData();
-					window.userControlPanel.updateData();
-
-//					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${dat.basicElementsVO[0].value}</span>`);
-//					$$("alarm-control-panel-box-no-recognized").refresh();
-				}
-			}
-		});
-	}
-
-	updateFilteredAlarms() {
-
-		let self = this;
-
-		webix.ajax(appConfig.restUrl + this.alarms.config.stats.rest.filtered_alarms).then(function(data) {
-
-			if (data.json() != undefined) {
-				
-				let filteredAlarms = data.json().value;
-
-				self.alarms.data.stats.filteredAlarms = filteredAlarms;
-				
-				window.alarmControlPanel.updateData();
-
-
-				util.stomp.connect(appConfig.stompUrl, self.alarms.config.stats.ws.filtered_alarms, null, on_message);
-
-				function on_message(message) {
-
-					var dat = JSON.parse(JSON.parse(message.body));
-					
-					self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
-					
-					window.alarmControlPanel.updateData();
-
-				}
-			}
-		});
-	}
-
-	updateAlarms() {
-
-		let self = this;
-
-		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-
-		if (stompSubscriptorService) {
-
-			let dataSource = {
-				dataSourceValues: [
-					{ value: appConfig.stompUrl },
-					{ value: self.alarms.config.stats.ws.alarms }
-				]
-			};
-
-			this.idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
-		}
+		self.alarms.stats = {};
+		self.alarms.latest = [];
+		self.alarms.notifications = [];
 		
-		let isFiltered = function(data) {
-			
-			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			
-			return (data.filteredUntil && timeService.getEpoch() < data.filteredUntil);
-		}
+		loadActiveAlarms();
+		loadNoRecognizedAlarms();
+		loadFilteredAlarms();
+		loadNotifications();
+		loadAlarms();
 		
-		let isRecognized = function(data) {
-			
-			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			
-			return (data.recognized && timeService.getEpoch() > data.recognized);
-		}
+		function loadActiveAlarms() {
 
-		function onMessage(be) {
-
-			let date = undefined;
-
-			let equipment = window.em.getByField(EntityType.ELEMENT, undefined, be.targetElement.id).alias;
-			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", be.alarmConfig.id);
-			let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
-
-			if (alarmConfig && alarmLevel && equipment) {
-
-				self.recentAlarmCount++;
-
-				if (be.deactivation) {
-					date = be.deactivation / 1000;
-				}
-				else {
-					date = be.activation / 1000;
-
-					if (alarmLevel.notification === 'true' && !isFiltered(be) && !isRecognized(be)) {
-
-						let notification = new Notification(NotificationType.ALARM, date, equipment, i18n.t(alarmConfig.labelAlias), alarmLevel.sound, undefined);
-
-						let winNotif = webix.ui(notification.getView());
-
-						winNotif.show();
+			webix.ajax(appConfig.restUrl + self.config.rest.active_alarms).then(function(data) {
+	
+				if (data.json() != undefined) {
+					
+					let activeAlarms = data.json().value;
+	
+					self.alarms.data.stats.activeAlarms = activeAlarms;
+					
+					if (window.alarmControlPanel) {
+						
+						window.alarmControlPanel.updateData();	
+					}
+	
+					util.stomp.connect(appConfig.stompUrl, self.config.ws.active_alarms, null, on_message);
+	
+					function on_message(message) {
+	
+						var dat = JSON.parse(JSON.parse(message.body));
+						
+						self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
+	
+						if (window.alarmControlPanel) { 
+							
+							window.alarmControlPanel.updateData();	
+						}
 					}
 				}
-
-				let alarm = {
-					id: webix.uid(),
-					alarmId: be.id,
-					alarmConfig: alarmConfig,
-					date: date,
-					dateFormatted: util.toLocaleString(date),
-					equipment: equipment,
-					activation: be.activation,
-					deactivation: be.deactivation,
-					recognized: be.recognized
-				};
-				
-				self.alarms.data.latest.push(alarm);
-				
-				// Sort descending
-				self.alarms.data.latest.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
-				
-				if (Array.isArray(self.alarms.data.latest) && self.alarms.data.latest.length > LATEST_ALARMS_MAX) {
+			});
+		}
+	
+		function loadNoRecognizedAlarms() {
+	
+			webix.ajax(appConfig.restUrl + self.config.rest.no_recognized_alarms).then(function(data) {
+	
+				if (data.json() != undefined) {
 					
-					self.alarms.data.latest.splice(LATEST_ALARMS_MAX, 1);
+					let noRecognizedAlarms = data.json().value;
+	
+					self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
+					
+					if (window.alarmControlPanel) {
+					
+						window.alarmControlPanel.updateData();	
+					}
+					
+					if (window.userControlPanel) {
+						
+						window.userControlPanel.updateData();	
+					}
+	
+					util.stomp.connect(appConfig.stompUrl, self.config.ws.no_recognized_alarms, null, on_message);
+	
+					function on_message(message) {
+	
+						var dat = JSON.parse(JSON.parse(message.body));
+						
+						self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
+						
+						if (window.alarmControlPanel) {
+							
+							window.alarmControlPanel.updateData();	
+						}
+						
+						if (window.userControlPanel) {
+							
+							window.userControlPanel.updateData();	
+						}	
+					}
 				}
+			});
+		}
+	
+		function loadFilteredAlarms() {
+	
+			webix.ajax(appConfig.restUrl + self.config.rest.filtered_alarms).then(function(data) {
+	
+				if (data.json() != undefined) {
+					
+					let filteredAlarms = data.json().value;
+	
+					self.alarms.data.stats.filteredAlarms = filteredAlarms;
+					
+					if (window.alarmControlPanel) {
+					
+						window.alarmControlPanel.updateData();	
+					}
+	
+					util.stomp.connect(appConfig.stompUrl, self.config.ws.filtered_alarms, null, on_message);
+	
+					function on_message(message) {
+	
+						var dat = JSON.parse(JSON.parse(message.body));
+						
+						self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
+						
+						if (window.alarmControlPanel) {
+							
+							window.alarmControlPanel.updateData();
+						}
+					}
+				}
+			});
+		}
+		
+		function loadNotifications() {
+			
+			let alarmsConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
+			
+			if (Array.isArray(alarmsConfigs)) {
 				
-				window.alarmControlPanel.updateData();
-
-//				if (self.recentAlarmCount > 10) {
-//
-//					$$("alarm-control-panel-recent-list").remove(self.recentAlarmCount - 10);
-//				}
-//
-//				$$("alarm-control-panel-recent-list").add(alarm);
-//				$$("alarm-control-panel-recent-list").sort("#date#", "desc", "int");
-
-				//console.log(be);	
+				webix.ajax(appConfig.restUrl + self.config.rest.alarms).then(function(data) {
+	
+					if (data.json() != undefined) {
+						
+						let alarms = data.json();
+		
+						let alarmsFiltered = alarms.filter(alarm => {
+							
+							if (!alarm.deactivation && !alarm.recognized) {
+								
+								let alarmConfig = alarmsConfigs.find(e => e.id === alarm.alarmConfig.id);
+													
+								if (alarmConfig && alarmConfig.alarmLevel && alarmConfig.alarmLevel.notification === "true") {
+								
+									alarm.active = true;
+									
+									return alarm;	
+								}	
+							}
+						});
+						
+						if (Array.isArray(alarmsFiltered) && alarmsFiltered.length > 0) {
+							
+							self.alarms.data.notifications = alarmsFiltered.map(e => createNotification(e));
+							
+							self.alarms.data.notifications.sort((a, b) => (a.activation < b.activation) ? 1 : ((b.activation < a.activation) ? -1 : 0))
+						}
+						
+						if (window.userControlPanel) {
+							
+							window.userControlPanel.updateData();	
+						}
+						
+						self.notification = new Notification(self.config.notification, Notification.ALARM, self.alarms.data.notifications);
+						
+						self.notification.load();
+					}
+				});	
 			}
 		}
-	}
-
-	callAlarmControlPanel() {
 		
-		if (window.alarmControlPanel.hidden()) {
-			window.alarmControlPanel.show();
-		} else {
-			window.alarmControlPanel.hide();
+		function createNotification(alarm) {
+			
+			let element = window.em.getByField(EntityType.ELEMENT, undefined, alarm.targetElement.id);
+			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
+			
+			let date = alarm.deactivation ? alarm.deactivation / 1000 : alarm.activation / 1000;
+					
+			return {
+				id: webix.uid(),
+				alarmId: alarm.id,
+				alarmConfig: alarmConfig,
+				date: date,
+				dateFormatted: util.toLocaleString(date),
+				element: element,
+				activation: alarm.activation,
+				deactivation: alarm.deactivation,
+				recognized: alarm.recognized
+			};
+		}
+		
+		function loadAlarms() {
+
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+			if (stompSubscriptorService) {
+	
+				let dataSource = {
+					dataSourceValues: [
+						{ value: appConfig.stompUrl },
+						{ value: self.config.ws.alarms }
+					]
+				};
+	
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
+			}
+			
+			function onMessage(be) {
+	
+				let alarmNotification = createNotification(be);
+					
+				if (alarmNotification) {
+					
+					self.recentAlarmCount++;
+				
+					chkNotifyAlarm();
+					
+					self.alarms.data.latest.push(alarmNotification);
+					
+					// Sort descending
+					self.alarms.data.latest.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+					
+					if (Array.isArray(self.alarms.data.latest) && self.alarms.data.latest.length > LATEST_ALARMS_MAX) {
+						
+						self.alarms.data.latest.splice(LATEST_ALARMS_MAX, 1);
+					}
+					
+					if (window.alarmControlPanel) {
+						
+						window.alarmControlPanel.updateData();	
+					}
+					
+					function chkNotifyAlarm() {
+						
+						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmNotification.alarmConfig.alarmLevel.id);
+						
+						if (alarmLevel && alarmLevel.notification === 'true' && !isFiltered()) {
+							
+							// NEW ALARM NOTIF AND NOT RECOGNIZED
+							if (!alarmNotification.deactivation && !isRecognized()) {
+									
+									self.alarms.data.notifications.push(alarmNotification);
+								
+									self.notification.add(alarmNotification);	
+							}
+							// EXIST ALARM NOTIF
+							else {
+								
+								let idx = self.alarms.data.notifications.findIndex(e => e.alarmId === alarmNotification.alarmId);
+									
+								if (idx !== -1) {
+									
+									alarmNotification.id = self.alarms.data.notifications[idx].id; 
+																
+									// EXIST ALARM NOTIF IS RECOGNIZED
+									if (!alarmNotification.deactivation && isRecognized()) {
+										
+										self.notification.recognize(alarmNotification);
+									}
+									// EXIST ALARM NOTIF REMOVED
+									else if (alarmNotification.deactivation) {
+									
+										self.notification.remove(alarmNotification);		
+									}
+									
+									self.alarms.data.notifications.splice(idx, 1);
+									
+									if (self.alarms.data.notifications.length === 0 && self.notification.getRecognizedNotifications().length === 0) {
+										
+										self.notification.hide();
+									}
+								}	
+							}
+							
+							if (window.userControlPanel) {
+							
+								window.userControlPanel.updateData();	
+							}
+						}
+					}
+				}
+				
+				function isFiltered() {
+				
+					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					
+					return (be.filteredUntil && timeService.getEpoch() < be.filteredUntil);
+				}
+				
+				function isRecognized() {
+					
+					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					
+					return (be.recognized && timeService.getEpoch() > be.recognized);
+				}
+			}
+		}
+		
+		function callAlarmControlPanel() {
+		
+			if (window.alarmControlPanel) {
+				
+				if (window.alarmControlPanel.hidden()) {
+				
+					window.alarmControlPanel.show();
+				} 
+				else {
+					
+					window.alarmControlPanel.hide();
+				}	
+			}
 		}
 	}
 }

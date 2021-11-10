@@ -34,7 +34,7 @@ class AdapterGridAuditLog extends AdapterGrid{
 	}
 
 	@Override
-	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) {
+	public List<Map<String, Object>> toGridData(Integer datasourceId, List<Map<String, Object>> entities) {
 
 		List<Map<String, Object>> data = new ArrayList<>();
 
@@ -52,7 +52,7 @@ class AdapterGridAuditLog extends AdapterGrid{
 					flattenUser(dataRow);
 					flattenElementValues(dataRow);
 
-					data.add(vo2uiAdapter.convert(fieldId, dataRow));
+					data.add(vo2uiAdapter.convert(datasourceId, dataRow));
 				}
 			}
 		} catch (IllegalArgumentException e) {

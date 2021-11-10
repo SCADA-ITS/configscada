@@ -20,12 +20,12 @@ public class VoEntityHierarchy implements Serializable {
 
 	private Integer position;
 
-	//uni-directional many-to-one association to VoEntity
+	//bi-directional many-to-one association to VoEntity
 	@ManyToOne
 	@JoinColumn(name="child_id")
 	private VoEntity voEntityChild;
 
-	//uni-directional many-to-one association to VoEntity
+	//bi-directional many-to-one association to VoEntity
 	@ManyToOne
 	@JoinColumn(name="parent_id")
 	private VoEntity voEntityParent;

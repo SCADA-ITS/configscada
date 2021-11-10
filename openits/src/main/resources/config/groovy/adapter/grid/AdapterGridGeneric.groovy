@@ -23,17 +23,19 @@ class AdapterGridGeneric extends AdapterGrid{
 	}
 	
 	@Override
-	public List<Map<String, Object>> toGridData(String fieldId, List<Map<String, Object>> entities) {
+	public List<Map<String, Object>> toGridData(Integer datasourceId, List<Map<String, Object>> entities) {
 		
 		List<Map<String, Object>> data = new ArrayList<>();
 		
 		try {
+		
+			String fieldId = vo2uiAdapter.getFieldIdFromDatasource(datasourceId);
 			
 			if (!CollectionUtils.isEmpty(entities)) {
 				
 				for (Map<String, Object> entity : entities) {
 
-					data.add(vo2uiAdapter.convert(fieldId, getObject(entity, null, fieldId)));
+					data.add(vo2uiAdapter.convert(datasourceId, getObject(entity, null, fieldId)));
 				}
 			}
 			

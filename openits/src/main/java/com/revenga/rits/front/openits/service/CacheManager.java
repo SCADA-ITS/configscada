@@ -188,8 +188,7 @@ public class CacheManager {
 		
 		listEntities = voDataSourceAdapter.getList(entityId, null);
 		
-		listEntities = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(entityId).getFieldId(), listEntities);
+		listEntities = vo2uiAdapter.convert(entityId, listEntities);
 		
 		return listEntities;
 	}
@@ -205,8 +204,7 @@ public class CacheManager {
 			
 			listEntities = voDataSourceAdapter.getList(entityId, null);
 			
-			listEntities = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-					.getById(entityId).getFieldId(), listEntities);
+			listEntities = vo2uiAdapter.convert(entityId, listEntities);
 		}
 		
 		if (!CollectionUtils.isEmpty(listEntities)) {
@@ -249,8 +247,7 @@ public class CacheManager {
 									
 									List<?> list = null;
 									
-									list = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-											.getById(entityId).getFieldId(), (List<Map<String, Object>>) data);
+									list = vo2uiAdapter.convert(entityId, (List<Map<String, Object>>) data);
 									
 									entitiesCached.put(entityId, list);
 									

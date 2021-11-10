@@ -57,16 +57,16 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line" style="text-decoration:line-through;">${obj.alarmConfig.alias} </span>
-									  		<span class="second-line">${obj.dateFormatted} : ${obj.equipment}</span>
+									  		<span class="first-line" style="text-decoration:line-through;">${i18n.t(obj.alarmConfig.labelAlias)} </span>
+									  		<span class="second-line">${obj.dateFormatted} : ${obj.element.alias}</span>
 										</div>`;
 							}
 							else {
 
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line">${obj.alarmConfig.alias} </span>
-									  		<span class="second-line">${obj.dateFormatted} : ${obj.equipment}</span>
+									  		<span class="first-line">${i18n.t(obj.alarmConfig.labelAlias)} </span>
+									  		<span class="second-line">${obj.dateFormatted} : ${obj.element.alias}</span>
 										</div>`;
 							}
 

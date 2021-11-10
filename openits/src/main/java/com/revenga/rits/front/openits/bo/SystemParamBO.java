@@ -39,8 +39,7 @@ public class SystemParamBO extends GenericBO {
 		
 		if (!CollectionUtils.isEmpty(systemParams)) {
 		
-			return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-					.getById(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PARAMS).getFieldId(), systemParams.get(0));
+			return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PARAMS, systemParams.get(0));
 		}
 		
 		return null;
@@ -51,8 +50,7 @@ public class SystemParamBO extends GenericBO {
 		List<Map<String, Object>> systemParams = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PARAMS, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PARAMS).getFieldId(), systemParams);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_SYSTEM_PARAMS, systemParams);
 	}
 	
 	public Object getSystemValue(String id) {

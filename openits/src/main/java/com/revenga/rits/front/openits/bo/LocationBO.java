@@ -43,12 +43,6 @@ public class LocationBO extends GenericBO {
 	@Autowired
 	VoEntityHierarchyService voEntityHierarchyService;
 	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-	
 	private List<VoEntity> voEntityLocations;
 	private List<VoEntityHierarchy> voEntityHierarchies;
 	
@@ -58,8 +52,7 @@ public class LocationBO extends GenericBO {
 		List<Map<String, Object>> locations = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS, null);
 		
-		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS).getFieldId(), locations));
+		return assignCoordinates(vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS, locations));
 	}
 
 	@Override
@@ -67,16 +60,14 @@ public class LocationBO extends GenericBO {
 		
 		Map<String, Object> location = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION, new Object[] { id });
 		
-		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION).getFieldId(), location));
+		return assignCoordinates(vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION, location));
 	}
 	
 	public List<Map<String, Object>> getLocationByStretch(String alarmTypeId) {
 		
 		List<Map<String, Object>> locations = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH, new Object[] { alarmTypeId });
 		
-		return assignCoordinates(vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH).getFieldId(), locations));
+		return assignCoordinates(vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_LOCATION_BY_STRETCH, locations));
 	}
 	
 	private List<Map<String, Object>> assignCoordinates(List<Map<String, Object>> locations) {
@@ -142,7 +133,7 @@ public class LocationBO extends GenericBO {
 				
 					for (VoEntityHierarchy voEntityHierarchy : voEntityHierarchiesByParent) {
 						
-						List<VoEntityValue> voEntityValues = voEntityHierarchy.getVoEntityChild().getVoEntityValues();
+						List<VoEntityValue> voEntityValues =  List.copyOf(voEntityHierarchy.getVoEntityChild().getVoEntityValues());
 						
 						if (!CollectionUtils.isEmpty(voEntityValues)) {
 							

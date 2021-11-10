@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -25,33 +26,50 @@ public class VO2UIAdapter {
 	@Autowired
 	CacheManager cacheManager;
 	
-	public List<Map<String, Object>> convert(String fieldId, List<Map<String, Object>> entities) {
+	@Autowired
+	VODataSourceAdapter voDataSourceAdapter;
+	
+	public List<Map<String, Object>> convert(Integer datasourceId, List<Map<String, Object>> entities) {
+		
+		String fieldId = getFieldIdFromDatasource(datasourceId);
 		
 		List<Map<String, Object>> entitiesUI = null;
 		
-		if (!CollectionUtils.isEmpty(entities)) {
+		if (cacheManager.getEntitiesCached(datasourceId) != null) {
 			
-			entitiesUI = new ArrayList<>();
+			entitiesUI = entities;
+		}
+		else {
 			
-			List<VoEntity> listVoEntity = cacheManager.getVoEntities();
-			
-			if (CollectionUtils.isEmpty(listVoEntity)) {
+			if (!CollectionUtils.isEmpty(entities)) {
 				
-				listVoEntity = voEntityService.getAll();
-			}
-			
-			for (Map<String, Object> entity : entities) {
+				entitiesUI = new ArrayList<>();
 				
-				entitiesUI.add(convert(fieldId, entity, listVoEntity));
+				List<VoEntity> listVoEntity = cacheManager.getVoEntities();
+				
+				if (CollectionUtils.isEmpty(listVoEntity)) {
+					
+					listVoEntity = voEntityService.getAll();
+				}
+				
+				for (Map<String, Object> entity : entities) {
+					
+					entitiesUI.add(convert(fieldId, entity, listVoEntity));
+				}
 			}
 		}
 		
 		return entitiesUI;
 	}
 	
-	public Map<String, Object> convert(String fieldId, Map<String, Object> entity) {
+	public Map<String, Object> convert(Integer datasourceId, Map<String, Object> entity) {
 		
-		return convert(fieldId, entity, null);
+		return convert(getFieldIdFromDatasource(datasourceId), entity, null);
+	}
+	
+	public String getFieldIdFromDatasource(Integer datasourceId) {
+		
+		return voDataSourceAdapter.getDataSourceService().getById(datasourceId).getFieldId();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -100,11 +118,12 @@ public class VO2UIAdapter {
 						
 						entityUI.putAll(mapAttrib);
 					}
+					
+					addEnum(voEntity, entityUI);
 				}
 			}
 			else {
 				
-				//entityUI.putAll(entity);
 				entityUI.put("visible", true);
 			}
 			
@@ -148,5 +167,13 @@ public class VO2UIAdapter {
 		}
 		
 		return entityUI;
+	}
+	
+	private void addEnum(final VoEntity voEntity, Map<String, Object> entityUI) {
+		
+		if (voEntity != null && !CollectionUtils.isEmpty(voEntity.getVoEntityEnumTypes())) {
+			
+			entityUI.put("enum", voEntity.getVoEntityEnumTypes().stream().map(e -> e.getVoEnumType()).collect(Collectors.toList()));
+		}
 	}
 }

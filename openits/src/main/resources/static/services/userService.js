@@ -27,7 +27,7 @@ export default class UserService extends GenericModule {
 			align: "right", 
 			maxWidth: 350 
 		};
-		
+				
 		let iconUser = { 
 			id: "icon-user-service", 
 			view: "icon", 

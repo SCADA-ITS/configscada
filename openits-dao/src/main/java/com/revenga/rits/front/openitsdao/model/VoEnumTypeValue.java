@@ -3,6 +3,8 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the vo_enum_type_values database table.
@@ -18,10 +20,17 @@ public class VoEnumTypeValue implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
+	private String key;
+
+	private Boolean translate;
+
 	private String value;
 
-	@Column(name="vo_enum_type_id")
-	private String voEnumTypeId;
+	//bi-directional many-to-one association to VoEnumType
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="vo_enum_type_id")
+	private VoEnumType voEnumType;
 
 	public VoEnumTypeValue() {
 	}
@@ -34,6 +43,22 @@ public class VoEnumTypeValue implements Serializable {
 		this.id = id;
 	}
 
+	public String getKey() {
+		return this.key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Boolean getTranslate() {
+		return this.translate;
+	}
+
+	public void setTranslate(Boolean translate) {
+		this.translate = translate;
+	}
+
 	public String getValue() {
 		return this.value;
 	}
@@ -42,12 +67,12 @@ public class VoEnumTypeValue implements Serializable {
 		this.value = value;
 	}
 
-	public String getVoEnumTypeId() {
-		return this.voEnumTypeId;
+	public VoEnumType getVoEnumType() {
+		return this.voEnumType;
 	}
 
-	public void setVoEnumTypeId(String voEnumTypeId) {
-		this.voEnumTypeId = voEnumTypeId;
+	public void setVoEnumType(VoEnumType voEnumType) {
+		this.voEnumType = voEnumType;
 	}
 
 }

@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -17,19 +18,11 @@ public class PlanBO extends GenericBO {
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 
-	@Autowired
-	VO2UIAdapter vo2uiAdapter;
-
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-
-	@Override
-	public List<Map<String, Object>> getList() {
-
-		List<Map<String, Object>> plans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLANS, null);
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLANS).getFieldId(), plans);
+	@PostConstruct
+	private void initialize() {
+		
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_PLANS;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_PLAN;
 	}
 
 	public List<Map<String, Object>> getSummaryList() {
@@ -37,18 +30,7 @@ public class PlanBO extends GenericBO {
 		List<Map<String, Object>> plans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_SUMMARY,
 				null);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_SUMMARY).getFieldId(), plans);
-	}
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-
-		Map<String, Object> plan = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN,
-				new Object[] { id });
-
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN).getFieldId(), plan);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_SUMMARY, plans);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,8 +39,7 @@ public class PlanBO extends GenericBO {
 		Map<String, Object> createdPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN,
 				(Map<String, Object>) input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN).getFieldId(), createdPlan);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN, createdPlan);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -67,8 +48,7 @@ public class PlanBO extends GenericBO {
 		Map<String, Object> updatedPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN,
 				(Map<String, Object>) input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN).getFieldId(), updatedPlan);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN, updatedPlan);
 	}
 
 	public Map<String, Object> deletePlan(String id) {
@@ -79,8 +59,7 @@ public class PlanBO extends GenericBO {
 
 		Map<String, Object> deletedPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN, input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN).getFieldId(), deletedPlan);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN, deletedPlan);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -116,16 +95,14 @@ public class PlanBO extends GenericBO {
 		
 		List<Map<String, Object>> planHierarchies = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_HIERARCHIES, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_HIERARCHIES).getFieldId(), planHierarchies);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_HIERARCHIES, planHierarchies);
 	}
 	
 	public List<Map<String, Object>> getPlanNodes() {
 		
 		List<Map<String, Object>> planNodes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_NODES, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_NODES).getFieldId(), planNodes);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_NODES, planNodes);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -134,8 +111,7 @@ public class PlanBO extends GenericBO {
 		Map<String, Object> createdPlan = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_NODE,
 				(Map<String, Object>) input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_NODE).getFieldId(), createdPlan);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_NODE, createdPlan);
 	}
 
 	public Map<String, Object> deletePlanNode(String id) {
@@ -146,7 +122,6 @@ public class PlanBO extends GenericBO {
 
 		Map<String, Object> deletedPlanNode = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_NODE, input);
 
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_NODE).getFieldId(), deletedPlanNode);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_NODE, deletedPlanNode);
 	}
 }

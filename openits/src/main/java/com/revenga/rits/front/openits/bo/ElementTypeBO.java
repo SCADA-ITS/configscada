@@ -3,11 +3,12 @@ package com.revenga.rits.front.openits.bo;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -18,28 +19,11 @@ public class ElementTypeBO extends GenericBO {
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-	
-	@Override
-	public List<Map<String, Object>> getList() {
+	@PostConstruct
+	private void initialize() {
 		
-		List<Map<String, Object>> elementTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES, null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES).getFieldId(), elementTypes);
-	}
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-		
-		Map<String, Object> elementType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE, new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE).getFieldId(), elementType);
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPES;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE;
 	}
 	
 	public List<Map<String, Object>> getElementsByElementType(String id) {
@@ -47,8 +31,7 @@ public class ElementTypeBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE, new Object[] { id });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE, elements);
 	}
 
 	public List<Map<String, Object>> getElementsWithChildsByElementType(String id) {
@@ -56,8 +39,7 @@ public class ElementTypeBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE, new Object[] { id });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_WITH_CHILDS_BY_ELEMENT_TYPE, elements);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -65,8 +47,7 @@ public class ElementTypeBO extends GenericBO {
 		
 		Map<String, Object> elementType = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE, new Object[] { id });
 		
-		Map<String, Object> elementTypeConverted = vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE).getFieldId(), elementType);
+		Map<String, Object> elementTypeConverted = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_TYPE, elementType);
 		
 		return (List<Map<String, Object>>) elementTypeConverted.get(FIELD_ELEMENT_TYPE_STATES);	
 	}

@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.model.SynopticUI;
 import com.revenga.rits.front.openitsdao.model.Synoptic;
@@ -14,21 +17,11 @@ import com.revenga.rits.front.openitsdao.model.SynopticLayer;
 import com.revenga.rits.front.openitsdao.model.SynopticLayerElement;
 import com.revenga.rits.front.openitsdao.service.SynopticService;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 @Service
 public class SynopticBO extends GenericBO {
 	
 	@Autowired
 	SynopticService synopticService;
-	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
 	
 	public List<SynopticUI> getSynoptics() {
 		
@@ -110,8 +103,7 @@ public class SynopticBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC, elements);
 	}
 	
 	private List<Map<String, Object>> getElementsStatesMeasures(List<String> ids) {
@@ -119,8 +111,7 @@ public class SynopticBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC, elements);
 	}
 
 	private List<Map<String, Object>> getElementsStatesAlarms(List<String> ids) {
@@ -128,8 +119,7 @@ public class SynopticBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC, elements);
 	}
 
 	private List<Map<String, Object>> getElementsStatesMeasuresAlarms(List<String> ids) {
@@ -137,8 +127,7 @@ public class SynopticBO extends GenericBO {
 		List<Map<String, Object>> elements = voDataSourceAdapter
 				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC, new Object[] { ids });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC).getFieldId(), elements);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_ALARMS_SYNOPTIC, elements);
 	}
 	
 	private void getElementIds(Synoptic synoptic, Set<String> elementsWithStates, Set<String> elementsWithStatesMeasures, Set<String> elementsWithStatesAlarms, Set<String> elementsWithStatesMeasuresAlarms) {

@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -18,29 +19,21 @@ public class StretchBO extends GenericBO {
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-
 	@Autowired
 	ImsIncidentTypeStretchBO imsIncidentTypeStretchBO;
 
-	private final String FIELD_STRETCH = "stretch";
-	private final String FIELD_STRETCH_ID = "id";
-	private final String FIELD_INCIDENT_TYPE = "incidentType";
-	private final String FIELD_INCIDENT_TYPE_ID = "id";
+	private static final String FIELD_STRETCH = "stretch";
+	private static final String FIELD_STRETCH_ID = "id";
+	private static final String FIELD_INCIDENT_TYPE = "incidentType";
+	private static final String FIELD_INCIDENT_TYPE_ID = "id";
 	
-	@Override
-	public List<Map<String, Object>> getList() {
-	
-		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, null);
+	@PostConstruct
+	private void initialize() {
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS).getFieldId(), stretchs);
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_STRETCH;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getListByIncidentType(String id) {
 
@@ -92,26 +85,13 @@ public class StretchBO extends GenericBO {
 			}
 		}
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS).getFieldId(), scretchsFiltered);
-	}
-	
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-
-		Map<String, Object> stretch = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH, new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH).getFieldId(), stretch);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, scretchsFiltered);
 	}
 	
 	public List<Map<String, Object>> getStretchByRoad(String id) {
 		
 		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD, new Object[] { id });
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD).getFieldId(), stretchs);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD, stretchs);
 	}
-
 }

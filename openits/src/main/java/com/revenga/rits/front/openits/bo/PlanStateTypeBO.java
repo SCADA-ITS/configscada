@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -15,35 +14,26 @@ public class PlanStateTypeBO extends GenericBO {
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
-	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-	
+		
 	public List<Map<String, Object>> getPlanStateTypes() {
 		
 		List<Map<String, Object>> planStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_STATE_TYPES, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_STATE_TYPES).getFieldId(), planStateTypes);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_STATE_TYPES, planStateTypes);
 	}
 				
 	public List<Map<String, Object>> getPlanOrderStateTypes() {
 		
 		List<Map<String, Object>> planOrderStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES).getFieldId(), planOrderStateTypes);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_ORDER_STATE_TYPES, planOrderStateTypes);
 	}
 	
 	public List<Map<String, Object>> getPlanScheduleStateTypes() {
 		
 		List<Map<String, Object>> planScheduleStateTypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES, null);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES).getFieldId(), planScheduleStateTypes);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SCHEDULE_STATE_TYPES, planScheduleStateTypes);
 	}
 
 	@Override

@@ -1,11 +1,25 @@
 package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.List;
 
 
 /**
@@ -26,19 +40,25 @@ public class VoEntity implements Serializable {
 
 	private Boolean visible;
 
-	//uni-directional many-to-one association to VoEntityType
+	//bi-directional many-to-one association to VoEntityType
 	@ManyToOne
 	@JoinColumn(name="vo_entity_type_id")
 	private VoEntityType voEntityType;
 
-	//bi-directional many-to-one association to VoEntityValue
-	@OneToMany(mappedBy="voEntity", fetch = FetchType.EAGER)
-	private List<VoEntityValue> voEntityValues;
+	//bi-directional many-to-one association to VoEntityEnumType
+	@OneToMany(mappedBy="voEntity")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<VoEntityEnumType> voEntityEnumTypes;
 
 	//bi-directional one-to-one association to EquipViewer
 	@JsonIgnore
 	@OneToOne(mappedBy="voEntity")
 	private EquipViewer equipViewer;
+	
+	//bi-directional many-to-one association to VoEntityValue
+	@OneToMany(mappedBy="voEntity")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<VoEntityValue> voEntityValues;
 
 	public VoEntity() {
 	}
@@ -75,11 +95,33 @@ public class VoEntity implements Serializable {
 		this.voEntityType = voEntityType;
 	}
 
-	public List<VoEntityValue> getVoEntityValues() {
+	public Set<VoEntityEnumType> getVoEntityEnumTypes() {
+		return this.voEntityEnumTypes;
+	}
+
+	public void setVoEntityEnumTypes(Set<VoEntityEnumType> voEntityEnumTypes) {
+		this.voEntityEnumTypes = voEntityEnumTypes;
+	}
+
+	public VoEntityEnumType addVoEntityEnumType(VoEntityEnumType voEntityEnumType) {
+		getVoEntityEnumTypes().add(voEntityEnumType);
+		voEntityEnumType.setVoEntity(this);
+
+		return voEntityEnumType;
+	}
+
+	public VoEntityEnumType removeVoEntityEnumType(VoEntityEnumType voEntityEnumType) {
+		getVoEntityEnumTypes().remove(voEntityEnumType);
+		voEntityEnumType.setVoEntity(null);
+
+		return voEntityEnumType;
+	}
+
+	public Set<VoEntityValue> getVoEntityValues() {
 		return this.voEntityValues;
 	}
 
-	public void setVoEntityValues(List<VoEntityValue> voEntityValues) {
+	public void setVoEntityValues(Set<VoEntityValue> voEntityValues) {
 		this.voEntityValues = voEntityValues;
 	}
 
@@ -98,7 +140,7 @@ public class VoEntity implements Serializable {
 	}
 
 	public EquipViewer getEquipViewer() {
-		return this.equipViewer;
+		return equipViewer;
 	}
 
 	public void setEquipViewer(EquipViewer equipViewer) {

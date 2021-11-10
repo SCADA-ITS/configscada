@@ -73,7 +73,8 @@ const WindowParam = Object.freeze({
 	LABEL: 12,
 	RESIZABLE: 13,
 	EXTERNALIZABLE: 14,
-	MODAL: 15
+	MODAL: 15,
+	NOTIFICABLE: 16
 });
 
 // Services

@@ -2,6 +2,9 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -26,6 +29,11 @@ public class VoEntityType implements Serializable {
 	private Boolean enabled;
 
 	private Boolean visible;
+
+	//bi-directional many-to-one association to VoEntity
+	@JsonIgnore
+	@OneToMany(mappedBy="voEntityType")
+	private List<VoEntity> voEntities;
 
 	//bi-directional many-to-one association to VoEntityField
 	@OneToMany(mappedBy="voEntityType")
@@ -72,6 +80,28 @@ public class VoEntityType implements Serializable {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
+	}
+
+	public List<VoEntity> getVoEntities() {
+		return this.voEntities;
+	}
+
+	public void setVoEntities(List<VoEntity> voEntities) {
+		this.voEntities = voEntities;
+	}
+
+	public VoEntity addVoEntity(VoEntity voEntity) {
+		getVoEntities().add(voEntity);
+		voEntity.setVoEntityType(this);
+
+		return voEntity;
+	}
+
+	public VoEntity removeVoEntity(VoEntity voEntity) {
+		getVoEntities().remove(voEntity);
+		voEntity.setVoEntityType(null);
+
+		return voEntity;
 	}
 
 	public List<VoEntityField> getVoEntityFields() {

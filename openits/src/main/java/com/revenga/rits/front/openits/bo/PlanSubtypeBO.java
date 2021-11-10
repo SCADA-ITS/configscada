@@ -1,14 +1,14 @@
 package com.revenga.rits.front.openits.bo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
-import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 
 @Service
@@ -17,28 +17,11 @@ public class PlanSubtypeBO extends GenericBO {
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
 	
-	@Autowired 
-	VO2UIAdapter vo2uiAdapter;
-	
-	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
-
-	@Override
-	public List<Map<String, Object>> getList() {
+	@PostConstruct
+	private void initialize() {
 		
-		List<Map<String, Object>> planSubtypes = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPES, null);
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPES).getFieldId(), planSubtypes);
-	}
-
-	@Override
-	public Map<String, Object> getItem(String id) {
-		
-		Map<String, Object> planSubtype = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPE, new Object[] { id });
-		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPE).getFieldId(), planSubtype);
+		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPES;
+		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_PLAN_SUBTYPE;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -46,8 +29,7 @@ public class PlanSubtypeBO extends GenericBO {
 		
 		Map<String, Object> createdPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_SUBTYPE, (Map<String, Object>) input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_SUBTYPE).getFieldId(), createdPlanSubtype);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_CREATE_PLAN_SUBTYPE, createdPlanSubtype);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -55,8 +37,7 @@ public class PlanSubtypeBO extends GenericBO {
 			
 		Map<String, Object> updatedPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_SUBTYPE, (Map<String, Object>) input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_SUBTYPE).getFieldId(), updatedPlanSubtype);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_PLAN_SUBTYPE, updatedPlanSubtype);
 	}
 	
 	public Map<String, Object> deletePlanSubtype(String id) {
@@ -67,8 +48,7 @@ public class PlanSubtypeBO extends GenericBO {
 		
 		Map<String, Object> deletedPlanSubtype = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_SUBTYPE, input);
 		
-		return vo2uiAdapter.convert(voDataSourceAdapter.getDataSourceService()
-				.getById(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_SUBTYPE).getFieldId(), deletedPlanSubtype);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_PLAN_SUBTYPE, deletedPlanSubtype);
 	}
 
 }
