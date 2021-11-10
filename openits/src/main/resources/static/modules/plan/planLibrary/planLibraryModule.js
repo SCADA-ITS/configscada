@@ -60,9 +60,9 @@ export default class PlanLibraryModule extends GenericModule {
 
 			webix.promise.all(promises).then(function(responses) {
 
-				self.planNodes = responses[0] ? responses[0].json() : undefined;
-				self.planHierarchies = responses[1] ? responses[1].json() : undefined;
-				self.plans = responses[2] ? responses[2].json() : undefined;
+				self.planNodes = responses[0] && responses[0].json() ? responses[0].json() : [];
+				self.planHierarchies = responses[1] && responses[1].json() ? responses[1].json() : [];
+				self.plans = responses[2]  && responses[2].json() ? responses[2].json() : [];
 
 				if ($$(self.uid)) {
 
