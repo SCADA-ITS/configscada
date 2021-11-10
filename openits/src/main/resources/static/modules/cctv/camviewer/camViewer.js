@@ -4,6 +4,7 @@ import MessageBox from "../../../component/messageBox.js";
 import Decoder from "./decoder.js";
 import DecoderMJPEG from "./decoderMJPEG.js";
 import DecoderSNAP from "./decoderSNAP.js";
+import CCTVModule from "../cctvModule.js";
 
 const SIZE_SINGLE = 30;
 const SIZE_MULTI = 50;
@@ -355,10 +356,28 @@ export default class CamViewer {
 							let mainTab = $$(MAIN_TAB_ID);
 
 							if (mainTab && camViewer) {
+								
+								let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
+								
+								if (taskManagerService) {
+									
+									let module = util.module.getFromModuleAction(self.config.moduleAction.singleCam);
+									let moduleAction = { id: self.config.moduleAction.singleCam };
+									let args = {
+										selectedPks: [self.element.id],
+										fullScreen: true
+									}
+									
+									let cctvModule = new CCTVModule(module, moduleAction, args)
+									taskManagerService.externalize(null, cctvModule);
+								}
+								// DEPRECATED
+								else {
+								
+									let camViewerFullScreen = new CamViewer(self.config, self.element, mainTab.$width, mainTab.$height + mainTab.getTabbar().config.height, CamViewer.MODE_SINGLE, false, true);
 
-								let camViewerFullScreen = new CamViewer(self.config, self.element, mainTab.$width, mainTab.$height + mainTab.getTabbar().config.height, CamViewer.MODE_SINGLE, false, true);
-
-								util.ui.loadTab(self.element.alias, camViewerFullScreen.getView());
+									util.ui.loadTab(self.element.alias, camViewerFullScreen.getView());	
+								}
 							}
 						}
 					}

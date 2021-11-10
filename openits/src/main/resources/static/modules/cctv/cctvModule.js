@@ -25,7 +25,7 @@ export default class CCTVModule extends GenericModule {
 			
 			if (this.moduleAction.id === this.config.moduleAction.singleCam) {
 			
-				loadSingleCam(self.args.selectedPks[0]);
+				loadSingleCam(self.args.selectedPks[0], self.args.fullScreen);
 			}
 			else if(this.moduleAction.id === this.config.moduleAction.scenario) {
 				
@@ -37,9 +37,9 @@ export default class CCTVModule extends GenericModule {
 			loadScenario();
 		}
 		
-		function loadSingleCam(elementId) {
+		function loadSingleCam(elementId, fullScreen) {
 			
-			(new CCTVSingle(self, elementId, onLoad)).loadData();
+			(new CCTVSingle(self, elementId, fullScreen, onLoad)).loadData();
 		}
 		
 		function loadScenario(scenarioId) {
