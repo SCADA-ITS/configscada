@@ -1148,7 +1148,7 @@ export default class TubeContent {
 							});
 						}
 	
-						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime, OptionDialogBox.MODE_TOGGLE);
+						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
 						optionDialog.show();
 					}
 				});
