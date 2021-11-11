@@ -2,8 +2,9 @@
 const appConfig = {
 
 	restUrl: './api/v1/',
-	stompUrl: 'ws://192.168.88.162:61614',
+	stompUrl: 'ws://10.120.50.248:61614',
 }
 
 // APP properties
 const APP_DEVMODE_ON = true;
+const APP_TITLE = "OpenITS";
