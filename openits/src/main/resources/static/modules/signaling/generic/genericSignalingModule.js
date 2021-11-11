@@ -75,7 +75,8 @@ export default class GenericSignalingModule extends GenericModule {
 								{ width: 20 }
 							]
 						},
-						{ height: 1 }
+						{ height: 1 },
+						getButtons()
 					]
 				}
 	
@@ -164,7 +165,46 @@ export default class GenericSignalingModule extends GenericModule {
 		
 					return viewTabs;
 				}
-				
+
+				function getButtons() {
+
+					let buttons= {};
+
+					if (self.args.multiselectAllowed) {
+
+						buttons = {
+							view: "toolbar",
+							height: 45,
+							borderless: true,
+							elements: [
+								{},
+								{
+									view: "button",
+									id: "btn-send-" + self.uid,
+									css: "action-button",
+									width: 130,
+									height: 35,
+									label: i18n.t("LBL_ACCEPT"),
+									on: {
+										onItemClick() {
+
+											const win = $$(this.config.id).getTopParentView();
+											win.hide();
+											self.args.callbacks[0]();
+										}
+									}
+								}
+							]
+						}
+					} else {
+						
+						buttons = {height: 1}
+					}
+
+
+					return buttons;
+				}
+
 				webix.ui(viewMain, $$(self.uid));
 				
 				if (Array.isArray(self.signalingCmds) && self.signalingCmds.length > 0) {

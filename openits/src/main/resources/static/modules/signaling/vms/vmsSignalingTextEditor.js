@@ -470,12 +470,13 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
 								for (let asciiCode of asciiCodes) {
 							
-									let newCharacter = document.createElement("span");
+									let newCharacter = document.createElement("div");									
+									let chart = '&#x'+ asciiCode;
 
-									newCharacter.textContent = String.fromCharCode(asciiCode);
+									newCharacter.innerHTML = `<span class="special-character" style="font-family:${fontFamily}">${chart}</span>`;
 									newCharacter.setAttribute("class", "special-character");
 									newCharacter.setAttribute("style", "font-family:" + fontFamily);
-								
+
 									popUp.appendChild(newCharacter);
 
 									newCharacter.addEventListener("click", function() { characterSelected(newCharacter.textContent, obj) });

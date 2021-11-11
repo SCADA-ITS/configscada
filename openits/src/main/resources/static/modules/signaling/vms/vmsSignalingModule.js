@@ -13,6 +13,7 @@ export default class VmsSignalingModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
+		this.args = args;
 		this.vmsSignalingTree = undefined;
 		this.vmsSignalingContent = undefined;
 		this.currentElement = undefined;
@@ -25,7 +26,14 @@ export default class VmsSignalingModule extends GenericModule {
 
 		let self = this;
 		let isModuleActionElements = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0);
-		let isModuleActionPlanOrderEdit = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit); 
+		let isModuleActionPlanOrderEdit = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit);
+		let multiselectAllowed = self.args.multiselectAllowed;
+
+		if (isModuleActionPlanOrderEdit && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1) {
+
+			isModuleActionPlanOrderEdit = false;
+			isModuleActionElements = true;
+		}
 
 		if ($$(this.uid)) {
 
@@ -78,9 +86,9 @@ export default class VmsSignalingModule extends GenericModule {
 			$$(self.uid).show();
 			
 			webix.ui(view, $$(self.uid));
-			
-			if (isModuleActionElements || isModuleActionPlanOrderEdit) {
-				
+
+			if (isModuleActionElements || isModuleActionPlanOrderEdit || multiselectAllowed) {
+
 				self.currentElement = self.elements.find(e => e.id === self.args.selectedPks[0]);
 				self.elementsSelected = self.elements.filter(e => self.args.selectedPks.includes(e.id));
 				
@@ -240,7 +248,12 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.planOrder.comandElement;
 					}
 								
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate);
+					if (multiselectAllowed) {
+
+						self.config.multiselectAllowed = true;
+					}		
+					
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit);
 					
 					view = self.vmsSignalingContent.getView();
 					
@@ -272,7 +285,12 @@ export default class VmsSignalingModule extends GenericModule {
 					});
 				}
 			}
-			
+
+			function onOrderEdit() {
+
+				self.args.callbacks[0]();
+			}
+
 			return viewMain;
 		}
 	}
