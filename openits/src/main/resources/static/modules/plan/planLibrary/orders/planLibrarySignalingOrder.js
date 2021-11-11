@@ -11,6 +11,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 		super(config, uid, plan, planOrder, onUpdate);
 		
 		this.signalingModuleInstance = undefined;
+		this.newPlanOrder = undefined;
 	}
 	
 	loadData() {
@@ -80,20 +81,21 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 	}
 	
-	getPlanOrder() {
+	getPlanOrder(newPlan) {
 
 		let self = this;	
 		let planOrder;	
+		let newPlanOrder = (newPlan) ? newPlan : self.planOrder;
 		
-		if (self.planOrder && self.signalingModuleInstance) {
+		if (newPlanOrder && self.signalingModuleInstance) {
 			
 			let commandElement = self.signalingModuleInstance.getSignaling();
 			
 			if (commandElement) {
 				
 				planOrder = {
-					id: self.planOrder.id,
-					planOrderTypeId: self.planOrder.planOrderType.id,
+					id: newPlanOrder.id,
+					planOrderTypeId: newPlanOrder.planOrderType.id,
 					comandElement: {
 						
 						commandElementTypeId: commandElement.commandElementType.id,
@@ -182,7 +184,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 						
 						newPlanOrder.comandElement = {
 							elementId: elementSelected.id,
-							commandElementTypeId: elementTypeSelected.commandElementTypes[0].id
+							commandElementTypeId: elementSelected.commandElements[0].id
 						}
 						
 						planLibraryPersist.createPlanOrder(newPlanOrder).then(result => {
@@ -194,6 +196,65 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				}
 			}
 			
+			function onMultiselectElement(elementsIds) {
+
+				if (newPlanOrder && elementsIds && elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
+
+					let counter = 0;
+
+					persist();
+
+					function persist() {
+
+						elementSelected = window.em.getByField(EntityType.ELEMENT, "id", elementsIds[counter]);
+
+						if (elementSelected) {
+
+							newPlanOrder.alias = planOrder.planOrderType.alias + " - " + elementSelected.alias;
+							newPlanOrder.description = newPlanOrder.alias;
+							newPlanOrder.planOrderOrder = planOrder.planOrderOrder + counter;
+
+							newPlanOrder.comandElement = {
+								elementId: elementSelected.id,
+								commandElementTypeId: elementTypeSelected.commandElementTypes[0].id
+							}
+
+							planLibraryPersist.createPlanOrder(newPlanOrder).then(response => {
+
+								self.newPlanOrder = {
+									id: response.id,
+									planOrderType: { id: response.planOrderType.id }
+								}
+
+								let getPlan = self.getPlanOrder(self.newPlanOrder);
+
+								if (getPlan) {
+
+									planLibraryPersist.updatePlanOrder(getPlan).then(result => {
+
+										if (result != null) {
+
+											counter++;
+
+											if (counter < elementsIds.length) {
+
+												persist();
+
+											} else {
+
+												$$(self.signalingModuleInstance.args.containerId).close();
+												self.onUpdate(self.plan, result);
+											}
+										}
+									});
+								}
+							});
+						}
+					}
+				}
+			}
+			
+		
 			function searchDialogElementType() {
 				
 				let dialogElementTypes = webix.copy(SearchDialogBox.CALLBACK);
@@ -267,6 +328,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				
 				dialogElements.height = 600;
 				dialogElements.width = 800;
+				dialogElements.multiselect = true;
 				dialogElements.fillDialogEntity = fillDialogEntity;
 				
 				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
@@ -299,15 +361,80 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 					onFilledDialogEntity(dialogEntity);
 				}
 						
-				let s = new SearchDialogBox(label, dialogElements, function(items) {
-
-					if (Array.isArray(items) && items.length === 1) {
-
-						onSelectElement(items[0].id);
-					}
-				});
-	
+				let s = new SearchDialogBox(label, dialogElements, onAccept);
 				s.show();
+				
+				function onAccept(items){
+								
+					if (Array.isArray(items) && items.length > 0) {
+
+						let arrayItemsId = [];
+
+						for (let item of items) {
+
+							arrayItemsId.push(item.id);
+						}
+
+						if (items.length === 1) {
+
+							onSelectElement(arrayItemsId);
+
+						} else {
+							
+							let modAction = (elementTypeSelected.planOrderSignalingModule) ? elementTypeSelected.planOrderSignalingModule : self.config.moduleAction.defaultPlanOrderEdit;
+							let module = util.module.getFromModuleAction(parseInt(modAction));
+
+							if (module) {
+								
+								let arrayCommandElementTypesId = [];
+								
+								elementTypeSelected.commandElementTypes.forEach(type => {
+										
+										arrayCommandElementTypesId.push(type.id);
+										
+									});
+
+								let moduleAction = { id: module.config.moduleAction.planOrderEdit };
+																	
+								let planOrderGeneric = {
+									elementId: undefined,
+									comandElement: { commandElementType: { id: arrayCommandElementTypesId } }
+								};
+
+								let args = {
+									selectedPks: arrayItemsId,
+									data: {
+										planOrder: (module.config.moduleAction.planOrderEdit === self.config.moduleAction.defaultPlanOrderEdit) ? planOrderGeneric : undefined,
+										newPlanOrder: undefined
+									},
+									multiselectAllowed: true,
+									callbacks: [
+										function () {
+											
+											$$("plan-lib-loading-" + self.uid).show();
+											$$("view-option-dialog-" + self.uid).hide();
+											$$("plan-lib-resizer-" + self.uid).hide();
+											$$("plan-lib-content-" + self.uid).hide();
+ 											onMultiselectElement(arrayItemsId);
+										}]
+								};
+
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, function(instance) {
+
+									self.signalingModuleInstance = instance;
+									let win = $$(self.signalingModuleInstance.args.containerId);
+
+									util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
+								});
+														
+							} else {
+
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+								ms.show();
+							}
+						}
+					}								
+				}
 			}
 		}
 	}

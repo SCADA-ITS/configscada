@@ -6,7 +6,7 @@ import MessageBox from "../../../component/messageBox.js";
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onOrderEdit) {
 
 		this.config = config;
 		this.element = element;
@@ -16,6 +16,7 @@ export default class VmsSignalingContent {
 		this.isPlanOrderEdit = (currentCommandElement != undefined);
 		this.commandsElement = [];
 		this.onUpdate = onUpdate;
+		this.onOrderEdit = onOrderEdit;
 
 		if (this.isPlanOrderEdit) {
 			
@@ -574,66 +575,75 @@ export default class VmsSignalingContent {
 						hidden: self.isPlanOrderEdit,
 						width: 130,
 						height: 35,
-						label: i18n.t("LBL_SEND"),
+						label: (self.config.multiselectAllowed) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
 						on: {
 							onItemClick() {
-
-								let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
-								let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
 								
-								title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
-								
-								let ms = new MessageBox (MessageBox.CONFIRM, title, onAccept, null);
-								ms.show();
-								
-								function onAccept() {
+								if (self.config.multiselectAllowed) {
 									
-									let isCmdSendMessage = (self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId);
-										
-									let body = {
-										commands : []
-									};
+									const win = $$(this.config.id).getTopParentView();
+									win.hide();
+									self.onOrderEdit();
 									
-									let sendMessageCmd = {};
-								
-									self.selectedElements.forEach(element => {
-
-										sendMessageCmd = {};
-										
-										if (isCmdSendMessage) {
-											
-											sendMessageCmd = self.config.commands.sendMessage;
-										}
-										else {
-											
-											sendMessageCmd.commandElementTypeId = self.selectedCommand;
-											
-											self.composer.clear();
-											self.hasMessage = false;
-										}
-										
-										if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
-											
-											sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
-										}
-										
-										sendMessageCmd.elementId = element.id;
-										
-										body.commands.push(webix.copy(sendMessageCmd));	
-										
-										sendMessageCmd = undefined;
-										
-									});
+								} else {
 									
-									if (Array.isArray(body.commands) && body.commands.length > 0) {
+									let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
+									let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
+									
+									title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
+									
+									let ms = new MessageBox (MessageBox.CONFIRM, title, onAccept, null);
+									ms.show();
+									
+									function onAccept() {
 										
-										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+										let isCmdSendMessage = (self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId);
+											
+										let body = {
+											commands : []
+										};
 										
-											let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
-											ms.show();
-										});	
+										let sendMessageCmd = {};
+									
+										self.selectedElements.forEach(element => {
+	
+											sendMessageCmd = {};
+											
+											if (isCmdSendMessage) {
+												
+												sendMessageCmd = self.config.commands.sendMessage;
+											}
+											else {
+												
+												sendMessageCmd.commandElementTypeId = self.selectedCommand;
+												
+												self.composer.clear();
+												self.hasMessage = false;
+											}
+											
+											if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
+												
+												sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
+											}
+											
+											sendMessageCmd.elementId = element.id;
+											
+											body.commands.push(webix.copy(sendMessageCmd));	
+											
+											sendMessageCmd = undefined;
+											
+										});
+										
+										if (Array.isArray(body.commands) && body.commands.length > 0) {
+											
+											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
+											
+												let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+												ms.show();
+											});	
+										}										
 									}										
-								}				
+								}
 							}
 						}
 					}
