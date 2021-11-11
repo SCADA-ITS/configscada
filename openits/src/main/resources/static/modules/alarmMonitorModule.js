@@ -1296,45 +1296,6 @@ export default class AlarmMonitorModule extends GenericModule {
 								{
 									view: "button",
 									width: 135,
-									label: i18n.t("LBL_ALARMS_MONITOR_NEW"),
-									tooltip: i18n.t("LBL_ALARMS_MONITOR_NEW_DESCRIPTION"),
-									type: "iconTop",
-									icon: "mdi mdi-plus",
-									on: {
-
-										onItemClick() {
-
-											newAlarm();
-										}
-									}
-								},
-								{},
-								{
-									view: "button",
-									width: 135,
-									label: i18n.t("LBL_ALARMS_MONITOR_NEW_INCIDENT"),
-									tooltip: i18n.t("LBL_ALARMS_MONITOR_NEW_INCIDENT_DESCRIPTION"),
-									type: "iconTop",
-									icon: "mdi mdi-alert",
-									on: {
-
-										onItemClick() {
-
-											newIncident();
-										}
-									}
-								}
-							],
-							borderless: true
-						},
-						{
-							view: "toolbar",
-							height: 75,
-							css: "tb-actions",
-							elements: [
-								{
-									view: "button",
-									width: 135,
 									label: i18n.t("LBL_ALARMS_MONITOR_VIEW_FILTERED"),
 									tooltip: i18n.t("LBL_ALARMS_MONITOR_VIEW_FILTERED_DESCRIPTION"),
 									type: "iconTop",
