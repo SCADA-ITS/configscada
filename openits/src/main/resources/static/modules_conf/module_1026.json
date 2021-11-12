@@ -66,7 +66,7 @@
 			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": false,
-			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+			"specialCharacters": [2191]
 		},
 		{
 			"id": "ElementSubtype:2:71",
@@ -84,7 +84,7 @@
 			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": false,
-			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+			"specialCharacters": [2191]
 		},
 		{
 			"id": "ElementSubtype:3:71",
@@ -102,7 +102,7 @@
 			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": false,
-			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+			"specialCharacters": [2191]
 		},
 		{
 			"id": "ElementSubtype:4:71",
