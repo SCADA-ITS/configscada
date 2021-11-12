@@ -39,22 +39,39 @@ export default class OptionDialogBox {
 
 		let self = this;
 		let content = {};
+		let bodyContent = {};
+		let height = undefined;
 
 		if (self.mode === OptionDialogBox.MODE_TOGGLE) {
 
 			content = new OptionButtonList(self.options, self.onChange, self.mode);
 
+			height = (self.options.length <= 2) ? 240 : 336;
+
+			bodyContent = {
+				rows: [
+					{
+						view: "scrollview",
+						height: height,
+						scroll: "y",
+						body: {
+							rows: [content.getView()]
+						}
+					},
+					{ height: 10 },
+					getToolbarActions()
+				]
+			};
+
 		} else if (self.mode === OptionDialogBox.MODE_COMBO) {
 
 			content = new ComboDetail(self.options, self.onChange);
 
+			bodyContent = content.getView();
+			bodyContent.rows.push(getToolbarActions());
 		}
-		
-		let body = content.getView();
 
-		body.rows.push(getToolbarActions());
-
-		self.optionWindow = util.ui.loadWindow(self.title, body, 650, 650, true);
+		self.optionWindow = util.ui.loadWindow(self.title, bodyContent, 650, 650, true);
 
 
 		function getToolbarActions() {
@@ -106,7 +123,7 @@ export default class OptionDialogBox {
 
 												if (selectionId === oldSelection) {
 
-													let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+													let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
 													ms.show();
 
 												} else {
@@ -130,9 +147,9 @@ export default class OptionDialogBox {
 
 									if (selectionId === oldSelection) {
 
-										let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
+										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_SAME_MODE_SELECTED_DESCRIPTION"), null, null);
 										ms.show();
-			
+
 									} else {
 
 										let res = self.onChange(selectionId, function(close) {
