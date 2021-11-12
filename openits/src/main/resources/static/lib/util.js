@@ -110,9 +110,17 @@ export let util = {
 
 			if (viewModule) {
 				
-				let hideIconDock = !taskManagerService || !externalizable || window.isExternal;
-				let hideIconExternalize = !taskManagerService || !externalizable;
-				let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal;
+				let noExternalizableModuleAction = undefined;
+				let modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);
+				
+				if(modAction) {
+					
+					noExternalizableModuleAction = (modAction.noExternalizable) ? true: false;
+				}
+				
+				let hideIconDock = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
+				let hideIconExternalize = !taskManagerService || !externalizable || noExternalizableModuleAction;
+				let hideIconMinimize = !taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction;
 
 				let head = {
 					view: "toolbar",
@@ -121,7 +129,7 @@ export let util = {
 					cols: [
 						{
 							id: winId + "-label",
-							css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
+							css: "window-head-title " + ((!taskManagerService || !externalizable || window.isExternal || noExternalizableModuleAction) ? "window-head-title-wo-buttons" : "window-head-title-w-buttons"), 
 							view: "label",
 							//css: "notification-center-title", 
 							label: label ? i18n.t(label): ""

@@ -416,6 +416,17 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 									let win = $$(self.signalingModuleInstance.args.containerId);
 
 									util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
+																		
+									webix.delay(function(){
+
+										let signalingTabs = $$("view-tabs-" + self.signalingModuleInstance.uid);
+	
+										if (signalingTabs) {
+	
+											signalingTabs.getTabbar().setValue("view-generic-signaling-command-body-" + self.signalingModuleInstance.signalingCmds[0].commandElementType.id + "-" + self.signalingModuleInstance.uid);
+										}											
+									}, null, null, 700);
+
 								});
 														
 							} else {

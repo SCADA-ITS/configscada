@@ -13,6 +13,7 @@ export default class PlanLibraryContent {
 		
 		this.planLibraryPlan = undefined;
 		this.selectedPlanOrder = undefined;
+		this.currentHeight = undefined;
 	}
 	
 	getView() {
@@ -126,10 +127,12 @@ export default class PlanLibraryContent {
 		
 		function drawPlan() {
 			
+			let planHeight = (self.currentHeight) ? self.currentHeight : 270;
 			let viewPlan = {};
 			
 			viewPlan = {
-				height: 270,
+				id: "plan-" + self.uid,
+				height: planHeight,
 				cols: [
 					{ width: 10 },
 					{
@@ -205,9 +208,10 @@ export default class PlanLibraryContent {
 					}
 					else {
 						
+						self.currentHeight = $$("plan-" + self.uid).$height;
 						$$("plan-lib-loading-" + self.uid).show();
 						$$("plan-lib-content-" + self.uid).hide();
-		
+							
 						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.plan, { id: plan.id })).then(function(response) {
 		
 							let planResponse = response ? response.json() : undefined;
@@ -219,9 +223,10 @@ export default class PlanLibraryContent {
 								self.selectedPlanOrder = planOrder;
 		
 								webix.ui(self.getView(), $$("plan-lib-content-" + self.uid));
-		
+								
 								$$("plan-lib-loading-" + self.uid).hide();
 								$$("plan-lib-content-" + self.uid).show();
+
 							}
 						});
 					}

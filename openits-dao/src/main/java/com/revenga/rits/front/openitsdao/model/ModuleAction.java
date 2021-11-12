@@ -2,6 +2,7 @@ package com.revenga.rits.front.openitsdao.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,9 @@ public class ModuleAction implements Serializable {
 	private String description;
 
 	private Boolean enabled;
+	
+	@Column(name="no_externalizable")
+	private Boolean noExternalizable;
 
 	//bi-directional many-to-one association to Module
 	@JsonIgnore
@@ -99,5 +103,13 @@ public class ModuleAction implements Serializable {
 
 	public void setSystemPermissionId(String systemPermissionId) {
 		this.systemPermissionId = systemPermissionId;
+	}
+	
+	public Boolean getNoExternalizable() {
+		return this.noExternalizable;
+	}
+
+	public void setNoExternalizable(Boolean noExternalizable) {
+		this.noExternalizable = noExternalizable;
 	}
 }
