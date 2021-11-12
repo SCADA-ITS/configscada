@@ -385,21 +385,13 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 							let module = util.module.getFromModuleAction(parseInt(modAction));
 
 							if (module) {
-								
-								let arrayCommandElementTypesId = [];
-								
-								elementTypeSelected.commandElementTypes.forEach(type => {
-										
-										arrayCommandElementTypesId.push(type.id);
-										
-									});
 
 								let moduleAction = { id: module.config.moduleAction.planOrderEdit };
-																	
+																							
 								let planOrderGeneric = {
 									elementId: undefined,
-									comandElement: { commandElementType: { id: arrayCommandElementTypesId } }
-								};
+									comandElement: { commandElementType: { id: elementTypeSelected.commandElementTypes[0].id } }
+								}
 
 								let args = {
 									selectedPks: arrayItemsId,
@@ -407,7 +399,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 										planOrder: (module.config.moduleAction.planOrderEdit === self.config.moduleAction.defaultPlanOrderEdit) ? planOrderGeneric : undefined,
 										newPlanOrder: undefined
 									},
-									multiselectAllowed: true,
 									callbacks: [
 										function () {
 											

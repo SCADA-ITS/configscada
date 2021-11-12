@@ -218,7 +218,7 @@ export default class PlanLibraryPlan {
 							default_: false,
 							icon: "mdi mdi-file-plus-outline",
 							label: "LBL_NEW",
-							multiselect: false,
+							multiselect: true,
 							position: 1,
 							showText: false,
 							itemRequired: false

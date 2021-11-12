@@ -6,7 +6,7 @@ import MessageBox from "../../../component/messageBox.js";
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onOrderEdit) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed) {
 
 		this.config = config;
 		this.element = element;
@@ -17,6 +17,7 @@ export default class VmsSignalingContent {
 		this.commandsElement = [];
 		this.onUpdate = onUpdate;
 		this.onOrderEdit = onOrderEdit;
+		this.multiselectAllowed = multiselectAllowed;
 
 		if (this.isPlanOrderEdit) {
 			
@@ -41,8 +42,7 @@ export default class VmsSignalingContent {
 
 	getView() {
 
-		let self = this;
-		
+		let self = this;		
 		let editPanelPermission = util.module.isAllowedPermission(self.config.requiredPermissions.editPanel);
 		
 		let view = {
@@ -508,6 +508,13 @@ export default class VmsSignalingContent {
 		function getViewActions() {
 			
 			let viewActions = {};
+			let hideSelectionButton = self.isPlanOrderEdit;
+			
+			if(!self.isPlanOrderEdit){
+				
+				hideSelectionButton = (self.multiselectAllowed) ? true : false;	
+			} 
+			
 			
 			viewActions = {
 				view: "toolbar",
@@ -519,7 +526,7 @@ export default class VmsSignalingContent {
 						view: "button", 
 						id: "btn-multisignaling-" + self.uid,
 						css: "action-aux-button", 
-						hidden: self.isPlanOrderEdit,
+						hidden: hideSelectionButton,
 						width: 130, 
 						height: 35,
 						label: i18n.t("LBL_MULTISIGNALING"), 
@@ -575,11 +582,11 @@ export default class VmsSignalingContent {
 						hidden: self.isPlanOrderEdit,
 						width: 130,
 						height: 35,
-						label: (self.config.multiselectAllowed) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
+						label: (self.multiselectAllowed) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
 						on: {
 							onItemClick() {
 								
-								if (self.config.multiselectAllowed) {
+								if (self.multiselectAllowed) {
 									
 									const win = $$(this.config.id).getTopParentView();
 									win.hide();

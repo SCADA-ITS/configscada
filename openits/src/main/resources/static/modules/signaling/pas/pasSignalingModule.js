@@ -29,7 +29,7 @@ export default class VmsSignalingModule extends GenericModule {
 
 		let self = this;
 		
-		if (self.args.multiselectAllowed) {
+		if ((self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) && (self.args.selectedPks && self.args.selectedPks.length >1)) {
 			
 			$$(self.args.containerId).close();
 			

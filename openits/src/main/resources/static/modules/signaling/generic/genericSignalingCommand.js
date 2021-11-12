@@ -57,6 +57,11 @@ export default class GenericSignalingCommand {
 
 				viewComponents.rows.push(getViewActions());
 			}
+			
+			if (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) {
+
+				viewComponents.rows.push(getViewActions());
+			}
 
 			function getViewInfo() {
 
@@ -379,17 +384,28 @@ export default class GenericSignalingCommand {
 							css: "action-button",
 							width: 130,
 							height: 35,
-							label: i18n.t("LBL_SEND"),
+							label: (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
 							on: {
 								onItemClick() {
 
-									let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
-									ms.show();
-									
-									function onAccept() {
+									if (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) {
 										
-										sendCommandElement();
-									};
+										const win = $$(self.parent.args.containerId).getTopParentView();
+										win.hide();
+										
+										self.parent.args.callbacks[0]();
+																				
+									} else {
+
+										let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
+										ms.show();
+									
+										function onAccept() {
+											
+											sendCommandElement();
+										};										
+									}
+
 								}
 							}
 						}
