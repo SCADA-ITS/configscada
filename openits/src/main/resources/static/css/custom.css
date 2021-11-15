@@ -1717,7 +1717,7 @@ p, input, textarea {
 .panel-action .tb-buttons {
 	background: transparent;
 	right: 3px;
-	position: absolute;
+	/*position: absolute;*/
 	bottom: 25px;
 }
 

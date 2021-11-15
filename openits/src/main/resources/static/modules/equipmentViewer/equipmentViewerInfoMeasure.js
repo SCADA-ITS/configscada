@@ -223,7 +223,7 @@ class MeasureGroup {
 					}
 				}
 				
-				viewGridMeasures.rows.push({ height: 50 });
+				viewGridMeasures.rows.push({});
 				
 				viewCarousel.cols.push(viewGridMeasures);
 			}
@@ -332,17 +332,17 @@ export default class EquipmentViewerInfoMeasure {
 		view = {
 			id: "equipmentViewerInfoMeasure-main-" + self.uid,
 			rows: [
-				{ height: 10},
+				{ height: 10 },
 				{
 					cols: [
 						{ width: 1 },
 						{
-							rows: [viewSegmented, { height: 10 }, viewMultiview, { height: 10 }]
+							rows: [viewSegmented, {  }, viewMultiview, { height: 10 }]
 						},		
 						{ width: 1 }
 					]
 				},
-				{ height: 10}
+				{ height: 10 }
 			]
 		};
 		

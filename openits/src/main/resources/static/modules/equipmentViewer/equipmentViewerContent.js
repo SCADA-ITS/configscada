@@ -33,15 +33,15 @@ export default class EquipmentViewerContent {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
-				{ height: 3 },
+				//{ height: 3 },
 				{
 					cols: [
 						{ width: 10 },
 						{
 							rows: [
-								{ height: 20 },
+								//{ height: 10 },
 								getViewTabs(),
-								{ height: 20 }
+								//{ height: 20 }
 							]
 						},
 						{ width: 10 }
@@ -362,7 +362,7 @@ export default class EquipmentViewerContent {
 					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
 					body: {
 						id: "view-main-content-tab-info-" + self.uid,
-						height: 605,
+						//height: 605,
 						cols: [self.equipmentViewerInfo.getView()]
 
 					}
@@ -434,7 +434,7 @@ export default class EquipmentViewerContent {
 
 				let newContentTab = {
 					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
-					height: 605,
+					//height: 605,
 					cols: [view]
 				};
 
