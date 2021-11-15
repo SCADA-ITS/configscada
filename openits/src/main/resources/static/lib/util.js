@@ -111,7 +111,12 @@ export let util = {
 			if (viewModule) {
 				
 				let noExternalizableModuleAction = undefined;
-				let modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);
+				let modAction = undefined;
+				
+				if(moduleAction){
+				
+					modAction = module.moduleActions.find(mod => mod.id === moduleAction.id);	
+				}
 				
 				if(modAction) {
 					
