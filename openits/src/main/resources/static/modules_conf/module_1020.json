@@ -76,14 +76,19 @@
 				"decoder": "mjpeg"
 			},
 			{
+				"brand": "HIKVISION",
+				"model": "DS-2CD2665FWD-IZS_STMI",
+				"decoder": "snap"
+			},
+			{
 				"brand": "VIVOTEK",
-				"model": "-",
+				"model": "Unknown",
 				"decoder": "mjpeg"
 			},
 			{
 				"brand": "VIVOTEK",
-				"model": "",
-				"decoder": "mjpeg"
+				"model": "Unknown_STMI",
+				"decoder": "snap"
 			},
 			{
 				"brand": "Foscam",
