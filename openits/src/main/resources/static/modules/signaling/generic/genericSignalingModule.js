@@ -179,13 +179,22 @@ export default class GenericSignalingModule extends GenericModule {
 
 					let signalingTabs = $$("view-tabs-" + self.uid);
 					
+					let viewTabSelected = "view-generic-signaling-command-body-";
+					
 					if (signalingTabs) {
 						
-						let commandElementTypeId = self.args.data.planOrder.comandElement.commandElementType.id;
+						if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1 && 
+							Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+
+							viewTabSelected += self.element.commandElements[0].id + "-" + self.uid; 	
+						}
+						else {
+							
+							viewTabSelected += self.args.data.planOrder.comandElement.commandElementType.id + "-" + self.uid;
+						}
 						
-						signalingTabs.getTabbar().setValue("view-generic-signaling-command-body-" + commandElementTypeId + "-" + self.uid);	
+						signalingTabs.getTabbar().setValue(viewTabSelected);
 					}					
-					
 				}
 			}
 		}

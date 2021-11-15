@@ -387,18 +387,9 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 							if (module) {
 
 								let moduleAction = { id: module.config.moduleAction.planOrderEdit };
-																							
-								let planOrderGeneric = {
-									elementId: undefined,
-									comandElement: { commandElementType: { id: elementTypeSelected.commandElementTypes[0].id } }
-								}
 
 								let args = {
 									selectedPks: arrayItemsId,
-									data: {
-										planOrder: (module.config.moduleAction.planOrderEdit === self.config.moduleAction.defaultPlanOrderEdit) ? planOrderGeneric : undefined,
-										newPlanOrder: undefined
-									},
 									callbacks: [
 										function () {
 											
@@ -416,16 +407,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 									let win = $$(self.signalingModuleInstance.args.containerId);
 
 									util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
-																		
-									webix.delay(function(){
-
-										let signalingTabs = $$("view-tabs-" + self.signalingModuleInstance.uid);
-	
-										if (signalingTabs) {
-	
-											signalingTabs.getTabbar().setValue("view-generic-signaling-command-body-" + self.signalingModuleInstance.signalingCmds[0].commandElementType.id + "-" + self.signalingModuleInstance.uid);
-										}											
-									}, null, null, 700);
 
 								});
 														
