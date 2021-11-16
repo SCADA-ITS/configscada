@@ -337,7 +337,7 @@ export default class EquipmentViewerInfoMeasure {
 					cols: [
 						{ width: 1 },
 						{
-							rows: [viewSegmented, {  }, viewMultiview, { height: 10 }]
+							rows: [viewSegmented, { height: 10 }, viewMultiview, { height: 10 }]
 						},		
 						{ width: 1 }
 					]
