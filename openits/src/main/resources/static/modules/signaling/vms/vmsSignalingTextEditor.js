@@ -463,15 +463,15 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
 							let popUp = $$("popup-id-" + obj).getNode().querySelector('#characters-listId');
 
-							if (Array.isArray(self.config.properties.specialCharacters)  &&  self.config.properties.specialCharacters.length > 0) {
+							if (Array.isArray(self.config.properties.specialCharacters) && self.config.properties.specialCharacters.length > 0) {
 
 								let asciiCodes = self.config.properties.specialCharacters;
-								let fontFamily = self.config.fontInfo["font-family"];								
+								let fontFamily = self.config.fontInfo["font-family"];
 
 								for (let asciiCode of asciiCodes) {
-							
-									let newCharacter = document.createElement("div");									
-									let chart = '&#x'+ asciiCode;
+
+									let newCharacter = document.createElement("div");
+									let chart = '&#x' + asciiCode;
 
 									newCharacter.innerHTML = `<span class="special-character" style="font-family:${fontFamily}">${chart}</span>`;
 									newCharacter.setAttribute("class", "special-character");
@@ -483,20 +483,21 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 
 								}
 							}
+
+							function characterSelected(character, obj) {
+
+								let inputContainer = $$(obj.replace(buttonId, (!alternance) ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-"));
+								let cursorPosition = inputContainer.getNode().getElementsByTagName("input")[0].selectionStart;
+								let firstPart =inputContainer.getValue().substring(0, cursorPosition);
+								let lastPart = inputContainer.getValue().substring(cursorPosition, inputContainer.getValue().length);
+
+								inputContainer.setValue(firstPart + character + lastPart);
+
+							}
 						}
 					}
 
-					function characterSelected(character, obj) {
 
-						let buttonId = !alternance ? "keyboard-button-main-" : "keyboard-button-alt-";
-						let inputId = !alternance ? "view-signalling-text-editor-main-input-" : "view-signalling-text-editor-alt-input-";
-
-						let inputContainer = obj.replace(buttonId, inputId);
-						let oldValue = $$(inputContainer).getValue();
-
-						$$(inputContainer).setValue(oldValue + character);
-
-					}
 
 					return viewLines;
 				}

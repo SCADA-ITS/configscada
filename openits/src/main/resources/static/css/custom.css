@@ -3841,7 +3841,7 @@ audio {
 
 .special-character:hover {
 	background-color: #dee6f1;
-	transform: scale(2, 2);
+	transform: scale(1.75, 1.75);
 }
 
 .camviewer-matrix .webix_template{
