@@ -109,6 +109,27 @@ class MeasureItem {
 							
 							value = util.toLocaleString(parseValue / 1000);
 						}
+						
+						if (elementValue.elementTypeParam.enum && Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
+
+							let enumListValues = [];
+							let enumList = elementValue.elementTypeParam.enum;
+
+							for (let e of enumList) {
+
+								for (let enumTypeValue of e.voEnumTypeValues) {
+
+									enumListValues.push(enumTypeValue);
+								}
+							}
+
+							let enumValue = enumListValues.find(e => e.key == elementValue.value);
+
+							if (enumValue) {
+
+								value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+							}
+						}					
 					}	
 					
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
@@ -337,7 +358,7 @@ export default class EquipmentViewerInfoMeasure {
 					cols: [
 						{ width: 1 },
 						{
-							rows: [viewSegmented, { height: 10 }, viewMultiview, { height: 10 }]
+							rows: [viewSegmented, { height: 1 }, viewMultiview, { height: 10 }]
 						},		
 						{ width: 1 }
 					]
