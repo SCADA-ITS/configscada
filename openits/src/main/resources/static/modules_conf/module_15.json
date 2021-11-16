@@ -6,5 +6,18 @@
 		"topic": {
 			"incidentPendingToConfirm": "/topic/generic_data.GenericData:5"
 		}
+	},
+	"rest": {
+		"incidentReports": "incidents/reports",
+		"incidentReport": "incidents/reports/${id}"
+	},
+	"ws": {
+		"incidentReports": "/topic/incidentReport.>"
+	},
+	"notification": {
+		"enabled": true,
+		"timeoutNotificationMs": 30000,
+		"maxInactiveNotifications": 10,
+		"confirmIncidents": 100402
 	}
 }

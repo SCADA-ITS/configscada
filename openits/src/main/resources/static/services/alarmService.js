@@ -83,7 +83,12 @@ export default class AlarmService extends GenericModule {
 		loadActiveAlarms();
 		loadNoRecognizedAlarms();
 		loadFilteredAlarms();
-		loadNotifications();
+		
+		if (self.config.notification.enabled) {
+			
+			loadNotifications();	
+		}
+		
 		loadAlarms();
 		
 		function loadActiveAlarms() {
@@ -223,17 +228,20 @@ export default class AlarmService extends GenericModule {
 							
 							self.alarms.data.notifications = alarmsFiltered.map(e => createNotification(e));
 							
-							self.alarms.data.notifications.sort((a, b) => (a.activation < b.activation) ? 1 : ((b.activation < a.activation) ? -1 : 0))
+							self.alarms.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0))
 						}
 						
 						if (window.userControlPanel) {
 							
 							window.userControlPanel.updateData();	
 						}
-						
+					}
+					
+					if (self.config.notification.enabled) {
+							
 						self.notification = new Notification(self.config.notification, Notification.ALARM, self.alarms.data.notifications);
-						
-						self.notification.load();
+					
+						self.notification.load();	
 					}
 				});	
 			}
@@ -241,21 +249,26 @@ export default class AlarmService extends GenericModule {
 		
 		function createNotification(alarm) {
 			
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			let element = window.em.getByField(EntityType.ELEMENT, undefined, alarm.targetElement.id);
 			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
 			
-			let date = alarm.deactivation ? alarm.deactivation / 1000 : alarm.activation / 1000;
+			//let date = alarm.deactivation ? alarm.deactivation / 1000 : alarm.activation / 1000;
 					
 			return {
 				id: webix.uid(),
-				alarmId: alarm.id,
-				alarmConfig: alarmConfig,
-				date: date,
-				dateFormatted: util.toLocaleString(date),
-				element: element,
-				activation: alarm.activation,
-				deactivation: alarm.deactivation,
-				recognized: alarm.recognized
+				notificationId: alarm.id,
+				level: alarmConfig.alarmLevel.alias.replace("LEVEL_", ""),
+				notification: alarmConfig.alarmLevel.notification,
+				color: alarmConfig.alarmLevel.color ? alarmConfig.alarmLevel.color : "rgb(230, 0, 0)",
+				sound: alarmConfig.alarmLevel.sound ? alarmConfig.alarmLevel.sound : undefined, 
+				img: element.elementType.elementTypePhoto ? "img/" + element.elementType.elementTypePhoto : undefined,
+				recognized: alarm.recognized,
+				created: alarm.activation,
+				updated: timeService.getEpoch(),
+				removed: alarm.deactivation,
+				alias: i18n.t(alarmConfig.labelAlias),
+				description: element.alias
 			};
 		}
 		
@@ -282,13 +295,16 @@ export default class AlarmService extends GenericModule {
 				if (alarmNotification) {
 					
 					self.recentAlarmCount++;
-				
-					chkNotifyAlarm();
 					
-					self.alarms.data.latest.push(alarmNotification);
+					self.alarms.data.latest.push(webix.copy(alarmNotification));
+					
+					if (self.config.notification.enabled) {
+						
+						chkNotifyAlarm();	
+					}
 					
 					// Sort descending
-					self.alarms.data.latest.sort((a, b) => (a.date < b.date) ? 1 : ((b.date < a.date) ? -1 : 0));
+					self.alarms.data.latest.sort((a, b) => (a.updated < b.updated) ? 1 : ((b.updated < a.updated) ? -1 : 0));
 					
 					if (Array.isArray(self.alarms.data.latest) && self.alarms.data.latest.length > LATEST_ALARMS_MAX) {
 						
@@ -300,14 +316,16 @@ export default class AlarmService extends GenericModule {
 						window.alarmControlPanel.updateData();	
 					}
 					
+					
+					
 					function chkNotifyAlarm() {
 						
-						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmNotification.alarmConfig.alarmLevel.id);
+						//let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmNotification.alarmConfig.alarmLevel.id);
 						
-						if (alarmLevel && alarmLevel.notification === 'true' && !isFiltered()) {
+						if (alarmNotification.notification === 'true' && !isFiltered()) {
 							
 							// NEW ALARM NOTIF AND NOT RECOGNIZED
-							if (!alarmNotification.deactivation && !isRecognized()) {
+							if (!alarmNotification.removed && !isRecognized()) {
 									
 									self.alarms.data.notifications.push(alarmNotification);
 								
@@ -316,19 +334,19 @@ export default class AlarmService extends GenericModule {
 							// EXIST ALARM NOTIF
 							else {
 								
-								let idx = self.alarms.data.notifications.findIndex(e => e.alarmId === alarmNotification.alarmId);
+								let idx = self.alarms.data.notifications.findIndex(e => e.notificationId === alarmNotification.notificationId);
 									
 								if (idx !== -1) {
 									
 									alarmNotification.id = self.alarms.data.notifications[idx].id; 
 																
 									// EXIST ALARM NOTIF IS RECOGNIZED
-									if (!alarmNotification.deactivation && isRecognized()) {
+									if (!alarmNotification.removed && isRecognized()) {
 										
 										self.notification.recognize(alarmNotification);
 									}
 									// EXIST ALARM NOTIF REMOVED
-									else if (alarmNotification.deactivation) {
+									else if (alarmNotification.removed) {
 									
 										self.notification.remove(alarmNotification);		
 									}

@@ -1134,17 +1134,19 @@ export default class TubeContent {
 					function: () => {
 	
 						let options = [];
-						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
+						let selectedItem = self.tubeDalisDataTable.getSelectedItems()[0];
+						let dali = self.tubeDalis.find(d => d.id == selectedItem.id);
 	
 						let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
 						daliRegimeConfig = JSON.parse(daliRegimeConfig);
 	
 						for (let regime of daliRegimeConfig.regimes) {
+							
 							options.push({
 								id: regime.id,
 								label: regime.alias,
 								description: i18n.t("LBL_MODE_" + regime.alias.toUpperCase() + "_DESCRIPTION"),
-								default: null
+								default: regime.id == selectedItem[self.parent.config.params.daliState]
 							});
 						}
 	

@@ -157,13 +157,13 @@ export default class UserControlPanel extends GenericControlPanel {
 						},
 						{
 							view: "button",
-							id: "user-control-panel-notif-incident",
+							id: "user-control-panel-notif-incidents",
 							width: 350,
 							height: 50,
 							tooltip: i18n.t("LBL_INCIDENTS"),
 							type: "icon",
 							icon: "webix_icon_btn mdi mdi-alert",
-							hidden: true,
+							hidden: false,
 							on: {
 
 								onItemClick() {
@@ -453,6 +453,22 @@ export default class UserControlPanel extends GenericControlPanel {
 					} else {
 						$$("user-control-panel-incident").hide();
 					}
+				}
+				
+				let notifications = incidentService.getData().notifications;
+				
+				if ((Array.isArray(notifications) && notifications.length > 0) ||
+				    (incidentService.getNotification() && incidentService.getNotification().getRecognizedNotifications().length > 0)) {
+					
+					$$("user-control-panel-notif-incidents").show();
+					$$("user-control-panel-notif-incidents").config.label = i18n.t("LBL_INCIDENTS") + " " + notifications.length;
+					$$("user-control-panel-notif-incidents").refresh();
+					
+					pendingTasks |= true;
+				}
+				else {
+					
+					$$("user-control-panel-notif-incidents").hide();
 				}
 			}	
 		}

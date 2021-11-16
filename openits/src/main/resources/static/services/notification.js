@@ -1,8 +1,6 @@
 import { util } from "../lib/util.js";
 import MessageBox from "../component/messageBox.js";
 
-
-const DEFAULT_TIMEOUT_NOTIFICATION_MS = 300000;
 const MAX_INACTIVE_NOTICATIONS = 10;
 
 export default class Notification {
@@ -17,7 +15,8 @@ export default class Notification {
 		this.config = config;
 		this.notificationType = notificationType;
 		this.notifications = notifications;
-		this.config.timeoutNotificationMs = config.timeoutNotificationMs ? config.timeoutNotificationMs : DEFAULT_TIMEOUT_NOTIFICATION_MS;
+		this.timeoutNotificationMs = config.timeoutNotificationMs > 0 ? config.timeoutNotificationMs : undefined;
+		this.maxInactiveNotifications = config.maxInactiveNotifications ? config.maxInactiveNotifications : MAX_INACTIVE_NOTICATIONS;
 		
 		this.instance = undefined;
 		this.audio = undefined;
@@ -128,96 +127,191 @@ export default class Notification {
 			
 			viewToolbar.cols.push({});
 			
-			viewToolbar.cols.push(
-				{ 
-					view: "button", 
-					type: "icon", 
-					icon: "mdi mdi-check", 
-					css: "toolbar-button-text", 
-					width: TOOLBAR_BUTTONS_WIDTH, 
-					label: i18n.t("LBL_RECOGNIZE"), 
-					tooltip: i18n.t("LBL_RECOGNIZE_ALARM"),
-					on: {
-						onItemClick() {
-							
-							let alarmIds = getSelectedAlarms().map(e => { return e.alarmId });
-							
-							if (Array.isArray(alarmIds) && alarmIds.length > 0) {
+			if (self.notificationType.id === Notification.ALARM.id) {
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-check", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_RECOGNIZE"), 
+						tooltip: i18n.t("LBL_RECOGNIZE_ALARM"),
+						on: {
+							onItemClick() {
 								
-								let moduleActionId = self.config.recognize;
-								let module = util.module.getFromModuleAction(moduleActionId);
+								let alarmIds = getSelectedItems().map(e => { return e.notificationId });
 								
-								if (module) {
+								if (Array.isArray(alarmIds) && alarmIds.length > 0) {
 									
-									let args = { selectedPks: alarmIds };
-									let moduleAction = { id: moduleActionId };
-					
-									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
+									let moduleActionId = self.config.recognizeAlarms;
+									let module = util.module.getFromModuleAction(moduleActionId);
+									
+									if (module) {
+										
+										let args = { selectedPks: alarmIds };
+										let moduleAction = { id: moduleActionId };
+						
+										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
+									}
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
 								}
 							}
-							else {
+						} 
+					}
+				);
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-volume-off", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_SNOOZE"), 
+						tooltip: i18n.t("LBL_SNOOZE_ALARM"),
+						on: {
+							onItemClick() {
 								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
-							}
-						}
-					} 
-				}
-			);
-			
-			viewToolbar.cols.push(
-				{ 
-					view: "button", 
-					type: "icon", 
-					icon: "mdi mdi-volume-off", 
-					css: "toolbar-button-text", 
-					width: TOOLBAR_BUTTONS_WIDTH, 
-					label: i18n.t("LBL_SNOOZE"), 
-					tooltip: i18n.t("LBL_SNOOZE_ALARM"),
-					on: {
-						onItemClick() {
-							
-							let alarms = getSelectedAlarms();
-							
-							if (Array.isArray(alarms) && alarms.length > 0) {
+								let alarms = getSelectedItems();
 								
-								(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS"),
-								
-									// onAccept
-									function() {
-										
-										alarms.forEach(alarm => {
-								
-											if (alarm.alarmConfig.alarmLevel.sound) {
+								if (Array.isArray(alarms) && alarms.length > 0) {
+									
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_ALARMS"),
+									
+										// onAccept
+										function() {
+											
+											alarms.forEach(alarm => {
+									
+												if (alarm.sound) {
+													
+													alarm.snooze = true;
+												}
+											});
+											
+											let list = $$("list-" + self.uid);
+											
+											if (list) {
 												
-												alarm.snooze = true;
+												list.refresh();
+												
+												list.unselectAll();
+												
+												list.select(alarms.map(alarm => parseInt(alarm.id)));
 											}
-										});
-										
-										let list = $$("list-" + self.uid);
-										
-										if (list) {
-											
-											list.refresh();
-											
-											list.unselectAll();
-											
-											list.select(alarms.map(alarm => parseInt(alarm.id)));
 										}
-									}
-								)).show();
-								
-								
-							}
-							else {
-								
-								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
+									)).show();
+									
+									
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_ALARMS"), null, null)).show();
+								}
 							}
 						}
 					}
-				}
-			);
+				);
+			}
+			else if (self.notificationType.id === Notification.INCIDENT.id) {
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-check", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_CONFIRM"), 
+						tooltip: i18n.t("LBL_CONFIRM_INCIDENT"),
+						on: {
+							onItemClick() {
+								
+								let incidentIds = getSelectedItems().map(e => { return e.notificationId });
+								
+								if (Array.isArray(incidentIds) && incidentIds.length > 0) {
+									
+									let moduleActionId = self.config.confirmIncidents;
+									let module = util.module.getFromModuleAction(moduleActionId);
+									
+									if (module) {
+										
+										let args = { selectedPks: incidentIds };
+										let moduleAction = { id: moduleActionId };
+						
+										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
+									}
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null)).show();
+								}
+							}
+						} 
+					}
+				);
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-volume-off", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_SNOOZE"), 
+						tooltip: i18n.t("LBL_SNOOZE_INCIDENT"),
+						on: {
+							onItemClick() {
+								
+								let incidents = getSelectedItems();
+								
+								if (Array.isArray(incidents) && incidents.length > 0) {
+									
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_INCIDENTS"),
+									
+										// onAccept
+										function() {
+											
+											incidents.forEach(incident => {
+									
+												if (incident.sound) {
+													
+													incident.snooze = true;
+												}
+											});
+											
+											let list = $$("list-" + self.uid);
+											
+											if (list) {
+												
+												list.refresh();
+												
+												list.unselectAll();
+												
+												list.select(incidents.map(incident => parseInt(incident.id)));
+											}
+										}
+									)).show();
+									
+									
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null)).show();
+								}
+							}
+						}
+					}
+				);
+			}
+
 			
-			function getSelectedAlarms() {
+			function getSelectedItems() {
 		
 				let list = $$("list-" + self.uid);
 				let alarms = [];
@@ -247,7 +341,7 @@ export default class Notification {
 			list = {
 				view: "list",
 				id: "list-" + self.uid,
-				css: "notification-list",
+				css: self.notificationType.css + "-list",
 				select: "multiselect",
 				type: {
 
@@ -260,20 +354,17 @@ export default class Notification {
 				on: {
 					onAfterSelect: function() {
 						
-						if (self.notificationType.id === Notification.ALARM.id) {
+						let id = this.getSelectedId(true);
 						
-							let id = this.getSelectedId(true);
+						let notification = self.notifications.find(e => e.id == id);
+						
+						if (notification && !notification.recognized && !notification.snooze) {
 							
-							let alarm = self.notifications.find(e => e.id == id);
+							self.playAudio(notification.sound);	
+						}
+						else {
 							
-							if (alarm && !alarm.recognized && !alarm.snooze) {
-								
-								self.playAudio(alarm.alarmConfig.alarmLevel.sound);	
-							}
-							else {
-								
-								self.stopAudio();
-							}
+							self.stopAudio();
 						}
 					},
 					onAfterDelete: function(id) {
@@ -292,28 +383,14 @@ export default class Notification {
 				
 				let html;
 
-				if (self.notificationType.id === Notification.ALARM.id) {
-					
-					let levelBackgroundColor = obj.alarmConfig.alarmLevel.color ? obj.alarmConfig.alarmLevel.color : "rgb(230, 0, 0)";
-					let level = obj.alarmConfig.alarmLevel.alias.replace("LEVEL_", "");
-					
-					html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
-							<image class="image" src="img/${obj.element.elementType.elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
-							<div class="level" style="background-color: ${levelBackgroundColor}">${level}</div>
-							<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.alarmConfig.alarmLevel.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
-							<div class="text">
-						  		<span class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${i18n.t(obj.alarmConfig.labelAlias)} </span>
-					  			<span class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${util.toLocaleString(obj.activation / 1000)} : ${obj.element.alias}</span>
-							</div>`;
-				}
-				else if (self.notificationType.id === Notification.INCIDENT.id) {
-					
-					// TODO
-				}				
-				else if (self.notificationType.id === Notification.EVENT.id) {
-					
-					// TODO
-				}
+				html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
+						<image class="image" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
+						<div class="level" style="background-color: ${obj.color}">${obj.level}</div>
+						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
+						<div class="text">
+					  		<span class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${obj.alias} </span>
+				  			<span class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${util.toLocaleString(obj.created / 1000)} : ${obj.description}</span>
+						</div>`;
 				
 				return html;
 			}
@@ -359,19 +436,23 @@ export default class Notification {
 	enableReminder() {
 		
 		let self = this;
+		
 		if (this.intervalNotification) {
 	
 			disableReminder();
 		}
 		
-		this.intervalNotification = setInterval(function() {
+		if (this.timeoutNotificationMs > 0) {
+			
+			this.intervalNotification = setInterval(function() {
 
-			if (Array.isArray(self.notifications) && self.notifications.length > 0) {
-				
-				self.show();	
-			}
-
-		}, this.config.timeoutNotificationMs);
+				if (Array.isArray(self.notifications) && self.notifications.length > 0) {
+					
+					self.show();	
+				}
+	
+			}, this.timeoutNotificationMs);	
+		}
 	}
 	
 	disableReminder() {
@@ -443,23 +524,23 @@ export default class Notification {
 		
 		if (list && Array.isArray(this.notifications) && this.notifications.length > 0) {
 			
-			let idxList = list.getIndexById(notification.id);
+			let idxList = list.config.data.findIndex(e => e.notificationId == notification.notificationId);
 			
 			if (idxList !== -1) {
 				
-				list.remove(notification.id);
+				list.remove(list.config.data[idxList].id);
 				list.add(notification, idxList);
 			
 				this.recognizedNotifications.push(notification);
 			
 				// Sort descending
-				this.recognizedNotifications.sort((a, b) => (a.activation < b.activation) ? 1 : ((b.activation < a.activation) ? -1 : 0));			
+				this.recognizedNotifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0));			
 				
-				if (Array.isArray(this.recognizedNotifications) && this.recognizedNotifications.length > MAX_INACTIVE_NOTICATIONS) {
+				if (Array.isArray(this.recognizedNotifications) && this.recognizedNotifications.length > this.maxInactiveNotifications) {
 					
-					list.remove(this.recognizedNotifications[MAX_INACTIVE_NOTICATIONS].id)
+					list.remove(this.recognizedNotifications[this.maxInactiveNotifications].id)
 					
-					this.recognizedNotifications.splice(MAX_INACTIVE_NOTICATIONS, 1);
+					this.recognizedNotifications.splice(this.maxInactiveNotifications, 1);
 				}	
 			}
 		}
@@ -471,11 +552,13 @@ export default class Notification {
 		
 		if (list && Array.isArray(this.notifications) && this.notifications.length > 0) {
 			
-			let idxList = list.getIndexById(notification.id);
+			let idxList = -1;
+			
+			idxList = list.config.data.findIndex(e => e.notificationId == notification.notificationId);
 			
 			if (idxList !== -1) {
 				
-				list.remove(notification.id);
+				list.remove(list.config.data[idxList].id);
 			}
 		}
 	}

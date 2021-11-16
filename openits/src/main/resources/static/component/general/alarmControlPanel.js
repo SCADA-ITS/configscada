@@ -45,28 +45,23 @@ export default class AlarmControlPanel extends GenericControlPanel {
 					type: {
 
 						template: function(obj) {
+							
+							let stateAlarm = obj.removed ? "alarm-state-deactive" : "alarm-state-active";
 
-							let stateAlarm = "alarm-state-active";
-
-							if (obj.deactivation) {
-
-								stateAlarm = "alarm-state-deactive";
-							}
-
-							if (obj.deactivation) {
+							if (obj.removed) {
 
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line" style="text-decoration:line-through;">${i18n.t(obj.alarmConfig.labelAlias)} </span>
-									  		<span class="second-line">${obj.dateFormatted} : ${obj.element.alias}</span>
+									  		<span class="first-line" style="text-decoration:line-through;">${obj.alias} </span>
+									  		<span class="second-line">${util.toLocaleString(obj.updated / 1000)} : ${obj.description}</span>
 										</div>`;
 							}
 							else {
 
 								return `<div class="${stateAlarm}"></div>
 										<div class="text">
-									  		<span class="first-line">${i18n.t(obj.alarmConfig.labelAlias)} </span>
-									  		<span class="second-line">${obj.dateFormatted} : ${obj.element.alias}</span>
+									  		<span class="first-line">${obj.alias} </span>
+									  		<span class="second-line">${util.toLocaleString(obj.updated / 1000)} : ${obj.description}</span>
 										</div>`;
 							}
 

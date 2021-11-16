@@ -431,8 +431,14 @@ export default class IncidentReportModule extends GenericModule {
 
 				self.requestReport = true;
 
-				$$("loading-" + self.uid).show();
-				$$(self.uid).hide();
+				let loadingView = $$("loading-" + self.uid);
+				let mainView = $$(self.uid);
+				
+				if (loadingView && mainView) {
+					
+					$$("loading-" + self.uid).show();
+					$$(self.uid).hide();	
+				}
 			}
 		}
 

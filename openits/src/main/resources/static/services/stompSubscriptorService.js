@@ -117,6 +117,7 @@ export default class StompSubscriptorService extends GenericModule {
 	static get ACTION_CREATE() { return "CREATE" }
 	static get ACTION_UPDATE() { return "UPDATE" }
 	static get ACTION_DELETE() { return "DELETE" }
+	static get ACTION_BLOCK() { return "BLOCK" }
 		
 	constructor(module) {
 
