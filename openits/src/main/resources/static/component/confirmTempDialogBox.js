@@ -10,7 +10,7 @@ export default class ConfirmTempDialogBox {
 		this.defaultCallBack = defaultCallBack;
 
 		this.uid = webix.uid();
-		this.interval;
+		this.interval = undefined;
 	}
 
 	show() {
@@ -72,6 +72,12 @@ export default class ConfirmTempDialogBox {
 			},
 			on: {
 				onShow: function() {
+					
+					if(self.interval){
+
+						clearInterval(self.interval);
+						self.interval = undefined;
+					}
 
 					self.interval = setInterval(() => {
 
@@ -93,6 +99,7 @@ export default class ConfirmTempDialogBox {
 					if (self.interval) {
 
 						clearInterval(self.interval);
+						self.interval = undefined;
 					}
 				}
 			}
