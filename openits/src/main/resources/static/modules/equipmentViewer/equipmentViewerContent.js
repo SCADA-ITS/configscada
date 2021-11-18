@@ -349,6 +349,7 @@ export default class EquipmentViewerContent {
 		let self = this;
 		let contentTabs = $$("view-main-content-tabs-" + self.uid);
 		let extraTabs = false;
+		let equipmentViewerInfoView = undefined;
 
 		if (contentTabs) {
 
@@ -357,13 +358,14 @@ export default class EquipmentViewerContent {
 				(self.equipmentViewer && self.equipmentViewer.showInfoTab)) { // Configured as not show
 
 				self.equipmentViewerInfo = new EquipmentViewerInfo(self.parent, self.element, self.equipmentViewer);
-
+				equipmentViewerInfoView = self.equipmentViewerInfo.getView();
+				
 				contentTabs.addView({
 					header: i18n.t("LBL_EQUIPMENT_VIEWER_INFO"),
 					body: {
 						id: "view-main-content-tab-info-" + self.uid,
 						//height: 605,
-						cols: [self.equipmentViewerInfo.getView()]
+						cols: [equipmentViewerInfoView]
 
 					}
 				});
@@ -386,7 +388,8 @@ export default class EquipmentViewerContent {
 			}
 
 			contentTabs.removeView("tab2remove" + self.uid);
-
+			self.equipmentViewerInfo.resizeMeasures();	
+		
 			connectWS();
 
 			$$(self.uid).attachEvent("onDestruct", function() {
@@ -457,7 +460,8 @@ export default class EquipmentViewerContent {
 				}
 			}
 		}
-
+		
+		
 		function connectWS() {
 
 			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);

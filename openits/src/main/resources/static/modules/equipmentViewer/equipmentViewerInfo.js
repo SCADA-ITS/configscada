@@ -23,13 +23,13 @@ export default class EquipmentViewerInfo {
 
 		let self = this;
 		let view = {};
-		let viewMeasures = {};
+		let viewMeasures = util.ui.getViewNoData();
 
 		if (!self.equipmentViewer.noShowMeasures) {
 
 			this.equipmentViewerInfoMeasure = new EquipmentViewerInfoMeasure(this.parent, this.element, this.equipmentViewer);
 			viewMeasures = this.equipmentViewerInfoMeasure.getView();
-
+			
 		} 
 
 		view = {
@@ -377,6 +377,12 @@ export default class EquipmentViewerInfo {
 
 			// TODO: Update any in equipment viewer???
 		}
+	}
+	
+	resizeMeasures() {
+		
+		this.equipmentViewerInfoMeasure.resizeCarousel();
+		
 	}
 
 	refresh() {

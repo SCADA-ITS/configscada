@@ -3866,3 +3866,7 @@ audio {
 	font-size: 14px;
 	font-weight: 500;
 }
+
+.equipment-viewer-carousel .webix_nav_panel {
+	padding-top: 15px;
+}

@@ -109,27 +109,29 @@ class MeasureItem {
 							
 							value = util.toLocaleString(parseValue / 1000);
 						}
-						
-						if (elementValue.elementTypeParam.enum && Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
+						else {
+							
+							if (Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
 
-							let enumListValues = [];
-							let enumList = elementValue.elementTypeParam.enum;
-
-							for (let e of enumList) {
-
-								for (let enumTypeValue of e.voEnumTypeValues) {
-
-									enumListValues.push(enumTypeValue);
+								let enumListValues = [];
+								let enumList = elementValue.elementTypeParam.enum;
+	
+								for (let e of enumList) {
+	
+									for (let enumTypeValue of e.voEnumTypeValues) {
+	
+										enumListValues.push(enumTypeValue);
+									}
 								}
-							}
-
-							let enumValue = enumListValues.find(e => e.key == elementValue.value);
-
-							if (enumValue) {
-
-								value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
-							}
-						}					
+	
+								let enumValue = enumListValues.find(e => e.key == elementValue.value);
+	
+								if (enumValue) {
+	
+									value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+								}
+							}	
+						}
 					}	
 					
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
@@ -256,6 +258,7 @@ class MeasureGroup {
 				view: "carousel",
 				borderless: true,
 			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
+				css: "equipment-viewer-carousel",
 				navigation:{
 				    type: "side",
 				    items: true,
@@ -358,12 +361,12 @@ export default class EquipmentViewerInfoMeasure {
 					cols: [
 						{ width: 1 },
 						{
-							rows: [viewSegmented, { height: 1 }, viewMultiview, { height: 10 }]
+							rows: [viewSegmented, { height: 1 }, viewMultiview]
 						},		
 						{ width: 1 }
 					]
 				},
-				{ height: 10 }
+				//{ height: 10 }
 			]
 		};
 		
@@ -486,6 +489,23 @@ export default class EquipmentViewerInfoMeasure {
 		}
 	}
 	
+	resizeCarousel() {
+		
+		let measureCarouselLength = $$(VIEW_INFO_MEASURE_SEGMENTED + "-" + this.uid).config.options.length;
+		let measuresGroup = $$(VIEW_INFO_MEASURE_CAROUSEL + "-" + measureCarouselLength + "-" + this.uid);
+
+		let colsGroup = $$(measuresGroup).config.cols;
+		let colsGroupWidth = $$(measuresGroup).$width;
+
+		for (let group of colsGroup) {
+
+			let carousel = $$(group.id);
+			carousel.define("width", colsGroupWidth);
+			carousel.resize();
+		}
+	}
+
+
 	refresh() {
 		
 		let lastUID = this.uid;
@@ -493,5 +513,6 @@ export default class EquipmentViewerInfoMeasure {
 		this.uid = webix.uid();
 		
 		webix.ui(this.getView(), $$("equipmentViewerInfoMeasure-main-" + lastUID));
+		this.resizeCarousel()		
 	}
 }	
