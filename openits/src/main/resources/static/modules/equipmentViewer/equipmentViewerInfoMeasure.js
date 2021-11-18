@@ -88,6 +88,7 @@ class MeasureItem {
 					}
 					
 					let value = '-';
+					let insertImage = undefined;
 					
 					if (elementValue.value) {
 						
@@ -115,25 +116,33 @@ class MeasureItem {
 
 								let enumListValues = [];
 								let enumList = elementValue.elementTypeParam.enum;
-	
+
 								for (let e of enumList) {
-	
+
 									for (let enumTypeValue of e.voEnumTypeValues) {
-	
+
 										enumListValues.push(enumTypeValue);
 									}
 								}
-	
+
 								let enumValue = enumListValues.find(e => e.key == elementValue.value);
-	
+
 								if (enumValue) {
-	
-									value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+
+									if (enumValue.image) {
+
+										value = enumValue.image;
+										insertImage = true;
+
+									} else {
+
+										value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+									}
 								}
-							}	
+							}
 						}
 					}	
-					
+													
 					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
 					let tooltip = elementValue.elementTypeParam.labelDescription ? i18n.t(elementValue.elementTypeParam.labelDescription) : i18n.t(elementValue.elementTypeParam.labelAlias);
 
@@ -141,12 +150,13 @@ class MeasureItem {
 					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
 					
 					this.currentValue = value;
-								
+					
+					let valueHTML = (insertImage) ? `<img style="width:40px" src="${value}">` : `<span title="${value}">${value}</span>`;						
 					let res;
 					
 					res = `<div class="measure-box" style="background: ${stateValueBackColor}">
 									<image class="image" src="img/${icon}" />
-									<div style="width: ${self.measureWidth - 70}px" class="value"><span title="${value}">${value}</span><span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
+									<div style="width: ${self.measureWidth - 70}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
 									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${tooltip}">${label}</span></div>
 									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="img/state/${iconElementValueState}" 
 													title="${stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>

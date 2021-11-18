@@ -25,6 +25,8 @@ public class VoEnumTypeValue implements Serializable {
 	private Boolean translate;
 
 	private String value;
+	
+	private String image;
 
 	//bi-directional many-to-one association to VoEnumType
 	@JsonIgnore
@@ -73,6 +75,14 @@ public class VoEnumTypeValue implements Serializable {
 
 	public void setVoEnumType(VoEnumType voEnumType) {
 		this.voEnumType = voEnumType;
+	}
+	
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }
