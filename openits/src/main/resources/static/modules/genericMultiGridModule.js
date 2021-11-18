@@ -108,7 +108,8 @@ export default class GenericMultiGridModule extends GenericModule {
 				let value = this.getValue().toLowerCase(); // input data is derived
 				listEquipmentTypes.filter(function(obj) {  // here it filters all titles from the list
 	
-					return (obj.alias.toLowerCase().indexOf(value) !== -1);
+					return (obj.labelAlias.toLowerCase().indexOf(value) !== -1 ||
+							obj.labelDescription.toLowerCase().indexOf(value) !== -1);
 				});
 			});
 	
