@@ -13,8 +13,6 @@ const PLAN_MODE_TYPE_AUTO = 1;
 const PLAN_MODE_TYPE_SEMI = 2;
 const PLAN_MODE_TYPE_MANUAL = 3;
 
-const PLAN_SUBTYPE_FIXED_ID = "PlanSubtype:1";
-
 export default class PlanLibraryModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -423,8 +421,7 @@ export default class PlanLibraryModule extends GenericModule {
 				let newPlan = {
 					alias: planName,
 					description: planName,
-					planModeType: PLAN_MODE_TYPE_AUTO,
-					planSubtypeId: PLAN_SUBTYPE_FIXED_ID
+					planModeType: PLAN_MODE_TYPE_AUTO
 				};				
 				
 				self.planLibraryPersist.createPlan(newPlan).then(function(resultPlan) {

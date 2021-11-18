@@ -63,8 +63,7 @@ export default class PlanLibraryContent {
 											id: self.plan.id,
 											alias: newAlias,
 											description: newDescription,
-											planModeType: self.plan.planModeType,
-											planSubtypeId: self.plan.planSubtype.id
+											planModeType: self.plan.planModeType
 										}
 
 										self.planLibraryPlan.update(updatedPlan);

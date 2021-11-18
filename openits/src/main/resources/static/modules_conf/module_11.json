@@ -24,7 +24,7 @@
 	},
 	"notification": {
 		"enabled": true,
-		"timeoutNotificationMs": 30000,
+		"timeoutNotificationMs": 0,
 		"maxInactiveNotifications": 10,
 		"recognizeAlarms": 100802
 	}
