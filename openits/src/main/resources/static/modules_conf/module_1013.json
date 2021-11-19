@@ -15,8 +15,15 @@
 		"location": "locations/${id}",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
 		"incidentTypesByStretch": "incidents/stretch/${id}",
-		"incidentTypes": "incidents/imsIncidentTypes"		
+		"incidentTypes": "incidents/imsIncidentTypes",
+		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
+		"incidentReportsSummary": "incidents/reports/summary",
+		"incidentReport": "incidents/reports/${id}"
 	},
+	"ws": {
+		"incidentReports": "/topic/incidentReport.>"
+	},
+	"incidentCreateTimeoutMs": 5000,
 	"steps": {
 		"fromIncidentsNoMap": [
 			{

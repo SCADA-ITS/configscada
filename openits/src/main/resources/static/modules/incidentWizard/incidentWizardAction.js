@@ -1,6 +1,7 @@
 import IncidentWizardModule from "./incidentWizardModule.js";
 import { util } from "../../lib/util.js";
 import MessageBox from "../../component/messageBox.js";
+import StompSubscriptorService from "../../services/stompSubscriptorService.js";
 
 export default class IncidentWizardAction {
 
@@ -19,23 +20,172 @@ export default class IncidentWizardAction {
 			// onAccept
 			function() {
 				
-				let body = {
-					incidentTypeId: parent.incidentData.incidentTypeId,
-					locationId: parent.incidentData.locationId
-				};
-	
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
-					console.log(data);
-	
-					let container = $$(parent.args.containerId);
-	
-					if (container) {
-	
-						container.close();
+				$$("loading-" + self.parent.uid).show();
+				$$(self.parent.uid).hide();
+				
+				checkNewIncident(
+					
+					function onAccept() {
+						
+						let body = {
+							incidentTypeId: parent.incidentData.incidentTypeId,
+							locationId: parent.incidentData.locationId
+						};
+			
+						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
+							console.log(data);
+							
+							waitResponse(
+								
+								function onResponse(msg) {
+									
+									showMessage(new MessageBox(MessageBox.INFO, msg, null, null));		
+								},
+								
+								function onTimeout(msg) {
+									
+									showMessage(new MessageBox(MessageBox.WARN, msg, null, null));
+								}
+							);
+							
+							function showMessage(messageBox) {
+								
+								messageBox.show();
+								
+								let container = $$(parent.args.containerId);
+			
+								if (container) {
+				
+									container.close();
+								}
+							}
+						});			
+					},
+					function onError() {
+						
+						$$("loading-" + self.parent.uid).hide();
+						$$(self.parent.uid).show();
+						
+						let message = `${i18n.t("LBL_INCIDENT_REPORT_NO_MORE_THAN_ONE_INCIDENT_OF_TYPE")} ${parent.incidentData.incidentType} ${i18n.t("LBL_INCIDENT_REPORT_IS_ALLOWED_IN_STRETCH")} ${parent.incidentData.stretch}`;
+						
+						(new MessageBox(MessageBox.ERROR, message, null, null)).show();
 					}
-				});
+				);
 			}
 		)).show();
+		
+		function checkNewIncident(onSuccess, onError) {
+			
+			webix.ajax().get(appConfig.restUrl + parent.config.restEndpoints.incidentReportsSummary).then(
+				
+				function(responseIncidentReportsSummary) {
+					
+					if (responseIncidentReportsSummary != null) {
+						
+						let incidentReportsSummary = responseIncidentReportsSummary.json();
+						
+						if (Array.isArray(incidentReportsSummary) && incidentReportsSummary.length > 0) {
+							
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentTypeStretchs, { incidentTypeId: parent.incidentData.incidentTypeId, stretchId: parent.incidentData.stretchId })).then(
+						
+								function(responseIncidentTypeStretchs) {
+				
+									if (responseIncidentTypeStretchs != null) {
+					
+										let incidentTypeStretch = responseIncidentTypeStretchs.json();
+										
+										if (incidentTypeStretch && !incidentTypeStretch.multiInstance) {
+											
+											let existIncidentReportInSameStretch = incidentReportsSummary.find(e => e.confirm && 
+																													!e.incidentState.finalState && 
+																													e.affectionStretch.id === incidentTypeStretch.stretch.id && 
+																													e.incidentType.id === incidentTypeStretch.incidentType.id);
+											
+											if (existIncidentReportInSameStretch) {
+										
+												onError();		
+											}
+											else {
+												
+												onSuccess();
+											}
+										}
+										else {
+											
+											onSuccess();
+										}
+									}
+								}
+							);
+						}
+						else {
+							
+							onSuccess();		
+						}
+					}
+				}
+			);
+		}
+		
+		function waitResponse(onResponse, onTimeout) {
+				
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+			let response = false;
+			let idStompSubscriptor = undefined;
+
+			if (stompSubscriptorService) {
+	
+				let dataSource = {
+					dataSourceValues: [
+						{ value: appConfig.stompUrl },
+						{ value: parent.config.ws.incidentReports }
+					]
+				};
+	
+				idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
+			}
+			
+			let incidentCreationTimeout = setInterval(function() {
+				
+				if (!response) {
+					
+					onTimeout(i18n.t("LBL_INCIDENT_REPORT_CREATE_TIMEOUT"));	
+				}
+				
+				if (stompSubscriptorService && idStompSubscriptor) {
+		
+					stompSubscriptorService.unsubscribe(idStompSubscriptor);
+				}
+				
+				clearInterval(incidentCreationTimeout);
+	
+			}, self.parent.config.incidentCreateTimeoutMs);
+			
+			function onMessage(be, action, timestamp) {
+				
+				if (action === StompSubscriptorService.ACTION_CREATE) {
+				
+					webix.ajax(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.incidentReport, { id: be.id })).then(function(data) {
+
+						if (data.json() != undefined) {
+						
+							let incidentReport = data.json();
+							
+							if (incidentReport && 
+								incidentReport.incidentType.id === parent.incidentData.incidentTypeId && 
+								incidentReport.location.id === parent.incidentData.locationId) {
+					
+								response = true;
+								
+								let msg = `${i18n.t("LBL_INCIDENT_REPORT_CREATE_SUCCESS")}  #${util.getSimpleId(incidentReport.id)} ${i18n.t("LBL_GENERATED_AT")}: ${util.toLocaleString(incidentReport.generatedAt / 1000)}`;
+								
+								onResponse(msg);			
+							}
+						}
+					});
+				}
+			}
+		}
 	}
 
 	getCurrentStep() {

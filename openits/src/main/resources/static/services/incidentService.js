@@ -164,7 +164,7 @@ export default class IncidentService extends GenericModule {
 			
 			function onMessage(be, action, timestamp) {
 				
-				console.log("[" + util.toLocaleString(timestamp / 1000) + "][Incident service] IncidentReport[" + be.id + "] => " + action);
+				//console.log("[" + util.toLocaleString(timestamp / 1000) + "][Incident service] IncidentReport[" + be.id + "] => " + action);
 				
 				if (action === StompSubscriptorService.ACTION_BLOCK) {
 					

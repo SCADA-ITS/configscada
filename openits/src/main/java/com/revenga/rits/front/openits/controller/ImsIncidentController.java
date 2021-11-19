@@ -22,6 +22,7 @@ import com.revenga.rits.front.openits.bo.ImsIncidentTaskPlanBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeTaskBO;
 import com.revenga.rits.front.openits.bo.ImsTaskTypeBO;
 import com.revenga.rits.front.openits.bo.ImsIncidentTypeBO;
+import com.revenga.rits.front.openits.bo.ImsIncidentTypeStretchBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,6 +64,9 @@ public class ImsIncidentController {
 
 	@Autowired
 	ImsIncidentTypeBO imsIncidentTypeBO;
+	
+	@Autowired
+	ImsIncidentTypeStretchBO imsIncidentTypeStretchBO;
 
 	@GetMapping(value = "/reports")
 	@ApiOperation(value = "Get all incident reports", notes = "Get all incident reports")
@@ -355,5 +359,20 @@ public class ImsIncidentController {
 
 		return new ResponseEntity<>(imsIncidentReportBO.deleteLog(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/incidentTypeStretchs")
+	@ApiOperation(value = "Get all stretchs associated to incident types", notes = "Get incident type stretchs")
+	public ResponseEntity<Object> getImsIncidentTypeStretchs() {
 
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.getList(), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/incidentTypeStretchs/{incidentTypeId}/{stretchId}")
+	@ApiOperation(value = "Get stretch associated to incident type", notes = "Get incident type stretch id")
+	public ResponseEntity<Object> getImsIncidentTypeStretch(
+			@ApiParam(name = "incidentTypeId", type = "String", value = "Incident type id", example = "ImsIncidentType:34", required = true) @PathVariable String incidentTypeId,
+			@ApiParam(name = "stretchId", type = "String", value = "Stretch id", example = "Stretch:1000", required = true) @PathVariable String stretchId) {
+
+		return new ResponseEntity<>(imsIncidentTypeStretchBO.getItem(incidentTypeId, stretchId), HttpStatus.OK);
+	}
 }

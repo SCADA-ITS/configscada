@@ -27,4 +27,11 @@ public class ImsIncidentTypeStretchBO extends GenericBO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Map<String, Object> getItem(String incidentTypeId, String stretchId) {
+		
+		Map<String, Object> incidentTypeStretch = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCH, new Object[] { stretchId, incidentTypeId });
+		
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_TYPE_STRETCH, incidentTypeStretch);
+	}
 }
