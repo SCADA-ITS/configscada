@@ -588,7 +588,16 @@ export let adapter = {
 						}
 
 						itemOutput.orderAlias = e.alias;
-						itemOutput.orderExecutedAt = e.orderExecutedAt;
+						
+						if (e.orderExecutedAt) {
+							
+							itemOutput.orderExecutedAt = e.orderExecutedAt;	
+						}
+						else {
+							
+							itemOutput.orderExecutedAt = e.changedAt;
+						}
+						
 
 						listOutput.push(itemOutput);
 					});

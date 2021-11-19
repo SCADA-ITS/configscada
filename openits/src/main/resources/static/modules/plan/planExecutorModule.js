@@ -152,6 +152,12 @@ export default class PlanExecutor extends GenericModule {
 						let planStateType = window.em.getByField(EntityType.PLAN_STATE_TYPE, "id", stompData.planStateType.id);
 
 						$$("label-state-" + self.uid).setValue(getPlanStateTemplate(planStateType));
+						
+						if (stompData.changedAt) {
+							
+							$$("label-changed-" + self.uid).setValue(getPlanChangedTemplate(stompData.changedAt));	
+						}
+						
 						$$("header-line-color" + self.uid).setValue(getHeaderLineTemplate(planStateType));	
 
 						if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
@@ -199,7 +205,11 @@ export default class PlanExecutor extends GenericModule {
 								if (order.planOrderStateType.id != self.config.planOrderStateTypes.unknown &&
 									order.planOrderStateType.id != self.config.planOrderStateTypes.running) {
 	
-									order.orderExecutedAt = new Date(Date.now());
+									order.orderExecutedAt = new Date(updateOrder.changedAt);
+								}
+								else {
+									
+									order.orderExecutedAt = undefined;
 								}
 		
 								self.ordersDataTable.update(order);
@@ -360,9 +370,17 @@ export default class PlanExecutor extends GenericModule {
 				}
 
 				buttonsGrid.cols.push(
-					{},
+					{ width: 1 },
 					{
 						view: "label",
+						align: "right",
+						id: "label-changed-" + self.uid,
+						template: getPlanChangedTemplate(self.data.changedAt),
+						css: { "padding-top": "11px" }
+					},
+					{
+						view: "label",
+						width: 150,
 						align: "right",
 						id: "label-state-" + self.uid,
 						template: getPlanStateTemplate(self.data.planStateType),
@@ -693,6 +711,18 @@ export default class PlanExecutor extends GenericModule {
 			args.confirmDescription = btnConfig.confirmDescription;
 
 			util.module.open(module, btnConfig.moduleAction, null, null, args);
+		}
+
+		function getPlanChangedTemplate(changedAt) {
+			
+			let planChangedTemplate = '<div><span> </span></div>';
+
+			if (changedAt) {
+
+				planChangedTemplate = '<div><span class="table-badge" style="background: white; color: black;">' + (changedAt ? i18n.t("LAST_EXECUTED") + ": " + util.toLocaleString(changedAt / 1000) : "") + '</span></div>';
+			}
+
+			return planChangedTemplate;
 		}
 
 		function getPlanStateTemplate(planStateType) {
