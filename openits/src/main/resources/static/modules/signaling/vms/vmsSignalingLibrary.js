@@ -596,7 +596,7 @@ export default class VmsSignalingLibrary {
 				
 				let viewComposer;
 			
-				self.composer = new VmsSignalingComposer(self.config, self.element, null, onUpdateComposer, onAfterRenderComposer);
+				self.composer = new VmsSignalingComposer(self.config, self.element, null, self.editLibraryPermission ? onUpdateComposer : undefined, onAfterRenderComposer);
 				
 				viewComposer = {
 					id: "view-composer-" + self.uid,
