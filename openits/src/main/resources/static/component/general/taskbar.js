@@ -95,14 +95,14 @@ export default class Taskbar {
 							tooltip = `<img class="icon" src="${icon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/><div class='title'>${i18n.t(label)}</div><div></div>`;	
 						}
 						
-						let taskButton = $$(taskButtonId); 
-						
-						if (taskButton && taskButton.config.miniature) {
-							
-							let canvasData = $$(taskButtonId).config.miniature.toDataURL();
-							
-							tooltip += `<div align="center"><img height="150" src="${canvasData}"></div>`	
-						}
+//						let taskButton = $$(taskButtonId); 
+//						
+//						if (taskButton && taskButton.config.miniature) {
+//							
+//							let canvasData = $$(taskButtonId).config.miniature.toDataURL();
+//							
+//							tooltip += `<div align="center"><img height="150" src="${canvasData}"></div>`	
+//						}
 
 						return tooltip;
 					},
@@ -136,12 +136,12 @@ export default class Taskbar {
 							
 							setTimeout(function() {
 								
-								if (!taskButton.config.miniature && $$(task.id)) {
-									
-									html2canvas($$(task.id).getNode()).then(canvas => {
-										taskButton.config.miniature = canvas 				    
-									});	
-								}
+//								if (!taskButton.config.miniature && $$(task.id)) {
+//									
+//									html2canvas($$(task.id).getNode()).then(canvas => {
+//										taskButton.config.miniature = canvas 				    
+//									});	
+//								}
 								
 								let labelWin = $$(task.id + "-label");
 						
