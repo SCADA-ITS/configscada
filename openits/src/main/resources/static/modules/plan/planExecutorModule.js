@@ -719,7 +719,7 @@ export default class PlanExecutor extends GenericModule {
 
 			if (changedAt) {
 
-				planChangedTemplate = '<div><span class="table-badge" style="background: white; color: black;">' + (changedAt ? i18n.t("LAST_EXECUTED") + ": " + util.toLocaleString(changedAt / 1000) : "") + '</span></div>';
+				planChangedTemplate = '<div><span class="table-badge" style="background: white; color: black;">' + (changedAt ? i18n.t("LBL_LAST_EXECUTION") + ": " + util.toLocaleString(changedAt / 1000) : "") + '</span></div>';
 			}
 
 			return planChangedTemplate;
