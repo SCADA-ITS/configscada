@@ -107,12 +107,11 @@ export default class EquipmentViewerContent {
 
 				let elementLabelDescription = i18n.t(self.elementType.labelDescription);
 				let container = $$(self.parent.args.containerId);
-				let percentageWidth = (self.equipmentViewer.showActions) && (self.element.tm && self.element.tm != undefined) ? 0.5 : 0.7;
 				let ellipsis;
 
 				if (container) {
 
-					ellipsis = `style='padding-left: 21px !important; max-width: ${container.$width * percentageWidth}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
+					ellipsis = `style='padding-left: 21px !important; overflow: hidden; white-space: nowrap; text-overflow: ellipsis'`;
 				}
 
 				let viewHeaderElement = {
@@ -171,11 +170,6 @@ export default class EquipmentViewerContent {
 						{}
 					]
 				};
-				
-				if (container) {
-
-					viewHeaderElement.width = container.$width * percentageWidth;
-				}
 
 				return viewHeaderElement;
 			}
@@ -204,6 +198,7 @@ export default class EquipmentViewerContent {
 				let viewHeaderButtons;
 				
 				viewHeaderButtons = {
+					width: 475,
 					rows: [
 						{},
 						{
