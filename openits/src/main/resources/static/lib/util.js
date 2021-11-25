@@ -1493,6 +1493,27 @@ export let util = {
 
 			let nodes = [];
 			let mapNodes = new Map();
+			
+			relationships.sort(function(a, b) {
+				
+				let idParentA = a[remapedFields.parentNodeId];
+				let idParentB = b[remapedFields.parentNodeId];
+				
+				let idChildA = a[remapedFields.childNodeId];
+				let idChildB = b[remapedFields.childNodeId];
+				
+				idParentA = parseInt(idParentA.substring(idParentA.indexOf(":") + 1));
+				idParentB = parseInt(idParentB.substring(idParentB.indexOf(":") + 1));
+				
+				idChildA = parseInt(idChildA.substring(idChildA.indexOf(":") + 1));
+				idChildB = parseInt(idChildB.substring(idChildB.indexOf(":") + 1));
+				
+				let x = parseInt(('0000000000'+idParentA).slice(-10) + ('0000000000'+idChildA).slice(-10));
+				let y = parseInt(('0000000000'+idParentB).slice(-10) + ('0000000000'+idChildB).slice(-10));
+				
+				
+				return (x > y) ? 1 : ((y > x) ? -1 : 0);
+			});
 
 			if (Array.isArray(items) && items.length > 0) {
 
@@ -1530,6 +1551,8 @@ export let util = {
 
 					return hierarchy;
 				});
+				
+				
 
 				let childNodeIds = fillNodes(hierarchies);
 

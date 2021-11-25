@@ -22,7 +22,9 @@ export default class GenericGridModule extends GenericModule {
 
 	getView() {
 
-		let view = {
+		let view;
+		
+		view = {
 			css: "custom_window",
 			cols: [
 				{
@@ -125,7 +127,7 @@ export default class GenericGridModule extends GenericModule {
 						genericGridContainer.removeView(viewId);
 					});
 
-					$$(self.uid).hideProgress();
+					//$$(self.uid).hideProgress();
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
