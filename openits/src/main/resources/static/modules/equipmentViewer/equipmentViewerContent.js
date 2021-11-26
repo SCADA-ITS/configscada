@@ -141,7 +141,7 @@ export default class EquipmentViewerContent {
 									let color = util.element.getColor(self.currentElementTypeState);
 
 									let res = `<image class="ims-incident-report-icon" src="img/${equipmentIcon}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
-											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis}>
+											<div class="ims-incident-report-title" id="equipDescription" ${ellipsis} title="${elementLabelDescription + ' - ' + self.element.alias}">
 												${elementLabelDescription + ' - ' + self.element.alias}
 											</div>
 											<div class="equip-viewer-header">
@@ -180,6 +180,8 @@ export default class EquipmentViewerContent {
 				let commandsModule;
 				let isAllowedCommands = false;
 				let noProperties = true;
+				let numberOfHeaderButtons = 0;
+				let toolbarButtonsWidth = 0;
 
 				if (self.parent.config.moduleAction.commandEquipments) {
 
@@ -194,11 +196,16 @@ export default class EquipmentViewerContent {
 					noProperties = false;
 				}
 
+				numberOfHeaderButtons = (noProperties) ? numberOfHeaderButtons : ++numberOfHeaderButtons;
+				numberOfHeaderButtons = !(self.equipmentViewer.showActions) || !isAllowedCommands ? numberOfHeaderButtons : ++numberOfHeaderButtons;
+				numberOfHeaderButtons = (self.element.tm && self.element.tm != undefined) ? ++numberOfHeaderButtons : numberOfHeaderButtons;
+						
+				toolbarButtonsWidth = numberOfHeaderButtons * 150;
 
 				let viewHeaderButtons;
 				
 				viewHeaderButtons = {
-					width: 475,
+					width: toolbarButtonsWidth,
 					rows: [
 						{},
 						{
@@ -290,7 +297,7 @@ export default class EquipmentViewerContent {
 										}
 									}
 								},
-								{ width: 20 }
+								{ width: 5}
 							]
 						},
 						{}
