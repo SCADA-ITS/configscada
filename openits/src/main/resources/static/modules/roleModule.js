@@ -18,7 +18,7 @@ export default class RoleModule extends GenericModule {
 
 		this.form;
 
-		this.data = null;
+		this.data = [];
 
 		this.dtPermissions = null;
 
@@ -122,7 +122,6 @@ export default class RoleModule extends GenericModule {
 
 		function add() {
 
-
 			let container = $$(self.args.containerId);
 
 			if (container) {
@@ -136,44 +135,40 @@ export default class RoleModule extends GenericModule {
 
 		function edit() {
 
+			$$("loading-" + self.uid).show();
+			$$(self.uid).hide();
+
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				if ($$("loading-" + self.uid)) {
+				webix.ajax().get(appConfig.restUrl + "users/role/" + self.args.selectedPks[0]).then(function(res) {
 
-					$$("loading-" + self.uid).show();
-					$$(self.uid).hide();
+					if (res != null) {
 
-					webix.ajax().get(appConfig.restUrl + "users/role/" + self.args.selectedPks[0]).then(function(data) {
+						self.oldPermissions = res.json();
 
-						if (data != null) {
+						if (self.oldPermissions.rolePermissions) {
 
-							self.oldPermissions = data.json();
-
-							if (self.oldPermissions.rolePermissions) {
-
-								self.oldPermissions.rolePermissions.forEach(e => {
-									self.rolPermissions.push(e.id);
-								});
-							}
-
-							let container = $$(self.args.containerId);
-
-							if (container) {
-
-								util.ui.setTitle(container.config.id, i18n.t("LBL_ROLE_EDIT") + " - " + self.oldPermissions.alias);
-							}
-
-
-							drawComponents();
-							setVal();
-
-							if (self.dtPermissions) {
-
-								self.dtPermissions.callbacks();
-							}
+							self.oldPermissions.rolePermissions.forEach(e => {
+								self.rolPermissions.push(e.id);
+							});
 						}
-					});
-				}
+
+						let container = $$(self.args.containerId);
+
+						if (container) {
+
+							util.ui.setTitle(container.config.id, i18n.t("LBL_ROLE_EDIT") + " - " + self.oldPermissions.alias);
+						}
+
+						drawComponents();
+						setVal();
+
+						if (self.dtPermissions) {
+
+							self.dtPermissions.callbacks();
+						}
+					}
+				});
 			}
 		};
 
@@ -182,7 +177,9 @@ export default class RoleModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				if (self.args.selectedPks[0] === self.config.systemRole) {
+				let systemRole = self.args.selectedPks.find(e => e === self.config.systemRole);
+
+				if (systemRole) {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
 					ms.show();
@@ -194,9 +191,16 @@ export default class RoleModule extends GenericModule {
 
 					function onAccept() {
 
+						let itemsReponse = 0;
 						self.args.selectedPks.forEach(e => {
-							webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
-							self.args.callbacks[0]();
+
+							webix.ajax().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e })).then(function(res) {
+
+								if (self.args.selectedPks.length === ++itemsReponse) {
+
+									self.args.callbacks[0]();
+								}
+							});
 						});
 					}
 				}
@@ -207,10 +211,10 @@ export default class RoleModule extends GenericModule {
 		function drawComponents() {
 
 			$$("loading-" + self.uid).show();
-
 			let oldPermissions = self.oldPermissions;
-
-			let viewMain = {
+			let viewMain = {};
+			
+			viewMain = {
 				id: self.uid,
 				css: { "box-sizing": "border-box" },
 				rows: [
@@ -325,8 +329,10 @@ export default class RoleModule extends GenericModule {
 
 
 				function getDataTable() {
-
-					let dataTable = {
+	
+					let dataTable = {};
+					
+					dataTable = {
 						id: "dt-" + self.uid,
 						css: "user-role-form user-role-dt",
 						rows: getTable()
@@ -336,6 +342,8 @@ export default class RoleModule extends GenericModule {
 					function getTable() {
 
 						let data = self.data;
+						let metadata = {};
+						let events = {};
 
 						const defaultGridOptionValues = [
 							{ gridOption: { id: 3 }, value: 1 },
@@ -349,7 +357,7 @@ export default class RoleModule extends GenericModule {
 							{ gridOption: { id: 23 }, value: "false" }
 						];
 
-						let metadata = {
+						metadata = {
 							filter: true,
 							label: "LBL_ROLE",
 							visible: true,
@@ -441,12 +449,9 @@ export default class RoleModule extends GenericModule {
 
 						if (oldPermissions && oldPermissions != undefined) {
 
-							getData(oldPermissions);
+							data = drawFromEdit(oldPermissions);
 						}
 
-						data = self.data;
-
-						let events = {};
 						events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
@@ -488,8 +493,9 @@ export default class RoleModule extends GenericModule {
 						});
 
 						self.dtPermissions = new DataTable(null, null, metadata, data, events);
-
+						
 						return self.dtPermissions.getView();
+
 					};
 
 
@@ -602,28 +608,28 @@ export default class RoleModule extends GenericModule {
 			};
 		};
 
-		function getData(resp) {
+		function drawFromEdit(resp) {
 
 			self.data = [];
 			let data = self.data;
 
 			if (resp.rolePermissions) {
 
-				resp.rolePermissions.forEach(e => {
+				resp.rolePermissions.forEach(permission => {
 
-					let response = webix.ajax().sync().get(appConfig.restUrl + "users/systemPermission/" + e.id);
-					let responsePerm = JSON.parse(response.responseText);
 					let row = {};
 
-					row.id = responsePerm.id;
-					row.labelAlias = responsePerm.labelAlias;
-					row.labelDescription = responsePerm.labelDescription;
-					row.inherited = resp.alias;
+					row.id = permission.id;
+					row.labelAlias = permission.labelAlias;
+					row.labelDescription = permission.labelDescription;
+					row.inherited = permission.alias;
 
 					data.push(row);
 				});
+				
+				return data;
 			}
-		}
+		};
 
 
 		function setVal() {
@@ -632,6 +638,7 @@ export default class RoleModule extends GenericModule {
 			let form = self.form;
 
 			if (oldPermissions) {
+				
 				$$(form.id).setValues({
 					roleName: oldPermissions.alias,
 					roleDesc: oldPermissions.description

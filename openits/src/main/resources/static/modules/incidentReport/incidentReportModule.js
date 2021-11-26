@@ -62,6 +62,8 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 		let incidentReportsToConfirm = [];
+		let sameUserCounter = 0;
+		let userData = util.user.auth();
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
@@ -74,10 +76,11 @@ export default class IncidentReportModule extends GenericModule {
 					if (dat != null) {
 
 						let incidentReport = dat.json();
-
+						
 						if (!incidentReport.confirm) {
 
 							incidentReportsToConfirm.push(incidentReport.id);
+							sameUserCounter = (incidentReport.currentUser.id === userData.id)  ? ++sameUserCounter : sameUserCounter;
 						}
 					}
 
@@ -85,28 +88,37 @@ export default class IncidentReportModule extends GenericModule {
 
 						if (incidentReportsToConfirm.length > 0) {
 
-							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-							ms.show();
-							
-							function onAccept() {
-								
-								incidentReportsToConfirm.forEach(incidentReportToConfirmId => {
+							if (sameUserCounter === incidentReportsToConfirm.length) {
 
-									let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, { id: incidentReportToConfirmId });
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+								ms.show();
 
-									console.log(endpoint);
+								function onAccept() {
 
-									self.restAction(endpoint);
+									incidentReportsToConfirm.forEach(incidentReportToConfirmId => {
 
-								});								
-							};
-						
+										let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, { id: incidentReportToConfirmId });
+
+										console.log(endpoint);
+
+										self.restAction(endpoint);
+
+									});
+								};
+
+							} else {
+
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_ASSIGNED_TO_USER_DESCRIPTION"), null, null);
+								ms.show();
+
+							}
+
 						} else {
-							
-							let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+
+							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
 							ms.show();
 						}
-					}
+					} 
 				});
 			});
 		}

@@ -51,5 +51,9 @@
 	"locationTypes":["LocationType:1", "LocationType:2"],
 	"stretchTypes":["StretchType:1", "StretchType:2"],
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
-	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}"
+	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",
+	"requiredPermissions": {
+		"autoassign": "SystemPermission:15",
+		"assignanother": "SystemPermission:16"
+	}
 }

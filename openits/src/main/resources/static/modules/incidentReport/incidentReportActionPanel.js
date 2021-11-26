@@ -21,11 +21,426 @@ export default class IncidentReportActionPanel {
 		this.currentSequenceOfState = parent.currentSequenceOfState;
 		this.incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", this.incidentReport.incidentType.id);
 		this.tableAlarms = undefined;
+		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
+		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignanother);
 	}
 
 	getView() {
 
 		let self = this;
+		let changeAssignIncident = false;
+		let onlyAutoassignIncident = false;
+		
+		if(self.autoAssignPermissions || self.assignAnotherPermissions){
+			
+			changeAssignIncident = true;
+			
+			if(changeAssignIncident) {
+				
+				onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
+			}
+		} 
+				
+		let viewActionPanel = {};
+		
+		viewActionPanel = {
+			id: "viewActionPanel-" + self.uid,
+			width: 300,
+			css: "panel-action",
+			rows: [
+				{
+					height: 95,
+					cols: [
+						{ width: MARGIN_ACTION_PANEL },
+						{
+							rows: [
+								{ height: 20 },
+								{
+									view: "button",
+									css: "action-button",
+									disabled: (function() {
+
+										if (!self.closed && self.incidentReport.confirm === true) {
+
+											// Mandatory tasks with state must be completed in penultimate state
+											if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
+
+												let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
+
+												if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
+
+													let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+													let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+													if (tasksCompleted.length < tasksMandatory.length) {
+
+														return true;
+													}
+												}
+											}
+
+											if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+
+												let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+												let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+												if (tasksCompleted.length < tasksMandatory.length) {
+
+													return true;
+												}
+											}
+										}
+
+										return false;
+
+									})(),
+									height: 50,
+									label: (function() {
+
+										if (!self.closed) {
+
+											if (self.incidentReport.confirm === true) {
+
+												return i18n.t("LBL_INCIDENT_ACTION_NEXT");
+											}
+											else {
+
+												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+											}
+										}
+										else {
+
+											return i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
+										}
+
+									})(),
+									tooltip: "#label#",
+									on: {
+
+										onItemClick() {
+
+											let bCancel = false;
+											if (!self.closed) {
+
+												if (self.incidentReport.confirm === true) {
+
+													let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
+
+													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0) {
+
+														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
+
+														if (comboCauseValue === "") {
+															
+															let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
+															ms.show();
+															
+															function onAccept (){
+
+																$$("tab-details-" + self.uid).show();
+																bCancel = true;																														
+															};
+														}
+													}
+
+													if (!bCancel) {
+
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
+															id: self.incidentReport.id
+														});
+
+														if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
+
+															let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+															let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+															if (tasksCompleted.length === tasksMandatory.length) {
+
+																self.parent.restAction(endpoint);
+															}
+
+														} else {
+
+															self.parent.restAction(endpoint);
+														}
+													}
+
+												} else {
+
+													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+													ms.show();
+													
+													function onAccept() {
+
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
+															id: self.incidentReport.id
+														});
+
+														self.parent.restAction(endpoint);														
+													};
+												}
+
+											} else {
+
+												let container = $$(self.containerId);
+
+												if (container) {
+
+													container.close();
+												}
+											}
+										}
+									}
+								},
+								{ height: 20 }
+							]
+						},
+						{ width: MARGIN_ACTION_PANEL }
+					]
+				},
+				{
+					view: "label",
+					css: "section",
+					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_ACTIONS")}</span></div>`,
+					borderless: true
+				},
+				{
+					rows: [
+						{ height: 10 },
+						{
+							cols: [
+								{ width: MARGIN_ACTION_PANEL },
+								{
+									view: "toolbar",
+									height: 75,
+									css: "tb-actions",
+									elements: [
+										{
+											view: "button",
+											width: 135,
+											label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
+											tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
+											type: "iconTop",
+											icon: "mdi mdi-map",
+											on: {
+												onItemClick() {
+
+													let module = undefined;
+													let containerId = $$(self.containerId).config.id;
+													let containerParentId = $$(self.containerId).getTopParentView().config.id;
+													let modules = window.em.getAll(EntityType.MODULE);
+													let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
+													const EXTERNALIZABLE_ID = {
+														CONTAINER: "view-content",
+														PARENT: "main-view"
+													};
+
+													if (Array.isArray(modules) && modules.length > 0) {
+
+														module = modules.find(mod => mod.id === self.config.defaultMapModule);
+
+														if (module) {
+
+															if (containerId === EXTERNALIZABLE_ID.CONTAINER && containerParentId === EXTERNALIZABLE_ID.PARENT) {
+
+																let mod = {module: module};
+																taskManagerService.externalize(self.uid, mod);
+
+															} else {
+
+																if (containerId === containerParentId) {
+
+																	taskManagerService.minimize(containerId);
+																}
+
+																let args = {
+																	longitude: self.incidentReport.location.lon,
+																	latitude: self.incidentReport.location.lat
+																}
+
+																util.module.open(module, null, VIEW_TYPE_TAB, null, args, function(instance){
+																	console.log(instance)
+																	//instance.goto();
+																	
+																});
+															}
+														}
+													}
+												}
+											}
+										},
+										{},
+										{
+											view: "button",
+											width: 135,
+											label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
+											tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
+											type: "iconTop",
+											icon: "mdi mdi-cctv",
+											hidden: !self.incidentReport.scenario || !self.incidentReport.scenario.id,
+											on: {
+
+												onItemClick() {
+
+													viewCameras();
+												}
+											}
+										}
+									],
+									borderless: true
+								},
+								{ width: MARGIN_ACTION_PANEL }
+							]
+						},
+						{
+							cols: [
+								{ width: MARGIN_ACTION_PANEL },
+								{
+									view: "toolbar",
+									height: 75,
+									css: "tb-actions",
+									elements: [
+										{
+											view: "button",
+											width: 135,
+											label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
+											tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
+											disabled: !self.incidentReport.confirm || !changeAssignIncident,
+											type: "iconTop",
+											icon: "mdi mdi-account",
+											on: {
+
+												onItemClick() {
+
+													changeUser();
+												}
+											}
+										},
+										{},
+										{
+											view: "button",
+											width: 135,
+											label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
+											tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
+											type: "iconTop",
+											disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
+											icon: "mdi mdi-bell",
+											on: {
+
+												onItemClick() {
+
+													showAlarms();
+												}
+											}
+										}
+									],
+									borderless: true
+								},
+								{ width: MARGIN_ACTION_PANEL }
+							]
+						},
+						{
+							cols: [
+								{ width: MARGIN_ACTION_PANEL },
+								{
+									view: "toolbar",
+									height: 75,
+									css: "tb-actions",
+									elements: [
+										{
+											view: "button",
+											width: 135,
+											hidden: self.incidentReport.confirm,
+											label: i18n.t("LBL_INCIDENT_CHANGE"),
+											tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
+											type: "iconTop",
+											icon: "mdi mdi-pen",
+											on: {
+
+												onItemClick() {
+
+													changeIncident();
+												}
+											}
+										},
+										{}
+									],
+									borderless: true
+								},
+								{ width: MARGIN_ACTION_PANEL }
+							]
+						}
+					]
+				},
+				{ height: 40 },
+				{
+					view: "label",
+					css: "section",
+					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
+					borderless: true,
+					hidden: !self.incidentReport.confirm
+				},
+				{ height: 20 },
+				{
+					height: 150,
+					cols: [
+						{ width: 15 },
+						{
+							hidden: !self.incidentReport.confirm,
+							rows: getLowerButtonsViewArray()
+						},
+						{ width: 15 }
+					]
+				},
+				{},
+				{
+					view: "toolbar",
+					height: 75,
+					css: "tb-buttons",
+					elements: [
+						{},
+						{
+							view: "button",
+							width: 135,
+							label: i18n.t("LBL_INCIDENT_CANCEL"),
+							tooltip: i18n.t("LBL_INCIDENT_CANCEL_DESCRIPTION"),
+							type: "iconTop",
+							icon: "mdi mdi-close-thick",
+							hidden: self.closed,
+							on: {
+
+								onItemClick() {
+
+									cancelIncidentReport();
+								}
+							}
+						},
+						{
+							view: "button",
+							width: 135,
+							label: i18n.t("LBL_INCIDENT_CLOSE"),
+							tooltip: i18n.t("LBL_INCIDENT_CLOSE_DESCRIPTION"),
+							type: "iconTop",
+							icon: "mdi mdi-exit-to-app",
+							on: {
+
+								onItemClick() {
+
+									let container = $$(self.containerId);
+
+									if (container) {
+
+										container.close();
+									}
+								}
+							}
+						},
+						{}
+					],
+					borderless: true
+				}
+			]
+		};
 
 		function viewCameras() {
 
@@ -51,6 +466,29 @@ export default class IncidentReportActionPanel {
 
 		function changeUser() {
 
+			if (onlyAutoassignIncident) {
+
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), function() {
+
+					let userData = util.user.auth();
+
+					let body = {
+						id: self.incidentReport.id,
+						userId: userData.id
+					};
+
+					let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+					self.parent.restAction(endpoint);
+
+				}, null);
+				ms.show();
+
+			} else {
+
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
+				s.show();
+			}
+
 			function resultSearch(data) {
 
 				let body = {
@@ -60,10 +498,6 @@ export default class IncidentReportActionPanel {
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
 				self.parent.restAction(endpoint);
 			}
-
-			let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
-
-			s.show();
 		}
 
 		function showAlarms() {
@@ -499,366 +933,9 @@ export default class IncidentReportActionPanel {
 			return body;
 		}
 
-		return {
 
-			id: "viewActionPanel-" + self.uid,
-			width: 300,
-			css: "panel-action",
-			rows: [
-				{
-					height: 95,
-					cols: [
-						{ width: MARGIN_ACTION_PANEL },
-						{
-							rows: [
-								{ height: 20 },
-								{
-									view: "button",
-									css: "action-button",
-									disabled: (function() {
-
-										if (!self.closed && self.incidentReport.confirm === true) {
-
-											// Mandatory tasks with state must be completed in penultimate state
-											if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
-
-												let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
-
-												if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
-
-													let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-													let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-													if (tasksCompleted.length < tasksMandatory.length) {
-
-														return true;
-													}
-												}
-											}
-
-											if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-
-												let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-												let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-												if (tasksCompleted.length < tasksMandatory.length) {
-
-													return true;
-												}
-											}
-										}
-
-										return false;
-
-									})(),
-									height: 50,
-									label: (function() {
-
-										if (!self.closed) {
-
-											if (self.incidentReport.confirm === true) {
-
-												return i18n.t("LBL_INCIDENT_ACTION_NEXT");
-											}
-											else {
-
-												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
-											}
-										}
-										else {
-
-											return i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
-										}
-
-									})(),
-									tooltip: "#label#",
-									on: {
-
-										onItemClick() {
-
-											let bCancel = false;
-											if (!self.closed) {
-
-												if (self.incidentReport.confirm === true) {
-
-													let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
-
-													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0) {
-
-														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
-
-														if (comboCauseValue === "") {
-															
-															let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
-															ms.show();
-															
-															function onAccept (){
-
-																$$("tab-details-" + self.uid).show();
-																bCancel = true;																														
-															};
-														}
-													}
-
-													if (!bCancel) {
-
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.forward, {
-															id: self.incidentReport.id
-														});
-
-														if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-
-															let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-															let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-															if (tasksCompleted.length === tasksMandatory.length) {
-
-																self.parent.restAction(endpoint);
-															}
-
-														} else {
-
-															self.parent.restAction(endpoint);
-														}
-													}
-
-												} else {
-
-													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-													ms.show();
-													
-													function onAccept() {
-
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
-															id: self.incidentReport.id
-														});
-
-														self.parent.restAction(endpoint);														
-													};
-												}
-
-											} else {
-
-												let container = $$(self.containerId);
-
-												if (container) {
-
-													container.close();
-												}
-											}
-										}
-									}
-								},
-								{ height: 20 }
-							]
-						},
-						{ width: MARGIN_ACTION_PANEL }
-					]
-				},
-				{
-					view: "label",
-					css: "section",
-					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_ACTIONS")}</span></div>`,
-					borderless: true
-				},
-				{
-					rows: [
-						{ height: 10 },
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
-											tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-map",
-											on: {
-
-												onItemClick() {
-
-													util.ui.notImplementedMessage();
-												}
-											}
-										},
-										{},
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
-											tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-cctv",
-											hidden: !self.incidentReport.scenario || !self.incidentReport.scenario.id,
-											on: {
-
-												onItemClick() {
-
-													viewCameras();
-												}
-											}
-										}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						},
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
-											tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-											disabled: !self.incidentReport.confirm,
-											type: "iconTop",
-											icon: "mdi mdi-account",
-											on: {
-
-												onItemClick() {
-
-													changeUser();
-												}
-											}
-										},
-										{},
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
-											tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
-											type: "iconTop",
-											disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
-											icon: "mdi mdi-bell",
-											on: {
-
-												onItemClick() {
-
-													showAlarms();
-												}
-											}
-										}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						},
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											hidden: self.incidentReport.confirm,
-											label: i18n.t("LBL_INCIDENT_CHANGE"),
-											tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-pen",
-											on: {
-
-												onItemClick() {
-
-													changeIncident();
-												}
-											}
-										},
-										{}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						}
-					]
-				},
-				{ height: 40 },
-				{
-					view: "label",
-					css: "section",
-					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_DOCUMENTS")}</span></div>`,
-					borderless: true,
-					hidden: !self.incidentReport.confirm
-				},
-				{ height: 20 },
-				{
-					height: 150,
-					cols: [
-						{ width: 15 },
-						{
-							hidden: !self.incidentReport.confirm,
-							rows: getLowerButtonsViewArray()
-						},
-						{ width: 15 }
-					]
-				},
-				{},
-				{
-					view: "toolbar",
-					height: 75,
-					css: "tb-buttons",
-					elements: [
-						{},
-						{
-							view: "button",
-							width: 135,
-							label: i18n.t("LBL_INCIDENT_CANCEL"),
-							tooltip: i18n.t("LBL_INCIDENT_CANCEL_DESCRIPTION"),
-							type: "iconTop",
-							icon: "mdi mdi-close-thick",
-							hidden: self.closed,
-							on: {
-
-								onItemClick() {
-
-									cancelIncidentReport();
-								}
-							}
-						},
-						{
-							view: "button",
-							width: 135,
-							label: i18n.t("LBL_INCIDENT_CLOSE"),
-							tooltip: i18n.t("LBL_INCIDENT_CLOSE_DESCRIPTION"),
-							type: "iconTop",
-							icon: "mdi mdi-exit-to-app",
-							on: {
-
-								onItemClick() {
-
-									let container = $$(self.containerId);
-
-									if (container) {
-
-										container.close();
-									}
-								}
-							}
-						},
-						{}
-					],
-					borderless: true
-				}
-			]
-		};
+		
+		return viewActionPanel;
 	}
 
 }

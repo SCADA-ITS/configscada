@@ -187,6 +187,7 @@ export default class UserModule extends GenericModule {
 						let container = $$(self.args.containerId);
 
 						if (container) {
+							
 							util.ui.setTitle(container.config.id, i18n.t("LBL_USER_EDIT") + " - " + self.oldUser.name);
 						}
 
@@ -196,6 +197,7 @@ export default class UserModule extends GenericModule {
 						if (self.dtPermissions) {
 
 							self.dtPermissions.callbacks();
+							
 							if (self.moduleAction.id === self.config.moduleAction.changePassword) {
 
 								self.dtPermissions.disable();
@@ -211,7 +213,9 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				if (self.args.selectedPks[0] === self.config.systemUser) {
+				let systemUser = self.args.selectedPks.find(e => e === self.config.systemUser);
+
+				if (systemUser) {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
 					ms.show();
@@ -223,9 +227,16 @@ export default class UserModule extends GenericModule {
 
 					function onAccept() {
 
+						let itemsReponse = 0;
 						self.args.selectedPks.forEach(e => {
-							webix.ajax().sync().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e }));
-							self.args.callbacks[0]();
+							
+							webix.ajax().del(appConfig.restUrl + util.fillTemplate(self.config.actionEndpoints.remove, { id: e })).then(function(res) {
+
+								if (self.args.selectedPks.length === ++itemsReponse) {
+
+									self.args.callbacks[0]();
+								}
+							});
 						});
 					}
 				}
@@ -239,7 +250,9 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				if (self.args.selectedPks[0] === self.config.systemUser) {
+				let systemUser = self.args.selectedPks.find(e => e === self.config.systemUser);
+
+				if (systemUser) {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
 					ms.show();
@@ -251,102 +264,116 @@ export default class UserModule extends GenericModule {
 					let actualDate = new Date(timeService.getEpoch());
 					let action = -1;
 					let isDiffActions = false;
-
+					let itemResponse = 0;		
+					let currentAction = undefined;
+					let arrayLock = [];
+					let arrayUnlock = [];
+					
 					for (let i = 0; !isDiffActions && i < self.args.selectedPks.length; i++) {
+			
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[i] })).then(function(response) {
 
-						let currentAction = -1;
-						let response = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[i] }));
-						let responseUser = JSON.parse(response.responseText);
+							let responseUser = response.json(); //JSON.parse(response.responseText);
 
-						currentAction = (responseUser.lockedUntil && actualDate < responseUser.lockedUntil) ? UNLOCK_ACTION : LOCK_ACTION;
+							currentAction = (responseUser.lockedUntil && actualDate < responseUser.lockedUntil) ? UNLOCK_ACTION : LOCK_ACTION;
 
-						// Establece la acción de trabajo
-						if (i === 0) {
-
-							action = currentAction;
-						}
-						else {
-
-							isDiffActions = (currentAction !== action);
-						}
-
-						users.push(responseUser);
+							if(currentAction === UNLOCK_ACTION) {
+								
+								arrayUnlock.push(responseUser);
+								
+							} else if (currentAction === LOCK_ACTION){
+								
+								arrayLock.push(responseUser);
+							}
+							
+							if (self.args.selectedPks.length === ++itemResponse) {
+								
+								isDiffActions = (arrayLock.length === self.args.selectedPks.length || arrayUnlock.length === self.args.selectedPks.length) ? false : true;
+								action = (arrayLock.length > arrayUnlock.length) ? LOCK_ACTION : UNLOCK_ACTION;
+								users = (action === LOCK_ACTION) ? arrayLock : arrayUnlock;
+								
+								questionLock();
+							}
+						});
 					}
 
-					if (!isDiffActions) {
+					function questionLock() {
 
-						if (action === LOCK_ACTION) {
+						if (!isDiffActions) {
 
-							lockUsers(users);
-						}
-						else {
+							if (action === LOCK_ACTION) {
 
-							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"), onAccept, null);
-							ms.show();
+								lockUsers(users);
+							}
+							else {
 
-							function onAccept() {
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_QUESTION_UNLOCK_USER_DESCRIPTION"), onAccept, null);
+								ms.show();
 
-								unlockUsers(users);
+								function onAccept() {
+
+									unlockUsers(users);
+								}
 							}
 						}
-					}
-					else {
+						else {
 
-						let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"), null, null);
-						ms.show();
-					}
+							let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_SELECTION_OF_LOCKED_AND_UNLOCKED_USERS_DESCRIPTION"), null, null);
+							ms.show();
+						}
 
-					function lockUsers(users) {
+						function lockUsers(users) {
 
-						new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), false,
+							new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), false,
 
-							function(date) {
+								function(date) {
 
-								return (Math.floor(date) < Math.floor(new Date()));
-							},
-							function(dates) {
+									return (Math.floor(date) < Math.floor(new Date()));
+								},
+								function(dates) {
 
-								let itemsReponse = 0;
-								let usersToUpdate = adapterUserToUpdate(users);
+									let itemsReponse = 0;
+									let usersToUpdate = adapterUserToUpdate(users);
 
-								usersToUpdate.forEach(user => {
+									usersToUpdate.forEach(user => {
 
-									user.user.lockedUntil = dates.from.getTime();
+										user.user.lockedUntil = dates.from.getTime();
 
-									webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user)
-										.then(function(data) {
-
-											shouldRefresh();
-										},
-											function(response) {
+										webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user)
+											.then(function(data) {
 
 												shouldRefresh();
-											});
-								});
+											},
+												function(response) {
 
-								function shouldRefresh() {
+													shouldRefresh();
+												});
+									});
 
-									if (users.length === ++itemsReponse) {
+									function shouldRefresh() {
 
-										self.args.callbacks[0]();
+										if (users.length === ++itemsReponse) {
+
+											self.args.callbacks[0]();
+										}
 									}
-								}
-							}).show();
-					}
+								}).show();
+						}
 
-					function unlockUsers(users) {
+						function unlockUsers(users) {
 
-						let usersToUpdate = adapterUserToUpdate(users);
+							let usersToUpdate = adapterUserToUpdate(users);
 
-						usersToUpdate.forEach(user => {
+							usersToUpdate.forEach(user => {
 
-							user.user.lockedUntil = timeService.getEpoch();
+								user.user.lockedUntil = timeService.getEpoch();
 
-							webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user).then(function(data) {
+								webix.ajax().headers(CONTENT_TYPE_JSON).put(appConfig.restUrl + self.config.actionEndpoints.edit, user).then(function(data) {
 
-								self.args.callbacks[0]();
+									self.args.callbacks[0]();
+								});
 							});
-						});
+						}
 					}
 				}
 			}
@@ -412,11 +439,11 @@ export default class UserModule extends GenericModule {
 		function drawComponents() {
 
 			$$("loading-" + self.uid).show();
-
 			let newUser = self.newUser;
 			let oldUser = self.oldUser;
-
-			let viewMain = {
+			let viewMain = {};
+			
+			viewMain = {
 				id: self.uid,
 				css: { "box-sizing": "border-box" },
 				rows: [
@@ -609,16 +636,21 @@ export default class UserModule extends GenericModule {
 
 							} else {
 
-								let response = webix.ajax().sync().get(appConfig.restUrl + "users/role/" + selection[0].id);
-								let responseRole = JSON.parse(response.responseText);
+								webix.ajax().get(appConfig.restUrl + "users/role/" + selection[0].id).then(function(response) {
 
-								drawFromRole(responseRole)
-								newUser.role = selection[0].alias;
-								newUser.roleId = selection[0].id;
+									let responseRole = response.json(); //JSON.parse(response.responseText);
+
+									drawFromRole(responseRole)
+									newUser.role = selection[0].alias;
+									newUser.roleId = selection[0].id;
+
+									self.newUser = newUser;
+									setVal();
+								});
+
 							}
 
-							self.newUser = newUser;
-							setVal();
+						
 						}
 					};
 
@@ -628,7 +660,9 @@ export default class UserModule extends GenericModule {
 
 				function getDataTable() {
 
-					let dataTable = {
+					let dataTable = {};
+					 
+					dataTable = {
 						id: "dt-" + self.uid,
 						css: "user-role-form user-role-dt",
 						rows: getTable()
@@ -637,7 +671,9 @@ export default class UserModule extends GenericModule {
 					function getTable() {
 
 						let data = self.data;
-
+						let metadata = {};
+						let events = {};
+						
 						const defaultGridOptionValues = [
 							{ gridOption: { id: 3 }, value: 1 },
 							{ gridOption: { id: 4 }, value: "asc" },
@@ -651,7 +687,7 @@ export default class UserModule extends GenericModule {
 							{ gridOption: { id: 23 }, value: "false" }
 						];
 
-						let metadata = {
+						metadata = {
 							filter: true,
 							label: "LBL_ROLE",
 							visible: true,
@@ -768,7 +804,6 @@ export default class UserModule extends GenericModule {
 							data = drawFromEdit();
 						}
 
-						let events = {};
 						events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
