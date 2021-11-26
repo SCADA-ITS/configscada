@@ -3870,3 +3870,10 @@ audio {
 .equipment-viewer-carousel .webix_nav_panel {
 	padding-top: 15px;
 }
+
+.listview-disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	background-color:rgba(244,245,249);
+	opacity: 0.4;
+}

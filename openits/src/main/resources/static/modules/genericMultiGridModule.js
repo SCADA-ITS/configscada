@@ -1,6 +1,7 @@
 import {util} from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
+import ListView from "../component/listview.js";
 
 const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
 
@@ -11,6 +12,7 @@ export default class GenericMultiGridModule extends GenericModule {
 		super(module, moduleAction, args);
 		
 		this.dataTable = undefined;
+		this.listView = undefined;
 		
     }
 
@@ -52,20 +54,10 @@ export default class GenericMultiGridModule extends GenericModule {
 				{
 					header: i18n.t("LBL_" + entity),
 					body: {
+						width: 350,
+						minWidth: 250,
 						rows: [
 							{ height: 6 },
-							{
-								view: "toolbar",
-								elements: [
-									{ width: 4 },
-									{
-										view: "search",
-										id: "txtSearchEquipmentType-" + this.uid,
-										placeholder: i18n.t("LBL_EQUIPMENT_TYPE_SEARCH")
-									},
-									{ width: 4 }
-								]
-							},
 							this.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssignedCopy),
 							{ height: 6 }
 						]		
@@ -99,94 +91,79 @@ export default class GenericMultiGridModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let listEquipmentTypes = $$("listEquipmentType-" + this.uid );
-		let txtSearchEquipmentTypes = $$("txtSearchEquipmentType-" + this.uid);
-	
-		if (!webix.isUndefined(listEquipmentTypes) && !webix.isUndefined(txtSearchEquipmentTypes)) {
-	
-			txtSearchEquipmentTypes.attachEvent("onTimedKeyPress", function() {
-				let value = this.getValue().toLowerCase(); // input data is derived
-				listEquipmentTypes.filter(function(obj) {  // here it filters all titles from the list
-	
-					return (obj.labelAlias.toLowerCase().indexOf(value) !== -1 ||
-							obj.labelDescription.toLowerCase().indexOf(value) !== -1);
-				});
-			});
-	
+		let listEquipmentTypes = $$("listview-" + self.listView.uid);
+
+		if (!webix.isUndefined(listEquipmentTypes)) {
+
 			listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
-	
-				var list = this;
-				
+
 				webix.extend($$(self.uid), webix.ProgressBar);
-	
+
 				$$(self.uid).showProgress({
 					type: "bottom",
 					hide: false
 				});
-					
+
 				webix.delay(function() {
 					
-					self.callbackSelectedElemenType(list, id);
-					
+					self.callbackSelectedElemenType(id[0]);
+
 					//$$(self.uid).hideProgress();
-	
+
 				}, null, null, 1);
 			});
-			
-			listEquipmentTypes.select(listEquipmentTypes.getFirstId());
-			
-			listEquipmentTypes.refresh();
+
+			self.listView.select(self.listView.data[0].id);
 		}
 	}
 	
 	drawEquipmentTypeList(jsonEquipmentTypesWithGridAssigned) {
 
-		let equipmentTypeList;
+		let self = this;
 	
 		if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
-			equipmentTypeList = {
-				view: "list",
-				id: "listEquipmentType-" + this.uid,
-				width: 350,
-				minWidth: 250,
-				select: true,
-				type: {
-	
-					template: function(obj) {
-	
-						let elementTypePhoto = obj.elementTypePhoto;
-	
-						return `<image class="list-photo" src="img/${elementTypePhoto}" onerror="this.onerror=null;this.src='img/not_found_50.png';" />
-								<div class="text">
-							  		<span class="list-first-line">${obj.labelAlias} </span>
-							  		<span class="list-second-line">${obj.labelDescription} </span>
-								</div>`
-					},
-					height: 66
-				},
-				data: jsonEquipmentTypesWithGridAssigned
+			
+			let options = {};
+					
+			options[ListView.Options.MODE] = ListView.DrawMode.DEFAULT;
+			
+			let events = {};
+			
+			events[ListView.EventTypes.ON_SELECT_ROW] = function(ids) {
+
+				self.callbackSelectedElemenType(ids);
 			};
+			
+			this.listView = new ListView(jsonEquipmentTypesWithGridAssigned, options, events);
+		
 		}
 		else {
-			equipmentTypeList = this.getViewDrawLoading();
+		
+			this.listView = this.getViewDrawLoading();
 		}
 	
-		return equipmentTypeList;
+		return this.listView.getView();
 	}
 	
-	callbackSelectedElemenType(list, id) {
+	callbackSelectedElemenType(id) {
 
 		let self = this;
-		let item = list.getItem(id);
-		let dataGridId = item.grid;
+		let item = self.listView.getSelectedItems();
+		let dataGridId = item[0].grid;
 		let dataGridParams = id;
 		let equipmentTable = $$(this.uid);
-	
+		webix.extend($$(self.uid), webix.ProgressBar);
+		
 		if (dataGridId != undefined && dataGridParams != undefined) {
 			
 			if (self.dataTable) {
 				
 				webix.ui(self.getViewDrawLoading(), $$(self.dataTable.getViewId()));
+
+				$$(self.uid).showProgress({
+					type: "bottom",
+					hide: false
+				});
 				
 				let viewsToRemove = [];
 				equipmentTable.getChildViews().forEach(view => {
@@ -201,8 +178,8 @@ export default class GenericMultiGridModule extends GenericModule {
 					}
 				});
 			}
-			
-			$$("listEquipmentType-" + self.uid).disable();
+
+			self.listView.enable();
 			
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat){
 				
@@ -217,16 +194,21 @@ export default class GenericMultiGridModule extends GenericModule {
 					
 					webix.ui(newTable, equipmentTable);
 		
-					//app.datatable.callbacks(self.module, self.instance);
 					self.dataTable.callbacks();
 					
 					$$(self.uid).hideProgress();
 					
-					$$("listEquipmentType-" + self.uid).enable();
+					self.listView.enable(true);
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
 		else {
+			
+			$$(self.uid).showProgress({
+				type: "bottom",
+				hide: false
+			});
+				
 			equipmentTable.addView(self.getViewDrawLoading());
 			equipmentTable.addView({ height: 20 });
 		}

@@ -195,15 +195,11 @@ export default class SignalingManagerModule extends GenericModule {
 
 			self.elementTypeIdSelected = elementTypeId;
 
-			fillViewSignalingModule();
+			fillViewSignalingModule(callbackEnable);
 
-			if (callbackEnable) {
-
-				callbackEnable(true);
-			}
 		}
 
-		function fillViewSignalingModule() {
+		function fillViewSignalingModule(callbackEnable) {
 
 			if (self.elementTypeIdSelected && self.mapCommandModule && self.mapElements) {
 
@@ -220,12 +216,18 @@ export default class SignalingManagerModule extends GenericModule {
 						let moduleAction = { id: moduleActionId };
 						let args = { selectedPks: elementIds };
 
-						util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args);
-						
-						if (Array.isArray(elementIds) && elementIds.length > 0) {
+						util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawContent, args ,function(instance){
 							
+							if (callbackEnable) {
+
+								callbackEnable(true);
+							}
+						});
+
+						if (Array.isArray(elementIds) && elementIds.length > 0) {
+
 							let container = $$(self.args.containerId);
-				
+
 							if (container) {
 							
 								if (elementIds.length === 1) {

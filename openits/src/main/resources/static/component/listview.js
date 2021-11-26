@@ -159,7 +159,7 @@ export default class ListView {
 		function drawElements(obj) {
 
 			let html = "";
-			let image = obj.image;
+			let image = obj.image || obj.elementTypePhoto;
 
 			if (mode === ListView.DrawMode.DEFAULT || mode === undefined || mode === null) {
 
@@ -239,12 +239,14 @@ export default class ListView {
 		if (list) {
 			
 			if (value) {
-									
-				list.enable();
+
+				webix.html.removeCss($$("list-" + this.uid).$view, "listview-disabled");
+				//list.enable();
 			} 
 			else {
-				
-				list.disable();
+
+				webix.html.addCss($$("list-" + this.uid).$view, "listview-disabled");	
+				//list.disable();
 			}	
 		}
 	}
