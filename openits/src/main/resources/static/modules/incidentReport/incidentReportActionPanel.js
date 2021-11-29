@@ -224,48 +224,8 @@ export default class IncidentReportActionPanel {
 											icon: "mdi mdi-map",
 											on: {
 												onItemClick() {
-
-													let module = undefined;
-													let containerId = $$(self.containerId).config.id;
-													let containerParentId = $$(self.containerId).getTopParentView().config.id;
-													let modules = window.em.getAll(EntityType.MODULE);
-													let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
-													const EXTERNALIZABLE_ID = {
-														CONTAINER: "view-content",
-														PARENT: "main-view"
-													};
-
-													if (Array.isArray(modules) && modules.length > 0) {
-
-														module = modules.find(mod => mod.id === self.config.defaultMapModule);
-
-														if (module) {
-
-															if (containerId === EXTERNALIZABLE_ID.CONTAINER && containerParentId === EXTERNALIZABLE_ID.PARENT) {
-
-																let mod = {module: module};
-																taskManagerService.externalize(self.uid, mod);
-
-															} else {
-
-																if (containerId === containerParentId) {
-
-																	taskManagerService.minimize(containerId);
-																}
-
-																let args = {
-																	longitude: self.incidentReport.location.lon,
-																	latitude: self.incidentReport.location.lat
-																}
-
-																util.module.open(module, null, VIEW_TYPE_TAB, null, args, function(instance){
-																	console.log(instance)
-																	//instance.goto();
-																	
-																});
-															}
-														}
-													}
+													
+													openMap();
 												}
 											}
 										},
@@ -697,6 +657,48 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
+		
+		
+		function openMap() {
+
+			const EXTERNALIZABLE_ID = { CONTAINER: "view-content", PARENT: "main-view" };
+			let containerId = $$(self.containerId).config.id;
+			let containerParentId = $$(self.containerId).getTopParentView().config.id;
+			let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
+			let module = util.module.getFromModuleAction(self.config.defaultMapSettings.moduleAction);
+			let moduleAction = { id: self.config.defaultMapSettings.moduleAction };
+
+			if (module) {
+
+				if (containerId === EXTERNALIZABLE_ID.CONTAINER && containerParentId === EXTERNALIZABLE_ID.PARENT) {
+
+					let mod = {
+						module: module,
+						moduleAction: moduleAction,
+						args: {
+							selectedPks: [self.incidentReport.id],
+						}
+					};
+
+					taskManagerService.externalize(self.uid, mod);
+
+				} else {
+
+					if (containerId === containerParentId) {
+
+						taskManagerService.minimize(containerId);
+					}
+
+					let args = {
+						selectedPks: [self.incidentReport.id],
+						containerId: containerId
+					}
+
+					util.module.open(module, moduleAction, VIEW_TYPE_TAB, null, args, null);
+				}
+			}
+		}
+
 
 		function showOperationalPlan() {
 			let h = document.documentElement.clientHeight - 200;

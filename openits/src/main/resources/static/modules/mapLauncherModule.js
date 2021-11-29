@@ -24,21 +24,45 @@ export default class MapLauncherModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-
+		let element = undefined;
+		let isIncident = false;
+		
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
 		if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
-			let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
+			if(self.moduleAction.id === self.config.moduleAction.loadIncidentInMap){
+				
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incident, { id: self.args.selectedPks[0] })).then(function(response) {
+					
+					if(response != null) {
+						
+						let responseJson = response.json();
+						
+						if(responseJson){
 
-			if (self.moduleAction.id === self.config.moduleAction.map) {
+							let mapId = (responseJson.incidentType.map) ? responseJson.incidentType.map : self.config.defaultMap;
 
-				loadMap(element);
+							responseJson.map = mapId;
+							isIncident = true;
+							loadMap(responseJson);							
+						}
+					}					
+				});
+			
+			} else {
+				
+				element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
 
-			} else if (self.moduleAction.id === self.config.moduleAction.synoptic) {
+				if (self.moduleAction.id === self.config.moduleAction.map) {
 
-				loadSynoptic(element);
+					loadMap(element);
+
+				} else if (self.moduleAction.id === self.config.moduleAction.synoptic) {
+
+					loadSynoptic(element);
+				}				
 			}
 		}
 
@@ -78,8 +102,15 @@ export default class MapLauncherModule extends GenericModule {
 								
 								$$("loading-" + self.uid).hide();
 								$$(self.uid).show();
+																
+								if (isIncident) {
 
-								webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+									webix.ui(map.getView(function() { map.selectIncident(element.id) }), $$(self.uid));
+
+								} else {
+
+									webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+								}
 								
 								if (container) {
 									
@@ -106,7 +137,6 @@ export default class MapLauncherModule extends GenericModule {
 
 						if (responseJson) {
 
-							console.log(responseJson);
 							let events = {};
 
 							let options = {};

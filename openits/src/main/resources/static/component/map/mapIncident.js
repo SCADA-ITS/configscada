@@ -460,4 +460,16 @@ export default class MapIncident {
 			this.hide();		
 		}
 	}
+	
+	goTo(coordinates, zoomLvl) {
+		
+		let lon = coordinates.longitude;
+		let lat = coordinates.latitude;
+		
+		this.parent.olMap.getView().animate({
+			center: ol.proj.fromLonLat([lon, lat]),
+			zoom: zoomLvl,
+			duration: 3000
+		});
+	}
 } 

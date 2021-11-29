@@ -7,7 +7,7 @@ import MapContextMenu from "./mapContextMenu.js";
 import MapZone from "./mapZone.js";
 import GraphicIcon from "../graphicIcon/graphicIcon.js";
 import MapIncident from "./mapIncident.js";
-//import MessageBox from "../messageBox.js";  
+import MessageBox from "../messageBox.js";  
 
 const TOPIC_ELEMENTS = "/topic/element.>";
 
@@ -1528,13 +1528,9 @@ export default class OpenMap extends GenericMap {
 				}, null, null, 4000);
 			}
 			else {
-				
-				webix.alert({
-					title: i18n.t("LBL_LAYER_NOT_VISIBLE"),
-					text: i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"),
-					type: "alert-error",
-					width: 500
-				});
+
+				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_LAYER_NOT_VISIBLE_FOR_ELEMENT_DESCRIPTION"), null, null);
+				ms.show();
 			}
 		}
 	}
@@ -1587,6 +1583,25 @@ export default class OpenMap extends GenericMap {
 		}
 		
 		return isVisible;
+	}
+	
+	selectIncident(incidentReportId) {
+
+		if (this.mapIncident && this.mapIncident.incidentReports) {
+
+			let incident = Object.fromEntries(this.mapIncident.incidentReports);
+
+			if (incident[incidentReportId] && incident[incidentReportId].id === incidentReportId) {
+
+				let coordinates = {
+						longitude: incident[incidentReportId].location.lon,
+						latitude: incident[incidentReportId].location.lat,
+				};
+
+				this.mapIncident.goTo(coordinates, this.currentZoomLevel);
+			}
+		}
+
 	}
 } 
 

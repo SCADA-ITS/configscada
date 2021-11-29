@@ -52,6 +52,9 @@
 	"stretchTypes":["StretchType:1", "StretchType:2"],
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
 	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",
+	"defaultMapSettings": { 
+		"moduleAction": 200003
+	},
 	"requiredPermissions": {
 		"autoassign": "SystemPermission:15",
 		"assignanother": "SystemPermission:16"
