@@ -209,6 +209,14 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				webix.ui(getViewContent(), $$(previousViewContent));
 				
+				if (Array.isArray(self.vmsSignalingContent.signalingCmds) && self.vmsSignalingContent.signalingCmds.length > 0) {
+					
+					self.vmsSignalingContent.signalingCmds.forEach(signalingCmd => {
+						
+						signalingCmd.loadData();
+					});
+				}
+				
 				$$("view-main-loading-" + self.uid).hide();
 				$$("view-main-body-" + self.uid).show();
 				
@@ -219,7 +227,6 @@ export default class VmsSignalingModule extends GenericModule {
 					$$("view-panel-" + self.uid).show();
 					
 				}, null, null, 500);
-				
 			}
 			
 			function getViewContent() {

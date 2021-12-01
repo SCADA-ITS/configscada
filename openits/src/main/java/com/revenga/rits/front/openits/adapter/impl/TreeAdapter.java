@@ -97,7 +97,7 @@ public class TreeAdapter {
 								@SuppressWarnings("unchecked")
 								List<TreeDataUI> treeData = (List<TreeDataUI>) groovyObj.invokeMethod(
 										METHOD_TO_TREE_DATA,
-										new Object[] { dataSourceGraphQL.getFieldId(), items });
+										new Object[] { dataSourceGraphQL.getId(), items });
 								
 								if (treeData != null) {
 									

@@ -45,9 +45,6 @@ export default class AlarmFilteredWizard {
 			]
 		};
 
-//		let h = document.documentElement.clientHeight - 270;
-//		let w = document.documentElement.clientWidth - 750;
-
 		this.createView = util.ui.loadWindow(
 			i18n.t("LBL_CREATE_ALARMS_FILTER"),
 			view,
@@ -79,7 +76,9 @@ export default class AlarmFilteredWizard {
 
 			let drawStepRadeonOptions = function() {
 
-				let viewContent = {
+				let viewContent;
+				
+				viewContent = {
 					cols: [
 						{},
 						{
@@ -118,7 +117,7 @@ export default class AlarmFilteredWizard {
 													],
 													on: {
 														onChange: function(newv) {
-															newv === "1" ? self.disableAlarm = true : self.disableAlarm = false;
+															self.disableAlarm = (newv === "1");
 															self.tableAlarmsModal.clear();
 															self.treeView.unselectAll();
 															self.treeView.collapse();
@@ -142,7 +141,7 @@ export default class AlarmFilteredWizard {
 
 			let drawStepCreateTreeGrid = function() {
 
-				let aconfitArray = [];
+				let aconfigArray = [];
 				
 				let viewContent = {
 					id: "treeGridStepView" + parent.uid,
@@ -165,55 +164,37 @@ export default class AlarmFilteredWizard {
 							self.alarmMutedElementSelect = element;
 
 							let elementTypeId = element.elementType.id;
-							let alarmConfig = window.em.getAll(EntityType.ALARM_CONFIG);
-							aconfitArray = alarmConfig.filter(e => e.elementType.id === elementTypeId);
+							let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
+							aconfigArray = alarmConfigs.filter(e => e.elementType.id === elementTypeId);
 
-							if (aconfitArray != undefined) {
+							if (Array.isArray(aconfigArray) && aconfigArray.length > 0) {
 
-								if (Array.isArray(aconfitArray) && aconfitArray.length) {
-
-									let alarmsConfig = aconfitArray;
-
-									for (let i = 0; i < alarmsConfig.length; i++) {
-
-										let row = {};
-
-										row.id = alarmsConfig[i].id;
-										row.alarmConfigAlias = alarmsConfig[i].alias;
-										row.alarmTypeLabelAlias = i18n.t(alarmsConfig[i].alarmType.labelAlias);
-										row.alarmLevelLabelAlias = i18n.t(alarmsConfig[i].alarmLevel.labelAlias);
-
-										self.tableAlarmsModal.add(row);
-									}
-								} else {
-
+								aconfigArray.forEach(alarmConfig => {
+									
 									let row = {};
 
-									row.id = aconfitArray.id;
-									row.alarmConfigAlias = aconfitArray.alias;
-									row.alarmTypeLabelAlias = i18n.t(aconfitArray.alarmType.labelAlias);
-									row.alarmLevelLabelAlias = i18n.t(aconfitArray.alarmLevel.labelAlias);
+									row.id = alarmConfig.id;
+									row.alarmConfigAlias = i18n.t(alarmConfig.labelAlias);
+									row.alarmLevelLabelAlias = i18n.t(alarmConfig.alarmLevel.labelAlias);
 
 									self.tableAlarmsModal.add(row);
-								}
-							}
+								});
+							} 
 						};
 
 						self.treeView = new TreeView(metadata, data, events);
 
 						let viewMain = {
 							id: "viewTree" + parent.uid,
-							width: 306,
+							width: 406,
 							cols: [
-								{},
+								{ width: 96 },
 								{
-									width: 250,
 									height: 385,
 									rows: [
 										{
 											view: "label",
 											borderless: true,
-											width: 250,
 											height: 23,
 											css: "headers",
 											label: i18n.t("LBL_ELEMENT_TYPES")
@@ -222,7 +203,6 @@ export default class AlarmFilteredWizard {
 											css: {
 												"border": "1px solid #dadee0 !important",
 												"border-top": "none !important",
-												"width": "248px !important",
 												"height": "362px !important"
 											},
 											cols: [self.treeView.getView()]
@@ -233,20 +213,20 @@ export default class AlarmFilteredWizard {
 							]
 						};
 
-						webix.ajax().get(appConfig.restUrl + "grids/" + parent.config.gridAlarmsConfig + "/" + "id").then((dat) => {
+						webix.ajax().get(appConfig.restUrl + "grids/" + parent.config.gridAlarmsConfig + "/" + "id").then((d) => {
 
-							if (dat != null) {
+							if (d != null) {
 
-								let metadata = dat.json().metadata;
+								let meta = d.json().metadata;
 
-								self.tableAlarmsModal = new DataTable(null, null, metadata, []);
+								self.tableAlarmsModal = new DataTable(null, null, meta, []);
 
 								let viewMaintable = {
 									id: "viewTable" + parent.uid,
 									cols: [
 										{ width: 7 },
 										{
-											width: 741,
+											//width: 741,
 											height: 385,
 											rows: [
 												{
@@ -278,7 +258,7 @@ export default class AlarmFilteredWizard {
 												}
 											]
 										},
-										{}
+										{ width: 100 }
 									]
 								};
 
@@ -289,10 +269,10 @@ export default class AlarmFilteredWizard {
 									$$("button-next-" + position + "-" + parent.uid).enable();
 									$$("calendar1-undefined").setValue(new Date());
 									
-									let alarmSelected = aconfitArray.find(e => e.id === selection.id);
+									let alarmSelected = aconfigArray.find(e => e.id === selection.id);
 									
 									if (alarmSelected){
-										self.arrSummary.alarmConfigAlias = alarmSelected.alias;
+										self.arrSummary.alarmConfigAlias = i18n.t(alarmSelected.labelAlias);
 										self.arrSummary.alarmLevelLabelAlias = i18n.t(alarmSelected.alarmLevel.labelAlias);										
 									}
 								});
@@ -321,7 +301,9 @@ export default class AlarmFilteredWizard {
 					null
 				);
 
-				let viewCalendar = {
+				let viewCalendar;
+				
+				viewCalendar = {
 					id: "viewCalendar" + parent.uid,
 					cols: [
 						{},
@@ -367,7 +349,9 @@ export default class AlarmFilteredWizard {
 
 			let drawSummary = function() {
 
-				let viewSummary = {
+				let viewSummary;
+				
+				viewSummary = {
 					id: "viewSummary" + parent.uid,
 					cols: [
 						{},
@@ -439,7 +423,9 @@ export default class AlarmFilteredWizard {
 				maxWidthLabels = container.config.width - 600;
 			}
 
-			let viewHeader = {
+			let viewHeader;
+			
+			viewHeader = {
 				css: { "background": "#567eba" },
 				rows: [
 					{
@@ -483,7 +469,9 @@ export default class AlarmFilteredWizard {
 
 			let labelNoCss = false;
 
-			let viewSteps = {
+			let viewSteps;
+			
+			viewSteps = {
 				rows: [
 					{
 						height: 5,
@@ -547,7 +535,9 @@ export default class AlarmFilteredWizard {
 			let icon = (position === parent.config.summaryStepPosition) ? "ico webix_icon mdi mdi-flag-checkered" : "ico webix_icon mdi mdi-numeric-" + position + "-box";
 			let label = parent.steps.find(e => e.position === position);
 
-			let viewStepAlarm = {
+			let viewStepAlarm;
+			
+			viewStepAlarm = {
 				cols: [
 					{},
 					{
@@ -674,13 +664,13 @@ export default class AlarmFilteredWizard {
 											alarmFiltereds: filteredAlarms
 										};
 
-										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then(function(data) {
+										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then(function() {
 											parent.args.callbacks[0](1000);
 											$$(self.createView).close();
 
 										});
 									}									
-								};
+								}
 							}
 						}
 					}
@@ -755,7 +745,7 @@ export default class AlarmFilteredWizard {
 		step = this.parent.steps.find(e => e.position === position);
 
 		return step;
-	};
+	}
 
 
 	setCurrentStep(position) {
@@ -787,6 +777,6 @@ export default class AlarmFilteredWizard {
 		currentStep = this.parent.steps.find(e => e.active);
 
 		return currentStep;
-	};
+	}
 
 }

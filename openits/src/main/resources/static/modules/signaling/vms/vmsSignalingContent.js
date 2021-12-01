@@ -3,6 +3,17 @@ import VmsSignalingComposer from "./vmsSignalingComposer.js";
 import VmsSignalingLibrary from "./vmsSignalingLibrary.js";
 import VmsSignalingMulti from "./vmsSignalingMulti.js";
 import MessageBox from "../../../component/messageBox.js";
+import GenericSignalingCommand from "../generic/genericSignalingCommand.js";
+
+const MAX_ALTERNANCE_S = 10;
+const MIN_ALTERNANCE_S = 1;
+
+const MAX_FLASHING_S = 10;
+const MIN_FLASHING_S = 1;
+
+const DEFAULT_ALTERNANCE_S = 5;
+const DEFAULT_FLASHING_ON_S = 5;
+const DEFAULT_FLASHING_OFF_S = 5;
 
 export default class VmsSignalingContent {
 
@@ -18,16 +29,16 @@ export default class VmsSignalingContent {
 		this.onUpdate = onUpdate;
 		this.onOrderEdit = onOrderEdit;
 		this.multiselectAllowed = multiselectAllowed;
+		this.signalingCmds = [];
 
 		if (this.isPlanOrderEdit) {
 			
-			this.selectedCommand = this.currentCommandElement.commandElementType.id;
+			this.selectedCommand = this.currentCommandElement.commandElementType;
 		}
 		else {
 			
-			this.selectedCommand = config.commands.sendMessage.commandElementTypeId;
+			this.selectedCommand = element.commandElements.find(e => e.id == config.commands.sendMessage.commandElementTypeId);
 		}
-		
 		
 		this.uid = webix.uid();
 		
@@ -49,38 +60,12 @@ export default class VmsSignalingContent {
 			id: "view-main-content-" + self.uid,
 			rows: [
 				getViewHeader(),
-				{ height: !self.isPlanOrderEdit ? 20 : 1 },
+				{ height: 10 },
 				{
 					cols: [
 						{ width: 20 },
-						{
-							rows: function() {
-								
-								if (!self.isPlanOrderEdit) {
-									
-									return [
-										getViewToolbar(),
-										{ height: 20 },
-										getViewComposer(),
-										{ height: 20 },
-										getViewPriority(),
-										{ height: 20 },
-										getViewSchedule(),
-										{ height: 20 },
-										{}
-									]
-								}
-								else {
-									
-									return [
-										getViewToolbar(),
-										{ height: 1 },
-										getViewComposer(),
-										{}
-									]
-								}
-							}()
-						}
+						getSignallingTabs(),
+						{ width: 20 }
 					]
 				},
 				{
@@ -165,12 +150,6 @@ export default class VmsSignalingContent {
 								
 									self.composer.clear();
 									self.hasMessage = false;
-									let radioCommands = $$("view-signalling-commands-" + self.uid);
-									
-									if (radioCommands) {
-										
-										radioCommands.setValue(self.config.commands.sendMessage.commandElementTypeId);	
-									}
 									
 									let btnSend = $$("btn-send-" + self.uid);
 									let btnUndo = $$("btn-undo-" + self.uid);
@@ -238,7 +217,7 @@ export default class VmsSignalingContent {
 										self.hasMessage = false;
 										btnUndo.disable();
 																				
-										if (btnSend && btnUndo && self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId) {
+										if (btnSend && btnUndo && self.selectedCommand.id == self.config.commands.sendMessage.commandElementTypeId) {
 											
 											btnSend.disable();
 										}	
@@ -303,64 +282,137 @@ export default class VmsSignalingContent {
 			}
 		}
 		
-		function getViewCommands() {
+		function getSignallingTabs() {
 			
-			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
-				
-				self.commandsElement = self.element.commandElements.map(cmdElement => {
-					
-					return {
+			let signallingTabs = {};
+
+			signallingTabs = {
+				view: "tabview",
+				id: "view-signalling-tabs-" + self.uid,
+				css: "auxiliary-tab",
+				animate: false,
+				borderless: true,
+				cells: [],
+				multiview: {
+					keepViews:true
+		        },
+				tabbar: {
+					tabMargin: 6,
+					on: {
+						onChange: function(newv) {
+					        
+							if ($$(newv)) {
+								
+								self.selectedCommand = self.element.commandElements.find(e => e.id == $$(newv).config.commandElementTypeId);
 						
-						id: cmdElement.id,
-						value: i18n.t(cmdElement.labelAlias)
-					}
-				})
-			}
-			
-			let viewCommands;
-			
-			viewCommands = {
-				id: "view-signalling-commands-" + self.uid,
-				view: "radio",
-				vertical: false,
-				value: function() {
-					
-					let commandElementTypeId = self.config.commands.sendMessage.commandElementTypeId;
-					
-					if (self.isPlanOrderEdit) {
-						
-						commandElementTypeId = self.currentCommandElement.commandElementType.id;
-					} 
-					
-					return commandElementTypeId;
-				}(),
-				options: self.commandsElement,
-				on: {
-					onChange: function(newv) {
-						
-						self.selectedCommand = newv;
-						
-						let btnSend = $$("btn-send-" + self.uid);
-						let btnUndo = $$("btn-undo-" + self.uid);
+								let btnSend = $$("btn-send-" + self.uid);
+								let btnUndo = $$("btn-undo-" + self.uid);
+												
+								if (btnSend) {
+									
+									if (newv != self.config.commands.sendMessage.commandElementTypeId) {
+									
+										btnSend.enable();
 										
-						if (btnSend) {
-							
-							if (newv != self.config.commands.sendMessage.commandElementTypeId) {
-							
-								btnSend.enable();
-								
+									}
+									else {
+										
+										self.hasMessage ? btnSend.enable() : btnSend.disable();
+										self.hasMessage ? btnUndo.enable() : btnUndo.disable();
+									}	
+								}	
 							}
-							else {
+					    },
+						onAfterRender: function() {
+							
+							let tabView = $$("view-signalling-tabs-" + self.uid);
+							
+							if (tabView) {
 								
-								self.hasMessage ? btnSend.enable() : btnSend.disable();
-								self.hasMessage ? btnUndo.enable() : btnUndo.disable();
-							}	
+								setTimeout(function() {
+								
+									let tabSelected = "view-generic-signaling-command-body-" + self.config.commands.sendMessage.commandElementTypeId + "-" + self.uid;
+							
+									if (self.isPlanOrderEdit) {
+										
+										tabSelected = "view-generic-signaling-command-body-" + self.currentCommandElement.commandElementType.id + "-" + self.uid;
+									} 	
+									
+									tabView.setValue(tabSelected);							
+	
+								}, 100);	
+							}
 						}
 					}
 				}
+			};
+			
+			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
+				
+				// First command sendmessage and the ordered alphabetic
+				
+				let viewSignalling = undefined;
+				let commandElementSendMessage = self.element.commandElements.find(e => e.id === self.config.commands.sendMessage.commandElementTypeId);
+				
+				viewSignalling = getViewSendMessage();
+				
+				signallingTabs.cells.push(viewSignalling);
+				
+				self.element.commandElements.forEach(cmdElement => {
+					
+					if (cmdElement.id != self.config.commands.sendMessage.commandElementTypeId) {
+						
+						viewSignalling = getViewCommandOthers(cmdElement);
+						
+						signallingTabs.cells.push(viewSignalling);
+					}
+				});
+				
+				function getViewSendMessage() {
+					
+					return {
+							
+						header: function() {
+
+							return `<div><span>${i18n.t(commandElementSendMessage.labelAlias)}</span></div>`;
+						}(),
+						body: {
+							
+							id: "view-generic-signaling-command-body-" + commandElementSendMessage.id + "-" + self.uid,
+							commandElementTypeId: commandElementSendMessage.id,
+							rows: [
+								{ height: 20 },
+								getViewToolbar(),
+								{ height: 10 },
+								getViewComposer(),
+								getViewOptions(),
+								{}	
+							]	
+						}
+					}
+					
+				}
+				
+				function getViewCommandOthers(cmd) {
+				
+					let commandElement = webix.copy(cmd);
+						
+					if (self.isPlanOrderEdit && commandElement.id === self.currentCommandElement.commandElementType.id &&
+						Array.isArray(self.currentCommandElement.commandElementValues)) {
+						
+						commandElement.commandElementValues = webix.copy(self.currentCommandElement.commandElementValues);	
+					}
+
+					let signalingCmd = new GenericSignalingCommand(self, self.selectedElements.map(e => { return e.id }), commandElement, true, true);
+					
+					self.signalingCmds.push(signalingCmd);
+					
+					return signalingCmd.getView();
+				}
+				
 			}
 			
-			return viewCommands;
+			return signallingTabs;
 		}
 		
 		function getViewComposer() {
@@ -400,8 +452,6 @@ export default class VmsSignalingContent {
 				}
 			}
 			
-			
-			
 			self.composer = new VmsSignalingComposer(self.config, self.element, initialJsonValue, editPanelPermission ? onUpdateComposer : undefined);
 			
 			if (!editPanelPermission && Array.isArray(initialJsonValue) && initialJsonValue.length > 0) {
@@ -412,44 +462,8 @@ export default class VmsSignalingContent {
 			viewComposer = {
 				rows: [
 					{
-						cols: function() {
-
-							let labels; 
-							
-							labels= [
-								{
-									view: "label",
-									label: `<div class="title"><i style="color:#33425e; font-size: 2em" class="mdi mdi-cog"></i></div>`,
-									align: "center",
-									height: 50,
-									width: 56
-								},
-								{
-									view: "label",
-									css: "alarm-view-header-details-text",
-									label: `<span class="alarm-view-header-details-text">${i18n.t("LBL_SIGNALING")}</span>`,
-									align: "left",
-									height: 50
-								}
-							];
-
-							return labels;
-						}()
-					},
-					{
-						cols: function() {
-
-							return [
-								{ width: 60 },
-								getViewCommands(),
-								{ width: 60 }
-							];
-						}()
-					},
-					{ height: 10 },
-					{
 						cols: [
-							{ width: 60 },
+							{ width: 40 },
 							self.composer.getView(),
 							{}
 						]
@@ -459,6 +473,172 @@ export default class VmsSignalingContent {
 			
 			return viewComposer;
 		}
+		
+		function getViewOptions() {
+			
+			let viewVmsOptions = {};
+			
+			let property = self.config.properties.find(e => e.id === self.element.elementSubtype.id)
+				
+			if (property) {
+				
+				viewVmsOptions = {
+					cols: [
+						{ width: 20 },
+						{
+							rows: [
+								{ 
+									type: "section",
+									hidden: !property.alternance && !property.blinking, 
+									template: i18n.t("LBL_VMS_SETTINGS")
+								},
+								getViewOptionForm(),
+							]
+						},
+						{}
+					]
+				}	
+			}
+			
+			function getViewOptionForm() {
+				
+				let viewOptionForm;
+				
+				viewOptionForm = {
+					
+					view: "form",
+					id: "view-form-options-" + self.uid,
+					borderless: true,
+					width: 700,
+					elements: []
+				}
+				
+				
+				let decimalPrecision = property.decimalPrecision ? property.decimalPrecision : 0;  
+		
+				if (property.alternance) {
+					
+					let alternance = self.composer.getOption(VmsSignalingComposer.FIELD_ALTERNANCE_MS);
+					
+					if (!alternance) {
+					
+						alternance = property.defaultAlternanceMs ? property.defaultAlternanceMs / 1000 : DEFAULT_ALTERNANCE_S;	
+					}
+					else {
+						
+						alternance /= 1000;
+					}
+					
+					viewOptionForm.elements.push({ 
+						view: "slider", 
+						label: i18n.t("LBL_ALTERNANCE_SECS"),
+						tooltip: i18n.t("LBL_ALTERNANCE_SECS"),
+						labelWidth: 250, 
+						step: decimalPrecision ? (1 / Math.pow(10, decimalPrecision)) : 1,
+						value: alternance, 
+						min: MIN_ALTERNANCE_S, 
+						max: MAX_ALTERNANCE_S,
+						title: function(obj){
+					         return parseFloat(obj.value).toFixed(decimalPrecision ? decimalPrecision : 0) + " " + i18n.t("LBL_SECONDS");
+					    },
+						name: "alternance",
+						on: {
+							onChange: function(newv) {
+								
+								let btnSend = $$("btn-send-" + self.uid);
+								
+								if (btnSend) {
+									
+									btnSend.enable();
+								}
+							}
+						}
+					});
+				}
+				
+				if (property.blinking) {
+					
+					let flashingOn = self.composer.getOption(VmsSignalingComposer.FIELD_FLASHING_ON_MS);
+					
+					if (!flashingOn) {
+					
+						flashingOn = property.defaultFlashingOnMs ? property.defaultFlashingOnMs / 1000 : DEFAULT_FLASHING_ON_S;	
+					}
+					else {
+						
+						flashingOn /= 1000;
+					}
+					
+					viewOptionForm.elements.push({ 
+						view: "slider", 
+						label: i18n.t("LBL_FLASHING_ON_SECS"),
+						tooltip: i18n.t("LBL_FLASHING_ON_SECS"),
+						labelWidth: 250,
+						step: decimalPrecision ? (1 / Math.pow(10, decimalPrecision)) : 1, 
+						value: flashingOn, 
+						min: MIN_FLASHING_S, 
+						max: MAX_FLASHING_S,
+						title: function(obj){
+					         return parseFloat(obj.value).toFixed(decimalPrecision ? decimalPrecision : 0) + " " + i18n.t("LBL_SECONDS");
+					    },
+						name: "flashingOn",
+						on: {
+							onChange: function(newv) {
+								
+								let btnSend = $$("btn-send-" + self.uid);
+								
+								if (btnSend) {
+									
+									btnSend.enable();
+								}
+							}
+						}
+					});
+					
+					let flashingOff = self.composer.getOption(VmsSignalingComposer.FIELD_FLASHING_OFF_MS);
+					
+					if (!flashingOff) {
+					
+						flashingOff = property.defaultFlashingOffMs ? property.defaultFlashingOffMs / 1000 : DEFAULT_FLASHING_OFF_S;	
+					}
+					else {
+						
+						flashingOff /= 1000;
+					}
+					
+					viewOptionForm.elements.push({ 
+						view: "slider", 
+						label: i18n.t("LBL_FLASHING_OFF_SECS"),
+						tooltip: i18n.t("LBL_FLASHING_OFF_SECS"),
+						labelWidth: 250,
+						step: decimalPrecision ? (1 / Math.pow(10, decimalPrecision)) : 1, 
+						value: flashingOff, 
+						min: MIN_FLASHING_S, 
+						max: MAX_FLASHING_S,
+						title: function(obj){
+					         return parseFloat(obj.value).toFixed(decimalPrecision ? decimalPrecision : 0) + " " + i18n.t("LBL_SECONDS");
+					    },
+						name: "flashingOff",
+						on: {
+							onChange: function(newv) {
+								
+								let btnSend = $$("btn-send-" + self.uid);
+								
+								if (btnSend) {
+									
+									btnSend.enable();
+								}
+							}
+						}
+					});
+				}
+						
+				return viewOptionForm;
+			}
+			
+			return viewVmsOptions;
+		} 
+		
 				
 		function onUpdateComposer(jsonData) {
 			
@@ -466,7 +646,7 @@ export default class VmsSignalingContent {
 				
 				if (!self.undoJsonData) {
 				
-					self.undoJsonData = webix.copy(self.composer.jsonData);
+					self.undoJsonData = webix.copy(self.composer.getCurrentSignalingJsonData());
 					return;
 				}
 				
@@ -483,26 +663,6 @@ export default class VmsSignalingContent {
 					}	
 				}	
 			}
-		}
-		
-		function getViewPriority() {
-			
-			let viewPriority;
-			
-			viewPriority = {
-				
-			};
-			
-			return viewPriority;
-		}
-		
-		function getViewSchedule() {
-			
-			let viewSchedule = {
-				
-			};
-			
-			return viewSchedule;
 		}
 		
 		function getViewActions() {
@@ -594,8 +754,10 @@ export default class VmsSignalingContent {
 									
 								} else {
 									
-									let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
-									let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
+									let commandSelected = self.element.commandElements.find(e => e.id == self.selectedCommand.id);
+									//let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
+									//let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
+									let title = (commandSelected ? i18n.t(commandSelected.labelAlias) : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM"));
 									
 									title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
 									
@@ -604,7 +766,7 @@ export default class VmsSignalingContent {
 									
 									function onAccept() {
 										
-										let isCmdSendMessage = (self.selectedCommand == self.config.commands.sendMessage.commandElementTypeId);
+										let isCmdSendMessage = (self.selectedCommand.id == self.config.commands.sendMessage.commandElementTypeId);
 											
 										let body = {
 											commands : []
@@ -616,29 +778,58 @@ export default class VmsSignalingContent {
 	
 											sendMessageCmd = {};
 											
+											// Command SendMessage
 											if (isCmdSendMessage) {
 												
 												sendMessageCmd = self.config.commands.sendMessage;
+												sendMessageCmd.elementId = element.id;
+												
+												if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
+													
+													let options = $$("view-form-options-" + self.uid).getValues();
+												
+													sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.getCurrentSignalingJsonData(options));
+												}
 											}
+											// Other commands
 											else {
 												
-												sendMessageCmd.commandElementTypeId = self.selectedCommand;
+												sendMessageCmd = {
+													elementId: element.id,
+													commandElementTypeId: self.selectedCommand.id,
+												}
+												
+												if (Array.isArray(self.signalingCmds) && self.signalingCmds.length > 0) {
+								
+													let signalingCmd = self.signalingCmds.find(e => e.commandElementType.id === sendMessageCmd.commandElementTypeId);
+													
+													if (signalingCmd) {
+														
+														let genericCmd = signalingCmd.getCommandElement(element.id); 
+														
+														if (genericCmd && Array.isArray(genericCmd.commandElementValues)) {
+															
+															sendMessageCmd.commandElementValues = [];
+						
+															genericCmd.commandElementValues.forEach(commandElementValue => {
+								
+																sendMessageCmd.commandElementValues.push({
+								
+																	commandElementTypeParamId: commandElementValue.commandElementTypeParam.id,
+																	value: commandElementValue.value
+																});
+															});
+														}
+													}
+												}
 												
 												self.composer.clear();
 												self.hasMessage = false;
 											}
 											
-											if (isCmdSendMessage && Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
-												
-												sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.jsonData);
-											}
-											
-											sendMessageCmd.elementId = element.id;
-											
 											body.commands.push(webix.copy(sendMessageCmd));	
 											
 											sendMessageCmd = undefined;
-											
 										});
 										
 										if (Array.isArray(body.commands) && body.commands.length > 0) {
@@ -677,7 +868,7 @@ export default class VmsSignalingContent {
 			
 			if (Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) {
 
-				let selectedCommandElement = self.element.commandElements.find(e => e.id === self.selectedCommand);
+				let selectedCommandElement = self.element.commandElements.find(e => e.id === self.selectedCommand.id);
 				
 				if (selectedCommandElement) {
 					
@@ -699,6 +890,8 @@ export default class VmsSignalingContent {
 						if (selectedCommandElement.id === self.config.commands.sendMessage.commandElementTypeId &&
 							self.composer) {
 								
+							let options = $$("view-form-options-" + self.uid).getValues();
+								
 							commandElement.commandElementValues = [];
 							
 							commandElement.commandElementValues.push({
@@ -706,8 +899,20 @@ export default class VmsSignalingContent {
 								commandElementTypeParam: {
 									id: selectedCommandElement.commandElementTypeParams[0].id 
 								},
-								value: self.composer.jsonData
+								value: self.composer.getCurrentSignalingJsonData(options)
 							});
+						}
+						else {
+							
+							if (Array.isArray(self.signalingCmds) && self.signalingCmds.length > 0) {
+								
+								let signalingCmd = self.signalingCmds.find(e => e.commandElementType.id === selectedCommandElement.id);
+								
+								if (signalingCmd) {
+									
+									commandElement = signalingCmd.getCommandElement(elementId);
+								}
+							}		
 						}
 					}
 				}				

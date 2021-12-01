@@ -431,7 +431,7 @@ export default class VmsSignalingLibrary {
 							{}
 						]
 					},
-					{}
+					{ height: 20 }
 				]
 			};
 
@@ -600,10 +600,15 @@ export default class VmsSignalingLibrary {
 				
 				viewComposer = {
 					id: "view-composer-" + self.uid,
-					cols: [
-						{ width: 30 },
-						self.composer.getView(),
-						{ width: 30 }
+					rows: [
+						{
+							cols: [
+								{ width: 30 },
+								self.composer.getView(),
+								{ width: 30 }
+							]		
+						},
+						{}
 					]
 				}
 
@@ -637,13 +642,15 @@ export default class VmsSignalingLibrary {
 					viewOptionButtonList = {
 						id: "view-option-dialog-" + self.uid,
 						rows: [
-							{height: 30},
+							{ height: 30 },
 							{						
 								cols: [
 									{ width: 30 },
 									self.optionButtonList.getView(),
 									{ width: 30 }
-								]}							
+								]
+							},
+							{}						
 						]
 					}
 

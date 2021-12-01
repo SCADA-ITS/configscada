@@ -6,18 +6,25 @@ import VmsSignalingGraphicEditor from "./vmsSignalingGraphicEditor.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
 
-const TEXT_ALIGN_CENTER = "center";
-const TEXT_ALIGN_LEFT = "left";
-const TEXT_ALIGN_RIGHT = "right";
-
 export default class VmsSignalingComposer {
+	
+	static get WIN() { return 1 }
+	static get ALERT() { return 2 }
+	
+	static get TEXT_ALIGN_CENTER() { return "center" }
+	static get TEXT_ALIGN_LEFT() { return "left" }
+	static get TEXT_ALIGN_RIGHT() { "right" }
+	
+	static get FIELD_ALTERNANCE_MS() { return "alternance_ms" }
+	static get FIELD_FLASHING_ON_MS() { return "flashing_on_ms" }
+	static get FIELD_FLASHING_OFF_MS() { return "flashing_off_ms" }
 
 	constructor(config, element, initialJsonData, onUpdate, onAfterRender) {
 		
 		const jsonDataFakeArray = [
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE","alternance":"REDUZCA"},{"id":2,"value":"A 3 KM EN","alternance":"LA VELOCIDAD"},{"id":3,"value":"CARRIL DER.","alternance":"USE CAR. IZD"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
-			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION","alternance":"ATENCION","color":"#ff0000"},{"id":2,"value":"LA SENDA","alternance":"AMIGO","color":"#00ff00"},{"id":3,"value":"ES PELIGROSA","alternance":"CONDUCTOR","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
-			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":81,"alternance":744}]},{"zone":2,"alternance_ms":5000,"align": VmsSignalingComposer.TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"ACCIDENTE","alternance":"REDUZCA"},{"id":2,"value":"A 3 KM EN","alternance":"LA VELOCIDAD"},{"id":3,"value":"CARRIL DER.","alternance":"USE CAR. IZD"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":85}]}],
+			[{"zone":1,"alternance_ms":5000,"graphics":[{"id":1,"value":22,"alternance":29}]},{"zone":2,"alternance_ms":5000,"align": VmsSignalingComposer.TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"PRECAUCION","alternance":"ATENCION","color":"#ff0000"},{"id":2,"value":"LA SENDA","alternance":"AMIGO","color":"#00ff00"},{"id":3,"value":"ES PELIGROSA","alternance":"CONDUCTOR","color":"#0000ff"}]},{"zone":3,"flashing_on_ms":1000,"flashing_off_ms":1000,"graphics":[{"id":1,"value":28}]}],
+			[{"zone":1,"graphics":[{"id":1,"value":438}]},{"zone":2,"alternance_ms":5000,"align": VmsSignalingComposer.TEXT_ALIGN_LEFT,"texts":[{"id":1,"value":"CAMPAÑA"},{"id":2,"value":"CONTROL USO"},{"id":3,"value":"CINTURON"}]}]
 		]
 		
 		this.config = config;
@@ -383,10 +390,48 @@ export default class VmsSignalingComposer {
 		
 		return jsonData;
 	}
-	
-	getCurrentSignalingJsonData() {
+		
+	getCurrentSignalingJsonData(options) {
+		
+		if (options && Array.isArray(this.jsonData)) {
+			
+			this.jsonData.forEach(zone => {
+				
+				if (zone[VmsSignalingComposer.FIELD_ALTERNANCE_MS] && options.alternance) {
+					
+					zone[VmsSignalingComposer.FIELD_ALTERNANCE_MS] = parseInt(options.alternance * 1000);
+				}
+				
+				if (zone[VmsSignalingComposer.FIELD_FLASHING_ON_MS] && options.flashingOn) {
+					
+					zone[VmsSignalingComposer.FIELD_FLASHING_ON_MS] = parseInt(options.flashingOn * 1000);
+				}
+				
+				if (zone[VmsSignalingComposer.FIELD_FLASHING_OFF_MS] && options.flashingOff) {
+					
+					zone[VmsSignalingComposer.FIELD_FLASHING_OFF_MS] = parseInt(options.flashingOff * 1000);
+				}
+			});
+		}
 		
 		return this.jsonData;
+	}
+	
+	getOption(option) {
+		
+		let value = undefined;
+		
+		if (Array.isArray(this.jsonData)) {
+			
+			let zone = this.jsonData.find(e => e[option]);
+			
+			if (zone) {
+				
+				value = zone[option];
+			}
+		}
+		
+		return value;
 	}
 	
 	update(jsonData) {

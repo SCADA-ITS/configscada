@@ -58,6 +58,7 @@
 				"svgFile": "img/graphic_icon/71_vms_dgt.svg",
 				"jsCustomTypeRender": "component/graphicIcon/custom/vms.js"
 			},
+			"decimalPrecision": 1,
 			"alternance": true,
 			"defaultAlternanceMs": 5000,
 			"blinking": true,

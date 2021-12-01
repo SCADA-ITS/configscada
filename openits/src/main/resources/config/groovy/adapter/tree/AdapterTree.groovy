@@ -28,5 +28,5 @@ public abstract class AdapterTree {
 		this.log = log;
 	}
 	
-	public abstract List<TreeDataUI> toTreeData(String fieldId, List<Map<String, Object>> entities);
+	public abstract List<TreeDataUI> toTreeData(Integer datasourceId, List<Map<String, Object>> entities);
 }

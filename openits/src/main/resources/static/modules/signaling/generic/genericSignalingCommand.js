@@ -4,7 +4,7 @@ import MessageBox from "../../../component/messageBox.js";
 
 export default class GenericSignalingCommand {
 
-	constructor(parent, selectedElementIds, commandElementType, isEditPlanOrder) {
+	constructor(parent, selectedElementIds, commandElementType, isEditPlanOrder, isEmbedded) {
 
 		this.parent = parent;
 		this.uid = parent.uid;
@@ -12,6 +12,7 @@ export default class GenericSignalingCommand {
 		this.commandElementType = commandElementType;
 		this.dtParams = undefined;
 		this.isEditPlanOrder = isEditPlanOrder;
+		this.isEmbedded = (isEmbedded === true);
 	}
 
 	getView() {
@@ -58,7 +59,7 @@ export default class GenericSignalingCommand {
 				viewComponents.rows.push(getViewActions());
 			}
 			
-			if (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) {
+			if (self.isEditPlanOrder && self.selectedElementIds && self.selectedElementIds.length >1) {
 
 				viewComponents.rows.push(getViewActions());
 			}
@@ -382,13 +383,14 @@ export default class GenericSignalingCommand {
 						{
 							view: "button",
 							css: "action-button",
+							hidden: self.isEmbedded,
 							width: 130,
 							height: 35,
-							label: (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
+							label: (self.isEditPlanOrder && self.selectedElementIds && self.selectedElementIds.length >1) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
 							on: {
 								onItemClick() {
 
-									if (self.isEditPlanOrder && self.parent.args.selectedPks && self.parent.args.selectedPks.length >1) {
+									if (self.isEditPlanOrder && self.selectedElementIds && self.selectedElementIds.length >1) {
 										
 										const win = $$(self.parent.args.containerId).getTopParentView();
 										win.hide();

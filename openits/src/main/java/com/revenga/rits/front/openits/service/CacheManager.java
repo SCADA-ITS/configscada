@@ -31,6 +31,7 @@ import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 import com.revenga.rits.front.openits.scheduler.ScheduledEntitiesResositoryJob;
 import com.revenga.rits.front.openits.util.ConfigProperty;
+import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
 
@@ -228,7 +229,7 @@ public class CacheManager {
 				
 				Integer[] datasources = Arrays.stream(emCacheDatasources).map(e -> Integer.valueOf(e)).toArray(Integer[]::new);
 				
-				Arrays.stream(datasources).forEach(entityId -> {
+				Arrays.stream(datasources).forEach(dataSourceId -> {
 					
 					int retries = (int) CACHE_RETRY_TIMES;
 					Object data = null;
@@ -239,32 +240,36 @@ public class CacheManager {
 							
 							Instant timeRef = Instant.now();
 							
-							data = voDataSourceAdapter.getList(entityId, null);
+							DataSource dataSource = voDataSourceAdapter.getDataSourceService().getById(dataSourceId);
 							
-							if (data != null) {
+							if (dataSource != null) {
 								
-								if (data instanceof List<?>) {
+								data = voDataSourceAdapter.getList(dataSourceId, null);
+								
+								if (data != null) {
 									
-									List<?> list = null;
-									
-									list = vo2uiAdapter.convert(entityId, (List<Map<String, Object>>) data);
-									
-									entitiesCached.put(entityId, list);
-									
-									log.info(list.size() + " entities from datasource " + entityId + " cached in "
-											+ Duration.between(timeRef, Instant.now()).toMillis() + "ms.");
+									if (data instanceof List<?>) {
+										
+										List<?> list = vo2uiAdapter.convert(dataSourceId, (List<Map<String, Object>>) data);
+										
+										entitiesCached.put(dataSourceId, list);
+										
+										log.info("Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
+												+ "]: " + list.size() + " " + dataSource.getEntityVo() + " ("
+												+ Duration.between(timeRef, Instant.now()).toMillis() + " ms." + ")");
+									}
+									else {
+										
+										log.error("Not allow caching of single entities");
+									}
 								}
 								else {
 									
-									log.error("Not allow caching of single entities");
+									log.warn("Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
+											+ "]: Not response. Try again in " + CACHE_RETRY_TIMEOUT_SECS + " secs...");
+									
+									Thread.sleep(CACHE_RETRY_TIMEOUT_SECS);
 								}
-							}
-							else {
-								
-								log.warn("Entity datasource = " + entityId + " not response. Try again in "
-										+ CACHE_RETRY_TIMEOUT_SECS + " secs...");
-								
-								Thread.sleep(CACHE_RETRY_TIMEOUT_SECS);
 							}
 							
 						} catch (InterruptedException e1) {

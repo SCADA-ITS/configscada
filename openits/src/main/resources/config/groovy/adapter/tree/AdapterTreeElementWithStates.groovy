@@ -43,7 +43,7 @@ public class AdapterTreeElementWithStates extends AdapterTree{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TreeDataUI> toTreeData(String fieldId, List<Map<String, Object>> entities) {
+	public List<TreeDataUI> toTreeData(Integer datasourceId, List<Map<String, Object>> entities) {
 		
 		List<TreeDataUI> data = null;
 		Map<String, TreeDataUI> elementTypeNodes = new HashMap<>();
@@ -52,7 +52,7 @@ public class AdapterTreeElementWithStates extends AdapterTree{
 			
 			if (!CollectionUtils.isEmpty(entities)) {
 				
-				List<Map<String, Object>> entitiesConverted = vo2uiAdapter.convert(fieldId, entities);
+				List<Map<String, Object>> entitiesConverted = vo2uiAdapter.convert(datasourceId, entities);
 						
 				for (Map<String, Object> entity : entitiesConverted) {
 									

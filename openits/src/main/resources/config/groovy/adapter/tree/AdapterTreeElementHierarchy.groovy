@@ -31,7 +31,7 @@ public class AdapterTreeElementHierarchy extends AdapterTree{
 	}
 	
 	@Override
-	public List<TreeDataUI> toTreeData(String fieldId, List<Map<String, Object>> entities) {
+	public List<TreeDataUI> toTreeData(Integer datasourceId, List<Map<String, Object>> entities) {
 
 		List<TreeDataUI> data = null;
 		
@@ -39,7 +39,7 @@ public class AdapterTreeElementHierarchy extends AdapterTree{
 			
 			if (!CollectionUtils.isEmpty(entities)) {
 				
-				List<Map<String, Object>> hierarchiesConverted = vo2uiAdapter.convert(fieldId, entities);
+				List<Map<String, Object>> hierarchiesConverted = vo2uiAdapter.convert(datasourceId, entities);
 				
 				data = getRootNodes(hierarchiesConverted);
 			}
