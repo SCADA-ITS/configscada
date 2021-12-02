@@ -32,21 +32,10 @@
      inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="main" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
-         id="path2" />
-    </clipPath>
-  </defs>
   <g
      id="main"
      transform="matrix(1.6127368,0,0,1.6127903,0,-139.08426)">
     <g
-       clip-path="url(#clip1)"
-       clip-rule="nonzero"
        id="g11">
       <path
          style="fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"

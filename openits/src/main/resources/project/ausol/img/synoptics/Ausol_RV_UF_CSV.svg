@@ -46,22 +46,11 @@
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
-  <defs
-     id="defs5" />
   <g
      id="main"
      transform="matrix(1.6128117,0,0,1.6128305,-0.78326384,-139.08362)">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0.480469,86.238281 H 1191 V 755.89844 H 0.480469 Z m 0,0"
-         id="path2"
-         inkscape:connector-curvature="0" />
-    </clipPath>
     <g
-       clip-path="url(#clip1)"
-       id="g11"
-       style="clip-rule:nonzero">
+       id="g11">
       <path
          style="fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
          d="M 1435.026,19841.016 H 12594.987 L 1435.026,0 Z m 11159.961,0 L 1435.026,0 h 11159.961 z m 0,0"

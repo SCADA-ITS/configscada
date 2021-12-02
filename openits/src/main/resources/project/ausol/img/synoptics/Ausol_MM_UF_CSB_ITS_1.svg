@@ -47,26 +47,17 @@
      inkscape:current-layer="svg2"
      inkscape:pagecheckerboard="0"
      inkscape:document-units="pt" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0.480469,86.238281 H 1191 V 755.89844 H 0.480469 Z m 0,0"
-         id="path2" />
-    </clipPath>
-  </defs>
   <g
      id="main"
      transform="matrix(1.2089945,0,0,1.2084997,-0.21645836,-103.85941)">
     <g
        id="g11048">
       <path
-         style="clip-rule:nonzero;fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:0.12;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
+         style="fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:0.12;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
          d="M 1191,86.30078 H 0.53904 L 1191,755.89844 Z m -1190.46096,0 L 1191,755.89844 H 0.53904 Z m 0,0"
          id="path7" />
       <path
-         style="clip-rule:nonzero;fill:none;stroke:#000000;stroke-width:0.72;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
+         style="fill:none;stroke:#000000;stroke-width:0.72;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
          d="M 0.53904,86.30078 H 1191 V 755.89844 H 0.53904 V 86.30078"
          id="path9" />
       <path

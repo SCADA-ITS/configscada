@@ -46,21 +46,10 @@
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="main" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
-         id="path2"
-         inkscape:connector-curvature="0" />
-    </clipPath>
-  </defs>
   <g
      id="main"
      transform="matrix(1.6127467,0,0,1.6127337,-0.00517152,-139.0665)">
     <g
-       clip-path="url(#clip1)"
        id="g11"
        style="clip-rule:nonzero">
       <path

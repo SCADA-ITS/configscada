@@ -49,19 +49,11 @@
      inkscape:document-units="px"
      units="px"
      inkscape:snap-global="false" />
-  <defs
-     id="defs5" />
+
   <g
      id="main">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0,86.238281 H 1190.5195 V 755.89844 H 0 Z m 0,0"
-         id="path2" />
-    </clipPath>
     <g
-       clip-path="url(#clip1)"
-       clip-rule="nonzero"
+
        id="g11"
        transform="matrix(1.2095555,0,0,1.209579,0,-104.31201)">
       <path

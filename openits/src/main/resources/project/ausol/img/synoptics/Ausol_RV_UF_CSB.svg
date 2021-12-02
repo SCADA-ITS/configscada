@@ -48,24 +48,12 @@
      units="px"
      inkscape:pagecheckerboard="0"
      scale-x="1" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0.480469,86.238281 H 1191 V 755.89844 H 0.480469 Z m 0,0"
-         id="path2"
-         inkscape:connector-curvature="0" />
-    </clipPath>
-  </defs>
   <g
      id="main"
      transform="matrix(1.3333325,0,0,1.3333387,-0.18782843,-43.117302)">
     <g
-       clip-path="url(#clip1)"
        id="g11"
-       transform="matrix(1.2095555,0,0,1.209579,-0.01179253,-70.965894)"
-       style="clip-rule:nonzero">
+       transform="matrix(1.2095555,0,0,1.209579,-0.01179253,-70.965894)">
       <path
          style="fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
          d="M 12594.987,0 V 19841.016 L 1435.026,0 Z m 0,19841.016 L 1435.026,0 v 19841.016 z m 0,0"

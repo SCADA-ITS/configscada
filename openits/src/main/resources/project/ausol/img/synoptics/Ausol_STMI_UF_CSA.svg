@@ -49,21 +49,10 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      inkscape:document-rotation="0" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0.480469,86.238281 H 1191 V 755.89844 H 0.480469 Z m 0,0"
-         id="path2" />
-    </clipPath>
-  </defs>
   <g
      id="main"
      transform="matrix(1.6127368,0,0,1.6127903,-0.76944758,-139.08882)">
     <g
-       clip-path="url(#clip1)"
-       clip-rule="nonzero"
        id="g13"
        transform="translate(-0.00336227,0.00282548)">
       <path

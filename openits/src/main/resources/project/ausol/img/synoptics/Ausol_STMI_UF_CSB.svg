@@ -48,21 +48,10 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="pt"
      units="px" />
-  <defs
-     id="defs5">
-    <clipPath
-       id="clip1">
-      <path
-         d="M 0.480469,86.238281 H 1191 V 755.89844 H 0.480469 Z m 0,0"
-         id="path2" />
-    </clipPath>
-  </defs>
   <g
      id="main">
     <g
-       clip-path="url(#clip1)"
        id="g11"
-       clip-rule="nonzero"
        transform="matrix(1.209556,0,0,1.2095687,-0.58115416,-104.31113)">
       <path
          style="fill:#cfcfcf;fill-opacity:1;fill-rule:nonzero;stroke:#cfcfcf;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
