@@ -24,6 +24,8 @@ export default class IncidentReportTaskContent {
 		
 		let self = this;
 		let view;
+		let userData = self.parent.parent.userData;
+		let sameUser =(userData.id === self.incidentReport.currentUser.id);
 		
 		view = {
 			id: "taskContent-" + self.index + "-" + self.uid,
@@ -139,7 +141,7 @@ export default class IncidentReportTaskContent {
 						})(),
 						height: 41,
 						width: 130,
-						disabled: !self.incidentReport.confirm,
+						disabled: !self.incidentReport.confirm || !sameUser,
 						hidden: self.taskState.incidentTypeTask.auto || self.taskState.completedAt,
 						label: (function() {
 

@@ -19,6 +19,8 @@ export default class IncidentReportModule extends GenericModule {
 		this.closed = false;
 		this.config = module.config;
 		this.incidentReportContent = undefined;
+		
+		this.userData = util.user.auth();
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
@@ -63,7 +65,6 @@ export default class IncidentReportModule extends GenericModule {
 		let self = this;
 		let incidentReportsToConfirm = [];
 		let sameUserCounter = 0;
-		let userData = util.user.auth();
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
@@ -80,7 +81,7 @@ export default class IncidentReportModule extends GenericModule {
 						if (!incidentReport.confirm) {
 
 							incidentReportsToConfirm.push(incidentReport.id);
-							sameUserCounter = (incidentReport.currentUser.id === userData.id)  ? ++sameUserCounter : sameUserCounter;
+							sameUserCounter = (incidentReport.currentUser.id === self.userData.id)  ? ++sameUserCounter : sameUserCounter;
 						}
 					}
 
@@ -127,24 +128,67 @@ export default class IncidentReportModule extends GenericModule {
 	actionCancel() {
 
 		let self = this;
+		let incidentReportsToDelete = [];
+		let sameUserCounter = 0;
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
-			let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
-			ms.show();
-			
-			function onAccept() {
+			let pendingRequest = this.args.selectedPks.length;
 
-				self.args.selectedPks.forEach(e => {
+			self.args.selectedPks.forEach(e => {
 
-					let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, { id: e });
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
 
-					console.log(endpoint)
+					if (dat != null) {
 
-					self.restAction(endpoint);
+						let incidentReport = dat.json();
 
-				});					
-			};
+						if (incidentReport) {
+
+							incidentReportsToDelete.push(incidentReport.id);
+							sameUserCounter = (incidentReport.currentUser.id === self.userData.id) ? ++sameUserCounter : sameUserCounter;
+						}
+					}
+
+					if (--pendingRequest == 0) {
+
+						if (incidentReportsToDelete.length > 0) {
+
+							if (sameUserCounter === incidentReportsToDelete.length) {
+
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+								ms.show();
+
+								function onAccept() {
+
+									incidentReportsToDelete.forEach(e => {
+
+										let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, { id: e });
+
+										console.log(endpoint)
+
+										self.restAction(endpoint);
+
+									});
+								};
+
+							} else {
+
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_ASSIGNED_TO_USER_DESCRIPTION"), null, null);
+								ms.show();
+
+							}
+
+						} else {
+
+							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+							ms.show();
+						}
+					}
+				});
+			});
+
+
 		}
 	}
 

@@ -38,11 +38,14 @@ export default class IncidentReportTaskPlan {
 		
 		function initDataTable() {
 			
+			let userData = util.user.auth();
+			let sameUser =(userData.id === self.incidentReport.currentUser.id);
+			
 			if (self.dtPlans) {
 								
 				self.dtPlans.callbacks();
 				
-				if (self.taskState.completedAt) {
+				if (self.taskState.completedAt || !sameUser) {
 					
 					self.dtPlans.disable();
 				}
@@ -352,7 +355,7 @@ export default class IncidentReportTaskPlan {
 			}
 
 			self.dtPlans = new DataTable(null, null, getMetadata(), getInitialData(), getEvents());
-			
+
 			return self.dtPlans.getView();
 		}
 		

@@ -57,6 +57,8 @@
 	},
 	"requiredPermissions": {
 		"autoassign": "SystemPermission:15",
-		"assignanother": "SystemPermission:16"
+		"assignAnother": "SystemPermission:16",
+		"confirmIncident": "SystemPermission:10",
+		"cancelIncident": "SystemPermission:11"
 	}
 }

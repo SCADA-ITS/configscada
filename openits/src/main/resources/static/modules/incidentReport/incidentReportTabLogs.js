@@ -467,9 +467,17 @@ export default class IncidentReportTabLog {
 	}
 
 	init() {
+		
+		let userData = this.parent.userData;
+		let sameUser = (userData.id === this.incidentReport.currentUser.id);
 
 		if (this.dtLogs) {
 			this.dtLogs.callbacks();
+			
+			if(!sameUser) {
+				
+				this.dtLogs.disable();
+			}
 		}
 	}
 
