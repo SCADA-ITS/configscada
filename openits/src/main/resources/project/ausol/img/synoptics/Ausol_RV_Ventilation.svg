@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="1440.0278pt"
-   height="809.76208pt"
+   width="1920.0371"
+   height="1079.6827"
    viewBox="0 0 1920 1080"
    version="1.1"
    id="svg2"
    sodipodi:docname="Ausol_RV_Ventilation.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -35,20 +35,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
      id="namedview1004"
      showgrid="false"
-     inkscape:zoom="0.73"
-     inkscape:cx="848.63014"
-     inkscape:cy="528.08219"
+     inkscape:zoom="0.25809398"
+     inkscape:cx="718.73045"
+     inkscape:cy="-253.78353"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2"
+     inkscape:current-layer="main"
      inkscape:pagecheckerboard="0"
-     inkscape:document-units="pt"
-     inkscape:snap-global="true" />
+     inkscape:document-units="px"
+     inkscape:snap-global="true"
+     units="px" />
   <defs
      id="defs161">
     <clipPath
@@ -62,6 +63,14 @@
   <g
      id="main"
      transform="matrix(1.8387153,0,0,2.0251412,-197.02286,-270.9459)">
+    <rect
+       style="fill:#aa0000;fill-opacity:0;stroke-width:1.30802"
+       id="rect620"
+       width="1044.5142"
+       height="533.45288"
+       x="106.98895"
+       y="133.79112"
+       ry="7.8752069" />
     <text
        id="text1380"
        x="201.71988"
@@ -74,10 +83,6 @@
          y="656.03607"
          font-size="6.89017px"
          stroke-width="0.369116">0 m (PK 177+005)</tspan></text>
-    <path
-       id="path108"
-       style="fill:none;stroke:none;stroke-width:0.601815;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0"
-       d="M 106.98894,133.79112 H 1151.5031 V 667.24397 H 106.98894 V 133.79112" />
     <clipPath
        id="clip2">
       <path
