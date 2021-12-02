@@ -46,15 +46,13 @@
 	"iReportLogValuesParamIdState": "LogTypeParam:1:1",
 	"iReportLogValuesParamIdComment": "LogTypeParam:1:2",
 	"action": {
-		"cctvScenario": 102002
+		"cctvScenario": 102002,
+		"loadIncidentInMap": 200003
 	},
 	"locationTypes":["LocationType:1", "LocationType:2"],
 	"stretchTypes":["StretchType:1", "StretchType:2"],
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
 	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",
-	"defaultMapSettings": { 
-		"moduleAction": 200003
-	},
 	"requiredPermissions": {
 		"autoassign": "SystemPermission:15",
 		"assignAnother": "SystemPermission:16",

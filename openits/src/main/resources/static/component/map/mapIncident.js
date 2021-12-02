@@ -461,14 +461,14 @@ export default class MapIncident {
 		}
 	}
 	
-	goTo(coordinates, zoomLvl) {
+	
+	goTo(coordinates) {
 		
 		let lon = coordinates.longitude;
 		let lat = coordinates.latitude;
 		
 		this.parent.olMap.getView().animate({
 			center: ol.proj.fromLonLat([lon, lat]),
-			zoom: zoomLvl,
 			duration: 3000
 		});
 	}

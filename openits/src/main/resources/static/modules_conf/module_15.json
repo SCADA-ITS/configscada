@@ -18,6 +18,7 @@
 		"enabled": true,
 		"timeoutNotificationMs": 0,
 		"maxInactiveNotifications": 10,
-		"confirmIncidents": 100402
+		"confirmIncidents": 100402,
+		"viewIncidentPermission": "SystemPermission:12"
 	}
 }

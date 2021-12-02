@@ -18,6 +18,11 @@ const MIN_ZOOM_LEVEL = 1;
 const ZINDEX_BACK = 0;
 const ZINDEX_FRONT = 9999;
 
+const REQUIRED_INCIDENT_PERMISSIONS = {
+	VIEW: "SystemPermission:12",
+	CREATE: "SystemPermission:9"
+}; 
+
 export default class OpenMap extends GenericMap {
 
 	constructor(metadata, data, events, w, h, options) {
@@ -45,6 +50,9 @@ export default class OpenMap extends GenericMap {
 		this.mapAction = undefined;
 		this.mapZone = undefined;
 		this.mapIncident = undefined;
+		
+		this.viewIncidentPermission = util.module.isAllowedPermission(REQUIRED_INCIDENT_PERMISSIONS.VIEW);
+		this.createIncidentPermission = util.module.isAllowedPermission(REQUIRED_INCIDENT_PERMISSIONS.CREATE);
 		
 		this.afterRenderCallback = undefined;
 		
@@ -171,7 +179,7 @@ export default class OpenMap extends GenericMap {
 					});	
 				}
 				
-				if (self.metadata.mapIncident) {
+				if (self.metadata.mapIncident && self.viewIncidentPermission) {
 					
 					let incidentTypes = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
 					let incidentTypeLayers = [];
@@ -649,7 +657,7 @@ export default class OpenMap extends GenericMap {
 		
 		function loadIncidents() {
 			
-			if (self.metadata.mapIncident) {
+			if (self.metadata.mapIncident && self.viewIncidentPermission) {
 				
 				self.mapIncident = new MapIncident(self);
 				
@@ -1224,7 +1232,7 @@ export default class OpenMap extends GenericMap {
 				viewToolbarActions.cols.push(viewButtonLayers);	
 			}
 			
-			if (self.mapIncident) {
+			if (self.mapIncident && self.createIncidentPermission) {
 				
 				let viewButtonIncidents = {
 					view: "button",
@@ -1615,13 +1623,13 @@ export default class OpenMap extends GenericMap {
 
 		if (this.mapIncident && this.mapIncident.incidentReports) {
 
-			let incident = Object.fromEntries(this.mapIncident.incidentReports);
+			let incidentReport = this.mapIncident.incidentReports.get(incidentReportId);
 
-			if (incident[incidentReportId] && incident[incidentReportId].id === incidentReportId) {
+			if (incidentReport) {
 
 				let coordinates = {
-						longitude: incident[incidentReportId].location.lon,
-						latitude: incident[incidentReportId].location.lat,
+						longitude: incidentReport.location.lon,
+						latitude: incidentReport.location.lat,
 				};
 
 				this.mapIncident.goTo(coordinates, this.currentZoomLevel);

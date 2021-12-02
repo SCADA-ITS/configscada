@@ -6,7 +6,7 @@ const MAX_INACTIVE_NOTICATIONS = 10;
 export default class Notification {
 	
 	static get ALARM() { return { id: 1, label: "LBL_NOTIFICATION_ALARM", css: "notification-alarm-window", icon: "alarm.png", windowWidth: 750, windowHeight: 500 } }
-	static get INCIDENT() { return { id: 2, label: "LBL_NOTIFICATION_INCIDENT", css: "notification-incident-window", icon: "incident.png", windowWidth: 750, windowHeight: 500 } }
+	static get INCIDENT() { return { id: 2, label: "LBL_NOTIFICATION_INCIDENT", css: "notification-incident-window", icon: "incident.png", windowWidth: 800, windowHeight: 500 } }
 	static get EVENT() { return { id: 3, label: "LBL_NOTIFICATION_EVENT", css: "notification-event-window", icon: "event.png", windowWidth: 750, windowHeight: 500 } }
 
 	constructor(config, notificationType, notifications) {

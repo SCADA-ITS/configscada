@@ -7,6 +7,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 		super(config);
 		this.mainView = this.createView();
+		this.viewIncidentPermission = util.module.isAllowedPermission(config.module.user.viewIncidentPermission);
 	}
 
 	show() {
@@ -163,7 +164,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							tooltip: i18n.t("LBL_INCIDENTS"),
 							type: "icon",
 							icon: "webix_icon_btn mdi mdi-alert",
-							hidden: false,
+							hidden: (self.viewIncidentPermission) ? false : true,
 							on: {
 
 								onItemClick() {
@@ -374,7 +375,8 @@ export default class UserControlPanel extends GenericControlPanel {
 	}
 
 	updateData() {
-
+		
+		let self = this;
 		let pendingTasks = false;
 		
 		updateDataAlarms();
@@ -442,7 +444,7 @@ export default class UserControlPanel extends GenericControlPanel {
 	
 				if (stats) {
 	
-					if (stats.incidentPendingToConfirm > 0) {
+					if (stats.incidentPendingToConfirm > 0 && self.viewIncidentPermission) {
 	
 						$$("user-control-panel-incident").show();
 						$$("user-control-panel-incident").config.label = i18n.t("LBL_INCIDENTS_PENDING_CONFIRMATION") + " " + stats.incidentPendingToConfirm;
@@ -460,11 +462,14 @@ export default class UserControlPanel extends GenericControlPanel {
 				if ((Array.isArray(notifications) && notifications.length > 0) ||
 				    (incidentService.getNotification() && incidentService.getNotification().getRecognizedNotifications().length > 0)) {
 					
-					$$("user-control-panel-notif-incidents").show();
-					$$("user-control-panel-notif-incidents").config.label = i18n.t("LBL_INCIDENTS") + " " + notifications.length;
-					$$("user-control-panel-notif-incidents").refresh();
-					
-					pendingTasks |= true;
+					if (self.viewIncidentPermission) {
+
+						$$("user-control-panel-notif-incidents").show();
+						$$("user-control-panel-notif-incidents").config.label = i18n.t("LBL_INCIDENTS") + " " + notifications.length;
+						$$("user-control-panel-notif-incidents").refresh();
+
+						pendingTasks |= true;
+					}
 				}
 				else {
 					

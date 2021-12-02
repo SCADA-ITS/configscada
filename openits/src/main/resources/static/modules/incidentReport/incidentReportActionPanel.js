@@ -681,8 +681,8 @@ export default class IncidentReportActionPanel {
 			let containerId = $$(self.containerId).config.id;
 			let containerParentId = $$(self.containerId).getTopParentView().config.id;
 			let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
-			let module = util.module.getFromModuleAction(self.config.defaultMapSettings.moduleAction);
-			let moduleAction = { id: self.config.defaultMapSettings.moduleAction };
+			let module = util.module.getFromModuleAction(self.config.action.loadIncidentInMap);
+			let moduleAction = { id: self.config.action.loadIncidentInMap };
 
 			if (module) {
 

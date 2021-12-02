@@ -23,6 +23,8 @@ export default class IncidentService extends GenericModule {
 		};
 		
 		this.notification = undefined;
+		
+		this.viewIncidentPermission = util.module.isAllowedPermission(module.config.notification.viewIncidentPermission);
 	}
 	
 	getNotification() {
@@ -114,7 +116,7 @@ export default class IncidentService extends GenericModule {
 					window.userControlPanel.updateData();	
 				}
 				
-				if (self.config.notification.enabled) {
+				if (self.config.notification.enabled && self.viewIncidentPermission) {
 						
 					self.notification = new Notification(self.config.notification, Notification.INCIDENT, self.incidents.data.notifications);
 				
@@ -142,7 +144,8 @@ export default class IncidentService extends GenericModule {
 				alias: incidentReport.incidentType.description,
 				description: incidentReport.incidentType.alias + " " + 
 							 i18n.t("LBL_AFFECTION_STRETCH") + ": " + incidentReport.affectionStretch.alias + " " + 
-							 i18n.t("LBL_LOCATION") + ": " + incidentReport.location.alias  
+							 i18n.t("LBL_LOCATION") + ": " + incidentReport.location.alias + " " +
+							 i18n.t("LBL_USER") + ": " + incidentReport.currentUser.name
 			};
 		}
 		

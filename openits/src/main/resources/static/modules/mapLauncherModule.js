@@ -24,103 +24,121 @@ export default class MapLauncherModule extends GenericModule {
 	loadData() {
 
 		let self = this;
-		let element = undefined;
-		let isIncident = false;
 		
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
 		if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
-
-			if(self.moduleAction.id === self.config.moduleAction.loadIncidentInMap){
+			
+			if(self.moduleAction.id === self.config.moduleAction.loadIncidentInMap) {
+				
+				loadFromIncident();
+			}
+			else {
+				
+				loadFromElement();
+			}
+			
+			function loadFromIncident() {
+				
+				let incident;
 				
 				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incident, { id: self.args.selectedPks[0] })).then(function(response) {
 					
 					if(response != null) {
 						
-						let responseJson = response.json();
+						incident = response.json();
 						
-						if(responseJson){
+						if(incident){
 
-							let mapId = (responseJson.incidentType.map) ? responseJson.incidentType.map : self.config.defaultMap;
+							let mapId = (incident.incidentType.map) ? incident.incidentType.map : self.config.defaultMap;
 
-							responseJson.map = mapId;
-							isIncident = true;
-							loadMap(responseJson);							
+							incident.map = mapId;
+							loadMap(mapId, onLoadMapIncident);							
 						}
 					}					
 				});
-			
-			} else {
 				
-				element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
+				function onLoadMapIncident(map, container, label) {
+				
+					if (incident && map) {
+						
+						$$("loading-" + self.uid).hide();
+						$$(self.uid).show();
+						
+						webix.ui(map.getView(function() { map.selectIncident(incident.id) }), $$(self.uid));
+																		
+						if (container) {
+							
+							util.ui.setTitle(container.config.id, i18n.t(label));
+						}	
+					}
+				}
+			}
+
+			function loadFromElement() {
+				
+				let element = window.em.getByField(EntityType.ELEMENT, "id", self.args.selectedPks[0]);
 
 				if (self.moduleAction.id === self.config.moduleAction.map) {
-
-					loadMap(element);
+					
+					loadMap(element.map, onLoadMapElement);
 
 				} else if (self.moduleAction.id === self.config.moduleAction.synoptic) {
 
 					loadSynoptic(element);
-				}				
+				}
+				
+				function onLoadMapElement(map, container, label) {
+				
+					if (element && map) {
+						
+						$$("loading-" + self.uid).hide();
+						$$(self.uid).show();
+		
+						webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
+																		
+						if (container) {
+							
+							util.ui.setTitle(container.config.id, i18n.t(label));
+						}	
+					}
+				}
 			}
 		}
+		
+		function loadMap(mapId, onLoad) {
+			
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.map, { id: mapId })).then(function(response) {
 
-		function loadMap(element) {
+				if (response != null) {
 
-			if (element && element.map) {
+					let responseJson = response.json();
 
-				let mapId = element.map;
+					if (responseJson) {
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.map, { id: mapId })).then(function(response) {
+						let events = {};
 
-					if (response != null) {
+						let options = {};
 
-						let responseJson = response.json();
-
-						if (responseJson) {
-
-							let events = {};
-
-							let options = {};
-
-							options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
+						options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
+						
+						let w = self.args.width;
+						let h = self.args.height;
+						let container = $$(self.args.containerId);
+						
+						if (container && (!w || !h)) {
 							
-							let w = self.args.width;
-							let h = self.args.height;
-							let container = $$(self.args.containerId);
-							
-							if (container && (!w || !h)) {
-								
-								w = container.$width - 10;
-								h = container.$height - 10;
-							}
-
-							let map = new OpenMap(responseJson.metadata, responseJson.data, events, w, h, options);
-
-							if (map) {
-								
-								$$("loading-" + self.uid).hide();
-								$$(self.uid).show();
-																
-								if (isIncident) {
-
-									webix.ui(map.getView(function() { map.selectIncident(element.id) }), $$(self.uid));
-
-								} else {
-
-									webix.ui(map.getView(function() { map.select(element.id) }), $$(self.uid));
-								}
-								
-								if (container) {
-									
-									util.ui.setTitle(container.config.id, i18n.t(responseJson.metadata.label));
-								}
-							}
+							w = container.$width - 10;
+							h = container.$height - 10;
 						}
+
+						let map = new OpenMap(responseJson.metadata, responseJson.data, events, w, h, options);
+						
+						onLoad(map, container, responseJson.metadata.label);
 					}
-				});
-			}
+				}
+			});
 		}
 
 		function loadSynoptic(element) {
