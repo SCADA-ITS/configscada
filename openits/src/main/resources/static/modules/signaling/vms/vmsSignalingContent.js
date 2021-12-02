@@ -402,7 +402,7 @@ export default class VmsSignalingContent {
 						
 						commandElement.commandElementValues = webix.copy(self.currentCommandElement.commandElementValues);	
 					}
-
+					
 					let signalingCmd = new GenericSignalingCommand(self, self.selectedElements.map(e => { return e.id }), commandElement, true, true);
 					
 					self.signalingCmds.push(signalingCmd);

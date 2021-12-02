@@ -5,6 +5,7 @@
 	},
 	"restEndpoints": {
 		"elementsByType": "element_types/${id}/elements",
+		"element": "elements/${id}",
 		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
 		"command": "elements/send_command_element",
 		"saveNode": "vms_libraries/${id}/node/${parentNodeIds}",

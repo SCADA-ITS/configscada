@@ -677,5 +677,10 @@ export default class Vms extends GraphicIconCustomType {
 			}
 		}
 	}
+	
+	reset() {
+	
+		this.render(this.getElementInfoInitial());		
+	}
 }
 

@@ -1,6 +1,7 @@
 import DataTable from "../../../component/datatable.js";
 import InputDialogBox from "../../../component/inputDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
+import { util } from "../../../lib/util.js";
 
 export default class GenericSignalingCommand {
 
@@ -223,8 +224,10 @@ export default class GenericSignalingCommand {
 								
 								function onAccept() {
 									
-									self.dtParams.clear();
-									self.dtParams.add(getInitialData());									
+									//self.dtParams.clear();
+									//self.dtParams.add(getInitialData());
+									
+									undoAll();									
 								};
 							}
 						});
@@ -297,6 +300,24 @@ export default class GenericSignalingCommand {
 									id: 1,
 									name: "string"
 								}
+							},
+							{
+								extended: false,
+								filtered: false,
+								isEpochMilli: false,
+								isPk: false,
+								label: "LBL_CURRENT_VALUE",
+								replacementFunction: "getLocalDateString",
+								needsTranslation: false,
+								parameterized: false,
+								position: 5,
+								required: true,
+								sourceField: "currentValue",
+								visible: true,
+								gridFieldDataType: {
+									id: 1,
+									name: "string"
+								}
 							}
 						];
 
@@ -310,6 +331,13 @@ export default class GenericSignalingCommand {
 						if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 
 							let selectedItem = selectedItems[0];
+							
+							let currentValue = selectedItem.value;
+							
+							if (!currentValue) {
+								
+								currentValue = selectedItem.currentValue;
+							} 
 
 							(new InputDialogBox(selectedItem.param, i18n.t("LBL_ENTER_VALUE"), function(value) {
 
@@ -318,12 +346,35 @@ export default class GenericSignalingCommand {
 								newItem.value = value;
 								self.dtParams.update(newItem);
 
-							}, true, selectedItem.value, {
+							}, true, currentValue, {
 								id: selectedItem.dataTypeId,
 								labelUnit: selectedItem.labelUnit,
 								threshold1: selectedItem.threshold1,
 								threshold2: selectedItem.threshold2
 							})).show();
+						}
+					}
+					
+					function undoAll() {
+						
+						if (self.dtParams) {
+							
+							let oldData = self.dtParams.getAllItems();
+							
+							if (Array.isArray(oldData) && oldData.length > 0) {
+								
+								let newData = oldData.map(e => {
+									
+									let newItem = webix.copy(e);
+									
+									newItem.value = undefined;
+									
+									return newItem;
+								})
+								
+								self.dtParams.update(newData);
+								
+							}
 						}
 					}
 
@@ -474,9 +525,60 @@ export default class GenericSignalingCommand {
 
 	loadData() {
 
-		if (this.dtParams) {
+		let self = this;
+		
+		if (self.dtParams) {
 
-			this.dtParams.callbacks();
+			self.dtParams.callbacks();
+			
+			loadCurrentValues();
+		}
+		
+		
+		function loadCurrentValues() {
+		
+			if (Array.isArray(self.selectedElementIds) && self.selectedElementIds.length === 1) {
+				
+				if (self.commandElementType && Array.isArray(self.commandElementType.commandElementTypeParams) &&
+					self.commandElementType.commandElementTypeParams.find(e => e.elementTypeParam != undefined)) {
+				
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.element, { id: self.selectedElementIds[0] })).then(
+				
+						function(elementResponse) {
+						
+							if (elementResponse != null) {
+							
+								let element = elementResponse.json();
+								
+								if (element && Array.isArray(element.elementValues)) {
+									
+									self.commandElementType.commandElementTypeParams.forEach(commandElementTypeParam => {
+									
+										if (commandElementTypeParam.elementTypeParam) {
+											
+											let elementValue = element.elementValues.find(e => e.elementTypeParam.id === commandElementTypeParam.elementTypeParam.id);
+											
+											if (elementValue) {
+												
+												let item = self.dtParams.getItem(commandElementTypeParam.id);
+												
+												if (item) {
+													
+													let newItem = webix.copy(item);
+													
+													newItem.currentValue = elementValue.value;
+													
+													self.dtParams.update(newItem);
+												}
+											}
+										}
+									});	
+								}
+							}
+						}
+					);		
+				}
+			}
 		}
 	}
 

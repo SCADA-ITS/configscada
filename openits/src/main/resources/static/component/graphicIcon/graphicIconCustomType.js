@@ -18,6 +18,10 @@ export default class GraphicIconCustomType {
 		throw new Error("Method 'render(elementInfo)' must be implemented.");
 	}
 	
+	reset() {
+		
+	}
+	
 	stop() {
 		
 		
