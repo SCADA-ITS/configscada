@@ -83,8 +83,11 @@ export default class OpenMap extends GenericMap {
 							self.afterRenderCallback = afterRenderCallback;
 							self.olMap = createMap();
 							
-							loadGraphicIcons();
-							loadIncidents();
+							if (self.olMap) {
+								
+								loadGraphicIcons();
+								loadIncidents();	
+							}
 						},
 						onDestruct: function() {
 		
@@ -262,17 +265,43 @@ export default class OpenMap extends GenericMap {
 		}
 			
 		function createMap() {
+			
+			let layers;
+						
+			if (self.metadata.customProviderUrl) {
+				
+				if (util.resourceExist(self.metadata.customProviderUrl)) {
+					
+					layers = new ol.layer.Tile({
+						source: new ol.source.TileWMS({
+							url: self.metadata.customProviderUrl,
+							params: { 'LAYERS': 'final', 'TILED': true },
+							serverType: 'geoserver',
+						})
+					});	
+				}
+				else {
+					
+					(new MessageBox(MessageBox.ERROR, i18n.t("LBL_MAP_PROVIDER_NOT_AVAILABLE") + ": " + self.metadata.customProviderUrl, null, null)).show();
+					
+					return;
+				}
+			}
+			else {
+
+				layers = [
+					new ol.layer.Tile({
+
+						source: new ol.source.OSM()
+					})
+				];
+			}
 					
 			let map = new ol.Map({
 				target: "map-" + self.uid,
 				controls: [],
 				interactions : ol.interaction.defaults({doubleClickZoom :false}),
-				layers: [
-					new ol.layer.Tile({
-
-						source: new ol.source.OSM()
-					})
-				],
+				layers: layers,
 				view: new ol.View({
 					center: ol.proj.fromLonLat([self.metadata.longitude, self.metadata.latitude]),
 					//extent: [ -553203.4061760335, 4366939.736625225, -531934.8030556832, 4374793.6412815275 ],
@@ -295,10 +324,7 @@ export default class OpenMap extends GenericMap {
 					maxZoom: self.metadata.zoomMax,
 					minZoom: self.metadata.zoomMin
 				})
-			});
-			
-			
-			
+			});		
 			
 			map.on('moveend', onChangeZoom);
 						

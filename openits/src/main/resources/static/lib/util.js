@@ -1664,10 +1664,21 @@ export let util = {
 
 	resourceExist(url) {
 
+		var result = false;
+		
 		var http = new XMLHttpRequest();
 		http.open('HEAD', url, false);
-		http.send();
-		return http.status != 404;
+		
+		try {
+		
+			http.send();	
+			result = (http.status != 404);
+		}
+		catch {
+			
+		}
+		
+		return result;
 	},
 
 	toLocaleTimeString(ts) {
