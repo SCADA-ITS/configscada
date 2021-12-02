@@ -6,7 +6,7 @@
    version="1.1"
    id="svg2"
    sodipodi:docname="Ausol_MM_PCI.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -20,18 +20,18 @@
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:document-units="pt"
+     inkscape:document-units="px"
      showgrid="false"
      units="px"
      inkscape:zoom="0.36388287"
-     inkscape:cx="943.98508"
+     inkscape:cx="586.72726"
      inkscape:cy="507.03129"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="main"
+     inkscape:current-layer="svg2"
      inkscape:snap-global="false" />
   <defs
      id="defs152">
@@ -46,10 +46,14 @@
   <g
      id="main"
      transform="matrix(1.6127083,0,0,1.592949,0,-130.7835)">
-    <path
-       id="path108"
-       style="fill:none;stroke:none;stroke-width:0.724343;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0"
-       d="M 0,82.101499 H 1190.5439 V 760.08931 H 0 V 82.101499" />
+    <rect
+       style="fill:#aa0000;fill-opacity:0;stroke-width:1.04626"
+       id="rect225"
+       width="1190.5438"
+       height="677.98779"
+       x="-1.4210855e-14"
+       y="82.101501"
+       ry="5.9428329" />
     <g
        id="g1868"
        transform="matrix(1.059813,0,0,1.2176713,-17.364457,-83.003771)">

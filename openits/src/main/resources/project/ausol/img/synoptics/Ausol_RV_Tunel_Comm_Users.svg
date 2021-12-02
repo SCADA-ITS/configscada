@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="1452.8605pt"
-   height="827.18872pt"
-   viewBox="0 0 1937.1473 1102.9182"
+   width="1920"
+   height="1080"
+   viewBox="0 0 1919.9952 1079.9973"
    version="1.1"
-   id="svg783"
+   id="svg2"
    sodipodi:docname="Ausol_RV_Tunel_Comm_Users.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -35,20 +35,22 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
      id="namedview785"
      showgrid="false"
-     inkscape:zoom="0.41"
-     inkscape:cx="1196.3415"
-     inkscape:cy="615.85366"
+     inkscape:zoom="0.43489583"
+     inkscape:cx="960"
+     inkscape:cy="539.20958"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="main"
      inkscape:pagecheckerboard="0"
-     inkscape:document-units="pt"
-     inkscape:snap-global="false" />
+     inkscape:document-units="px"
+     inkscape:snap-global="false"
+     units="px"
+     width="1920px" />
   <defs
      id="defs200">
     <clipPath
@@ -62,10 +64,14 @@
   <g
      id="main"
      transform="matrix(1.7053423,0,0,1.6936608,-58.7091,-796.36771)">
-    <path
-       id="path108"
-       style="fill:none;stroke:none;stroke-width:0.683127;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0"
-       d="M 34.426578,470.20496 H 1160.3002 V 1107.8769 H 34.426578 V 470.20496" />
+    <rect
+       style="fill:#aa0000;fill-opacity:0;stroke-width:1.154"
+       id="rect334"
+       width="1125.8735"
+       height="637.67194"
+       x="34.426579"
+       y="470.20496"
+       ry="5.6395864" />
     <clipPath
        id="clip3">
       <path
@@ -96,7 +102,7 @@
     </clipPath>
     <g
        id="g3900"
-       transform="matrix(0.99794028,0,0,1.0174981,2.4364179,-17.374235)">
+       transform="matrix(0.99794181,0,0,1.0064635,2.435497,-11.938419)">
       <g
          id="g2322"
          transform="translate(2.2684563,359.42642)">

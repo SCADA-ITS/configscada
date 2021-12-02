@@ -6,7 +6,7 @@
    version="1.1"
    viewBox="0 0 1920 1080"
    sodipodi:docname="Ausol_MM_Ventilation.svg"
-   inkscape:version="1.1 (1:1.1+202105261518+ce6663b3b7)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -31,24 +31,28 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="4.4258924"
-     inkscape:cx="1271.9469"
-     inkscape:cy="838.13606"
-     inkscape:window-width="1920"
-     inkscape:window-height="980"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:zoom="0.39119732"
+     inkscape:cx="829.50467"
+     inkscape:cy="72.85326"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g5404"
+     inkscape:current-layer="main"
      inkscape:snap-global="false"
      showguides="false" />
   <g
      id="main"
      transform="matrix(1.6116841,0,0,1.5929,-0.76970484,-130.79)">
-    <path
-       id="path108"
-       style="fill:none;stroke:none;stroke-width:0.724356;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0"
-       d="M 0.47757797,82.108105 H 1191.0275 V 760.11679 H 0.47757797 V 82.108105" />
+    <rect
+       style="fill:#aa0000;fill-opacity:0;stroke-width:0.735221"
+       id="rect877"
+       width="1191.3004"
+       height="678.00867"
+       x="0.47757798"
+       y="82.108109"
+       ry="3.5162358" />
     <g
        id="g1605"
        transform="matrix(0.49376482,0,0,0.62420809,27.82929,78.841447)">

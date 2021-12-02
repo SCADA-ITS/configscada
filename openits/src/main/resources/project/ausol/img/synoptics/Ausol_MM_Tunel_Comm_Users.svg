@@ -6,7 +6,7 @@
    version="1.1"
    viewBox="0 0 1920 1080"
    sodipodi:docname="Ausol_MM_Tunel_Comm_Users.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -32,22 +32,26 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:zoom="1.1064731"
-     inkscape:cx="607.78703"
-     inkscape:cy="891.57161"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="1912"
+     inkscape:zoom="0.48229806"
+     inkscape:cx="975.53783"
+     inkscape:cy="403.27759"
+     inkscape:window-width="1600"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g5751" />
+     inkscape:current-layer="main" />
   <g
      id="main"
      transform="matrix(.99998 0 0 1 .062967 .0097243)">
-    <path
-       id="path108"
-       style="fill:none;stroke:none;stroke-width:1.16;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0"
-       d="M -0.06296826,-0.0097243 H 1918.7767 V 1078.8301 H -0.06296826 V -0.0097243" />
+    <rect
+       style="fill:#aa0000;fill-opacity:0;stroke-width:2.42477"
+       id="rect704"
+       width="1920.0385"
+       height="1080"
+       x="-0.062968262"
+       y="-0.0097243004"
+       ry="13.575037" />
     <g
        id="g877"
        transform="matrix(1.6725094,0,0,1.8112936,-37.709768,-182.70728)">
