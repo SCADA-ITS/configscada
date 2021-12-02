@@ -54,6 +54,6 @@ export default class RedTrafficLight extends GraphicIconCustomType {
 
 		}
 		
-	}
+}
 
 
