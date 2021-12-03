@@ -61,14 +61,16 @@
 			},
 			"decimalPrecision": 1,
 			"alternance": true,
+			"configAlternance": true,
 			"defaultAlternanceMs": 5000,
 			"blinking": true,
+			"configBlinking": true,
 			"defaultFlashingOnMs":1000,
 			"defaultFlashingOffMs":1000,
 			"textColor": true,
 			"defaultTextColor": "#FFFFFF",
 			"textAlign": true,
-			"specialCharacters": [216, 181, 222, 230, 240, 162, 208,  163, 164, 165, 177, 190]
+			"specialCharacters": [216, 181, 222, 230, 240, 162, 208, 163, 164, 165, 177, 190]
 		},
 		{
 			"id": "ElementSubtype:5:71",

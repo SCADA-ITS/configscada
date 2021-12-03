@@ -482,6 +482,9 @@ export default class VmsSignalingContent {
 				
 			if (property) {
 				
+				let showViewOptions = (property.alternance && (property.configAlternance === undefined || property.configAlternance === true)) ||
+									  (property.blinking && (property.configBlinking === undefined || property.configBlinking === true));
+				
 				viewVmsOptions = {
 					cols: [
 						{ width: 20 },
@@ -489,7 +492,7 @@ export default class VmsSignalingContent {
 							rows: [
 								{ 
 									type: "section",
-									hidden: !property.alternance && !property.blinking, 
+									hidden: !showViewOptions, 
 									template: i18n.t("LBL_VMS_SETTINGS")
 								},
 								getViewOptionForm(),
@@ -516,7 +519,7 @@ export default class VmsSignalingContent {
 				
 				let decimalPrecision = property.decimalPrecision ? property.decimalPrecision : 0;  
 		
-				if (property.alternance) {
+				if (property.alternance && (property.configAlternance === undefined || property.configAlternance === true)) {
 					
 					let alternance = self.composer.getOption(VmsSignalingComposer.FIELD_ALTERNANCE_MS);
 					
@@ -556,7 +559,7 @@ export default class VmsSignalingContent {
 					});
 				}
 				
-				if (property.blinking) {
+				if (property.blinking && (property.configBlinking === undefined || property.configBlinking === true)) {
 					
 					let flashingOn = self.composer.getOption(VmsSignalingComposer.FIELD_FLASHING_ON_MS);
 					

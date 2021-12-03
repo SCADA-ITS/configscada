@@ -194,7 +194,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 						{ id: DataView.Options.ICON_SIZE, value: self.config.pictogramsSize },
 						{ id: DataView.Options.SEARCH, value: true },
 						{ id: DataView.Options.GROUP, value: true },
-						{ id: DataView.Options.SORTED, value: false }
+						{ id: DataView.Options.SORTED, value: true }
 					]
 				}
 							
