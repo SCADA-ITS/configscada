@@ -3,6 +3,7 @@ import GenericModule from "../../modules/genericModule.js";
 import IncidentReportActionPanel from "./incidentReportActionPanel.js";
 import IncidentReportContent from "./incidentReportContent.js";
 import MessageBox from "../../component/messageBox.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 export default class IncidentReportModule extends GenericModule {
 
@@ -21,6 +22,9 @@ export default class IncidentReportModule extends GenericModule {
 		this.incidentReportContent = undefined;
 		
 		this.userData = util.user.auth();
+		
+		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
+		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
@@ -56,6 +60,10 @@ export default class IncidentReportModule extends GenericModule {
 		else if (this.moduleAction.id === this.config.moduleAction.cancel) {
 
 			this.actionCancel();
+		} 
+		else if (this.moduleAction.id === this.config.moduleAction.assign) {
+			
+			this.actionAssign();
 		}
 
 	}
@@ -176,7 +184,6 @@ export default class IncidentReportModule extends GenericModule {
 
 								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_ASSIGNED_TO_USER_DESCRIPTION"), null, null);
 								ms.show();
-
 							}
 
 						} else {
@@ -187,11 +194,105 @@ export default class IncidentReportModule extends GenericModule {
 					}
 				});
 			});
-
-
 		}
 	}
 
+
+	actionAssign(assignFromIncidentReport) {
+
+		let self = this;
+
+		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
+
+			if (self.autoAssignPermissions || self.assignAnotherPermissions) {
+
+				let onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
+
+				if (onlyAutoassignIncident) {
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();
+
+				} else {
+
+					let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, changeUser);
+					s.show();
+				}
+
+			} else {
+
+				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_USER_WITHOUT_PERMISSION_TO_ASSIGN_INCIDENTS_DESCRIPTION"), null, null);
+				ms.show();
+			}
+			
+			function onAccept() {
+
+				let incidentReportsToAssign = 0;
+
+				if (assignFromIncidentReport) {
+
+					changeUser();
+
+				} else {
+
+					let pendingRequest = self.args.selectedPks.length;
+
+					self.args.selectedPks.forEach(e => {
+
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
+
+							if (dat != null) {
+
+								let incident = dat.json();
+
+								if (incident) {
+
+									let currentUser = window.em.getByField(EntityType.USER, "id", incident.currentUser.id);
+									let currentUserRole = currentUser.role.id;
+
+									if (currentUserRole === self.userData.role.id) {
+
+										incidentReportsToAssign++;
+									}
+								}
+							}
+
+							if (--pendingRequest == 0) {
+
+								if (incidentReportsToAssign === self.args.selectedPks.length) {
+
+									changeUser();
+
+								} else {
+
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ACTUAL_USER_WITH_DIFFERENT_ROLE_DESCRIPTION"), null, null);
+									ms.show();
+								}
+							}
+						});
+					});
+				}
+			}
+			
+			function changeUser(data) {
+			
+			let userId = (data) ? data[0].id : self.userData.id;
+			  
+				self.args.selectedPks.forEach(incident => {
+
+					let body = {
+						id: incident,
+						userId: userId
+					};
+
+					let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+					self.restAction(endpoint);
+				});
+			}
+		}
+	}
+	
+	
 	refresh() {
 
 		let self = this;

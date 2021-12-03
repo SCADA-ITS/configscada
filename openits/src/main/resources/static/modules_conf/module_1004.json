@@ -3,6 +3,7 @@
 		"edit": 100401,
 		"confirm": 100402,
 		"cancel": 100403,
+		"assign": 100404,
 		"executePlanFromIncident": 102502,
 		"editPlanFromIncident": 102901
 	},

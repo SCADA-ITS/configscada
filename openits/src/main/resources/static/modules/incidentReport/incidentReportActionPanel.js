@@ -1,7 +1,6 @@
 import { util } from "../../lib/util.js";
 import IncidentReportChangeLocation from "./incidentReportChangeLocation.js";
 import IncidentReportChangeType from "./incidentReportChangeType.js";
-import SearchDialogBox from "../../component/searchDialogBox.js";
 import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
@@ -22,8 +21,8 @@ export default class IncidentReportActionPanel {
 		this.userData = parent.userData;
 		this.incidentType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", this.incidentReport.incidentType.id);
 		this.tableAlarms = undefined;
-		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
-		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
+		this.autoAssignPermissions = parent.autoAssignPermissions;
+		this.assignAnotherPermissions = parent.assignAnotherPermissions;
 		this.cancelIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.cancelIncident);
 		this.confirmIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.confirmIncident);
 	}
@@ -36,7 +35,7 @@ export default class IncidentReportActionPanel {
 		let currentUser = window.em.getByField(EntityType.USER, "id", self.incidentReport.currentUser.id);
 		let currentUserRole = currentUser.role.id;
 
-		if((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) || self.assignAnotherPermissions)){
+		if((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) && (self.userData.id != currentUser.id) || self.assignAnotherPermissions)){
 			
 			changeAssignIncident = true;
 			
@@ -289,8 +288,10 @@ export default class IncidentReportActionPanel {
 											on: {
 
 												onItemClick() {
+													
+													let assignFromIncidentReport = true;
 
-													changeUser();
+													self.parent.actionAssign(assignFromIncidentReport);
 												}
 											}
 										},
@@ -442,39 +443,6 @@ export default class IncidentReportActionPanel {
 			}
 		}
 
-		function changeUser() {
-
-			if (onlyAutoassignIncident) {
-
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_AUTOASSIGN_CONFIRM_DESCRIPTION"), function() {
-
-					let body = {
-						id: self.incidentReport.id,
-						userId: self.userData.id
-					};
-
-					let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
-					self.parent.restAction(endpoint);
-
-				}, null);
-				ms.show();
-
-			} else {
-
-				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, resultSearch);
-				s.show();
-			}
-
-			function resultSearch(data) {
-
-				let body = {
-					id: self.incidentReport.id,
-					userId: data[0].id
-				};
-				let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
-				self.parent.restAction(endpoint);
-			}
-		}
 
 		function showAlarms() {
 
