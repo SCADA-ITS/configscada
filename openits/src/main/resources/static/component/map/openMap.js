@@ -278,22 +278,16 @@ export default class OpenMap extends GenericMap {
 						
 			if (self.metadata.customProviderUrl) {
 				
-				if (util.resourceExist(self.metadata.customProviderUrl)) {
+				layers = [
 					
-					layers = new ol.layer.Tile({
+					new ol.layer.Tile({
 						source: new ol.source.TileWMS({
 							url: self.metadata.customProviderUrl,
 							params: { 'LAYERS': 'final', 'TILED': true },
 							serverType: 'geoserver',
 						})
-					});	
-				}
-				else {
-					
-					(new MessageBox(MessageBox.ERROR, i18n.t("LBL_MAP_PROVIDER_NOT_AVAILABLE") + ": " + self.metadata.customProviderUrl, null, null)).show();
-					
-					return;
-				}
+					})
+				];
 			}
 			else {
 
@@ -312,7 +306,7 @@ export default class OpenMap extends GenericMap {
 				layers: layers,
 				view: new ol.View({
 					center: ol.proj.fromLonLat([self.metadata.longitude, self.metadata.latitude]),
-					//extent: [ -553203.4061760335, 4366939.736625225, -531934.8030556832, 4374793.6412815275 ],
+//					//extent: [ -553203.4061760335, 4366939.736625225, -531934.8030556832, 4374793.6412815275 ],
 					extent: function() {
 						
 						let ext = undefined;
