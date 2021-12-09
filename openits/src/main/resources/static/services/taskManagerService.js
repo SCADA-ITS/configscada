@@ -88,11 +88,21 @@ export default class TaskManagerService extends GenericModule {
 	}
 	
 	dock(id, genericModule) {
-		
+
 		let win = $$(id);
-		
+
+		if ($$(id + "-label") && $$(id + "-label").config.label && $$(id + "-label").config.label != "") {
+
+			let actualLabel;
+
+			actualLabel = $$(id + "-label").config.label.replace("<div>", "");
+			actualLabel = actualLabel.replace("</div>", "");
+
+			genericModule.args.actualLabel = actualLabel;
+		}
+
 		if (win) {
-			
+
 			util.module.open(genericModule.module, genericModule.moduleAction, VIEW_TYPE_TAB, null, genericModule.args);
 			this.remove(id);
 			win.close();

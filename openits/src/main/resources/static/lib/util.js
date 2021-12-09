@@ -146,7 +146,7 @@ export let util = {
 							tooltip: i18n.t("LBL_WINDOW_DOCK"),
 							on: {
 								onItemClick: function(id) {
-									
+																		
 									if (taskManagerService) {
 								
 										taskManagerService.dock(winId, lazyClass);
@@ -261,7 +261,7 @@ export let util = {
 			let label = 'LBL_UNDEFINED';
 			let externalizable = true;
 			let tab_id = "tab_" + module.id + "_" + webix.uid();
-
+			let tabLabel = undefined;
 			let lazyClass;
 
 			if (module.windowValues && module.windowValues.length > 0) {
@@ -287,12 +287,22 @@ export let util = {
 
 				args = {};
 			}
+			
+			
+			if(args.actualLabel){
+				
+				tabLabel = args.actualLabel; 
+
+			} else {
+							
+				tabLabel = (label) ? i18n.t(label) : '';
+			}
 
 			args.containerId = tab_id.replace("tab", "tab_body");
 
 			lazyClass = new mod.default(module, moduleAction, args);
 
-			viewModule = lazyClass.runOne(module.jsMethodDraw)
+			viewModule = lazyClass.runOne(module.jsMethodDraw);
 
 			if (viewModule) {
 				
@@ -312,7 +322,7 @@ export let util = {
 //							</div>`,
 					header: `<div style='float: left; width: 250px;'>
 								<img class='tab-icon' src='${icon}'/>
-								<span class='tab-text'>${label ? i18n.t(label) : ''}</span>
+								<span class='tab-text'>${tabLabel}</span>
 								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
