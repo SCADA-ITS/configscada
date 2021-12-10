@@ -430,8 +430,9 @@ export default class EquipmentViewerContent {
 
 		function addModule(module, equipViewerTab) {
 
+			const CORRECTION_FACTOR = {WIDTH: 10, HEIGHT: 55};
 			let moduleAction = { id: equipViewerTab.moduleActionId };
-			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id, width: contentTabs.$width, height: contentTabs.$height - 32 };
+			let args = { selectedPks: [self.element.id], containerId: contentTabs.config.id, width: contentTabs.$width - CORRECTION_FACTOR.WIDTH, height: contentTabs.$height - CORRECTION_FACTOR.HEIGHT };
 
 			util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args);
 
