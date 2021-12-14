@@ -503,15 +503,18 @@ export default class EquipmentViewerInfoMeasure {
 		
 		let measureCarouselLength = $$(VIEW_INFO_MEASURE_SEGMENTED + "-" + this.uid).config.options.length;
 		let measuresGroup = $$(VIEW_INFO_MEASURE_CAROUSEL + "-" + measureCarouselLength + "-" + this.uid);
-
-		let colsGroup = $$(measuresGroup).config.cols;
-		let colsGroupWidth = $$(measuresGroup).$width;
-
-		for (let group of colsGroup) {
-
-			let carousel = $$(group.id);
-			carousel.define("width", colsGroupWidth);
-			carousel.resize();
+		
+		if (measuresGroup) {
+			
+			let colsGroup = $$(measuresGroup).config.cols;
+			let colsGroupWidth = $$(measuresGroup).$width;
+	
+			for (let group of colsGroup) {
+	
+				let carousel = $$(group.id);
+				carousel.define("width", colsGroupWidth);
+				carousel.resize();
+			}	
 		}
 	}
 
