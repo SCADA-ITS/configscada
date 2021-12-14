@@ -11,7 +11,9 @@
 	},
 	"restEndpoints": {
 		"alarmMuted": "alarms/alarm_filtered/${id}",
-		"alarmsArray": "alarms"
+		"alarmsArray": "alarms",
+		"trees": "trees/${id}",
+		"grids": "grids/${gridAlarmsConfig}/id"
 	},
 	"treeElementType": "1",
 	"gridAlarmsConfig": "1011",

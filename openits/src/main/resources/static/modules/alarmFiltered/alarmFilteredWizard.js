@@ -148,7 +148,7 @@ export default class AlarmFilteredWizard {
 					cols: []
 				}
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate("trees/${id}", { id: parent.config.treeElementType })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.trees, { id: parent.config.treeElementType })).then(function(dat) {
 
 					if (dat != null) {
 
@@ -213,7 +213,7 @@ export default class AlarmFilteredWizard {
 							]
 						};
 
-						webix.ajax().get(appConfig.restUrl + "grids/" + parent.config.gridAlarmsConfig + "/" + "id").then((d) => {
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.grids, { gridAlarmsConfig: parent.config.gridAlarmsConfig })).then((d) => {
 
 							if (d != null) {
 

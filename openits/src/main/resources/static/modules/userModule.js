@@ -636,8 +636,8 @@ export default class UserModule extends GenericModule {
 
 							} else {
 
-								webix.ajax().get(appConfig.restUrl + "users/role/" + selection[0].id).then(function(response) {
-
+								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.userRole, { id: selection[0].id })).then(function(response) {
+	
 									let responseRole = response.json(); //JSON.parse(response.responseText);
 
 									drawFromRole(responseRole)

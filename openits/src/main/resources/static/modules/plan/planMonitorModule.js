@@ -1,3 +1,4 @@
+import { util } from "../../lib/util.js";
 import GenericModule from "../genericModule.js";
 import DataTable from "../../component/datatable.js";
 
@@ -72,7 +73,7 @@ export default class GenericGridModule extends GenericModule {
 
 		if (dataGridId) {
 
-			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId).then(function(dat) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.grids, { id: dataGridId })).then(function(dat) {
 
 				if (dat != null) {
 

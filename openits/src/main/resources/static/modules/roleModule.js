@@ -140,7 +140,7 @@ export default class RoleModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				webix.ajax().get(appConfig.restUrl + "users/role/" + self.args.selectedPks[0]).then(function(res) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.user, { id: self.args.selectedPks[0] })).then(function(res) {
 
 					if (res != null) {
 
