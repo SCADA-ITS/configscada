@@ -198,7 +198,7 @@ export default class IncidentReportModule extends GenericModule {
 	}
 
 
-	actionAssign(assignFromIncidentReport) {
+	actionAssign() {
 
 		let self = this;
 
@@ -229,49 +229,42 @@ export default class IncidentReportModule extends GenericModule {
 
 				let incidentReportsToAssign = 0;
 
-				if (assignFromIncidentReport) {
+				let pendingRequest = self.args.selectedPks.length;
 
-					changeUser();
+				self.args.selectedPks.forEach(e => {
 
-				} else {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
 
-					let pendingRequest = self.args.selectedPks.length;
+						if (dat != null) {
 
-					self.args.selectedPks.forEach(e => {
+							let incident = dat.json();
 
-						webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.incidentReport, { id: e })).then(function(dat) {
+							if (incident) {
 
-							if (dat != null) {
+								let currentUser = window.em.getByField(EntityType.USER, "id", incident.currentUser.id);
+								let currentUserRole = currentUser.role.id;
 
-								let incident = dat.json();
+								if (currentUserRole === self.userData.role.id) {
 
-								if (incident) {
-
-									let currentUser = window.em.getByField(EntityType.USER, "id", incident.currentUser.id);
-									let currentUserRole = currentUser.role.id;
-
-									if (currentUserRole === self.userData.role.id) {
-
-										incidentReportsToAssign++;
-									}
+									incidentReportsToAssign++;
 								}
 							}
+						}
 
-							if (--pendingRequest == 0) {
+						if (--pendingRequest == 0) {
 
-								if (incidentReportsToAssign === self.args.selectedPks.length) {
+							if (incidentReportsToAssign === self.args.selectedPks.length) {
 
-									changeUser();
+								changeUser();
 
-								} else {
+							} else {
 
-									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ACTUAL_USER_WITH_DIFFERENT_ROLE_DESCRIPTION"), null, null);
-									ms.show();
-								}
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ACTUAL_USER_WITH_DIFFERENT_ROLE_DESCRIPTION"), null, null);
+								ms.show();
 							}
-						});
+						}
 					});
-				}
+				});
 			}
 			
 			function changeUser(data) {

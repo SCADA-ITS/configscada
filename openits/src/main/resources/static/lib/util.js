@@ -1192,6 +1192,9 @@ export let util = {
 					let titleView = head.queryView({ view: "label" });
 
 					if (titleView) {
+						
+						titleView.config.shortTitle = (shortTitle) ? shortTitle : "";
+						titleView.config.longTitle = title;
 
 						titleView.setHTML(`<div>${title}</div>`);
 					}

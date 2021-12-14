@@ -90,16 +90,13 @@ export default class TaskManagerService extends GenericModule {
 	dock(id, genericModule) {
 
 		let win = $$(id);
+		let winLabel = $$(id + "-label");
 
-		if ($$(id + "-label") && $$(id + "-label").config.label && $$(id + "-label").config.label != "") {
+		if (winLabel && winLabel.config) {
 
-			let actualLabel;
+			genericModule.args.actualLabel = (winLabel.config.shortTitle != "") ? winLabel.config.shortTitle : winLabel.config.longTitle;
 
-			actualLabel = $$(id + "-label").config.label.replace("<div>", "");
-			actualLabel = actualLabel.replace("</div>", "");
-
-			genericModule.args.actualLabel = actualLabel;
-		}
+		} 
 
 		if (win) {
 

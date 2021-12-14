@@ -3,7 +3,8 @@
 	    "tunnel": 102801,
 	    "tube": 102802,
 		"circuit": 102803,
-		"dali": 102804
+		"dali": 102804,
+		"busDali": 102805
 	},
 	"containerAction": {
 	    "tunnel": 101401

@@ -82,13 +82,13 @@ export default class LightingnModule extends GenericModule {
 				});
 			}
 		
-		} else if(this.moduleAction && (this.moduleAction.id == this.config.moduleAction.circuit || this.moduleAction.id == this.config.moduleAction.dali)) {
+		} else if(this.moduleAction && (this.moduleAction.id == this.config.moduleAction.circuit || this.moduleAction.id == this.config.moduleAction.dali || this.moduleAction.id == this.config.moduleAction.busDali)) {
 			
 			if(this.args && this.args.selectedPks){
 
 				self.enabledSelectedPks = this.args.selectedPks;
 
-				if(this.moduleAction.id == this.config.moduleAction.dali){
+				if((this.moduleAction.id == this.config.moduleAction.dali) || (this.moduleAction.id == this.config.moduleAction.busDali)){
 				
 					self.tubeTableOption = "action-panel-switcher-dali" + this.uid;
 				}
@@ -98,6 +98,7 @@ export default class LightingnModule extends GenericModule {
 					if(response){
 
 						let elementsHierarchy = response.json();
+
 						let tubesHierarchy = elementsHierarchy.filter(element => self.enabledSelectedPks.includes(element.child.id));
 						tubesHierarchy = tubesHierarchy.filter(element => element.parent.elementType.id == self.config.elementTypeTube);
 						let enabledTubeIds = tubesHierarchy.map(e => { return e.parent.id; }); 
@@ -127,6 +128,7 @@ export default class LightingnModule extends GenericModule {
 					}
 				});
 			}
+
 		} else {
 
 			loadTree().then(function(res) {

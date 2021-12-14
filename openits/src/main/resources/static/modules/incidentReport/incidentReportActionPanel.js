@@ -34,7 +34,7 @@ export default class IncidentReportActionPanel {
 		let onlyAutoassignIncident = false;
 		let currentUser = window.em.getByField(EntityType.USER, "id", self.incidentReport.currentUser.id);
 		let currentUserRole = currentUser.role.id;
-
+		
 		if((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) && (self.userData.id != currentUser.id) || self.assignAnotherPermissions)){
 			
 			changeAssignIncident = true;
@@ -282,16 +282,18 @@ export default class IncidentReportActionPanel {
 											width: 135,
 											label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 											tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-											disabled: !self.incidentReport.confirm || !changeAssignIncident,
+											disabled: !changeAssignIncident,
 											type: "iconTop",
 											icon: "mdi mdi-account",
 											on: {
 
 												onItemClick() {
-													
-													let assignFromIncidentReport = true;
 
-													self.parent.actionAssign(assignFromIncidentReport);
+													let moduleAction = {id:  self.parent.module.config.moduleAction.assign };
+													let args = { selectedPks: [self.incidentReport.id]};
+													
+													util.module.open(self.parent.module, moduleAction, null, null, args);
+													
 												}
 											}
 										},
@@ -330,6 +332,7 @@ export default class IncidentReportActionPanel {
 											view: "button",
 											width: 135,
 											hidden: self.incidentReport.confirm,
+											disabled: (self.userData.id != self.incidentReport.currentUser.id) ? true : false,
 											label: i18n.t("LBL_INCIDENT_CHANGE"),
 											tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
 											type: "iconTop",
