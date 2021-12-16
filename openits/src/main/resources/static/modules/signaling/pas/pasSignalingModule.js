@@ -237,7 +237,7 @@ export default class VmsSignalingModule extends GenericModule {
 					$$("view-main-body-" + self.uid).show();
 	
 					//TODO DEPRECATED sustituir por evento, no usar DELAY siempre que se pueda
-					webix.delay(function() {
+				webix.delay(function() {
 	
 						$$("view-loading-panel-" + self.uid).hide();
 						$$("view-panel-" + self.uid).show();
@@ -262,22 +262,15 @@ export default class VmsSignalingModule extends GenericModule {
 					} else {
 	
 						self.pasSignalingContent = new PasSignalingContent(self.config, self.currentElement, self.selectedChildElementsHierarchyMap.get(self.currentElement.id));
+						view = self.pasSignalingContent.getView();	
 						self.pasSignalingContent.loadData();			
-						view = self.pasSignalingContent.getView();					
+										
 					}
 	
 					self.currentViewContent = view.id;
 					
 					webix.ui(view, $$(previousViewContent));
-					
-					if(self.pasSignalingContent){
-	
-						self.pasSignalingContent.callbacks();	
-	
-					} else if (self.pasSignalingOrderEdit){
-						
-						self.pasSignalingOrderEdit.callbacks();
-					}
+
 				}
 				
 				return viewMain;
