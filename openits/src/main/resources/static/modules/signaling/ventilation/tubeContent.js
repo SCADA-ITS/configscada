@@ -4,10 +4,6 @@ import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
 
-const FAN_COMMAND_SEND_FANS_STOP = "SEND_FANS_STOP";
-const FAN_COMMAND_SEND_FANS_START = "SEND_FANS_START";
-const FAN_COMMAND_SEND_FANS_START_REVERSE = "SEND_FANS_START_REVERSE";
-
 export default class TubeContent {
 
 	constructor(tubeId, parent) {
@@ -18,6 +14,7 @@ export default class TubeContent {
 		this.enabledFanIds = parent.selectedFansIds;
 
 		this.selectedTube = undefined;
+		this.fanGrid = undefined;
 		this.tubeFans = undefined;
 		this.tubeFansDataTable = undefined;
 		this.infoRegime = undefined;
@@ -81,33 +78,74 @@ export default class TubeContent {
 
 		if (this.tubeId) {
 
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementById, { id: self.tubeId })).then(function(data) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementByIdWithoutChilds, { id: self.tubeId })).then(function(data) {
 
 				if (data != null) {
 
 					self.selectedTube = data.json();
-					let fans = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeFan);
-					self.tubeFans = eval("adapter." + self.parent.config.adapters.fan)(fans, null);
+					
+					webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.elementsHierarchy).then(function(dataHierarchies) {
+						
+						if (dataHierarchies != null) {
 
-					webix.ui(drawContent(), $$("view-tube-content-" + self.uid));
-					$$("view-tube-loading-" + self.uid).hide();
-
-					if (self.tubeFansDataTable) {
-
-						self.tubeFansDataTable.callbacks();
-
-						if (self.enabledFanIds) {
-
-							self.tubeFansDataTable.select(self.enabledFanIds);
+							let hierarchies = dataHierarchies.json();
+							
+							if (Array.isArray(hierarchies)) {
+								
+								let tubeFans = hierarchies.filter(h => h.parent.id === self.selectedTube.id && h.child.elementType.id === self.parent.config.elementTypeFan);
+								
+								if (Array.isArray(tubeFans)) {
+									
+									let fanIds = tubeFans.map(t => {
+										
+										return t.child.id;
+									});
+									
+									webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.parent.config.restEndpoints.elementByIds, JSON.stringify(fanIds)).then(function(dataFans) {
+									
+										if (dataFans != null) {
+											
+											let fans = dataFans.json();
+											
+											if (Array.isArray(fans) && fans.length > 0) {
+												
+												self.tubeFans = eval("adapter." + self.parent.config.adapters.fan)(fans, null);
+												
+												webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.grid, { id: self.parent.config.gridId })).then(function(dataGrid) {
+													
+													if (dataGrid != null) {
+							
+														self.fanGrid = dataGrid.json();
+														
+														webix.ui(drawContent(), $$("view-tube-content-" + self.uid));
+														$$("view-tube-loading-" + self.uid).hide();
+									
+														if (self.tubeFansDataTable) {
+									
+															self.tubeFansDataTable.callbacks();
+									
+															if (self.enabledFanIds) {
+									
+																self.tubeFansDataTable.select(self.enabledFanIds);
+															}
+									
+															if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableFanChange) {
+									
+																self.tubeFansDataTable.disable();
+															}
+														}
+									
+														connectWS();
+														
+													}
+												});
+											}
+										}
+									});
+								}
+							}
 						}
-
-						if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableFanChange) {
-
-							self.tubeFansDataTable.disable();
-						}
-					}
-
-					connectWS();
+					});
 				}
 			});
 		}
@@ -124,7 +162,7 @@ export default class TubeContent {
 
 				if (self.tubeFansDataTable && self.tubeFansDataTable.getAllItems() && Array.isArray(self.tubeFansDataTable.getAllItems()) && self.tubeFansDataTable.getAllItems().length > 0 && modeEnableFanActions) {
 
-					let enabled = self.tubeFansDataTable.getAllItems().find(item => (item.fanStateToSend != undefined && item.fanStateToSend != null));
+					let enabled = self.tubeFansDataTable.getAllItems().find(item => (item.tubeCmdToSend != undefined && item.tubeCmdParamIds != undefined));
 
 					if (enabled) {
 
@@ -151,16 +189,11 @@ export default class TubeContent {
 		function getDisabledChangeRegime() {
 
 			let currentVentilationState = getCurrentVentilationState();
-
-			if (currentVentilationState && currentVentilationState.id &&
-				self.parent.config.ventilationStates[currentVentilationState.id].actions.includes("SEND_VENTILATION_REGIME")) {
-
-				return false;
-
-			} else {
-
-				return true;
-			}
+			
+			let result = (currentVentilationState && currentVentilationState.id &&
+				self.parent.config.ventilationStates[currentVentilationState.id].actions.includes("SEND_VENTILATION_REGIME"));
+				
+			return !result; 
 		}
 
 		function getVentilationRegime(regimeId) {
@@ -420,19 +453,21 @@ export default class TubeContent {
 			function onMessageFan(data) {
 
 				if (data) {
+					
+					let newFanData = webix.copy(data);
 
-					let oldFanData = self.tubeFansDataTable.getItem(data.id);
+					let oldFanData = self.tubeFansDataTable.getItem(newFanData.id);
 
 					if (oldFanData) {
 
-						data.fanStateToSend = oldFanData.statusSendId;
-						data.fanStateToSendAlias = oldFanData.statusSendAlias;
-						data.alias = oldFanData.alias;
+						newFanData.tubeCmdToSend = oldFanData.tubeCmdToSend;
+						newFanData.tubeCmdParamIds = oldFanData.tubeCmdParamIds 
+						newFanData.tubeCmdToSendAlias = oldFanData.tubeCmdToSendAlias;
+						newFanData.alias = oldFanData.alias;
 
-						let fanData = eval("adapter." + self.parent.config.adapters.fan)([data], null);
+						let fanData = eval("adapter." + self.parent.config.adapters.fan)([newFanData], null);
 						self.tubeFansDataTable.update(fanData);
 					}
-
 				}
 			}
 		}
@@ -494,10 +529,10 @@ export default class TubeContent {
 
 						ventilationRegimesConfig = JSON.parse(ventilationRegimesConfig.value);
 
-						availableRegimes = ventilationRegimesConfig.ventilationRegimes.map(function(regime) {
+						availableRegimes = ventilationRegimesConfig.ventilationRegimes.map(function(reg) {
 							return {
-								id: regime.id.toString(),
-								value: i18n.t(regime.labelAlias)
+								id: reg.id.toString(),
+								value: i18n.t(reg.labelAlias)
 							};
 						});
 
@@ -764,287 +799,91 @@ export default class TubeContent {
 				function getTable() {
 
 					let data = self.tubeFans;
-
-					const defaultGridOptionValues = [
-						{ gridOption: { id: 5 }, value: undefined },
-						{ gridOption: { id: 6 }, value: undefined },
-						{ gridOption: { id: 7 }, value: "false" },
-						{ gridOption: { id: 8 }, value: "false" },
-						{ gridOption: { id: 9 }, value: "true" },
-						{ gridOption: { id: 10 }, value: "true" },
-						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-						{ gridOption: { id: 21 }, value: "custom" },
-						{ gridOption: { id: 23 }, value: "true" }
-					];
-
-					let metadata = {
-						filter: true,
-						label: "LBL_FAN",
-						visible: true,
-						gridOptionValues: defaultGridOptionValues,
-						gridFields: [
-							{
-								id: 102701,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: true,
-								parameterized: false,
-								position: 1,
-								required: true,
-								sourceField: "id",
-								visible: false,
-								widthPx: 1,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								}
-							},
-							{
-								id: 102502,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								parameterized: false,
-								position: 2,
-								required: true,
-								sourceField: "state",
-								visible: true,
-								widthPx: 30,
-								adjust: false,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								},
-								gridFieldIcons: [
-									{
-										icon: "./img/state/stateUnknown.png",
-										showValue: false,
-										value: "ElementTypeState:9:0",
-										labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
-									},
-									{
-										icon: "./img/state/stateUp.png",
-										showValue: false,
-										value: "ElementTypeState:9:1",
-										labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
-									},
-									{
-										icon: "./img/state/stateDown.png",
-										showValue: false,
-										value: "ElementTypeState:9:2",
-										labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
-									},
-									{
-										icon: "./img/state/stateAlarm.png",
-										showValue: false,
-										value: "ElementTypeState:9:3",
-										labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
-
-									}
-								]
-							},
-							{
-								id: 102703,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								label: "LBL_FAN_ALIAS",
-								labelTooltip: "LBL_FAN_ALIAS",
-								parameterized: false,
-								position: 3,
-								required: false,
-								sourceField: "alias",
-								visible: true,
-								widthPx: 200,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								},
-								gridFieldIcons: []
-							},
-							{
-								id: 102504,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								label: "LBL_FAN_STATE",
-								labelTooltip: "LBL_FAN_STATE",
-								parameterized: false,
-								position: 4,
-								required: true,
-								sourceField: "ElementTypeParam:9:2:1",
-								visible: true,
-								widthPx: 250,
-								adjust: false,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								},
-								replacementFunction: "getLabelToFanState",
-								gridFieldIcons: [
-									{
-										showValue: false,
-										badgeColor: true,
-										avatar: false,
-										enabled: true
-									}
-								]
-							},
-							{
-								id: 102505,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								parameterized: false,
-								position: 5,
-								required: false,
-								sourceField: "fanStateToSend",
-								visible: false,
-								widthPx: 1,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								}
-							}, {
-								id: 102506,
-								extended: false,
-								filtered: false,
-								isEpochMilli: false,
-								isPk: false,
-								label: "LBL_FAN_STATE_TO_SEND",
-								labelTooltip: "LBL_FAN_STATE_TO_SEND",
-								needsTranslation: false,
-								parameterized: false,
-								position: 6,
-								required: true,
-								sourceField: "fanStateToSendAlias",
-								visible: true,
-								widthPx: 250,
-								adjust: false,
-								gridFieldDataType: {
-									id: 1,
-									name: "string"
-								},
-								gridFieldIcons: []
-							}
-						],
-						gridCommands: [
-							{
-								id: 1,
-								default_: false,
-								icon: "mdi mdi-rotate-right",
-								label: "LBL_SEND_FAN_START_DIRECT",
-								multiselect: true,
-								position: 1,
-								showText: false,
-								itemRequired: true
-							},
-							{
-								id: 2,
-								default_: false,
-								icon: "mdi mdi-rotate-left",
-								label: "LBL_SEND_FAN_START_REVERSE",
-								multiselect: true,
-								position: 2,
-								showText: false,
-								itemRequired: true
-							},
-							{
-								id: 3,
-								default_: false,
-								icon: "mdi mdi-stop",
-								label: "LBL_SEND_FAN_STOP",
-								multiselect: true,
-								position: 3,
-								showText: false,
-								itemRequired: true
-							},
-							{
-								id: 4,
-								default_: false,
-								icon: "mdi mdi-broom",
-								label: "LBL_CLEAN",
-								multiselect: true,
-								position: 4,
-								showText: false,
-								itemRequired: true
-							}
-						]
-
-					};
+					let metadata = self.fanGrid.metadata;				
 
 					let events = {};
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-
-					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-						commandId: 1,
-						function: () => {
-
-							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-
-								item.fanStateToSend = FAN_COMMAND_SEND_FANS_START;
-								item.fanStateToSendAlias = i18n.t("LBL_FAN_START");
-								self.tubeFansDataTable.update(item);
-							});
-
-							checkDisableChangeStatusButton();
-						}
-					});
-
-					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-						commandId: 2,
-						function: () => {
-
-							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-
-								item.fanStateToSend = FAN_COMMAND_SEND_FANS_START_REVERSE;
-								item.fanStateToSendAlias = i18n.t("LBL_FAN_START_REVERSE");
-								self.tubeFansDataTable.update(item);
-							});
-
-							checkDisableChangeStatusButton();
-						}
-					});
-
-					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-						commandId: 3,
-						function: () => {
-
-							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-
-								item.fanStateToSend = FAN_COMMAND_SEND_FANS_STOP;
-								item.fanStateToSendAlias = i18n.t("LBL_FAN_STOP");
-								self.tubeFansDataTable.update(item);
-							});
-
-							checkDisableChangeStatusButton();
-						}
-					});
-
-					events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-						commandId: 4,
-						function: () => {
-
-							self.tubeFansDataTable.getSelectedItems().forEach(item => {
-
-								item.fanStateToSend = null;
-								item.fanStateToSendAlias = "-";
-								self.tubeFansDataTable.update(item);
-							});
-
-							checkDisableChangeStatusButton();
-						}
-					});
+					
+					if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+						
+						metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+						
+						let cleanButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
+						
+						metadata.gridCommands.push({
+							id: cleanButtonId,
+							default_: false,
+							icon: "mdi mdi-broom",
+							label: "LBL_CLEAN",
+							multiselect: true,
+							position: metadata.gridCommands.length + 1,
+							showText: false,
+							itemRequired: false,
+							unselectAllAfter: true
+						});
+						
+						metadata.gridCommands.forEach(gridCommand => {
+							
+							if (gridCommand.args) {
+								
+								let args = JSON.parse(gridCommand.args);
+								
+								if (args.command && args.ids) {
+									
+									events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+										commandId: gridCommand.id,
+										function: () => {
+											
+											let commandElement = self.selectedTube.commandElements.find(e => e.id === args.command);
+				
+											self.tubeFansDataTable.getSelectedItems().forEach(item => {
+												
+												let fanElementTypeState = item[self.parent.config.fanElementTypeState.field];
+												
+												if (fanElementTypeState && 
+													self.parent.config.fanElementTypeState.allowed.includes(fanElementTypeState)) {
+													
+													item.tubeCmdToSend = commandElement.id;
+													item.tubeCmdParamIds = args.ids;
+													item.tubeCmdToSendAlias = i18n.t(commandElement.labelAlias);
+													self.tubeFansDataTable.update(item);	
+												}
+											});
+				
+											checkDisableChangeStatusButton();
+										}
+									});
+								}
+							}
+							
+						});
+						
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+							commandId: cleanButtonId,
+							function: () => {
+	
+								clearGrid();
+							}
+						});
+					}
 
 					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
 
 					return self.tubeFansDataTable.getView();
-				};
+				}
+				
+				function clearGrid() {
+					
+					self.tubeFansDataTable.getAllItems().forEach(item => {
+	
+						item.tubeCmdToSend = null;
+						item.tubeCmdParamIds = null;
+						item.tubeCmdToSendAlias = "-";
+						self.tubeFansDataTable.update(item);
+					});
+
+					checkDisableChangeStatusButton();	
+				}
 
 				function getBottom() {
 
@@ -1066,84 +905,61 @@ export default class TubeContent {
 									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
 									ms.show();
 									
-									function onAccept(){
+									function onAccept() {
 										
-										let allTableItems = self.tubeFansDataTable.getAllItems();
-
-										let fansStopCommand = [];
-										let fansStartCommand = [];
-										let fansStartReverseCommand = [];
-
-										allTableItems.forEach(row => {
-
-											if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_STOP) {
-
-												fansStopCommand.push(row.id);
-
-											} else if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_START) {
-
-												fansStartCommand.push(row.id);
-
-											} else if (row.fanStateToSend == FAN_COMMAND_SEND_FANS_START_REVERSE) {
-
-												fansStartReverseCommand.push(row.id);
+										let rows = self.tubeFansDataTable.getAllItems();
+										
+										let cmdMap = new Map();
+										
+										rows.forEach(row => {
+											
+											if (row.tubeCmdToSend && row.tubeCmdParamIds) {
+												
+												let mapItem = cmdMap.get([row.tubeCmdToSend, row.tubeCmdParamIds]);
+											
+												if (Array.isArray(mapItem)) {
+													
+													mapItem.push(row.id);
+												}
+												else {
+													
+													cmdMap.set([row.tubeCmdToSend, row.tubeCmdParamIds], [row.id]);
+												}	
 											}
 										});
-
-										if (fansStopCommand.length > 0) {
-
-											executeFansCommand(FAN_COMMAND_SEND_FANS_STOP, fansStopCommand);
-										}
-
-										if (fansStartCommand.length > 0) {
-
-											executeFansCommand(FAN_COMMAND_SEND_FANS_START, fansStartCommand);
-										}
-
-										if (fansStartReverseCommand.length > 0) {
-
-											executeFansCommand(FAN_COMMAND_SEND_FANS_START_REVERSE, fansStartReverseCommand);
-										}
-
-										function executeFansCommand(commandAction, values) {
-
-											let command = self.parent.config.commands[commandAction];
-											let value = "[";
-											command.elementId = self.selectedTube.id;
-
-											for (var i = 0; i < values.length; i++) {
-
-												if (i > 0) {
-													value += ", ";
-												}
-												value += values[i];
-											}
-
-											value += "]";
-											command.commandElementValues[0].value = value;
-
+										
+										cmdMap.forEach((ids, command) => {
+											
+											executeFansCommand(command, ids);
+										});
+										
+										self.tubeFansDataTable.unselectAll();
+										
+										function executeFansCommand(command, ids) {
+											
 											let body = {
-												commands: []
+												commands: [{
+													commandElementTypeId: command[0],
+													elementId: self.selectedTube.id,
+													commandElementValues: [
+														{
+															commandElementTypeParamId: command[1],
+															value: "[" + ids.join() + "]"
+														}
+													]
+												}]
 											};
-											body.commands.push(command);
 
 											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
 
-												self.tubeFansDataTable.getAllItems().forEach(row => {
-
-													row.fanStateToSend = null;
-													row.fanStateToSendAlias = null;
-													self.tubeFansDataTable.update(row);
-												});
-
-												checkDisableChangeStatusButton();
+												clearGrid();
 
 												if (!data.json()) {
 
 													webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
 												}
 											});
-										}										
+										}
 									}
 								}
 							}

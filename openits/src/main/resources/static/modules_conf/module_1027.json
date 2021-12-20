@@ -10,9 +10,11 @@
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
 		"elementById": "elements/${id}",
+		"elementByIdWithoutChilds": "elements/${id}/withoutChilds",
 		"elementByIds": "elements",
 		"command": "elements/send_command_element",
-		"elementsHierarchy": "elements/hierarchy"
+		"elementsHierarchy": "elements/hierarchy",
+		"grid": "grids/${id}"
 	},
 	"topics": {
 		"tube" : "/topic/element.ElementType:2000",
@@ -23,6 +25,7 @@
 		"element": "ws.element.update",
 		"fan": "ws.fan.getList"
 	},
+	"gridId": 1012,
 	"elementTypeTunnel": "ElementType:2001",
 	"elementTypeTube": "ElementType:2000",
 	"elementTypeFan": "ElementType:9",
@@ -50,6 +53,10 @@
 		"ventilationMode" : "ElementTypeParam:2000:2:1",
 		"fanState" : "ElementTypeParam:9:2:1",
 		"currentVentilationState" : "ElementTypeParam:2000:2:7"
+	},
+	"fanElementTypeState" : {
+		"field": "state",
+		"allowed": ["ElementTypeState:9:1", "ElementTypeState:9:3"]
 	},
 	"ventilationModeOptions" :[
 		{"id": "1", "label" : "LBL_AUTO", "disableRegimeChange" : true, "disableFanChange" : true},

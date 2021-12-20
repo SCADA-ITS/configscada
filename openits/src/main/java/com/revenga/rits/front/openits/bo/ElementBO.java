@@ -31,6 +31,14 @@ public class ElementBO extends GenericBO {
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, elements);
 	}
+	
+	public Map<String, Object> getElementWithoutChilds(String id) {
+		
+		Map<String, Object> element = voDataSourceAdapter
+				.get(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_WITHOUT_CHILDS, new Object[] { id });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENT_WITHOUT_CHILDS, element);
+	}
 
 	public List<Map<String, Object>> getHierarchies() {
 

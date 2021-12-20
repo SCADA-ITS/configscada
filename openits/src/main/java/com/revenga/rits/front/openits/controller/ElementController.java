@@ -59,6 +59,19 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getItem(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/{id}/withoutChilds")
+	@ApiOperation(value = "Get element by id without childs", notes = "Get element by id without childs")
+	public ResponseEntity<Object> getElementByIdWithoutChilds(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Element by id",
+			example = "Element:33:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(elementBO.getElementWithoutChilds(id), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/hierarchy")
 	@ApiOperation(value = "Get hierarchies", notes = "Get hierarchies")
 	public ResponseEntity<Object> getHierarchies() {

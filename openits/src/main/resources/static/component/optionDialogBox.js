@@ -50,6 +50,7 @@ export default class OptionDialogBox {
 
 			bodyContent = {
 				rows: [
+					{},
 					{
 						view: "scrollview",
 						height: height,
@@ -59,6 +60,7 @@ export default class OptionDialogBox {
 						}
 					},
 					{ height: 10 },
+					{},
 					getToolbarActions()
 				]
 			};
@@ -71,7 +73,7 @@ export default class OptionDialogBox {
 			bodyContent.rows.push(getToolbarActions());
 		}
 
-		self.optionWindow = util.ui.loadWindow(self.title, bodyContent, 650, 650, true);
+		self.optionWindow = util.ui.loadWindow(self.title, bodyContent, 430, 650, true);
 
 
 		function getToolbarActions() {

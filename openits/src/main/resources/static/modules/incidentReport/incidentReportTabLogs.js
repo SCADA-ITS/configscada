@@ -2,8 +2,14 @@ import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
 
-export default class IncidentReportTabLog {
+//Incidents Log Value constants
+const INCIDENTS_LOGS_VALUE_STATE = "LogTypeParam:1:1";
+const INCIDENTS_LOGS_VALUE_ARG1 = "LogTypeParam:1:2";
+const INCIDENTS_LOGS_VALUE_ARG2 = "LogTypeParam:1:3";
 
+
+export default class IncidentReportTabLog {
+	
 	constructor(parent) {
 
 		this.parent = parent;
@@ -279,8 +285,9 @@ export default class IncidentReportTabLog {
 					row["incidentLogValueArg1"] = null;
 
 					element.incidentReportLogValues.forEach(e => {
-						e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE ? row["incidentLogValueState"] = e.value : null;
-						e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1 ? row["incidentLogValueArg1"] = e.value : null;
+						
+						row["incidentLogValueState"] = (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE) ? e.value : null;
+						row["incidentLogValueArg1"] = (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1) ? e.value : null; 
 					});
 
 					data.push(row);

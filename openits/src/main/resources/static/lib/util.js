@@ -1454,11 +1454,6 @@ export let util = {
 
 		},
 
-		getLabelToFanState(fanState) {
-
-			return i18n.t(FanSate.find(e => e.value === fanState).label);
-		},
-
 		getCurrentPlanOrderAlias(planOrderId, obj) {
 
 			let planOrder = undefined;

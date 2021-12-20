@@ -256,27 +256,20 @@ export default class DataTable {
 									value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
 								}
 								else {
+									
+									if (Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
 	
-									if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+										let gridFieldReplacement = field.gridFieldReplacements.find(e => e.value == obj[field.sourceField]);
 	
-										badgeColor = (field.gridFieldIcons[0].badgeColor == true);
-										avatar = (field.gridFieldIcons[0].avatar == true);
-										showValue = (field.gridFieldIcons[0].showValue == true);
-										
-										if (value === "") {
-										
-											value = obj[field.sourceField];	
-										}
-										
-										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == value);
+										if (gridFieldReplacement) {
 	
-										if (gridFieldIcon) {
-	
-											icon = gridFieldIcon.icon;
-											showValue = (gridFieldIcon.showValue == true);
+											value = field.needsTranslation ? i18n.t(gridFieldReplacement.label) : gridFieldReplacement.label;
+											
+											obj[field.sourceField] = value;
 										}
 									}
-									else if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
+									
+									if (field.gridFieldReferences != undefined && field.gridFieldReferences.length > 0) {
 	
 	
 										let gridFieldReference = field.gridFieldReferences[0];
@@ -296,6 +289,26 @@ export default class DataTable {
 	
 												obj[field.sourceField] = value;
 											}
+										}
+									}
+	
+									if (field.gridFieldIcons != undefined && field.gridFieldIcons.length > 0) {
+	
+										badgeColor = (field.gridFieldIcons[0].badgeColor == true);
+										avatar = (field.gridFieldIcons[0].avatar == true);
+										showValue = (field.gridFieldIcons[0].showValue == true);
+										
+										if (value === "") {
+										
+											value = obj[field.sourceField];	
+										}
+										
+										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == value);
+	
+										if (gridFieldIcon) {
+	
+											icon = gridFieldIcon.icon;
+											showValue = (gridFieldIcon.showValue == true);
 										}
 									}
 									else {
@@ -2091,14 +2104,14 @@ export default class DataTable {
 						
 							let module = this.find_module(gridCommand.moduleAction.id);
 							util.module.open(module, gridCommand.moduleAction, viewTypeId, null, args);
-							
-							let grid = $$("dt-" + this.uid);
-
-							if (grid && gridCommand.unselectAllAfter) {
-					
-								grid.unselectAll();
-							}	
 						}
+					}
+					
+					let grid = $$("dt-" + this.uid);
+
+					if (grid && gridCommand.unselectAllAfter) {
+			
+						grid.unselectAll();
 					}
 				}
 			}
@@ -2627,7 +2640,16 @@ export default class DataTable {
 			}
 		}
 	}
-
+	
+	unselectAll() {
+		
+		let grid = $$("dt-" + this.uid);
+		
+		if (grid) {
+			
+			grid.unselectAll();	
+		}
+	}
 }
 
 Object.defineProperty(DataTable, 'EventTypes', {
