@@ -279,7 +279,7 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			self.dcRecognized = data.filter(e => {
 
-				return e.recognized && !isFiltered(e);
+				return e.recognized && !isFiltered(e) && !e.deactivation;
 			});
 		}
 
