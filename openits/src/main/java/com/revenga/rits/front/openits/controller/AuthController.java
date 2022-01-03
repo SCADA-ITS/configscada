@@ -43,7 +43,7 @@ public class AuthController {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
-				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
+				.collect(Collectors.toMap(h -> h.toLowerCase(), attr.getRequest()::getHeader));
 	    
 		return new ResponseEntity<>(sessionBO.login(headers, httpSession), HttpStatus.OK);
 	}
