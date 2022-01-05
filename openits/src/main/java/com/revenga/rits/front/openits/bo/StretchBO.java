@@ -37,7 +37,7 @@ public class StretchBO extends GenericBO {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getListByIncidentType(String id) {
 
-		List<Map<String, Object>> scretchsFiltered = null;
+		List<Map<String, Object>> stretchsFiltered = null;
 		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, null);	
 						
 		if (!CollectionUtils.isEmpty(stretchs) && id != null) {
@@ -63,7 +63,7 @@ public class StretchBO extends GenericBO {
 				
 				if (!CollectionUtils.isEmpty(listIncidentTypeStretchsFiltered)) {
 				
-					scretchsFiltered = stretchs.stream().filter(scretch -> {
+					stretchsFiltered = stretchs.stream().filter(scretch -> {
 						
 						return (listIncidentTypeStretchsFiltered.stream()
 								.filter(e -> {
@@ -85,9 +85,16 @@ public class StretchBO extends GenericBO {
 			}
 		}
 		
-		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, scretchsFiltered);
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCHS, stretchsFiltered);
 	}
 	
+	public List<Map<String, Object>> getListByLocation(String locationId) {
+		
+		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_LOCATION, new Object[] { locationId });
+		
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_LOCATION, stretchs);
+	}
+		
 	public List<Map<String, Object>> getStretchByRoad(String id) {
 		
 		List<Map<String, Object>> stretchs = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_STRETCH_BY_ROAD, new Object[] { id });

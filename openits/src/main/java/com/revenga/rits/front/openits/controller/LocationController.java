@@ -93,6 +93,19 @@ public class LocationController {
 		
 		return new ResponseEntity<>(stretchBO.getList(), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "{id}/stretchs")
+	@ApiOperation(value = "Get stretchs by location", notes = "Get stretchs by location")
+	public ResponseEntity<Object> getStretchsByLocation(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Location id",
+			example = "Location:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(stretchBO.getListByLocation(id), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/stretchs/incidentType/{id}")
 	@ApiOperation(value = "Get stretchs by incidentType id", notes = "Get stretchs by incident type id")
@@ -106,6 +119,8 @@ public class LocationController {
 		
 		return new ResponseEntity<>(stretchBO.getListByIncidentType(id), HttpStatus.OK);
 	}
+	
+	
 	
 	@GetMapping(value = "/stretch/{id}")
 	@ApiOperation(value = "Get stretch by id", notes = "Get stretch by id")

@@ -1,4 +1,5 @@
 import IncidentWizardDrawStepSummary from "./incidentWizardDrawStepSummary.js";
+import IncidentWizardDrawStepAffectionStretch from "./incidentWizardDrawStepAffectionStretch.js";
 import IncidentWizardDrawStepStretchAndLocation from "./incidentWizardDrawStepStretchAndLocation.js";
 import IncidentWizardDrawStepIncidentType from "./incidentWizardDrawStepIncidentType.js";
 import IncidentWizardDrawStepLocationFromMap from "./incidentWizardDrawStepLocationFromMap.js";
@@ -26,6 +27,11 @@ export default class IncidentWizardDrawContent {
 		function drawStepStretchAndLocation() {
 			
 			return new IncidentWizardDrawStepStretchAndLocation(parent, step);
+		}
+		
+		function drawStepAffectionStretch() {
+			
+			return new IncidentWizardDrawStepAffectionStretch(parent, step);
 		}
 
 		let drawStepSummary = function() {

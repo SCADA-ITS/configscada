@@ -112,7 +112,9 @@ export default class VmsSignalingMulti {
 			
 			function getViewLists() {
 			
-				let viewLists = { 
+				let viewLists;
+				
+				viewLists = { 
 					id: "view-signaling-multi-dbllist-" + self.uid,
 					view: "dbllist",
 				  	//list: { autoheight:true },
@@ -127,7 +129,7 @@ export default class VmsSignalingMulti {
 							let selectedValuesStr = this.getValue();
 							let acceptButton = $$("btn-accept-" + self.uid);
 
-							if(acceptButton){
+							if (acceptButton){
 								
 								if(selectedValuesStr == "") {
 								
@@ -138,23 +140,6 @@ export default class VmsSignalingMulti {
 									acceptButton.enable();
 								}								
 							}
-							
-//							this.blockEvent();
-//														
-//							if (selectedValuesStr) {
-//								
-//								if (!selectedValuesStr.split(",").includes(self.currentElement.id)) {
-//									
-//									this.select(self.currentElement.id, true);
-//								}
-//							}
-//							else {
-//								
-//								this.select(self.currentElement.id, true);
-//							}
-//							
-//							this.unblockEvent();
-							
 						}
 					}
 				};

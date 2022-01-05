@@ -29,7 +29,8 @@ export default class IncidentWizardAction {
 						
 						let body = {
 							incidentTypeId: parent.incidentData.incidentTypeId,
-							locationId: parent.incidentData.locationId
+							locationId: parent.incidentData.locationId,
+							affectionStretchIds: parent.incidentData.affectionStretchsSelected.map(e => e.id)
 						};
 			
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
@@ -380,11 +381,42 @@ export default class IncidentWizardAction {
 				onValid(false);
 			}
 		}
+		
+		function validateStepAffectionStretch(onValid) {
+			
+			if (Array.isArray(parent.incidentData.affectionStretchs)) {
+				
+				let affectionStretchsSelectedStr = parent.dblListAffectionStretchs.getValue();
+									
+				if (affectionStretchsSelectedStr != "") {
+					
+					let affectionStretchsId = affectionStretchsSelectedStr.split(",");
+					
+					if (Array.isArray(affectionStretchsId)) {
+						
+						parent.incidentData.affectionStretchsSelected = [];
+						
+						affectionStretchsId.forEach(affectionStretchId => {
+						
+							let affectionStretch = parent.incidentData.affectionStretchs.find(e => e.id === affectionStretchId);
+							
+							if (affectionStretch) {
+								
+								parent.incidentData.affectionStretchsSelected.push(affectionStretch);
+							}	
+						});
+					}
+				}
+	
+				valid = Array.isArray(parent.incidentData.affectionStretchsSelected) && parent.incidentData.affectionStretchsSelected.length > 0;
+				
+				onValid(valid);	
+			}
+		}
 
 		function validateStepSummary(onValid) {
 			
 			 onValid(true);
-
 		}
 
 		if (step) {
@@ -409,7 +441,7 @@ export default class IncidentWizardAction {
 	
 					if (summaryStretch) {
 	
-						summaryStretch.setValues({ stretch: parent.incidentData.stretch });
+						summaryStretch.setValues({ affectionStretchs: parent.incidentData.affectionStretchsSelected });
 					}
 	
 					if (summaryUser) {
@@ -461,6 +493,49 @@ export default class IncidentWizardAction {
 
 			parent.listViewIncidentGroups.unselect();
 			parent.dtIncidentTypes.clear();
+		}
+		
+		function resetStepAffectionStretch() {
+			
+			parent.incidentData.affectionStretchsSelected = undefined;
+			
+			if (parent.dblListAffectionStretchs) {
+				
+				parent.dblListAffectionStretchs.$$("left").clearAll();
+				parent.dblListAffectionStretchs.$$("right").clearAll();
+				
+				if (parent.incidentData.locationId) {
+				
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByLocation, { id: parent.incidentData.locationId })).then(
+							
+						function(dat) {
+		
+							if (dat != null) {
+			
+								let stretchs = dat.json();
+								
+								if (Array.isArray(stretchs) && stretchs.length > 0) {
+									
+									parent.incidentData.affectionStretchs = stretchs;
+									
+									let stretchData = stretchs.map(e => {
+										
+										return {
+											id: e.id,
+											value: e.alias
+										}
+									});
+									
+									parent.dblListAffectionStretchs.parse(stretchData);
+									parent.dblListAffectionStretchs.setValue([parent.incidentData.stretchId]);
+									
+									parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+								}
+							}
+						}
+					);	
+				}
+			}
 		}
 
 		function resetStepStretchAndLocationFromIncidentType() {

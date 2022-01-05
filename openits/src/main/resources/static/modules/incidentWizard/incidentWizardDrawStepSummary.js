@@ -85,21 +85,29 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 												}
 											},
 											{
+												id: "summary-stretch-" + parent.uid,
+												height: 50,
+												borderless: true,
+												template: function(obj) {
+													
+													let lblAffectionStretchs = '';
+													
+													if (Array.isArray(obj.affectionStretchs)) {
+														
+														lblAffectionStretchs = obj.affectionStretchs.map(e => e.alias).join(',');
+													}
+													
+													return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_AFFECTION_STRETCHS")}</span></div>
+														   <div class="value" style="max-width: ${maxWidthLabels}px;">${lblAffectionStretchs}</div>`
+												}
+											},
+											{
 												id: "summary-location-" + parent.uid,
 												height: 50,
 												borderless: true,
 												template: function(obj) {
 													return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
 														   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.location ? obj.location : ''}</div>`
-												}
-											},
-											{
-												id: "summary-stretch-" + parent.uid,
-												height: 50,
-												borderless: true,
-												template: function(obj) {
-													return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
-														   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.stretch ? obj.stretch : ''}</div>`
 												}
 											},
 											{
