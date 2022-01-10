@@ -404,14 +404,14 @@ export let util = {
 
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
 					
-					if (args) {
+					if (args && viewTypeId) {
 						
 						args.viewTypeId = viewTypeId;	
 					}
 
 					const mod = await import(jsFile);
 
-					if (viewTypeId === VIEW_TYPE_CUSTOM && drawCallback) {
+					if ((viewTypeId === VIEW_TYPE_CUSTOM || viewTypeId === VIEW_TYPE_EXTERNAL) && drawCallback) {
 
 						instance = util.module.loadInCustom(module, moduleAction, mod, args, drawCallback);
 					}

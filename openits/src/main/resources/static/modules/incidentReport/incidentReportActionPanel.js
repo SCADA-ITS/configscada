@@ -13,6 +13,7 @@ export default class IncidentReportActionPanel {
 
 		this.parent = parent;
 		this.containerId = parent.args.containerId;
+		this.viewTypeId = parent.args.viewTypeId;
 		this.uid = parent.uid;
 		this.config = parent.config;
 		this.closed = parent.closed;
@@ -194,17 +195,27 @@ export default class IncidentReportActionPanel {
 														});
 
 														self.parent.restAction(endpoint);														
-													};
+													}
 												}
 
 											} else {
 
-												let container = $$(self.containerId);
+												
+												
+												if (this.viewTypeId === VIEW_TYPE_WINDOW) {
+													
+													let container = $$(self.containerId);
 
-												if (container) {
-
-													container.close();
+													if (container) {
+	
+														container.close();
+													}
+													
 												}
+												else {
+													
+													window.open('', '_self').close();
+												}	
 											}
 										}
 									}

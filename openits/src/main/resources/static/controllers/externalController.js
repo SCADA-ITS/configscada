@@ -77,7 +77,6 @@ window.onload = function() {
 			
 				const moduleId = parseInt(urlParams.get('module'));
 				const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
-				const viewTypeId = parseInt(urlParams.get('viewTypeId'));
 				
 				let args = urlParams.get('args') ? JSON.parse(urlParams.get('args')) : {};
 				
@@ -91,7 +90,7 @@ window.onload = function() {
 					$$("loading-main").hide();
 					$$("view-content").show();
 					
-					util.module.open(module, moduleAction, viewTypeId, drawView, args);
+					util.module.open(module, moduleAction, VIEW_TYPE_EXTERNAL, drawView, args);
 					
 					if (module.windowValues) {
 						

@@ -158,9 +158,17 @@ export default class TaskManagerService extends GenericModule {
 		positionLeft = screenWidth / 2 - w / 2;
 		positionTop = screenHeight / 2 - h / 2;
 		
-		if (genericModule.args && genericModule.args.containerId) {
+		if (genericModule.args) {
 			
-			delete genericModule.args.containerId;
+			if (genericModule.args.containerId) {
+				
+				delete genericModule.args.containerId;	
+			}
+			
+			if (genericModule.args.viewTypeId) {
+				
+				delete genericModule.args.viewTypeId;
+			}
 		}
 		
 		let params = {
@@ -176,7 +184,6 @@ export default class TaskManagerService extends GenericModule {
 		
 		if (genericModule.args && Object.keys(genericModule.args).length > 0 && Object.getPrototypeOf(genericModule.args) === Object.prototype) {
 			
-			genericModule.args.viewTypeId = VIEW_TYPE_EXTERNAL;
 			params.args = JSON.stringify(genericModule.args);
 		}
 		
