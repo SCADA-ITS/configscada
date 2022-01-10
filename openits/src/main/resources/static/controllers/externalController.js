@@ -77,20 +77,21 @@ window.onload = function() {
 			
 				const moduleId = parseInt(urlParams.get('module'));
 				const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
+				const viewTypeId = parseInt(urlParams.get('viewTypeId'));
 				
 				let args = urlParams.get('args') ? JSON.parse(urlParams.get('args')) : {};
 				
 				args.containerId = "view-content";
 				
 				let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
-				let moduleAction = moduleActionId ? { id: moduleActionId } : undefined; 
+				let moduleAction = moduleActionId ? { id: moduleActionId } : undefined;
 				
 				if (module) {
 			
 					$$("loading-main").hide();
 					$$("view-content").show();
 					
-					util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawView, args);
+					util.module.open(module, moduleAction, viewTypeId, drawView, args);
 					
 					if (module.windowValues) {
 						

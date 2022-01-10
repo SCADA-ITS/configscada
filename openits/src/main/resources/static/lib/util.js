@@ -403,6 +403,11 @@ export let util = {
 				const lazy = async _ => {
 
 					let jsFile = util.getContextPath() + "/" + module.jsFile;
+					
+					if (args) {
+						
+						args.viewTypeId = viewTypeId;	
+					}
 
 					const mod = await import(jsFile);
 

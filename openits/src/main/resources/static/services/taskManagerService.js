@@ -176,6 +176,7 @@ export default class TaskManagerService extends GenericModule {
 		
 		if (genericModule.args && Object.keys(genericModule.args).length > 0 && Object.getPrototypeOf(genericModule.args) === Object.prototype) {
 			
+			genericModule.args.viewTypeId = VIEW_TYPE_EXTERNAL;
 			params.args = JSON.stringify(genericModule.args);
 		}
 		
