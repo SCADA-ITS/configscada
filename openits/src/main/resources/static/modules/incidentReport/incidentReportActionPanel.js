@@ -415,6 +415,7 @@ export default class IncidentReportActionPanel {
 							tooltip: i18n.t("LBL_INCIDENT_CLOSE_DESCRIPTION"),
 							type: "iconTop",
 							icon: "mdi mdi-exit-to-app",
+							hidden: (self.viewTypeId != VIEW_TYPE_WINDOW),
 							on: {
 
 								onItemClick() {
@@ -659,16 +660,14 @@ export default class IncidentReportActionPanel {
 		
 		function openMap() {
 
-			const EXTERNALIZABLE_ID = { CONTAINER: "view-content", PARENT: "main-view" };
 			let containerId = $$(self.containerId).config.id;
-			let containerParentId = $$(self.containerId).getTopParentView().config.id;
 			let taskManagerService = window.sm.getService(Services.TASK_MANAGER_SERVICE);
 			let module = util.module.getFromModuleAction(self.config.action.loadIncidentInMap);
 			let moduleAction = { id: self.config.action.loadIncidentInMap };
 
 			if (module) {
 
-				if (containerId === EXTERNALIZABLE_ID.CONTAINER && containerParentId === EXTERNALIZABLE_ID.PARENT) {
+				if (self.parent.args.viewTypeId === VIEW_TYPE_EXTERNAL) {
 
 					let mod = {
 						module: module,
@@ -682,7 +681,7 @@ export default class IncidentReportActionPanel {
 
 				} else {
 
-					if (containerId === containerParentId) {
+					if (self.parent.args.viewTypeId === VIEW_TYPE_WINDOW) {
 
 						taskManagerService.minimize(containerId);
 					}
