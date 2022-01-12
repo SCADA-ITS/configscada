@@ -53,6 +53,14 @@ public class LocationBO extends GenericBO {
 		
 		return assignCoordinates(vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS, locations));
 	}
+	
+	public List<Map<String, Object>> getListSummary() {
+		
+		List<Map<String, Object>> locations = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS_SUMMARY, null);
+		
+		return assignCoordinates(vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_LOCATIONS_SUMMARY, locations));
+	}
 
 	@Override
 	public Map<String, Object> getItem(String id) {

@@ -34,6 +34,13 @@ public class LocationController {
 	@Autowired
 	RoadBO roadBO;
 	
+	@GetMapping(value = "/summary")
+	@ApiOperation(value = "Get all locations summary", notes = "Get all locations summary")
+	public ResponseEntity<Object> getLocationsSummary() {
+		
+		return new ResponseEntity<>(locationBO.getListSummary(), HttpStatus.OK);
+	}
+	
 	@GetMapping
 	@ApiOperation(value = "Get all locations", notes = "Get all locations")
 	public ResponseEntity<Object> getLocations() {

@@ -41,6 +41,7 @@ export default class IncidentWizardModule extends GenericModule {
 		this.listViewIncidentGroups = undefined;
 		this.dtIncidentTypes = undefined;
 		this.mapLocationSelected = undefined;
+		this.mapIncidentTypeSelected = undefined;
 		this.dblListAffectionStretchs = undefined;
 
 		this.drawContent = new IncidentWizardDrawContent(this);		

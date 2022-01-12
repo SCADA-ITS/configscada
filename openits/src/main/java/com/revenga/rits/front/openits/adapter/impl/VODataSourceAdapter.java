@@ -77,6 +77,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_LOCALES = getPropertyInt("get_locales");
 	public static final int DATA_SOURCE_GET_LOCALE = getPropertyInt("get_locale");
 	public static final int DATA_SOURCE_GET_LOCATIONS = getPropertyInt("get_locations");
+	public static final int DATA_SOURCE_GET_LOCATIONS_SUMMARY = getPropertyInt("get_locations_summary");
 	public static final int DATA_SOURCE_GET_LOCATION_BY_STRETCH = getPropertyInt("get_location_by_stretch");
 	public static final int DATA_SOURCE_GET_LOCATION = getPropertyInt("get_location");
 	public static final int DATA_SOURCE_GET_ROADS = getPropertyInt("get_roads");

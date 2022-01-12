@@ -191,7 +191,7 @@ export default class OpenMap extends GenericMap {
 							return {
 								
 								id: incidentType.id,
-								label: incidentType.alias,
+								label: incidentType.alias + (incidentType.description ? " (" + incidentType.description + ")" : ""),
 								description: incidentType.description,
 								name: incidentType.alias,
 								layerElements: [],
@@ -232,7 +232,7 @@ export default class OpenMap extends GenericMap {
 							
 							let incidentTypes = indidentTypeLayersSelected.map(e => e.replace(MapLayer.TYPE_INCIDENT.prefix, ""));
 								
-							self.mapIncident.showIncidentTypes(incidentTypes)
+							self.mapIncident.showIncidentTypes(incidentTypes);
 						}	
 					}
 				});

@@ -69,55 +69,81 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 												height: 50,
 												borderless: true,
 												template: function(obj) {
-													return `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
-														   <div class="value" style="max-width: ${maxWidthLabels}px;">${(obj.incidentType && obj.incidentTypeDesc) ? obj.incidentType + ' - ' + obj.incidentTypeDesc : ''}</div>`
-												}
-											},
-											{
-												id: "summary-level-" + parent.uid,
-												height: 50,
-												borderless: true,
-												template: function(obj) {
-													return `<div><span class="ico webix_icon mdi mdi-signal-cellular-3"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div>
-														    <div class="ims-incident-report-title" style="position: absolute; padding-left: 226px !important; margin-top: -15px !important;">
-																<span class="ims-incident-badge" style="background: ${obj.levelColor}; color: white;">${obj.level}</span>
-															</div>`
-												}
-											},
-											{
-												id: "summary-stretch-" + parent.uid,
-												height: 50,
-												borderless: true,
-												template: function(obj) {
-													
-													let lblAffectionStretchs = '';
-													
-													if (Array.isArray(obj.affectionStretchs)) {
+
+													let message = '';
+																										
+													if (Array.isArray(obj.affectionStretchs) && obj.affectionStretchs.length > 1) {
 														
-														lblAffectionStretchs = obj.affectionStretchs.map(e => e.alias).join(',');
+														message = i18n.t("LBL_INCIDENTS_TO_CREATE_PER_AFFECTION_STRETCH") + ": " + obj.affectionStretchs.length;
+															
 													}
 													
-													return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${i18n.t("LBL_INCIDENT_AFFECTION_STRETCHS")}</span></div>
-														   <div class="value" style="max-width: ${maxWidthLabels}px;">${lblAffectionStretchs}</div>`
+													return `<div><span class="summary">${message}</span></div>`
 												}
 											},
 											{
-												id: "summary-location-" + parent.uid,
-												height: 50,
-												borderless: true,
-												template: function(obj) {
-													return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
-														   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.location ? obj.location : ''}</div>`
-												}
-											},
-											{
-												id: "summary-user-" + parent.uid,
-												height: 50,
-												borderless: true,
-												template: function(obj) {
-													return `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
-														   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.user ? obj.user : ''}</div>`
-												}
+												cols: [
+													{ width: 30, borderless: true },
+													{
+														rows: [
+															{
+																id: "summary-incident-type-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+																	return `<div><span class="ico webix_icon mdi mdi-exclamation-thick"></span><span class="field">${i18n.t("LBL_INCIDENT")}</span></div>
+																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${(obj.incidentType && obj.incidentTypeDesc) ? obj.incidentType + ' - ' + obj.incidentTypeDesc : ''}</div>`
+																}
+															},
+															{
+																id: "summary-level-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+																	return `<div><span class="ico webix_icon mdi mdi-signal-cellular-3"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div>
+																		    <div class="ims-incident-report-title" style="position: absolute; padding-left: 226px !important; margin-top: -15px !important;">
+																				<span class="ims-incident-badge" style="background: ${obj.levelColor}; color: white;">${obj.level}</span>
+																			</div>`
+																}
+															},
+															{
+																id: "summary-stretch-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+																	
+																	let lblAffectionStretchs = '';
+																	
+																	if (Array.isArray(obj.affectionStretchs)) {
+																		
+																		lblAffectionStretchs = obj.affectionStretchs.map(e => e.alias).join(',');
+																	}
+																	
+																	return `<div><span class="ico webix_icon mdi mdi-road"></span><span class="field">${obj.affectionStretchs.length > 1 ? i18n.t("LBL_INCIDENT_AFFECTION_STRETCHS") : i18n.t("LBL_INCIDENT_STRETCH")}</span></div>
+																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${lblAffectionStretchs}</div>`
+																}
+															},
+															{
+																id: "summary-location-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+																	return `<div><span class="ico webix_icon mdi mdi-map-marker"></span><span class="field">${i18n.t("LBL_INCIDENT_LOCATION")}</span></div>
+																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.location ? obj.location : ''}</div>`
+																}
+															},
+															{
+																id: "summary-user-" + parent.uid,
+																height: 50,
+																borderless: true,
+																template: function(obj) {
+																	return `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
+																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.user ? obj.user : ''}</div>`
+																}
+															}
+														]
+													}
+												]
 											},
 											{}
 										]

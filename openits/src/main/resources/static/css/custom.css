@@ -1711,6 +1711,13 @@ p, input, textarea {
     padding-top: 3px;
 }
 
+.ims-incident-report-tab-details .summary {
+	font-weight: 500;
+    float: left;
+    font-size: 17px;
+    padding-top: 3px;
+}
+
 .ims-incident-report-tab-details .value {
 	position: absolute;
     padding-left: 225px;

@@ -1,9 +1,11 @@
 import IncidentWizardDrawStep from "./incidentWizardDrawStep.js";
 import { util } from "../../lib/util.js";
 import MessageBox from "../../component/messageBox.js";
+import MapLayer  from "../../component/map/mapLayer.js";
 
 const POINTER_HAND = 'pointer'
 const POINTER_DEFAULT = ''
+const TREE_PANEL_WIDTH = 275;
 
 export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizardDrawStep {
 
@@ -13,6 +15,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 		this.uid = webix.uid();
 		
 		this.selectedArea = parent.args.selectedArea;
+		this.olMap = undefined;
 	}
 	
 	getView() {
@@ -42,7 +45,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 									label: `<span class="ico webix_icon mdi mdi-numeric-${self.step.position}-box" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(self.step.stepLabel)}</span>`
 								},
 								{ height: 17 },
-								getMap()
+								getContent()
 							]
 						},
 						{ width: 45 }
@@ -51,8 +54,67 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 			]
 		};
 		
-		function getMap() {
+		function getContent() {
 			
+			let viewContent = {};
+			
+			viewContent = {
+				
+				cols: [
+					getTreeIncidentTypes(),
+					{ view: "resizer" },
+					{ id: "view-map-" + self.parent.uid } 
+				],
+				on: {
+					onAfterCollapse: updateSize,
+					onAfterExpand: updateSize				
+				}
+			}
+			
+			function updateSize() {
+				
+				if (self.olMap) {
+							
+					self.olMap.updateSize();
+				}
+			}
+			
+			function getTreeIncidentTypes() {
+				
+				let viewTree = {};
+				
+				viewTree = {
+					width: TREE_PANEL_WIDTH,
+					header: function() {
+						
+						return `<div>
+									<span class='ico webix_icon mdi mdi-view-headline'></span>
+									<span>${i18n.t("LBL_INCIDENT_TYPES")}</span>
+								</div>`;
+					},
+					body: {
+						id: "tree-incident-types-" + self.uid
+					}
+				};
+				
+				return viewTree;
+			}
+			
+			return viewContent;
+		}
+
+		return viewStepLocationFromMap;
+	}
+	
+	loadData() {
+		
+		let self = this;
+		let incidentTypesLocations = new Map();
+		
+		loadLocations();
+		
+		function getMap() {
+				
 			let viewMap;
 			
 			viewMap = {
@@ -63,40 +125,34 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 								
 					let t;
 					let h = $$("view-map-" + self.parent.uid).$height;
-					let w = $$("view-map-" + self.parent.uid).$width;
 					
 					t = `<div>
-							<div id="map-${self.parent.uid}" style="height: ${h}px; width: ${w}px">
+							<div id="map-${self.parent.uid}" style="height: ${h}px; width: 100%">
 						 </div>`;
 					
 					return t;
 				},
-//				on: {
-//					onAfterRender: function() {
-//	
-//						self.olMap = createMap();
-//					}
-//				}
+				on: {
+				
+					onViewResize: function() {
+						
+						if (self.olMap) {
+							
+							self.olMap.updateSize();	
+						}
+					}	
+				}
 			};
-			
-			
 			
 			return viewMap;
 		}
-
-		return viewStepLocationFromMap;
-	}
-	
-	loadData() {
-		
-		let self = this;
-		let olMap = undefined;
-		
-		loadLocations();
 		
 		function loadLocations() {
 			
 			let locations;
+			let stretchs = new Set();
+			let incidentTypes = new Set();
+			let incidentTypeStretchs;
 			
 			webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.locations).then(
 						
@@ -108,24 +164,201 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 						
 						if (Array.isArray(locations)) {
 							
-							locations = locations.filter(e => {
-									return (self.parent.config.locationTypes.indexOf(e.locationType.id) !== -1)
+							// Filter locations configured in json file
+							locations = locations.filter(location => {
+									return (self.parent.config.locationTypes.indexOf(location.locationType.id) !== -1)
 								});
-							
-							$$("loading-" + self.uid).hide();
-							$$(self.uid).show();
-							
-							olMap = createMap();
-							
-							if (olMap) {
 								
-								drawLocations();	
+							// Filter locations in selected area
+							if (Array.isArray(locations) && locations.length > 0) {
+				
+								locations = locations.filter(location => {
+									
+									let isInside = false;
+									
+									if (Array.isArray(location.coordinates) && location.coordinates.length > 0) {
+										
+										let locationLon = location.coordinates[0].lon;
+										let locationLat = location.coordinates[0].lat;
+										
+										if (self.selectedArea && 
+											Array.isArray(self.selectedArea.startCoordinates) && self.selectedArea.startCoordinates.length > 1 && 
+											Array.isArray(self.selectedArea.endCoordinates) && self.selectedArea.endCoordinates.length > 1) {
+											
+											let limitCoordinates = [self.selectedArea.startCoordinates[0],
+																	self.selectedArea.startCoordinates[1],
+																	self.selectedArea.endCoordinates[0],
+																	self.selectedArea.endCoordinates[1]];
+											
+											isInside = util.ui.isInside(limitCoordinates, locationLon, locationLat);	
+										}
+									}
+									
+									return isInside;
+								});
+								
+								// Load stretchs associated to locations
+								if (Array.isArray(locations) && locations.length > 0) {												
+									
+									locations.forEach(location => {
+										
+										if (Array.isArray(location.stretchs)) {
+											
+											location.stretchs.forEach(s => {
+										
+												stretchs.add(s.id);		
+											});
+											
+											if (stretchs.size > 0) {
+									
+												webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.incidentTypeStretchsList).then(
+													
+													function(d) {
+														
+														if (d != null) {
+					
+															incidentTypeStretchs = d.json();
+															
+															if (Array.isArray(incidentTypeStretchs)) {
+																
+																incidentTypeStretchs = incidentTypeStretchs.filter(incidentTypeStretch => stretchs.has(incidentTypeStretch.stretch.id));
+																
+																if (Array.isArray(incidentTypeStretchs) && incidentTypeStretchs.length > 0) {
+																	
+																	incidentTypeStretchs.forEach(incidentTypeStretch => {
+																
+																		incidentTypes.add(incidentTypeStretch.incidentType.id);		
+																	});
+																	
+																	associateIncidentTypesLocations();
+																	
+																	$$("loading-" + self.uid).hide();
+																	$$(self.uid).show();
+																	
+																	webix.ui(getViewMapLayer(), $$("tree-incident-types-" + self.uid));
+																	
+																	webix.ui(getMap(), $$("view-map-" + self.parent.uid));
+																	
+																	self.olMap = createMap();
+																}
+															}
+															else {
+																
+																(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
+															}
+														}
+													}
+												);
+											}
+										}
+									});
+								}
+								else {
+									
+									(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
+								}
 							}
-							
 						}
 					}
 				}
 			);
+			
+			function associateIncidentTypesLocations() {
+			
+				if (Array.isArray(locations) && locations.length > 0 &&
+					Array.isArray(incidentTypeStretchs) && incidentTypeStretchs.length > 0) {
+						
+					incidentTypeStretchs.forEach(incidentTypeStretch => {
+						
+						let incidentTypeId = incidentTypeStretch.incidentType.id;
+						let stretchId = incidentTypeStretch.stretch.id;
+						
+						let locationsByIncidentType = locations.filter(location => location.stretchs.findIndex(locationStretch => locationStretch.id === stretchId) !== -1);
+						
+						if (Array.isArray(locationsByIncidentType) && locationsByIncidentType.length > 0) {
+							
+							let currentLocationsByIncidentTypes = incidentTypesLocations.get(incidentTypeId);
+							
+							if (!Array.isArray(currentLocationsByIncidentTypes)) {
+								
+								currentLocationsByIncidentTypes = [];
+								
+								incidentTypesLocations.set(incidentTypeId, currentLocationsByIncidentTypes);
+							}
+							
+							locationsByIncidentType.forEach(locationItem => {
+							
+								if (currentLocationsByIncidentTypes.findIndex(e => e.id === locationItem.id) === -1) {
+									
+									currentLocationsByIncidentTypes.push(locationItem)	
+								}
+							});
+						}
+					});
+				}	
+			}
+			
+			function getViewMapLayer() {
+				
+				let incidentTypesAvailable = window.em.getAll(EntityType.IMS_INCIDENT_TYPE);
+				let dataMapLayer = [];
+				let incidentTypeLayers = [];
+				
+				incidentTypesAvailable = incidentTypesAvailable.filter(e => incidentTypes.has(e.id));
+				
+				incidentTypeLayers = incidentTypesAvailable.map(incidentType => {
+						
+					return {
+						
+						id: incidentType.id,
+						label: incidentType.alias + (incidentType.description ? " (" + incidentType.description + ")" : ""),
+						description: incidentType.description,
+						name: incidentType.alias,
+						layerElements: [],
+						visible: incidentType.visible
+					}
+				});
+				
+				dataMapLayer.push({
+					layers: incidentTypeLayers,
+					layerRelationships: [],
+					layerType: MapLayer.TYPE_INCIDENT
+				});
+				
+				let treeOptions = [
+					{ treeOption: { id: 2}, value: false },	// multiselect
+					{ treeOption: { id: 3}, value: true }, 	// sorted
+					{ treeOption: { id: 4}, value: true }, 	// cmd_buttons
+					{ treeOption: { id: 5}, value: true }, 	// search
+					{ treeOption: { id: 6}, value: true },	// expand_all
+					{ treeOption: { id: 7}, value: false }	// check_all
+				]
+				
+				self.mapLayer = new MapLayer(dataMapLayer, function(layersId) {
+										
+					if (Array.isArray(layersId)) {
+						
+						let indidentTypeLayersSelected = layersId.filter(layerId => layerId.includes(MapLayer.TYPE_INCIDENT.prefix));
+						
+						indidentTypeLayersSelected = indidentTypeLayersSelected.map(e => e.replace(MapLayer.TYPE_INCIDENT.prefix, ""));
+						
+						if (Array.isArray(indidentTypeLayersSelected) && indidentTypeLayersSelected.length === 1 && indidentTypeLayersSelected[0]) {
+							
+							webix.ui(getMap(), $$("view-map-" + self.parent.uid));
+																	
+							self.olMap = createMap();
+							
+							let incidentTypeId = indidentTypeLayersSelected[0]; 
+							
+							drawLocations(incidentTypeId);
+							
+							self.parent.mapIncidentTypeSelected = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", incidentTypeId);
+						}
+					}
+				}, treeOptions);
+				
+				return self.mapLayer.getView();
+			}
 			
 			function createMap() {
 					
@@ -173,10 +406,11 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 				
 				return map;
 			}
-			
-			function drawLocations() {
+					
+			function drawLocations(incidentTypeId) {
 				
 				let marks = [];
+				let locationsLayer;
 				
 				let tooltipDiv = document.createElement("div");
 				tooltipDiv.setAttribute("id", "tooltip-location");
@@ -185,44 +419,34 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 				tooltipDiv.setAttribute("style", "position: absolute; display: none;");
 				document.body.appendChild(tooltipDiv);
 				
-				if (Array.isArray(locations) && locations.length > 0) {
+				let locationsByIncidentType = incidentTypesLocations.get(incidentTypeId);
 				
-					locations.forEach(location => {
+				if (Array.isArray(locationsByIncidentType) && locationsByIncidentType.length > 0) {
+					
+					locationsByIncidentType.forEach(location => {
 						
 						if (Array.isArray(location.coordinates) && location.coordinates.length > 0) {
 							
 							let locationLon = location.coordinates[0].lon;
 							let locationLat = location.coordinates[0].lat;
 							
-							let limitCoordinates = [self.selectedArea.startCoordinates[0],
-													self.selectedArea.startCoordinates[1],
-													self.selectedArea.endCoordinates[0],
-													self.selectedArea.endCoordinates[1]];
+							// SE CREA EL MARCADOR EN LAS COORDENADAS INDICADAS
+							let mark = new ol.Feature({
+								location: location,
+								geometry: new ol.geom.Point(
+									ol.proj.fromLonLat([locationLon, locationLat])
+								)
+							});
 							
-							if (util.ui.isInside(limitCoordinates, locationLon, locationLat)) {
-								
-								// SE CREA EL MARCADOR EN LAS COORDENADAS INDICADAS
-								let mark = new ol.Feature({
-									location: location,
-									geometry: new ol.geom.Point(
-										ol.proj.fromLonLat([locationLon, locationLat])
-									)
-								});
-								
-								const iconStyle = new ol.style.Style({
-									image: new ol.style.Icon({
-//								    	anchor: [0.5, 46],
-//								    	anchorXUnits: 'fraction',
-//								    	anchorYUnits: 'pixels',
-								    	src: 'img/marker.png',
-										scale: 0.8
-								  	}),
-								});
-								
-								mark.setStyle(iconStyle);
-				
-								marks.push(mark);
-							}	
+							const iconStyle = new ol.style.Style({
+								image: new ol.style.Icon({
+							    	src: 'img/marker.png',
+									scale: 0.8
+							  	}),
+							});
+							
+							mark.setStyle(iconStyle);
+							marks.push(mark);
 						}
 					});
 				}
@@ -230,13 +454,13 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 				if (marks.length > 0) {
 					
 					// SE CREA LA CAPA CON EL ARRAY DE MARCADORES Y SE AÑADE AL MAPA
-					let locationsLayer = new ol.layer.Vector({
+					locationsLayer = new ol.layer.Vector({
 						source: new ol.source.Vector({
 							features: marks
 						})
 					});
 		
-					olMap.addLayer(locationsLayer);
+					self.olMap.addLayer(locationsLayer);
 					
 					// SE INYECTA EL EVENTO ONCLICK
 					let selectLocation = new ol.interaction.Select(
@@ -245,7 +469,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 							toggleCondition: ol.events.condition.never
 						}
 					);
-					olMap.addInteraction(selectLocation);
+					self.olMap.addInteraction(selectLocation);
 		
 					selectLocation.on('select', function(evt) {
 		
@@ -255,9 +479,6 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 		
 							const iconStyle = new ol.style.Style({
 								image: new ol.style.Icon({
-//							    	anchor: [0.5, 46],
-//							    	anchorXUnits: 'fraction',
-//							    	anchorYUnits: 'pixels',
 							    	src: 'img/marker-selected.png',
 									scale: 0.8
 							  	}),
@@ -281,19 +502,19 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 						offset: [15, 15]
 					});
 					
-					tooltip.setMap(olMap);
+					tooltip.setMap(self.olMap);
 					
 					
 					// change mouse cursor when over marker
-					olMap.on("pointermove", function (evt) {
+					self.olMap.on("pointermove", function (evt) {
 					    
-						let feature = this.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+						let feature = this.forEachFeatureAtPixel(evt.pixel, function(f) {
 							
-							tooltip.setPosition(feature.getGeometry().getCoordinates());
-						    tooltip.getElement().innerHTML = `<div>${feature.get('location').alias}</div>`;
+							tooltip.setPosition(f.getGeometry().getCoordinates());
+						    tooltip.getElement().innerHTML = `<div>${f.get('location').alias}</div>`;
 							tooltip.getElement().style.display = "block";
 		
-					        return feature;
+					        return f;
 					    });
 	
 						this.getTargetElement().style.cursor = (feature ? POINTER_HAND : POINTER_DEFAULT);
@@ -304,6 +525,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 					
 					(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
 				}
+						
 			}
 		}
 	}

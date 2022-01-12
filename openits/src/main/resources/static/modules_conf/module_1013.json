@@ -18,13 +18,14 @@
 		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"incidentTypeStretchs": "incidents/incidentTypeStretchs/${incidentTypeId}/${stretchId}",
+		"incidentTypeStretchsList": "incidents/incidentTypeStretchs",
 		"incidentReportsSummary": "incidents/reports/summary",
 		"incidentReport": "incidents/reports/${id}"
 	},
 	"ws": {
 		"incidentReports": "/topic/incidentReport.>"
 	},
-	"incidentCreateTimeoutMs": 5000,
+	"incidentCreateTimeoutMs": 10000,
 	"steps": {
 		"fromIncidentsNoMap": [
 			{
@@ -88,17 +89,6 @@
 			{
 				"position": 2,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_INCIDENT_TYPE",
-				"labelAlias": "LBL_INCIDENT_TYPE",
-				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_STEP_2",
-				"active": false,
-				"drawFunction": "drawStepIncidentType",
-				"validateFunction": "validateStepIncidentType",
-				"resetFunction": "resetStepIncidentType"
-			},
-			{
-				"position": 3,
-				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
 				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_AFFECTION_STRETCHS",
 				"labelAlias": "LBL_AFFECTION_STRETCHS",
 				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_STEP_AFFECTION_STRETCHS",
@@ -108,7 +98,7 @@
 				"resetFunction": "resetStepAffectionStretch"
 			},
 			{
-				"position": 4,
+				"position": 3,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
 				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_SUMMARY",
 				"labelAlias": "LBL_SUMMARY",

@@ -15,7 +15,14 @@ export default class IncidentWizardAction {
 		let parent = this.parent;
 		let self = this;
 		
-		(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CREATE_INCIDENT"),
+		let confirmMsg = i18n.t("LBL_ARE_YOU_SURE_CREATE_INCIDENT");
+		
+		if (parent.incidentData.affectionStretchsSelected.length > 1) {
+			
+			confirmMsg = i18n.t("LBL_INCIDENTS_TO_CREATE") + ": " + parent.incidentData.affectionStretchsSelected.length + " " + i18n.t("LBL_ARE_YOU_CONTINUE"); 
+		}
+
+		(new MessageBox(MessageBox.CONFIRM, confirmMsg,
 								
 			// onAccept
 			function() {
@@ -53,11 +60,18 @@ export default class IncidentWizardAction {
 								
 								messageBox.show();
 								
-								let container = $$(parent.args.containerId);
-			
-								if (container) {
+								if (parent.args.viewTypeId === VIEW_TYPE_WINDOW) {
+													
+									let container = $$(parent.args.containerId);
+
+									if (container) {
 				
-									container.close();
+										container.close();
+									}
+								}
+								else {
+									
+									window.open('', '_self').close();
 								}
 							}
 						});			
@@ -238,7 +252,8 @@ export default class IncidentWizardAction {
 		let self = this;
 
 		let valid = false;
-		let summaryIncidentType = $$("summary-incident-" + parent.uid);
+		let summaryIncident = $$("summary-incident-" + parent.uid);
+		let summaryIncidentType = $$("summary-incident-type-" + parent.uid);
 		let summaryLocation = $$("summary-location-" + parent.uid);
 		let summaryStretch = $$("summary-stretch-" + parent.uid);
 		let summaryUser = $$("summary-user-" + parent.uid);
@@ -278,43 +293,36 @@ export default class IncidentWizardAction {
 		
 		function validateStepLocationFromMap(onValid) {
 
-			if (parent.mapLocationSelected) {
+			if (parent.mapLocationSelected && parent.mapIncidentTypeSelected) {
 				
 				parent.incidentData.locationId = parent.mapLocationSelected.id;
+				parent.incidentData.location = parent.mapLocationSelected.alias;
+				parent.incidentData.stretchs = parent.mapLocationSelected.stretchs;
+				parent.incidentData.stretchId = parent.mapLocationSelected.stretchs[0].id;
+				parent.incidentData.stretch = parent.mapLocationSelected.stretchs[0].alias;
 				
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.location, { id: parent.mapLocationSelected.id })).then(
-						
-					function(dat) {
+				parent.incidentData.incidentGroupId = parent.mapIncidentTypeSelected.incidentGroup.id;
+				parent.incidentData.incidentGroup = parent.mapIncidentTypeSelected.incidentGroup.alias;
+				
+				parent.incidentData.incidentTypeId = parent.mapIncidentTypeSelected.id;
+				parent.incidentData.incidentType = parent.mapIncidentTypeSelected.alias;
+				parent.incidentData.incidentTypeDesc = parent.mapIncidentTypeSelected.description;
 
-						if (dat != null) {
-		
-							let location = dat.json();
+				parent.incidentData.incidentLevelId = parent.mapIncidentTypeSelected.incidentLevel.id;
+				parent.incidentData.incidentLevelLabelAlias = i18n.t(parent.mapIncidentTypeSelected.incidentLevel.labelAlias);
+				parent.incidentData.incidentLevelIcon = parent.mapIncidentTypeSelected.incidentLevel.icon;
+				parent.incidentData.incidentLevelColor = parent.mapIncidentTypeSelected.incidentLevel.color;
+
+				parent.incidentData.userId = parent.mapIncidentTypeSelected.defaultUser.id;
+				parent.incidentData.user = parent.mapIncidentTypeSelected.defaultUser.name;
+				
 							
-							if (location) {
-								
-								parent.incidentData.location = location.alias;
-								
-								if (Array.isArray(location.stretchs) && location.stretchs.length > 0) {
-									
-									parent.incidentData.stretchs = location.stretchs;
-									parent.incidentData.stretchId = location.stretchs[0].id;
-									parent.incidentData.stretch = location.stretchs[0].alias;	
-								}
-								
-								valid = true;
-							
-								onValid(valid);
-							}
-						}
-					}
-				);
+				onValid(true);
 			}
 			else {
 				
-				onValid(valid);
+				onValid(false);
 			}
-			
-			
 		}
 
 		function validateStepIncidentType(onValid) {
@@ -428,6 +436,11 @@ export default class IncidentWizardAction {
 				step.valid = v;
 
 				if (v) {
+					
+					if (summaryIncident) {
+	
+						summaryIncident.setValues({ affectionStretchs: parent.incidentData.affectionStretchsSelected });
+					}
 	
 					if (summaryIncidentType) {
 	
