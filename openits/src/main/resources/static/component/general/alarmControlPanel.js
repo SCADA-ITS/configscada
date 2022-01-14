@@ -307,7 +307,7 @@ export default class AlarmControlPanel extends GenericControlPanel {
 
 			if (stats) {
 
-				if (stats.activeAlarms) {
+				if (stats.activeAlarms > -1) {
 
 					$$("alarm-control-panel-box-active").setHTML(`<span class="box-value">${stats.activeAlarms}</span>`);
 					$$("alarm-control-panel-box-active").refresh();
@@ -316,13 +316,13 @@ export default class AlarmControlPanel extends GenericControlPanel {
 					$$("icon-alarm-service").refresh();
 				}
 
-				if (stats.noRecognizedAlarms) {
+				if (stats.noRecognizedAlarms > -1) {
 
 					$$("alarm-control-panel-box-no-recognized").setHTML(`<span class="box-value">${stats.noRecognizedAlarms}</span>`);
 					$$("alarm-control-panel-box-no-recognized").refresh();
 				}
 
-				if (stats.filteredAlarms) {
+				if (stats.filteredAlarms > -1) {
 
 					$$("alarm-control-panel-box-filtered").setHTML(`<span class="box-value">${stats.filteredAlarms}</span>`);
 					$$("alarm-control-panel-box-filtered").refresh();

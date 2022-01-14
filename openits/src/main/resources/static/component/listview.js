@@ -89,7 +89,22 @@ export default class ListView {
 			}
 
 			if (Array.isArray(self.data) && self.data.length > 0) {
-
+				
+				let headerData = self.data.filter(e => e.id == -1);
+				let mainData = self.data.filter(e => e.id != -1);
+				
+				if (Array.isArray(mainData) && mainData.length > 0) {
+					
+					mainData.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));	
+				}
+				
+				if (Array.isArray(headerData) && headerData.length > 0) {
+					
+					headerData.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+				}
+				
+				self.data = [...headerData, ...mainData];
+				
 				list = {
 					view: "list",
 					id: "list-" + self.uid,

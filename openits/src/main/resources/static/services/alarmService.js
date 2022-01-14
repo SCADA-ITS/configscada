@@ -95,29 +95,31 @@ export default class AlarmService extends GenericModule {
 
 			webix.ajax(appConfig.restUrl + self.config.rest.active_alarms).then(function(data) {
 	
+				let activeAlarms = 0;
+				
 				if (data.json() != undefined) {
 					
-					let activeAlarms = data.json().value;
-	
-					self.alarms.data.stats.activeAlarms = activeAlarms;
+					activeAlarms = data.json().value;
+				}
+				
+				self.alarms.data.stats.activeAlarms = activeAlarms;
 					
-					if (window.alarmControlPanel) {
+				if (window.alarmControlPanel) {
+					
+					window.alarmControlPanel.updateData();	
+				}
+
+				util.stomp.connect(appConfig.stompUrl, self.config.ws.active_alarms, null, on_message);
+
+				function on_message(message) {
+
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
+
+					if (window.alarmControlPanel) { 
 						
 						window.alarmControlPanel.updateData();	
-					}
-	
-					util.stomp.connect(appConfig.stompUrl, self.config.ws.active_alarms, null, on_message);
-	
-					function on_message(message) {
-	
-						var dat = JSON.parse(JSON.parse(message.body));
-						
-						self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
-	
-						if (window.alarmControlPanel) { 
-							
-							window.alarmControlPanel.updateData();	
-						}
 					}
 				}
 			});
@@ -127,40 +129,42 @@ export default class AlarmService extends GenericModule {
 	
 			webix.ajax(appConfig.restUrl + self.config.rest.no_recognized_alarms).then(function(data) {
 	
+				let noRecognizedAlarms = 0;
+				
 				if (data.json() != undefined) {
 					
-					let noRecognizedAlarms = data.json().value;
-	
-					self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
+					noRecognizedAlarms = data.json().value;
+				}
+				
+				self.alarms.data.stats.noRecognizedAlarms = noRecognizedAlarms;
+					
+				if (window.alarmControlPanel) {
+				
+					window.alarmControlPanel.updateData();	
+				}
+				
+				if (window.userControlPanel) {
+					
+					window.userControlPanel.updateData();	
+				}
+
+				util.stomp.connect(appConfig.stompUrl, self.config.ws.no_recognized_alarms, null, on_message);
+
+				function on_message(message) {
+
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
 					
 					if (window.alarmControlPanel) {
-					
+						
 						window.alarmControlPanel.updateData();	
 					}
 					
 					if (window.userControlPanel) {
 						
 						window.userControlPanel.updateData();	
-					}
-	
-					util.stomp.connect(appConfig.stompUrl, self.config.ws.no_recognized_alarms, null, on_message);
-	
-					function on_message(message) {
-	
-						var dat = JSON.parse(JSON.parse(message.body));
-						
-						self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
-						
-						if (window.alarmControlPanel) {
-							
-							window.alarmControlPanel.updateData();	
-						}
-						
-						if (window.userControlPanel) {
-							
-							window.userControlPanel.updateData();	
-						}	
-					}
+					}	
 				}
 			});
 		}
@@ -168,30 +172,32 @@ export default class AlarmService extends GenericModule {
 		function loadFilteredAlarms() {
 	
 			webix.ajax(appConfig.restUrl + self.config.rest.filtered_alarms).then(function(data) {
+				
+				let filteredAlarms = 0;
 	
 				if (data.json() != undefined) {
 					
-					let filteredAlarms = data.json().value;
-	
-					self.alarms.data.stats.filteredAlarms = filteredAlarms;
+					filteredAlarms = data.json().value;
+				}
+				
+				self.alarms.data.stats.filteredAlarms = filteredAlarms;
+					
+				if (window.alarmControlPanel) {
+				
+					window.alarmControlPanel.updateData();	
+				}
+
+				util.stomp.connect(appConfig.stompUrl, self.config.ws.filtered_alarms, null, on_message);
+
+				function on_message(message) {
+
+					var dat = JSON.parse(JSON.parse(message.body));
+					
+					self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
 					
 					if (window.alarmControlPanel) {
-					
-						window.alarmControlPanel.updateData();	
-					}
-	
-					util.stomp.connect(appConfig.stompUrl, self.config.ws.filtered_alarms, null, on_message);
-	
-					function on_message(message) {
-	
-						var dat = JSON.parse(JSON.parse(message.body));
 						
-						self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
-						
-						if (window.alarmControlPanel) {
-							
-							window.alarmControlPanel.updateData();
-						}
+						window.alarmControlPanel.updateData();
 					}
 				}
 			});
@@ -204,37 +210,39 @@ export default class AlarmService extends GenericModule {
 			if (Array.isArray(alarmsConfigs)) {
 				
 				webix.ajax(appConfig.restUrl + self.config.rest.alarms).then(function(data) {
+					
+					let alarms = [];
 	
 					if (data.json() != undefined) {
 						
-						let alarms = data.json();
+						alarms = data.json();
+					}
 		
-						let alarmsFiltered = alarms.filter(alarm => {
-							
-							if (!alarm.deactivation && !alarm.recognized) {
-								
-								let alarmConfig = alarmsConfigs.find(e => e.id === alarm.alarmConfig.id);
-													
-								if (alarmConfig && alarmConfig.alarmLevel && alarmConfig.alarmLevel.notification === "true") {
-								
-									alarm.active = true;
-									
-									return alarm;	
-								}	
-							}
-						});
+					let alarmsFiltered = alarms.filter(alarm => {
 						
-						if (Array.isArray(alarmsFiltered) && alarmsFiltered.length > 0) {
+						if (!alarm.deactivation && !alarm.recognized) {
 							
-							self.alarms.data.notifications = alarmsFiltered.map(e => createNotification(e));
+							let alarmConfig = alarmsConfigs.find(e => e.id === alarm.alarmConfig.id);
+												
+							if (alarmConfig && alarmConfig.alarmLevel && alarmConfig.alarmLevel.notification === "true") {
 							
-							self.alarms.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0))
+								alarm.active = true;
+								
+								return alarm;	
+							}	
 						}
+					});
+					
+					if (Array.isArray(alarmsFiltered) && alarmsFiltered.length > 0) {
 						
-						if (window.userControlPanel) {
-							
-							window.userControlPanel.updateData();	
-						}
+						self.alarms.data.notifications = alarmsFiltered.map(e => createNotification(e));
+						
+						self.alarms.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0))
+					}
+					
+					if (window.userControlPanel) {
+						
+						window.userControlPanel.updateData();	
 					}
 					
 					if (self.config.notification.enabled) {
