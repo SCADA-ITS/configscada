@@ -38,8 +38,6 @@ export default class DecoderMJPEG extends Decoder {
 
 		if (url) {
 
-			self.img.onload = startStreaming;
-			
 			function startStreaming() {
 
 				self.isOnline = true;
@@ -54,19 +52,11 @@ export default class DecoderMJPEG extends Decoder {
 
 						let imgStyle;
 
-						if (self.w > self.h) {
+						let ratio = self.w / self.img.width;
+						let w = self.fit ? "width: " + self.w + "px" : "width: " + self.img.width * ratio + "px";
+						let h = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
 
-							let ratio = self.h / self.img.height;
-							let w = self.fit ? "width: " + self.w + "px" : "width: " + self.img.width * ratio + "px";
-							imgStyle = `max-width:100%;height:${self.h}px;${w}`;
-						}
-						else {
-							
-							let ratio = self.w / self.img.width; 
-							let h = self.fit ? "height: " + self.h + "px" : "height: " + self.img.height * ratio + "px";
-							imgStyle = `max-height:100%;width:${self.w}px;${h}`;
-						}	
-						
+						imgStyle = `max-width:100%;height:${h}px;${w}`;
 
 						return `<div id="${self.camContainerId}" class="camviewer-div" style="background-color: #9e9e9e; overflow: hidden ${imgStyle}"><img id="img-${self.element.id}-${self.uid}" class="camviewer-img" align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
 					}
@@ -96,16 +86,10 @@ export default class DecoderMJPEG extends Decoder {
 				
 				if ($$("camviewer-" + self.uid).isVisible()) {
 					
-					if (self.camviewer.expandCam) {
-					
-						self.camviewer.expandCam = !self.camviewer.expandCam;
-						 
-						self.camviewer.expandVideo();
-					}
-					else {
-						
+					if ($$("camviewer-buttons-" + self.uid)) {
+
 						$$("camviewer-buttons-" + self.uid).show();
-					}	
+					}
 				}
 					
 				self.img.onload = undefined;
@@ -118,6 +102,7 @@ export default class DecoderMJPEG extends Decoder {
 			}
 
 			self.img.src = self.getNewUrl(url);
+			self.img.onload = startStreaming;
 
 			self.startKeepAliveStream(startStreaming, url);
 		}
@@ -195,4 +180,5 @@ export default class DecoderMJPEG extends Decoder {
 		self.img.src = '';
 	}
 }
+
 

@@ -364,7 +364,8 @@ export default class CCTVMulti {
 						
 						let w = $$("cell-1-" + self.uid).$width;
 						let h = $$("cell-1-" + self.uid).$height;						
-						let fit = (h > w) ? true: self.parent.config.multi.fit;
+						//let fit = (h > w) ? true: self.parent.config.multi.fit;
+						let fit = self.parent.config.multi.fit;
 
 						if ($$("cell-" + pos + "-" + self.uid)) {
 							

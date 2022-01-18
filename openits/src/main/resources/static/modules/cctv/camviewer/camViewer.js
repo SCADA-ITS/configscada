@@ -146,7 +146,7 @@ export default class CamViewer {
 		let w = (self.w == 0) ? containerId.$width : self.w;
 		let h = (self.h == 0) ? containerId.$height : self.h;
 
-		if ((h > w) && !self.expandCam) {
+		if (!self.expandCam) {
 			
 			if (camContainer) {
 				
@@ -204,12 +204,6 @@ export default class CamViewer {
 
 				viewButtons.height = SIZE_MULTI;
 
-				let viewButtonExpandCam = getButtonExpandCam();
-
-				viewButtonExpandCam.height = SIZE_MULTI;
-				viewButtonExpandCam.width = SIZE_MULTI;
-				viewButtonExpandCam.css = "cam-viewer-button";
-
 				if (self.pan || self.tilt || self.zoom) {
 
 					let viewButtonCamControls = getButtonCamControls();
@@ -229,9 +223,14 @@ export default class CamViewer {
 					viewButtonFullScreen.width = SIZE_MULTI;
 					viewButtonFullScreen.css = "cam-viewer-button";
 					viewButtons.cols.push(viewButtonFullScreen);
-				}
 
-				viewButtons.cols.push(viewButtonExpandCam);
+					let viewButtonExpandCam = getButtonExpandCam();
+
+					viewButtonExpandCam.height = SIZE_MULTI;
+					viewButtonExpandCam.width = SIZE_MULTI;
+					viewButtonExpandCam.css = "cam-viewer-button";
+					viewButtons.cols.push(viewButtonExpandCam);
+				}
 
 				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
 					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId)) {
@@ -318,17 +317,17 @@ export default class CamViewer {
 
 								self.controlsVisible ? camControlsView.show() : camControlsView.hide();
 
-								let className = "webix_view webix_control webix_el_button webix_secondary ";
+								let cn = "webix_view webix_control webix_el_button webix_secondary ";
 
 								if (self.controlsVisible) {
 
-									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button-pressed" : "cam-viewer-button-pressed-small";
-									this._contentobj.className = className;
+									cn += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button-pressed" : "cam-viewer-button-pressed-small";
+									this._contentobj.className = cn;
 								}
 								else {
 
-									className += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button" : "cam-viewer-button-small";
-									this._contentobj.className = className;
+									cn += (self.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button" : "cam-viewer-button-small";
+									this._contentobj.className = cn;
 								}
 
 							}
@@ -492,7 +491,6 @@ export default class CamViewer {
 					} catch (e) {
 
 						presets = undefined;
-						//console.error(e);
 					}
 				}
 			}
@@ -861,92 +859,53 @@ export default class CamViewer {
 		return viewCamName;
 	}
 
-	resize(camViewerUid) {
+	resize() {
 
-		let containerId = $$("camviewer-" + camViewerUid);
+		let self = this;
+                let contId = $$("camviewer-" + self.uid);
+                let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
+                let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
 
-		if (containerId) {
 
-			let taller = undefined;
-			let camViewerContainer = containerId.getNode().querySelector(".camviewer-div");
-			let camViewerImg = containerId.getNode().querySelector(".camviewer-img");
-			let expandButton = "cam-expand-button-" + camViewerUid;
-			let className = "webix_view webix_control webix_el_button webix_secondary ";
+                if (camViewerContainer && camViewerImg) {
+                        self.adjust();
+			self.drawButtons(contId);
+                }
 
-			taller = ($$(containerId).$height > $$(containerId).$width) ? true : false;
+	}
 
-			if (camViewerContainer && camViewerImg) {
+	expandVideo() {
 
-				if (taller) {
+		let self = this;
+        let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
+        let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
+                
 
-					camViewerContainer.style.width = "100%";
-
-				} else {
-
-					camViewerContainer.style.height = "100%";
-				}
-
-				camViewerImg.style.width = "100%";
-				this.drawButtons(containerId);
-
-				if (this.expandCam) {
-
-					className += (this.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button-pressed" : "cam-viewer-button-pressed-small";
-					$$(expandButton)._contentobj.className = className;
-
-				} else {
-
-					className += (this.mode === CamViewer.MODE_SINGLE) ? "cam-viewer-button" : "cam-viewer-button-small";
-					$$(expandButton)._contentobj.className = className;
-				}
-			}
+		if (camViewerContainer && camViewerImg) {
+			
+			self.expandCam = !self.expandCam;
+	                self.fit = !self.fit;
+			self.adjust();
 		}
 	}
+
+	adjust() {
 	
-	expandVideo() {
-		
 		let self = this;
-		let taller = undefined;
 		let contId = $$("camviewer-" + self.uid);
 		let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
 		let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
-
-		taller = ($$(contId).$height > $$(contId).$width) ? true : false;
+		let contHeight = $$(contId).$height;
+		let contWidth = $$(contId).$width;
 
 		if (camViewerContainer && camViewerImg) {
 
-			if (taller) {
+			camViewerContainer.style.height = self.expandCam ? contHeight + "px" : "initial";
+			camViewerImg.style.height = camViewerContainer.style.height;
 
-				if (self.expandCam) {
-
-					camViewerContainer.style.height = "initial";
-					self.expandCam = false;
-
-				} else {
-
-					camViewerContainer.style.height = "100%";
-					camViewerContainer.style.width = "100%";
-					camViewerImg.style.width = "100%";
-					self.expandCam = true;
-				}
-
-			} else {
-
-				if (self.expandCam) {
-
-					camViewerContainer.style.width = "inherit";
-					camViewerImg.style.width = "inherit";
-					self.expandCam = false;
-
-				} else {
-
-					camViewerContainer.style.width = "100%";
-					camViewerImg.style.width = "100%";
-					self.expandCam = true;
-				}
-
-				self.fit = !self.fit;
-			}
+			camViewerContainer.style.width = contWidth + "px";
+			camViewerImg.style.width = camViewerContainer.style.width;
 		}
 	}
 }
+

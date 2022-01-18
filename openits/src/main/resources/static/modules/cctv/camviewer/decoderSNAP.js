@@ -1,8 +1,6 @@
 import CamViewer from "./camViewer.js";
 import Decoder from "./decoder.js";
 
-const NO_VIDEO_IMAGE = './img/no-video.jpg';
-
 export default class DecoderSNAP extends Decoder {
 
 	constructor(camviewer) {
@@ -52,8 +50,6 @@ export default class DecoderSNAP extends Decoder {
 			
 			if (cnv) {
 				
-				//cnv.setHTML("<canvas id='video'></canvas>");	
-				
 				self.running = true;
 				self.img.onerror = onErrorImage;
 				self.img.onload = onLoadImage;
@@ -86,23 +82,9 @@ export default class DecoderSNAP extends Decoder {
 			
 			if (self.img != null && cnv) {
 				
-				let ratio;
-				
-				if (self.camviewer.fullScreen) {
-					
-					console.log("fullscreen");
-				}
-				
-				if (self.w > self.h) {
-
-					ratio = self.h / self.img.height;
-					w = self.fit ? self.w : self.img.width * ratio;
-				}
-				else {
-					
-					ratio = self.w / self.img.width; 
-					h = self.fit ? self.h :self.img.height * ratio;
-				}
+				let ratio = self.w / self.img.width;
+				w = self.fit ? self.w : self.img.width * ratio;
+				h = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
 				
 				cnv.width = w;
         		cnv.height = h;
