@@ -27,34 +27,56 @@ window.onload = function() {
 		console.log(queryString);
 		const urlParams = new URLSearchParams(queryString);
 				
-		const height = urlParams.get('height') ? parseInt(urlParams.get('height')) : 1024;
-		const width = urlParams.get('width') ? parseInt(urlParams.get('width')) : 768;
+		let containerHeight = urlParams.get('height') ? parseInt(urlParams.get('height')) : 1024;
+		let containerWidth = urlParams.get('width') ? parseInt(urlParams.get('width')) : 768;
+		
+		let frameHeight = "";
+		let frameWidth = "";
+		
+		
+		window.em = new EntitiesManager();
+		const moduleId = parseInt(urlParams.get('module'));
+		let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
+
+		if (module.windowValues) {
+
+			let windowParamValue = module.windowValues.find(e => e.windowParam.id === WindowParam.RESPONSIVE);
+
+			if (windowParamValue) {
+				
+				containerHeight = "";
+				containerWidth = "";
+				frameHeight = 10;
+				frameWidth = 10;
+			}
+		}
+		
 	
 		let main_screen = {
 			id: "main-view",
 			type: "space",
 			rows: [
-				{},
+				{height: frameHeight},
 				{ 
-					height: height,
+					height: containerHeight,
 					cols: [
-						{},
+						{width: frameWidth},
 						{
 							id: "loading-main",
-							width: width,
+							width: containerWidth,
 							rows: [util.ui.getViewDrawLoading(true)] 
 						},
 						{ 
 							id: "view-content",
-							width: width,
+							width: containerWidth,
 							hidden: true,
 							rows: [{ id: "view-module"}]
 							
 						},
-						{}
+						{width: frameWidth}
 					] 
 				},
-				{}
+				{height: frameHeight}
 			],
 			borderless: 0
 		};
@@ -67,7 +89,7 @@ window.onload = function() {
 		
 		function onLoadI18n() {
 		
-			window.em = new EntitiesManager();
+		//	window.em = new EntitiesManager();
 			window.wm = new WindowManager();
 			util.module.checkSystemPermissions(window.em.getAll(EntityType.MODULE), userData);
 			
@@ -75,14 +97,14 @@ window.onload = function() {
 			
 			function onLoadServiceManager() {
 			
-				const moduleId = parseInt(urlParams.get('module'));
+				//const moduleId = parseInt(urlParams.get('module'));
 				const moduleActionId = urlParams.get('moduleAction') ? parseInt(urlParams.get('moduleAction')) : undefined;
 				
 				let args = urlParams.get('args') ? JSON.parse(urlParams.get('args')) : {};
 				
 				args.containerId = "view-content";
 				
-				let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
+				//let module = window.em.getByField(EntityType.MODULE, "id", moduleId);
 				let moduleAction = moduleActionId ? { id: moduleActionId } : undefined;
 				
 				if (module) {
