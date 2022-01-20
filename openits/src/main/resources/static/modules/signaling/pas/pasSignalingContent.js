@@ -555,22 +555,28 @@ export default class PasSignalingContent {
 								command.commandElementValues[0].value = selectedZonesValue;
 								command.commandElementValues[1].value = "[" + message + "]";
 
-								let body = {
-									commands: []
-								};
-								body.commands.push(command);
-
-								webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-
-									if (!data.json()) {
-
-										webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-									} else {
-
-										let ms = new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+								let commands = [];
+								
+								commands.push(command);
+							
+								if (Array.isArray(commands) && commands.length > 0) {
+												
+									util.element.sendCommand(commands, function(res) {
+										
+										let ms;
+											
+										if (res) {
+										
+											ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+										}
+										else {
+											
+											ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+										}
+										
 										ms.show();
-									}
-								});
+									});
+								}
 							}
 
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {

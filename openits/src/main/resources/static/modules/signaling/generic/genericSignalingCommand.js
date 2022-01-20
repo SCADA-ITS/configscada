@@ -467,23 +467,53 @@ export default class GenericSignalingCommand {
 
 				function sendCommandElement() {
 
-					let body = {
-						commands: []
-					};
-
+//					let body = {
+//						commands: []
+//					};
+//
+//					if (self.parent.config.restEndpoints && self.parent.config.restEndpoints.command) {
+//
+//						self.selectedElementIds.forEach(selectedElementId => {
+//
+//							body.commands.push(getCommandElementToSend(self.getCommandElement(selectedElementId)));
+//
+//						});
+//
+//						if (Array.isArray(body.commands) && body.commands.length > 0) {
+//
+//							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+//
+//								let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+//								ms.show();
+//							});
+//						}
+//					}
+					
+					let commands = [];
+					
 					if (self.parent.config.restEndpoints && self.parent.config.restEndpoints.command) {
 
 						self.selectedElementIds.forEach(selectedElementId => {
 
-							body.commands.push(getCommandElementToSend(self.getCommandElement(selectedElementId)));
+							commands.push(getCommandElementToSend(self.getCommandElement(selectedElementId)));
 
 						});
 
-						if (Array.isArray(body.commands) && body.commands.length > 0) {
+						if (Array.isArray(commands) && commands.length > 0) {
 
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
-								let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+							util.element.sendCommand(commands, function(res) {
+								
+								let ms;
+								
+								if (res) {
+								
+									ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+								}
+								else {
+									
+									ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+								}
+								
 								ms.show();
 							});
 						}

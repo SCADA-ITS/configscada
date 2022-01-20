@@ -262,92 +262,95 @@ function login(values) {
 		webix.delay(function() {
 
 			webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(appConfig.restUrl + "auth/login")
-				.then(function(loginResponse) {
+				.then(
+					function(loginResponse) {
 				
-					if (loginResponse != undefined) {
-			
-						let loginData = loginResponse.json();
+						if (loginResponse != undefined) {
 				
-						if (loginData.access === LOGIN_MESSAGE.AUTHORIZED) {
-				
-							webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
-							webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, loginData);
-				
-							let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${loginData.userId}`);
-				
-							if (userResponse != undefined) {
-				
-								let userData = JSON.parse(userResponse.responseText);
-				
-								userData.password = undefined;
-				
-								webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
-				
-								let translateMessage = translateLabel("LBL_AUTHORIZED");
-				
+							let loginData = loginResponse.json();
+					
+							if (loginData.access === LOGIN_MESSAGE.AUTHORIZED) {
+					
+								webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
+								webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, loginData);
+					
+								let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${loginData.userId}`);
+					
+								if (userResponse != undefined) {
+					
+									let userData = JSON.parse(userResponse.responseText);
+					
+									userData.password = undefined;
+					
+									webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
+					
+									let translateMessage = translateLabel("LBL_AUTHORIZED");
+					
+									$$("alertText-" + uid).config.label = translateMessage;
+									webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+									$$("alertText-" + uid).refresh();
+					
+									userPermissions(userData);
+					
+								}
+					
+							} else {
+					
+								switch (loginData.access) {
+					
+									case LOGIN_MESSAGE.WRONG_USER_PASSWORD:
+										labelAlertMessage = "LBL_WRONG_USER_PASSWORD";
+										break;
+					
+									case LOGIN_MESSAGE.DENY_PASSWORD_EXPIRED:
+										labelAlertMessage = "LBL_DENY_PASSWORD_EXPIRED";
+										break;
+					
+									case LOGIN_MESSAGE.DENY_LOCKED:
+										labelAlertMessage = "LBL_DENY_LOCKED";
+										break;
+					
+									case LOGIN_MESSAGE.DENY_MULTI_SESSION_NOT_ALLOWED:
+										labelAlertMessage = "LBL_DENY_MULTI_SESSION_NOT_ALLOWED";
+										break;
+					
+									case LOGIN_MESSAGE.UNAUTHORIZED:
+										labelAlertMessage = "LBL_UNAUTHORIZED";
+										break;
+					
+									case LOGIN_MESSAGE.DENY_OTHERS:
+										labelAlertMessage = "LBL_DENY_OTHERS";
+										break;
+					
+									case LOGIN_MESSAGE.LOGOUT:
+										labelAlertMessage = "LBL_LOGOUT";
+										break;
+								}
+					
+								let translateMessage = translateLabel(labelAlertMessage);
+					
 								$$("alertText-" + uid).config.label = translateMessage;
-								webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+								webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
 								$$("alertText-" + uid).refresh();
-				
-								userPermissions(userData);
-				
+					
+								$$("password-" + uid).getNode().querySelector('#password-input').focus();
+								
+								validating(false);
 							}
-				
-						} else {
-				
-							switch (loginData.access) {
-				
-								case LOGIN_MESSAGE.WRONG_USER_PASSWORD:
-									labelAlertMessage = "LBL_WRONG_USER_PASSWORD";
-									break;
-				
-								case LOGIN_MESSAGE.DENY_PASSWORD_EXPIRED:
-									labelAlertMessage = "LBL_DENY_PASSWORD_EXPIRED";
-									break;
-				
-								case LOGIN_MESSAGE.DENY_LOCKED:
-									labelAlertMessage = "LBL_DENY_LOCKED";
-									break;
-				
-								case LOGIN_MESSAGE.DENY_MULTI_SESSION_NOT_ALLOWED:
-									labelAlertMessage = "LBL_DENY_MULTI_SESSION_NOT_ALLOWED";
-									break;
-				
-								case LOGIN_MESSAGE.UNAUTHORIZED:
-									labelAlertMessage = "LBL_UNAUTHORIZED";
-									break;
-				
-								case LOGIN_MESSAGE.DENY_OTHERS:
-									labelAlertMessage = "LBL_DENY_OTHERS";
-									break;
-				
-								case LOGIN_MESSAGE.LOGOUT:
-									labelAlertMessage = "LBL_LOGOUT";
-									break;
-							}
-				
-							let translateMessage = translateLabel(labelAlertMessage);
-				
-							$$("alertText-" + uid).config.label = translateMessage;
-							webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
-							$$("alertText-" + uid).refresh();
-				
-							$$("password-" + uid).getNode().querySelector('#password-input').focus();
-							
-							validating(false);
 						}
+					},
+					function(loginError) {
+					
+						let translateMessage = translateLabel(labelAlertMessage);
+					
+						$$("alertText-" + uid).config.label = translateMessage;
+						webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+						$$("alertText-" + uid).refresh();
+						console.error(loginError);
+						
+						validating(false);
 					}
-				})
-				.error(function(error) {
-					
-					let translateMessage = translateLabel(labelAlertMessage);
-				
-					$$("alertText-" + uid).config.label = translateMessage;
-					webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
-					$$("alertText-" + uid).refresh();
-					
-					validating(false);
-				});
+				);
 		}, null, null, 1);
 		
 	

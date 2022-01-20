@@ -1,4 +1,5 @@
 import MessageBox from "../component/messageBox.js";
+import InputDialogBox from "../component/inputDialogBox.js";
 
 export let util = {
 
@@ -822,7 +823,6 @@ export let util = {
 		}
 	},
 
-
 	stomp: {
 
 		getDataSourceFromTopic(topic) {
@@ -1397,6 +1397,155 @@ export let util = {
 			}
 
 			return color;
+		},
+		
+		sendCommand(commands, onResponse) {
+			
+			let showCommentDialog = false;
+			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			let auditLogs = [];
+			
+			if (userData && Array.isArray(commands) && commands.length > 0) {
+				
+				auditLogs = getAuditLogs();
+				
+				if (showCommentDialog) {
+					
+					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
+
+						auditLogs = auditLogs.map(auditLog => {
+							
+							let newAuditLog = webix.copy(auditLog);
+							
+							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
+								
+								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LOG_TYPE_COMMAND_PARAM_COMMENT);
+								
+								if (auditLogValueComment) {
+									
+									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
+								}
+							}
+							
+							return newAuditLog;
+						});
+						
+						send();		
+
+					}, false)).show();
+				}
+				else {
+					
+					send();
+				}
+			}
+			
+			function send() {
+			
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND, { commands: commands }).then(
+					function(okSendCommand) {
+						
+						if (Array.isArray(auditLogs) && auditLogs.length > 0) {
+						
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
+								function(okSendAuditLog) {
+									
+									onResponse(true);
+								
+								},
+								function(errSendAuditLog) {
+								
+									onResponse(false);
+								}
+							);	
+						}
+						else {
+						
+							onResponse(true);	
+						}
+					},
+					function(errSendCommand) {
+						
+						onResponse(false);
+					}
+				);	
+			}
+			
+			function getAuditLogs() {
+				
+				let aLogs = [];
+				
+				commands.forEach(command => {
+					
+					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
+					
+					if (element) {
+						
+						let commandElementType = getCommandElementType(element, command.commandElementTypeId);
+					
+						if (commandElementType && LogLevel[commandElementType.logLevel]) {
+							
+							if (commandElementType.logComment === "true") {
+								
+								showCommentDialog = true;
+							}
+							
+							let commandValues = undefined;
+							
+							if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
+								
+								commandValues = command.commandElementValues.map(e=> e.value).join(",");
+							}
+						
+							let auditLog = {
+								logTypeId: LOG_TYPE_COMMANDS,
+								logSubtypeId: LOG_SUBTYPE_EXECUTE_COMMAND,
+								userId: userData.id,
+								level: LogLevel[commandElementType.logLevel],
+								auditLogValues: [
+									{
+										value: commandElementType.labelAlias,
+										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMAND_TYPE
+									},
+									{
+										value: element.alias,
+										logTypeParamId: LOG_TYPE_COMMAND_PARAM_ELEMENT
+									},
+									{
+										value: commandValues,
+										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMAND_VALUES
+									},
+									{
+										value: commandElementType.logComment ? "" : undefined,
+										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMENT
+									}
+								]
+							};
+							
+							aLogs.push(auditLog);	
+						}	
+					}
+				});
+				
+				return aLogs;
+			}
+			
+			function getCommandElementType(element, commandElementTypeId) {
+				
+				let commandElementType = undefined;
+				
+				if (element && element.elementType && element.elementType.id) {
+				
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+					
+					if (elementType && Array.isArray(elementType.commandElementTypes)) {
+						
+						commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
+					}
+				}
+				
+				return commandElementType;				
+			}
 		}
 	},
 

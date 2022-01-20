@@ -771,9 +771,7 @@ export default class VmsSignalingContent {
 										
 										let isCmdSendMessage = (self.selectedCommand.id == self.config.commands.sendMessage.commandElementTypeId);
 											
-										let body = {
-											commands : []
-										};
+										let commands = [];
 										
 										let sendMessageCmd = {};
 									
@@ -830,18 +828,28 @@ export default class VmsSignalingContent {
 												self.hasMessage = false;
 											}
 											
-											body.commands.push(webix.copy(sendMessageCmd));	
+											commands.push(webix.copy(sendMessageCmd));	
 											
 											sendMessageCmd = undefined;
 										});
 										
-										if (Array.isArray(body.commands) && body.commands.length > 0) {
+										if (Array.isArray(commands) && commands.length > 0) {
 											
-											webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.command, body).then(function(data) {
-											
-												let ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);
+											util.element.sendCommand(commands, function(res) {
+												
+												let ms;
+												
+												if (res) {
+												
+													ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+												}
+												else {
+													
+													ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+												}
+												
 												ms.show();
-											});	
+											});
 										}										
 									}										
 								}

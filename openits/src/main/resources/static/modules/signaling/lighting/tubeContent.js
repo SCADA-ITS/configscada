@@ -329,23 +329,28 @@ export default class TubeContent {
 							command.elementId = self.selectedTube.id;
 							command.commandElementValues[0].value = newModeId;
 
-							let body = {
-								commands: []
-							};
+							let commands = [];
 
-							body.commands.push(command);
-
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-								console.log(data.json())
-								if (!data.json()) {
-									webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-								}
-							}, () => {
-								this.blockEvent();
-								this.setValue(oldv);
-								this.unblockEvent();
-							});
+							commands.push(command);
 							
+							if (Array.isArray(commands) && commands.length > 0) {
+											
+								util.element.sendCommand(commands, function(res) {
+									
+									let ms;
+										
+									if (res) {
+									
+										ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+									}
+									else {
+										
+										ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+									}
+									
+									ms.show();
+								});
+							}
 						}
 					}
 				}
@@ -527,19 +532,28 @@ export default class TubeContent {
 												
 												function onAccept() {
 
-													let body = {
-														commands: []
-													};
+													let commands = [];
 													
-													body.commands.push(command);
-
-													webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-
-														if (!data.json()) {
-
-															webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-														}
-													});													
+													commands.push(command);
+													
+													if (Array.isArray(commands) && commands.length > 0) {
+											
+														util.element.sendCommand(commands, function(res) {
+															
+															let ms;
+										
+															if (res) {
+															
+																ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+															}
+															else {
+																
+																ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+															}
+															
+															ms.show();
+														});
+													}												
 												}
 											}
 										}
@@ -1173,18 +1187,26 @@ export default class TubeContent {
 						command.elementId = dali.id;
 						command.commandElementValues[0].value = newRegimeId;
 	
-						let body = {
-							commands: []
-						};
-						body.commands.push(command);
-	
-						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
-							console.log(data.json())
-							if (!data.json()) {
-	
-								webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-							}
-						});							
+						let commands = [];
+						
+						if (Array.isArray(commands) && commands.length > 0) {
+											
+							util.element.sendCommand(commands, function(res) {
+								
+								let ms;
+										
+								if (res) {
+								
+									ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+								}
+								else {
+									
+									ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+								}
+								
+								ms.show();
+							});
+						}
 					}
 				}
 				
@@ -1265,27 +1287,37 @@ export default class TubeContent {
 									value += "]";
 									command.commandElementValues[0].value = value;
 
-									let body = {
-										commands: []
-									};
-									body.commands.push(command);
+									let commands = [];
 
-									webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.parent.config.restEndpoints.command, body).then(function(data) {
+									commands.push(command);
+									
+									if (Array.isArray(commands) && commands.length > 0) {
+											
+										util.element.sendCommand(commands, function(res) {
+											
+											self.tubeCircuitsDataTable.getAllItems().forEach(row => {
 
-										self.tubeCircuitsDataTable.getAllItems().forEach(row => {
-
-											row.circuitStateToSend = null;
-											row.circuitStateToSendAlias = null;
-											self.tubeCircuitsDataTable.update(row);
+												row.circuitStateToSend = null;
+												row.circuitStateToSendAlias = null;
+												self.tubeCircuitsDataTable.update(row);
+											});
+	
+											self.checkDisableChangeStatusButton();
+											
+											let ms;
+										
+											if (res) {
+											
+												ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+											}
+											else {
+												
+												ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+											}
+											
+											ms.show();
 										});
-
-										self.checkDisableChangeStatusButton();
-
-										if (!data.json()) {
-
-											webix.message({ type: "error", text: i18n.t("LBL_ERROR_OPERATION") });
-										}
-									});
+									}
 								}								
 							}
 						}
