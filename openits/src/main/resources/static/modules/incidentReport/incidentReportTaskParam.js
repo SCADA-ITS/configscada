@@ -4,8 +4,9 @@ import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTaskParam {
 
-	constructor(taskState, index, uid) {
+	constructor(config, taskState, index, uid) {
 
+		this.config = config;
 		this.taskState = taskState;
 		this.index = index;
 		this.uid = uid;
@@ -228,6 +229,8 @@ export default class IncidentReportTaskParam {
 				let taskTypeParams = self.taskState.incidentTypeTask.taskType.taskTypeParams;
 
 				if (Array.isArray(taskTypeParams) && taskTypeParams.length) {
+					
+					taskTypeParams = taskTypeParams.filter(e => self.config.taskParamTypes.includes(e.paramType.id));
 	
 					taskTypeParams.forEach(taskTypeParam => {
 						

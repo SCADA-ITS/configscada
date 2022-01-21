@@ -52,6 +52,7 @@
 	},
 	"locationTypes":["LocationType:1", "LocationType:2"],
 	"stretchTypes":["StretchType:1", "StretchType:2"],
+	"taskParamTypes":["ParamType:1"],
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
 	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",
 	"requiredPermissions": {

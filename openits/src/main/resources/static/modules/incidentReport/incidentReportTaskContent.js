@@ -94,9 +94,10 @@ export default class IncidentReportTaskContent {
 			// TODO: Task param
 			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
 				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) && 
-				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0) {
+				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
+				self.taskState.incidentTypeTask.taskType.taskTypeParams.findIndex(e => self.config.taskParamTypes.includes(e.paramType.id)) !== -1) {
 				
-				self.incidentReportTaskParam = new IncidentReportTaskParam(self.taskState, self.index, self.uid);
+				self.incidentReportTaskParam = new IncidentReportTaskParam(self.config, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PARAMS"),
