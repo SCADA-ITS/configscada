@@ -60,7 +60,8 @@ class Subscriptor {
 
 		function onConnect() {
 
-			console.log("[StompSubscriptorService] Connected to " + self.url + self.topic)
+			//console.log("[StompSubscriptorService] Connected to " + self.url + self.topic);
+			log.debug("Connected to " + self.url + self.topic);
 		}
 
 		function onMessage(message) {
@@ -105,7 +106,8 @@ class Subscriptor {
 
 			util.stomp.disconnect(this.stompClient);
 			
-			console.log("[StompSubscriptorService] Disconnected from " + this.url + this.topic)
+			//console.log("[StompSubscriptorService] Disconnected from " + this.url + this.topic)
+			log.debug("Disconnected from " + this.url + this.topic);
 			
 			this.stompClient = undefined;
 		}
@@ -161,7 +163,8 @@ export default class StompSubscriptorService extends GenericModule {
 			id = subscriptor.register(callback, fields);
 		}
 		
-		console.log("[StompSubscriptorService] Subscribe => Id: " + id + "; DataSource: " + JSON.stringify(dataSource) + "; Fields: " + JSON.stringify(fields));
+		//console.log("[StompSubscriptorService] Subscribe => Id: " + id + "; DataSource: " + JSON.stringify(dataSource) + "; Fields: " + JSON.stringify(fields));
+		log.debug("Subscribe => Id: " + id + "; DataSource: " + JSON.stringify(dataSource) + "; Fields: " + JSON.stringify(fields));
 
 		return id;
 	}
@@ -189,7 +192,8 @@ export default class StompSubscriptorService extends GenericModule {
 
 						subscriptorFound = true;
 						
-						console.log("[StompSubscriptorService] Unsubscribe => Id: " + client.id);						
+						//console.log("[StompSubscriptorService] Unsubscribe => Id: " + client.id);						
+						log.debug("Unsubscribe => Id: " + client.id);
 					}
 				}
 			}

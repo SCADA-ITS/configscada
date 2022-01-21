@@ -8,7 +8,9 @@ function assign(entitiesManager, em_type) {
 			
 			if (Array.isArray(response) && response.length > 0) {
 			
-				console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type);	
+				//console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type);
+				
+				log.debug("Cached " + response.length + " entities of type " + em_type);	
 			}
 				
 		}
@@ -28,7 +30,8 @@ function assign(entitiesManager, em_type) {
 			if (Array.isArray(response) && response.length > 0) {
 			
 				let nextUpdate = new Date((new Date()).getTime() + (EntityType[em_type].expireSeconds * 1000));
-				console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());	
+				//console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());
+				log.debug("Cached " + response.length + " entities of type " + em_type + ". Next update at " + nextUpdate.toLocaleString());	
 			}
 			
 			entitiesManager.lastUpdateTempEntities[[EntityType[em_type].id]] = Math.floor(new Date() / 1000);
@@ -94,7 +97,8 @@ function scheduler(entitiesManager) {
 					//if ((Math.floor(new Date() / 1000) - entitiesManager.lastUpdateTempEntities[EntityType[em_type].id]) > EntityType[em_type].expireSeconds) {
 					if (nextSchedulerDate > nextExpireType) {
 					
-						console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Scheduled refresh cache for entity of type " + em_type);
+						//console.log("[" + (new Date()).toISOString() + "] " + "[EntitiesManager] Scheduled refresh cache for entity of type " + em_type);
+						log.debug("Scheduled refresh cache for entity of type " + em_type);
 						assign(entitiesManager, em_type);	
 					}
 				}
@@ -158,7 +162,8 @@ export default class EntitiesManager {
 					
 					if (tempEntity && (Math.floor(new Date() / 1000) - tempEntity.date) > em_type.expireSeconds) {
 						
-						console.log("[" + (new Date()).toISOString() + "] " + tempEntity + " needs to be updated because it exceeds expiration time");
+						//console.log("[" + (new Date()).toISOString() + "] " + tempEntity + " needs to be updated because it exceeds expiration time");
+						log.debug(tempEntity + " needs to be updated because it exceeds expiration time");
 					
 						//this.tempEntities[em_type.id].splice(index, 1);
 						tempEntity = undefined;
@@ -168,23 +173,27 @@ export default class EntitiesManager {
 			
 			if (!tempEntity) {
 				
-				console.log("[" + (new Date()).toISOString() + "] " + "Querying => " + em_type.endpoint + "/" + value);
+				//console.log("[" + (new Date()).toISOString() + "] " + "Querying => " + em_type.endpoint + "/" + value);
+				log.debug("Querying => " + em_type.endpoint + "/" + value);
 				
 				let response = webix.ajax().sync().get(em_type.endpoint + "/" + value) ;
 						
 				if (response) {
 					
-					console.log("[" + (new Date()).toISOString() + "] " + "Response => " + em_type.endpoint + "/" + value);
+					//console.log("[" + (new Date()).toISOString() + "] " + "Response => " + em_type.endpoint + "/" + value);
+					log.debug("Response => " + em_type.endpoint + "/" + value);
 				
 					let responseObject = JSON.parse(response.responseText);
 					
 					if (index > -1) {
 						
-						console.log("[" + (new Date()).toISOString() + "] " + "Deleting old value => " + this.tempEntities[em_type.id][index]);
+						//console.log("[" + (new Date()).toISOString() + "] " + "Deleting old value => " + this.tempEntities[em_type.id][index]);
+						log.debug("Deleting old value => " + this.tempEntities[em_type.id][index]);
 
 						this.tempEntities[em_type.id].splice(index, 1);
 						
-						console.log("[" + (new Date()).toISOString() + "] " + "Deleted old value");
+						//console.log("[" + (new Date()).toISOString() + "] " + "Deleted old value");
+						log.debug("Deleted old value");
 					}
 				
 					let newValue = {
@@ -193,11 +202,13 @@ export default class EntitiesManager {
 						data: responseObject
 					};
 					
-					console.log("[" + (new Date()).toISOString() + "] " + "Adding new value => " + newValue);
+					//console.log("[" + (new Date()).toISOString() + "] " + "Adding new value => " + newValue);
+					log.debug("Adding new value => " + newValue);
 					
 					this.tempEntities[em_type.id].push(newValue);
 					
-					console.log("[" + (new Date()).toISOString() + "] " + "Added value");
+					//console.log("[" + (new Date()).toISOString() + "] " + "Added value");
+					log.debug("Added value");
 					
 					return responseObject;	
 				}

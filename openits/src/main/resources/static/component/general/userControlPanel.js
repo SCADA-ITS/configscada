@@ -186,7 +186,7 @@ export default class UserControlPanel extends GenericControlPanel {
 						},
 						{
 							view: "button",
-							id: "user-control-panel-notif-event",
+							id: "user-control-panel-notif-events",
 							width: 350,
 							height: 50,
 							tooltip: i18n.t("LBL_EVENTS"),
@@ -197,7 +197,18 @@ export default class UserControlPanel extends GenericControlPanel {
 
 								onItemClick() {
 
-									// TODO
+									let eventService = window.sm.getService(Services.EVENT_SERVICE);
+		
+									if (eventService) {
+										
+										let notification = eventService.getNotification();
+										
+										if (notification) {
+											
+											notification.show();
+											self.hide();
+										}
+									}
 								}
 							}
 						}
@@ -381,6 +392,7 @@ export default class UserControlPanel extends GenericControlPanel {
 		
 		updateDataAlarms();
 		updateDataIncidents();
+		updateDataEvents();
 		
 		if (pendingTasks) {
 
@@ -474,6 +486,30 @@ export default class UserControlPanel extends GenericControlPanel {
 				else {
 					
 					$$("user-control-panel-notif-incidents").hide();
+				}
+			}	
+		}
+		
+		function updateDataEvents() {
+			
+			let eventService = window.sm.getService(Services.EVENT_SERVICE);
+		
+			if (eventService) {
+					
+				let notifications = eventService.getData().notifications;
+				
+				if ((Array.isArray(notifications) && notifications.length > 0) ||
+				    (eventService.getNotification() && eventService.getNotification().getRecognizedNotifications().length > 0)) {
+					
+					$$("user-control-panel-notif-events").show();
+					$$("user-control-panel-notif-events").config.label = i18n.t("LBL_EVENTS") + " " + notifications.length;
+					$$("user-control-panel-notif-events").refresh();
+
+					pendingTasks |= true;
+				}
+				else {
+					
+					$$("user-control-panel-notif-events").hide();
 				}
 			}	
 		}

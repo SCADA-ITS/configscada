@@ -7,14 +7,14 @@ export default class Notification {
 	
 	static get ALARM() { return { id: 1, label: "LBL_NOTIFICATION_ALARM", css: "notification-alarm-window", icon: "alarm.png", windowWidth: 750, windowHeight: 500 } }
 	static get INCIDENT() { return { id: 2, label: "LBL_NOTIFICATION_INCIDENT", css: "notification-incident-window", icon: "incident.png", windowWidth: 800, windowHeight: 500 } }
-	static get EVENT() { return { id: 3, label: "LBL_NOTIFICATION_EVENT", css: "notification-event-window", icon: "event.png", windowWidth: 750, windowHeight: 500 } }
+	static get EVENT() { return { id: 3, label: "LBL_NOTIFICATION_EVENT", css: "notification-event-window", icon: "event.png", windowWidth: 850, windowHeight: 500 } }
 
 	constructor(config, notificationType, notifications) {
 
 		this.uid = webix.uid();
 		this.config = config;
 		this.notificationType = notificationType;
-		this.notifications = notifications;
+		this.notifications = Array.isArray(notifications) ? notifications : [];
 		this.timeoutNotificationMs = config.timeoutNotificationMs > 0 ? config.timeoutNotificationMs : undefined;
 		this.maxInactiveNotifications = config.maxInactiveNotifications ? config.maxInactiveNotifications : MAX_INACTIVE_NOTICATIONS;
 		
@@ -314,7 +314,7 @@ export default class Notification {
 			function getSelectedItems() {
 		
 				let list = $$("list-" + self.uid);
-				let alarms = [];
+				let items = [];
 				
 				if (list) {
 			
@@ -324,11 +324,11 @@ export default class Notification {
 						
 						ids = ids.map(e => parseInt(e));					
 
-						alarms = self.notifications.filter(e => ids.includes(parseInt(e.id)));
+						items = self.notifications.filter(e => ids.includes(parseInt(e.id)));
 					}	
 				}
 				
-				return alarms;
+				return items;
 			}
 			
 			return viewToolbar;
@@ -382,14 +382,17 @@ export default class Notification {
 			function drawNotification(obj) {
 				
 				let html;
+				
+				let firstLine = obj.alias;
+				let secondLine = util.toLocaleString(obj.created / 1000) + ": " + obj.description;
 
 				html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
 						<image class="image" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
 						<div class="level" style="background-color: ${obj.color}">${obj.level}</div>
 						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
 						<div class="text">
-					  		<span class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${obj.alias} </span>
-				  			<span class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${util.toLocaleString(obj.created / 1000)} : ${obj.description}</span>
+					  		<span title="${firstLine}" class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${firstLine} </span>
+				  			<span title="${secondLine}" class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${secondLine}</span>
 						</div>`;
 				
 				return html;

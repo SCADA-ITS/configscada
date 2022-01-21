@@ -47,7 +47,13 @@ window.onload = function() {
 
 function initialize() {
 	
-	document.title = APP_TITLE ? APP_TITLE : "OpenITS";
+	try {
+		
+		document.title = APP_TITLE ? APP_TITLE : "OpenITS";	
+	}
+	catch {
+		
+	}
 
 	window.alarmControlPanel = undefined;
 	window.notificationControlPanel = undefined;

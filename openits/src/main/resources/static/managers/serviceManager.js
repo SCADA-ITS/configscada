@@ -60,6 +60,9 @@ function drawService(service, module) {
 		const lazy = async _ => {
 
 			let jsFile = util.getContextPath() + "/" + module.jsFile;
+			
+			//console.log("Loading " + module.name + " ...");
+			log.debug("Loading " + module.name + " ...");
 			const mod = await import(jsFile);
 
 			let lazyClass = new mod.default(module);
@@ -80,7 +83,8 @@ function drawService(service, module) {
 
 	} catch (error) {
 
-		console.log(error);
+		//console.log(error);
+		log.error(error);
 	}
 }
 
@@ -125,6 +129,9 @@ function runServices(service, onLoaded) {
 		if (serviceItem.module.jsMethodCallbacks && serviceItem.object) {
 			
 			serviceItem.object.runOne(serviceItem.module.jsMethodCallbacks);
+			
+			//console.log(serviceItem.module.name + " loaded");
+			log.debug(serviceItem.module.name + " loaded");
 		}
 	});
 	

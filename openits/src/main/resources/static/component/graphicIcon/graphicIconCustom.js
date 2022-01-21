@@ -41,7 +41,7 @@ export default class GraphicIconCustom extends GraphicIcon {
 		}
 		else {
 			
-			console.error("Render not configured for graphicIcon = " + graphicIcon.id);
+			log.warn("Render not configured for graphicIcon = " + graphicIcon.id);
 			onRenderReady();
 		}
 		

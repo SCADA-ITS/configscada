@@ -451,7 +451,7 @@ export let util = {
 
 			} catch (error) {
 
-				console.log(error);
+				log.error(error);
 			}
 		},
 
@@ -524,7 +524,7 @@ export let util = {
 
 						} catch (error) {
 
-							console.error(error);
+							log.error(error);
 							args = {};
 						}
 					}
@@ -852,7 +852,7 @@ export let util = {
 				// Do something, all subscribes must be done is this callback
 				// This is needed because this will be executed after a (re)connect
 
-				console.log("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
+				log.debug("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
 
 				if (onConnected) {
 
@@ -863,7 +863,7 @@ export let util = {
 			};
 
 			client.onWebSocketClose = function(frame) {
-				console.log("Broker reported close");
+				log.debug("Broker reported close");
 			}
 
 			client.onStompError = function(frame) {
@@ -871,8 +871,8 @@ export let util = {
 				// Bad login/passcode typically will cause an error
 				// Complaint brokers will set `message` header with a brief message. Body may contain details.
 				// Compliant brokers will terminate the connection after any error
-				console.log("Broker reported error: " + frame.headers["message"]);
-				console.log("Additional details: " + frame.body);
+				log.error("Broker reported error: " + frame.headers["message"]);
+				log.error("Additional details: " + frame.body);
 			};
 
 			client.activate();
@@ -884,7 +884,7 @@ export let util = {
 
 			if (client.connected) {
 
-				console.log("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
+				log.error("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
 
 				client.deactivate();
 			}

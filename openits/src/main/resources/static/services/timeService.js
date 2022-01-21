@@ -94,16 +94,20 @@ export default class TimeService extends GenericModule {
 										
 										requestTraceCount = 0;
 										
-										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Server time = " + new Date(self.serverTimeMs).toISOString());
-										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Client time = " + new Date(clientTimeMs).toISOString());
-										console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Diff time (ms) = " + diffCliSrvMs);
+										//console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Server time = " + new Date(self.serverTimeMs).toISOString());
+										//console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Client time = " + new Date(clientTimeMs).toISOString());
+										//console.log("[" + (new Date()).toISOString() + "] " + "[TimeService] Diff time (ms) = " + diffCliSrvMs);
+										log.debug("Server time = " + new Date(self.serverTimeMs).toISOString());
+										log.debug("Client time = " + new Date(clientTimeMs).toISOString());
+										log.debug("Diff time (ms) = " + diffCliSrvMs);
 									}
 									
 									waitingResponse = false;
 								})
 								.fail(function(err) {
 									
-									console.error("Server not response => " + appConfig.restUrl + "server/time")
+									//console.error("Server not response => " + appConfig.restUrl + "server/time")
+									log.error("Server not response => " + appConfig.restUrl + "server/time");
 									
 									initTimeMs = Date.now();
 									timeElapsedMs = 0;

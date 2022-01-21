@@ -15,9 +15,6 @@ export default class IncidentService extends GenericModule {
 		this.stomp = {};
 		this.events = {
 			data: {
-				stats: {
-					eventPendingToConfirm: 0
-				},
 				notifications: []
 			}
 		};
@@ -45,8 +42,6 @@ export default class IncidentService extends GenericModule {
 	loadData() {
 
 		let self = this;
-
-		loadEventsPendingToConfirm();
 		
 		if (self.config.notification.enabled) {
 		
@@ -54,88 +49,72 @@ export default class IncidentService extends GenericModule {
 			loadEvents();
 		}
 		
-		function loadEventsPendingToConfirm() {
-		
-			if (self.config && self.config.stats && self.config.stats.restEndpoint && self.config.stats.topic) {
+		function createNotification(event) {
+			
+			let notification = undefined;
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			let description = "";
+			let auditLogValues = [];
+			let logType = undefined;
+			let logSubtype = undefined;
+			
+			if (event.logType) {
 				
-				webix.ajax(appConfig.restUrl + self.config.stats.restEndpoint.eventPendingToConfirm).then(function(data) {
-	
-					if (data.json() != undefined) {
-		
-						let eventPendingToConfirm = data.json().value;
-		
-						self.events.data.stats.eventPendingToConfirm = eventPendingToConfirm;
-		
-						window.userControlPanel.updateData();
-		
-						connectWS();
-					}
-				});
+				logType = window.em.getByField(EntityType.LOG_TYPE, "id", event.logType.id);
+				logSubtype = logType && Array.isArray(logType.logSubtypes) ? logType.logSubtypes.find(e => e.id === event.logSubtype.id) : undefined;
 			}
-	
-			function connectWS() {
-	
-				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
-				if (stompSubscriptorService) {
-	
-					stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.stats.topic.eventPendingToConfirm), onMessage);
-				}
-	
-				function onMessage(data) {
-	
-					self.incidents.data.stats.eventPendingToConfirm = data.value;
-	
-					window.userControlPanel.updateData();
-				}
+			
+			if (event.user) {
+				
+				description += "[" + window.em.getByField(EntityType.USER, "id", event.user.id).name + "] ";
 			}
+			
+			if (logType && logSubtype) {
+				
+				if (Array.isArray(event.auditLogValues) && Array.isArray(logType.logTypeParams)) {
+				
+					auditLogValues = event.auditLogValues.filter(e => e.value != undefined && e.value != "" && e.value != "null");
+					
+					auditLogValues.sort((a, b) => (a.logTypeParam.id < b.logTypeParam.id) ? 1 : ((b.logTypeParam.id < a.logTypeParam.id) ? -1 : 0));
+					
+					
+					
+					auditLogValues.forEach(auditLogValue => {
+						
+						let logTypeParam = logType.logTypeParams.find(e => e.id === auditLogValue.logTypeParam.id);
+						
+						if (logTypeParam) {
+							
+							description += i18n.t(logTypeParam.labelAlias) + ": " + (auditLogValue.value.indexOf("LBL") !== -1 ? i18n.t(auditLogValue.value) : auditLogValue.value) + "; ";	
+						}
+					});
+				}
+				
+				 notification = {
+					id: webix.uid(),
+					notificationId: event.id,
+					level: event.level,
+					notification: "true",
+					color: logSubtype.color ? logSubtype.color : (logType.color ? logType.color : "rgb(255, 153, 0)"),
+					sound: logSubtype.sound ? logSubtype.sound : (logType.sound ? logType.sound : undefined), 
+					img: event.logSubtype.img ? logSubtype.img : (logType.img ? logType.img : undefined),
+					recognized: undefined,
+					created: event.time,
+					updated: timeService.getEpoch(),
+					removed: undefined,
+					alias: (event.logType ? i18n.t(logType.labelAlias) : undefined) + " - " + (logSubtype ? i18n.t(logSubtype.labelAlias) : undefined),
+					description: description
+				};
+			}
+			
+			return notification;
 		}
 		
 		function loadNotifications() {
 			
-			webix.ajax(appConfig.restUrl + self.config.rest.events).then(function(data) {
-
-				if (data.json() != undefined) {
-					
-					let events = data.json();
-
-
-					// TODO	
-				}
+			self.notification = new Notification(self.config.notification, Notification.EVENT);
 				
-				if (window.userControlPanel) {
-							
-					window.userControlPanel.updateData();	
-				}
-				
-				if (self.config.notification.enabled) {
-						
-					self.notification = new Notification(self.config.notification, Notification.EVENT, self.events.data.notifications);
-				
-					self.notification.load();	
-				}
-			});	
-		}
-		
-		function createNotification(event) {
-			
-			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			
-			return {
-				id: webix.uid(),
-				notificationId: undefined,
-				level: undefined,
-				notification: undefined,
-				color: undefined,
-				sound: undefined, 
-				img: undefined,
-				recognized: undefined,
-				created: undefined,
-				updated: undefined,
-				removed: undefined,
-				alias: undefined,
-				description: undefined 
-			};
+			self.notification.load();
 		}
 		
 		function loadEvents() {
@@ -155,23 +134,28 @@ export default class IncidentService extends GenericModule {
 			}
 			
 			function onMessage(be, action, timestamp) {
+								
+				if (be) {
 				
-				if (action === StompSubscriptorService.ACTION_BLOCK) {
+					let event = be;
 					
-					return;
-				}
-				
-				webix.ajax(appConfig.restUrl + util.fillTemplate(self.config.rest.event, { id: be.id })).then(function(data) {
-
-					if (data.json() != undefined) {
-					
-						let event = data.json();
+					if (event) {
 						
-						if (event) {
+						let eventNotification = createNotification(event);
+						
+						if (eventNotification) {
 							
+							self.events.data.notifications.push(eventNotification);
+										
+							self.notification.add(eventNotification);
+							
+							if (window.userControlPanel) {
+			
+								window.userControlPanel.updateData();	
+							}
 						}
 					}
-				});
+				}
 			}
 		}
 	}
