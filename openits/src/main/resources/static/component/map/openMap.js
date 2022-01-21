@@ -25,7 +25,7 @@ const REQUIRED_INCIDENT_PERMISSIONS = {
 
 export default class OpenMap extends GenericMap {
 
-	constructor(metadata, data, events, w, h, options) {
+	constructor(metadata, data, events, w, h, options, viewTypeId) {
 
 		super(metadata, data, events, w, h, options)
 		this.stomp = {};
@@ -45,6 +45,7 @@ export default class OpenMap extends GenericMap {
 		this.maxZoomLevel = MAX_ZOOM_LEVEL;
 		this.minZoomLevel = MIN_ZOOM_LEVEL;
 		this.darkModeActive = false;
+		this.viewTypeId = viewTypeId;
 		
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
@@ -77,9 +78,9 @@ export default class OpenMap extends GenericMap {
 					template: function() {
 									
 						let t;
-						
+
 						t = `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
-									<div id="map-${self.uid}" style="height: ${self.h}px; width: ${self.w}px">
+									<div id="map-${self.uid}" style="height:${self.h}px; width:100%">
 									<div id="svg-main-container-${self.uid}" style="display: none;"></div>
 								 </div>`;
 						
@@ -367,7 +368,25 @@ export default class OpenMap extends GenericMap {
 				map.updateSize();
 			}, null, null, 1000);
 			
+			if (self.viewTypeId === VIEW_TYPE_EXTERNAL) {
+
+				onResize();	
+			}
+			
 			return map;
+		}
+		
+		
+		function onResize() {
+
+			window.addEventListener("resize", function(obj) {
+
+				let containerHeight = $$(self.uid).$height;
+				let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
+
+				mapNode.style.height = containerHeight + "px";		
+				self.olMap.updateSize();
+			});
 		}
 		
 		function darkMode() {

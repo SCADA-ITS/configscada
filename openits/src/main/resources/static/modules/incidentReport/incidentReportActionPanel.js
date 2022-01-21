@@ -6,6 +6,7 @@ import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
 
 const MARGIN_ACTION_PANEL = 15;
+const TOOLBARS_ALLOWED = 3;
 
 export default class IncidentReportActionPanel {
 
@@ -232,139 +233,7 @@ export default class IncidentReportActionPanel {
 					label: `<div class="title"><span class="section-text">${i18n.t("LBL_INCIDENT_SECTION_ACTIONS")}</span></div>`,
 					borderless: true
 				},
-				{
-					rows: [
-						{ height: 10 },
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
-											tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-map",
-											on: {
-												onItemClick() {
-													
-													openMap();
-												}
-											}
-										},
-										{},
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
-											tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-cctv",
-											hidden: !self.incidentReport.scenario || !self.incidentReport.scenario.id,
-											on: {
-
-												onItemClick() {
-
-													viewCameras();
-												}
-											}
-										}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						},
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
-											tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-											disabled: !changeAssignIncident,
-											type: "iconTop",
-											icon: "mdi mdi-account",
-											on: {
-
-												onItemClick() {
-
-													let moduleAction = {id:  self.parent.module.config.moduleAction.assign };
-													let args = { selectedPks: [self.incidentReport.id]};
-													
-													util.module.open(self.parent.module, moduleAction, null, null, args);
-													
-												}
-											}
-										},
-										{},
-										{
-											view: "button",
-											width: 135,
-											label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
-											tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
-											type: "iconTop",
-											disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
-											icon: "mdi mdi-bell",
-											on: {
-
-												onItemClick() {
-
-													showAlarms();
-												}
-											}
-										}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						},
-						{
-							cols: [
-								{ width: MARGIN_ACTION_PANEL },
-								{
-									view: "toolbar",
-									height: 75,
-									css: "tb-actions",
-									elements: [
-										{
-											view: "button",
-											width: 135,
-											hidden: self.incidentReport.confirm,
-											disabled: (self.userData.id != self.incidentReport.currentUser.id) ? true : false,
-											label: i18n.t("LBL_INCIDENT_CHANGE"),
-											tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
-											type: "iconTop",
-											icon: "mdi mdi-pen",
-											on: {
-
-												onItemClick() {
-
-													changeIncident();
-												}
-											}
-										},
-										{}
-									],
-									borderless: true
-								},
-								{ width: MARGIN_ACTION_PANEL }
-							]
-						}
-					]
-				},
+				drawActionsButtons(),
 				{ height: 40 },
 				{
 					view: "label",
@@ -435,6 +304,192 @@ export default class IncidentReportActionPanel {
 				}
 			]
 		};
+		
+		function drawActionsButtons() {
+
+			let actionsButtons = { rows: [] };
+			let buttonsArray = [];
+			let numberOfButtonsToDraw = 2;
+			let mapButton = {};
+			let camerasButton = {};
+			let changeUserButton = {};
+			let showAlarmsButton = {};
+			let changeIncidentButton = {};
+
+			changeUserButton = {
+				view: "button",
+				width: 135,
+				label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
+				tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
+				disabled: !changeAssignIncident,
+				type: "iconTop",
+				icon: "mdi mdi-account",
+				on: {
+
+					onItemClick() {
+
+						let moduleAction = { id: self.parent.module.config.moduleAction.assign };
+						let args = { selectedPks: [self.incidentReport.id] };
+
+						util.module.open(self.parent.module, moduleAction, null, null, args);
+					}
+				}
+			};
+
+			showAlarmsButton = {
+				view: "button",
+				width: 135,
+				label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
+				tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
+				type: "iconTop",
+				disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
+				icon: "mdi mdi-bell",
+				on: {
+
+					onItemClick() {
+
+						showAlarms();
+					}
+				}
+			}; 	
+
+			if (self.config.action.loadIncidentInMap) {
+
+				mapButton = {
+					view: "button",
+					width: 135,
+					label: i18n.t("LBL_INCIDENT_VIEW_IN_MAP"),
+					tooltip: i18n.t("LBL_INCIDENT_VIEW_IN_MAP_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-map",
+					on: {
+						onItemClick() {
+
+							openMap();
+						}
+					}
+				};
+
+				buttonsArray.push(mapButton);
+				numberOfButtonsToDraw++;
+			}
+
+			if (self.config.action.cctvScenario) {
+
+				camerasButton = {
+					view: "button",
+					width: 135,
+					label: i18n.t("LBL_INCIDENT_VIEW_CAMERAS"),
+					tooltip: i18n.t("LBL_INCIDENT_VIEW_CAMERAS_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-cctv",
+					disabled: !self.incidentReport.scenario,
+					on: {
+
+						onItemClick() {
+
+							viewCameras();
+						}
+					}
+				};
+				
+				buttonsArray.push(camerasButton);
+				numberOfButtonsToDraw++;
+			}
+
+			buttonsArray.push(changeUserButton, showAlarmsButton);
+			
+			if (!self.incidentReport.confirm) {
+
+				changeIncidentButton = {
+					view: "button",
+					width: 135,
+					disabled: (self.userData.id != self.incidentReport.currentUser.id) ? true : false,
+					label: i18n.t("LBL_INCIDENT_CHANGE"),
+					tooltip: i18n.t("LBL_INCIDENT_CHANGE_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-pen",
+					on: {
+
+						onItemClick() {
+
+							changeIncident();
+						}
+					}
+				};
+
+				buttonsArray.push(changeIncidentButton);
+				numberOfButtonsToDraw++;
+			}
+
+			actionsButtons.rows.push({ height: 10 });
+
+			let elements = [];				
+			let buttonsInToolbar = 0;
+			let toolbarsComplete = 0;
+			let toolbarsNeeded = Math.ceil(numberOfButtonsToDraw / 2);
+			
+			for (let button of buttonsArray) {
+
+				elements.push(button);
+				buttonsInToolbar++;
+				numberOfButtonsToDraw--;
+
+				if (buttonsInToolbar === 1) {
+
+					if (numberOfButtonsToDraw === 0) {
+
+						actionsButtons.rows.push({
+							cols: [
+								{ width: MARGIN_ACTION_PANEL },
+								{
+									view: "toolbar",
+									height: 75,
+									css: "tb-actions",
+									elements: elements,
+									borderless: true
+								},
+								{ width: MARGIN_ACTION_PANEL }
+							]
+						});
+
+						toolbarsComplete++;
+					}
+
+				} else if (buttonsInToolbar === 2) {
+
+					actionsButtons.rows.push({
+						cols: [
+							{ width: MARGIN_ACTION_PANEL },
+							{
+								view: "toolbar",
+								height: 75,
+								css: "tb-actions",
+								elements: elements,
+								borderless: true
+							},
+							{ width: MARGIN_ACTION_PANEL }
+						]
+					});
+
+					elements = [];
+					buttonsInToolbar = 0;
+					toolbarsComplete++;
+				}
+
+				if ((numberOfButtonsToDraw === 0) && (toolbarsComplete === toolbarsNeeded)) {
+
+					let toolbarsAllowed = TOOLBARS_ALLOWED - toolbarsNeeded;
+
+					for (let i = 1; i <= toolbarsAllowed; i++) {
+			
+						actionsButtons.rows.push({ height: 75 });
+					}
+				}
+			}				
+			
+			return actionsButtons;
+		}
 
 		function viewCameras() {
 

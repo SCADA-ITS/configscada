@@ -15,7 +15,7 @@ const OPTIONS_PAN_ZOOM = {
 
 export default class Synoptic extends GenericMap {
 
-	constructor(metadata, data, events, w, h, options) {
+	constructor(metadata, data, events, w, h, options, viewTypeId) {
 
 		super(metadata, data, events, w, h, options);
 		this.stomp = {};
@@ -24,6 +24,7 @@ export default class Synoptic extends GenericMap {
 		this.s = undefined;
 		this.synoptic = undefined;
 		this.flagMouseMove = false;
+		this.viewTypeId = viewTypeId;
 		
 		this.panZoomTrigger = undefined;
 		
@@ -54,9 +55,9 @@ export default class Synoptic extends GenericMap {
 					id: "syn-" + self.uid,
 					template: function() {
 						return `<div oncontextmenu="return ${Array.isArray(self.metadata.commands) && self.metadata.commands.length > 0}">
-									<svg id=${"svg-syn-" + self.uid} style="height: ${self.h}; width: ${self.w}"></svg>
+									<svg id=${"svg-syn-" + self.uid}></svg>
 								</div>`
-					},
+					}, 
 					on: {
 						onAfterRender: function() {
 		
@@ -183,6 +184,12 @@ export default class Synoptic extends GenericMap {
 				
 					onBeforeLoadGraphicIcon();
 				}
+				
+				if(self.viewTypeId === VIEW_TYPE_EXTERNAL) {
+				
+					onResize();	
+				}
+				
 			});
 			
 			function onMouseUp(e) {
@@ -191,6 +198,23 @@ export default class Synoptic extends GenericMap {
 								
 					unselectAll();
 				}
+			}
+			
+			function onResize(e) {
+
+				window.addEventListener("resize", function(obj) {
+
+					let containerWidth = $$(self.uid).$width;
+					let containerHeight = $$(self.uid).$height;
+
+					let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
+
+					synopticNode.style.width = containerWidth;
+					synopticNode.style.height = containerHeight;
+
+					self.panZoomTrigger.resize();
+					self.panZoomTrigger.reset();
+				});
 			}
 		}
 		

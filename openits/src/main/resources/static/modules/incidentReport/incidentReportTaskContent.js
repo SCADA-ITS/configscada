@@ -121,7 +121,7 @@ export default class IncidentReportTaskContent {
 		function getViewFooter() {
 			
 			let viewFooter;
-			
+
 			viewFooter = {
 				height: 45,
 				cols: [
@@ -146,13 +146,17 @@ export default class IncidentReportTaskContent {
 						hidden: self.taskState.incidentTypeTask.auto || self.taskState.completedAt,
 						label: (function() {
 
-							return i18n.t("LBL_INCIDENT_END_TASK");
+							let labelButton = (self.taskState.incidentTypeTask.incidentTaskFinalizeButton) ? i18n.t(self.taskState.incidentTypeTask.incidentTaskFinalizeButton) : i18n.t("LBL_INCIDENT_END_TASK");
+
+							return labelButton;
 						})(),
 						on: {
 
 							onItemClick() {
-								
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION"), onAccept, null);
+
+								let label = (self.taskState.incidentTypeTask.incidentTaskFinalizeMessage) ?  self.taskState.incidentTypeTask.incidentTaskFinalizeMessage : "LBL_INCIDENT_CONFIRM_END_TASK_DESCRIPTION";
+													
+								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t(label), onAccept, null);
 								ms.show();
 								
 								function onAccept() {
