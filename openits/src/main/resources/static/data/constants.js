@@ -1,3 +1,5 @@
+const LOG_LEVEL = 2;
+
 const MAIN_TAB_ID = "tabs";
 const MAIN_TOOLBAR_ID = "mainToolbar";
 const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
