@@ -39,9 +39,7 @@ export default class MapModule extends GenericModule {
 						
 					options[Map.Options.DEBUG_MODE] = DEBUG_MODE;
 					
-					let viewTypeId = self.args.viewTypeId;
-					
-					let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options, viewTypeId);
+					let map = new OpenMap(responseJson.metadata, responseJson.data, events, $$("loading-" + self.uid).$width, $$("loading-" + self.uid).$height, options);
 					
 					$$("loading-" + self.uid).hide();
 					$$(self.uid).show();

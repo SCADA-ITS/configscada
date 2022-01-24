@@ -15,7 +15,7 @@ const OPTIONS_PAN_ZOOM = {
 
 export default class Synoptic extends GenericMap {
 
-	constructor(metadata, data, events, w, h, options, viewTypeId) {
+	constructor(metadata, data, events, w, h, options) {
 
 		super(metadata, data, events, w, h, options);
 		this.stomp = {};
@@ -24,7 +24,6 @@ export default class Synoptic extends GenericMap {
 		this.s = undefined;
 		this.synoptic = undefined;
 		this.flagMouseMove = false;
-		this.viewTypeId = viewTypeId;
 		
 		this.panZoomTrigger = undefined;
 		
@@ -185,11 +184,8 @@ export default class Synoptic extends GenericMap {
 					onBeforeLoadGraphicIcon();
 				}
 				
-				if(self.viewTypeId === VIEW_TYPE_EXTERNAL) {
-				
-					onResize();	
-				}
-				
+				onResize();
+			
 			});
 			
 			function onMouseUp(e) {
@@ -208,12 +204,15 @@ export default class Synoptic extends GenericMap {
 					let containerHeight = $$(self.uid).$height;
 
 					let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
+					
+					if (synopticNode && self.panZoomTrigger) {
 
-					synopticNode.style.width = containerWidth;
-					synopticNode.style.height = containerHeight;
+						synopticNode.style.width = containerWidth;
+						synopticNode.style.height = containerHeight;
 
-					self.panZoomTrigger.resize();
-					self.panZoomTrigger.reset();
+						self.panZoomTrigger.resize();
+						self.panZoomTrigger.reset();
+					}
 				});
 			}
 		}

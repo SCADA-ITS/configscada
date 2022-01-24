@@ -25,7 +25,7 @@ const REQUIRED_INCIDENT_PERMISSIONS = {
 
 export default class OpenMap extends GenericMap {
 
-	constructor(metadata, data, events, w, h, options, viewTypeId) {
+	constructor(metadata, data, events, w, h, options) {
 
 		super(metadata, data, events, w, h, options)
 		this.stomp = {};
@@ -45,7 +45,6 @@ export default class OpenMap extends GenericMap {
 		this.maxZoomLevel = MAX_ZOOM_LEVEL;
 		this.minZoomLevel = MIN_ZOOM_LEVEL;
 		this.darkModeActive = false;
-		this.viewTypeId = viewTypeId;
 		
 		this.mapLayer = undefined;
 		this.mapAction = undefined;
@@ -368,10 +367,7 @@ export default class OpenMap extends GenericMap {
 				map.updateSize();
 			}, null, null, 1000);
 			
-			if (self.viewTypeId === VIEW_TYPE_EXTERNAL) {
-
-				onResize();	
-			}
+			onResize();
 			
 			return map;
 		}
@@ -383,9 +379,13 @@ export default class OpenMap extends GenericMap {
 
 				let containerHeight = $$(self.uid).$height;
 				let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
+				
+				if(mapNode) {
 
-				mapNode.style.height = containerHeight + "px";		
-				self.olMap.updateSize();
+					mapNode.style.height = containerHeight + "px";		
+					self.olMap.updateSize();					
+				}
+
 			});
 		}
 		
