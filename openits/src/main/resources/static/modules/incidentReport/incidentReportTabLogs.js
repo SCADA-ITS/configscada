@@ -286,8 +286,11 @@ export default class IncidentReportTabLog {
 
 					element.incidentReportLogValues.forEach(e => {
 						
-						row["incidentLogValueState"] = (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE) ? e.value : null;
-						row["incidentLogValueArg1"] = (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1) ? e.value : null; 
+						if (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_STATE)
+							row["incidentLogValueState"] =  e.value;
+							
+						if (e.logTypeParam.id === INCIDENTS_LOGS_VALUE_ARG1)
+							row["incidentLogValueArg1"] = e.value; 
 					});
 
 					data.push(row);
