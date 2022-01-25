@@ -1,3 +1,5 @@
+import {util} from "../lib/util.js";
+
 const DefaultOptionValues = { 
 	1: true,
 	2: true,
@@ -111,13 +113,50 @@ export default class ListView {
 					select: getOptions(ListView.Options.SELECTED),
 					tooltip: 
 						function(obj) {
+
 							if (mode === ListView.DrawMode.COMPACT || mode === ListView.DrawMode.IMAGE) {
+
 								return obj.description;
+
 							} else {
-								return "";
+
+								let textAliasWidth;
+								let textDescriptionWidth;
+								let list = $$("list-" + self.uid);
+								let nodeAlias = list.getNode().querySelector(".list-first-line");
+								let nodeDescription = list.getNode().querySelector(".list-second-line");
+								let listWidth = nodeAlias.clientWidth;
+
+								if (nodeAlias) {
+
+									let elementStyle = window.getComputedStyle(nodeAlias);
+									let fontSize = elementStyle.getPropertyValue('font-size');
+									let fontFamily = elementStyle.getPropertyValue('font-family');
+									let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+									textAliasWidth = util.ui.calculateTextWidth(obj.alias, fontFamily, fontSize, letterSpacing);
+								}
+
+								if (nodeDescription) {
+
+									let elementStyle = window.getComputedStyle(nodeDescription);
+									let fontSize = elementStyle.getPropertyValue('font-size');
+									let fontFamily = elementStyle.getPropertyValue('font-family');
+									let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+									textDescriptionWidth = util.ui.calculateTextWidth(obj.description, fontFamily, fontSize, letterSpacing);
+								}
+
+								if (textAliasWidth > listWidth * 0.9 || textDescriptionWidth > listWidth * 0.9) {
+
+									return `${obj.alias}:<br>${obj.description}`;
+
+								} else {
+
+									return "";
+								}
 							}
-						}
-						,
+						},
 					type: {
 
 						template: function(obj) {
