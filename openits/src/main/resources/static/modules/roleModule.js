@@ -38,7 +38,7 @@ export default class RoleModule extends GenericModule {
 
 		if (this.args.selectedPks != undefined) {
 
-			if (this.args.selectedPks[0] === this.config.systemRole) {
+			if (this.args.selectedPks[0] === SYSTEM_PROFILES.ROLE) {
 
 				this.roleSystem = true;
 			}
@@ -177,7 +177,7 @@ export default class RoleModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let systemRole = self.args.selectedPks.find(e => e === self.config.systemRole);
+				let systemRole = self.args.selectedPks.find(e => e === SYSTEM_PROFILES.ROLE);
 
 				if (systemRole) {
 

@@ -43,7 +43,7 @@ export default class UserModule extends GenericModule {
 
 		if (this.args.selectedPks != undefined) {
 
-			if (this.args.selectedPks[0] === this.config.systemUser) {
+			if (this.args.selectedPks[0] === SYSTEM_PROFILES.USER) {
 
 				this.userSystem = true;
 			}
@@ -213,7 +213,7 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let systemUser = self.args.selectedPks.find(e => e === self.config.systemUser);
+				let systemUser = self.args.selectedPks.find(e => e === SYSTEM_PROFILES.USER);
 
 				if (systemUser) {
 
@@ -250,7 +250,7 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let systemUser = self.args.selectedPks.find(e => e === self.config.systemUser);
+				let systemUser = self.args.selectedPks.find(e => e === SYSTEM_PROFILES.USER);
 
 				if (systemUser) {
 
@@ -627,7 +627,7 @@ export default class UserModule extends GenericModule {
 
 						if (Array.isArray(selection) && selection.length > 0) {
 
-							if (selection[0].id === self.config.systemRole) {
+							if (selection[0].id === SYSTEM_PROFILES.ROLE) {
 
 								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO SELECT_SYSTEM_ROLE_DESCRIPTION"), null, null);
 								ms.show();

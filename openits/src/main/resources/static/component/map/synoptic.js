@@ -200,18 +200,21 @@ export default class Synoptic extends GenericMap {
 
 				window.addEventListener("resize", function(obj) {
 
-					let containerWidth = $$(self.uid).$width;
-					let containerHeight = $$(self.uid).$height;
+					if ($$(self.uid) && $$("syn-" + self.uid)) {
 
-					let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
-					
-					if (synopticNode && self.panZoomTrigger) {
+						let containerWidth = $$(self.uid).$width;
+						let containerHeight = $$(self.uid).$height;
 
-						synopticNode.style.width = containerWidth;
-						synopticNode.style.height = containerHeight;
+						let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
 
-						self.panZoomTrigger.resize();
-						self.panZoomTrigger.reset();
+						if (synopticNode && self.panZoomTrigger) {
+
+							synopticNode.style.width = containerWidth;
+							synopticNode.style.height = containerHeight;
+
+							self.panZoomTrigger.resize();
+							self.panZoomTrigger.reset();
+						}
 					}
 				});
 			}

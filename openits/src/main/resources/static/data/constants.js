@@ -7,6 +7,11 @@ const TASKBAR_ID = "taskbar";
 
 const START_ON_MONDAY = true;
 
+const SYSTEM_PROFILES = {
+	USER: "User:1000",
+	ROLE: "Role:1000"
+};
+
 const FORMAT_NUMERIC_DATES = {
 	month: '2-digit',
 	day: '2-digit',

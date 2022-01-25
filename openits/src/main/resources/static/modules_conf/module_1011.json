@@ -14,7 +14,5 @@
 	"restEndpoints": {
 		"user": "users/${id}",
 		"userRole": "users/role/${id}"
-	},
-	"systemRole": "Role:1000",
-	"systemUser": "User:1000"
+	}
 }

@@ -269,18 +269,27 @@ export default class IncidentReportModule extends GenericModule {
 			
 			function changeUser(data) {
 			
-			let userId = (data) ? data[0].id : self.userData.id;
-			  
-				self.args.selectedPks.forEach(incident => {
+				let userId = (data) ? data[0].id : self.userData.id;
 
-					let body = {
-						id: incident,
-						userId: userId
-					};
+				if (userId != SYSTEM_PROFILES.USER) {
 
-					let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
-					self.restAction(endpoint);
-				});
+					self.args.selectedPks.forEach(incident => {
+
+						let body = {
+							id: incident,
+							userId: userId
+						};
+
+						let endpoint = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+						self.restAction(endpoint);
+					});
+
+				} else {
+
+					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_ASSIGN_SYSTEM_USER_DESCRIPTION"), null, null);
+					ms.show();
+				}
+
 			}
 		}
 	}

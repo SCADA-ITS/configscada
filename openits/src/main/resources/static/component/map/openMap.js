@@ -377,15 +377,17 @@ export default class OpenMap extends GenericMap {
 
 			window.addEventListener("resize", function(obj) {
 
-				let containerHeight = $$(self.uid).$height;
-				let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
-				
-				if(mapNode) {
+				if ($$(self.uid) && $$("view-map-" + self.uid)) {
 
-					mapNode.style.height = containerHeight + "px";		
-					self.olMap.updateSize();					
+					let containerHeight = $$(self.uid).$height;
+					let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
+
+					if (mapNode) {
+
+						mapNode.style.height = containerHeight + "px";
+						self.olMap.updateSize();
+					}
 				}
-
 			});
 		}
 		
