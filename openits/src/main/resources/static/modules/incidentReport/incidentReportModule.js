@@ -556,13 +556,14 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 
-		function on_message(be, action) {
+		function on_message(be, action, timestamp) {
 
 			//var data = JSON.parse(JSON.parse(message.body));
 			
 			let data = {
 				basicElementsVO: [be],
-				action: action
+				action: action,
+				timestamp: timestamp
 			}
 
 			self.disconnectStomp = false;

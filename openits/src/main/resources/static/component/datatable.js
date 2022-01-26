@@ -2512,7 +2512,7 @@ export default class DataTable {
 
 					}
 
-					function on_message(be, action) {
+					function on_message(be, action, timestamp) {
 
 						function update(gridData) {
 
@@ -2573,7 +2573,8 @@ export default class DataTable {
 						
 						let data = {
 							basicElementsVO: [be],
-							action: action
+							action: action,
+							timestamp: timestamp
 						}
 
 						eval("adapter." + adapterDataSource.value)(data, update);
