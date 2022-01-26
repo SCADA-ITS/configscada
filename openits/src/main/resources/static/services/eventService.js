@@ -115,9 +115,32 @@ export default class EventService extends GenericModule {
 		
 		function loadNotifications() {
 			
-			self.notification = new Notification(self.config.notification, Notification.EVENT, self.events.data.notifications);
+			webix.ajax(appConfig.restUrl + self.config.rest.events).then(function(data) {
+
+				if (data.json() != undefined) {
+					
+					let events = data.json();
+	
+					if (Array.isArray(events) && events.length > 0) {
+						
+						self.events.data.notifications = events.map(e => createNotification(e));
+						
+						self.events.data.notifications.sort((a, b) => (a.created < b.created) ? 1 : ((b.created < a.created) ? -1 : 0));
+					}
+				}
 				
-			self.notification.load();
+				if (window.userControlPanel) {
+							
+					window.userControlPanel.updateData();	
+				}
+				
+				if (self.config.notification.enabled) {
+						
+					self.notification = new Notification(self.config.notification, Notification.EVENT, self.events.data.notifications);
+				
+					self.notification.load();	
+				}
+			});
 		}
 		
 		function loadEvents() {
