@@ -1,8 +1,59 @@
-import { util } from "../lib/util.js";
+//import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 
 const DATASOURCE_PARAM_URL = 0;
 const DATASOURCE_PARAM_TOPIC = 1;
+
+function stompConnect(url, topic, onConnected, onMessage) {
+
+	var client = new StompJs.Client({
+		brokerURL: url,
+		connectHeaders: {
+			login: "user",
+			passcode: "user"
+		},
+		reconnectDelay: 5000,
+		heartbeatIncoming: 4000,
+		heartbeatOutgoing: 4000
+	});
+
+	client.onConnect = function(frame) {
+		// Do something, all subscribes must be done is this callback
+		// This is needed because this will be executed after a (re)connect
+
+		if (onConnected) {
+
+			onConnected();
+		}
+
+		this.suscription = client.subscribe(topic, onMessage);
+	};
+
+	client.onWebSocketClose = function(frame) {
+		log.warn("Broker reported close");
+	}
+
+	client.onStompError = function(frame) {
+		// Will be invoked in case of error encountered at Broker
+		// Bad login/passcode typically will cause an error
+		// Complaint brokers will set `message` header with a brief message. Body may contain details.
+		// Compliant brokers will terminate the connection after any error
+		log.error("Broker reported error: " + frame.headers["message"]);
+		log.error("Additional details: " + frame.body);
+	};
+
+	client.activate();
+
+	return client;
+}
+
+function stompDisconnect(client) {
+
+	if (client.connected) {
+
+		client.deactivate();
+	}
+}
 
 class Subscriptor {
 
@@ -97,14 +148,16 @@ class Subscriptor {
 			}
 		}
 
-		this.stompClient = util.stomp.connect(this.url, this.topic, onConnect, onMessage);
+		//this.stompClient = util.stomp.connect(this.url, this.topic, onConnect, onMessage);
+		this.stompClient = stompConnect(this.url, this.topic, onConnect, onMessage);
 	}
 
 	disconnect() {
 		
 		if (this.stompClient && this.stompClient.connected) {
 
-			util.stomp.disconnect(this.stompClient);
+			//util.stomp.disconnect(this.stompClient);
+			stompDisconnect(this.stompClient);
 			
 			//console.log("[StompSubscriptorService] Disconnected from " + this.url + this.topic)
 			log.debug("Disconnected from " + this.url + this.topic);
@@ -141,9 +194,16 @@ export default class StompSubscriptorService extends GenericModule {
 
 	}
 
-	subscribe(dataSource, callback, fields) {
+	subscribe(url, topic, callback, fields) {
 
 		let id = undefined;
+		let dataSource = {
+			dataSourceValues: [
+				{ value: url ? url : appConfig.stompUrl },
+				{ value: topic }
+			]
+		};
+		
 		let subscriptor = this.subscriptors.find(e => {
 
 			return (e.dataSource.dataSourceValues[DATASOURCE_PARAM_URL].value === dataSource.dataSourceValues[DATASOURCE_PARAM_URL].value &&

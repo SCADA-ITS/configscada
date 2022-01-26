@@ -387,7 +387,7 @@ export default class TubeContent {
 				if (self.tubeId) {
 
 					let topic = self.parent.config.topics.tube + "." + self.tubeId;
-					self.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
+					self.idStompSubscriptorTube = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessageTube);
 
 				}
 
@@ -400,7 +400,7 @@ export default class TubeContent {
 					});
 					self.tubeFans.forEach(element => fields[0].values.push(element.id));
 
-					self.idStompSubscriptorFans = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.fan), onMessageFan, fields);
+					self.idStompSubscriptorFans = stompSubscriptorService.subscribe(appConfig.stompUrl, self.parent.config.topics.fan, onMessageFan, fields);
 				}
 			}
 

@@ -10,6 +10,8 @@
 		"enabled": true,
 		"timeoutNotificationMs": 0,
 		"maxInactiveNotifications": 10,
-		"confirmEvents": 100701
+		"confirmEvents": 100701,
+		"level": "INFO",
+		"sound": "event.mp3"
 	}
 }

@@ -473,7 +473,7 @@ export default class EquipmentViewerContent {
 
 				let topic = self.parent.config.topic + "." + self.element.elementType.id + "." + self.element.id;
 
-				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessage);
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
 			}
 
 			function onMessage(data) {

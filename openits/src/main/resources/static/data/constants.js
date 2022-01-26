@@ -154,10 +154,10 @@ const LOG_TYPE_COMMAND_PARAM_COMMENT = "LogTypeParam:3:4";
 
 // DataTypes
 const LogLevel = Object.freeze({
-	TRACE: "TRACE",
-  	DEBUG: "DEBUG",
-  	INFO: "INFO",
-  	WARN: "WARN",
-  	ERROR: "ERROR",
-  	CRITICAL: "CRITICAL"
+	TRACE: { level: 1, color: "#ffc107" },
+  	DEBUG: { level: 2, color: "#ffc107" },
+  	INFO: { level: 3, color: "#ff9800" },
+  	WARN: { level: 4, color: "#ff9800" },
+  	ERROR: { level: 5, color: "#e60000" },
+  	CRITICAL: { level: 6, color: "#cc0000" }
 });

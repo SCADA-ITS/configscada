@@ -62,6 +62,7 @@ export default class DataTable {
 		this.metadata = metadata;
 		this.data = data;
 		this.stomp = {};
+		this.idStompSubscriptor = undefined;
 		this.uid = webix.uid();
 		this.events = events;
 		this.sortedByField = {
@@ -2511,7 +2512,7 @@ export default class DataTable {
 
 					}
 
-					function on_message(message) {
+					function on_message(be, action) {
 
 						function update(gridData) {
 
@@ -2550,7 +2551,7 @@ export default class DataTable {
 											});
 										}
 										
-										console.log (record);
+										//console.log (record);
 									} else {
 
 										grid.add(dataItem);
@@ -2568,7 +2569,12 @@ export default class DataTable {
 							}
 						}
 
-						var data = JSON.parse(JSON.parse(message.body));
+						//var data = JSON.parse(JSON.parse(message.body));
+						
+						let data = {
+							basicElementsVO: [be],
+							action: action
+						}
 
 						eval("adapter." + adapterDataSource.value)(data, update);
 					}
@@ -2587,7 +2593,14 @@ export default class DataTable {
 						params = ".>";
 					}
 
-					this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
+					//this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
+					
+					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+					if (stompSubscriptorService) {
+			
+						this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic + params, on_message);
+					}
 
 
 				}
@@ -2598,10 +2611,20 @@ export default class DataTable {
 
 	disconnect_ws() {
 
-		if (this.stomp != undefined && this.stomp.client != undefined && this.stomp.client.connected) {
+//		if (this.stomp != undefined && this.stomp.client != undefined && this.stomp.client.connected) {
+//
+//			util.stomp.disconnect(this.stomp.client);
+//			this.stomp = {};
+//		}
 
-			util.stomp.disconnect(this.stomp.client);
-			this.stomp = {};
+		if (this.idStompSubscriptor) {
+			
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+			if (stompSubscriptorService) {
+	
+				stompSubscriptorService.unsubscribe(this.idStompSubscriptor);
+			}
 		}
 	}
 

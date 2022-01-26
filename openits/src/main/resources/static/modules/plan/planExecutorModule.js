@@ -130,7 +130,7 @@ export default class PlanExecutor extends GenericModule {
 				if (self.planId) {
 
 					let topic = self.config.topic + "." + self.planId;
-					self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessage);
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
 
 				}
 			}

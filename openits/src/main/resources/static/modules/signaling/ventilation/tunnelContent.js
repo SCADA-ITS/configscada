@@ -94,7 +94,7 @@ export default class TunnelContent {
 						if (self.tunnelId) {
 
 							let topic = self.parent.config.topics.tunnel + "." + self.tunnelId;
-							self.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTunnel);
+							self.idStompSubscriptorTunnel = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessageTunnel);
 						}
 
 					}

@@ -948,7 +948,7 @@ export default class Synoptic extends GenericMap {
 					
 					self.data.forEach(element => fields[0].values.push(element.id));
 					
-					self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(TOPIC_ELEMENTS), onMessage, fields);
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, TOPIC_ELEMENTS, onMessage, fields);
 				}
 			}
 			

@@ -309,6 +309,97 @@ export default class Notification {
 					}
 				);
 			}
+			else if (self.notificationType.id === Notification.EVENT.id) {
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-check", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_CONFIRM"), 
+						tooltip: i18n.t("LBL_CONFIRM_EVENT"),
+						on: {
+							onItemClick() {
+								
+								let eventIds = getSelectedItems().map(e => { return e.notificationId });
+								
+								if (Array.isArray(eventIds) && eventIds.length > 0) {
+									
+									let moduleActionId = self.config.confirmEvents;
+									let module = util.module.getFromModuleAction(moduleActionId);
+									
+									if (module) {
+										
+										let args = { selectedPks: eventIds };
+										let moduleAction = { id: moduleActionId };
+						
+										util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
+									}
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null)).show();
+								}
+							}
+						} 
+					}
+				);
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-volume-off", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_SNOOZE"), 
+						tooltip: i18n.t("LBL_SNOOZE_EVENT"),
+						on: {
+							onItemClick() {
+								
+								let events = getSelectedItems();
+								
+								if (Array.isArray(events) && events.length > 0) {
+									
+									(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_SNOOZE_SELECTED_EVENTS"),
+									
+										// onAccept
+										function() {
+											
+											events.forEach(event => {
+									
+												if (event.sound) {
+													
+													event.snooze = true;
+												}
+											});
+											
+											let list = $$("list-" + self.uid);
+											
+											if (list) {
+												
+												list.refresh();
+												
+												list.unselectAll();
+												
+												list.select(events.map(event => parseInt(event.id)));
+											}
+										}
+									)).show();
+									
+									
+								}
+								else {
+									
+									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_EVENTS"), null, null)).show();
+								}
+							}
+						}
+					}
+				);
+			}
 
 			
 			function getSelectedItems() {
@@ -385,10 +476,12 @@ export default class Notification {
 				
 				let firstLine = obj.alias;
 				let secondLine = util.toLocaleString(obj.created / 1000) + ": " + obj.description;
+				
+				let widthLevel = isNaN(obj.level) ? 75 : 20;
 
 				html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
 						<image class="image" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
-						<div class="level" style="background-color: ${obj.color}">${obj.level}</div>
+						<div class="level" style="width: ${widthLevel}px; background-color: ${obj.color}">${obj.level}</div>
 						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
 						<div class="text">
 					  		<span title="${firstLine}" class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${firstLine} </span>

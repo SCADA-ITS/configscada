@@ -1373,7 +1373,7 @@ export default class TubeContent {
 			if (self.tubeId) {
 
 				let topic = self.parent.config.topics.tube + "." + self.tubeId;
-				self.idStompSubscriptorTube = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessageTube);
+				self.idStompSubscriptorTube = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessageTube);
 			}
 
 			if (Array.isArray(self.tubeCircuits) && self.tubeCircuits.length > 0) {
@@ -1385,7 +1385,7 @@ export default class TubeContent {
 				});
 				self.tubeCircuits.forEach(element => fields[0].values.push(element.id));
 
-				self.idStompSubscriptorCircuits = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.circuits), onMessageCircuit, fields);
+				self.idStompSubscriptorCircuits = stompSubscriptorService.subscribe(appConfig.stompUrl, self.parent.config.topics.circuits, onMessageCircuit, fields);
 			}
 
 			if (Array.isArray(self.tubeDalis) && self.tubeDalis.length > 0) {
@@ -1397,7 +1397,7 @@ export default class TubeContent {
 				});
 				self.tubeDalis.forEach(element => fields[0].values.push(element.id));
 
-				self.idStompSubscriptorDalis = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.parent.config.topics.dalis), onMessageDali, fields);
+				self.idStompSubscriptorDalis = stompSubscriptorService.subscribe(appConfig.stompUrl, self.parent.config.topics.dalis, onMessageDali, fields);
 			}
 		}
 

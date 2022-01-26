@@ -1,9 +1,7 @@
-import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import Notification from "./notification.js";
-import StompSubscriptorService from "./stompSubscriptorService.js";
 
-export default class IncidentService extends GenericModule {
+export default class EventService extends GenericModule {
 
 	constructor(module) {
 
@@ -95,8 +93,8 @@ export default class IncidentService extends GenericModule {
 					notificationId: event.id,
 					level: event.level,
 					notification: "true",
-					color: logSubtype.color ? logSubtype.color : (logType.color ? logType.color : "rgb(255, 153, 0)"),
-					sound: logSubtype.sound ? logSubtype.sound : (logType.sound ? logType.sound : undefined), 
+					color: event.level[event.level] ? LogLevel[event.level].color : "#ff9800",
+					sound: self.config.notification.sound, 
 					img: event.logSubtype.img ? logSubtype.img : (logType.img ? logType.img : undefined),
 					recognized: undefined,
 					created: event.time,
@@ -123,14 +121,7 @@ export default class IncidentService extends GenericModule {
 	
 			if (stompSubscriptorService) {
 	
-				let dataSource = {
-					dataSourceValues: [
-						{ value: appConfig.stompUrl },
-						{ value: self.config.ws.events }
-					]
-				};
-	
-				stompSubscriptorService.subscribe(dataSource, onMessage);
+				stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.ws.events, onMessage);
 			}
 			
 			function onMessage(be, action, timestamp) {
@@ -139,7 +130,7 @@ export default class IncidentService extends GenericModule {
 				
 					let event = be;
 					
-					if (event) {
+					if (event && event.level && LogLevel[event.level].level >= LogLevel[self.config.notification.level].level) {
 						
 						let eventNotification = createNotification(event);
 						

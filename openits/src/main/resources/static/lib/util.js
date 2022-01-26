@@ -823,74 +823,74 @@ export let util = {
 		}
 	},
 
-	stomp: {
-
-		getDataSourceFromTopic(topic) {
-
-			return {
-				dataSourceValues: [
-					{ value: appConfig.stompUrl },
-					{ value: topic }
-				]
-			};
-		},
-
-		connect(url, topic, onConnected, onMessage) {
-
-			var client = new StompJs.Client({
-				brokerURL: url,
-				connectHeaders: {
-					login: "user",
-					passcode: "user"
-				},
-				reconnectDelay: 5000,
-				heartbeatIncoming: 4000,
-				heartbeatOutgoing: 4000
-			});
-
-			client.onConnect = function(frame) {
-				// Do something, all subscribes must be done is this callback
-				// This is needed because this will be executed after a (re)connect
-
-				log.debug("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
-
-				if (onConnected) {
-
-					onConnected();
-				}
-
-				this.suscription = client.subscribe(topic, onMessage);
-			};
-
-			client.onWebSocketClose = function(frame) {
-				log.debug("Broker reported close");
-			}
-
-			client.onStompError = function(frame) {
-				// Will be invoked in case of error encountered at Broker
-				// Bad login/passcode typically will cause an error
-				// Complaint brokers will set `message` header with a brief message. Body may contain details.
-				// Compliant brokers will terminate the connection after any error
-				log.error("Broker reported error: " + frame.headers["message"]);
-				log.error("Additional details: " + frame.body);
-			};
-
-			client.activate();
-
-			return client;
-		},
-
-		disconnect(client) {
-
-			if (client.connected) {
-
-				log.error("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
-
-				client.deactivate();
-			}
-		},
-
-	},
+//	stomp: {
+//
+//		getDataSourceFromTopic(topic) {
+//
+//			return {
+//				dataSourceValues: [
+//					{ value: appConfig.stompUrl },
+//					{ value: topic }
+//				]
+//			};
+//		},
+//
+//		connect(url, topic, onConnected, onMessage) {
+//
+//			var client = new StompJs.Client({
+//				brokerURL: url,
+//				connectHeaders: {
+//					login: "user",
+//					passcode: "user"
+//				},
+//				reconnectDelay: 5000,
+//				heartbeatIncoming: 4000,
+//				heartbeatOutgoing: 4000
+//			});
+//
+//			client.onConnect = function(frame) {
+//				// Do something, all subscribes must be done is this callback
+//				// This is needed because this will be executed after a (re)connect
+//
+//				log.debug("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
+//
+//				if (onConnected) {
+//
+//					onConnected();
+//				}
+//
+//				this.suscription = client.subscribe(topic, onMessage);
+//			};
+//
+//			client.onWebSocketClose = function(frame) {
+//				log.warn("Broker reported close");
+//			}
+//
+//			client.onStompError = function(frame) {
+//				// Will be invoked in case of error encountered at Broker
+//				// Bad login/passcode typically will cause an error
+//				// Complaint brokers will set `message` header with a brief message. Body may contain details.
+//				// Compliant brokers will terminate the connection after any error
+//				log.error("Broker reported error: " + frame.headers["message"]);
+//				log.error("Additional details: " + frame.body);
+//			};
+//
+//			client.activate();
+//
+//			return client;
+//		},
+//
+//		disconnect(client) {
+//
+//			if (client.connected) {
+//
+//				log.error("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
+//
+//				client.deactivate();
+//			}
+//		},
+//
+//	},
 
 	ui: {
 
@@ -1501,7 +1501,7 @@ export let util = {
 								logTypeId: LOG_TYPE_COMMANDS,
 								logSubtypeId: LOG_SUBTYPE_EXECUTE_COMMAND,
 								userId: userData.id,
-								level: LogLevel[commandElementType.logLevel],
+								level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
 								auditLogValues: [
 									{
 										value: commandElementType.labelAlias,

@@ -182,7 +182,7 @@ export default class PasSignalingContent {
 				if (self.element) {
 
 					let topic = self.config.topics.pas + "." + self.element.id;
-					self.idStompSubscriptorPas = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(topic), onMessagePas);
+					self.idStompSubscriptorPas = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessagePas);
 
 				}
 
@@ -195,7 +195,7 @@ export default class PasSignalingContent {
 					});
 					self.zones.forEach(element => fields[0].values.push(element.id));
 
-					self.idStompSubscriptorZones = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topics.zones), onMessageZone, fields);
+					self.idStompSubscriptorZones = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.topics.zones, onMessageZone, fields);
 				}
 			}
 

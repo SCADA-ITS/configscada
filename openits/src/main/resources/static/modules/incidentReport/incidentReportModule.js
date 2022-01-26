@@ -4,6 +4,7 @@ import IncidentReportActionPanel from "./incidentReportActionPanel.js";
 import IncidentReportContent from "./incidentReportContent.js";
 import MessageBox from "../../component/messageBox.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
+import StompSubscriptorService from "../../services/stompSubscriptorService.js";
 
 export default class IncidentReportModule extends GenericModule {
 
@@ -15,6 +16,7 @@ export default class IncidentReportModule extends GenericModule {
 
 		this.incidentReport = undefined;
 		this.stompClient = undefined;
+		this.idStompSubscriptor = undefined;
 		this.requestReport = true;
 		this.disconnectStomp = true;
 		this.closed = false;
@@ -554,13 +556,18 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 
-		function on_message(message) {
+		function on_message(be, action) {
 
-			var data = JSON.parse(JSON.parse(message.body));
+			//var data = JSON.parse(JSON.parse(message.body));
+			
+			let data = {
+				basicElementsVO: [be],
+				action: action
+			}
 
 			self.disconnectStomp = false;
 
-			if (data.action === "UPDATE") {
+			if (action === StompSubscriptorService.ACTION_UPDATE) {
 
 				console.log(data);
 
@@ -568,7 +575,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				self.refresh();
 			}
-			else if (data.action === "DELETE") {
+			else if (action === StompSubscriptorService.ACTION_DELETE) {
 
 				console.log(data);
 
@@ -584,7 +591,7 @@ export default class IncidentReportModule extends GenericModule {
 					self.closed = true;
 					self.refresh();
 				}
-			} else if (data.action === "BLOCK") {
+			} else if (action === StompSubscriptorService.ACTION_BLOCK) {
 
 				console.log(data);
 
@@ -604,22 +611,39 @@ export default class IncidentReportModule extends GenericModule {
 		let url = appConfig.stompUrl;
 		let topic = this.config.topic + "." + this.incidentReportId;
 
-		this.stompClient = util.stomp.connect(url, topic, undefined, on_message);
+		//this.stompClient = util.stomp.connect(url, topic, undefined, on_message);
+		
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+		if (stompSubscriptorService) {
+
+			this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, on_message);
+		}
 	}
 
 	disconnect_ws() {
 
-		if (this.disconnectStomp) {
+//		if (this.disconnectStomp) {
+//
+//			if (this.stompClient && this.stompClient.connected) {
+//
+//				util.stomp.disconnect(this.stompClient);
+//				this.stompClient = undefined;
+//			}
+//		}
+//		else {
+//
+//			this.disconnectStomp = true;
+//		}
 
-			if (this.stompClient && this.stompClient.connected) {
-
-				util.stomp.disconnect(this.stompClient);
-				this.stompClient = undefined;
+		if (this.idStompSubscriptor) {
+			
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+			if (stompSubscriptorService) {
+	
+				stompSubscriptorService.unsubscribe(this.idStompSubscriptor);
 			}
-		}
-		else {
-
-			this.disconnectStomp = true;
 		}
 
 	}

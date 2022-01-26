@@ -81,7 +81,7 @@ export default class IncidentService extends GenericModule {
 	
 				if (stompSubscriptorService) {
 	
-					stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.stats.topic.incidentPendingToConfirm), onMessage);
+					stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.incidentPendingToConfirm, onMessage);
 				}
 	
 				function onMessage(data) {
@@ -155,14 +155,7 @@ export default class IncidentService extends GenericModule {
 	
 			if (stompSubscriptorService) {
 	
-				let dataSource = {
-					dataSourceValues: [
-						{ value: appConfig.stompUrl },
-						{ value: self.config.ws.incidentReports }
-					]
-				};
-	
-				stompSubscriptorService.subscribe(dataSource, onMessage);
+				stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.ws.incidentReports, onMessage);
 			}
 			
 			function onMessage(be, action, timestamp) {

@@ -1410,7 +1410,7 @@ export default class AlarmMonitorModule extends GenericModule {
 					}
 				}
 
-				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(self.config.topic), onMessage, fields);
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.topic, onMessage, fields);
 				
 				timerMessages();
 			}

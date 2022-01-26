@@ -150,14 +150,7 @@ export default class IncidentWizardAction {
 
 			if (stompSubscriptorService) {
 	
-				let dataSource = {
-					dataSourceValues: [
-						{ value: appConfig.stompUrl },
-						{ value: parent.config.ws.incidentReports }
-					]
-				};
-	
-				idStompSubscriptor = stompSubscriptorService.subscribe(dataSource, onMessage);
+				idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, parent.config.ws.incidentReports, onMessage);
 			}
 			
 			let incidentCreationTimeout = setInterval(function() {

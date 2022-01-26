@@ -219,7 +219,7 @@ export default class MapIncident {
 
 			if (stompSubscriptorService) {
 				
-				self.idStompSubscriptor = stompSubscriptorService.subscribe(util.stomp.getDataSourceFromTopic(TOPIC_INCIDENT_REPORTS), onMessage);
+				self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, TOPIC_INCIDENT_REPORTS, onMessage);
 			}
 			
 			function onMessage(be, action) {
