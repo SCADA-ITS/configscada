@@ -118,6 +118,26 @@ export default class PlanExecutor extends GenericModule {
 						}
 					});
 				}
+				else if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
+
+					if (self.data.planStateType) {
+						
+						self.config.actionButtons.forEach(btnConfig => {
+
+							if (btnConfig.visible) {
+	
+								if (self.config.planStateTypes[self.data.planStateType.id].actions.includes(btnConfig.action)) {
+	
+									$$("BTN-" + btnConfig.action + "-" + self.uid).enable();
+	
+								} else {
+	
+									$$("BTN-" + btnConfig.action + "-" + self.uid).disable();
+								}
+							}
+						});	
+					}
+				}
 			}
 		});
 

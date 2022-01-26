@@ -23,15 +23,26 @@ export default class AuditLogModule extends GenericModule {
 
 		if (self.moduleAction.id === self.config.moduleAction.recognize) {
 
-			recognizeAuditLogs();
+			recognizeAuditLogs(true);
+		}
+		else if (self.moduleAction.id === self.config.moduleAction.recognizeNoConfirm) {
+			
+			recognizeAuditLogs(false);
 		}
 
-		function recognizeAuditLogs() {
+		function recognizeAuditLogs(confirm) {
 
 			if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
-				let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), onAccept, null);
-				ms.show();
+				if (!confirm) {
+					
+					onAccept();
+				}
+				else {
+				
+					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), onAccept, null);
+					ms.show();	
+				}
 				
 				function onAccept() {
 					

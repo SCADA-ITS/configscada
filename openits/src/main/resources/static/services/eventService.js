@@ -1,5 +1,6 @@
 import GenericModule from "../modules/genericModule.js";
 import Notification from "./notification.js";
+import StompSubscriptorService from "../services/stompSubscriptorService.js";
 
 export default class EventService extends GenericModule {
 
@@ -88,21 +89,25 @@ export default class EventService extends GenericModule {
 					});
 				}
 				
-				 notification = {
-					id: webix.uid(),
-					notificationId: event.id,
-					level: event.level,
-					notification: "true",
-					color: event.level[event.level] ? LogLevel[event.level].color : "#ff9800",
-					sound: self.config.notification.sound, 
-					img: event.logSubtype.img ? logSubtype.img : (logType.img ? logType.img : undefined),
-					recognized: undefined,
-					created: event.time,
-					updated: timeService.getEpoch(),
-					removed: undefined,
-					alias: (event.logType ? i18n.t(logType.labelAlias) : undefined) + " - " + (logSubtype ? i18n.t(logSubtype.labelAlias) : undefined),
-					description: description
-				};
+				if (logSubtype.filterEventLevel && LogLevel[logSubtype.filterEventLevel] && 
+					event.level && LogLevel[event.level].level >= LogLevel[logSubtype.filterEventLevel].level) {
+				
+					notification = {
+						id: webix.uid(),
+						notificationId: event.id,
+						level: event.level,
+						notification: "true",
+						color: event.level[event.level] ? LogLevel[event.level].color : "#ff9800",
+						sound: self.config.notification.sound, 
+						img: event.logSubtype.img ? logSubtype.img : (logType.img ? logType.img : undefined),
+						recognized: undefined,
+						created: event.time,
+						updated: timeService.getEpoch(),
+						removed: undefined,
+						alias: (event.logType ? i18n.t(logType.labelAlias) : undefined) + " - " + (logSubtype ? i18n.t(logSubtype.labelAlias) : undefined),
+						description: description
+					};		
+				}
 			}
 			
 			return notification;
@@ -110,7 +115,7 @@ export default class EventService extends GenericModule {
 		
 		function loadNotifications() {
 			
-			self.notification = new Notification(self.config.notification, Notification.EVENT);
+			self.notification = new Notification(self.config.notification, Notification.EVENT, self.events.data.notifications);
 				
 			self.notification.load();
 		}
@@ -127,24 +132,45 @@ export default class EventService extends GenericModule {
 			function onMessage(be, action, timestamp) {
 								
 				if (be) {
-				
-					let event = be;
 					
-					if (event && event.level && LogLevel[event.level].level >= LogLevel[self.config.notification.level].level) {
+					let eventNotification = undefined;
+					
+					if (action === StompSubscriptorService.ACTION_CREATE) {
 						
-						let eventNotification = createNotification(event);
+						eventNotification = createNotification(be);
 						
 						if (eventNotification) {
 							
 							self.events.data.notifications.push(eventNotification);
-										
-							self.notification.add(eventNotification);
+								
+							self.notification.add(eventNotification);	
+						}
+					}
+					else if (action === StompSubscriptorService.ACTION_DELETE) {
+						
+						let idxEventNotification = self.events.data.notifications.findIndex(e => e.notificationId === be.id);
+						
+						if (idxEventNotification !== -1) {
+						
+							eventNotification = self.events.data.notifications[idxEventNotification];
 							
-							if (window.userControlPanel) {
-			
-								window.userControlPanel.updateData();	
+							if (eventNotification) {
+								
+								self.notification.remove(eventNotification);
+								
+								self.events.data.notifications.splice(idxEventNotification, 1);
+								
+								if (self.events.data.notifications.length === 0) {
+												
+									self.notification.hide();
+								}						
 							}
 						}
+					}
+					
+					if (window.userControlPanel) {
+	
+						window.userControlPanel.updateData();	
 					}
 				}
 			}

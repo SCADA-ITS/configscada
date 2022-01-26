@@ -9,9 +9,7 @@
 	"notification": {
 		"enabled": true,
 		"timeoutNotificationMs": 0,
-		"maxInactiveNotifications": 10,
-		"confirmEvents": 100701,
-		"level": "INFO",
+		"recognizeNoConfirm": 100702,
 		"sound": "event.mp3"
 	}
 }

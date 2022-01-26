@@ -129,20 +129,6 @@ export default class AlarmService extends GenericModule {
 						}
 					}
 				}
-
-//				util.stomp.connect(appConfig.stompUrl, self.config.ws.active_alarms, null, on_message);
-//
-//				function on_message(message) {
-//
-//					var dat = JSON.parse(JSON.parse(message.body));
-//					
-//					self.alarms.data.stats.activeAlarms = dat.basicElementsVO[0].value;
-//
-//					if (window.alarmControlPanel) { 
-//						
-//						window.alarmControlPanel.updateData();	
-//					}
-//				}
 			});
 		}
 	
@@ -195,25 +181,6 @@ export default class AlarmService extends GenericModule {
 						}	
 					}
 				}
-
-//				util.stomp.connect(appConfig.stompUrl, self.config.ws.no_recognized_alarms, null, on_message);
-//
-//				function on_message(message) {
-//
-//					var dat = JSON.parse(JSON.parse(message.body));
-//					
-//					self.alarms.data.stats.noRecognizedAlarms = dat.basicElementsVO[0].value;
-//					
-//					if (window.alarmControlPanel) {
-//						
-//						window.alarmControlPanel.updateData();	
-//					}
-//					
-//					if (window.userControlPanel) {
-//						
-//						window.userControlPanel.updateData();	
-//					}	
-//				}
 			});
 		}
 	
@@ -256,20 +223,6 @@ export default class AlarmService extends GenericModule {
 						}
 					}
 				}
-
-//				util.stomp.connect(appConfig.stompUrl, self.config.ws.filtered_alarms, null, on_message);
-//
-//				function on_message(message) {
-//
-//					var dat = JSON.parse(JSON.parse(message.body));
-//					
-//					self.alarms.data.stats.filteredAlarms = dat.basicElementsVO[0].value;
-//					
-//					if (window.alarmControlPanel) {
-//						
-//						window.alarmControlPanel.updateData();
-//					}
-//				}
 			});
 		}
 		
