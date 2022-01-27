@@ -53,17 +53,6 @@
 			{
 				"position": 3,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_AFFECTION_STRETCHS",
-				"labelAlias": "LBL_AFFECTION_STRETCHS",
-				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_AFFECTION_STRETCHS",
-				"active": false,
-				"drawFunction": "drawStepAffectionStretch",
-				"validateFunction": "validateStepAffectionStretch",
-				"resetFunction": "resetStepAffectionStretch"
-			},
-			{
-				"position": 4,
-				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER",
 				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_HEADER_STEP_SUMMARY",
 				"labelAlias": "LBL_SUMMARY",
 				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_NO_MAP_STEP_SUMMARY",
@@ -88,17 +77,6 @@
 			},
 			{
 				"position": 2,
-				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
-				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_AFFECTION_STRETCHS",
-				"labelAlias": "LBL_AFFECTION_STRETCHS",
-				"stepLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_STEP_AFFECTION_STRETCHS",
-				"active": false,
-				"drawFunction": "drawStepAffectionStretch",
-				"validateFunction": "validateStepAffectionStretch",
-				"resetFunction": "resetStepAffectionStretch"
-			},
-			{
-				"position": 3,
 				"headerLabel": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER",
 				"headerLabelDescription": "LBL_INCIDENT_WIZARD_FROM_INCIDENT_MAP_HEADER_STEP_SUMMARY",
 				"labelAlias": "LBL_SUMMARY",

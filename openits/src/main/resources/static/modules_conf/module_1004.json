@@ -50,8 +50,8 @@
 		"cctvScenario": 102002,
 		"loadIncidentInMap": 200003
 	},
-	"locationTypes":["LocationType:1", "LocationType:2"],
-	"stretchTypes":["StretchType:1", "StretchType:2"],
+	"locationTypes":["LocationType:2"],
+	"stretchTypes":["StretchType:2"],
 	"taskParamTypes":["ParamType:1"],
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
 	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",

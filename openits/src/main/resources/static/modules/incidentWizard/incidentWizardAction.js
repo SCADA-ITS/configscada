@@ -1,6 +1,7 @@
 import IncidentWizardModule from "./incidentWizardModule.js";
 import { util } from "../../lib/util.js";
 import MessageBox from "../../component/messageBox.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 import StompSubscriptorService from "../../services/stompSubscriptorService.js";
 
 export default class IncidentWizardAction {
@@ -260,6 +261,8 @@ export default class IncidentWizardAction {
 
 				parent.incidentData.stretchId = stretchsSelected[0][IncidentWizardModule.FIELD_STRETCH_ID];
 				parent.incidentData.stretch = stretchsSelected[0][IncidentWizardModule.FIELD_STRETCH_ALIAS];
+				
+				parent.incidentData.affectionStretchsSelected = [stretchsSelected[0]];
 			}
 			else {
 				parent.incidentData.stretchId = undefined;
@@ -282,6 +285,22 @@ export default class IncidentWizardAction {
 			valid = parent.incidentData.stretchId != null && parent.incidentData.locationId != null;
 			
 			onValid(valid);
+
+			if (valid) {
+				
+				getAffectionStretchs(parent.incidentData.locationId,
+					
+					function(affectedStretchs) {
+					
+						if (Array.isArray(affectedStretchs) && affectedStretchs.length > 1) {
+					
+							let message = affectedStretchs.length + " " + i18n.t("LBL_STRETCHS_AVAILABLE_FOR_LOCATION") + " " + parent.incidentData.location + ": " + affectedStretchs.map(e => e.alias).join(",");
+										
+							(new MessageBox(MessageBox.INFO, message, null, null)).show();
+						}
+					}
+				);
+			}
 		}
 		
 		function validateStepLocationFromMap(onValid) {
@@ -309,12 +328,99 @@ export default class IncidentWizardAction {
 				parent.incidentData.userId = parent.mapIncidentTypeSelected.defaultUser.id;
 				parent.incidentData.user = parent.mapIncidentTypeSelected.defaultUser.name;
 				
+				parent.incidentData.affectionStretchsSelected = [parent.mapLocationSelected.stretchs[0]];
+				
+				getAffectionStretchs(parent.incidentData.locationId,
+					
+					function(affectedStretchs) {
+					
+						if (Array.isArray(affectedStretchs) && affectedStretchs.length > 1) {
 							
-				onValid(true);
+							let message = i18n.t("LBL_STRETCH_SELECTED_FOR_LOCATION") + " " + parent.incidentData.stretch + ". " + i18n.t("LBL_CHANGE_STRECH_FOR_SELECTED_LOCATION_QUESTION");
+										
+							(new MessageBox(MessageBox.CONFIRM, message, 
+							
+								// onAccept	
+								function() {
+									
+									let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+	
+									dialogEntity.data = affectedStretchs.map(e => {
+										
+										return {
+											id: e.id,
+											alias: e.alias
+										}
+									});
+									
+									dialogEntity.pkField = "id"
+									dialogEntity.fields = ["alias=LBL_STRECH"];
+									dialogEntity.height = 600;
+									dialogEntity.width = 800;
+									dialogEntity.sortFieldId = 1;
+										
+									let s = new SearchDialogBox(i18n.t("LBL_SELECT_STRECH"), dialogEntity, 
+
+										function(selectedIds) {
+											
+											if (selectedIds && Array.isArray(selectedIds) && selectedIds.length === 1) {
+												
+												let selectedStretch = affectedStretchs.find(e => e.id === selectedIds[0].id);
+												
+												if (selectedStretch) {
+													
+													parent.incidentData.affectionStretchsSelected = [selectedStretch];
+													parent.incidentData.stretchId = selectedStretch.id;
+													parent.incidentData.stretch = selectedStretch.alias;
+												}
+											}
+											
+											onValid(true);
+										}
+									);
+						
+									s.show();
+								},
+								
+								// onCancel
+								function() {
+									
+									onValid(true);
+								}
+							, null)).show();
+						}
+						else {
+							
+							onValid(true);
+						}
+					}
+				);
 			}
 			else {
 				
 				onValid(false);
+			}
+		}
+		
+		function getAffectionStretchs(locationId, onResponse) {
+			
+			if (locationId) {
+				
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByLocation, { id: locationId })).then(
+							
+					function(dat) {
+	
+						if (dat != null) {
+		
+							let stretchs = dat.json();
+							
+							if (stretchs && onResponse) {
+								
+								onResponse(stretchs);	
+							} 
+						}
+					}
+				);
 			}
 		}
 
