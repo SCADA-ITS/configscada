@@ -1496,28 +1496,30 @@ export let util = {
 								
 								commandValues = command.commandElementValues.map(e=> e.value).join(",");
 							}
+							
+							const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
 						
 							let auditLog = {
-								logTypeId: LOG_TYPE_COMMANDS,
-								logSubtypeId: LOG_SUBTYPE_EXECUTE_COMMAND,
+								logTypeId: LOG_TYPE_COMMANDS.id,
+								logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
 								userId: userData.id,
 								level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
 								auditLogValues: [
 									{
 										value: commandElementType.labelAlias,
-										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMAND_TYPE
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_TYPE
 									},
 									{
 										value: element.alias,
-										logTypeParamId: LOG_TYPE_COMMAND_PARAM_ELEMENT
+										logTypeParamId: LOG_TYPE_COMMANDS.params.ELEMENT
 									},
 									{
 										value: commandValues,
-										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMAND_VALUES
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_VALUES
 									},
 									{
 										value: commandElementType.logComment ? "" : undefined,
-										logTypeParamId: LOG_TYPE_COMMAND_PARAM_COMMENT
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMENT
 									}
 								]
 							};

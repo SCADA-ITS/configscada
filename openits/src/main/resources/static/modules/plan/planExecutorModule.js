@@ -5,9 +5,6 @@ import { adapter } from "../../lib/adapter.js";
 
 import { util } from "../../lib/util.js";
 
-const PLAN_ORDER_ACTION_PLAY = "PLAY";
-const PLAN_ORDER_ACTION_CANCEL = "CANCEL";
-
 export default class PlanExecutor extends GenericModule {
 
 	constructor(module, moduleAction, args) {
@@ -253,7 +250,7 @@ export default class PlanExecutor extends GenericModule {
 	
 										function callBackAccept() {
 	
-											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_PLAY));
+											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PlanAction.PLAY));
 											btnConfig.confirm = false;
 	
 											open_module(btnConfig);
@@ -261,7 +258,7 @@ export default class PlanExecutor extends GenericModule {
 	
 										function callBackCancel() {
 	
-											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PLAN_ORDER_ACTION_CANCEL));
+											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PlanAction.CANCEL));
 											btnConfig.confirm = false;
 	
 											open_module(btnConfig);

@@ -9,7 +9,7 @@
 	"notification": {
 		"enabled": true,
 		"timeoutNotificationMs": 0,
-		"recognizeNoConfirm": 100702,
+		"recognizeEvents": 100701,
 		"sound": "event.mp3"
 	}
 }

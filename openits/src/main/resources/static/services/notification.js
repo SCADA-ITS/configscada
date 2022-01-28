@@ -328,12 +328,12 @@ export default class Notification {
 								
 								if (Array.isArray(eventIds) && eventIds.length > 0) {
 									
-									let moduleActionId = self.config.recognizeNoConfirm;
+									let moduleActionId = self.config.recognizeEvents;
 									let module = util.module.getFromModuleAction(moduleActionId);
 									
 									if (module) {
 										
-										let args = { selectedPks: eventIds };
+										let args = { selectedPks: eventIds, confirm: false };
 										let moduleAction = { id: moduleActionId };
 										
 										(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), 

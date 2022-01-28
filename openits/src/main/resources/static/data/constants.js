@@ -144,13 +144,45 @@ const USE_VMS_FAKE_DATA = false;
 const ENDPOINT_SEND_COMMAND = "elements/send_command_element";
 const ENDPOINT_SEND_AUDIT_LOG = "audit_logs/send";
 
-const LOG_TYPE_COMMANDS = "LogType:3";
-const LOG_SUBTYPE_EXECUTE_COMMAND = "LogSubtype:1";
+// DataTypes
+const LogType = Object.freeze({
+	LOG_TYPE_IMS: { 
+		id: "LogType:1",
+	},
+	LOG_TYPE_PLANS: {
+		id: "LogType:2",
+		subtypes: {
+			LOG_SUBTYPE_EXECUTE_PLAN: "LogSubtype:3",
+			LOG_SUBTYPE_STOP_PLAN: "LogSubtype:34",
+			LOG_SUBTYPE_PAUSE_PLAN: "LogSubtype:35"
+		},
+		params: {
+			PLAN: "LogTypeParam:2:1",
+			ARG: "LogTypeParam:2:2",
+			COMMENT: "LogTypeParam:2:3"
+		}
+	},
+	LOG_TYPE_COMMANDS: {
+		id: "LogType:3",
+		subtypes: {
+			LOG_SUBTYPE_EXECUTE_COMMAND: "LogSubtype:1"
+		},
+		params: {
+			COMMAND_TYPE: "LogTypeParam:3:1",
+			ELEMENT: "LogTypeParam:3:2",
+			COMMAND_VALUES: "LogTypeParam:3:3",
+			COMMENT: "LogTypeParam:3:4"
+		}
+	}
+});
 
-const LOG_TYPE_COMMAND_PARAM_COMMAND_TYPE = "LogTypeParam:3:1";
-const LOG_TYPE_COMMAND_PARAM_ELEMENT = "LogTypeParam:3:2";
-const LOG_TYPE_COMMAND_PARAM_COMMAND_VALUES = "LogTypeParam:3:3";
-const LOG_TYPE_COMMAND_PARAM_COMMENT = "LogTypeParam:3:4";
+// Plan actions
+const PlanAction = Object.freeze({
+	PLAY: "PLAY",
+	STOP: "STOP",
+	PAUSE: "PAUSE",
+	CANCEL: "CANCEL"
+});
 
 // DataTypes
 const LogLevel = Object.freeze({
