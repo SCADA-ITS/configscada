@@ -3,6 +3,8 @@ package com.revenga.rits.front.openitsdao.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the vo_entity_enum_types database table.
@@ -19,11 +21,13 @@ public class VoEntityEnumType implements Serializable {
 	private Integer id;
 
 	//bi-directional many-to-one association to VoEntity
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="vo_entity_id")
 	private VoEntity voEntity;
 
 	//bi-directional many-to-one association to VoEnumType
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="enum_type_id")
 	private VoEnumType voEnumType;
