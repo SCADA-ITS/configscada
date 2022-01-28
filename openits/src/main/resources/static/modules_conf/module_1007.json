@@ -1,7 +1,6 @@
 {
 	"moduleAction": {
-		"recognize": 100701,
-		"recognizeNoConfirm": 100702
+		"recognize": 100701
 	},
 	"actionEndpoints": {
 		"recognize": "log_types/send_recognize_audit_logs"
