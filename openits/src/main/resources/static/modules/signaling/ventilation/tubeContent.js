@@ -3,6 +3,7 @@ import { adapter } from "../../../lib/adapter.js";
 import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
+import EquipmentMeasures from "../../../component/equipmentMeasures.js";
 
 export default class TubeContent {
 
@@ -16,8 +17,10 @@ export default class TubeContent {
 		this.selectedTube = undefined;
 		this.fanGrid = undefined;
 		this.tubeFans = undefined;
+		this.tubeEquipmentsNotFans = undefined;
 		this.tubeFansDataTable = undefined;
 		this.infoRegime = undefined;
+		this.equipmentMeasures = undefined;
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorFans = undefined;
@@ -93,7 +96,9 @@ export default class TubeContent {
 							if (Array.isArray(hierarchies)) {
 								
 								let tubeFans = hierarchies.filter(h => h.parent.id === self.selectedTube.id && h.child.elementType.id === self.parent.config.elementTypeFan);
-								
+
+								self.tubeEquipmentsNotFans = hierarchies.filter(h => h.parent.id === self.selectedTube.id && h.child.elementType.id != self.parent.config.elementTypeFan);
+
 								if (Array.isArray(tubeFans)) {
 									
 									let fanIds = tubeFans.map(t => {
@@ -514,17 +519,16 @@ export default class TubeContent {
 					css: { "box-sizing": "border-box" },
 					rows: [
 						getRegime(),
-						getButtons(),
 						{
 							cols: [
 								{
-									rows: getTable()
+									rows: [getContent()]
 								}
 							]
 						},
 						getBottom()
 					]
-				}
+				};
 
 				function getRegime() {
 
@@ -764,51 +768,50 @@ export default class TubeContent {
 					return regime;
 				}
 
-				function getButtons() {
 
-					let buttons;
+				function getContent() {
 
-					buttons = {
-						cols: [
-							{
-								view: "segmented",
-								css: "segment-custom-2",
-								value: "action-panel-switcher-fan" + self.uid,
-								width: 200,
-								options: [
-									{
-										id: "action-panel-switcher-fan" + self.uid,
-										value: "<span>" + i18n.t("LBL_FANS") + "</span>",
-									}
+					let viewContent = {};
 
-								],
-								tooltip: function(obj) {
-
-									if (obj.id === "action-panel-switcher-fan" + self.uid) {
-
-										return i18n.t("LBL_FANS");
-									}
-
-								},
-								on: {
-									onChange(newv, oldv) {
-
-										if (newv === "action-panel-switcher-fan" + self.uid) {
-
-											webix.message("show-all");
-										}
-										else if (newv === "action-panel-switcher-tube" + self.uid) {
-
-											webix.message("show-top");
-										}
-									}
-								}
-							},
-							{}
-						]
+					viewContent = {
+						view: "tabview",
+						id: "content-" + self.uid,
+						css: "auxiliary-tab",
+						tabbar: {
+							multiview: true
+						},
+						multiview: {
+							keepViews: true
+						},
+						animate: false,
+						cells: []
 					};
 
-					return buttons;
+					viewContent.cells.push({
+						header: i18n.t("LBL_FANS"),
+						body: {
+							rows: getTable()
+						}
+					});
+					
+					if (self.parent.config.viewEquipmentMeasures && self.parent.config.viewEquipmentMeasures.enabled === true) {
+
+						let elementsId = [];
+
+						for (let equipment of self.tubeEquipmentsNotFans) {
+
+							elementsId.push(equipment.child.id);
+						}
+
+						self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
+
+						viewContent.cells.push({
+							header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+							body: self.equipmentMeasures.show()
+						});
+					}
+
+					return viewContent;
 				}
 
 				function getTable() {

@@ -4019,3 +4019,16 @@ audio {
 	background-color:rgba(244,245,249);
 	opacity: 0.4;
 }
+
+.equipment-measures-values {
+    animation-name: measure-update;
+  	animation-duration: 1s;
+}
+
+.equipment-measures-pager {
+	border: none !important;
+}
+
+.equipment-measures-pager .webix_el_box .webix_button {
+	color: var(--blue-mid2-opacity-5);
+}

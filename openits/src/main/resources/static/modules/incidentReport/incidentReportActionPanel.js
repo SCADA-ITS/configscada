@@ -100,15 +100,7 @@ export default class IncidentReportActionPanel {
 												
 											} else {
 
-												if (self.confirmIncidentPermissions) {
-
-													return false;
-
-												} else {
-
-													return true;
-												}
-
+												return true;
 											}
 											
 										} else {
@@ -198,25 +190,6 @@ export default class IncidentReportActionPanel {
 														self.parent.restAction(endpoint);														
 													}
 												}
-
-											} else {
-
-												
-												
-												if (this.viewTypeId === VIEW_TYPE_WINDOW) {
-													
-													let container = $$(self.containerId);
-
-													if (container) {
-	
-														container.close();
-													}
-													
-												}
-												else {
-													
-													window.open('', '_self').close();
-												}	
 											}
 										}
 									}

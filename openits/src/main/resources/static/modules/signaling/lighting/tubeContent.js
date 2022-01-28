@@ -3,6 +3,7 @@ import { adapter } from "../../../lib/adapter.js";
 import DataTable from "../../../component/datatable.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
+import EquipmentMeasures from "../../../component/equipmentMeasures.js";
 
 const CIRCUIT_COMMAND_SEND_ON = "SEND_CIRCUIT_ON";
 const CIRCUIT_COMMAND_SEND_OFF = "SEND_CIRCUIT_OFF";
@@ -28,6 +29,7 @@ export default class TubeContent {
 		this.tubeCircuitsDataTable = undefined;
 		this.tubeDalis = undefined;
 		this.tubeDalisDataTable = undefined;
+		this.restTubeEquipments = undefined;
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorCircuits = undefined;
@@ -87,6 +89,8 @@ export default class TubeContent {
 
 				loadDataCircuits();
 				loadDataDalis();
+				
+				self.restTubeEquipments = self.selectedTube.childs.filter(element => (element.elementType.id != self.parent.config.elementTypeIdCircuit) && (element.elementType.id != self.parent.config.elementTypeIdDali));
 			}
 
 			self.connectWS();
@@ -374,24 +378,17 @@ export default class TubeContent {
 			css: { "box-sizing": "border-box", "border": "1px solid #dadee0 !important" },
 			rows: [
 				getRegime(),
-				getButtons(),
 				{
 					cols: [
 						{
-							id: "view-content-body-circuit-dt-" + self.parent.uid,
-							rows: [getCircuitsTable()],
-							hidden: (self.selectedTable != "action-panel-switcher-circuit" + self.parent.uid)
-						},
-						{
-							id: "view-content-body-dali-dt-" + self.parent.uid,
-							rows: [getDalisTable()],
-							hidden: (self.selectedTable != "action-panel-switcher-dali" + self.parent.uid)
+							rows: [getContent()]
 						}
 					]
 				},
-				getBottom(),
+				getBottom()
 			]
-		}
+		};
+		
 
 		function getRegime() {
 
@@ -641,63 +638,58 @@ export default class TubeContent {
 
 			return regime;
 		}
+		
+		function getContent() {
 
-		function getButtons() {
+			let viewContent = {};
 
-			let buttons;
-
-			buttons = {
-				cols: [
-					{
-						view: "segmented",
-						css: "segment-custom-2",
-						width: 300,
-						value: self.selectedTable,
-						tooltip: true,
-						options: [
-							{
-								id: "action-panel-switcher-circuit" + self.parent.uid,
-								value: "<span>" + i18n.t("LBL_CIRCUITS") + "</span>",
-							},
-							{
-								id: "action-panel-switcher-dali" + self.parent.uid,
-								value: "<span>" + i18n.t("LBL_DALIS") + "</span>",
-							}
-						],
-						on: {
-							onChange(newv, oldv) {
-
-								self.selectedTable = newv;
-
-								if (newv === "action-panel-switcher-circuit" + self.parent.uid) {
-
-									$$("view-content-body-dali-dt-" + self.parent.uid).hide();
-									$$("view-content-body-circuit-dt-" + self.parent.uid).show();
-									
-									if (self.tubeCircuitsDataTable) {
-										
-										$$("view-content-button-change-circuits-status-" + self.parent.uid).show();	
-									}
-									
-								}
-								else if (newv === "action-panel-switcher-dali" + self.parent.uid) {
-
-									$$("view-content-body-circuit-dt-" + self.parent.uid).hide();
-									$$("view-content-body-dali-dt-" + self.parent.uid).show();
-									
-									if (self.tubeCircuitsDataTable) {
-										
-										$$("view-content-button-change-circuits-status-" + self.parent.uid).hide();	
-									}
-								}
-							}
-						}
-					},
-					{}
-				]
+			viewContent = {
+				view: "tabview",
+				id: "content-" + self.uid,
+				css: "auxiliary-tab",
+				tabbar: {
+					multiview: true
+				},
+				multiview: {
+					keepViews: true
+				},
+				animate: false,
+				cells: []
 			};
 
-			return buttons;
+			viewContent.cells.push(
+				{
+					header: i18n.t("LBL_CIRCUITS"),
+					body: {
+						rows: getCircuitsTable()
+					}
+				},
+				{
+					header: i18n.t("LBL_DALIS"),
+					body: {
+						rows: getDalisTable()
+					}					
+				}
+			);
+
+			if (self.parent.config.viewEquipmentMeasures && self.parent.config.viewEquipmentMeasures.enabled === true) {
+
+				let elementsId = [];
+			
+				for (let equipment of self.restTubeEquipments) {
+
+					elementsId.push(equipment.id);
+				}
+
+				self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
+
+				viewContent.cells.push({
+					header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+					body: self.equipmentMeasures.show()
+				});
+			}
+
+			return viewContent;
 		}
 
 		function getCircuitsTable() {
@@ -971,14 +963,12 @@ export default class TubeContent {
 	
 				self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
 				
-				viewCircuits = { rows: self.tubeCircuitsDataTable.getView() };
+				viewCircuits = self.tubeCircuitsDataTable.getView();
 			}
 			else {
 				
 				viewCircuits = util.ui.getViewNoData();
 			}
-
-			
 
 			return viewCircuits;
 		}
@@ -1171,7 +1161,7 @@ export default class TubeContent {
 	
 				self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
 				
-				viewDalis = { rows: self.tubeDalisDataTable.getView() };
+				viewDalis = self.tubeDalisDataTable.getView();
 	
 				function changeRegime(newRegimeId, callbackCloseDialog) {
 	

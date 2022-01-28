@@ -29,6 +29,14 @@
 	"elementTypeTunnel": "ElementType:2001",
 	"elementTypeTube": "ElementType:2000",
 	"elementTypeFan": "ElementType:9",
+	"viewEquipmentMeasures": {
+		"enabled": true,
+		"options": {
+			"combo": true,
+			"width": 320,
+			"rows": 1
+		}
+	},
 	"ventilationStates":{
 		"ElementTypeState:2001:0" :{
 			"actions": []

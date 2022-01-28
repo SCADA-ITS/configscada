@@ -29,6 +29,14 @@
 	"elementTypeTube" :"ElementType:2000",
 	"elementTypeIdCircuit": "ElementType:84",
 	"elementTypeIdDali": "ElementType:85",
+	"viewEquipmentMeasures": {
+		"enabled": true,
+		"options": {
+			"combo": true,
+			"width": 320,
+			"rows": 1
+		}
+	},
 	"params":{
 		"lightingRegimeConfig": "ElementTypeParam:2000:1:2",
 		"currentRegime": "ElementTypeParam:2000:2:4", 
