@@ -195,7 +195,7 @@ class MeasureGroup {
 	
 		if ($$("grid-measures-" + this.id + "-" + this.uid)) {
 			
-			this.carousel = this.getViewCarousel();
+			//this.carousel = this.getViewCarousel();
 		
 			webix.ui(this.getView(), $$("grid-measures-" + this.id + "-" + this.uid));	
 		}
@@ -500,21 +500,31 @@ export default class EquipmentViewerInfoMeasure {
 	}
 	
 	resizeCarousel() {
-		
-		let measureCarouselLength = $$(VIEW_INFO_MEASURE_SEGMENTED + "-" + this.uid).config.options.length;
-		let measuresGroup = $$(VIEW_INFO_MEASURE_CAROUSEL + "-" + measureCarouselLength + "-" + this.uid);
-		
-		if (measuresGroup) {
-			
-			let colsGroup = $$(measuresGroup).config.cols;
-			let colsGroupWidth = $$(measuresGroup).$width;
-	
-			for (let group of colsGroup) {
-	
-				let carousel = $$(group.id);
-				carousel.define("width", colsGroupWidth);
-				carousel.resize();
-			}	
+
+		let colsGroupWidth = undefined;
+
+		if (Array.isArray(this.measuresGroups) && this.measuresGroups.length > 0) {
+
+			this.measuresGroups.forEach(measuresGroup => {
+
+				if (measuresGroup) {
+
+					let measureGroupView = $$(VIEW_INFO_MEASURE_CAROUSEL + "-" + measuresGroup.id + "-" + this.uid);
+
+					if (measureGroupView) {
+
+						let colsGroup = measureGroupView.config.cols;
+						colsGroupWidth = (colsGroupWidth != undefined) ? colsGroupWidth : measureGroupView.$width;
+
+						for (let group of colsGroup) {
+
+							let carousel = $$(group.id);
+							carousel.define("width", colsGroupWidth);
+							carousel.resize();
+						}
+					}
+				}
+			});
 		}
 	}
 

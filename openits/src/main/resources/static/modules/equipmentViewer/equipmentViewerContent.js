@@ -390,7 +390,12 @@ export default class EquipmentViewerContent {
 			}
 
 			contentTabs.removeView("tab2remove" + self.uid);
-			self.equipmentViewerInfo.resizeMeasures();	
+			
+			if(self.equipmentViewerInfo){
+				
+				self.equipmentViewerInfo.resizeMeasures();		
+			}
+			
 		
 			connectWS();
 
