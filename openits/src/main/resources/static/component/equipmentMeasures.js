@@ -329,6 +329,7 @@ export default class EquipmentMeasures {
 													id: "tableContent-select-" + element.id + "-" + self.uid,
 													height: 28,
 													view: "richselect",
+													css: "equipment-measures-combo",
 													value: selectOptions[0],
 													options: selectOptions,
 													hidden: (self.combo) ? false : true,

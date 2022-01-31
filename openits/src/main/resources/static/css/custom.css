@@ -4025,6 +4025,14 @@ audio {
   	animation-duration: 1s;
 }
 
+.equipment-measures-combo .webix_el_box {
+	padding: 3px 0px !important;
+}
+
+.equipment-measures-combo .webix_inp_static {
+	width: 100% !important;
+}
+
 .equipment-measures-pager {
 	border: none !important;
 }
