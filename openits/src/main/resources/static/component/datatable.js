@@ -345,8 +345,9 @@ export default class DataTable {
 										}
 									}
 									else {
-	
-										return data[field.sourceField];
+
+										return (data[field.sourceField].value != undefined) ? data[field.sourceField].value : data[field.sourceField]; 	
+										
 									}
 								}
 							};
@@ -2663,6 +2664,23 @@ export default class DataTable {
 				}
 			}
 		}
+	}
+	
+	selectByIndex(idx) {
+		
+		let grid = $$("dt-" + this.uid);
+		
+		if (grid && idx > -1) {
+			
+			let id = grid.getIdByIndex(idx);
+			
+			if (id) {
+				
+				this.select(id);
+				grid.showItem(id);	
+				grid.refresh();	
+			}
+		}		
 	}
 	
 	unselectAll() {
