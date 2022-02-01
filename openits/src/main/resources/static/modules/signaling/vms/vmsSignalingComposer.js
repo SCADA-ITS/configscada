@@ -6,6 +6,10 @@ import VmsSignalingGraphicEditor from "./vmsSignalingGraphicEditor.js";
 import OptionDialogBox from "../../../component/optionDialogBox.js";
 import MessageBox from "../../../component/messageBox.js";
 
+const VMS_MAX_WIDTH = 625
+const VMS_MAX_HEIGHT = 250
+
+
 export default class VmsSignalingComposer {
 	
 	static get WIN() { return 1 }
@@ -61,20 +65,20 @@ export default class VmsSignalingComposer {
 		let view = {
 			id: "vms-composer-" + self.uid,
 			//height: !self.initialJsonData ? 250 : 100,
-			height: 250,
-			width: 625,
+			height: VMS_MAX_HEIGHT,
+			width: VMS_MAX_WIDTH,
 			borderless: true,
 			template: function() {
 					
 				return `<div>
 							<!--<svg id=${"vms-composer-svg-" + self.uid} style="display: none"></svg>-->
-							<svg id=${"vms-composer-svg-" + self.uid} height=250px"></svg>
+							<svg id=${"vms-composer-svg-" + self.uid} height=${VMS_MAX_HEIGHT}px"></svg>
 						</div>`
 			},
 			on: {
 				onAfterRender: function() {
 
-					drawGraphicIcon(this.$width, this.$height);
+					drawGraphicIcon(VMS_MAX_WIDTH, VMS_MAX_HEIGHT);
 				},
 				onDestruct: function() {
 		
