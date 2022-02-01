@@ -61,6 +61,8 @@ export default class Synoptic extends GenericMap {
 						onAfterRender: function() {
 		
 							drawSynoptic();
+							
+							window.addEventListener("resize", callbackOnResize);
 						},
 						onDestruct: function() {
 		
@@ -71,7 +73,9 @@ export default class Synoptic extends GenericMap {
 								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
 							}	
 							
-							stop();				
+							stop();
+							
+							window.removeEventListener("resize", callbackOnResize);				
 						}
 					}
 				},
@@ -183,9 +187,6 @@ export default class Synoptic extends GenericMap {
 				
 					onBeforeLoadGraphicIcon();
 				}
-				
-				onResize();
-			
 			});
 			
 			function onMouseUp(e) {
@@ -195,28 +196,25 @@ export default class Synoptic extends GenericMap {
 					unselectAll();
 				}
 			}
-			
-			function onResize(e) {
+		}
+		
+		function callbackOnResize() {
+				
+			if ($$(self.uid) && $$("syn-" + self.uid)) {
 
-				window.addEventListener("resize", function(obj) {
+				let containerWidth = $$(self.uid).$width;
+				let containerHeight = $$(self.uid).$height;
 
-					if ($$(self.uid) && $$("syn-" + self.uid)) {
+				let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
 
-						let containerWidth = $$(self.uid).$width;
-						let containerHeight = $$(self.uid).$height;
+				if (synopticNode && self.panZoomTrigger) {
 
-						let synopticNode = $$("syn-" + self.uid).getNode().querySelector("#" + "svg-syn-" + self.uid);
+					synopticNode.style.width = containerWidth;
+					synopticNode.style.height = containerHeight;
 
-						if (synopticNode && self.panZoomTrigger) {
-
-							synopticNode.style.width = containerWidth;
-							synopticNode.style.height = containerHeight;
-
-							self.panZoomTrigger.resize();
-							self.panZoomTrigger.reset();
-						}
-					}
-				});
+					self.panZoomTrigger.resize();
+					self.panZoomTrigger.reset();
+				}
 			}
 		}
 		

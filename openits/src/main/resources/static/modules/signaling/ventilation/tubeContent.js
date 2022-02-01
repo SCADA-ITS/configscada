@@ -139,6 +139,11 @@ export default class TubeContent {
 																self.tubeFansDataTable.disable();
 															}
 														}
+														
+														if(self.equipmentMeasures){
+															
+															self.equipmentMeasures.loadData();
+														}
 									
 														connectWS();
 														
@@ -807,7 +812,7 @@ export default class TubeContent {
 
 						viewContent.cells.push({
 							header: i18n.t("LBL_EQUIPMENT_MEASURES"),
-							body: self.equipmentMeasures.show()
+							body: self.equipmentMeasures.getView()
 						});
 					}
 

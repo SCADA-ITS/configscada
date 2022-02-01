@@ -30,6 +30,7 @@ export default class TubeContent {
 		this.tubeDalis = undefined;
 		this.tubeDalisDataTable = undefined;
 		this.restTubeEquipments = undefined;
+		this.equipmentMeasures = undefined;
 
 		this.idStompSubscriptorTube = undefined;
 		this.idStompSubscriptorCircuits = undefined;
@@ -208,6 +209,11 @@ export default class TubeContent {
 				}
 			}
 
+			if(self.equipmentMeasures){
+				
+				self.equipmentMeasures.loadData();
+			}
+			
 		});
 	}
 
@@ -685,7 +691,7 @@ export default class TubeContent {
 
 				viewContent.cells.push({
 					header: i18n.t("LBL_EQUIPMENT_MEASURES"),
-					body: self.equipmentMeasures.show()
+					body: self.equipmentMeasures.getView()
 				});
 			}
 

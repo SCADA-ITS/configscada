@@ -96,6 +96,8 @@ export default class OpenMap extends GenericMap {
 								loadGraphicIcons();
 								loadIncidents();	
 							}
+							
+							window.addEventListener("resize", callbackOnResize);
 						},
 						onDestruct: function() {
 		
@@ -111,7 +113,9 @@ export default class OpenMap extends GenericMap {
 								self.mapIncident.unload();
 							}	
 							
-							stop();				
+							stop();
+							
+							window.removeEventListener("resize", callbackOnResize);			
 						}
 					}
 				},
@@ -367,28 +371,22 @@ export default class OpenMap extends GenericMap {
 				map.updateSize();
 			}, null, null, 1000);
 			
-			onResize();
-			
 			return map;
 		}
 		
-		
-		function onResize() {
+		function callbackOnResize() {
+			
+			if ($$(self.uid) && $$("view-map-" + self.uid)) {
 
-			window.addEventListener("resize", function(obj) {
+				let containerHeight = $$(self.uid).$height;
+				let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
 
-				if ($$(self.uid) && $$("view-map-" + self.uid)) {
+				if (mapNode) {
 
-					let containerHeight = $$(self.uid).$height;
-					let mapNode = $$("view-map-" + self.uid).getNode().querySelector("#map-" + self.uid);
-
-					if (mapNode) {
-
-						mapNode.style.height = containerHeight + "px";
-						self.olMap.updateSize();
-					}
+					mapNode.style.height = containerHeight + "px";
+					self.olMap.updateSize();
 				}
-			});
+			}	
 		}
 		
 		function darkMode() {
