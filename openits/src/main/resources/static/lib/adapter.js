@@ -244,7 +244,8 @@ export let adapter = {
 						itemOutput.alarmConfigId = e.alarmConfig.id;
 						itemOutput.alarmConfigLabelAlias = i18n.t(alarmConfig.labelAlias);
 						itemOutput.alarmLevelId = alarmLevel.id;
-						itemOutput.alarmLevelAlias = alarmLevel.labelAlias;
+						itemOutput.alarmLevelAlias = alarmLevel.alias;
+						itemOutput.alarmLevelLabelAlias = alarmLevel.labelAlias;
 
 						if (e.filteredUntil) {
 
