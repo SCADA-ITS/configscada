@@ -1639,13 +1639,36 @@ export default class DataTable {
 			// gets filter values
 			self.metadata.gridFields.forEach(gridField => {
 
-				if (datatable.getFilter(gridField.sourceField) && datatable.getFilter(gridField.sourceField).value) {
+				if (datatable.getFilter(gridField.sourceField)) {
 					
-					filteredValues.push({
+					let filteredValue = {
+						
 						sourceField: gridField.sourceField,
-						value: datatable.getFilter(gridField.sourceField).value.toLowerCase()
-					});
-				}
+						dataType: gridField.gridFieldDataType.id,
+						value: undefined,
+						start: undefined,
+						end: undefined
+					}
+					
+					if (gridField.gridFieldDataType.id != DataType.DATE.value) {
+						
+						if (datatable.getFilter(gridField.sourceField).value) {
+							
+							filteredValue.value = datatable.getFilter(gridField.sourceField).value.toLowerCase();
+							filteredValues.push(filteredValue);	
+						}
+					}
+					else {
+						
+						if (datatable.getFilter(gridField.sourceField).config.value.start) {
+							
+							filteredValue.start = datatable.getFilter(gridField.sourceField).config.value.start;
+							filteredValue.end = datatable.getFilter(gridField.sourceField).config.value.end;
+							
+							filteredValues.push(filteredValue);	
+						}
+					}
+				} 
 			});
 			
 			// unfilters the table if values were not selected and init filters not exists
@@ -1662,8 +1685,25 @@ export default class DataTable {
 					for (let i = 0; res && i < filteredValues.length; i++) {
 	
 						let filteredValue = filteredValues[i];
-	
-						res &= ((obj[filteredValue.sourceField]).toLowerCase().indexOf(filteredValue.value) !== -1);
+						
+						if (filteredValue.dataType != DataType.DATE.value) {
+							
+							res &= ((obj[filteredValue.sourceField]).toLowerCase().indexOf(filteredValue.value) !== -1);	
+						}
+						else {
+							
+							if (filteredValue.start) {
+								
+								if (filteredValue.end && filteredValue.end > filteredValue.start) {
+									
+									res &= obj[filteredValue.sourceField] >= filteredValue.start && obj[filteredValue.sourceField] < filteredValue.end;  
+								}
+								else {
+									
+									res &= obj[filteredValue.sourceField] >= filteredValue.start;
+								}
+							}
+						}
 					}
 	
 					res = res & checkInitFilter(obj);
@@ -1695,14 +1735,14 @@ export default class DataTable {
 			
 			function check_search_filter(row) {
 		
-				let txtSearch = $$("txtSearch-" + self.uid);
+				let txtS = $$("txtSearch-" + self.uid);
 				let grid = $$("dt-" + self.uid);
 				
 				let res = false;
 				
-				if (grid && txtSearch && txtSearch.getValue()) {
+				if (grid && txtS && txtS.getValue()) {
 					
-					let value = txtSearch.getValue().toLowerCase();
+					let value = txtS.getValue().toLowerCase();
 									
 					grid.config.columns.forEach(col => {
 						
