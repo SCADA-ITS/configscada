@@ -304,7 +304,7 @@ export default class DataTable {
 											value = obj[field.sourceField];	
 										}
 										
-										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == value);
+										let gridFieldIcon = field.gridFieldIcons.find(e => e.value == value || i18n.t(e.labelValue) == value);
 	
 										if (gridFieldIcon) {
 	
@@ -333,7 +333,7 @@ export default class DataTable {
 	
 									} else if (Array.isArray(field.gridFieldIcons) && field.gridFieldIcons.length > 0) {
 	
-										let label = field.gridFieldIcons.find(e => e.value === data[field.sourceField]);
+										let label = field.gridFieldIcons.find(e => e.value == data[field.sourceField] || i18n.t(e.labelValue) == data[field.sourceField]);
 	
 										if (label != undefined) {
 											//let tool = label.labelValue != "" && label.labelValue ? label.labelValue : data[field.sourceField];
