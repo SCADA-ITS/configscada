@@ -1409,7 +1409,7 @@ export let util = {
 				
 				auditLogs = getAuditLogs();
 				
-				if (showCommentDialog) {
+				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
 					
 					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
 

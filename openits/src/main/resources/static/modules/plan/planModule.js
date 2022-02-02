@@ -62,7 +62,7 @@ export default class PlanModule extends GenericModule {
 						
 						auditLogs = getAuditLogs();
 					
-						if (showCommentDialog) {
+						if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
 							
 							(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
 		
@@ -122,39 +122,42 @@ export default class PlanModule extends GenericModule {
 						
 						let aLogs = [];
 						
-						plans.forEach(plan => {
+						if (self.config.logLevel && LogLevel[self.config.logLevel]) {
 							
-							let logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_EXECUTE_PLAN;
+							plans.forEach(plan => {
 							
-							if (plan.action == PlanAction.STOP) {
+								let logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_EXECUTE_PLAN;
 								
-								logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_STOP_PLAN;
-							}
-							else if (plan.action == PlanAction.PAUSE) {
+								if (plan.action == PlanAction.STOP) {
+									
+									logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_STOP_PLAN;
+								}
+								else if (plan.action == PlanAction.PAUSE) {
+									
+									logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_EXECUTE_PAUSE;
+								}
 								
-								logSubtypeId = LOG_TYPE_PLANS.subtypes.LOG_SUBTYPE_EXECUTE_PAUSE;
-							}
-							
-							let auditLog = {
-								logTypeId: LOG_TYPE_PLANS.id,
-								logSubtypeId: logSubtypeId,
-								userId: userData.id,
-								level: LogLevel[self.config.logLevel] ? self.config.logLevel : undefined,
-								auditLogValues: [
-									{
-										value: plan.alias,
-										logTypeParamId: LOG_TYPE_PLANS.params.PLAN
-									},
-									{
-										value: "",
-										logTypeParamId: LOG_TYPE_PLANS.params.COMMENT
-									}
-								]
-							};
-							
-							aLogs.push(auditLog);
-							
-						});
+								let auditLog = {
+									logTypeId: LOG_TYPE_PLANS.id,
+									logSubtypeId: logSubtypeId,
+									userId: userData.id,
+									level: LogLevel[self.config.logLevel] ? self.config.logLevel : undefined,
+									auditLogValues: [
+										{
+											value: plan.alias,
+											logTypeParamId: LOG_TYPE_PLANS.params.PLAN
+										},
+										{
+											value: "",
+											logTypeParamId: LOG_TYPE_PLANS.params.COMMENT
+										}
+									]
+								};
+								
+								aLogs.push(auditLog);
+								
+							});	
+						}
 						
 						return aLogs;
 					}
