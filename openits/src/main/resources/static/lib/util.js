@@ -1419,7 +1419,7 @@ export let util = {
 							
 							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
 								
-								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LOG_TYPE_COMMAND_PARAM_COMMENT);
+								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
 								
 								if (auditLogValueComment) {
 									
@@ -1650,6 +1650,131 @@ export let util = {
 	},
 
 	tree: {
+		
+		getNodesOld(items, relationships, remapedFields, translate) {
+
+			const CHILD_ID_IDX = 1;
+
+			let nodes = [];
+			let mapNodes = new Map();
+			
+			relationships.sort(function(a, b) {
+				
+				let idParentA = a[remapedFields.parentNodeId];
+				let idParentB = b[remapedFields.parentNodeId];
+				
+				let idChildA = a[remapedFields.childNodeId];
+				let idChildB = b[remapedFields.childNodeId];
+				
+				idParentA = parseInt(idParentA.substring(idParentA.indexOf(":") + 1));
+				idParentB = parseInt(idParentB.substring(idParentB.indexOf(":") + 1));
+				
+				idChildA = parseInt(idChildA.substring(idChildA.indexOf(":") + 1));
+				idChildB = parseInt(idChildB.substring(idChildB.indexOf(":") + 1));
+				
+				let x = parseInt(('0000000000'+idParentA).slice(-10) + ('0000000000'+idChildA).slice(-10));
+				let y = parseInt(('0000000000'+idParentB).slice(-10) + ('0000000000'+idChildB).slice(-10));
+				
+				return (x > y) ? 1 : ((y > x) ? -1 : 0);
+			});
+			
+			if (Array.isArray(items) && items.length > 0) {
+
+				items.forEach(item => {
+
+					let node = {
+						id: item.id + "_" + item.id,
+						value: item.label,
+						id_: item.id,
+						data: [],
+						params: {},
+						props: {
+							translate: translate,
+							folder: item.folder ? item.folder : false
+						}
+					};
+
+					mapNodes.set(node.id, node);
+				});
+
+				let hierarchies = relationships.map(e => {
+
+					let hierarchy = undefined;
+					let parentNodeId = e[remapedFields.parentNodeId] + "_" + e[remapedFields.parentNodeId];
+					let childNodeId = e[remapedFields.childNodeId] + "_" + e[remapedFields.childNodeId];
+
+					if (parentNodeId && childNodeId) {
+
+						hierarchy = {
+							id: e.id,
+							parentNode: mapNodes.get(parentNodeId),
+							childNode: mapNodes.get(childNodeId)
+						};
+					}
+
+					return hierarchy;
+				});
+				
+				
+
+				let childNodeIds = fillNodes(hierarchies);
+
+				childNodeIds.forEach(childNodeId => {
+
+					mapNodes.delete(childNodeId);
+				});
+
+				mapNodes.forEach(function(value) { // Full params => function(value, key, map) 
+
+					nodes.push(value);
+				});
+			}
+
+			function fillNodes(hierarchies) {
+
+				let childNodeIds = [];
+
+				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
+
+					hierarchies.forEach(hierarchy => {
+
+						let parentNode = hierarchy.parentNode;
+						let childNode = hierarchy.childNode;
+
+						if (parentNode && childNode) {
+
+							let parentNodeId = parentNode.id;
+							let childNodeId = childNode.id;
+
+							if (parentNodeId && childNodeId) {
+
+								let parentTreeData = mapNodes.get(parentNodeId);
+								let childTreeData = mapNodes.get(childNodeId);
+
+								if (parentTreeData && childTreeData) {
+
+									parentTreeData.props.folder = true;
+
+									let newChild = webix.copy(childTreeData);
+
+									newChild.id = parentTreeData.id.split("_")[CHILD_ID_IDX] + "_" + childTreeData.id.split("_")[CHILD_ID_IDX];
+									parentTreeData.data.push(newChild);
+
+									mapNodes.set(childNodeId, newChild)
+
+									childNodeIds.push(childNodeId);
+								}
+							}
+						}
+					});
+				}
+
+				return childNodeIds;
+			}
+
+			return nodes;
+		},
+
 
 		getNodes(items, relationships, remapedFields, translate) {
 

@@ -144,7 +144,7 @@ export default class PlanModule extends GenericModule {
 									level: LogLevel[self.config.logLevel] ? self.config.logLevel : undefined,
 									auditLogValues: [
 										{
-											value: plan.alias,
+											value: plan.planAlias,
 											logTypeParamId: LOG_TYPE_PLANS.params.PLAN
 										},
 										{
