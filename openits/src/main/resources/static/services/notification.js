@@ -470,6 +470,46 @@ export default class Notification {
 					}
 				},
 				data: self.notifications,
+				tooltip: function(obj) {
+
+					let textFirstLineWidth;
+					let textSecondLineWidth;
+					let nodeFirstLine = $$("list-" + self.uid).getNode().querySelector(".first-line");
+					let nodeSecondLine = $$("list-" + self.uid).getNode().querySelector(".second-line");
+					let allowedSpace = nodeFirstLine.clientWidth;
+
+					if (nodeFirstLine != null) {
+
+						let elementStyle = window.getComputedStyle(nodeFirstLine);
+						let fontSize = elementStyle.getPropertyValue('font-size');
+						let fontFamily = elementStyle.getPropertyValue('font-family');
+						let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+						textFirstLineWidth = util.ui.calculateTextWidth(nodeFirstLine.innerHTML, fontFamily, fontSize, letterSpacing);
+					}
+
+					if (nodeSecondLine != null) {
+
+						let elementStyle = window.getComputedStyle(nodeSecondLine);
+						let fontSize = elementStyle.getPropertyValue('font-size');
+						let fontFamily = elementStyle.getPropertyValue('font-family');
+						let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+						textSecondLineWidth = util.ui.calculateTextWidth(nodeSecondLine.innerHTML, fontFamily, fontSize, letterSpacing);
+					}
+
+					if (textFirstLineWidth > allowedSpace || textSecondLineWidth > allowedSpace) {
+
+						let secondLine = util.toLocaleString(obj.created / 1000) + ": " + obj.description;
+
+
+						return `${obj.alias}:<br>${secondLine}`;
+
+					} else {
+
+						return "";
+					}
+				},
 				on: {
 					onAfterSelect: function() {
 						
@@ -513,8 +553,8 @@ export default class Notification {
 						<div class="level" style="width: ${widthLevel}px; background-color: ${obj.color}">${obj.level}</div>
 						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
 						<div class="text">
-					  		<span title="${firstLine}" class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${firstLine} </span>
-				  			<span title="${secondLine}" class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${secondLine}</span>
+					  		<span class="first-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}" >${firstLine} </span>
+				  			<span class="second-line" style="${obj.recognized ? 'text-decoration:line-through;color:rgb(146, 171, 207);' : ''}">${secondLine}</span>
 						</div>`;
 				
 				return html;

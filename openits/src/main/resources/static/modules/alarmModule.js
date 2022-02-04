@@ -928,7 +928,6 @@ export default class AlarmModule extends GenericModule {
 
 
 		let labelAlarm = (this.alarmConfig.labelDescription) ? i18n.t(this.alarmConfig.labelDescription) : this.alarmConfigLabelAlias;
-		const MAX_LENGTH = 50;
 		
 		let container = $$(self.args.containerId);
 		let ellipsis = undefined;
@@ -1034,18 +1033,36 @@ export default class AlarmModule extends GenericModule {
 										},
 										{ height: 24 },
 										{
+											id: "label-alarm-" + self.uid,
 											view: "label",
-											tooltip: function(obj){
-												if (labelAlarm.length > MAX_LENGTH){
-													return labelAlarm;	
-													
-													} else {
-														return "";
-													}
-											},
 											label: `<span id="labelAlarm" class="alarm-view-text" ${ellipsis}>${labelAlarm}</span>`,
 											align: "left",
-											height: 20
+											height: 20,
+											tooltip: function(obj) {
+
+												let textWidth;
+												let nodeValue = $$("label-alarm-" + self.uid).getNode().querySelector("#labelAlarm");
+												let allowedSpace = $$("label-alarm-" + self.uid).getNode().clientWidth;
+
+												if (nodeValue != null) {
+
+													let elementStyle = window.getComputedStyle(nodeValue);
+													let fontSize = elementStyle.getPropertyValue('font-size');
+													let fontFamily = elementStyle.getPropertyValue('font-family');
+													let letterSpacing = elementStyle.getPropertyValue('letter-spacing');
+
+													textWidth = util.ui.calculateTextWidth(labelAlarm, fontFamily, fontSize, letterSpacing);
+												}
+
+												if (textWidth > allowedSpace * 0.95) {
+
+													return labelAlarm;
+
+												} else {
+
+													return "";
+												}
+											},
 										},
 										{ height: 24 },
 										{
