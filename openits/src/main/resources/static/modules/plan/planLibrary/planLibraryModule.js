@@ -322,7 +322,7 @@ export default class PlanLibraryModule extends GenericModule {
 					});	
 				}
 
-				data = util.tree.getNodesOld(itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
+				data = util.tree.getNodes(itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
 
 				return data;
 			}

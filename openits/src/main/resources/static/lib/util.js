@@ -1650,266 +1650,153 @@ export let util = {
 	},
 
 	tree: {
-		
-		getNodesOld(items, relationships, remapedFields, translate) {
-
-			const CHILD_ID_IDX = 1;
-
-			let nodes = [];
-			let mapNodes = new Map();
 			
-			relationships.sort(function(a, b) {
-				
-				let idParentA = a[remapedFields.parentNodeId];
-				let idParentB = b[remapedFields.parentNodeId];
-				
-				let idChildA = a[remapedFields.childNodeId];
-				let idChildB = b[remapedFields.childNodeId];
-				
-				idParentA = parseInt(idParentA.substring(idParentA.indexOf(":") + 1));
-				idParentB = parseInt(idParentB.substring(idParentB.indexOf(":") + 1));
-				
-				idChildA = parseInt(idChildA.substring(idChildA.indexOf(":") + 1));
-				idChildB = parseInt(idChildB.substring(idChildB.indexOf(":") + 1));
-				
-				let x = parseInt(('0000000000'+idParentA).slice(-10) + ('0000000000'+idChildA).slice(-10));
-				let y = parseInt(('0000000000'+idParentB).slice(-10) + ('0000000000'+idChildB).slice(-10));
-				
-				return (x > y) ? 1 : ((y > x) ? -1 : 0);
-			});
-			
-			if (Array.isArray(items) && items.length > 0) {
-
-				items.forEach(item => {
-
-					let node = {
-						id: item.id + "_" + item.id,
-						value: item.label,
-						id_: item.id,
-						data: [],
-						params: {},
-						props: {
-							translate: translate,
-							folder: item.folder ? item.folder : false
-						}
-					};
-
-					mapNodes.set(node.id, node);
-				});
-
-				let hierarchies = relationships.map(e => {
-
-					let hierarchy = undefined;
-					let parentNodeId = e[remapedFields.parentNodeId] + "_" + e[remapedFields.parentNodeId];
-					let childNodeId = e[remapedFields.childNodeId] + "_" + e[remapedFields.childNodeId];
-
-					if (parentNodeId && childNodeId) {
-
-						hierarchy = {
-							id: e.id,
-							parentNode: mapNodes.get(parentNodeId),
-							childNode: mapNodes.get(childNodeId)
-						};
-					}
-
-					return hierarchy;
-				});
-				
-				
-
-				let childNodeIds = fillNodes(hierarchies);
-
-				childNodeIds.forEach(childNodeId => {
-
-					mapNodes.delete(childNodeId);
-				});
-
-				mapNodes.forEach(function(value) { // Full params => function(value, key, map) 
-
-					nodes.push(value);
-				});
-			}
-
-			function fillNodes(hierarchies) {
-
-				let childNodeIds = [];
-
-				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
-
-					hierarchies.forEach(hierarchy => {
-
-						let parentNode = hierarchy.parentNode;
-						let childNode = hierarchy.childNode;
-
-						if (parentNode && childNode) {
-
-							let parentNodeId = parentNode.id;
-							let childNodeId = childNode.id;
-
-							if (parentNodeId && childNodeId) {
-
-								let parentTreeData = mapNodes.get(parentNodeId);
-								let childTreeData = mapNodes.get(childNodeId);
-
-								if (parentTreeData && childTreeData) {
-
-									parentTreeData.props.folder = true;
-
-									let newChild = webix.copy(childTreeData);
-
-									newChild.id = parentTreeData.id.split("_")[CHILD_ID_IDX] + "_" + childTreeData.id.split("_")[CHILD_ID_IDX];
-									parentTreeData.data.push(newChild);
-
-									mapNodes.set(childNodeId, newChild)
-
-									childNodeIds.push(childNodeId);
-								}
-							}
-						}
-					});
-				}
-
-				return childNodeIds;
-			}
-
-			return nodes;
-		},
-
-
 		getNodes(items, relationships, remapedFields, translate) {
-
-			const CHILD_ID_IDX = 1;
-
+			
+			let uid = webix.uid();
+			let mapNodes = undefined;
 			let nodes = [];
-			let mapNodes = new Map();
+			let hierarchies = [];
 			
-			relationships.sort(function(a, b) {
+			if (Array.isArray(items) && Array.isArray(relationships)) {
 				
-				let idParentA = extractNumber(a[remapedFields.parentNodeId]);
-				let idParentB = extractNumber(b[remapedFields.parentNodeId]);
+				log.debug("Tree::getNodes(uid = " + uid + ") init => " + items.length + " items; " + relationships.length + " relationships");
 				
-				let idChildA = extractNumber(a[remapedFields.childNodeId]);
-				let idChildB = extractNumber(b[remapedFields.childNodeId]);
+				mapNodes = createMapNodes();
+				hierarchies = getHierarchies();
+				nodes = getParentNodes();		
 				
-				let x = parseInt(('0000000000'+idParentA).slice(-10) + ('0000000000'+idChildA).slice(-10));
-				let y = parseInt(('0000000000'+idParentB).slice(-10) + ('0000000000'+idChildB).slice(-10));
-				
-				return (x > y) ? 1 : ((y > x) ? -1 : 0);
-			});
-			
-			function extractNumber(str) {
-				
-				let res = undefined;
-				
-				if (Number.isNaN(str)) {
-				
-					if (str.indexOf(":")) {
-				
-						res = parseInt(idChildA.substring(idChildA.indexOf(":") + 1));
-					}	
-				}
-				else {
-					
-					res = parseInt(str);
-				}
-				
-				return res;
-			}
-
-			if (Array.isArray(items) && items.length > 0) {
-
-				items.forEach(item => {
-
-					let node = {
-						id: item.id + "_" + item.id,
-						value: item.label,
-						id_: item.id,
-						data: [],
-						params: {},
-						props: {
-							translate: translate,
-							folder: item.folder ? item.folder : false
-						}
-					};
-
-					mapNodes.set(node.id, node);
-				});
-
-				let hierarchies = relationships.map(e => {
-
-					let hierarchy = undefined;
-					let parentNodeId = e[remapedFields.parentNodeId] + "_" + e[remapedFields.parentNodeId];
-					let childNodeId = e[remapedFields.childNodeId] + "_" + e[remapedFields.childNodeId];
-
-					if (parentNodeId && childNodeId) {
-
-						hierarchy = {
-							id: e.id,
-							parentNode: mapNodes.get(parentNodeId),
-							childNode: mapNodes.get(childNodeId)
-						};
-					}
-
-					return hierarchy;
-				});
-				
-				
-
-				let childNodeIds = fillNodes(hierarchies);
-
-				childNodeIds.forEach(childNodeId => {
-
-					mapNodes.delete(childNodeId);
-				});
-
-				mapNodes.forEach(function(value) { // Full params => function(value, key, map) 
-
-					nodes.push(value);
-				});
-			}
-
-			function fillNodes(hierarchies) {
-
-				let childNodeIds = [];
-
-				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
-
-					hierarchies.forEach(hierarchy => {
-
-						let parentNode = hierarchy.parentNode;
-						let childNode = hierarchy.childNode;
-
-						if (parentNode && childNode) {
-
-							let parentNodeId = parentNode.id;
-							let childNodeId = childNode.id;
-
-							if (parentNodeId && childNodeId) {
-
-								let parentTreeData = mapNodes.get(parentNodeId);
-								let childTreeData = mapNodes.get(childNodeId);
-
-								if (parentTreeData && childTreeData) {
-
-									parentTreeData.props.folder = true;
-
-									let newChild = webix.copy(childTreeData);
-
-									newChild.id = parentTreeData.id.split("_")[CHILD_ID_IDX] + "_" + childTreeData.id.split("_")[CHILD_ID_IDX];
-									parentTreeData.data.push(newChild);
-
-									mapNodes.set(childNodeId, newChild)
-
-									childNodeIds.push(childNodeId);
-								}
-							}
-						}
+				if (Array.isArray(nodes)) {
+						
+					nodes.forEach(node => {
+						
+						fillNode(node);
 					});
-				}
-
-				return childNodeIds;
+				}	
 			}
+			
+			function fillNode(node) {
+				
+				// Remove hierarchy associate with current node (only nodes with parents)
+				if (node.parentId) {
+					
+					let idxRemove = hierarchies.findIndex(e => e.parentNode == node.parentId && e.childNode == node.id_);
+					
+					if (idxRemove !== -1) {
+					
+						hierarchies.splice(idxRemove, 1);
+					}
+				}
+				
+				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
+					
+					// Find child nodes for current node
+					let childNodes = hierarchies.filter(e => e.parentNode == node.id_);
+					
+					// Assing child nodes to current node
+					if (Array.isArray(childNodes) && childNodes.length > 0) {
+						
+						node.props.folder = true;
+												
+						childNodes.forEach(childNode => {
+							
+							let nodeChild = mapNodes.get(childNode.childNode);
+							
+							if (nodeChild) {
+								
+								let newNodeChild = webix.copy(nodeChild);
+																	
+								newNodeChild.id = node.id_ + "_" + nodeChild.id_;
+								newNodeChild.parentId = node.id_;
+								
+								fillNode(newNodeChild);
+								
+								node.data.push(newNodeChild);
+							}
+						});
+					}
+				}
+			}
+			
+			function createMapNodes() {
+				
+				let mapNodesAux = new Map();
+				
+				if (Array.isArray(items)) {
+					
+					items.forEach(item => {
+						
+						mapNodesAux.set(item.id, createNode(item, null));
+					})
+				}
+				
+				return mapNodesAux;
+			}
+			
+			function getParentNodes() {
+				
+				let parentNodesAux = [];
+				
+				mapNodes.forEach(node => {
+				
+					if (hierarchies.findIndex(e => e.childNode == node.id_) === -1) {
+						
+						parentNodesAux.push(node);
+					}
+				});	
+				
+				
+				return parentNodesAux;
+			}
+			
+			function createNode(item, parentId) {
+				
+				let nodeAux; 
+				
+				nodeAux = {
+					id: parentId ? parentId + "_" + item.id : item.id + "_" + item.id,
+					value: item.label,
+					parentId: parentId ? parentId : undefined,
+					id_: item.id,
+					data: [],
+					params: {},
+					props: {
+						translate: translate === true,
+						folder: item.folder === true
+					}
+				};
 
+				return nodeAux;
+			}
+			
+			function getHierarchies() {
+				
+				let hierarchiesAux = [];
+				
+				if (Array.isArray(relationships)) {
+					
+					if (remapedFields.parentNodeId && remapedFields.childNodeId) {
+						
+						hierarchiesAux = relationships.map(e => {
+
+							return {
+								id: e.id,
+								parentNode: e[remapedFields.parentNodeId],
+								childNode: e[remapedFields.childNodeId]
+							}
+						});
+					}
+					else {
+					
+						hierarchiesAux = remapedFields;
+					}
+				}
+				
+				return hierarchiesAux;
+			}
+			
+			log.debug("Tree::getNodes(uid = " + uid + ") end");
+			
 			return nodes;
 		}
 	},
