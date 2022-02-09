@@ -57,25 +57,10 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 		function getViewStretchs() {
 
 			let viewStretchs = {};
-			let stretchs;
+			let stretchs;		
 
-//			if (parent.incidentData.incidentTypeId) {
-//
-//				let stretchsResponse = webix.ajax().sync().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId }))
-//
-//				if (stretchsResponse) {
-//
-//					stretchs = JSON.parse(stretchsResponse.responseText);
-//				}
-//			} else {
-//				stretchs = window.em.getAll(EntityType.STRETCH);
-//			}
-
-			if (!parent.incidentData.stretchs) {
-
-				stretchs = window.em.getAll(EntityType.STRETCH);
-			}
-
+			stretchs = window.em.getAll(EntityType.STRETCH);
+			
 			if (Array.isArray(stretchs) && stretchs.length > 0) {
 
 				stretchs = stretchs.filter(e => {
@@ -117,6 +102,8 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.locationsByStretch, { id: data })).then(function(dat) {
 
+						let dataLocations;
+
 						if (dat != null) {
 
 							let locations = dat.json();
@@ -128,27 +115,30 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 								});
 
 								locations.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-								let dataLocations = locations.map(e => {
+								dataLocations = locations.map(e => {
 
 									return {
 										id: e.id,
 										alias: e.alias
 									}
 								});
-
-								parent.dtLocations.add(dataLocations);
 							}
+						}
 
-							$$("view-locations-" + parent.uid).hideProgress();
+						$$("view-locations-" + parent.uid).hideProgress();
+						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+
+						if (Array.isArray(dataLocations) && dataLocations.length > 0) {
+
+							parent.dtLocations.add(dataLocations);
+							parent.dtLocations.selectByIndex(0);
 						}
 
 						if (callbackEnable) {
 
 							callbackEnable(true);
 						}
-					});
-
-					parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+					});					
 				};
 
 				parent.listViewStrechs = new ListView(stretchData, options, events);
@@ -222,7 +212,14 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 				if (Array.isArray(rows) && rows.length > 0) {
 
-					parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+					if (parent.incidentWizardAction.autoSelectLocation) {
+
+						parent.incidentWizardAction.validateStep(parent.steps[1]);
+
+					} else {
+
+						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+					}
 				}
 			};
 
@@ -258,7 +255,10 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 		return viewStepStretchAndLocation;
 	}
 	
-	loadData() {
+	initialize() {
 		
+		super.initialize();
+		
+		this.parent.listViewStrechs.selectByIndex(0);		
 	}
 }	

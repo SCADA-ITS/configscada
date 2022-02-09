@@ -457,23 +457,8 @@ export default class IncidentWizardAction {
 				parent.incidentData.incidentTypeId = incidentTypesSelected[0][IncidentWizardModule.FIELD_INCIDENT_TYPE_ID];
 				
 				if (parent.incidentData.incidentTypeId) {
-
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(
-						
-						function(dat) {
-
-							if (dat != null) {
-			
-								let stretchs = dat.json();
-								
-								parent.incidentData.stretchs = stretchs;
-							}
-							
-							valid = parent.incidentData.incidentGroupId != null && parent.incidentData.incidentTypeId != null;
-							
-							onValid(valid);
-						}
-					);
+					
+					onValid(true);	
 				}
 			}
 			else {
@@ -589,7 +574,6 @@ export default class IncidentWizardAction {
 			parent.incidentData.locationId = undefined;
 			parent.incidentData.location = undefined;
 
-			parent.listViewStrechs.selectByIndex(0);
 			parent.dtLocations.clear();
 		}
 
@@ -657,11 +641,6 @@ export default class IncidentWizardAction {
 			parent.incidentData.locationId = undefined;
 			parent.incidentData.location = undefined;
 
-			$$("view-locations-" + parent.uid).showProgress({
-				type: "bottom",
-				hide: false
-			});
-
 			parent.listViewStrechs.clear();
 
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
@@ -722,6 +701,7 @@ export default class IncidentWizardAction {
 					eval(e.resetFunction)();
 
 					e.valid = false;
+					e.initializated = true;
 
 					$$("button-next-" + e.position + "-" + parent.uid).disable();
 				});

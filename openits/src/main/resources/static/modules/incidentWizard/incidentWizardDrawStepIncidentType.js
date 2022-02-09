@@ -101,6 +101,8 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 
 						webix.ajax().get(restUrl).then(function(dat) {
 
+							let dataIncidentTypes;
+							
 							if (dat != null) {
 
 								let incidentTypesByStretch = dat.json();
@@ -118,7 +120,7 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 											return (incidentTypesByStretch.find(itByStretch => itByStretch.id === itByGroup.id) != undefined);
 										});
 
-										let dataIncidentTypes = incidentTypesByGroupFiltered.map(e => {
+										dataIncidentTypes = incidentTypesByGroupFiltered.map(e => {
 
 											return {
 												id: e.id,
@@ -132,22 +134,25 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 												levelColor: e.incidentLevel.color
 											}
 										});
-
-										parent.dtIncidentTypes.add(dataIncidentTypes);
 									}
 								}
 							}
 
 							$$("view-incident-types-" + parent.uid).hideProgress();
+							parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+							
+							if (Array.isArray(dataIncidentTypes) && dataIncidentTypes.length > 0) {
+								
+								parent.dtIncidentTypes.add(dataIncidentTypes);
+								parent.dtIncidentTypes.selectByIndex(0);	
+							}
 
 							if (callbackEnable) {
 
 								callbackEnable(true);
-							}
+							}	
 						});
-					}
-
-					parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+					}				
 				};
 
 				parent.listViewIncidentGroups = new ListView(incidentGroupData, options, events);
@@ -299,5 +304,6 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 	
 	loadData() {
 		
+		this.parent.listViewIncidentGroups.selectByIndex(0);	
 	}
 }	

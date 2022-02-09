@@ -4,25 +4,25 @@ import IncidentWizardAction from "./incidentWizardAction.js";
 import { util } from "../../lib/util.js";
 
 export default class IncidentWizardModule extends GenericModule {
-	
+
 	static get FIELD_STRETCH_ID() { return "id" }
 	static get FIELD_STRETCH_ALIAS() { return "alias" }
-	
+
 	static get FIELD_LOCATION_ID() { return "id" }
 	static get FIELD_LOCATION_ALIAS() { return "alias" }
-	
+
 	static get FIELD_INCIDENT_GROUP_ID() { return "id" }
 	static get FIELD_INCIDENT_GROUP_ALIAS() { return "alias" }
-	
+
 	static get FIELD_INCIDENT_TYPE_ID() { return "id" }
 	static get FIELD_INCIDENT_TYPE_ALIAS() { return "alias" }
 	static get FIELD_INCIDENT_TYPE_DESCRIPTION() { return "description" }
-	
+
 	static get FIELD_INCIDENT_LEVEL_ID() { return "levelId" }
 	static get FIELD_INCIDENT_LEVEL_LABEL_ALIAS() { return "levelLabelAlias" }
 	static get FIELD_INCIDENT_LEVEL_ICON() { return "levelIcon" }
 	static get FIELD_INCIDENT_LEVEL_COLOR() { return "levelColor" }
-	
+
 	static get FIELD_INCIDENT_USER_ID() { return "userId" }
 	static get FIELD_INCIDENT_USER() { return "user" }
 
@@ -33,9 +33,9 @@ export default class IncidentWizardModule extends GenericModule {
 		this.uid = webix.uid();
 
 		this.config = module.config;
-		
+
 		this.steps = undefined;
-		
+
 		this.listViewStrechs = undefined;
 		this.dtLocations = undefined;
 		this.listViewIncidentGroups = undefined;
@@ -44,10 +44,10 @@ export default class IncidentWizardModule extends GenericModule {
 		this.mapIncidentTypeSelected = undefined;
 		this.dblListAffectionStretchs = undefined;
 
-		this.drawContent = new IncidentWizardDrawContent(this);		
+		this.drawContent = new IncidentWizardDrawContent(this);
 		this.incidentWizardAction = new IncidentWizardAction(this);
-		
-		
+
+
 		this.incidentData = {
 			stretchId: undefined,
 			stretch: undefined,
@@ -77,7 +77,7 @@ export default class IncidentWizardModule extends GenericModule {
 
 		let self = this;
 		let viewMain = undefined;
-		
+
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
 
@@ -101,59 +101,54 @@ export default class IncidentWizardModule extends GenericModule {
 
 			viewMain = fromAlarms();
 		}
-		
+
 		setTimeout(function() {
-			
+
 			$$("loading-" + self.uid).hide();
 			$$(self.uid).show();
-			
+
 			if (viewMain) {
-		
+
 				webix.ui(viewMain, $$(self.uid));
-				
+
 				if (self.dtLocations) {
 					self.dtLocations.callbacks();
-				}	
-				
+				}
+
 				if (self.dtIncidentTypes) {
 					self.dtIncidentTypes.callbacks();
 				}
-				
+
 				loadDataIncidentSteps();
-				
-				if (self.listViewStrechs) {
-					
-					self.listViewStrechs.selectByIndex(0);	
-				}
 			}
-				
+
 		}, 500);
-		
+
 		function drawMain() {
-			
+
 			let multiView = {
-				
+
 				view: "multiview",
 				id: self.uid,
 				animate: false,
 				cells: []
 			};
-			
+
 			function drawHeader(position) {
-				
+
 				let step = self.incidentWizardAction.getStep(position);
-				
+
 				let maxWidthLabels = 500;
-			
+
 				let container = $$(self.args.containerId);
-	
+
 				if (container) {
-	
+
 					maxWidthLabels = container.config.width - 200;
 				}
-				
+
 				let viewHeader;
-				
+
 				viewHeader = {
 					css: { "background": "#567eba" },
 					rows: [
@@ -179,7 +174,7 @@ export default class IncidentWizardModule extends GenericModule {
 									borderless: true,
 									css: { "background": "transparent" },
 									template: function() {
-										
+
 										return `<div class="text">
 											  		<span class="header-wizard-step">${(step.position < self.steps.length) ? (i18n.t("LBL_STEP") + " " + step.position) : i18n.t("LBL_LAST_STEP")}</span>
 												</div>`;
@@ -189,16 +184,16 @@ export default class IncidentWizardModule extends GenericModule {
 						}
 					]
 				};
-				
+
 				return viewHeader;
 			};
-			
+
 			function drawProgressBar(position) {
-				
+
 				let labelNoCss = false;
-				
+
 				let viewSteps;
-				
+
 				viewSteps = {
 					rows: [
 						{ height: 5 },
@@ -207,77 +202,77 @@ export default class IncidentWizardModule extends GenericModule {
 							css: { "margin-top": "-24px" },
 							borderless: true,
 							template: function() {
-								
+
 								if (Array.isArray(self.steps) && self.steps.length > 0) {
-									
+
 									let progressBar = `<div class="progressbar-wrapper">
 											      <ul class="progressbar">`;
-					
+
 									self.steps.forEach(e => {
-										
+
 										progressBar += `<li style="width: ${100 / self.steps.length}% !important" `;
-										
+
 										if (e.position === position) {
-	
+
 											labelNoCss = true;
 											progressBar += `class="current">`;
 										}
 										else {
-	
+
 											if (!labelNoCss) {
-	
+
 												progressBar += `class="active">`;
 											}
 											else {
-	
+
 												progressBar += `>`;
 											}
 										}
-										
+
 										progressBar += i18n.t(e.labelAlias);
 									});
-									
+
 									progressBar += `  </ul>
 											  </div>`;
-	
+
 									return progressBar;
 								}
 								else {
-	
+
 									return `<div></div>`;
 								}
 							}
 						}
 					]
 				};
-				
+
 				return viewSteps;
 			}
-		
+
 			function drawToolbarActions(position) {
 
 				let firstStep = false;
 				let lastStep = false;
 				let step = self.incidentWizardAction.getStep(position);
-				
+
 				if (Array.isArray(self.steps) && self.steps.length > 0) {
-										
+
 					firstStep = (step.position === 1);
-					lastStep = (!firstStep && step.position === self.steps.length);   
+					lastStep = (!firstStep && step.position === self.steps.length);
 				}
-				
+
 				let viewToolbarActionsButtons = [
 					{ width: 18 },
-					{ 
+					{
 						id: "button-cancel-" + position + "-" + self.uid,
 						view: "button",
-						css: "dialog-cancel", 
+						css: "dialog-cancel",
 						width: 130,
 						height: 35,
 						label: i18n.t("LBL_CANCEL"),
 						on: {
 							onItemClick() {
-							
+
 								let container = $$(self.args.containerId);
 
 								if (container) {
@@ -290,7 +285,7 @@ export default class IncidentWizardModule extends GenericModule {
 					{},
 					{
 						id: "button-next-" + position + "-" + self.uid,
-						view: "button", 
+						view: "button",
 						disabled: !lastStep,
 						css: !lastStep ? "dialog-accept" : "dialog-finish",
 						width: 130,
@@ -300,18 +295,25 @@ export default class IncidentWizardModule extends GenericModule {
 							onItemClick() {
 
 								if (!lastStep) {
-								
-									let next = $$(self.uid).getChildViews()[step.position]; 
-									
+
+									let next = $$(self.uid).getChildViews()[step.position];
+
 									if (next) {
-										
+
 										next.show();
-										
-										self.incidentWizardAction.setCurrentStep(step.position + 1);
+
+										let newStep = self.incidentWizardAction.setCurrentStep(step.position + 1);
+
+										if (newStep.initializated && self.drawContent && self.drawContent.stepsMap) {
+
+											let newincidentWizardStepself = self.drawContent.stepsMap.get(newStep.position);
+
+											newincidentWizardStepself.initialize();
+										}
 									}
 								}
 								else {
-									
+
 									self.incidentWizardAction.createIncident();
 								}
 							}
@@ -319,95 +321,95 @@ export default class IncidentWizardModule extends GenericModule {
 					},
 					{ width: 18 }
 				];
-								
+
 				let viewToolbarActions = {
 					cols: [
 						{
 							rows: [
-								{ height: 10},
+								{ height: 10 },
 								{
 									view: "toolbar",
 									height: 45,
 									borderless: true,
 									elements: viewToolbarActionsButtons
 								},
-								{ height: 10}
+								{ height: 10 }
 							]
 						}
 					]
 				};
-				
+
 				if (!firstStep) {
-					
-					viewToolbarActionsButtons.splice(3, 0, { 
+
+					viewToolbarActionsButtons.splice(3, 0, {
 						id: "button-previous-" + position + "-" + self.uid,
-						view: "button", 
+						view: "button",
 						css: "dialog-previous",
 						width: 130,
 						height: 35,
 						label: i18n.t("LBL_PREVIOUS"),
 						on: {
 							onItemClick() {
-								
+
 								$$(self.uid).back();
-								
-								self.incidentWizardAction.setCurrentStep(step.position -1);
+
+								self.incidentWizardAction.setCurrentStep(step.position - 1);
 							}
 						}
-					});	
+					});
 				}
-				
+
 				return viewToolbarActions;
 			};
-			
+
 			if (Array.isArray(self.steps) && self.steps.length > 0) {
-				
+
 				self.steps.forEach(e => {
-					
+
 					let stepContent = [];
-					
+
 					stepContent.push(drawHeader(e.position));
 					stepContent.push(drawProgressBar(e.position));
 					stepContent.push(self.drawContent.draw(e.position));
 					stepContent.push({ rows: [{ height: 20 }] });
 					stepContent.push(drawToolbarActions(e.position));
-			
-					multiView.cells.push({rows: stepContent }); 	
+
+					multiView.cells.push({ rows: stepContent });
 				});
 			}
-			
+
 			return multiView;
 		}
-		
+
 		function loadDataIncidentSteps() {
-			
+
 			if (self.drawContent && Array.isArray(self.steps) && self.steps.length > 0) {
-				
+
 				self.steps.forEach(e => self.drawContent.load(e.position));
 			}
 		}
-		
+
 		function fromMap() {
 
 			self.steps = webix.copy(self.config.steps.fromMap);
-		
+
 			return drawMain();
 		};
-		
+
 		function fromSynoptic() {
 
 			util.ui.notImplementedMessage();
 		};
 
 		function fromIncidentsNoMap() {
-			
+
 			self.steps = webix.copy(self.config.steps.fromIncidentsNoMap);
-		
+
 			return drawMain();
 		}
-		
+
 		function fromIncidentsMap() {
-			
+
 			util.ui.notImplementedMessage();
 		};
 

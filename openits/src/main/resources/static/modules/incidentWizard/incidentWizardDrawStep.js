@@ -20,6 +20,10 @@ export default class IncidentWizardDrawStep {
 	
 	loadData() {
 		
-		throw new Error("Method 'IncidentWizardDrawStep()' must be implemented.");
+	}
+	
+	initialize() {
+		
+		this.step.initializated = false;
 	}
 }	
