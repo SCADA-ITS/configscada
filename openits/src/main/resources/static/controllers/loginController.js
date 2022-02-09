@@ -4,17 +4,6 @@ let uid = webix.uid();
 
 const LANGUAGE = navigator.language || navigator.userLanguage;
 
-const LOGIN_MESSAGE = {
-	AUTHORIZED: "AUTHORIZED",
-	DENY_PASSWORD_EXPIRED: "DENY_PASSWORD_EXPIRED",
-	DENY_LOCKED: "DENY_LOCKED",
-	DENY_MULTI_SESSION_NOT_ALLOWED: "DENY_MULTI_SESSION_NOT_ALLOWED",
-	WRONG_USER_PASSWORD: "WRONG_USER_PASSWORD",
-	DENY_OTHERS: "DENY_OTHERS",
-	LOGOUT: "LOGOUT",
-	UNAUTHORIZED: "UNAUTHORIZED"
-}
-
 webix.ready(function() {
 
 	webix.ui({
@@ -69,7 +58,9 @@ webix.ready(function() {
 
 function getLogos() {
 
-	let logos = {
+	let logos;
+	
+	logos = {
 		rows: [
 			{ height: 112 },
 			{
@@ -269,63 +260,16 @@ function login(values) {
 				
 							let loginData = loginResponse.json();
 					
-							if (loginData.access === LOGIN_MESSAGE.AUTHORIZED) {
-					
-								webix.storage.session.put(SESSION_STORAGE_SESSION_LOCKED, false);
-								webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, loginData);
-					
-								let userResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${loginData.userId}`);
-					
-								if (userResponse != undefined) {
-					
-									let userData = JSON.parse(userResponse.responseText);
-					
-									userData.password = undefined;
-					
-									webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
-					
-									let translateMessage = translateLabel("LBL_AUTHORIZED");
-					
-									$$("alertText-" + uid).config.label = translateMessage;
-									webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
-									$$("alertText-" + uid).refresh();
-					
-									userPermissions(userData);
-					
+							if (loginData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
+								
+								if (loginData) {
+									
+									access(loginData);							
 								}
 					
 							} else {
-					
-								switch (loginData.access) {
-					
-									case LOGIN_MESSAGE.WRONG_USER_PASSWORD:
-										labelAlertMessage = "LBL_WRONG_USER_PASSWORD";
-										break;
-					
-									case LOGIN_MESSAGE.DENY_PASSWORD_EXPIRED:
-										labelAlertMessage = "LBL_DENY_PASSWORD_EXPIRED";
-										break;
-					
-									case LOGIN_MESSAGE.DENY_LOCKED:
-										labelAlertMessage = "LBL_DENY_LOCKED";
-										break;
-					
-									case LOGIN_MESSAGE.DENY_MULTI_SESSION_NOT_ALLOWED:
-										labelAlertMessage = "LBL_DENY_MULTI_SESSION_NOT_ALLOWED";
-										break;
-					
-									case LOGIN_MESSAGE.UNAUTHORIZED:
-										labelAlertMessage = "LBL_UNAUTHORIZED";
-										break;
-					
-									case LOGIN_MESSAGE.DENY_OTHERS:
-										labelAlertMessage = "LBL_DENY_OTHERS";
-										break;
-					
-									case LOGIN_MESSAGE.LOGOUT:
-										labelAlertMessage = "LBL_LOGOUT";
-										break;
-								}
+								
+								labelAlertMessage = LOGIN_MESSAGE[loginData.access].label;
 					
 								let translateMessage = translateLabel(labelAlertMessage);
 					
@@ -362,53 +306,74 @@ function login(values) {
 	}
 }
 
-
-function userPermissions(userData) {
-
+function access(loginData) {
+	
 	let permissions = [];
+	let userData = loginData.user;
+	
+	if (loginData && userData) {
+					
+		userData.password = undefined; // protect password
 
-	if (userData.role.rolePermissions) {
-
-		userData.role.rolePermissions.forEach(item => {
-
-			permissions.push({
-				'id': item.id.split(":")[1],
-				'alias': item.alias
+		if (userData.role && Array.isArray(userData.role.rolePermissions)) {
+	
+			userData.role.rolePermissions.forEach(item => {
+	
+				permissions.push({
+					'id': item.id.split(":")[1],
+					'alias': item.alias
+				});
 			});
-		});
+		}
+	
+		if (Array.isArray(userData.userPermissions)) {
+	
+			userData.userPermissions.forEach(item => {
+				permissions.push(item.id);
+			});
+	
+		}
+	
+		if (Array.isArray(permissions)) {
+			
+			if (permissions.find(e => e.id == SYSTEM_PERMISSION_LOGIN)) {
+			
+				webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, loginData);
+				
+				$$("alertText-" + uid).config.label = translateLabel("LBL_AUTHORIZED");
+				webix.html.addCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+				$$("alertText-" + uid).refresh();
+				
+				webix.delay(function() {
+					window.location = "./home.html";
+				}, null, null, 1000);	
+			}
+			else {
+				
+				$$("alertText-" + uid).config.label = translateLabel("LBL_UNAUTHORIZED");
+				webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+				$$("alertText-" + uid).refresh();
+				
+				validating(false);
+			}
+		}
 	}
-
-	if (userData.userPermissions) {
-
-		userData.userPermissions.forEach(item => {
-			permissions.push(item.id);
-		});
-
-	}
-
-	if (permissions) {
-
-		webix.storage.session.put("app_user_permissions", permissions);
-
-	}
-
-	webix.delay(function() { window.location = "./home.html" }, null, null, 2000);
-
 }
 
 
 function translateLabel(labelToTranslate) {
 
 	let labelsArr = CONFIG.i18n.data;
-
+	let labelTranslated = "¿¿¿" + labelToTranslate +"???";
+	
 	let label = labelsArr.find(e => e.label === labelToTranslate);
 
 	if (label) {
 
-		let labelTranslated = (label[LANGUAGE] != undefined) ? label[LANGUAGE] : label["en-US"];
-
-		return labelTranslated;
+		labelTranslated = (label[LANGUAGE] != undefined) ? label[LANGUAGE] : label["en-US"];
 	}
+	
+	return labelTranslated;
 }
 
 

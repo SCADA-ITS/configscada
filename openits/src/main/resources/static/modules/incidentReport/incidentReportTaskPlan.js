@@ -38,7 +38,7 @@ export default class IncidentReportTaskPlan {
 		
 		function initDataTable() {
 			
-			let userData = util.user.auth();
+			let userData = util.user.getUserData();
 			let sameUser =(userData.id === self.incidentReport.currentUser.id);
 			
 			if (self.dtPlans) {

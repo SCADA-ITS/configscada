@@ -48,47 +48,53 @@ export default class I18n {
 	
 	t(label, values) {
 		
-		let translation;
+		let translation = undefined;
 		let fields = undefined;
 		
-		if(values != undefined && Array.isArray(values)){
+		try {
 			
-			fields = values.join();
-		}
-		 
-		if (this.localeId != undefined && label != undefined && label != "") {
-			
-			if (this.labels != undefined && !fields) {
+			if (values != undefined && Array.isArray(values)) {
 				
-				translation = this.labels[label];
+				fields = values.join();
 			}
-			
-			if (translation == undefined ) {
+			 
+			if (this.localeId != undefined && label != undefined && label != "") {
 				
-				let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
-				
-				if (fields) {
+				if (this.labels != undefined && !fields) {
 					
-					translationUrl = translationUrl + `/${fields}`;	
+					translation = this.labels[label];
 				}
 				
-				let translationResponse = webix.ajax().sync().get(translationUrl); 
-								
-				if (translationResponse && translationResponse.responseText) {
-							
-					let translationJson = JSON.parse(translationResponse.responseText);
-
-					if (translationJson != undefined) {
+				if (translation == undefined ) {
+					
+					let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
+					
+					if (fields) {
 						
-						translation = translationJson.translation;
-						
-						if (!fields) {
-						
-							this.labels[label] = translation;	
-						}
+						translationUrl = translationUrl + `/${fields}`;	
 					}
-				}
-			}				
+						
+					let translationResponse = webix.ajax().sync().get(translationUrl); 
+								
+					if (translationResponse && translationResponse.responseText) {
+								
+						let translationJson = JSON.parse(translationResponse.responseText);
+	
+						if (translationJson != undefined) {
+							
+							translation = translationJson.translation;
+							
+							if (!fields) {
+							
+								this.labels[label] = translation;	
+							}
+						}
+					}	
+				}				
+			}
+		}
+		catch {
+			
 		}
 		
 		return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");

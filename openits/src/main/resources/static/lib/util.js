@@ -723,7 +723,8 @@ export let util = {
 
 		isAllowedPermission(permissionToCheck) {
 
-			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			let userData = util.user.getUserData();
+			
 			let rolePermissions = userData.role.rolePermissions;
 			let userPermissions = userData.userPermissions;
 			let permissionsOK = false;
@@ -766,131 +767,111 @@ export let util = {
 	},
 
 	user: {
-
-		keepAlive() {
-
-			let response = webix.ajax().sync().post(appConfig.restUrl + "auth/keep_alive");
-
-			if (response != undefined) {
-
-				return JSON.parse(response.responseText)
+		
+		getUserData() {
+			
+			let userData = undefined;
+			let sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+			
+			if (sessionData && sessionData.user) {
+			
+				userData = sessionData.user;	
 			}
-
-			return undefined;
+						
+			return userData;
+		},
+		
+		getSessionData() {
+			
+			return webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+		},
+		
+		closeSession() {
+			
+			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
+			
+			let services = window.sm.getAll();
+			
+			if (Array.isArray(services)) {
+				
+				services.forEach(service => {
+					
+					if (service.object && typeof service.object.destroy === "function") { 
+					
+						service.object.destroy();	
+					}
+				});
+			}
+					
+			if (util.ui.isExternal()) {
+				
+				window.open('', '_self').close();	
+			}
+			else {
+				
+				window.location = "./login.html";
+			}
 		},
 
+		keepAlive(onResponse, onError) {
+			
+			util.user.request("auth/keep_alive", onResponse, onError);
+		},
+		
 		auth() {
-			let userData;
+			
+			let sessionData;
+			
+			webix.storage.session.remove(SESSION_STORAGE_SESSION_DATA);
+			
+			let response = webix.ajax().sync().post(appConfig.restUrl + "auth/keep_alive");
 
-			if (APP_DEVMODE_ON) {
-				userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
-			} else {
-				let sessionData = util.user.keepAlive();
-				userData = null;
+			if (response && response.responseText) {
 
-				if (!sessionData) {
-
-					return false;
+				sessionData = JSON.parse(response.responseText);
+				
+				if (sessionData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
+					
+					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
 				}
 				else {
-
-					webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);
-
-					if (sessionData.userId) {
-
-						let userDataResponse = webix.ajax().sync().get(appConfig.restUrl + `users/${sessionData.userId}`);
-
-						if (userDataResponse != undefined) {
-
-							if (userDataResponse.responseText) {
-
-								userData = JSON.parse(userDataResponse.responseText);
-
-								userData.password = undefined;
-
-								webix.storage.session.put(SESSION_STORAGE_USER_DATA, userData);
-							}
-						}
-					}
-
-					if (!userData) {
-
-						return false
-					}
+					
+					sessionData = undefined;
 				}
 			}
-			return userData;
+
+			return sessionData;
+		
+		},
+		
+		logout(onResponse, onError) {
+			
+			util.user.request("auth/logout", onResponse, onError);
+		},
+		
+		request(endpoint, onResponse, onError) {
+			
+			webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint).then(
+				function(dat) {
+					
+					if (dat != null) {
+	
+						if (dat != null && onResponse) {
+						
+							onResponse(dat.json());	
+						}
+					}	
+				},
+				function(err) {
+					
+					if (onError) {
+						
+						onError(err);
+					}
+				}
+			);
 		}
 	},
-
-//	stomp: {
-//
-//		getDataSourceFromTopic(topic) {
-//
-//			return {
-//				dataSourceValues: [
-//					{ value: appConfig.stompUrl },
-//					{ value: topic }
-//				]
-//			};
-//		},
-//
-//		connect(url, topic, onConnected, onMessage) {
-//
-//			var client = new StompJs.Client({
-//				brokerURL: url,
-//				connectHeaders: {
-//					login: "user",
-//					passcode: "user"
-//				},
-//				reconnectDelay: 5000,
-//				heartbeatIncoming: 4000,
-//				heartbeatOutgoing: 4000
-//			});
-//
-//			client.onConnect = function(frame) {
-//				// Do something, all subscribes must be done is this callback
-//				// This is needed because this will be executed after a (re)connect
-//
-//				log.debug("S T O M P   O V E R   W E B S O C K E T   C O N N E C T E D ");
-//
-//				if (onConnected) {
-//
-//					onConnected();
-//				}
-//
-//				this.suscription = client.subscribe(topic, onMessage);
-//			};
-//
-//			client.onWebSocketClose = function(frame) {
-//				log.warn("Broker reported close");
-//			}
-//
-//			client.onStompError = function(frame) {
-//				// Will be invoked in case of error encountered at Broker
-//				// Bad login/passcode typically will cause an error
-//				// Complaint brokers will set `message` header with a brief message. Body may contain details.
-//				// Compliant brokers will terminate the connection after any error
-//				log.error("Broker reported error: " + frame.headers["message"]);
-//				log.error("Additional details: " + frame.body);
-//			};
-//
-//			client.activate();
-//
-//			return client;
-//		},
-//
-//		disconnect(client) {
-//
-//			if (client.connected) {
-//
-//				log.error("S T O M P   O V E R   W E B S O C K E T   D I S C O N N E C T E D ");
-//
-//				client.deactivate();
-//			}
-//		},
-//
-//	},
 
 	ui: {
 
@@ -1289,6 +1270,19 @@ export let util = {
 			}
 		},
 		
+		getViewLogout() {
+
+			return {
+				view: "template",
+				template: function(data) {
+					
+					let logo = "<img src='img/open_its_full.png' align='center'>";
+	
+					return `<div class='welcome-screen-inner'>${logo}</div>`;
+				}
+			}
+		},
+		
 		isInside(limits, lon, lat) {
 			
 			let res = true;
@@ -1340,6 +1334,11 @@ export let util = {
 			dText.remove();
 
 			return width;
+		},
+		
+		isExternal() {
+			
+			return (window.location.pathname.indexOf("external.html") !== -1);
 		}
 	},
 
@@ -1402,7 +1401,7 @@ export let util = {
 		sendCommand(commands, onResponse) {
 			
 			let showCommentDialog = false;
-			let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+			let userData = util.user.getUserData();
 			let auditLogs = [];
 			
 			if (userData && Array.isArray(commands) && commands.length > 0) {
@@ -1809,8 +1808,9 @@ export let util = {
 			return undefined;
 		}
 
-		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
+		
+		let userData = util.user.getUserData();
 
 		if (userData) {
 
@@ -1827,8 +1827,9 @@ export let util = {
 			return undefined;
 		}
 
-		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
+		
+		let userData = util.user.getUserData();
 
 		if (userData) {
 
@@ -1864,8 +1865,9 @@ export let util = {
 			return undefined;
 		}
 
-		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 		let date = new Date(ts * 1000);
+		
+		let userData = util.user.getUserData();
 
 		if (userData) {
 

@@ -13,10 +13,10 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 public abstract class GenericBO {
 	
 	@Autowired
-	VODataSourceAdapter voDataSourceAdapter;
+	protected VODataSourceAdapter voDataSourceAdapter;
 	
 	@Autowired
-	VO2UIAdapter vo2uiAdapter;
+	protected VO2UIAdapter vo2uiAdapter;
 	
 	protected Integer dataSourceList;
 	protected Integer dataSourceItem;
@@ -36,22 +36,21 @@ public abstract class GenericBO {
 		return vo2uiAdapter.convert(dataSourceItem, obj);
 	}
 	
-	public Boolean checkMapIsBoolean(Map<String, Object> map) {
+	protected Boolean checkMapIsBoolean(Map<String, Object> map) {
 	    
-	    Boolean res = false;
-	        
-	    if (map.size() == 1) {
-	      
-	      for (Map.Entry<String, Object> entry : map.entrySet()) {
-	        
-	        if (entry.getValue() instanceof Boolean) {
-	          
-	          res = (Boolean) entry.getValue();
-	        }
-	      }
-	    }
-	    
-	    return res;
-	  }
+		Boolean res = false;
 
+		if (map.size() == 1) {
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+				if (entry.getValue() instanceof Boolean) {
+
+					res = (Boolean) entry.getValue();
+				}
+			}
+		}
+
+		return res;
+	}
 }

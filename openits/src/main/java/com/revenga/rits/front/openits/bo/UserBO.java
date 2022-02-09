@@ -18,6 +18,9 @@ public class UserBO extends GenericBO {
 	@Autowired
 	GraphqlTypeAdapter graphqlTypeAdapter;
 	
+	@Autowired
+	SessionBO sessionBO;
+	
 	@PostConstruct
 	private void initialize() {
 		
@@ -46,7 +49,11 @@ public class UserBO extends GenericBO {
 			
 		Map<String, Object> updatedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, (Map<String, Object>) input);
 		
-		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, updatedUser);
+		Map<String, Object> updatedUserConverted = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_UPDATE_USER, updatedUser); 
+		
+		sessionBO.updateUser(updatedUserConverted);
+		
+		return updatedUserConverted;
 	}
 	
 	public Map<String, Object> deleteUser(String id) {
@@ -57,7 +64,11 @@ public class UserBO extends GenericBO {
 		
 		Map<String, Object> deletedUser = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_DELETE_USER, input);
 		
-		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_USER, deletedUser);
+		Map<String, Object> deletedUserConverted = vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_DELETE_USER, deletedUser);
+		
+		sessionBO.deleteUser(deletedUserConverted);
+		
+		return deletedUserConverted;
 	}
 	
 	@SuppressWarnings("unchecked")

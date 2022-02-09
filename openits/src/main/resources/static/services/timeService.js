@@ -16,6 +16,14 @@ export default class TimeService extends GenericModule {
 		this.timer = undefined;
 	}
 	
+	destroy() {
+	
+		if (this.timer) {
+			
+			clearInterval(this.timer);	
+		}
+	}
+	
 	getView() {
 
 		let views = [];

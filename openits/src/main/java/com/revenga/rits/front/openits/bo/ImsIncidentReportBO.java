@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.revenga.rits.front.openits.adapter.impl.GraphqlAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
+import com.revenga.rits.front.openits.model.UserSessionUI;
 
 @Service
 public class ImsIncidentReportBO extends GenericBO {
@@ -449,50 +451,52 @@ public class ImsIncidentReportBO extends GenericBO {
 
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
-			if (attr != null) {
+			HttpSession httpSession = attr.getRequest().getSession(true);
 
-				HttpSession httpSession = attr.getRequest().getSession(true);
+			UserSessionUI userSession = sessionBO.getUserSession(httpSession.getId());
+			
+			if (userSession != null && !StringUtils.isEmpty((String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID)) && userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+				
+				userId = (String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID);
+			}
 
-				userId = sessionBO.getUserId(httpSession);
+			if (userId != null) {
 
-				if (userId != null) {
+				Object objIncidentStateLabelAlias = (stateLabel != null) ? stateLabel
+						: getIncidentStateLabelAlias(incidentReport);
 
-					Object objIncidentStateLabelAlias = (stateLabel != null) ? stateLabel
-							: getIncidentStateLabelAlias(incidentReport);
+				if (objIncidentStateLabelAlias != null) {
+					Map<String, Object> input = new HashMap<>();
 
-					if (objIncidentStateLabelAlias != null) {
-						Map<String, Object> input = new HashMap<>();
+					List<Map<String, Object>> incidentReportLogs = new ArrayList<>();
+					Map<String, Object> incidentReportLog = new HashMap<>();
 
-						List<Map<String, Object>> incidentReportLogs = new ArrayList<>();
-						Map<String, Object> incidentReportLog = new HashMap<>();
+					incidentReportLog.put(FIELD_INCIDENT_REPORT_ID, incidentReportId);
+					incidentReportLog.put(FIELD_LOG_SUBTYPE_ID, logSubtypeId);
+					incidentReportLog.put(FIELD_USER_ID, userId);
+					incidentReportLog.put(FIELD_LEVEL, VALUE_DEFAULT_LEVEL);
 
-						incidentReportLog.put(FIELD_INCIDENT_REPORT_ID, incidentReportId);
-						incidentReportLog.put(FIELD_LOG_SUBTYPE_ID, logSubtypeId);
-						incidentReportLog.put(FIELD_USER_ID, userId);
-						incidentReportLog.put(FIELD_LEVEL, VALUE_DEFAULT_LEVEL);
+					List<Map<String, Object>> incidentReportLogValues = new ArrayList<>();
 
-						List<Map<String, Object>> incidentReportLogValues = new ArrayList<>();
+					Map<String, Object> incidentReportLogValueState = new HashMap<>();
+					incidentReportLogValueState.put(FIELD_VALUE, objIncidentStateLabelAlias);
+					incidentReportLogValueState.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_STATE);
+					incidentReportLogValues.add(incidentReportLogValueState);
 
-						Map<String, Object> incidentReportLogValueState = new HashMap<>();
-						incidentReportLogValueState.put(FIELD_VALUE, objIncidentStateLabelAlias);
-						incidentReportLogValueState.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_STATE);
-						incidentReportLogValues.add(incidentReportLogValueState);
+					if (arg1 != null) {
 
-						if (arg1 != null) {
-
-							Map<String, Object> incidentReportLogValueArg1 = new HashMap<>();
-							incidentReportLogValueArg1.put(FIELD_VALUE, arg1);
-							incidentReportLogValueArg1.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_ARG_1);
-							incidentReportLogValues.add(incidentReportLogValueArg1);
-						}
-
-						incidentReportLog.put(FIELD_INCIDENT_REPORT_LOG_VALUES, incidentReportLogValues);
-
-						incidentReportLogs.add(incidentReportLog);
-						input.put(FIELD_INCIDENT_REPORT_LOGS, incidentReportLogs);
-
-						return addLog(input);
+						Map<String, Object> incidentReportLogValueArg1 = new HashMap<>();
+						incidentReportLogValueArg1.put(FIELD_VALUE, arg1);
+						incidentReportLogValueArg1.put(FIELD_LOG_TYPE_PARAM_ID, LOG_TYPE_PARAM_ARG_1);
+						incidentReportLogValues.add(incidentReportLogValueArg1);
 					}
+
+					incidentReportLog.put(FIELD_INCIDENT_REPORT_LOG_VALUES, incidentReportLogValues);
+
+					incidentReportLogs.add(incidentReportLog);
+					input.put(FIELD_INCIDENT_REPORT_LOGS, incidentReportLogs);
+
+					return addLog(input);
 				}
 			}
 		}

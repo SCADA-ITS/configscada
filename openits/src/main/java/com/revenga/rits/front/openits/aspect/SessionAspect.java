@@ -1,9 +1,5 @@
 package com.revenga.rits.front.openits.aspect;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
@@ -70,12 +66,10 @@ public class SessionAspect {
 
 			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 			HttpSession httpSession = attr.getRequest().getSession(true);
-			Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
-					.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
 
-			UserSessionUI userSession = sessionBO.keepAlive(headers, httpSession); 
+			UserSessionUI userSession = sessionBO.keepAlive(httpSession); 
 			
-			if (userSession == null || userSession.getAccess().equals(UserSessionUI.UNAUTHORIZED)) {
+			if (userSession == null || !userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
 
 				throw new SessionThrowable();
 			}
@@ -83,7 +77,7 @@ public class SessionAspect {
 	}
 
 	@Around("execution(* com.revenga.rits.front.openits.controller.*.*(..))")
-	public ResponseEntity<?> around(ProceedingJoinPoint pjp) {
+	public Object around(ProceedingJoinPoint pjp) {
 
 		ResponseEntity<?> response = null;
 		UserSessionUI userSession = null;

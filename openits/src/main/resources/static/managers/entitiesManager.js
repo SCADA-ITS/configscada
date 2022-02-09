@@ -83,7 +83,7 @@ function load(entitiesManager) {
 
 function scheduler(entitiesManager) {
 	
-	setInterval(function(){
+	return setInterval(function(){
 	
 		for (var em_type in EntityType) {
 		
@@ -118,7 +118,15 @@ export default class EntitiesManager {
 		this.tempEntities = {};
 		this.lastUpdateTempEntities = {};
 		load(this);
-		scheduler(this);
+		this.sched = scheduler(this);
+	}
+	
+	destroy() {
+	
+		if (this.sched) {
+			
+			clearInterval(this.sched);	
+		}
 	}
 
 	getAll(em_type) {

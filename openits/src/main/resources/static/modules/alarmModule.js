@@ -12,7 +12,7 @@ export default class AlarmModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.uid = webix.uid();
-		this.userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+		this.userData = util.user.getUserData();
 		this.requestAlarm = true;
 		this.stompClient = undefined;
 		this.requestReport = true;
@@ -476,7 +476,7 @@ export default class AlarmModule extends GenericModule {
 					
 													if(Array.isArray(self.tableAlarmsModal.getSelectedIds()) && self.tableAlarmsModal.getSelectedIds().length > 0){
 															
-														let userData = util.user.auth();
+														let userData = util.user.getUserData();
 		
 														(new InputDialogBox(i18n.t("LBL_DIALOG_CREATE_MANUAL_ALARM"), i18n.t("LBL_ARE_YOU_SURE_CREATE_MANUAL_ALARM"), function(comments) {
 						

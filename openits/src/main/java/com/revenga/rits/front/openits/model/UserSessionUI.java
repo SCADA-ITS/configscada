@@ -1,10 +1,9 @@
 package com.revenga.rits.front.openits.model;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.persistence.Entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -26,16 +25,20 @@ public class UserSessionUI implements Serializable {
 	public static final String LOGOUT = "LOGOUT";
 	public static final String UNAUTHORIZED = "UNAUTHORIZED";
 	
+	public static final String USER_FIELD_ID = "id";
+	public static final String USER_FIELD_USER = "name";
+	public static final String USER_FIELD_PASSWORD = "password";
+	public static final String USER_FIELD_LOCKED_UNTIL = "lockedUntil";
+	public static final String USER_FIELD_PASSWORD_EXPIRED_AT = "passwordExpiredAt";
+	public static final String USER_FIELD_ALLOW_MULTIPLE_SESSIONS = "allowMultipleSessions";
+	public static final String USER_FIELD_SESSION_EXPIRE_TIME_S = "sessionExpireTimeS";
+	
 	public static final Integer SECURE_TOKEN_LENGTH = 20;
 	
-	private String userId;
+	private Map<String, Object> user;
 	private String sessionId;
 	private Long loginSince;
 	private String access;
-	private String userName;
-	@JsonIgnore
 	private Long validUntil;
-	@JsonIgnore
-	private Long sessionExpireTimeS;
 }
 

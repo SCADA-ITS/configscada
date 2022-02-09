@@ -1,26 +1,19 @@
 package com.revenga.rits.front.openits.service;
 
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.JobBuilder.newJob;
-import static org.quartz.TriggerBuilder.newTrigger;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.quartz.CronTrigger;
-import org.quartz.Job;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
@@ -29,8 +22,6 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VO2UIAdapter;
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
-import com.revenga.rits.front.openits.scheduler.ScheduledEntitiesResositoryJob;
-import com.revenga.rits.front.openits.util.ConfigProperty;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.VoEntity;
 import com.revenga.rits.front.openitsdao.service.VoEntityService;
@@ -40,17 +31,14 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-public class CacheManager {
+public class CacheManager extends FrontManager {
 	
-	protected static final String FILE_DATASOURCES_CONSTANTS = "datasources.properties";
-	
-	private static Map<String, String> props = ConfigProperty.getInstance().getProperties(FILE_DATASOURCES_CONSTANTS);
-	
-	private static final Boolean CACHE_ENABLED = props.get("cache.enabled").equals("true");
+	private static final String CACHE_ENABLED = props.get("cache.enabled");
 	private static final String CACHE_CRON = props.get("cache.cron");
+	
 	private static final String CACHE_DATA_SOURCES = props.get("cache.datasources");
-	private static final Integer CACHE_RETRY_TIMES = Integer.valueOf(props.get("cache.retry.times"));
-	private static final Integer CACHE_RETRY_TIMEOUT_SECS = Integer.valueOf(props.get("cache.retry.timeout_secs"));
+	private static final String CACHE_RETRY_TIMES = props.get("cache.retry.times");
+	private static final String CACHE_RETRY_TIMEOUT_SECS = props.get("cache.retry.timeout_secs");
 	
 	@Autowired
 	VODataSourceAdapter voDataSourceAdapter;
@@ -65,35 +53,43 @@ public class CacheManager {
 	
 	@Getter
 	List<VoEntity> voEntities;
-
-	Scheduler scheduler;
-
-	public void start() {
+	
+	@PostConstruct
+	private void afterLoad() {
 		
-		if (!CACHE_ENABLED.booleanValue()) {
-			
-			return;
-		}
+		this.enabled = CACHE_ENABLED.equals("true");
+		this.cronExpression = CACHE_CRON;
+	}
+	
 		
-		log.info("Enabled cache for entities");
+	@Override
+	protected void load() {
 		
 		cacheVOEntities();
+	}
+	
+	private void cacheVOEntities() {
 		
-		initQuartzScheduler();
+		this.voEntities = voEntityService.getAll();
+	}
+	
+	@Override
+	protected void launchScheduled() {
 		
-		launchScheduledCache();
-		
-		// All of the jobs have been added to the scheduler, but none of the jobs
-	    // will run until the scheduler has been started
 		try {
-			if (!scheduler.isStarted()) {
-				
-				scheduler.start();
-			}
-		} catch (SchedulerException e1) {
-			log.error(e1.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e1));
+			
+			SchedulerFactory sf = new StdSchedulerFactory();
+			scheduler = sf.getScheduler();
+			
+		} catch (SchedulerException e) {
+			
+			log.error(e.getMessage());
+			log.debug(ExceptionUtils.getStackTrace(e));
 		}
+	}
+	
+	@Override
+	protected void afterStart() {
 		
 		(new Thread() {
 			
@@ -110,72 +106,7 @@ public class CacheManager {
 				}
 			}
 		}).start();
-	}
-	
-	private void cacheVOEntities() {
 		
-		this.voEntities = voEntityService.getAll();
-	}
-	
-	private void initQuartzScheduler() {
-		
-		try {
-			
-			SchedulerFactory sf = new StdSchedulerFactory();
-			scheduler = sf.getScheduler();
-			
-		} catch (SchedulerException e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		}
-	}
-	
-	private void launchScheduledCache() {
-		
-		try {
-			
-			// First we must get a reference to a scheduler
-
-			scheduler.getContext().put(this.getClass().getSimpleName(), this);
-			createJob(ScheduledEntitiesResositoryJob.class, CACHE_CRON);
-			
-		} catch (SchedulerException e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		}
-	}
-	
-	private void createJob(Class<? extends Job> jobClass, String cronExpression) {
-		
-		try {
-			
-			// jobs can be scheduled before sched.start() has been called
-			// job 1 will run every cron value
-			
-			JobDetail job = newJob(jobClass).withIdentity("job" + jobClass.getSimpleName(), "group" + jobClass.getSimpleName()).build();
-			
-			if (!StringUtils.isEmpty(cronExpression)) {
-				
-				CronTrigger trigger = newTrigger().withIdentity("trigger" + jobClass.getSimpleName(), "group" + jobClass.getSimpleName())
-						.withSchedule(cronSchedule(cronExpression)).build();
-				
-				Date dt = scheduler.scheduleJob(job, trigger);
-				
-				log.debug(job.getKey() + " has been scheduled to run at: " + dt + " and repeat based on expression: "
-						+ trigger.getCronExpression());
-			}
-			else {
-				
-				log.debug(job.getKey() + " is not scheduled");
-			}
-			
-		} catch (SchedulerException e) {
-			
-			log.error(e.getMessage());
-			log.debug(ExceptionUtils.getStackTrace(e));
-		}
 	}
 	
 	public Object getEntitiesCached(Integer entityId) {
@@ -231,7 +162,7 @@ public class CacheManager {
 				
 				Arrays.stream(datasources).forEach(dataSourceId -> {
 					
-					int retries = (int) CACHE_RETRY_TIMES;
+					int retries = Integer.parseInt(CACHE_RETRY_TIMES);
 					Object data = null;
 					
 					do {
@@ -268,7 +199,7 @@ public class CacheManager {
 									log.warn("Cached datasource " + dataSource.getId() + " [" + dataSource.getName()
 											+ "]: Not response. Try again in " + CACHE_RETRY_TIMEOUT_SECS + " secs...");
 									
-									Thread.sleep(CACHE_RETRY_TIMEOUT_SECS);
+									Thread.sleep(Long.parseLong(CACHE_RETRY_TIMEOUT_SECS));
 								}
 							}
 							

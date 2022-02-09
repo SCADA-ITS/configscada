@@ -50,7 +50,7 @@ export default class PlanModule extends GenericModule {
 			function executePlan() {
 				
 				const LOG_TYPE_PLANS = LogType.LOG_TYPE_PLANS;
-				let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+				let userData = util.user.getUserData();
 				let auditLogs = [];
 				prepareData(onDataPrepared);
 				

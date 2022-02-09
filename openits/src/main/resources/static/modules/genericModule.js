@@ -113,5 +113,8 @@ export default class GenericModule {
 	runOne(method) {
 		return this[method]();
 	}
-
+	
+	destroy() {
+		
+	}
 }

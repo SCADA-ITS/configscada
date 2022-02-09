@@ -1,5 +1,8 @@
+import { util } from "../lib/util.js";
 import GenericModule from "../modules/genericModule.js";
 import UserControlPanel  from "../component/general/userControlPanel.js";
+import MessageBox  from "../component/messageBox.js";
+import SubscriptorService from "./subscriptorService.js";
 
 export default class UserService extends GenericModule {
 	
@@ -10,10 +13,16 @@ export default class UserService extends GenericModule {
 		this.module = module;
 		this.config = module.config;
 		
-		this.userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
-		
-		this.users = {};
-		this.stomp = {};
+		this.userData = util.user.getUserData();
+		this.keepAliveInterval = undefined;
+	}
+	
+	destroy() {
+	
+		if (this.keepAliveInterval) {
+			
+			clearInterval(this.keepAliveInterval);	
+		}
 	}
 	
 	getView() {
@@ -32,7 +41,6 @@ export default class UserService extends GenericModule {
 			id: "icon-user-service", 
 			view: "icon", 
 			css: "user-template",
-			//width: 75,
 			badge: "",
 			icon: "mdi mdi-account-circle", 
 			value:"User",
@@ -48,50 +56,131 @@ export default class UserService extends GenericModule {
 	loadData() {
 		
 		let self = this;
-		let moduleValue = this.module.moduleValues.find(e => e.moduleParam.id === PARAM_MODULE_TYPE_SERVICE_CONFIG);
+		let subscriptorService = window.sm.getService(Services.SUBSCRIPTOR_SERVICE);
 		
-		if (moduleValue != undefined) {
-			
-			if (!window.userControlPanel) {
+		if (!window.userControlPanel && subscriptorService) {
 
-				window.userControlPanel = new UserControlPanel(this.config);
-			}
+			window.userControlPanel = new UserControlPanel(self.config);
 			
-			if ($$("icon-user-service")) {
+			if (!util.ui.isExternal() && $$("icon-user-service")) {
 				
 				$$("icon-user-service").attachEvent("onItemClick", function(id, e) {
-
-					self.callUserControlPanel();
+	
+					if (window.userControlPanel.hidden()) {
+						window.userControlPanel.show();
+					} else {
+						window.userControlPanel.hide();
+					}
 				});	
-			}
 			
-			
-			this.users.stats = {};
-			
-			if (moduleValue.value) {
-			
-				this.users.config = JSON.parse(moduleValue.value);	
-			}
-			
-			this.updateStatistics(); 
-		}
-	}
-	
-	updateStatistics() {
-	
-		this.updateUsers();
-	}
-	
-	updateUsers() {
-		
-	}
-	
-	callUserControlPanel() {
+				let userData = util.user.getUserData();
+				let mainScreen = $$("mainscreen");
+				
+				if (userData) {
+					
+					self.keepAliveInterval = setInterval(function() {
 
-		if (window.userControlPanel.hidden()) {
-			window.userControlPanel.show();
-		} else {
-			window.userControlPanel.hide();
+						util.user.keepAlive(
+							
+							function(sessionData) {
+								
+								if (sessionData) {
+									
+									if (sessionData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
+										
+										webix.storage.session.put(SESSION_STORAGE_SESSION_DATA, sessionData);	
+									}
+									else {
+										
+										if (self.keepAliveInterval) {
+				
+											clearInterval(self.keepAliveInterval);	
+										}
+										
+										let labelMsg = LOGIN_MESSAGE[sessionData.access].label;
+										
+										subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_UNAUTHORIZED, "");
+
+										if (mainScreen) {
+											
+											webix.ui(util.ui.getViewLogout(), mainScreen);
+										}
+										
+										
+										(new MessageBox(MessageBox.WARN, i18n.t(labelMsg),  
+											function onAccept() {
+												
+												util.user.closeSession();
+											}
+										)).show();
+									}
+								}
+							},
+							function(error) {
+								
+								subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_UNAUTHORIZED, "");
+								
+								if (self.keepAliveInterval) {
+				
+									clearInterval(self.keepAliveInterval);	
+								}
+								
+								if (mainScreen) {
+											
+									webix.ui(util.ui.getViewLogout(), mainScreen);
+								}
+								
+								(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_WITHOUT_COMM"),  
+									function onAccept() {
+										
+										util.user.closeSession();
+									}
+								)).show();
+							}
+						)
+							
+					}, self.config.keepAliveSecs * 1000);
+					
+					if (userData.sessionExpireTimeS > 0) {
+					
+						idle({
+							onIdle: function () {
+								
+								subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "Exceeded idle time");
+								
+								if (mainScreen) {
+											
+									webix.ui(util.ui.getViewLogout(), mainScreen);
+								}
+								
+								if (self.keepAliveInterval) {
+				
+									clearInterval(self.keepAliveInterval);	
+								}
+								
+								util.user.logout(
+									
+									function onResponse(userSession) {
+										
+										(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME"),  
+											function onAccept() {
+												
+												util.user.closeSession();	
+											}
+										)).show();
+									}
+								);
+						  	},
+							idle: userData.sessionExpireTimeS * 1000
+						}).start();	
+					}
+				}
+				
+				window.addEventListener("beforeunload", function (e) {        
+			      
+			    	subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "Main closed");
+			    });	
+			}
 		}
 	}
 }

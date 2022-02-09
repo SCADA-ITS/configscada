@@ -23,7 +23,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.config = module.config;
 		this.incidentReportContent = undefined;
 		
-		this.userData = util.user.auth();
+		this.userData = util.user.getUserData();
 		
 		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
 		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);

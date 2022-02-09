@@ -20,5 +20,6 @@
 		"incidentReportModule": {
 			"id": 1003
 		}
-	}
+	},
+	"keepAliveSecs": 60
 }

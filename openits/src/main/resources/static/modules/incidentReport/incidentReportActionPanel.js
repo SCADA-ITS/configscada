@@ -801,7 +801,6 @@ export default class IncidentReportActionPanel {
 
 				if (Array.isArray(logFiles) && logFiles.length > 0) {
 
-					//let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
 					let body = { "incidentReportLogs": [] };
 
 					logFiles.forEach(logFile => {

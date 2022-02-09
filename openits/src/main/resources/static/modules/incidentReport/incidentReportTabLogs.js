@@ -307,7 +307,7 @@ export default class IncidentReportTabLog {
 
 					let title = i18n.t("LBL_DIALOG_CREATE_LOG");
 					let text = i18n.t("LBL_DIALOG_CREATE_LOG_TEXT");
-					let userData = util.user.auth();
+					let userData = util.user.getUserData();
 					let logType = window.em.getByField(EntityType.LOG_TYPE, "id", self.config.logIncidentType);
 
 					let options = []

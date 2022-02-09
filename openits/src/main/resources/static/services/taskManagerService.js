@@ -174,7 +174,8 @@ export default class TaskManagerService extends GenericModule {
 		let params = {
 			width: w - (CONTAINER_MARGIN * 2),
 			height: isMaximized ? h - CONTAINER_MARGIN - 100 : h - CONTAINER_MARGIN,
-			module: genericModule.module.id
+			module: genericModule.module.id,
+			sessionUID: window.sessionUID
 		};
 		
 		if (genericModule.moduleAction && Object.keys(genericModule.moduleAction).length > 0 && Object.getPrototypeOf(genericModule.moduleAction) === Object.prototype) {

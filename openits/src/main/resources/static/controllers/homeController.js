@@ -8,26 +8,22 @@ import WindowManager from "../managers/windowManager.js";
 import ServiceManager from "../managers/serviceManager.js";
 import SplashScreen from "../component/general/splashScreen.js";
 
-var userData = util.user.auth();
+util.user.auth();
+
+var userData = util.user.getUserData();
 
 if (!userData) {
+	
 	window.location = "./login.html";
 }
+
+window.sessionUID = webix.uid();
+
 document.getElementById("pagestyle").setAttribute("href", "./lib/webix/skins/material.css");
 
 window.i18n = new I18n(userData.locale);
 
 window.splashScreen = new SplashScreen(null);
-
-//window.extenalizeTab = function(tabId, module, moduleAction, args) {
-//	
-//	util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-//	
-//	if ($$(MAIN_TAB_ID)) {
-//		
-//		$$(MAIN_TAB_ID).removeView(tabId.replace("tab", "tab_body"));
-//	}
-//}
 
 window.onload = function() {
 
@@ -99,11 +95,10 @@ function initialize() {
 
 	let main_screen = {
 		type: "space",
-
 		cols: [
-			//{ view: "template", role: "placeholder", borderless: 1, width: 10 },
 			{ width: 0.1 },
 			{
+				id: "mainscreen",
 				rows: [
 					{
 						height: 80,

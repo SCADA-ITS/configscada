@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -14,22 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.revenga.rits.front.openits.model.GridUI;
+import com.revenga.rits.front.openits.util.GroovyManager;
 import com.revenga.rits.front.openitsdao.model.AdapterDataSource;
 import com.revenga.rits.front.openitsdao.model.DataSource;
 import com.revenga.rits.front.openitsdao.model.Grid;
 
 import groovy.lang.GroovyObject;
-
-import com.revenga.rits.front.openits.model.GridUI;
-import com.revenga.rits.front.openits.util.GroovyManager;
-
 import lombok.extern.log4j.Log4j2;
 
 @Component
 @Log4j2
 public class GridAdapter {
 	
-//	private static final String DATA_SOURCE_TYPE_GRAPHQL = "datasouce.type.graphql";
 	private static final String METHOD_TO_GRID_DATA = "toGridData";
 	
 	private static final int ADAPTER_DATA_SOURCE_TYPE_GROOVY = 1;
@@ -45,15 +40,6 @@ public class GridAdapter {
 	
 	@Autowired
 	GroovyManager groovyManager;
-	
-//	private Integer dataSourceTypeGraphql;
-	
-	@PostConstruct
-	private void initialize() {
-		
-//		this.dataSourceTypeGraphql = Integer.parseInt(env.getProperty(DATA_SOURCE_TYPE_GRAPHQL));
-	}
-	
 	
 	public GridUI getData(Grid grid, String params) {
 		
@@ -104,7 +90,7 @@ public class GridAdapter {
 						
 						if (!CollectionUtils.isEmpty(items)) {
 														
-							// TODO: Load from groovy file here
+							// Load from groovy file here
 							String groovyFile = adapterDataSource.getValue();
 							
 							GroovyObject groovyObj = groovyManager.getGroovyObject(groovyFile);
@@ -122,7 +108,7 @@ public class GridAdapter {
 								}
 							}
 							
-							// TODO: Test groovy from class here
+							// Test groovy from class here
 //							AdapterGridGeneric adapterGridGeneric = new AdapterGridGeneric(log);
 //							
 //							List<Map<String, Object>> gridData = adapterGridGeneric.toGridData(vo2uiAdapter,

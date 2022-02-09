@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import com.revenga.rits.front.openits.service.CacheManager;
+import com.revenga.rits.front.openits.service.SessionManager;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +39,9 @@ public class AppInfra {
 	
 	@Autowired
 	CacheManager entitiesManager;
+	
+	@Autowired
+	SessionManager sessionManager;
 	
 		
 	public static boolean isDebugging() {
@@ -63,6 +67,8 @@ public class AppInfra {
 		initShutdownHook();
 		
 		entitiesManager.start();
+		
+		sessionManager.start();
 	}
 	
 	private void initShutdownHook() {

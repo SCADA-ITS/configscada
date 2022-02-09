@@ -1,5 +1,6 @@
 import { util } from "../../lib/util.js";
 import GenericControlPanel from "./genericControlPanel.js";
+import SubscriptorService from "../../services/subscriptorService.js";
 
 export default class UserControlPanel extends GenericControlPanel {
 
@@ -41,25 +42,27 @@ export default class UserControlPanel extends GenericControlPanel {
 
 				if (result === "0") {
 
-					let response = webix.ajax().sync().post(appConfig.restUrl + "auth/logout");
-
-					if (response != undefined) {
-
-						let login = JSON.parse(response.responseText);
-
-						if (login.access === "LOGOUT") {
-
-							webix.storage.session.remove("loginSession");
-							webix.storage.session.remove("app_user_language");
-							webix.storage.session.remove("app_user_name");
-							webix.storage.session.remove("app_user_permissions");
-							webix.storage.session.remove(SESSION_STORAGE_USER_DATA);
-							window.location = "./login.html";
+					util.user.logout(
+						
+						function onResponse(userSession) {
+							
+							if (userSession && userSession.access === LOGIN_MESSAGE.LOGOUT.id) {
+								
+								util.user.closeSession();
+							
+								let subscriptorService = window.sm.getService(Services.SUBSCRIPTOR_SERVICE);
+								
+								if (subscriptorService) {
+									
+									subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "");
+								}
+							}
 						}
-					}
+					);
 				}
 			}
 		});
+		
 	}
 
 	createView() {
@@ -67,7 +70,14 @@ export default class UserControlPanel extends GenericControlPanel {
 		// for using the object inside callbacks
 		let self = this;
 		let panelWidth = 400;
-		let userData = webix.storage.session.get(SESSION_STORAGE_USER_DATA);
+		let sessionData = webix.storage.session.get(SESSION_STORAGE_SESSION_DATA);
+		let userData = undefined;
+		
+		if (sessionData && sessionData.user) {
+			
+			userData = sessionData.user;	
+		}
+		
 
 		let pendingTasksView = {
 			view: "toolbar",
@@ -326,7 +336,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 									onItemClick() {
 
-										let args = { selectedPks: [util.user.auth().id] };
+										let args = { selectedPks: [util.user.getUserData().id] };
 
 										self.doAction(self.config.module.user.id, self.config.module.user.action.changePassword, args);
 										self.hide();
@@ -344,7 +354,7 @@ export default class UserControlPanel extends GenericControlPanel {
 
 									onItemClick() {
 
-										let args = { selectedPks: [util.user.auth().id] };
+										let args = { selectedPks: [util.user.getUserData().id] };
 
 										self.doAction(self.config.module.user.id, self.config.module.user.action.settings, args);
 										self.hide();

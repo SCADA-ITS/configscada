@@ -617,7 +617,7 @@ export default class AlarmFilteredWizard {
 
 								if (pos === parent.config.summaryStepPosition) {
 
-									let user = JSON.parse(sessionStorage.getItem('user.data'));
+									let user = util.user.getUserData();
 									let date = util.toLocaleString(self.calendar.getSelectedDates().from.getTime() / 1000);
 
 									self.arrSummary.alarmDisabled = self.disableAlarm;

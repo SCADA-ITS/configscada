@@ -32,7 +32,7 @@ export default class CronUi {
 
 		let self = this;
 		let editCronExpression = $$(self.input).elements.cronExpression.data.value;
-		let userData = util.user.auth();
+		let userData = util.user.getUserData();
 		let userLocale = userData.locale.code.split("_")[0];
 		let localLocale = moment();
 

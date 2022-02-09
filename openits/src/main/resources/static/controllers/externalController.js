@@ -4,11 +4,9 @@ import EntitiesManager from "../managers/entitiesManager.js";
 import WindowManager from "../managers/windowManager.js";
 import ServiceManager from "../managers/serviceManager.js";
 
-
-
 window.onload = function() {
 	
-	var userData = util.user.auth();
+	var userData = util.user.getUserData();
 
 	if (userData) {
 		
@@ -29,6 +27,8 @@ window.onload = function() {
 				
 		let containerHeight = urlParams.get('height') ? parseInt(urlParams.get('height')) : 1024;
 		let containerWidth = urlParams.get('width') ? parseInt(urlParams.get('width')) : 768;
+		
+		window.sessionUID = urlParams.get('sessionUID');
 		
 		let frameHeight = "";
 		let frameWidth = "";

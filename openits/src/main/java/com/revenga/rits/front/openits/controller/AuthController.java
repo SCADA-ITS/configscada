@@ -1,6 +1,7 @@
 package com.revenga.rits.front.openits.controller;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -25,12 +26,14 @@ import com.revenga.rits.front.openits.model.UserSessionUI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping(value = "/api/v1/auth", produces = { "application/json", "application/xml" })
 @Api(value = "Auth", tags = { "AUTH" })
+@Log4j2
 public class AuthController {
 	
 	@Autowired
@@ -44,6 +47,8 @@ public class AuthController {
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
 				.collect(Collectors.toMap(h -> h.toLowerCase(), attr.getRequest()::getHeader));
+		
+		log.info("login session: " + httpSession.getId());
 	    
 		return new ResponseEntity<>(sessionBO.login(headers, httpSession), HttpStatus.OK);
 	}
@@ -58,9 +63,9 @@ public class AuthController {
 		return new ResponseEntity<>(sessionBO.logout(httpSession), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/swagger/{user}/{password}")
+	@GetMapping(value = "/swagger/login/{user}/{password}")
 	@ApiOperation(value = "swagger")
-	public ResponseEntity<UserSessionUI> swagger(
+	public ResponseEntity<UserSessionUI> loginSwagger(
 			@ApiParam(name = "user", type = "String", value = "user name", example = "pepe", required = true) @PathVariable String user,
 			@ApiParam(name = "password", type = "String", value = "pass", example = "1234", required = true) @PathVariable String password) {
 
@@ -70,17 +75,36 @@ public class AuthController {
 		return new ResponseEntity<>(sessionBO.login(user, password, httpSession), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/swagger/logout")
+	@ApiOperation(value = "swagger")
+	public ResponseEntity<UserSessionUI> logoutSwagger() {
+		
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpSession httpSession = attr.getRequest().getSession(true);
+
+		return new ResponseEntity<>(sessionBO.logout(httpSession), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/keep_alive")
 	@ApiOperation(value = "Keep alive", notes = "Get generic data by id")
 	public ResponseEntity<UserSessionUI> keepAlive() {
 		
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession httpSession = attr.getRequest().getSession(true);
-		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
-				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
+//		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
+//				.collect(Collectors.toMap(h -> h, attr.getRequest()::getHeader));
 		
-		UserSessionUI userSession = sessionBO.keepAlive(headers, httpSession);
+		UserSessionUI userSession = sessionBO.keepAlive(httpSession);
 		
 		return new ResponseEntity<>(userSession, userSession != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
+	}
+	
+	@GetMapping(value = "/sessions")
+	@ApiOperation(value = "sessions", notes = "Get list of active sessions")
+	public ResponseEntity<List<UserSessionUI>> getSessions() {
+		
+		List<UserSessionUI> sessions = sessionBO.getUserSessions();
+		
+		return new ResponseEntity<>(sessions, sessions != null ? HttpStatus.OK : HttpStatus.FORBIDDEN);
 	}
 }
