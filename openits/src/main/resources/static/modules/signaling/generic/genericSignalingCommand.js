@@ -24,14 +24,29 @@ export default class GenericSignalingCommand {
 
 			header: function() {
 
-				let tooltip = "";
+				const TAB_SIZES = {
+					TAB_WIDTH: 180,
+					TABBAR_WIDTH_PROPORTION: 0.953
+				};
 
-				if (self.isEditPlanOrder && Array.isArray(self.commandElementType.commandElementTypeParams)) {
+				let totalTabs = self.parent.element.commandElements.length;
+				let maxWidth = "";
+				let idHtml = "view-generic-signaling-command-body-"+ self.commandElementType.id.split(":").join("") + "-" + self.uid;
 
-					tooltip = self.commandElementType.labelDescription ? i18n.t(self.commandElementType.labelDescription) : i18n.t(self.commandElementType.labelAlias);
+				if ($$(self.uid)) {
+
+					let tabbarWidth = $$(self.uid).getParentView().$width * TAB_SIZES.TABBAR_WIDTH_PROPORTION;
+
+					if (totalTabs * TAB_SIZES.TAB_WIDTH > tabbarWidth) {
+
+						maxWidth = "inherit";
+					}
 				}
 
-				return `<div title="${self.isEditPlanOrder ? tooltip : ''}"><span>${i18n.t(self.commandElementType.labelAlias)}</span></div>`;
+				return `<div title="${i18n.t(self.commandElementType.labelAlias)}" id='${idHtml}' style='width:${maxWidth}; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
+							<span>${i18n.t(self.commandElementType.labelAlias)}</span>
+						</div>`;
+
 			}(),
 			body: drawComponents()
 		}

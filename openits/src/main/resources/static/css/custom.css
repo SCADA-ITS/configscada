@@ -411,6 +411,10 @@ p, input, textarea {
 	background-color: var(--blue-mid-opacity-2);
 }
 
+.main-tab .webix_all_tabs .webix_tab_more_icon .webix_icon{
+	color: #babdb6;
+}
+
 .webix_pager_item_selected{
 	color: rgb(71, 84, 102, 0.8) !important;
 	background-color: var(--blue-mid-opacity-2) !important;
@@ -3203,9 +3207,12 @@ p, input, textarea {
 }
 
 .auxiliary-tab .webix_all_tabs .webix_item_tab {
-	width: 180px !important;
+	max-width: 180px !important;
 	background-color: transparent;
 	font-size: 13px;
+	overflow: hidden; 
+	white-space: nowrap; 
+	text-overflow: ellipsis;
 }
 
 .auxiliary-tab .webix_all_tabs .webix_tab_filler {
@@ -4040,3 +4047,4 @@ audio {
 .equipment-measures-pager .webix_el_box .webix_button {
 	color: var(--blue-mid2-opacity-5);
 }
+
