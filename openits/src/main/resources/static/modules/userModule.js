@@ -34,6 +34,8 @@ export default class UserModule extends GenericModule {
 		this.rolPermissions = [];
 
 		this.userSystem = false;
+		
+		this.userData = util.user.getUserData();
 	}
 
 
@@ -213,9 +215,9 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let systemUser = self.args.selectedPks.find(e => e === SYSTEM_PROFILES.USER);
+				let changesNotAllowed = self.args.selectedPks.find(e => (e === SYSTEM_PROFILES.USER) || (e === self.userData.id));
 
-				if (systemUser) {
+				if (changesNotAllowed) {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
 					ms.show();
@@ -250,9 +252,9 @@ export default class UserModule extends GenericModule {
 
 			if (self.args.selectedPks != undefined && self.args.selectedPks[0] && self.args.selectedPks.length > 0) {
 
-				let systemUser = self.args.selectedPks.find(e => e === SYSTEM_PROFILES.USER);
+				let changesNotAllowed = self.args.selectedPks.find(e => (e === SYSTEM_PROFILES.USER) || (e === self.userData.id));
 
-				if (systemUser) {
+				if (changesNotAllowed) {
 
 					let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_NOT_ALLOWED_TO_SELECT_SYSTEM_USER_DESCRIPTION"), null, null);
 					ms.show();
