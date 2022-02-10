@@ -2,6 +2,8 @@ import { CONFIG } from "./loginController_conf.js";
 
 let uid = webix.uid();
 
+let isValidating = false;
+
 const LANGUAGE = navigator.language || navigator.userLanguage;
 
 webix.ready(function() {
@@ -112,12 +114,8 @@ function getForm() {
 							</div>`,
 				on: {
 					onEnter: function(ev) {
-						let validation = $$(loginForm.id).validate();
 
-						if (validation) {
-
-							login($$(loginForm.id).getValues());
-						}
+						webix.html.triggerEvent($$("btn-auth-" + uid).getInputNode(), "MouseEvents", "click");
 					},
 					onKeyPress: function(code, e) {
 						$$("alertText-" + uid).config.label = "";
@@ -145,12 +143,8 @@ function getForm() {
 							</div>`,
 				on: {
 					onEnter: function(ev) {
-						let validation = $$(loginForm.id).validate();
 
-						if (validation) {
-
-							login($$(loginForm.id).getValues());
-						}
+						webix.html.triggerEvent($$("btn-auth-" + uid).getInputNode(), "MouseEvents", "click");
 					},
 					onKeyPress: function(code, e) {
 												
@@ -180,22 +174,19 @@ function getForm() {
 				on: {
 					onItemClick: function() {
 
-						let validation = $$(loginForm.id).validate();
+						if (!isValidating) {
+							
+							let validation = $$(loginForm.id).validate();
 
-						if (validation) {
-
-							login($$(loginForm.id).getValues());
+							if (validation) {
+								
+								login($$(loginForm.id).getValues());
+							}	
 						}
-
-
 					},
 					onEnter: function(ev) {
-						let validation = $$(loginForm.id).validate();
-
-						if (validation) {
-
-							login($$(loginForm.id).getValues());
-						}
+						
+						webix.html.triggerEvent(this.getInputNode(), "MouseEvents", "click");
 					}
 				}
 			}
@@ -225,6 +216,8 @@ function getForm() {
 
 function validating(inProcess) {
 	
+	isValidating = inProcess;
+	
 	let messageTranslate = translateLabel("LBL_USER_AUTHENTICATION");
 
 	if (inProcess) {
@@ -250,52 +243,51 @@ function login(values) {
 		const encodedString = btoa((values.user + ':' + values.password).toString('utf8')).toString('base64');
 		//let loginResponse = webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).sync().post(appConfig.restUrl + "auth/login");
 		
-		webix.delay(function() {
-
-			webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(appConfig.restUrl + "auth/login")
-				.then(
-					function(loginResponse) {
+		console.log("request");
+		
+		webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).post(appConfig.restUrl + "auth/login")
+			.then(
+				function(loginResponse) {
+			
+					if (loginResponse != undefined) {
+			
+						let loginData = loginResponse.json();
 				
-						if (loginResponse != undefined) {
-				
-							let loginData = loginResponse.json();
-					
-							if (loginData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
+						if (loginData.access === LOGIN_MESSAGE.AUTHORIZED.id) {
+							
+							if (loginData) {
 								
-								if (loginData) {
-									
-									access(loginData);							
-								}
-					
-							} else {
-								
-								labelAlertMessage = LOGIN_MESSAGE[loginData.access].label;
-					
-								let translateMessage = translateLabel(labelAlertMessage);
-					
-								$$("alertText-" + uid).config.label = translateMessage;
-								webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
-								$$("alertText-" + uid).refresh();
-					
-								$$("password-" + uid).getNode().querySelector('#password-input').focus();
-								
-								validating(false);
+								access(loginData);							
 							}
+				
+						} else {
+							
+							labelAlertMessage = LOGIN_MESSAGE[loginData.access].label;
+				
+							let translateMessage = translateLabel(labelAlertMessage);
+				
+							$$("alertText-" + uid).config.label = translateMessage;
+							webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+							$$("alertText-" + uid).refresh();
+				
+							$$("password-" + uid).getNode().querySelector('#password-input').focus();
+							
+							validating(false);
 						}
-					},
-					function(loginError) {
-					
-						let translateMessage = translateLabel(labelAlertMessage);
-					
-						$$("alertText-" + uid).config.label = translateMessage;
-						webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
-						$$("alertText-" + uid).refresh();
-						console.error(loginError);
-						
-						validating(false);
 					}
-				);
-		}, null, null, 1);
+				},
+				function(loginError) {
+				
+					let translateMessage = translateLabel(labelAlertMessage);
+				
+					$$("alertText-" + uid).config.label = translateMessage;
+					webix.html.removeCss($$("alertText-" + uid).getNode(), "alert-text-authorized");
+					$$("alertText-" + uid).refresh();
+					console.error(loginError);
+					
+					validating(false);
+				}
+			);
 		
 	
 		

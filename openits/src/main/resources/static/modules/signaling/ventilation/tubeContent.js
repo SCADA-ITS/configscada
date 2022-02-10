@@ -128,6 +128,11 @@ export default class TubeContent {
 														if (self.tubeFansDataTable) {
 									
 															self.tubeFansDataTable.callbacks();
+															
+															if (Array.isArray(self.tubeFans)) {
+																
+																self.tubeFansDataTable.add(self.tubeFans);	
+															}
 									
 															if (self.enabledFanIds) {
 									
@@ -829,7 +834,8 @@ export default class TubeContent {
 
 				function getTable() {
 
-					let data = self.tubeFans;
+					//let data = self.tubeFans;
+					let data = [];
 					let metadata = self.fanGrid.metadata;				
 
 					let events = {};
@@ -850,6 +856,20 @@ export default class TubeContent {
 							position: metadata.gridCommands.length + 1,
 							showText: false,
 							itemRequired: false,
+							unselectAllAfter: true
+						});
+						
+						let infoButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
+						
+						metadata.gridCommands.push({
+							id: infoButtonId,
+							default_: true,
+							icon: "mdi mdi-information-outline",
+							label: "LBL_INFO",
+							multiselect: false,
+							position: 0,
+							showText: false,
+							itemRequired: true,
 							unselectAllAfter: true
 						});
 						
@@ -896,6 +916,14 @@ export default class TubeContent {
 								clearGrid();
 							}
 						});
+						
+						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+							commandId: infoButtonId,
+							function: () => {
+	
+								openEquipmentViewer();
+							}
+						});
 					}
 
 					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
@@ -914,6 +942,30 @@ export default class TubeContent {
 					});
 
 					checkDisableChangeStatusButton();	
+				}
+				
+				function openEquipmentViewer() {
+					
+					let selectedItems = self.tubeFansDataTable.getSelectedItems();
+					
+					if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+						
+						let selectedItem = selectedItems[0];
+						
+						if (selectedItem) {
+							
+							let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
+
+							if (module) {
+		
+								let moduleAction = { id: self.parent.config.equipmentViewer };
+								let args = { selectedPks: [selectedItem.id] };
+		
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+							}	
+						}
+					}
+						
 				}
 
 				function getBottom() {

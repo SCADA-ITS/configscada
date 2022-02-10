@@ -7,6 +7,7 @@
 	"containerAction": {
 	    "tunnel": 101401
 	},
+	"equipmentViewer": 101401,
 	"restEndpoints": {
 		"elementsByIdType": "element_types/${id}/elementsWithChilds",
 		"elementById": "elements/${id}",
