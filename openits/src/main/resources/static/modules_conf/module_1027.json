@@ -37,7 +37,7 @@
 			"width": 320,
 			"rows": 1
 		},
-		"elementTypes": ["ElementType:3","ElementType:20","ElementType:21","ElementType:19","ElementType:84","ElementType:85"]
+		"elementTypes": ["ElementType:18","ElementType:19","ElementType:20","ElementType:21"]
 	},
 	"ventilationStates":{
 		"ElementTypeState:2001:0" :{

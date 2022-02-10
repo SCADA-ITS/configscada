@@ -36,19 +36,19 @@ export default class IncidentReportActionPanel {
 		let onlyAutoassignIncident = false;
 		let currentUser = window.em.getByField(EntityType.USER, "id", self.incidentReport.currentUser.id);
 		let currentUserRole = currentUser.role.id;
-		
-		if((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) && (self.userData.id != currentUser.id) || self.assignAnotherPermissions)){
-			
+
+		if ((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) && (self.userData.id != currentUser.id) || self.assignAnotherPermissions)) {
+
 			changeAssignIncident = true;
-			
-			if(changeAssignIncident) {
-				
+
+			if (changeAssignIncident) {
+
 				onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
 			}
-		} 
-				
+		}
+
 		let viewActionPanel = {};
-		
+
 		viewActionPanel = {
 			id: "viewActionPanel-" + self.uid,
 			width: 300,
@@ -97,15 +97,19 @@ export default class IncidentReportActionPanel {
 														return true;
 													}
 												}
+
+											} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
+
+												return false;
 												
 											} else {
 
 												return true;
 											}
-											
+
 										} else {
-											
-											return true;											
+
+											return true;
 										}
 									})(),
 									height: 50,
@@ -134,7 +138,7 @@ export default class IncidentReportActionPanel {
 										onItemClick() {
 
 											let bCancel = false;
-											
+
 											if (!self.closed) {
 
 												if (self.incidentReport.confirm === true) {
@@ -146,11 +150,11 @@ export default class IncidentReportActionPanel {
 														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
 
 														if (comboCauseValue === "") {
-															
-															let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
+
+															let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_CAUSE_OF_INCIDENT_NOT_SELECTED_DESCRIPTION"), onAccept, null);
 															ms.show();
-															
-															function onAccept (){
+
+															function onAccept() {
 
 																$$("tab-details-" + self.uid).show();
 															};
@@ -178,16 +182,16 @@ export default class IncidentReportActionPanel {
 
 												} else {
 
-													let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+													let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
 													ms.show();
-													
+
 													function onAccept() {
 
 														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
 															id: self.incidentReport.id
 														});
 
-														self.parent.restAction(endpoint);														
+														self.parent.restAction(endpoint);
 													}
 												}
 											}
@@ -277,7 +281,7 @@ export default class IncidentReportActionPanel {
 				}
 			]
 		};
-		
+
 		function drawActionsButtons() {
 
 			let actionsButtons = { rows: [] };
@@ -324,7 +328,7 @@ export default class IncidentReportActionPanel {
 						showAlarms();
 					}
 				}
-			}; 	
+			};
 
 			if (self.config.action.loadIncidentInMap) {
 
@@ -365,13 +369,13 @@ export default class IncidentReportActionPanel {
 						}
 					}
 				};
-				
+
 				buttonsArray.push(camerasButton);
 				numberOfButtonsToDraw++;
 			}
 
 			buttonsArray.push(changeUserButton, showAlarmsButton);
-			
+
 			if (!self.incidentReport.confirm) {
 
 				changeIncidentButton = {
@@ -397,11 +401,11 @@ export default class IncidentReportActionPanel {
 
 			actionsButtons.rows.push({ height: 10 });
 
-			let elements = [];				
+			let elements = [];
 			let buttonsInToolbar = 0;
 			let toolbarsComplete = 0;
 			let toolbarsNeeded = Math.ceil(numberOfButtonsToDraw / 2);
-			
+
 			for (let button of buttonsArray) {
 
 				elements.push(button);
@@ -455,12 +459,12 @@ export default class IncidentReportActionPanel {
 					let toolbarsAllowed = TOOLBARS_ALLOWED - toolbarsNeeded;
 
 					for (let i = 1; i <= toolbarsAllowed; i++) {
-			
+
 						actionsButtons.rows.push({ height: 75 });
 					}
 				}
-			}				
-			
+			}
+
 			return actionsButtons;
 		}
 
@@ -684,8 +688,8 @@ export default class IncidentReportActionPanel {
 				}
 			}
 		}
-		
-		
+
+
 		function openMap() {
 
 			let containerId = $$(self.containerId).config.id;
@@ -853,16 +857,16 @@ export default class IncidentReportActionPanel {
 
 		function cancelIncidentReport() {
 
-			let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+			let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
 			ms.show();
-			
+
 			function onAccept() {
-				
+
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
 					id: self.incidentReport.id
 				});
 
-				self.parent.restAction(endpoint);				
+				self.parent.restAction(endpoint);
 			};
 		}
 
@@ -879,11 +883,11 @@ export default class IncidentReportActionPanel {
 
 				function onAcceptChangeLocation(selectedStretchId, selectedLocationId) {
 
-					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null);
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_CHANGE_CONFIRM_DESCRIPTION"), onAccept, null);
 					ms.show();
-					
+
 					function onAccept(res) {
-						
+
 						let body = {
 							id: self.incidentReport.id,
 							locationId: selectedLocationId,
@@ -893,7 +897,7 @@ export default class IncidentReportActionPanel {
 
 						let endpoint = util.fillTemplate(self.config.actionEndpoints.changeIncident, body);
 
-						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });						
+						webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
 					};
 				}
 			}
@@ -969,7 +973,7 @@ export default class IncidentReportActionPanel {
 		}
 
 
-		
+
 		return viewActionPanel;
 	}
 
