@@ -63,7 +63,6 @@ export let util = {
 
 			let viewModule;
 			let allowMultipleInstances = true;
-			let image = 'img/module/default.png';
 			let icon = 'img/module/default.png';
 			let color = '#464646';
 			let label = 'LBL_UNDEFINED';
@@ -79,7 +78,6 @@ export let util = {
 			if (module.windowValues) {
 
 				allowMultipleInstances = util.module.getWindowParamValue(module, WindowParam.ALLOW_MULTIPLE_INSTANCES, allowMultipleInstances) === 'true';
-				image = util.module.getWindowParamValue(module, WindowParam.IMAGE, image);
 				icon = util.module.getWindowParamValue(module, WindowParam.ICON, icon);
 				color = util.module.getWindowParamValue(module, WindowParam.COLOR, color);
 				label = util.module.getWindowParamValue(module, WindowParam.LABEL, label);
@@ -256,7 +254,6 @@ export let util = {
 
 			let viewModule;
 			let allowMultipleInstances = true;
-			let image = 'img/module/default.png';
 			let icon = 'img/module/default.png';
 			let color = '#464646';
 			let label = 'LBL_UNDEFINED';
@@ -268,7 +265,6 @@ export let util = {
 			if (module.windowValues && module.windowValues.length > 0) {
 
 				allowMultipleInstances = util.module.getWindowParamValue(module, WindowParam.ALLOW_MULTIPLE_INSTANCES, allowMultipleInstances) === 'true';
-				image = util.module.getWindowParamValue(module, WindowParam.IMAGE, image);
 				icon = util.module.getWindowParamValue(module, WindowParam.ICON, icon);
 				color = util.module.getWindowParamValue(module, WindowParam.COLOR, color);
 				label = util.module.getWindowParamValue(module, WindowParam.LABEL, label);
@@ -322,7 +318,7 @@ export let util = {
 //								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 //							</div>`,
 					header: `<div style='float: left; width: 250px;'>
-								<img class='tab-icon' src='${icon}'/>
+								<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
 								<span class='tab-text'>${tabLabel}</span>
 								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
