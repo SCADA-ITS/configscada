@@ -804,10 +804,14 @@ export default class TubeContent {
 						let elementsId = [];
 
 						for (let equipment of self.tubeEquipmentsNotFans) {
-
-							elementsId.push(equipment.child.id);
+														
+							let isIncluded = self.parent.config.viewEquipmentMeasures.elementTypes.find(elementType => elementType === equipment.child.elementType.id);
+							
+							if(isIncluded) {
+								
+								elementsId.push(equipment.child.id);								
+							} 
 						}
-
 						self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
 
 						viewContent.cells.push({

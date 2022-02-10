@@ -35,7 +35,8 @@
 			"combo": true,
 			"width": 320,
 			"rows": 1
-		}
+		},
+		"elementTypes": ["ElementType:3","ElementType:20","ElementType:21","ElementType:19"]
 	},
 	"params":{
 		"lightingRegimeConfig": "ElementTypeParam:2000:1:2",

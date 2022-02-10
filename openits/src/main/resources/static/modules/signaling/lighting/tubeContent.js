@@ -684,7 +684,12 @@ export default class TubeContent {
 			
 				for (let equipment of self.restTubeEquipments) {
 
-					elementsId.push(equipment.id);
+					let isIncluded = self.parent.config.viewEquipmentMeasures.elementTypes.find(elementType => elementType === equipment.elementType.id);
+
+					if (isIncluded) {
+
+						elementsId.push(equipment.id);
+					}
 				}
 
 				self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
