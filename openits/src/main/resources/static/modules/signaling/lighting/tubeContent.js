@@ -681,7 +681,7 @@ export default class TubeContent {
 			if (self.parent.config.viewEquipmentMeasures && self.parent.config.viewEquipmentMeasures.enabled === true) {
 
 				let elementsId = [];
-			
+
 				for (let equipment of self.restTubeEquipments) {
 
 					let isIncluded = self.parent.config.viewEquipmentMeasures.elementTypes.find(elementType => elementType === equipment.elementType.id);
@@ -692,12 +692,15 @@ export default class TubeContent {
 					}
 				}
 
-				self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
+				if (Array.isArray(elementsId) && elementsId.length > 0) {
 
-				viewContent.cells.push({
-					header: i18n.t("LBL_EQUIPMENT_MEASURES"),
-					body: self.equipmentMeasures.getView()
-				});
+					self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
+
+					viewContent.cells.push({
+						header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+						body: self.equipmentMeasures.getView()
+					});
+				}
 			}
 
 			return viewContent;

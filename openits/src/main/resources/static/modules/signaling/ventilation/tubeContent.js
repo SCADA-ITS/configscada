@@ -804,20 +804,24 @@ export default class TubeContent {
 						let elementsId = [];
 
 						for (let equipment of self.tubeEquipmentsNotFans) {
-														
-							let isIncluded = self.parent.config.viewEquipmentMeasures.elementTypes.find(elementType => elementType === equipment.child.elementType.id);
-							
-							if(isIncluded) {
-								
-								elementsId.push(equipment.child.id);								
-							} 
-						}
-						self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
 
-						viewContent.cells.push({
-							header: i18n.t("LBL_EQUIPMENT_MEASURES"),
-							body: self.equipmentMeasures.getView()
-						});
+							let isIncluded = self.parent.config.viewEquipmentMeasures.elementTypes.find(elementType => elementType === equipment.child.elementType.id);
+
+							if (isIncluded) {
+
+								elementsId.push(equipment.child.id);
+							}
+						}
+
+						if (Array.isArray(elementsId) && elementsId.length > 0) {
+
+							self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
+
+							viewContent.cells.push({
+								header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+								body: self.equipmentMeasures.getView()
+							});
+						}
 					}
 
 					return viewContent;
