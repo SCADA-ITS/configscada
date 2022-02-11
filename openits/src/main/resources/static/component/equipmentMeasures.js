@@ -597,38 +597,40 @@ export default class EquipmentMeasures {
 
 					for (let i = 0; i < tablesPages; i++) {
 
+						let buttonId = i + 1;
+						
 						pager.cols.push({
-							view: "button", id: i + 1, value: i + 1, width: 50, click: clickButton
+							view: "button", id: buttonId + "-" + self.uid, value: i + 1, width: 50, click: clickButton
 						});
 					}
 
 					pager.cols.unshift({
-						view: "button", id: "first", value: "<<", width: 50, click: clickButton
+						view: "button", id: "first-" + self.uid, value: "<<", width: 50, click: clickButton
 					});
 
 					pager.cols.push({
-						view: "button", id: "last", value: ">>", width: 50, click: clickButton
+						view: "button", id: "last-" + self.uid, value: ">>", width: 50, click: clickButton
 					});
 
 					function clickButton(obj) {
 
 						const FIRST_PAGE = "first";
 						const LAST_PAGE = "last";
+						let buttonId = obj.split("-")[0];
+						
+						if (buttonId != FIRST_PAGE && buttonId != LAST_PAGE) {
 
-						if (obj != FIRST_PAGE && obj != LAST_PAGE) {
-
-							$$("multiview-tables-" + obj + "-" + self.uid).show();
+							$$("multiview-tables-" + obj).show();
 
 						} else {
 
-							let page = (obj === FIRST_PAGE) ? 1 : tablesPages;
+							let page = (buttonId === FIRST_PAGE) ? 1 : tablesPages;
 
 							$$("multiview-tables-" + page + "-" + self.uid).show();
-							
 						}
-						
-						if(isResized){
-							
+
+						if (isResized) {
+
 							callbackOnResize();
 						}
 					}
