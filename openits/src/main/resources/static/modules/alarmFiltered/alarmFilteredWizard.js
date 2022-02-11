@@ -391,6 +391,11 @@ export default class AlarmFilteredWizard {
 												{
 													view: "label",
 													id: "alarm-user"
+												},
+												{ height: 10 },
+												{
+													view: "label",
+													id: "alarm-comment"
 												}
 											]
 										},
@@ -617,6 +622,7 @@ export default class AlarmFilteredWizard {
 
 								if (pos === parent.config.summaryStepPosition) {
 
+									//let user = JSON.parse(sessionStorage.getItem('user.data'));
 									let user = util.user.getUserData();
 									let date = util.toLocaleString(self.calendar.getSelectedDates().from.getTime() / 1000);
 
@@ -628,7 +634,14 @@ export default class AlarmFilteredWizard {
 									$$("alarm-level").setValue(`<div><span class="ico webix_icon mdi mdi-signal-cellular-3" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div><div class="value">${self.arrSummary.alarmLevelLabelAlias}</div>`);
 									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value">${self.arrSummary.filteredUntil}</div>`);
 									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${self.arrSummary.user}</div>`);
-
+									$$("alarm-comment").setValue(`<div>
+																	<span class="ico webix_icon mdi mdi-comment-edit" style="margin-top: 7px"></span>
+																	<span class="field">${i18n.t("LBL_COMMENT")}</span>
+																</div>
+																<div class="value">
+																<textarea id="textarea-alarm-filtered" class="alarm-view-rectangle-back" style="resize: none; border-width: 1px; overflow: auto; display: inline-block; vertical-align: top; margin-top: 0px; width: 626px;"></textarea>
+																</div>`);
+									
 									let titleSummary = (self.arrSummary.alarmDisabled) ? `<div><span style="font-size: 13px">${i18n.t("LBL_ALARM_FILTER_RADIO_DISABLED")}</span></div>` : `<div><span style="font-size: 14px; color: #475466">${i18n.t("LBL_ALARM_FILTER_RADIO_MUTE")}</span></div>`;
 
 									$$("alarm-title").setValue(titleSummary);
@@ -643,6 +656,9 @@ export default class AlarmFilteredWizard {
 								function onAccept() {
 
 									let filteredAlarms = [];
+									//let user = JSON.parse(sessionStorage.getItem('user.data'));
+									let user = util.user.getUserData();
+									let textareaValue = $$("alarm-comment").getNode().querySelector("#textarea-alarm-filtered").value;
 
 									self.tableAlarmsModal.getSelectedIds().forEach(alarm => {
 
@@ -652,8 +668,9 @@ export default class AlarmFilteredWizard {
 											filteredUntil: self.calendar.getSelectedDates().from.getTime(),
 											elementId: self.alarmMutedElementSelect.id,
 											enable: true,
-											alarmDisabled: self.disableAlarm
-
+											alarmDisabled: self.disableAlarm,
+											userId: user.id,
+											comment: textareaValue
 										});
 									});
 

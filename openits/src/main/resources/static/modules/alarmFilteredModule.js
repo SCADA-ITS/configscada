@@ -1,6 +1,7 @@
 import GenericModule from "./genericModule.js";
 import AlarmFilteredMute from "./alarmFiltered/alarmFilteredMute.js";
 import AlarmFilteredWizard from "./alarmFiltered/alarmFilteredWizard.js";
+import AlarmFilteredView from "./alarmFiltered/alarmFilteredView.js";
 
 export default class AlarmFilteredModule extends GenericModule {
 
@@ -16,6 +17,7 @@ export default class AlarmFilteredModule extends GenericModule {
 
 		this.AlarmFilteredWizard = new AlarmFilteredWizard(this);
 		this.AlarmFilteredMute = new AlarmFilteredMute(this);
+		this.AlarmFilteredView = new AlarmFilteredView(this);
 	}
 
 	getView() {
@@ -45,6 +47,9 @@ export default class AlarmFilteredModule extends GenericModule {
 
 			self.AlarmFilteredWizard.drawComponents();
 
+		} else if (self.moduleAction.id === self.config.moduleAction.view){
+			
+			self.AlarmFilteredView.show();
 		}
 
 	}

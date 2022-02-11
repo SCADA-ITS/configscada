@@ -3,7 +3,8 @@
 		"mute": 101601,
 		"deleteAlarmFilter": 101602,
 		"filterAlarmWizard": 101603,
-		"muteModalAction": 101604
+		"muteModalAction": 101604,
+		"view": 101605
 	},
 	"actionEndpoints": {
 		"mute": "alarms/send_alarm_filtered_actions",
@@ -13,7 +14,8 @@
 		"alarmMuted": "alarms/alarm_filtered/${id}",
 		"alarmsArray": "alarms",
 		"trees": "trees/${id}",
-		"grids": "grids/${gridAlarmsConfig}/id"
+		"grids": "grids/${gridAlarmsConfig}/id",
+		"elementAlarms": "alarms/alarms/${id}"
 	},
 	"treeElementType": "1",
 	"gridAlarmsConfig": "1011",

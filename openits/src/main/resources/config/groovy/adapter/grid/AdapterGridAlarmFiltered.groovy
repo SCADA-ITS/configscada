@@ -21,6 +21,11 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
     static final String FIELD_ELEMENT_ALIAS  = "elementAlias";
     static final String FIELD_OBJECT_ALARM_CONFIG = "alarmConfig";
 	static final String FIELD_ALARM_CONFIG_LABEL_ALIAS = "alarmConfigLabelAlias";
+	static final String FIELD_OBJECT_USER = "user";
+	static final String FIELD_USER_ID = "userId";
+	static final String FIELD_ID = "id";
+	static final String FIELD_OBJECT_ALARM = "alarm";
+	static final String FIELD_ALARM_ID = "alarmId";
 
 	public AdapterGridAlarmFiltered(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
@@ -43,7 +48,9 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 					dataRow.putAll(entity);
 					
 					flattenAlarmConfig(dataRow);
+					flattenAlarm(dataRow);
 					flattenElement(dataRow);
+					flattenUser(dataRow);
 					
 					data.add(vo2uiAdapter.convert(datasourceId, dataRow));
 				}
@@ -74,6 +81,23 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 		}
 	}
 	
+	void flattenAlarm(Map<String, Object> dataRow) {
+		
+		if (dataRow.containsKey(FIELD_OBJECT_ALARM)) {
+			
+			Object obj = dataRow.get(FIELD_OBJECT_ALARM);
+			
+			if (obj instanceof Map) {
+				
+				Map<String, Object> map = (Map<String, Object>) obj; 
+				
+				dataRow.put(FIELD_ALARM_ID, map.get(FIELD_ID));
+			}
+			
+			dataRow.remove(FIELD_OBJECT_ALARM);
+		}
+	}
+	
 	void flattenElement(Map<String, Object> dataRow) {
 		
 		if (dataRow.containsKey(FIELD_OBJECT_ELEMENT)) {
@@ -88,6 +112,23 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 			}
 			
 			dataRow.remove(FIELD_OBJECT_ELEMENT);
+		}
+	}
+	
+	void flattenUser(Map<String, Object> dataRow) {
+		
+		if (dataRow.containsKey(FIELD_OBJECT_USER)) {
+			
+			Object obj = dataRow.get(FIELD_OBJECT_USER);
+			
+			if (obj instanceof Map) {
+				
+				Map<String, Object> map = (Map<String, Object>) obj; 
+
+				dataRow.put(FIELD_USER_ID, map.get(FIELD_ID));
+			}
+			
+			dataRow.remove(FIELD_OBJECT_USER);
 		}
 	}
 }

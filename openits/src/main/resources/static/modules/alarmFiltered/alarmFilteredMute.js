@@ -1,6 +1,7 @@
 import { util } from "../../lib/util.js";
 import CalendarDialogBox from "../../component/calendarDialogBox.js";
 import MessageBox from "../../component/messageBox.js";
+import InputDialogBox from "../../component/inputDialogBox.js";
 
 export default class AlarmFilteredMute {
 
@@ -67,20 +68,26 @@ export default class AlarmFilteredMute {
 
 				if (action === ACTION.true) {
 
-					(new CalendarDialogBox(title, text, false,
-
-						function(date) {
+					(new CalendarDialogBox(title, text, false, function(date) {
 
 							return (Math.floor(date) < Math.floor(new Date()));
 						},
-						function(dates) {
+						onAcceptCalendar
+						)).show();
+					
+					function onAcceptCalendar(dates) {
+
+						(new InputDialogBox(title, text, onAcceptInputDialogBox, false, null, { id: DataType.ALPHANUMERIC })).show();
+
+						function onAcceptInputDialogBox(comment) {
 
 							webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + parent.config.restEndpoints.alarmsArray, JSON.stringify(arrAlarms)).then(function(data) {
 
 								let responseAlarms = data.json();
 
 								if (Array.isArray(responseAlarms) && responseAlarms.length > 0) {
-
+									
+									let user = util.user.getUserData();
 									let alarmsToFilter = [];
 
 									responseAlarms.forEach(alarm => {
@@ -91,7 +98,9 @@ export default class AlarmFilteredMute {
 											filteredUntil: dates.from.getTime(),
 											elementId: alarm.targetElement.id,
 											alarmDisabled: false,
-											enable: true
+											enable: true,
+											userId: user.id,
+											comment: comment
 										});
 									});
 
@@ -111,8 +120,8 @@ export default class AlarmFilteredMute {
 								}
 							});
 						}
-					)).show();
 
+					}
 				}
 
 				if (action === ACTION.false) {
