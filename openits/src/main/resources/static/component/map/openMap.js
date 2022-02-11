@@ -88,16 +88,9 @@ export default class OpenMap extends GenericMap {
 					on: {
 						onAfterRender: function() {
 		
+							log.debug("Map onAfterRender");
 							self.afterRenderCallback = afterRenderCallback;
 							self.olMap = createMap();
-							
-							if (self.olMap) {
-								
-								loadGraphicIcons();
-								loadIncidents();	
-							}
-							
-							window.addEventListener("resize", callbackOnResize);
 						},
 						onDestruct: function() {
 		
@@ -366,10 +359,22 @@ export default class OpenMap extends GenericMap {
 			self.maxZoomLevel = self.metadata.zoomMax;
 			self.minZoomLevel = self.metadata.zoomMin;
 			
-			webix.delay(function() {
+			map.once('postrender', function(event) {
+			    
+				webix.delay(function() {
+					
+					if (self.olMap) {
+								
+						loadGraphicIcons();
+						loadIncidents();	
+					}
+					
+					window.addEventListener("resize", callbackOnResize);
 
-				map.updateSize();
-			}, null, null, 1000);
+					map.updateSize();
+					
+				}, null, null, 1000);
+			});
 			
 			return map;
 		}
