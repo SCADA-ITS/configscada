@@ -91,17 +91,11 @@ public class ElementBO extends GenericBO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Boolean sendCommandElement(Object input) {
+	public List<Map<String, Object>> sendCommandElement(Object input) {
 
-		Boolean res = false;
-
-		Map<String, Object> sendCommandElement = voDataSourceAdapter
-				.put(VODataSourceAdapter.DATA_SOURCE_SEND_COMMAND_ELEMENT, (Map<String, Object>) input);
-
-		res = checkMapIsBoolean(sendCommandElement);
-
-		return res;
-
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_SEND_COMMAND_ELEMENT, (Map<String, Object>) input);
+		
 	}
 
 }
