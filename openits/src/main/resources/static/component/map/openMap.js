@@ -15,7 +15,7 @@ const ALL_ZOOM_LEVEL = 0;
 const MAX_ZOOM_LEVEL = 20;
 const MIN_ZOOM_LEVEL = 1;
 
-const ZINDEX_BACK = 0;
+const ZINDEX_BACK = 9998;
 const ZINDEX_FRONT = 9999;
 
 const REQUIRED_INCIDENT_PERMISSIONS = {
@@ -56,8 +56,7 @@ export default class OpenMap extends GenericMap {
 		
 		this.afterRenderCallback = undefined;
 		
-		this.drawButtonPressed = false;
-		
+		this.drawButtonPressed = false;	
 	}
 
 	getView(afterRenderCallback) {
@@ -91,6 +90,16 @@ export default class OpenMap extends GenericMap {
 							log.debug("Map onAfterRender");
 							self.afterRenderCallback = afterRenderCallback;
 							self.olMap = createMap();
+							
+							if (self.olMap) {
+								
+								loadGraphicIcons();
+								loadIncidents();
+								
+								
+							}
+							
+							window.addEventListener("resize", callbackOnResize);
 						},
 						onDestruct: function() {
 		
@@ -361,20 +370,13 @@ export default class OpenMap extends GenericMap {
 			
 			map.once('postrender', function(event) {
 			    
-				webix.delay(function() {
-					
-					if (self.olMap) {
-								
-						loadGraphicIcons();
-						loadIncidents();	
-					}
-					
-					window.addEventListener("resize", callbackOnResize);
-
-					map.updateSize();
-					
-				}, null, null, 1000);
 			});
+			
+			webix.delay(function() {
+					
+				map.updateSize();
+				
+			}, null, null, 1000);
 			
 			return map;
 		}
@@ -522,8 +524,9 @@ export default class OpenMap extends GenericMap {
 			}
 		}
 		
-	
 		function loadGraphicIcons() {
+			
+			let graphicIconsToLoad = [];
 			
 			self.metadata.layers.forEach(layer => {
 			
@@ -546,7 +549,12 @@ export default class OpenMap extends GenericMap {
 							
 							if (isLayerElementZoomBetweenLimits) {
 								
-								loadGraphicIcon(layerElement, layerElementZoom);	
+								graphicIconsToLoad.push({
+									layerElement: layerElement,
+									layerElementZoom: layerElementZoom
+								});
+								
+								//loadGraphicIcon(layerElement, layerElementZoom);	
 							}
 						});
 					}
@@ -560,10 +568,25 @@ export default class OpenMap extends GenericMap {
 							layerElement.latitude = lonLat[1]; 
 						}
 						
-						loadGraphicIcon(layerElement);
+						graphicIconsToLoad.push({
+							layerElement: layerElement,
+							layerElementZoom: undefined
+						});
+						
+						//loadGraphicIcon(layerElement);
 					}
 				});
-			});	
+			});
+			
+			if (Array.isArray(graphicIconsToLoad) && graphicIconsToLoad.length > 0) {
+				
+				self.layerElements = graphicIconsToLoad.length; 
+				
+				graphicIconsToLoad.forEach(graphicIconToLoad => {
+					
+					loadGraphicIcon(graphicIconToLoad.layerElement, graphicIconToLoad.layerElementZoom);
+				});
+			}
 			
 			function loadGraphicIcon(layerElement, layerElementZoom) {
 				
@@ -588,9 +611,7 @@ export default class OpenMap extends GenericMap {
 					layerElem.showText = layerElementZoom.showText;
 					layerElem.textColor = layerElementZoom.textColor;
 				}
-				
-				self.layerElements++;
-								
+												
 				createGraphicIcon(layerElem,
 								self.data.find(element => element.id === layerElem.elementId),
 								container,
@@ -650,27 +671,16 @@ export default class OpenMap extends GenericMap {
 			
 				addGraphicIcon(layerElement, graphicIconInstance);
 				
-				onBeforeLoadGraphicIcon()
-				
-				
+				onAfterLoadGraphicIcon();
 			}
 		}
 		
-		function onBeforeLoadGraphicIcon() {
+		function onAfterLoadGraphicIcon() {
 			
-			if (self.layerElements > 0) {
+			if (self.layerElements > 0 && ++self.layerElementsLoaded === self.layerElements) {
 				
-				if (++self.layerElementsLoaded === self.layerElements) {
-				
-					loadElementInfo();
-				}	
-			}
-			else {
-				
-				webix.ui(getToolbarMain(), $$("map-toolbar-main-" + self.uid));
-				webix.ui(getToolbarActions(), $$("map-toolbar-actions-" + self.uid));
-				webix.ui(getPanelActions(), $$("map-window-actions-" + self.uid));
-			}
+				loadElementInfo();
+			}	
 		}
 		
 		function loadIncidents() {
@@ -679,11 +689,13 @@ export default class OpenMap extends GenericMap {
 				
 				self.mapIncident = new MapIncident(self);
 				
-				self.mapIncident.load();
+				self.mapIncident.load(onReady);
 				
-				if (!self.graphicIcons || (self.graphicIcons && self.graphicIcons.size === 0)) {
+				function onReady() {
 					
-					onBeforeLoadGraphicIcon();
+					webix.ui(getToolbarMain(), $$("map-toolbar-main-" + self.uid));
+					webix.ui(getToolbarActions(), $$("map-toolbar-actions-" + self.uid));
+					webix.ui(getPanelActions(), $$("map-window-actions-" + self.uid));
 				}
 			}
 		}
@@ -691,6 +703,13 @@ export default class OpenMap extends GenericMap {
 		function loadElementInfo() {
 			
 			let loadedElements = 0;
+			let targetLoadElements = 0;
+			
+			self.zoomLevelGraphicIcons.forEach((value, key) => {
+				
+				targetLoadElements += Array.isArray(value) ? value.length : 0;
+				
+			});
 
 			self.zoomLevelGraphicIcons.forEach((value, key) => {
 				
@@ -716,15 +735,15 @@ export default class OpenMap extends GenericMap {
 									graphicIcon.updateValues(element.elementValues);
 								}
 								
-								if (++loadedElements === self.layerElements) {
+								if (++loadedElements === targetLoadElements) {
 									
 									connectWS();
+									
+									linkGraphicIcons();
 									
 									webix.ui(getToolbarMain(), $$("map-toolbar-main-" + self.uid));
 									webix.ui(getToolbarActions(), $$("map-toolbar-actions-" + self.uid));
 									webix.ui(getPanelActions(), $$("map-window-actions-" + self.uid));
-									
-									linkGraphicIcons();
 									
 									loadContextMenu();
 									
@@ -1454,7 +1473,7 @@ export default class OpenMap extends GenericMap {
 					
 					if (self.options && self.options[Map.Options.DEBUG_MODE]) {
 						
-						console.log("RX >> " + JSON.stringify(data));
+//						console.log("RX >> " + JSON.stringify(data));
 					}
 					
 					let elementTypeParams = [];

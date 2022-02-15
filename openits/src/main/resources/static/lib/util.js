@@ -1266,6 +1266,20 @@ export let util = {
 			}
 		},
 		
+		clearScreen() {
+			
+			webix.ui({
+				view: "popup",
+				move: true,
+				css: "control-panel-main",
+				height: document.documentElement.clientHeight,
+				width: document.documentElement.clientWidth,
+				body: {
+					rows: []
+				}
+			});
+		},
+		
 		getViewLogout() {
 
 			return {

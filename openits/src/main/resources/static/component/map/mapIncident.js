@@ -18,13 +18,15 @@ export default class MapIncident {
 		this.idStompSubscriptor = undefined;
 		this.incidentReports = new Map();
 		this.graphicIcons = new Map();
+		this.graphicIconsCount = 0;
+		this.graphicIconsLoaded = 0;
 		
 		this.snap = undefined;
 		this.drawBox = undefined;
 		this.polygon = undefined;
 	}
 	
-	load() {
+	load(onReady) {
 		
 		let self = this;
 		
@@ -74,12 +76,21 @@ export default class MapIncident {
 		
 		function loadGraphicIcons() {
 			
-			if (self.incidentReports) {
+			if (self.incidentReports && self.incidentReports.size > 0) {
+				
+				self.graphicIconsCount = self.incidentReports.size; 
 				
 				self.incidentReports.forEach(incidentReport => {
 					
 					loadGraphicIcon(incidentReport);
 				})
+			}
+			else {
+				
+				if (onReady) {
+					
+					onReady();
+				}
 			}
 		}
 		
@@ -143,6 +154,14 @@ export default class MapIncident {
 				updateGraphicIcon(incidentReport);
 				
 				graphicIcon.show();
+				
+				if (++self.graphicIconsLoaded === self.graphicIconsCount) {
+					
+					if (onReady) {
+						
+						onReady();
+					}
+				}
 			}
 			
 			function createGraphicIcon(incident, onCreate) {
