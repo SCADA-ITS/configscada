@@ -118,6 +118,13 @@ const DataType = Object.freeze({
 	BOOLEAN: "DataType:5",
 });
 
+const StateValue = Object.freeze({
+		INITIALIZED: "ElementValueState:1",
+		ONLINE: "ElementValueState:2",
+		ALERTED: "ElementValueState:3",
+		OFFLINE: "ElementValueState:4"
+	});
+
 const ENTITIES_MANAGER_SCHEDULER_SECS = 600;
 
 // Type of entities to load

@@ -16,6 +16,7 @@ export default class EquipmentMeasures {
 		this.options = options;
 
 		this.combo = ((options != null) && (options.combo === false)) ? false : true;
+		this.moduleAction = ((options != null) && (options.equipmentViewer)) ? options.equipmentViewer : null;
 
 		this.uid = webix.uid();
 
@@ -187,6 +188,7 @@ export default class EquipmentMeasures {
 					connectWS();
 					window.addEventListener("resize", callbackOnResize);
 
+
 				}
 			});
 		});
@@ -252,11 +254,25 @@ export default class EquipmentMeasures {
 
 							for (let el of elementsSameTypeArray) {
 
+								let iconInfo = "";
+
+								if (self.moduleAction) {
+
+									iconInfo = `<span id='${el.id}' title='${i18n.t("LBL_INFO")}' class='webix_icon mdi mdi-information-outline' style='float:right; margin:5px; cursor:pointer;'></span>`;
+
+								}
+
+								let label = `<div>
+												<span>${el.alias}</span>
+												${iconInfo}
+											</div>`
+
 								data.push(
-									{ label: el.alias, type: "label", id: el.alias }
+									{ label: label, type: "label", id: el.alias, iconId: el.id }
 								);
 
 								drawInitMeasures(el.elementValues);
+
 							}
 						}
 
@@ -267,52 +283,25 @@ export default class EquipmentMeasures {
 
 							for (let property of propertiesArray) {
 
+								let valuesForPrint = util.element.getValuesForPrint(null, property);
 								let value;
 								let htmlId = (self.combo) ? property.elementTypeParam.alias : property.id.split(":").join("");
-								let label = `<div id="${htmlId}-label" ${labelEllipsis}>${i18n.t(property.elementTypeParam.labelAlias)}</div>`;
+								let label = `<div id="${htmlId}-label" ${labelEllipsis}>${valuesForPrint.label}</div>`;
 
-								if (property.value) {
+								if (valuesForPrint.value && valuesForPrint.value != "-") {
 
-									let val = property.value;
-									let icon = undefined;
-									let unit = (property.elementTypeParam.labelUnit) ? i18n.t(property.elementTypeParam.labelUnit) : "";
+									let iconHTML = "";
+									let unit = "";
 
-									if (Array.isArray(property.elementTypeParam.enum) && property.elementTypeParam.enum.length > 0) {
+									if (valuesForPrint.hasEnum === undefined) {
 
-										let enumListValues = [];
-										let enumList = property.elementTypeParam.enum;
-
-										for (let e of enumList) {
-
-											for (let enumTypeValue of e.voEnumTypeValues) {
-
-												enumListValues.push(enumTypeValue);
-											}
-										}
-
-										let enumValue = enumListValues.find(e => e.key == val);
-
-										if (enumValue) {
-
-											if (enumValue.image) {
-
-												val = `<img style="width:40px" src="${enumValue.image}">`;
-
-											} else {
-
-												val = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
-											}
-										}
+										iconHTML = (valuesForPrint.iconElementValueState) ? `<image src="img/state/${valuesForPrint.iconElementValueState}"/>` : "";
+										unit = valuesForPrint.unit;
 									}
 
-									if (property.elementValueState && property.elementValueState.id) {
+									let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
 
-										icon = property.elementValueState.id.replace(":", "_") + ".png";
-									}
-
-									let iconHTML = (icon != undefined) ? `<image src="img/state/${icon}"/>` : "";
-
-									value = `<div id="${htmlId}" ${valueEllipsis} class="equipment-measures-values">${iconHTML} ${val} ${unit}</div>`;
+									value = `<div id="${htmlId}" ${valueEllipsis} class="equipment-measures-values">${iconHTML} ${valueHTML} ${unit}</div>`;
 
 								} else {
 
@@ -351,38 +340,82 @@ export default class EquipmentMeasures {
 												}
 											},
 											{
-												id: "tableContent-select-" + element.id + "-" + self.uid,
-												height: 28,
-												view: "richselect",
-												css: "equipment-measures-combo",
-												value: selectOptions[0],
-												options: selectOptions,
 												hidden: (self.combo) ? false : true,
-												on: {
-													onChange(newv, oldv) {
+												cols: [
+													{
+														id: "tableContent-select-" + element.id + "-" + self.uid,
+														height: 28,
+														view: "richselect",
+														css: "equipment-measures-combo",
+														value: selectOptions[0],
+														options: selectOptions,
+														hidden: (self.combo) ? false : true,
+														on: {
+															onChange(newv, oldv) {
 
-														let propertiesId = this.config.id.replace("tableContent-select-", "sets-");
-														let newElementSelected = detailedElements.find(e => e.id === newv);
-														let oldElement = detailedElements.find(e => e.id === oldv);
+																let propertiesId = this.config.id.replace("tableContent-select-", "sets-");
+																let newElementSelected = detailedElements.find(e => e.id === newv);
+																let oldElement = detailedElements.find(e => e.id === oldv);
 
-														if (newElementSelected) {
+																if (newElementSelected) {
 
-															for (let newValue of newElementSelected.elementValues) {
+																	for (let newValue of newElementSelected.elementValues) {
 
-																let valueToUpdate = elementsValuesMap.has(newValue.id);
+																		let valueToUpdate = elementsValuesMap.has(newValue.id);
 
-																if (valueToUpdate) {
+																		if (valueToUpdate) {
 
-																	newValue.value = elementsValuesMap.get(newValue.id);
+																			newValue.value = elementsValuesMap.get(newValue.id);
+																		}
+																	}
+
+																	self.measuresToUpdate = newElementSelected;
+																	updateMeasures(propertiesId, false, oldElement);
 																}
 															}
-
-															self.measuresToUpdate = newElementSelected;
-															updateMeasures(propertiesId, false, oldElement);
 														}
+													},
+													{
+														view: "toolbar",
+														height: 28,
+														id: "tbActions-" + element.id + "-" + self.uid,
+														borderless: true,
+														css: { "margin-top": "1px !important" },
+														hidden: (self.combo) && (self.moduleAction) ? false : true,
+														elements: [
+															{
+																id: "tb_btn-info-" + element.id + "-" + self.uid,
+																view: "icon",
+																icon: "mdi mdi-information-outline",
+																value: i18n.t("LBL_INFO"),
+																tooltip: true,
+																css: { "margin-top": "0px !important" },
+																on: {
+																	onItemClick: function(obj) {
+
+																		let itemSelected = $$("tableContent-select-" + element.id + "-" + self.uid).getValue();
+
+																		if (self.moduleAction != null) {
+
+																			let mod = util.module.getFromModuleAction(self.moduleAction);
+																			let moduleAction = {
+																				id: self.moduleAction
+																			};
+
+																			let args = {
+																				selectedPks: [itemSelected]
+																			};
+
+																			util.module.open(mod, moduleAction, undefined, null, args, undefined);
+																		}
+																	}
+																}
+															}
+														]
 													}
-												}
+												]
 											},
+
 											{
 												view: "property",
 												id: "sets-" + element.id + "-" + self.uid,
@@ -427,7 +460,33 @@ export default class EquipmentMeasures {
 														return "";
 													}
 												},
-												elements: data
+												elements: data,
+												on: {
+													onAfterRender: function() {
+
+														if (self.moduleAction != null) {
+
+															let nodeIcon = $$("sets-" + element.id + "-" + self.uid).getNode().querySelectorAll('.webix_icon');
+
+															for (let icon of nodeIcon) {
+
+																icon.addEventListener('click', function() {
+
+																	let mod = util.module.getFromModuleAction(self.moduleAction);
+																	let moduleAction = {
+																		id: self.moduleAction
+																	};
+
+																	let args = {
+																		selectedPks: [icon.id]
+																	};
+
+																	util.module.open(mod, moduleAction, undefined, null, args, undefined);
+																});
+															}
+														}
+													}
+												}
 											},
 											{ height: 5 }
 										]
@@ -598,7 +657,7 @@ export default class EquipmentMeasures {
 					for (let i = 0; i < tablesPages; i++) {
 
 						let buttonId = i + 1;
-						
+
 						pager.cols.push({
 							view: "button", id: buttonId + "-" + self.uid, value: i + 1, width: 50, click: clickButton
 						});
@@ -617,7 +676,7 @@ export default class EquipmentMeasures {
 						const FIRST_PAGE = "first";
 						const LAST_PAGE = "last";
 						let buttonId = obj.split("-")[0];
-						
+
 						if (buttonId != FIRST_PAGE && buttonId != LAST_PAGE) {
 
 							$$("multiview-tables-" + obj).show();
@@ -702,38 +761,12 @@ export default class EquipmentMeasures {
 
 			function drawMeasures() {
 
-				let unit, htmlId;
-				let value = elementsValuesMap.get(newMeasure.id);
-				let icon = undefined;
+				let htmlId;
+				let iconHTML = "";
+				let unit = "";
 				let values = {};
 
-				if (Array.isArray(newMeasure.elementTypeParam.enum) && newMeasure.elementTypeParam.enum.length > 0) {
-
-					let enumListValues = [];
-					let enumList = newMeasure.elementTypeParam.enum;
-
-					for (let e of enumList) {
-
-						for (let enumTypeValue of e.voEnumTypeValues) {
-
-							enumListValues.push(enumTypeValue);
-						}
-					}
-
-					let enumValue = enumListValues.find(e => e.key == newMeasure.value);
-
-					if (enumValue) {
-
-						if (enumValue.image) {
-
-							value = `<img style="width:40px" src="${enumValue.image}">`;
-
-						} else {
-
-							value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
-						}
-					}
-				}
+				let valuesForPrint = util.element.getValuesForPrint(null, newMeasure);
 
 				if (self.combo) {
 
@@ -744,19 +777,19 @@ export default class EquipmentMeasures {
 					htmlId = newMeasure.id.split(":").join("");
 				}
 
-				unit = (newMeasure.elementTypeParam.labelUnit) ? i18n.t(newMeasure.elementTypeParam.labelUnit) : "";
+				if (valuesForPrint.hasEnum === undefined) {
 
-				if (newMeasure.elementValueState && newMeasure.elementValueState.id) {
-
-					icon = newMeasure.elementValueState.id.replace(":", "_") + ".png";
+					iconHTML = `<image src="img/state/${valuesForPrint.iconElementValueState}"/>`;
+					unit = valuesForPrint.unit;
 				}
 
-				let iconHTML = (icon != undefined) ? `<image src="img/state/${icon}"/>` : "";
-				let valueHTML = `<div id="${htmlId}" style="max-width: ${self.valueWidth * 0.75}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="equipment-measures-values">${iconHTML} ${value} ${unit}</div>`;
+				let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span>${valuesForPrint.value}</span>`;
+
+				let value = `<div id="${htmlId}" style="max-width: ${self.valueWidth * 0.75}px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis" class="equipment-measures-values">${iconHTML} ${valueHTML} ${unit}</div>`;
 
 				values = {
 					key: htmlId,
-					value: valueHTML
+					value: value
 				}
 
 				newValues[values["key"]] = values["value"];
@@ -838,7 +871,7 @@ export default class EquipmentMeasures {
 					table.refresh();
 				}
 			}
-			
+
 			isResized = true;
 		}
 	}

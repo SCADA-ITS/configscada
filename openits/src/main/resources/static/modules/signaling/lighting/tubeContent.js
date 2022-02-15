@@ -981,7 +981,7 @@ export default class TubeContent {
 			}
 			else {
 				
-				viewCircuits = util.ui.getViewNoData();
+				viewCircuits = [util.ui.getViewNoData()];
 			}
 
 			return viewCircuits;
@@ -1216,7 +1216,7 @@ export default class TubeContent {
 				
 			} else {
 				
-				viewDalis = util.ui.getViewNoData();
+				viewDalis = [util.ui.getViewNoData()];
 			}
 
 			return viewDalis;

@@ -1543,6 +1543,130 @@ export let util = {
 				
 				return commandElementType;				
 			}
+		},
+		
+		getValuesForPrint(data, elementValue) {
+
+			let stateValueId = StateValue.ONLINE;
+			let stateValueLabel = i18n.t("LBL_UNKNOWN");
+			let stateValueBackColor = "white";
+
+			if (data && data.elementValue) {
+
+				elementValue.value = data.elementValue.value;
+
+				if (data.elementValue.elementValueState) {
+
+					stateValueId = data.elementValue.elementValueState.id;
+				}
+				else {
+
+					stateValueId = StateValue.ONLINE;
+				}
+			}
+			else {
+
+				if (elementValue.elementValueState) {
+
+					stateValueId = elementValue.elementValueState.id;
+				}
+			}
+
+			let stateValue = window.em.getByField(EntityType.ELEMENT_VALUE_STATE, "id", stateValueId);
+
+			if (stateValue) {
+
+				stateValueLabel = i18n.t(stateValue.labelAlias);
+				stateValueBackColor = stateValue.color ? stateValue.color : "white";
+			}
+
+			let icon = undefined;
+
+			if (!elementValue.elementTypeParam.image) {
+
+				icon = "not_found_50.png";
+			}
+
+			let value = '-';
+			let hasEnum = undefined;
+			let hasEnumImage = undefined;
+	
+			if (elementValue.value) {
+
+				value = elementValue.value;
+
+				if (elementValue.elementTypeParam.dataType.id === DataType.DECIMAL) {
+
+					let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : 0;
+
+					value = value.replace(",", ".");
+
+					let parseValue = (typeof (value) === "string") ? parseFloat(value) : value;
+
+					value = parseValue.toFixed(precision);
+				}
+				else if (elementValue.elementTypeParam.dataType.id === DataType.TIMESTAMP) {
+
+					let parseValue = (typeof (value) === "string") ? parseInt(value) : value;
+
+					value = util.toLocaleString(parseValue / 1000);
+				}
+				else {
+
+					if (Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
+
+						let enumListValues = [];
+						let enumList = elementValue.elementTypeParam.enum;
+
+						for (let e of enumList) {
+
+							for (let enumTypeValue of e.voEnumTypeValues) {
+
+								enumListValues.push(enumTypeValue);
+							}
+						}
+
+						let enumValue = enumListValues.find(e => e.key == elementValue.value);
+
+						if (enumValue) {
+							
+							hasEnum = true;
+
+							if (enumValue.image) {
+
+								value = enumValue.image;
+								hasEnumImage = true;
+
+							} else {
+
+								value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+							}
+						}
+					}
+				}
+			}
+
+			let label = i18n.t(elementValue.elementTypeParam.labelAlias);
+			let elementTypeParamDescription = elementValue.elementTypeParam.labelDescription ? i18n.t(elementValue.elementTypeParam.labelDescription) : i18n.t(elementValue.elementTypeParam.labelAlias);
+
+			let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
+			let iconElementValueState = stateValueId.replace(":", "_") + ".png";
+			
+			let res = {
+				elementTypeParamDescription: elementTypeParamDescription,
+				hasEnum: hasEnum,
+				hasEnumImage: hasEnumImage,
+				icon: icon,
+				iconElementValueState: iconElementValueState,
+				label: label,
+				stateValueLabel: stateValueLabel,
+				stateValueBackColor: stateValueBackColor,
+				unit: unit,
+				value: value
+			};
+			
+			return res;
+
 		}
 	},
 

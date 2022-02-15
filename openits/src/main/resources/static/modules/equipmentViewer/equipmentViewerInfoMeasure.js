@@ -45,124 +45,135 @@ class MeasureItem {
 				template: function(data) {
 
 					let elementValue = self.elementValue;
-					
-					let stateValueId = self.parent.parent.config.stateValue.online;
-					let stateValueLabel = i18n.t("LBL_UNKNOWN");
-					let stateValueBackColor = "white";
-					
-					if (data && data.elementValue) {
-						
-						elementValue.value = data.elementValue.value;
-						
-						if (data.elementValue.elementValueState) {
-						
-							stateValueId = data.elementValue.elementValueState.id;	
-						}
-						else {
-							
-							stateValueId = self.parent.parent.config.stateValue.online;
-						}
+					let unit = "";
+					let valuesForPrint = util.element.getValuesForPrint(data, elementValue);
+
+					this.currentValue = valuesForPrint.value;
+
+					if (valuesForPrint.hasEnum === undefined) {
+				
+						unit = valuesForPrint.unit;
 					}
-					else {
-						
-						if (elementValue.elementValueState) {
-							
-							stateValueId = elementValue.elementValueState.id;
-						}
-					} 
-					
-					
-					
-					let stateValue = window.em.getByField(EntityType.ELEMENT_VALUE_STATE, "id", stateValueId);
-					
-					if (stateValue) {
-						
-						stateValueLabel = i18n.t(stateValue.labelAlias);
-						stateValueBackColor = stateValue.color ? stateValue.color : "white";
-					}
-					
-					let icon = undefined;
-					
-					if (!elementValue.elementTypeParam.image) {
-						icon = "not_found_50.png";
-					}
-					
-					let value = '-';
-					let insertImage = undefined;
-					
-					if (elementValue.value) {
-						
-						value = elementValue.value;
-						
-						if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.decimal) { 
-						    
-							let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : 0; 
-							
-							value = value.replace(",", ".");
-							
-							let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
-							
-							value = parseValue.toFixed(precision);
-						}
-						else if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.timestamp) {
-							
-							let parseValue = (typeof(value) === "string") ? parseInt(value) : value;
-							
-							value = util.toLocaleString(parseValue / 1000);
-						}
-						else {
-							
-							if (Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
 
-								let enumListValues = [];
-								let enumList = elementValue.elementTypeParam.enum;
-
-								for (let e of enumList) {
-
-									for (let enumTypeValue of e.voEnumTypeValues) {
-
-										enumListValues.push(enumTypeValue);
-									}
-								}
-
-								let enumValue = enumListValues.find(e => e.key == elementValue.value);
-
-								if (enumValue) {
-
-									if (enumValue.image) {
-
-										value = enumValue.image;
-										insertImage = true;
-
-									} else {
-
-										value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
-									}
-								}
-							}
-						}
-					}	
-													
-					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
-					let tooltip = elementValue.elementTypeParam.labelDescription ? i18n.t(elementValue.elementTypeParam.labelDescription) : i18n.t(elementValue.elementTypeParam.labelAlias);
-
-					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
-					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
-					
-					this.currentValue = value;
-					
-					let valueHTML = (insertImage) ? `<img style="width:40px" src="${value}">` : `<span title="${value}">${value}</span>`;						
+					let valueHTML = (valuesForPrint.hasEnumImage != undefined) ? `<img style="width:40px" src="${valuesForPrint.value}">` : `<span title="${valuesForPrint.value}">${valuesForPrint.value}</span>`;
 					let res;
-					
-					res = `<div class="measure-box" style="background: ${stateValueBackColor}">
-									<image class="image" src="img/${icon}" />
+
+					res = `<div class="measure-box" style="background: ${valuesForPrint.stateValueBackColor}">
+									<image class="image" src="img/${valuesForPrint.icon}" />
 									<div style="width: ${self.measureWidth - 70}px" class="value">${valueHTML}<span style="margin-left: 5px; font-size: 14px; font-weight: 100;">${unit}</span></div>
-									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${tooltip}">${label}</span></div>
-									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="img/state/${iconElementValueState}" 
-													title="${stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
+									<div style="width: ${self.measureWidth - 70}px" class="desc"><span title="${valuesForPrint.elementTypeParamDescription}">${valuesForPrint.label}</span></div>
+									<img style="margin-left: ${self.measureWidth - 30}px; margin-top: 5px;" class="table-field-icons" src="img/state/${valuesForPrint.iconElementValueState}" 
+													title="${valuesForPrint.stateValueLabel}" onerror="this.onerror=null; this.style.display = 'none'"/>
 							   </div>`;
-					
-					return res;	
+
+					return res;
+
+					//					let stateValueId = self.parent.parent.config.stateValue.online;
+					//					let stateValueLabel = i18n.t("LBL_UNKNOWN");
+					//					let stateValueBackColor = "white";
+					//					
+					//					if (data && data.elementValue) {
+					//						
+					//						elementValue.value = data.elementValue.value;
+					//						
+					//						if (data.elementValue.elementValueState) {
+					//						
+					//							stateValueId = data.elementValue.elementValueState.id;	
+					//						}
+					//						else {
+					//							
+					//							stateValueId = self.parent.parent.config.stateValue.online;
+					//						}
+					//					}
+					//					else {
+					//						
+					//						if (elementValue.elementValueState) {
+					//							
+					//							stateValueId = elementValue.elementValueState.id;
+					//						}
+					//					} 
+					//					
+					//					
+					//					
+					//					let stateValue = window.em.getByField(EntityType.ELEMENT_VALUE_STATE, "id", stateValueId);
+					//					
+					//					if (stateValue) {
+					//						
+					//						stateValueLabel = i18n.t(stateValue.labelAlias);
+					//						stateValueBackColor = stateValue.color ? stateValue.color : "white";
+					//					}
+					//					
+					//					let icon = undefined;
+					//					
+					//					if (!elementValue.elementTypeParam.image) {
+					//						icon = "not_found_50.png";
+					//					}
+					//					
+					//					let value = '-';
+					//					let insertImage = undefined;
+					//					
+					//					if (elementValue.value) {
+					//						
+					//						value = elementValue.value;
+					//						
+					//						if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.decimal) { 
+					//						    
+					//							let precision = elementValue.elementTypeParam.precision ? elementValue.elementTypeParam.precision : 0; 
+					//							
+					//							value = value.replace(",", ".");
+					//							
+					//							let parseValue = (typeof(value) === "string") ? parseFloat(value) : value;
+					//							
+					//							value = parseValue.toFixed(precision);
+					//						}
+					//						else if (elementValue.elementTypeParam.dataType.id === self.parent.parent.config.dataType.timestamp) {
+					//							
+					//							let parseValue = (typeof(value) === "string") ? parseInt(value) : value;
+					//							
+					//							value = util.toLocaleString(parseValue / 1000);
+					//						}
+					//						else {
+					//							
+					//							if (Array.isArray(elementValue.elementTypeParam.enum) && elementValue.elementTypeParam.enum.length > 0) {
+					//
+					//								let enumListValues = [];
+					//								let enumList = elementValue.elementTypeParam.enum;
+					//
+					//								for (let e of enumList) {
+					//
+					//									for (let enumTypeValue of e.voEnumTypeValues) {
+					//
+					//										enumListValues.push(enumTypeValue);
+					//									}
+					//								}
+					//
+					//								let enumValue = enumListValues.find(e => e.key == elementValue.value);
+					//
+					//								if (enumValue) {
+					//
+					//									if (enumValue.image) {
+					//
+					//										value = enumValue.image;
+					//										insertImage = true;
+					//
+					//									} else {
+					//
+					//										value = (enumValue.translate) ? i18n.t(enumValue.value) : enumValue.value;
+					//									}
+					//								}
+					//							}
+					//						}
+					//					}	
+					//													
+					//					let label = i18n.t(elementValue.elementTypeParam.labelAlias);
+					//					let tooltip = elementValue.elementTypeParam.labelDescription ? i18n.t(elementValue.elementTypeParam.labelDescription) : i18n.t(elementValue.elementTypeParam.labelAlias);
+					//
+					//					let unit = i18n.t(elementValue.elementTypeParam.labelUnit);
+					//					let iconElementValueState = stateValueId.replace(":", "_") + ".png";
+					//					
+					//					this.currentValue = value;
+					//
+
 				}
 			};
 	

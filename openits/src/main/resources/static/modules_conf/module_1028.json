@@ -34,7 +34,8 @@
 		"options": {
 			"combo": true,
 			"width": 320,
-			"rows": 1
+			"rows": 1, 
+			"equipmentViewer":101401			
 		},
 		"elementTypes": ["ElementType:14", "ElementType:31"]
 	},
