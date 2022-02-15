@@ -33,6 +33,14 @@ public class ElementTypeBO extends GenericBO {
 		
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE, elements);
 	}
+	
+	public List<Map<String, Object>> getElementsByElementTypeForGrid(String id) {
+		
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID, new Object[] { id });
+		
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID, elements);
+	}
 
 	public List<Map<String, Object>> getElementsWithChildsByElementType(String id) {
 		

@@ -58,6 +58,19 @@ public class ElementTypeController {
 		
 		return new ResponseEntity<>(elementTypeBO.getElementsByElementType(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/{id}/elementsForGrid")
+	@ApiOperation(value = "Get elements by elementTypeId for grid", notes = "Get elements by elementTypeId for grid")
+	public ResponseEntity<Object> getElementsByElementTypeIdForGrid(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Element type identifier",
+					example = "ElementType:3",
+					required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(elementTypeBO.getElementsByElementTypeForGrid(id), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/{id}/elementsWithChilds")
 	@ApiOperation(value = "Get elements with Childs by elementTypeId", notes = "Get elements with childs by elementTypeId")

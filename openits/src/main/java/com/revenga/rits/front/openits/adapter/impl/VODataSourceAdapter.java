@@ -59,6 +59,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ALARM_CONFIG = getPropertyInt("get_alarm_filtereds_by_alarm_config");
 	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ELEMENT = getPropertyInt("get_alarm_filtereds_by_element");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_by_element_type");
+	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID = getPropertyInt("get_elements_by_element_type_for_grid");
 	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC = getPropertyInt("get_elements_array_states_synoptic");

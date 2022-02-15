@@ -32,6 +32,12 @@ class AdapterGridElement extends AdapterGrid{
 	static final String FIELD_ELEMENT_TYPE_STATE = "elementTypeState";
 	static final String FIELD_ELEMENT_TYPE_STATE_STATE = "state";
 	static final String FIELD_ELEMENT_TYPE_STATE_STATE_LABEL = "stateLabel";
+	static final String FIELD_LOCATION = "location";
+	static final String FIELD_ALIAS = "alias";
+	static final String FIELD_DESCRIPTION = "description";
+	static final String FIELD_LOCATION_ID = "locationId";
+	static final String FIELD_LOCATION_ALIAS = "locationAlias";
+	static final String FIELD_LOCATION_DESCRIPTION = "locationDescription";
 	
 	public AdapterGridElement(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
@@ -55,6 +61,7 @@ class AdapterGridElement extends AdapterGrid{
 					
 					flattenElementTypeState(dataRow);
 					flattenElementValues(dataRow);
+					flattenLocation(dataRow);
 					
 					data.add(vo2uiAdapter.convert(datasourceId, dataRow));
 				}
@@ -178,6 +185,25 @@ class AdapterGridElement extends AdapterGrid{
 				
 				dataRow.remove(FIELD_ELEMENT_VALUES);
 			}
+		}
+	}
+	
+	void flattenLocation(Map<String, Object> dataRow) {
+		
+		if (dataRow.containsKey(FIELD_LOCATION)) {
+			
+			Object objLocation = dataRow.get(FIELD_LOCATION);
+			
+			if (objLocation instanceof Map) {
+				
+				Map<String, Object> location = (Map<String, Object>) objLocation; 
+				
+				dataRow.put(FIELD_LOCATION_ID, location.get(FIELD_ID));
+				dataRow.put(FIELD_LOCATION_ALIAS, location.get(FIELD_ALIAS));
+				dataRow.put(FIELD_LOCATION_DESCRIPTION, location.get(FIELD_DESCRIPTION));
+			}
+			
+			dataRow.remove(FIELD_LOCATION);
 		}
 	}
 }
