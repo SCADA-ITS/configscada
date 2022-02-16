@@ -756,8 +756,10 @@ export default class DataTable {
 		let ctxMenu = $$("ctx_menu-" + this.uid);
 
 		if (command) {
+			
+			let cssClass = (command.config.label != "") ? "command-label-datatable-disable" : "command-icon-datatable-disable";
 
-			webix.html.addCss(command.$view, "command-datatable-disable");
+			webix.html.addCss(command.$view, cssClass);
 			command.disable();
 
 			if (ctxMenu) {
@@ -781,7 +783,9 @@ export default class DataTable {
 
 		if (command) {
 
-			webix.html.removeCss(command.$view, "command-datatable-disable");
+			let cssClass = (command.config.label != "") ? "command-label-datatable-disable" : "command-icon-datatable-disable";
+	
+			webix.html.removeCss(command.$view, cssClass);
 			command.enable();
 
 			if (ctxMenu) {

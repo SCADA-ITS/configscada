@@ -4048,6 +4048,15 @@ audio {
 	color: var(--blue-mid2-opacity-5);
 }
 
-.command-datatable-disable .webix_icon_button .webix_icon {
+.command-icon-datatable-disable .webix_icon_button .webix_icon {
 	color: var(--blue-headers-not-sel) !important;
+}
+
+.command-label-datatable-disable .webix_button {
+	color: var(--blue-soft-opacity-9) !important;
+	background: white !important;	
+}
+
+.command-label-datatable-disable .webix_button .webix_icon_btn {
+	color: var(--blue-headers-not-sel) !important;	
 }

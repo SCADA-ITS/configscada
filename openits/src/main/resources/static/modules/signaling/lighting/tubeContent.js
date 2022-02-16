@@ -109,7 +109,8 @@ export default class TubeContent {
 
 				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
 
-					this.tubeCircuitsDataTable.disable();
+					//this.tubeCircuitsDataTable.disable();
+					self.enableGridButtons(this.tubeCircuitsDataTable, false);
 				}
 			}
 
@@ -124,7 +125,8 @@ export default class TubeContent {
 
 				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
 
-					this.tubeDalisDataTable.disable();
+					//this.tubeDalisDataTable.disable();
+					self.enableGridButtons(self.tubeDalisDataTable, false);	
 				}
 			}
 
@@ -894,20 +896,10 @@ export default class TubeContent {
 					],
 					gridCommands: [
 						{
-							id: 1,
+							id: 2,
 							default_: false,
 							icon: "mdi mdi-toggle-switch",
 							label: "LBL_SWITCH_ON",
-							multiselect: true,
-							position: 1,
-							showText: true,
-							itemRequired: true
-						},
-						{
-							id: 2,
-							default_: false,
-							icon: "mdi mdi-toggle-switch-off",
-							label: "LBL_SWITCH_OFF",
 							multiselect: true,
 							position: 2,
 							showText: true,
@@ -916,10 +908,30 @@ export default class TubeContent {
 						{
 							id: 3,
 							default_: false,
+							icon: "mdi mdi-toggle-switch-off",
+							label: "LBL_SWITCH_OFF",
+							multiselect: true,
+							position: 3,
+							showText: true,
+							itemRequired: true
+						},
+						{
+							id: 4,
+							default_: false,
 							icon: "mdi mdi-broom",
 							label: "LBL_CLEAN",
 							multiselect: true,
-							position: 3,
+							position: 4,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 1,
+							default_: true,
+							icon: "mdi mdi-information-outline",
+							label: "LBL_INFO",
+							multiselect: false,
+							position: 1,
 							showText: false,
 							itemRequired: true
 						}
@@ -931,7 +943,7 @@ export default class TubeContent {
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 	
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
+					commandId: 2,
 					function: () => {
 	
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
@@ -946,7 +958,7 @@ export default class TubeContent {
 				});
 	
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 2,
+					commandId: 3,
 					function: () => {
 	
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
@@ -961,7 +973,7 @@ export default class TubeContent {
 				});
 	
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 3,
+					commandId: 4,
 					function: () => {
 	
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
@@ -972,6 +984,32 @@ export default class TubeContent {
 						});
 	
 						self.checkDisableChangeStatusButton();
+					}
+				});
+
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 1,
+					function: () => {
+
+						let selectedItems = self.tubeCircuitsDataTable.getSelectedItems();
+
+						if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+
+							let selectedItem = selectedItems[0];
+
+							if (selectedItem) {
+
+								let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
+
+								if (module) {
+
+									let moduleAction = { id: self.parent.config.equipmentViewer };
+									let args = { selectedPks: [selectedItem.id] };
+
+									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+								}
+							}
+						}
 					}
 				});
 	
@@ -1132,11 +1170,21 @@ export default class TubeContent {
 					gridCommands: [
 						{
 							id: 1,
+							default_: true,
+							icon: "mdi mdi-information-outline",
+							label: "LBL_INFO",
+							multiselect: false,
+							position: 1,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 2,
 							default_: false,
 							icon: "mdi mdi-pen",
 							label: "LBL_CHANGE_REGIME",
 							multiselect: false,
-							position: 1,
+							position: 2,
 							showText: true,
 							itemRequired: true
 						}
@@ -1148,7 +1196,7 @@ export default class TubeContent {
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 	
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
+					commandId: 2,
 					function: () => {
 	
 						let options = [];
@@ -1170,6 +1218,32 @@ export default class TubeContent {
 	
 						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
 						optionDialog.show();
+					}
+				});
+				
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
+					commandId: 1,
+					function: () => {
+
+						let selectedItems = self.tubeDalisDataTable.getSelectedItems();
+
+						if (Array.isArray(selectedItems) && selectedItems.length == 1) {
+
+							let selectedItem = selectedItems[0];
+
+							if (selectedItem) {
+
+								let module = util.module.getFromModuleAction(self.parent.config.equipmentViewer);
+
+								if (module) {
+
+									let moduleAction = { id: self.parent.config.equipmentViewer };
+									let args = { selectedPks: [selectedItem.id] };
+
+									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
+								}
+							}
+						}
 					}
 				});
 	
@@ -1422,12 +1496,14 @@ export default class TubeContent {
 
 					if (self.tubeCircuitsDataTable) {
 						
-						self.tubeCircuitsDataTable.disable();	
+						//self.tubeCircuitsDataTable.disable();
+						self.enableGridButtons(self.tubeCircuitsDataTable, false);	
 					}
 					
 					if (self.tubeDalisDataTable) {
 					
-						self.tubeDalisDataTable.disable();	
+						//self.tubeDalisDataTable.disable();
+						self.enableGridButtons(self.tubeDalisDataTable, false);		
 					}
 					
 					$$("view-content-button-change-regime-" + self.parent.uid).disable();
@@ -1436,12 +1512,14 @@ export default class TubeContent {
 
 					if (self.tubeCircuitsDataTable) {
 						
-						self.tubeCircuitsDataTable.enable();	
+						//self.tubeCircuitsDataTable.enable();
+						self.enableGridButtons(self.tubeCircuitsDataTable, true);
 					}
 					
 					if (self.tubeDalisDataTable) {
 					
-						self.tubeDalisDataTable.enable();	
+						//self.tubeDalisDataTable.enable();
+						self.enableGridButtons(self.tubeDalisDataTable, true);	
 					}
 					
 					$$("view-content-button-change-regime-" + self.parent.uid).enable();
@@ -1624,5 +1702,25 @@ export default class TubeContent {
 		let lightingMode = this.selectedTube.elementValues.find(elementValue => elementValue.elementTypeParam.id == this.parent.config.params.lightingMode);
 
 		return lightingMode ? lightingMode.value : undefined;
+	}
+	
+	enableGridButtons(table, enable) {
+
+		const INFO_BUTTON_ID = 1;
+		
+		for (let command of table.metadata.gridCommands) {
+
+			if (enable) {
+
+				table.commandEnable("tb_btn-" + table.uid + "_" + command.id);
+
+			} else {
+
+				if (command.id != INFO_BUTTON_ID) {
+
+					table.commandDisable("tb_btn-" + table.uid + "_" + command.id);
+				}
+			}
+		}
 	}
 }
