@@ -39,7 +39,7 @@ export default class AlarmFilteredView {
 
 					alarmFiltered = alarmFilteredResponse.json();
 					alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarmFiltered.alarmConfig.id);
-					element = window.em.getByField(EntityType.ELEMENT, undefined, alarmFiltered.element.id);
+					element = window.em.getByField(EntityType.ELEMENT, "id", alarmFiltered.element.id);
 
 					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.elementAlarms, { id: element.id })).then(function(alarmResponse) {
 

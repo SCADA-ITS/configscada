@@ -229,7 +229,7 @@ export let adapter = {
 
 						let itemOutput = {};
 
-						let targetElement = window.em.getByField(EntityType.ELEMENT, undefined, e.targetElement.id);
+						let targetElement = window.em.getByField(EntityType.ELEMENT, "id", e.targetElement.id);
 						let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", e.alarmConfig.id);
 						let alarmLevel = window.em.getByField(EntityType.ALARM_LEVEL, "id", alarmConfig.alarmLevel.id);
 

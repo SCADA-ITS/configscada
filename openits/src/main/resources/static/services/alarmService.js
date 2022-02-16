@@ -281,7 +281,7 @@ export default class AlarmService extends GenericModule {
 		function createNotification(alarm) {
 			
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
-			let element = window.em.getByField(EntityType.ELEMENT, undefined, alarm.targetElement.id);
+			let element = window.em.getByField(EntityType.ELEMENT, "id", alarm.targetElement.id);
 			let alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", alarm.alarmConfig.id);
 			
 			//let date = alarm.deactivation ? alarm.deactivation / 1000 : alarm.activation / 1000;

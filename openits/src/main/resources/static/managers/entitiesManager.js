@@ -162,7 +162,7 @@ export default class EntitiesManager {
 			
 			if (this.tempEntities[em_type.id].length > 0) {
 			
-				index = this.tempEntities[em_type.id].findIndex(v => v.id === value);
+				index = this.tempEntities[em_type.id].findIndex(v => v[field] === value);
 				
 				if (index > -1) {
 					

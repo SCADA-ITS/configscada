@@ -160,7 +160,7 @@ export default class AlarmFilteredWizard {
 
 							self.tableAlarmsModal.clear();
 
-							let element = window.em.getByField(EntityType.ELEMENT, undefined, item.id);
+							let element = window.em.getByField(EntityType.ELEMENT, "id", item.id);
 							self.alarmMutedElementSelect = element;
 
 							let elementTypeId = element.elementType.id;

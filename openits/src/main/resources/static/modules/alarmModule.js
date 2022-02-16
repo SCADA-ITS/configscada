@@ -381,7 +381,7 @@ export default class AlarmModule extends GenericModule {
 	
 					self.tableAlarmsModal.clear();
 	
-					let element = window.em.getByField(EntityType.ELEMENT, undefined, item.id_);
+					let element = window.em.getByField(EntityType.ELEMENT, "id", item.id_);
 					self.alarmMutedElementSelect = element;
 	
 					let elementTypeId = element.elementType.id;
@@ -620,7 +620,7 @@ export default class AlarmModule extends GenericModule {
 
 	update() {
 
-		this.targetElement = window.em.getByField(EntityType.ELEMENT, undefined, this.alarm.targetElement.id);
+		this.targetElement = window.em.getByField(EntityType.ELEMENT, "id", this.alarm.targetElement.id);
 		this.targetElementAlias = this.targetElement.alias;
 		this.alarmConfig = window.em.getByField(EntityType.ALARM_CONFIG, "id", this.alarm.alarmConfig.id);
 		this.alarmConfigLabelAlias = i18n.t(this.alarmConfig.labelAlias);
