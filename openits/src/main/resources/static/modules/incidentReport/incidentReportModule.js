@@ -17,13 +17,13 @@ export default class IncidentReportModule extends GenericModule {
 		this.incidentReport = undefined;
 		this.stompClient = undefined;
 		this.idStompSubscriptor = undefined;
-		this.requestReport = true;
 		this.disconnectStomp = true;
 		this.closed = false;
 		this.config = module.config;
 		this.incidentReportContent = undefined;
 		
 		this.userData = util.user.getUserData();
+		this.isUpdating = false;
 		
 		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
 		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
@@ -53,7 +53,7 @@ export default class IncidentReportModule extends GenericModule {
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
-			this.refresh();
+			this.request();
 		}
 		else if (this.moduleAction.id === this.config.moduleAction.confirm) {
 
@@ -297,40 +297,37 @@ export default class IncidentReportModule extends GenericModule {
 	}
 	
 	
-	refresh() {
+	request() {
 
 		let self = this;
 
 		$$("loading-" + this.uid).show();
 		$$(this.uid).hide();
+		log.debug("loading...");
 
-		if (this.requestReport) {
+		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
-			if (this.moduleAction.id === this.config.moduleAction.edit) {
+			log.debug("request incident report = " + self.incidentReportId);
+			
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.incidentReport, { id: self.incidentReportId })).then(function(dat) {
+				
+				log.debug("response incident report = " + self.incidentReportId);
 
-				this.requestReport = false;
+				if (dat != null) {
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(this.config.restEndpoints.incidentReport, { id: self.incidentReportId })).then(function(dat) {
+					self.incidentReport = dat.json();
 
-					if (dat != null) {
+					self.update();
+				}
 
-						self.incidentReport = dat.json();
-
-						self.update();
-					}
-
-				}, function(response) { util.ajax.handleError(response); });
-			}
-		}
-		else {
-
-			this.update();
+			}, function(response) { util.ajax.handleError(response); });
 		}
 	}
 
 	update() {
 
-
+		this.isUpdating = true;
+		
 		if (this.incidentReport) {
 
 			this.currentSequenceOfState = this.incidentReport.sequenceOfStates.find(e => {
@@ -360,11 +357,6 @@ export default class IncidentReportModule extends GenericModule {
 				this.drawComponents();
 			}
 
-			if (this.moduleAction.id === this.config.moduleAction.edit && !this.stompClient) {
-
-				this.callbacks();
-			}
-
 			if (this.incidentReportContent) {
 
 				this.incidentReportContent.init();
@@ -372,6 +364,14 @@ export default class IncidentReportModule extends GenericModule {
 
 			$$("loading-" + this.uid).hide();
 			$$(this.uid).show();
+			log.debug("loading hide");
+			
+			this.isUpdating = false;
+			
+			if (this.moduleAction.id === this.config.moduleAction.edit && !this.stompClient) {
+
+				this.callbacks();
+			}
 
 			if (this.closed) {
 
@@ -379,6 +379,8 @@ export default class IncidentReportModule extends GenericModule {
 				ms.show();
 			}
 		}
+		
+		self.isUpdating = false;
 	}
 
 	callbacks() {
@@ -396,7 +398,11 @@ export default class IncidentReportModule extends GenericModule {
 
 			view.attachEvent("onDestruct", function() {
 
-				self.disconnect_ws();
+				if (!self.isUpdating) {
+					
+					self.disconnect_ws();	
+				}
+				
 			});
 		}
 	}
@@ -555,6 +561,19 @@ export default class IncidentReportModule extends GenericModule {
 	connect_ws() {
 
 		let self = this;
+		
+		if (!this.idStompSubscriptor) {
+			
+			let url = appConfig.stompUrl;
+			let topic = this.config.topic + "." + this.incidentReportId;
+	
+			let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+		
+			if (stompSubscriptorService) {
+	
+				this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, on_message);
+			}	
+		}
 
 		function on_message(be, action, timestamp) {
 
@@ -565,22 +584,16 @@ export default class IncidentReportModule extends GenericModule {
 				action: action,
 				timestamp: timestamp
 			}
-
+			
 			self.disconnectStomp = false;
+			
+			log.debug(JSON.stringify(data));
 
 			if (action === StompSubscriptorService.ACTION_UPDATE) {
 
-				console.log(data);
-
-				self.requestReport = true;
-
-				self.refresh();
+				self.request();
 			}
 			else if (action === StompSubscriptorService.ACTION_DELETE) {
-
-				console.log(data);
-
-				self.requestReport = false;
 
 				if (Array.isArray(self.incidentReport.sequenceOfStates) && self.incidentReport.sequenceOfStates.length > 0) {
 
@@ -590,13 +603,10 @@ export default class IncidentReportModule extends GenericModule {
 					self.incidentReport.incidentState.finalState = true;
 
 					self.closed = true;
-					self.refresh();
+					self.update();
 				}
-			} else if (action === StompSubscriptorService.ACTION_BLOCK) {
-
-				console.log(data);
-
-				self.requestReport = true;
+			} 
+			else if (action === StompSubscriptorService.ACTION_BLOCK) {
 
 				let loadingView = $$("loading-" + self.uid);
 				let mainView = $$(self.uid);
@@ -604,21 +614,10 @@ export default class IncidentReportModule extends GenericModule {
 				if (loadingView && mainView) {
 					
 					$$("loading-" + self.uid).show();
-					$$(self.uid).hide();	
+					$$(self.uid).hide();
+					log.debug("loading...");	
 				}
 			}
-		}
-
-		let url = appConfig.stompUrl;
-		let topic = this.config.topic + "." + this.incidentReportId;
-
-		//this.stompClient = util.stomp.connect(url, topic, undefined, on_message);
-		
-		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
-		if (stompSubscriptorService) {
-
-			this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, on_message);
 		}
 	}
 

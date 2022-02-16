@@ -117,7 +117,6 @@ export default class Notification {
 			});
 			
 			viewToolbar.cols.push({
-				width: 300,
 				template: function() {
 	
 					return `<div class="notification-title">${i18n.t(self.notificationType.label)}</div>`;
@@ -125,7 +124,7 @@ export default class Notification {
 				borderless: true
 			});
 			
-			viewToolbar.cols.push({});
+			viewToolbar.cols.push({ width: 10 });
 			
 			if (self.notificationType.id === Notification.ALARM.id) {
 				
