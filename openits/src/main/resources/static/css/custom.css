@@ -4048,3 +4048,6 @@ audio {
 	color: var(--blue-mid2-opacity-5);
 }
 
+.command-datatable-disable .webix_icon_button .webix_icon {
+	color: var(--blue-headers-not-sel) !important;
+}

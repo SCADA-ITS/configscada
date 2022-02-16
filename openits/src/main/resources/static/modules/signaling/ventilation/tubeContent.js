@@ -75,6 +75,7 @@ export default class TubeContent {
 	loadData() {
 
 		let self = this;
+		let infoButtonId = undefined;
 
 		$$("view-tube-loading-" + self.uid).show();
 		$$("view-tube-content-" + self.uid).hide();
@@ -141,7 +142,8 @@ export default class TubeContent {
 									
 															if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableFanChange) {
 									
-																self.tubeFansDataTable.disable();
+																//self.tubeFansDataTable.disable();
+																enableGridButtons(false)
 															}
 														}
 														
@@ -434,7 +436,8 @@ export default class TubeContent {
 
 					if (!ventilationMode) {
 
-						self.tubeFansDataTable.disable();
+						//self.tubeFansDataTable.disable();
+						enableGridButtons(false);
 						$$("view-content-button-change-regime-" + self.uid).disable();
 
 					} else {
@@ -454,16 +457,19 @@ export default class TubeContent {
 								$$("view-content-button-change-regime-" + self.uid).enable();
 							}
 
-							self.tubeFansDataTable.enable();
+							//self.tubeFansDataTable.enable();
+							enableGridButtons(true);
 						}
 
 						if (self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disableFanChange) {
 
-							self.tubeFansDataTable.disable();
+							//self.tubeFansDataTable.disable();
+							enableGridButtons(false);
 
 						} else {
 
-							self.tubeFansDataTable.enable();
+							//self.tubeFansDataTable.enable();
+							enableGridButtons(true);
 						}
 					}
 
@@ -488,6 +494,25 @@ export default class TubeContent {
 
 						let fanData = eval("adapter." + self.parent.config.adapters.fan)([newFanData], null);
 						self.tubeFansDataTable.update(fanData);
+					}
+				}
+			}
+		}
+		
+		
+		function enableGridButtons(enable) {
+
+			for (let command of self.tubeFansDataTable.metadata.gridCommands) {
+
+				if (enable) {
+
+					self.tubeFansDataTable.commandEnable("tb_btn-" + self.tubeFansDataTable.uid + "_" + command.id);
+
+				} else {
+
+					if (command.id != infoButtonId) {
+
+						self.tubeFansDataTable.commandDisable("tb_btn-" + self.tubeFansDataTable.uid + "_" + command.id);
 					}
 				}
 			}
@@ -859,7 +884,7 @@ export default class TubeContent {
 							unselectAllAfter: true
 						});
 						
-						let infoButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
+						infoButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
 						
 						metadata.gridCommands.push({
 							id: infoButtonId,

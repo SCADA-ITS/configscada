@@ -749,6 +749,54 @@ export default class DataTable {
 			$$("dt-" + this.uid).on_dblclick="";
 		}
 	}
+	
+	commandDisable(commandId) {
+
+		let command = $$(commandId);
+		let ctxMenu = $$("ctx_menu-" + this.uid);
+
+		if (command) {
+
+			webix.html.addCss(command.$view, "command-datatable-disable");
+			command.disable();
+
+			if (ctxMenu) {
+
+				let commandIcon = ctxMenu.config.data.find(dat => dat.icon === command.config.icon);
+
+				if (commandIcon) {
+
+					commandIcon.disabled = true;
+				}
+
+				ctxMenu.refresh();
+			}
+		}
+	}
+
+	commandEnable(commandId) {
+
+		let command = $$(commandId);
+		let ctxMenu = $$("ctx_menu-" + this.uid);
+
+		if (command) {
+
+			webix.html.removeCss(command.$view, "command-datatable-disable");
+			command.enable();
+
+			if (ctxMenu) {
+
+				let commandIcon = ctxMenu.config.data.find(dat => dat.icon === command.config.icon);
+
+				if (commandIcon) {
+
+					commandIcon.disabled = false;
+				}
+
+				ctxMenu.refresh();
+			}
+		}
+	}
 
 	drawMainToolbar() {
 
