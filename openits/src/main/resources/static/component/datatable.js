@@ -752,7 +752,7 @@ export default class DataTable {
 	
 	commandDisable(commandId) {
 
-		let command = $$(commandId);
+		let command = $$("tb_btn-" + this.uid + "_" + commandId);
 		let ctxMenu = $$("ctx_menu-" + this.uid);
 
 		if (command) {
@@ -778,7 +778,7 @@ export default class DataTable {
 
 	commandEnable(commandId) {
 
-		let command = $$(commandId);
+		let command = $$("tb_btn-" + this.uid + "_" + commandId);
 		let ctxMenu = $$("ctx_menu-" + this.uid);
 
 		if (command) {

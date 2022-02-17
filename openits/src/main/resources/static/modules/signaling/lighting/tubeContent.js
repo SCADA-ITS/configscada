@@ -1712,13 +1712,13 @@ export default class TubeContent {
 
 			if (enable) {
 
-				table.commandEnable("tb_btn-" + table.uid + "_" + command.id);
+				table.commandEnable(command.id);
 
 			} else {
 
 				if (command.id != INFO_BUTTON_ID) {
 
-					table.commandDisable("tb_btn-" + table.uid + "_" + command.id);
+					table.commandDisable(command.id);
 				}
 			}
 		}

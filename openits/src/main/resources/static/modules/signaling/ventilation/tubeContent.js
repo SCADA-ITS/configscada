@@ -506,13 +506,13 @@ export default class TubeContent {
 
 				if (enable) {
 
-					self.tubeFansDataTable.commandEnable("tb_btn-" + self.tubeFansDataTable.uid + "_" + command.id);
+					self.tubeFansDataTable.commandEnable(command.id);
 
 				} else {
 
 					if (command.id != infoButtonId) {
 
-						self.tubeFansDataTable.commandDisable("tb_btn-" + self.tubeFansDataTable.uid + "_" + command.id);
+						self.tubeFansDataTable.commandDisable(command.id);
 					}
 				}
 			}
