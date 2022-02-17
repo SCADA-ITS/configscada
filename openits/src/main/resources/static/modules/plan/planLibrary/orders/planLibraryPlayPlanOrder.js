@@ -59,7 +59,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 							}
 						}
 					},
-					{ width: 90 }
+					{}
 				]
 			};
 

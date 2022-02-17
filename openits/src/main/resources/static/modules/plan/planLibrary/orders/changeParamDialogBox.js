@@ -111,7 +111,7 @@ export default class ChangeParamDialogBox {
 				elementTypeParamRow = {
 					id: "change-param-equipment-type-param-row-" + self.uid,
 					cols: [
-						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: true, label: i18n.t("LBL_PARAM"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: (self.elementTypeParam?i18n.t(self.elementTypeParam.labelAlias):""), required: true, label: i18n.t("LBL_PARAM"), disabled: true, labelWidth: 275 },
 						{
 							view: "icon", icon: "wxi-search", disabled: disabled,
 							on: {
@@ -142,7 +142,7 @@ export default class ChangeParamDialogBox {
 				valueRow = {
 					id: "change-param-value-row-" + self.uid,
 					cols: [
-						{ view: "text", value: self.planOrderValue, required: true, label: i18n.t("LBL_VALUE"), disabled: true, labelWidth: 325 },
+						{ view: "text", value: self.planOrderValue, required: true, label: i18n.t("LBL_VALUE"), disabled: true, labelWidth: 275 },
 						{
 							view: "icon", icon: "mdi mdi-pencil", disabled: disabled,
 							on: {

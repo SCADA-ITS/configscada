@@ -76,7 +76,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 							}
 						}
 					},
-					{ width: 90 }
+					{}
 				]
 			};
 
@@ -100,7 +100,7 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 							}
 						}
 					},
-					{ width: 90 }
+					{}
 				]
 			};
 
