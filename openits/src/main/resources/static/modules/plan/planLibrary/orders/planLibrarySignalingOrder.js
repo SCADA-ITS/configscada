@@ -142,7 +142,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 		
 		let self = this;
 		let elementTypeSelected;
-		let elementSelected;
 		
 		if (planOrder && self.plan) {
 			
@@ -171,34 +170,28 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				}
 			}
 			
-			function onSelectElement(elementId) {
+			function onSelectElement(elementSelected) {
 				
-				if (newPlanOrder && elementId && elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
+				if (newPlanOrder && elementSelected && Array.isArray(elementSelected.commandElements) && elementSelected.commandElements.length > 0) {
 					
-					elementSelected = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+					newPlanOrder.alias = planOrder.planOrderType.alias + " - " + elementSelected.alias;
+					newPlanOrder.description = newPlanOrder.alias;
 					
-					if (elementSelected) {
-						
-						newPlanOrder.alias = planOrder.planOrderType.alias + " - " + elementSelected.alias;
-						newPlanOrder.description = newPlanOrder.alias;
-						
-						newPlanOrder.comandElement = {
-							elementId: elementSelected.id,
-							commandElementTypeId: elementSelected.commandElements[0].id
-						}
-						
-						planLibraryPersist.createPlanOrder(newPlanOrder).then(result => {
-							
-							self.onUpdate(self.plan, result);	
-						});	
+					newPlanOrder.comandElement = {
+						elementId: elementSelected.id,
+						commandElementTypeId: elementSelected.commandElements[0].id
 					}
+					
+					planLibraryPersist.createPlanOrder(newPlanOrder).then(result => {
 						
+						self.onUpdate(self.plan, result);	
+					});	
 				}
 			}
 			
-			function onMultiselectElement(elementsIds) {
+			function onMultiselectElement(elementsSelected) {
 
-				if (newPlanOrder && elementsIds && elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
+				if (newPlanOrder && Array.isArray(elementsSelected)) {
 
 					let counter = 0;
 
@@ -206,9 +199,11 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 					function persist() {
 
-						elementSelected = window.em.getByField(EntityType.ELEMENT, "id", elementsIds[counter]);
-
-						if (elementSelected) {
+						//elementSelected = window.em.getByField(EntityType.ELEMENT, "id", elementsIds[counter]);
+						
+						let elementSelected = elementsSelected[counter];
+						
+						if (elementSelected && Array.isArray(elementSelected.commandElements) && elementSelected.commandElements.length > 0) {
 
 							newPlanOrder.alias = planOrder.planOrderType.alias + " - " + elementSelected.alias;
 							newPlanOrder.description = newPlanOrder.alias;
@@ -236,7 +231,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 											counter++;
 
-											if (counter < elementsIds.length) {
+											if (counter < elementsSelected.length) {
 
 												persist();
 
@@ -367,55 +362,68 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				function onAccept(items){
 								
 					if (Array.isArray(items) && items.length > 0) {
-
-						let arrayItemsId = [];
-
-						for (let item of items) {
-
-							arrayItemsId.push(item.id);
-						}
-
-						if (items.length === 1) {
-
-							onSelectElement(arrayItemsId);
-
-						} else {
+					
+						let elementIdsSelected = items.map(e => {
 							
-							let modAction = (elementTypeSelected.planOrderSignalingModule) ? elementTypeSelected.planOrderSignalingModule : self.config.moduleAction.defaultPlanOrderEdit;
-							let module = util.module.getFromModuleAction(parseInt(modAction));
+							return e.id;
+						});
+						
+						webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.elementByIdsCommands, JSON.stringify(elementIdsSelected)).then(
 
-							if (module) {
-
-								let moduleAction = { id: module.config.moduleAction.planOrderEdit };
-
-								let args = {
-									selectedPks: arrayItemsId,
-									callbacks: [
-										function () {
+							function(dataElements) {
+									
+								if (dataElements) {
+									
+									let elementsSelected = dataElements.json();
+									
+									if (Array.isArray(elementsSelected) && elementsSelected.length > 0) {
+										
+										if (elementsSelected.length === 1) {
+	
+											onSelectElement(elementsSelected[0]);
+				
+										} 
+										else {
 											
-											$$("plan-lib-loading-" + self.uid).show();
-											$$("view-option-dialog-" + self.uid).hide();
-											$$("plan-lib-resizer-" + self.uid).hide();
-											$$("plan-lib-content-" + self.uid).hide();
- 											onMultiselectElement(arrayItemsId);
-										}]
-								};
-
-								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, function(instance) {
-
-									self.signalingModuleInstance = instance;
-									let win = $$(self.signalingModuleInstance.args.containerId);
-
-									util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
-
-								});
-														
-							} else {
-
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
-								ms.show();
+											let modAction = (elementTypeSelected.planOrderSignalingModule) ? elementTypeSelected.planOrderSignalingModule : self.config.moduleAction.defaultPlanOrderEdit;
+											let module = util.module.getFromModuleAction(parseInt(modAction));
+				
+											if (module) {
+				
+												let moduleAction = { id: module.config.moduleAction.planOrderEdit };
+				
+												let args = {
+													selectedPks: elementIdsSelected,
+													callbacks: [
+														function () {
+															
+															$$("plan-lib-loading-" + self.uid).show();
+															$$("view-option-dialog-" + self.uid).hide();
+															$$("plan-lib-resizer-" + self.uid).hide();
+															$$("plan-lib-content-" + self.uid).hide();
+				 											onMultiselectElement(elementsSelected);
+														}]
+												};
+				
+												util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, function(instance) {
+				
+													self.signalingModuleInstance = instance;
+													let win = $$(self.signalingModuleInstance.args.containerId);
+				
+													util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
+				
+												});
+																		
+											} else {
+				
+												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+												ms.show();
+											}
+										}
+									}
+								}
 							}
-						}
+						);
 					}								
 				}
 			}

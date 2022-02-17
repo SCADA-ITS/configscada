@@ -18,7 +18,8 @@
 		"deletePlan": "plans/deletePlan/${id}",
 		"createPlanOrder": "plans/createPlanOrder",
 		"updatePlanOrder": "plans/updatePlanOrder",
-		"deletePlanOrder": "plans/deletePlanOrder/${id}"
+		"deletePlanOrder": "plans/deletePlanOrder/${id}",
+		"elementByIdsCommands": "elements/commands"
 	},
 	"requiredPermissions": {
 		"signalling": "SystemPermission:5",

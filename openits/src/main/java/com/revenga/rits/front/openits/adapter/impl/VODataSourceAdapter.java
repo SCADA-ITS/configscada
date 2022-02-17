@@ -62,6 +62,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID = getPropertyInt("get_elements_by_element_type_for_grid");
 	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
+	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_COMMANDS = getPropertyInt("get_elements_array_commands");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC = getPropertyInt("get_elements_array_states_synoptic");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_MEASURES_SYNOPTIC = getPropertyInt("get_elements_array_states_measures_synoptic");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_ALARMS_SYNOPTIC = getPropertyInt("get_elements_array_states_alarms_synoptic");

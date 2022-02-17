@@ -46,6 +46,13 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getElements(ids), HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/commands")
+	@ApiOperation(value = "Get selected elements only with commands", notes = "Get selected elements only with commands")
+	public ResponseEntity<Object> getElementsCommands(@RequestBody List<String> ids) {
+		
+		return new ResponseEntity<>(elementBO.getElementsCommands(ids), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Get element by id", notes = "Get element by id")
 	public ResponseEntity<Object> getElementById(
