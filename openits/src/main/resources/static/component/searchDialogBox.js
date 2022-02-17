@@ -51,10 +51,15 @@ export default class SearchDialogBox {
 				
 					if (res === undefined || res === true) {
 						
-						$$(self.containerId).close();	
+						$$(self.containerId).hide();
+						
+						setTimeout(function() {
+
+							$$(self.containerId).close();
+				
+						}, 100);
 					}
 				}
-
 			}
 			catch {}
 			

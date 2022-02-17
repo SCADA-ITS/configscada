@@ -481,6 +481,13 @@ p, input, textarea {
 	    animation-duration: 0.4s;
 	    border-width: 0px !important;
 	}
+	
+	.lock-screen {
+		backdrop-filter: blur(10px);
+		box-shadow: unset;
+	    background-color: var(--blue-strong-opacity-2);
+	    border-width: 0px !important;
+	}
 }
 
 @supports not (backdrop-filter: none) {
@@ -491,6 +498,18 @@ p, input, textarea {
 	    animation-duration: 0.4s;
 	    border-width: 0px !important;
 	}
+	
+	.lock-screen {
+		
+	    background-color: var(--blue-strong-opacity-2);
+	    box-shadow: unset;
+	    border-width: 0px !important;
+	}
+}
+
+.main-screen-locked-firefox {
+	
+	filter: blur(4px);
 }
 
 .notification-alarm-window-list {

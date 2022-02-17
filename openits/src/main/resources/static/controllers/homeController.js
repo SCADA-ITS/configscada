@@ -95,6 +95,7 @@ function initialize() {
 
 	let main_screen = {
 		type: "space",
+		id: "mainScreen",
 		cols: [
 			{ width: 0.1 },
 			{

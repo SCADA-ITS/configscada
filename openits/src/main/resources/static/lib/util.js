@@ -542,19 +542,22 @@ export let util = {
 					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
 
 						let selectedPk = args.selectedPks[0];
-						let elementType = window.em.getByField(EntityType.ELEMENT, "id", selectedPk).elementType;
+						let element = window.em.getByField(EntityType.ELEMENT, "id", selectedPk);
 
-						let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === elementType.id);
-
-						if (elementTypeCommand) {
-
-							cmd = elementTypeCommand;
-
-							if (cmd.viewType) {
-
-								viewTypeId = cmd.viewType.id;
-							}
-						}
+						if (element && element.elementType) {
+							
+							let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === element.elementType.id);
+	
+							if (elementTypeCommand) {
+	
+								cmd = elementTypeCommand;
+	
+								if (cmd.viewType) {
+	
+									viewTypeId = cmd.viewType.id;
+								}
+							}	
+						}						
 					}
 
 					let module = util.module.getFromModuleAction(cmd.moduleAction.id);
@@ -1271,13 +1274,27 @@ export let util = {
 			webix.ui({
 				view: "popup",
 				move: true,
-				css: "control-panel-main",
+				css: "lock-screen",
 				height: document.documentElement.clientHeight,
 				width: document.documentElement.clientWidth,
 				body: {
-					rows: []
+					rows: [{}]
+				},
+				on: {
+					onBeforeShow: function() {
+	
+						if (webix.env.isFF) {
+
+							let mainScreen = $$(MAIN_SCREEN);
+							
+							if (mainScreen) {
+								
+								webix.html.addCss(mainScreen.$view, "main-screen-locked-firefox");
+							}							
+						}
+					}
 				}
-			});
+			}).show();
 		},
 		
 		getViewLogout() {

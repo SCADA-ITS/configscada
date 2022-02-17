@@ -101,11 +101,7 @@ export default class UserService extends GenericModule {
 										
 										subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_UNAUTHORIZED, "");
 
-										if (mainScreen) {
-											
-											webix.ui(util.ui.getViewLogout(), mainScreen);
-										}
-										
+										util.ui.clearScreen();
 										
 										(new MessageBox(MessageBox.WARN, i18n.t(labelMsg),  
 											function onAccept() {
@@ -124,11 +120,8 @@ export default class UserService extends GenericModule {
 				
 									clearInterval(self.keepAliveInterval);	
 								}
-								
-								if (mainScreen) {
-											
-									webix.ui(util.ui.getViewLogout(), mainScreen);
-								}
+
+								util.ui.clearScreen();
 								
 								(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_WITHOUT_COMM"),  
 									function onAccept() {
@@ -148,10 +141,7 @@ export default class UserService extends GenericModule {
 								
 								subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "Exceeded idle time");
 								
-								if (mainScreen) {
-											
-									webix.ui(util.ui.getViewLogout(), mainScreen);
-								}
+								util.ui.clearScreen();
 								
 								if (self.keepAliveInterval) {
 				

@@ -198,9 +198,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 					persist();
 
 					function persist() {
-
-						//elementSelected = window.em.getByField(EntityType.ELEMENT, "id", elementsIds[counter]);
-						
+					
 						let elementSelected = elementsSelected[counter];
 						
 						if (elementSelected && Array.isArray(elementSelected.commandElements) && elementSelected.commandElements.length > 0) {
