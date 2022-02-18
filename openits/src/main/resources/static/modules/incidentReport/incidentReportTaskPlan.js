@@ -322,17 +322,18 @@ export default class IncidentReportTaskPlan {
 							});
 							
 							console.log("Incident report action => " + endpoint);
+							
+							let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
+							let args = { selectedPks: [planId] };
 		
-							webix.ajax().post(appConfig.restUrl + endpoint).then(function(dat) {
+							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
+							
+							function onLoadedModule() {
 								
-								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
-								let args = { selectedPks: [planId] };
-			
-								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-		
-							}, function(response) { util.ajax.handleError(response); });
+								webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });	
+							}
 						}						
-					};
+					}
 				}
 			}
 

@@ -115,7 +115,7 @@ export default class PlanExecutor extends GenericModule {
 						}
 					});
 				}
-				else if (self.moduleAction.id != self.config.moduleAction.executeTaskPlan) {
+				else {
 
 					if (self.data.planStateType) {
 						
@@ -157,7 +157,7 @@ export default class PlanExecutor extends GenericModule {
 				if (stompData) {
 
 					//Update header plan state
-					if(stompData.planStateType && stompData.planStateType.id) {
+					if (stompData.planStateType && stompData.planStateType.id) {
 
 						//Check for opened confirm window 
 						if(self.confirmWindow && stompData.planStateType.id != "PlanStateType:5"){
