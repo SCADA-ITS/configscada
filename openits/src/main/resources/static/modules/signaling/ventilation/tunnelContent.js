@@ -154,6 +154,7 @@ export default class TunnelContent {
 											tooltip: i18n.t("LBL_STOP_DESCRIPTION"),
 											type: "iconTop",
 											icon: "mdi mdi-stop",
+											hidden: self.parent.config.hiddenButton,
 											disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_STOP"),
 											on: {
 												onItemClick() {
@@ -191,6 +192,7 @@ export default class TunnelContent {
 											tooltip: i18n.t("LBL_START_DESCRIPTION"),
 											type: "iconTop",
 											icon: "mdi mdi-play",
+											hidden: self.parent.config.hiddenButton,
 											disabled: !self.parent.config.ventilationStates[self.selectedTunnel.elementTypeState.id].actions.includes("SEND_VENTILATION_START"),
 											on: {
 												onItemClick() {
