@@ -4,7 +4,7 @@ import InputDialogBox from "../../../../component/inputDialogBox.js";
 import MessageBox from "../../../../component/messageBox.js";
 
 const CHANGE_DIALOG_BOX_WIDTH = 700;
-const CHANGE_DIALOG_BOX_HEIGHT = 500;
+const CHANGE_DIALOG_BOX_HEIGHT = 600;
 	
 export default class ConditionDialogBox {
 	
@@ -60,13 +60,12 @@ export default class ConditionDialogBox {
 			id: "change-condition-search-dialog-" + this.uid,
 			cols: [
 				{ width: 20 },
-				{
-					rows: [
-						{ height: 20 },
+				{					
+					rows: [				
+						{ height: 10 },
 						getBodyComponent(),
-						{ height: 20 },
-						getToolbarActions(),
-						{ height: 20 },			
+						{ height: 10 },
+						getToolbarActions()
 					]
 				},	
 				{ width: 20 }
@@ -78,19 +77,26 @@ export default class ConditionDialogBox {
 		function getBodyComponent() {
 
 			let bodyComponent = {
-				view: "form",
-				elementsConfig: { labelAlign: "left" },
-				css: "global-form",
-				elements: [
-					getElemenRow(),
-					getElementTypeParamRow(),
-					getElementTypeStateRow(),
-					getThresholdOperationRow(),
-					getThresholdVal1Row(),
-					getThresholdVal2Row(),
-					getNexusAndRow()
+				rows: [
+					getNexusAndRow(),
+					{
+						view: "form",
+						elementsConfig: { labelAlign: "left" },
+						css: "global-form condition-dialog-box",
+						elements: [
+							getElemenRow(),
+							{ view: "template", template: i18n.t("LBL_STATE"), type: "section" },
+							getElementTypeStateRow(),
+							{ view: "template", template: i18n.t("LBL_PARAM"), type: "section" },
+							getElementTypeParamRow(),
+							getThresholdOperationRow(),
+							getThresholdVal1Row(),
+							getThresholdVal2Row()
+						]
+					}
 				]
 			};
+			
 
 			function getElemenRow() {
 
@@ -273,21 +279,20 @@ export default class ConditionDialogBox {
 				nexusAndRow = {
 					id: "change-nexus-operator-row-" + self.uid,
 					cols: [
+						{},
 						{ 
 							view: "switch", 
-							value: self.nexusAnd, 
-							label: i18n.t("LBL_NEXUS_OPERATOR"), 
-							labelWidth: 325, 
+							value: self.nexusAnd,
+							width :125,
 							on:{
 								onChange: function (newVal, oldVal) {
 
 									updateNexusAnd(newVal);
 								}
 							},
-							onLabel: i18n.t("LBL_AND"),
-      						offLabel: i18n.t("LBL_OR")
-						},
-						{ width: 90 }
+							onLabel: i18n.t("LBL_OR"),
+      						offLabel: i18n.t("LBL_YES")
+						}
 					]
 				};
 

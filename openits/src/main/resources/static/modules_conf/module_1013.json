@@ -13,6 +13,7 @@
 		"locationsByStretch": "locations/locations/stretch/${id}",
 		"locations": "locations",
 		"location": "locations/${id}",
+		"locationsStretchs": "locations/stretchs",
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
 		"stretchsByLocation": "locations/${id}/stretchs",
 		"incidentTypesByStretch": "incidents/stretch/${id}",

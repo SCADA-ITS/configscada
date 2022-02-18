@@ -111,15 +111,15 @@ export default class IncidentWizardModule extends GenericModule {
 
 				webix.ui(viewMain, $$(self.uid));
 
-				if (self.dtLocations) {
-					self.dtLocations.callbacks();
-				}
-
 				if (self.dtIncidentTypes) {
 					self.dtIncidentTypes.callbacks();
 				}
 
 				loadDataIncidentSteps();
+				
+				if (self.dtLocations) {
+					self.dtLocations.callbacks();
+				}
 			}
 
 		}, 500);

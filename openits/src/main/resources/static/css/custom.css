@@ -2680,6 +2680,10 @@ p, input, textarea {
 	padding-left: 75px ;
 }
 
+.condition-dialog-box {
+	box-sizing: border-box;
+}
+
 .global-text {
 	margin: 6px 0px;
 	font-size: 14px;

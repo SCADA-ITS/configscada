@@ -10,19 +10,30 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 		super(parent, step);
 		
-		this.stretchs = [];
+		this.stretchs = this.getStretchs();
 	}
 
-	
+
 	getView() {
-		
+
+		let view = {};
+
+		view = {
+			id: "drawStepStretchAndLocation-" + this.parent.uid
+		}
+
+		return view;
+	}
+
+
+	loadData() {
+
+		let self = this;
 		let parent = this.parent;
 		let step = this.step;
-		
 		let viewStepStretchAndLocation;
 
 		viewStepStretchAndLocation = {
-
 			rows: [
 				{
 					cols: [
@@ -53,14 +64,14 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 				}
 			]
 		};
-		
+
+		webix.ui(viewStepStretchAndLocation, $$("drawStepStretchAndLocation-" + parent.uid));
+
 		function getViewStretchs() {
 
 			let viewStretchs = {};
-			let stretchs;		
+			let stretchs = self.stretchs;
 
-			stretchs = window.em.getAll(EntityType.STRETCH);
-			
 			if (Array.isArray(stretchs) && stretchs.length > 0) {
 
 				stretchs = stretchs.filter(e => {
@@ -138,7 +149,7 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 							callbackEnable(true);
 						}
-					});					
+					});
 				};
 
 				parent.listViewStrechs = new ListView(stretchData, options, events);
@@ -173,7 +184,7 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 			return viewStretchs;
 		}
-		
+
 		function getViewLocations() {
 
 			let viewLocations = {};
@@ -254,11 +265,26 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 		return viewStepStretchAndLocation;
 	}
-	
+
+
+	getStretchs() {
+
+		let self = this;
+
+		webix.ajax().get(appConfig.restUrl + this.parent.config.restEndpoints.locationsStretchs).then(function(stretchsResponse) {
+
+			if (stretchsResponse != null) {
+
+				self.stretchs = stretchsResponse.json();
+			}
+		});
+	}
+
+
 	initialize() {
-		
+
 		super.initialize();
-		
-		this.parent.listViewStrechs.selectByIndex(0);		
+
+		this.parent.listViewStrechs.selectByIndex(0);
 	}
 }	
