@@ -4,6 +4,7 @@ import MessageBox from "../../component/messageBox.js";
 
 const PLAN_EXECUTED = "1";
 const PLAN_NO_EXECUTED = "0";
+const DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS = 2;
 			
 export default class IncidentReportTaskPlan {
 
@@ -330,7 +331,13 @@ export default class IncidentReportTaskPlan {
 							
 							function onLoadedModule() {
 								
-								webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });	
+								setTimeout(function() {
+								
+									webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });							
+	
+								}, (self.config.executeTaskPlanDelaySecs ? self.config.executeTaskPlanDelaySecs : DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS) * 1000);
+								
+									
 							}
 						}						
 					}

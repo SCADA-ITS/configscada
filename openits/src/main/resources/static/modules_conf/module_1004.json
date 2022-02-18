@@ -61,5 +61,6 @@
 		"assignAnother": "SystemPermission:16",
 		"confirmIncident": "SystemPermission:10",
 		"cancelIncident": "SystemPermission:11"
-	}
+	},
+	"executeTaskPlanDelaySecs": 2
 }
