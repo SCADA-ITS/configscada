@@ -37,7 +37,7 @@ export default class UserControlPanel extends GenericControlPanel {
 			title: i18n.t("LBL_CLOSE_SESSION"),
 			buttons: [i18n.t("LBL_YES"), i18n.t("LBL_NO")],
 			width: 400,
-			text: i18n.t("LBL_CONFIR_CLOSE_SESSION"),
+			text: i18n.t("LBL_CONFIRM_CLOSE_SESSION"),
 			callback: function(result) {
 
 				if (result === "0") {
@@ -91,7 +91,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							id: "user-control-panel-alarms",
 							css: "control-panel-notification",
 							align: "center",
-							tooltip: i18n.t("LBL_ALARMS_RECOGNIZE"),
+							tooltip: i18n.t("LBL_NUMBER_ALARMS_NO_RECOGNIZED"),
 							width: 350,
 							height: 50,
 							label: function() {
@@ -114,7 +114,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							id: "user-control-panel-incident",
 							css: "control-panel-notification",
 							align: "center",
-							tooltip: i18n.t("LBL_INCIDENTS_PENDING"),
+							tooltip: i18n.t("LBL_NUMBER_INCIDENTS_PENDING"),
 							width: 350,
 							height: 50,
 							label: function() {
@@ -137,7 +137,7 @@ export default class UserControlPanel extends GenericControlPanel {
 							id: "user-control-panel-event",
 							css: "control-panel-notification",
 							align: "center",
-							tooltip: i18n.t("LBL_EVENTS_PENDING"),
+							tooltip: i18n.t("LBL_NUMBER_EVENTS_PENDING"),
 							width: 350,
 							height: 50,
 							label: function() {
@@ -516,7 +516,7 @@ export default class UserControlPanel extends GenericControlPanel {
 				
 				return `<div>
 					<span class="icon ico webix_icon mdi mdi-bell"></span>
-					<span class="value-alarm">${notifications > 0 ? notifications + " " +  i18n.t("LBL_ALARMS_NO_RECOGNIZED") : i18n.t("LBL_ALL_RECOGNIZED")}</span>
+					<span class="value-alarm">${notifications > 0 ? notifications + " " +  i18n.t("LBL_ALARMS_NO_RECOGNIZED") : i18n.t("LBL_WO_ALARMS_PENDING")}</span>
 				</div>`
 			}
 		}
@@ -579,7 +579,7 @@ export default class UserControlPanel extends GenericControlPanel {
 				
 				return `<div>
 					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-					<span class="value-incident">${incidentPendingToConfirm > 0 ? incidentPendingToConfirm + " " + i18n.t("LBL_INCIDENTS_NO_CONFIRMED") : i18n.t("LBL_ALL_CONFIRMED")}</span>
+					<span class="value-incident">${incidentPendingToConfirm > 0 ? incidentPendingToConfirm + " " + i18n.t("LBL_INCIDENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
 				</div>`
 			}
 		}
@@ -639,7 +639,7 @@ export default class UserControlPanel extends GenericControlPanel {
 				
 				return `<div>
 					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
-					<span class="value-event">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_ALL_CONFIRMED")}</span>
+					<span class="value-event">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_WO_PENDING_EVENTS")}</span>
 				</div>`
 			}
 		}
