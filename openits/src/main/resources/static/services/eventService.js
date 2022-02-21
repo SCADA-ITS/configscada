@@ -14,6 +14,9 @@ export default class EventService extends GenericModule {
 		this.stomp = {};
 		this.events = {
 			data: {
+				stats: {
+					eventPendingToConfirm: 0
+				},
 				notifications: []
 			}
 		};
@@ -41,6 +44,8 @@ export default class EventService extends GenericModule {
 	loadData() {
 
 		let self = this;
+		
+		loadEventsPendingToConfirm();
 		
 		if (self.config.notification.enabled) {
 		
@@ -111,6 +116,43 @@ export default class EventService extends GenericModule {
 			}
 			
 			return notification;
+		}
+		
+		function loadEventsPendingToConfirm() {
+		
+			if (self.config && self.config.stats && self.config.stats.restEndpoint && self.config.stats.topic) {
+				
+				webix.ajax(appConfig.restUrl + self.config.stats.restEndpoint.eventPendingToConfirm).then(function(data) {
+	
+					if (data.json() != undefined) {
+		
+						let eventPendingToConfirm = data.json().value;
+		
+						self.events.data.stats.eventPendingToConfirm = eventPendingToConfirm;
+		
+						window.userControlPanel.updateData();
+		
+						connectWS();
+					}
+				});
+			}
+	
+			function connectWS() {
+	
+				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+				if (stompSubscriptorService) {
+	
+					stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.eventPendingToConfirm, onMessage);
+				}
+	
+				function onMessage(data) {
+	
+					self.incidents.data.stats.eventPendingToConfirm = data.value;
+	
+					window.userControlPanel.updateData();
+				}
+			}
 		}
 		
 		function loadNotifications() {

@@ -241,7 +241,6 @@ function login(values) {
 
 		validating(true);
 		const encodedString = btoa((values.user + ':' + values.password).toString('utf8')).toString('base64');
-		//let loginResponse = webix.ajax().headers({ 'Authorization': 'Basic ' + encodedString }).sync().post(appConfig.restUrl + "auth/login");
 		
 		console.log("request");
 		

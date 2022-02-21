@@ -65,108 +65,113 @@ function initialize() {
 	
 	var mainTab = new MainTab();
 	var mainToolbar = new MainToolbar();
-	var menuToolbar = new MenuToolbar();
-
-	let main_footer = {
-		view: "toolbar",
-		css: "main-footer",
-		id: "mainFooter",
-		height: 40,
-		cols: [
-			{
-				id: TASKBAR_ID
-			},
-			{},
-			{
-				view: "label",
-				label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
-				align: "right",
-				width: 150
-			},
-			{
-				view: "label",
-				label: `<span class='open-its-version'>version 0.01</span>`,
-				align: "right",
-				width: 85
-			}
-		],
-		borderless: 0
-	};
-
-	let main_screen = {
-		type: "space",
-		id: "mainScreen",
-		cols: [
-			{ width: 0.1 },
-			{
-				id: "mainscreen",
-				rows: [
-					{
-						height: 80,
-						css: "head-color",
-						cols: [
-							{
-								rows: [
-									{},
-									mainToolbar.getView(),
-									menuToolbar.getView(),
-									{}
-								]
-							},
-							{
-								width: 400,
-								rows: [
-									{},
-									{
-										id: MAIN_TOOLBAR_ICONS_ID,
-										view: "toolbar",
-										//height: 42,
-										css: "head-color main-toolbar",
-										//padding: 3,
-										elements: [{}]
-									},									
-									{}
-								]
-							}
-						]
-					},
-					
-					//{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
-					mainTab.getView(),
-					/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
-					main_footer
-				],
-				borderless: 1,
-			},
-			//{ view: "template", template: "Content", role: "placeholder", borderless: 1, width: 10 }
-			{ width: 0.1 }
-		],
-		borderless: 0
-
-	};
-
-	$$("splashScreen").hide();
-
-	webix.ui(main_screen);
-	mainTab.attachOnBeforeTabClose();
-
-	window.sm = new ServiceManager();
-
-	autoloadModules();
-
-	function autoloadModules() {
-
-		let modules = window.em.getAll(EntityType.MODULE);
-
-		if (Array.isArray(modules) && modules.length > 0) {
-			
-			modules.forEach(module => {
-				
-				if (module.autoload && module.moduleType.id != MODULE_TYPE_SERVICE) {
+	var menuToolbar = new MenuToolbar(onLoad);
 	
-					util.module.open(module);					
+	function onLoad() {
+	
+		let main_footer = {
+			view: "toolbar",
+			css: "main-footer",
+			id: "mainFooter",
+			height: 40,
+			cols: [
+				{
+					id: TASKBAR_ID
+				},
+				{},
+				{
+					view: "label",
+					label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
+					align: "right",
+					width: 150
+				},
+				{
+					view: "label",
+					label: `<span class='open-its-version'>version 0.01</span>`,
+					align: "right",
+					width: 85
 				}
-			});
-		}		
+			],
+			borderless: 0
+		};
+	
+		let main_screen = {
+			type: "space",
+			id: "mainScreen",
+			cols: [
+				{ width: 0.1 },
+				{
+					id: "mainscreen",
+					rows: [
+						{
+							height: 80,
+							css: "head-color",
+							cols: [
+								{
+									rows: [
+										{},
+										mainToolbar.getView(),
+										menuToolbar.getView(),
+										{}
+									]
+								},
+								{
+									width: 400,
+									rows: [
+										{},
+										{
+											id: MAIN_TOOLBAR_ICONS_ID,
+											view: "toolbar",
+											//height: 42,
+											css: "head-color main-toolbar",
+											//padding: 3,
+											elements: [{}]
+										},									
+										{}
+									]
+								}
+							]
+						},
+						
+						//{ view: "template", css: "head-color", role: "placeholder", borderless: 1, "height": 10 },
+						mainTab.getView(),
+						/*{ view: "template", role: "placeholder", borderless: 1, "height": 10 },*/
+						main_footer
+					],
+					borderless: 1,
+				},
+				//{ view: "template", template: "Content", role: "placeholder", borderless: 1, width: 10 }
+				{ width: 0.1 }
+			],
+			borderless: 0
+	
+		};
+	
+		$$("splashScreen").hide();
+	
+		webix.ui(main_screen);
+		mainTab.attachOnBeforeTabClose();
+	
+		window.sm = new ServiceManager();
+	
+		autoloadModules();
+	
+		function autoloadModules() {
+	
+			let modules = window.em.getAll(EntityType.MODULE);
+	
+			if (Array.isArray(modules) && modules.length > 0) {
+				
+				modules.forEach(module => {
+					
+					if (module.autoload && module.moduleType.id != MODULE_TYPE_SERVICE) {
+		
+						util.module.open(module);					
+					}
+				});
+			}		
+		}	
 	}
+
+	
 }

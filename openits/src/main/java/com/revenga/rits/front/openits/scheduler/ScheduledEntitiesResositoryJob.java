@@ -26,7 +26,7 @@ public class ScheduledEntitiesResositoryJob implements Job {
 		
 		try {
 			
-			log.info(this.getClass().getSimpleName() + "Execute at " + context.getFireTime()); ;
+			log.debug(this.getClass().getSimpleName() + " Execute at " + context.getFireTime()); ;
 			
 			schedulerContext = context.getScheduler().getContext();
 			
@@ -35,7 +35,7 @@ public class ScheduledEntitiesResositoryJob implements Job {
 
 			entitiesManager.updateEntitiesRepository();
 
-			log.info(this.getClass().getSimpleName() + "Next fire time at " + context.getNextFireTime()); ;			
+			log.debug(this.getClass().getSimpleName() + " Next fire time at " + context.getNextFireTime()); ;			
 			
 		} catch (SchedulerException e) {
 			

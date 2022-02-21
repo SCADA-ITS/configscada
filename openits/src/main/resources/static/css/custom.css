@@ -995,6 +995,65 @@ p, input, textarea {
     margin-top: 20px !important;
 }
 
+.control-panel-notification {
+	
+	text-align: center;
+	background: transparent;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.control-panel-notification .icon {
+	
+	font-size: 20px;
+	color: var(--blue-soft);
+}
+
+.control-panel-notification .value-alarm {
+	
+	font-size: 15px;
+	color: var(--blue-soft);
+	box-shadow: 0 2.1rem 0.5rem rgb(255 0 0) !important;
+}
+
+.control-panel-notification .value-alarm:hover {
+	
+	font-weight: bold;
+	color: var(--blue-soft);
+	cursor: pointer;
+	box-shadow: 0 2.0rem 0.8rem rgb(255 0 0) !important;
+}
+
+.control-panel-notification .value-incident {
+	
+	font-size: 15px;
+	color: var(--blue-soft);
+	box-shadow: 0 2.1rem 0.5rem rgb(91 13 169) !important;
+}
+
+.control-panel-notification .value-incident:hover {
+	
+	font-weight: bold;
+	color: var(--blue-soft);
+	cursor: pointer;
+	box-shadow: 0 2.0rem 0.8rem rgb(91 13 169) !important;
+}
+
+.control-panel-notification .value-event {
+	
+	font-size: 15px;
+	color: var(--blue-soft);
+	box-shadow: 0 2.1rem 0.5rem rgb(255 153 0) !important;
+}
+
+.control-panel-notification .value-event:hover {
+	
+	font-weight: bold;
+	color: var(--blue-soft);
+	cursor: pointer;
+	box-shadow: 0 2.0rem 0.8rem rgb(255 153 0) !important;
+}
+
 .notification-panel {
 	background-color: rgb(0, 0, 0, 0.30); 
 }

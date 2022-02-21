@@ -47,8 +47,6 @@ public class AuthController {
 		HttpSession httpSession = attr.getRequest().getSession(true);
 		Map<String, String> headers = Collections.list(attr.getRequest().getHeaderNames()).stream()
 				.collect(Collectors.toMap(h -> h.toLowerCase(), attr.getRequest()::getHeader));
-		
-		log.info("login session: " + httpSession.getId());
 	    
 		return new ResponseEntity<>(sessionBO.login(headers, httpSession), HttpStatus.OK);
 	}

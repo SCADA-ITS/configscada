@@ -1,4 +1,12 @@
 {
+	"stats": {
+		"restEndpoint": {
+			"eventPendingToConfirm": "generic_datas/GenericData:4"
+		},
+		"topic": {
+			"eventPendingToConfirm": "/topic/generic_data.GenericData:4"
+		}
+	},
 	"rest": {
 		"events": "audit_logs",
 		"event": "audit_logs/${id}"

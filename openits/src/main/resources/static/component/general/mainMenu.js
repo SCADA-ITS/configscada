@@ -2,9 +2,32 @@ import { util } from "../../lib/util.js";
 
 export default class MainMenu {
 
-	constructor() {
+	constructor(onLoadMainMenu, menuToolbar) {
 
-		// This is intentional
+		this.onLoadMainMenu = onLoadMainMenu;
+		this.menuToolbar = menuToolbar;
+		this.menus = undefined;
+		
+		this.loadMenus();
+	}
+	
+	loadMenus() {
+		
+		let self = this;
+		
+		webix.ajax().get(appConfig.restUrl + "menus").then(
+			function(response){
+		
+			if (response) {
+			
+				self.menus = response.json();
+				
+				if (self.onLoadMainMenu && self.menuToolbar) {
+					
+					self.onLoadMainMenu(self.menuToolbar);
+				}
+			}
+		});
 	}
 
 	getView() {
@@ -65,57 +88,52 @@ export default class MainMenu {
 
 	getMainMenuData() {
 
+		let self = this;
 		let menuResponse = [];
-		let response = webix.ajax().sync().get(appConfig.restUrl + "menus");
 
-		if (response.responseText) {
+		if (Array.isArray(self.menus)) {
 
-			let menus = JSON.parse(response.responseText);
+			self.menus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-			if (Array.isArray(menus)) {
+			self.menus.forEach(menu => {
 
-				menus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+				var mainMenu = {};
 
-				menus.forEach(menu => {
+				mainMenu.id = menu.id;
+				mainMenu.value = i18n.t(menu.label);
+				mainMenu.config = { css: "menu-custom" };
 
-					var mainMenu = {};
+				var submenus = menu.menuItems;
 
-					mainMenu.id = menu.id;
-					mainMenu.value = i18n.t(menu.label);
-					mainMenu.config = { css: "menu-custom" };
+				if (Array.isArray(submenus)) {
 
-					var submenus = menu.menuItems;
+					submenus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-					if (Array.isArray(submenus)) {
+					mainMenu.submenu = [];
 
-						submenus.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+					submenus.forEach(submenu => {
 
-						mainMenu.submenu = [];
+						if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
 
-						submenus.forEach(submenu => {
+							var mainSubmenu = {};
 
-							if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
+							mainSubmenu.id = mainMenu.id + "." + submenu.id;
+							mainSubmenu.value = i18n.t(submenu.label);
+							mainSubmenu.moduleId = submenu.module.id;
+							mainSubmenu.icon = submenu.icon;
 
-								var mainSubmenu = {};
+							mainMenu.submenu.push(mainSubmenu);
+						}
 
-								mainSubmenu.id = mainMenu.id + "." + submenu.id;
-								mainSubmenu.value = i18n.t(submenu.label);
-								mainSubmenu.moduleId = submenu.module.id;
-								mainSubmenu.icon = submenu.icon;
+					});
+				}
 
-								mainMenu.submenu.push(mainSubmenu);
-							}
+				if (mainMenu.submenu.length > 0) {
 
-						});
-					}
+					menuResponse.push(mainMenu);
+				}
 
-					if (mainMenu.submenu.length > 0) {
-
-						menuResponse.push(mainMenu);
-					}
-
-				});
-			}
+			});
 		}
 
 		return menuResponse;

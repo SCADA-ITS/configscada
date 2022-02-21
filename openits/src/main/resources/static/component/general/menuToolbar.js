@@ -4,9 +4,18 @@ const MENU_TOOLBAR_ID = "menuToolbar";
 
 export default class MenuToolbar {
 
-	constructor() {
+	constructor(onLoadToolbar) {
 
-		this.mainMenu = new MainMenu();
+		this.onLoadToolbar = onLoadToolbar;
+		this.mainMenu = new MainMenu(this.onLoadMainMenu, this);
+	}
+	
+	onLoadMainMenu(menuToolbar) {
+		
+		if (menuToolbar && menuToolbar.onLoadToolbar) {
+			
+			menuToolbar.onLoadToolbar();
+		}
 	}
 
 	getView() {

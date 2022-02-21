@@ -78,7 +78,6 @@ export default class UserControlPanel extends GenericControlPanel {
 			userData = sessionData.user;	
 		}
 		
-
 		let pendingTasksView = {
 			view: "toolbar",
 			css: "control-panel-button-toolbar",
@@ -88,37 +87,70 @@ export default class UserControlPanel extends GenericControlPanel {
 				{
 					rows: [
 						{
-							view: "button",
+							view: "label",
 							id: "user-control-panel-alarms",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_ALARMS_RECOGNIZE"),
 							width: 350,
 							height: 50,
-							tooltip: i18n.t("LBL_ALARMS_RECOGNIZE"),
-							type: "icon",
-							icon: "webix_icon_btn mdi mdi-bell",
-							hidden: true,
+							label: function() {
+								
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-bell"></span>
+											<span class="value-alarm">${i18n.t("LBL_WO_ALARMS_PENDING")}</span>
+										</div>`
+							}(),
 							on: {
-
-								onItemClick() {
-
+								onItemClick: function(id) {
+	
 									self.openModule(self.config.module.alarmMonitor.id);
 									self.hide();
 								}
 							}
 						},
 						{
-							view: "button",
+							view: "label",
 							id: "user-control-panel-incident",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_INCIDENTS_PENDING"),
 							width: 350,
 							height: 50,
-							tooltip: i18n.t("LBL_INCIDENTS_PENDING"),
-							type: "icon",
-							icon: "webix_icon_btn mdi mdi-alert",
-							hidden: true,
+							label: function() {
+
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+											<span class="value-incident">${i18n.t("LBL_WO_PENDING_INCIDENTS")}</span>
+										</div>`
+							}(),
 							on: {
-
-								onItemClick() {
-
+								onItemClick: function(id) {
+	
 									self.openModule(self.config.module.incidentReportModule.id);
+									self.hide();
+								}
+							}
+						},
+						{
+							view: "label",
+							id: "user-control-panel-event",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_EVENTS_PENDING"),
+							width: 350,
+							height: 50,
+							label: function() {
+
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+											<span class="value-event">${i18n.t("LBL_WO_PENDING_EVENTS")}</span>
+										</div>`
+							}(),
+							on: {
+								onItemClick: function(id) {
+	
+									self.openModule(self.config.module.auditLogs.id);
 									self.hide();
 								}
 							}
@@ -139,20 +171,25 @@ export default class UserControlPanel extends GenericControlPanel {
 				{
 					rows: [
 						{
-							view: "button",
+							view: "label",
 							id: "user-control-panel-notif-alarms",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_SHOW_ALARMS_NOTIFIED"),
 							width: 350,
 							height: 50,
-							tooltip: i18n.t("LBL_ALARMS"),
-							type: "icon",
-							icon: "webix_icon_btn mdi mdi-bell",
-							hidden: false,
+							label: function() {
+								
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-bell"></span>
+											<span class="value-alarm">${i18n.t("LBL_WO_NOTIFIED_ALARMS")}</span>
+										</div>`
+							}(),
 							on: {
-
-								onItemClick() {
-									
+								onItemClick: function(id) {
+	
 									let alarmService = window.sm.getService(Services.ALARM_SERVICE);
-		
+			
 									if (alarmService) {
 										
 										let notification = alarmService.getNotification();
@@ -167,18 +204,23 @@ export default class UserControlPanel extends GenericControlPanel {
 							}
 						},
 						{
-							view: "button",
+							view: "label",
 							id: "user-control-panel-notif-incidents",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_SHOW_INCIDENTS_NOTIFIED"),
 							width: 350,
 							height: 50,
-							tooltip: i18n.t("LBL_INCIDENTS"),
-							type: "icon",
-							icon: "webix_icon_btn mdi mdi-alert",
-							hidden: (self.viewIncidentPermission) ? false : true,
+							label: function() {
+
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+											<span class="value-incident">${i18n.t("LBL_WO_NOTIFIED_INCIDENTS")}</span>
+										</div>`
+							}(),
 							on: {
-
-								onItemClick() {
-
+								onItemClick: function(id) {
+	
 									let incidentService = window.sm.getService(Services.INCIDENT_SERVICE);
 		
 									if (incidentService) {
@@ -195,18 +237,23 @@ export default class UserControlPanel extends GenericControlPanel {
 							}
 						},
 						{
-							view: "button",
+							view: "label",
 							id: "user-control-panel-notif-events",
+							css: "control-panel-notification",
+							align: "center",
+							tooltip: i18n.t("LBL_SHOW_EVENTS_NOTIFIED"),
 							width: 350,
 							height: 50,
-							tooltip: i18n.t("LBL_EVENTS"),
-							type: "icon",
-							icon: "webix_icon_btn mdi mdi-calendar",
-							hidden: true,
+							label: function() {
+			
+								return `<div>
+											<span class="icon ico webix_icon mdi mdi-alert"></span>
+											<span class="value-event">${i18n.t("LBL_WO_NOTIFIED_EVENTS")}</span>
+										</div>`
+							}(),
 							on: {
-
-								onItemClick() {
-
+								onItemClick: function(id) {
+	
 									let eventService = window.sm.getService(Services.EVENT_SERVICE);
 		
 									if (eventService) {
@@ -428,7 +475,7 @@ export default class UserControlPanel extends GenericControlPanel {
 					if (stats.noRecognizedAlarms > 0) {
 	
 						$$("user-control-panel-alarms").show();
-						$$("user-control-panel-alarms").config.label = i18n.t("LBL_ALARMS_NO_RECOGNIZED") + " " + stats.noRecognizedAlarms;
+						$$("user-control-panel-alarms").config.label = getLabelPending(stats.noRecognizedAlarms);
 						$$("user-control-panel-alarms").refresh();
 	
 						pendingTasks |= true;
@@ -444,16 +491,34 @@ export default class UserControlPanel extends GenericControlPanel {
 				    (alarmService.getNotification() && alarmService.getNotification().getRecognizedNotifications().length > 0)) {
 					
 					$$("user-control-panel-notif-alarms").show();
-					$$("user-control-panel-notif-alarms").config.label = i18n.t("LBL_ALARMS") + " " + notifications.length;
+					$$("user-control-panel-notif-alarms").config.label = getLabelNotification(notifications.length);
 					$$("user-control-panel-notif-alarms").refresh();
 					
-					pendingTasks |= true;
+					pendingTasks |= (notifications.length > 0);	
 				}
 				else {
 					
 					$$("user-control-panel-notif-alarms").hide();
 				}
-			}	
+			}
+			
+			function getLabelNotification(notifications) {
+				
+				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_ALARMS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_ALARMS"); 
+													
+				return `<div>
+							<span class="icon ico webix_icon mdi mdi-bell"></span>
+							<span class="value-alarm">${label}</span>
+						</div>`
+			}
+			
+			function getLabelPending(notifications) {
+				
+				return `<div>
+					<span class="icon ico webix_icon mdi mdi-bell"></span>
+					<span class="value-alarm">${notifications > 0 ? notifications + " " +  i18n.t("LBL_ALARMS_NO_RECOGNIZED") : i18n.t("LBL_ALL_RECOGNIZED")}</span>
+				</div>`
+			}
 		}
 		
 		function updateDataIncidents() {
@@ -469,12 +534,13 @@ export default class UserControlPanel extends GenericControlPanel {
 					if (stats.incidentPendingToConfirm > 0 && self.viewIncidentPermission) {
 	
 						$$("user-control-panel-incident").show();
-						$$("user-control-panel-incident").config.label = i18n.t("LBL_INCIDENTS_PENDING_CONFIRMATION") + " " + stats.incidentPendingToConfirm;
+						$$("user-control-panel-incident").config.label = getLabelPending(stats.incidentPendingToConfirm);
 						$$("user-control-panel-incident").refresh();
 	
 						pendingTasks |= true;
 	
 					} else {
+						
 						$$("user-control-panel-incident").hide();
 					}
 				}
@@ -487,17 +553,35 @@ export default class UserControlPanel extends GenericControlPanel {
 					if (self.viewIncidentPermission) {
 
 						$$("user-control-panel-notif-incidents").show();
-						$$("user-control-panel-notif-incidents").config.label = i18n.t("LBL_INCIDENTS") + " " + notifications.length;
+						$$("user-control-panel-notif-incidents").config.label = getLabelNotification(notifications.length);
 						$$("user-control-panel-notif-incidents").refresh();
 
-						pendingTasks |= true;
+						pendingTasks |= (notifications.length > 0);
 					}
 				}
 				else {
 					
 					$$("user-control-panel-notif-incidents").hide();
 				}
-			}	
+			}
+			
+			function getLabelNotification(notifications) {
+				
+				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_INCIDENTS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_INCIDENTS"); 
+													
+				return `<div>
+							<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+							<span class="value-incident">${label}</span>
+						</div>`
+			}
+			
+			function getLabelPending(incidentPendingToConfirm) {
+				
+				return `<div>
+					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+					<span class="value-incident">${incidentPendingToConfirm > 0 ? incidentPendingToConfirm + " " + i18n.t("LBL_INCIDENTS_NO_CONFIRMED") : i18n.t("LBL_ALL_CONFIRMED")}</span>
+				</div>`
+			}
 		}
 		
 		function updateDataEvents() {
@@ -505,6 +589,24 @@ export default class UserControlPanel extends GenericControlPanel {
 			let eventService = window.sm.getService(Services.EVENT_SERVICE);
 		
 			if (eventService) {
+				
+				let stats = eventService.getData().stats;
+	
+				if (stats) {
+	
+					if (stats.eventPendingToConfirm > 0) {
+	
+						$$("user-control-panel-event").show();
+						$$("user-control-panel-event").config.label = getLabelPending(stats.eventPendingToConfirm);
+						$$("user-control-panel-event").refresh();
+	
+						pendingTasks |= true;
+	
+					} else {
+						
+						$$("user-control-panel-event").hide();
+					}
+				}
 					
 				let notifications = eventService.getData().notifications;
 				
@@ -512,16 +614,34 @@ export default class UserControlPanel extends GenericControlPanel {
 				    (eventService.getNotification() && eventService.getNotification().getRecognizedNotifications().length > 0)) {
 					
 					$$("user-control-panel-notif-events").show();
-					$$("user-control-panel-notif-events").config.label = i18n.t("LBL_EVENTS") + " " + notifications.length;
+					$$("user-control-panel-notif-events").config.label = getLabelNotification(notifications.length);
 					$$("user-control-panel-notif-events").refresh();
 
-					pendingTasks |= true;
+					pendingTasks |= (notifications.length > 0);
 				}
 				else {
 					
 					$$("user-control-panel-notif-events").hide();
 				}
-			}	
+			}
+			
+			function getLabelNotification(notifications) {
+				
+				let label = notifications > 0 ? notifications + " " + i18n.t("LBL_EVENTS_NOTIFIED") : i18n.t("LBL_WO_NOTIFIED_EVENTS"); 
+													
+				return `<div>
+							<span class="icon ico webix_icon mdi mdi-alert"></span>
+							<span class="value-event">${label}</span>
+						</div>`
+			}
+			
+			function getLabelPending(eventPendingToConfirm) {
+				
+				return `<div>
+					<span class="icon ico webix_icon mdi mdi-map-marker-alert"></span>
+					<span class="value-event">${eventPendingToConfirm > 0 ? eventPendingToConfirm + " " +  i18n.t("LBL_EVENTS_NO_CONFIRMED") : i18n.t("LBL_ALL_CONFIRMED")}</span>
+				</div>`
+			}
 		}
 	}
 }

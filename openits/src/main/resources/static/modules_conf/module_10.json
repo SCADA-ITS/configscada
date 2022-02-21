@@ -19,6 +19,9 @@
 		},
 		"incidentReportModule": {
 			"id": 1003
+		},
+		"auditLogs": {
+			"id": 1006
 		}
 	},
 	"keepAliveSecs": 60
