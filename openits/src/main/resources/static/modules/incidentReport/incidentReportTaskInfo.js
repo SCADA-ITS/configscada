@@ -56,7 +56,7 @@ export default class IncidentReportTaskInfo {
 									borderless: true,
 									hidden: self.taskState.incidentTypeTask.operationDescription ? false : true,
 									template: `<div><span class="ico webix_icon mdi mdi-view-headline"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_OPERATION")}</span></div>
-										   <div class="value" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;">${self.taskState.incidentTypeTask.operationDescription}</div>`
+										   <div class="value" style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;" title="${self.taskState.incidentTypeTask.operationDescription}">${self.taskState.incidentTypeTask.operationDescription}</div>`
 								},
 								{
 									id: "task-details-info-type-" + self.index + "-" + self.uid,

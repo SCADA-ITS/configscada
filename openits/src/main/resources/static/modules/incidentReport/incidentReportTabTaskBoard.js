@@ -332,7 +332,7 @@ export default class IncidentReportTabTaskBoard {
 					row.type = self.tasks[i].incidentTypeTask.auto ? "auto" : "manual";
 					row.required = self.tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
 					
-					let isAutomatism = self.tasks[i].incidentTypeTask.onchange ||
+					let isAutomatism = self.tasks[i].incidentTypeTask.onChange ||
 									   (Array.isArray(self.tasks[i].taskPlanStates) && self.tasks[i].taskPlanStates.length > 0);
 					
 					row.automatism = isAutomatism ? "yes" : "no";

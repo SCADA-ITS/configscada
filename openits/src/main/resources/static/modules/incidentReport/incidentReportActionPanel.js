@@ -114,22 +114,27 @@ export default class IncidentReportActionPanel {
 									})(),
 									height: 50,
 									label: (function() {
+										
+										let label = i18n.t("LBL_INCIDENT_ACTION_FINALIZE");								
+										let positionCurrentState = self.incidentReport.sequenceOfStates.findIndex(seq => seq.state.id === self.incidentReport.incidentState.id)
+										let isLastState = self.incidentReport.sequenceOfStates.length > 1 && positionCurrentState >= self.incidentReport.sequenceOfStates.length - 2;
 
 										if (!self.closed) {
 
 											if (self.incidentReport.confirm === true) {
-
-												return i18n.t("LBL_INCIDENT_ACTION_NEXT");
+												
+												if (!isLastState) {
+												
+													label = i18n.t("LBL_INCIDENT_ACTION_NEXT");	
+												}
 											}
 											else {
 
-												return i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
 											}
 										}
-										else {
-
-											return i18n.t("LBL_INCIDENT_ACTION_FINALIZE");
-										}
+										
+										return label;
 
 									})(),
 									tooltip: "#label#",
