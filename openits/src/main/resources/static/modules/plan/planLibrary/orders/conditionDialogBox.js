@@ -54,6 +54,10 @@ export default class ConditionDialogBox {
 			self.thresholdVal1 = self.planOrderCondition.thresholdVal1;
 			self.thresholdVal2 = self.planOrderCondition.thresholdVal2;
 			self.nexusAnd = self.planOrderCondition.nexusAnd;
+
+		} else {
+
+			self.nexusAnd = true;
 		}
 		
 		let body = {
@@ -284,14 +288,15 @@ export default class ConditionDialogBox {
 							view: "switch", 
 							value: self.nexusAnd,
 							width :125,
+							tooltip: true,
 							on:{
 								onChange: function (newVal, oldVal) {
 
 									updateNexusAnd(newVal);
 								}
 							},
-							onLabel: i18n.t("LBL_OR"),
-      						offLabel: i18n.t("LBL_YES")
+							onLabel: i18n.t("LBL_AND"),
+      						offLabel: i18n.t("LBL_OR")
 						}
 					]
 				};
@@ -658,13 +663,26 @@ export default class ConditionDialogBox {
 				});
 			}
 
-			function isValidForm(){
+			function isValidForm() {
 
 				let result = true;
+				let paramSelection = false;
 
-				if(!self.element){
+				if (self.thresholdOperation && self.thresholdVal1) {
+
+					paramSelection = true;
+				}
+
+				if (!self.element) {
 
 					result = false;
+
+				} else {
+
+					if (!self.elementTypeState && !paramSelection) {
+
+						result = false;
+					}
 				}
 
 				return result;

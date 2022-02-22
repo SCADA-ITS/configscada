@@ -44,12 +44,12 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 		function getNextPlayPlanRow() {
 
-			let nextPlayPlanRow;
+			let nextPlayPlanRow;		
 
 			nextPlayPlanRow = {
 				id: "next-plan-row-" + self.uid,
 				cols: [
-					{ view: "text", value: (self.nextPlan?self.nextPlan.alias:""), required: true, label: i18n.t("LBL_PLAN"), disabled: true, labelWidth: 275 },
+					{ view: "text", value: (self.nextPlan.alias) ? self.nextPlan.alias : "", required: true, label: i18n.t("LBL_PLAN"), disabled: true, labelWidth: 275 },
 					{
 						view: "icon", icon: "wxi-search", disabled: false,
 						on: {
@@ -67,9 +67,70 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 		}
 
 		function getWindowPlayPlanSelected() {
+			
+				let dialogEntity = webix.copy(SearchDialogBox.PLANS);				
+				dialogEntity.fillDialogEntity = fillDialogEntity;
+				dialogEntity.data = {};
 				
-			let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), SearchDialogBox.PLANS, onAccept);
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 
+					let promises = [];
+
+					promises.push(webix.ajax().get(appConfig.restUrl + "plans/nodes"));
+					promises.push(webix.ajax().get(appConfig.restUrl + "plans/hierarchies"));
+					promises.push(webix.ajax().get(appConfig.restUrl + "plans"));
+
+					webix.promise.all(promises).then(function(responses) {
+
+						if (responses != null) {
+							
+							let itemsTree = [];
+							let itemRelationships = [];
+
+							let nodes = (responses[0] && responses[0].json()) ? responses[0].json() : [];
+							let relationships = responses[1] && responses[1].json() ? responses[1].json() : [];
+							let plans = responses[2] && responses[2].json() ? responses[2].json() : [];
+
+							if (Array.isArray(nodes) && nodes.length > 0) {
+
+								itemsTree = nodes.map(e => {
+
+									let plan = plans.find(p => (e.plan && p.id === e.plan.id));
+
+									return {
+
+										id: e.id,
+										label: plan ? plan.alias : e.alias,
+										plan: e.plan,
+										folder: !e.plan
+									}
+								});
+							}
+
+							if (Array.isArray(relationships) && relationships.length > 0) {
+
+								itemRelationships = relationships.map(e => {
+
+									return {
+
+										id: e.id,
+										nodeParentId: e.parent.id,
+										nodeChildId: e.child.id
+									}
+								});
+							}
+
+							dialogEntity.data.nodes = itemsTree;
+							dialogEntity.data.relationships = itemRelationships;
+							dialogEntity.data.nodeParentId = "nodeParentId";
+							dialogEntity.data.nodeChildId = "nodeChildId";
+							
+							onFilledDialogEntity(dialogEntity);
+						}
+					});					
+				}
+				
+			let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), dialogEntity, onAccept);
 			s.show();
 
 			function onAccept(selectedIds) {

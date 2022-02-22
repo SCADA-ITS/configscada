@@ -1,5 +1,6 @@
 import DataTable from "../component/datatable.js";
 import TreeView from "../component/treeview.js";
+import MessageBox from "../component/messageBox.js";
 import { util } from "../lib/util.js";
 
 const DIALOG_DATA_TYPE_TABLE = 1;
@@ -22,13 +23,16 @@ export default class SearchDialogBox {
 		this.searchDataTable = undefined;
 		this.searchTreeView = undefined;
 		this.containerId = undefined;
+		this.planNodes = undefined;
+		this.planHierarchies = undefined;
+		this.plans = undefined;
 	}
 
 	show() {
 
 		let self = this;
 		
-		let acceptCallback = function() {
+		function acceptCallback() {
 			
 			try {
 				
@@ -39,8 +43,19 @@ export default class SearchDialogBox {
 					selected = self.searchDataTable.getSelectedItems();
 				}
 				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+
+					let selectedNode = self.searchTreeView.getSelected();
 					
-					selected = self.searchTreeVuew.getSelected();
+					if (Array.isArray(selectedNode) && selectedNode.length > 0 && !selectedNode[0].props.folder) {
+						
+						selected = selectedNode.map(e => {
+						
+							return {
+								id: e.id_,
+								alias: e.value
+							}	
+						});
+					}
 				}
 				
 				let res = undefined;
@@ -59,6 +74,11 @@ export default class SearchDialogBox {
 				
 						}, 100);
 					}
+				}
+				else {
+					
+					let m = new MessageBox(MessageBox.ERROR, i18n.t("LBL_WRONG_SELECTION"), null, null);
+					m.show();					
 				}
 			}
 			catch {}
@@ -117,6 +137,31 @@ export default class SearchDialogBox {
 				}
 			};
 			
+			function getFieldDataType(fieldName) {
+
+				let dataType = 1;
+
+				if (Array.isArray(self.dialogEntity.fieldsDataType) && self.dialogEntity.fieldsDataType.length > 0) {
+
+					for (let fieldDataType of self.dialogEntity.fieldsDataType) {
+
+						let offset = fieldDataType.indexOf("=");
+
+						if (offset !== -1) {
+
+							let f = fieldDataType.substring(0, offset);
+
+							if (f === fieldName) {
+
+								dataType = parseInt(fieldDataType.substring(offset + 1));
+							}
+						}
+					}
+				}
+
+				return dataType;
+			}
+			
 			function getData() {
 				
 				let dat = [];
@@ -155,27 +200,25 @@ export default class SearchDialogBox {
 				}
 				
 				function getDataTree() {
-					
+
 					let dataTree = [];
-										
+
 					if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM ||
-					    self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
-						
-						
-						if (self.dialogEntity.treeData) {
-						
+						self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+
+						if (self.dialogEntity.data) {
+
 							dataTree = util.tree.getNodes(
-													self.dialogEntity.treeData.nodes,
-													self.dialogEntity.treeData.relationships, 
-													{ 
-														parentNodeId: self.dialogEntity.treeData.nodeParentId, 
-														childNodeId: self.dialogEntity.treeData.nodeChildId 
-													}, 
-													false);	
+								self.dialogEntity.data.nodes,
+								self.dialogEntity.data.relationships,
+								{
+									parentNodeId: self.dialogEntity.data.nodeParentId,
+									childNodeId: self.dialogEntity.data.nodeChildId
+								},
+								false);
 						}
-							
 					}
-					
+
 					return dataTree;
 				}
 				
@@ -247,6 +290,7 @@ export default class SearchDialogBox {
 								
 						let fieldName = getFieldName(field);
 						let fieldLabel = getFieldLabel(field);
+						let fieldDataType = getFieldDataType(fieldName);
 						let needsTranslation = false;
 						
 						if (Array.isArray(self.dialogEntity.translate)) {
@@ -273,8 +317,7 @@ export default class SearchDialogBox {
 							sourceField: fieldName,
 							visible: true,
 							gridFieldDataType: {
-								id: 1,
-								name: "string"
+								id: fieldDataType
 							},
 							gridFieldIcons: function() {
 								
@@ -330,16 +373,16 @@ export default class SearchDialogBox {
 				function(response) {
 					
 					if (response) {
-						
+
 						self.dialogEntity.data = response.json();
-						
+
 						doActions();
 					}
 				}
 			);
 		}
 		else {
-			
+
 			doActions();
 		}
 		
@@ -398,8 +441,11 @@ export default class SearchDialogBox {
 					};
 				}	
 				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
-				
-					v = getTreeView();
+
+					v = {
+						css: { "border": "1px solid #CCD7E6", "box-sizing": "border-box" },
+						cols: [getTreeView()]  
+					} 
 				}
 				
 				if (v) {
@@ -419,11 +465,11 @@ export default class SearchDialogBox {
 				}
 				
 				function getTreeView() {
-					
+
 					let events = {};
-					
+
 					self.searchTreeView = new TreeView(self.dialogInfo.metadata, self.dialogInfo.data, events);
-					
+
 					return self.searchTreeView.getView();
 				}
 			}
@@ -469,9 +515,9 @@ export default class SearchDialogBox {
 					height: 35,
 					label: i18n.t("LBL_ACCEPT"),
 					on: {
-						onItemClick() {
+						onItemClick(){
 							
-							if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
+							if ((self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) || (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE && self.searchTreeView)) {
 							
 								acceptCallback();	
 							}
@@ -514,7 +560,7 @@ Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
 });
 
 Object.defineProperty(SearchDialogBox, 'PLANS', {
-	value: { id: 5, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "plans/summary", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
+	value: { id: 5, dataType: DIALOG_DATA_TYPE_TREE, endpointType: DIALOG_ENDPOINT_TYPE_CALLBACK, pkField: "id", height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false

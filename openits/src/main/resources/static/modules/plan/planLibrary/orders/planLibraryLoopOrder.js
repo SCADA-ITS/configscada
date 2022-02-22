@@ -128,21 +128,32 @@ export default class PlanLibraryLoopOrder extends PlanLibraryOrder {
 			dialogEntity.data = [];
 			
 			dialogEntity.pkField = "id"
-			dialogEntity.fields = ["order=LBL_PLAN_ORDER", "planOrderType=LBL_PLAN_ORDER_TYPE"];
+			dialogEntity.fields = ["idIcon=", "planOrderType=LBL_PLAN_ORDER_TYPE", "order=LBL_PLAN_ORDER", "planOrderOrder=LBL_PLAN_POSITION"];
+			dialogEntity.fieldsDataType = ["planOrderOrder=2"];
 			dialogEntity.height = 600;
 			dialogEntity.width = 800;
-			dialogEntity.sortFieldId = 2;
-			
+			dialogEntity.sortFieldId = 5;			
+			dialogEntity.icons = {
+				idIcon: []
+			};	
+						
 			if (Array.isArray(self.plan.planOrders) && self.plan.planOrders.length > 1) {
-					
+								
 				self.plan.planOrders.forEach(item => {
 				
 					if(item.id != self.planOrder.id){
 
+						dialogEntity.icons.idIcon.push({
+							id: item.planOrderType.id,
+							icon: item.planOrderType.icon
+						});
+						
 						dialogEntity.data.push({
 							id: item.id,
 							order: item.alias,
-							planOrderType: i18n.t(item.planOrderType.labelAlias)
+							planOrderType: i18n.t(item.planOrderType.labelAlias),
+							idIcon: item.planOrderType.id,
+							planOrderOrder: parseInt(item.planOrderOrder)
 						});
 					}
 				});
