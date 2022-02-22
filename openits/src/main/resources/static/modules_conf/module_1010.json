@@ -6,7 +6,12 @@
         "disable": 101004,
         "delete": 101005
     },
-    "restEndpoint": "plans/plan_schedules/${id}",
+    "restEndpoints": {
+    	"planSchedule": "plans/plan_schedules/${id}",	
+    	"plans": "plans/plan_library",
+		"planNodes": "plans/nodes",
+		"planHierarchies": "plans/hierarchies"
+    },
     "topic": "/topic/planSchedules",
     "actionEndpoints": {
         "save": "plans/send_plan_schedules",

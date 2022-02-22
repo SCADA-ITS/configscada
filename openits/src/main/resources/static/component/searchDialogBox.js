@@ -3,15 +3,15 @@ import TreeView from "../component/treeview.js";
 import MessageBox from "../component/messageBox.js";
 import { util } from "../lib/util.js";
 
-const DIALOG_DATA_TYPE_TABLE = 1;
-const DIALOG_DATA_TYPE_TREE = 2;
-
-const DIALOG_ENDPOINT_TYPE_REST = 1;
-const DIALOG_ENDPOINT_TYPE_EM = 2;
-const DIALOG_ENDPOINT_TYPE_CUSTOM = 3;
-const DIALOG_ENDPOINT_TYPE_CALLBACK = 4;
-	
 export default class SearchDialogBox {
+	
+	static get DIALOG_DATA_TYPE_TABLE() { return 1 }
+	static get DIALOG_DATA_TYPE_TREE() { return 2 }
+	
+	static get DIALOG_ENDPOINT_TYPE_REST() { return 1 }
+	static get DIALOG_ENDPOINT_TYPE_EM() { return 2 }
+	static get DIALOG_ENDPOINT_TYPE_CUSTOM() { return 3 }
+	static get DIALOG_ENDPOINT_TYPE_CALLBACK() { return 4 }
 	
 	constructor(title, dialogEntity, onAccept) {
 
@@ -38,11 +38,11 @@ export default class SearchDialogBox {
 				
 				let selected = undefined;
 				
-				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
 						
 					selected = self.searchDataTable.getSelectedItems();
 				}
-				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 
 					let selectedNode = self.searchTreeView.getSelected();
 
@@ -89,7 +89,7 @@ export default class SearchDialogBox {
 		
 		function getDialogInfo(onGetDialogInfo) {
 		
-			if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+			if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_CALLBACK) {
 				
 				self.dialogEntity.fillDialogEntity(self.dialogEntity, onFilledDialogEntity);
 			}
@@ -172,7 +172,7 @@ export default class SearchDialogBox {
 					
 					let dataTable;
 				
-					if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_EM) {
+					if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_EM) {
 						
 						dataTable = window.em.getAll(EntityType[self.dialogEntity.endpoint]);
 					}
@@ -205,8 +205,8 @@ export default class SearchDialogBox {
 
 					let dataTree = [];
 
-					if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CUSTOM ||
-						self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_CALLBACK) {
+					if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_CUSTOM ||
+						self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_CALLBACK) {
 
 						if (self.dialogEntity.data) {
 
@@ -224,11 +224,11 @@ export default class SearchDialogBox {
 					return dataTree;
 				}
 				
-				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
 					
 					dat = getDataTable();
 				}
-				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 				
 					dat = getDataTree();
 				}
@@ -240,7 +240,7 @@ export default class SearchDialogBox {
 				
 				let meta = {};
 				
-				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
 										
 					const gridOptionValues = [
 						{ gridOption: { id: 1 }, value: (self.dialogEntity.multiselect) ? String(self.dialogEntity.multiselect) : "false" },
@@ -345,7 +345,7 @@ export default class SearchDialogBox {
 						});
 					});
 				}
-				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 					
 					meta = {
 							
@@ -368,7 +368,7 @@ export default class SearchDialogBox {
 		
 		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
 
-		if (self.dialogEntity.endpointType === DIALOG_ENDPOINT_TYPE_REST) {
+		if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST) {
 				
 			webix.ajax().get(appConfig.restUrl + self.dialogEntity.endpoint).then(
 				
@@ -414,7 +414,7 @@ export default class SearchDialogBox {
 				webix.ui(body, $$("search-dialog-" + self.uid));
 				
 				// Post draw views actions
-				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
+				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE && self.searchDataTable) {
 				
 					self.searchDataTable.callbacks();
 				}	
@@ -431,7 +431,7 @@ export default class SearchDialogBox {
 				
 				self.dialogInfo = dialogInfo;
 				
-				if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE) {
+				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
 			
 					v = {
 						
@@ -442,7 +442,7 @@ export default class SearchDialogBox {
 						]  
 					};
 				}	
-				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
+				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 
 					v = {
 						css: { "border": "1px solid #CCD7E6", "box-sizing": "border-box" },
@@ -519,7 +519,7 @@ export default class SearchDialogBox {
 					on: {
 						onItemClick(){
 							
-							if ((self.dialogEntity.dataType === DIALOG_DATA_TYPE_TABLE && self.searchDataTable) || (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE && self.searchTreeView)) {
+							if ((self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE && self.searchDataTable) || (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE && self.searchTreeView)) {
 							
 								acceptCallback();	
 							}
@@ -534,49 +534,49 @@ export default class SearchDialogBox {
 }
 
 Object.defineProperty(SearchDialogBox, 'USERS', {
-	value: { id: 1, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 },
+	value: { id: 1, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_EM, endpoint: "USER", pkField: "id", fields: ["name=LBL_USER", "fullName=LBL_FULL_NAME"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'LOCALES', {
-	value: { id: 2, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "i18n/locales", pkField: "id", fields: ["code=LBL_LOCALE_CODE", "name=LBL_LOCALE_NAME"], height: 600, width: 800 },
+	value: { id: 2, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST, endpoint: "i18n/locales", pkField: "id", fields: ["code=LBL_LOCALE_CODE", "name=LBL_LOCALE_NAME"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'ROLES', {
-	value: { id: 3, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/roles", pkField: "id", fields: ["alias=LBL_ROLE", "description=LBL_ROLE_DESCRIPTION"], height: 600, width: 800 },
+	value: { id: 3, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/roles", pkField: "id", fields: ["alias=LBL_ROLE", "description=LBL_ROLE_DESCRIPTION"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'PERMISSIONS', {
-	value: {id: 4, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "labelDescription=LBL_LABEL_PERMISSION_DESCRIPTION"], translate: ["labelAlias", "labelDescription"], height: 600, width: 800},
+	value: {id: 4, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST, endpoint: "users/systemPermissions", pkField: "id", fields: ["labelAlias=LBL_LABEL_PERMISSION", "labelDescription=LBL_LABEL_PERMISSION_DESCRIPTION"], translate: ["labelAlias", "labelDescription"], height: 600, width: 800},
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'PLANS', {
-	value: { id: 5, dataType: DIALOG_DATA_TYPE_TREE, endpointType: DIALOG_ENDPOINT_TYPE_CALLBACK, pkField: "id", height: 600, width: 800 },
+	value: { id: 5, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST, endpoint: "plans/summary", pkField: "id", fields: ["alias=LBL_PLAN", "description=LBL_PLAN_DESCRIPTION"], height: 600, width: 800 },
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'CUSTOM', {
-	value: { id: 6, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_CUSTOM },
+	value: { id: 6, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_CUSTOM },
 	writable: false,
 	enumerable: true,
 	configurable: false
 });
 
 Object.defineProperty(SearchDialogBox, 'CALLBACK', {
-	value: { id: 7, dataType: DIALOG_DATA_TYPE_TABLE, endpointType: DIALOG_ENDPOINT_TYPE_CALLBACK },
+	value: { id: 7, dataType: SearchDialogBox.DIALOG_DATA_TYPE_TABLE, endpointType: SearchDialogBox.DIALOG_ENDPOINT_TYPE_CALLBACK },
 	writable: false,
 	enumerable: true,
 	configurable: false

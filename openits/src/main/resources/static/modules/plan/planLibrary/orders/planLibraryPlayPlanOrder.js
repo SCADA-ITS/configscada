@@ -68,21 +68,24 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 
 		function getWindowPlayPlanSelected() {
 			
-				let dialogEntity = webix.copy(SearchDialogBox.PLANS);				
-				dialogEntity.fillDialogEntity = fillDialogEntity;
-				dialogEntity.data = {};
+				let dialogPlanEntity = webix.copy(SearchDialogBox.CALLBACK);				
+				dialogPlanEntity.fillDialogEntity = fillDialogEntity;
+				dialogPlanEntity.dataType = SearchDialogBox.DIALOG_DATA_TYPE_TREE;
+				dialogPlanEntity.height = 600;
+				dialogPlanEntity.width = 800;
+				dialogPlanEntity.data = {};
 				
 				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
 
 					let promises = [];
 
-					promises.push(webix.ajax().get(appConfig.restUrl + "plans/nodes"));
-					promises.push(webix.ajax().get(appConfig.restUrl + "plans/hierarchies"));
-					promises.push(webix.ajax().get(appConfig.restUrl + "plans"));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planNodes));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planHierarchies));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.plans));
 
 					webix.promise.all(promises).then(function(responses) {
 
-						if (responses != null) {
+						if (Array.isArray(responses) && responses.length === 3) {
 							
 							let itemsTree = [];
 							let itemRelationships = [];
@@ -130,7 +133,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 					});					
 				}
 				
-			let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), dialogEntity, onAccept);
+			let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), dialogPlanEntity, onAccept);
 			s.show();
 
 			function onAccept(selectedIds) {

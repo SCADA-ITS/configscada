@@ -73,7 +73,7 @@ export default class PlanScheduleModule extends GenericModule {
 					let planScheduleId = self.args.selectedPks[0];
 
 					self.requestReport = false;
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoint, { id: planScheduleId })).then(function(dat) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.planSchedule, { id: planScheduleId })).then(function(dat) {
 
 						if (dat != null) {
 							self.planSchedule = dat.json();
@@ -138,7 +138,7 @@ export default class PlanScheduleModule extends GenericModule {
 				function onAccept() {
 					
 					actionExecution("PLAY", planScheduleList, self.config.actionEndpoints.enable);
-				};
+				}
 			}
 		}
 
@@ -170,32 +170,35 @@ export default class PlanScheduleModule extends GenericModule {
 				function onAccept() {
 					
 					actionExecution("STOP", planScheduleList, self.config.actionEndpoints.delete);
-				};
+				}
 			}
 		}
 
-		function actionExecution(action, elementList, actionEndpoints) {
+		function actionExecution(action, planScheduleList, actionEndpoints) {
 
 			let endpoint = actionEndpoints;
 
-			elementList.forEach(element => {
+			planScheduleList.forEach(planScheduleId => {
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoint, { id: element })).then(function(dat) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.planSchedule, { id: planScheduleId })).then(function(dat) {
 
-					if (dat != null) {
+					if (dat) {
+						
 						let planSchedule = dat.json();
-
-						const CONTENT_TYPE_JSON = { "Content-type": "application/json" };
-						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, {
-							planSchedules: [{
-								id: element,
-								planId: planSchedule.plan.id,
-								cronExpression: planSchedule.cronExpression,
-								action: action
-							}]
-						}).then(function(data2) {
-							//console.log(data2);
-						});
+						
+						if (planSchedule) {
+							
+							let body = {
+								planSchedules: [{
+									id: planSchedule.id,
+									planId: planSchedule.plan.id,
+									cronExpression: planSchedule.cronExpression,
+									action: action
+								}]
+							};
+							
+							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, body);
+						}
 					}
 				});
 			});
@@ -368,8 +371,8 @@ export default class PlanScheduleModule extends GenericModule {
 														onItemClick: function() {
 
 															newPlan = $$(form.id).getValues();
-															let dialogBox = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), SearchDialogBox.PLANS, selectPlan);
-															dialogBox.show();
+															
+															searchPlan();
 														}
 													}
 												}
@@ -396,6 +399,89 @@ export default class PlanScheduleModule extends GenericModule {
 
 			}
 
+			function searchPlan() {
+				
+				let dialogPlanEntity = webix.copy(SearchDialogBox.CALLBACK);				
+				dialogPlanEntity.fillDialogEntity = fillDialogEntity;
+				dialogPlanEntity.dataType = SearchDialogBox.DIALOG_DATA_TYPE_TREE;
+				dialogPlanEntity.height = 600;
+				dialogPlanEntity.width = 800;
+				dialogPlanEntity.data = {};
+				
+				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+
+					let promises = [];
+
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planNodes));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.planHierarchies));
+					promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.plans));
+
+					webix.promise.all(promises).then(function(responses) {
+
+						if (Array.isArray(responses) && responses.length === 3) {
+							
+							let itemsTree = [];
+							let itemRelationships = [];
+
+							let nodes = (responses[0] && responses[0].json()) ? responses[0].json() : [];
+							let relationships = responses[1] && responses[1].json() ? responses[1].json() : [];
+							let plans = responses[2] && responses[2].json() ? responses[2].json() : [];
+
+							if (Array.isArray(nodes) && nodes.length > 0) {
+
+								itemsTree = nodes.map(e => {
+
+									let plan = plans.find(p => (e.plan && p.id === e.plan.id));
+
+									return {
+
+										id: e.id,
+										label: plan ? plan.alias : e.alias,
+										plan: e.plan,
+										folder: !e.plan
+									}
+								});
+							}
+
+							if (Array.isArray(relationships) && relationships.length > 0) {
+
+								itemRelationships = relationships.map(e => {
+
+									return {
+
+										id: e.id,
+										nodeParentId: e.parent.id,
+										nodeChildId: e.child.id
+									}
+								});
+							}
+
+							dialogEntity.data.nodes = itemsTree;
+							dialogEntity.data.relationships = itemRelationships;
+							dialogEntity.data.nodeParentId = "nodeParentId";
+							dialogEntity.data.nodeChildId = "nodeChildId";
+							
+							onFilledDialogEntity(dialogEntity);
+						}
+					});					
+				}
+				
+				
+				let s = new SearchDialogBox(i18n.t("LBL_SELECT_PLAN"), dialogPlanEntity, onAccept);
+				s.show();
+				
+				function onAccept(selection) {
+
+					if (Array.isArray(selection) && selection.length > 0) {
+						
+						newPlan.plan = selection[0].alias;
+						newPlan.planId = selection[0].id;
+						self.newPlan = newPlan;
+		
+						$$(self.form.id).setValues(self.newPlan);	
+					}				
+				}
+			}
 
 			function getToolbarActions() {
 
@@ -501,15 +587,6 @@ export default class PlanScheduleModule extends GenericModule {
 				};
 
 				return viewToolbarActions;
-			}
-
-			function selectPlan(selection) {
-
-				newPlan.plan = selection[0].alias;
-				newPlan.planId = selection[0].id;
-				self.newPlan = newPlan;
-
-				$$(self.form.id).setValues(self.newPlan);
 			}
 
 			webix.ui(viewMain, $$(self.uid));
