@@ -76,12 +76,32 @@ public class PlanController {
 		
 		return new ResponseEntity<>(planBO.getItem(id), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/{id}/plan_library")
+	@ApiOperation(value = "Get plan by id for plan library", notes = "Get plan by id for plan library")
+	public ResponseEntity<Object> getPlanPlanLibrary(
+			@ApiParam(
+			name = "id",
+			type = "String",
+			value = "Plan by id",
+			example = "Plan:1",
+			required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(planBO.getPlanPlanLibrary(id), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/summary")
 	@ApiOperation(value = "Get all plans summary", notes = "Get all plans summary")
 	public ResponseEntity<Object> getPlansSummary() {
 		
 		return new ResponseEntity<>(planBO.getSummaryList(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/plan_library")
+	@ApiOperation(value = "Get all plans for plan library", notes = "Get all plans for plan library")
+	public ResponseEntity<Object> getPlansPlanLibrary() {
+		
+		return new ResponseEntity<>(planBO.getPlansPlanLibrary(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/plan_types")

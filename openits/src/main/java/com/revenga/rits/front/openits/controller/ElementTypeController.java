@@ -85,6 +85,19 @@ public class ElementTypeController {
 		return new ResponseEntity<>(elementTypeBO.getElementsWithChildsByElementType(id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/{id}/summary")
+	@ApiOperation(value = "Get elements summary", notes = "Get elements summary")
+	public ResponseEntity<Object> getElementsSummaryByElementTypeId(
+			@ApiParam(
+					name = "id",
+					type = "String",
+					value = "Element type identifier",
+					example = "ElementType:3",
+					required = true) @PathVariable String id) {
+		
+		return new ResponseEntity<>(elementTypeBO.getElementsSummaryByElementType(id), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/{id}/elementTypeStates")
 	@ApiOperation(value = "Get element type states by elementTypeId", notes = "Get element type states by elementTypeId")
 	public ResponseEntity<Object> getElementTypeStatesByElementTypeId(

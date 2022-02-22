@@ -3,10 +3,9 @@ import { util } from "../../../lib/util.js";
 
 export default class VmsSignalingTree {
 	
-	constructor(elements, element, onSelectElement) {
+	constructor(elements, onSelectElement) {
 
 		this.elements = elements;
-		this.element = element;
 		this.onSelectElement = onSelectElement;
 		this.treeView = undefined;
 	}

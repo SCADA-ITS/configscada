@@ -45,10 +45,17 @@ export default class VmsSignalingModule extends GenericModule {
 					
 					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 				
-						self.currentElement = getElementFromElementId(self.args.selectedPks[0]); 
+						getElementFromElementId(self.args.selectedPks[0], function(element) {
+						
+							self.currentElement = element;
+							
+							load();	
+						});
 					}
-					
-					load();	
+					else {
+						
+						load();	
+					}
 				}
 				else {
 					
@@ -65,9 +72,22 @@ export default class VmsSignalingModule extends GenericModule {
 			}
 		});
 		
-		function getElementFromElementId(elementId) {
+		function getElementFromElementId(elementId, onResponse) {
+			
+			if (self.currentElement && self.currentElement.id === elementId) {
+			
+				onResponse(self.currentElement);	
+			}
+			else {
 				
-			return self.elements.find(e => e.id === elementId);
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.element, { id: elementId })).then(function(elementResponse) {
+			
+					if (elementResponse) {
+						
+						onResponse(elementResponse.json());	
+					}
+				});
+			}
 		}
 		
 		function load() {
@@ -83,7 +103,6 @@ export default class VmsSignalingModule extends GenericModule {
 
 			if (isModuleActionElements || isModuleActionPlanOrderEdit) {
 
-				self.currentElement = self.elements.find(e => e.id === self.args.selectedPks[0]);
 				self.elementsSelected = self.elements.filter(e => self.args.selectedPks.includes(e.id));
 				
 				$$("view-main-tree-hierarchy-" + self.uid).hide();
@@ -94,13 +113,24 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				self.elements.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 				
-				self.currentElement = self.elements[0];
-				self.elementsSelected = [self.currentElement];
-			}
-			
-			if (self.vmsSignalingTree) {
+				getElementFromElementId(self.elements[0].id, function(element) {
+					
+					self.currentElement = element;
 				
-				self.vmsSignalingTree.select(self.currentElement);
+					self.elementsSelected = [self.currentElement];
+					
+					if (self.vmsSignalingTree) {
+				
+						self.vmsSignalingTree.select(self.currentElement);
+					}	
+				});
+			}
+			else {
+				
+				if (self.vmsSignalingTree) {
+				
+					self.vmsSignalingTree.select(self.currentElement);
+				}
 			}
 		}
 		
@@ -188,7 +218,7 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view = {};
 				
-				self.vmsSignalingTree = new VmsSignalingTree(self.elements, self.currentElement, onSelectElement);
+				self.vmsSignalingTree = new VmsSignalingTree(self.elements, onSelectElement);
 				
 				view = self.vmsSignalingTree.getView();
 				
@@ -197,36 +227,42 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			function onSelectElement(elementId) {
 				
+					
 				$$("view-main-body-" + self.uid).hide();
 				$$("view-main-loading-" + self.uid).show();
 				
 				$$("view-loading-panel-" + self.uid).show();
 				$$("view-panel-" + self.uid).hide();
-				
-				self.currentElement = getElementFromElementId(elementId);
-								
-				let previousViewContent = self.currentViewContent;
-				
-				webix.ui(getViewContent(), $$(previousViewContent));
-				
-				if (Array.isArray(self.vmsSignalingContent.signalingCmds) && self.vmsSignalingContent.signalingCmds.length > 0) {
-					
-					self.vmsSignalingContent.signalingCmds.forEach(signalingCmd => {
-						
-						signalingCmd.loadData();
-					});
-				}
-				
-				$$("view-main-loading-" + self.uid).hide();
-				$$("view-main-body-" + self.uid).show();
-				
-				
-				webix.delay(function() {
 
-					$$("view-loading-panel-" + self.uid).hide();
-					$$("view-panel-" + self.uid).show();
+				getElementFromElementId(elementId, onResponse);	
+				
+				function onResponse(element) {
 					
-				}, null, null, 500);
+					self.currentElement = element;
+				
+					let previousViewContent = self.currentViewContent;
+					
+					webix.ui(getViewContent(), $$(previousViewContent));
+					
+					if (Array.isArray(self.vmsSignalingContent.signalingCmds) && self.vmsSignalingContent.signalingCmds.length > 0) {
+						
+						self.vmsSignalingContent.signalingCmds.forEach(signalingCmd => {
+							
+							signalingCmd.loadData();
+						});
+					}
+					
+					$$("view-main-loading-" + self.uid).hide();
+					$$("view-main-body-" + self.uid).show();
+					
+					webix.delay(function() {
+	
+						$$("view-loading-panel-" + self.uid).hide();
+						$$("view-panel-" + self.uid).show();
+						
+					}, null, null, 500);	
+				}
+
 			}
 			
 			function getViewContent() {

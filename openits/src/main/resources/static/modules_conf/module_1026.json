@@ -4,7 +4,7 @@
 	    "planOrderEdit": 102602
 	},
 	"restEndpoints": {
-		"elementsByType": "element_types/${id}/elements",
+		"elementsByType": "element_types/${id}/summary",
 		"element": "elements/${id}",
 		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
 		"command": "elements/send_command_element",

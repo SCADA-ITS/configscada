@@ -60,6 +60,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ALARM_FILTEREDS_BY_ELEMENT = getPropertyInt("get_alarm_filtereds_by_element");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_by_element_type");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID = getPropertyInt("get_elements_by_element_type_for_grid");
+	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_SUMMARY = getPropertyInt("get_elements_by_element_type_summary");
 	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_COMMANDS = getPropertyInt("get_elements_array_commands");
@@ -94,7 +95,9 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_STRETCH_BY_LOCATION = getPropertyInt("get_stretch_by_location");
 	public static final int DATA_SOURCE_GET_PLANS = getPropertyInt("get_plans");
 	public static final int DATA_SOURCE_GET_PLANS_SUMMARY = getPropertyInt("get_plans_summary");
+	public static final int DATA_SOURCE_GET_PLANS_PLAN_LIBRARY = getPropertyInt("get_plans_plan_library");
 	public static final int DATA_SOURCE_GET_PLAN = getPropertyInt("get_plan");
+	public static final int DATA_SOURCE_GET_PLAN_PLAN_LIBRARY = getPropertyInt("get_plan_plan_library");
 	public static final int DATA_SOURCE_GET_PLAN_TYPES = getPropertyInt("get_plan_types");
 	public static final int DATA_SOURCE_GET_PLAN_TYPE = getPropertyInt("get_plan_type");
 	public static final int DATA_SOURCE_GET_PLAN_SUBTYPES = getPropertyInt("get_plan_subtypes");
@@ -109,6 +112,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_PLAN_SCHEDULE_BY_PLAN = getPropertyInt("get_plan_schedule_by_plan");
 	public static final int DATA_SOURCE_GET_PLAN_ORDERS = getPropertyInt("get_plan_orders");
 	public static final int DATA_SOURCE_GET_PLAN_ORDER = getPropertyInt("get_plan_order");
+	public static final int DATA_SOURCE_GET_PLAN_ORDER_PLAN_LIBRARY = getPropertyInt("get_plan_order_plan_library");
 	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE = getPropertyInt("get_translations_by_locale");
 	public static final int DATA_SOURCE_GET_TRANSLATIONS_BY_LOCALE_AND_MODULE = getPropertyInt("get_translations_by_locale_and_module");
 	public static final int DATA_SOURCE_GET_USERS = getPropertyInt("get_users");

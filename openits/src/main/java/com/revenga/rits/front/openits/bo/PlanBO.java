@@ -32,7 +32,23 @@ public class PlanBO extends GenericBO {
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_SUMMARY, plans);
 	}
+	
+	public List<Map<String, Object>> getPlansPlanLibrary() {
 
+		List<Map<String, Object>> plans = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_PLAN_LIBRARY,
+				null);
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLANS_PLAN_LIBRARY, plans);
+	}
+	
+	public Map<String, Object> getPlanPlanLibrary(String id) {
+
+		Map<String, Object> plan = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_PLAN_LIBRARY,
+				new Object[] { id });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_PLAN_PLAN_LIBRARY, plan);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createPlan(Object input) {
 

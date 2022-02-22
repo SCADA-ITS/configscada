@@ -286,7 +286,7 @@ export default class SignalingManagerModule extends GenericModule {
 							viewHeader = {
 								id: "view-main-content-signaling-header-" + self.uid,
 								cols: [
-									{},
+									{ width: 50 },
 									{
 										rows: [
 											{ height: 10 },
@@ -306,7 +306,7 @@ export default class SignalingManagerModule extends GenericModule {
 											{ height: 10 }
 										]
 									},
-									{}
+									{ width: 50 }
 								]
 							}	
 						}
