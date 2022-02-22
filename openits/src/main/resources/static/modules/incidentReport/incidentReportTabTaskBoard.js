@@ -88,7 +88,7 @@ export default class IncidentReportTabTaskBoard {
 					cols: [
 						{ width: 10 },
 						{
-							width: 425,
+							width: 485,
 							rows: getTasks()
 						},
 						{ view: "resizer" },
@@ -118,7 +118,8 @@ export default class IncidentReportTabTaskBoard {
 				{ gridOption: { id: 13 }, value: "false" },
 				{ gridOption: { id: 14 }, value: "false" },
 				{ gridOption: { id: 15 }, value: "false" },
-				{ gridOption: { id: 16 }, value: "img/grid/default.png" }
+				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+				{ gridOption: { id: 21 }, value: "auto" }
 			];
 
 			let metadata = {
@@ -186,7 +187,7 @@ export default class IncidentReportTabTaskBoard {
 						required: true,
 						sourceField: "position",
 						visible: true,
-						widthPx: 25,
+						widthPx: 45,
 						gridFieldDataType: {
 							id: 2,
 							name: "int"
@@ -205,7 +206,7 @@ export default class IncidentReportTabTaskBoard {
 						required: true,
 						sourceField: "alias",
 						visible: true,
-						widthPx: 230,
+						adjust: true,
 						gridFieldDataType: {
 							id: 1,
 							name: "string"
@@ -217,17 +218,50 @@ export default class IncidentReportTabTaskBoard {
 						isEpochMilli: false,
 						isPk: false,
 						label: "",
-						labelTooltip: "LBL_TYPE",
+						labelTooltip: "LBL_AUTOMATISM",
 						needsTranslation: false,
 						parameterized: false,
 						position: 5,
+						required: true,
+						sourceField: "automatism",
+						visible: true,
+						widthPx: 45,
+						gridFieldDataType: {
+							id: 1,
+							name: "string"
+						},
+						gridFieldIcons: [
+							{
+								icon: "./img/grid/task_automatism.png",
+								showValue: false,
+								value: "yes",
+								labelValue: "LBL_AUTOMATISM"
+							},
+							{
+								icon: "./img/grid/empty.png",
+								showValue: false,
+								value: "no",
+								labelValue: "LBL_WO_AUTOMATISM"
+							}
+						]
+					},
+					{
+						extended: false,
+						filtered: false,
+						isEpochMilli: false,
+						isPk: false,
+						label: "",
+						labelTooltip: "LBL_TYPE",
+						needsTranslation: false,
+						parameterized: false,
+						position: 6,
 						required: true,
 						sourceField: "type",
 						visible: true,
 						widthPx: 45,
 						gridFieldDataType: {
-							id: 2,
-							name: "int"
+							id: 1,
+							name: "string"
 						},
 						gridFieldIcons: [
 							{
@@ -254,7 +288,7 @@ export default class IncidentReportTabTaskBoard {
 						labelTooltip: "LBL_REQUIRED",
 						needsTranslation: false,
 						parameterized: false,
-						position: 6,
+						position: 7,
 						required: true,
 						sourceField: "required",
 						visible: true,
@@ -297,6 +331,11 @@ export default class IncidentReportTabTaskBoard {
 					row.alias = self.tasks[i].incidentTypeTask.alias;
 					row.type = self.tasks[i].incidentTypeTask.auto ? "auto" : "manual";
 					row.required = self.tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
+					
+					let isAutomatism = self.tasks[i].incidentTypeTask.onchange ||
+									   (Array.isArray(self.tasks[i].taskPlanStates) && self.tasks[i].taskPlanStates.length > 0);
+					
+					row.automatism = isAutomatism ? "yes" : "no";
 
 					data.push(row);
 				}
