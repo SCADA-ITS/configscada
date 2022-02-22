@@ -585,7 +585,12 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 						planOrderCondition.thresholdOperationId = row.thresholdOperation.id;
 					}
-					
+
+					if(row.elementTypeState && row.elementTypeState.id){
+
+						planOrderCondition.elementTypeStateId = row.elementTypeState.id;
+					}
+										
 					planOrder.planOrderConditions.push(planOrderCondition);
 				});	
 			}
