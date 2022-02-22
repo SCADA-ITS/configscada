@@ -44,15 +44,19 @@ export default class SearchDialogBox {
 				}
 				else if (self.dialogEntity.dataType === DIALOG_DATA_TYPE_TREE) {
 
-					let selectedNode = self.searchTreeView.getSelected();					
-					let planNode = self.dialogEntity.data.nodes.find(e => e.id === selectedNode[0].id_);
-					
-					if (planNode.plan) {
-						
-						selected = [{
-							id: planNode.plan.id,
-							alias: planNode.label
-						}];
+					let selectedNode = self.searchTreeView.getSelected();
+
+					if (Array.isArray(selectedNode) && selectedNode.length > 0) {
+
+						let planNode = self.dialogEntity.data.nodes.find(e => e.id === selectedNode[0].id_);
+
+						if (planNode && planNode.plan) {
+
+							selected = [{
+								id: planNode.plan.id,
+								alias: planNode.label
+							}];
+						}
 					}
 				}
 				
