@@ -49,7 +49,7 @@ export default class PlanLibraryChangeParamConfigOrder extends PlanLibraryOrder 
 			nextPlayPlanRow = {
 				id: "next-plan-row-" + self.uid,
 				cols: [
-					{ view: "text", value: (self.nextPlan.alias) ? self.nextPlan.alias : "", required: true, label: i18n.t("LBL_PLAN"), disabled: true, labelWidth: 275 },
+					{ view: "text", value: (self.nextPlan && self.nextPlan.alias) ? self.nextPlan.alias : "", required: true, label: i18n.t("LBL_PLAN"), disabled: true, labelWidth: 275 },
 					{
 						view: "icon", icon: "wxi-search", disabled: false,
 						on: {
