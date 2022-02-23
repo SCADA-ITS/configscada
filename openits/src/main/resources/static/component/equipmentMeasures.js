@@ -78,7 +78,6 @@ export default class EquipmentMeasures {
 		let elementsTypesArray = [];
 		let elementsTypes = new Set();
 		let elementsValuesMap = new Map();
-		let isResized = false;
 		let counter = 0;
 
 		self.elements.forEach(el => {
@@ -220,6 +219,7 @@ export default class EquipmentMeasures {
 				let spacers = (containerWidth - (tablesForRow * tablesWidth)) / tablesForRow - 1;
 				let data = [];
 				let temporallyTablesArray = [];
+				let firstCharge = true;
 
 				elementsTypesArray.forEach(element => {
 
@@ -485,6 +485,10 @@ export default class EquipmentMeasures {
 																});
 															}
 														}
+													},
+													onViewShow: function() {
+
+														callbackOnResize();
 													}
 												}
 											},
@@ -688,10 +692,7 @@ export default class EquipmentMeasures {
 							$$("multiview-tables-" + page + "-" + self.uid).show();
 						}
 
-						if (isResized) {
-
-							callbackOnResize();
-						}
+						callbackOnResize();
 					}
 				}
 
@@ -867,15 +868,11 @@ export default class EquipmentMeasures {
 
 					let tableWidth = table.$width;
 					let labelWidth = tableWidth * 0.66;
-					table._data_width = (tableWidth - labelWidth) * 0.8;
+					table._data_width = (tableWidth - labelWidth) * 0.94;
 					table.refresh();
 				}
 			}
-
-			isResized = true;
 		}
 	}
-
-
 
 }
