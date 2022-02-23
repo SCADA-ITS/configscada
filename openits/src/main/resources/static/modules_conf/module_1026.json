@@ -322,7 +322,7 @@
 			"defaultFlashingOffMs":1000,
 			"textColor": false,
 			"defaultTextColor": "#FFFFFF",
-			"textAlign": false
+			"textAlign": true
 		},
 		{
 			"id": "ElementSubtype:20:71",
