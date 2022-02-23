@@ -5,7 +5,7 @@ import MessageBox from "../../component/messageBox.js";
 const PLAN_EXECUTED = "1";
 const PLAN_NO_EXECUTED = "0";
 const DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS = 2;
-			
+
 export default class IncidentReportTaskPlan {
 
 	constructor(config, incidentReport, taskState, index, uid) {
@@ -19,10 +19,10 @@ export default class IncidentReportTaskPlan {
 	}
 
 	getView() {
-		
+
 		let self = this;
 		let viewPlans;
-		
+
 		viewPlans = {
 			id: "task-details-plans-" + self.index + "-" + self.uid,
 			rows: [
@@ -36,45 +36,45 @@ export default class IncidentReportTaskPlan {
 				}
 			]
 		};
-		
+
 		function initDataTable() {
-			
+
 			let userData = util.user.getUserData();
-			let sameUser =(userData.id === self.incidentReport.currentUser.id);
-			
+			let sameUser = (userData.id === self.incidentReport.currentUser.id);
+
 			if (self.dtPlans) {
-								
+
 				self.dtPlans.callbacks();
-				
+
 				if (self.taskState.completedAt || !sameUser) {
-					
+
 					self.dtPlans.disable();
 				}
 				else {
-					
+
 					let dtItems = self.dtPlans.getAllItems();
-					
+
 					if (Array.isArray(dtItems) && dtItems.length > 0) {
-						
+
 						let planNoExecuted = dtItems.find(dtItem => dtItem.status == PLAN_NO_EXECUTED);
-						
+
 						if (planNoExecuted) {
-							
+
 							self.dtPlans.select(planNoExecuted.id);
 						}
 					}
 				}
 			}
 		}
-		
+
 		viewPlans.rows.push(...getTablePlans());
-				
+
 		function getTablePlans() {
-			
+
 			function getMetadata() {
-				
+
 				let metadata;
-				
+
 				const defaultGridOptionValues = [
 					{ gridOption: { id: 1 }, value: "false" },
 					{ gridOption: { id: 2 }, value: "false" },
@@ -88,7 +88,7 @@ export default class IncidentReportTaskPlan {
 					{ gridOption: { id: 21 }, value: "auto" },
 					{ gridOption: { id: 23 }, value: "false" }
 				];
-	
+
 				metadata = {
 					filter: true,
 					label: "LBL_PLANS",
@@ -245,16 +245,16 @@ export default class IncidentReportTaskPlan {
 						}
 					]
 				};
-				
+
 				return metadata;
 			}
-			
+
 			function getEvents() {
-				
+
 				let events = {};
-			
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-	
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 1,
 					function: onExecutePlan
@@ -267,79 +267,87 @@ export default class IncidentReportTaskPlan {
 
 				return events;
 			}
-			
+
 			function getInitialData() {
-				
+
 				let data = [];
 				let taskPlanStates = self.taskState.taskPlanStates;
 
 				let position = 1;
-				
+
 				if (Array.isArray(taskPlanStates) && taskPlanStates.length) {
-	
+
 					taskPlanStates.forEach(taskPlanState => {
-						
+
 						let row;
-						
+
 						row = {
 							id: taskPlanState.incidentTaskPlan.plan.id,
 							position: position++,
 							plan: taskPlanState.incidentTaskPlan.plan.alias,
 							status: taskPlanState.completedAt ? PLAN_EXECUTED : PLAN_NO_EXECUTED,
 							lastExecution: taskPlanState.completedAt,
-							incidentTaskPlanId: taskPlanState.incidentTaskPlan.id 
+							incidentTaskPlanId: taskPlanState.incidentTaskPlan.id
 						}
-						
+
 						data.push(row);
 					});
 				}
-				
+
 				return data;
 			}
-			
+
 			function onExecutePlan() {
-				
+
 				let selectedItems = self.dtPlans.getSelectedItems();
-						
+
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
-					
+
 					let selectedItem = selectedItems[0];
-					
-					let ms = new MessageBox (MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), onAccept, null);
+
+					let ms = new MessageBox(MessageBox.CONFIRM, selectedItem.status != PLAN_EXECUTED ? i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_CONFIRM_DESCRIPTION") : i18n.t("LBL_INCIDENT_TASK_PLAN_EXECUTE_AGAIN_CONFIRM_DESCRIPTION"), onAccept, null);
 					ms.show();
-					
+
 					function onAccept() {
-						
-						let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
-						
-						if (module) {
-							
-							let planId = selectedItem.id;
-							let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
-							
-							let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
-								id: self.incidentReport.id,
-								taskPlanId: incidentTaskPlanId
-							});
-							
-							console.log("Incident report action => " + endpoint);
-							
-							let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
-							let args = { selectedPks: [planId] };
-		
-							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
-							
-							function onLoadedModule() {
-								
-								setTimeout(function() {
-								
-									webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });							
-	
-								}, (self.config.executeTaskPlanDelaySecs ? self.config.executeTaskPlanDelaySecs : DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS) * 1000);
-								
-									
+
+
+						let planId = selectedItem.id;
+						let incidentTaskPlanId = selectedItem.incidentTaskPlanId;
+
+						let endpoint = util.fillTemplate(self.config.actionEndpoints.executeTaskPlan, {
+							id: self.incidentReport.id,
+							taskPlanId: incidentTaskPlanId
+						});
+
+						console.log("Incident report action => " + endpoint);
+
+						if (self.config.moduleAction.executePlanFromIncident) {
+
+							let module = util.module.getFromModuleAction(self.config.moduleAction.executePlanFromIncident);
+
+							if (module) {
+
+								let moduleAction = { id: self.config.moduleAction.executePlanFromIncident };
+								let args = { selectedPks: [planId] };
+
+								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, onLoadedModule);
+
+								function onLoadedModule() {
+
+									setTimeout(function() {
+
+										webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+
+									}, (self.config.executeTaskPlanDelaySecs ? self.config.executeTaskPlanDelaySecs : DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS) * 1000);
+
+								}
 							}
-						}						
+
+						} else {
+
+							webix.ajax().post(appConfig.restUrl + endpoint).then(undefined, function(response) { util.ajax.handleError(response); });
+						}
+
 					}
 				}
 			}
@@ -351,14 +359,14 @@ export default class IncidentReportTaskPlan {
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 
 					let module = util.module.getFromModuleAction(self.config.moduleAction.editPlanFromIncident);
-	
+
 					if (module) {
-	
+
 						let moduleAction = { id: self.config.moduleAction.editPlanFromIncident };
 						let args = { selectedPks: [selectedItems[0].id] };
-	
+
 						util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-					}			
+					}
 				}
 			}
 
@@ -366,7 +374,7 @@ export default class IncidentReportTaskPlan {
 
 			return self.dtPlans.getView();
 		}
-		
+
 		return viewPlans;
 	}
 }
