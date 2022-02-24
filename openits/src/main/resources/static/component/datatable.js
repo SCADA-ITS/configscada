@@ -750,6 +750,22 @@ export default class DataTable {
 		}
 	}
 	
+	disableAll() {
+		
+		if ($$("dt-" + this.uid)) {
+			
+			$$("dt-" + this.uid).disable();
+		}
+	}
+	
+	enableAll() {
+		
+		if ($$("dt-" + this.uid)) {
+			
+			$$("dt-" + this.uid).enable();
+		}
+	}
+	
 	commandDisable(commandId) {
 
 		let command = $$("tb_btn-" + this.uid + "_" + commandId);

@@ -45,7 +45,13 @@ export default class AlarmFilteredView {
 
 						if (alarmResponse != null) {
 
-							alarm = alarmResponse.json()[0];
+							let alarmsByElement = alarmResponse.json();
+							
+							if (Array.isArray(alarmsByElement && alarmsByElement.length > 0)) {
+							
+								alarm = alarmResponse.json()[0];	
+							}
+						
 							webix.ui(drawContent(), $$("view-content-" + self.uid));
 							$$("view-loading-" + self.uid).hide();
 							util.ui.setTitle(alarmFilteredViewWindow, i18n.t(alarmConfig.labelAlias) + " - " + element.alias, element.alias);
@@ -225,9 +231,9 @@ export default class AlarmFilteredView {
 														height: 20
 													},
 													{ height: 24 },
-													getAlarmTypeIcon(alarm),
+													getAlarmTypeIcon(),
 													{ height: 24 },
-													getAlarmFilteredIcon(alarm),
+													getAlarmFilteredIcon(),
 													{ height: 24 },
 													{
 														view: "label",
@@ -236,7 +242,7 @@ export default class AlarmFilteredView {
 														height: 20
 													},
 													{ height: 24 },
-													paintFieldFilteredComments(alarm),
+													paintFieldFilteredComments(),
 													{ height: 24 }
 												]
 											}
@@ -266,10 +272,10 @@ export default class AlarmFilteredView {
 								]
 							}
 						]
-					};
+					}
 
 
-					function getAlarmTypeIcon(alarm) {
+					function getAlarmTypeIcon() {
 
 						const DISABLED = "LBL_ALARM_FILTER_DISABLED_ALARM";
 						const MUTED = "LBL_ALARM_FILTER_MUTED";
@@ -278,9 +284,9 @@ export default class AlarmFilteredView {
 						let icon = disabled ? "./img/grid/alarm_disabled.png" : "./img/grid/no-sound.png";
 						let vlabel = disabled ? DISABLED : MUTED;
 
-						let alarmRecognized;
+						let viewAlarmRecognized;
 
-						alarmRecognized = {
+						viewAlarmRecognized = {
 							cols: [
 								{
 									width: 34,
@@ -298,20 +304,20 @@ export default class AlarmFilteredView {
 							]
 						};
 
-						return alarmRecognized;
-					};
+						return viewAlarmRecognized;
+					}
 
-					function getAlarmFilteredIcon(alarm) {
+					function getAlarmFilteredIcon() {
 
 						const NO_FILTERED = "LBL_NO";
 						const YES_FILTERED = "LBL_YES";
 
-						let filtered = (alarm.filteredUntil) ? true : false;
+						let filtered = (alarm && alarm.filteredUntil) ? true : false;
 						let vlabel = filtered ? YES_FILTERED : NO_FILTERED;
 
-						let view;
+						let viewAlarmFilteredIcon;
 
-						view = {
+						viewAlarmFilteredIcon = {
 							cols: [
 								{
 									width: 130,
@@ -334,22 +340,22 @@ export default class AlarmFilteredView {
 
 						}
 						
-						return view;
+						return viewAlarmFilteredIcon;
 
 					};
 
-					function paintFieldFilteredComments(alarm) {
+					function paintFieldFilteredComments() {
 
 						const LABEL_PREFIX = "LBL_";
 						let label = "";
-						let filteredComments = {};
+						let viewFilteredComments = {};
 
 						if (alarmFiltered.comment) {
 
 							label = alarmFiltered.comment.startsWith(LABEL_PREFIX) ? i18n.t(alarmFiltered.comment) : alarmFiltered.comment;
 						}
 
-						filteredComments = {
+						viewFilteredComments = {
 							hidden: !label,
 							rows: [
 								{
@@ -362,7 +368,7 @@ export default class AlarmFilteredView {
 							]
 						};
 
-						return filteredComments;
+						return viewFilteredComments;
 					}
 
 					return viewMain;

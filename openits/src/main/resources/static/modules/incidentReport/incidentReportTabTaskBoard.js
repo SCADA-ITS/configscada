@@ -271,6 +271,12 @@ export default class IncidentReportTabTaskBoard {
 								labelValue: "LBL_AUTO"
 							},
 							{
+								icon: "./img/grid/delayed.png",
+								showValue: false,
+								value: "delayed",
+								labelValue: "LBL_DELAYED"
+							},
+							{
 								icon: "./img/grid/manual.png",
 								showValue: false,
 								value: "manual",
@@ -329,7 +335,16 @@ export default class IncidentReportTabTaskBoard {
 					row.status = self.tasks[i].completedAt ? "confirmed" : "not_confirmed";
 					row.position = i + 1;
 					row.alias = self.tasks[i].incidentTypeTask.alias;
-					row.type = self.tasks[i].incidentTypeTask.auto ? "auto" : "manual";
+					
+					if (!self.tasks[i].incidentTypeTask.delay) {
+						
+						row.type = self.tasks[i].incidentTypeTask.auto ? "auto" : "manual";	
+					}	
+					else {
+						
+						row.type = "delayed";
+					}		
+					
 					row.required = self.tasks[i].incidentTypeTask.mandatory ? "yes" : "no";
 					
 					let isAutomatism = self.tasks[i].incidentTypeTask.onChange ||

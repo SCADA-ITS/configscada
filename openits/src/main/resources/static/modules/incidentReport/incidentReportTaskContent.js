@@ -108,7 +108,7 @@ export default class IncidentReportTaskContent {
 			// END
 
 			
-			self.incidentReportTaskInfo = new IncidentReportTaskInfo(self.taskState, self.index, self.uid);
+			self.incidentReportTaskInfo = new IncidentReportTaskInfo(self.incidentReport, self.taskState, self.index, self.uid);
 			
 			viewBody.cells.push({
 				header: i18n.t("LBL_INFO"),

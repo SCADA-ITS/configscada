@@ -2,8 +2,9 @@ import { util } from "../../lib/util.js";
 
 export default class IncidentReportTaskInfo {
 
-	constructor(taskState, index, uid) {
+	constructor(incidentReport, taskState, index, uid) {
 
+		this.incidentReport = incidentReport; 
 		this.taskState = taskState;
 		this.index = index;
 		this.uid = uid;
@@ -66,9 +67,21 @@ export default class IncidentReportTaskInfo {
 
 										let typeTask = i18n.t("LBL_INCIDENT_TASK_MANUAL");
 
-										if (self.taskState.incidentTypeTask.auto) {
+										if (!self.taskState.incidentTypeTask.delay) {
+											
+											if (self.taskState.incidentTypeTask.auto) {
 
-											typeTask = i18n.t("LBL_INCIDENT_TASK_AUTO");
+												typeTask = i18n.t("LBL_INCIDENT_TASK_AUTO");
+											}	
+										}
+										else {
+											
+											typeTask = i18n.t("LBL_INCIDENT_TASK_DELAYED") + " " + self.taskState.incidentTypeTask.delay + " " + i18n.t("LBL_INCIDENT_TASK_DELAYED_SECONDS");
+											
+											if (!self.taskState.completedAt && self.incidentReport) {
+
+												typeTask += ". " + i18n.t("LBL_INCIDENT_TASK_PLANNED_EXECUTION_AT") + ": " + util.toLocaleString((self.incidentReport.lastUpdate / 1000) + self.taskState.incidentTypeTask.delay);
+											}
 										}
 
 										return `<div><span class="ico webix_icon mdi mdi-animation"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_TYPE")}</span></div>

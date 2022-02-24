@@ -351,7 +351,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				if (container) {
 
-					util.ui.setTitle(container.config.id, i18n.t("LBL_INCIDENT_REPORT") + " [" + util.getSimpleId(this.incidentReport.id) + "]" + " - " + this.incidentReport.incidentType.alias);
+					util.ui.setTitle(container.config.id, i18n.t("LBL_INCIDENT_REPORT") + " " + util.getSimpleId(this.incidentReport.id) + " - " + this.incidentReport.incidentType.alias);
 				}
 
 				this.drawComponents();

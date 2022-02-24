@@ -94,6 +94,7 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.ROW_HEIGHT] = 41;
+				options[ListView.Options.SELECT_FIRST] = true;
 
 				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 
@@ -137,17 +138,20 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 						}
 
 						$$("view-locations-" + parent.uid).hideProgress();
-						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
+						
+						function onValidateStep(valid) {
+							
+							if (Array.isArray(dataLocations) && dataLocations.length > 0) {
 
-						if (Array.isArray(dataLocations) && dataLocations.length > 0) {
-
-							parent.dtLocations.add(dataLocations);
-							parent.dtLocations.selectByIndex(0);
-						}
-
-						if (callbackEnable) {
-
-							callbackEnable(true);
+								parent.dtLocations.add(dataLocations);
+								parent.dtLocations.selectByIndex(0);
+							}
+	
+							if (callbackEnable) {
+	
+								callbackEnable(true);
+							}	
 						}
 					});
 				};
@@ -222,15 +226,22 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 			events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
 				if (Array.isArray(rows) && rows.length > 0) {
+					
+					parent.dtLocations.disableAll();
 
 					if (parent.incidentWizardAction.autoSelectLocation) {
 
-						parent.incidentWizardAction.validateStep(parent.steps[1]);
+						parent.incidentWizardAction.validateStep(parent.steps[1], onValidateStep);
 
 					} else {
 
-						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+						parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
 					}
+				}
+				
+				function onValidateStep(valid) {
+					
+					parent.dtLocations.enableAll();
 				}
 			};
 

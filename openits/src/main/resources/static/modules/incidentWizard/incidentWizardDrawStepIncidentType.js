@@ -139,18 +139,21 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 							}
 
 							$$("view-incident-types-" + parent.uid).hideProgress();
-							parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+							parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
 							
-							if (Array.isArray(dataIncidentTypes) && dataIncidentTypes.length > 0) {
+							function onValidateStep(valid) {
 								
-								parent.dtIncidentTypes.add(dataIncidentTypes);
-								parent.dtIncidentTypes.selectByIndex(0);	
+								if (Array.isArray(dataIncidentTypes) && dataIncidentTypes.length > 0) {
+								
+									parent.dtIncidentTypes.add(dataIncidentTypes);
+									parent.dtIncidentTypes.selectByIndex(0);	
+								}
+	
+								if (callbackEnable) {
+	
+									callbackEnable(true);
+								}	
 							}
-
-							if (callbackEnable) {
-
-								callbackEnable(true);
-							}	
 						});
 					}				
 				};
@@ -264,9 +267,15 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 			events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
 				if (Array.isArray(rows) && rows.length > 0) {
+					
+					parent.dtIncidentTypes.disableAll();
 
-					parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
-
+					parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep(), onValidateStep);
+				}
+				
+				function onValidateStep(valid) {
+					
+					parent.dtIncidentTypes.enableAll();
 				}
 			};
 

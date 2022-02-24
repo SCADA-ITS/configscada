@@ -240,7 +240,7 @@ export default class IncidentWizardAction {
 		return !newStep ? currentStep : newStep;
 	}
 
-	validateStep(step) {
+	validateStep(step, onValidate) {
 
 		let parent = this.parent;
 		let self = this;
@@ -253,7 +253,7 @@ export default class IncidentWizardAction {
 		let summaryUser = $$("summary-user-" + parent.uid);
 		let summaryLevel = $$("summary-level-" + parent.uid);
 
-		function validateStepStretchAndLocation(onValid) {
+		function validateStepStretchAndLocation(onValidateStep) {
 
 			let stretchsSelected = parent.listViewStrechs.getSelectedItems();
 
@@ -284,7 +284,7 @@ export default class IncidentWizardAction {
 
 			valid = parent.incidentData.stretchId != null && parent.incidentData.locationId != null;
 			
-			onValid(valid);
+			onValidateStep(valid);
 
 			if (valid) {
 				
@@ -303,7 +303,7 @@ export default class IncidentWizardAction {
 			}
 		}
 		
-		function validateStepLocationFromMap(onValid) {
+		function validateStepLocationFromMap(onValidateStep) {
 
 			if (parent.mapLocationSelected && parent.mapIncidentTypeSelected) {
 				
@@ -375,7 +375,7 @@ export default class IncidentWizardAction {
 												}
 											}
 											
-											onValid(true);
+											onValidateStep(true);
 										}
 									);
 						
@@ -385,20 +385,20 @@ export default class IncidentWizardAction {
 								// onCancel
 								function() {
 									
-									onValid(true);
+									onValidateStep(true);
 								}
 							, null)).show();
 						}
 						else {
 							
-							onValid(true);
+							onValidateStep(true);
 						}
 					}
 				);
 			}
 			else {
 				
-				onValid(false);
+				onValidateStep(false);
 			}
 		}
 		
@@ -424,7 +424,7 @@ export default class IncidentWizardAction {
 			}
 		}
 
-		function validateStepIncidentType(onValid) {
+		function validateStepIncidentType(onValidateStep) {
 
 			let incidentGroupsSelected = parent.listViewIncidentGroups.getSelectedItems();
 
@@ -458,7 +458,7 @@ export default class IncidentWizardAction {
 				
 				if (parent.incidentData.incidentTypeId) {
 					
-					onValid(true);	
+					onValidateStep(true);	
 				}
 			}
 			else {
@@ -470,11 +470,11 @@ export default class IncidentWizardAction {
 				parent.incidentData.userId = undefined;
 				parent.incidentData.user = undefined;
 				
-				onValid(false);
+				onValidateStep(false);
 			}
 		}
 		
-		function validateStepAffectionStretch(onValid) {
+		function validateStepAffectionStretch(onValidateStep) {
 			
 			if (Array.isArray(parent.incidentData.affectionStretchs)) {
 				
@@ -502,20 +502,22 @@ export default class IncidentWizardAction {
 	
 				valid = Array.isArray(parent.incidentData.affectionStretchsSelected) && parent.incidentData.affectionStretchsSelected.length > 0;
 				
-				onValid(valid);	
+				onValidateStep(valid);	
 			}
 		}
 
-		function validateStepSummary(onValid) {
+		function validateStepSummary(onValidateStep) {
 			
-			 onValid(true);
+			 onValidateStep(true);
 		}
 
 		if (step) {
-
-			eval(step.validateFunction)(onValidate);
 			
-			function onValidate(v) {
+			$$("button-next-" + step.position + "-" + parent.uid).disable();
+
+			eval(step.validateFunction)(onValidateStep);
+			
+			function onValidateStep(v) {
 				
 				step.valid = v;
 
@@ -551,23 +553,38 @@ export default class IncidentWizardAction {
 						summaryLevel.setValues({ level: parent.incidentData.incidentLevelLabelAlias, levelColor: parent.incidentData.incidentLevelColor });
 					}
 	
-					$$("button-next-" + step.position + "-" + parent.uid).enable();
+//					$$("button-next-" + step.position + "-" + parent.uid).enable();
 				}
 				else {
 	
-					$$("button-next-" + step.position + "-" + parent.uid).disable();
+//					$$("button-next-" + step.position + "-" + parent.uid).disable();
 				}
 	
-				self.resetFromStep(step);
+				self.resetFromStep(step, function() {
+					
+					if (v) {
+						
+						$$("button-next-" + step.position + "-" + parent.uid).enable();
+					}
+					else {
+						
+						$$("button-next-" + step.position + "-" + parent.uid).disable();	
+					}
+					
+					if (onValidate) {
+						
+						onValidate(v);
+					}
+				});
 			}
 		}
 	}
 
-	resetFromStep(step) {
+	resetFromStep(step, onReset) {
 
 		let parent = this.parent;
 
-		function resetStepStretchAndLocation() {
+		function resetStepStretchAndLocation(onResetStep) {
 
 			parent.incidentData.stretchId = undefined;
 			parent.incidentData.stretch = undefined;
@@ -575,9 +592,14 @@ export default class IncidentWizardAction {
 			parent.incidentData.location = undefined;
 
 			parent.dtLocations.clear();
+			
+			if (onResetStep) {
+				
+				onResetStep();
+			}
 		}
 
-		function resetStepIncidentType() {
+		function resetStepIncidentType(onResetStep) {
 
 			parent.incidentData.incidentGroupId = undefined;
 			parent.incidentData.incidentGroup = undefined;
@@ -589,9 +611,14 @@ export default class IncidentWizardAction {
 
 			parent.listViewIncidentGroups.unselect();
 			parent.dtIncidentTypes.clear();
+			
+			if (onResetStep) {
+				
+				onResetStep();
+			}
 		}
 		
-		function resetStepAffectionStretch() {
+		function resetStepAffectionStretch(onResetStep) {
 			
 			parent.incidentData.affectionStretchsSelected = undefined;
 			
@@ -627,6 +654,11 @@ export default class IncidentWizardAction {
 									
 									parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
 								}
+								
+								if (onResetStep) {
+									
+									onResetStep();
+								}
 							}
 						}
 					);	
@@ -634,7 +666,7 @@ export default class IncidentWizardAction {
 			}
 		}
 
-		function resetStepStretchAndLocationFromIncidentType() {
+		function resetStepStretchAndLocationFromIncidentType(onResetStep) {
 
 			parent.incidentData.stretchId = undefined;
 			parent.incidentData.stretch = undefined;
@@ -642,6 +674,7 @@ export default class IncidentWizardAction {
 			parent.incidentData.location = undefined;
 
 			parent.listViewStrechs.clear();
+			parent.dtLocations.clear();
 
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
 
@@ -667,44 +700,84 @@ export default class IncidentWizardAction {
 
 						parent.listViewStrechs.add(dataStrechs);
 					}
-
-					$$("view-locations-" + parent.uid).hideProgress();
+					
+					if ($$("view-locations-" + parent.uid)) {
+						
+						try {
+							
+							$$("view-locations-" + parent.uid).hideProgress();	
+						}
+						catch {}
+					}
+					
+					if (onResetStep) {
+				
+						onResetStep();
+					}
 				}
 
 			})
-
-			parent.dtLocations.clear();
 		}
 		
-		function resetStepLocationFromMap() {
+		function resetStepLocationFromMap(onResetStep) {
 
 			parent.mapLocationSelected = undefined;
 			
 			parent.incidentData.stretchId = undefined;
 			parent.incidentData.stretch = undefined;
 			parent.incidentData.locationId = undefined;
-			parent.incidentData.location = undefined;			
+			parent.incidentData.location = undefined;
+			
+			if (onResetStep) {
+				
+				onResetStep();
+			}			
 		}
 
-		function resetStepSummary() {
+		function resetStepSummary(onResetStep) {
+			
+			if (onResetStep) {
+				
+				onResetStep();
+			}
 
 		}
 
 		if (step) {
 
 			let stepsToReset = parent.steps.filter(e => e.position > step.position);
+			let stepsReseted = 0;
 
 			if (Array.isArray(stepsToReset) && stepsToReset.length > 0) {
 
 				stepsToReset.forEach(e => {
 
-					eval(e.resetFunction)();
+					eval(e.resetFunction)(function() {
+						
+						if (++stepsReseted == stepsToReset.length) {
+							
+							if (onReset) {
+								
+								onReset();
+							}
+						}
+					});
 
 					e.valid = false;
 					e.initializated = true;
-
-					$$("button-next-" + e.position + "-" + parent.uid).disable();
+					
+					if ($$("button-next-" + e.position + "-" + parent.uid)) {
+						
+						$$("button-next-" + e.position + "-" + parent.uid).disable();	
+					}
 				});
+			}
+			else {
+				
+				if (onReset) {
+								
+					onReset();
+				}
 			}
 		}
 	}
