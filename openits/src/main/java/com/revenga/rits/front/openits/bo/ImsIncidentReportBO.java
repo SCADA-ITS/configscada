@@ -39,6 +39,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_LOG_TYPE_PARAM_ID = "logTypeParamId";
 	static final String FIELD_VALUE = "value";
 	static final String FIELD_ALIAS = "alias";
+	static final String FIELD_DESCRIPTION = "description";
 	static final String FIELD_ID = "id";
 
 	static final String VALUE_DEFAULT_LEVEL = "INFO";
@@ -145,7 +146,7 @@ public class ImsIncidentReportBO extends GenericBO {
 									if (objIncidentTypeTaskId != null && incidentTypeTaskId
 											.equals(objIncidentTypeTaskId)) {
 
-										return incidentTypeTask.get(FIELD_ALIAS);
+										return incidentTypeTask.get(FIELD_ALIAS)+" - "+incidentTypeTask.get(FIELD_DESCRIPTION);
 									}
 								}
 							}
@@ -195,7 +196,7 @@ public class ImsIncidentReportBO extends GenericBO {
 													if (objIncidentTypeTaskId != null && incidentTypeTaskId
 															.equals(objIncidentTypeTaskId)) {
 
-														return incidentTypeTask.get(FIELD_ALIAS);
+														return incidentTypeTask.get(FIELD_ALIAS)+" - "+incidentTypeTask.get(FIELD_DESCRIPTION);
 													}
 												}
 											}
@@ -676,7 +677,8 @@ public class ImsIncidentReportBO extends GenericBO {
 	public Boolean finalizeTask(String id, String incidentTypeTaskId, Object incidentTypeTaskValues) {
 
 		Boolean res = false;
-
+		StringBuilder taskValues = new StringBuilder();
+		
 		Map<String, Object> input = new HashMap<>();
 
 		input.put(FIELD_INCIDENT_REPORT_ID, id);
@@ -690,6 +692,34 @@ public class ImsIncidentReportBO extends GenericBO {
 			if (mapIncidentTypeTaskValues.containsKey(FIELD_INCIDENT_TYPE_TASK_VALUES)) {
 				
 				input.put(FIELD_INCIDENT_TYPE_TASK_VALUES, mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES));
+				
+				Object objIncidentTypeTaskValues = mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES);
+
+				if (objIncidentTypeTaskValues instanceof List) {
+
+					List<?> incidentTypeTaskValuesList = (List<?>) objIncidentTypeTaskValues;
+
+					for (Object objIncidentTypeTaskValue : incidentTypeTaskValuesList) {
+
+						if (objIncidentTypeTaskValue instanceof Map) {
+
+							Map<String, Object> incidentTypeTaskValue = (Map<String, Object>) objIncidentTypeTaskValue;
+
+							if (incidentTypeTaskValue.containsKey(FIELD_VALUE)) {
+
+								if(taskValues.length() != 0) {
+									
+									taskValues.append(", ");
+									
+								} else {
+									taskValues.append(": ");
+								}
+								taskValues.append(incidentTypeTaskValue.get(FIELD_VALUE));
+							}
+						}
+
+					}
+				}
 			}
 		}
 
@@ -704,7 +734,7 @@ public class ImsIncidentReportBO extends GenericBO {
 					new Object[] { id });
 
 			addLog(incidentReport, id, LOG_SUBTYPE_FINALIZED_TASK, null,
-					getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId));
+					getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId) + taskValues.toString());
 		}
 		return res;
 	}

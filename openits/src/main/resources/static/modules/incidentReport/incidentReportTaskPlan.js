@@ -46,7 +46,7 @@ export default class IncidentReportTaskPlan {
 
 				self.dtPlans.callbacks();
 
-				if (self.taskState.completedAt || !sameUser) {
+				if (!self.taskState.incidentTypeTask.rerun && (self.taskState.completedAt || !sameUser)) {
 
 					self.dtPlans.disable();
 				}
@@ -83,7 +83,8 @@ export default class IncidentReportTaskPlan {
 					{ gridOption: { id: 7 }, value: "false" },
 					{ gridOption: { id: 8 }, value: "false" },
 					{ gridOption: { id: 9 }, value: "true" },
-					{ gridOption: { id: 11 }, value: "false" },
+					{ gridOption: { id: 11 }, value: "true" },
+					{ gridOption: { id: 14 }, value: "false" },
 					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
 					{ gridOption: { id: 21 }, value: "auto" },
 					{ gridOption: { id: 23 }, value: "false" }
@@ -181,6 +182,25 @@ export default class IncidentReportTaskPlan {
 								name: "string"
 							}
 						},
+												{
+							extended: false,
+							filtered: true,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_TASK_PLAN_STRETCH",
+							labelTooltip: "LBL_TASK_PLAN_STRETCH",
+							needsTranslation: false,
+							parameterized: true,
+							position: 5,
+							required: true,
+							sourceField: "stretch",
+							visible: true,
+							widthPx: 35,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							}
+						},
 						{
 							extended: false,
 							filtered: false,
@@ -190,7 +210,7 @@ export default class IncidentReportTaskPlan {
 							labelTooltip: "LBL_LAST_EXECUTION",
 							needsTranslation: false,
 							parameterized: false,
-							position: 5,
+							position: 6,
 							required: true,
 							sourceField: "lastExecution",
 							visible: true,
@@ -209,7 +229,7 @@ export default class IncidentReportTaskPlan {
 							labelTooltip: "",
 							needsTranslation: false,
 							parameterized: false,
-							position: 6,
+							position: 7,
 							required: true,
 							sourceField: "incidentTaskPlanId",
 							visible: false,
@@ -285,6 +305,7 @@ export default class IncidentReportTaskPlan {
 							id: taskPlanState.incidentTaskPlan.plan.id,
 							position: position++,
 							plan: taskPlanState.incidentTaskPlan.plan.alias,
+							stretch: taskPlanState.incidentTaskPlan.stretch.alias,
 							status: taskPlanState.completedAt ? PLAN_EXECUTED : PLAN_NO_EXECUTED,
 							lastExecution: taskPlanState.completedAt,
 							incidentTaskPlanId: taskPlanState.incidentTaskPlan.id

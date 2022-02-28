@@ -4,7 +4,7 @@ import MessageBox from "../../component/messageBox.js";
 export default class IncidentReportTabInfo {
 
 	constructor(parent) {
-		
+
 		this.parent = parent;
 		this.uid = parent.uid;
 		this.config = parent.config;
@@ -23,10 +23,26 @@ export default class IncidentReportTabInfo {
 
 				let objField = self.config.infoFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
+				let stretchs = "-";
+
+				if (self.incidentReport.spath && Array.isArray(self.incidentReport.spath) && self.incidentReport.spath.length > 0) {
+					
+					stretchs = "";
+
+					for (let stretch of self.incidentReport.spath) {
+
+						if (stretchs != "") {
+							stretchs += ", ";
+						}
+						stretchs += stretch.alias + "-" + stretch.road.alias;
+					}
+				}
+
 				const fieldsValues = {
 					fieldId: util.getSimpleId(self.incidentReport.id),
 					fieldType: self.incidentReport.incidentType.alias + "-" + self.incidentReport.incidentType.description,
 					fieldLocation: self.incidentReport.location.alias !== undefined && self.incidentReport.location.alias !== null ? self.incidentReport.location.alias : "-",
+					fieldStretchs: stretchs,
 					fieldStretch: self.incidentReport.affectionStretch.alias !== undefined && self.incidentReport.affectionStretch.alias !== null ? self.incidentReport.affectionStretch.alias : "-",
 					fieldUser: self.incidentReport.currentUser.name !== undefined && self.incidentReport.currentUser.name !== null ? self.incidentReport.currentUser.name : "-",
 					fieldGenerateAt: self.incidentReport.generatedAt !== undefined && self.incidentReport.generatedAt !== null ? util.toLocaleString(self.incidentReport.generatedAt / 1000) : "-",
@@ -81,7 +97,7 @@ export default class IncidentReportTabInfo {
 										view: "icon",
 										id: "fieldCause-edit-" + self.uid,
 										icon: "mdi mdi-pencil",
-										hidden:  !self.incidentReport.confirm,
+										hidden: !self.incidentReport.confirm,
 										on: {
 											onItemClick: function() {
 												$$("fieldCause-combo-" + self.uid).show();
@@ -101,9 +117,9 @@ export default class IncidentReportTabInfo {
 										on: {
 											onItemClick: function() {
 
-												let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"), onAccept, null);
+												let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_IMS_CAUSE_CONFIRM_DESCRIPTION"), onAccept, null);
 												ms.show();
-												
+
 												function onAccept() {
 
 													let body = {
@@ -113,12 +129,12 @@ export default class IncidentReportTabInfo {
 
 													let endpoint = util.fillTemplate(self.config.actionEndpoints.assignCauseIncidentReport, body);
 													self.parent.restAction(endpoint);
-													
+
 													$$("fieldCause-combo-" + self.uid).hide();
 													$$("fieldCause-save-" + self.uid).hide();
 													$$("fieldCause-cancel-" + self.uid).hide();
 													$$("fieldCause-edit-" + self.uid).show();
-													$$("fieldCause-label-" + self.uid).show();													
+													$$("fieldCause-label-" + self.uid).show();
 												};
 											}
 										}

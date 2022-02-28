@@ -32,7 +32,7 @@ export default class IncidentReportTaskParam {
 								
 								self.dtParams.callbacks();
 								
-								if (self.taskState.incidentTypeTask.auto || self.taskState.completedAt) {
+								if (!self.taskState.incidentTypeTask.rerun && ( self.taskState.incidentTypeTask.auto || self.taskState.completedAt)) {
 									
 									self.dtParams.disable();
 								}
@@ -138,7 +138,7 @@ export default class IncidentReportTaskParam {
 							position: 3,
 							required: true,
 							sourceField: "newValue",
-							visible: (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt),
+							visible: self.taskState.incidentTypeTask.rerun === true || (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt),
 							widthPx: 25,
 							gridFieldDataType: {
 								id: 1,
@@ -262,7 +262,7 @@ export default class IncidentReportTaskParam {
 							id: taskTypeParam.id,
 							param: i18n.t(taskTypeParam.labelAlias),
 							currentValue: currentValue,
-							newValue:  (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) ? newValue : undefined,
+							newValue:  (self.taskState.incidentTypeTask.rerun === true || (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt)) ? newValue : undefined,
 							paramTypeId: taskTypeParam.paramTypeId	,
 							dataTypeId: taskTypeParam.dataType.id,
 							labelUnit: taskTypeParam.labelUnit,

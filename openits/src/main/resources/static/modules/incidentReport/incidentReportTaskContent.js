@@ -130,11 +130,11 @@ export default class IncidentReportTaskContent {
 						view: "button",
 						css: (function() {
 
-							if (!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) {
+							if ((!self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) || self.taskState.incidentTypeTask.rerun === true)  {
 
 								return "action-button"
-							}
-							else {
+								
+							} else {
 
 								return "action-button-dis";
 							}
@@ -143,7 +143,7 @@ export default class IncidentReportTaskContent {
 						height: 41,
 						width: 130,
 						disabled: !self.incidentReport.confirm || !sameUser,
-						hidden: self.taskState.incidentTypeTask.auto || self.taskState.completedAt,
+						hidden: !self.taskState.incidentTypeTask.rerun  && (self.taskState.incidentTypeTask.auto || self.taskState.completedAt),
 						label: (function() {
 
 							let labelButton = (self.taskState.incidentTypeTask.incidentTaskFinalizeButton) ? i18n.t(self.taskState.incidentTypeTask.incidentTaskFinalizeButton) : i18n.t("LBL_INCIDENT_END_TASK");
@@ -161,7 +161,7 @@ export default class IncidentReportTaskContent {
 								
 								function onAccept() {
 									
-									if (self.taskState && !self.taskState.incidentTypeTask.auto && !self.taskState.completedAt) {
+									if (self.taskState.incidentTypeTask.rerun === true || (self.taskState && !self.taskState.incidentTypeTask.auto && !self.taskState.completedAt)) {
 	
 										let endpoint = util.fillTemplate(self.config.actionEndpoints.finalizeTask, {
 											id: self.incidentReport.id,
