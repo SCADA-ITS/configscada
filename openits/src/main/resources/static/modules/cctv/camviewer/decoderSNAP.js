@@ -77,18 +77,20 @@ export default class DecoderSNAP extends Decoder {
 			
 			self.loading = false;
 			var ctx = cnv.getContext("2d");
-			let w = self.w;
-			let h = self.h;
 			
 			if (self.img != null && cnv) {
 				
-				let ratio = self.w / self.img.width;
-				w = self.fit ? self.w : self.img.width * ratio;
-				h = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
+				let ratioW = self.w / self.img.width;
+				let ratioH = self.h / self.img.height;
+						
+				let ratio = ratioW < ratioH ? ratioW : ratioH;
 				
-				cnv.width = w;
-        		cnv.height = h;
-        		ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, w, h);
+				self.imgW = self.fit ? self.w : self.img.width * ratio;
+				self.imgH = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
+				
+				cnv.width = self.imgW;
+        		cnv.height = self.imgH;
+        		ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);
 
 				if (self.firstConnection && !self.error) {
 					

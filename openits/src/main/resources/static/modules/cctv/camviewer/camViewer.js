@@ -900,10 +900,10 @@ export default class CamViewer {
 
 		if (camViewerContainer && camViewerImg) {
 
-			camViewerContainer.style.height = self.expandCam ? contHeight + "px" : "initial";
-			camViewerImg.style.height = camViewerContainer.style.height;
-
-			camViewerContainer.style.width = contWidth + "px";
+			camViewerContainer.style.height = (self.expandCam ? contHeight : self.decoder.imgH) + "px";
+			camViewerImg.style.height = camViewerContainer.style.height
+			
+			camViewerContainer.style.width = (self.expandCam ? contWidth : self.decoder.imgW) + "px";
 			camViewerImg.style.width = camViewerContainer.style.width;
 		}
 	}

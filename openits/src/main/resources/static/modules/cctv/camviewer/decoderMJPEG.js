@@ -52,11 +52,15 @@ export default class DecoderMJPEG extends Decoder {
 
 						let imgStyle;
 
-						let ratio = self.w / self.img.width;
-						let w = self.fit ? "width: " + self.w + "px" : "width: " + self.img.width * ratio + "px";
-						let h = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
+						let ratioW = self.w / self.img.width;
+						let ratioH = self.h / self.img.height;
+						
+						let ratio = ratioW < ratioH ? ratioW : ratioH;  
+						
+						self.imgW = self.fit ? self.w : self.img.width * ratio;
+						self.imgH = self.camviewer.fullScreen ? (self.h - 24) : (self.img.height * ratio);
 
-						imgStyle = `max-width:100%;height:${h}px;${w}`;
+						imgStyle = `max-width:100%;height:${self.imgH}px;width:${self.imgW}px`;
 
 						return `<div id="${self.camContainerId}" class="camviewer-div" style="background-color: #9e9e9e; overflow: hidden ${imgStyle}"><img id="img-${self.element.id}-${self.uid}" class="camviewer-img" align='center' style="${imgStyle}" src="${self.img.src}"></div>`;
 					}
