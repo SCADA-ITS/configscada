@@ -535,7 +535,7 @@ export let util = {
 				}
 
 				// Only single selection
-				function executeCommand() {
+				/*function executeCommand() {
 
 					let cmd = command;
 
@@ -563,6 +563,53 @@ export let util = {
 					let module = util.module.getFromModuleAction(cmd.moduleAction.id);
 
 					util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
+				}*/
+				
+				function executeCommand() {
+
+					let cmd = command;
+
+					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0) {
+
+						command.elementTypeCommand.forEach(item => {
+
+							let elementIds = [];
+							let elementTypeCommandselectedPks = [];
+
+							for (let elementId of args.selectedPks) {
+
+								let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+
+								if (element && element.elementType && item.elementType === element.elementType.id) {
+
+									elementTypeCommandselectedPks.push(elementId);
+
+								} else {
+									elementIds.push(elementId);
+								}
+							}
+
+							if (elementTypeCommandselectedPks.length > 0) {
+
+								let argsElementTypeCommand = webix.copy(args);
+								argsElementTypeCommand.selectedPks = elementTypeCommandselectedPks;
+
+								let elementTypeCommandModule = util.module.getFromModuleAction(item.moduleAction.id);
+
+								util.module.open(elementTypeCommandModule, item.moduleAction, item.viewType.id, null, argsElementTypeCommand);
+
+								args.selectedPks = elementIds;
+							}
+						});
+					}
+
+					if (args.selectedPks.length > 0) {
+						
+						let module = util.module.getFromModuleAction(cmd.moduleAction.id);
+
+						util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
+					}
+
 				}
 			}
 
