@@ -60,7 +60,8 @@ export default class IncidentReportChangeType {
 				rows: [
 					getBody(),
 					{ rows: [{ height: 20 }] },
-					getBottomView()
+					getBottomView(),
+					{ rows: [{ height: 10 }] }
 				]
 			};
 
@@ -356,11 +357,14 @@ export default class IncidentReportChangeType {
 		function getBottomView() {
 
 			return {
-				rows: [
-					{ height: 10 },
-					{
-						cols: [
-							{ width: 20 },
+				view: "toolbar",
+				height: 45,
+				borderless: true,
+				elements: [
+					//{ height: 10 },
+//					{
+//						cols: [
+							{ width: 36 },
 							{
 								view: "button",
 								css: "dialog-cancel",
@@ -393,9 +397,10 @@ export default class IncidentReportChangeType {
 									parentWindow.close();
 								}
 							},
-							{ width: 20 }
-						]
-					}]
+							{ width: 36 }
+//						]
+//					}
+				]
 			};
 		}
 	}

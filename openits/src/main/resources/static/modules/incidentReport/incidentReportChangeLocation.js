@@ -67,12 +67,12 @@ export default class IncidentReportChangeLocation {
 			view = {
 				rows: [
 					getBody(),
-					{ rows: [{ height: 20 }] },
+					{ rows: [{ height: 10 }] },
 					getBottomView()
 				]
 			};
 
-			self.optionWindow = util.ui.loadWindow(i18n.t("LBL_CHANGE_LOCATION_ACTION"), view, 600, 600, true);
+			self.optionWindow = util.ui.loadWindow(i18n.t("LBL_CHANGE_LOCATION_ACTION"), view, 500, 600, true);
 
 			if (self.dtLocations) {
 
@@ -349,46 +349,45 @@ export default class IncidentReportChangeLocation {
 			let buttons = {};
 
 			buttons = {
-				rows: [
-					{ height: 10 },
+				view: "toolbar",
+				height: 45,
+				borderless: true,
+				elements: [
+					{ width: 36 },
 					{
-						cols: [
-							{ width: 20 },
-							{
-								view: "button",
-								css: "dialog-cancel",
-								width: 130,
-								height: 35,
-								value: i18n.t("LBL_CANCEL"),
-								click: function() {
+						view: "button",
+						css: "dialog-cancel",
+						width: 130,
+						height: 35,
+						value: i18n.t("LBL_CANCEL"),
+						click: function() {
 
-									let parentWindow = this.getTopParentView();
-									parentWindow.close();
-								}
-							},
-							{},
-							{
-								id: "button-accept-" + self.uid,
-								view: "button",
-								css: "dialog-accept",
-								width: 130,
-								height: 35,
-								value: i18n.t("LBL_ACCEPT"),
-								disabled: true,
-								click: function() {
+							let parentWindow = this.getTopParentView();
+							parentWindow.close();
+						}
+					},
+					{},
+					{
+						id: "button-accept-" + self.uid,
+						view: "button",
+						css: "dialog-accept",
+						width: 130,
+						height: 35,
+						value: i18n.t("LBL_ACCEPT"),
+						disabled: true,
+						click: function() {
 
-									if (self.onAccept && self.selectedStretchId && self.selectedLocationId) {
+							if (self.onAccept && self.selectedStretchId && self.selectedLocationId) {
 
-										self.onAccept(self.selectedStretchId, self.selectedLocationId);
-									}
+								self.onAccept(self.selectedStretchId, self.selectedLocationId);
+							}
 
-									let parentWindow = this.getTopParentView();
-									parentWindow.close();
-								}
-							},
-							{ width: 20 }
-						]
-					}]
+							let parentWindow = this.getTopParentView();
+							parentWindow.close();
+						}
+					},
+					{ width: 36 }
+				]
 			};
 
 			return buttons;

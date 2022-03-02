@@ -94,7 +94,6 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 				options[ListView.Options.ICON] = false;
 				options[ListView.Options.ROW_HEIGHT] = 41;
-				options[ListView.Options.SELECT_FIRST] = true;
 
 				events[ListView.EventTypes.ON_SELECT_ROW] = function(data, callbackEnable) {
 
