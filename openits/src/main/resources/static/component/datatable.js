@@ -349,6 +349,9 @@ export default class DataTable {
 										return (data[field.sourceField].value != undefined) ? data[field.sourceField].value : data[field.sourceField]; 	
 										
 									}
+								} else {
+									
+									return "";
 								}
 							};
 

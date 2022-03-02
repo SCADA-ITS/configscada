@@ -317,9 +317,10 @@ export let util = {
 //								<span class='tab-text'>${i18n.t(label)}</span>
 //								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.extenalizeTab(${JSON.stringify(tab_id)}, ${module ? JSON.stringify(module) : undefined }, ${moduleAction ? JSON.stringify(moduleAction) : undefined}, ${args ? JSON.stringify(args) : undefined})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 //							</div>`,
-					header: `<div style='float: left; width: 250px;'>
+					tabId: tab_id,
+					header: `<div id='${tab_id}' style='float: left; width: 250px;'>
 								<img class='tab-icon' style='height:22px; width:22px' src='${icon}'/>
-								<span class='tab-text'>${tabLabel}</span>
+								<span id='${tab_id}_title' class='tab-text'>${tabLabel}</span>
 								<span style='float: right; padding-top: 2px'><a href='#' onclick='window.sm.getService(Services.TASK_MANAGER_SERVICE).undock(${JSON.stringify(tab_id)}, ${JSON.stringify(genericModule)})'><img id='${tab_id}-externalize' title='${i18n.t("LBL_VIEW_IN_WINDOW")}' src='./img/externalize_button.png'></a></span>
 							</div>`,
 					body: {
@@ -1242,19 +1243,17 @@ export let util = {
 					let tabs = $$(topParent.config.id).getTabbar();
 					let tabToChange = tabs.config.options.find(e => e.id === containerId);
 
-					if (tabToChange) {
+					let tabToChangeNodeHTML = tabs.getNode().querySelector("#" + tabToChange.tabId);
+
+					if (tabToChange && tabToChangeNodeHTML) {
 
 						let newTabTitle = (shortTitle) ? shortTitle : title;
-						let tabTexts = Array.from(tabs.getNode().getElementsByClassName("tab-text"));
-						
-						if (Array.isArray(tabTexts)) {
-							
-							let tabText = tabTexts.find(e => e.parentNode && e.parentNode.parentNode && e.parentNode.parentNode.getAttribute("button_id") == containerId);
-							
-							if (tabText) {
-								
-								tabText.innerText = newTabTitle;
-							}
+						let tabText = tabToChangeNodeHTML.querySelector("#" + tabToChange.tabId + "_title");
+
+						if (tabText) {
+
+							tabText.innerText = newTabTitle;
+							tabToChange.value = tabToChangeNodeHTML.outerHTML;
 						}
 					}
 				}
