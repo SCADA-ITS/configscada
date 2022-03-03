@@ -394,16 +394,19 @@ export default class AlarmService extends GenericModule {
 				
 				function isFiltered() {
 				
-					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					//let timeService = window.sm.getService(Services.TIME_SERVICE);
 					
-					return (be.filteredUntil && timeService.getEpoch() < be.filteredUntil);
+					//return (be.filteredUntil && timeService.getEpoch() < be.filteredUntil);
+					
+					return (be.filteredUntil != undefined);
 				}
 				
 				function isRecognized() {
 					
-					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					//let timeService = window.sm.getService(Services.TIME_SERVICE);
 					
-					return (be.recognized && timeService.getEpoch() > be.recognized);
+					//return (be.recognized && timeService.getEpoch() > be.recognized);
+					return (be.recognized != undefined);
 				}
 			}
 		}

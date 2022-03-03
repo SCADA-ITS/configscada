@@ -1010,6 +1010,7 @@ export default class TubeContent {
 								disabled: true,
 								click: function() {
 
+									let responseSend = 0;
 									let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
 									ms.show();
 									
@@ -1057,23 +1058,24 @@ export default class TubeContent {
 											}];
 											
 											if (Array.isArray(commands) && commands.length > 0) {
-											
+												
 												util.element.sendCommand(commands, function(res) {
 													
-													clearGrid();
-
-													let ms;
-										
-													if (res) {
-													
-														ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
-													}
-													else {
+													if (!res) {
 														
-														ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+														clearGrid();
+													
+														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 													}
 													
-													ms.show();
+													if (++responseSend == cmdMap.size) {
+														
+														clearGrid();
+														
+														responseSend = 0;
+														
+														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+													}
 												});
 											}
 										}

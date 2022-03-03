@@ -676,9 +676,20 @@ export default class Notification {
 		
 		if (list) {
 			
-			list.add(notification, 0);
+			log.debug("Create id = " + list.add(notification, 0));
+			log.debug("id = " + notification.id);
 			
 			this.show(notification);
+		}
+	}
+	
+	update(notification) {
+		
+		let list = $$("list-" + this.uid);
+		
+		if (list && list.getItem(notification.id)) {
+			
+			list.updateItem(notification.id, notification);	
 		}
 	}
 	

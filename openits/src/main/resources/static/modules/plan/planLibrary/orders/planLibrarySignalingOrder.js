@@ -11,7 +11,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 		super(config, uid, plan, planOrder, onUpdate);
 		
 		this.signalingModuleInstance = undefined;
-		this.newPlanOrder = undefined;
 	}
 	
 	loadData() {
@@ -99,7 +98,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 					comandElement: {
 						
 						commandElementTypeId: commandElement.commandElementType.id,
-						elementId: commandElement.element.id,
+						elementId: newPlanOrder.element ? newPlanOrder.element.id : commandElement.element.id,
 						commandElementValues: function() {
 							
 							let commandElementValues = undefined;
@@ -214,22 +213,23 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 							planLibraryPersist.createPlanOrder(newPlanOrder).then(response => {
 
-								self.newPlanOrder = {
+								let responseNewPlanOrder = {
 									id: response.id,
-									planOrderType: { id: response.planOrderType.id }
+									planOrderType: { id: response.planOrderType.id },
+									element: { id: elementSelected.id }
 								}
 
-								let getPlan = self.getPlanOrder(self.newPlanOrder);
 
-								if (getPlan) {
+								let generatedPlanOrder = self.getPlanOrder(responseNewPlanOrder);
 
-									planLibraryPersist.updatePlanOrder(getPlan).then(result => {
+								if (generatedPlanOrder) {
+
+									planLibraryPersist.updatePlanOrder(generatedPlanOrder).then(result => {
 
 										if (result != null) {
 
-											counter++;
 
-											if (counter < elementsSelected.length) {
+											if (++counter < elementsSelected.length) {
 
 												persist();
 

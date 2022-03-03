@@ -1320,6 +1320,7 @@ export default class TubeContent {
 							
 							function onAccept() {
 								
+								let responseSend = 0;
 								let allTableItems = self.tubeCircuitsDataTable.getAllItems();
 
 								let circuitsOnCommand = [];
@@ -1340,15 +1341,25 @@ export default class TubeContent {
 
 								if (circuitsOnCommand.length > 0) {
 
-									executeCircuitCommand(CIRCUIT_COMMAND_SEND_ON, circuitsOnCommand);
+									executeCircuitCommand(CIRCUIT_COMMAND_SEND_ON, circuitsOnCommand, onExecuted);
 								}
 
 								if (circuitsOffCommand.length > 0) {
 
-									executeCircuitCommand(CIRCUIT_COMMAND_SEND_OFF, circuitsOffCommand);
+									executeCircuitCommand(CIRCUIT_COMMAND_SEND_OFF, circuitsOffCommand, onExecuted);
+								}
+								
+								function onExecuted() {
+									
+									if (++responseSend == circuitsOnCommand.length + circuitsOffCommand.length) {
+										
+										responseSend = 0;
+										
+										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+									}
 								}
 
-								function executeCircuitCommand(commandAction, values) {
+								function executeCircuitCommand(commandAction, values, onExecuted) {
 
 									let command = self.parent.config.commands[commandAction];
 									let value = "[";
@@ -1382,18 +1393,17 @@ export default class TubeContent {
 	
 											self.checkDisableChangeStatusButton();
 											
-											let ms;
-										
 											if (res) {
 											
-												ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+												if (onExecuted) {
+												
+													onExecuted();	
+												}
 											}
 											else {
 												
-												ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
+												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null)).show();
 											}
-											
-											ms.show();
 										});
 									}
 								}								

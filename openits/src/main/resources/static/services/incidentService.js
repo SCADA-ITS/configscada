@@ -169,7 +169,7 @@ export default class IncidentService extends GenericModule {
 				
 				webix.ajax(appConfig.restUrl + util.fillTemplate(self.config.rest.incidentReport, { id: be.id })).then(function(data) {
 
-					if (data.json() != undefined) {
+					if (data.json()) {
 					
 						let incidentReport = data.json();
 						
@@ -183,63 +183,108 @@ export default class IncidentService extends GenericModule {
 								
 								if (incidentNotification) {
 									
-									let idx = self.incidents.data.notifications.findIndex(e => e.notificationId === incidentNotification.notificationId);
-									
-									// NEW INCIDENT REPORT NOTIF AND NOT CONFIRMED
-									if (!incidentNotification.recognized && idx === -1) {
+									if (action === StompSubscriptorService.ACTION_CREATE) {
 										
-										self.incidents.data.notifications.push(incidentNotification);
-											
-										self.notification.add(incidentNotification);
+										actionCreate(incidentNotification);
+									}
+									else if (action === StompSubscriptorService.ACTION_UPDATE) {
 										
-										if (window.userControlPanel) {
-						
-											window.userControlPanel.updateData();	
-										}
-									}							
-									// EXIST INCIDENT REPORT NOTIF
-									else {
+										actionUpdate(incidentNotification);
+									}
+									else if (action === StompSubscriptorService.ACTION_DELETE) {
 										
-										if (action === StompSubscriptorService.ACTION_UPDATE && !self.incidents.data.notifications[idx].confirm) {
-											
-											incidentNotification.id = self.incidents.data.notifications[idx].id;
-											
-											self.notification.recognize(incidentNotification);
-											
-											self.incidents.data.notifications.splice(idx, 1);
-									
-											if (self.incidents.data.notifications.length === 0 && self.notification.getRecognizedNotifications().length === 0) {
-												
-												self.notification.hide();
-											}
-											
-											if (window.userControlPanel) {
-						
-												window.userControlPanel.updateData();	
-											}	
-										}
-										else if (action === StompSubscriptorService.ACTION_DELETE) {
-											
-											self.notification.remove(incidentNotification);
-											
-											self.incidents.data.notifications.splice(idx, 1);
-											
-											if (self.incidents.data.notifications.length === 0 && self.notification.getRecognizedNotifications().length === 0) {
-											
-												self.notification.hide();
-											}
-											
-											if (window.userControlPanel) {
-						
-												window.userControlPanel.updateData();	
-											}	
-										}
+										actionDelete(incidentNotification);
 									}
 								}
 							}
 						}
 					}
 				});
+				
+				function actionCreate(incidentNotification) {
+					
+					let idx = -1;
+					
+					if (Array.isArray(self.incidents.data.notifications)) {
+						
+						idx = self.incidents.data.notifications.findIndex(e => e.notificationId === incidentNotification.notificationId);
+					
+						if (!incidentNotification.recognized && idx === -1 && Array.isArray(self.incidents.data.notifications)) {
+							
+							self.incidents.data.notifications.push(incidentNotification);
+							
+							self.notification.add(incidentNotification);
+							
+							if (window.userControlPanel) {
+			
+								window.userControlPanel.updateData();	
+							}	
+						}
+					}
+				}
+				
+				function actionUpdate(incidentNotification) {
+					
+					let idx = -1;
+					
+					if (Array.isArray(self.incidents.data.notifications) && self.incidents.data.notifications.length > 0) {
+						
+						idx = self.incidents.data.notifications.findIndex(e => e.notificationId === incidentNotification.notificationId);
+				
+						if (idx > -1) {
+						
+							incidentNotification.id = self.incidents.data.notifications[idx].id;
+							
+							if (incidentNotification.recognized) {
+							
+								self.notification.recognize(incidentNotification);
+								
+								self.incidents.data.notifications.splice(idx, 1);
+						
+								if (self.incidents.data.notifications.length === 0 && self.notification.getRecognizedNotifications().length === 0) {
+									
+									self.notification.hide();
+								}
+								
+								if (window.userControlPanel) {
+			
+									window.userControlPanel.updateData();	
+								}
+							}
+							else {
+								
+								self.notification.update(incidentNotification);
+							}	
+						}		
+					}
+				}
+				
+				function actionDelete(incidentNotification) {
+					
+					let idx = -1;
+					
+					if (Array.isArray(self.incidents.data.notifications) && self.incidents.data.notifications.length > 0) {
+						
+						idx = self.incidents.data.notifications.findIndex(e => e.notificationId === incidentNotification.notificationId);
+						
+						if (idx > -1) {
+					
+							self.notification.remove(incidentNotification);
+
+							self.incidents.data.notifications.splice(idx, 1);
+						
+							if (self.incidents.data.notifications.length === 0 && self.notification.getRecognizedNotifications().length === 0) {
+							
+								self.notification.hide();
+							}
+							
+							if (window.userControlPanel) {
+		
+								window.userControlPanel.updateData();	
+							}	
+						}
+					}						
+				}
 			}
 		}
 	}

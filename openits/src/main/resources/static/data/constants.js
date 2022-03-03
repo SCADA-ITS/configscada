@@ -6,6 +6,16 @@ const MAIN_TOOLBAR_ID = "mainToolbar";
 const MAIN_TOOLBAR_ICONS_ID = "mainToolbarIcons";
 const TASKBAR_ID = "taskbar";
 
+const IS_TRUE = function(str) {
+	
+	return (str === true || str === "true" || str === "TRUE");	
+};
+
+const IS_FALSE = function(str) {
+	
+	return (!str || str === "false" || str === "FALSE");	
+};
+
 const START_ON_MONDAY = true;
 
 const SYSTEM_PERMISSION_LOGIN = 1;
