@@ -219,7 +219,6 @@ export default class EquipmentMeasures {
 				let spacers = (containerWidth - (tablesForRow * tablesWidth)) / tablesForRow - 1;
 				let data = [];
 				let temporallyTablesArray = [];
-				let firstCharge = true;
 
 				elementsTypesArray.forEach(element => {
 
@@ -254,25 +253,22 @@ export default class EquipmentMeasures {
 
 							for (let el of elementsSameTypeArray) {
 
-								let iconInfo = "";
-
+								let label = `<div>
+												<span>${el.alias}</span>												
+											</div>`;
+											
 								if (self.moduleAction) {
 
-									iconInfo = `<span id='${el.id}' title='${i18n.t("LBL_INFO")}' class='webix_icon mdi mdi-information-outline' style='float:right; margin:5px; cursor:pointer;'></span>`;
-
+								label = `<div>
+											<span id='${el.id}' class='equipment-measures-info-label'>${el.alias}</span>												
+										</div>`																		
 								}
-
-								let label = `<div>
-												<span>${el.alias}</span>
-												${iconInfo}
-											</div>`
 
 								data.push(
 									{ label: label, type: "label", id: el.alias, iconId: el.id }
 								);
 
 								drawInitMeasures(el.elementValues);
-
 							}
 						}
 
@@ -376,46 +372,37 @@ export default class EquipmentMeasures {
 														}
 													},
 													{
-														view: "toolbar",
-														height: 28,
-														id: "tbActions-" + element.id + "-" + self.uid,
-														borderless: true,
-														css: { "margin-top": "1px !important" },
+														view: "button",
+														id: "tb_btn-info-" + element.id + "-" + self.uid,
 														hidden: (self.combo) && (self.moduleAction) ? false : true,
-														elements: [
-															{
-																id: "tb_btn-info-" + element.id + "-" + self.uid,
-																view: "icon",
-																icon: "mdi mdi-information-outline",
-																value: i18n.t("LBL_INFO"),
-																tooltip: true,
-																css: { "margin-top": "0px !important" },
-																on: {
-																	onItemClick: function(obj) {
+														type: "icon",
+														icon:  "mdi mdi-information-outline",
+														width: 35,
+														height: 35,
+														css: "equipment-measures-info-icon",
+														on: {
+															onItemClick: function(obj){
+																
+																let itemSelected = $$("tableContent-select-" + element.id + "-" + self.uid).getValue();
 
-																		let itemSelected = $$("tableContent-select-" + element.id + "-" + self.uid).getValue();
+																if (self.moduleAction != null) {
 
-																		if (self.moduleAction != null) {
+																	let mod = util.module.getFromModuleAction(self.moduleAction);
+																	let moduleAction = {
+																		id: self.moduleAction
+																	};
 
-																			let mod = util.module.getFromModuleAction(self.moduleAction);
-																			let moduleAction = {
-																				id: self.moduleAction
-																			};
+																	let args = {
+																		selectedPks: [itemSelected]
+																	};
 
-																			let args = {
-																				selectedPks: [itemSelected]
-																			};
-
-																			util.module.open(mod, moduleAction, undefined, null, args, undefined);
-																		}
-																	}
+																	util.module.open(mod, moduleAction, undefined, null, args, undefined);
 																}
 															}
-														]
+														}
 													}
 												]
 											},
-
 											{
 												view: "property",
 												id: "sets-" + element.id + "-" + self.uid,
@@ -466,11 +453,11 @@ export default class EquipmentMeasures {
 
 														if (self.moduleAction != null) {
 
-															let nodeIcon = $$("sets-" + element.id + "-" + self.uid).getNode().querySelectorAll('.webix_icon');
+															let nodeLabel = $$("sets-" + element.id + "-" + self.uid).getNode().querySelectorAll('.equipment-measures-info-label');
 
-															for (let icon of nodeIcon) {
+															for (let label of nodeLabel) {
 
-																icon.addEventListener('click', function() {
+																label.addEventListener('click', function() {
 
 																	let mod = util.module.getFromModuleAction(self.moduleAction);
 																	let moduleAction = {
@@ -478,7 +465,7 @@ export default class EquipmentMeasures {
 																	};
 
 																	let args = {
-																		selectedPks: [icon.id]
+																		selectedPks: [label.id]
 																	};
 
 																	util.module.open(mod, moduleAction, undefined, null, args, undefined);

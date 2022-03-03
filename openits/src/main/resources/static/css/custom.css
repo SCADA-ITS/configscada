@@ -3645,8 +3645,7 @@ p, input, textarea {
 	font-size: 13px !important;
 	text-decoration: underline;
 	cursor: pointer;
-	color: var(--blue-mid2) !important;
-	
+	color: var(--blue-mid2) !important;	
 }
 
 .label-default .webix_el_box {
@@ -4130,6 +4129,28 @@ audio {
 	color: var(--blue-mid2-opacity-5);
 }
 
+.equipment-measures-info-icon {
+	margin-left: 1px !important;	
+}
+
+.equipment-measures-info-icon .webix_button {
+	border: 1px solid #CCD7E6;	
+}
+
+.equipment-measures-info-icon .webix_icon_btn {
+	margin: auto;
+	color: var(--blue-soft-opacity-9) !important;
+	vertical-align: initial;
+} 
+
+.equipment-measures-info-label {
+	font-size: 13px !important;
+	font-weight: 500;
+	text-decoration: underline;
+	cursor: pointer;
+	color: var(--blue-mid2) !important;	
+}
+
 .command-icon-datatable-disable .webix_icon_button .webix_icon {
 	color: var(--blue-headers-not-sel) !important;
 }
@@ -4142,3 +4163,4 @@ audio {
 .command-label-datatable-disable .webix_button .webix_icon_btn {
 	color: var(--blue-headers-not-sel) !important;	
 }
+
