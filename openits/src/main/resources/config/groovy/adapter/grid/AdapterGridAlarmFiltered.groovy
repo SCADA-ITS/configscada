@@ -26,6 +26,11 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 	static final String FIELD_ID = "id";
 	static final String FIELD_OBJECT_ALARM = "alarm";
 	static final String FIELD_ALARM_ID = "alarmId";
+	static final String FIELD_ALARM_DISABLED = "alarmDisabled";
+	static final String FIELD_ALARM_INHIBIT_LABEL = "alarmInhibitLabel";
+	
+	static final String LABEL_ALARM_DISABLED = "LBL_ALARM_FILTER_DISABLED_ALARM";
+	static final String LABEL_ALARM_MUTED = "LBL_ALARM_FILTER_MUTED";
 
 	public AdapterGridAlarmFiltered(CacheManager cacheManager, VO2UIAdapter vo2uiAdapter, org.apache.logging.log4j.Logger log) {
 		
@@ -47,11 +52,12 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 					
 					dataRow.putAll(entity);
 					
+					assignAlarmInhibitType(dataRow);
 					flattenAlarmConfig(dataRow);
 					flattenAlarm(dataRow);
 					flattenElement(dataRow);
 					flattenUser(dataRow);
-					
+
 					data.add(vo2uiAdapter.convert(datasourceId, dataRow));
 				}
 			}
@@ -62,6 +68,23 @@ class AdapterGridAlarmFiltered extends AdapterGrid{
 		}
 
 		return data;
+	}
+	
+	void assignAlarmInhibitType(Map<String, Object> dataRow) {
+	
+		if (dataRow.containsKey(FIELD_ALARM_DISABLED)) {
+		
+			Object obj = dataRow.get(FIELD_ALARM_DISABLED);
+			
+			if (obj instanceof Boolean) {
+			
+				Boolean alarmDisabled = (Boolean) obj;
+				
+				dataRow.put(FIELD_ALARM_INHIBIT_LABEL, alarmDisabled ? LABEL_ALARM_DISABLED : LABEL_ALARM_MUTED);
+				
+				dataRow.remove(FIELD_ALARM_DISABLED);
+			}
+		}
 	}
 	
 	void flattenAlarmConfig(Map<String, Object> dataRow) {

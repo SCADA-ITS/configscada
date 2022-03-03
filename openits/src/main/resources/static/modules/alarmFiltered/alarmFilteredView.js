@@ -47,7 +47,7 @@ export default class AlarmFilteredView {
 
 							let alarmsByElement = alarmResponse.json();
 							
-							if (Array.isArray(alarmsByElement && alarmsByElement.length > 0)) {
+							if (Array.isArray(alarmsByElement) && alarmsByElement.length > 0) {
 							
 								alarm = alarmResponse.json()[0];	
 							}
@@ -329,19 +329,7 @@ export default class AlarmFilteredView {
 							]
 						};
 
-						if (filtered) {
-
-							view.cols.unshift({
-								width: 34,
-								borderless: true,
-								height: 27,
-								template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="./img/grid/alarm_filtered_active.png">`,
-							});
-
-						}
-						
 						return viewAlarmFilteredIcon;
-
 					};
 
 					function paintFieldFilteredComments() {
