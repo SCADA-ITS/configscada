@@ -955,7 +955,7 @@ export default class CronUi {
 								cols: [
 									{
 										view: "label",
-										label: i18n.t("LBL_DAY(S)_STARTING_ON"),
+										label: i18n.t("LBL_DAY(S)_STARTING_ON_THE"),
 										width: 300,
 										align: "left"
 									},
@@ -1114,9 +1114,12 @@ export default class CronUi {
 								cols: [
 									{
 										view: "label",
-										label: i18n.t("LBL_STARTING_DAY_Nº"),
+										label: i18n.t("LBL_DAY(S)_STARTING_ON_THE"),
 										width: 200,
 										align: "left"
+									},
+									{
+										width: 115
 									},
 									{
 										view: "combo",
@@ -1135,7 +1138,7 @@ export default class CronUi {
 									{
 										view: "label",
 										label: i18n.t("LBL_OF_THE_MONTH"),
-										width: 185,
+										width: 100,
 										align: "left"
 									},
 								]
@@ -1632,6 +1635,16 @@ export default class CronUi {
 
 
 		function drawResume() {
+			
+			let nextExcLabel;
+			let cronEx = "0 * * ? * * *";
+
+			let nextDate = moment(prettyCron.getNextDate(cronEx, true));
+			let dateToEpoch = Math.floor(new Date(nextDate._d).getTime()) / 1000;
+			let localeDate = util.toLocaleDateString(dateToEpoch);
+			let localeHour = util.toLocaleTimeString(dateToEpoch);
+
+			nextExcLabel = localeDate + " - " + localeHour;
 
 			let resume = {
 				css: "cronui-resume",
@@ -1683,8 +1696,8 @@ export default class CronUi {
 										align: "center",
 										css: "cronui-description",
 										id: "cronDescriptionId",
-										label: i18n.t("LBL_DATE_TIME_NEXT_EXEC_DESCRIPTION"),
-										value: i18n.t("LBL_DATE_TIME_NEXT_EXEC_DESCRIPTION")
+										value: nextExcLabel,
+										label: nextExcLabel
 									}
 								]
 							}
@@ -1789,6 +1802,7 @@ export default class CronUi {
 
 										$$("tabview_CronUi-" + self.uid).reconstruct();
 										$$("resume" + self.uid).reconstruct();
+										setCronDescription();
 
 										self.checkedMins = [];
 										self.checkedHours = [];
@@ -1798,11 +1812,19 @@ export default class CronUi {
 										self.checkedYears = [];
 										self.cronExpressionArr = ["0", "*", "*", "?", "*", "*", "*"];
 
+										let nextYear = (new Date().getFullYear() + 1).toString();
+
 										$$("minutesOpt03-0").setValue(1);
 										$$("hoursOpt03-0").setValue(1);
+										$$("daysOpt05-6").setValue(1);
+										$$("daysOpt03-1").setValue(1);
+										$$("yearsOpt03-" + nextYear).setValue(1);
 
 										self.checkedMins.push("0");
 										self.checkedHours.push("0");
+										self.checkedDaysWeek.push("6");
+										self.checkedDays.push("1");
+										self.checkedYears.push(nextYear);
 
 										if (self.currentTab != undefined) {
 											$$(self.currentTab).show();
@@ -1816,21 +1838,21 @@ export default class CronUi {
 								click:
 									function() {
 
-										const CRON_EXPRESSION_NULL = "0 * * ? * * *";
+										//const CRON_EXPRESSION_NULL = "0 * * ? * * *";
 										let cronEx = $$("cronExpression" + self.uid).getValue();
 										let translate = prettyCron.toString(cronEx, true);
 
-										if (cronEx === CRON_EXPRESSION_NULL) {
-
-											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"), null, null);
-											ms.show();
-
-										} else {
+//										if (cronEx === CRON_EXPRESSION_NULL) {
+//
+//											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_CRON_EXPRESSION_IS_NULL_DESCRIPTION"), null, null);
+//											ms.show();
+//
+//										} else {
 
 											$$(self.input).setValues({ cronExpression: cronEx, cronExpressionDescription: translate }, true);
 											$$(self.cronWindow).close();
 
-										}
+//										}
 									}
 							},
 							{ width: 20 }
@@ -1888,6 +1910,8 @@ export default class CronUi {
 
 					if (self.checkedMins.length === 0) {
 						minutes = 0;
+						$$("minutesOpt03-0").setValue(1);
+						self.checkedMins.push("0");
 					}
 
 				} else {
@@ -1958,6 +1982,8 @@ export default class CronUi {
 
 					if (self.checkedHours.length === 0) {
 						hours = 0;
+						$$("hoursOpt03-0").setValue(1);
+						self.checkedHours.push("0");
 					}
 				} else {
 
@@ -2048,7 +2074,9 @@ export default class CronUi {
 					days = self.checkedDays.join();
 
 					if (self.checkedDays.length === 0) {
-						days = 0;
+						days = 1;
+						$$("daysOpt03-1").setValue(1);
+						self.checkedDays.push("1");
 					}
 
 				} else {
@@ -2106,6 +2134,8 @@ export default class CronUi {
 
 					if (self.checkedDaysWeek.length === 0) {
 						days = "SUN";
+						$$("daysOpt05-6").setValue(1);
+						self.checkedDaysWeek.push("6");
 					}
 				} else {
 
@@ -2273,6 +2303,8 @@ export default class CronUi {
 
 					if (self.checkedYears.length === 0) {
 						years = new Date().getFullYear() + 1;
+						$$("yearsOpt03-" + years).setValue(1);
+						self.checkedYears.push(years.toString());
 					}
 
 				} else {
@@ -2340,22 +2372,23 @@ export default class CronUi {
 
 		function setCronDescription() {
 
-			const ACTUAL_CRON = "* * * ? * * *";
+			let cronEx = $$("cronExpression" + self.uid);
 
-			let cronEx = $$("cronExpression" + self.uid).getValue();
-
-			if (cronEx != ACTUAL_CRON) {
-
-				let nextDate = moment(prettyCron.getNextDate(cronEx, true));
+			if (cronEx) {
+				
+				let cronExValue = cronEx.getValue();
+				let nextDate = moment(prettyCron.getNextDate(cronExValue, true));
 				let dateToEpoch = Math.floor(new Date(nextDate._d).getTime()) / 1000;
-				let localeDate = util.toLocaleDateString(dateToEpoch);
-				let localeHour = util.toLocaleTimeString(dateToEpoch);
 
-				$$("cronDescriptionId").setValue(localeDate + " - " + localeHour);
+				if (dateToEpoch) {
+
+					let localeDate = util.toLocaleDateString(dateToEpoch);
+					let localeHour = util.toLocaleTimeString(dateToEpoch);
+
+					$$("cronDescriptionId").setValue(localeDate + " - " + localeHour);
+				}
 			}
-
 		}
-
 
 		this.cronWindow = util.ui.loadWindow(
 			i18n.t(self.windowLabel),
@@ -2383,10 +2416,9 @@ export default class CronUi {
 
 			$$("currentCronDescriptionId").setValue(localeDate + " - " + localeHour);
 			$$("cronExpressionEdit").setValue(editCronExpression);
-			$$("cronExpression" + this.uid).setValue(editCronExpression);
-			$$("cronDescriptionId").setValue(localeDate + " - " + localeHour);
-
-			this.setCronValues(editCronExpression);
+//			$$("cronExpression" + this.uid).setValue(editCronExpression);
+//			$$("cronDescriptionId").setValue(localeDate + " - " + localeHour);
+//			this.setCronValues(editCronExpression);
 
 		} else if (cronExpression != null) {
 
@@ -2394,18 +2426,26 @@ export default class CronUi {
 
 			$$("cronExpressionEdit").setValue(cronExpression);
 			$$("cronExpression" + this.uid).setValue(cronExpression);
-			$$("currentCronDescriptionId").setValue(translate);
-			$$("cronDescriptionId").setValue(translate);
-			this.setCronValues(cronExpression);
+//			$$("currentCronDescriptionId").setValue(translate);
+//			$$("cronDescriptionId").setValue(translate);
+//			this.setCronValues(cronExpression);
 
-		} else {
+		} 
+//		else {
 
+			let nextYear = (new Date().getFullYear() + 1).toString();
 			$$("minutesOpt03-0").setValue(1);
 			$$("hoursOpt03-0").setValue(1);
+			$$("daysOpt05-6").setValue(1);
+			$$("daysOpt03-1").setValue(1);
+			$$("yearsOpt03-" + nextYear).setValue(1);
 
 			this.checkedMins.push("0");
 			this.checkedHours.push("0");
-		}
+			this.checkedDaysWeek.push("6");
+			this.checkedDays.push("1");
+			this.checkedYears.push(nextYear);
+//		}
 	}
 
 
@@ -2416,18 +2456,22 @@ export default class CronUi {
 		let monthsOfYear = [i18n.t("LBL_JANUARY"), i18n.t("LBL_FEBRUARY"), i18n.t("LBL_MARCH"), i18n.t("LBL_APRIL"), i18n.t("LBL_MAY"), i18n.t("LBL_JUNE"), i18n.t("LBL_JULY"), i18n.t("LBL_AUGUST"), i18n.t("LBL_SEPTEMBER"), i18n.t("LBL_OCTOBER"), i18n.t("LBL_NOVEMBER"), i18n.t("LBL_DECEMBER")];
 		let monthsOfYearCron = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-		const MINUTES = 1;
-		const HOURS = 2;
-		const DAYS_MONTH = 3;
-		const MONTHS = 4;
-		const DAYS_WEEK = 5;
-		const YEARS = 6;
+		const MINUTES = 0;
+		const HOURS = 1;
+		const DAYS_MONTH = 2;
+		const MONTHS = 3;
+		const DAYS_WEEK = 4;
+		const YEARS = 5;
 
 		let editCronExpressionArr = cronExp.split(" ");
+		
+		editCronExpressionArr.splice(0, 1);
 
 		self.cronExpressionArr = editCronExpressionArr;
 
 		for (let i = 0; i < editCronExpressionArr.length; i++) {
+			
+			let timesArrPosition = i;
 
 			if (editCronExpressionArr[i].includes("-")) {
 
@@ -2435,13 +2479,13 @@ export default class CronUi {
 
 				if (i === MONTHS) {
 
-					$$(timesArr[i] + "04_counter01").setValue(monthsOfYear[checkList[0] - 1]);
-					$$(timesArr[i] + "04_counter02").setValue(monthsOfYear[checkList[1] - 1]);
+					$$(timesArr[timesArrPosition] + "04_counter01").setValue(monthsOfYear[checkList[0] - 1]);
+					$$(timesArr[timesArrPosition] + "04_counter02").setValue(monthsOfYear[checkList[1] - 1]);
 
 				} else {
 
-					$$(timesArr[i] + "04_counter01").setValue(checkList[0]);
-					$$(timesArr[i] + "04_counter02").setValue(checkList[1]);
+					$$(timesArr[timesArrPosition] + "04_counter01").setValue(checkList[0]);
+					$$(timesArr[timesArrPosition] + "04_counter02").setValue(checkList[1]);
 				}
 
 			} else if (editCronExpressionArr[i].includes("/")) {
@@ -2450,24 +2494,24 @@ export default class CronUi {
 
 				if (i === DAYS_WEEK) {
 
-					$$(timesArr[i] + "02_counter01").setValue(checkList[1]);
-					$$(timesArr[i] + "02_counter02").setValue(self.daysOfWeek[checkList[0] - 1]);
+					$$(timesArr[timesArrPosition] + "02_counter01").setValue(checkList[1]);
+					$$(timesArr[timesArrPosition] + "02_counter02").setValue(self.daysOfWeek[checkList[0] - 1]);
 
 				} else if (i === DAYS_MONTH) {
 
-					$$(timesArr[i] + "04_counter01").setValue(checkList[1]);
+					$$(timesArr[timesArrPosition] + "04_counter01").setValue(checkList[1]);
 
-					$$(timesArr[i] + "04_counter02").setValue(selectDays[checkList[0] - 1]);
+					$$(timesArr[timesArrPosition] + "04_counter02").setValue(selectDays[checkList[0] - 1]);
 
 				} else if (i === MONTHS) {
 
-					$$(timesArr[i] + "02_counter01").setValue(checkList[1]);
-					$$(timesArr[i] + "02_counter02").setValue(monthsOfYear[checkList[0] - 1]);
+					$$(timesArr[timesArrPosition] + "02_counter01").setValue(checkList[1]);
+					$$(timesArr[timesArrPosition] + "02_counter02").setValue(monthsOfYear[checkList[0] - 1]);
 
 				} else {
 
-					$$(timesArr[i] + "02_counter01").setValue(checkList[1]);
-					$$(timesArr[i] + "02_counter02").setValue(checkList[0]);
+					$$(timesArr[timesArrPosition] + "02_counter01").setValue(checkList[1]);
+					$$(timesArr[timesArrPosition] + "02_counter02").setValue(checkList[0]);
 				}
 
 			} else if (editCronExpressionArr[i].includes(",")) {
@@ -2478,34 +2522,34 @@ export default class CronUi {
 
 					if (i === MINUTES) {
 
-						$$(timesArr[i] + "03-" + check).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + check).setValue(1);
 						self.checkedMins.push(check);
 
 					} else if (i === HOURS) {
 
-						$$(timesArr[i] + "03-" + check).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + check).setValue(1);
 						self.checkedHours.push(check);
 
 					} else if (i === DAYS_MONTH) {
 
-						$$(timesArr[i] + "03-" + check).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + check).setValue(1);
 						self.checkedDays.push(check);
 
 					} else if (i === YEARS) {
 
-						$$(timesArr[i] + "03-" + check).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + check).setValue(1);
 						self.checkedYears.push(check);
 
 					} else if (i === DAYS_WEEK) {
 
 						let dayOfWeek = self.daysOfWeekCron.indexOf(check);
-						$$(timesArr[i] + "05-" + dayOfWeek).setValue(1);
+						$$(timesArr[timesArrPosition] + "05-" + dayOfWeek).setValue(1);
 						self.checkedDaysWeek.push(dayOfWeek.toString());
 
 					} else {
 
 						let monthOfYear = monthsOfYearCron.indexOf(check);
-						$$(timesArr[i] + "03-" + monthOfYear).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + monthOfYear).setValue(1);
 						self.checkedMonths.push(monthOfYear.toString());
 					}
 				}
@@ -2516,34 +2560,34 @@ export default class CronUi {
 
 					if (i === MINUTES) {
 
-						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + editCronExpressionArr[i]).setValue(1);
 						self.checkedMins.push(editCronExpressionArr[i]);
 
 					} else if (i === HOURS) {
 
-						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + editCronExpressionArr[i]).setValue(1);
 						self.checkedHours.push(editCronExpressionArr[i]);
 
 					} else if (i === DAYS_MONTH) {
 
-						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + editCronExpressionArr[i]).setValue(1);
 						self.checkedDays.push(editCronExpressionArr[i]);
 
 					} else if (i === YEARS) {
 
-						$$(timesArr[i] + "03-" + editCronExpressionArr[i]).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + editCronExpressionArr[i]).setValue(1);
 						self.checkedYears.push(editCronExpressionArr[i]);
 
 					} else if (i === MONTHS) {
 
 						let monthOfYear = monthsOfYearCron.indexOf(editCronExpressionArr[i]);
-						$$(timesArr[i] + "03-" + monthOfYear).setValue(1);
+						$$(timesArr[timesArrPosition] + "03-" + monthOfYear).setValue(1);
 						self.checkedMonths.push(monthOfYear.toString());
 
 					} else {
 
 						let dayOfWeek = self.daysOfWeekCron.indexOf(editCronExpressionArr[i]);
-						$$(timesArr[i] + "05-" + dayOfWeek).setValue(1);
+						$$(timesArr[timesArrPosition] + "05-" + dayOfWeek).setValue(1);
 						self.checkedDaysWeek.push(dayOfWeek.toString());
 
 					}
