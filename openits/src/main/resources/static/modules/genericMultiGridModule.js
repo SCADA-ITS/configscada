@@ -43,7 +43,10 @@ export default class GenericMultiGridModule extends GenericModule {
 		jsonEquipmentTypesWithGridAssignedCopy.forEach(item => {
 			
 			item.labelAlias = i18n.t(item.labelAlias);
+			item.alias = item.labelAlias; 
+			item.labelAlias = i18n.t(item.labelAlias);
 			item.labelDescription = i18n.t(item.labelDescription);
+			item.description = item.labelDescription;
 		});
 		
 		jsonEquipmentTypesWithGridAssignedCopy.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));
