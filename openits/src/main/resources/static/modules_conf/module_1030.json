@@ -12,7 +12,8 @@
 		"pasLibraryByElement": "pas_libraries/element/${id}",
 		"command": "elements/send_command_element",
 		"saveNode": "pas_libraries/${id}/node/${parentNodeIds}",
-		"deleteNode": "pas_libraries/node/${id}"
+		"deleteNode": "pas_libraries/node/${id}",
+		"elementsByTypeSummary": "element_types/${id}/summary"
 		
 	},
 	"topics": {

@@ -299,11 +299,16 @@ export default class IncidentReportModule extends GenericModule {
 	
 	request() {
 
-		let self = this;
+		let self = this;	
+		let mainContent = $$("main-content-" + self.uid);
+		let loadingViewBlur = $$("loading-blur-" + self.uid);
 
-		$$("loading-" + this.uid).show();
-		$$(this.uid).hide();
-		log.debug("loading...");
+		if (loadingViewBlur && mainContent) {
+
+			loadingViewBlur.show();
+			webix.html.addCss(mainContent.$view, "main-screen-locked-firefox");
+			log.debug("loading...");
+		}
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
@@ -420,20 +425,35 @@ export default class IncidentReportModule extends GenericModule {
 		}
 
 		let viewMain = {
+			view: "abslayout",
 			id: this.uid,
-			cols: [
+			cells: [
 				{
-					rows: [
-						getViewHeader(),
-						{ height: 20 },
-						getViewStateTransitions(),
-						{ height: 6 },
-						this.incidentReportContent.getView(),
-						{ height: 6 }
+					id: "main-content-" + self.uid,
+					relative: true,
+					cols: [
+						{
+							rows: [
+								getViewHeader(),
+								{ height: 20 },
+								getViewStateTransitions(),
+								{ height: 6 },
+								this.incidentReportContent.getView(),
+								{ height: 6 }
+							]
+						},
+						{ width: 6 },
+						incidentReportActionPanel.getView()
 					]
 				},
-				{ width: 6 },
-				incidentReportActionPanel.getView()
+				{
+					id: "loading-blur-" + self.uid,
+					css: "loading-blur",
+					hidden: true,
+					width: 1689,
+					height: 773,
+					cols: [util.ui.getViewDrawLoading()]				
+				}
 			]
 		};
 
@@ -608,13 +628,13 @@ export default class IncidentReportModule extends GenericModule {
 			} 
 			else if (action === StompSubscriptorService.ACTION_BLOCK) {
 
-				let loadingView = $$("loading-" + self.uid);
-				let mainView = $$(self.uid);
+				let mainContent = $$("main-content-" + self.uid);
+				let loadingViewBlur = $$("loading-blur-" + self.uid);
 				
-				if (loadingView && mainView) {
+				if (loadingViewBlur && mainContent) {
 					
-					$$("loading-" + self.uid).show();
-					$$(self.uid).hide();
+					loadingViewBlur.show();
+					webix.html.addCss(mainContent.$view, "main-screen-locked-firefox");
 					log.debug("loading...");	
 				}
 			}

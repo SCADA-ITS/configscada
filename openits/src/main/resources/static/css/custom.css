@@ -1377,7 +1377,6 @@ p, input, textarea {
 }
 
 .grid-button-text .webix_button {
-
 	display: inline-block;
 	width: 120px;
 	white-space: nowrap;
@@ -1390,8 +1389,12 @@ p, input, textarea {
 }
 
 .grid-button-text .webix_button:hover {
-	background: rgba(231 233 242 / 0.4);
+	background: rgba(231 233 242 / 0.4) !important;
 	border-radius: 10px; 
+}
+
+.grid-button-text .webix_button:focus {
+	background: transparent;
 }
 
 .grid-button-text .webix_button .webix_icon_btn {
@@ -1516,6 +1519,11 @@ p, input, textarea {
 	color: #fff;
 	text-align: center;
 	font-size: 90px;
+}
+
+.loading-blur .webix_view {
+	background: transparent;
+	border: none;
 }
 
 .default-window {

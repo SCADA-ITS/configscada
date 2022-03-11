@@ -636,7 +636,7 @@ export default class AlarmFilteredWizard {
 									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${self.arrSummary.user}</div>`);
 									$$("alarm-comment").setValue(`<div>
 																	<span class="ico webix_icon mdi mdi-comment-edit" style="margin-top: 7px"></span>
-																	<span class="field">${i18n.t("LBL_COMMENT")}</span>
+																	<span class="field">${i18n.t("LBL_COMMENTS_HERE")}</span>
 																</div>
 																<div class="value">
 																<textarea id="textarea-alarm-filtered" class="alarm-view-rectangle-back" style="resize: none; border-width: 1px; overflow: auto; display: inline-block; vertical-align: top; margin-top: 0px; width: 626px;"></textarea>

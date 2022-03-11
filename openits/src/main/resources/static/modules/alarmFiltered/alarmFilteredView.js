@@ -184,7 +184,7 @@ export default class AlarmFilteredView {
 													{
 														view: "label",
 														css: "alarm-view-title-label",
-														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_COMMENT")}</span></div>`,
+														label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_COMMENTS")}</span></div>`,
 														align: "left",
 														hidden: (!alarmFiltered.comment) ? true : false,
 														height: 27

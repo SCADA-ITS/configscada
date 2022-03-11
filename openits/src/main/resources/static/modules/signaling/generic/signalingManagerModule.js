@@ -229,15 +229,22 @@ export default class SignalingManagerModule extends GenericModule {
 							let container = $$(self.args.containerId);
 
 							if (container) {
-							
-								if (elementIds.length === 1) {
-									
-									util.ui.setTitle(container.config.id, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);		
-								}
-								else {
 
-									util.ui.setTitle(container.config.id, i18n.t("LBL_SIGNALING_MANAGER") + " - " + elementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED"));
-								}	
+								if (elementIds.length === 1) {
+
+									util.ui.setTitle(container.config.id, i18n.t("LBL_SIGNALING_MANAGER") + " - " + element.alias);
+								
+								} else {
+
+									let title = i18n.t("LBL_SIGNALING_MANAGER") + " - " + elementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED");
+									
+									if (element.elementType && element.elementType.commandModule) {
+
+										title = i18n.t(util.module.getWindowParamValue(module, WindowParam.LABEL, i18n.t("LBL_SIGNALING_MANAGER")));
+									}
+
+									util.ui.setTitle(container.config.id, title);
+								}
 							}
 						}
 						
@@ -280,8 +287,8 @@ export default class SignalingManagerModule extends GenericModule {
 					
 					if (Array.isArray(elementIds) && elementIds.length > 0) {
 
-						if ((elementIds.length > 1 && !elementType.showSignalingManagerSelectedItems)  || 
-						(elementIds.length > 1 && elementType.showSignalingManagerSelectedItems && elementType.showSignalingManagerSelectedItems === _TRUE)) {
+						if ((elementIds.length > 1 && !elementType.showSignalingManagerSelectedItems && !elementType.commandModule)  || 
+						(elementIds.length > 1 && elementType.showSignalingManagerSelectedItems && elementType.showSignalingManagerSelectedItems === _TRUE && !elementType.commandModule)) {
 
 							viewHeader = {
 								id: "view-main-content-signaling-header-" + self.uid,

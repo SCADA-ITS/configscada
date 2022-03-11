@@ -22,7 +22,6 @@ export default class VmsSignalingModule extends GenericModule {
 		this.elements = undefined;
 		this.selectedChildElementsHierarchyMap = new Map();
 		this.currentViewContent = undefined;
-		this.viewMainListHierarchyHidden = false;		
 	}
 
 	loadData() {
@@ -44,8 +43,9 @@ export default class VmsSignalingModule extends GenericModule {
 				$$(this.uid).hide();
 			}
 			
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.pas.type })).then(function(elementsResponse) {
-	
+//			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.pas.type })).then(function(elementsResponse) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByTypeSummary, { id: self.config.pas.type })).then(function(elementsResponse) {	
+
 				if (elementsResponse != null) {
 	
 					self.elements = elementsResponse.json();
@@ -90,12 +90,12 @@ export default class VmsSignalingModule extends GenericModule {
 									load();
 								}
 							});
+		
+						} else {
+		
+							load();					
 						}
-	
-						self.viewMainListHierarchyHidden = (self.elements.length == 1);
-	
-						load();
-	
+			
 					} else {
 	
 						let container = $$(self.args.containerId);
@@ -151,7 +151,7 @@ export default class VmsSignalingModule extends GenericModule {
 	
 				let viewMainListHierarchy = {
 					id: "view-main-list-hierarchy-" + self.uid,
-					hidden: self.viewMainListHierarchyHidden,
+					hidden: self.elements.length == 1,
 					header: function() {
 						
 						return `<div>
@@ -167,7 +167,7 @@ export default class VmsSignalingModule extends GenericModule {
 						
 				let viewMainResizer = { 
 					id: "view-main-resizer-" + self.uid,
-					hidden: self.viewMainListHierarchyHidden,
+					hidden: self.elements.length == 1,
 					view: "resizer" 
 				};
 				
