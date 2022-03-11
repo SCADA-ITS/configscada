@@ -1,5 +1,6 @@
 import MessageBox from "../component/messageBox.js";
 import InputDialogBox from "../component/inputDialogBox.js";
+import SearchDialogBox from "../component/searchDialogBox.js";
 
 export let util = {
 
@@ -1510,6 +1511,218 @@ export let util = {
 						onResponse(false);
 					}
 				);	
+			}
+			
+			function getAuditLogs() {
+				
+				let aLogs = [];
+				
+				commands.forEach(command => {
+					
+					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
+					
+					if (element) {
+						
+						let commandElementType = getCommandElementType(element, command.commandElementTypeId);
+					
+						if (commandElementType && LogLevel[commandElementType.logLevel]) {
+							
+							if (commandElementType.logComment === "true") {
+								
+								showCommentDialog = true;
+							}
+							
+							let commandValues = undefined;
+							
+							if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
+								
+								commandValues = command.commandElementValues.map(e=> e.value).join(",");
+							}
+							
+							const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
+						
+							let auditLog = {
+								logTypeId: LOG_TYPE_COMMANDS.id,
+								logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
+								userId: userData.id,
+								level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
+								auditLogValues: [
+									{
+										value: commandElementType.labelAlias,
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_TYPE
+									},
+									{
+										value: element.alias,
+										logTypeParamId: LOG_TYPE_COMMANDS.params.ELEMENT
+									},
+									{
+										value: commandValues,
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_VALUES
+									},
+									{
+										value: commandElementType.logComment ? "" : undefined,
+										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMENT
+									}
+								]
+							};
+							
+							aLogs.push(auditLog);	
+						}	
+					}
+				});
+				
+				return aLogs;
+			}
+			
+			function getCommandElementType(element, commandElementTypeId) {
+				
+				let commandElementType = undefined;
+				
+				if (element && element.elementType && element.elementType.id) {
+				
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+					
+					if (elementType && Array.isArray(elementType.commandElementTypes)) {
+						
+						commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
+					}
+				}
+				
+				return commandElementType;				
+			}
+		},
+		
+		sendCommandSync(commands, onResponse) {
+			
+			let showCommentDialog = false;
+			let userData = util.user.getUserData();
+			let auditLogs = [];
+			
+			if (userData && Array.isArray(commands) && commands.length > 0) {
+				
+				auditLogs = getAuditLogs();
+				
+				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
+					
+					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
+
+						auditLogs = auditLogs.map(auditLog => {
+							
+							let newAuditLog = webix.copy(auditLog);
+							
+							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
+								
+								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
+								
+								if (auditLogValueComment) {
+									
+									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
+								}
+							}
+							
+							return newAuditLog;
+						});
+						
+						send();		
+
+					}, false)).show();
+				}
+				else {
+					
+					send();
+				}
+			}
+			
+			function send() {
+				
+				if (Array.isArray(auditLogs) && auditLogs.length > 0) {
+						
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
+						function(okSendAuditLog) {
+							
+							callSendCommand();						
+						},
+						function(errSendAuditLog) {
+						
+							onResponse(false);
+						}
+					);	
+				}
+				else {
+				
+					callSendCommand();	
+				}
+				
+				function callSendCommand() {
+					
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND_SYNC, { commands: commands }).then(
+						function(responseCommandElementErrors) {
+							
+							if (responseCommandElementErrors) {
+								
+								let commandElementErrors = responseCommandElementErrors.json();
+								
+								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+									
+									printCommandElementErrors(commandElementErrors);
+									
+									onResponse(false);
+								}
+								else {
+									
+									onResponse(true);
+								}
+								
+							}
+						},
+						function(errSendCommand) {
+							
+							onResponse(false);
+						}
+					);
+					
+					function printCommandElementErrors(commandElementErrors) {
+						
+						if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+							
+							let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+							let label = i18n.t("LBL_COMMAND_ELEMENT_ERRORS_DESCRIPTION");
+					
+							dialogEntity.data = [];
+					
+							dialogEntity.pkField = "id";
+							dialogEntity.fields = ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"];
+							dialogEntity.sortFieldId = 1;
+							dialogEntity.height = 600;
+							dialogEntity.width = 800;
+							
+							commandElementErrors.forEach(commandElementError => {
+								
+								let elementAlias = "";
+								
+								if (commandElementError.element) {
+									
+									let element = window.em.getByField(EntityType.ELEMENT, "id", commandElementError.element.id);
+									
+									if (element) {
+										
+										elementAlias = element.alias;
+									}	
+								}
+								
+								dialogEntity.data.push({
+									id: webix.uid(),
+									element: elementAlias,
+									error: commandElementError.error,
+									description: commandElementError.commandElementPreconditions && commandElementError.commandElementPreconditions.toStr ? commandElementPreconditions.toStr : ""
+									
+								});
+							});
+							
+							(new SearchDialogBox(label, dialogEntity)).show();
+						}
+					}
+				}
 			}
 			
 			function getAuditLogs() {

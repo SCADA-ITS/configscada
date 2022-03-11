@@ -130,4 +130,11 @@ public class ElementController {
 		
  		return new ResponseEntity<>(elementBO.sendCommandElement(commands), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/send_command_element_sync")
+	@ApiOperation(value = "Send Command Element", notes = "Send Command Element")
+	public ResponseEntity<Object> sendCommandElementSync(@RequestBody Object command) {
+		
+ 		return new ResponseEntity<>(elementBO.sendCommandElementSync(command), HttpStatus.OK);
+	}
 }

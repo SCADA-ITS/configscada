@@ -172,6 +172,7 @@ const HEADER_POST = {
 const USE_VMS_FAKE_DATA = false;
 
 const ENDPOINT_SEND_COMMAND = "elements/send_command_element";
+const ENDPOINT_SEND_COMMAND_SYNC = "elements/send_command_element_sync";
 const ENDPOINT_SEND_AUDIT_LOG = "audit_logs/send";
 
 // DataTypes

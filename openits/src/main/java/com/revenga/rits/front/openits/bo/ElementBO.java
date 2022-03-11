@@ -103,7 +103,13 @@ public class ElementBO extends GenericBO {
 
 		return voDataSourceAdapter
 				.putList(VODataSourceAdapter.DATA_SOURCE_SEND_COMMAND_ELEMENT, (Map<String, Object>) input);
-		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> sendCommandElementSync(Object input) {
+
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_SEND_COMMAND_ELEMENT_SYNC, (Map<String, Object>) input);
 	}
 
 }
