@@ -676,47 +676,67 @@ export default class IncidentWizardAction {
 			parent.listViewStrechs.clear();
 			parent.dtLocations.clear();
 
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
-
-				if (dat != null) {
-
-					let strechs = dat.json();
-
-					if (Array.isArray(strechs) && strechs.length > 0) {
-
-						strechs = strechs.filter(e => {
-							return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
-						});
-
-						strechs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-						let dataStrechs = strechs.map(e => {
-
-							return {
-								id: e.id,
-								alias: e.alias,
-								description: e.description
-							}
-						});
-
-						parent.listViewStrechs.add(dataStrechs);
-					}
-					
-					if ($$("view-locations-" + parent.uid)) {
-						
-						try {
-							
-							$$("view-locations-" + parent.uid).hideProgress();	
-						}
-						catch {}
-					}
-					
-					if (onResetStep) {
+			if (parent.incidentData.incidentTypeId) {
 				
-						onResetStep();
-					}
-				}
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
 
-			})
+					if (dat != null) {
+	
+						let strechs = dat.json();
+	
+						if (Array.isArray(strechs) && strechs.length > 0) {
+	
+							strechs = strechs.filter(e => {
+								return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
+							});
+	
+							strechs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+							let dataStrechs = strechs.map(e => {
+	
+								return {
+									id: e.id,
+									alias: e.alias,
+									description: e.description
+								}
+							});
+	
+							parent.listViewStrechs.add(dataStrechs);
+						}
+						
+						if ($$("view-locations-" + parent.uid)) {
+							
+							try {
+								
+								$$("view-locations-" + parent.uid).hideProgress();	
+							}
+							catch {}
+						}
+						
+						if (onResetStep) {
+					
+							onResetStep();
+						}
+					}
+	
+				})				
+			}
+			else {
+				
+				if ($$("view-locations-" + parent.uid)) {
+							
+					try {
+						
+						$$("view-locations-" + parent.uid).hideProgress();	
+					}
+					catch {}
+				}
+				
+				if (onResetStep) {
+			
+					onResetStep();
+				}
+			}
+			
 		}
 		
 		function resetStepLocationFromMap(onResetStep) {

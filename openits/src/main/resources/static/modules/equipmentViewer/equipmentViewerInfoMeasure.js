@@ -336,24 +336,32 @@ export default class EquipmentViewerInfoMeasure {
 			
 			let firstSelected = false;
 			
-			self.measuresGroups.forEach(measureGroup => {
+			if (Array.isArray(self.measuresGroups) && self.measuresGroups.length > 0) {
 				
-				if (!firstSelected) {
-			
-					viewSegmented.value = VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid;		
-					firstSelected = !firstSelected;
-				}
+				self.measuresGroups.forEach(measureGroup => {
 				
-				viewSegmented.options.push({
+					if (!firstSelected) {
+				
+						viewSegmented.value = VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid;		
+						firstSelected = !firstSelected;
+					}
 					
-					id: VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid,
-					measureGroupId: measureGroup.id,
-					width: 150,
-					value: i18n.t(measureGroup.label)
-				});
+					viewSegmented.options.push({
+						
+						id: VIEW_INFO_MEASURE_SEGMENTED_ITEM + "-" + measureGroup.id + "-" + self.uid,
+						measureGroupId: measureGroup.id,
+						width: 150,
+						value: i18n.t(measureGroup.label)
+					});
+					
+					viewMultiview.cells.push(measureGroup.getView());
+				});	
+			}
+			else {
 				
-				viewMultiview.cells.push(measureGroup.getView());
-			});
+				viewMultiview.cells.push({});
+			}
+			
 			
 			viewSegmented.tooltip = function(obj) {
 				
