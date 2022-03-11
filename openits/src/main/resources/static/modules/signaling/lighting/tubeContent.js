@@ -653,7 +653,7 @@ export default class TubeContent {
 
 			viewContent = {
 				view: "tabview",
-				id: "content-" + self.uid,
+				id: "content-" + self.parent.uid,
 				css: "auxiliary-tab",
 				tabbar: {
 					multiview: true

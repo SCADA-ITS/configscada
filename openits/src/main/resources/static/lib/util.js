@@ -534,38 +534,7 @@ export let util = {
 
 					executeCommand();
 				}
-
-				// Only single selection
-				/*function executeCommand() {
-
-					let cmd = command;
-
-					if (Array.isArray(command.elementTypeCommand) && command.elementTypeCommand.length > 0 && args.selectedPks.length === 1) {
-
-						let selectedPk = args.selectedPks[0];
-						let element = window.em.getByField(EntityType.ELEMENT, "id", selectedPk);
-
-						if (element && element.elementType) {
-							
-							let elementTypeCommand = command.elementTypeCommand.find(e => e.elementType === element.elementType.id);
-	
-							if (elementTypeCommand) {
-	
-								cmd = elementTypeCommand;
-	
-								if (cmd.viewType) {
-	
-									viewTypeId = cmd.viewType.id;
-								}
-							}	
-						}						
-					}
-
-					let module = util.module.getFromModuleAction(cmd.moduleAction.id);
-
-					util.module.open(module, cmd.moduleAction, viewTypeId, null, args);
-				}*/
-				
+		
 				function executeCommand() {
 
 					let cmd = command;
