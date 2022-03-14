@@ -21,7 +21,7 @@ export default class IncidentReportTaskInfo {
 			borderless: true,
 			css: "ims-incident-report-tab-details",
 			rows: [
-				{ height: 40 },
+				{ height: 15 },
 				{
 					cols: [
 						{ width: 40 },
@@ -30,14 +30,14 @@ export default class IncidentReportTaskInfo {
 							rows: [
 								{
 									id: "task-details-info-labelAlias-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									template: `<div><span class="ico webix_icon mdi mdi-view-grid"></span><span class="field">${i18n.t("LBL_TASK_TYPE")}</span></div>
 										   <div class="value">${i18n.t(self.taskState.incidentTypeTask.taskType.labelAlias)}</div>`
 								},
 								{
 									id: "task-details-info-alias-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									hidden: self.taskState.incidentTypeTask.operationDescription ? true : false,
 									template: `<div><span class="ico webix_icon mdi mdi-order-bool-ascending-variant"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_ALIAS")}</span></div>
@@ -45,7 +45,7 @@ export default class IncidentReportTaskInfo {
 								},
 								{
 									id: "task-details-info-description-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									hidden: self.taskState.incidentTypeTask.operationDescription ? true : false,
 									template: `<div><span class="ico webix_icon mdi mdi-view-headline"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_DESCRIPTION")}</span></div>
@@ -53,7 +53,7 @@ export default class IncidentReportTaskInfo {
 								},
 								{
 									id: "task-details-info-operation-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									hidden: self.taskState.incidentTypeTask.operationDescription ? false : true,
 									template: `<div><span class="ico webix_icon mdi mdi-view-headline"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_OPERATION")}</span></div>
@@ -61,7 +61,7 @@ export default class IncidentReportTaskInfo {
 								},
 								{
 									id: "task-details-info-type-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									template: function() {
 
@@ -90,7 +90,7 @@ export default class IncidentReportTaskInfo {
 								},
 								{
 									id: "task-details-info-automatism-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									template: function() {
 										
@@ -111,14 +111,14 @@ export default class IncidentReportTaskInfo {
 								},
 								{
 									id: "task-details-info-mandatory-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									template: `<div><span class="ico webix_icon mdi mdi-asterisk"></span><span class="field">${i18n.t("LBL_INCIDENT_TASK_REQUIRED")}</span></div>
 										   <div class="value">${self.taskState.incidentTypeTask.mandatory ? i18n.t("LBL_YES") : i18n.t("LBL_NO")}</div>`
 								},
 								{
 									id: "task-details-info-completedAt-" + self.index + "-" + self.uid,
-									height: 50,
+									height: 45,
 									borderless: true,
 									template: function() {
 

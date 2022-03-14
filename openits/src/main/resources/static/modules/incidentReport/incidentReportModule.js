@@ -416,6 +416,9 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 		this.dtTasks = undefined;
+		
+		let	loadingBlurHeight = util.module.getWindowParamValue(self.module, WindowParam.HEIGHT, 773) - 50;
+		let loadingBlurWidth = util.module.getWindowParamValue(self.module, WindowParam.WIDTH, 1689);
 
 		let incidentReportActionPanel = new IncidentReportActionPanel(self);
 
@@ -450,8 +453,8 @@ export default class IncidentReportModule extends GenericModule {
 					id: "loading-blur-" + self.uid,
 					css: "loading-blur",
 					hidden: true,
-					width: 1689,
-					height: 773,
+					width: loadingBlurWidth,
+					height: loadingBlurHeight,
 					cols: [util.ui.getViewDrawLoading()]				
 				}
 			]

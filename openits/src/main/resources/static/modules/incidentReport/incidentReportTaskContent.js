@@ -29,12 +29,11 @@ export default class IncidentReportTaskContent {
 		
 		view = {
 			id: "taskContent-" + self.index + "-" + self.uid,
-			css: { "border-width": "1px !important" },
+			css: { "border-width": "1px !important", "box-sizing": "border-box"},
 			rows: [
 				getViewHeader(),
-				{ height: 10 },
+				{ height: 5 },
 				{
-					css: { "border-width": "0px !important" },
 					cols: [
 						{ width: 10 },
 						getViewBody(),		
@@ -42,7 +41,6 @@ export default class IncidentReportTaskContent {
 					]
 				},
 				getViewFooter(),
-				{ height: 10 , css: { "border-bottom-width": "1px !important" } },
 				{ height: 4 }
 			]
 		};

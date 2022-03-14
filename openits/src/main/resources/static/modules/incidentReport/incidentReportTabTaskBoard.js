@@ -96,7 +96,7 @@ export default class IncidentReportTabTaskBoard {
 						{ width: 10 }
 					]
 				},
-				{ height: 10 }
+				//{ height: 10 }
 			]
 		};
 
