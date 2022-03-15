@@ -206,7 +206,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_ELEMENT",
+						label: "LBL_EQUIPMENT",
 						needsTranslation: false,
 						parameterized: false,
 						position: 2,
@@ -314,7 +314,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 						filtered: false,
 						isEpochMilli: false,
 						isPk: false,
-						label: "LBL_NEXUS_OPERATOR",
+						label: "LBL_TYPE_OF_OPERATION",
 						needsTranslation: false,
 						parameterized: false,
 						position: 8,
@@ -385,7 +385,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 					newItem.planOrderConditionOrder = planOrderCondition.planOrderConditionOrder;
 					newItem.operationVal1 = planOrderCondition.thresholdVal1;
 					newItem.operationVal2 = planOrderCondition.thresholdVal2;
-					newItem.nexusOperator = (planOrderCondition.nexusAnd?i18n.t("LBL_AND"):i18n.t("LBL_OR"));
+					newItem.nexusOperator = (planOrderCondition.nexusAnd?i18n.t("LBL_INCLUSIVE"):i18n.t("LBL_EXCLUSIVE"));
 					
 					self.dtParams.add(newItem);
 
@@ -436,7 +436,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 
 						selectedItems[0].operationVal1 = selectedItem.thresholdVal1;
 						selectedItems[0].operationVal2 = selectedItem.thresholdVal2;
-						selectedItems[0].nexusOperator = (selectedItem.nexusAnd!=1?i18n.t("LBL_OR"):i18n.t("LBL_AND"));
+						selectedItems[0].nexusOperator = (selectedItem.nexusAnd!=1?i18n.t("LBL_EXCLUSIVE"):i18n.t("LBL_INCLUSIVE"));
 						selectedItems[0].planOrderConditionOrder = selectedItem.planOrderConditionOrder;
 
 						self.dtParams.update(selectedItems[0]);
@@ -527,7 +527,7 @@ export default class PlanLibraryConditionOrder extends PlanLibraryOrder {
 							operation: operation,
 							operationVal1: e.thresholdVal1,
 							operationVal2: e.thresholdVal2,
-							nexusOperator: (e.nexusAnd?i18n.t("LBL_AND"):i18n.t("LBL_OR")),
+							nexusOperator: (e.nexusAnd?i18n.t("LBL_INCLUSIVE"):i18n.t("LBL_EXCLUSIVE")),
 							planOrderConditionOrder: e.planOrderConditionOrder
 						}
 					});

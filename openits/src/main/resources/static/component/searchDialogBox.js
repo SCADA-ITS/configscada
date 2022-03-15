@@ -13,6 +13,8 @@ export default class SearchDialogBox {
 	static get DIALOG_ENDPOINT_TYPE_CUSTOM() { return 3 }
 	static get DIALOG_ENDPOINT_TYPE_CALLBACK() { return 4 }
 	
+	static get ID_NOT_SELECTED() {return -1}
+	
 	constructor(title, dialogEntity, onAccept) {
 
 		this.uid = webix.uid();
@@ -168,22 +170,36 @@ export default class SearchDialogBox {
 				
 				let dat = [];
 				
-				function getDataTable() {
+				function getDataForTable() {
 					
-					let dataTable;
+					let data;
 				
 					if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_EM) {
 						
-						dataTable = window.em.getAll(EntityType[self.dialogEntity.endpoint]);
+						data = window.em.getAll(EntityType[self.dialogEntity.endpoint]);
 					}
 					else {
 						
-						dataTable = self.dialogEntity.data;
+						data = self.dialogEntity.data;
 					}
 					
-					if (Array.isArray(dataTable) && dataTable.length > 0) {
+					if (self.dialogEntity.showEmptyRowCol && self.dialogEntity.showEmptyRowCol === SearchDialogBox.ID_NOT_SELECTED) {
+
+						let emptyRow = { id: self.dialogEntity.showEmptyRowCol };
+						
+						if (self.dialogEntity.fields.length > 0) {
 							
-						return dataTable.map(function(e) {
+							let firstField = getFieldName(self.dialogEntity.fields[0]);
+							
+							emptyRow[firstField] = "[" + i18n.t("LBL_EMPTY") + "]";
+						}
+						
+						data.unshift(emptyRow);
+					}
+					
+					if (Array.isArray(data) && data.length > 0) {
+							
+						return data.map(function(e) {
 							
 							let output = {};
 							
@@ -201,16 +217,16 @@ export default class SearchDialogBox {
 					}	
 				}
 				
-				function getDataTree() {
+				function getDataForTree() {
 
-					let dataTree = [];
+					let data = [];
 
 					if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_CUSTOM ||
 						self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_CALLBACK) {
 
 						if (self.dialogEntity.data) {
 
-							dataTree = util.tree.getNodes(
+							data = util.tree.getNodes(
 								self.dialogEntity.data.nodes,
 								self.dialogEntity.data.relationships,
 								{
@@ -221,16 +237,16 @@ export default class SearchDialogBox {
 						}
 					}
 
-					return dataTree;
+					return data;
 				}
 				
 				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
 					
-					dat = getDataTable();
+					dat = getDataForTable();
 				}
 				else if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TREE) {
 				
-					dat = getDataTree();
+					dat = getDataForTree();
 				}
 	
 				return dat;

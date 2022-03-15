@@ -6,7 +6,7 @@ const MAX_INACTIVE_NOTICATIONS = 10;
 export default class Notification {
 	
 	static get ALARM() { return { id: 1, label: "LBL_NOTIFICATION_ALARM", css: "notification-alarm-window", icon: "alarm.png", windowWidth: 750, windowHeight: 500 } }
-	static get INCIDENT() { return { id: 2, label: "LBL_NOTIFICATION_INCIDENT", css: "notification-incident-window", icon: "incident.png", windowWidth: 800, windowHeight: 500 } }
+	static get INCIDENT() { return { id: 2, label: "LBL_NOTIFICATION_INCIDENT", css: "notification-incident-window", icon: "incident.png", windowWidth: 850, windowHeight: 500 } }
 	static get EVENT() { return { id: 3, label: "LBL_NOTIFICATION_EVENT", css: "notification-event-window", icon: "event.png", windowWidth: 850, windowHeight: 500 } }
 
 	constructor(config, notificationType, notifications) {
@@ -216,6 +216,46 @@ export default class Notification {
 						}
 					}
 				);
+				
+				viewToolbar.cols.push(
+					{ 
+						view: "button", 
+						type: "icon", 
+						icon: "mdi mdi-broom", 
+						css: "toolbar-button-text", 
+						width: TOOLBAR_BUTTONS_WIDTH, 
+						label: i18n.t("LBL_CLEAN"), 
+						tooltip: i18n.t("LBL_CLEAN_ALARM"),
+						on: {
+							onItemClick() {
+
+								if (Array.isArray(self.recognizedNotifications) && self.recognizedNotifications.length > 0) {
+
+									let alarmRecognizedSelected = getSelectedItemsRecognized();
+
+									if (Array.isArray(alarmRecognizedSelected) && alarmRecognizedSelected.length > 0) {
+
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + alarmRecognizedSelected.length + " " + i18n.t("SELECTED_ALARM/S"), function (){
+										
+											self.removeRecognized(alarmRecognizedSelected);	
+										})).show();
+										
+								} else {
+										
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS"), function(){
+											
+											self.removeRecognized();	
+										})).show();										
+									}
+									
+								} else {
+
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_RECOGNIZED_ELEMENTS"), null, null)).show();
+								}
+							}
+						} 
+					}
+				);
 			}
 			else if (self.notificationType.id === Notification.INCIDENT.id) {
 				
@@ -302,6 +342,46 @@ export default class Notification {
 								else {
 									
 									(new MessageBox (MessageBox.ERROR, i18n.t("LBL_NO_SELECTED_INCIDENTS"), null, null)).show();
+								}
+							}
+						}
+					}
+				);
+				
+				viewToolbar.cols.push(
+					{
+						view: "button",
+						type: "icon",
+						icon: "mdi mdi-broom",
+						css: "toolbar-button-text",
+						width: TOOLBAR_BUTTONS_WIDTH,
+						label: i18n.t("LBL_CLEAN"),
+						tooltip: i18n.t("LBL_CLEAN_INCIDENT"),
+						on: {
+							onItemClick() {
+
+								if (Array.isArray(self.recognizedNotifications) && self.recognizedNotifications.length > 0) {
+
+									let incidentRecognizedSelected = getSelectedItemsRecognized();
+
+									if (Array.isArray(incidentRecognizedSelected) && incidentRecognizedSelected.length > 0) {
+
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + incidentRecognizedSelected.length + " " + i18n.t("SELECTED_INCIDENT/S"), function (){
+										
+											self.removeRecognized(incidentRecognizedSelected);	
+										})).show();
+									}
+									else {
+
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS"), function(){
+											
+											self.removeRecognized();	
+										})).show();
+									}
+
+								} else {
+
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_RECOGNIZED_ELEMENTS"), null, null)).show();
 								}
 							}
 						}
@@ -447,6 +527,26 @@ export default class Notification {
 				}
 				
 				return items;
+			}
+			
+			function getSelectedItemsRecognized() {
+
+				let list = $$("list-" + self.uid);
+				let itemsRecognized = [];
+
+				if (list) {
+
+					let ids = list.getSelectedId(true);
+
+					if (Array.isArray(ids) && ids.length > 0) {
+
+						ids = ids.map(e => parseInt(e));
+
+						itemsRecognized = self.recognizedNotifications.filter(e => ids.includes(parseInt(e.id)));
+					}
+				}
+
+				return itemsRecognized;
 			}
 			
 			return viewToolbar;
@@ -736,6 +836,33 @@ export default class Notification {
 				list.remove(list.config.data[idxList].id);
 			}
 		}
+	}
+	
+	removeRecognized(notificationsSelected) {
+
+		let list = $$("list-" + this.uid);
+		
+		let notificationsRecognizedSelected = Array.isArray(notificationsSelected) ? notificationsSelected : webix.copy(this.recognizedNotifications);
+		
+		if (Array.isArray(notificationsRecognizedSelected) && notificationsRecognizedSelected.length > 0) {
+			
+			for (let notificationsRecognized of notificationsRecognizedSelected) {
+
+				let notificationToDelete = this.recognizedNotifications.find(notification => notification.id === notificationsRecognized.id);
+
+				if (notificationToDelete) {
+
+					list.remove(notificationToDelete.id);
+				
+					let idx = this.recognizedNotifications.indexOf(notificationToDelete);
+
+					if (idx !== -1) {
+
+						this.recognizedNotifications.splice(idx, 1);
+					}					
+				}
+			}
+		}    
 	}
 	
 	playAudio(sound) {

@@ -287,16 +287,19 @@ export default class ConditionDialogBox {
 						{ 
 							view: "switch", 
 							value: self.nexusAnd,
-							width :125,
-							tooltip: true,
+							width : 120,
+							tooltip: function(){
+								
+								return i18n.t("LBL_TYPE_OF_OPERATION")
+							},
 							on:{
 								onChange: function (newVal, oldVal) {
 
 									updateNexusAnd(newVal);
 								}
 							},
-							onLabel: i18n.t("LBL_AND"),
-      						offLabel: i18n.t("LBL_OR")
+							onLabel: i18n.t("LBL_INCLUSIVE"),
+      						offLabel: i18n.t("LBL_EXCLUSIVE")
 						}
 					]
 				};
@@ -376,6 +379,7 @@ export default class ConditionDialogBox {
 				dialogEntity.height = 600;
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
+				dialogEntity.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 
 				let elements = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id).elementTypeParams;
 				
@@ -439,6 +443,7 @@ export default class ConditionDialogBox {
 				dialogEntity.height = 600;
 				dialogEntity.width = 800;
 				dialogEntity.sortFieldId = 1;
+				dialogEntity.showEmptyRowCol = SearchDialogBox.ID_NOT_SELECTED;
 
 				let elementTypeStates = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id).elementTypeStates;
 				
