@@ -1644,7 +1644,11 @@ export let util = {
 						},
 						function(errSendAuditLog) {
 						
-							onResponse(false);
+							if (onResponse) {
+								
+								onResponse(false);	
+							}
+							
 						}
 					);	
 				}
@@ -1666,18 +1670,28 @@ export let util = {
 									
 									printCommandElementErrors(commandElementErrors);
 									
-									onResponse(false);
+									if (onResponse) {
+										
+										onResponse(false);	
+									}
+									
 								}
 								else {
 									
-									onResponse(true);
+									if (onResponse) {
+										
+										onResponse(true);
+									}
 								}
 								
 							}
 						},
 						function(errSendCommand) {
 							
-							onResponse(false);
+							if (onResponse) {
+								
+								onResponse(false);
+							}
 						}
 					);
 					

@@ -369,18 +369,10 @@ export default class TubeContent {
 											
 									util.element.sendCommand(commands, function(res) {
 										
-										let ms;
-										
 										if (res) {
 										
-											ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+											(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 										}
-										else {
-											
-											ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
-										}
-										
-										ms.show();
 									});
 								}		
 							}
@@ -709,18 +701,10 @@ export default class TubeContent {
 											
 																util.element.sendCommand(commands, function(res) {
 
-																	let ms;
-										
 																	if (res) {
 																	
-																		ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+																		(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 																	}
-																	else {
-																		
-																		ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
-																	}
-																	
-																	ms.show();
 																});
 															}
 														}
@@ -1064,8 +1048,6 @@ export default class TubeContent {
 													if (!res) {
 														
 														clearGrid();
-													
-														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 													}
 													
 													if (++responseSend == cmdMap.size) {

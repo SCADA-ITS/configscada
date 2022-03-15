@@ -349,18 +349,11 @@ export default class TubeContent {
 											
 								util.element.sendCommand(commands, function(res) {
 									
-									let ms;
-										
 									if (res) {
 									
-										ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 									}
-									else {
-										
-										ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
-									}
-									
-									ms.show();
+
 								});
 							}
 						}
@@ -545,18 +538,10 @@ export default class TubeContent {
 											
 														util.element.sendCommand(commands, function(res) {
 															
-															let ms;
-										
 															if (res) {
 															
-																ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 															}
-															else {
-																
-																ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
-															}
-															
-															ms.show();
 														});
 													}												
 												}
@@ -1256,7 +1241,7 @@ export default class TubeContent {
 					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
 					ms.show();
 					
-					function onAccept(res){
+					function onAccept(){
 
 						callbackCloseDialog(true);
 						let command = self.parent.config.commands.SEND_DALI_REGIME;
@@ -1271,18 +1256,10 @@ export default class TubeContent {
 											
 							util.element.sendCommand(commands, function(res) {
 								
-								let ms;
-										
 								if (res) {
 								
-									ms = new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null);	
+									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 								}
-								else {
-									
-									ms = new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null);
-								}
-								
-								ms.show();
 							});
 						}
 					}
@@ -1393,16 +1370,9 @@ export default class TubeContent {
 	
 											self.checkDisableChangeStatusButton();
 											
-											if (res) {
-											
-												if (onExecuted) {
+											if (res && onExecuted) {
 												
-													onExecuted();	
-												}
-											}
-											else {
-												
-												(new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_SEND_ERROR"), null, null)).show();
+												onExecuted();	
 											}
 										});
 									}
