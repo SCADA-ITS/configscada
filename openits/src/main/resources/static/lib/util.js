@@ -1441,7 +1441,7 @@ export let util = {
 			return color;
 		},
 		
-		sendCommand(commands, onResponse) {
+		sendCommandAsync(commands, onResponse) {
 			
 			let showCommentDialog = false;
 			let userData = util.user.getUserData();
@@ -1592,7 +1592,7 @@ export let util = {
 			}
 		},
 		
-		sendCommandSync(commands, onResponse) {
+		sendCommand(commands, onResponse) {
 			
 			let showCommentDialog = false;
 			let userData = util.user.getUserData();
@@ -1683,6 +1683,16 @@ export let util = {
 					
 					function printCommandElementErrors(commandElementErrors) {
 						
+						const LBL_COMMAND_ELEMENT_ERRORS = {
+							
+							1: "LBL_ELEMENT_NOT_CONNECTED",
+							2: "LBL_NOT_COMPLY_PRECONDITIONS",
+							3: "LBL_TIME_OUT_EXPIRED",
+							4: "LBL_GROOVY_NOT_FOUND",
+							5: "LBL_COMMAND_NOT_FOUND",
+							6: "LBL_ELEMENT_NOT_FOUND"
+						}
+						
 						if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
 							
 							let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
@@ -1710,11 +1720,24 @@ export let util = {
 									}	
 								}
 								
+								let description = "";
+								
+								if (Array.isArray(commandElementError.commandElementPreconditions) && commandElementError.commandElementPreconditions.length > 0) {
+									
+									commandElementError.commandElementPreconditions.forEach(commandElementPrecondition => {
+										
+										if (commandElementPrecondition.toStr) {
+											
+											description += commandElementPrecondition.toStr;	
+										}
+									});
+								}
+								
 								dialogEntity.data.push({
 									id: webix.uid(),
 									element: elementAlias,
-									error: commandElementError.error,
-									description: commandElementError.commandElementPreconditions && commandElementError.commandElementPreconditions.toStr ? commandElementPreconditions.toStr : ""
+									error: (commandElementError.error && commandElementError.error > 0) ? i18n.t(LBL_COMMAND_ELEMENT_ERRORS[commandElementError.error]) : "",
+									description: description
 									
 								});
 							});
