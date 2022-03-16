@@ -47,8 +47,6 @@ export default class UserControlPanel extends GenericControlPanel {
 						function onResponse(userSession) {
 							
 							if (userSession && userSession.access === LOGIN_MESSAGE.LOGOUT.id) {
-								
-								util.user.closeSession();
 							
 								let subscriptorService = window.sm.getService(Services.SUBSCRIPTOR_SERVICE);
 								
@@ -56,6 +54,9 @@ export default class UserControlPanel extends GenericControlPanel {
 									
 									subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "");
 								}
+								
+								util.user.closeSession();
+								util.user.redirectLogin();
 							}
 						}
 					);

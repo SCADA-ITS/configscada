@@ -14,9 +14,6 @@ import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
 @Service
 public class ElementBO extends GenericBO {
 
-	@Autowired
-	LocationBO locationBO;
-
 	@PostConstruct
 	private void initialize() {
 		
@@ -31,6 +28,15 @@ public class ElementBO extends GenericBO {
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, elements);
 	}
+	
+	public List<Map<String, Object>> getElementsByStretchs(List<String> stretchIds, String elementTypeId) {
+
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_STRETCHS, new Object[] { stretchIds, elementTypeId });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_BY_STRETCHS, elements);
+	}
+	
 	
 	public List<Map<String, Object>> getElementsCommands(List<String> ids) {
 

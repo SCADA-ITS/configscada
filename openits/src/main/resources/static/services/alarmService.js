@@ -27,6 +27,17 @@ export default class AlarmService extends GenericModule {
 			}
 		};
 		this.notification = undefined;
+		this.idStompSubscriptor = undefined;
+	}
+	
+	destroy() {
+		
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+		if (stompSubscriptorService && self.idStompSubscriptor) {
+
+			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+		}
 	}
 	
 	getNotification() {
@@ -116,7 +127,7 @@ export default class AlarmService extends GenericModule {
 		
 					if (stompSubscriptorService) {
 		
-						stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.ws.active_alarms, onMessage);
+						self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.ws.active_alarms, onMessage);
 					}
 		
 					function onMessage(data) {

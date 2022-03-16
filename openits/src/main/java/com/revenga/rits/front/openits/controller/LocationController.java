@@ -1,11 +1,15 @@
 package com.revenga.rits.front.openits.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,6 +76,13 @@ public class LocationController {
 			required = true) @PathVariable String id) {
 		
 		return new ResponseEntity<>(locationBO.getLocationByStretch(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/locations/byStretchs")
+	@ApiOperation(value = "Get locations by stretchs", notes = "locations by stretchs")
+	public ResponseEntity<Object> getLocationsByStretchs(@RequestBody List<String> stretchIds) {
+		
+		return new ResponseEntity<>(locationBO.getLocationsByStretchs(stretchIds), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/roads")

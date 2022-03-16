@@ -22,6 +22,17 @@ export default class EventService extends GenericModule {
 		};
 		
 		this.notification = undefined;
+		this.idStompSubscriptor = undefined;
+	}
+	
+	destroy() {
+		
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+		if (stompSubscriptorService && self.idStompSubscriptor) {
+
+			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+		}
 	}
 	
 	getNotification() {
@@ -143,7 +154,7 @@ export default class EventService extends GenericModule {
 	
 				if (stompSubscriptorService) {
 	
-					stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.eventPendingToConfirm, onMessage);
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.eventPendingToConfirm, onMessage);
 				}
 	
 				function onMessage(data) {

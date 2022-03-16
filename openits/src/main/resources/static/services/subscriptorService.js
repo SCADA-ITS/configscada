@@ -54,6 +54,8 @@ export default class SubscriptorService extends GenericModule {
 						data.type == SubscriptorService.TYPE_SESSION_UNAUTHORIZED) {
 						
 						util.user.closeSession();
+						
+						util.user.redirectLogin();
 					}
 				}
 			}

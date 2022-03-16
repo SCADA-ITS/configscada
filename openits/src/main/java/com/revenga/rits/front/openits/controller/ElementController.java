@@ -46,6 +46,25 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getElements(ids), HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/byStretchs")
+	@ApiOperation(value = "Get elements by stretchs", notes = "Get elements by strechs")
+	public ResponseEntity<Object> getElementsByStretchs(@RequestBody List<String> stretchIds) {
+		
+		return new ResponseEntity<>(elementBO.getElementsByStretchs(stretchIds, null), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/byStretchs/{elementTypeId}")
+	@ApiOperation(value = "Get elements by stretchs and elementType", notes = "Get elements by stretchs and elementType")
+	public ResponseEntity<Object> getElementsByStretchsElementType(@RequestBody List<String> stretchIds, @ApiParam(
+			name = "elementTypeId",
+			type = "String",
+			value = "Element type id",
+			example = "ElementType:33",
+			required = true) @PathVariable String elementTypeId) {
+		
+		return new ResponseEntity<>(elementBO.getElementsByStretchs(stretchIds, elementTypeId), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/commands")
 	@ApiOperation(value = "Get selected elements only with commands", notes = "Get selected elements only with commands")
 	public ResponseEntity<Object> getElementsCommands(@RequestBody List<String> ids) {

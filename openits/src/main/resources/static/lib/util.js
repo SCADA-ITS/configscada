@@ -819,7 +819,10 @@ export let util = {
 					}
 				});
 			}
-					
+		},
+		
+		redirectLogin() {
+
 			if (util.ui.isExternal()) {
 				
 				window.open('', '_self').close();	
@@ -827,7 +830,7 @@ export let util = {
 			else {
 				
 				window.location = "./login.html";
-			}
+			}			
 		},
 
 		keepAlive(onResponse, onError) {

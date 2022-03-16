@@ -58,11 +58,11 @@ export default class PlanModule extends GenericModule {
 				
 					if (Array.isArray(plans) && plans.length > 0) {
 						
-						let showCommentDialog = (self.config.requiredCommentToExecute === true);
+						let showCommentDialog = (self.config.requiredCommentToExecute === true && !self.args.noComments);
 						
 						auditLogs = getAuditLogs();
-					
-						if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
+						
+						if (showCommentDialog && Array.isArray(auditLogs) && auditLogs.length > 0) {
 							
 							(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
 		

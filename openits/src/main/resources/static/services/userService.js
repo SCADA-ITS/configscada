@@ -102,11 +102,12 @@ export default class UserService extends GenericModule {
 										subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_UNAUTHORIZED, "");
 
 										util.ui.clearScreen();
+										util.user.closeSession();
 										
 										(new MessageBox(MessageBox.WARN, i18n.t(labelMsg),  
 											function onAccept() {
 												
-												util.user.closeSession();
+												util.user.redirectLogin();
 											}
 										)).show();
 									}
@@ -122,11 +123,13 @@ export default class UserService extends GenericModule {
 								}
 
 								util.ui.clearScreen();
+								util.user.closeSession();
 								
 								(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_WITHOUT_COMM"),  
 									function onAccept() {
 										
-										util.user.closeSession();
+										
+										util.user.redirectLogin();
 									}
 								)).show();
 							}
@@ -142,6 +145,7 @@ export default class UserService extends GenericModule {
 								subscriptorService.sendMessage(SubscriptorService.TYPE_SESSION_LOGOUT, "Exceeded idle time");
 								
 								util.ui.clearScreen();
+								util.user.closeSession();
 								
 								if (self.keepAliveInterval) {
 				
@@ -154,8 +158,8 @@ export default class UserService extends GenericModule {
 										
 										(new MessageBox(MessageBox.WARN, i18n.t("LBL_SESSION_CLOSED_BY_EXCEED_IDLE_TIME"),  
 											function onAccept() {
-												
-												util.user.closeSession();	
+
+												util.user.redirectLogin();	
 											}
 										)).show();
 									}

@@ -252,6 +252,7 @@ export default class PlanExecutor extends GenericModule {
 	
 											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PlanAction.PLAY));
 											btnConfig.confirm = false;
+											btnConfig.noComments = true;
 	
 											open_module(btnConfig);
 										}
@@ -260,6 +261,7 @@ export default class PlanExecutor extends GenericModule {
 	
 											let btnConfig = webix.copy(self.config.actionButtons.find(e => e.action == PlanAction.CANCEL));
 											btnConfig.confirm = false;
+											btnConfig.noComments = true;
 	
 											open_module(btnConfig);
 										}
@@ -726,6 +728,7 @@ export default class PlanExecutor extends GenericModule {
 			args.confirm = btnConfig.confirm;
 			args.confirmTitle = btnConfig.confirmTitle;
 			args.confirmDescription = btnConfig.confirmDescription;
+			args.noComments = btnConfig.noComments;
 
 			util.module.open(module, btnConfig.moduleAction, null, null, args);
 		}

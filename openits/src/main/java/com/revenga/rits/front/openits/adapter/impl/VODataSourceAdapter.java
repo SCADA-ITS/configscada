@@ -61,6 +61,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE = getPropertyInt("get_elements_by_element_type");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_FOR_GRID = getPropertyInt("get_elements_by_element_type_for_grid");
 	public static final int DATA_SOURCE_GET_ELEMENTS_BY_ELEMENT_TYPE_SUMMARY = getPropertyInt("get_elements_by_element_type_summary");
+	public static final int DATA_SOURCE_GET_ELEMENTS_BY_STRETCHS = getPropertyInt("get_elements_by_stretchs");
 	public static final int DATA_SOURCE_GET_ELEMENTS = getPropertyInt("get_elements");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY = getPropertyInt("get_elements_array");
 	public static final int DATA_SOURCE_GET_ELEMENTS_ARRAY_COMMANDS = getPropertyInt("get_elements_array_commands");
@@ -86,6 +87,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_LOCATIONS = getPropertyInt("get_locations");
 	public static final int DATA_SOURCE_GET_LOCATIONS_SUMMARY = getPropertyInt("get_locations_summary");
 	public static final int DATA_SOURCE_GET_LOCATION_BY_STRETCH = getPropertyInt("get_location_by_stretch");
+	public static final int DATA_SOURCE_GET_LOCATIONS_BY_STRETCHS = getPropertyInt("get_locations_by_stretchs");
 	public static final int DATA_SOURCE_GET_LOCATION = getPropertyInt("get_location");
 	public static final int DATA_SOURCE_GET_ROADS = getPropertyInt("get_roads");
 	public static final int DATA_SOURCE_GET_ROAD = getPropertyInt("get_road");
@@ -487,7 +489,7 @@ public class VODataSourceAdapter {
 			for (int paramTypePos = 0; paramTypePos < objParamValues.length; paramTypePos++) {
 
 				Object objValue = objParamValues[paramTypePos];
-				String paramTypeGraphQL = "";
+				String paramTypeGraphQL = null;
 
 				if (objValue instanceof String) {
 
@@ -518,11 +520,22 @@ public class VODataSourceAdapter {
 					}
 				} else {
 
-					paramTypeGraphQL = String.format("%s:%s", paramTypeArray[paramTypePos], objValue.toString());
+					if (objValue != null) {
+						
+						paramTypeGraphQL = String.format("%s:%s", paramTypeArray[paramTypePos], objValue.toString());
+					}
+					
 				}
 
-				paramTypeList.add(paramTypeGraphQL);
-				paramsGraphQL = String.join(",", paramTypeList);
+				if (!StringUtils.isEmpty(paramTypeGraphQL)) {
+					
+					paramTypeList.add(paramTypeGraphQL);
+				}
+			}
+			
+			if (!CollectionUtils.isEmpty(paramTypeList)) {
+				
+				paramsGraphQL = String.join(",", paramTypeList);	
 			}
 		}
 

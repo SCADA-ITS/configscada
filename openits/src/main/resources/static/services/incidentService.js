@@ -23,8 +23,19 @@ export default class IncidentService extends GenericModule {
 		};
 		
 		this.notification = undefined;
+		this.idStompSubscriptor = undefined;
 		
 		this.viewIncidentPermission = util.module.isAllowedPermission(module.config.notification.viewIncidentPermission);
+	}
+	
+	destroy() {
+		
+		let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+	
+		if (stompSubscriptorService && self.idStompSubscriptor) {
+
+			stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+		}
 	}
 	
 	getNotification() {
@@ -81,7 +92,7 @@ export default class IncidentService extends GenericModule {
 	
 				if (stompSubscriptorService) {
 	
-					stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.incidentPendingToConfirm, onMessage);
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.config.stats.topic.incidentPendingToConfirm, onMessage);
 				}
 	
 				function onMessage(data) {

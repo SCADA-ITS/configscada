@@ -23,19 +23,20 @@ export default class IncidentReportTabInfo {
 
 				let objField = self.config.infoFields.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
-				let stretchs = "-";
+				let stretchs = [];
 
 				if (self.incidentReport.spath && Array.isArray(self.incidentReport.spath) && self.incidentReport.spath.length > 0) {
 					
-					stretchs = "";
-
-					for (let stretch of self.incidentReport.spath) {
-
-						if (stretchs != "") {
-							stretchs += ", ";
+					stretchs = self.incidentReport.spath.reduce((result, stretch) => {
+					
+						if (stretch.id != self.incidentReport.affectionStretch.id) {
+							
+							result.push(stretch.alias + " (" + stretch.road.alias + ")");
 						}
-						stretchs += stretch.alias + "-" + stretch.road.alias;
-					}
+						
+						return result;
+						
+					}, []).join();
 				}
 
 				const fieldsValues = {
