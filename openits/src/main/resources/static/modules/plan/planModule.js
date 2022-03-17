@@ -64,7 +64,7 @@ export default class PlanModule extends GenericModule {
 						
 						if (showCommentDialog && Array.isArray(auditLogs) && auditLogs.length > 0) {
 							
-							(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
+							(new InputDialogBox(i18n.t("LBL_SEND_PLAN_COMMENT_DIALOG"), i18n.t("LBL_SEND_PLAN_COMMENT"), function(comment) {
 		
 								auditLogs = auditLogs.map(auditLog => {
 									

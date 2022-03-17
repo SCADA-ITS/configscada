@@ -247,7 +247,7 @@ export default class InputDialogBox {
 						id: "input-dialog-" + self.uid,
 						name: "input-dialog-" + self.uid,
 						height: 80,
-						placeholder: self.text,
+						//placeholder: self.text,
 						value: self.currentValue ? self.currentValue : undefined,
 
 						validate: function(value) {
