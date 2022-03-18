@@ -66,7 +66,7 @@ public class ImsIncidentReportBO extends GenericBO {
 	static final String FIELD_INCIDENT_TASK_PLAN_ID = "incidentTaskPlanId";
 	static final String FIELD_INCIDENT_TYPE = "incidentType";
 	static final String FIELD_INCIDENT_TYPE_ID = "incidentTypeId";
-	
+
 	static final String FIELD_SEQUENCE_OF_STATES = "sequenceOfStates";
 	static final String FIELD_STATE = "state";
 	static final String FIELD_TASK_STATES = "taskStates";
@@ -82,12 +82,12 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	static final String FIELD_LOCATION_ID = "locationId";
 	static final String FIELD_AFFECTION_STRETCH_ID = "affectionStretchId";
-	
+
 	static final String FIELD_INCIDENT_TYPE_TASK_VALUES = "incidentTypeTaskValues";
-	
+
 	@PostConstruct
 	private void initialize() {
-		
+
 		dataSourceList = VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS;
 		dataSourceItem = VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT;
 	}
@@ -118,7 +118,6 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		if (incidentReport != null && incidentTypeTaskId != null) {
 
-			
 			if (incidentReport.containsKey(FIELD_TASK_STATES)) {
 
 				Object objectTaskStates = incidentReport.get(FIELD_TASK_STATES);
@@ -143,10 +142,19 @@ public class ImsIncidentReportBO extends GenericBO {
 
 									Object objIncidentTypeTaskId = incidentTypeTask.get(FIELD_ID);
 
-									if (objIncidentTypeTaskId != null && incidentTypeTaskId
-											.equals(objIncidentTypeTaskId)) {
+									if (objIncidentTypeTaskId != null
+											&& incidentTypeTaskId.equals(objIncidentTypeTaskId)) {
 
-										return incidentTypeTask.get(FIELD_ALIAS)+" - "+incidentTypeTask.get(FIELD_DESCRIPTION);
+										StringBuilder stringBuilder = new StringBuilder();
+										stringBuilder.append(incidentTypeTask.get(FIELD_ALIAS));
+
+										if (incidentTypeTask.containsKey(FIELD_DESCRIPTION)
+												&& incidentTypeTask.get(FIELD_DESCRIPTION) != null) {
+
+											stringBuilder.append(" - " + incidentTypeTask.get(FIELD_DESCRIPTION));
+										}
+
+										return stringBuilder.toString();
 									}
 								}
 							}
@@ -154,7 +162,7 @@ public class ImsIncidentReportBO extends GenericBO {
 					}
 				}
 			}
-			
+
 			if (incidentReport.containsKey(FIELD_SEQUENCE_OF_STATES)) {
 
 				Object objSequenceOfStates = incidentReport.get(FIELD_SEQUENCE_OF_STATES);
@@ -193,10 +201,20 @@ public class ImsIncidentReportBO extends GenericBO {
 
 													Object objIncidentTypeTaskId = incidentTypeTask.get(FIELD_ID);
 
-													if (objIncidentTypeTaskId != null && incidentTypeTaskId
-															.equals(objIncidentTypeTaskId)) {
+													if (objIncidentTypeTaskId != null
+															&& incidentTypeTaskId.equals(objIncidentTypeTaskId)) {
 
-														return incidentTypeTask.get(FIELD_ALIAS)+" - "+incidentTypeTask.get(FIELD_DESCRIPTION);
+														StringBuilder stringBuilder = new StringBuilder();
+														stringBuilder.append(incidentTypeTask.get(FIELD_ALIAS));
+
+														if (incidentTypeTask.containsKey(FIELD_DESCRIPTION)
+																&& incidentTypeTask.get(FIELD_DESCRIPTION) != null) {
+
+															stringBuilder.append(
+																	" - " + incidentTypeTask.get(FIELD_DESCRIPTION));
+														}
+
+														return stringBuilder.toString();
 													}
 												}
 											}
@@ -455,9 +473,11 @@ public class ImsIncidentReportBO extends GenericBO {
 			HttpSession httpSession = attr.getRequest().getSession(true);
 
 			UserSessionUI userSession = sessionBO.getUserSession(httpSession.getId());
-			
-			if (userSession != null && !StringUtils.isEmpty((String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID)) && userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
-				
+
+			if (userSession != null
+					&& !StringUtils.isEmpty((String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID))
+					&& userSession.getAccess().equals(UserSessionUI.AUTHORIZED)) {
+
 				userId = (String) userSession.getUser().get(UserSessionUI.USER_FIELD_ID);
 			}
 
@@ -540,8 +560,8 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	public List<Map<String, Object>> getSummaryList() {
 
-		List<Map<String, Object>> incidentReports = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY,
-				null);
+		List<Map<String, Object>> incidentReports = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY, null);
 
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORTS_SUMMARY, incidentReports);
 	}
@@ -551,8 +571,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		Map<String, Object> incidentReport = voDataSourceAdapter
 				.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY, new Object[] { id });
 
-		return vo2uiAdapter.convert(
-				VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY,
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_INCIDENT_REPORT_SUMMARY,
 				incidentReport);
 	}
 
@@ -678,21 +697,22 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		Boolean res = false;
 		StringBuilder taskValues = new StringBuilder();
-		
+
 		Map<String, Object> input = new HashMap<>();
 
 		input.put(FIELD_INCIDENT_REPORT_ID, id);
 		input.put(FIELD_INCIDENT_TYPE_TASK_ID, incidentTypeTaskId);
-		
+
 		if (incidentTypeTaskValues instanceof Map) {
-			
+
 			@SuppressWarnings("unchecked")
 			Map<String, Object> mapIncidentTypeTaskValues = (Map<String, Object>) incidentTypeTaskValues;
 
 			if (mapIncidentTypeTaskValues.containsKey(FIELD_INCIDENT_TYPE_TASK_VALUES)) {
-				
-				input.put(FIELD_INCIDENT_TYPE_TASK_VALUES, mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES));
-				
+
+				input.put(FIELD_INCIDENT_TYPE_TASK_VALUES,
+						mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES));
+
 				Object objIncidentTypeTaskValues = mapIncidentTypeTaskValues.get(FIELD_INCIDENT_TYPE_TASK_VALUES);
 
 				if (objIncidentTypeTaskValues instanceof List) {
@@ -707,10 +727,10 @@ public class ImsIncidentReportBO extends GenericBO {
 
 							if (incidentTypeTaskValue.containsKey(FIELD_VALUE)) {
 
-								if(taskValues.length() != 0) {
-									
+								if (taskValues.length() != 0) {
+
 									taskValues.append(", ");
-									
+
 								} else {
 									taskValues.append(": ");
 								}
@@ -724,18 +744,16 @@ public class ImsIncidentReportBO extends GenericBO {
 		}
 
 		Map<String, Object> incidentReport = voDataSourceAdapter
-				.put(VODataSourceAdapter.DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT, input);
+				.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT, new Object[] { id });
+
+		addLog(incidentReport, id, LOG_SUBTYPE_FINALIZED_TASK, null,
+				getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId) + taskValues.toString());
+
+		incidentReport = voDataSourceAdapter.put(VODataSourceAdapter.DATA_SOURCE_SEND_FINALIZE_TASK_INCIDENT_REPORT,
+				input);
 
 		res = checkMapIsBoolean(incidentReport);
 
-		if (Boolean.TRUE.equals(res)) {
-
-			incidentReport = voDataSourceAdapter.get(VODataSourceAdapter.DATA_SOURCE_GET_INCIDENT_REPORT,
-					new Object[] { id });
-
-			addLog(incidentReport, id, LOG_SUBTYPE_FINALIZED_TASK, null,
-					getIncidentTypeTaskAlias(incidentReport, incidentTypeTaskId) + taskValues.toString());
-		}
 		return res;
 	}
 
@@ -827,7 +845,7 @@ public class ImsIncidentReportBO extends GenericBO {
 		input.put(FIELD_LOCATION_ID, locationId);
 		input.put(FIELD_AFFECTION_STRETCH_ID, stretchId);
 		input.put(FIELD_INCIDENT_TYPE_ID, incidentTypeId);
-		
+
 		Map<String, Object> incidentReport = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CHANGE_INCIDENT_REPORT, input);
 
