@@ -2,6 +2,7 @@ import { util } from "../../lib/util.js";
 import IncidentReportTaskInfo from "./incidentReportTaskInfo.js";
 import IncidentReportTaskParam from "./incidentReportTaskParam.js";
 import IncidentReportTaskPlan from "./incidentReportTaskPlan.js";
+import IncidentReportTaskSignallingSpath from "./incidentReportTaskSignallingSpath.js";
 import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTaskContent {
@@ -18,6 +19,7 @@ export default class IncidentReportTaskContent {
 		this.incidentReportTaskPlan = undefined;
 		this.incidentReportTaskParam = undefined;
 		this.incidentReportTaskInfo = undefined;
+		this.incidentReportTaskSignallingSpath = undefined;
 	}
 
 	getView() {
@@ -25,6 +27,7 @@ export default class IncidentReportTaskContent {
 		let self = this;
 		let view;
 		let userData = self.parent.parent.userData;
+		let stretchsInfo = self.parent.parent.stretchsInfo;
 		let sameUser =(userData.id === self.incidentReport.currentUser.id);
 		
 		view = {
@@ -89,9 +92,9 @@ export default class IncidentReportTaskContent {
 				});
 			}
 			
-			// TODO: Task param
 			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
-				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) && 
+				Array.isArray(self.taskState.incidentTypeTask.taskType.taskTypeParams) &&
+				self.taskState.incidentTypeTask.taskType.id != self.config.taskTypeSignalling && 
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.findIndex(e => self.config.taskParamTypes.includes(e.paramType.id)) !== -1) {
 				
@@ -102,9 +105,22 @@ export default class IncidentReportTaskContent {
 					body: self.incidentReportTaskParam.getView()
 				});
 			}
-			
-			// END
 
+			if (self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType &&
+				self.taskState.incidentTypeTask.taskType.id == self.config.taskTypeSignalling &&
+				Array.isArray(self.taskState.incidentTypeTask.incidentTypeTaskValues) &&
+				self.taskState.incidentTypeTask.incidentTypeTaskValues.length === 1 &&
+				
+				self.taskState.incidentTypeTask.incidentTypeTaskValues[0].taskTypeParam.id == self.config.taskTypeParamSignallingToSpath
+			) {
+
+				self.incidentReportTaskSignallingSpath = new IncidentReportTaskSignallingSpath(self.config, self.taskState, stretchsInfo, self.index, self.uid);
+
+				viewBody.cells.push({
+					header: i18n.t("LBL_SIGNALLING"),
+					body: self.incidentReportTaskSignallingSpath.getView()
+				});
+			}
 			
 			self.incidentReportTaskInfo = new IncidentReportTaskInfo(self.incidentReport, self.taskState, self.index, self.uid);
 			
@@ -170,7 +186,12 @@ export default class IncidentReportTaskContent {
 										
 										if (self.incidentReportTaskParam) {
 										
-											body = { incidentTypeTaskValues: self.incidentReportTaskParam.getIncidentTypePaskValues() };	
+											body = { incidentTypeTaskValues: self.incidentReportTaskParam.getIncidentTypeTaskValues() };	
+										}
+										
+										if (self.incidentReportTaskSignallingSpath) {
+										
+											body = { incidentTypeTaskValues: self.incidentReportTaskSignallingSpath.getIncidentTypeTaskValues() };	
 										}
 		
 										console.log("Incident report action => " + endpoint);

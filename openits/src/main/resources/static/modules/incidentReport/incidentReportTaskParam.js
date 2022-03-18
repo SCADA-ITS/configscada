@@ -308,10 +308,10 @@ export default class IncidentReportTaskParam {
 		return viewParams;
 	}
 	
-	getIncidentTypePaskValues() {
+	getIncidentTypeTaskValues() {
 		
 		let self = this;
-		let incidentTypePaskValues = undefined;
+		let incidentTypeTaskValues = undefined;
 		
 		if (self.dtParams) {
 			
@@ -319,9 +319,9 @@ export default class IncidentReportTaskParam {
 			
 			if (Array.isArray(dtItems)) {
 				
-				incidentTypePaskValues = dtItems.filter(e => e.currentValue != e.newValue); 
+				incidentTypeTaskValues = dtItems.filter(e => e.currentValue != e.newValue); 
 				
-				incidentTypePaskValues = incidentTypePaskValues.map(e => {
+				incidentTypeTaskValues = incidentTypeTaskValues.map(e => {
 						
 					return {
 						
@@ -332,6 +332,6 @@ export default class IncidentReportTaskParam {
 			}
 		}
 		
-		return incidentTypePaskValues;
+		return incidentTypeTaskValues;
 	}
 }

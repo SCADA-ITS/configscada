@@ -5,7 +5,8 @@
 		"cancel": 100403,
 		"assign": 100404,
 		"executePlanFromIncident": 102502,
-		"editPlanFromIncident": 102901
+		"editPlanFromIncident": 102901,
+		"equipmentViewer": 101401
 	},
 	"restEndpoints": {
 	 	"incidentReport": "incidents/reports/${id}",
@@ -13,7 +14,8 @@
 		"stretchsByIncidentType": "locations/stretchs/incidentType/${id}",
 		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes",
-		"locationsStretchs": "locations/stretchs"		
+		"locationsStretchs": "locations/stretchs",
+		"elementsStretchs": "elements/byStretchs"
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {
@@ -55,6 +57,8 @@
 	"locationTypes":["LocationType:2"],
 	"stretchTypes":["StretchType:2"],
 	"taskParamTypes":["ParamType:1"],
+	"taskTypeSignalling": "ImsTaskType:1",
+	"taskTypeParamSignallingToSpath": "ImsTaskTypeParam:1:1",
 	"defaultDocDirs": ["ims/common", "ims/incidentType/${incidentTypeId}"],
 	"defaultAttachmentDir": "ims/incidentReport/${incidentReportId}",
 	"requiredPermissions": {

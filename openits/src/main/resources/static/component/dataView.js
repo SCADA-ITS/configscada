@@ -64,9 +64,15 @@ export default class DataView {
 		
 		function drawToolbar() {
 			
+			let optionCmdButtons = getOptions(DataView.Options.CMD_BUTTONS);
+			let optionGroup = getOptions(DataView.Options.GROUP);
+			let optionSearch = getOptions(DataView.Options.SEARCH);
+			
 			let viewtoolbar = {
 			
 				view: "toolbar",
+				hidden: !(optionCmdButtons || optionGroup || optionSearch),
+				height: 42,
 				borderless: true,
 				elements: function() {
 					
@@ -74,19 +80,19 @@ export default class DataView {
 					
 					elements.push({ width: 4 });
 					
-					if (getOptions(DataView.Options.CMD_BUTTONS)) {
+					if (optionCmdButtons) {
 						
 						elements.push(drawCommandButtons());	
 					}
 					
 					elements.push({});
 					
-					if (getOptions(DataView.Options.GROUP)) {
+					if (optionGroup) {
 						
 						elements.push(drawComboGroup());	
 					}
 					
-					if (getOptions(DataView.Options.SEARCH)) {
+					if (optionSearch) {
 						
 						elements.push(drawSearchBox());
 					}

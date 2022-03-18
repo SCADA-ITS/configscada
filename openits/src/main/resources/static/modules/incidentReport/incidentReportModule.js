@@ -15,6 +15,7 @@ export default class IncidentReportModule extends GenericModule {
 		this.currentSequenceOfState = undefined;
 
 		this.incidentReport = undefined;
+		this.stretchsInfo = undefined;
 		this.stompClient = undefined;
 		this.idStompSubscriptor = undefined;
 		this.disconnectStomp = true;
@@ -321,11 +322,69 @@ export default class IncidentReportModule extends GenericModule {
 				if (dat != null) {
 
 					self.incidentReport = dat.json();
-
-					self.update();
+					
+					self.loadStretchs(function() {
+						
+						self.update();	
+					});
 				}
 
 			}, function(response) { util.ajax.handleError(response); });
+		}
+	}
+	
+	loadStretchs(onLoad) {
+		
+		let self = this;
+		
+		if (self.incidentReport && Array.isArray(self.incidentReport.spath) && self.incidentReport.spath.length > 0) {
+			
+			let stretchs = self.incidentReport.spath.map(spath => {
+				
+				return {
+					
+					id: spath.id,
+					position: spath.position,
+					elements: []
+				}
+			});
+			
+			let stretchIds = stretchs.map(stretch => { return stretch.id });
+			
+			webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elementsStretchs, JSON.stringify(stretchIds)).then(function(elementsResponse) {
+
+				if (elementsResponse) {
+					
+					let elementsInStretchs = elementsResponse.json();
+					
+					assignElementsToStretchs(elementsInStretchs);
+					
+					self.stretchsInfo = stretchs;
+					
+					if (onLoad) {
+						
+						onLoad();
+					}
+				}
+
+			}, function(response) { util.ajax.handleError(response); });
+			
+			function assignElementsToStretchs(elements) {
+				
+				if (Array.isArray(stretchs)) {
+					
+					stretchs.forEach(stretch => {
+						
+						elements.forEach(element => {
+							
+							if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
+							
+								stretch.elements.push(element);	
+							}
+						});
+					});
+				}
+			}
 		}
 	}
 
