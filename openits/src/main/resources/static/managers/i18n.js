@@ -1,5 +1,6 @@
 const I18N_ENDPOINT_TRANSLATIONS = appConfig.restUrl + "i18n/translations";
 const I18N_MODULE = 1;
+const I18N_PREFIX = "LBL_";
 
 function load(i18n, onLoad) {
 			
@@ -44,6 +45,26 @@ export default class I18n {
 	getLocale() {
 		
 		return this.localeCode;
+	}
+	
+	tPhrase(string) {
+
+		let stringArr = string.split(" ");
+
+		for (let i = 0; i < stringArr.length; i++) {
+
+			if (stringArr[i].startsWith(I18N_PREFIX)) {
+
+				stringArr[i] = this.t(stringArr[i]);
+
+				if (i != 0) {
+
+					stringArr[i] = stringArr[i].toLowerCase();
+				}
+			}
+		}
+		
+		return stringArr.join(" ");
 	}
 	
 	t(label, values) {

@@ -248,8 +248,7 @@ export default class SignalingManagerModule extends GenericModule {
 							}
 						}
 						
-						webix.ui(getViewHeader(), $$("view-main-content-signaling-header-" + self.uid));
-
+						
 						function drawContent(view) {
 
 							let content = $$("view-main-content-signaling-module-" + self.uid);
@@ -269,99 +268,6 @@ export default class SignalingManagerModule extends GenericModule {
 							}
 						}
 					}
-				}
-				
-				function getViewHeader() {
-					
-					let viewHeader;
-					let elementTypeLabelDescription;
-					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-					const _TRUE = "true";
-					
-					if (elementType) {
-						
-						elementTypeLabelDescription = elementType.labelDescription; 
-					}
-					
-					let label = i18n.t("LBL_EQUIPMENT_SELECTED") + ": " + elementIds.length + " " + i18n.t(element.elementType.labelAlias) + (elementTypeLabelDescription ? " (" + i18n.t(elementTypeLabelDescription) + ")" : ""); 
-					
-					if (Array.isArray(elementIds) && elementIds.length > 0) {
-
-						if ((elementIds.length > 1 && !elementType.showSignalingManagerSelectedItems && !elementType.commandModule)  || 
-						(elementIds.length > 1 && elementType.showSignalingManagerSelectedItems && elementType.showSignalingManagerSelectedItems === _TRUE && !elementType.commandModule)) {
-
-							viewHeader = {
-								id: "view-main-content-signaling-header-" + self.uid,
-								cols: [
-									{ width: 50 },
-									{
-										rows: [
-											{ height: 10 },
-											{
-												view: "label",
-												label: label, 
-												align: "center",
-												//width: 350,
-												css: "label-window-alarms",
-												on: {
-													onItemClick: function(id) {
-						
-														getWindowEquipmentSelected();
-													}
-												}
-											},
-											{ height: 10 }
-										]
-									},
-									{ width: 50 }
-								]
-							}	
-						}
-						else {
-							
-							viewHeader = { 
-								id: "view-main-content-signaling-header-" + self.uid,
-								height: 1
-							};
-						}
-					}
-					
-					function getWindowEquipmentSelected() {
-	
-						let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
-			
-						dialogEntity.data = [];
-						
-						dialogEntity.pkField = "id"
-						dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
-						dialogEntity.height = 600;
-						dialogEntity.width = 800;
-						
-						let elements = window.em.getAll(EntityType.ELEMENT);
-						
-						if (Array.isArray(elements) && elements.length > 0) {
-								
-							elements.forEach(el => {
-				
-								let ele = elementIds.find(e => e === el.id);
-				
-								if (ele) {
-									
-									dialogEntity.data.push({
-										id: el.id,
-										element: el.alias,
-										elementType: i18n.t(el.elementType.labelAlias)
-									})
-								}
-							});
-						}
-							
-						let s = new SearchDialogBox(label, dialogEntity);
-			
-						s.show();
-					}
-					
-					return viewHeader;
 				}
 			}
 			
@@ -430,9 +336,6 @@ export default class SignalingManagerModule extends GenericModule {
 				css: {"box-sizing": "border-box"},
 				body: {
 					rows: [
-						{
-							id: "view-main-content-signaling-header-" + self.uid
-						},
 						{
 							id: "view-main-content-signaling-module-" + self.uid
 						}

@@ -2263,8 +2263,9 @@ export default class DataTable {
 
 		let self = this;
 		let grid = $$("dt-" + this.uid);
+		let resultSelect = this.getGridOptions(GridOptions.SELECT);
 
-		if (grid) {
+		if (grid && resultSelect) {
 
 			grid.attachEvent("onItemDblClick", function(id, e, node) {
 

@@ -1,6 +1,7 @@
 import GenericModule from "../../../modules/genericModule.js";
 import { util } from "../../../lib/util.js";
 import GenericSignalingCommand from "./genericSignalingCommand.js";
+import SearchDialogBox from "../../../component/searchDialogBox.js";
 
 export default class GenericSignalingModule extends GenericModule {
 
@@ -80,11 +81,11 @@ export default class GenericSignalingModule extends GenericModule {
 				}
 	
 				function getViewHeader() {
-					
-					let viewHeader = { height: 1 };
-					
+
+					let viewHeader = {height: 1};
+
 					if (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1) {
-					
+
 						viewHeader = {
 							cols: [
 								{
@@ -103,9 +104,81 @@ export default class GenericSignalingModule extends GenericModule {
 								},
 								{}
 							]
-						};	
+						};
+
+					} else if ((Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1) && (self.element && Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0)){
+
+						let elementTypeLabelDescription;
+						let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
+
+						if (elementType) {
+
+							elementTypeLabelDescription = elementType.labelDescription;
+						}
+
+						let label = i18n.t("LBL_EQUIPMENT_SELECTED") + ": " + self.args.selectedPks.length + " " + i18n.t(self.element.elementType.labelAlias) + (elementTypeLabelDescription ? " (" + i18n.t(elementTypeLabelDescription) + ")" : "");
+
+						viewHeader = {
+							id: "view-main-content-signaling-header-" + self.uid,
+							cols: [
+								{ width: 50 },
+								{
+									rows: [
+										{ height: 10 },
+										{
+											id: "signaling-header" + self.uid,
+											view: "label",
+											label: label,
+											align: "center",
+											//width: 350,
+											css: "label-window-alarms",
+											on: {
+												onItemClick: function(id) {
+
+													getWindowEquipmentSelected();
+												}
+											}
+										},
+										{ height: 10 }
+									]
+								},
+								{ width: 50 }
+							]
+						}
+
+
+						function getWindowEquipmentSelected() {					
+
+							let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
+
+							dialogEntity.data = [];
+
+							dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
+
+							let elements = window.em.getAll(EntityType.ELEMENT);
+
+							if (Array.isArray(elements) && elements.length > 0) {
+
+								elements.forEach(el => {
+
+									let ele = self.args.selectedPks.find(e => e === el.id);
+
+									if (ele) {
+
+										dialogEntity.data.push({
+											id: el.id,
+											element: el.alias,
+											elementType: i18n.t(el.elementType.labelAlias)
+										})
+									}
+								});
+							}
+
+							let s = new SearchDialogBox(label, dialogEntity);
+							s.show();
+						}
 					}
-					
+
 					return viewHeader;
 				}
 				
