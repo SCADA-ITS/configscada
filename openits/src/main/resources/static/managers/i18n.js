@@ -49,18 +49,45 @@ export default class I18n {
 	
 	tPhrase(string) {
 
+		let regAlphanumeric = /[a-zA-Z0-9]|_/i;
 		let stringArr = string.split(" ");
 
 		for (let i = 0; i < stringArr.length; i++) {
-
-			if (stringArr[i].startsWith(I18N_PREFIX)) {
-
-				stringArr[i] = this.t(stringArr[i]);
-
-				if (i != 0) {
+	
+			let idxLblStart = stringArr[i].indexOf(I18N_PREFIX);
+			
+			if (idxLblStart > -1) {
+				
+				let strPartialStart = stringArr[i].substring(0, idxLblStart);
+				
+				let offsetEnd = false;
+				
+				let strPartialContent = "";
+				
+				let offset = idxLblStart;
+				
+				while (offset < stringArr[i].length && !offsetEnd) {
+					
+					if (regAlphanumeric.test(stringArr[i][offset])) {
+					
+						strPartialContent += stringArr[i][offset++];
+					}
+					else {
+						
+						offsetEnd = true;	
+					}
+				}
+				
+				strPartialContent = i18n.t(strPartialContent);
+				
+				let strPartialEnd = stringArr[i].substring(offset, stringArr[i].length);	
+				
+				if (i != 0 && idxLblStart === 0) {
 
 					stringArr[i] = stringArr[i].toLowerCase();
 				}
+
+				stringArr[i] = strPartialStart + strPartialContent + strPartialEnd;
 			}
 		}
 		
