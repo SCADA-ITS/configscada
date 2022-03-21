@@ -386,6 +386,13 @@ export default class IncidentReportModule extends GenericModule {
 				}
 			}
 		}
+		else {
+			
+			if (onLoad) {
+						
+				onLoad();
+			}
+		}
 	}
 
 	update() {
