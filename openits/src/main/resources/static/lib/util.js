@@ -1,6 +1,6 @@
 import MessageBox from "../component/messageBox.js";
 import InputDialogBox from "../component/inputDialogBox.js";
-import SearchDialogBox from "../component/searchDialogBox.js";
+import TableMessageBox from "../component/tableMessageBox.js";
 
 export let util = {
 
@@ -1712,17 +1712,13 @@ export let util = {
 						
 						if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
 							
-							let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
 							let label = i18n.t("LBL_COMMAND_ELEMENT_ERRORS_DESCRIPTION");
 					
-							dialogEntity.data = [];
+							let table = {
+								fields: ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"],
+								data: []
+							};
 					
-							dialogEntity.pkField = "id";
-							dialogEntity.fields = ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"];
-							dialogEntity.sortFieldId = 1;
-							dialogEntity.height = 600;
-							dialogEntity.width = 800;
-							
 							commandElementErrors.forEach(commandElementError => {
 								
 								let elementAlias = "";
@@ -1750,7 +1746,7 @@ export let util = {
 									});
 								}
 								
-								dialogEntity.data.push({
+								table.data.push({
 									id: webix.uid(),
 									element: elementAlias,
 									error: (commandElementError.error && commandElementError.error > 0) ? i18n.t(LBL_COMMAND_ELEMENT_ERRORS[commandElementError.error]) : "",
@@ -1759,7 +1755,7 @@ export let util = {
 								});
 							});
 							
-							(new SearchDialogBox(label, dialogEntity)).show();
+							(new TableMessageBox(label, TableMessageBox.ERROR, table)).show()
 						}
 					}
 				}

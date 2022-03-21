@@ -28,6 +28,10 @@ export default class SearchDialogBox {
 		this.planNodes = undefined;
 		this.planHierarchies = undefined;
 		this.plans = undefined;
+		this.pkField = (dialogEntity.pkField) ? dialogEntity.pkField : "id";
+		this.windowHeight = (dialogEntity.height) ? dialogEntity.height : 600;
+		this.windowWidth = (dialogEntity.width) ? dialogEntity.width : 800;
+		
 	}
 
 	show() {
@@ -203,7 +207,7 @@ export default class SearchDialogBox {
 							
 							let output = {};
 							
-							output.id = e[self.dialogEntity.pkField];
+							output.id = e[self.pkField];
 							
 							self.dialogEntity.fields.forEach(field => {
 								
@@ -257,6 +261,9 @@ export default class SearchDialogBox {
 				let meta = {};
 				
 				if (self.dialogEntity.dataType === SearchDialogBox.DIALOG_DATA_TYPE_TABLE) {
+					
+					let searchBar = (self.dialogEntity.messageType) ? "false": "true";
+					let select = (self.dialogEntity.messageType) ? "false": "true";
 										
 					const gridOptionValues = [
 						{ gridOption: { id: 1 }, value: (self.dialogEntity.multiselect) ? String(self.dialogEntity.multiselect) : "false" },
@@ -269,10 +276,11 @@ export default class SearchDialogBox {
 						{ gridOption: { id: 10 }, value: "true" },
 						{ gridOption: { id: 11 }, value: "false" },
 						{ gridOption: { id: 12 }, value: "false" },
-						{ gridOption: { id: 13 }, value: "true" },
+						{ gridOption: { id: 13 }, value: searchBar },
 						{ gridOption: { id: 14 }, value: "false" },
 						{ gridOption: { id: 15 }, value: "false" },
 						{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+						{ gridOption: { id: 17 }, value: select },
 						{ gridOption: { id: 21 }, value: "auto" }
 					];
 					
@@ -296,7 +304,7 @@ export default class SearchDialogBox {
 						parameterized: false,
 						position: position,
 						required: true,
-						sourceField: self.dialogEntity.pkField,
+						sourceField: self.pkField,
 						visible: false,
 						gridFieldDataType: {
 							id: 1,
@@ -382,7 +390,7 @@ export default class SearchDialogBox {
 			cols: [util.ui.getViewDrawLoading()]
 		}
 		
-		self.containerId = util.ui.loadWindow(self.title, body, self.dialogEntity.height, self.dialogEntity.width, true);
+		self.containerId = util.ui.loadWindow(self.dialogEntity.messageType ? i18n.t(self.dialogEntity.messageType.title) : self.title, body, self.windowHeight, self.windowWidth, true);
 
 		if (self.dialogEntity.endpointType === SearchDialogBox.DIALOG_ENDPOINT_TYPE_REST) {
 				
@@ -417,6 +425,8 @@ export default class SearchDialogBox {
 						{
 							rows: [
 								{ height: 20 },
+								getMessageBoxHeader(),
+								{ height: 20 },
 								viewSearchComponent,
 								{ height: 20 },
 								getToolbarActions(),
@@ -435,6 +445,39 @@ export default class SearchDialogBox {
 					self.searchDataTable.callbacks();
 				}	
 			}
+		}
+		
+		function getMessageBoxHeader() {
+
+			let messageBoxHeader = { height: 1 };
+
+			if (self.dialogEntity.messageType) {
+
+				messageBoxHeader = {
+					height: 50,
+					cols: [
+						{ width: 35 },
+						{
+							width: 45,
+							css: { "border": "0px !important" },
+							template: `<div><img style='width: 40px; padding: 0px 15px 15px 0px;' src=${self.dialogEntity.messageType.icon}></div>`
+						},
+						{
+							rows: [
+								{
+									view: "template",
+									template: `<p style='font-size: 14px; color: #475466; text-align: center'>${self.title}</p>`,
+									css: "messagebox"
+								}
+							]
+						},
+						{ width: 60 }
+					]
+				}
+			}
+
+			return messageBoxHeader;
+
 		}
 		
 		function getSearchComponent(onSearchComponent) {
@@ -504,34 +547,31 @@ export default class SearchDialogBox {
 				elements: []
 			};
 			
-			if (!self.onAccept) {
-				
-				viewToolbarActions.elements.push({});
-			}
-			
-			viewToolbarActions.elements.push({ 
+			let cancelButton = { 
 				view: "button",
 				css: "dialog-cancel", 
 				width: 130,
 				height: 35, 
-				label: i18n.t("LBL_CANCEL"),
+				label: (self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_CANCEL"),
 				on: {
 					onItemClick() {
-					
+
+						if (self.dialogEntity.messageType && self.onAccept) {
+
+							self.onAccept();
+						}
+
 						$$(self.containerId).close();
 					}
 				}
-			});
+			};
 			
-			if (self.onAccept) {
-				
-				viewToolbarActions.elements.push({});
-				viewToolbarActions.elements.push({ 
+			let acceptButton = { 
 					view: "button", 
-					css: "dialog-accept",
+					css: (self.dialogEntity.messageType) ?  "dialog-cancel" :"dialog-accept",
 					width: 130,
 					height: 35,
-					label: i18n.t("LBL_ACCEPT"),
+					label: (self.dialogEntity.messageType) ? i18n.t("LBL_CLOSE") : i18n.t("LBL_ACCEPT"),
 					on: {
 						onItemClick(){
 							
@@ -541,7 +581,18 @@ export default class SearchDialogBox {
 							}
 						}
 					}
-				});
+				};
+			
+			if (!self.onAccept || self.dialogEntity.messageType) {
+
+				viewToolbarActions.elements.push({});
+				viewToolbarActions.elements.push(cancelButton);
+
+			} else {
+
+				viewToolbarActions.elements.push(cancelButton);
+				viewToolbarActions.elements.push({});
+				viewToolbarActions.elements.push(acceptButton);
 			}
 			
 			return viewToolbarActions;	
