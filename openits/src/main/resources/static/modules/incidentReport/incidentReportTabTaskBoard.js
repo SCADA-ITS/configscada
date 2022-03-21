@@ -169,6 +169,12 @@ export default class IncidentReportTabTaskBoard {
 								labelValue: "LBL_INCIDENT_TASK_COMPLETED"
 							},
 							{
+								icon: "./img/grid/critical.png",
+								showValue: false,
+								value: "error",
+								labelValue: "LBL_ERROR"
+							},
+							{
 								icon: "./img/grid/not_confirmed.png",
 								showValue: false,
 								value: "not_confirmed",
@@ -332,7 +338,15 @@ export default class IncidentReportTabTaskBoard {
 					let row = {};
 
 					row.id = self.tasks[i].incidentTypeTask.id;
-					row.status = self.tasks[i].completedAt ? "confirmed" : "not_confirmed";
+					
+					if (self.tasks[i].error) {
+
+						row.status = "error";
+					} else {
+
+						row.status = self.tasks[i].completedAt ? "confirmed" : "not_confirmed";
+					}
+
 					row.position = i + 1;
 					row.alias = self.tasks[i].incidentTypeTask.alias;
 					
