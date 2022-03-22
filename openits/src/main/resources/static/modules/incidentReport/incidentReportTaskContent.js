@@ -183,18 +183,23 @@ export default class IncidentReportTaskContent {
 										});
 										
 										let body = {};
+										let incidentTypeTaskValues = undefined;
 										
 										if (self.incidentReportTaskParam) {
-										
-											body = { incidentTypeTaskValues: self.incidentReportTaskParam.getIncidentTypeTaskValues() };	
+											
+											incidentTypeTaskValues = self.incidentReportTaskParam.getIncidentTypeTaskValues();
+										}
+										else if (self.incidentReportTaskSignallingSpath) {
+											
+											incidentTypeTaskValues = self.incidentReportTaskSignallingSpath.getIncidentTypeTaskValues();
 										}
 										
-										if (self.incidentReportTaskSignallingSpath) {
-										
-											body = { incidentTypeTaskValues: self.incidentReportTaskSignallingSpath.getIncidentTypeTaskValues() };	
+										if (incidentTypeTaskValues) {
+												
+											body = { incidentTypeTaskValues: incidentTypeTaskValues };	
 										}
 		
-										console.log("Incident report action => " + endpoint);
+										log.debug("Incident report action => " + endpoint);
 
 										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endpoint, body).then(function(dat) {
 

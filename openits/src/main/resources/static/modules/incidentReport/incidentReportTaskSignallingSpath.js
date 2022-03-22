@@ -689,6 +689,8 @@ export default class IncidentReportTaskSignallingSpath {
 						
 							updataTable(signallingSpath, true);		
 						});
+						
+						self.changed = false;
 					}	
 				}, null)).show();
 				
