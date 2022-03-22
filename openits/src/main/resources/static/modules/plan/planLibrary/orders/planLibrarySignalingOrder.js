@@ -34,8 +34,8 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				let args = { 
 					selectedPks: [self.planOrder.comandElement.element.id],
 					data: {
-						planOrder: self.planOrder,
-						newPlanOrder: undefined
+						commandElement: self.planOrder.comandElement,
+
 					}
 				};
 	
@@ -388,7 +388,7 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 				
 											if (module) {
 				
-												let moduleAction = { id: module.config.moduleAction.planOrderEdit };
+												let moduleAction = { id: module.config.moduleAction.commandEdit };
 				
 												let args = {
 													selectedPks: elementIdsSelected,

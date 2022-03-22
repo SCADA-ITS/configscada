@@ -1,7 +1,7 @@
 {
 	"moduleAction": {
 	    "elements": 102601,
-	    "planOrderEdit": 102602
+	    "commandEdit": 102602
 	},
 	"restEndpoints": {
 		"elementsByType": "element_types/${id}/summary",

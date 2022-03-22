@@ -104,7 +104,7 @@ export default class PasSignalingOrderEdit {
 
 		function updateZone(element) {
 
-			let commandElementValues = self.args.data.planOrder.comandElement.commandElementValues;
+			let commandElementValues = self.args.data.commandElement.commandElementValues;
 			let arrayZonesId = [];
 			let arrayMessagesId = [];
 			let messageId = undefined;

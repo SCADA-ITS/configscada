@@ -1,6 +1,10 @@
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import DataView from "../../component/dataView.js";
+import MessageBox from "../../component/messageBox.js";
+
+const CHANGED_YES = "yes"
+const CHANGED_NO = "no"
 
 export default class IncidentReportTaskSignallingSpath {
 
@@ -13,7 +17,12 @@ export default class IncidentReportTaskSignallingSpath {
 		this.uid = uid;
 		this.dtSignallingSpaths = undefined;
 		this.lvEquipments = undefined;
+		this.originalMapSignallingSpaths = undefined;
 		this.mapSignallingSpaths = new Map();
+		this.signallingModuleInstance = undefined;
+		this.selectedSignallingSpath = undefined;
+		this.winIdSignallingEditor = undefined;
+		this.changed = false;
 	}
 
 	getView() {
@@ -118,11 +127,44 @@ export default class IncidentReportTaskSignallingSpath {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
+							label: "",
+							labelTooltip: "LBL_CHANGED",
+							needsTranslation: false,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "changed",
+							visible: true,
+							widthPx: 45,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: [
+								{
+									icon: "./img/grid/required.png",
+									showValue: false,
+									value: "yes",
+									labelValue: "LBL_W_CHANGES"
+								},
+								{
+									icon: "./img/grid/not_confirmed.png",
+									showValue: false,
+									value: "no",
+									labelValue: "LBL_WO_CHANGES"
+								}
+							]
+						},
+						{
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
 							label: "LBL_ALIAS",
 							labelTooltip: "LBL_ALIAS",
 							needsTranslation: false,
 							parameterized: false,
-							position: 2,
+							position: 3,
 							required: true,
 							sourceField: "alias",
 							visible: true,
@@ -142,7 +184,7 @@ export default class IncidentReportTaskSignallingSpath {
 							replacementFunction: "getLocalDateString",
 							needsTranslation: false,
 							parameterized: false,
-							position: 3,
+							position: 4,
 							required: true,
 							sourceField: "commandAlias",
 							visible: true,
@@ -161,7 +203,7 @@ export default class IncidentReportTaskSignallingSpath {
 							labelTooltip: "LBL_ELEMENT_TYPE",
 							needsTranslation: false,
 							parameterized: false,
-							position: 4,
+							position: 5,
 							required: true,
 							sourceField: "elementTypeAlias",
 							visible: true,
@@ -180,7 +222,7 @@ export default class IncidentReportTaskSignallingSpath {
 							labelTooltip: "LBL_ELEMENT_SUBTYPE",
 							needsTranslation: false,
 							parameterized: false,
-							position: 5,
+							position: 6,
 							required: true,
 							sourceField: "elementSubtypeAlias",
 							visible: true,
@@ -194,14 +236,25 @@ export default class IncidentReportTaskSignallingSpath {
 					gridCommands: [
 						{
 							id: 1,
-							value: "LBL_COMMAND",
-							icon: "mdi mdi-cog",
+							value: "LBL_EDIT",
+							icon: "mdi mdi-pencil",
 							default_: true,
-							label: "LBL_COMMAND",
+							label: "LBL_EDIT",
 							showText: true,
 							position: 1,
 							multiselect: false,
 							itemRequired: true
+						},
+						{
+							id: 2,
+							value: "LBL_UNDO",
+							icon: "mdi mdi-undo",
+							default_: false,
+							label: "LBL_UNDO",
+							showText: true,
+							position: 2,
+							multiselect: false,
+							itemRequired: false
 						}
 					]
 				};
@@ -215,42 +268,43 @@ export default class IncidentReportTaskSignallingSpath {
 			
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 	
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
-					function: onEdit
-				});
+				events[DataTable.EventTypes.ON_COMMAND_EXEC].push(
+					{
+						commandId: 1,
+						function: onEditCommand
+					},
+					{
+						commandId: 2,
+						function: onUndoCommand
+					}
+				);
 				
 				events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
-					if (Array.isArray(rows) && rows.length > 0) {
-
-						showElements(rows[0]);	
+					if (Array.isArray(rows) && rows.length > 0 && self.mapSignallingSpaths.size > 0) {
+						
+						self.selectedSignallingSpath = self.mapSignallingSpaths.get(rows[0]);
+						
+						showElements();
 					}
 				};
 				
-				function showElements(spathSignallingId) {
+				function showElements() {
 					
-					let spathSignalling;
+					let signallingSpath = self.selectedSignallingSpath;
 					
-					if (self.mapSignallingSpaths.size > 0) {
+					if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
 						
-						spathSignalling = self.mapSignallingSpaths.get(spathSignallingId);
+						let dataView = new DataView(getMetadataViewData(), getDataViewData(), null);
 						
-						if (spathSignalling && Array.isArray(spathSignalling.elements) && spathSignalling.elements.length > 0) {
+						let viewDataView = {
 							
-							let dataView = new DataView(getMetadataViewData(), getDataViewData(), null);
-							
-							let viewDataView = {
-								
-								id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid,
-								gravity: 0.35,
-								cols: [dataView.getView()]
-							}
-							
-							webix.ui(viewDataView, $$("task-details-signalling-spaths-elements-" + self.index + "-" + self.uid));	
+							id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid,
+							gravity: 0.35,
+							cols: [dataView.getView()]
 						}
-									
-							
+						
+						webix.ui(viewDataView, $$("task-details-signalling-spaths-elements-" + self.index + "-" + self.uid));	
 					}
 					
 					function getMetadataViewData() {
@@ -286,9 +340,9 @@ export default class IncidentReportTaskSignallingSpath {
 				
 						let data;
 						
-						if (Array.isArray(spathSignalling.elements) && spathSignalling.elements.length > 0) {
+						if (Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
 							
-							data = spathSignalling.elements.map(e => { 
+							data = signallingSpath.elements.map(e => { 
 							
 								return {
 									id: e.id,
@@ -357,46 +411,49 @@ export default class IncidentReportTaskSignallingSpath {
 						
 						jsonSignallingToSpath.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
 						
-						jsonSignallingToSpath.forEach(spathSignalling => {
+						jsonSignallingToSpath.forEach(signallingSpath => {
 							
-							let elements = getElementsBetweenRange(spathSignalling);
+							let elements = getElementsBetweenRange(signallingSpath);
 							
 							if (Array.isArray(elements) && elements.length > 0) {
 								
 								let refElement = elements[0];
-								let commandElement = getCommandElement(spathSignalling, refElement);
+								let commandElement = getCommandElement(signallingSpath, refElement);
 								
 								if (commandElement) {
 									
 									let rowSpathSignallign = {
-										id: spathSignalling.id,
-										alias: spathSignalling.alias,
+										id: signallingSpath.id,
+										changed: CHANGED_NO,
+										alias: signallingSpath.alias,
 										commandAlias: i18n.t(commandElement.labelAlias),
 										elementTypeAlias: i18n.t(refElement.elementType.labelAlias),
-										elementSubtypeAlias: spathSignalling.elementSubtypeId ? i18n.t(refElement.elementSubtype.labelAlias) : null
+										elementSubtypeAlias: signallingSpath.elementSubtypeId ? i18n.t(refElement.elementSubtype.labelAlias) : null
 									}
 								
 									data.push(rowSpathSignallign);
 									
-									let mapValue = webix.copy(spathSignalling);
+									let mapValue = webix.copy(signallingSpath);
 							
 									mapValue.elements = elements; 
 									
-									self.mapSignallingSpaths.set(spathSignalling.id, mapValue);	
+									self.mapSignallingSpaths.set(signallingSpath.id, mapValue);	
 								}
 							}
 						});
+						
+						self.originalMapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.mapSignallingSpaths)))); 
 					}
 				}
 				
-				function getElementsBetweenRange(spathSignalling) {
+				function getElementsBetweenRange(signallingSpath) {
 					
 					let elements = undefined;
 					
-					if (spathSignalling && Array.isArray(self.stretchsInfo) && self.stretchsInfo.length > 0) {
+					if (signallingSpath && Array.isArray(self.stretchsInfo) && self.stretchsInfo.length > 0) {
 						
-						let from = !isNaN(spathSignalling.from) ? spathSignalling.from : -999999;
-						let to = !isNaN(spathSignalling.to) ? spathSignalling.to : 999999; 
+						let from = !isNaN(signallingSpath.from) ? signallingSpath.from : -999999;
+						let to = !isNaN(signallingSpath.to) ? signallingSpath.to : 999999; 
 						
 						let stretchsFiltered = self.stretchsInfo.filter(stretchInfo => from <= stretchInfo.position && stretchInfo.position <= to);
 						
@@ -410,13 +467,13 @@ export default class IncidentReportTaskSignallingSpath {
 								
 								if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
 									
-									elementsToAdd = elementsToAdd.filter(e => Array.isArray(e.commandElements) && (e.commandElements.findIndex(c => c.id === spathSignalling.command.commandElementTypeId) != -1));
+									elementsToAdd = elementsToAdd.filter(e => Array.isArray(e.commandElements) && (e.commandElements.findIndex(c => c.id === signallingSpath.command.commandElementTypeId) != -1));
 									
 									if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
 										
-										if (spathSignalling.elementSubtypeId) {
+										if (signallingSpath.elementSubtypeId) {
 										
-											elementsToAdd = stretchFiltered.elements.filter(e => e.elementSubtype && e.elementSubtype.id === spathSignalling.elementSubtypeId);
+											elementsToAdd = stretchFiltered.elements.filter(e => e.elementSubtype && e.elementSubtype.id === signallingSpath.elementSubtypeId);
 										}
 										
 										if (Array.isArray(elementsToAdd) && elementsToAdd.length > 0) {
@@ -432,29 +489,211 @@ export default class IncidentReportTaskSignallingSpath {
 					return elements;
 				}
 				
-				function getCommandElement(spathSignalling, element) {
-					
-					let commandElement = undefined;
-					
-					if (spathSignalling && element && Array.isArray(element.commandElements) && element.commandElements.length > 0) {
-						
-						commandElement = element.commandElements.find(e => e.id == spathSignalling.command.commandElementTypeId);
-					}
-					
-					return commandElement;
-				}
-				
 				return data;
 			}
 			
-			function onEdit() {
+			function getCommandElement(signallingSpath, element) {
+					
+				let commandElement = undefined;
+				
+				if (signallingSpath && element && Array.isArray(element.commandElements) && element.commandElements.length > 0) {
+					
+					commandElement = element.commandElements.find(e => e.id == signallingSpath.command.commandElementTypeId);
+				}
+				
+				return commandElement;
+			}
+			
+			function updateSignallingSpath(signallingSpath, commandElement) {
+				
+				if (signallingSpath && signallingSpath.command && commandElement) {
+					
+					signallingSpath.command.commandElementTypeId = commandElement.commandElementType.id;
+
+					if (Array.isArray(commandElement.commandElementValues) && commandElement.commandElementValues.length > 0) {
+						
+						let commandElementTypeParamId = commandElement.commandElementValues[0].commandElementTypeParam.id;
+						let commandElementValue = "";
+						
+						if (Array.isArray(commandElement.commandElementValues[0].value) || 
+							(typeof commandElement.commandElementValues[0].value === 'object' && commandElement.commandElementValues[0].value)) {
+							
+							commandElementValue = JSON.stringify(commandElement.commandElementValues[0].value);
+						}
+						else {
+							
+							commandElementValue = commandElement.commandElementValues[0].value;
+						}
+						
+						signallingSpath.command.commandElementValues = [
+							{
+								commandElementTypeParamId: commandElementTypeParamId,
+								value: commandElementValue
+							}
+						]
+					}
+					
+					self.changed = true;
+				}
+			}
+			
+			function updataTable(signallingSpath, noChanged) {
+				
+				if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0 && self.dtSignallingSpaths) {
+					
+					let row = self.dtSignallingSpaths.getItem(signallingSpath.id);
+				
+					if (row) {
+						
+						let newRow = webix.copy(row);
+						
+						let commandElement = getCommandElement(signallingSpath, signallingSpath.elements[0]);
+						
+						if (commandElement) {
+							
+							newRow.commandAlias = i18n.t(commandElement.labelAlias);
+							newRow.changed = !noChanged ? CHANGED_YES : CHANGED_NO;
+							
+							self.dtSignallingSpaths.update(newRow);
+						}
+					} 
+				}
+			}
+			
+			function onEditCommand() {
 						
 				let selectedItems = self.dtSignallingSpaths.getSelectedItems()
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
-					let selectedItem = selectedItems[0];
+					let signallingSpathId = selectedItems[0].id;
+					
+					if (self.mapSignallingSpaths.size > 0) {
+						
+						let signallingSpath = self.mapSignallingSpaths.get(signallingSpathId);
+						
+						if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
+							
+							let element = signallingSpath.elements[0];
+							
+							let modAction = (element.elementType.planOrderSignalingModule) ? element.elementType.planOrderSignalingModule : self.config.moduleAction.defaultCommandEdit;
+							let module = util.module.getFromModuleAction(parseInt(modAction));
+		
+							if (module) {
+		
+								let moduleAction = { id: module.config.moduleAction.commandEdit };
+								
+								let args = {
+									selectedPks: [element.id],
+									data: {
+										commandElement: {
+											commandElementType: {
+												id: signallingSpath.command.commandElementTypeId
+											},
+											element: element,
+											commandElementValues: undefined
+										}
+									}
+								};
+								
+								if (args.data.commandElement && Array.isArray(signallingSpath.command.commandElementValues) && signallingSpath.command.commandElementValues.length > 0) {
+									
+									args.data.commandElement.commandElementValues = signallingSpath.command.commandElementValues.map(e => { return { commandElementTypeParam: { id: e.commandElementTypeParamId }, value: e.value}});
+								}
+		
+								const defaultHeight = 768;
+								const defaultWidth = 1280;
+					
+								const height = util.module.getWindowParamValue(module, WindowParam.HEIGHT, defaultHeight);
+								const width = util.module.getWindowParamValue(module, WindowParam.WIDTH, defaultWidth);
+								
+								let signallingEditorView = {
+									rows: [
+										{
+											id: "signalling-editor-body-" + self.uid,
+											cols: [util.ui.getViewDrawLoading()]
+										},
+										{
+											view: "toolbar",
+											height: 45,
+											borderless: true,
+											elements: [
+												{},
+												{ 
+													view: "button", 
+													id: "btn-send-" + self.uid,
+													css: "action-button",
+													width: 130,
+													height: 35,
+													label: i18n.t("LBL_ACCEPT"),
+													on: {
+														onItemClick() {
+															
+															if (self.signallingModuleInstance && self.selectedSignallingSpath && self.winIdSignallingEditor) {
+																
+																let winSignallingEditor = $$(self.winIdSignallingEditor);
+																
+																if (winSignallingEditor) {
+																	
+																	let commandElement = self.signallingModuleInstance.getSignaling();
+																
+																	updateSignallingSpath(self.selectedSignallingSpath, commandElement);
+																	
+																	updataTable(self.selectedSignallingSpath);
+																
+																	winSignallingEditor.close();
+																}
+															}
+														}
+													}
+												},
+												{ width: 10 }
+											]		
+										}
+									]
+								}
+						
+								self.winIdSignallingEditor = util.ui.loadWindow(self.taskState.incidentTypeTask.alias + " - " + signallingSpath.alias, signallingEditorView, height, width, true);
+								
+								util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args, function(instance) { self.signallingModuleInstance = instance });
+						
+								function drawTabContent(view) {
+				
+									let signallingEditor = {
+										id: "signalling-editor-body-" + self.uid,
+										cols: [view]
+									}
+
+									webix.ui(signallingEditor, $$("signalling-editor-body-" + self.uid));
+								}
+														
+							} else {
+		
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+								ms.show();
+							}
+						}
+					}
 				}
+			}
+			
+			function onUndoCommand() {
+				
+				(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMANDS"), function() {
+					
+					self.mapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.originalMapSignallingSpaths))));
+				
+					if (self.mapSignallingSpaths.size > 0) {
+						
+						self.mapSignallingSpaths.forEach(signallingSpath => {
+						
+							updataTable(signallingSpath, true);		
+						});
+					}	
+				}, null)).show();
+				
+				
+				
 			}
 
 			self.dtSignallingSpaths = new DataTable(null, null, getMetadata(), getData(), getEvents());
@@ -472,20 +711,20 @@ export default class IncidentReportTaskSignallingSpath {
 		let self = this;
 		let incidentTypeTaskValues = undefined;
 		
-		if (self.mapSignallingSpaths.size > 0) {
+		if (self.changed && self.mapSignallingSpaths.size > 0) {
 			
 			let signallingSpathValues = [];
 			
 			self.mapSignallingSpaths.forEach((signallingSpath) => {
 				
 				let signallingSpathCopy = webix.copy(signallingSpath);
-				
+			
 				if (signallingSpathCopy.elements) {
 					
 					delete signallingSpathCopy.elements; 
 				}
 				
-				signallingSpathValues.push(signallingSpathCopy)
+				signallingSpathValues.push(signallingSpathCopy)	
 			});
 			
 			if (Array.isArray(signallingSpathValues) && signallingSpathValues.length > 0) {
@@ -498,10 +737,8 @@ export default class IncidentReportTaskSignallingSpath {
 					value: JSON.stringify(signallingSpathValues)
 				});
 			}
-			
-			return incidentTypeTaskValues;
 		}
 		
-		return incidentTypePaskValues;
+		return incidentTypeTaskValues;
 	}
 }

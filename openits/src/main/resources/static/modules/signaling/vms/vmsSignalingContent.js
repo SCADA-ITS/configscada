@@ -17,21 +17,21 @@ const DEFAULT_FLASHING_OFF_S = 5;
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onEdit, multiselectAllowed) {
 
 		this.config = config;
 		this.element = element;
 		this.subtypeElements = subtypeElements;
 		this.selectedElements = selectedElements ? selectedElements : [element];
 		this.currentCommandElement = currentCommandElement;
-		this.isPlanOrderEdit = (currentCommandElement != undefined);
+		this.isEditAction = (currentCommandElement != undefined);
 		this.commandsElement = [];
 		this.onUpdate = onUpdate;
-		this.onOrderEdit = onOrderEdit;
+		this.onEdit = onEdit;
 		this.multiselectAllowed = multiselectAllowed;
 		this.signalingCmds = [];
 
-		if (this.isPlanOrderEdit) {
+		if (this.isEditAction) {
 			
 			this.selectedCommand = this.currentCommandElement.commandElementType;
 		}
@@ -333,7 +333,7 @@ export default class VmsSignalingContent {
 								
 									let tabSelected = "view-generic-signaling-command-body-" + self.config.commands.sendMessage.commandElementTypeId + "-" + self.uid;
 							
-									if (self.isPlanOrderEdit) {
+									if (self.isEditAction) {
 										
 										tabSelected = "view-generic-signaling-command-body-" + self.currentCommandElement.commandElementType.id + "-" + self.uid;
 									} 	
@@ -397,7 +397,7 @@ export default class VmsSignalingContent {
 				
 					let commandElement = webix.copy(cmd);
 						
-					if (self.isPlanOrderEdit && commandElement.id === self.currentCommandElement.commandElementType.id &&
+					if (self.isEditAction && commandElement.id === self.currentCommandElement.commandElementType.id &&
 						Array.isArray(self.currentCommandElement.commandElementValues)) {
 						
 						commandElement.commandElementValues = webix.copy(self.currentCommandElement.commandElementValues);	
@@ -420,7 +420,7 @@ export default class VmsSignalingContent {
 			let viewComposer;
 			let initialJsonValue = undefined;
 			
-			if (self.isPlanOrderEdit) { 
+			if (self.isEditAction) { 
 				
 				if (Array.isArray(self.currentCommandElement.commandElementValues) && 
 					self.currentCommandElement.commandElementValues.length > 0) {
@@ -671,9 +671,9 @@ export default class VmsSignalingContent {
 		function getViewActions() {
 			
 			let viewActions = {};
-			let hideSelectionButton = self.isPlanOrderEdit;
+			let hideSelectionButton = self.isEditAction;
 			
-			if(!self.isPlanOrderEdit){
+			if(!self.isEditAction){
 				
 				hideSelectionButton = (self.multiselectAllowed) ? true : false;	
 			} 
@@ -742,18 +742,23 @@ export default class VmsSignalingContent {
 						id: "btn-send-" + self.uid,
 						css: "action-button",
 						disabled: true,
-						hidden: self.isPlanOrderEdit,
+						hidden: self.isEditAction,
 						width: 130,
 						height: 35,
 						label: (self.multiselectAllowed) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),
 						on: {
 							onItemClick() {
 								
-								if (self.multiselectAllowed) {
+								if (self.multiselectAllowed && self.onEdit) {
 									
 									const win = $$(this.config.id).getTopParentView();
-									win.hide();
-									self.onOrderEdit();
+									
+									if (win) {
+										
+										win.hide();	
+									}
+									
+									self.onEdit();
 									
 								} else {
 									

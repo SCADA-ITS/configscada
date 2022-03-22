@@ -6,7 +6,8 @@
 		"assign": 100404,
 		"executePlanFromIncident": 102502,
 		"editPlanFromIncident": 102901,
-		"equipmentViewer": 101401
+		"equipmentViewer": 101401,
+		"defaultCommandEdit": 101902
 	},
 	"restEndpoints": {
 	 	"incidentReport": "incidents/reports/${id}",

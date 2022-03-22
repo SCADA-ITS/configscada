@@ -28,7 +28,7 @@ export default class VmsSignalingModule extends GenericModule {
 
 		let self = this;
 		
-		if ((self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) && (self.args.selectedPks && self.args.selectedPks.length >1)) {
+		if ((self.moduleAction && self.moduleAction.id === self.config.moduleAction.commandEdit) && (self.args.selectedPks && self.args.selectedPks.length > 1)) {
 			
 			$$(self.args.containerId).close();
 			
@@ -43,7 +43,6 @@ export default class VmsSignalingModule extends GenericModule {
 				$$(this.uid).hide();
 			}
 			
-//			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.pas.type })).then(function(elementsResponse) {
 			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByTypeSummary, { id: self.config.pas.type })).then(function(elementsResponse) {	
 
 				if (elementsResponse != null) {
@@ -250,7 +249,7 @@ export default class VmsSignalingModule extends GenericModule {
 					
 					let previousViewContent = self.currentViewContent;
 	
-					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+					if (self.moduleAction && self.moduleAction.id === self.config.moduleAction.commandEdit) {
 	
 						$$("view-main-list-hierarchy-" + self.uid).hide();
 						$$("view-main-resizer-" + self.uid).hide();

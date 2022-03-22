@@ -25,7 +25,7 @@ export default class GenericSignalingModule extends GenericModule {
 		let self = this;
 
 		if ((self.moduleAction.id === self.config.moduleAction.commandEquipments || 
-			 self.moduleAction.id === self.config.moduleAction.planOrderEdit) && 
+			 self.moduleAction.id === self.config.moduleAction.commandEdit) && 
 			Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0) {
 
 			if ($$(self.uid)) {
@@ -213,12 +213,12 @@ export default class GenericSignalingModule extends GenericModule {
 								
 								signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement);
 							}
-							else if (self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+							else if (self.moduleAction.id === self.config.moduleAction.commandEdit) {
 														
-								if (self.args.data && self.args.data.planOrder && self.args.data.planOrder.comandElement && 
-									self.args.data.planOrder.comandElement.commandElementValues) {
+								if (self.args.data && self.args.data.commandElement && 
+									self.args.data.commandElement.commandElementValues) {
 										
-									commandElement.commandElementValues = webix.copy(self.args.data.planOrder.comandElement.commandElementValues);	
+									commandElement.commandElementValues = webix.copy(self.args.data.commandElement.commandElementValues);	
 								}
 									
 								signalingCmd = new GenericSignalingCommand(self, self.args.selectedPks, commandElement, true);
@@ -248,7 +248,7 @@ export default class GenericSignalingModule extends GenericModule {
 					});
 				}
 				
-				if (self.moduleAction.id === self.config.moduleAction.planOrderEdit) {
+				if (self.moduleAction.id === self.config.moduleAction.commandEdit) {
 
 					let signalingTabs = $$("view-tabs-" + self.uid);
 					
@@ -263,7 +263,7 @@ export default class GenericSignalingModule extends GenericModule {
 						}
 						else {
 							
-							viewTabSelected += self.args.data.planOrder.comandElement.commandElementType.id + "-" + self.uid;
+							viewTabSelected += self.args.data.commandElement.commandElementType.id + "-" + self.uid;
 						}
 						
 						signalingTabs.getTabbar().setValue(viewTabSelected);

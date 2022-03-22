@@ -2275,13 +2275,16 @@ export default class DataTable {
 				}
 				else {
 
-					let defaultCommand = self.metadata.gridCommands.find(gridCommand => {
-						return gridCommand.default_ === true
-					});
-
-					self.open_module(defaultCommand);
+					if (Array.isArray(self.metadata.gridCommands) && self.metadata.gridCommands.length > 0) {
+					
+						let defaultCommand = self.metadata.gridCommands.find(gridCommand => gridCommand.default_ === true);
+						
+						if (defaultCommand) {
+							
+							self.open_module(defaultCommand);	
+						}
+					}	
 				}
-
 			});
 		}
 	}

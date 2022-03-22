@@ -26,8 +26,8 @@ export default class VmsSignalingModule extends GenericModule {
 
 		let self = this;
 		let isModuleActionElements = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.elements && Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 0);
-		let isModuleActionPlanOrderEdit = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.planOrderEdit);
-		let multiselectAllowed = (isModuleActionPlanOrderEdit && self.args.selectedPks && self.args.selectedPks.length > 1) ? true : undefined;
+		let isModuleActionCommandEdit = (self.moduleAction && self.moduleAction.id === self.config.moduleAction.commandEdit);
+		let multiselectAllowed = (isModuleActionCommandEdit && self.args.selectedPks && self.args.selectedPks.length > 1) ? true : undefined;
 
 		if ($$(this.uid)) {
 
@@ -101,7 +101,7 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			webix.ui(view, $$(self.uid));
 
-			if (isModuleActionElements || isModuleActionPlanOrderEdit) {
+			if (isModuleActionElements || isModuleActionCommandEdit) {
 
 				self.elementsSelected = self.elements.filter(e => self.args.selectedPks.includes(e.id));
 				
@@ -280,9 +280,9 @@ export default class VmsSignalingModule extends GenericModule {
 					
 					let currentCommandElement = undefined;
 									
-					if (self.args.data && self.args.data.planOrder && self.args.data.planOrder.comandElement) {
+					if (self.args.data && self.args.data.commandElement) {
 						
-						currentCommandElement = self.args.data.planOrder.comandElement;
+						currentCommandElement = self.args.data.commandElement;
 					}
 					
 					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed);
@@ -297,7 +297,7 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			function onUpdate(selectedElements){
 				
-				if(!isModuleActionElements && !isModuleActionPlanOrderEdit && Array.isArray(selectedElements)) {
+				if(!isModuleActionElements && !isModuleActionCommandEdit && Array.isArray(selectedElements)) {
 					
 					let actualSelection = self.vmsSignalingTree.treeView.getSelected();
 					
