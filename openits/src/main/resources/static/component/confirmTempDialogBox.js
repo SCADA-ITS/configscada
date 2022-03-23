@@ -82,7 +82,7 @@ export default class ConfirmTempDialogBox {
 					self.interval = setInterval(() => {
 
 						self.timeSec--;
-						$$("temp-count-" + self.uid).setValue(self.description + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"));
+						$$("temp-count-" + self.uid).setValue(i18n.t("LBL_CONFIRM_IN") + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"));
 
 						if (self.timeSec <= 0) {
 							clearInterval(self.interval);
@@ -115,8 +115,9 @@ export default class ConfirmTempDialogBox {
 						css: { "background-color": "#1CA1C1", "width": "600px !important" }
 					},
 					{
+						id: "temp-count-" + self.uid,
 						view: "label",
-						label: self.message,
+						label: i18n.t("LBL_CONFIRM_IN") + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"),// self.message,
 						align: "center",
 						css: "dialog-header-custom"
 
@@ -125,9 +126,9 @@ export default class ConfirmTempDialogBox {
 						css: "dialog-description-custom",
 						cols: [
 							{
-								id: "temp-count-" + self.uid,
+								//id: "temp-count-" + self.uid,
 								view: "label",
-								label: self.description + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"),
+								label: self.description, // + " " + self.timeSec + " " + i18n.t("LBL_SECONDS"),
 								align: "center",
 								width: 600,
 							}

@@ -2,6 +2,7 @@ import GenericModule from "../../../modules/genericModule.js";
 import { util } from "../../../lib/util.js";
 import GenericSignalingCommand from "./genericSignalingCommand.js";
 import SearchDialogBox from "../../../component/searchDialogBox.js";
+import GenericSignalingMulti from "./genericSignalingMulti.js";
 
 export default class GenericSignalingModule extends GenericModule {
 
@@ -13,6 +14,7 @@ export default class GenericSignalingModule extends GenericModule {
 		this.config = module.config;
 		this.element = undefined;
 		this.signalingCmds = [];
+		this.selectedElements = [];
 	}
 
 	getView() {
@@ -106,7 +108,9 @@ export default class GenericSignalingModule extends GenericModule {
 							]
 						};
 
-					} else if ((Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1) && (self.element && Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0)){
+					} else if ((Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1) &&
+						(self.element && Array.isArray(self.element.commandElements) && self.element.commandElements.length > 0) &&
+						(self.moduleAction.id != self.config.moduleAction.commandEdit)) {
 
 						let elementTypeLabelDescription;
 						let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.element.elementType.id);
@@ -135,7 +139,61 @@ export default class GenericSignalingModule extends GenericModule {
 											on: {
 												onItemClick: function(id) {
 
-													getWindowEquipmentSelected();
+													let availableElements = [];
+													let actualSelectedElements = (Array.isArray(self.selectedElements) && (self.selectedElements.length > 0)) ? self.selectedElements : self.args.selectedPks;
+
+													let elements = window.em.getAll(EntityType.ELEMENT);
+
+													if (Array.isArray(elements) && elements.length > 0) {
+
+														elements.forEach(el => {
+
+															let ele = actualSelectedElements.find(e => (e === el.id) || (e.id === el.id) );
+
+															if (ele) {
+
+																self.selectedElements.push(el);
+															}
+														});
+													}
+
+													if (Array.isArray(elements) && elements.length > 0) {
+
+														elements.forEach(el => {
+
+															let ele = self.args.selectedPks.find(e => e === el.id);
+
+															if (ele) {
+
+																availableElements.push(el);
+															}
+														});
+													}
+
+													let genericSingalingMulti = new GenericSignalingMulti(self.config, availableElements, self.selectedElements, self.element, onAccept);
+													genericSingalingMulti.show();
+
+													function onAccept(selectedElements) {
+
+														let headerLabel = $$("signaling-header" + self.uid);
+
+														self.selectedElements = [];
+														self.selectedElements = selectedElements;
+
+														if (headerLabel) {
+
+															let newLabel = i18n.t("LBL_EQUIPMENT_SELECTED") + ": " + selectedElements.length + " " + i18n.t(self.element.elementType.labelAlias) + (elementTypeLabelDescription ? " (" + i18n.t(elementTypeLabelDescription) + ")" : "");
+															headerLabel.setValue(newLabel);
+														}
+
+														if (Array.isArray(self.signalingCmds)) {
+
+															self.signalingCmds.forEach(signalingCmd => {
+
+																signalingCmd.selectedElementIds = selectedElements.map(e => e.id);
+															});
+														}
+													}
 												}
 											}
 										},
@@ -144,38 +202,6 @@ export default class GenericSignalingModule extends GenericModule {
 								},
 								{ width: 50 }
 							]
-						}
-
-
-						function getWindowEquipmentSelected() {					
-
-							let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
-
-							dialogEntity.data = [];
-
-							dialogEntity.fields = ["element=LBL_EQUIPMENT", "elementType=LBL_EQUIPMENT_TYPE"];
-
-							let elements = window.em.getAll(EntityType.ELEMENT);
-
-							if (Array.isArray(elements) && elements.length > 0) {
-
-								elements.forEach(el => {
-
-									let ele = self.args.selectedPks.find(e => e === el.id);
-
-									if (ele) {
-
-										dialogEntity.data.push({
-											id: el.id,
-											element: el.alias,
-											elementType: i18n.t(el.elementType.labelAlias)
-										})
-									}
-								});
-							}
-
-							let s = new SearchDialogBox(label, dialogEntity);
-							s.show();
 						}
 					}
 
