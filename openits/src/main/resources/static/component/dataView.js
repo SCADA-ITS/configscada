@@ -4,7 +4,6 @@ const DefOptionValues = { 1: false, 2: true, 3: false, 4: true, 5: 48, 6: false 
 const _TRUE = "true";
 const _FALSE = "false";
 const TOOLBAR_BUTTONS_WIDTH_TEXT = 130;
-const TOOLBAR_BUTTONS_WIDTH_ICON = 40;
 
 export default class DataView {
 	
@@ -168,7 +167,8 @@ export default class DataView {
 					view: "richselect",
 					id: "cboGroup-" + self.uid,
 					value: 1,
-					width: 300,
+					width: 200,
+					tooltip: i18n.t("LBL_GROUPS"),
 					options: self.groups,
 					on: {
 						onChange(newValue, oldValue) {
