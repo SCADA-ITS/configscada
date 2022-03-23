@@ -1,7 +1,6 @@
-import GenericModule from "../../../modules/genericModule.js";
-import ListView from "../../../component/listview.js";
-import { util } from "../../../lib/util.js";
-import SearchDialogBox from "../../../component/searchDialogBox.js";
+import GenericModule from "../../modules/genericModule.js";
+import ListView from "../../component/listview.js";
+import { util } from "../../lib/util.js";
 
 export default class SignalingManagerModule extends GenericModule {
 

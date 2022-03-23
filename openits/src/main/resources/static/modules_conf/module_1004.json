@@ -7,6 +7,7 @@
 		"executePlanFromIncident": 102502,
 		"editPlanFromIncident": 102901,
 		"equipmentViewer": 101401,
+		"commandEquipments": 101901,
 		"defaultCommandEdit": 101902
 	},
 	"restEndpoints": {

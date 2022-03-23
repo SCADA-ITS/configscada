@@ -210,6 +210,11 @@ export default class TubeContent {
 			let result = (currentVentilationState && currentVentilationState.id &&
 				self.parent.config.ventilationStates[currentVentilationState.id].actions.includes("SEND_VENTILATION_REGIME"));
 				
+			if (self.parent.args && self.parent.args.readOnly) {
+				
+				result &= (self.parent.args.readOnly !== true)
+			}
+				
 			return !result; 
 		}
 
@@ -321,12 +326,13 @@ export default class TubeContent {
 				view: "segmented",
 				css: "segment-custom-2",
 				value: getVentilationMode(),
+				disabled: (self.parent.args && self.parent.args.readOnly === true),
 				width: 500,
 				options: ventilationModeOptions,
 				tooltip: true,
 				on: {
 					onChange(newv, oldv) {
-
+						
 						this.blockEvent();
 						this.setValue(oldv);
 						this.unblockEvent();
@@ -493,6 +499,11 @@ export default class TubeContent {
 		
 		
 		function enableGridButtons(enable) {
+			
+			if (self.parent.args && self.parent.args.readOnly) {
+				
+				enable &= (self.parent.args.readOnly !== true);	
+			}
 
 			for (let command of self.tubeFansDataTable.metadata.gridCommands) {
 
@@ -832,7 +843,7 @@ export default class TubeContent {
 							self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
 
 							viewContent.cells.push({
-								header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+								header: i18n.t("LBL_OTHERS"),
 								body: self.equipmentMeasures.getView()
 							});
 						}

@@ -285,7 +285,7 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.commandElement;
 					}
 					
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed);
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args.readOnly == true));
 					
 					view = self.vmsSignalingContent.getView();
 					

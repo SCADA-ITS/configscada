@@ -1,8 +1,9 @@
 import { util } from "../../lib/util.js";
-import IncidentReportTaskInfo from "./incidentReportTaskInfo.js";
-import IncidentReportTaskParam from "./incidentReportTaskParam.js";
-import IncidentReportTaskPlan from "./incidentReportTaskPlan.js";
-import IncidentReportTaskSignallingSpath from "./incidentReportTaskSignallingSpath.js";
+import IncidentReportTaskDetailInfo from "./incidentReportTaskDetailInfo.js";
+import IncidentReportTaskDetailParam from "./incidentReportTaskDetailParam.js";
+import IncidentReportTaskDetailPlan from "./incidentReportTaskDetailPlan.js";
+import IncidentReportTaskDetailSignallingSpath from "./incidentReportTaskDetailSignallingSpath.js";
+import IncidentReportTaskDetailElement from "./incidentReportTaskDetailElement.js";
 import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentReportTaskContent {
@@ -16,10 +17,10 @@ export default class IncidentReportTaskContent {
 		this.index = parent.index;
 		this.uid = parent.uid;
 		
-		this.incidentReportTaskPlan = undefined;
-		this.incidentReportTaskParam = undefined;
-		this.incidentReportTaskInfo = undefined;
-		this.incidentReportTaskSignallingSpath = undefined;
+		this.incidentReportTaskDetailPlan = undefined;
+		this.incidentReportTaskDetailParam = undefined;
+		this.incidentReportTaskDetailInfo = undefined;
+		this.incidentReportTaskDetailSignallingSpath = undefined;
 	}
 
 	getView() {
@@ -84,11 +85,11 @@ export default class IncidentReportTaskContent {
 			
 			if (Array.isArray(self.taskState.taskPlanStates) && self.taskState.taskPlanStates.length > 0) {
 				
-				self.incidentReportTaskPlan = new IncidentReportTaskPlan(self.config, self.incidentReport, self.taskState, self.index, self.uid);
+				self.incidentReportTaskDetailPlan = new IncidentReportTaskDetailPlan(self.config, self.incidentReport, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PLANS"),
-					body: self.incidentReportTaskPlan.getView()
+					body: self.incidentReportTaskDetailPlan.getView()
 				});
 			}
 			
@@ -98,11 +99,11 @@ export default class IncidentReportTaskContent {
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.length > 0 &&
 				self.taskState.incidentTypeTask.taskType.taskTypeParams.findIndex(e => self.config.taskParamTypes.includes(e.paramType.id)) !== -1) {
 				
-				self.incidentReportTaskParam = new IncidentReportTaskParam(self.config, self.taskState, self.index, self.uid);
+				self.incidentReportTaskDetailParam = new IncidentReportTaskDetailParam(self.config, self.incidentReport, self.taskState, self.index, self.uid);
 				
 				viewBody.cells.push({
 					header: i18n.t("LBL_PARAMS"),
-					body: self.incidentReportTaskParam.getView()
+					body: self.incidentReportTaskDetailParam.getView()
 				});
 			}
 
@@ -114,19 +115,29 @@ export default class IncidentReportTaskContent {
 				self.taskState.incidentTypeTask.incidentTypeTaskValues[0].taskTypeParam.id == self.config.taskTypeParamSignallingToSpath
 			) {
 
-				self.incidentReportTaskSignallingSpath = new IncidentReportTaskSignallingSpath(self.config, self.taskState, stretchsInfo, self.index, self.uid);
+				self.incidentReportTaskDetailSignallingSpath = new IncidentReportTaskDetailSignallingSpath(self.config, self.incidentReport, self.taskState, stretchsInfo, self.index, self.uid);
 
 				viewBody.cells.push({
 					header: i18n.t("LBL_SIGNALLING"),
-					body: self.incidentReportTaskSignallingSpath.getView()
+					body: self.incidentReportTaskDetailSignallingSpath.getView()
 				});
 			}
 			
-			self.incidentReportTaskInfo = new IncidentReportTaskInfo(self.incidentReport, self.taskState, self.index, self.uid);
+			if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
+				
+				let incidentReportTaskDetailElement = new IncidentReportTaskDetailElement(self.config, self.incidentReport, self.taskState, self.index, self.uid);
+				
+				viewBody.cells.push({
+					header: i18n.t("LBL_EQUIPMENTS"),
+					body: incidentReportTaskDetailElement.getView()
+				});
+			}
+			
+			self.incidentReportTaskDetailInfo = new IncidentReportTaskDetailInfo(self.config, self.incidentReport, self.taskState, self.index, self.uid);
 			
 			viewBody.cells.push({
 				header: i18n.t("LBL_INFO"),
-				body: self.incidentReportTaskInfo.getView()
+				body: self.incidentReportTaskDetailInfo.getView()
 			});
 			
 			return viewBody;			
@@ -185,13 +196,13 @@ export default class IncidentReportTaskContent {
 										let body = {};
 										let incidentTypeTaskValues = undefined;
 										
-										if (self.incidentReportTaskParam) {
+										if (self.incidentReportTaskDetailParam) {
 											
-											incidentTypeTaskValues = self.incidentReportTaskParam.getIncidentTypeTaskValues();
+											incidentTypeTaskValues = self.incidentReportTaskDetailParam.getIncidentTypeTaskValues();
 										}
-										else if (self.incidentReportTaskSignallingSpath) {
+										else if (self.incidentReportTaskDetailSignallingSpath) {
 											
-											incidentTypeTaskValues = self.incidentReportTaskSignallingSpath.getIncidentTypeTaskValues();
+											incidentTypeTaskValues = self.incidentReportTaskDetailSignallingSpath.getIncidentTypeTaskValues();
 										}
 										
 										if (incidentTypeTaskValues) {

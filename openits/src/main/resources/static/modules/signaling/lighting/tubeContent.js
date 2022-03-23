@@ -98,35 +98,41 @@ export default class TubeContent {
 
 			drawContent(self.getView());
 
-			if (this.tubeCircuitsDataTable) {
+			if (self.tubeCircuitsDataTable) {
 
-				this.tubeCircuitsDataTable.callbacks();
+				self.tubeCircuitsDataTable.callbacks();
 
 				if (args.selectedPks) {
 
-					this.tubeCircuitsDataTable.select(args.selectedPks);
+					self.tubeCircuitsDataTable.select(args.selectedPks);
 				}
 
-				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
+				if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
 
-					//this.tubeCircuitsDataTable.disable();
-					self.enableGridButtons(this.tubeCircuitsDataTable, false);
+					self.enableGridButtons(self.tubeCircuitsDataTable, false);
+				}
+				else {
+					
+					self.enableGridButtons(self.tubeCircuitsDataTable, true);
 				}
 			}
 
-			if (this.tubeDalisDataTable) {
+			if (self.tubeDalisDataTable) {
 
-				this.tubeDalisDataTable.callbacks();
+				self.tubeDalisDataTable.callbacks();
 
 				if (args.selectedPks) {
 
-					this.tubeDalisDataTable.select(args.selectedPks);
+					self.tubeDalisDataTable.select(args.selectedPks);
 				}
 
-				if (this.lightingModeValueParam && this.parent.config.lightingModeOptions.find(option => option.id == this.lightingModeValueParam.value).disable) {
+				if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
 
-					//this.tubeDalisDataTable.disable();
 					self.enableGridButtons(self.tubeDalisDataTable, false);	
+				}
+				else {
+					
+					self.enableGridButtons(self.tubeDalisDataTable, true);
 				}
 			}
 
@@ -300,6 +306,7 @@ export default class TubeContent {
 			view: "segmented",
 			css: "segment-custom-2",
 			value: self.lightingModeValueParam.value,
+			disabled: (self.parent.args && self.parent.args.readOnly === true),
 			width: 500,
 			options: lightingModeOptions,
 			tooltip: true,
@@ -511,7 +518,7 @@ export default class TubeContent {
 										align: "right",
 										css: "button-cta",
 										value: i18n.t("LBL_CHANGE_REGIME"),
-										disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable,
+										disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable || (self.parent.args && self.parent.args.readOnly === true),
 										click: function() {
 
 											let command = self.parent.config.commands.SEND_LIGHTING_REGIME;
@@ -684,7 +691,7 @@ export default class TubeContent {
 					self.equipmentMeasures = new EquipmentMeasures(elementsId, null, self.parent.config.viewEquipmentMeasures.options);
 
 					viewContent.cells.push({
-						header: i18n.t("LBL_EQUIPMENT_MEASURES"),
+						header: i18n.t("LBL_OTHERS"),
 						body: self.equipmentMeasures.getView()
 					});
 				}
@@ -1687,6 +1694,11 @@ export default class TubeContent {
 	enableGridButtons(table, enable) {
 
 		const INFO_BUTTON_ID = 1;
+		
+		if (this.parent.args && this.parent.args.readOnly) {
+				
+			enable &= (this.parent.args.readOnly !== true);	
+		}
 		
 		for (let command of table.metadata.gridCommands) {
 

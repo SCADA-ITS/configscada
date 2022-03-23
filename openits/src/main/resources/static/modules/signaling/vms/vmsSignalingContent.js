@@ -17,7 +17,7 @@ const DEFAULT_FLASHING_OFF_S = 5;
 
 export default class VmsSignalingContent {
 
-	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onEdit, multiselectAllowed) {
+	constructor(config, element, subtypeElements, selectedElements, currentCommandElement, onUpdate, onEdit, multiselectAllowed, readOnly) {
 
 		this.config = config;
 		this.element = element;
@@ -29,6 +29,7 @@ export default class VmsSignalingContent {
 		this.onUpdate = onUpdate;
 		this.onEdit = onEdit;
 		this.multiselectAllowed = multiselectAllowed;
+		this.readOnly = readOnly;
 		this.signalingCmds = [];
 
 		if (this.isEditAction) {
@@ -690,6 +691,7 @@ export default class VmsSignalingContent {
 						id: "btn-multisignaling-" + self.uid,
 						css: "action-aux-button", 
 						hidden: hideSelectionButton,
+						disabled: (self.readOnly === true),
 						width: 130, 
 						height: 35,
 						label: i18n.t("LBL_MULTISIGNALING"), 
@@ -743,6 +745,7 @@ export default class VmsSignalingContent {
 						css: "action-button",
 						disabled: true,
 						hidden: self.isEditAction,
+						disabled: (self.readOnly === true),
 						width: 130,
 						height: 35,
 						label: (self.multiselectAllowed) ? i18n.t("LBL_ACCEPT") : i18n.t("LBL_SEND"),

@@ -1,15 +1,14 @@
+import IncidentReportTaskDetail from "./incidentReportTaskDetail.js";
 import DataTable from "../../component/datatable.js";
 import InputDialogBox from "../../component/inputDialogBox.js";
 import MessageBox from "../../component/messageBox.js";
 
-export default class IncidentReportTaskParam {
+export default class IncidentReportTaskDetailParam extends IncidentReportTaskDetail {
+	
+	constructor(config, incidentReport, taskState, index, uid) {
 
-	constructor(config, taskState, index, uid) {
-
-		this.config = config;
-		this.taskState = taskState;
-		this.index = index;
-		this.uid = uid;
+		super(config, incidentReport, taskState, index, uid);
+		
 		this.dtParams = undefined;
 	}
 

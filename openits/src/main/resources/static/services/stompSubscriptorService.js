@@ -181,6 +181,28 @@ export default class StompSubscriptorService extends GenericModule {
 		this.module = module;
 		this.subscriptors = [];
 	}
+	
+	destroy() {
+		
+		let self = this;
+		
+		while (self.subscriptors.length > 0) {
+			
+			let subscriptor = self.subscriptors[0];
+
+			if (subscriptor && Array.isArray(subscriptor.clients) && subscriptor.clients.length > 0) {
+
+				subscriptor.clients.forEach(client => {
+				
+					subscriptor.unregister(client.id);
+					
+					log.debug("Unsubscribe => Id: " + client.id);	
+				});
+				
+				self.subscriptors.splice(0, 1);
+			}
+		}
+	}
 
 	getView() {
 

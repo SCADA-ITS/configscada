@@ -1,13 +1,11 @@
+import IncidentReportTaskDetail from "./incidentReportTaskDetail.js";
 import { util } from "../../lib/util.js";
 
-export default class IncidentReportTaskInfo {
+export default class IncidentReportTaskDetailInfo extends IncidentReportTaskDetail {
 
-	constructor(incidentReport, taskState, index, uid) {
+	constructor(config, incidentReport, taskState, index, uid) {
 
-		this.incidentReport = incidentReport; 
-		this.taskState = taskState;
-		this.index = index;
-		this.uid = uid;
+		super(config, incidentReport, taskState, index, uid);
 	}
 
 	getView() {

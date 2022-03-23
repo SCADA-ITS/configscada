@@ -1,3 +1,4 @@
+import IncidentReportTaskDetail from "./incidentReportTaskDetail.js";
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import DataView from "../../component/dataView.js";
@@ -6,29 +7,29 @@ import MessageBox from "../../component/messageBox.js";
 const CHANGED_YES = "yes"
 const CHANGED_NO = "no"
 
-export default class IncidentReportTaskSignallingSpath {
+export default class IncidentReportTaskDetailSignallingSpath extends IncidentReportTaskDetail {
 
-	constructor(config, taskState, stretchsInfo, index, uid) {
+	constructor(config, incidentReport, taskState, index, uid) {
 
-		this.config = config;
-		this.taskState = taskState;
-		this.stretchsInfo = stretchsInfo;
-		this.index = index;
-		this.uid = uid;
-		this.dtSignallingSpaths = undefined;
-		this.lvEquipments = undefined;
-		this.originalMapSignallingSpaths = undefined;
+		super(config, incidentReport, taskState, index, uid);
+		
 		this.mapSignallingSpaths = new Map();
-		this.signallingModuleInstance = undefined;
-		this.selectedSignallingSpath = undefined;
-		this.winIdSignallingEditor = undefined;
 		this.changed = false;
 	}
 
 	getView() {
 		
 		let self = this;
+		let stretchsInfo = undefined;
+		let dtSignallingSpaths = undefined;
+		let originalMapSignallingSpaths = undefined;
+		let signallingModuleInstance = undefined;
+		let selectedSignallingSpath = undefined;
+		let winIdSignallingEditor = undefined;
+		
 		let viewSignallingSpaths;
+		
+		loadStretchs();
 		
 		viewSignallingSpaths = {
 			id: "task-details-signalling-spaths-" + self.index + "-" + self.uid,
@@ -40,13 +41,13 @@ export default class IncidentReportTaskSignallingSpath {
 					on: {
 						onAfterRender: function() {
 			
-							if (self.dtSignallingSpaths) {
+							if (dtSignallingSpaths) {
 								
-								self.dtSignallingSpaths.callbacks();
+								dtSignallingSpaths.callbacks();
 								
 								if (!self.taskState.incidentTypeTask.rerun && ( self.taskState.incidentTypeTask.auto || self.taskState.completedAt)) {
 									
-									self.dtSignallingSpaths.disable();
+									dtSignallingSpaths.disable();
 								}
 								else {
 									
@@ -58,7 +59,7 @@ export default class IncidentReportTaskSignallingSpath {
 											
 											signallingSpathIds.sort();
 											
-											self.dtSignallingSpaths.select(signallingSpathIds[0]);	
+											dtSignallingSpaths.select(signallingSpathIds[0]);	
 										}
 											
 									}, 100);
@@ -70,11 +71,50 @@ export default class IncidentReportTaskSignallingSpath {
 			]
 		};
 		
-		
 		viewSignallingSpaths.rows.push(getTableSignallingSpaths());
 		viewSignallingSpaths.rows.push({ view: "resizer" });
 		
 		viewSignallingSpaths.rows.push({ id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid, gravity: 0.35});
+		
+		function loadStretchs() {
+		
+			if (self.incidentReport && Array.isArray(self.incidentReport.spath) && self.incidentReport.spath.length > 0) {
+				
+				let stretchs = self.incidentReport.spath.map(spath => {
+					
+					return {
+						
+						id: spath.id,
+						position: spath.position,
+						elements: []
+					}
+				});
+				
+				if (Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
+					
+					assignElementsToStretchs(self.taskState.elements);
+					
+					stretchsInfo = stretchs;
+				}
+
+				function assignElementsToStretchs(elements) {
+					
+					if (Array.isArray(stretchs)) {
+						
+						stretchs.forEach(stretch => {
+							
+							elements.forEach(element => {
+								
+								if (element.location.stretchs.findIndex(elementStretch => elementStretch.id === stretch.id) != -1) {
+								
+									stretch.elements.push(element);	
+								}
+							});
+						});
+					}
+				}
+			}
+		}
 				
 		function getTableSignallingSpaths() {
 			
@@ -179,8 +219,8 @@ export default class IncidentReportTaskSignallingSpath {
 							filtered: false,
 							isEpochMilli: false,
 							isPk: false,
-							label: "LBL_COMMAND_ALIAS",
-							labelTooltip: "LBL_COMMAND_ALIAS",
+							label: "LBL_COMMAND",
+							labelTooltip: "LBL_COMMAND",
 							replacementFunction: "getLocalDateString",
 							needsTranslation: false,
 							parameterized: false,
@@ -283,7 +323,7 @@ export default class IncidentReportTaskSignallingSpath {
 
 					if (Array.isArray(rows) && rows.length > 0 && self.mapSignallingSpaths.size > 0) {
 						
-						self.selectedSignallingSpath = self.mapSignallingSpaths.get(rows[0]);
+						selectedSignallingSpath = self.mapSignallingSpaths.get(rows[0]);
 						
 						showElements();
 					}
@@ -291,7 +331,7 @@ export default class IncidentReportTaskSignallingSpath {
 				
 				function showElements() {
 					
-					let signallingSpath = self.selectedSignallingSpath;
+					let signallingSpath = selectedSignallingSpath;
 					
 					if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0) {
 						
@@ -322,9 +362,9 @@ export default class IncidentReportTaskSignallingSpath {
 							],
 							commands: [
 								{
-									value: "LBL_VIEW",
+									value: "LBL_INFO",
 									icon: "mdi mdi-information-outline",
-									label: "LBL_VIEW",
+									label: "LBL_INFO",
 									showText: true,
 									position: 1,
 									itemRequired: true,
@@ -391,9 +431,20 @@ export default class IncidentReportTaskSignallingSpath {
 					
 					if (taskTypeParam) {
 						
-						if (Array.isArray(self.taskState.incidentTypeTask.incidentTypeTaskValues)) {
+						let taskValues;
+						
+						if (Array.isArray(self.taskState.incidentReportTaskValues)) {
 							
-							let incidentTypeTaskValueResult = self.taskState.incidentTypeTask.incidentTypeTaskValues.find(incidentTypeTaskValue => incidentTypeTaskValue.taskTypeParam.id === taskTypeParam.id);
+							taskValues = self.taskState.incidentReportTaskValues;
+						}
+						else if (self.taskState.incidentTypeTask.incidentTypeTaskValues) {
+							
+							taskValues = self.taskState.incidentTypeTask.incidentTypeTaskValues;
+						}
+						
+						if (Array.isArray(taskValues)) {
+							
+							let incidentTypeTaskValueResult = taskValues.find(taskValue => taskValue.taskTypeParam.id === taskTypeParam.id);
 							
 							if (incidentTypeTaskValueResult && incidentTypeTaskValueResult.value) {
 								
@@ -442,7 +493,7 @@ export default class IncidentReportTaskSignallingSpath {
 							}
 						});
 						
-						self.originalMapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.mapSignallingSpaths)))); 
+						originalMapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.mapSignallingSpaths)))); 
 					}
 				}
 				
@@ -450,12 +501,12 @@ export default class IncidentReportTaskSignallingSpath {
 					
 					let elements = undefined;
 					
-					if (signallingSpath && Array.isArray(self.stretchsInfo) && self.stretchsInfo.length > 0) {
+					if (signallingSpath && Array.isArray(stretchsInfo) && stretchsInfo.length > 0) {
 						
 						let from = !isNaN(signallingSpath.from) ? signallingSpath.from : -999999;
 						let to = !isNaN(signallingSpath.to) ? signallingSpath.to : 999999; 
 						
-						let stretchsFiltered = self.stretchsInfo.filter(stretchInfo => from <= stretchInfo.position && stretchInfo.position <= to);
+						let stretchsFiltered = stretchsInfo.filter(stretchInfo => from <= stretchInfo.position && stretchInfo.position <= to);
 						
 						if (Array.isArray(stretchsFiltered) && stretchsFiltered.length > 0) {
 							
@@ -498,7 +549,14 @@ export default class IncidentReportTaskSignallingSpath {
 				
 				if (signallingSpath && element && Array.isArray(element.commandElements) && element.commandElements.length > 0) {
 					
-					commandElement = element.commandElements.find(e => e.id == signallingSpath.command.commandElementTypeId);
+					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+					if (elementType && Array.isArray(elementType.commandElementTypes) && elementType.commandElementTypes.length > 0) {
+						
+						commandElement = elementType.commandElementTypes.find(commandElementType => commandElementType.id === signallingSpath.command.commandElementTypeId);
+					}
+					
+					//commandElement = element.commandElements.find(e => e.id == signallingSpath.command.commandElementTypeId);
 				}
 				
 				return commandElement;
@@ -539,9 +597,9 @@ export default class IncidentReportTaskSignallingSpath {
 			
 			function updataTable(signallingSpath, noChanged) {
 				
-				if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0 && self.dtSignallingSpaths) {
+				if (signallingSpath && Array.isArray(signallingSpath.elements) && signallingSpath.elements.length > 0 && dtSignallingSpaths) {
 					
-					let row = self.dtSignallingSpaths.getItem(signallingSpath.id);
+					let row = dtSignallingSpaths.getItem(signallingSpath.id);
 				
 					if (row) {
 						
@@ -554,7 +612,7 @@ export default class IncidentReportTaskSignallingSpath {
 							newRow.commandAlias = i18n.t(commandElement.labelAlias);
 							newRow.changed = !noChanged ? CHANGED_YES : CHANGED_NO;
 							
-							self.dtSignallingSpaths.update(newRow);
+							dtSignallingSpaths.update(newRow);
 						}
 					} 
 				}
@@ -562,7 +620,7 @@ export default class IncidentReportTaskSignallingSpath {
 			
 			function onEditCommand() {
 						
-				let selectedItems = self.dtSignallingSpaths.getSelectedItems()
+				let selectedItems = dtSignallingSpaths.getSelectedItems()
 						
 				if (Array.isArray(selectedItems) && selectedItems.length === 1) {
 					
@@ -629,17 +687,17 @@ export default class IncidentReportTaskSignallingSpath {
 													on: {
 														onItemClick() {
 															
-															if (self.signallingModuleInstance && self.selectedSignallingSpath && self.winIdSignallingEditor) {
+															if (signallingModuleInstance && selectedSignallingSpath && winIdSignallingEditor) {
 																
-																let winSignallingEditor = $$(self.winIdSignallingEditor);
+																let winSignallingEditor = $$(winIdSignallingEditor);
 																
 																if (winSignallingEditor) {
 																	
-																	let commandElement = self.signallingModuleInstance.getSignaling();
+																	let commandElement = signallingModuleInstance.getSignaling();
 																
-																	updateSignallingSpath(self.selectedSignallingSpath, commandElement);
+																	updateSignallingSpath(selectedSignallingSpath, commandElement);
 																	
-																	updataTable(self.selectedSignallingSpath);
+																	updataTable(selectedSignallingSpath);
 																
 																	winSignallingEditor.close();
 																}
@@ -653,9 +711,9 @@ export default class IncidentReportTaskSignallingSpath {
 									]
 								}
 						
-								self.winIdSignallingEditor = util.ui.loadWindow(self.taskState.incidentTypeTask.alias + " - " + signallingSpath.alias, signallingEditorView, height, width, true);
+								winIdSignallingEditor = util.ui.loadWindow(self.taskState.incidentTypeTask.alias + " - " + signallingSpath.alias, signallingEditorView, height, width, true);
 								
-								util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args, function(instance) { self.signallingModuleInstance = instance });
+								util.module.open(module, moduleAction, VIEW_TYPE_CUSTOM, drawTabContent, args, function(instance) { signallingModuleInstance = instance });
 						
 								function drawTabContent(view) {
 				
@@ -679,28 +737,32 @@ export default class IncidentReportTaskSignallingSpath {
 			
 			function onUndoCommand() {
 				
-				(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMANDS"), function() {
+				if (self.changed) {
 					
-					self.mapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(self.originalMapSignallingSpaths))));
-				
-					if (self.mapSignallingSpaths.size > 0) {
-						
-						self.mapSignallingSpaths.forEach(signallingSpath => {
-						
-							updataTable(signallingSpath, true);		
-						});
-						
-						self.changed = false;
-					}	
-				}, null)).show();
-				
-				
-				
+					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_UNDO_COMMANDS"), function() {
+					
+						self.mapSignallingSpaths = new Map(JSON.parse(JSON.stringify(Array.from(originalMapSignallingSpaths))));
+					
+						if (self.mapSignallingSpaths.size > 0) {
+							
+							self.mapSignallingSpaths.forEach(signallingSpath => {
+							
+								updataTable(signallingSpath, true);		
+							});
+							
+							self.changed = false;
+						}	
+					}, null)).show();	
+				}
+				else {
+					
+					(new MessageBox (MessageBox.WARN, i18n.t("LBL_UNDO_UNAVAILABLE"))).show();
+				}
 			}
 
-			self.dtSignallingSpaths = new DataTable(null, null, getMetadata(), getData(), getEvents());
+			dtSignallingSpaths = new DataTable(null, null, getMetadata(), getData(), getEvents());
 			
-			viewTableSignallingSpaths.rows = self.dtSignallingSpaths.getView();
+			viewTableSignallingSpaths.rows = dtSignallingSpaths.getView();
 			
 			return viewTableSignallingSpaths;
 		}

@@ -1,3 +1,4 @@
+import IncidentReportTaskDetail from "./incidentReportTaskDetail.js";
 import { util } from "../../lib/util.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
@@ -6,15 +7,12 @@ const PLAN_EXECUTED = "1";
 const PLAN_NO_EXECUTED = "0";
 const DEFAULT_EXECUTE_TASK_PLAN_DELAY_SECS = 2;
 
-export default class IncidentReportTaskPlan {
+export default class IncidentReportTaskDetailPlan extends IncidentReportTaskDetail {
 
 	constructor(config, incidentReport, taskState, index, uid) {
 
-		this.config = config;
-		this.incidentReport = incidentReport;
-		this.taskState = taskState;
-		this.index = index;
-		this.uid = uid;
+		super(config, incidentReport, taskState, index, uid);
+		
 		this.dtPlans = undefined;
 	}
 
