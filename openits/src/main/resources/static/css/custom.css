@@ -3548,9 +3548,13 @@ p, input, textarea {
 }
 
 .toolbar-button-text .webix_button:hover {
-	background: var(--blue-headers-not-sel);
+	background: var(--blue-headers-not-sel) !important;
 	border-radius: 5px; 
 	color: var(--blue-headers);
+}
+
+.toolbar-button-text .webix_button:focus {
+	background: transparent;
 }
 
 .toolbar-button-text .webix_button .webix_icon_btn {

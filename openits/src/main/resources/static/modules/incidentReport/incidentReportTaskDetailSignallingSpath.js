@@ -74,7 +74,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 		viewSignallingSpaths.rows.push(getTableSignallingSpaths());
 		viewSignallingSpaths.rows.push({ view: "resizer" });
 		
-		viewSignallingSpaths.rows.push({ id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid, gravity: 0.35});
+		viewSignallingSpaths.rows.push({ id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid });
 		
 		function loadStretchs() {
 		
@@ -120,7 +120,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 			
 			let viewTableSignallingSpaths = {
 				id: "task-details-signalling-spaths-table-" + self.index + "-" + self.uid,
-				gravity: 0.65,
+				//gravity: 0.65,
 				rows: []
 			}
 			
@@ -340,7 +340,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 						let viewDataView = {
 							
 							id: "task-details-signalling-spaths-elements-" + self.index + "-" + self.uid,
-							gravity: 0.35,
+							height: 90,
+//							gravity: 0.35,
 							cols: [dataView.getView()]
 						}
 						
@@ -355,8 +356,8 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 					
 							options: [
 								{ id: DataView.Options.ICON_SIZE, value: 40 },
-								{ id: DataView.Options.CMD_BUTTONS, value: true },
-								{ id: DataView.Options.SEARCH, value: true },
+//								{ id: DataView.Options.CMD_BUTTONS, value: true },
+								{ id: DataView.Options.SEARCH, value: false },
 								{ id: DataView.Options.GROUP, value: false },
 								{ id: DataView.Options.SORTED, value: true }
 							],
@@ -368,6 +369,7 @@ export default class IncidentReportTaskDetailSignallingSpath extends IncidentRep
 									showText: true,
 									position: 1,
 									itemRequired: true,
+									default: true,
 									callback: showEquipment
 								}
 							]

@@ -1741,7 +1741,7 @@ export let util = {
 										
 										if (commandElementPrecondition.toStr) {
 											
-											let stringTanslate = i18n.tPhrase(commandElementPrecondition.toStr);
+											let stringTanslate = i18n.t(commandElementPrecondition.toStr);
 											description += stringTanslate;	
 										}
 									});

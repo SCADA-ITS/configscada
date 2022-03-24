@@ -314,6 +314,22 @@ export default class DataView {
 							
 							eval(self.events[DataView.EventTypes.ON_SELECT_ITEM])(this.getItem(id));	
 						}
+					},
+					
+					onItemDblClick: function(obj) {
+
+						if (self.metadata && self.metadata.commands) {
+
+							let defaultCommand = self.metadata.commands.find(cmd => cmd.default);
+
+							if (defaultCommand && defaultCommand.callback) {
+
+								let selectedPks = [];
+
+								selectedPks.push(obj);
+								defaultCommand.callback(selectedPks);
+							}
+						}
 					}
 				}
 			}

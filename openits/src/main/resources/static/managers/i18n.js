@@ -1,6 +1,5 @@
 const I18N_ENDPOINT_TRANSLATIONS = appConfig.restUrl + "i18n/translations";
 const I18N_MODULE = 1;
-const I18N_PREFIX = "LBL_";
 
 function load(i18n, onLoad) {
 			
@@ -46,105 +45,153 @@ export default class I18n {
 		
 		return this.localeCode;
 	}
-	
-	tPhrase(string) {
 
-		let regAlphanumeric = /[a-zA-Z0-9]|_/i;
-		let stringArr = string.split(" ");
+	t(txt, values) {
 
-		for (let i = 0; i < stringArr.length; i++) {
-	
-			let idxLblStart = stringArr[i].indexOf(I18N_PREFIX);
-			
-			if (idxLblStart > -1) {
-				
-				let strPartialStart = stringArr[i].substring(0, idxLblStart);
-				
-				let offsetEnd = false;
-				
-				let strPartialContent = "";
-				
-				let offset = idxLblStart;
-				
-				while (offset < stringArr[i].length && !offsetEnd) {
-					
-					if (regAlphanumeric.test(stringArr[i][offset])) {
-					
-						strPartialContent += stringArr[i][offset++];
-					}
-					else {
-						
-						offsetEnd = true;	
-					}
-				}
-				
-				strPartialContent = i18n.t(strPartialContent);
-				
-				let strPartialEnd = stringArr[i].substring(offset, stringArr[i].length);	
-				
-				if (i != 0 && idxLblStart === 0) {
+		let self = this;
+		let lblTranslated = "";
+		const regEx = /LBL_[a-zA-Z0-9_]*/gm;
+		
+		if (txt != undefined && txt.trim().includes(" ") && !values) {
 
-					stringArr[i] = stringArr[i].toLowerCase();
-				}
+			lblTranslated = translateText(txt);
 
-				stringArr[i] = strPartialStart + strPartialContent + strPartialEnd;
-			}
+		} else {
+
+			lblTranslated = translateLabel(txt, values);
 		}
-		
-		return stringArr.join(" ");
-	}
-	
-	t(label, values) {
-		
-		let translation = undefined;
-		let fields = undefined;
-		
-		try {
-			
-			if (values != undefined && Array.isArray(values)) {
-				
-				fields = values.join();
+
+		function translateText(txt) {
+
+			let regExRes;
+			let items = [];
+			let txtRes = txt;
+
+			while ((regExRes = regEx.exec(txt)) !== null) {
+
+				items.push({
+					label: regExRes[0],
+					translate: translateLabel(regExRes[0])
+				});
 			}
-			 
-			if (this.localeId != undefined && label != undefined && label != "") {
-				
-				if (this.labels != undefined && !fields) {
-					
-					translation = this.labels[label];
+
+			for (let item of items) {
+
+				txtRes = txtRes.replace(item.label, item.translate.toLowerCase());
+			}
+
+			return txtRes;
+		}
+
+		function translateLabel(label, values) {
+
+			let translation = undefined;
+			let fields = undefined;
+
+			try {
+
+				if (values != undefined && Array.isArray(values)) {
+
+					fields = values.join();
 				}
-				
-				if (translation == undefined ) {
-					
-					let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
-					
-					if (fields) {
-						
-						translationUrl = translationUrl + `/${fields}`;	
+
+				if (self.localeId != undefined && label != undefined && label != "") {
+
+					if (self.labels != undefined && !fields) {
+
+						translation = self.labels[label];
 					}
-						
-					let translationResponse = webix.ajax().sync().get(translationUrl); 
-								
-					if (translationResponse && translationResponse.responseText) {
-								
-						let translationJson = JSON.parse(translationResponse.responseText);
-	
-						if (translationJson != undefined) {
-							
-							translation = translationJson.translation;
-							
-							if (!fields) {
-							
-								this.labels[label] = translation;	
+
+					if (translation == undefined) {
+
+						let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${self.localeId}/${I18N_MODULE}/${label}`;
+
+						if (fields) {
+
+							translationUrl = translationUrl + `/${fields}`;
+						}
+
+						let translationResponse = webix.ajax().sync().get(translationUrl);
+
+						if (translationResponse && translationResponse.responseText) {
+
+							let translationJson = JSON.parse(translationResponse.responseText);
+
+							if (translationJson != undefined) {
+
+								translation = translationJson.translation;
+
+								if (!fields) {
+
+									self.labels[label] = translation;
+								}
 							}
 						}
-					}	
-				}				
+					}
+				}
 			}
+			catch {
+
+			}
+
+			return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");
 		}
-		catch {
-			
-		}
-		
-		return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");
+
+		return lblTranslated;
+
 	}
+
+//	t(label, values) {
+//
+//		let translation = undefined;
+//		let fields = undefined;
+//
+//		try {
+//
+//			if (values != undefined && Array.isArray(values)) {
+//
+//				fields = values.join();
+//			}
+//
+//			if (this.localeId != undefined && label != undefined && label != "") {
+//
+//				if (this.labels != undefined && !fields) {
+//
+//					translation = this.labels[label];
+//				}
+//
+//				if (translation == undefined) {
+//
+//					let translationUrl = `${I18N_ENDPOINT_TRANSLATIONS}/${this.localeId}/${I18N_MODULE}/${label}`;
+//
+//					if (fields) {
+//
+//						translationUrl = translationUrl + `/${fields}`;
+//					}
+//
+//					let translationResponse = webix.ajax().sync().get(translationUrl);
+//
+//					if (translationResponse && translationResponse.responseText) {
+//
+//						let translationJson = JSON.parse(translationResponse.responseText);
+//
+//						if (translationJson != undefined) {
+//
+//							translation = translationJson.translation;
+//
+//							if (!fields) {
+//
+//								this.labels[label] = translation;
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//		catch {
+//
+//		}
+//
+//		return (translation != undefined) ? translation : ((label != undefined) ? "¿¿" + label + "??" : "");
+//	}
 }
