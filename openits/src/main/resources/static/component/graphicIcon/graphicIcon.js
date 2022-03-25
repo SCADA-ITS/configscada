@@ -255,24 +255,51 @@ export default class GraphicIcon {
 			
 			let position = "t" + [x, y].join();
 			
-			let scale;
 			
-			if (graphicIcon.keepAspectRatio !== false) {
-				
-				scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (self.ratio + "," + self.ratio);
-			}
-			else {
-				
-				scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (wRatio + "," + hRatio);
-			}
+			let scaleW = graphicIcon.keepAspectRatio !== false ? self.ratio : wRatio;
+			let scaleH = graphicIcon.keepAspectRatio !== false ? self.ratio : hRatio;			
+			let scale = "s" + (self.layerElement.horizontalFlip ? "-" : "") + (scaleW + "," + scaleH);
 			
 			self.g.transform(position + ',' + scale);
+			
+			if (self.layerElement.horizontalFlip) {
+			
+				flipTexts(self.g, gWidth);	
+			}
 			
 			self.g.attr({
 				cursor: ((self.container.type !== GraphicIcon.CONTAINER_TYPE_WEBIX_VIEW) && (self.layerElement.selectable === true || self.layerElement.selectable == undefined)) ? "pointer" : "auto"
 		    });
 
 			s.add(self.g);
+			
+			
+		}
+		
+		function flipTexts(gElement, gWidth) {
+			
+			if (gElement) {
+				
+				let childs = gElement.selectAll("*");
+				
+				if (childs && Array.isArray(childs.items)) {
+					
+					childs.items.filter(e => e.type === "text").forEach(textNode => {
+					
+						if (textNode.node) {
+							
+							let gText = gElement.select("#" + textNode.node.id);
+						
+							if (gText) {
+								
+								let pos = "t" + [gWidth, 0].join();
+								
+								gText.transform(pos + ",s-1,1");	
+							}	
+						}
+					});	
+				}
+			}
 		}
 		
 		function assignEvents() {
