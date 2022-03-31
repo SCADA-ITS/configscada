@@ -64,10 +64,11 @@ export default class IncidentReportTaskElement extends IncidentReportTaskDetail 
 					]
 				}
 				
-				function showEquipment(id) {
+				function showEquipment(ids) {
 						
-					if (id) {
+					if (Array.isArray(ids) && ids.length === 1) {
 						
+						let id = ids[0];
 						let module = util.module.getFromModuleAction(self.config.moduleAction.equipmentViewer);
 	
 						if (module) {
@@ -80,21 +81,39 @@ export default class IncidentReportTaskElement extends IncidentReportTaskDetail 
 					}						
 				}
 				
-				function showSignalling(id) {
+				function showSignalling(ids) {
 						
-					if (id && Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
+					if (Array.isArray(ids) && ids.length === 1 && Array.isArray(self.taskState.elements) && self.taskState.elements.length > 0) {
 						
+						let id = ids[0];
 						let element = self.taskState.elements.find(e => e.id == id);
 						
 						if (element) {
 							
-							let moduleActionId = (element.elementType.commandModule) ? element.elementType.commandModule : self.config.moduleAction.commandEquipments;
-							let module = util.module.getFromModuleAction(parseInt(moduleActionId));
+							let moduleActionId = undefined;
+							
+							if(self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
+								self.taskState.incidentTypeTask.taskType. commandModule){
+								
+								moduleActionId = self.taskState.incidentTypeTask.taskType. commandModule;
+								
+							} else if (element.elementType.commandModule){
+								
+								moduleActionId = element.elementType.commandModule;
+								
+							} else  {
+								
+								moduleActionId = self.config.moduleAction.commandEquipments;
+							}
+
+							moduleActionId = parseInt(moduleActionId);
+							 
+							let module = util.module.getFromModuleAction(moduleActionId);
 							
 							if (module) {
 	
 								let moduleAction = { id: moduleActionId };
-								let args = { selectedPks: [id], readOnly: true };
+								let args = { selectedPks: [id] };
 	
 								util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
 							}
