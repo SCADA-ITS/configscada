@@ -72,7 +72,7 @@ export default class VmsSignalingComposer {
 					
 				return `<div>
 							<!--<svg id=${"vms-composer-svg-" + self.uid} style="display: none"></svg>-->
-							<svg id=${"vms-composer-svg-" + self.uid} height=${VMS_MAX_HEIGHT}px"></svg>
+							<svg id=${"vms-composer-svg-" + self.uid} height="${VMS_MAX_HEIGHT}px"></svg>
 						</div>`
 			},
 			on: {

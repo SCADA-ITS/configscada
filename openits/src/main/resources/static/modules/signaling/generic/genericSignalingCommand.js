@@ -449,7 +449,7 @@ export default class GenericSignalingCommand {
 						{
 							view: "button",
 							css: "action-button",
-							disabled: (self.parent.args.readOnly === true),
+							disabled: (self.parent.args && self.parent.args.readOnly === true),
 							hidden: self.isEmbedded,
 							width: 130,
 							height: 35,

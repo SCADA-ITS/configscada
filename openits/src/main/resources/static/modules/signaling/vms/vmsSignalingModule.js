@@ -2,9 +2,11 @@ import { util } from "../../../lib/util.js";
 import GenericModule from "../../../modules/genericModule.js";
 import VmsSignalingContent from "./vmsSignalingContent.js";
 import VmsSignalingTree from "./vmsSignalingTree.js";
+import VmsSignalingQueue from "./vmsSignalingQueue.js";
 import MessageBox from "../../../component/messageBox.js";
 
 const TREE_PANEL_WIDTH = 325;
+const QUEUE_PANEL_WIDTH = 400;
 
 export default class VmsSignalingModule extends GenericModule {
 
@@ -16,6 +18,7 @@ export default class VmsSignalingModule extends GenericModule {
 		this.args = args;
 		this.vmsSignalingTree = undefined;
 		this.vmsSignalingContent = undefined;
+		this.elementType = undefined;
 		this.currentElement = undefined;
 		this.elements = undefined;
 		this.elementsSelected = undefined;
@@ -34,6 +37,8 @@ export default class VmsSignalingModule extends GenericModule {
 			$$("loading-" + this.uid).show();
 			$$(this.uid).hide();
 		}
+		
+		self.elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.config.vms.type);
 		
 		webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementsByType, { id: self.config.vms.type })).then(function(elementsResponse) {
 			
@@ -149,8 +154,6 @@ export default class VmsSignalingModule extends GenericModule {
 			};
 			
 			let viewMainTreeHierarchyHidden = (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1);
-			
-
 			let viewMainTreeHierarchy = {
 				id: "view-main-tree-hierarchy-" + self.uid,
 				hidden: viewMainTreeHierarchyHidden,
@@ -211,8 +214,32 @@ export default class VmsSignalingModule extends GenericModule {
 				rows: [util.ui.getViewDrawLoading()],
 			};
 			
-			viewMain.cols = [viewMainTreeHierarchy, viewMainResizer, viewMainBody, viewMainLoading];
+//			let viewMainQueueResizer = { 
+//				id: "view-main-queue-resizer-" + self.uid,
+//				hidden: true,
+//				view: "resizer" 
+//			};
+
+			let viewQueue = getViewQueue();
 			
+			let viewMainQueue = {
+				
+				id: "view-main-queue-" + self.uid,
+				hidden: true,
+				header: function() {
+					
+					return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t("LBL_SIGNALLING_PRIORITY")}</span>
+							</div>`;
+				},
+				body: {
+					width: QUEUE_PANEL_WIDTH,
+					rows: [viewQueue ? viewQueue : {}]
+				}
+			}
+			
+			viewMain.cols = [viewMainTreeHierarchy, viewMainResizer, viewMainBody, viewMainQueue, viewMainLoading];
 
 			function getViewTree() {
 				
@@ -221,6 +248,17 @@ export default class VmsSignalingModule extends GenericModule {
 				self.vmsSignalingTree = new VmsSignalingTree(self.elements, onSelectElement);
 				
 				view = self.vmsSignalingTree.getView();
+				
+				return view;
+			}
+			
+			function getViewQueue() {
+				
+				let view;
+				
+				self.vmsSignalingQueue = new VmsSignalingQueue(self.config, self.elementType.priorities);
+				
+				view = self.vmsSignalingQueue.getView();
 				
 				return view;
 			}
@@ -250,6 +288,17 @@ export default class VmsSignalingModule extends GenericModule {
 							
 							signalingCmd.loadData();
 						});
+					}
+					
+					let viewMainQueueVisible = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
+					viewMainQueueVisible &= !isModuleActionCommandEdit;
+					viewMainQueueVisible &= (self.vmsSignalingQueue != null);
+					viewMainQueueVisible &= !(Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1);
+					
+					if (viewMainQueueVisible) {
+						
+						$$("view-main-queue-" + self.uid).show();
+						self.vmsSignalingQueue.update(self.currentElement);
 					}
 					
 					$$("view-main-loading-" + self.uid).hide();
@@ -285,7 +334,7 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.commandElement;
 					}
 					
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args.readOnly == true));
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args && self.args.readOnly == true));
 					
 					view = self.vmsSignalingContent.getView();
 					

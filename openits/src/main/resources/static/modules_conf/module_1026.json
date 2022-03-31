@@ -12,6 +12,9 @@
 		"deleteNode": "vms_libraries/node/${id}"
 		
 	},
+	"topics": {
+		"elementQueue": "/topic/queue/element"
+	},
 	"requiredPermissions": {
 		"editPanel": "SystemPermission:13",
 		"editLibrary": "SystemPermission:14"
