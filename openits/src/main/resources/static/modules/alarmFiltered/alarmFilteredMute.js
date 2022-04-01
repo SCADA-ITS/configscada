@@ -68,7 +68,7 @@ export default class AlarmFilteredMute {
 
 				if (action === ACTION.true) {
 
-					(new CalendarDialogBox(title, text, false, function(date) {
+					(new CalendarDialogBox(title, text, null, false, function(date) {
 
 							return (Math.floor(date) < Math.floor(new Date()));
 						},

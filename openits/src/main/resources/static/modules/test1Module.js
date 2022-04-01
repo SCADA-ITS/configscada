@@ -124,7 +124,7 @@ export default class Test1Module extends GenericModule {
 			
 			function drawCalendar() {
 		
-				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"), false, 
+				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"),null, false, 
 							
 					function(date) {
 						

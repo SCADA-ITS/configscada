@@ -1,29 +1,37 @@
 import { util } from "../../lib/util.js";
 import CalendarDialogBox from "../../component/calendarDialogBox.js";
-import TreeView from "../../component/treeview.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
+import ListView from "../../component/listview.js";
 
 export default class AlarmFilteredWizard {
 
 	constructor(parent) {
 
 		this.parent = parent;
+		this.tableElements = undefined;
 		this.tableAlarmsModal = undefined;
 		this.treeView = undefined;
 		this.steps = undefined;
 		this.disableAlarm = true;
-		this.alarmMutedElementSelect = undefined;
+		this.alarmMutedElementsIdSelect = [];
+		this.alarmMutedAlarmsIdSelect = [];
+		this.alarmSelectedArr = [];
 		this.calendar = undefined;
 		this.arrSummary = [];
 		this.createView = undefined;
+		this.viewMaintable = undefined;
+		this.viewMain = undefined;
+		this.aconfigArray = [];
+		this.initialAlarmsArr = [];
+
 	}
 
 
 	drawComponents() {
 
 		let view = {
-			id: self.uid,
+			id: this.uid,
 			css: "custom_window",
 			position: "center",
 			cols: [
@@ -38,8 +46,7 @@ export default class AlarmFilteredWizard {
 								},
 								{ width: 6 }
 							]
-						},
-						//{height:30 }
+						}
 					]
 				}
 			]
@@ -53,6 +60,15 @@ export default class AlarmFilteredWizard {
 			true
 		);
 
+		if (this.tableElements) {
+
+			this.tableElements.callbacks();
+		}
+
+		if (this.listView) {
+
+			this.listView.selectByIndex(0);
+		}
 	}
 
 
@@ -66,6 +82,7 @@ export default class AlarmFilteredWizard {
 			view: "multiview",
 			id: "multi" + parent.uid,
 			animate: false,
+			keepViews: true,
 			cells: []
 		};
 
@@ -77,7 +94,7 @@ export default class AlarmFilteredWizard {
 			let drawStepRadeonOptions = function() {
 
 				let viewContent;
-				
+
 				viewContent = {
 					cols: [
 						{},
@@ -102,7 +119,6 @@ export default class AlarmFilteredWizard {
 									cols: [
 										{},
 										{
-											//width: 300,
 											rows: [
 												{ height: 50 },
 												{
@@ -118,9 +134,8 @@ export default class AlarmFilteredWizard {
 													on: {
 														onChange: function(newv) {
 															self.disableAlarm = (newv === "1");
-															self.tableAlarmsModal.clear();
-															self.treeView.unselectAll();
-															self.treeView.collapse();
+															self.listView.selectByIndex(0);
+
 														}
 													}
 												},
@@ -139,159 +154,395 @@ export default class AlarmFilteredWizard {
 			}
 
 
-			let drawStepCreateTreeGrid = function() {
+			let drawStepCreateListGrid = function() {
 
-				let aconfigArray = [];
-				
-				let viewContent = {
-					id: "treeGridStepView" + parent.uid,
+				let viewContent;
+				let elementTypeView = [];
+				let elementTypesList = window.em.getAll(EntityType.ELEMENT_TYPE);
+				let elementTypesFiltered = elementTypesList.filter(e => e.visible === true && e.grid);
+
+				viewContent = {
+					id: "listGridStepView" + parent.uid,
 					cols: []
+				};
+
+				if (Array.isArray(elementTypesFiltered) && elementTypesFiltered.length > 0) {
+
+					elementTypesFiltered.forEach(e => {
+
+						elementTypeView.push({
+							id: e.id,
+							alias: i18n.t(e.labelAlias),
+							description: i18n.t(e.labelDescription),
+							image: e.elementTypePhoto,
+							grid: e.grid
+						});
+					});
 				}
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.trees, { id: parent.config.treeElementType })).then(function(dat) {
+				if (Array.isArray(elementTypeView) != undefined && elementTypeView.length > 0) {
 
-					if (dat != null) {
+					elementTypeView.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
 
-						let metadata = dat.json().metadata;
-						let data = dat.json().data;
-						let events = {};
+					let events = {};
 
-						events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) {
+					events[ListView.EventTypes.ON_SELECT_ROW] = function(ids, callbackEnable) {
 
-							self.tableAlarmsModal.clear();
+						if (callbackEnable) {
 
-							let element = window.em.getByField(EntityType.ELEMENT, "id", item.id);
-							self.alarmMutedElementSelect = element;
+							callbackEnable(false);
+						}
 
-							let elementTypeId = element.elementType.id;
-							let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
-							aconfigArray = alarmConfigs.filter(e => e.elementType.id === elementTypeId);
+						if (Array.isArray(ids) && ids.length > 0) {
 
-							if (Array.isArray(aconfigArray) && aconfigArray.length > 0) {
+							self.tableElements.clear();
 
-								aconfigArray.forEach(alarmConfig => {
-									
+							let elements = window.em.getAll(EntityType.ELEMENT);
+							let elementsByType = elements.filter(element => element.elementType.id === ids[0]);
+
+							if (Array.isArray(elementsByType) && elementsByType.length > 0) {
+
+								elementsByType.forEach(element => {
+
 									let row = {};
 
-									row.id = alarmConfig.id;
-									row.alarmConfigAlias = i18n.t(alarmConfig.labelAlias);
-									row.alarmLevelLabelAlias = i18n.t(alarmConfig.alarmLevel.labelAlias);
+									row.id = element.id;
+									row.alias = element.alias;
+									row.description = element.description;
+
+									self.tableElements.add(row);
+								});
+
+								self.tableElements.selectByIndex(0);
+
+								if (callbackEnable) {
+
+									callbackEnable(true);
+								}
+							}
+						}
+					};
+
+					let options = {}
+
+					options[ListView.Options.MODE] = ListView.DrawMode.COMPACT;
+
+					self.listView = new ListView(elementTypeView, options, events);
+				}
+
+				let viewMain = {
+					id: "viewList" + parent.uid,
+					width: 406,
+					cols: [
+						{ width: 96 },
+						{
+							height: 385,
+							rows: [
+								{
+									view: "label",
+									borderless: true,
+									height: 23,
+									css: "headers",
+									label: i18n.t("LBL_ELEMENT_TYPES")
+								},
+								{
+									css: {
+										"border": "1px solid #dadee0 !important",
+										"border-top": "none !important",
+										"height": "362px !important"
+									},
+									cols: [self.listView.getView()]
+								}
+							]
+						},
+						{ width: 5 }
+					]
+				};
+
+				let metadata = {};
+				let events = {};
+
+				const defaultGridOptionValues = [
+					{ gridOption: { id: 2 }, value: "true" },
+					{ gridOption: { id: 3 }, value: "2" },
+					{ gridOption: { id: 4 }, value: "asc" },
+					{ gridOption: { id: 5 }, value: undefined },
+					{ gridOption: { id: 6 }, value: undefined },
+					{ gridOption: { id: 7 }, value: "false" },
+					{ gridOption: { id: 8 }, value: "false" },
+					{ gridOption: { id: 10 }, value: "false" },
+					{ gridOption: { id: 11 }, value: "false" },
+					{ gridOption: { id: 12 }, value: "false" },
+					{ gridOption: { id: 13 }, value: "false" },
+					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
+					{ gridOption: { id: 23 }, value: "false" }
+				];
+
+				metadata = {
+					filter: true,
+					label: "LBL_ELEMENTS",
+					visible: true,
+					gridOptionValues: defaultGridOptionValues,
+					gridFields: [
+						{
+							id: 1,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: true,
+							needsTranslation: false,
+							parameterized: false,
+							position: 1,
+							required: true,
+							sourceField: "id",
+							visible: false,
+							widthPx: 1,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						},
+						{
+							id: 2,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_ALIAS",
+							labelTooltip: "LBL_ALIAS",
+							needsTranslation: true,
+							parameterized: false,
+							position: 2,
+							required: true,
+							sourceField: "alias",
+							visible: true,
+							widthPx: 230,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						},
+						{
+							id: 3,
+							extended: false,
+							filtered: false,
+							isEpochMilli: false,
+							isPk: false,
+							label: "LBL_DESCRIPTION",
+							labelTooltip: "LBL_DESCRIPTION",
+							needsTranslation: true,
+							parameterized: false,
+							position: 3,
+							required: true,
+							sourceField: "description",
+							visible: true,
+							fillspace: true,
+							widthPx: 400,
+							gridFieldDataType: {
+								id: 1,
+								name: "string"
+							},
+							gridFieldIcons: []
+						}
+					],
+					gridCommands: []
+				};
+
+				events[DataTable.EventTypes.ON_SELECT_ROW] = function(elementsId) {
+
+					if (Array.isArray(elementsId) && elementsId.length > 0) {
+
+						self.alarmMutedElementsIdSelect = [];
+
+						if (self.tableAlarmsModal) {
+
+							self.tableAlarmsModal.clear();
+						}
+
+						for (let elementId of elementsId) {
+
+							self.alarmMutedElementsIdSelect.push(elementId);
+						}
+
+						let element = window.em.getByField(EntityType.ELEMENT, "id", elementsId[0]);
+						let elementTypeId = element.elementType.id;
+						let alarmConfigs = window.em.getAll(EntityType.ALARM_CONFIG);
+						self.aconfigArray = alarmConfigs.filter(e => e.elementType.id === elementTypeId);
+
+						if (Array.isArray(self.aconfigArray) && self.aconfigArray.length > 0) {
+
+							self.aconfigArray.forEach(alarmConfig => {
+
+								let row = {};
+
+								row.id = alarmConfig.id;
+								row.alarmConfigAlias = i18n.t(alarmConfig.labelAlias);
+								row.alarmLevelLabelAlias = i18n.t(alarmConfig.alarmLevel.labelAlias);
+
+								if (self.tableAlarmsModal) {
 
 									self.tableAlarmsModal.add(row);
-								});
-							} 
-						};
+									self.tableAlarmsModal.selectByIndex(0);
 
-						self.treeView = new TreeView(metadata, data, events);
+								} else {
 
-						let viewMain = {
-							id: "viewTree" + parent.uid,
-							width: 406,
+									self.initialAlarmsArr.push(row);
+								}
+							});
+						}
+
+						$$("button-next-" + position + "-" + parent.uid).enable();
+						$$("calendar1-undefined").setValue(new Date());
+
+					} else {
+
+						$$("button-next-" + position + "-" + parent.uid).disable();
+					}
+				};
+
+				self.tableElements = new DataTable(null, null, metadata, [], events);
+
+				let viewMaintable = {
+					id: "view-elements-table" + parent.uid,
+					cols: [
+						{ width: 7 },
+						{
+							height: 385,
+							rows: [
+								{
+									view: "label",
+									borderless: true,
+									height: 23,
+									css: "headers",
+									label: i18n.t("LBL_EQUIPMENT_S")
+								},
+								{
+									height: 5,
+									css: {
+										"border-left": "1px solid #dadee0 !important",
+										"border-right": "1px solid #dadee0 !important",
+										"width": "739px !important"
+									}
+								},
+								{
+
+									css: {
+										"border": "1px solid #dadee0 !important",
+										"border-top": "none !important",
+										"border-left": "none !important",
+										"width": "740px !important",
+										"height": "358px !important"
+									},
+									cols: self.tableElements.getView()
+								}
+							]
+						},
+						{ width: 96 }
+					]
+				};
+
+				viewContent.cols.push(viewMain, viewMaintable);
+
+				return viewContent
+			}
+
+			let drawStepCreateAlarmGrid = function() {
+
+				let viewContent = {
+					id: "alarmGridStepView" + parent.uid,
+					cols: []
+				};
+
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.grids, { gridAlarmsConfig: parent.config.gridAlarmsConfig })).then((d) => {
+
+					if (d != null) {
+
+						let meta = d.json().metadata;
+						let data = [];
+						console.log(meta)
+
+						if (Array.isArray(self.initialAlarmsArr) && self.initialAlarmsArr.length > 0) {
+
+							data = self.initialAlarmsArr;
+						}
+
+						self.tableAlarmsModal = new DataTable(null, null, meta, data);
+
+						let viewMaintable = {
+							id: "viewTable" + parent.uid,
 							cols: [
 								{ width: 96 },
 								{
+									//width: 741,
 									height: 385,
 									rows: [
 										{
 											view: "label",
 											borderless: true,
+											//width: 591,
 											height: 23,
 											css: "headers",
-											label: i18n.t("LBL_ELEMENT_TYPES")
+											label: i18n.t("LBL_ALARM_TYPES")
+										},
+										{
+											height: 5,
+											css: {
+												"border-left": "1px solid #dadee0 !important",
+												"border-right": "1px solid #dadee0 !important",
+												"width": "739px !important"
+											}
 										},
 										{
 											css: {
 												"border": "1px solid #dadee0 !important",
 												"border-top": "none !important",
-												"height": "362px !important"
+												"border-left": "none !important",
+												"height": "358px !important"
 											},
-											cols: [self.treeView.getView()]
+											cols: self.tableAlarmsModal.getView()
 										}
 									]
 								},
-								{ width: 5 }
+								{ width: 96 }
 							]
 						};
 
-						webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.grids, { gridAlarmsConfig: parent.config.gridAlarmsConfig })).then((d) => {
+						$$("alarmGridStepView" + parent.uid).addView(viewMaintable, 2);
 
-							if (d != null) {
+						$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterSelect", function(selection, preserve) {
 
-								let meta = d.json().metadata;
+							$$("button-next-" + position + "-" + parent.uid).enable();
+							$$("calendar1-undefined").setValue(new Date());
+						});
 
-								self.tableAlarmsModal = new DataTable(null, null, meta, []);
+						$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterUnSelect", function(selection, preserve) {
 
-								let viewMaintable = {
-									id: "viewTable" + parent.uid,
-									cols: [
-										{ width: 7 },
-										{
-											//width: 741,
-											height: 385,
-											rows: [
-												{
-													view: "label",
-													borderless: true,
-													//width: 591,
-													height: 23,
-													css: "headers",
-													label: i18n.t("LBL_ALARM_TYPES")
-												},
-												{
-													height: 5,
-													css: {
-														"border-left": "1px solid #dadee0 !important",
-														"border-right": "1px solid #dadee0 !important",
-														"width": "739px !important"
-													}
-												},
-												{
+							if (self.tableAlarmsModal.getSelectedIds().length === 0) {
 
-													css: {
-														"border": "1px solid #dadee0 !important",
-														"border-top": "none !important",
-														"border-left": "none !important",
-														"width": "740px !important", 
-														"height": "358px !important"
-													},
-													cols: self.tableAlarmsModal.getView()
-												}
-											]
-										},
-										{ width: 100 }
-									]
-								};
-
-								$$("treeGridStepView" + parent.uid).addView(viewMain, 1);
-								$$("treeGridStepView" + parent.uid).addView(viewMaintable, 2);
-
-								$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterSelect", function(selection, preserve) {
-									$$("button-next-" + position + "-" + parent.uid).enable();
-									$$("calendar1-undefined").setValue(new Date());
-									
-									let alarmSelected = aconfigArray.find(e => e.id === selection.id);
-									
-									if (alarmSelected){
-										self.arrSummary.alarmConfigAlias = i18n.t(alarmSelected.labelAlias);
-										self.arrSummary.alarmLevelLabelAlias = i18n.t(alarmSelected.alarmLevel.labelAlias);										
-									}
-								});
-
-								$$(self.treeView.getView().rows[3].id).attachEvent("onAfterSelect", function(id) {
-									$$("button-next-" + position + "-" + parent.uid).disable();
-								});
+								$$("button-next-" + position + "-" + parent.uid).disable();
 							}
 						});
+
+						if (self.tableAlarmsModal) {
+
+							self.tableAlarmsModal.callbacks();
+							self.tableAlarmsModal.selectByIndex(0);
+						}
 					}
 				});
 
 				return viewContent
 			}
 
-
 			let drawStepCalendar = function() {
 
-				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"), false,
+				let startDate = Date.now();
+				let minToAdd = self.parent.config.minAddToCurrentDate * 60000;
+				let newDate = new Date(startDate + minToAdd);
+
+				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"), newDate, false,
 
 					function(date) {
 
@@ -302,7 +553,7 @@ export default class AlarmFilteredWizard {
 				);
 
 				let viewCalendar;
-				
+
 				viewCalendar = {
 					id: "viewCalendar" + parent.uid,
 					cols: [
@@ -314,7 +565,6 @@ export default class AlarmFilteredWizard {
 								{
 									view: "label",
 									borderless: true,
-									//width: 850,
 									height: 23,
 									css: "headers",
 									label: i18n.t("LBL_DATE_UNTIL")
@@ -350,7 +600,7 @@ export default class AlarmFilteredWizard {
 			let drawSummary = function() {
 
 				let viewSummary;
-				
+
 				viewSummary = {
 					id: "viewSummary" + parent.uid,
 					cols: [
@@ -374,7 +624,22 @@ export default class AlarmFilteredWizard {
 												{ height: 10 },
 												{
 													view: "label",
-													id: "alarm-name"
+													id: "alarm-name",
+													tooltip: function(obj) {
+
+														let tooltip = "";
+
+														if (Array.isArray(self.alarmSelectedArr) && self.alarmSelectedArr.length > 1) {
+
+															for (let alarmSelected of self.alarmSelectedArr) {
+
+																tooltip += alarmSelected.alias + " ";
+															}
+														}
+
+														return tooltip;
+													}
+
 												},
 												{ height: 10 },
 												{
@@ -398,8 +663,7 @@ export default class AlarmFilteredWizard {
 													id: "alarm-comment"
 												}
 											]
-										},
-										//{ width: 80 }
+										}
 									]
 								},
 								{ height: 40 }
@@ -413,7 +677,6 @@ export default class AlarmFilteredWizard {
 			}
 
 			return eval(step.drawFunction)();
-
 		}
 
 
@@ -429,7 +692,7 @@ export default class AlarmFilteredWizard {
 			}
 
 			let viewHeader;
-			
+
 			viewHeader = {
 				css: { "background": "#567eba" },
 				rows: [
@@ -451,7 +714,6 @@ export default class AlarmFilteredWizard {
 							{},
 							{
 								view: "template",
-								//width: 140,
 								borderless: true,
 								css: { "background": "transparent" },
 								template: function() {
@@ -475,12 +737,11 @@ export default class AlarmFilteredWizard {
 			let labelNoCss = false;
 
 			let viewSteps;
-			
+
 			viewSteps = {
 				rows: [
 					{
 						height: 5,
-						//width: 850
 					},
 					{
 						height: 66,
@@ -541,7 +802,7 @@ export default class AlarmFilteredWizard {
 			let label = parent.steps.find(e => e.position === position);
 
 			let viewStepAlarm;
-			
+
 			viewStepAlarm = {
 				cols: [
 					{},
@@ -589,7 +850,6 @@ export default class AlarmFilteredWizard {
 						onItemClick() {
 
 							$$(self.createView).close();
-
 						}
 					}
 				},
@@ -615,25 +875,43 @@ export default class AlarmFilteredWizard {
 									self.setCurrentStep(step.position + 1);
 								}
 
-								if (position === parent.config.steps.fromNoMap[0].position && self.tableAlarmsModal.getSelectedIds().length === 0) {
+								if (position === parent.config.steps.fromNoMap[0].position && self.tableElements.getSelectedIds().length === 0) {
 
 									$$("button-next-" + pos + "-" + parent.uid).disable();
 								}
 
 								if (pos === parent.config.summaryStepPosition) {
 
-									//let user = JSON.parse(sessionStorage.getItem('user.data'));
+									self.alarmSelectedArr = [];
 									let user = util.user.getUserData();
 									let date = util.toLocaleString(self.calendar.getSelectedDates().from.getTime() / 1000);
+									let alarmsIdSelected = self.tableAlarmsModal.getSelectedIds();
 
-									self.arrSummary.alarmDisabled = self.disableAlarm;
-									self.arrSummary.filteredUntil = date;
-									self.arrSummary.user = user.name;
+									for (let alarmId of alarmsIdSelected) {
 
-									$$("alarm-name").setValue(`<div><span class="ico webix_icon mdi mdi-exclamation-thick" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_ALARM")}</span></div><div class="value">${self.arrSummary.alarmConfigAlias}</div>`);
-									$$("alarm-level").setValue(`<div><span class="ico webix_icon mdi mdi-signal-cellular-3" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div><div class="value">${self.arrSummary.alarmLevelLabelAlias}</div>`);
-									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value">${self.arrSummary.filteredUntil}</div>`);
-									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${self.arrSummary.user}</div>`);
+										let alarmSelected = self.aconfigArray.find(e => e.id === alarmId);
+
+										if (alarmSelected) {
+
+											let elementId = (alarmSelected.element && alarmSelected.element.id) ? alarmSelected.element.id : undefined;
+
+											self.alarmSelectedArr.push({
+												alias: i18n.t(alarmSelected.labelAlias),
+												level: i18n.t(alarmSelected.alarmLevel.labelAlias),
+												elementTypeId: alarmSelected.elementType.id,
+												elementId: elementId
+											});
+
+											console.log(alarmSelected, self.alarmSelectedArr)
+										}
+									}
+
+									let ellipsis = (self.alarmSelectedArr.length > 1) ? "..." : "";
+
+									$$("alarm-name").setValue(`<div><span class="ico webix_icon mdi mdi-exclamation-thick" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_ALARM")}</span></div><div class="value">${self.alarmSelectedArr[0].alias}${ellipsis}</div>`);
+									$$("alarm-level").setValue(`<div><span class="ico webix_icon mdi mdi-signal-cellular-3" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div><div class="value">${self.alarmSelectedArr[0].level}</div>`);
+									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value">${date}</div>`);
+									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${user.name}</div>`);
 									$$("alarm-comment").setValue(`<div>
 																	<span class="ico webix_icon mdi mdi-comment-edit" style="margin-top: 7px"></span>
 																	<span class="field">${i18n.t("LBL_COMMENTS_HERE")}</span>
@@ -641,53 +919,108 @@ export default class AlarmFilteredWizard {
 																<div class="value">
 																<textarea id="textarea-alarm-filtered" class="alarm-view-rectangle-back" style="resize: none; border-width: 1px; overflow: auto; display: inline-block; vertical-align: top; margin-top: 0px; width: 626px;"></textarea>
 																</div>`);
-									
-									let titleSummary = (self.arrSummary.alarmDisabled) ? `<div><span style="font-size: 13px">${i18n.t("LBL_ALARM_FILTER_RADIO_DISABLED")}</span></div>` : `<div><span style="font-size: 14px; color: #475466">${i18n.t("LBL_ALARM_FILTER_RADIO_MUTE")}</span></div>`;
+
+									let titleSummary = (self.disableAlarm) ? `<div><span style="font-size: 13px">${i18n.t("LBL_ALARM_FILTER_RADIO_DISABLED")}</span></div>` : `<div><span style="font-size: 14px; color: #475466">${i18n.t("LBL_ALARM_FILTER_RADIO_MUTE")}</span></div>`;
 
 									$$("alarm-title").setValue(titleSummary);
-
 								}
 
 							} else {
 
-								let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
-								ms.show();
-								
-								function onAccept() {
+								let alarmsWithElementId = self.alarmSelectedArr.filter(alarm => alarm.elementId);
 
-									let filteredAlarms = [];
-									//let user = JSON.parse(sessionStorage.getItem('user.data'));
-									let user = util.user.getUserData();
-									let textareaValue = $$("alarm-comment").getNode().querySelector("#textarea-alarm-filtered").value;
+								if (Array.isArray(alarmsWithElementId) && alarmsWithElementId.length > 0) {
 
-									self.tableAlarmsModal.getSelectedIds().forEach(alarm => {
+									let alarmToSave = undefined;
+									let counter = 0;
+									let onlyOneElement = (Array.isArray(self.alarmMutedElementsIdSelect) && self.alarmMutedElementsIdSelect.length === 1);
 
-										filteredAlarms.push({
+									for (let alarmWithElementId of alarmsWithElementId) {
 
-											alarmConfigId: alarm,
-											filteredUntil: self.calendar.getSelectedDates().from.getTime(),
-											elementId: self.alarmMutedElementSelect.id,
-											enable: true,
-											alarmDisabled: self.disableAlarm,
-											userId: user.id,
-											comment: textareaValue
-										});
-									});
+										if (onlyOneElement) {
 
-									if (Array.isArray(filteredAlarms) && filteredAlarms.length > 0) {
+											counter = (alarmWithElementId.elementId === self.alarmMutedElementsIdSelect[0]) ? counter + 1 : counter;
+											alarmToSave = (counter === alarmsWithElementId.length);
 
-										let body = {
+										} else {
 
-											alarmFiltereds: filteredAlarms
-										};
+											alarmToSave = false;
+										}
+									}
 
-										webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then(function() {
-											parent.args.callbacks[0](1000);
-											$$(self.createView).close();
+									if (alarmToSave) {
 
-										});
-									}									
+										saveFilteredAlarm();
+
+									} else {
+
+										let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_SELECTED_NOT_CONFIGURED_FOR_EQUIPMENT"), null, null);
+										ms.show();
+									}
+
+								} else {
+
+									saveFilteredAlarm();
 								}
+
+								function saveFilteredAlarm() {
+
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ALARM_CREATE_ALARMS_FILTER_CONFIRM_DESCRIPTION"), onAccept, null);
+									ms.show();
+
+									function onAccept() {
+
+										let currentTime = Date.now();
+										let selectedTime = self.calendar.getSelectedDates().from.getTime();
+
+										if ((self.parent.config.minAddToCurrentDate * 60000) > (selectedTime - currentTime)) {
+
+											let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ALARM_FILTERED_LESS_THAN_MINIMUM_ESTABLISHED"), null, null);
+											ms.show();
+
+										} else {
+
+											let user = util.user.getUserData();
+											let textareaValue = $$("alarm-comment").getNode().querySelector("#textarea-alarm-filtered").value;
+
+											self.tableAlarmsModal.getSelectedIds().forEach(alarm => {
+
+												for (let alarmMutedElementIdSelect of self.alarmMutedElementsIdSelect) {
+
+													let filteredAlarms = [];
+
+													filteredAlarms.push({
+
+														alarmConfigId: alarm,
+														filteredUntil: self.calendar.getSelectedDates().from.getTime(),
+														elementId: alarmMutedElementIdSelect,
+														enable: true,
+														alarmDisabled: self.disableAlarm,
+														userId: user.id,
+														comment: textareaValue
+													});
+
+													if (Array.isArray(filteredAlarms) && filteredAlarms.length > 0) {
+
+														let body = {
+
+															alarmFiltereds: filteredAlarms
+														};
+
+														webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.mute, body).then(function() {
+
+															parent.args.callbacks[0](1000);
+															$$(self.createView).close();
+														});
+													}
+												}
+											});
+										}
+									}
+
+								}
+
+
 							}
 						}
 					}
@@ -704,7 +1037,7 @@ export default class AlarmFilteredWizard {
 								height: 45,
 								borderless: true,
 								elements: viewToolbarActionsButtons
-							}						]
+							}]
 					}
 				]
 			};
@@ -747,7 +1080,6 @@ export default class AlarmFilteredWizard {
 				stepContent.push({ rows: [{ height: 15 }] });
 
 				multiView.cells.push({ rows: stepContent });
-
 			});
 		}
 

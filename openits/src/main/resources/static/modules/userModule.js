@@ -326,7 +326,7 @@ export default class UserModule extends GenericModule {
 
 						function lockUsers(users) {
 
-							new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), false,
+							new CalendarDialogBox(i18n.t("LBL_CONFIRM_LOCK_USER"), i18n.t("LBL_QUESTION_LOCK_USER"), null, false,
 
 								function(date) {
 
