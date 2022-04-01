@@ -4176,3 +4176,7 @@ audio {
 	color: var(--blue-headers-not-sel) !important;	
 }
 
+.tube-order-edit-radio-options .webix_radio_option {
+	margin-bottom: 10px !important;
+}
+
