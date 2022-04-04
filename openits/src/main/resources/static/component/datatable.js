@@ -361,7 +361,7 @@ export default class DataTable {
 
 									if (!showValue) {
 
-										return `<img class="table-field-icons" src="${icon}" />`;
+										return `<img class="table-field-icons" src="${icon}" onerror="this.onerror=null;this.src='./img/grid/empty.png'"/>`;
 									}
 									else {
 
@@ -2077,6 +2077,7 @@ export default class DataTable {
 		let self = this;
 		let grid = $$("dt-" + this.uid);
 		let txtSearch = $$("txtSearch-" + this.uid);
+		console.log(txtSearch,"txtSearch-" + this.uid)
 		let gridOptionsFilterFieldId = self.getGridOptions(GridOptions.FILTER_FIELD_ID)
 		let gridOptionsFilterFieldValue = self.getGridOptions(GridOptions.FILTER_FIELD_VALUE)
 		let existsInitFilter = (gridOptionsFilterFieldId && gridOptionsFilterFieldValue) ? true : false;

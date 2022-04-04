@@ -15,7 +15,7 @@
 	],
 	"restEndpoints": {
 		"elementByIdWithoutChilds": "elements/${id}/withoutChilds",
-		"elementsHierarchy": "elements/hierarchy"
+		"elementByIdWithParents": "elements/${id}/withParents"
 	},
 	"ventilationParams":{
 		"ventilationRegimesConfig": "ElementTypeParam:2000:1:1",

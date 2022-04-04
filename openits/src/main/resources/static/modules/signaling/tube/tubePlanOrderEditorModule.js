@@ -67,20 +67,19 @@ export default class TubePlanOrderEditorModule extends GenericModule {
 
 					self.element = elementResponse.json();
 
-					webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy).then(function(hierarchyResponse) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementByIdWithParents, { id: self.element.id })).then(function(parentsResponse) {
 
-						if (hierarchyResponse != null) {
+						if (parentsResponse != null) {
 
-							let hierarchiesArr = hierarchyResponse.json();
-							let tubeHierarchies = hierarchiesArr.filter(e => e.child.id === self.element.id);
+							let tube = parentsResponse.json();
 
-							if (Array.isArray(tubeHierarchies) && tubeHierarchies.length > 0) {
+							if (Array.isArray(tube.parents) && tube.parents.length > 0) {
 
-								for (let tube of tubeHierarchies) {
+								for (let parent of tube.parents) {
 
-									modeOptions = (tube.parent.elementType && tube.parent.elementType.arg_1) ? JSON.parse(tube.parent.elementType.arg_1) : self.config;
+									modeOptions = (parent.elementType && parent.elementType.arg_1) ? JSON.parse(parent.elementType.arg_1) : self.config;
 
-									if (tube.parent.elementType.id === self.config.elementTypeVentilation) {
+									if (parent.elementType.id === self.config.elementTypeVentilation) {
 
 										tubeParents.push({
 											id: TAB_OPTION.VENTILATION,
@@ -88,7 +87,7 @@ export default class TubePlanOrderEditorModule extends GenericModule {
 										});
 									}
 
-									if (tube.parent.elementType.id === self.config.elementTypeLighting) {
+									if (parent.elementType.id === self.config.elementTypeLighting) {
 
 										tubeParents.push({
 											id: TAB_OPTION.LIGHTING,
@@ -119,7 +118,12 @@ export default class TubePlanOrderEditorModule extends GenericModule {
 					id: "view-content-" + self.uid,
 					rows: [
 						getViewHeader(),
-						getViewBody()
+						{
+							cols: [
+								{ width: 20 },
+								 getViewBody()
+							]
+						}
 					]
 				};
 

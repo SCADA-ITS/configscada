@@ -17,6 +17,7 @@ export default class AlarmFilteredWizard {
 		this.alarmMutedElementsIdSelect = [];
 		this.alarmMutedAlarmsIdSelect = [];
 		this.alarmSelectedArr = [];
+		this.elementAlias = [];
 		this.calendar = undefined;
 		this.arrSummary = [];
 		this.createView = undefined;
@@ -610,7 +611,7 @@ export default class AlarmFilteredWizard {
 							height: 385,
 							css: { "border": "1px solid #dadee0 !important", "box-sizing": "border-box" },
 							rows: [
-								{ height: 50 },
+								{ height: 30 },
 								{
 									cols: [
 										{ width: 80 },
@@ -624,28 +625,40 @@ export default class AlarmFilteredWizard {
 												{ height: 10 },
 												{
 													view: "label",
+													id: "alarm-equipments",
+													tooltip: function(obj) {
+
+														let tooltip = [];
+
+														if (Array.isArray(self.elementAlias) && self.elementAlias.length > 1) {
+
+															for (let alias of self.elementAlias) {
+
+																tooltip.push(alias);
+															}
+														}
+
+														return tooltip.join(",");
+													}
+												},
+												{ height: 10 },
+												{
+													view: "label",
 													id: "alarm-name",
 													tooltip: function(obj) {
 
-														let tooltip = "";
+														let tooltip = [];
 
 														if (Array.isArray(self.alarmSelectedArr) && self.alarmSelectedArr.length > 1) {
 
 															for (let alarmSelected of self.alarmSelectedArr) {
 
-																tooltip += alarmSelected.alias + " ";
+																tooltip.push(alarmSelected.alias);
 															}
 														}
 
-														return tooltip;
+														return tooltip.join(",");
 													}
-
-												},
-												{ height: 10 },
-												{
-													view: "label",
-													id: "alarm-level"
-
 												},
 												{ height: 10 },
 												{
@@ -883,6 +896,7 @@ export default class AlarmFilteredWizard {
 								if (pos === parent.config.summaryStepPosition) {
 
 									self.alarmSelectedArr = [];
+									self.elementAlias = [];
 									let user = util.user.getUserData();
 									let date = util.toLocaleString(self.calendar.getSelectedDates().from.getTime() / 1000);
 									let alarmsIdSelected = self.tableAlarmsModal.getSelectedIds();
@@ -901,15 +915,20 @@ export default class AlarmFilteredWizard {
 												elementTypeId: alarmSelected.elementType.id,
 												elementId: elementId
 											});
-
-											console.log(alarmSelected, self.alarmSelectedArr)
 										}
 									}
 
-									let ellipsis = (self.alarmSelectedArr.length > 1) ? "..." : "";
+									for (let elementId of self.alarmMutedElementsIdSelect) {
 
-									$$("alarm-name").setValue(`<div><span class="ico webix_icon mdi mdi-exclamation-thick" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_ALARM")}</span></div><div class="value">${self.alarmSelectedArr[0].alias}${ellipsis}</div>`);
-									$$("alarm-level").setValue(`<div><span class="ico webix_icon mdi mdi-signal-cellular-3" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_LEVEL")}</span></div><div class="value">${self.alarmSelectedArr[0].level}</div>`);
+										let element = window.em.getByField(EntityType.ELEMENT, "id", elementId);
+										self.elementAlias.push(element.alias);
+									}
+
+									let alarmEllipsis = (self.alarmSelectedArr.length > 1) ? "..." : "";
+									let equipmentEllipsis = (self.elementAlias.length > 1) ? "..." : "";
+
+									$$("alarm-equipments").setValue(`<div><span class="ico webix_icon mdi mdi-engine" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_EQUIPMENT_S")}</span></div><div class="value">${self.elementAlias[0]}${equipmentEllipsis}</div>`);
+									$$("alarm-name").setValue(`<div><span class="ico webix_icon mdi mdi-exclamation-thick" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_ALARM")}</span></div><div class="value">${self.alarmSelectedArr[0].alias}${alarmEllipsis}</div>`);									
 									$$("alarm-date").setValue(`<div><span class="ico webix_icon wxi-calendar" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_UNTIL")}</span></div><div class="value">${date}</div>`);
 									$$("alarm-user").setValue(`<div><span class="ico webix_icon mdi mdi-account" style="margin-top: 7px"></span><span class="field">${i18n.t("LBL_USER")}</span></div><div class="value">${user.name}</div>`);
 									$$("alarm-comment").setValue(`<div>
@@ -1017,10 +1036,7 @@ export default class AlarmFilteredWizard {
 											});
 										}
 									}
-
 								}
-
-
 							}
 						}
 					}
