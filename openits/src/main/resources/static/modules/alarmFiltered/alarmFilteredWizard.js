@@ -216,10 +216,11 @@ export default class AlarmFilteredWizard {
 
 								self.tableElements.selectByIndex(0);
 
-								if (callbackEnable) {
+							}
+							
+							if (callbackEnable) {
 
-									callbackEnable(true);
-								}
+								callbackEnable(true);
 							}
 						}
 					};
