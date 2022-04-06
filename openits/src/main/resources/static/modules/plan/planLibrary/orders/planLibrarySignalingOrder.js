@@ -3,6 +3,7 @@ import PlanLibraryOrder from "./planLibraryOrder.js";
 import PlanLibraryPersist from "../planLibraryPersist.js";
 import SearchDialogBox from "../../../../component/searchDialogBox.js";
 import MessageBox from "../../../../component/messageBox.js";
+import EquipmentList from "../../../../component/equipmentList.js";
 
 export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
@@ -85,53 +86,45 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 		let self = this;	
 		let planOrder;	
 		let newPlanOrder = (newPlan) ? newPlan : self.planOrder;
+		let commandElement;
 		
 		if (newPlanOrder && self.signalingModuleInstance) {
 			
-			let commandElement = self.signalingModuleInstance.getSignaling();
+			commandElement = self.signalingModuleInstance.getSignaling();
+		}
 			
-			if (commandElement) {
-				
-				planOrder = {
-					id: newPlanOrder.id,
-					planOrderTypeId: newPlanOrder.planOrderType.id,
-					comandElement: {
-						
-						commandElementTypeId: commandElement.commandElementType.id,
-						elementId: newPlanOrder.element ? newPlanOrder.element.id : commandElement.element.id,
-						commandElementValues: function() {
-							
-							let commandElementValues = undefined;
-							
-							if (Array.isArray(commandElement.commandElementValues) && commandElement.commandElementValues.length > 0) {
-							
-								commandElementValues = commandElement.commandElementValues.map(e => {
-								
-									let value = undefined;
-									
-									if (e.value && typeof e.value === 'object') {
-										
-										value = JSON.stringify(e.value);
-									}
-									else {
-										
-										value = e.value;
-									}
-									
-									return {
-										
-										commandElementTypeParamId: e.commandElementTypeParam.id,
-										value: value
-									}
-								});	
-							}
-							
-							return commandElementValues;
-							 
-						}()
-					},
+		if (commandElement) {
+			
+			planOrder = {
+				id: newPlanOrder.id,
+				planOrderTypeId: newPlanOrder.planOrderType.id,
+				comandElement: {
+					
+					commandElementTypeId: commandElement.commandElementType.id,
+					elementId: newPlanOrder.element ? newPlanOrder.element.id : commandElement.element.id,
+					commandElementValues: getCommandElementValues()
 				}
 			}
+		}
+		
+		function getCommandElementValues() {
+							
+			let commandElementValues = undefined;
+			
+			if (Array.isArray(commandElement.commandElementValues) && commandElement.commandElementValues.length > 0) {
+			
+				commandElementValues = commandElement.commandElementValues.filter(f => f.value).map(e => {
+
+					return {
+					
+						commandElementTypeParamId: e.commandElementTypeParam.id,
+						value: (typeof e.value === 'object') ? JSON.stringify(e.value) : e.value
+					}	
+				});	
+			}
+			
+			return Array.isArray(commandElementValues) && commandElementValues.length > 0 ? commandElementValues : undefined;
+			 
 		}
 		
 		return planOrder;
@@ -153,21 +146,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 			}
 			
 			searchDialogElementType();
-			
-			function onSelectElementType(elementType) {
-				
-				elementTypeSelected = elementType;
-				
-				if (elementTypeSelected && Array.isArray(elementTypeSelected.commandElementTypes) && elementTypeSelected.commandElementTypes.length > 0) {
-								
-					searchDialogElement();
-				}
-				else {
-					
-					let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_ELEMENT_TYPE_WITHOUT_COMMANDS_DESCRIPTION"), null, null);
-					ms.show();		
-				}
-			}
 			
 			function onSelectElement(elementSelected) {
 				
@@ -228,7 +206,6 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 
 										if (result != null) {
 
-
 											if (++counter < elementsSelected.length) {
 
 												persist();
@@ -249,180 +226,175 @@ export default class PlanLibrarySignalingOrder extends PlanLibraryOrder {
 			
 		
 			function searchDialogElementType() {
-				
-				let dialogElementTypes = webix.copy(SearchDialogBox.CALLBACK);
-				let label = i18n.t("LBL_STEP_1_OF_2_SELECT_ELEMENT_TYPE");
-				let elementTypes;
-				let elements;
-				
-				dialogElementTypes.height = 600;
-				dialogElementTypes.width = 800;
-				dialogElementTypes.fillDialogEntity = fillDialogEntity;
-				
-				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
-					
-					elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
-					elements = window.em.getAll(EntityType.ELEMENT);
-				
-					if (Array.isArray(elementTypes) && elementTypes.length > 0) {
-						
-						elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
-						
-						if (Array.isArray(elements) && elements.length > 0) {
-							
-							elementTypes = elementTypes.filter(elementType => (elements.findIndex(element => element.elementType.id === elementType.id) !== -1));
-						}
-						
-						dialogEntity.data = [];
-		
-						dialogEntity.pkField = "id"
-						dialogEntity.fields = ["idIcon=", "alias=LBL_ELEMENT_TYPE_ALIAS", "description=LBL_ELEMENT_TYPE_DESCRIPTION"];
-						dialogEntity.sortFieldId = 3; 
-						
-						dialogEntity.icons = {
-							idIcon: []
-						}
-						
-						elementTypes.forEach(elementType => {
-							
-							dialogEntity.icons.idIcon.push({
-								id: elementType.id,
-								icon: "img/" + elementType.elementTypePhoto
-							});
-							
-							dialogEntity.data.push({
-								id: elementType.id,
-								idIcon: elementType.id,
-								alias: i18n.t(elementType.labelAlias),
-								description: i18n.t(elementType.labelDescription)
-							});
-						});
-					}
-					
-					onFilledDialogEntity(dialogEntity);
-				}
-					
-				let s = new SearchDialogBox(label, dialogElementTypes, function(items) {
 
-					if (Array.isArray(items) && items.length === 1) {
-						
-						onSelectElementType(elementTypes.find(elementType => elementType.id == items[0].id));
-					}
-				});
-	
-				s.show();
-			}
-			
-			function searchDialogElement() {
-				
-				let dialogElements = webix.copy(SearchDialogBox.CALLBACK);
-				let label = i18n.t("LBL_STEP_2_OF_2_SELECT_ELEMENT");
-				let elements;
-				
-				dialogElements.height = 600;
-				dialogElements.width = 800;
-				dialogElements.multiselect = true;
-				dialogElements.fillDialogEntity = fillDialogEntity;
-				
-				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
-					
-					elements = window.em.getAll(EntityType.ELEMENT);
-				
+				let elementTypes = window.em.getAll(EntityType.ELEMENT_TYPE);
+				let elements = window.em.getAll(EntityType.ELEMENT);
+
+				if (Array.isArray(elementTypes) && elementTypes.length > 0) {
+
+					elementTypes = elementTypes.filter(e => Array.isArray(e.commandElementTypes) && e.commandElementTypes.length > 0);
+
 					if (Array.isArray(elements) && elements.length > 0) {
-						
-						elements = elements.filter(e => e.elementType.id === elementTypeSelected.id); 
-					
-						if (Array.isArray(elements) && elements.length > 0) {
-							
-							dialogEntity.data = [];
-			
-							dialogEntity.pkField = "id"
-							dialogEntity.fields = ["alias=LBL_ELEMENT_ALIAS", "description=LBL_ELEMENT_DESCRIPTION"];
-							dialogEntity.sortFieldId = 2; 
-							
-							elements.forEach(element => {
-								
-								dialogEntity.data.push({
-									id: element.id,
-									alias: element.alias,
-									description: element.description
-								});
-							});
-						}
+
+						elementTypes = elementTypes.filter(elementType => (elements.findIndex(element => element.elementType.id === elementType.id) !== -1));
 					}
-					
-					onFilledDialogEntity(dialogEntity);
 				}
-						
-				let s = new SearchDialogBox(label, dialogElements, onAccept);
-				s.show();
+
+				let equipmentList = new EquipmentList(elementTypes, onSelect);
 				
-				function onAccept(items){
-								
+				function onSelect(items) {
+
 					if (Array.isArray(items) && items.length > 0) {
-					
-						let elementIdsSelected = items.map(e => {
-							
-							return e.id;
-						});
-						
-						webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.elementByIdsCommands, JSON.stringify(elementIdsSelected)).then(
+
+						$$("dialog-accept-" + self.uid).enable();
+
+					} else {
+
+						$$("dialog-accept-" + self.uid).disable();
+					}
+
+				}
+
+				let equipmentViewBody = {
+					id: "equipmentList-" + self.uid,
+					rows: [
+						{
+							cols: [
+								{ width: 20 },
+								{
+									rows: [
+										{ height: 20 },
+										equipmentList.getView(),
+										{ height: 15 }
+									]
+								},
+								{ width: 20 }
+							]
+						},
+						{
+							cols: [
+								{ width: 15 },
+								{
+									id: "toolbar-" + self.uid,
+									view: "toolbar",
+									height: 45,
+									borderless: true,
+									elements: [
+										{
+											view: "button",
+											css: "dialog-cancel",
+											width: 130,
+											height: 35,
+											label: i18n.t("LBL_CANCEL"),
+											on: {
+												onItemClick() {
+
+													$$(equipmentListWindow).close();
+												}
+											}
+										},
+										{},
+										{
+											id: "dialog-accept-" + self.uid,
+											view: "button",
+											css: "dialog-accept",
+											width: 130,
+											height: 35,
+											label: i18n.t("LBL_ACCEPT"),
+											on: {
+												onItemClick() {
+
+													onAccept(equipmentList.tableView.getSelectedIds());
+													$$(equipmentListWindow).close();
+												}
+											}
+										}
+									]
+								},
+								{ width: 15 }
+							]
+						}
+					]
+				};
+
+				let equipmentListWindow = util.ui.loadWindow(i18n.t("LBL_ALARM_FILTER_LIST_EQUIPMENT_GRID"), equipmentViewBody, 600, 1100, true);
+
+				if (equipmentList.listView && equipmentList.tableView) {
+
+					equipmentList.tableView.callbacks();
+					equipmentList.listView.selectByIndex(0);
+				}
+
+
+				function onAccept(items) {
+
+					if (Array.isArray(items) && items.length > 0) {
+
+						webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.elementByIdsCommands, JSON.stringify(items)).then(
 
 							function(dataElements) {
-									
+
 								if (dataElements) {
-									
+
 									let elementsSelected = dataElements.json();
-									
+
 									if (Array.isArray(elementsSelected) && elementsSelected.length > 0) {
-										
+
 										if (elementsSelected.length === 1) {
-	
+
 											onSelectElement(elementsSelected[0]);
-				
-										} 
-										else {
-											
-											let modAction = (elementTypeSelected.planOrderSignalingModule) ? elementTypeSelected.planOrderSignalingModule : self.config.moduleAction.defaultPlanOrderEdit;
-											let module = util.module.getFromModuleAction(parseInt(modAction));
-				
-											if (module) {
-				
-												let moduleAction = { id: module.config.moduleAction.commandEdit };
-				
-												let args = {
-													selectedPks: elementIdsSelected,
-													callbacks: [
-														function () {
-															
-															$$("plan-lib-loading-" + self.uid).show();
-															$$("view-option-dialog-" + self.uid).hide();
-															$$("plan-lib-resizer-" + self.uid).hide();
-															$$("plan-lib-content-" + self.uid).hide();
-				 											onMultiselectElement(elementsSelected);
-														}]
-												};
-				
-												util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, function(instance) {
-				
-													self.signalingModuleInstance = instance;
-													let win = $$(self.signalingModuleInstance.args.containerId);
-				
-													util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
-				
-												});
-																		
-											} else {
-				
-												let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
-												ms.show();
+
+										} else {
+
+											let elementSelected = elements.find(element => element.id === elementsSelected[0].id);
+
+											if (elementSelected) {
+
+												elementTypeSelected = elementTypes.find(elementType => elementType.id === elementSelected.elementType.id);
+
+												if (elementTypeSelected) {
+
+													let modAction = (elementTypeSelected.planOrderSignalingModule) ? elementTypeSelected.planOrderSignalingModule : self.config.moduleAction.defaultPlanOrderEdit;
+													let module = util.module.getFromModuleAction(parseInt(modAction));
+
+													if (module) {
+
+														let moduleAction = { id: module.config.moduleAction.commandEdit };
+
+														let args = {
+															selectedPks: items,
+															callbacks: [
+																function() {
+
+																	$$("plan-lib-loading-" + self.uid).show();
+																	$$("view-option-dialog-" + self.uid).hide();
+																	$$("plan-lib-resizer-" + self.uid).hide();
+																	$$("plan-lib-content-" + self.uid).hide();
+																	onMultiselectElement(elementsSelected);
+																}]
+														};
+
+														util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args, function(instance) {
+
+															self.signalingModuleInstance = instance;
+															let win = $$(self.signalingModuleInstance.args.containerId);
+
+															util.ui.setTitle(win, i18n.t("LBL_CREATE_SIGNALING_ORDER"));
+
+														});
+
+													} else {
+
+														let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_MODULE_NOT_FOUND"), null, null);
+														ms.show();
+													}
+												}
 											}
 										}
 									}
 								}
-							}
-						);
-					}								
+							});
+					}
 				}
 			}
 		}
