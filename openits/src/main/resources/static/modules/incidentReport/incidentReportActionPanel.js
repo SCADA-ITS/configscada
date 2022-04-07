@@ -27,6 +27,7 @@ export default class IncidentReportActionPanel {
 		this.assignAnotherPermissions = parent.assignAnotherPermissions;
 		this.cancelIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.cancelIncident);
 		this.confirmIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.confirmIncident);
+		this.timeOut = undefined;
 	}
 
 	getView() {
@@ -62,6 +63,7 @@ export default class IncidentReportActionPanel {
 							rows: [
 								{ height: 20 },
 								{
+									id: "action-button-" + self.uid,
 									view: "button",
 									css: "action-button",
 									disabled: (function() {
@@ -131,6 +133,7 @@ export default class IncidentReportActionPanel {
 											else {
 
 												label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
+												getTimeRemaining();
 											}
 										}
 										
@@ -200,6 +203,11 @@ export default class IncidentReportActionPanel {
 													}
 												}
 											}
+										},
+										onDestruct: function(){
+											
+											clearInterval(self.timeOut);
+											
 										}
 									}
 								},
@@ -977,6 +985,40 @@ export default class IncidentReportActionPanel {
 			return body;
 		}
 
+
+		function getTimeRemaining() {
+
+			let generatedAt = self.incidentReport.generatedAt;
+
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
+
+				if (systemParamsResponse != null) {
+
+					let systemParams = systemParamsResponse.json();
+					let button = $$("action-button-" + self.uid);
+					let millisOfDiference = Date.now() - generatedAt;
+
+					if (millisOfDiference < (systemParams.value * 1000)) {
+
+						let pendingSecs = ((systemParams.value * 1000) - millisOfDiference) / 1000;
+
+						self.timeOut = setInterval(function() {
+							
+							button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": " + Math.floor(pendingSecs) + " " + i18n.t("LBL_SECONDS");
+							button.refresh();
+							pendingSecs--;
+
+							if (pendingSecs < 0) {
+
+								button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": - " + i18n.t("LBL_SECONDS");
+								button.refresh();
+							}
+							
+						}, 999);
+					}
+				}
+			});
+		}
 
 
 		return viewActionPanel;

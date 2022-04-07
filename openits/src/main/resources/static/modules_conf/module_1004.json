@@ -17,7 +17,8 @@
 		"incidentTypesByStretch": "incidents/stretch/${id}",
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"locationsStretchs": "locations/stretchs",
-		"elementsStretchs": "elements/byStretchs"
+		"elementsStretchs": "elements/byStretchs",
+		"systemParamConfirmIncident" : "system_params/${id}"
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {
@@ -69,5 +70,6 @@
 		"confirmIncident": "SystemPermission:10",
 		"cancelIncident": "SystemPermission:11"
 	},
-	"executeTaskPlanDelaySecs": 2
+	"executeTaskPlanDelaySecs": 2,
+	"systemParamConfirmIncident": "SystemParam:7"
 }
