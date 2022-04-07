@@ -1257,7 +1257,7 @@ export default class TubeContent {
 						command.elementId = dali.id;
 						command.commandElementValues[0].value = newRegimeId;
 	
-						let commands = [];
+						let commands = [command];
 						
 						if (Array.isArray(commands) && commands.length > 0) {
 											
@@ -1346,19 +1346,9 @@ export default class TubeContent {
 								function executeCircuitCommand(commandAction, values, onExecuted) {
 
 									let command = self.parent.config.commands[commandAction];
-									let value = "[";
 									command.elementId = self.selectedTube.id;
 
-									for (var i = 0; i < values.length; i++) {
-
-										if (i > 0) {
-											value += ", ";
-										}
-										value += values[i];
-									}
-
-									value += "]";
-									command.commandElementValues[0].value = value;
+									command.commandElementValues[0].value = JSON.stringify(values);
 
 									let commands = [];
 

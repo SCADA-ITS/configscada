@@ -1047,7 +1047,7 @@ export default class TubeContent {
 												commandElementValues: [
 													{
 														commandElementTypeParamId: command[1],
-														value: "[" + ids.join() + "]"
+														value: JSON.stringify(ids)
 													}
 												]
 											}];

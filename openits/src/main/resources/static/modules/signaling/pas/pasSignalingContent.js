@@ -574,22 +574,10 @@ export default class PasSignalingContent {
 
 								function onAccept() {
 
-									let selectedZonesValue = "[";
-
-									for (var i = 0; i < selectedItems.length; i++) {
-
-										if (i > 0) {
-											selectedZonesValue += ", ";
-										}
-										selectedZonesValue += selectedItems[i].messageZoneId;
-									}
-
-									selectedZonesValue += "]";
-
 									let command = self.config.commands.SWITCH_OFF;
 
 									command.elementId = self.element.id;
-									command.commandElementValues[0].value = selectedZonesValue;
+									command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => {return e.messageZoneId}));
 
 									let body = {
 										commands: []
