@@ -150,7 +150,19 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			let viewMain = {
 				id: self.uid,
-				cols: []
+				cols: [],
+				on: {
+						
+					onAfterExpand: function(id) {
+						
+						let viewMainQueueInstance = $$("view-main-queue-" + self.uid);
+						
+						if (viewMainQueueInstance && viewMainQueueInstance.isVisible() && self.vmsSignalingQueue) {
+							
+							self.vmsSignalingQueue.update(self.currentElement);
+						}
+					}
+				}
 			};
 			
 			let viewMainTreeHierarchyHidden = (Array.isArray(self.args.selectedPks) && self.args.selectedPks.length === 1);
@@ -214,11 +226,11 @@ export default class VmsSignalingModule extends GenericModule {
 				rows: [util.ui.getViewDrawLoading()],
 			};
 			
-//			let viewMainQueueResizer = { 
-//				id: "view-main-queue-resizer-" + self.uid,
-//				hidden: true,
-//				view: "resizer" 
-//			};
+			let viewMainQueueResizer = { 
+				id: "view-main-queue-resizer-" + self.uid,
+				hidden: true,
+				view: "resizer" 
+			};
 
 			let viewQueue = getViewQueue();
 			
@@ -256,7 +268,7 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				let view;
 				
-				self.vmsSignalingQueue = new VmsSignalingQueue(self.config, self.elementType.priorities);
+				self.vmsSignalingQueue = new VmsSignalingQueue(self.config, self.elementType.priorities, QUEUE_PANEL_WIDTH);
 				
 				view = self.vmsSignalingQueue.getView();
 				
@@ -271,6 +283,13 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				$$("view-loading-panel-" + self.uid).show();
 				$$("view-panel-" + self.uid).hide();
+				
+				$$("view-main-queue-" + self.uid).hide();
+				
+				if (self.vmsSignalingContent) {
+					
+					self.vmsSignalingContent.setPriorityOptions();	
+				}
 
 				getElementFromElementId(elementId, onResponse);	
 				
@@ -290,16 +309,7 @@ export default class VmsSignalingModule extends GenericModule {
 						});
 					}
 					
-					let viewMainQueueVisible = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
-					viewMainQueueVisible &= !isModuleActionCommandEdit;
-					viewMainQueueVisible &= (self.vmsSignalingQueue != null);
-					viewMainQueueVisible &= !(Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1);
-					
-					if (viewMainQueueVisible) {
-						
-						$$("view-main-queue-" + self.uid).show();
-						self.vmsSignalingQueue.update(self.currentElement);
-					}
+					drawViewQueue();
 					
 					$$("view-main-loading-" + self.uid).hide();
 					$$("view-main-body-" + self.uid).show();
@@ -312,6 +322,28 @@ export default class VmsSignalingModule extends GenericModule {
 					}, null, null, 500);	
 				}
 
+			}
+			
+			function drawViewQueue() {
+				
+				let viewMainQueueVisible = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
+				viewMainQueueVisible &= !isModuleActionCommandEdit;
+				viewMainQueueVisible &= (self.vmsSignalingQueue != null);
+				viewMainQueueVisible &= !(Array.isArray(self.args.selectedPks) && self.args.selectedPks.length > 1);
+				viewMainQueueVisible &= !(self.vmsSignalingContent && Array.isArray(self.vmsSignalingContent.selectedElements) && self.vmsSignalingContent.selectedElements.length > 1)
+				
+				if (viewMainQueueVisible) {
+					
+					$$("view-main-queue-" + self.uid).show();
+					self.vmsSignalingQueue.update(self.currentElement);
+					
+					self.vmsSignalingContent.setPriorityOptions(self.elementType.priorities);
+				}
+				else {
+					
+					$$("view-main-queue-" + self.uid).hide();
+					self.vmsSignalingContent.setPriorityOptions();
+				}
 			}
 			
 			function getViewContent() {
@@ -334,7 +366,7 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.commandElement;
 					}
 					
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args && self.args.readOnly == true));
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args && self.args.readOnly));
 					
 					view = self.vmsSignalingContent.getView();
 					
@@ -362,6 +394,10 @@ export default class VmsSignalingModule extends GenericModule {
 							
 								self.vmsSignalingTree.select(newElement);			
 							}							
+						}
+						else {
+							
+							drawViewQueue();
 						}
 					});
 				}

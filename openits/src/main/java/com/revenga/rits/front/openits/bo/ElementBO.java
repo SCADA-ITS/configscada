@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.adapter.impl.VODataSourceAdapter;
@@ -125,5 +124,40 @@ public class ElementBO extends GenericBO {
 		return voDataSourceAdapter
 				.putList(VODataSourceAdapter.DATA_SOURCE_SEND_COMMAND_ELEMENT_SYNC, (Map<String, Object>) input);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> addCommandElement(Object input) {
 
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_ADD_COMMAND_ELEMENT, (Map<String, Object>) input);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> deleteCommandElement(Object input) {
+
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_DELETE_COMMAND_ELEMENT, (Map<String, Object>) input);
+	}
+
+	public List<Map<String, Object>> enablePriority(String elementId, String priorityId) {
+		
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("elementId", elementId);
+		input.put("priorityId", priorityId);
+
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_ENABLE_PRIORITY, input);
+	}
+	
+	public List<Map<String, Object>> disablePriority(String elementId, String priorityId) {
+
+		Map<String, Object> input = new HashMap<>();
+
+		input.put("elementId", elementId);
+		input.put("priorityId", priorityId);
+
+		return voDataSourceAdapter
+				.putList(VODataSourceAdapter.DATA_SOURCE_DISABLE_PRIORITY, input);
+	}
 }

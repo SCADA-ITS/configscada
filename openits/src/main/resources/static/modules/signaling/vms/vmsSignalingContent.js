@@ -31,6 +31,9 @@ export default class VmsSignalingContent {
 		this.multiselectAllowed = multiselectAllowed;
 		this.readOnly = readOnly;
 		this.signalingCmds = [];
+		this.priorityId = undefined;
+		this.startTime = undefined;
+		this.endTime = undefined;
 
 		if (this.isEditAction) {
 			
@@ -71,14 +74,14 @@ export default class VmsSignalingContent {
 				},
 				{
 					cols: [
-						{},
+						{ width: 20 },
 						getViewActions(),	
 						{ width: 20 }
 					],	
 				},
 				{ height: 10 }
+	
 			]
-			
 		};
 		
 		function getViewHeader() {
@@ -686,6 +689,122 @@ export default class VmsSignalingContent {
 				borderless: true,
 				elements: [
 					{},
+					{
+						view: "toolbar",
+						height: 45,
+						css: "toolbar-vms-priority",
+						borderless: true,
+						elements: [
+							{
+								id: "vms-content-priority-chk-dt-ini-" + self.uid,
+								view: "checkbox",
+								width: 30,
+								value: false,
+								hidden: true,
+								//tooltip: (this.value ? i18n.t("LBL_SINCE_ENABLE") : i18n.t("LBL_SINCE_DISABLE")),
+								on: {
+									onChange: function(newValue) {
+										
+										let dtIni = $$("vms-content-priority-dt-ini-" + self.uid);
+										
+										if (dtIni) {
+											
+											if (newValue) {
+												
+												dtIni.enable();
+												
+												self.startTime = (dtIni.getValue() && typeof dtIni.getValue() === 'object') ? dtIni.getValue().getTime() : undefined;
+											}
+											else {
+												
+												dtIni.disable();
+												
+												self.startTime = undefined;
+											}
+										}
+									}
+								}
+							},
+							{
+								id: "vms-content-priority-dt-ini-" + self.uid,
+								view: "datepicker",
+								width: 155,
+								placeholder: i18n.t("LBL_SINCE"),
+								timepicker: true,
+								disabled: true,
+								hidden: true,
+								on: {
+									onChange: function(newValue) {
+										
+										self.startTime = (typeof newValue === 'object') ? newValue.getTime() : undefined;
+									}
+								}
+							},
+							{
+								id: "vms-content-priority-chk-dt-end-" + self.uid,
+								view: "checkbox",
+								value: false,
+								width: 30,
+								hidden: true,
+								//tooltip: (this.value ? i18n.t("LBL_UNTIL_ENABLE") : i18n.t("LBL_UNTIL_DISABLE")),
+								on: {
+									onChange: function(newValue) {
+										
+										let dtEnd = $$("vms-content-priority-dt-end-" + self.uid);
+										
+										if (dtEnd) {
+											
+											if (newValue) {
+												
+												dtEnd.enable();
+												
+												self.endTime = (dtEnd.getValue() && typeof dtEnd.getValue() === 'object') ? dtEnd.getValue().getTime() : undefined;
+											}
+											else {
+												
+												dtEnd.disable();
+												
+												self.endTime = undefined;
+											}
+										}
+									}
+								}
+							},
+							{
+								id: "vms-content-priority-dt-end-" + self.uid,
+								view: "datepicker",
+								placeholder: i18n.t("LBL_UNTIL"),
+								width: 155,
+								timepicker: true,
+								disabled: true,
+								hidden: true,
+								on: {
+									onChange: function(newValue) {
+										
+										self.endTime = (typeof newValue === 'object') ? newValue.getTime() : undefined;
+									}
+								}
+							},
+							{
+								id: "vms-content-priority-combo-" + self.uid,
+								view: "richselect",
+								width: 200,
+								placeholder: i18n.t("LBL_SELECT_PRIORITY"),
+								tooltip: i18n.t("LBL_SELECT_PRIORITY"),
+								options: {
+									css: "toolbar-vms-priority-options",
+									data: []
+								},
+								hidden: true,
+								on: {
+									onChange: function(newValue) {
+										
+										self.priorityId = (newValue != -1) ? newValue : undefined;
+									}
+								}
+							}
+						]
+					},
 					{ 
 						view: "button", 
 						id: "btn-multisignaling-" + self.uid,
@@ -709,7 +828,7 @@ export default class VmsSignalingContent {
 									let sameElement = selectedElements.find(element => element.id === self.element.id);
 
 									self.selectedElements = selectedElements;
-
+									
 									$$("elements-selected-label" + self.uid).config.label = function(){
 											
 										let label = (sameElement) ? sameElement.alias : selectedElements[0].alias;
@@ -743,7 +862,6 @@ export default class VmsSignalingContent {
 						view: "button", 
 						id: "btn-send-" + self.uid,
 						css: "action-button",
-						disabled: true,
 						hidden: self.isEditAction,
 						disabled: (self.readOnly === true),
 						width: 130,
@@ -790,7 +908,7 @@ export default class VmsSignalingContent {
 											// Command SendMessage
 											if (isCmdSendMessage) {
 												
-												sendMessageCmd = self.config.commands.sendMessage;
+												sendMessageCmd = webix.copy(self.config.commands.sendMessage);
 												sendMessageCmd.elementId = element.id;
 												
 												if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
@@ -836,6 +954,21 @@ export default class VmsSignalingContent {
 												self.hasMessage = false;
 											}
 											
+											if (self.priorityId) {
+											
+												sendMessageCmd.priorityId = self.priorityId;	
+											}
+											
+											if (self.startTime) {
+												
+												sendMessageCmd.startTime = self.startTime;	
+											}
+											
+											if (self.endTime) {
+												
+												sendMessageCmd.endTime = self.endTime;	
+											}
+											
 											commands.push(webix.copy(sendMessageCmd));	
 											
 											sendMessageCmd = undefined;
@@ -850,7 +983,7 @@ export default class VmsSignalingContent {
 													(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 												}
 											});
-										}										
+										}
 									}										
 								}
 							}
@@ -931,5 +1064,54 @@ export default class VmsSignalingContent {
 		}
 						
 		return commandElement;
+	}
+	
+	setPriorityOptions(priorities) {
+		
+		let self = this;
+		
+		let chkDtIni = $$("vms-content-priority-chk-dt-ini-" + self.uid);
+		let dtIni = $$("vms-content-priority-dt-ini-" + self.uid);
+		let chkDtEnd = $$("vms-content-priority-chk-dt-end-" + self.uid);
+		let dtEnd = $$("vms-content-priority-dt-end-" + self.uid);
+		let cboPriority = $$("vms-content-priority-combo-" + self.uid);
+		
+		if (chkDtIni && dtIni && chkDtEnd && dtEnd && cboPriority) {
+
+			if (Array.isArray(priorities)) {
+				
+				let data = [];
+				
+				data.push({
+					id: -1,
+					value: ""
+				});
+				
+				data.push(...priorities.filter(e => IS_TRUE(e.available)).map(priority => {
+					return {
+					
+						id: priority.id,
+						value: i18n.t(priority.labelAlias)
+					}
+				}));
+				
+				cboPriority.define("options", { css: "toolbar-vms-priority-options", data: data });			
+				cboPriority.refresh();
+				
+				chkDtIni.show();
+				dtIni.show();
+				chkDtEnd.show();
+				dtEnd.show();
+				cboPriority.show();
+			}	
+			else {
+				
+				chkDtIni.hide();
+				dtIni.hide();
+				chkDtEnd.hide();
+				dtEnd.hide();
+				cboPriority.hide();
+			}	
+		}
 	}
 }	

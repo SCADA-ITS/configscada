@@ -9,6 +9,7 @@ export default class CalendarDialogBox {
 		this.onBlockDates = onBlockDates;
 		this.onAccept = onAccept;
 		this.onAfterDateSelect = onAfterDateSelect;
+		this.uid = webix.uid();
 	}
 	
 	getView() {
@@ -18,7 +19,7 @@ export default class CalendarDialogBox {
 		var calendar1 = {
 			view: "calendar",
 			id: "calendar1-" + self.uid,
-			date: new Date(),
+			date: self.date,
 			timepicker: true,
 			blockDates: function(date) {
 				
@@ -26,12 +27,7 @@ export default class CalendarDialogBox {
 			},
 			blockTime: function(date) {
 
-				if ((new Date(self.date)).valueOf() > date.valueOf()){
-				
-					return true;	
-				}
-				
-				return false;
+				return ((new Date(self.date)).valueOf() > date.valueOf());
 			},
 			on: {
 				onAfterDateSelect: function(date) {
@@ -47,7 +43,7 @@ export default class CalendarDialogBox {
 		    view:"calendar",
 			id: "calendar2-" + self.uid,
 			date: self.date,
-		    	timepicker:true,
+		    timepicker:true,
 			blockDates: function(date) {
 				
 				return self.onBlockDates(date);

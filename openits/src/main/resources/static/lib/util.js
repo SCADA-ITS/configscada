@@ -1444,170 +1444,165 @@ export let util = {
 			return color;
 		},
 		
-		sendCommandAsync(commands, onResponse) {
-			
-			let showCommentDialog = false;
-			let userData = util.user.getUserData();
-			let auditLogs = [];
-			
-			if (userData && Array.isArray(commands) && commands.length > 0) {
-				
-				auditLogs = getAuditLogs();
-				
-				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
-					
-					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
-
-						auditLogs = auditLogs.map(auditLog => {
-							
-							let newAuditLog = webix.copy(auditLog);
-							
-							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
-								
-								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
-								
-								if (auditLogValueComment) {
-									
-									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
-								}
-							}
-							
-							return newAuditLog;
-						});
-						
-						send();		
-
-					}, false)).show();
-				}
-				else {
-					
-					send();
-				}
-			}
-			
-			function send() {
-			
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND, { commands: commands }).then(
-					function(okSendCommand) {
-						
-						if (Array.isArray(auditLogs) && auditLogs.length > 0) {
-						
-							webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
-								function(okSendAuditLog) {
-									
-									onResponse(true);
-								
-								},
-								function(errSendAuditLog) {
-								
-									onResponse(false);
-								}
-							);	
-						}
-						else {
-						
-							onResponse(true);	
-						}
-					},
-					function(errSendCommand) {
-						
-						onResponse(false);
-					}
-				);	
-			}
-			
-			function getAuditLogs() {
-				
-				let aLogs = [];
-				
-				commands.forEach(command => {
-					
-					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
-					
-					if (element) {
-						
-						let commandElementType = getCommandElementType(element, command.commandElementTypeId);
-					
-						if (commandElementType && LogLevel[commandElementType.logLevel]) {
-							
-							if (commandElementType.logComment === "true") {
-								
-								showCommentDialog = true;
-							}
-							
-							let commandValues = undefined;
-							
-							if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
-								
-								commandValues = command.commandElementValues.map(e=> e.value).join(",");
-							}
-							
-							const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
-						
-							let auditLog = {
-								logTypeId: LOG_TYPE_COMMANDS.id,
-								logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
-								userId: userData.id,
-								level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
-								auditLogValues: [
-									{
-										value: commandElementType.labelAlias,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_TYPE
-									},
-									{
-										value: element.alias,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.ELEMENT
-									},
-									{
-										value: commandValues,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_VALUES
-									},
-									{
-										value: commandElementType.logComment ? "" : undefined,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMENT
-									}
-								]
-							};
-							
-							aLogs.push(auditLog);	
-						}	
-					}
-				});
-				
-				return aLogs;
-			}
-			
-			function getCommandElementType(element, commandElementTypeId) {
-				
-				let commandElementType = undefined;
-				
-				if (element && element.elementType && element.elementType.id) {
-				
-					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-					
-					if (elementType && Array.isArray(elementType.commandElementTypes)) {
-						
-						commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
-					}
-				}
-				
-				return commandElementType;				
-			}
-		},
+//		sendCommand(commands, onResponse) {
+//			
+//			let showCommentDialog = false;
+//			let auditLogs = [];
+//			
+//			if (Array.isArray(commands) && commands.length > 0) {
+//				
+//				auditLogs = util.element.getAuditLogs(commands);
+//				
+//				showCommentDialog = (commands.find(command => {
+//				
+//					let res = false;
+//					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
+//				
+//					if (element) {
+//					
+//						let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
+//				
+//						if (commandElementType && LogLevel[commandElementType.logLevel]) {
+//						
+//							res = (commandElementType.logComment === "true")
+//						}
+//					}
+//					
+//					return res;
+//					
+//				}) != null);
+//				
+//				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
+//					
+//					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
+//
+//						auditLogs = auditLogs.map(auditLog => {
+//							
+//							let newAuditLog = webix.copy(auditLog);
+//							
+//							if (Array.isArray(newAuditLog.auditLogValues) && newAuditLog.auditLogValues.length > 0) {
+//								
+//								let auditLogValueComment = newAuditLog.auditLogValues.find(e => e.logTypeParamId == LogType.LOG_TYPE_COMMANDS.params.COMMENT);
+//								
+//								if (auditLogValueComment) {
+//									
+//									auditLogValueComment.value = auditLogValueComment.value === "" ? comment : undefined;
+//								}
+//							}
+//							
+//							return newAuditLog;
+//						});
+//						
+//						send();		
+//
+//					}, false)).show();
+//				}
+//				else {
+//					
+//					send();
+//				}
+//			}
+//			
+//			function send() {
+//				
+//				if (Array.isArray(auditLogs) && auditLogs.length > 0) {
+//						
+//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_AUDIT_LOG, { auditLogs: auditLogs }).then(
+//						function(okSendAuditLog) {
+//							
+//							callSendCommand();						
+//						},
+//						function(errSendAuditLog) {
+//						
+//							if (onResponse) {
+//								
+//								onResponse(false);	
+//							}
+//							
+//						}
+//					);	
+//				}
+//				else {
+//				
+//					callSendCommand();	
+//				}
+//				
+//				function callSendCommand() {
+//					
+//					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND_SYNC, { commands: commands }).then(
+//						function(responseCommandElementErrors) {
+//							
+//							if (responseCommandElementErrors) {
+//								
+//								let commandElementErrors = responseCommandElementErrors.json();
+//								
+//								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+//									
+//									util.element.printCommandElementErrors(commandElementErrors);
+//									
+//									if (onResponse) {
+//										
+//										onResponse(false);	
+//									}
+//									
+//								}
+//								else {
+//									
+//									if (onResponse) {
+//										
+//										onResponse(true);
+//									}
+//								}
+//								
+//							}
+//						},
+//						function(errSendCommand) {
+//							
+//							if (onResponse) {
+//								
+//								onResponse(false);
+//							}
+//						}
+//					);
+//					
+//					
+//				}
+//			}
+//			
+//			
+//		},
 		
-		sendCommand(commands, onResponse) {
+		sendCommand(commands, onResponse, confirmMessage) {
 			
 			let showCommentDialog = false;
-			let userData = util.user.getUserData();
 			let auditLogs = [];
 			
-			if (userData && Array.isArray(commands) && commands.length > 0) {
+			if (Array.isArray(commands) && commands.length > 0) {
 				
-				auditLogs = getAuditLogs();
+				showCommentDialog = (commands.find(command => {
+					
+					let res = false;
+					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
+				
+					if (element) {
+					
+						let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
+				
+						if (commandElementType && LogLevel[commandElementType.logLevel]) {
+						
+							res = (commandElementType.logComment === "true")
+						}
+					}
+					
+					return res;
+					
+				}) != null);
+				
+				auditLogs = util.element.getAuditLogs(commands);
 				
 				if (Array.isArray(auditLogs) && auditLogs.length > 0 && showCommentDialog) {
 					
-					(new InputDialogBox(i18n.t("LBL_SEND_COMMAND_COMMENT_DIALOG"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
+					(new InputDialogBox(i18n.t("LBL_ARE_YOU_SURE_QUEUE_COMMAND"), i18n.t("LBL_SEND_COMMAND_COMMENT"), function(comment) {
 
 						auditLogs = auditLogs.map(auditLog => {
 							
@@ -1632,8 +1627,15 @@ export let util = {
 				}
 				else {
 					
-					send();
-				}
+					if (confirmMessage) {
+				
+						(new MessageBox (MessageBox.CONFIRM, confirmMessage, send, null)).show();
+					}
+					else {
+						
+						send();
+					}
+				}	
 			}
 			
 			function send() {
@@ -1646,6 +1648,8 @@ export let util = {
 							callSendCommand();						
 						},
 						function(errSendAuditLog) {
+							
+							log.error(errSendAuditLog);
 						
 							if (onResponse) {
 								
@@ -1662,7 +1666,7 @@ export let util = {
 				
 				function callSendCommand() {
 					
-					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_SEND_COMMAND_SYNC, { commands: commands }).then(
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_ADD_COMMAND, { commands: commands }).then(
 						function(responseCommandElementErrors) {
 							
 							if (responseCommandElementErrors) {
@@ -1671,7 +1675,70 @@ export let util = {
 								
 								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
 									
-									printCommandElementErrors(commandElementErrors);
+									util.element.printCommandElementErrors(commandElementErrors);
+									
+									if (onResponse) {
+										
+										onResponse(false);	
+									}
+									
+								}
+								else {
+									
+									if (onResponse) {
+										
+										onResponse(true);
+									}
+								}
+								
+							}
+						},
+						function(errSendCommand) {
+							
+							log.error(errSendCommand);
+							
+							if (onResponse) {
+								
+								onResponse(false);
+							}
+						}
+					);
+					
+					
+				}
+			}
+		},
+		
+		deleteCommand(commandIds, onResponse, confirm) {
+			
+			if (Array.isArray(commandIds) && commandIds.length > 0) {
+				
+				if (confirm) {
+					
+					(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_DEQUEUE_COMMAND"), doAction, null)).show();
+				}
+				else {
+					
+					doAction();
+				}
+				
+				function doAction() {
+					
+					let body = {
+				
+						commandElementsId: commandIds
+					}
+					
+					webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + ENDPOINT_DELETE_COMMAND, body).then(
+						function(responseCommandElementErrors) {
+							
+							if (responseCommandElementErrors) {
+								
+								let commandElementErrors = responseCommandElementErrors.json();
+								
+								if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+									
+									util.element.printCommandElementErrors(commandElementErrors);
 									
 									if (onResponse) {
 										
@@ -1697,147 +1764,203 @@ export let util = {
 							}
 						}
 					);
+				}
+				
 					
-					function printCommandElementErrors(commandElementErrors) {
+			}
+		},
+		
+		setPriority(elementId, priorityId, active, onResponse, confirm) {
+			
+			if (elementId && priorityId) {
+				
+				if (confirm) {
+				
+					(new MessageBox (MessageBox.CONFIRM, active ? i18n.t("LBL_ARE_YOU_SURE_ENABLE_PRIORITY") : i18n.t("LBL_ARE_YOU_SURE_DISABLE_PRIORITY"), doAction, null)).show();
+				}
+				else {
+					
+					doAction();
+				}	
+			}
+			
+			function doAction() {
+				
+				let endPointChangePriority = util.fillTemplate(active ? ENDPOINT_PRIORITY_ENABLE : ENDPOINT_PRIORITY_DISABLE, { elementId: elementId, priorityId: priorityId }); 
+				
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + endPointChangePriority).then(
+					function(responseCommandElementErrors) {
 						
-						const LBL_COMMAND_ELEMENT_ERRORS = {
+						if (responseCommandElementErrors) {
 							
-							1: "LBL_ELEMENT_NOT_CONNECTED",
-							2: "LBL_NOT_COMPLY_PRECONDITIONS",
-							3: "LBL_TIME_OUT_EXPIRED",
-							4: "LBL_GROOVY_NOT_FOUND",
-							5: "LBL_COMMAND_NOT_FOUND",
-							6: "LBL_ELEMENT_NOT_FOUND"
+							let commandElementErrors = responseCommandElementErrors.json();
+							
+							if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+								
+								util.element.printCommandElementErrors(commandElementErrors);
+								
+								if (onResponse) {
+									
+									onResponse(false);	
+								}
+								
+							}
+							else {
+								
+								if (onResponse) {
+									
+									onResponse(true);
+								}
+							}
+							
 						}
+					},
+					function(errSendCommand) {
 						
-						if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+						if (onResponse) {
 							
-							let label = i18n.t("LBL_COMMAND_ELEMENT_ERRORS_DESCRIPTION");
-					
-							let table = {
-								fields: ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"],
-								data: []
-							};
-					
-							commandElementErrors.forEach(commandElementError => {
-								
-								let elementAlias = "";
-								
-								if (commandElementError.element) {
-									
-									let element = window.em.getByField(EntityType.ELEMENT, "id", commandElementError.element.id);
-									
-									if (element) {
-										
-										elementAlias = element.alias;
-									}	
-								}
-								
-								let description = "";
-								
-								if (Array.isArray(commandElementError.commandElementPreconditions) && commandElementError.commandElementPreconditions.length > 0) {
-									
-									commandElementError.commandElementPreconditions.forEach(commandElementPrecondition => {
-										
-										if (commandElementPrecondition.toStr) {
-											
-											let stringTanslate = i18n.t(commandElementPrecondition.toStr);
-											description += stringTanslate;	
-										}
-									});
-								}
-								
-								table.data.push({
-									id: webix.uid(),
-									element: elementAlias,
-									error: (commandElementError.error && commandElementError.error > 0) ? i18n.t(LBL_COMMAND_ELEMENT_ERRORS[commandElementError.error]) : "",
-									description: description
-									
-								});
-							});
-							
-							(new TableMessageBox(label, TableMessageBox.ERROR, table)).show()
+							onResponse(false);
 						}
 					}
+				);	
+			}
+		},
+		
+		getAuditLogs(commands) {
+			
+			let aLogs = [];
+			let userData = util.user.getUserData();
+				
+			commands.forEach(command => {
+				
+				let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
+				
+				if (element) {
+					
+					let commandElementType = util.element.getCommandElementType(element, command.commandElementTypeId);
+				
+					if (commandElementType && LogLevel[commandElementType.logLevel]) {
+						
+						let commandValues = undefined;
+						
+						if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
+							
+							commandValues = command.commandElementValues.map(e=> e.value).join(",");
+						}
+						
+						const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
+					
+						let auditLog = {
+							logTypeId: LOG_TYPE_COMMANDS.id,
+							logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
+							userId: userData.id,
+							level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
+							auditLogValues: [
+								{
+									value: commandElementType.labelAlias,
+									logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_TYPE
+								},
+								{
+									value: element.alias,
+									logTypeParamId: LOG_TYPE_COMMANDS.params.ELEMENT
+								},
+								{
+									value: commandValues,
+									logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_VALUES
+								},
+								{
+									value: commandElementType.logComment ? "" : undefined,
+									logTypeParamId: LOG_TYPE_COMMANDS.params.COMMENT
+								}
+							]
+						};
+						
+						aLogs.push(auditLog);	
+					}	
+				}
+			});
+			
+			
+			
+			return aLogs;
+		},
+		
+		getCommandElementType(element, commandElementTypeId) {
+				
+			let commandElementType = undefined;
+			
+			if (element && element.elementType && element.elementType.id) {
+			
+				let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+				
+				if (elementType && Array.isArray(elementType.commandElementTypes)) {
+					
+					commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
 				}
 			}
 			
-			function getAuditLogs() {
-				
-				let aLogs = [];
-				
-				commands.forEach(command => {
-					
-					let element = window.em.getByField(EntityType.ELEMENT, "id", command.elementId);
-					
-					if (element) {
+			return commandElementType;				
+		},
+		
+		printCommandElementErrors(commandElementErrors) {
 						
-						let commandElementType = getCommandElementType(element, command.commandElementTypeId);
+			const LBL_COMMAND_ELEMENT_ERRORS = {
+				
+				1: "LBL_ELEMENT_NOT_CONNECTED",
+				2: "LBL_NOT_COMPLY_PRECONDITIONS",
+				3: "LBL_TIME_OUT_EXPIRED",
+				4: "LBL_GROOVY_NOT_FOUND",
+				5: "LBL_COMMAND_NOT_FOUND",
+				6: "LBL_ELEMENT_NOT_FOUND"
+			}
+			
+			if (Array.isArray(commandElementErrors) && commandElementErrors.length > 0) {
+				
+				let label = i18n.t("LBL_COMMAND_ELEMENT_ERRORS_DESCRIPTION");
+		
+				let table = {
+					fields: ["element=LBL_ELEMENT", "error=LBL_ERROR", "description=LBL_DESCRIPTION"],
+					data: []
+				};
+		
+				commandElementErrors.forEach(commandElementError => {
 					
-						if (commandElementType && LogLevel[commandElementType.logLevel]) {
-							
-							if (commandElementType.logComment === "true") {
-								
-								showCommentDialog = true;
-							}
-							
-							let commandValues = undefined;
-							
-							if (Array.isArray(command.commandElementValues) && command.commandElementValues.length > 0) {
-								
-								commandValues = command.commandElementValues.map(e=> e.value).join(",");
-							}
-							
-							const LOG_TYPE_COMMANDS = LogType.LOG_TYPE_COMMANDS; 
+					let elementAlias = "";
+					
+					if (commandElementError.element) {
 						
-							let auditLog = {
-								logTypeId: LOG_TYPE_COMMANDS.id,
-								logSubtypeId: LOG_TYPE_COMMANDS.subtypes.LOG_SUBTYPE_EXECUTE_COMMAND,
-								userId: userData.id,
-								level: LogLevel[commandElementType.logLevel] ? commandElementType.logLevel : undefined,
-								auditLogValues: [
-									{
-										value: commandElementType.labelAlias,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_TYPE
-									},
-									{
-										value: element.alias,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.ELEMENT
-									},
-									{
-										value: commandValues,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMAND_VALUES
-									},
-									{
-										value: commandElementType.logComment ? "" : undefined,
-										logTypeParamId: LOG_TYPE_COMMANDS.params.COMMENT
-									}
-								]
-							};
+						let element = window.em.getByField(EntityType.ELEMENT, "id", commandElementError.element.id);
+						
+						if (element) {
 							
-							aLogs.push(auditLog);	
+							elementAlias = element.alias;
 						}	
 					}
+					
+					let description = "";
+					
+					if (Array.isArray(commandElementError.commandElementPreconditions) && commandElementError.commandElementPreconditions.length > 0) {
+						
+						commandElementError.commandElementPreconditions.forEach(commandElementPrecondition => {
+							
+							if (commandElementPrecondition.toStr) {
+								
+								let stringTanslate = i18n.t(commandElementPrecondition.toStr);
+								description += stringTanslate;	
+							}
+						});
+					}
+					
+					table.data.push({
+						id: webix.uid(),
+						element: elementAlias,
+						error: (commandElementError.error && commandElementError.error > 0) ? i18n.t(LBL_COMMAND_ELEMENT_ERRORS[commandElementError.error]) : "",
+						description: description
+						
+					});
 				});
 				
-				return aLogs;
-			}
-			
-			function getCommandElementType(element, commandElementTypeId) {
-				
-				let commandElementType = undefined;
-				
-				if (element && element.elementType && element.elementType.id) {
-				
-					let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-					
-					if (elementType && Array.isArray(elementType.commandElementTypes)) {
-						
-						commandElementType = elementType.commandElementTypes.find(e => e.id === commandElementTypeId);
-					}
-				}
-				
-				return commandElementType;				
+				(new TableMessageBox(label, TableMessageBox.ERROR, table)).show()
 			}
 		},
 		

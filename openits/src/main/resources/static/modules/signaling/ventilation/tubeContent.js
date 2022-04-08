@@ -359,28 +359,21 @@ export default class TubeContent {
 							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_VENTILATION_CHANGE_MODE_CONFIRM_DESCRIPTION"), onAccept, null);
 							ms.show();
 							
-							function onAccept(res) {
+							function onAccept() {
 								
 								callbackCloseDialog(true);
 
 								let command = self.parent.config.commands.SEND_VENTILATION_MODE;
 								command.elementId = self.selectedTube.id;
 								command.commandElementValues[0].value = newModeId;
-
-								let commands = [];
-
-								commands.push(command);
-								
-								if (Array.isArray(commands) && commands.length > 0) {
 											
-									util.element.sendCommand(commands, function(res) {
-										
-										if (res) {
-										
-											(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-										}
-									});
-								}		
+								util.element.sendCommand([command], function(res) {
+									
+									if (res) {
+									
+										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+									}
+								});
 							}
 						}
 					}
@@ -699,26 +692,13 @@ export default class TubeContent {
 
 													} else {
 
-														let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"), onAccept, null);
-														ms.show();
-														
-														function onAccept() {
-															
-															let commands = [];
-															
-															commands.push(command);
-															
-															if (Array.isArray(commands) && commands.length > 0) {
-											
-																util.element.sendCommand(commands, function(res) {
+														util.element.sendCommand([command], function(res) {
 
-																	if (res) {
-																	
-																		(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-																	}
-																});
+															if (res) {
+															
+																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 															}
-														}
+														}, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"));
 													}
 												}
 											}

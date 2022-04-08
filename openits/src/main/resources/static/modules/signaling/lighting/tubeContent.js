@@ -341,28 +341,21 @@ export default class TubeContent {
 						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
 						ms.show();
 						
-						function onAccept(res) {
+						function onAccept() {
 							
 							callbackCloseDialog(true);
 							let command = self.parent.config.commands.SEND_LIGHTING_MODE;
 							command.elementId = self.selectedTube.id;
 							command.commandElementValues[0].value = newModeId;
 
-							let commands = [];
+							util.element.sendCommand([command], function(res) {
+								
+								if (res) {
+								
+									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+								}
 
-							commands.push(command);
-							
-							if (Array.isArray(commands) && commands.length > 0) {
-											
-								util.element.sendCommand(commands, function(res) {
-									
-									if (res) {
-									
-										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-									}
-
-								});
-							}
+							});
 						}
 					}
 				}
@@ -531,27 +524,14 @@ export default class TubeContent {
 												ms.show();
 
 											} else {
-
-												let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"), onAccept, null);
-												ms.show();
 												
-												function onAccept() {
-
-													let commands = [];
+												util.element.sendCommand([command], function(res) {
+														
+													if (res) {
 													
-													commands.push(command);
-													
-													if (Array.isArray(commands) && commands.length > 0) {
-											
-														util.element.sendCommand(commands, function(res) {
-															
-															if (res) {
-															
-																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-															}
-														});
-													}												
-												}
+														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+													}
+												}, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"));	
 											}
 										}
 									}
@@ -1257,18 +1237,13 @@ export default class TubeContent {
 						command.elementId = dali.id;
 						command.commandElementValues[0].value = newRegimeId;
 	
-						let commands = [command];
-						
-						if (Array.isArray(commands) && commands.length > 0) {
-											
-							util.element.sendCommand(commands, function(res) {
-								
-								if (res) {
-								
-									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-								}
-							});
-						}
+						util.element.sendCommand([command], function(res) {
+							
+							if (res) {
+							
+								(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+							}
+						});
 					}
 				}
 				
@@ -1350,29 +1325,22 @@ export default class TubeContent {
 
 									command.commandElementValues[0].value = JSON.stringify(values);
 
-									let commands = [];
+									util.element.sendCommand([command], function(res) {
+										
+										self.tubeCircuitsDataTable.getAllItems().forEach(row => {
 
-									commands.push(command);
-									
-									if (Array.isArray(commands) && commands.length > 0) {
-											
-										util.element.sendCommand(commands, function(res) {
-											
-											self.tubeCircuitsDataTable.getAllItems().forEach(row => {
-
-												row.circuitStateToSend = null;
-												row.circuitStateToSendAlias = null;
-												self.tubeCircuitsDataTable.update(row);
-											});
-	
-											self.checkDisableChangeStatusButton();
-											
-											if (res && onExecuted) {
-												
-												onExecuted();	
-											}
+											row.circuitStateToSend = null;
+											row.circuitStateToSendAlias = null;
+											self.tubeCircuitsDataTable.update(row);
 										});
-									}
+
+										self.checkDisableChangeStatusButton();
+										
+										if (res && onExecuted) {
+											
+											onExecuted();	
+										}
+									});
 								}								
 							}
 						}

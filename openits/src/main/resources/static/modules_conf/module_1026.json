@@ -9,11 +9,12 @@
 		"vmsLibraryBySubtype": "vms_libraries/element_subtype/${id}",
 		"command": "elements/send_command_element",
 		"saveNode": "vms_libraries/${id}/node/${parentNodeIds}",
-		"deleteNode": "vms_libraries/node/${id}"
-		
+		"deleteNode": "vms_libraries/node/${id}",
+		"enablePriority": "elements/enable_priority/element/${elementId}/priority/${priorityId}",
+		"disablePriority": "elements/disable_priority/element/${elementId}/priority/${priorityId}"
 	},
 	"topics": {
-		"elementQueue": "/topic/queue/element"
+		"elementQueue": "/topic/pm_queue"
 	},
 	"requiredPermissions": {
 		"editPanel": "SystemPermission:13",

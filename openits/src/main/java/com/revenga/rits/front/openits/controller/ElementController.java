@@ -165,8 +165,58 @@ public class ElementController {
 	
 	@PostMapping(value = "/send_command_element_sync")
 	@ApiOperation(value = "Send Command Element", notes = "Send Command Element")
-	public ResponseEntity<Object> sendCommandElementSync(@RequestBody Object command) {
+	public ResponseEntity<Object> sendCommandElementSync(@RequestBody Object commands) {
 		
- 		return new ResponseEntity<>(elementBO.sendCommandElementSync(command), HttpStatus.OK);
+ 		return new ResponseEntity<>(elementBO.sendCommandElementSync(commands), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/add_command_element")
+	@ApiOperation(value = "Add Command Element", notes = "Add Command Element")
+	public ResponseEntity<Object> addCommandElement(@RequestBody Object commands) {
+		
+ 		return new ResponseEntity<>(elementBO.addCommandElement(commands), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/delete_command_element")
+	@ApiOperation(value = "Delete Command Element", notes = "Delete Command Element")
+	public ResponseEntity<Object> deleteCommandElement(@RequestBody Object commands) {
+		
+ 		return new ResponseEntity<>(elementBO.deleteCommandElement(commands), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/enable_priority/element/{elementId}/priority/{priorityId}")
+	@ApiOperation(value = "Enable priority", notes = "Enable priority")
+	public ResponseEntity<Object> enablePriority(@ApiParam(
+				name = "elementId",
+				type = "String",
+				value = "Element by id",
+				example = "Element:33:1",
+				required = true) @PathVariable String elementId,
+			@ApiParam(
+				name = "priorityId",
+				type = "String",
+				value = "Priority by id",
+				example = "PmQueuePriority:1:1",
+				required = true) @PathVariable String priorityId) {
+		
+ 		return new ResponseEntity<>(elementBO.enablePriority(elementId, priorityId), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/disable_priority/element/{elementId}/priority/{priorityId}")
+	@ApiOperation(value = "Disable priority", notes = "Disable priority")
+	public ResponseEntity<Object> disablePriority(@ApiParam(
+				name = "elementId",
+				type = "String",
+				value = "Element by id",
+				example = "Element:33:1",
+				required = true) @PathVariable String elementId,
+			@ApiParam(
+				name = "priorityId",
+				type = "String",
+				value = "Priority by id",
+				example = "PmQueuePriority:1:1",
+				required = true) @PathVariable String priorityId) {
+		
+ 		return new ResponseEntity<>(elementBO.disablePriority(elementId, priorityId), HttpStatus.OK);
 	}
 }

@@ -174,6 +174,10 @@ const USE_VMS_FAKE_DATA = false;
 const ENDPOINT_SEND_COMMAND = "elements/send_command_element";
 const ENDPOINT_SEND_COMMAND_SYNC = "elements/send_command_element_sync";
 const ENDPOINT_SEND_AUDIT_LOG = "audit_logs/send";
+const ENDPOINT_ADD_COMMAND = "elements/add_command_element";
+const ENDPOINT_DELETE_COMMAND = "elements/delete_command_element";
+const ENDPOINT_PRIORITY_ENABLE = "elements/enable_priority/element/${elementId}/priority/${priorityId}";
+const ENDPOINT_PRIORITY_DISABLE = "elements/disable_priority/element/${elementId}/priority/${priorityId}";
 
 // DataTypes
 const LogType = Object.freeze({

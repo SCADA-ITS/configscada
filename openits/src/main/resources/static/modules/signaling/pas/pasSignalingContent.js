@@ -521,20 +521,13 @@ export default class PasSignalingContent {
 								command.commandElementValues[0].value = JSON.stringify(selectedItems.map(e => {return e.messageZoneId}));
 								command.commandElementValues[1].value = JSON.stringify([message]);
 	
-								let commands = [];
-								
-								commands.push(command);
-							
-								if (Array.isArray(commands) && commands.length > 0) {
-												
-									util.element.sendCommand(commands, function(res) {
-										
-										if (res) {
-										
-											(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-										}
-									});
-								}
+								util.element.sendCommand([command], function(res) {
+									
+									if (res) {
+									
+										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+									}
+								}, i18n.t("LBL_PAS_EXECUTE_COMMAND"));
 							}
 	
 							if (self.pasLibraries && self.pasLibraries.pasLibrary) {

@@ -203,6 +203,10 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_SEND_KILL_USER = getPropertyInt("send_kill_user");
 	public static final int DATA_SOURCE_SEND_COMMAND_ELEMENT = getPropertyInt("send_command_element");
 	public static final int DATA_SOURCE_SEND_COMMAND_ELEMENT_SYNC = getPropertyInt("send_command_element_sync");
+	public static final int DATA_SOURCE_ADD_COMMAND_ELEMENT = getPropertyInt("add_command_element");
+	public static final int DATA_SOURCE_DELETE_COMMAND_ELEMENT = getPropertyInt("delete_command_element");
+	public static final int DATA_SOURCE_ENABLE_PRIORITY = getPropertyInt("enable_priority");
+	public static final int DATA_SOURCE_DISABLE_PRIORITY = getPropertyInt("disable_priority");
 
 	public static final int DATA_SOURCE_TYPE_GRAPHQL_QUERY = getPropertyInt("type.graphql_query");
 	public static final int DATA_SOURCE_TYPE_GRAPHQL_MUTATION = getPropertyInt("type.graphql_mutation");

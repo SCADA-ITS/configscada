@@ -466,13 +466,15 @@ export default class GenericSignalingCommand {
 																				
 									} else {
 
-										let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
-										ms.show();
-									
-										function onAccept() {
-											
-											sendCommandElement();
-										};										
+//										let ms = new MessageBox (MessageBox.CONFIRM, (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : "")), onAccept, null);
+//										ms.show();
+//									
+//										function onAccept() {
+//											
+//											
+//										}
+										
+										sendCommandElement();										
 									}
 
 								}
@@ -494,6 +496,8 @@ export default class GenericSignalingCommand {
 						});
 
 						if (Array.isArray(commands) && commands.length > 0) {
+							
+							let message = (i18n.t("LBL_SEND_SIGNALING_CONFIRM_DESCRIPTION") + (self.selectedElementIds.length > 1 ? " " + self.selectedElementIds.length + " " + i18n.t("LBL_EQUIPMENT_SELECTED") : ""));
 
 							util.element.sendCommand(commands, function(res) {
 												
@@ -501,7 +505,7 @@ export default class GenericSignalingCommand {
 								
 									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
 								}
-							});
+							}, message);
 						}
 					}
 
