@@ -153,7 +153,7 @@ export default class IncidentReportActionPanel {
 
 													let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
 
-													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0) {
+													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && !self.incidentReport.alarms) {
 
 														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
 
