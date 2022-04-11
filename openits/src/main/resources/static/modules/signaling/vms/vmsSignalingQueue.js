@@ -3,6 +3,13 @@ import GraphicIcon from "../../../component/graphicIcon/graphicIcon.js";
 import MessageBox from "../../../component/messageBox.js";
 
 const QUEUE_COMMAND_HEIGHT = 100;
+const MAX_EPOCH_TIME = 4102444799000;
+const VMS_STATE_ACTIVE = "ElementTypeState:71:1";
+const VMS_STATE_INACTIVE = "ElementTypeState:71:3";
+const VMS_STATE_UNAVAILABLE = "ElementTypeState:71:0";
+const QUEUE_COLOR_ACTIVE = "#009688";
+const QUEUE_COLOR_NO_ACTIVE = "#f44336";
+const QUEUE_COLOR_UNAVAILABLE = "#f44336";
 
 export default class VmsSignalingQueue {
 	
@@ -14,7 +21,6 @@ export default class VmsSignalingQueue {
 		this.element = undefined;
 		this.maxElementQueueWidth = width - 125;
 		this.maxElementQueueHeight = QUEUE_COMMAND_HEIGHT - 25;
-		this.lockPrioritySwitches = true; 
 		
 		this.idStompSubscriptor = undefined;
 		this.uid = webix.uid();
@@ -65,12 +71,35 @@ export default class VmsSignalingQueue {
 						cols: [
 							{ width: 20 },
 							{
-								id: "view-main-queue-section-title-" + priority.id + "-title-" + self.uid, 
+								id: "view-main-queue-section-title-" + priority.id + "-title-" + self.uid,
+								css: { "font-weight": "500" }, 
 								view: "template", 
 								template: i18n.t(priority.labelAlias), 
 								type: "section" 
 							},
 							{ width: 10 },
+							{
+								id: "view-main-queue-section-queue-size-" + priority.id + "-title-" + self.uid,
+								width: 40,
+								tooltip: i18n.t("LBL_ITEMS_QUEUED"),
+								borderless: true,
+								template: function(data) {
+									
+									let items = 0;
+									
+									if (data && data.items) {
+									
+										items = data.items;	
+									}
+									
+									return `<div style='font-size: 11px; text-align: center; margin-top: 10px; height: 21px; border: 1px solid; border-radius: 60px; background: #f4f6fa'>
+												<div style='padding-top: 4px'>
+													<span>${items}</span>
+												</div>
+											</div>`									
+								}
+							},
+							{ width: 5 },
 							{ 
 								id: "view-main-queue-section-enabled-" + priority.id + "-title-" + self.uid,
 								priorityId: priority.id,
@@ -90,28 +119,34 @@ export default class VmsSignalingQueue {
 							{ width: 15 },
 							{
 								rows: [
+//									{
+//										id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,
+//										height: QUEUE_COMMAND_HEIGHT,
+//										expanded: false,
+//										rows: [{
+//											view: "template",
+//											borderless: true,
+//											template: function() {
+//							
+//												return `<div class='empty-app-inner'>
+//															<img style='height:40px; width:40px; margin-top: -20px !important;' src='img/not_found_150.png' align='center'>
+//															<span style='font-size:14px;' class='empty-app-inner-text'>${i18n.t("LBL_EMPTY")}</span>
+//														</div>`;
+//											}
+//										}]		
+//									},
 									{
 										id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,
-										height: QUEUE_COMMAND_HEIGHT,
+										height: 10,
 										expanded: false,
-										rows: [{
-											view: "template",
-											borderless: true,
-											template: function() {
-							
-												return `<div class='empty-app-inner'>
-															<img style='height:40px; width:40px; margin-top: -20px !important;' src='img/not_found_150.png' align='center'>
-															<span style='font-size:14px;' class='empty-app-inner-text'>${i18n.t("LBL_EMPTY")}</span>
-														</div>`;
-											}
-										}]		
+										rows: []		
 									},
 									{
 										id: "view-main-queue-section-data-expand-" + priority.id + "-" + self.uid,
 										view: "button",
 										type: "icon",
 										icon: "mdi mdi-plus-thick",
-										label: i18n.t("LBL_SHOW_MORE"),
+										tooltip: i18n.t("LBL_SHOW_MORE"),
 										hidden: true,
 										align: "right",
 										css: "expand-collapse-btn",
@@ -140,7 +175,7 @@ export default class VmsSignalingQueue {
 										view: "button",
 										type: "icon",
 										icon: "mdi mdi-minus-thick",
-										label: i18n.t("LBL_SHOW_LESS"),
+										tooltip: i18n.t("LBL_SHOW_LESS"),
 										hidden: true,
 										align: "right",
 										css: "expand-collapse-btn",
@@ -215,30 +250,20 @@ export default class VmsSignalingQueue {
 				
 			if (viewPriorityEnabledInstance) {
 				
-				self.lockPrioritySwitches = false;
+				viewPriorityEnabledInstance.blockEvent();
 				viewPriorityEnabledInstance.setValue(priority.enable ? 1: 0);
-				self.lockPrioritySwitches = true;
+				viewPriorityEnabledInstance.unblockEvent();
 				
 				viewPriorityEnabledInstance.attachEvent("onChange", function(newValue, oldValue) {
 								
-					if (self.lockPrioritySwitches) {
-						
-						this.blockEvent();
-						this.setValue(oldValue);
-						this.unblockEvent();
-						
-						if (newValue != oldValue) {
-						
-							changePriority(newValue);	
-						}
+					this.blockEvent();
+					this.setValue(oldValue);
+					this.unblockEvent();
+					
+					if (newValue != oldValue) {
+					
+						changePriority(newValue);	
 					}
-//					
-//					if (newValue != oldValue) {
-//						
-//						changePriority(newValue);	
-//					}
-
-					log.debug("change: " + oldValue + " -> " + newValue);
 				});
 				
 				viewPriorityEnabledInstance.attachEvent("onItemClick", function(id) {
@@ -264,6 +289,8 @@ export default class VmsSignalingQueue {
 					
 					if (Array.isArray(commandElements) && commandElements.length > 0) {
 						
+						$$("view-main-queue-section-queue-size-" + priority.id + "-title-" + self.uid).setValues({items: commandElements.length });
+						
 						commandElements.sort((a, b) => (a.enable ? 0 : 1) - (b.enable ? 0 : 1) || a.startTime - b.startTime);
 						
 						viewSectionCommands = {
@@ -271,6 +298,9 @@ export default class VmsSignalingQueue {
 							height: QUEUE_COMMAND_HEIGHT,
 							rows: []
 						}
+						
+						viewMainQueueSectionDataExpandInstance.hide();
+						viewMainQueueSectionDataCollapseInstance.hide();
 						
 						if (viewMainQueueSectionDataExpandInstance && viewMainQueueSectionDataCollapseInstance && commandElements.length > 1) {
 						
@@ -293,20 +323,27 @@ export default class VmsSignalingQueue {
 					}
 					else {
 					
+//						viewSectionCommands = {
+//							id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,
+//							height: 40,
+//							rows: [{
+//								view: "template",
+//								borderless: true,
+//								template: function() {
+//				
+//									return `<div class='empty-app-inner'>
+//												<img style='height:24px; width:24px; margin-top: -5px !important;' src='img/not_found_150.png' align='center'>
+//												<span style='font-size:13px;' class='empty-app-inner-text'>${i18n.t("LBL_EMPTY")}</span>
+//											</div>`;
+//								}
+//							}]
+//						}
+						
 						viewSectionCommands = {
 							id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,
-							height: 40,
-							rows: [{
-								view: "template",
-								borderless: true,
-								template: function() {
-				
-									return `<div class='empty-app-inner'>
-												<img style='height:24px; width:24px; margin-top: -5px !important;' src='img/not_found_150.png' align='center'>
-												<span style='font-size:13px;' class='empty-app-inner-text'>${i18n.t("LBL_EMPTY")}</span>
-											</div>`;
-								}
-							}]
+							height: 10,
+							expanded: false,
+							rows: []		
 						}
 						
 						if (viewMainQueueSectionDataExpandInstance) {
@@ -372,10 +409,6 @@ export default class VmsSignalingQueue {
 										height: 30,
 										template: function() {
 											
-											const QUEUE_COLOR_ACTIVE = "#009688";
-											const QUEUE_COLOR_NO_ACTIVE = "#f44336";
-											const QUEUE_COLOR_UNAVAILABLE = "#f44336";
-											 
 											let color = QUEUE_COLOR_UNAVAILABLE;
 											
 											let labelCommandPosition = i18n.t(priority.labelAlias) + " #" + commandPosition + ": ";
@@ -486,20 +519,57 @@ export default class VmsSignalingQueue {
 					
 					function getViewOthers() {
 						
-						let viewOthers; 
+						let viewOthers;
+						let color = QUEUE_COLOR_UNAVAILABLE;
+						
+						if (priority.enable) {
+												
+							color = commandElement.enable ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
+						}
 						
 						viewOthers = {
 							id: "queue-element-value-" + priority.id + "-" + commandElement.id + "-" + self.uid,
 							height: self.maxElementQueueHeight,
 							width: self.maxElementQueueWidth,
 							borderless: true,
-							template: function() {
+							cols: [
+								{ width: 5 },
+								{ 
+									rows: [
+										{ height: 5 },
+										{
+											css: { "width": self.maxElementQueueWidth - 40  + "px !important", "padding-left": "15px", "border": "3px solid " + color, "border-radius": "5px", "background": color + "10" },	
+											cols: [
+												{
+													width: 40,
+													borderless: true,
+													css: { "background": "transparent" },
+													template: function() {
+														
+														return `<div>
+															<image style="margin-top: 12px; width: 32px; height: 32px; display: bloc" src="img/${commandElement.commandElementType.image}" onerror="this.onerror=null;this.src='img/send-command-default.png';" />
+														</div>`			
+													}
+												},
+												{
+													borderless: true,
+													//width: self.maxElementQueueWidth - 64 - 10,
+													css: { "background": "transparent" },
+													template: function() {
+														
+														return `<div style="color: ${color}; margin-top: 17px; font-size: 18px; font-weight: 500">
+															<span>${i18n.t(commandElement.commandElementType.labelAlias)}</span>
+														</div>`
+													}		
+												}			
+											]
+										},
+										{ height: 15 }
+									]	
+								},
+								{ width: 10 }
 								
-								return `<div>
-											<image style="width: 32px; height: 32px; display: block; margin: 0 auto" src="img/${commandElement.commandElementType.image}" onerror="this.onerror=null;this.src='img/send-command-default.png';" />
-											<span>${i18n.t(commandElement.commandElementType.labelAlias)}</span>
-										</div>`
-							}
+							]
 						}
 						
 						return viewOthers;
@@ -539,8 +609,15 @@ export default class VmsSignalingQueue {
 									
 									graphicIconInstance.loadRender(function() {
 										
+										let color = VMS_STATE_UNAVAILABLE;
+						
+										if (priority.enable) {
+																
+											color = commandElement.enable ? VMS_STATE_ACTIVE : VMS_STATE_INACTIVE;
+										}
+										
 										graphicIconInstance.updateState({
-											id: "ElementTypeState:71:1"
+											id: color
 										});
 										
 										let jsonValue = [];
@@ -587,7 +664,12 @@ export default class VmsSignalingQueue {
 					
 					
 					let validSince = util.toLocaleString(commandElement.startTime / 1000);
-					let validUntil = util.toLocaleString(commandElement.endTime / 1000);
+					let validUntil = "---";
+					
+					if (commandElement.endTime < MAX_EPOCH_TIME) {
+						
+						validUntil = util.toLocaleString(commandElement.endTime / 1000);
+					}
 					
 					viewQueueElementValid = {
 						id: "queue-element-valid-" + priority.id + "-" + commandElement.id + "-" + self.uid,

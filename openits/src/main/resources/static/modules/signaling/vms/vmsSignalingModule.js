@@ -336,14 +336,20 @@ export default class VmsSignalingModule extends GenericModule {
 					
 					$$("view-main-queue-" + self.uid).show();
 					self.vmsSignalingQueue.update(self.currentElement);
-					
-					self.vmsSignalingContent.setPriorityOptions(self.elementType.priorities);
 				}
 				else {
 					
 					$$("view-main-queue-" + self.uid).hide();
-					self.vmsSignalingContent.setPriorityOptions();
 				}
+				
+				let viewPriorityOptions = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
+				viewPriorityOptions &= !isModuleActionCommandEdit;
+				
+				if (viewPriorityOptions) {
+				
+					self.vmsSignalingContent.setPriorityOptions(self.elementType.priorities);	
+				}
+
 			}
 			
 			function getViewContent() {

@@ -713,7 +713,7 @@ export default class VmsSignalingContent {
 												
 												dtIni.enable();
 												
-												self.startTime = (dtIni.getValue() && typeof dtIni.getValue() === 'object') ? dtIni.getValue().getTime() : undefined;
+												self.startTime = (dtIni.getValue() && typeof dtIni.getValue() === 'object') ? dtIni.getValue().setSeconds(0) : undefined;
 											}
 											else {
 												
@@ -758,7 +758,7 @@ export default class VmsSignalingContent {
 												
 												dtEnd.enable();
 												
-												self.endTime = (dtEnd.getValue() && typeof dtEnd.getValue() === 'object') ? dtEnd.getValue().getTime() : undefined;
+												self.endTime = (dtEnd.getValue() && typeof dtEnd.getValue() === 'object') ? dtEnd.getValue().setSeconds(0) : undefined;
 											}
 											else {
 												
@@ -799,7 +799,7 @@ export default class VmsSignalingContent {
 								on: {
 									onChange: function(newValue) {
 										
-										self.priorityId = (newValue != -1) ? newValue : undefined;
+										self.priorityId = newValue;
 									}
 								}
 							}
@@ -1082,20 +1082,26 @@ export default class VmsSignalingContent {
 				
 				let data = [];
 				
-				data.push({
-					id: -1,
-					value: ""
-				});
-				
 				data.push(...priorities.filter(e => IS_TRUE(e.available)).map(priority => {
 					return {
 					
 						id: priority.id,
-						value: i18n.t(priority.labelAlias)
+						value: i18n.t(priority.labelAlias) + (IS_TRUE(priority.defaultPriority) ? " (" + i18n.t("LBL_DEFAULT") + ")" : ""),
+						default: IS_TRUE(priority.defaultPriority)
 					}
 				}));
 				
-				cboPriority.define("options", { css: "toolbar-vms-priority-options", data: data });			
+				cboPriority.define("options", { css: "toolbar-vms-priority-options", data: data });
+				
+				let defaultData = data.find(e => e.default);
+				
+				if (defaultData) {
+					
+					cboPriority.setValue(self.priorityId ? self.priorityId : defaultData.id);
+					
+					self.priorityId = cboPriority.getValue();	
+				}
+				
 				cboPriority.refresh();
 				
 				chkDtIni.show();
