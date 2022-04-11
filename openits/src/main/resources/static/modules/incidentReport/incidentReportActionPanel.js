@@ -153,7 +153,7 @@ export default class IncidentReportActionPanel {
 
 													let ireportType = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", self.incidentReport.incidentType.id);
 
-													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && !self.incidentReport.alarms) {
+													if (Array.isArray(ireportType.incidentTypeCauses) && ireportType.incidentTypeCauses.length > 0 && (!self.incidentReport.alarms || self.incidentReport.alarms.length === 0)) {
 
 														let comboCauseValue = $$("fieldCause-combo-" + self.uid).getValue();
 
@@ -990,34 +990,37 @@ export default class IncidentReportActionPanel {
 
 			let generatedAt = self.incidentReport.generatedAt;
 
-			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
+			if (self.config.restEndpoints.systemParamConfirmIncident && self.config.systemParamConfirmIncident) {
 
-				if (systemParamsResponse != null) {
+				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
 
-					let systemParams = systemParamsResponse.json();
-					let button = $$("action-button-" + self.uid);
-					let millisOfDiference = Date.now() - generatedAt;
+					if (systemParamsResponse != null) {
 
-					if (millisOfDiference < (systemParams.value * 1000)) {
+						let systemParams = systemParamsResponse.json();
+						let button = $$("action-button-" + self.uid);
+						let millisOfDiference = Date.now() - generatedAt;
 
-						let pendingSecs = ((systemParams.value * 1000) - millisOfDiference) / 1000;
+						if (millisOfDiference < (systemParams.value * 1000) && button) {
 
-						self.timeOut = setInterval(function() {
-							
-							button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": " + Math.floor(pendingSecs) + " " + i18n.t("LBL_SECONDS");
-							button.refresh();
-							pendingSecs--;
+							let pendingSecs = ((systemParams.value * 1000) - millisOfDiference) / 1000;
 
-							if (pendingSecs < 0) {
+							self.timeOut = setInterval(function() {
 
-								button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": - " + i18n.t("LBL_SECONDS");
+								button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": " + Math.floor(pendingSecs) + " " + i18n.t("LBL_SECONDS");
 								button.refresh();
-							}
-							
-						}, 999);
+								pendingSecs--;
+
+								if (pendingSecs < 0) {
+
+									button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": - " + i18n.t("LBL_SECONDS");
+									button.refresh();
+								}
+
+							}, 999);
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 
