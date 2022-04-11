@@ -9,7 +9,7 @@ const VMS_STATE_INACTIVE = "ElementTypeState:71:3";
 const VMS_STATE_UNAVAILABLE = "ElementTypeState:71:0";
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
-const QUEUE_COLOR_UNAVAILABLE = "#f44336";
+const QUEUE_COLOR_UNAVAILABLE = "#475466";
 
 export default class VmsSignalingQueue {
 	
@@ -296,6 +296,7 @@ export default class VmsSignalingQueue {
 						viewSectionCommands = {
 							id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,
 							height: QUEUE_COMMAND_HEIGHT,
+							expanded: viewSectionDataInstance.config.expanded,
 							rows: []
 						}
 						
@@ -703,7 +704,7 @@ export default class VmsSignalingQueue {
 
 				if (self.element) {
 
-					let topic = self.config.topics.elementQueue + "/" + self.element.id;
+					let topic = self.config.topics.elementQueue + "." + self.element.id;
 					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
 
 				}
