@@ -4,6 +4,7 @@ import IncidentReportChangeType from "./incidentReportChangeType.js";
 import FileManager from "../../component/fileManager.js";
 import DataTable from "../../component/datatable.js";
 import MessageBox from "../../component/messageBox.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 const MARGIN_ACTION_PANEL = 15;
 const TOOLBARS_ALLOWED = 3;
@@ -33,20 +34,12 @@ export default class IncidentReportActionPanel {
 	getView() {
 
 		let self = this;
-		let changeAssignIncident = false;
-		let onlyAutoassignIncident = false;
 		let currentUser = window.em.getByField(EntityType.USER, "id", self.incidentReport.currentUser.id);
 		let currentUserRole = currentUser.role.id;
-
-		if ((self.autoAssignPermissions && (self.userData.role.id === currentUserRole) && (self.userData.id != currentUser.id) || self.assignAnotherPermissions)) {
-
-			changeAssignIncident = true;
-
-			if (changeAssignIncident) {
-
-				onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
-			}
-		}
+		let sameRole = (self.userData.role.id === currentUserRole);
+		let sameUser = (self.userData.id === currentUser.id);
+		let changeAssignIncident =  ((self.autoAssignPermissions && sameRole && !sameUser) || self.assignAnotherPermissions) ? true : false;
+		let onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
 
 		let viewActionPanel = {};
 
@@ -68,51 +61,50 @@ export default class IncidentReportActionPanel {
 									css: "action-button",
 									disabled: (function() {
 
-										if (self.userData.id === self.incidentReport.currentUser.id) {
+										if (!self.closed && self.incidentReport.confirm === true && sameUser) {
 
-											if (!self.closed && self.incidentReport.confirm === true) {
+											// Mandatory tasks with state must be completed in penultimate state
+											if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
 
-												// Mandatory tasks with state must be completed in penultimate state
-												if (Array.isArray(self.incidentReport.taskStates) && self.incidentReport.taskStates.length && self.incidentReport.sequenceOfStates.length > 1) {
+												let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
 
-													let penUltimateState = self.incidentReport.sequenceOfStates[self.incidentReport.sequenceOfStates.length - 2];
+												if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
 
-													if (penUltimateState && penUltimateState.state && self.incidentReport.incidentState.id == penUltimateState.state.id) {
-
-														let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-														let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
-
-														if (tasksCompleted.length < tasksMandatory.length) {
-
-															return true;
-														}
-													}
-												}
-
-												if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
-
-													let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
-													let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+													let tasksCompleted = self.incidentReport.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+													let tasksMandatory = self.incidentReport.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
 
 													if (tasksCompleted.length < tasksMandatory.length) {
 
 														return true;
 													}
 												}
+											}
 
-											} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
+											if (Array.isArray(self.currentSequenceOfState.taskStates) && self.currentSequenceOfState.taskStates.length) {
 
-												return false;
+												let tasksCompleted = self.currentSequenceOfState.taskStates.filter(e => e.completedAt && e.incidentTypeTask.mandatory === true);
+												let tasksMandatory = self.currentSequenceOfState.taskStates.filter(e => e.incidentTypeTask.mandatory === true);
+
+												if (tasksCompleted.length < tasksMandatory.length) {
+
+													return true;
+												}
+											}
+
+										} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions && (self.assignAnotherPermissions || self.autoAssignPermissions)) {
+
+											if (onlyAutoassignIncident && !sameRole) {
 												
-											} else {
-
 												return true;
 											}
+											
+											return false;
 
 										} else {
 
 											return true;
 										}
+
 									})(),
 									height: 50,
 									label: (function() {
@@ -144,8 +136,6 @@ export default class IncidentReportActionPanel {
 									on: {
 
 										onItemClick() {
-
-											let bCancel = false;
 
 											if (!self.closed) {
 
@@ -189,17 +179,50 @@ export default class IncidentReportActionPanel {
 													}
 
 												} else {
+													
+													if (sameUser) {
 
-													let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-													ms.show();
+														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
+														ms.show();
 
-													function onAccept() {
+													} else {
 
-														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
-															id: self.incidentReport.id
-														});
+														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function(){
+															
+															onAccept(true);
+															
+														}, null);
+														ms.show();
+													}
+										
+													function onAccept(changeUser) {
 
-														self.parent.restAction(endpoint);
+														if (changeUser) {
+
+															let userId = self.userData.id;
+
+															if (userId != SYSTEM_PROFILES.USER) {
+
+																let body = {
+																	id: self.incidentReport.id,
+																	userId: userId
+																};
+
+																let endpointAssign = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
+																self.parent.restAction(endpointAssign);
+
+																let endpointConfirm = util.fillTemplate(self.config.actionEndpoints.confirm, { id: self.incidentReport.id });
+																self.parent.restAction(endpointConfirm);
+															}
+
+														} else {
+
+															let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
+																id: self.incidentReport.id
+															});
+
+															self.parent.restAction(endpoint);
+														}
 													}
 												}
 											}

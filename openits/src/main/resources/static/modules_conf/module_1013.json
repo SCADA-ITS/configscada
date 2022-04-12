@@ -91,5 +91,12 @@
 		]
 	},
 	"locationTypes": ["LocationType:2"],
-	"stretchTypes":  ["StretchType:2"]
+	"stretchTypes":  ["StretchType:2"],
+		"requiredPermissions": {
+		"autoassign": "SystemPermission:15",
+		"assignAnother": "SystemPermission:16"
+	},
+	"action": {
+		"assign": 100404
+	}
 }

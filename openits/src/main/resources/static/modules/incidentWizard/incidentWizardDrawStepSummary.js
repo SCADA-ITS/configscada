@@ -1,4 +1,6 @@
+import {util} from "../../lib/util.js";
 import IncidentWizardDrawStep from "./incidentWizardDrawStep.js";
+import SearchDialogBox from "../../component/searchDialogBox.js";
 
 export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawStep {
 
@@ -137,8 +139,57 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 																height: 50,
 																borderless: true,
 																template: function(obj) {
-																	return `<div><span class="ico webix_icon mdi mdi-account"></span><span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span></div>
-																		   <div class="value" style="max-width: ${maxWidthLabels}px;">${obj.user ? obj.user : ''}</div>`
+
+																	let user = obj.user ? obj.user : "";																	
+																	
+																	if (parent.autoAssignPermissions && !obj.userUpdate) {
+
+																		let userData = util.user.getUserData();
+																		user = userData.name;
+																		parent.incidentData.user = userData.name;
+																		parent.incidentData.userId = userData.id;
+																	}
+																	
+																	let summaryUser = `<div>
+																							<span class="ico webix_icon mdi mdi-account"></span>
+																							<span class="field">${i18n.t("LBL_INCIDENT_USER_ASSIGNED")}</span>
+																						</div>`;
+
+																	if (parent.assignAnotherPermissions) {
+																					
+																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}<span title='${i18n.t('LBL_CMD_ASSIGN')}' class='changeuser-button webix_icon mdi mdi-account-arrow-left'></span></div>`;
+
+																	} else {
+
+																		summaryUser += `<div class="value" style="max-width: ${maxWidthLabels}px;">${user}</div>`;																		
+																	}
+
+																	return summaryUser;
+
+																},
+																on: {
+																	onAfterRender: function() {
+
+																		let changeUserButton = this.getNode().querySelector(".changeuser-button");
+
+																		if (changeUserButton) {
+
+																			changeUserButton.addEventListener("click", function() {
+
+																				let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, function(obj){
+																					
+																					$$("summary-user-" + parent.uid).setValues({
+																						user: obj[0].name,
+																						userUpdate: true
+																					});
+																					
+																					parent.incidentData.user = obj[0].name;
+																					parent.incidentData.userId = obj[0].id;
+																				});
+																				s.show();
+																			});
+																		}
+																	}
 																}
 															}
 														]

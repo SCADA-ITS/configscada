@@ -46,7 +46,9 @@ export default class IncidentWizardModule extends GenericModule {
 
 		this.drawContent = new IncidentWizardDrawContent(this);
 		this.incidentWizardAction = new IncidentWizardAction(this);
-
+		
+		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
+		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
 
 		this.incidentData = {
 			stretchId: undefined,

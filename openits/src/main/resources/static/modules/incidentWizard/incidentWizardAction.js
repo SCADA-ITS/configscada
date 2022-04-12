@@ -38,7 +38,8 @@ export default class IncidentWizardAction {
 						let body = {
 							incidentTypeId: parent.incidentData.incidentTypeId,
 							locationId: parent.incidentData.locationId,
-							affectionStretchIds: parent.incidentData.affectionStretchsSelected.map(e => e.id)
+							affectionStretchIds: parent.incidentData.affectionStretchsSelected.map(e => e.id),
+							userId: parent.incidentData.userId
 						};
 			
 						webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + parent.config.actionEndpoints.create, body).then(function(data) {
