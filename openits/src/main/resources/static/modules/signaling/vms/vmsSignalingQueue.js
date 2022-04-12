@@ -323,6 +323,8 @@ export default class VmsSignalingQueue {
 						}
 					}
 					else {
+						
+						$$("view-main-queue-section-queue-size-" + priority.id + "-title-" + self.uid).setValues({items: 0 });
 					
 //						viewSectionCommands = {
 //							id: "view-main-queue-section-data-" + priority.id + "-" + self.uid,

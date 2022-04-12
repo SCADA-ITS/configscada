@@ -24,7 +24,7 @@ export default class VmsSignalingContent {
 		this.subtypeElements = subtypeElements;
 		this.selectedElements = selectedElements ? selectedElements : [element];
 		this.currentCommandElement = currentCommandElement;
-		this.isEditAction = (currentCommandElement != undefined);
+		this.isEditAction = (onEdit != undefined && currentCommandElement != undefined);
 		this.commandsElement = [];
 		this.onUpdate = onUpdate;
 		this.onEdit = onEdit;
@@ -35,7 +35,7 @@ export default class VmsSignalingContent {
 		this.startTime = undefined;
 		this.endTime = undefined;
 
-		if (this.isEditAction) {
+		if (this.isEditAction && this.currentCommandElement) {
 			
 			this.selectedCommand = this.currentCommandElement.commandElementType;
 		}
@@ -323,7 +323,9 @@ export default class VmsSignalingContent {
 										
 										self.hasMessage ? btnSend.enable() : btnSend.disable();
 										self.hasMessage ? btnUndo.enable() : btnUndo.disable();
-									}	
+									}
+									
+									self.setPriorityOptions();	
 								}	
 							}
 					    },
@@ -339,10 +341,12 @@ export default class VmsSignalingContent {
 							
 									if (self.isEditAction) {
 										
-										tabSelected = "view-generic-signaling-command-body-" + self.currentCommandElement.commandElementType.id + "-" + self.uid;
+										tabSelected = "view-generic-signaling-command-body-" + self.selectedCommand.id + "-" + self.uid;
 									} 	
 									
-									tabView.setValue(tabSelected);							
+									tabView.setValue(tabSelected);
+									
+									self.setPriorityOptions();						
 	
 								}, 100);	
 							}
@@ -401,7 +405,7 @@ export default class VmsSignalingContent {
 				
 					let commandElement = webix.copy(cmd);
 						
-					if (self.isEditAction && commandElement.id === self.currentCommandElement.commandElementType.id &&
+					if (self.isEditAction && self.currentCommandElement && commandElement.id === self.currentCommandElement.commandElementType.id &&
 						Array.isArray(self.currentCommandElement.commandElementValues)) {
 						
 						commandElement.commandElementValues = webix.copy(self.currentCommandElement.commandElementValues);	
@@ -426,7 +430,7 @@ export default class VmsSignalingContent {
 			
 			if (self.isEditAction) { 
 				
-				if (Array.isArray(self.currentCommandElement.commandElementValues) && 
+				if (self.currentCommandElement && Array.isArray(self.currentCommandElement.commandElementValues) && 
 					self.currentCommandElement.commandElementValues.length > 0) {
 					
 					let commandElementValue = self.currentCommandElement.commandElementValues.find(e => e.commandElementTypeParam.id === self.config.commands.sendMessage.commandElementValues[0].commandElementTypeParamId);
@@ -736,7 +740,7 @@ export default class VmsSignalingContent {
 								on: {
 									onChange: function(newValue) {
 										
-										self.startTime = (typeof newValue === 'object') ? newValue.getTime() : undefined;
+										self.startTime = (typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
 									}
 								}
 							},
@@ -781,7 +785,7 @@ export default class VmsSignalingContent {
 								on: {
 									onChange: function(newValue) {
 										
-										self.endTime = (typeof newValue === 'object') ? newValue.getTime() : undefined;
+										self.endTime = (typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
 									}
 								}
 							},
@@ -1066,7 +1070,7 @@ export default class VmsSignalingContent {
 		return commandElement;
 	}
 	
-	setPriorityOptions(priorities) {
+	setPriorityOptions() {
 		
 		let self = this;
 		
@@ -1077,8 +1081,10 @@ export default class VmsSignalingContent {
 		let cboPriority = $$("vms-content-priority-combo-" + self.uid);
 		
 		if (chkDtIni && dtIni && chkDtEnd && dtEnd && cboPriority) {
+			
+			let priorities = self.element.elementType.priorities;
 
-			if (Array.isArray(priorities)) {
+			if (Array.isArray(priorities) && self.selectedCommand.pmQueueCompatibility && !self.onEdit) {
 				
 				let data = [];
 				

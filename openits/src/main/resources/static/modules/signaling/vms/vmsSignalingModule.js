@@ -81,6 +81,11 @@ export default class VmsSignalingModule extends GenericModule {
 			
 			if (self.currentElement && self.currentElement.id === elementId) {
 			
+				if (self.elementType) {
+					
+					self.currentElement.elementType = webix.copy(self.elementType);
+				}
+				
 				onResponse(self.currentElement);	
 			}
 			else {
@@ -89,7 +94,14 @@ export default class VmsSignalingModule extends GenericModule {
 			
 					if (elementResponse) {
 						
-						onResponse(elementResponse.json());	
+						let element = elementResponse.json();
+						
+						if (self.elementType) {
+							
+							element.elementType = webix.copy(self.elementType); 
+						}
+						
+						onResponse(element);	
 					}
 				});
 			}
@@ -286,10 +298,10 @@ export default class VmsSignalingModule extends GenericModule {
 				
 				$$("view-main-queue-" + self.uid).hide();
 				
-				if (self.vmsSignalingContent) {
-					
-					self.vmsSignalingContent.setPriorityOptions();	
-				}
+//				if (self.vmsSignalingContent) {
+//					
+//					self.vmsSignalingContent.setPriorityOptions();	
+//				}
 
 				getElementFromElementId(elementId, onResponse);	
 				
@@ -342,13 +354,14 @@ export default class VmsSignalingModule extends GenericModule {
 					$$("view-main-queue-" + self.uid).hide();
 				}
 				
-				let viewPriorityOptions = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
-				viewPriorityOptions &= !isModuleActionCommandEdit;
-				
-				if (viewPriorityOptions) {
-				
-					self.vmsSignalingContent.setPriorityOptions(self.elementType.priorities);	
-				}
+//				let viewPriorityOptions = Array.isArray(self.elementType.priorities) && self.elementType.priorities.length > 0;
+//				viewPriorityOptions &= !isModuleActionCommandEdit;
+//				viewPriorityOptions &= self.vmsSignalingContent && self.vmsSignalingContent.selectedCommand.pmQueueCompatibility;
+//				
+//				if (viewPriorityOptions) {
+//				
+//					self.vmsSignalingContent.setPriorityOptions(self.elementType.priorities);	
+//				}
 
 			}
 			
@@ -372,7 +385,7 @@ export default class VmsSignalingModule extends GenericModule {
 						currentCommandElement = self.args.data.commandElement;
 					}
 					
-					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, onOrderEdit, multiselectAllowed, (self.args && self.args.readOnly));
+					self.vmsSignalingContent = new VmsSignalingContent(self.config, self.currentElement, subtypeElements, self.elementsSelected, currentCommandElement, onUpdate, isModuleActionCommandEdit ? onOrderEdit : undefined, multiselectAllowed, (self.args && self.args.readOnly));
 					
 					view = self.vmsSignalingContent.getView();
 					
