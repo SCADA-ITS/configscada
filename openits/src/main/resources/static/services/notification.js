@@ -238,13 +238,25 @@ export default class Notification {
 										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + alarmRecognizedSelected.length + " " + i18n.t("SELECTED_ALARM/S"), function (){
 										
 											self.removeRecognized(alarmRecognizedSelected);	
+											
+											if (window.userControlPanel) {
+			
+												window.userControlPanel.updateData();	
+											}
+											
 										})).show();
 										
 								} else {
 										
 										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_ALARMS"), function(){
 											
-											self.removeRecognized();	
+											self.removeRecognized();
+											
+											if (window.userControlPanel) {
+			
+												window.userControlPanel.updateData();	
+											}
+												
 										})).show();										
 									}
 									
@@ -368,14 +380,26 @@ export default class Notification {
 
 										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + incidentRecognizedSelected.length + " " + i18n.t("SELECTED_INCIDENT/S"), function (){
 										
-											self.removeRecognized(incidentRecognizedSelected);	
+											self.removeRecognized(incidentRecognizedSelected);
+											
+											if (window.userControlPanel) {
+			
+												window.userControlPanel.updateData();	
+											}
+												
 										})).show();
 									}
 									else {
 
 										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_ALL_CONFIRMED_INCIDENTS"), function(){
 											
-											self.removeRecognized();	
+											self.removeRecognized();
+											
+											if (window.userControlPanel) {
+			
+												window.userControlPanel.updateData();	
+											}
+												
 										})).show();
 									}
 
@@ -632,6 +656,32 @@ export default class Notification {
 						if (Array.isArray(ids) && ids.length === 0) {
 							
 							self.stopAudio();
+						}
+					},
+					onItemDblClick: function() {
+						
+						let ids = this.getSelectedId(true);
+						
+						let moduleActionId = self.config.dblClickModuleAction;
+						
+						if (moduleActionId) {
+							
+							if (Array.isArray(ids) && ids.length === 1) {
+								
+								let module = util.module.getFromModuleAction(moduleActionId);
+								
+								if (module) {
+									
+									let args = { selectedPks: ids };
+									let moduleAction = { id: moduleActionId };
+					
+									util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);	
+								}
+							}
+							else {
+								
+								(new MessageBox (MessageBox.ERROR, i18n.t("LBL_COMMAND_NOT_COMPATIBLE_MULTISELECT"), null, null)).show();
+							}	
 						}
 					}
 				}

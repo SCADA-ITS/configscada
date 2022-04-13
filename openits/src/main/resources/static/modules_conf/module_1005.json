@@ -11,11 +11,13 @@
 	"restEndpoints": {
 		"alarms": "alarms",
 		"tree": "trees/${id}",
-		"grid": "grids/${id}"
+		"grid": "grids/${id}",
+		"elementsHierarchy": "elements/hierarchy"
 	},
 	"topic": "/topic/alarm.>",
 	"gridNoRecognized": 1004,
 	"gridRecognized": 1005,
+	"treeElements": false,
 	"levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],
 		"warn": [ "AlarmLevel:3", "AlarmLevel:4" ],

@@ -490,7 +490,7 @@ export default class TreeView {
 			
 			let viewGroupCommands = [];
 			
-			if (Array.isArray(self.metadata.treeCommands) && self.metadata.treeCommands.length > 0) {
+			if (self.metadata && Array.isArray(self.metadata.treeCommands) && self.metadata.treeCommands.length > 0) {
 				
 				self.metadata.treeCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 				

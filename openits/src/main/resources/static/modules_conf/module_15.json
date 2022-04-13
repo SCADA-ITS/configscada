@@ -19,6 +19,7 @@
 		"timeoutNotificationMs": 0,
 		"maxInactiveNotifications": 10,
 		"confirmIncidents": 100402,
-		"viewIncidentPermission": "SystemPermission:12"
+		"viewIncidentPermission": "SystemPermission:12",
+		"dblClickModuleAction": 100401
 	}
 }

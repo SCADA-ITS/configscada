@@ -2191,14 +2191,14 @@ export let util = {
 			
 		getNodes(items, relationships, remapedFields, translate) {
 			
+			let instantInit = (new Date()).getTime();
 			let uid = webix.uid();
 			let mapNodes = undefined;
 			let nodes = [];
 			let hierarchies = [];
+			let ids = new Set();
 			
 			if (Array.isArray(items) && Array.isArray(relationships)) {
-				
-				log.debug("Tree::getNodes(uid = " + uid + ") init => " + items.length + " items; " + relationships.length + " relationships");
 				
 				mapNodes = createMapNodes();
 				hierarchies = getHierarchies();
@@ -2210,22 +2210,15 @@ export let util = {
 						
 						fillNode(node);
 					});
-				}	
+				}
+				
+				let diffTime = (new Date()).getTime() - instantInit;
+				
+				log.debug("Tree::getNodes(uid = " + uid + ", build = " + diffTime + "ms.) init => " + items.length + " items; " + relationships.length + " relationships");
 			}
 			
 			function fillNode(node) {
-				
-				// Remove hierarchy associate with current node (only nodes with parents)
-				if (node.parentId) {
-					
-					let idxRemove = hierarchies.findIndex(e => e.parentNode == node.parentId && e.childNode == node.id_);
-					
-					if (idxRemove !== -1) {
-					
-						hierarchies.splice(idxRemove, 1);
-					}
-				}
-				
+								
 				if (Array.isArray(hierarchies) && hierarchies.length > 0) {
 					
 					// Find child nodes for current node
@@ -2243,8 +2236,16 @@ export let util = {
 							if (nodeChild) {
 								
 								let newNodeChild = webix.copy(nodeChild);
-																	
-								newNodeChild.id = node.id_ + "_" + nodeChild.id_;
+								let id = [node.id_, nodeChild.id_].join('_');
+								
+								if (ids.has(id)) {
+									
+									id = [node.id_, nodeChild.id_, webix.uid()].join('_');
+								}
+								
+								ids.add(id);
+
+								newNodeChild.id = id;
 								newNodeChild.parentId = node.id_;
 								
 								fillNode(newNodeChild);
@@ -2300,7 +2301,8 @@ export let util = {
 					params: {},
 					props: {
 						translate: translate === true,
-						folder: item.folder === true
+						folder: item.folder === true,
+						image: item.image
 					}
 				};
 
@@ -2332,8 +2334,6 @@ export let util = {
 				
 				return hierarchiesAux;
 			}
-			
-			log.debug("Tree::getNodes(uid = " + uid + ") end");
 			
 			return nodes;
 		}

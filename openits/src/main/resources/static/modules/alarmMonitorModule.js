@@ -38,6 +38,7 @@ export default class AlarmMonitorModule extends GenericModule {
 		this.lastSelectedTreeView = [ELEMENT_ALL];
 		
 		this.treeElements = undefined;
+		this.elementHierarchies = undefined;
 		
 		this.dtNoRecognized = undefined;
 		this.dtRecognized = undefined;
@@ -68,7 +69,8 @@ export default class AlarmMonitorModule extends GenericModule {
 
 			if (self.config.treeElements) {
 				
-				promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: self.config.treeElements })));
+				//promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.tree, { id: self.config.treeElements })));
+				promises.push(webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elementsHierarchy));
 			}
 			promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridNoRecognized })));
 			promises.push(webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.grid, { id: self.config.gridRecognized })));
@@ -111,7 +113,8 @@ export default class AlarmMonitorModule extends GenericModule {
 				
 				if (response) {
 
-					self.treeElements = response.json();
+					//self.treeElements = response.json();
+					self.elementHierarchies = response.json();
 				}
 			}
 			
@@ -496,7 +499,8 @@ export default class AlarmMonitorModule extends GenericModule {
 				]
 			});
 				
-			if(self.treeElements){
+			//if(self.treeElements){
+			if (self.elementHierarchies) {
 				
 				rowsviewMainListEquipments.push(getSwitcherViews());
 				rowsviewMainListEquipments.push({ height: 1, borderless: false });
@@ -639,17 +643,65 @@ export default class AlarmMonitorModule extends GenericModule {
 					}
 				};
 				
+				let itemsTree = [];
+				let itemRelationships = [];
+				
+				let elements = window.em.getAll(EntityType.ELEMENT);
+				
+				if (Array.isArray(elements) && elements.length > 0) {
+
+					itemsTree = elements.map(e => {
+
+						return {
+
+							id: e.id,
+							label: e.alias + " (" + i18n.t(e.elementType.labelAlias) + ")",
+							image: e.elementType.elementTypePhoto
+						}
+					});
+				}
+
+				if (Array.isArray(self.elementHierarchies) && self.elementHierarchies.length > 0) {
+
+					itemRelationships = self.elementHierarchies.map(e => {
+
+						return {
+
+							id: e.id,
+							nodeParentId: e.parent.id,
+							nodeChildId: e.child.id
+						}
+					});
+				}
+				
+				let treeData = util.tree.getNodes(itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
+
 				let root = [{
 				
 					id: ELEMENT_TYPE_ALL,
 					value: i18n.t("LBL_ELEMENT_TYPE_ALL"),
-					data: self.treeElements.data,
+					data: treeData,
 					props: {
         				folder: true
 					}	
 				}];
+				
+				let metadata = {
+					id: -1,
+					label: "LBL_EQUIPMENTS",
+					treeOptionValues: [
+						{ value: false, treeOption: { id: 2 } },
+						{ value: true, treeOption: { id: 3 } },
+						{ value: true, treeOption: { id: 4 } },
+						{ value: true, treeOption: { id: 5 } },
+						{ value: true, treeOption: { id: 6 } },
+						{ value: false, treeOption: { id: 8 } }
+					],
+					treeCommands: []
+				}
 
-				self.treeView = new TreeView(self.treeElements.metadata, root, events);
+				//self.treeView = new TreeView(self.treeElements.metadata, root, events);
+				self.treeView = new TreeView(metadata, root, events);
 
 				view = self.treeView.getView();
 				view.hidden = true;
@@ -675,7 +727,9 @@ export default class AlarmMonitorModule extends GenericModule {
 			
 			function getSwitcherButtons() {
 				
-				let view = {
+				let view;
+				
+				view = {
 					css: { "background-color": "var(--blue-soft-opacity-1)" },
 					height: 50,
 					cols: [
@@ -717,7 +771,7 @@ export default class AlarmMonitorModule extends GenericModule {
 									on: {
 										onChange(newv, oldv) {
 				
-											console.log("init change => " + newv);
+											//console.log("init change => " + newv);
 											$$("loading-switcher-" + self.uid).show();
 											$$("switcher-views-" + self.uid).hide();
 												
@@ -759,7 +813,7 @@ export default class AlarmMonitorModule extends GenericModule {
 													initTreeView();
 												}
 												
-												console.log("end change => " + newv);
+												//console.log("end change => " + newv);
 											});
 										}
 									}
