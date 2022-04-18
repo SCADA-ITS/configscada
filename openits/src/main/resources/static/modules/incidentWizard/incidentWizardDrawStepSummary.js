@@ -1,6 +1,7 @@
 import {util} from "../../lib/util.js";
 import IncidentWizardDrawStep from "./incidentWizardDrawStep.js";
 import SearchDialogBox from "../../component/searchDialogBox.js";
+import MessageBox from "../../component/messageBox.js";
 
 export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawStep {
 
