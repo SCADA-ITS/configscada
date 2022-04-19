@@ -109,10 +109,10 @@ export default class EquipmentList {
 				{ gridOption: { id: 6 }, value: undefined },
 				{ gridOption: { id: 7 }, value: "false" },
 				{ gridOption: { id: 8 }, value: "false" },
-				{ gridOption: { id: 10 }, value: "false" },
+				{ gridOption: { id: 10 }, value: "true" },
 				{ gridOption: { id: 11 }, value: "false" },
 				{ gridOption: { id: 12 }, value: "false" },
-				{ gridOption: { id: 13 }, value: "false" },
+				{ gridOption: { id: 13 }, value: "true" },
 				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
 				{ gridOption: { id: 23 }, value: "false" }
 			];
@@ -241,8 +241,6 @@ export default class EquipmentList {
 								cols: [
 									{ width: 5 },
 									{
-										height: 385,
-										width: 697,
 										rows: [
 											{
 												view: "label",
@@ -253,7 +251,11 @@ export default class EquipmentList {
 											},
 											{ height: 5 },
 											{
-												cols: self.tableView.getView()
+												cols: [
+													{
+														rows: self.tableView.getView() 
+													}
+												]
 											}
 										]
 									}
