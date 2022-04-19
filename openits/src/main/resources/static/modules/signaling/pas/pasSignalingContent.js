@@ -21,6 +21,8 @@ export default class PasSignalingContent {
 
 		this.idStompSubscriptorPas = undefined;
 		this.idStompSubscriptorZones = undefined;
+		
+		this.commandEquipmentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
 	}
 
 	getView() {
@@ -470,6 +472,22 @@ export default class PasSignalingContent {
 					],
 					gridCommands: [
 						{
+							id: 3,
+							default_: false,
+							icon: "mdi mdi-volume-high",
+							label: "LBL_PAS_LISTEN_PLAYED_AUDIO",//"LBL_PAS_PLAY"
+							multiselect: false,
+							position: 1,
+							showText: false,
+							itemRequired: true
+						}
+					]
+				};
+
+				if (self.commandEquipmentPermissions) {
+
+					metadata.gridCommands.push(
+						{
 							id: 1,
 							default_: false,
 							icon: "mdi mdi-play",
@@ -488,20 +506,10 @@ export default class PasSignalingContent {
 							position: 2,
 							showText: false,
 							itemRequired: true
-						},
-						{
-							id: 3,
-							default_: false,
-							icon: "mdi mdi-volume-high",
-							label: "LBL_PAS_LISTEN_PLAYED_AUDIO",//"LBL_PAS_PLAY"
-							multiselect: false,
-							position: 1,
-							showText: false,
-							itemRequired: true
 						}
-					]
-				};
-
+					);
+				}
+				
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 

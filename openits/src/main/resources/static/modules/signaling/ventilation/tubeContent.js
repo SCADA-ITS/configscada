@@ -154,6 +154,11 @@ export default class TubeContent {
 									
 														connectWS();
 														
+														if (self.parent.treeView) {
+
+															self.parent.treeView.enable(true);
+														}
+														
 													}
 												});
 											}
@@ -326,7 +331,7 @@ export default class TubeContent {
 				view: "segmented",
 				css: "segment-custom-2",
 				value: getVentilationMode(),
-				disabled: (self.parent.args && self.parent.args.readOnly === true),
+				disabled: (self.parent.args && self.parent.args.readOnly === true) || !self.parent.commandEquipmentPermission,
 				width: 500,
 				options: ventilationModeOptions,
 				tooltip: true,
@@ -647,6 +652,7 @@ export default class TubeContent {
 												view: "richselect",
 												value: getCurrentRegime() ? getCurrentRegime().id : undefined,
 												options: availableRegimes,
+												disabled: !self.parent.commandEquipmentPermission,
 												on: {
 													onChange(newv, oldv) {
 
@@ -836,32 +842,41 @@ export default class TubeContent {
 
 					//let data = self.tubeFans;
 					let data = [];
-					let metadata = self.fanGrid.metadata;				
+					let metadataCopy = webix.copy(self.fanGrid.metadata);				
+					let cleanButtonId = undefined;
 
 					let events = {};
 					events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 					
-					if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0) {
+					if (Array.isArray(metadataCopy.gridCommands) && metadataCopy.gridCommands.length > 0) {
 						
-						metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+						if (self.parent.commandEquipmentPermission) {
+
+							metadataCopy.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+
+							cleanButtonId = metadataCopy.gridCommands[metadataCopy.gridCommands.length - 1].id + 1;
+							infoButtonId = metadataCopy.gridCommands[metadataCopy.gridCommands.length - 1].id + 2;
+
+						} else {
+
+							metadataCopy.gridCommands = [];
+							cleanButtonId = 1;
+							infoButtonId = 2;
+						}
 						
-						let cleanButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
-						
-						metadata.gridCommands.push({
+						metadataCopy.gridCommands.push({
 							id: cleanButtonId,
 							default_: false,
 							icon: "mdi mdi-broom",
 							label: "LBL_CLEAN",
 							multiselect: true,
-							position: metadata.gridCommands.length + 1,
+							position: metadataCopy.gridCommands.length + 1,
 							showText: false,
 							itemRequired: false,
 							unselectAllAfter: true
 						});
-						
-						infoButtonId = metadata.gridCommands[metadata.gridCommands.length - 1].id + 1;
-						
-						metadata.gridCommands.push({
+												
+						metadataCopy.gridCommands.push({
 							id: infoButtonId,
 							default_: true,
 							icon: "mdi mdi-information-outline",
@@ -873,16 +888,16 @@ export default class TubeContent {
 							unselectAllAfter: true
 						});
 						
-						metadata.gridCommands.forEach(gridCommand => {
+						metadataCopy.gridCommands.forEach(gridCmd => {
 							
-							if (gridCommand.args) {
+							if (gridCmd.args) {
 								
-								let args = JSON.parse(gridCommand.args);
+								let args = JSON.parse(gridCmd.args);
 								
 								if (args.command && args.ids) {
 									
 									events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-										commandId: gridCommand.id,
+										commandId: gridCmd.id,
 										function: () => {
 											
 											let commandElement = self.selectedTube.commandElements.find(e => e.id === args.command);
@@ -905,8 +920,7 @@ export default class TubeContent {
 										}
 									});
 								}
-							}
-							
+							}							
 						});
 						
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
@@ -926,7 +940,7 @@ export default class TubeContent {
 						});
 					}
 
-					self.tubeFansDataTable = new DataTable(null, null, metadata, data, events);
+					self.tubeFansDataTable = new DataTable(null, null, metadataCopy, data, events);
 
 					return self.tubeFansDataTable.getView();
 				}

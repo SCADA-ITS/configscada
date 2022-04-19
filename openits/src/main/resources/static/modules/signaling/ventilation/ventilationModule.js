@@ -22,6 +22,7 @@ export default class VentilationModule extends GenericModule {
 		this.selectedTunnelId = undefined;
 		this.selectedTubeId = undefined;
 		this.selectedFansIds = undefined;
+		this.commandEquipmentPermission = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
 	}
 
 	loadData() {
@@ -41,6 +42,7 @@ export default class VentilationModule extends GenericModule {
 
 					let selectedItem = self.treeView.data.find(treeOption => treeOption.id_ == enabledTunnelIds[0]);
 					self.treeView.select(selectedItem.id);
+					self.treeView.enable();
 				});
 			}
 		
@@ -76,6 +78,7 @@ export default class VentilationModule extends GenericModule {
 								});
 							});
 							self.treeView.select(selectedTreeId);
+							self.treeView.enable();
 						});
 					}
 				});
@@ -117,6 +120,7 @@ export default class VentilationModule extends GenericModule {
 								});
 							});
 							self.treeView.select(selectedTreeId);
+							self.treeView.enable();
 						});
 					}
 				});
@@ -128,6 +132,7 @@ export default class VentilationModule extends GenericModule {
 
 				drawComponents();
 				self.treeView.select(self.treeView.data[0].id);
+				self.treeView.enable();
 			});
 		}
 
@@ -211,6 +216,7 @@ export default class VentilationModule extends GenericModule {
 	
 				events[TreeView.EventTypes.ON_SELECT_ITEM] = function(item) { 
 
+					self.treeView.enable();	
 					self.selectedTunnelId = $$("tree-"+self.treeView.uid).getItem(item.$parent).id_;
 					self.selectedTubeId = item.id_;
 
@@ -219,13 +225,14 @@ export default class VentilationModule extends GenericModule {
 					if(tubeContent){
 						
 						webix.ui(tubeContent.getView(), $$("view-main-content-" + self.uid));
-						tubeContent.loadData();
+						tubeContent.loadData();						
 					}
 					
 				};
 	
 				events[TreeView.EventTypes.ON_SELECT_FOLDER] = function(item) { 
 					
+					self.treeView.enable();
 					self.selectedTunnelId = item.id_;
 					self.selectedTubeId = null;
 
@@ -273,6 +280,7 @@ export default class VentilationModule extends GenericModule {
 			$$("loading-" + self.uid).hide();
 
 			webix.ui(viewMain, $$(self.uid));
+			self.treeView.enable(true);
 		}
 	}
 }

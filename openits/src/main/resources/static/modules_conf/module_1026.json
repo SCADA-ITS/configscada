@@ -18,7 +18,8 @@
 	},
 	"requiredPermissions": {
 		"editPanel": "SystemPermission:13",
-		"editLibrary": "SystemPermission:14"
+		"editLibrary": "SystemPermission:14",
+		"commandEquipment": "SystemPermission:6"
 	},
 	"commands":{
 		"reset" :{

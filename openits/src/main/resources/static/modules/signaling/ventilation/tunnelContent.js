@@ -134,7 +134,8 @@ export default class TunnelContent {
 					view: "abslayout",
 					cells: [
 						view,
-						{
+						{	
+							hidden: !self.parent.commandEquipmentPermission,
 							top: 34, right: 186,
 							rows: [
 								{},
@@ -234,6 +235,7 @@ export default class TunnelContent {
 				
 				$$("view-tunnel-loading-" + self.uid).hide();
 				$$("view-tunnel-content-" + self.uid).show();
+				self.parent.treeView.enable(true);
 			}
 		});
 

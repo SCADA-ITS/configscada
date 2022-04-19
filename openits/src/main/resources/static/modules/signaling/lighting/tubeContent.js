@@ -306,7 +306,7 @@ export default class TubeContent {
 			view: "segmented",
 			css: "segment-custom-2",
 			value: self.lightingModeValueParam.value,
-			disabled: (self.parent.args && self.parent.args.readOnly === true),
+			disabled: (self.parent.args && self.parent.args.readOnly === true) || !self.parent.commandEquipmentPermission,
 			width: 500,
 			options: lightingModeOptions,
 			tooltip: true,
@@ -480,6 +480,7 @@ export default class TubeContent {
 										view: "richselect",
 										value: self.getCurrentRegime() ? self.getCurrentRegime().id : undefined,
 										options: availableRegimes,
+										disabled: !self.parent.commandEquipmentPermission,
 										on: {
 											onChange(newv, oldv) {
 
@@ -868,6 +869,33 @@ export default class TubeContent {
 					],
 					gridCommands: [
 						{
+							id: 1,
+							default_: true,
+							icon: "mdi mdi-information-outline",
+							label: "LBL_INFO",
+							multiselect: false,
+							position: 1,
+							showText: false,
+							itemRequired: true
+						},
+						{
+							id: 4,
+							default_: false,
+							icon: "mdi mdi-broom",
+							label: "LBL_CLEAN",
+							multiselect: true,
+							position: 4,
+							showText: false,
+							itemRequired: true
+						}
+					]	
+				};
+	
+	
+				if (self.parent.commandEquipmentPermissions) {
+
+					metadata.gridCommands.push(
+						{
 							id: 2,
 							default_: false,
 							icon: "mdi mdi-toggle-switch",
@@ -887,30 +915,9 @@ export default class TubeContent {
 							showText: true,
 							itemRequired: true
 						},
-						{
-							id: 4,
-							default_: false,
-							icon: "mdi mdi-broom",
-							label: "LBL_CLEAN",
-							multiselect: true,
-							position: 4,
-							showText: false,
-							itemRequired: true
-						},
-						{
-							id: 1,
-							default_: true,
-							icon: "mdi mdi-information-outline",
-							label: "LBL_INFO",
-							multiselect: false,
-							position: 1,
-							showText: false,
-							itemRequired: true
-						}
-					]
-	
-				};
-	
+					);
+				}
+				
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
 	
@@ -1149,7 +1156,13 @@ export default class TubeContent {
 							position: 1,
 							showText: false,
 							itemRequired: true
-						},
+						}
+					]
+				};
+				
+				if (self.parent.commandEquipmentPermission) {
+
+					metadata.gridCommands.push(
 						{
 							id: 2,
 							default_: false,
@@ -1160,9 +1173,8 @@ export default class TubeContent {
 							showText: true,
 							itemRequired: true
 						}
-					]
-	
-				};
+					);
+				}
 	
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
