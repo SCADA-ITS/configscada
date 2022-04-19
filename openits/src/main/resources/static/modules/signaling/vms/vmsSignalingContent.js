@@ -53,6 +53,8 @@ export default class VmsSignalingContent {
 		this.hasMessage = false;
 		
 		this.undoJsonData = undefined;
+		
+		this.commandEquipmentPermission = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
 	}
 
 	getView() {
@@ -680,12 +682,12 @@ export default class VmsSignalingContent {
 			
 			let viewActions = {};
 			let hideSelectionButton = self.isEditAction;
+			let hideSendButton = (!self.commandEquipmentPermission) ? true : self.isEditAction;
 			
 			if(!self.isEditAction){
 				
 				hideSelectionButton = (self.multiselectAllowed) ? true : false;	
 			} 
-			
 			
 			viewActions = {
 				view: "toolbar",
@@ -866,7 +868,7 @@ export default class VmsSignalingContent {
 						view: "button", 
 						id: "btn-send-" + self.uid,
 						css: "action-button",
-						hidden: self.isEditAction,
+						hidden: hideSendButton,
 						disabled: (self.readOnly === true),
 						width: 130,
 						height: 35,
@@ -886,66 +888,66 @@ export default class VmsSignalingContent {
 									self.onEdit();
 									
 								} else {
-									
+
 									let commandSelected = self.element.commandElements.find(e => e.id == self.selectedCommand.id);
 									//let commandSelected = self.commandsElement.find(e => e.id == self.selectedCommand);
 									//let title = (commandSelected ? commandSelected.value : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM")); 
 									let title = (commandSelected ? i18n.t(commandSelected.labelAlias) : i18n.t("LBL_SEND_VMS_SIGNALING_CONFIRM"));
-									
+
 									title += " (" + self.selectedElements.length + " " + i18n.t("LBL_SELECTED") + ")";
-									
-									let ms = new MessageBox (MessageBox.CONFIRM, title, onAccept, null);
+
+									let ms = new MessageBox(MessageBox.CONFIRM, title, onAccept, null);
 									ms.show();
-									
+
 									function onAccept() {
-										
+
 										let isCmdSendMessage = (self.selectedCommand.id == self.config.commands.sendMessage.commandElementTypeId);
-											
+
 										let commands = [];
-										
+
 										let sendMessageCmd = {};
-									
+
 										self.selectedElements.forEach(element => {
-	
+
 											sendMessageCmd = {};
-											
+
 											// Command SendMessage
 											if (isCmdSendMessage) {
-												
+
 												sendMessageCmd = webix.copy(self.config.commands.sendMessage);
 												sendMessageCmd.elementId = element.id;
-												
+
 												if (Array.isArray(sendMessageCmd.commandElementValues) && sendMessageCmd.commandElementValues.length === 1) {
-													
+
 													let options = $$("view-form-options-" + self.uid).getValues();
-												
+
 													sendMessageCmd.commandElementValues[0].value = JSON.stringify(self.composer.getCurrentSignalingJsonData(options));
 												}
 											}
 											// Other commands
 											else {
-												
+
 												sendMessageCmd = {
 													elementId: element.id,
 													commandElementTypeId: self.selectedCommand.id,
 												}
-												
+
 												if (Array.isArray(self.signalingCmds) && self.signalingCmds.length > 0) {
-								
+
 													let signalingCmd = self.signalingCmds.find(e => e.commandElementType.id === sendMessageCmd.commandElementTypeId);
-													
+
 													if (signalingCmd) {
-														
-														let genericCmd = signalingCmd.getCommandElement(element.id); 
-														
+
+														let genericCmd = signalingCmd.getCommandElement(element.id);
+
 														if (genericCmd && Array.isArray(genericCmd.commandElementValues)) {
-															
+
 															sendMessageCmd.commandElementValues = [];
-						
+
 															genericCmd.commandElementValues.forEach(commandElementValue => {
-								
+
 																sendMessageCmd.commandElementValues.push({
-								
+
 																	commandElementTypeParamId: commandElementValue.commandElementTypeParam.id,
 																	value: commandElementValue.value
 																});
@@ -953,42 +955,42 @@ export default class VmsSignalingContent {
 														}
 													}
 												}
-												
+
 												self.composer.clear();
 												self.hasMessage = false;
 											}
-											
+
 											if (self.priorityId) {
-											
-												sendMessageCmd.priorityId = self.priorityId;	
+
+												sendMessageCmd.priorityId = self.priorityId;
 											}
-											
+
 											if (self.startTime) {
-												
-												sendMessageCmd.startTime = self.startTime;	
+
+												sendMessageCmd.startTime = self.startTime;
 											}
-											
+
 											if (self.endTime) {
-												
-												sendMessageCmd.endTime = self.endTime;	
+
+												sendMessageCmd.endTime = self.endTime;
 											}
-											
-											commands.push(webix.copy(sendMessageCmd));	
-											
+
+											commands.push(webix.copy(sendMessageCmd));
+
 											sendMessageCmd = undefined;
 										});
-										
+
 										if (Array.isArray(commands) && commands.length > 0) {
-											
+
 											util.element.sendCommand(commands, function(res) {
-												
+
 												if (res) {
-												
-													(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+
+													(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 												}
 											});
 										}
-									}										
+									}
 								}
 							}
 						}

@@ -54,6 +54,9 @@
 		{"id": "1", "label" : "LBL_MODE_AUTO", "disable" : true},
 		{"id": "0", "label" : "LBL_MODE_MANUAL", "disable" : false}
 	],
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
 	"commands":{
 		"SEND_CIRCUIT_ON" :{
 			"commandElementTypeId":"CommandElementType:9:2000",

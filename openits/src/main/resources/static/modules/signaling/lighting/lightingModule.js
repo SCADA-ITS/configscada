@@ -1,9 +1,8 @@
+import { util } from "../../../lib/util.js";
 import GenericModule from "../../genericModule.js";
 import TreeView from "../../../component/treeview.js";
-import { util } from "../../../lib/util.js";
 import TubeContent from "./tubeContent.js";
 import LightingContent from "./lightingContent.js";
-import { adapter } from "../../../lib/adapter.js";
 
 export default class LightingnModule extends GenericModule {
 	
@@ -23,6 +22,8 @@ export default class LightingnModule extends GenericModule {
 		
 		this.enabledSelectedPks = undefined;
 		this.tubeTableOption = undefined;
+		
+		this.commandEquipmentPermission = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
 	}
 
 	loadData() {

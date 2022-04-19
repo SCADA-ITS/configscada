@@ -51,6 +51,9 @@
 	"single": {
 		"fit": false
 	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
 	"camConf": {
 		"brand": "ElementTypeParam:2:1:1",
 		"model": "ElementTypeParam:2:1:2",

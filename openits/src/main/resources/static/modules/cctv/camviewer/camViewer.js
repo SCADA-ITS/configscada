@@ -36,6 +36,8 @@ export default class CamViewer {
 		this.decoder = undefined;
 		this.decoderType = Decoder.MJPEG;
 		
+		this.commandEquipmentPermission = util.module.isAllowedPermission(this.config.requiredPermissions.commandEquipment);
+		
 		if (config && config.camConf && config.camConf.brand && config.camConf.model && config.camConf.devices) {
 				
 			let elementValueBrand = element.elementValues.find(e => e.elementTypeParam.id === config.camConf.brand);
@@ -159,7 +161,11 @@ export default class CamViewer {
 			marginRight += (w - camContainer.clientWidth) / 2;	
 		}
 
-		webix.ui(getCamControls(), $$("cam-controls-" + self.uid));
+		if(self.commandEquipmentPermission){
+		
+			webix.ui(getCamControls(), $$("cam-controls-" + self.uid));	
+		}
+		
 		webix.ui(getButtons(), $$("camviewer-buttons-" + self.uid));
 		webix.ui(self.getCamName(marginRight, bottom, containerId), $$("camviewer-name-" + self.uid));
 		
@@ -204,7 +210,7 @@ export default class CamViewer {
 
 				viewButtons.height = SIZE_MULTI;
 
-				if (self.pan || self.tilt || self.zoom) {
+				if ((self.pan || self.tilt || self.zoom) && self.commandEquipmentPermission) {
 
 					let viewButtonCamControls = getButtonCamControls();
 
@@ -233,7 +239,7 @@ export default class CamViewer {
 				}
 
 				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
-					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId)) {
+					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId) && self.commandEquipmentPermission) {
 
 					let viewButtonLock = getButtonLock();
 
@@ -256,7 +262,7 @@ export default class CamViewer {
 				viewButtonExpandCam.width = SIZE_SINGLE;
 				viewButtonExpandCam.css = "cam-viewer-button-small";
 
-				if (self.pan || self.tilt || self.zoom) {
+				if ((self.pan || self.tilt || self.zoom) && self.commandEquipmentPermission) {
 
 					let viewButtonCamControls = getButtonCamControls();
 
@@ -281,7 +287,7 @@ export default class CamViewer {
 				viewButtons.cols.push(viewButtonExpandCam);
 
 				if (self.config.commands.lock && Array.isArray(self.element.commandElements) &&
-					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId)) {
+					self.element.commandElements.find(e => e.id == self.config.commands.lock.commandElementTypeId) && self.commandEquipmentPermission) {
 
 					let viewButtonLock = getButtonLock();
 
@@ -866,12 +872,11 @@ export default class CamViewer {
                 let camViewerContainer = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-div");
                 let camViewerImg = $$("camviewer-" + self.uid).getNode().querySelector(".camviewer-img");
 
+		if (camViewerContainer && camViewerImg) {
 
-                if (camViewerContainer && camViewerImg) {
-                        self.adjust();
+			self.adjust();
 			self.drawButtons(contId);
-                }
-
+		}
 	}
 
 	expandVideo() {

@@ -133,5 +133,8 @@
 				}
 			]
 		}
+	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
 	}
 }

@@ -35,6 +35,9 @@
 		"paramMessageTag": "ElementTypeParam:16:2:1004",
 		"paramOnAir": "ElementTypeParam:16:2:1"
 	},
+	"requiredPermissions": {
+		"commandEquipment": "SystemPermission:6"
+	},
 	"commands":{
 		"SEND_MESSAGE" :{
 			"commandElementTypeId":"CommandElementType:2:5",
