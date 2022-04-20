@@ -39,7 +39,7 @@ export default class IncidentReportActionPanel {
 		let sameUser = (self.userData.id === currentUser.id);
 		let changeAssignIncident =  ((self.autoAssignPermissions && sameRole && !sameUser) || self.assignAnotherPermissions) ? true : false;
 		let onlyAutoassignIncident = (self.autoAssignPermissions && !self.assignAnotherPermissions) ? true : false;
-
+		let drawCounterLabel = false;
 		let viewActionPanel = {};
 
 		viewActionPanel = {
@@ -47,6 +47,26 @@ export default class IncidentReportActionPanel {
 			width: 300,
 			css: "panel-action",
 			rows: [
+				{
+					view: "template",
+					height: 1,
+					borderless: true,
+					on: {
+						
+						onDestruct: function(){
+											
+							clearInterval(self.timeOut);
+						},
+						onAfterRender: function (){
+							
+							if (drawCounterLabel){
+							
+								drawCounterLabel = false;	
+								getTimeRemaining();
+							}
+						}	
+					}
+				},
 				{
 					height: 95,
 					cols: [
@@ -91,8 +111,13 @@ export default class IncidentReportActionPanel {
 											}
 
 										} else if (!self.closed && self.incidentReport.confirm !== true && self.confirmIncidentPermissions) {
-											
-											return false;
+
+											if (sameUser || (onlyAutoassignIncident && sameRole) || self.assignAnotherPermissions) {
+
+												return false;
+											}																				
+
+											return true;
 
 										} else {
 
@@ -119,7 +144,7 @@ export default class IncidentReportActionPanel {
 											else {
 
 												label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM");
-												getTimeRemaining();
+												drawCounterLabel = true;
 											}
 										}
 										
@@ -234,11 +259,6 @@ export default class IncidentReportActionPanel {
 													}
 												}
 											}
-										},
-										onDestruct: function(){
-											
-											clearInterval(self.timeOut);
-											
 										}
 									}
 								},
@@ -1020,37 +1040,52 @@ export default class IncidentReportActionPanel {
 		function getTimeRemaining() {
 
 			let generatedAt = self.incidentReport.generatedAt;
+			let valueInSecs = undefined;
 
-			if (self.config.restEndpoints.systemParamConfirmIncident && self.config.systemParamConfirmIncident) {
+			if (self.incidentReport.incidentType.autoConfirmIncident) {
 
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
+				valueInSecs = self.incidentReport.incidentType.autoConfirmIncident;
+				setTimeInterval();
 
-					if (systemParamsResponse != null) {
+			} else {
 
-						let systemParams = systemParamsResponse.json();
-						let button = $$("action-button-" + self.uid);
-						let millisOfDiference = Date.now() - generatedAt;
+				if (self.config.restEndpoints.systemParamConfirmIncident && self.config.systemParamConfirmIncident) {
 
-						if (millisOfDiference < (systemParams.value * 1000) && button) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
 
-							let pendingSecs = ((systemParams.value * 1000) - millisOfDiference) / 1000;
+						if (systemParamsResponse != null) {
 
-							self.timeOut = setInterval(function() {
-
-								button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": " + Math.floor(pendingSecs) + " " + i18n.t("LBL_SECONDS");
-								button.refresh();
-								pendingSecs--;
-
-								if (pendingSecs < 0) {
-
-									button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": - " + i18n.t("LBL_SECONDS");
-									button.refresh();
-								}
-
-							}, 999);
+							let systemParams = systemParamsResponse.json();
+							valueInSecs = systemParams.value;
+							setTimeInterval();
 						}
-					}
-				});
+					});
+				}
+			}
+
+			function setTimeInterval() {
+
+				let button = $$("action-button-" + self.uid);
+				let millisOfDiference = Date.now() - generatedAt;
+
+				if (millisOfDiference < (valueInSecs * 1000) && button) {
+
+					let pendingSecs = ((valueInSecs * 1000) - millisOfDiference) / 1000;
+
+					self.timeOut = setInterval(function() {
+
+						button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": " + Math.floor(pendingSecs) + " " + i18n.t("LBL_SECONDS");
+						button.refresh();
+						pendingSecs--;
+
+						if (pendingSecs < 0) {
+
+							button.config.label = i18n.t("LBL_INCIDENT_ACTION_CONFIRM") + ": - " + i18n.t("LBL_SECONDS");
+							button.refresh();
+						}
+
+					}, 999);
+				}
 			}
 		}
 
