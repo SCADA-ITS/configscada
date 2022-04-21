@@ -143,7 +143,7 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 																	let user = obj.user ? obj.user : "";																	
 																	
-																	if (parent.autoAssignPermissions && !obj.userUpdate) {
+																	if ((parent.autoAssignPermissions || parent.assignAnotherPermissions) && !obj.userUpdate) {
 
 																		let userData = util.user.getUserData();
 																		user = userData.name;
