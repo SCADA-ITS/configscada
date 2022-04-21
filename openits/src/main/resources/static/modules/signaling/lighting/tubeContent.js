@@ -505,43 +505,55 @@ export default class TubeContent {
 							{
 								cols: [
 									{},
-									{
-										id: "view-content-button-change-regime-" + self.parent.uid,
-										width: 130,
-										view: "button",
-										align: "right",
-										css: "button-cta",
-										value: i18n.t("LBL_CHANGE_REGIME"),
-										disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable || (self.parent.args && self.parent.args.readOnly === true),
-										click: function() {
-
-											let command = self.parent.config.commands.SEND_LIGHTING_REGIME;
-											command.elementId = self.tubeId;
-											command.commandElementValues[0].value = $$("label-regimen-3-" + self.parent.uid).getValue();
-
-											if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
-
-												let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
-												ms.show();
-
-											} else {
-												
-												util.element.sendCommand([command], function(res) {
-														
-													if (res) {
-													
-														(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-													}
-												}, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"));	
-											}
-										}
-									}
+									getButtonChangeRegime()
 								]
 							}
 						]
 					}
 				]
 			};
+			
+			function getButtonChangeRegime() {
+
+				let buttonChangeRegime = { height: 38 };
+
+				if (self.parent.commandEquipmentPermission) {
+
+					buttonChangeRegime = {
+						id: "view-content-button-change-regime-" + self.parent.uid,
+						width: 130,
+						view: "button",
+						align: "right",
+						css: "button-cta",
+						value: i18n.t("LBL_CHANGE_REGIME"),
+						disabled: self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable || (self.parent.args && self.parent.args.readOnly === true),
+						click: function() {
+
+							let command = self.parent.config.commands.SEND_LIGHTING_REGIME;
+							command.elementId = self.tubeId;
+							command.commandElementValues[0].value = $$("label-regimen-3-" + self.parent.uid).getValue();
+
+							if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
+
+								let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+								ms.show();
+
+							} else {
+
+								util.element.sendCommand([command], function(res) {
+
+									if (res) {
+
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+									}
+								}, i18n.t("LBL_SEND_LIGHTING_REGIME_CONFIRM_DESCRIPTION"));
+							}
+						}
+					};
+				}
+
+				return buttonChangeRegime;
+			}
 
 			function getViewDocument() {
 
@@ -877,22 +889,11 @@ export default class TubeContent {
 							position: 1,
 							showText: false,
 							itemRequired: true
-						},
-						{
-							id: 4,
-							default_: false,
-							icon: "mdi mdi-broom",
-							label: "LBL_CLEAN",
-							multiselect: true,
-							position: 4,
-							showText: false,
-							itemRequired: true
 						}
 					]	
 				};
 	
-	
-				if (self.parent.commandEquipmentPermissions) {
+				if (self.parent.commandEquipmentPermission) {
 
 					metadata.gridCommands.push(
 						{
@@ -915,6 +916,16 @@ export default class TubeContent {
 							showText: true,
 							itemRequired: true
 						},
+						{
+							id: 4,
+							default_: false,
+							icon: "mdi mdi-broom",
+							label: "LBL_CLEAN",
+							multiselect: true,
+							position: 4,
+							showText: false,
+							itemRequired: true
+						}
 					);
 				}
 				
@@ -1283,7 +1294,7 @@ export default class TubeContent {
 						css: "button-cta",
 						value: i18n.t("LBL_LIGHTING_CHANGE_STATUS"),
 						disabled: true,
-						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable,
+						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable || !self.parent.commandEquipmentPermission,
 						click: function() {
 
 							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
@@ -1453,33 +1464,36 @@ export default class TubeContent {
 
 					if (self.tubeCircuitsDataTable) {
 						
-						//self.tubeCircuitsDataTable.disable();
 						self.enableGridButtons(self.tubeCircuitsDataTable, false);	
 					}
 					
 					if (self.tubeDalisDataTable) {
 					
-						//self.tubeDalisDataTable.disable();
 						self.enableGridButtons(self.tubeDalisDataTable, false);		
 					}
-					
-					$$("view-content-button-change-regime-" + self.parent.uid).disable();
+
+					if ($$("view-content-button-change-regime-" + self.parent.uid)) {
+
+						$$("view-content-button-change-regime-" + self.parent.uid).disable();
+					}					
+
 
 				} else {
 
 					if (self.tubeCircuitsDataTable) {
 						
-						//self.tubeCircuitsDataTable.enable();
 						self.enableGridButtons(self.tubeCircuitsDataTable, true);
 					}
 					
 					if (self.tubeDalisDataTable) {
 					
-						//self.tubeDalisDataTable.enable();
 						self.enableGridButtons(self.tubeDalisDataTable, true);	
 					}
-					
-					$$("view-content-button-change-regime-" + self.parent.uid).enable();
+
+					if ($$("view-content-button-change-regime-" + self.parent.uid)) {
+
+						$$("view-content-button-change-regime-" + self.parent.uid).enable();
+					}										
 				}
 
 				self.checkDisableChangeStatusButton();

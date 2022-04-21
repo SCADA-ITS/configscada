@@ -142,7 +142,6 @@ export default class TubeContent {
 									
 															if (getVentilationMode() && self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableFanChange) {
 									
-																//self.tubeFansDataTable.disable();
 																enableGridButtons(false)
 															}
 														}
@@ -430,41 +429,52 @@ export default class TubeContent {
 					$$("label-regimen-1-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getCurrentRegime() ? getCurrentRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
 					$$("label-regimen-2-" + self.uid).setValue('<div><span class="global-text-badge" style="background:#9c70303b; color: #9c7030a0;">' + i18n.t(getProposedRegime() ? getProposedRegime().labelAlias : "LBL_UNKNOWN") + '</span></div>')
 
+					let buttonChangeRegime = $$("view-content-button-change-regime-" + self.uid);
+					 
 					if (!ventilationMode) {
 
-						//self.tubeFansDataTable.disable();
 						enableGridButtons(false);
-						$$("view-content-button-change-regime-" + self.uid).disable();
+
+						if (buttonChangeRegime) {
+
+							buttonChangeRegime.disable();
+						}
 
 					} else {
 
 						if (self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disableRegimeChange) {
 
-							$$("view-content-button-change-regime-" + self.uid).disable();
+							if(buttonChangeRegime){
+							
+								buttonChangeRegime.disable();	
+							}							
 
 						} else {
 
 							if (getDisabledChangeRegime()) {
 
-								$$("view-content-button-change-regime-" + self.uid).disable();
+								if(buttonChangeRegime){
+								
+									buttonChangeRegime.disable();	
+								}								
 
 							} else {
 
-								$$("view-content-button-change-regime-" + self.uid).enable();
+								if (buttonChangeRegime) {
+
+									buttonChangeRegime.enable();
+								}
 							}
 
-							//self.tubeFansDataTable.enable();
 							enableGridButtons(true);
 						}
 
 						if (self.parent.config.ventilationModeOptions.find(option => option.id == ventilationMode).disableFanChange) {
 
-							//self.tubeFansDataTable.disable();
 							enableGridButtons(false);
 
 						} else {
 
-							//self.tubeFansDataTable.enable();
 							enableGridButtons(true);
 						}
 					}
@@ -676,44 +686,57 @@ export default class TubeContent {
 									{
 										cols: [
 											{},
-											{
-												id: "view-content-button-change-regime-" + self.uid,
-												width: 130,
-												view: "button",
-												align: "right",
-												css: "button-cta",
-												value: i18n.t("LBL_CHANGE_REGIME"),
-												disabled: self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableRegimeChange ||
-													getDisabledChangeRegime(),
-												click: function() {
-
-													let command = self.parent.config.commands.SEND_VENTILATION_REGIME;
-													command.elementId = self.tubeId;
-													command.commandElementValues[0].value = $$("label-regimen-3-" + self.uid).getValue();
-
-													if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
-
-														let ms = new MessageBox (MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
-														ms.show();
-
-													} else {
-
-														util.element.sendCommand([command], function(res) {
-
-															if (res) {
-															
-																(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
-															}
-														}, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"));
-													}
-												}
-											}
+											getButtonChangeRegime()
 										]
 									}
 								]
 							}
 						]
 					};
+					
+					function getButtonChangeRegime() {
+
+						let buttonChangeRegime = { height: 38 };
+
+						if (self.parent.commandEquipmentPermission) {
+
+							buttonChangeRegime = {
+								id: "view-content-button-change-regime-" + self.uid,
+								width: 130,
+								view: "button",
+								align: "right",
+								css: "button-cta",
+								value: i18n.t("LBL_CHANGE_REGIME"),
+								disabled: self.parent.config.ventilationModeOptions.find(option => option.id == getVentilationMode()).disableRegimeChange ||
+									getDisabledChangeRegime(),
+								click: function() {
+
+									let command = self.parent.config.commands.SEND_VENTILATION_REGIME;
+									command.elementId = self.tubeId;
+									command.commandElementValues[0].value = $$("label-regimen-3-" + self.uid).getValue();
+
+									if (!command.commandElementValues[0].value || command.commandElementValues[0].value === 0) {
+
+										let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_REGIME_SELECTED_DESCRIPTION"), null, null);
+										ms.show();
+
+									} else {
+
+										util.element.sendCommand([command], function(res) {
+
+											if (res) {
+
+												(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+											}
+										}, i18n.t("LBL_SEND_VENTILATION_REGIME_CONFIRM_DESCRIPTION"));
+									}
+								}
+							}
+						}
+
+						return buttonChangeRegime;
+
+					}
 
 					function getViewDocument() {
 
@@ -857,25 +880,24 @@ export default class TubeContent {
 							cleanButtonId = metadataCopy.gridCommands[metadataCopy.gridCommands.length - 1].id + 1;
 							infoButtonId = metadataCopy.gridCommands[metadataCopy.gridCommands.length - 1].id + 2;
 
+							metadataCopy.gridCommands.push({
+								id: cleanButtonId,
+								default_: false,
+								icon: "mdi mdi-broom",
+								label: "LBL_CLEAN",
+								multiselect: true,
+								position: metadataCopy.gridCommands.length + 1,
+								showText: false,
+								itemRequired: false,
+								unselectAllAfter: true
+							});
+
 						} else {
 
 							metadataCopy.gridCommands = [];
-							cleanButtonId = 1;
-							infoButtonId = 2;
+							infoButtonId = 1;
 						}
-						
-						metadataCopy.gridCommands.push({
-							id: cleanButtonId,
-							default_: false,
-							icon: "mdi mdi-broom",
-							label: "LBL_CLEAN",
-							multiselect: true,
-							position: metadataCopy.gridCommands.length + 1,
-							showText: false,
-							itemRequired: false,
-							unselectAllAfter: true
-						});
-												
+																		
 						metadataCopy.gridCommands.push({
 							id: infoButtonId,
 							default_: true,
@@ -934,7 +956,7 @@ export default class TubeContent {
 						events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 							commandId: infoButtonId,
 							function: () => {
-	
+								
 								openEquipmentViewer();
 							}
 						});
@@ -987,6 +1009,7 @@ export default class TubeContent {
 					let bottom;
 
 					bottom = {
+						height:40,
 						cols: [
 							{},
 							{
@@ -996,6 +1019,7 @@ export default class TubeContent {
 								align: "right",
 								css: "button-cta",
 								value: i18n.t("LBL_VENTILATION_CHANGE_STATUS"),
+								hidden: !self.parent.commandEquipmentPermission,
 								disabled: true,
 								click: function() {
 
