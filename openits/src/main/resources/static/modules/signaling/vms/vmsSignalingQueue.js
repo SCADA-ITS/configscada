@@ -6,7 +6,7 @@ const QUEUE_COMMAND_HEIGHT = 100;
 const MAX_EPOCH_TIME = 4102444799000;
 const VMS_STATE_ACTIVE = "ElementTypeState:71:1";
 const VMS_STATE_INACTIVE = "ElementTypeState:71:3";
-const VMS_STATE_UNAVAILABLE = "ElementTypeState:71:0";
+const VMS_STATE_UNAVAILABLE = "ElementTypeState:71:3";
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
 const QUEUE_COLOR_UNAVAILABLE = "#475466";
@@ -21,7 +21,8 @@ export default class VmsSignalingQueue {
 		this.element = undefined;
 		this.maxElementQueueWidth = width - 125;
 		this.maxElementQueueHeight = QUEUE_COMMAND_HEIGHT - 25;
-		
+
+		this.refreshing = false;		
 		this.idStompSubscriptor = undefined;
 		this.uid = webix.uid();
 	}
@@ -46,7 +47,7 @@ export default class VmsSignalingQueue {
 						on: {
 							onDestruct: function() {
 						
-								if (self.idStompSubscriptor) {
+								if (self.idStompSubscriptor && !self.refreshing) {
 									
 									let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 		
@@ -104,6 +105,7 @@ export default class VmsSignalingQueue {
 								id: "view-main-queue-section-enabled-" + priority.id + "-title-" + self.uid,
 								priorityId: priority.id,
 								view: "switch",
+								eventOnChangeId: undefined,
 								width: 70,
 								tooltip: function(obj){
 							        return obj.value ? i18n.t("LBL_ENABLED") : i18n.t("LBL_DISABLED");
@@ -250,25 +252,21 @@ export default class VmsSignalingQueue {
 				
 			if (viewPriorityEnabledInstance) {
 				
-				viewPriorityEnabledInstance.blockEvent();
 				viewPriorityEnabledInstance.setValue(priority.enable ? 1: 0);
-				viewPriorityEnabledInstance.unblockEvent();
 				
-				viewPriorityEnabledInstance.attachEvent("onChange", function(newValue, oldValue) {
-								
-					this.blockEvent();
+				if (viewPriorityEnabledInstance.hasEvent('onItemClick') && viewPriorityEnabledInstance.config.eventOnChangeId) {
+					
+					viewPriorityEnabledInstance.detachEvent(viewPriorityEnabledInstance.config.eventOnChangeId);
+				}
+				
+				viewPriorityEnabledInstance.config.eventOnChangeId = viewPriorityEnabledInstance.attachEvent("onItemClick", function() {
+					
+					let oldValue = !this.getValue();
+					let newValue = this.getValue(); 
+					
+					log.debug(viewPriorityEnabledInstance.config.id);
+					changePriority(newValue);
 					this.setValue(oldValue);
-					this.unblockEvent();
-					
-					if (newValue != oldValue) {
-					
-						changePriority(newValue);	
-					}
-				});
-				
-				viewPriorityEnabledInstance.attachEvent("onItemClick", function(id) {
-								
-					log.debug(this.config.id + " click");
 				});
 				
 				let viewSectionDataInstance = $$("view-main-queue-section-data-" + priority.id + "-" + self.uid);
@@ -414,16 +412,16 @@ export default class VmsSignalingQueue {
 											
 											let color = QUEUE_COLOR_UNAVAILABLE;
 											
-											let labelCommandPosition = i18n.t(priority.labelAlias) + " #" + commandPosition + ": ";
+											let labelCommandPosition = "#" + commandPosition + ": ";
 											
 											if (priority.enable) {
 												
 												color = commandElement.enable ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
-												labelCommandPosition += commandElement.enable ? i18n.t("LBL_ACTIVE") : i18n.t("LBL_INACTIVE") 
+												labelCommandPosition += commandElement.enable ? i18n.t("LBL_QUEUE_ITEM_ACTIVE") : i18n.t("LBL_QUEUE_ITEM_INACTIVE") 
 											}
 											else {
 												
-												labelCommandPosition += i18n.t("LBL_UNAVAILABLE");
+												labelCommandPosition += i18n.t("LBL_QUEUE_ITEM_UNAVAILABLE");
 											}
 											
 											return `<div title='${labelCommandPosition}' style='display: table-cell; vertical-align: middle; color: ${color};background-color: ${color + "50"}; width: 20px; height: 20px; text-align: center; border: 1px solid ${color}; border-radius: 5px; font-size: 10px; font-weight: bold' 
@@ -612,15 +610,15 @@ export default class VmsSignalingQueue {
 									
 									graphicIconInstance.loadRender(function() {
 										
-										let color = VMS_STATE_UNAVAILABLE;
+										let color = "none";
 						
-										if (priority.enable) {
-																
-											color = commandElement.enable ? VMS_STATE_ACTIVE : VMS_STATE_INACTIVE;
-										}
+//										if (priority.enable) {
+//																
+//											color = commandElement.enable ? VMS_STATE_ACTIVE : VMS_STATE_INACTIVE;
+//										}
 										
 										graphicIconInstance.updateState({
-											id: color
+											color: "none"
 										});
 										
 										let jsonValue = [];
@@ -723,6 +721,8 @@ export default class VmsSignalingQueue {
 		
 		function refresh() {
 			
+			self.refreshing = true;
+			
 			let loadingView = {
 				
 				id: "view-main-queue-" + self.uid,
@@ -741,6 +741,8 @@ export default class VmsSignalingQueue {
 					
 					self.update(elementResponse.json());	
 				}
+				
+				self.refreshing = false;
 			});	
 		}
 	}

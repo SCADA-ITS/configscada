@@ -590,11 +590,22 @@ public class ImsIncidentReportBO extends GenericBO {
 
 	public Boolean confirm(String id) {
 
+		return confirm(id, null);
+	}
+	
+	
+	public Boolean confirm(String id, String userId) {
+
 		Boolean res = false;
 
 		Map<String, Object> input = new HashMap<>();
 
 		input.put(FIELD_INCIDENT_REPORT_ID, id);
+		
+		if (!StringUtils.isEmpty(userId)) {
+		
+			input.put(FIELD_USER_ID, userId);
+		}
 
 		Map<String, Object> incidentReport = voDataSourceAdapter
 				.put(VODataSourceAdapter.DATA_SOURCE_SEND_CONFIRM_INCIDENT_REPORT, input);
@@ -637,8 +648,13 @@ public class ImsIncidentReportBO extends GenericBO {
 
 		return res;
 	}
-
+	
 	public Boolean cancel(String id) {
+		
+		return cancel(id, null);
+	}
+
+	public Boolean cancel(String id, String userId) {
 		Boolean res = false;
 
 		Map<String, Object> incidentReport = voDataSourceAdapter
@@ -649,6 +665,11 @@ public class ImsIncidentReportBO extends GenericBO {
 			Map<String, Object> input = new HashMap<>();
 
 			input.put(FIELD_INCIDENT_REPORT_ID, id);
+			
+			if (!StringUtils.isEmpty(userId)) {
+			
+				input.put(FIELD_USER_ID, userId);
+			}
 
 			Map<String, Object> incidentReportRes = voDataSourceAdapter
 					.put(VODataSourceAdapter.DATA_SOURCE_SEND_CANCEL_INCIDENT_REPORT, input);

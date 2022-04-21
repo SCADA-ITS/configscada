@@ -213,7 +213,7 @@ export default class EquipmentList {
 								width: 300,
 								cols: [
 									{
-										height: 385,
+										//height: 385,
 										rows: [
 											{
 												view: "label",
@@ -223,11 +223,16 @@ export default class EquipmentList {
 												label: i18n.t("LBL_ELEMENT_TYPES")
 											},
 											{
+//												css: {
+//													"box-sizing": "border-box",
+//													"border": "1px solid #dadee0 !important",
+//													"border-top": "none !important",
+//													"height": "362px !important"
+//												},
 												css: {
 													"box-sizing": "border-box",
 													"border": "1px solid #dadee0 !important",
-													"border-top": "none !important",
-													"height": "362px !important"
+													"border-top": "none !important"
 												},
 												cols: [self.listView.getView()]
 											}

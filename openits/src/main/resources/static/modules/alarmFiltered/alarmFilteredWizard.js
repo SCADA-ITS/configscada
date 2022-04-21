@@ -235,7 +235,6 @@ export default class AlarmFilteredWizard {
 							}
 
 							$$("button-next-" + position + "-" + parent.uid).enable();
-							$$("calendar1-undefined").setValue(new Date());
 
 						} else {
 
@@ -313,7 +312,6 @@ export default class AlarmFilteredWizard {
 						$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterSelect", function(selection, preserve) {
 
 							$$("button-next-" + position + "-" + parent.uid).enable();
-							$$("calendar1-undefined").setValue(new Date());
 						});
 
 						$$(self.tableAlarmsModal.getView()[0].id).attachEvent("onAfterUnSelect", function(selection, preserve) {

@@ -112,6 +112,15 @@ public class ImsIncidentController {
 
 		return new ResponseEntity<>(imsIncidentReportBO.confirm(id), HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/reports/{id}/confirm/{userId}")
+	@ApiOperation(value = "Confirm Incident Report with user", notes = "Confirm Incident Report with user")
+	public ResponseEntity<Boolean> confirmIncidentReportWithUser(
+			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id,
+			@ApiParam(name = "userId", type = "String", value = "User id", example = "User:1", required = true) @PathVariable String userId) {
+
+		return new ResponseEntity<>(imsIncidentReportBO.confirm(id, userId), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/reports/{id}/forward")
 	@ApiOperation(value = "Forward Incident Report", notes = "Forward Incident Report")
@@ -127,6 +136,15 @@ public class ImsIncidentController {
 			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id) {
 
 		return new ResponseEntity<>(imsIncidentReportBO.cancel(id), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reports/{id}/cancel/{userId}")
+	@ApiOperation(value = "Cancel Incident Report with user", notes = "Cancel Incident Report with user")
+	public ResponseEntity<Object> cancelIncidentReportWithUser(
+			@ApiParam(name = "id", type = "String", value = "Incident report id", example = "ImsIncidentReport:1", required = true) @PathVariable String id,
+			@ApiParam(name = "userId", type = "String", value = "User id", example = "User:1", required = true) @PathVariable String userId) {
+
+		return new ResponseEntity<>(imsIncidentReportBO.cancel(id, userId), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/reports/{id}/user/{userId}")
