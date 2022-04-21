@@ -320,7 +320,10 @@ function access(loginData) {
 		if (Array.isArray(userData.userPermissions)) {
 	
 			userData.userPermissions.forEach(item => {
-				permissions.push(item.id);
+				permissions.push({
+					'id': item.id.split(":")[1],
+					'alias': item.alias
+				});
 			});
 	
 		}
