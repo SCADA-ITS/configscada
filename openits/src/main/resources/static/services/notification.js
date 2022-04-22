@@ -380,7 +380,7 @@ export default class Notification {
 
 									if (Array.isArray(incidentRecognizedSelected) && incidentRecognizedSelected.length > 0) {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("c"), function (){
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_INCIDENTS"), function (){
 										
 											self.removeRecognized(incidentRecognizedSelected);
 											
