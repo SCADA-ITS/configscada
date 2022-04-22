@@ -198,64 +198,33 @@ export default class IncidentReportActionPanel {
 													}
 
 												} else {
-
-													if (self.autoAssignPermissions || self.assignAnotherPermissions) {
-
-														if (onlyAutoassignIncident && !sameRole) {
-
-															let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
-															ms.show();
-
-														} else {
-
-															let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function() {
-
-																onAccept(true);
-
-															}, null);
-															ms.show();
-														}
-
-													} else {
+													
+													if (sameUser) {
 
 														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
 														ms.show();
+
+													} else {
+
+														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function(){
+															
+															onAccept(true);
+															
+														}, null);
+														ms.show();
 													}
-													
 										
 													function onAccept(changeUser) {
 
-														if (changeUser) {
-														
-															let userId = self.userData.id;
+														let userId = (changeUser) ? self.userData.id : null;
 
-															let body = {
-																id: self.incidentReport.id,
-																userId: userId
-															};
+														let body = {
+															id: self.incidentReport.id,
+															userId: userId
+														};
 
-															let endpointAssign = util.fillTemplate(self.config.actionEndpoints.assignUserIncidentReport, body);
-															
-															console.log("Incident report action => " + endpointAssign);
-
-															webix.ajax().post(appConfig.restUrl + endpointAssign).then(function(res) {
-
-																let endpointConfirm = util.fillTemplate(self.config.actionEndpoints.confirm, { id: self.incidentReport.id });
-																self.parent.restAction(endpointConfirm);
-																
-															}, function(response) {
-
-																util.ajax.handleError(response);
-															});
-
-														} else {
-
-															let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, {
-																id: self.incidentReport.id
-															});
-
-															self.parent.restAction(endpoint);
-														}
+														let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
+														self.parent.restAction(endpoint);
 													}
 												}
 											}
@@ -309,7 +278,22 @@ export default class IncidentReportActionPanel {
 							tooltip: i18n.t("LBL_INCIDENT_CANCEL_DESCRIPTION"),
 							type: "iconTop",
 							icon: "mdi mdi-close-thick",
-							hidden: self.closed || !self.cancelIncidentPermissions || self.incidentReport.currentUser.id != self.userData.id,
+							hidden: function (){
+
+								if (self.closed || !self.cancelIncidentPermissions || (self.incidentReport.confirm === true && !sameUser)) {
+
+									return true
+
+								} else {
+
+									if(self.assignAnotherPermissions || (onlyAutoassignIncident && sameRole) || sameUser){
+										
+										return false;
+									}
+									
+									return true;
+								}
+							}(),
 							on: {
 
 								onItemClick() {
@@ -362,7 +346,7 @@ export default class IncidentReportActionPanel {
 				width: 135,
 				label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 				tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-				disabled: !changeAssignIncident,
+				disabled: !changeAssignIncident || (self.incidentReport.confirm === true),
 				type: "iconTop",
 				icon: "mdi mdi-account",
 				on: {
@@ -920,14 +904,29 @@ export default class IncidentReportActionPanel {
 		}
 
 		function cancelIncidentReport() {
+			
+			if (sameUser) {
 
-			let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
-			ms.show();
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
+				ms.show();
 
-			function onAccept() {
+			} else {
+
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
+
+					onAccept(true);
+
+				}, null);
+				ms.show();
+			}
+
+			function onAccept(changeUser) {
+				
+				let userId = (changeUser) ? self.userData.id : null;
 
 				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, {
-					id: self.incidentReport.id
+					id: self.incidentReport.id,
+					userId: userId
 				});
 
 				self.parent.restAction(endpoint);

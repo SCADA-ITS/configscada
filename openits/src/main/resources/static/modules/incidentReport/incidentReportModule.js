@@ -28,6 +28,7 @@ export default class IncidentReportModule extends GenericModule {
 		
 		this.autoAssignPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.autoassign);
 		this.assignAnotherPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.assignAnother);
+		this.confirmIncidentPermissions = util.module.isAllowedPermission(this.config.requiredPermissions.confirmIncident);
 
 		if (this.moduleAction.id === this.config.moduleAction.edit) {
 
@@ -70,11 +71,14 @@ export default class IncidentReportModule extends GenericModule {
 		}
 
 	}
+	
 
 	actionConfirm() {
 
 		let self = this;
 		let incidentReportsToConfirm = [];
+		let currentUser, sameUser, currentUserRole, sameRole, incidentReport = undefined;
+		let sameRoleCounter = 0;
 		let sameUserCounter = 0;
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
@@ -87,12 +91,17 @@ export default class IncidentReportModule extends GenericModule {
 
 					if (dat != null) {
 
-						let incidentReport = dat.json();
-						
+						incidentReport = dat.json();
+
 						if (!incidentReport.confirm) {
 
+							currentUser = window.em.getByField(EntityType.USER, "id", incidentReport.currentUser.id);
+							currentUserRole = currentUser.role.id;
+							sameUser =(self.userData.id === currentUser.id);
+							sameRole = (self.userData.role.id === currentUserRole);
 							incidentReportsToConfirm.push(incidentReport.id);
-							sameUserCounter = (incidentReport.currentUser.id === self.userData.id)  ? ++sameUserCounter : sameUserCounter;
+							sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
+							sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;							
 						}
 					}
 
@@ -105,24 +114,26 @@ export default class IncidentReportModule extends GenericModule {
 								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), onAccept, null);
 								ms.show();
 
-								function onAccept() {
+							} else if (self.autoAssignPermissions || self.assignAnotherPermissions) {
 
-									incidentReportsToConfirm.forEach(incidentReportToConfirmId => {
+								if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToConfirm.length)) || self.assignAnotherPermissions) {
 
-										let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, { id: incidentReportToConfirmId });
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function() {
 
-										console.log(endpoint);
+										onAccept(true);
+									}, null);
+									ms.show();
 
-										self.restAction(endpoint);
+								} else {
 
-									});
-								};
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_SAME_ROLE_DESCRIPTION"), null, null);
+									ms.show();
+								}
 
 							} else {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_ASSIGNED_TO_USER_DESCRIPTION"), null, null);
+								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_HAVE_NECESSARY_PERMISSIONS"), null, null);
 								ms.show();
-
 							}
 
 						} else {
@@ -130,8 +141,27 @@ export default class IncidentReportModule extends GenericModule {
 							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
 							ms.show();
 						}
-					} 
+					}
 				});
+			});
+		}
+
+		function onAccept(changeUser) {
+
+			incidentReportsToConfirm.forEach(incidentId => {
+
+				let userId = (changeUser) ? self.userData.id : null;
+
+				let body = {
+					id: incidentId,
+					userId: userId
+				};
+
+				let endpoint = util.fillTemplate(self.config.actionEndpoints.confirm, body);
+
+				console.log(endpoint);
+
+				self.restAction(endpoint);
 			});
 		}
 	}
@@ -140,7 +170,10 @@ export default class IncidentReportModule extends GenericModule {
 
 		let self = this;
 		let incidentReportsToDelete = [];
+		let currentUser, sameUser, currentUserRole, sameRole, incidentReport = undefined;
+		let sameRoleCounter = 0;
 		let sameUserCounter = 0;
+		let incidentConfirmed = 0;
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
@@ -152,13 +185,19 @@ export default class IncidentReportModule extends GenericModule {
 
 					if (dat != null) {
 
-						let incidentReport = dat.json();
+						incidentReport = dat.json();
 
 						if (incidentReport) {
 
+							currentUser = window.em.getByField(EntityType.USER, "id", incidentReport.currentUser.id);
+							currentUserRole = currentUser.role.id;
+							sameUser = (self.userData.id === currentUser.id);
+							sameRole = (self.userData.role.id === currentUserRole);
+							sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
+							sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
+							incidentConfirmed = (incidentReport.confirm) ? ++incidentConfirmed : incidentConfirmed;				
 							incidentReportsToDelete.push(incidentReport.id);
-							sameUserCounter = (incidentReport.currentUser.id === self.userData.id) ? ++sameUserCounter : sameUserCounter;
-						}
+						} 
 					}
 
 					if (--pendingRequest == 0) {
@@ -170,32 +209,63 @@ export default class IncidentReportModule extends GenericModule {
 								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
 								ms.show();
 
-								function onAccept() {
+							} else if ((self.autoAssignPermissions || self.assignAnotherPermissions) && (incidentConfirmed === 0)) {
 
-									incidentReportsToDelete.forEach(e => {
+								if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
 
-										let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, { id: e });
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
 
-										console.log(endpoint)
+										onAccept(true);
+									}, null);
+									ms.show();
 
-										self.restAction(endpoint);
+								} else {
 
-									});
-								};
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_SAME_ROLE_DESCRIPTION"), null, null);
+									ms.show();
+								}
 
 							} else {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_ASSIGNED_TO_USER_DESCRIPTION"), null, null);
-								ms.show();
+								if (incidentConfirmed != 0) {
+
+									let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+									ms.show();
+
+								} else {
+
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_HAVE_NECESSARY_PERMISSIONS"), null, null);
+									ms.show();
+								}
+
 							}
 
 						} else {
 
-							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+							let ms = new MessageBox(MessageBox.WARN, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CANCEL_DESCRIPTION"), null, null);
 							ms.show();
 						}
 					}
 				});
+			});
+		}
+
+		function onAccept(changeUser) {
+
+			incidentReportsToDelete.forEach(incidentId => {
+
+				let userId = (changeUser) ? self.userData.id : null;
+
+				let body = {
+					id: incidentId,
+					userId: userId
+				};
+
+				let endpoint = util.fillTemplate(self.config.actionEndpoints.cancel, body);
+
+				console.log(endpoint);
+
+				self.restAction(endpoint);
 			});
 		}
 	}
@@ -217,7 +287,7 @@ export default class IncidentReportModule extends GenericModule {
 
 				} else {
 
-					let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, changeUser);
+					let s = new SearchDialogBox(i18n.t("LBL_SELECT_USER"), SearchDialogBox.USERS, onAccept);
 					s.show();
 				}
 
@@ -225,12 +295,13 @@ export default class IncidentReportModule extends GenericModule {
 
 				let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_USER_WITHOUT_PERMISSION_TO_ASSIGN_INCIDENTS_DESCRIPTION"), null, null);
 				ms.show();
+
 			}
 			
-			function onAccept() {
+			function onAccept(data) {
 
 				let incidentReportsToAssign = 0;
-
+				let incidentConfirmed = 0;	
 				let pendingRequest = self.args.selectedPks.length;
 
 				self.args.selectedPks.forEach(e => {
@@ -245,8 +316,9 @@ export default class IncidentReportModule extends GenericModule {
 
 								let currentUser = window.em.getByField(EntityType.USER, "id", incident.currentUser.id);
 								let currentUserRole = currentUser.role.id;
+								incidentConfirmed = (incident.confirm) ? ++incidentConfirmed : incidentConfirmed;
 
-								if (currentUserRole === self.userData.role.id) {
+								if ((currentUserRole === self.userData.role.id) || self.assignAnotherPermissions) {
 
 									incidentReportsToAssign++;
 								}
@@ -255,14 +327,22 @@ export default class IncidentReportModule extends GenericModule {
 
 						if (--pendingRequest == 0) {
 
-							if (incidentReportsToAssign === self.args.selectedPks.length) {
+							if ((incidentReportsToAssign === self.args.selectedPks.length) && (incidentConfirmed === 0))  {
 
-								changeUser();
+								changeUser(data);
 
 							} else {
 
-								let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_ACTUAL_USER_WITH_DIFFERENT_ROLE_DESCRIPTION"), null, null);
-								ms.show();
+								if(incidentConfirmed != 0) {
+									
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOTHING_TO_CONFIRM_DESCRIPTION"), null, null);
+									ms.show();
+				
+								} else {
+									
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_NOT_SAME_ROLE_DESCRIPTION"), null, null);
+									ms.show();									
+								}
 							}
 						}
 					});
@@ -320,8 +400,7 @@ export default class IncidentReportModule extends GenericModule {
 				if (dat != null) {
 
 					self.incidentReport = dat.json();
-					
-					self.update();	
+					self.update();
 				}
 
 			}, function(response) { util.ajax.handleError(response); });

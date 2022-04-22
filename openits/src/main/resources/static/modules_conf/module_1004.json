@@ -22,8 +22,8 @@
 	},
 	"topic": "/topic/incidentReport",
 	"actionEndpoints": {
-		"cancel": "incidents/reports/${id}/cancel",
-		"confirm": "incidents/reports/${id}/confirm",
+		"cancel": "incidents/reports/${id}/cancel/${userId}",
+		"confirm": "incidents/reports/${id}/confirm/${userId}",
 		"forward": "incidents/reports/${id}/forward",
 		"finalizeTask": "incidents/reports/${id}/finalize_task/${taskId}",
 		"assignUserIncidentReport": "incidents/reports/${id}/user/${userId}",
