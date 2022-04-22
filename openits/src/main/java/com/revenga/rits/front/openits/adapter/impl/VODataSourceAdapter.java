@@ -244,6 +244,9 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_CREATE_PLAN_NODE = getPropertyInt("create_plan_node");
 	public static final int DATA_SOURCE_DELETE_PLAN_NODE = getPropertyInt("delete_plan_node");
 	
+	public static final int DATA_SOURCE_GET_PROCESSES_INFO = getPropertyInt("get_processes_info");
+	public static final int DATA_SOURCE_GET_SERVER_TIME = getPropertyInt("get_server_time");
+	
 	private static int getPropertyInt(final String prop) {
 		
 		if (!MapUtils.isEmpty(props)) {

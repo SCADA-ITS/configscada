@@ -163,6 +163,16 @@ public class GraphqlAdapter {
 					
 					list.add(mapBool);
 				}
+				else if (data.isLong()) {
+					
+					Map<String, Object> mapNumber = new HashedMap<>();
+					
+					mapNumber.put(method, data.asLong());
+					
+					list = new ArrayList<>();
+					
+					list.add(mapNumber);
+				}
 				else {
 					
 					list = new ArrayList<>();

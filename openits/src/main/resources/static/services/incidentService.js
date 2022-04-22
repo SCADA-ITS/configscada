@@ -24,6 +24,7 @@ export default class IncidentService extends GenericModule {
 		
 		this.notification = undefined;
 		this.idStompSubscriptor = undefined;
+		this.defaultTimeConfirmIncidentSecs = 0;
 		
 		this.viewIncidentPermission = util.module.isAllowedPermission(module.config.notification.viewIncidentPermission);
 	}
@@ -59,12 +60,37 @@ export default class IncidentService extends GenericModule {
 
 		let self = this;
 
-		loadIncidentsPendingToConfirm();
+		loadDefaultTimeConfirmIncident(function() {
+			
+			loadIncidentsPendingToConfirm();
 		
-		if (self.config.notification.enabled) {
+			if (self.config.notification.enabled) {
+			
+				loadNotifications();
+				loadIncidents();
+			}	
+		});
 		
-			loadNotifications();
-			loadIncidents();
+		
+		function loadDefaultTimeConfirmIncident(onLoad) {
+			
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.rest.systemParamConfirmIncident, { id: self.config.systemParamConfirmIncident })).then(function(systemParamsResponse) {
+
+				if (systemParamsResponse) {
+
+					let systemParam = systemParamsResponse.json();
+					
+					if (systemParam && !isNaN(systemParam.value)) {
+						
+						self.defaultTimeConfirmIncidentSecs = parseInt(systemParam.value); 	
+					}
+					
+					if (onLoad) {
+						
+						onLoad();
+					}
+				}
+			});
 		}
 		
 		function loadIncidentsPendingToConfirm() {
@@ -140,7 +166,7 @@ export default class IncidentService extends GenericModule {
 			
 			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			
-			return {
+			let notification = {
 				id: webix.uid(),
 				notificationId: incidentReport.id,
 				level: incidentReport.incidentLevel.alias.replace("LEVEL_", ""),
@@ -149,6 +175,11 @@ export default class IncidentService extends GenericModule {
 				sound: incidentReport.incidentLevel.sound ? incidentReport.incidentLevel.sound : undefined, 
 				img: incidentReport.incidentType.icon ? "img/incident_type/" + incidentReport.incidentType.icon : undefined,
 				recognized: incidentReport.confirm,
+				countdownRecognize: {
+					timeRef: "created",
+					timeConfirmSecs: self.defaultTimeConfirmIncidentSecs,
+					value: 0
+				},
 				created: incidentReport.generatedAt,
 				updated: timeService.getEpoch(),
 				removed: undefined,
@@ -157,7 +188,14 @@ export default class IncidentService extends GenericModule {
 							 i18n.t("LBL_AFFECTION_STRETCH") + ": " + incidentReport.affectionStretch.alias + " " + 
 							 i18n.t("LBL_LOCATION") + ": " + incidentReport.location.alias + " " +
 							 i18n.t("LBL_USER") + ": " + incidentReport.currentUser.name
-			};
+			}
+			
+			if (incidentReport.incidentType.autoConfirmIncident) {
+				
+				notification.countdownRecognize.timeConfirmSecs = incidentReport.incidentType.autoConfirmIncident;
+			}
+			
+			return notification;
 		}
 		
 		function loadIncidents() {

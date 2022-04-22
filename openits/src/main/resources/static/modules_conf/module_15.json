@@ -9,11 +9,13 @@
 	},
 	"rest": {
 		"incidentReports": "incidents/reports",
-		"incidentReport": "incidents/reports/${id}"
+		"incidentReport": "incidents/reports/${id}",
+		"systemParamConfirmIncident" : "system_params/${id}"
 	},
 	"ws": {
 		"incidentReports": "/topic/incidentReport.>"
 	},
+	"systemParamConfirmIncident": "SystemParam:7",
 	"notification": {
 		"enabled": true,
 		"timeoutNotificationMs": 0,

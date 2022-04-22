@@ -26,10 +26,20 @@ public class ServerTimeUI implements Serializable {
 	int hour;
 	int min;
 	int sec;
+	boolean serverTime;
 	
 	public ServerTimeUI() {
 		
-		Instant instant = Instant.now();
+		setProps(Instant.now());
+	}
+	
+	public ServerTimeUI(long epochMillis) {
+		
+		setProps(Instant.ofEpochMilli(epochMillis));
+	}
+	
+	private void setProps(Instant instant) {
+		
 		ZonedDateTime zone = instant.atZone(ZoneOffset.UTC);
 		
 		this.epochMillis = instant.toEpochMilli();

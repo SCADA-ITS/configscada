@@ -4,9 +4,6 @@ import MessageBox from "../../../component/messageBox.js";
 
 const QUEUE_COMMAND_HEIGHT = 100;
 const MAX_EPOCH_TIME = 4102444799000;
-const VMS_STATE_ACTIVE = "ElementTypeState:71:1";
-const VMS_STATE_INACTIVE = "ElementTypeState:71:3";
-const VMS_STATE_UNAVAILABLE = "ElementTypeState:71:3";
 const QUEUE_COLOR_ACTIVE = "#009688";
 const QUEUE_COLOR_NO_ACTIVE = "#f44336";
 const QUEUE_COLOR_UNAVAILABLE = "#475466";
@@ -610,15 +607,15 @@ export default class VmsSignalingQueue {
 									
 									graphicIconInstance.loadRender(function() {
 										
-										let color = "none";
+										let color = QUEUE_COLOR_UNAVAILABLE;
 						
-//										if (priority.enable) {
-//																
-//											color = commandElement.enable ? VMS_STATE_ACTIVE : VMS_STATE_INACTIVE;
-//										}
+										if (priority.enable) {
+																
+											color = commandElement.enable ? QUEUE_COLOR_ACTIVE : QUEUE_COLOR_NO_ACTIVE;
+										}
 										
 										graphicIconInstance.updateState({
-											color: "none"
+											color: color
 										});
 										
 										let jsonValue = [];

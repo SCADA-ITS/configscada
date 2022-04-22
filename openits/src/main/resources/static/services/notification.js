@@ -2,6 +2,7 @@ import { util } from "../lib/util.js";
 import MessageBox from "../component/messageBox.js";
 
 const MAX_INACTIVE_NOTICATIONS = 10;
+const COUNTDOWN_RECOGNIZE_MS = 1000;
 
 export default class Notification {
 	
@@ -23,6 +24,7 @@ export default class Notification {
 		
 		this.recognizedNotifications = [];
 		this.intervalNotification = undefined;
+		this.intervalCountdownRecognize = undefined;
 	}
 
 	load() {
@@ -235,7 +237,7 @@ export default class Notification {
 
 									if (Array.isArray(alarmRecognizedSelected) && alarmRecognizedSelected.length > 0) {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + alarmRecognizedSelected.length + " " + i18n.t("SELECTED_ALARM/S"), function (){
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN_SELECTED_ALARMS"), function (){
 										
 											self.removeRecognized(alarmRecognizedSelected);	
 											
@@ -378,7 +380,7 @@ export default class Notification {
 
 									if (Array.isArray(incidentRecognizedSelected) && incidentRecognizedSelected.length > 0) {
 
-										(new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_CLEAN") + " " + incidentRecognizedSelected.length + " " + i18n.t("SELECTED_INCIDENT/S"), function (){
+										(new MessageBox(MessageBox.CONFIRM, i18n.t("c"), function (){
 										
 											self.removeRecognized(incidentRecognizedSelected);
 											
@@ -405,7 +407,7 @@ export default class Notification {
 
 								} else {
 
-									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_RECOGNIZED_ELEMENTS"), null, null)).show();
+									(new MessageBox(MessageBox.ERROR, i18n.t("LBL_NO_INCIDENTS_RECOGNIZED"), null, null)).show();
 								}
 							}
 						}
@@ -439,7 +441,7 @@ export default class Notification {
 										let args = { selectedPks: eventIds, confirm: false };
 										let moduleAction = { id: moduleActionId };
 										
-										(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_AUDIT_LOG_REZOGNIZE_CONFIRM_DESCRIPTION"), 
+										(new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_ARE_YOU_SURE_RECOGNIZE_SELECTED_EVENT"), 
 										
 											function() {
 												
@@ -692,6 +694,12 @@ export default class Notification {
 				let html;
 				
 				let firstLine = obj.alias;
+				
+				if (obj.countdownRecognize && obj.countdownRecognize.value > 0) {
+					
+					firstLine += i18n.t(" (LBL_SECS_TO_RECOGNIZED_ITEM: " + obj.countdownRecognize.value + " LBL_SEC_AB)");
+				}
+				
 				let secondLine = util.toLocaleString(obj.created / 1000) + ": " + obj.description;
 				
 				let widthLevel = isNaN(obj.level) ? 50 : 20;
@@ -751,21 +759,21 @@ export default class Notification {
 		
 		let self = this;
 		
-		if (this.intervalNotification) {
+		if (self.intervalNotification) {
 	
-			disableReminder();
+			self.disableReminder();
 		}
 		
-		if (this.timeoutNotificationMs > 0) {
+		if (self.timeoutNotificationMs > 0) {
 			
-			this.intervalNotification = setInterval(function() {
+			self.intervalNotification = setInterval(function() {
 
 				if (Array.isArray(self.notifications) && self.notifications.length > 0) {
 					
 					self.show();	
 				}
 	
-			}, this.timeoutNotificationMs);	
+			}, self.timeoutNotificationMs);	
 		}
 	}
 	
@@ -776,6 +784,57 @@ export default class Notification {
 			clearInterval(this.intervalNotification);
 			
 			this.intervalNotification = undefined;
+		}
+	}
+	
+	enableCountdownRecognize() {
+		
+		let self = this;
+		let timeService = window.sm.getService(Services.TIME_SERVICE);
+		
+		if (self.intervalCountdownRecognize) {
+	
+			self.disableCountdownRecognize();
+		}
+		
+		if (Array.isArray(self.notifications)) {
+
+			let hasCountdownRecognize = (self.notifications.find(e => e.countdownRecognize && e.countdownRecognize.timeConfirmSecs > 0) != null);
+			
+			if (hasCountdownRecognize) {
+				
+				self.intervalCountdownRecognize = setInterval(function() {
+				
+					let timeNowSecs = Math.round(timeService.getEpoch() / 1000);
+						
+					self.notifications.forEach(notification => {
+						
+						if (notification.countdownRecognize) {
+													
+							let timeRefSecs = Math.round(notification[notification.countdownRecognize.timeRef] / 1000);
+							let timeTargetSecs = timeRefSecs + notification.countdownRecognize.timeConfirmSecs;
+							
+							if (timeNowSecs < timeTargetSecs) {
+								
+								notification.countdownRecognize.value = (timeTargetSecs - timeNowSecs);
+								
+								self.update(notification);  
+							}
+						}
+					});
+					
+				}, COUNTDOWN_RECOGNIZE_MS);	
+			}
+		}
+	}
+	
+	disableCountdownRecognize() {
+		
+		if (this.intervalCountdownRecognize) {
+			
+			clearInterval(this.intervalCountdownRecognize);
+			
+			this.intervalCountdownRecognize = undefined;
 		}
 	}
 	
@@ -805,6 +864,8 @@ export default class Notification {
 			util.ui.centerWindow(this.instance.config.id);
 			
 			this.disableReminder();
+			
+			this.enableCountdownRecognize();
 		}		
 	}
 	
@@ -817,6 +878,8 @@ export default class Notification {
 			this.stopAudio();
 			
 			this.enableReminder();
+			
+			this.disableCountdownRecognize();
 		}
 	}
 	
