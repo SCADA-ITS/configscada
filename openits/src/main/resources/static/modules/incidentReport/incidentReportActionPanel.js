@@ -1065,7 +1065,9 @@ export default class IncidentReportActionPanel {
 			function setTimeInterval() {
 
 				let button = $$("action-button-" + self.uid);
-				let millisOfDiference = Date.now() - generatedAt;
+				let timeService = window.sm.getService(Services.TIME_SERVICE);
+				let actualDate = timeService.serverTimeMs;
+				let millisOfDiference = actualDate- generatedAt;
 
 				if (millisOfDiference < (valueInSecs * 1000) && button) {
 
