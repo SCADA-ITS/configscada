@@ -280,7 +280,7 @@ export default class IncidentReportActionPanel {
 							icon: "mdi mdi-close-thick",
 							hidden: function (){
 
-								if (self.closed || !self.cancelIncidentPermissions || (self.incidentReport.confirm === true && !sameUser)) {
+								if (self.closed || !self.cancelIncidentPermissions) {
 
 									return true
 
@@ -346,7 +346,7 @@ export default class IncidentReportActionPanel {
 				width: 135,
 				label: (onlyAutoassignIncident) ? i18n.t("LBL_AUTOASSIGN") : i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT"),
 				tooltip: i18n.t("LBL_INCIDENT_CHANGE_ASSIGNMENT_DESCRIPTION"),
-				disabled: !changeAssignIncident || (self.incidentReport.confirm === true),
+				disabled: !changeAssignIncident,
 				type: "iconTop",
 				icon: "mdi mdi-account",
 				on: {
