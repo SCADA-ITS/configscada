@@ -206,7 +206,7 @@ export default class IncidentReportActionPanel {
 
 													} else {
 
-														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function(){
+														let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function(){
 															
 															onAccept(true);
 															
@@ -912,7 +912,7 @@ export default class IncidentReportActionPanel {
 
 			} else {
 
-				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
+				let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
 
 					onAccept(true);
 

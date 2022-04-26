@@ -116,7 +116,7 @@ export default class IncidentReportModule extends GenericModule {
 
 							} else if ((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToConfirm.length) || self.assignAnotherPermissions) {
 
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CONFIRM_DESCRIPTION"), function() {
+								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CONFIRM_DESCRIPTION"), function() {
 
 									onAccept(true);
 								}, null);
@@ -205,7 +205,7 @@ export default class IncidentReportModule extends GenericModule {
 
 								if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
 
-									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), function() {
 
 										onAccept(true);
 									}, null);
