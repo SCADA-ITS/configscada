@@ -278,7 +278,7 @@ export default class IncidentReportActionPanel {
 							tooltip: i18n.t("LBL_INCIDENT_CANCEL_DESCRIPTION"),
 							type: "iconTop",
 							icon: "mdi mdi-close-thick",
-							hidden: function (){
+							disabled: function (){
 
 								if (self.closed || !self.cancelIncidentPermissions || (self.incidentReport.confirm === true && !sameUser)) {
 
