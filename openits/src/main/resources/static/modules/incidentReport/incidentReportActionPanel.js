@@ -278,22 +278,23 @@ export default class IncidentReportActionPanel {
 							tooltip: i18n.t("LBL_INCIDENT_CANCEL_DESCRIPTION"),
 							type: "iconTop",
 							icon: "mdi mdi-close-thick",
-							disabled: function (){
+							disabled: function() {
 
-								if (self.closed || !self.cancelIncidentPermissions || (self.incidentReport.confirm === true && !sameUser)) {
+								if (self.incidentReport.confirm === true && !sameUser) {
 
 									return true
 
 								} else {
 
-									if(self.assignAnotherPermissions || (onlyAutoassignIncident && sameRole) || sameUser){
-										
+									if (self.assignAnotherPermissions || (onlyAutoassignIncident && sameRole) || sameUser) {
+
 										return false;
 									}
-									
+
 									return true;
 								}
 							}(),
+							hidden: self.closed || !self.cancelIncidentPermissions,
 							on: {
 
 								onItemClick() {
@@ -334,7 +335,7 @@ export default class IncidentReportActionPanel {
 
 			let actionsButtons = { rows: [] };
 			let buttonsArray = [];
-			let numberOfButtonsToDraw = 2;
+			let numberOfButtonsToDraw = 1;
 			let mapButton = {};
 			let camerasButton = {};
 			let changeUserButton = {};
@@ -357,23 +358,6 @@ export default class IncidentReportActionPanel {
 						let args = { selectedPks: [self.incidentReport.id] };
 
 						util.module.open(self.parent.module, moduleAction, null, null, args);
-					}
-				}
-			};
-
-			showAlarmsButton = {
-				view: "button",
-				width: 135,
-				label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
-				tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
-				type: "iconTop",
-				disabled: self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0 ? false : true,
-				icon: "mdi mdi-bell",
-				on: {
-
-					onItemClick() {
-
-						showAlarms();
 					}
 				}
 			};
@@ -422,7 +406,29 @@ export default class IncidentReportActionPanel {
 				numberOfButtonsToDraw++;
 			}
 
-			buttonsArray.push(changeUserButton, showAlarmsButton);
+			buttonsArray.push(changeUserButton);
+			
+			if (self.incidentReport.alarms !== undefined && self.incidentReport.alarms.length > 0) {
+
+				showAlarmsButton = {
+					view: "button",
+					width: 135,
+					label: i18n.t("LBL_INCIDENT_SHOW_ALARMS"),
+					tooltip: i18n.t("LBL_INCIDENT_SHOW_ALARMS_DESCRIPTION"),
+					type: "iconTop",
+					icon: "mdi mdi-bell",
+					on: {
+
+						onItemClick() {
+
+							showAlarms();
+						}
+					}
+				};
+
+				buttonsArray.push(showAlarmsButton);
+				numberOfButtonsToDraw++;
+			}
 
 			if (!self.incidentReport.confirm) {
 
