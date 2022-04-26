@@ -280,7 +280,7 @@ export default class IncidentReportActionPanel {
 							icon: "mdi mdi-close-thick",
 							hidden: function (){
 
-								if (self.closed || !self.cancelIncidentPermissions) {
+								if (self.closed || !self.cancelIncidentPermissions || (self.incidentReport.confirm === true && !sameUser)) {
 
 									return true
 

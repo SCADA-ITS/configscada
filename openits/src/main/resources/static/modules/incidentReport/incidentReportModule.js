@@ -165,6 +165,7 @@ export default class IncidentReportModule extends GenericModule {
 		let currentUser, sameUser, currentUserRole, sameRole, incidentReport = undefined;
 		let sameRoleCounter = 0;
 		let sameUserCounter = 0;
+		let incidentConfirmed = 0;
 
 		if (Array.isArray(this.args.selectedPks) && this.args.selectedPks.length > 0) {
 
@@ -186,6 +187,7 @@ export default class IncidentReportModule extends GenericModule {
 							sameRole = (self.userData.role.id === currentUserRole);
 							sameRoleCounter = (sameRole) ? ++sameRoleCounter : sameRoleCounter;
 							sameUserCounter = (sameUser) ? ++sameUserCounter : sameUserCounter;
+							incidentConfirmed = (incidentReport.confirm) ? ++incidentConfirmed : incidentConfirmed;				
 							incidentReportsToDelete.push(incidentReport.id);
 						} 
 					}
@@ -199,13 +201,21 @@ export default class IncidentReportModule extends GenericModule {
 								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_CONFIRM_CANCEL_DESCRIPTION"), onAccept, null);
 								ms.show();
 
-							} else if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
+							} else if ((self.autoAssignPermissions || self.assignAnotherPermissions) && (incidentConfirmed === 0)) {
 
-								let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
+								if (((self.autoAssignPermissions && !self.assignAnotherPermissions) && (sameRoleCounter === incidentReportsToDelete.length)) || self.assignAnotherPermissions) {
 
-									onAccept(true);
-								}, null);
-								ms.show();
+									let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_INCIDENT_USER_ASSIGNED_WILL_CHANGE_AND_CANCEL_DESCRIPTION"), function() {
+
+										onAccept(true);
+									}, null);
+									ms.show();
+
+								} else {
+
+									let ms = new MessageBox(MessageBox.ERROR, i18n.t("LBL_INCIDENT_CONFIRM_NOT_POSSIBLE_TO_CANCEL_DESCRIPTION"), null, null);
+									ms.show();
+								}
 
 							} else {
 
