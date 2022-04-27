@@ -265,9 +265,17 @@ export default class MapIncident {
 			
 			getIncident(incidentReportId, function(incidentReport) {
 				
-				self.incidentReports.set(incidentReport.id, incidentReport);
+				if (incidentReport.location && incidentReport.location.lon && incidentReport.location.lat) {
+								
+					let limitCoordinates = [self.metadata.limitInitLon, self.metadata.limitInitLat, self.metadata.limitEndLon, self.metadata.limitEndLat];
+					
+					if (util.ui.isInside(limitCoordinates, incidentReport.location.lon, incidentReport.location.lat)) {
+					
+						self.incidentReports.set(incidentReport.id, incidentReport);
 				
-				loadGraphicIcon(incidentReport);	
+						loadGraphicIcon(incidentReport);		
+					}	
+				}
 			});	
 		}
 		
@@ -275,9 +283,12 @@ export default class MapIncident {
 			
 			getIncident(incidentReportId, function(incidentReport) {
 				
-				self.incidentReports.set(incidentReport.id, incidentReport);
+				if (self.graphicIcons.has(incidentReport.id)) {
+					
+					self.incidentReports.set(incidentReport.id, incidentReport);
 				
-				updateGraphicIcon(incidentReport);
+					updateGraphicIcon(incidentReport);	
+				}
 			});
 		}
 		

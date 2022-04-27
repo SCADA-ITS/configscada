@@ -23,6 +23,9 @@ const REQUIRED_INCIDENT_PERMISSIONS = {
 	CREATE: "SystemPermission:9"
 }; 
 
+const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
+const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
+
 export default class OpenMap extends GenericMap {
 
 	constructor(metadata, data, events, w, h, options) {
@@ -173,7 +176,8 @@ export default class OpenMap extends GenericMap {
 						
 						let newLayer = webix.copy(layer);
 						
-						newLayer.label = i18n.t(newLayer.label);
+						newLayer.label = i18n.t(newLayer.label); 
+						newLayer.image = "tree_layer.png";
 						
 						return newLayer;
 					})
@@ -201,7 +205,8 @@ export default class OpenMap extends GenericMap {
 								description: incidentType.description,
 								name: incidentType.alias,
 								layerElements: [],
-								visible: incidentType.visible
+								visible: incidentType.visible,
+								image: incidentType.icon ? PICTOGRAM_INCIDENT_TYPE_PATH + "/" + incidentType.icon : PICTOGRAM_INCIDENT_TYPE_UNKNOWN
 							}
 						});
 					} 

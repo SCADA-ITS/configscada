@@ -3,6 +3,9 @@ import GenericModule from "../modules/genericModule.js";
 import Notification from "./notification.js";
 import StompSubscriptorService from "./stompSubscriptorService.js";
 
+const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
+const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
+
 export default class IncidentService extends GenericModule {
 
 	constructor(module) {
@@ -137,8 +140,8 @@ export default class IncidentService extends GenericModule {
 				if (data.json() != undefined) {
 					
 					let incidentReports = data.json();
-	
-					let incidentReportsFiltered = incidentReports.filter(e => !e.confirm);
+					
+					let incidentReportsFiltered = incidentReports.filter(e => !e.confirm && IS_TRUE(e.incidentLevel.notification));
 						
 					if (Array.isArray(incidentReportsFiltered) && incidentReportsFiltered.length > 0) {
 						
@@ -173,7 +176,7 @@ export default class IncidentService extends GenericModule {
 				notification: incidentReport.incidentLevel.notification,
 				color: incidentReport.incidentLevel.color ? incidentReport.incidentLevel.color : "rgb(230, 0, 0)",
 				sound: incidentReport.incidentLevel.sound ? incidentReport.incidentLevel.sound : undefined, 
-				img: incidentReport.incidentType.icon ? "img/incident_type/" + incidentReport.incidentType.icon : undefined,
+				img: incidentReport.incidentType.icon ? "img/" + PICTOGRAM_INCIDENT_TYPE_PATH + "/" + incidentReport.incidentType.icon : "img/" + PICTOGRAM_INCIDENT_TYPE_UNKNOWN,
 				recognized: incidentReport.confirm,
 				countdownRecognize: {
 					timeRef: "created",
@@ -226,7 +229,7 @@ export default class IncidentService extends GenericModule {
 							
 							let incidentLevel = window.em.getByField(EntityType.IMS_INCIDENT_LEVEL, "id", incidentReport.incidentLevel.id);
 						
-							if (incidentLevel && incidentLevel.notification === 'true') {
+							if (incidentLevel && IS_TRUE(incidentLevel.notification)) {
 								
 								let incidentNotification = createNotification(incidentReport);
 								

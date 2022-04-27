@@ -6,6 +6,8 @@ import MapLayer  from "../../component/map/mapLayer.js";
 const POINTER_HAND = 'pointer'
 const POINTER_DEFAULT = ''
 const TREE_PANEL_WIDTH = 275;
+const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
+const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
 
 export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizardDrawStep {
 
@@ -315,7 +317,8 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 						description: incidentType.description,
 						name: incidentType.alias,
 						layerElements: [],
-						visible: incidentType.visible
+						visible: incidentType.visible,
+						image: incidentType.icon ? PICTOGRAM_INCIDENT_TYPE_PATH + "/" + incidentType.icon : PICTOGRAM_INCIDENT_TYPE_UNKNOWN  
 					}
 				});
 				

@@ -116,7 +116,14 @@ export default class InputDialogBox {
 											valueToSend = valueToSend.getTime();
 										}
 									}
-									self.onAccept(valueToSend);
+									
+									// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
+									setTimeout(function() {
+								
+										self.onAccept(valueToSend);						
+		
+									}, 1);
+									
 									window.close();
 
 								} else {

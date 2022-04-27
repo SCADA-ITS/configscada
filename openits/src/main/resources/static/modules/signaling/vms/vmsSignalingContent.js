@@ -683,6 +683,7 @@ export default class VmsSignalingContent {
 			let viewActions = {};
 			let hideSelectionButton = self.isEditAction;
 			let hideSendButton = (!self.commandEquipmentPermission) ? true : self.isEditAction;
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
 			
 			if(!self.isEditAction){
 				
@@ -719,12 +720,21 @@ export default class VmsSignalingContent {
 												
 												dtIni.enable();
 												
-												self.startTime = (dtIni.getValue() && typeof dtIni.getValue() === 'object') ? dtIni.getValue().setSeconds(0) : undefined;
+												if (dtIni.getValue() && typeof dtIni.getValue() === 'object') {
+													
+													self.startTime = dtIni.getValue().setSeconds(0);
+												}
+												else {
+													
+													self.startTime = (new Date(timeService.getEpoch())).setSeconds(0);
+													dtIni.setValue(new Date(self.startTime));
+												}
 											}
 											else {
 												
 												dtIni.disable();
 												
+												dtIni.setValue(null);
 												self.startTime = undefined;
 											}
 										}
@@ -739,10 +749,11 @@ export default class VmsSignalingContent {
 								timepicker: true,
 								disabled: true,
 								hidden: true,
+								//value: new Date(timeService.getEpoch()),
 								on: {
 									onChange: function(newValue) {
 										
-										self.startTime = (typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
+										self.startTime = (newValue && typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
 									}
 								}
 							},
@@ -756,6 +767,7 @@ export default class VmsSignalingContent {
 								on: {
 									onChange: function(newValue) {
 										
+										const ONE_HOUR_IN_MS = 1000 * 3600;
 										let dtEnd = $$("vms-content-priority-dt-end-" + self.uid);
 										
 										if (dtEnd) {
@@ -764,12 +776,21 @@ export default class VmsSignalingContent {
 												
 												dtEnd.enable();
 												
-												self.endTime = (dtEnd.getValue() && typeof dtEnd.getValue() === 'object') ? dtEnd.getValue().setSeconds(0) : undefined;
+												if (dtEnd.getValue() && typeof dtEnd.getValue() === 'object') {
+													
+													self.endTime = dtEnd.getValue().setSeconds(0);
+												}
+												else {
+													
+													self.endTime = (new Date(timeService.getEpoch() + ONE_HOUR_IN_MS)).setSeconds(0);
+													dtEnd.setValue(new Date(self.endTime));
+												}
 											}
 											else {
 												
 												dtEnd.disable();
 												
+												dtEnd.setValue(null);
 												self.endTime = undefined;
 											}
 										}
@@ -784,10 +805,11 @@ export default class VmsSignalingContent {
 								timepicker: true,
 								disabled: true,
 								hidden: true,
+								//value: new Date(timeService.getEpoch()),
 								on: {
 									onChange: function(newValue) {
 										
-										self.endTime = (typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
+										self.endTime = (newValue && typeof newValue === 'object') ? newValue.setSeconds(0) : undefined;
 									}
 								}
 							},

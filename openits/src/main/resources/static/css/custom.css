@@ -368,6 +368,10 @@ p, input, textarea {
   	background-color: rgba(51 66 94 / 0.2);
 }
 
+.webix_menu.menu-custom .webix_context_separator .sep_line {
+	background-color: var(--blue-soft-opacity-6);
+}
+
 .menu-toolbar {
 	margin-top: -2px !important;
 	height: 34px !important;

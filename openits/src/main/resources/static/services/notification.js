@@ -695,7 +695,7 @@ export default class Notification {
 				
 				let firstLine = obj.alias;
 				
-				if (obj.countdownRecognize && obj.countdownRecognize.value > 0) {
+				if (!obj.recognized && obj.countdownRecognize && obj.countdownRecognize.value >= 0) {
 					
 					firstLine += i18n.t(" (LBL_SECS_TO_RECOGNIZED_ITEM: " + obj.countdownRecognize.value + " LBL_SEC_AB)");
 				}
@@ -706,7 +706,7 @@ export default class Notification {
 				let widthImg = obj.img ? 36 : 10;
 
 				html = `<div class="${!obj.recognized ? 'state-enabled' : 'state-disabled'}"></div>
-						<image class="image" style="width: ${widthImg}px;" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
+						<image class="image" style="width: ${widthImg}px; padding-left: 5px; padding-right: 5px;" src="${obj.img}" onerror="this.onerror=null;this.src='img/undefined.png';" />
 						<div class="level" style="width: ${widthLevel}px; background-color: ${obj.color}">${obj.level}</div>
 						<div class="sound"><span style="${obj.recognized ? 'color:rgb(146, 171, 207);' : ''}" class="${obj.sound && !obj.snooze ? "mdi mdi-volume-high" : "mdi mdi-volume-off"}"></span></div>
 						<div class="text">
@@ -814,7 +814,7 @@ export default class Notification {
 							let timeRefSecs = Math.round(notification[notification.countdownRecognize.timeRef] / 1000);
 							let timeTargetSecs = timeRefSecs + notification.countdownRecognize.timeConfirmSecs;
 							
-							if (timeNowSecs < timeTargetSecs) {
+							if (timeNowSecs <= timeTargetSecs) {
 								
 								notification.countdownRecognize.value = (timeTargetSecs - timeNowSecs);
 								

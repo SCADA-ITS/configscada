@@ -1,0 +1,9 @@
+{
+	"moduleAction": {
+	    "edit": 103401
+	},
+	"restEndpoints": {
+		"incidentTypes": "incidents/imsIncidentTypes",
+		"incidentType": "incidents/imsIncidentType/${id}"
+	}
+}

@@ -113,17 +113,24 @@ export default class MainMenu {
 
 					submenus.forEach(submenu => {
 
-						if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
-
-							var mainSubmenu = {};
-
-							mainSubmenu.id = mainMenu.id + "." + submenu.id;
-							mainSubmenu.value = i18n.t(submenu.label);
-							mainSubmenu.moduleId = submenu.module.id;
-							mainSubmenu.icon = submenu.icon;
-
-							mainMenu.submenu.push(mainSubmenu);
+						var mainSubmenu = {};
+						
+						if (submenu.module) {
+							
+							if (util.module.isAllowedModule(window.em.getAll(EntityType.MODULE), submenu.module.id)) {
+								
+								mainSubmenu.id = mainMenu.id + "." + submenu.id;
+								mainSubmenu.value = i18n.t(submenu.label);
+								mainSubmenu.moduleId = submenu.module.id;
+								mainSubmenu.icon = submenu.icon;	
+							}
 						}
+						else {
+							
+							mainSubmenu.$template = "Separator";
+						}
+						
+						mainMenu.submenu.push(mainSubmenu);
 
 					});
 				}

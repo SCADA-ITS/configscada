@@ -115,6 +115,7 @@ export default class Synoptic extends GenericMap {
 					let newLayer = webix.copy(layer);
 					
 					newLayer.label = i18n.t(newLayer.label);
+					newLayer.image = "tree_layer.png";
 					
 					return newLayer;
 				})

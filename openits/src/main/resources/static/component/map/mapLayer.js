@@ -12,8 +12,8 @@ const DEFAULT_TREE_OPTIONS = [
 	
 export default class MapLayer {
 	
-	static get TYPE_ELEMENT() { return { id: "ELEMENT_ROOT", label: "LBL_ELEMENTS", prefix: "ELEMENT_"} }
-	static get TYPE_INCIDENT() { return { id: "INCIDENT_ROOT", label: "LBL_INCIDENTS", prefix: "INCIDENT_"} }
+	static get TYPE_ELEMENT() { return { id: "ELEMENT_ROOT", label: i18n.t("LBL_EQUIPMENTS"), image: "tree_equipment.png", prefix: "ELEMENT_"} }
+	static get TYPE_INCIDENT() { return { id: "INCIDENT_ROOT", label: i18n.t("LBL_INCIDENTS"), image: "tree_incident.png", prefix: "INCIDENT_"} }
 
 	constructor(data, onLayersSelectedChange, treeOptions) {
 
@@ -93,7 +93,8 @@ export default class MapLayer {
 								
 								layers.push({
 									id: dat.layerType.id,
-									label: dat.layerType.label
+									label: dat.layerType.label,
+									image: dat.layerType.image
 								});
 								
 								layerRelationships.push(...srcLayersRel);
