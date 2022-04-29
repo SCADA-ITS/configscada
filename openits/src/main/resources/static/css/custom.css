@@ -2270,7 +2270,7 @@ p, input, textarea {
 
 .secondary-tab .webix_el_tabbar {
 	height: 32px !important;
-	box-shadow: inset 0 -3px var(--blue-headers);
+	box-shadow: inset 0 -3px #dadee0;
 	border-width: 0px !important;
 	background-color: transparent !important;
 }
@@ -2722,6 +2722,13 @@ p, input, textarea {
 	font-size: 16px;
 	font-weight: 500;
 	font-family: Roboto;
+}
+
+.bordered-layout {
+	
+	box-sizing: border-box;
+	border: 1px solid #dadee0 !important;
+	border-top: none !important;
 }
 
 .user-role-form {

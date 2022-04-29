@@ -27,6 +27,14 @@ const DefProperties = {
 		name: "image",
 		value: "not_found_50.png"
 	},
+	STATE_COLOR: {
+		name: "stateColor",
+		value: "transparent"
+	},
+	STATE_LABEL: {
+		name: "stateLabel",
+		value: ""
+	},
 	DISABLED: {
 		name: "disabled",
 		value: false
@@ -53,6 +61,8 @@ export default class TreeView {
 		this.stomp = {};
 		this.uid = webix.uid();
 		this.events = events;
+		
+		this.idStompSubscriptor = undefined;
 		
 		this.filterValue = undefined;
 	}
@@ -199,6 +209,8 @@ export default class TreeView {
 		
 		view.rows.push(drawTree());
 		
+		connectWS();
+		
 		function applyProperties(data, level) {
 			
 			let noShowEmptyFolders = self.getTreeOptions(TreeOptions.NO_SHOW_EMPTY_FOLDERS);
@@ -303,6 +315,8 @@ export default class TreeView {
 					let value = obj.value;
 					let valueAux = getItemProps(obj, DefProperties.VALUE_AUX);
 					let valueAuxTranslate = getItemProps(obj, DefProperties.VALUE_AUX_TRANSLATE);
+					let stateColor = getItemProps(obj, DefProperties.STATE_COLOR);
+					let stateLabel = getItemProps(obj, DefProperties.STATE_LABEL);
 					
 					if (valueAux && valueAuxTranslate) {
 						
@@ -348,15 +362,17 @@ export default class TreeView {
 							}
 						}
 						
-						nodeValue = `<div style="margin-left: 30px;">	
-										<img src="img/${img}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
+						nodeValue = `<div style="margin-left: 30px;" title="${stateLabel}">
+										<div style="position: absolute; width: 2px; height: 24px; background: ${stateColor} !important"></div>	
+										<img style="padding-left: 5px" src="img/${img}" onerror="this.onerror=null;this.src='img/not_found_50.png';"/>
 										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
 									</div>`;	
 					}
 					else {
 						
-						nodeValue = `<div style="margin-left: 30px;">
-										<span style="font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
+						nodeValue = `<div style="margin-left: 30px; title="${stateLabel}">
+										<div style="position: absolute; width: 2px; height: 24px; background: ${stateColor} !important"></div>
+										<span style="padding-left: 5px;font-weight: ${fontWeight}; letter-spacing: ${letterSpacing}; opacity: ${opacity};]">${value}</span>
 									</div>`;
 					}
 					
@@ -660,6 +676,30 @@ export default class TreeView {
 			}
 			
 			return branchItems;
+		}
+		
+		function connectWS() {
+			
+			if (self.metadata && self.metadata.stomp && self.metadata.stomp.topic && self.metadata.stomp.adapter && typeof(self.metadata.stomp.adapter) === "function") {
+				
+				let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+		
+				if (stompSubscriptorService) {
+		
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
+				}
+				
+				function onMessage(be, action, timestamp) {
+					
+					let data = {
+						basicElementsVO: [be],
+						action: action,
+						timestamp: timestamp
+					}
+				}
+			}
+			
+			
 		}
 			
 		return view;

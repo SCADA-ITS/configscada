@@ -367,6 +367,7 @@ export default class EquipmentViewerContent {
 					body: {
 						id: "view-main-content-tab-info-" + self.uid,
 						//height: 605,
+						css: "bordered-layout",
 						cols: [equipmentViewerInfoView]
 
 					}
@@ -423,6 +424,7 @@ export default class EquipmentViewerContent {
 						id: "view-main-content-tab-" + e.moduleActionId + "-" + self.uid,
 						body: {
 							id: "view-main-content-tab_body-" + e.moduleActionId + "-" + self.uid,
+							css: "bordered-layout",
 							rows: [{ }]
 						}
 					});
@@ -445,6 +447,7 @@ export default class EquipmentViewerContent {
 
 				let newContentTab = {
 					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
+					css: "bordered-layout",
 					//height: 605,
 					cols: [view]
 				};

@@ -241,10 +241,10 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 					header: !alternance ? i18n.t("LBL_VMS_MAIN") : i18n.t("LBL_VMS_ALTERNANCE"),
 					body: {
 						id: (!alternance ? "view-signalling-text-editor-main-" : "view-signalling-text-editor-alt-") + self.uid,
+						css: "bordered-layout",
 						rows: [
 							{
 								cols: [
-									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
 									{ width: 10 },
 									{
 										rows: [
@@ -253,14 +253,10 @@ export default class VmsSignalingTextEditor extends VmsSignalingZoneEditor {
 											{}
 										]
 									},
-									{ width: 6 },
-									{ width: 1, css: { "border-left": "solid 1px #475466 !important" } },
-									{ width: 3 }
-									
+									{ width: 10 }
 								]		
 							},
-							{ height: 1, css: { "border-top": "solid 1px #475466 !important" } },
-							{ height: 1 }
+							{ height: 2 }
 						]
 					}
 				}

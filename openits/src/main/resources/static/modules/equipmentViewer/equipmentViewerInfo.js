@@ -35,7 +35,8 @@ export default class EquipmentViewerInfo {
 		view = {
 			rows: [
 				getViewMain(),
-				viewMeasures
+				viewMeasures,
+				{ height : 10 }
 			]
 		}
 

@@ -18,8 +18,12 @@ export default class IncidentWizardDrawStep {
 		throw new Error("Method 'getView()' must be implemented.");
 	}
 	
-	loadData() {
+	loadData(onReady) {
 		
+		if (onReady) {
+			
+			onReady();
+		}
 	}
 	
 	initialize() {

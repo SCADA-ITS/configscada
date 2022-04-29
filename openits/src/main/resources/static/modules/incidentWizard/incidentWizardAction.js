@@ -602,16 +602,27 @@ export default class IncidentWizardAction {
 
 		function resetStepIncidentType(onResetStep) {
 
-			parent.incidentData.incidentGroupId = undefined;
-			parent.incidentData.incidentGroup = undefined;
-			parent.incidentData.incidentTypeId = undefined;
-			parent.incidentData.incidentType = undefined;
-			parent.incidentData.incidentTypeDesc = undefined;
-			parent.incidentData.userId = undefined;
-			parent.incidentData.user = undefined;
+			if (parent.incidentData) {
+				
+				parent.incidentData.incidentGroupId = undefined;
+				parent.incidentData.incidentGroup = undefined;
+				parent.incidentData.incidentTypeId = undefined;
+				parent.incidentData.incidentType = undefined;
+				parent.incidentData.incidentTypeDesc = undefined;
+				parent.incidentData.userId = undefined;
+				parent.incidentData.user = undefined;	
+			}
 
-			parent.listViewIncidentGroups.unselect();
-			parent.dtIncidentTypes.clear();
+			if (parent.listViewIncidentGroups) {
+				
+				parent.listViewIncidentGroups.unselect();
+			}
+			
+			if (parent.dtIncidentTypes) {
+				
+				parent.dtIncidentTypes.clear();	
+			}
+			
 			
 			if (onResetStep) {
 				
@@ -621,110 +632,130 @@ export default class IncidentWizardAction {
 		
 		function resetStepAffectionStretch(onResetStep) {
 			
-			parent.incidentData.affectionStretchsSelected = undefined;
+			if (parent.incidentData) {
 			
-			if (parent.dblListAffectionStretchs) {
-				
-				parent.dblListAffectionStretchs.$$("left").clearAll();
-				parent.dblListAffectionStretchs.$$("right").clearAll();
-				
-				if (parent.incidentData.locationId) {
-				
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByLocation, { id: parent.incidentData.locationId })).then(
-							
-						function(dat) {
-		
-							if (dat != null) {
+				parent.incidentData.affectionStretchsSelected = undefined;
 			
-								let stretchs = dat.json();
-								
-								if (Array.isArray(stretchs) && stretchs.length > 0) {
-									
-									parent.incidentData.affectionStretchs = stretchs;
-									
-									let stretchData = stretchs.map(e => {
-										
-										return {
-											id: e.id,
-											value: e.alias
-										}
-									});
-									
-									parent.dblListAffectionStretchs.parse(stretchData);
-									parent.dblListAffectionStretchs.setValue([parent.incidentData.stretchId]);
-									
-									parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
-								}
-								
-								if (onResetStep) {
-									
-									onResetStep();
-								}
-							}
-						}
-					);	
-				}
-			}
-		}
-
-		function resetStepStretchAndLocationFromIncidentType(onResetStep) {
-
-			parent.incidentData.stretchId = undefined;
-			parent.incidentData.stretch = undefined;
-			parent.incidentData.locationId = undefined;
-			parent.incidentData.location = undefined;
-
-			parent.listViewStrechs.clear();
-			parent.dtLocations.clear();
-
-			if (parent.incidentData.incidentTypeId) {
-				
-				webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
-
-					if (dat != null) {
-	
-						let strechs = dat.json();
-	
-						if (Array.isArray(strechs) && strechs.length > 0) {
-	
-							strechs = strechs.filter(e => {
-								return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
-							});
-	
-							strechs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
-							let dataStrechs = strechs.map(e => {
-	
-								return {
-									id: e.id,
-									alias: e.alias,
-									description: e.description
-								}
-							});
-	
-							parent.listViewStrechs.add(dataStrechs);
-						}
-						
-						if ($$("view-locations-" + parent.uid)) {
-							
-							try {
-								
-								$$("view-locations-" + parent.uid).hideProgress();	
-							}
-							catch {}
-						}
-						
-						if (onResetStep) {
+				if (parent.dblListAffectionStretchs) {
 					
-							onResetStep();
-						}
+					parent.dblListAffectionStretchs.$$("left").clearAll();
+					parent.dblListAffectionStretchs.$$("right").clearAll();
+					
+					if (parent.incidentData.locationId) {
+					
+						webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByLocation, { id: parent.incidentData.locationId })).then(
+								
+							function(dat) {
+			
+								if (dat != null) {
+				
+									let stretchs = dat.json();
+									
+									if (Array.isArray(stretchs) && stretchs.length > 0) {
+										
+										parent.incidentData.affectionStretchs = stretchs;
+										
+										let stretchData = stretchs.map(e => {
+											
+											return {
+												id: e.id,
+												value: e.alias
+											}
+										});
+										
+										parent.dblListAffectionStretchs.parse(stretchData);
+										parent.dblListAffectionStretchs.setValue([parent.incidentData.stretchId]);
+										
+										parent.incidentWizardAction.validateStep(parent.incidentWizardAction.getCurrentStep());
+									}
+									
+									if (onResetStep) {
+										
+										onResetStep();
+									}
+								}
+							}
+						);	
 					}
-	
-				})				
+				}	
 			}
 			else {
 				
-				if ($$("view-locations-" + parent.uid)) {
+				if (onResetStep) {
+				
+					onResetStep();
+				}
+			}
+			
+		}
+
+		function resetStepStretchAndLocationFromIncidentType(onResetStep) {
+			
+			if (parent.listViewStrechs) {
+				
+				parent.listViewStrechs.clear();	
+			}
+			
+			if (parent.dtLocations) {
+				
+				parent.dtLocations.clear();	
+			}
+			
+			if (parent.incidentData) {
+				
+				parent.incidentData.stretchId = undefined;
+				parent.incidentData.stretch = undefined;
+				parent.incidentData.locationId = undefined;
+				parent.incidentData.location = undefined;	
+
+				if (parent.incidentData.incidentTypeId) {
+					
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(parent.config.restEndpoints.stretchsByIncidentType, { id: parent.incidentData.incidentTypeId })).then(function(dat) {
+	
+						if (dat != null) {
+		
+							let strechs = dat.json();
+		
+							if (Array.isArray(strechs) && strechs.length > 0) {
+		
+								strechs = strechs.filter(e => {
+									return (parent.config.stretchTypes.indexOf(e.stretchType.id) !== -1)
+								});
+		
+								strechs.sort((a, b) => (a.alias > b.alias) ? 1 : ((b.alias > a.alias) ? -1 : 0));
+								let dataStrechs = strechs.map(e => {
+		
+									return {
+										id: e.id,
+										alias: e.alias,
+										description: e.description
+									}
+								});
+								
+								parent.listViewStrechs.clear();
+		
+								parent.listViewStrechs.add(dataStrechs);
+							}
 							
+							resetStep();
+						}
+		
+					})				
+				}
+				else {
+					
+					resetStep();
+				}
+			}
+			else {
+				
+				resetStep();
+			}
+			
+			function resetStep() {
+				
+				if ($$("view-locations-" + parent.uid)) {
+								
 					try {
 						
 						$$("view-locations-" + parent.uid).hideProgress();	
@@ -744,10 +775,14 @@ export default class IncidentWizardAction {
 
 			parent.mapLocationSelected = undefined;
 			
-			parent.incidentData.stretchId = undefined;
-			parent.incidentData.stretch = undefined;
-			parent.incidentData.locationId = undefined;
-			parent.incidentData.location = undefined;
+			if (parent.incidentData) {
+				
+				parent.incidentData.stretchId = undefined;
+				parent.incidentData.stretch = undefined;
+				parent.incidentData.locationId = undefined;
+				parent.incidentData.location = undefined;	
+			}
+			
 			
 			if (onResetStep) {
 				

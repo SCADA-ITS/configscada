@@ -103,28 +103,29 @@ export default class IncidentWizardModule extends GenericModule {
 
 			viewMain = fromAlarms();
 		}
-
-		setTimeout(function() {
+		
+//		setTimeout(function() {
 
 			$$("loading-" + self.uid).hide();
 			$$(self.uid).show();
 
+			log.debug("Incident wizard: setTimeout");
+			
 			if (viewMain) {
 
-				webix.ui(viewMain, $$(self.uid));
+				webix.ui(viewMain, $$(self.uid));	
 
-				if (self.dtIncidentTypes) {
-					self.dtIncidentTypes.callbacks();
-				}
-
-				loadDataIncidentSteps();
-				
-				if (self.dtLocations) {
-					self.dtLocations.callbacks();
-				}
+				loadDataIncidentSteps(onReadyLoadDataIncidentSteps);
 			}
 
-		}, 500);
+//		}, 5000);
+
+		function onReadyLoadDataIncidentSteps() {
+		
+			if (self.dtLocations) {
+				self.dtLocations.callbacks();
+			}
+		}
 
 		function drawMain() {
 
@@ -188,7 +189,7 @@ export default class IncidentWizardModule extends GenericModule {
 				};
 
 				return viewHeader;
-			};
+			}
 
 			function drawProgressBar(position) {
 
@@ -362,7 +363,7 @@ export default class IncidentWizardModule extends GenericModule {
 				}
 
 				return viewToolbarActions;
-			};
+			}
 
 			if (Array.isArray(self.steps) && self.steps.length > 0) {
 
@@ -383,11 +384,32 @@ export default class IncidentWizardModule extends GenericModule {
 			return multiView;
 		}
 
-		function loadDataIncidentSteps() {
+		function loadDataIncidentSteps(onReady) {
 
-			if (self.drawContent && Array.isArray(self.steps) && self.steps.length > 0) {
-
-				self.steps.forEach(e => self.drawContent.load(e.position));
+			let readyItems = 0;
+			let steps = Array.isArray(self.steps) ? self.steps.length : 0;
+			
+			if (self.drawContent) {
+				
+				if (steps > 0) {
+					
+					self.steps.forEach(e => self.drawContent.load(e.position, onReadyLoadDataIncidentStep));	
+				}
+				else {
+					
+					if (onReady) {
+					
+						onReady();
+					}	
+				}
+			}
+			
+			function onReadyLoadDataIncidentStep() {
+				
+				if (onReady && ++readyItems === steps) {
+					
+					onReady();
+				}
 			}
 		}
 
@@ -396,12 +418,12 @@ export default class IncidentWizardModule extends GenericModule {
 			self.steps = webix.copy(self.config.steps.fromMap);
 
 			return drawMain();
-		};
+		}
 
 		function fromSynoptic() {
 
 			util.ui.notImplementedMessage();
-		};
+		}
 
 		function fromIncidentsNoMap() {
 
@@ -413,11 +435,11 @@ export default class IncidentWizardModule extends GenericModule {
 		function fromIncidentsMap() {
 
 			util.ui.notImplementedMessage();
-		};
+		}
 
 		function fromAlarms() {
 
 			util.ui.notImplementedMessage();
-		};
+		}
 	}
 }	

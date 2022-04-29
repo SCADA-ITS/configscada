@@ -108,12 +108,20 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 		return viewStepLocationFromMap;
 	}
 	
-	loadData() {
+	loadData(onReady) {
 		
 		let self = this;
 		let incidentTypesLocations = new Map();
 		
-		loadLocations();
+		loadLocations(onReadyLocations);
+		
+		function onReadyLocations() {
+			
+			if (onReady) {
+				
+				onReady();
+			}
+		}
 		
 		function getMap() {
 				
@@ -149,7 +157,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 			return viewMap;
 		}
 		
-		function loadLocations() {
+		function loadLocations(onReadyLocations) {
 			
 			let locations;
 			let stretchs = new Set();
@@ -210,55 +218,79 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 										
 												stretchs.add(s.id);		
 											});
-											
-											if (stretchs.size > 0) {
-									
-												webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.incidentTypeStretchsList).then(
-													
-													function(d) {
-														
-														if (d != null) {
-					
-															incidentTypeStretchs = d.json();
-															
-															if (Array.isArray(incidentTypeStretchs)) {
-																
-																incidentTypeStretchs = incidentTypeStretchs.filter(incidentTypeStretch => stretchs.has(incidentTypeStretch.stretch.id));
-																
-																if (Array.isArray(incidentTypeStretchs) && incidentTypeStretchs.length > 0) {
-																	
-																	incidentTypeStretchs.forEach(incidentTypeStretch => {
-																
-																		incidentTypes.add(incidentTypeStretch.incidentType.id);		
-																	});
-																	
-																	associateIncidentTypesLocations();
-																	
-																	$$("loading-" + self.uid).hide();
-																	$$(self.uid).show();
-																	
-																	webix.ui(getViewMapLayer(), $$("tree-incident-types-" + self.uid));
-																	
-																	webix.ui(getMap(), $$("view-map-" + self.parent.uid));
-																	
-																	self.olMap = createMap();
-																}
-															}
-															else {
-																
-																(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
-															}
-														}
-													}
-												);
-											}
 										}
 									});
+									
+									if (stretchs.size > 0) {
+									
+										webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.incidentTypeStretchsList).then(
+											
+											function(d) {
+												
+												if (d != null) {
+			
+													incidentTypeStretchs = d.json();
+													
+													if (Array.isArray(incidentTypeStretchs)) {
+														
+														incidentTypeStretchs = incidentTypeStretchs.filter(incidentTypeStretch => stretchs.has(incidentTypeStretch.stretch.id));
+														
+														if (Array.isArray(incidentTypeStretchs) && incidentTypeStretchs.length > 0) {
+															
+															incidentTypeStretchs.forEach(incidentTypeStretch => {
+														
+																incidentTypes.add(incidentTypeStretch.incidentType.id);		
+															});
+															
+															associateIncidentTypesLocations();
+															
+															$$("loading-" + self.uid).hide();
+															$$(self.uid).show();
+															
+															webix.ui(getViewMapLayer(), $$("tree-incident-types-" + self.uid));
+															
+															webix.ui(getMap(), $$("view-map-" + self.parent.uid));
+															
+															self.olMap = createMap();
+														}
+													}
+													else {
+														
+														(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
+													}
+												}
+												
+												if (onReadyLocations) {
+								
+													onReadyLocations();
+												}
+											}
+										);
+									}
+									else {
+										
+										if (onReadyLocations) {
+								
+											onReadyLocations();
+										}
+									}
 								}
 								else {
 									
+									if (onReadyLocations) {
+								
+										onReadyLocations();
+									}
+									
 									(new MessageBox(MessageBox.WARN, i18n.t("LBL_NO_LOCATIONS_AVAILABLE_SELECTED_AREA"))).show();
 								}
+							}
+						}
+						else {
+							
+							if (onReadyLocations) {
+								
+								onReadyLocations();
 							}
 						}
 					}

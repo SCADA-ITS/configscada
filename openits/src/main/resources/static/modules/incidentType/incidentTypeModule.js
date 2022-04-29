@@ -6,7 +6,7 @@ import OptionButtonList from "../../component/optionButtonList.js";
 import MessageBox from "../../component/messageBox.js";
 import InputDialogBox from "../../component/inputDialogBox.js";
 
-const TREE_PANEL_WIDTH = 325;
+const TREE_PANEL_WIDTH = 450;
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";
 const PICTOGRAM_INCIDENT_TYPE_UNKNOWN = "incident_type/undefined.png";
 
@@ -324,6 +324,8 @@ export default class IncidentTypeModule extends GenericModule {
 									label: incidentType.alias + (incidentType.description ? " (" + incidentType.description + ")" : ""),
 									description: incidentType.description,
 									image: incidentType.icon ? PICTOGRAM_INCIDENT_TYPE_PATH + "/" + incidentType.icon : PICTOGRAM_INCIDENT_TYPE_UNKNOWN,
+									stateColor: incidentType.incidentLevel.color,
+									stateLabel: i18n.t(incidentType.incidentLevel.labelAlias),
 									folder: false
 								})
 							})
@@ -356,7 +358,11 @@ export default class IncidentTypeModule extends GenericModule {
 					{ value: true, treeOption: { id: 5 } },
 					{ value: false, treeOption: { id: 6 } }
 				],
-				treeCommands: []
+				treeCommands: [],
+				stomp: {
+					topic: undefined,
+					adapter: adapterElement2Tree
+				}
 			}
 
 			if (self.editPermission) {
@@ -365,7 +371,11 @@ export default class IncidentTypeModule extends GenericModule {
 					{ id: 1, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
 					{ id: 2, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
 				];				
-			}		
+			}
+			
+			function adapterElement2Tree() {
+				
+			}
 			
 			return metadata;
 		}

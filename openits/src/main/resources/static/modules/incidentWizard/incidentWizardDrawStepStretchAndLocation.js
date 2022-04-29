@@ -10,7 +10,7 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 		super(parent, step);
 		
-		this.stretchs = this.getStretchs();
+		this.stretchs = undefined;
 	}
 
 
@@ -26,46 +26,61 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 	}
 
 
-	loadData() {
+	loadData(onReady) {
 
 		let self = this;
 		let parent = this.parent;
 		let step = this.step;
 		let viewStepStretchAndLocation;
+		
+		webix.ajax().get(appConfig.restUrl + self.parent.config.restEndpoints.locationsStretchs).then(function(stretchsResponse) {
 
-		viewStepStretchAndLocation = {
-			rows: [
-				{
-					cols: [
-						{ width: 45 },
+			if (stretchsResponse != null) {
+
+				self.stretchs = stretchsResponse.json();
+				
+				viewStepStretchAndLocation = {
+					rows: [
 						{
-							rows: [
-								{ height: 15 },
+							cols: [
+								{ width: 45 },
 								{
-									view: "label",
-									label: `<span class="ico webix_icon mdi mdi-numeric-${step.position}-box" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(step.stepLabel)}</span>`
-								},
-								{ height: 17 },
-								{
-									cols: [
-										getViewStretchs(),
-										{ width: 25 },
+									rows: [
+										{ height: 15 },
 										{
-											rows: [
-												getViewLocations(),
+											view: "label",
+											label: `<span class="ico webix_icon mdi mdi-numeric-${step.position}-box" style="font-size: 30px;"></span><span class="content-wizard-label">${i18n.t(step.stepLabel)}</span>`
+										},
+										{ height: 17 },
+										{
+											cols: [
+												getViewStretchs(),
+												{ width: 25 },
+												{
+													rows: [
+														getViewLocations(),
+													]
+												}
 											]
 										}
 									]
-								}
+								},
+								{ width: 45 }
 							]
-						},
-						{ width: 45 }
+						}
 					]
-				}
-			]
-		};
+				};
+		
+				webix.ui(viewStepStretchAndLocation, $$("drawStepStretchAndLocation-" + parent.uid));
+			}
+			
+			if (onReady) {
+				
+				onReady();
+			}
+		});
 
-		webix.ui(viewStepStretchAndLocation, $$("drawStepStretchAndLocation-" + parent.uid));
+		
 
 		function getViewStretchs() {
 
@@ -272,23 +287,20 @@ export default class IncidentWizardDrawStepStretchAndLocation extends IncidentWi
 
 			return viewLocations;
 		}
-
-		return viewStepStretchAndLocation;
 	}
 
-
-	getStretchs() {
-
-		let self = this;
-
-		webix.ajax().get(appConfig.restUrl + this.parent.config.restEndpoints.locationsStretchs).then(function(stretchsResponse) {
-
-			if (stretchsResponse != null) {
-
-				self.stretchs = stretchsResponse.json();
-			}
-		});
-	}
+//	getStretchs() {
+//
+//		let self = this;
+//
+//		webix.ajax().get(appConfig.restUrl + this.parent.config.restEndpoints.locationsStretchs).then(function(stretchsResponse) {
+//
+//			if (stretchsResponse != null) {
+//
+//				self.stretchs = stretchsResponse.json();
+//			}
+//		});
+//	}
 
 
 	initialize() {

@@ -92,8 +92,4 @@ export default class IncidentWizardDrawStepAffectionStretch extends IncidentWiza
 		
 		return view;
 	}
-	
-	loadData() {
-
-	}
 }	

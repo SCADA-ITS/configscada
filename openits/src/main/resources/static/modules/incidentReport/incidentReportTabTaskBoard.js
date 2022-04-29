@@ -82,6 +82,7 @@ export default class IncidentReportTabTaskBoard {
 		let tabTasksBoard = {
 			id: "tab-task-board-" + self.index + "-" + self.uid,
 			borderless: true,
+			css: "bordered-layout",
 			rows: [
 				{ height: 10 },
 				{
@@ -89,16 +90,45 @@ export default class IncidentReportTabTaskBoard {
 						{ width: 10 },
 						{
 							width: 485,
-							rows: getTasks()
+							rows: [
+								getViewHeader(),
+								{
+									cols: [
+										{
+											rows: getTasks()				
+										}
+									]
+								}
+							]
 						},
 						{ view: "resizer" },
 						getTaskDetails(),
 						{ width: 10 }
 					]
 				},
-				//{ height: 10 }
+				{ height: 10 }
 			]
 		};
+		
+		function getViewHeader() {
+			
+			let viewHeader;
+			
+			viewHeader = {
+				//view: "toolbar",
+				css: { "background": "#F4F5F9", "margin-left": "1px !important" },
+				borderless: true,
+				cols: [
+					{ width: 4 },
+					{
+						view: "label",
+						label: `<span class="ico webix_icon mdi mdi-order-bool-ascending-variant"></span><span class="grid-title">${i18n.t("LBL_TASKS")}</span>`
+					}
+				]
+			}
+			
+			return viewHeader;
+		}
 
 		function getTasks() {
 
@@ -119,7 +149,8 @@ export default class IncidentReportTabTaskBoard {
 				{ gridOption: { id: 14 }, value: "false" },
 				{ gridOption: { id: 15 }, value: "false" },
 				{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-				{ gridOption: { id: 21 }, value: "auto" }
+				{ gridOption: { id: 21 }, value: "auto" },
+				{ gridOption: { id: 24 }, value: "false" }
 			];
 
 			let metadata = {

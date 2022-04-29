@@ -26,6 +26,7 @@ export default class IncidentReportTabLog {
 
 		let tabLogs = {
 			id: "tab-logs-" + self.uid,
+			css: "bordered-layout",
 			borderless: true,
 			rows: [
 				{ height: 10 },

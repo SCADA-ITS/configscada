@@ -311,8 +311,15 @@ export default class IncidentWizardDrawStepIncidentType extends IncidentWizardDr
 		return viewStepIncidentType;
 	}
 	
-	loadData() {
+	loadData(onReady) {
 		
-		this.parent.listViewIncidentGroups.selectByIndex(0);	
+		if (this.parent.dtIncidentTypes) {
+			
+			this.parent.dtIncidentTypes.callbacks();
+			
+			this.parent.listViewIncidentGroups.selectByIndex(0);
+		}
+		
+		super.loadData(onReady);
 	}
 }	

@@ -51,13 +51,13 @@ export default class IncidentWizardDrawContent {
 		return incidentWizardDrawStep.getView();
 	}
 	
-	load(position) {
+	load(position, onReady) {
 		
 		let incidentWizardDrawStep = this.stepsMap.get(position);
 		
 		if (incidentWizardDrawStep) {
 			
-			incidentWizardDrawStep.loadData();
+			incidentWizardDrawStep.loadData(onReady);
 		}
 	}
 }	

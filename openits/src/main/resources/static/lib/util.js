@@ -2302,7 +2302,9 @@ export let util = {
 					props: {
 						translate: translate === true,
 						folder: item.folder === true,
-						image: item.image
+						image: item.image,
+						stateColor: item.stateColor,
+						stateLabel: item.stateLabel
 					}
 				};
 

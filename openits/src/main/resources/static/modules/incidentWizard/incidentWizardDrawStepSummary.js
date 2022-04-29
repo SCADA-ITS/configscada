@@ -224,8 +224,4 @@ export default class IncidentWizardDrawStepSummary extends IncidentWizardDrawSte
 
 		return viewStepSummary;
 	}
-	
-	loadData() {
-		
-	}
 }	
