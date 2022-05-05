@@ -46,7 +46,7 @@ export default class LightingnModule extends GenericModule {
 				});
 			}
 		
-		} else if(this.moduleAction && this.moduleAction.id == this.config.moduleAction.tube){
+		} else if(this.moduleAction && (this.moduleAction.id == this.config.moduleAction.tube || this.moduleAction.id == this.config.moduleAction.tubeFromEquipment)){
 			
 			if(this.args && this.args.selectedPks){
 
@@ -285,6 +285,7 @@ export default class LightingnModule extends GenericModule {
 					{
 						id: "view-tree-" + self.uid,
 						header: i18n.t("LBL_LIGHTING_ZONES"),
+						hidden: (self.moduleAction.id == self.config.moduleAction.tubeFromEquipment),
 						body: {
 							width: 230,
 							rows: [

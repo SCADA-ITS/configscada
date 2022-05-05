@@ -39,16 +39,6 @@ export default class ConditionDialogBox {
 			if (self.planOrderCondition.elementTypeParam) {
 				
 				self.elementTypeParam = self.planOrderCondition.elementTypeParam;
-
-				if (self.elementTypeParam && !self.elementTypeParam.dataType) {
-
-					let elementTypeParam = window.em.getByField(EntityType.ELEMENT_TYPE, "id", self.planOrderCondition.element.elementType.id).elementTypeParams.find(e => e.id == self.elementTypeParam.id);
-
-					if (elementTypeParam) {
-
-						self.elementTypeParam.dataType = elementTypeParam.dataType;
-					}
-				}
 			}
 			
 			if(self.planOrderCondition.elementTypeState) {

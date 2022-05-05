@@ -1,0 +1,11 @@
+{
+	"moduleAction": {
+  		"view": 50001
+	 },
+ 	"action": {
+		"equipmentViewer": 101401
+	},
+	"restEndpoints":{
+		"hierarchy": "elements/hierarchy"
+	}
+}

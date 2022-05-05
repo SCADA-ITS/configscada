@@ -186,8 +186,15 @@ export default class EquipmentViewerModule extends GenericModule {
 			let container = $$(self.args.containerId);
 
 			if (container) {
-				
-				self.containerWidth += container.$width;
+
+				if (self.args.containerWidth) {
+
+					self.containerWidth += self.args.containerWidth;
+
+				} else {
+
+					self.containerWidth += container.$width;
+				}
 			}
 			
 			let viewMain = {

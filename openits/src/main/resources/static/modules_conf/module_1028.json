@@ -4,7 +4,8 @@
 	    "tube": 102802,
 		"circuit": 102803,
 		"dali": 102804,
-		"busDali": 102805
+		"busDali": 102805,
+		"tubeFromEquipment": 102806
 	},
 	"containerAction": {
 	    "tunnel": 101401
