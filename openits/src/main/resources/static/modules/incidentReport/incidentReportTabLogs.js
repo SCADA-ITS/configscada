@@ -250,7 +250,7 @@ export default class IncidentReportTabLog {
 						isPk: false,
 						label: "LOG_IMS_PARAM_ARG1",
 						labelTooltip: "LOG_IMS_PARAM_ARG1",
-						needsTranslation: false,
+						needsTranslation: true,
 						parameterized: false,
 						position: 7,
 						required: true,
