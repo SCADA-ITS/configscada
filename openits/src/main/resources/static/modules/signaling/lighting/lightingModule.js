@@ -11,6 +11,7 @@ export default class LightingnModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
+		this.moduleAction = moduleAction;
 		
 		this.treeView = undefined;
 		this.nodes = undefined;
@@ -285,7 +286,7 @@ export default class LightingnModule extends GenericModule {
 					{
 						id: "view-tree-" + self.uid,
 						header: i18n.t("LBL_LIGHTING_ZONES"),
-						hidden: (self.moduleAction.id == self.config.moduleAction.tubeFromEquipment),
+						hidden: (self.moduleAction && (self.moduleAction.id == self.config.moduleAction.tubeFromEquipment)),
 						body: {
 							width: 230,
 							rows: [

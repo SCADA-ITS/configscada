@@ -14,7 +14,7 @@ export default class VentilationModule extends GenericModule {
 		super(module, moduleAction, args);
 
 		this.config = module.config;
-		
+		this.moduleAction = moduleAction;
 		this.treeView = undefined;
 		this.nodes = undefined;
 		this.hierarchy = undefined;
@@ -259,7 +259,7 @@ export default class VentilationModule extends GenericModule {
 					{
 						id: "view-tree-" + self.uid,
 						header: i18n.t("LBL_VENTILATIONS"),
-						hidden: (self.moduleAction.id == self.config.moduleAction.tubeFromEquipment),
+						hidden: (self.moduleAction && (self.moduleAction.id == self.config.moduleAction.tubeFromEquipment)),
 						body: {
 							width: 230,
 							rows: [
