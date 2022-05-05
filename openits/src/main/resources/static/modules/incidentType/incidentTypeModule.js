@@ -1,10 +1,8 @@
 import { util } from "../../lib/util.js";
 import GenericModule from "../genericModule.js";
-import IncidentTypeContent from "./incidentTypeContent.js";
+import IncidentTypeContent from "./content/incidentTypeContent.js";
 import TreeView from "../../component/treeview.js";
 import OptionButtonList from "../../component/optionButtonList.js";
-import MessageBox from "../../component/messageBox.js";
-import InputDialogBox from "../../component/inputDialogBox.js";
 
 const TREE_PANEL_WIDTH = 450;
 const PICTOGRAM_INCIDENT_TYPE_PATH = "incident_type";

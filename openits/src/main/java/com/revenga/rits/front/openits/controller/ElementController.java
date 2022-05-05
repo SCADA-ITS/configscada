@@ -46,6 +46,13 @@ public class ElementController {
 		return new ResponseEntity<>(elementBO.getElements(ids), HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/withStates")
+	@ApiOperation(value = "Get selected elements with states", notes = "Get selected elements with states")
+	public ResponseEntity<Object> getElementsWithState(@RequestBody List<String> ids) {
+		
+		return new ResponseEntity<>(elementBO.getElementsWithState(ids), HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/byStretchs")
 	@ApiOperation(value = "Get elements by stretchs", notes = "Get elements by strechs")
 	public ResponseEntity<Object> getElementsByStretchs(@RequestBody List<String> stretchIds) {

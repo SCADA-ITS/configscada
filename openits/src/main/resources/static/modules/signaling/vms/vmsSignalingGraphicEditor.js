@@ -78,9 +78,11 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 		
 		function drawOptionModes() {
 			
-			let viewOptionModes = {
+			let viewOptionModes;
+			
+			viewOptionModes = {
 				
-				cols: [
+				viewOptionModescols: [
 					{
 						rows: [
 							{
@@ -245,16 +247,13 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 					
 					data = self.config.graphics.map(e => { 
 					
-						let d = {
+						return {
 							id: e.id,
 							image: self.config.pictogramsPath + "/" + e.id + self.config.pictogramsExtension,
 							//value: ("00000" + parseInt(e.id, 10)).slice(-5),
 							value: e.value,
 							group: e.group
 						};
-						
-						return d;
-						
 					});
 				}
 				
@@ -423,32 +422,4 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 		
 		initialize();
 	}
-	
-//	delete() {
-//		
-//		let self = this;
-//	
-//		let data = {
-//			zone: this.data.zone,
-//			texts:  this.data.texts,
-//			graphics: function() {
-//				
-//				let graphicArray = [];
-//				
-//				if (Array.isArray(self.data.graphics) && self.data.graphics.length > 0) {
-//					
-//					let id = 0;
-//					
-//					while (id++ < self.data.graphics.length) {
-//					
-//						graphicArray.push({id: id});	
-//					} 
-//				}
-//				
-//				return graphicArray;
-//			}()
-//		};
-//		
-//		this.onZoneDataChange(data);
-//	}
 }	

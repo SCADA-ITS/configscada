@@ -1,7 +1,5 @@
-import InputDialogBox from "../../component/inputDialogBox.js";
-import IncidentTypeTabMain from "./incidentTypeTabMain.js";
-import IncidentTypeTabState from "./incidentTypeTabState.js";
-import { util } from "../../lib/util.js";
+import IncidentTypeMain from "./main/incidentTypeMain.js";
+import IncidentTypeState from "./state/incidentTypeState.js";
 
 export default class IncidentTypeContent {
 
@@ -12,8 +10,8 @@ export default class IncidentTypeContent {
 		this.uid = uid;
 		this.onUpdate = onUpdate;
 		
-		this.incidentTypeTabMain = new IncidentTypeTabMain(config, uid, incidentType, onUpdate);
-		this.incidentTypeTabState = new IncidentTypeTabState(config, uid, incidentType, onUpdate);
+		this.incidentTypeMain = new IncidentTypeMain(config, uid, incidentType, onUpdate);
+		this.incidentTypeState = new IncidentTypeState(config, uid, incidentType, onUpdate);
 	}
 	
 	getView() {
@@ -85,8 +83,8 @@ export default class IncidentTypeContent {
 				animate: false,
 				borderless: true,
 				cells: [
-					self.incidentTypeTabMain.getView(),
-					self.incidentTypeTabState.getView()
+					self.incidentTypeMain.getView(),
+					self.incidentTypeState.getView()
 				],
 				multiview: {
 					keepViews: true

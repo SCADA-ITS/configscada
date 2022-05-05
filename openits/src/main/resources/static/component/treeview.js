@@ -52,6 +52,34 @@ const DefProperties = {
 const _TRUE = "true";
 const _FALSE = "false";
 
+function assignId(item, dataMap, _self) {
+			
+	if (item) {
+		
+		if (item.id_) {
+		
+			let ids = dataMap.get(item.id_)
+			
+			if (Array.isArray(ids)) {
+				
+				ids.push(item.id);
+			}
+			else {
+				
+				dataMap.set(item.id_, [item.id]);
+			}
+		}
+		
+		if (Array.isArray(item.data) && item.data.length > 0) {
+				
+			item.data.forEach(otherItem => {
+				
+				_self(otherItem, dataMap, _self);
+			});
+		}	
+	}
+}
+
 export default class TreeView {
 
 	constructor(metadata, data, events) {
@@ -65,6 +93,19 @@ export default class TreeView {
 		this.idStompSubscriptor = undefined;
 		
 		this.filterValue = undefined;
+		this.dataMap = undefined;
+		
+		if (Array.isArray(data) && data.length > 0) {
+			
+			this.dataMap = new Map();
+			
+			let datMap = this.dataMap;
+			
+			data.forEach(item => {
+				
+				assignId(item, datMap, assignId);
+			});
+		}
 	}
 
 	getView() {
@@ -494,6 +535,19 @@ export default class TreeView {
 						let tree = $$("tree-" + self.uid).$view;
 						
 						tree.addEventListener("contextmenu", e => e.preventDefault());
+					},
+					onDestruct: function() {
+						
+						if (self.idStompSubscriptor) {
+							
+							let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
+
+							if (stompSubscriptorService) {
+				
+								stompSubscriptorService.unsubscribe(self.idStompSubscriptor);
+								self.idStompSubscriptor = undefined;
+							}
+						}
 					}
 					
 				}
@@ -696,10 +750,10 @@ export default class TreeView {
 						action: action,
 						timestamp: timestamp
 					}
+					
+					self.metadata.stomp.adapter(data, self.getItemsById_, self.update);
 				}
 			}
-			
-			
 		}
 			
 		return view;
@@ -923,6 +977,56 @@ export default class TreeView {
 		if (tree) {
 		
 			tree.updateItem(id, item);	
+		}
+	}
+	
+	getItemsById_(id_) {
+		
+		let tree = $$("tree-" + this.uid);
+		let items = [];
+		
+		if (tree && this.dataMap && this.dataMap.size > 0) {
+			
+			let ids = this.dataMap.get(id_);
+			
+			if (Array.isArray(ids) && ids.length > 0) {
+				
+				ids.forEach(id => {
+					
+					let item = tree.getItem(id);
+					
+					if (item) {
+						
+						items.push(item);	
+					}
+				});
+			}
+		}
+		
+		return items;
+	}
+	
+	updateById_(id_, item) {
+		
+		let tree = $$("tree-" + this.uid);
+
+		if (tree && this.dataMap && this.dataMap.size > 0) {
+			
+			let ids = this.dataMap.get(id_);
+			
+			if (Array.isArray(ids) && ids.length > 0) {
+				
+				ids.forEach(id => {
+					
+					let currentItem = tree.getItem(id);
+					
+					let newItem = webix.copy(item);
+					
+					newItem.id = currentItem.id; 
+					
+					tree.updateItem(id, newItem);
+				});
+			}
 		}
 	}
 	

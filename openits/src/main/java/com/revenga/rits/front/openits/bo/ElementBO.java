@@ -28,6 +28,14 @@ public class ElementBO extends GenericBO {
 		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY, elements);
 	}
 	
+	public List<Map<String, Object>> getElementsWithState(List<String> ids) {
+
+		List<Map<String, Object>> elements = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC, new Object[] { ids });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ELEMENTS_ARRAY_STATES_SYNOPTIC, elements);
+	}
+	
 	public List<Map<String, Object>> getElementsByStretchs(List<String> stretchIds, String elementTypeId) {
 
 		List<Map<String, Object>> elements = voDataSourceAdapter

@@ -1,4 +1,4 @@
-export default class IncidentTypeTabMain {
+export default class IncidentTypeState {
 
 	constructor(config, uid, incidentType, onUpdate) {
 		
@@ -15,21 +15,21 @@ export default class IncidentTypeTabMain {
 		let view;
 		
 		view = {
-			id: "incident-type-tab-main-" + self.uid,
-			header: i18n.t("LBL_MAIN"),
-			body: getViewMain()
+			id: "incident-type-tab-state-" + self.uid,
+			header: i18n.t("LBL_STATES_AND_TASKS"),
+			body: getViewState()
 		}
 		
-		function getViewMain() {
+		function getViewState() {
 			
-			let viewMain;
+			let viewState;
 			
-			viewMain = {
-				id: "incident-type-main-" + self.uid,
+			viewState = {
+				id: "incident-type-state-" + self.uid,
 				css: "bordered-layout"
 			}
 			
-			return viewMain;
+			return viewState;
 		}
 			
 		return view;

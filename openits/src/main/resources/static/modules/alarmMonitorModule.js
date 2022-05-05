@@ -109,12 +109,12 @@ export default class AlarmMonitorModule extends GenericModule {
 				}
 			}
 			
-			function doOnLoadTreeElements(response) {
+			function doOnLoadTreeElements(responseHierarchies) {
 				
-				if (response) {
+				if (responseHierarchies) {
 
 					//self.treeElements = response.json();
-					self.elementHierarchies = response.json();
+					self.elementHierarchies = responseHierarchies.json();
 				}
 			}
 			

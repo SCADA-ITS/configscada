@@ -115,7 +115,7 @@ export default class IncidentReportTaskContent {
 				self.taskState.incidentTypeTask.incidentTypeTaskValues[0].taskTypeParam.id == self.config.taskTypeParamSignallingToSpath
 			) {
 
-				self.incidentReportTaskDetailSignallingSpath = new IncidentReportTaskDetailSignallingSpath(self.config, self.incidentReport, self.taskState, stretchsInfo, self.index, self.uid);
+				self.incidentReportTaskDetailSignallingSpath = new IncidentReportTaskDetailSignallingSpath(self.config, self.incidentReport, self.taskState, self.index, self.uid);
 
 				viewBody.cells.push({
 					header: i18n.t("LBL_SIGNALLING"),
