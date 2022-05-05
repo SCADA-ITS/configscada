@@ -26,7 +26,7 @@
 	"ws": {
 		"incidentReports": "/topic/incidentReport.>"
 	},
-	"incidentCreateTimeoutMs": 12000,
+	"incidentCreateTimeoutMs": 30000,
 	"steps": {
 		"fromIncidentsNoMap": [
 			{

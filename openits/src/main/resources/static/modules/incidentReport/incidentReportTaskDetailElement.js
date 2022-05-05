@@ -93,9 +93,9 @@ export default class IncidentReportTaskElement extends IncidentReportTaskDetail 
 							let moduleActionId = undefined;
 							
 							if(self.taskState.incidentTypeTask && self.taskState.incidentTypeTask.taskType && 
-								self.taskState.incidentTypeTask.taskType. commandModule){
+								self.taskState.incidentTypeTask.taskType.commandModule){
 								
-								moduleActionId = self.taskState.incidentTypeTask.taskType. commandModule;
+								moduleActionId = self.taskState.incidentTypeTask.taskType.commandModule;
 								
 							} else if (element.elementType.commandModule){
 								
