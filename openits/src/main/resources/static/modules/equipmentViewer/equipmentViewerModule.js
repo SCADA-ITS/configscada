@@ -227,6 +227,11 @@ export default class EquipmentViewerModule extends GenericModule {
 			if (self.equipmentViewer) {
 				
 				viewMainTreeHierarchyHidden = !self.equipmentViewer.showChilds || !(Array.isArray(element.childs) && element.childs.length > 0);
+				
+				if (self.args.viewTypeId && self.args.viewTypeId === VIEW_TYPE_CUSTOM) {
+
+					viewMainTreeHierarchyHidden = true;
+				}
 			}
 
 			let viewMainTreeHierarchy = {

@@ -22,19 +22,6 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		this.viewMain = undefined;
 	}
 
-	getViewDrawLoading() {
-
-		return {
-			view: "template",
-			id: "no-data-" + this.uid,
-			template: function(data) {
-
-				let icon = "<img src='img/loading.svg' align='center'>";
-
-				return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-			}
-		}
-	}
 
 	getView() {
 
@@ -66,22 +53,35 @@ export default class EquipmentModule extends GenericMultiGridModule {
 				},
 				{ view: "resizer" },
 				{
-					body: {
-						rows: [
-							{ height: 6 },
-							{
-								cols: [
-									{ width: 6 },
-									{
-										id: self.uid,
-										rows: [self.getViewDrawLoading()]
-									},
-									{ width: 6 }
-								]
-							},
-							{ height: 6 }
-						]
-					}
+					rows: [
+						{ height: 6 },
+						{
+							cols: [
+								{ width: 6 },
+								{
+									id: "loading-" + self.uid,
+									rows: [util.ui.getViewDrawLoading()]
+								},
+								{
+									id: self.uid,
+									view: "multiview",
+									hidden: true,
+									keepViews: true,
+									animate: false,
+									cells: [
+										{
+											id: "table-content-" + self.uid
+										},
+										{
+											id: "equipment-content-" + self.uid
+										}
+									]
+								},
+								{ width: 6 }
+							]
+						},
+						{ height: 6 }
+					]
 				}
 			]
 		};
@@ -341,16 +341,16 @@ export default class EquipmentModule extends GenericMultiGridModule {
 									{
 										id: "switcher-element-types-" + self.uid,
 										value: `<div>
-															<span class='ico webix_icon mdi mdi-format-list-bulleted'></span>
-															<span>${i18n.t("LBL_LIST")}</span>
-														</div>`,
+													<span class='ico webix_icon mdi mdi-format-list-bulleted'></span>
+													<span>${i18n.t("LBL_LIST")}</span>
+												</div>`,
 									},
 									{
 										id: "switcher-element-hierarchy-" + self.uid,
 										value: `<div>
-															<span class='ico webix_icon mdi mdi-family-tree'></span>
-															<span>${i18n.t("LBL_TREE")}</span>
-														</div>`,
+													<span class='ico webix_icon mdi mdi-family-tree'></span>
+													<span>${i18n.t("LBL_TREE")}</span>
+												</div>`,
 									}
 								],
 								tooltip: function(obj) {
@@ -367,12 +367,18 @@ export default class EquipmentModule extends GenericMultiGridModule {
 								on: {
 									onChange(newv, oldv) {
 
-										//console.log("init change => " + newv);
+										const VIEWS = {
+											TABLE: 0,
+											EQUIPMENT: 1
+										};
+
 										$$("loading-switcher-" + self.uid).show();
 										$$("switcher-views-" + self.uid).hide();
 
 										webix.delay(function() {
 
+											let contentViews = $$(self.uid).getChildViews();
+											
 											$$("switcher-views-" + self.uid).show();
 											$$("loading-switcher-" + self.uid).hide();
 
@@ -384,44 +390,44 @@ export default class EquipmentModule extends GenericMultiGridModule {
 												$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
 
 													return `<div>
-																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-																	<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
-																</div>`;
+																<span class='ico webix_icon mdi mdi-view-headline'></span>
+																<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
+															</div>`;
 												});
 
 												$$("view-main-list-equipments-" + self.uid).refresh();
-												self.callbackSelectedElemenTypeList();
+	
+												contentViews[VIEWS.TABLE].show();
+												contentViews[VIEWS.EQUIPMENT].hide();
 
 											} else if (newv === "switcher-element-hierarchy-" + self.uid) {
 
-												$$("listview-" + self.listView.uid).hide();
 												$$("treeview-" + self.treeView.uid).show();
+												$$("listview-" + self.listView.uid).hide();
 
 												$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
 
 													return `<div>
-																	<span class='ico webix_icon mdi mdi-view-headline'></span>
-																	<span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
-																</div>`;
+																<span class='ico webix_icon mdi mdi-view-headline'></span>
+																<span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
+															</div>`;
 												});
 
 												$$("view-main-list-equipments-" + self.uid).refresh();
 
-												let id = [];
 												let itemSelected = self.treeView.getSelected();
 
 												if (Array.isArray(itemSelected) && itemSelected.length > 0) {
 
-													id.push({
-														id_: itemSelected[0].id_
-													});
-
-													self.callbackSelectedItemTree(id);
+													contentViews[VIEWS.EQUIPMENT].show();
 
 												} else {
 
 													$$("tree-" + self.treeView.uid).select(ELEMENT_TYPE_ALL);
+													contentViews[VIEWS.EQUIPMENT].show();
 												}
+	
+												contentViews[VIEWS.TABLE].hide();
 											}
 										});
 									}
@@ -443,40 +449,11 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let item = self.listView.getSelectedItems();
 		let dataGridId = item[0].grid;
 		let dataGridParams = id ? id : item[0].id;
-		let equipmentContent = undefined;
 
 		if (dataGridId != undefined && dataGridParams != undefined && $$(self.uid) != undefined) {
 
-			if (self.dataTable) {
-
-				let viewsToRemove = [];
-
-				if ($$(self.dataTable.getViewId())) {
-
-					equipmentContent = $$(self.dataTable.getViewId());
-
-				} else {
-
-					let content = $$(self.uid).getChildViews();
-					equipmentContent = $$(content[0].config.id);
-				}
-
-				webix.ui(self.getViewDrawLoading(), equipmentContent);
-
-				$$(self.uid).getChildViews().forEach(view => {
-
-					viewsToRemove.push(view.config.id);
-				});
-
-				viewsToRemove.forEach(viewId => {
-
-					if (viewId.indexOf("no-data-") === -1) {
-						$$(self.uid).removeView(viewId);
-					}
-				});
-
-			}
-
+			$$("loading-" + self.uid).show();
+			$$(self.uid).hide();
 			self.listView.enable();
 
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat) {
@@ -488,13 +465,15 @@ export default class EquipmentModule extends GenericMultiGridModule {
 					self.dataTable = new DataTable(dataGridId, dataGridParams, metadata, data);
 
 					let newTable = {
-						id: self.uid,
+						id: "table-content-" + self.uid,
 						rows: self.dataTable.getView()
 					};
 
-					webix.ui(newTable, $$(self.uid));
+					webix.ui(newTable, $$("table-content-" + self.uid));
 					self.dataTable.callbacks();
 					self.listView.enable(true);
+					$$(self.uid).show();
+					$$("loading-" + self.uid).hide();
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
@@ -509,6 +488,9 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let modAction = self.config.action.equipmentViewer;
 		let equipmentSelected = [];
 		let containerWidth = $$(self.args.containerId).$width - 330;
+
+		$$("loading-" + self.uid).show();
+		$$(self.uid).hide();
 
 		if (Array.isArray(item) && item.length > 0 && item[0].id_) {
 
@@ -555,11 +537,13 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		} else {
 
 			let viewNoData = {
-				id: self.uid,
+				id: "equipment-content-" + self.uid,
 				cols: [util.ui.getViewNoData()]
 			};
 
-			webix.ui(viewNoData, $$(self.uid));
+			webix.ui(viewNoData, $$("equipment-content-" + self.uid));
+			$$(self.uid).show();
+			$$("loading-" + self.uid).hide();
 		}
 
 		function getOptionDialogBox() {
@@ -609,11 +593,13 @@ export default class EquipmentModule extends GenericMultiGridModule {
 				function drawContent(view) {
 
 					let equipmentViewer = {
-						id: self.uid,
+						id: "equipment-content-" + self.uid,
 						cols: [view]
 					};
 
-					webix.ui(equipmentViewer, $$(self.uid));
+					webix.ui(equipmentViewer, $$("equipment-content-" + self.uid));
+					$$(self.uid).show();
+					$$("loading-" + self.uid).hide();
 				}
 			}
 		}
