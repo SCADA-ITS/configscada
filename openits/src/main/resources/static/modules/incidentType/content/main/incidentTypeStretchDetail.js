@@ -47,7 +47,10 @@ export default class IncidentTypeStretchDetail {
 										
 										self.dtAlarmConditions.callbacks();
 										
-										//self.dtAlarmConditions.selectByIndex(0);
+										setTimeout(function() {
+								
+											self.dtAlarmConditions.selectByIndex(0);
+										}, 50);
 									}
 								}
 							}

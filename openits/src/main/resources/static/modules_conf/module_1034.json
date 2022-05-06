@@ -4,6 +4,11 @@
 	},
 	"restEndpoints": {
 		"incidentTypes": "incidents/imsIncidentTypes",
-		"incidentType": "incidents/imsIncidentType/${id}"
+		"incidentType": "incidents/imsIncidentType/${id}",
+		"clientResources": "client/resources/${folder}"
+	},
+	"resources": {
+		"incidentType": "img/incident_type",
+		"defaultIncidentType": "undefined.png"
 	}
 }

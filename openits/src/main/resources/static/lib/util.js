@@ -2398,7 +2398,7 @@ export let util = {
 		
 		return result;
 	},
-
+	
 	toLocaleTimeString(ts) {
 
 		if (!ts) {

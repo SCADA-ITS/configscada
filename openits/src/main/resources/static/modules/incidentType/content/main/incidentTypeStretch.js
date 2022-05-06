@@ -52,8 +52,6 @@ export default class IncidentTypeStretch {
 								
 											self.dtStretchs.selectByIndex(0);
 										}, 50);
-										
-										
 									}
 								}
 							}
