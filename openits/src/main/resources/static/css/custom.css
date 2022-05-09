@@ -2232,8 +2232,7 @@ p, input, textarea {
     color: white !important;
 }
 
-.panel-button .webix_button{
-	
+.panel-button .webix_button {
 	font-size: 13px;
 	width: 100% !important;
 	border-radius: 4px;
@@ -2247,9 +2246,12 @@ p, input, textarea {
     text-align: center;
 }
 
-.panel-button .webix_button:hover{
-	
-	background: var(--blue-soft-opacity-2);
+.panel-button .webix_button:hover {
+	background: var(--blue-soft-opacity-2) !important;
+}
+
+.panel-button .webix_button:focus {
+	background: transparent;
 }
 
 .panel-button .webix_button .webix_icon_btn {
@@ -4253,4 +4255,15 @@ audio {
 .changeuser-button:hover {
 	background-color: #F4F5F9;
 	border-radius: 50%;
+}
+
+.parameter-window {
+	text-align: left;
+	line-height: 32px;
+	padding-left: 75px 
+}
+
+.parameter-window .webix_el_box {
+	color: #475466;
+	font-size: 13px; 
 }

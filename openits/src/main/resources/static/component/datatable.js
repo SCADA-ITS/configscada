@@ -8,7 +8,8 @@ const DataType = {
 	STRING: { value: 1, filter: "textFilter", sort: "string" },
 	INT: { value: 2, filter: "numberFilter", sort: "int" },
 	DECIMAL: { value: 3, filter: "numberFilter", sort: "decimal" },
-	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" }
+	DATE: { value: 4, filter: "dateRangeFilter", sort: "date" },
+	IMAGE: { value: 5, filter: "textFilter", sort: "string" }
 };
 
 const GridOptions = {
@@ -255,8 +256,12 @@ export default class DataTable {
 								if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.DATE.value && value === "") {
 
 									value = obj[field.sourceField].toLocaleString(i18n.getLocale(), FORMAT_NUMERIC_DATES);
-								}
-								else {
+								
+								} else if (field.gridFieldDataType && field.gridFieldDataType.id === DataType.IMAGE.value) {
+									
+									return `<div><img style='display:block; height:32px; width:auto; margin:auto; padding:1px;' src='${obj[field.sourceField]}'></div>`;
+
+								} else {
 									
 									if (Array.isArray(field.gridFieldReplacements) && field.gridFieldReplacements.length > 0) {
 	
