@@ -155,8 +155,11 @@ export default class DecoderMJPEG extends Decoder {
 			newUrl += "?rnd=";
 		}
 		
-		newUrl += (new Date()).getTime();
-	
+		let timeService = window.sm.getService(Services.TIME_SERVICE);
+		let date = timeService.getEpoch();
+
+		newUrl += date;
+
 		return newUrl;
 	}
 	

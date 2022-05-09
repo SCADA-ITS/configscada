@@ -367,12 +367,23 @@ export default class InputDialogBox {
 			function getDateBody() {
 
 				let dateBody;
+				let date;
+				
+				if (self.currentValue instanceof Date) {
+
+					date = self.currentValue;
+					 
+				} else {
+
+					let timeService = window.sm.getService(Services.TIME_SERVICE);
+					date = new Date(timeService.getEpoch());
+				}
 
 				dateBody = {
 					id: "input-dialog-" + self.uid,
 					view: "calendar",
 					borderless: true,
-					date: self.currentValue instanceof Date ? self.currentValue : new Date(),
+					date: date,
 					timepicker: true,
 					width: 300,
 					height: 250,
@@ -441,7 +452,19 @@ export default class InputDialogBox {
 		}
 		else {
 
-			$$("input-dialog-" + self.uid).setValue(self.currentValue instanceof Date ? self.currentValue : new Date());
+			let date;
+			
+			if (self.currentValue instanceof Date) {
+
+				date = self.currentValue;
+
+			} else {
+
+				let timeService = window.sm.getService(Services.TIME_SERVICE);
+				date = new Date(timeService.getEpoch());
+			}
+			
+			$$("input-dialog-" + self.uid).setValue(date);
 		}
 	}
 }

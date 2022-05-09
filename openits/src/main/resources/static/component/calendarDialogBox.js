@@ -4,12 +4,21 @@ export default class CalendarDialogBox {
 
 		this.title = title;
 		this.text = text;
-		this.date = (typeof(date) === 'object') ? date : new Date();
 		this.multidate = multidate; 
 		this.onBlockDates = onBlockDates;
 		this.onAccept = onAccept;
 		this.onAfterDateSelect = onAfterDateSelect;
 		this.uid = webix.uid();
+		
+		if ((typeof (date) === 'object') && (date != null)) {
+
+			this.date = date;
+			
+		} else {
+
+			let timeService = window.sm.getService(Services.TIME_SERVICE);
+			this.date = new Date(timeService.getEpoch());
+		}
 	}
 	
 	getView() {

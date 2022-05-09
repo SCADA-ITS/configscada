@@ -335,15 +335,19 @@ export default class AlarmFilteredWizard {
 
 			let drawStepCalendar = function() {
 
-				let startDate = Date.now();
+				let timeService = window.sm.getService(Services.TIME_SERVICE);
+				let startDate = timeService.getEpoch();	
 				let minToAdd = self.parent.config.minAddToCurrentDate * 60000;
 				let newDate = new Date(startDate + minToAdd);
 
 				self.calendar = new CalendarDialogBox(i18n.t("LBL_DIALOG_MUTE_ALARMS"), i18n.t("LBL_DIALOG_UNMUTE_ALARMS"), newDate, false,
 
 					function(date) {
+						
+						let tService = window.sm.getService(Services.TIME_SERVICE);
+						let dat = new Date(tService.getEpoch());
 
-						return (Math.floor(date) < Math.floor(new Date()));
+						return (Math.floor(date) < Math.floor(dat));
 					},
 					null,
 					null

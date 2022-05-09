@@ -70,7 +70,10 @@ export default class AlarmFilteredMute {
 
 					(new CalendarDialogBox(title, text, null, false, function(date) {
 
-							return (Math.floor(date) < Math.floor(new Date()));
+							let timeService = window.sm.getService(Services.TIME_SERVICE);
+							let dat = new Date(timeService.getEpoch());
+						
+							return (Math.floor(date) < Math.floor(dat));
 						},
 						onAcceptCalendar
 						)).show();
