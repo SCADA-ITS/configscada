@@ -294,6 +294,15 @@ public class ImsIncidentController {
 		return new ResponseEntity<>(imsIncidentTypeTaskBO
 				.getIncidentTypeTaskByIncidentTypeAndIncidentState(incidentTypeId, incidentStateId), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/incidentTypeTasks/{incidentTypeId}")
+	@ApiOperation(value = "Get all incident type tasks by Incident Type", notes = "Get all incident type tasks by Incident Type")
+	public ResponseEntity<Object> getIncidentTypeTaskByIncidentType(
+			@ApiParam(name = "incidentTypeId", type = "String", value = "Incident Type id", example = "ImsIncidentType:1", required = true) @PathVariable String incidentTypeId) {
+
+		return new ResponseEntity<>(imsIncidentTypeTaskBO
+				.getIncidentTypeTaskByIncidentTypeAndIncidentState(incidentTypeId, null), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/extIncidents")
 	@ApiOperation(value = "Get ext incidents", notes = "Get ext incidents")

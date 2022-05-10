@@ -970,8 +970,23 @@ export default class DataTable {
 		}
 
 		if (Array.isArray(metadata.gridCommands) && metadata.gridCommands.length > 0 && resultCommands) {
-
-			toolbar.elements.push({ width: 8 });
+			
+			if (resultCommons) {
+				
+				toolbar.elements.push({ width: 3 });
+				toolbar.elements.push(
+					{ 
+						width: 1,
+						rows: [
+							{ height: 8 },
+							{ type: "template", css: {"border-left": "1px solid #dadee0 !important"}, borderless: true },
+							{ height: 8 }		
+						]
+					}
+				);
+				toolbar.elements.push({ width: 3 });	
+			}
+			
 			metadata.gridCommands.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 
 			let groupedMenu = metadata.gridCommands.filter(e => e.grouped);

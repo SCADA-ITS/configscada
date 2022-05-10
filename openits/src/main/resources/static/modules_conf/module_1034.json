@@ -5,10 +5,16 @@
 	"restEndpoints": {
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"incidentType": "incidents/imsIncidentType/${id}",
-		"clientResources": "client/resources/${folder}"
+		"clientResources": "client/resources/${folder}",
+		"incidentTypeTasksByIncidentTypeAndIncidentState": "incidents/${incidentTypeId}/${incidentStateId}",
+		"incidentTypeTasksByIncidentType": "incidents/incidentTypeTasks/${incidentTypeId}"
 	},
 	"resources": {
 		"incidentType": "img/incident_type",
 		"defaultIncidentType": "undefined.png"
+	},
+	"incidentStates": {
+		"closed": { "id": "ImsIncidentState:100", "labelAlias": "LBL_CLOSED" }, 
+		"cancel": { "id": "ImsIncidentState:101", "labelAlias": "LBL_CANCEL" }
 	}
 }

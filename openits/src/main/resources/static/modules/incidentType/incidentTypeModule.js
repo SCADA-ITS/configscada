@@ -88,8 +88,15 @@ export default class IncidentTypeModule extends GenericModule {
 							
 							if (self.firstGroupId) {
 								
-								self.treeView.select(self.firstGroupId);
-								self.treeView.expand(self.firstGroupId);	
+//								self.treeView.select(self.firstGroupId);
+								self.treeView.expand(self.firstGroupId);
+								
+								let firstItem = self.treeView.getFirstItem();
+								
+								if (firstItem) {
+									
+									self.treeView.select(firstItem.id);
+								}	
 							}
 						}
 						
@@ -363,28 +370,25 @@ export default class IncidentTypeModule extends GenericModule {
 				}
 			}
 
-			if (self.editPermission) {
-
-				metadata.treeCommands = [
-					{ id: 1, callbacks: [{ commandId: 2, function: onNewItem }], position: 2, label: "LBL_NEW_ITEM", icon: "mdi mdi-file-plus-outline", default: false, multiselect: false, itemRequired: true, grouped: false },
-					{ id: 2, callbacks: [{ commandId: 3, function: onDelete }], position: 3, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
-				];				
-			}
+			metadata.treeCommands = [
+				{ id: 1, callbacks: [{ commandId: 2, function: onNewIncidentType }], position: 1, label: "LBL_NEW_ITEM", icon: "mdi mdi-plus", default: false, multiselect: false, itemRequired: true, grouped: false },
+				{ id: 2, callbacks: [{ commandId: 3, function: onDeleteIncidentType }], position: 2, label: "LBL_DELETE", icon: "mdi mdi-delete-outline", default: false, multiselect: false, itemRequired: true, grouped: false }
+			];				
 			
 			function adapterElement2Tree() {
 				
 			}
 			
-			return metadata;
-		}
+			function onNewIncidentType(selectedPks) {
 
-		function onNewItem(selectedPks) {
-
+				
+			}
+	
+			function onDeleteIncidentType(selectedPks) {
+	
+			}
 			
-		}
-
-		function onDelete(selectedPks) {
-
+			return metadata;
 		}
 
 		function drawResizer() {

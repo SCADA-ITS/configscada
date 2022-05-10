@@ -1,7 +1,7 @@
 import DataTable from "../../../../component/datatable.js";
 import IncidentTypeStretchDetail from "./incidentTypeStretchDetail.js";
 
-const STRETCH_PANEL_WIDTH = 450;
+const STRETCH_PANEL_WIDTH = 300;
 
 export default class IncidentTypeStretch {
 
@@ -32,14 +32,15 @@ export default class IncidentTypeStretch {
 						{ width: 10 },
 						getViewStretchs(),
 						{ 
-							view: "resizer",
+							borderless: true,
 							width: 10
 						},
 						getViewStretch(),
+						{ width: 12 },
 						{ 
 							view: "template",
 							borderless: true,
-							width: 10,
+							width: 1,
 							on: {
 								
 								onAfterRender: function() {
@@ -65,43 +66,49 @@ export default class IncidentTypeStretch {
 		function getViewStretchs() {
 			
 			let viewStretchList;
-			
+					
 			viewStretchList = {
 				
 				id: "incident-type-main-stretch-panel-" + self.uid,
-				header: function() {
-
-					return `<div>
-								<span class='ico webix_icon mdi mdi-view-headline'></span>
-								<span>${i18n.t("LBL_STRETCHS")}</span>
-							</div>`;
+				css: {
+					"box-sizing": "border-box",
+					"border": "1px solid #dadee0 !important"
 				},
-				body: {
-					width: STRETCH_PANEL_WIDTH,
-					rows: getViewDatatableStretchs()
-				}
+				width: STRETCH_PANEL_WIDTH,
+				rows: [
+					{
+						view: "template",
+						borderless: true,
+						height: 38,
+						css: { "background-color": "var(--blue-soft-opacity-1)", "font-size": "14px", "font-weight": "lighter", "color": "var(--blue-text-default)" },
+						template: function() {
+							
+							return `<div style="padding-top: 10px; padding-left: 10px">
+										<span class='ico webix_icon mdi mdi-road'></span>
+										<span>${i18n.t("LBL_STRETCHS")}</span>
+									</div>`;
+						}
+					}
+				]
 			}
+			
+			viewStretchList.rows.push(...getViewDatatableStretchs());
 			
 			function getViewDatatableStretchs() {
 
 				const defaultGridOptionValues = [
 					{ gridOption: { id: 1 }, value: "false" },
 					{ gridOption: { id: 2 }, value: "false" },
-					{ gridOption: { id: 3 }, value: undefined },
-					{ gridOption: { id: 4 }, value: undefined },
-					{ gridOption: { id: 5 }, value: undefined },
-					{ gridOption: { id: 6 }, value: undefined },
+					{ gridOption: { id: 3 }, value: "1" },
+					{ gridOption: { id: 4 }, value: "asc" },
 					{ gridOption: { id: 7 }, value: "false" },
 					{ gridOption: { id: 8 }, value: "false" },
 					{ gridOption: { id: 9 }, value: "true" },
-					{ gridOption: { id: 10 }, value: "false" },
 					{ gridOption: { id: 11 }, value: "false" },
-					{ gridOption: { id: 12 }, value: "false" },
 					{ gridOption: { id: 13 }, value: "false" },
-					{ gridOption: { id: 14 }, value: "false" },
-					{ gridOption: { id: 15 }, value: "false" },
 					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-					{ gridOption: { id: 21 }, value: "auto" },
+					{ gridOption: { id: 21 }, value: "custom" },
+					{ gridOption: { id: 23 }, value: "false" },
 					{ gridOption: { id: 24 }, value: "false" }
 				];
 	
@@ -141,6 +148,7 @@ export default class IncidentTypeStretch {
 							required: true,
 							sourceField: "alias",
 							visible: true,
+							widthPx: 200,
 							adjust: true,
 							gridFieldDataType: {
 								id: 1,
@@ -149,10 +157,37 @@ export default class IncidentTypeStretch {
 						}
 					]
 				};
-	
+				
+				metadata.gridCommands = [];
+			
+				metadata.gridCommands = [
+					{
+						id: 1,
+						value: "LBL_NEW",
+						icon: "mdi mdi-plus",
+						default_: false,
+						label: "LBL_NEW",
+						showText: false,
+						position: 1,
+						multiselect: true,
+						itemRequired: false
+					},
+					{
+						id: 2,
+						value: "LBL_DELETE",
+						icon: "mdi mdi-delete-outline",
+						label: "LBL_DELETE",
+						default_: false,
+						showText: false,
+						position: 2,
+						multiselect: true,
+						itemRequired: true
+					}
+				]
+				
 				let data = [];
 	
-				if (Array.isArray(self.incidentType.incidentTypeStretchs) && self.incidentType.incidentTypeStretchs.length) {
+				if (Array.isArray(self.incidentType.incidentTypeStretchs) && self.incidentType.incidentTypeStretchs.length > 0) {
 	
 					data = self.incidentType.incidentTypeStretchs.map(e => {
 						
@@ -166,6 +201,11 @@ export default class IncidentTypeStretch {
 				}
 	
 				let events = {};
+			
+				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [
+					{ commandId: 1, function: onNewStretch},
+					{ commandId: 2, function: onDeleteStretch}
+				];
 	
 				events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
@@ -187,7 +227,15 @@ export default class IncidentTypeStretch {
 				};
 	
 				self.dtStretchs = new DataTable(null, null, metadata, data, events);
-	
+				
+				function onNewStretch() {
+					
+				}
+				
+				function onDeleteStretch() {
+					
+				}
+				
 				return self.dtStretchs.getView();
 			}
 			

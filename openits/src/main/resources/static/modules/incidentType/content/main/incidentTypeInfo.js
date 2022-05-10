@@ -2,7 +2,8 @@ import SearchDialogBox from "../../../../component/searchDialogBox.js";
 import MessageBox from "../../../../component/messageBox.js";
 import { util } from "../../../../lib/util.js";
 
-const FORM_LABEL_WIDTH = 150;
+const FORM_LABEL_WIDTH = 100;
+const FORM_FIELD_WIDTH = 300;
 
 export default class IncidentTypeStretch {
 
@@ -23,19 +24,19 @@ export default class IncidentTypeStretch {
 		view = {
 			id: "incident-type-info-" + self.uid,
 			css: { "background-color": "white" },
-			height: 200,
+			height: 125,
 			rows: [
 				{ height: 10 },
 				{
 					cols: [
-						{ width: 13 },
+						{ width: 10 },
 						{
 							css: {
 								"box-sizing": "border-box",
 								"border": "1px solid #dadee0 !important"
 							},
 							rows: [
-								getForm()
+								getIncidentTypeFields()
 							]			
 						},
 						{ width: 12 }
@@ -45,7 +46,7 @@ export default class IncidentTypeStretch {
 			]
 		}
 		
-		function getForm() {
+		function getIncidentTypeFields() {
 
 			let form;
 			
@@ -65,12 +66,12 @@ export default class IncidentTypeStretch {
 									{},
 									{
 										cols: [
-											{ view: "text", id: "incident-type-info-form-name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: FORM_LABEL_WIDTH, width: FORM_LABEL_WIDTH + 300, value: self.incidentType.alias },
+											{ view: "text", id: "incident-type-info-form-name-" + self.uid, name: "name", required: true, label: i18n.t("LBL_ALIAS"), labelWidth: FORM_LABEL_WIDTH, width: FORM_FIELD_WIDTH, value: self.incidentType.alias },
 											{ width: 45 },		
 											{ view: "text", id: "incident-type-info-form-description-" + self.uid, name: "description", required: false, label: i18n.t("LBL_DESCRIPTION"), labelWidth: FORM_LABEL_WIDTH, value: self.incidentType.description },
 										]
 									},
-									{ height: 35 },
+									{ height: 10 },
 									{
 										cols: [
 											{ 
@@ -80,7 +81,7 @@ export default class IncidentTypeStretch {
 												required: true, 
 												label: i18n.t("LBL_LEVEL"), 
 												labelWidth: FORM_LABEL_WIDTH, 
-												width: FORM_LABEL_WIDTH + 300,
+												width: FORM_FIELD_WIDTH,
 												options: function() {
 													
 													return incidentLevels.map(e => {
@@ -96,7 +97,7 @@ export default class IncidentTypeStretch {
 											},
 											{ width: 45 },		
 											{ view: "text", id: "incident-type-info-form-userId-" + self.uid, name: "userId", hidden: true, value: self.incidentType.defaultUser.id },
-											{ view: "text", id: "incident-type-info-form-user-" + self.uid, name: "user", required: true, disabled: true, label: i18n.t("LBL_USER"), labelWidth: FORM_LABEL_WIDTH, width: FORM_LABEL_WIDTH + 300, value: self.incidentType.defaultUser.name },
+											{ view: "text", id: "incident-type-info-form-user-" + self.uid, name: "user", required: true, readonly: true, label: i18n.t("LBL_USER"), labelWidth: FORM_LABEL_WIDTH, width: FORM_FIELD_WIDTH, value: self.incidentType.defaultUser.name },
 											{
 												view: "icon", icon: "wxi-search",
 												on: {
@@ -113,12 +114,12 @@ export default class IncidentTypeStretch {
 												view: "text", 
 												id: "incident-type-info-form-img-" + self.uid, 
 												name: "img", 
-												required: false, 
-												disabled: true, 
+												required: false,
+												readonly: true,
 												//label: `<img src='./${self.config.resources.incidentType + "/" + self.incidentType.icon}' class="grid-icon" onerror="this.onerror=null;this.src='./img/grid/default.png' /><span class="grid-title"> </span>`, 
 												label: `<img style="padding-top: 3px" src="${"./" + self.config.resources.incidentType + "/" + self.incidentType.icon}" class="grid-icon" onerror="this.onerror=null;this.src='${"./" + self.config.resources.incidentType + "/" + self.config.resources.defaultIncidentType}'" /><span class="grid-title">${""}</span>`,
 												labelWidth: 50, 
-												width: FORM_LABEL_WIDTH + 300, 
+												width: FORM_FIELD_WIDTH, 
 												value: self.incidentType.icon 
 											},
 											{
