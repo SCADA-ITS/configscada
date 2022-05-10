@@ -19,40 +19,18 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		this.listView = undefined;
 		this.treeView = undefined;
 		this.elementHierarchies = undefined;
-		this.viewMain = undefined;
 	}
 
 
 	getView() {
 
 		let self = this;
-		let entity = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE).value;
 
 		let view = {
+			css: "custom_window",
 			cols: [
-				{ width: 6 },
 				{
-					id: "loadingList-" + self.uid,
-					header: i18n.t("LBL_" + entity),
-					body: {
-						width: 330,
-						minWidth: 250,
-						rows: [
-							{ height: 6 },
-							{
-								template: function(data) {
-
-									let icon = "<img src='img/loading.svg' align='center'>";
-
-									return "<div class='empty-app-inner'>" + icon + "<span class='empty-app-inner-text'>" + i18n.t("LBL_LOADING_DATA") + "</span></div>";
-								}
-							},
-							{ height: 6 }
-						]
-					}
-				},
-				{ view: "resizer" },
-				{
+					css: { "background-color": "white" },
 					rows: [
 						{ height: 6 },
 						{
@@ -61,21 +39,6 @@ export default class EquipmentModule extends GenericMultiGridModule {
 								{
 									id: "loading-" + self.uid,
 									rows: [util.ui.getViewDrawLoading()]
-								},
-								{
-									id: self.uid,
-									view: "multiview",
-									hidden: true,
-									keepViews: true,
-									animate: false,
-									cells: [
-										{
-											id: "table-content-" + self.uid
-										},
-										{
-											id: "equipment-content-" + self.uid
-										}
-									]
 								},
 								{ width: 6 }
 							]
@@ -118,9 +81,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 				self.elementHierarchies = hierarchyResponse.json();
 
-				self.drawEquipmentTypeList(jsonEquipmentTypesWithGridAssignedCopy);
-
-				webix.ui(self.viewMain, $$("loadingList-" + self.uid));
+				webix.ui(self.drawContent(jsonEquipmentTypesWithGridAssignedCopy), $$("loading-" + self.uid));
 
 				$$("switcher-views-" + self.uid).show();
 				$$("loading-switcher-" + self.uid).hide();
@@ -150,51 +111,88 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		});
 	}
 
-	drawEquipmentTypeList(jsonEquipmentTypesWithGridAssigned) {
+	drawContent(jsonEquipmentTypesWithGridAssigned) {
 
 		let self = this;
+		let viewMain;
 		let rowsviewMainListEquipments = [];
 
-		self.viewMain = {
-			id: "equipmentTypeList-" + self.uid,
-			cols: []
+		viewMain = {
+			cols: [
+				drawList(),
+				{ view: "resizer" },
+				{
+					cols: [
+						{
+							id: "loadingContent-" + self.uid,
+							rows: [util.ui.getViewDrawLoading()]
+						},
+						{
+							id: "multi-" + self.uid,
+							view: "multiview",
+							hidden: true,
+							keepViews: true,
+							animate: false,
+							cells: [
+								{
+									id: "table-content-" + self.uid
+								},
+								{
+									id: "equipment-content-" + self.uid
+								}
+							]
+						}
+					]
+				}
+			]
 		};
 
-		rowsviewMainListEquipments.push({
-			id: "loading-switcher-" + self.uid,
-			hidden: false,
-			cols: [
-				util.ui.getViewDrawLoading(true)
-			]
-		});
+		function drawList() {
 
-		if (self.elementHierarchies) {
+			let viewList = {
+				id: "equipmentTypeList-" + self.uid,
+				width: 325,
+				cols: []
+			};
 
-			rowsviewMainListEquipments.push(getSwitcherViews());
-			rowsviewMainListEquipments.push({ height: 1, borderless: false });
-			rowsviewMainListEquipments.push(getSwitcherButtons());
+			rowsviewMainListEquipments.push({
+				id: "loading-switcher-" + self.uid,
+				hidden: false,
+				cols: [
+					util.ui.getViewDrawLoading(true)
+				]
+			});
 
-		} else {
+			if (self.elementHierarchies) {
 
-			rowsviewMainListEquipments.push(getViewListEquipments());
-		}
+				rowsviewMainListEquipments.push(getSwitcherViews());
+				rowsviewMainListEquipments.push({ height: 1, borderless: false });
+				rowsviewMainListEquipments.push(getSwitcherButtons());
 
-		let viewMainListEquipments = {
-			id: "view-main-list-equipments-" + self.uid,
-			header: function() {
+			} else {
 
-				return `<div>
+				rowsviewMainListEquipments.push(getViewListEquipments());
+			}
+
+			let viewMainListEquipments = {
+				id: "view-main-list-equipments-" + self.uid,
+				header: function() {
+
+					return `<div>
 								<span class='ico webix_icon mdi mdi-view-headline'></span>
 								<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
 							</div>`;
-			},
-			body: {
-				width: 325,
-				rows: rowsviewMainListEquipments
-			}
-		};
+				},
+				body: {
+					//width: 325,
+					rows: rowsviewMainListEquipments
+				}
+			};
 
-		self.viewMain.cols = [viewMainListEquipments];
+			viewList.cols = [viewMainListEquipments];
+
+			return viewList;
+		}
 
 		function getSwitcherViews() {
 
@@ -218,8 +216,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 		function getViewListEquipments() {
 
-			let view = {};
-			view.rows = [];
+			let listView = {};
+			listView.rows = [];
 			let viewListEquipments = {};
 
 			if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
@@ -243,15 +241,14 @@ export default class EquipmentModule extends GenericMultiGridModule {
 				viewListEquipments = self.getViewDrawLoading();
 			}
 
-			view = viewListEquipments;
+			listView = viewListEquipments;
 
-			return view;
+			return listView;
 		}
-
 
 		function getViewTreeEquipments() {
 
-			let view = {};
+			let treeView = {};
 			let events = {};
 
 			events[TreeView.EventTypes.ON_SELECT_ANY] = function(item, callbackEnable) {
@@ -315,17 +312,17 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 			self.treeView = new TreeView(metadata, root, events);
 
-			view = self.treeView.getView();
-			view.hidden = true;
+			treeView = self.treeView.getView();
+			treeView.hidden = true;
 
-			return view;
+			return treeView;
 		}
 
 		function getSwitcherButtons() {
 
-			let view;
+			let switcherButtonsView;
 
-			view = {
+			switcherButtonsView = {
 				css: { "background-color": "var(--blue-soft-opacity-1)" },
 				height: 50,
 				cols: [
@@ -377,8 +374,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 										webix.delay(function() {
 
-											let contentViews = $$(self.uid).getChildViews();
-											
+											let contentViews = $$("multi-" + self.uid).getChildViews();
+
 											$$("switcher-views-" + self.uid).show();
 											$$("loading-switcher-" + self.uid).hide();
 
@@ -396,7 +393,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 												});
 
 												$$("view-main-list-equipments-" + self.uid).refresh();
-	
+
 												contentViews[VIEWS.TABLE].show();
 												contentViews[VIEWS.EQUIPMENT].hide();
 
@@ -423,10 +420,10 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 												} else {
 
-													$$("tree-" + self.treeView.uid).select(ELEMENT_TYPE_ALL);
+													self.treeView.select(ELEMENT_TYPE_ALL);
 													contentViews[VIEWS.EQUIPMENT].show();
 												}
-	
+
 												contentViews[VIEWS.TABLE].hide();
 											}
 										});
@@ -439,8 +436,11 @@ export default class EquipmentModule extends GenericMultiGridModule {
 					{ width: 10 }
 				]
 			};
-			return view;
+
+			return switcherButtonsView;
 		}
+
+		return viewMain;
 	}
 
 	callbackSelectedElemenTypeList(id) {
@@ -450,10 +450,10 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let dataGridId = item[0].grid;
 		let dataGridParams = id ? id : item[0].id;
 
-		if (dataGridId != undefined && dataGridParams != undefined && $$(self.uid) != undefined) {
+		if (dataGridId != undefined && dataGridParams != undefined) {
 
-			$$("loading-" + self.uid).show();
-			$$(self.uid).hide();
+			$$("loadingContent-" + self.uid).show();
+			$$("multi-" + self.uid).hide();
 			self.listView.enable();
 
 			webix.ajax().get(appConfig.restUrl + "grids/" + dataGridId + "/" + dataGridParams).then(function(dat) {
@@ -472,8 +472,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 					webix.ui(newTable, $$("table-content-" + self.uid));
 					self.dataTable.callbacks();
 					self.listView.enable(true);
-					$$(self.uid).show();
-					$$("loading-" + self.uid).hide();
+					$$("multi-" + self.uid).show();
+					$$("loadingContent-" + self.uid).hide();
 				}
 			}, function(response) { util.ajax.handleError(response); });
 		}
@@ -489,8 +489,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let equipmentSelected = [];
 		let containerWidth = $$(self.args.containerId).$width - 330;
 
-		$$("loading-" + self.uid).show();
-		$$(self.uid).hide();
+		$$("loadingContent-" + self.uid).show();
+		$$("multi-" + self.uid).hide();
 
 		if (Array.isArray(item) && item.length > 0 && item[0].id_) {
 
@@ -542,8 +542,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 			};
 
 			webix.ui(viewNoData, $$("equipment-content-" + self.uid));
-			$$(self.uid).show();
-			$$("loading-" + self.uid).hide();
+			$$("multi-" + self.uid).show();
+			$$("loadingContent-" + self.uid).hide();
 		}
 
 		function getOptionDialogBox() {
@@ -598,8 +598,8 @@ export default class EquipmentModule extends GenericMultiGridModule {
 					};
 
 					webix.ui(equipmentViewer, $$("equipment-content-" + self.uid));
-					$$(self.uid).show();
-					$$("loading-" + self.uid).hide();
+					$$("multi-" + self.uid).show();
+					$$("loadingContent-" + self.uid).hide();
 				}
 			}
 		}
