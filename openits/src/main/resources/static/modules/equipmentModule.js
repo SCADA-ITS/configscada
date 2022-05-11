@@ -117,9 +117,42 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let viewMain;
 		let rowsviewMainListEquipments = [];
 
+		rowsviewMainListEquipments.push({
+			id: "loading-switcher-" + self.uid,
+			hidden: false,
+			cols: [
+				util.ui.getViewDrawLoading(true)
+			]
+		});
+
+		if (self.elementHierarchies) {
+
+			rowsviewMainListEquipments.push(getSwitcherViews());
+			rowsviewMainListEquipments.push({ height: 1, borderless: false });
+			rowsviewMainListEquipments.push(getSwitcherButtons());
+
+		} else {
+
+			rowsviewMainListEquipments.push(getViewListEquipments());
+		}
+
 		viewMain = {
 			cols: [
-				drawList(),
+				{
+					id: "view-main-list-equipments-" + self.uid,
+
+					header: function() {
+
+						return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
+							</div>`;
+					},
+					body: {
+						width: 350,
+						rows: rowsviewMainListEquipments
+					}
+				},
 				{ view: "resizer" },
 				{
 					cols: [
@@ -146,53 +179,6 @@ export default class EquipmentModule extends GenericMultiGridModule {
 				}
 			]
 		};
-
-		function drawList() {
-
-			let viewList = {
-				id: "equipmentTypeList-" + self.uid,
-				width: 325,
-				cols: []
-			};
-
-			rowsviewMainListEquipments.push({
-				id: "loading-switcher-" + self.uid,
-				hidden: false,
-				cols: [
-					util.ui.getViewDrawLoading(true)
-				]
-			});
-
-			if (self.elementHierarchies) {
-
-				rowsviewMainListEquipments.push(getSwitcherViews());
-				rowsviewMainListEquipments.push({ height: 1, borderless: false });
-				rowsviewMainListEquipments.push(getSwitcherButtons());
-
-			} else {
-
-				rowsviewMainListEquipments.push(getViewListEquipments());
-			}
-
-			let viewMainListEquipments = {
-				id: "view-main-list-equipments-" + self.uid,
-				header: function() {
-
-					return `<div>
-								<span class='ico webix_icon mdi mdi-view-headline'></span>
-								<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
-							</div>`;
-				},
-				body: {
-					//width: 325,
-					rows: rowsviewMainListEquipments
-				}
-			};
-
-			viewList.cols = [viewMainListEquipments];
-
-			return viewList;
-		}
 
 		function getSwitcherViews() {
 
