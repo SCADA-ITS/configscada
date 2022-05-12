@@ -1,8 +1,8 @@
 export default class SplashScreen {
 
-	constructor(callback) {
+	constructor() {
 
-		this.mainView = this.createView(callback);
+		this.mainView = this.createView();
 	}
 	
 	getView() {
@@ -30,7 +30,7 @@ export default class SplashScreen {
 		return this.mainView.config.hidden;
 	}
 
-	createView(callback) {
+	createView() {
 
 		let splashHeight = 500;
 		let splashWidth = 800;
@@ -62,7 +62,6 @@ export default class SplashScreen {
 					on: {
 						onAfterRender: function() {
 							
-							//callback();
 						}
 					}
 				}

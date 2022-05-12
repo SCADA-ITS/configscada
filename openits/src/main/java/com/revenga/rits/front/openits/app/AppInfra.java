@@ -1,6 +1,9 @@
 package com.revenga.rits.front.openits.app;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.nio.file.Files;
@@ -30,12 +33,16 @@ public class AppInfra {
 
 	private static final String MAVEN_ARTIFACT = "openits";
 	private static final String MAVEN_PACKAGE = "com.revenga.rits.front";
-	
+
+	private static final String GIT_VERSION = "git.version";
 		
 	private static final Pattern debugPattern = Pattern.compile("-Xdebug|jdwp");
 	
 	@Getter
 	private final String version = getVer();
+	
+	@Getter 
+	private final String gitInfoStr = getGitVersion();
 	
 	@Autowired
 	CacheManager entitiesManager;
@@ -189,5 +196,36 @@ public class AppInfra {
 		}
 		version = version == null ? "" : version.trim();
 		return version.isEmpty() ? "unknown" : version;
+	}
+	
+	private String getGitVersion() {
+		
+		String gitInfoStr = null;
+		
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream(GIT_VERSION);
+		
+		if (is != null) {
+		
+			try (BufferedReader buf = new BufferedReader(new InputStreamReader(is))) {
+				
+				String line = buf.readLine(); 
+				StringBuilder sb = new StringBuilder();
+
+				while(line != null) { 
+
+					sb.append(line).append(System.lineSeparator()); 
+					line = buf.readLine(); 
+				} 
+				
+				gitInfoStr = sb.toString();
+				
+			} catch (IOException e) {
+				
+				log.error(e.getMessage());
+				log.debug(ExceptionUtils.getStackTrace(e));
+			}
+		}
+		
+		return gitInfoStr;
 	}
 }

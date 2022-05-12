@@ -1,6 +1,9 @@
 import CamViewer from "./camViewer.js";
 import Decoder from "./decoder.js";
 
+const DEFAULT_FPS = 10;
+const DEFAULT_TIMEOUT_CONNECT_MS = 10;
+
 export default class DecoderSNAP extends Decoder {
 
 	constructor(camviewer) {
@@ -10,7 +13,11 @@ export default class DecoderSNAP extends Decoder {
 		this.config = this.config.camConf.decoders[Decoder.SNAP];
 		this.img = undefined;
 		this.fps = this.config.defaultFps ? this.config.defaultFps : DEFAULT_FPS;
-		
+		this.timeCheckStreamMs = Math.floor(1000 / this.fps);
+		this.timeoutConnectMs = this.config.timeoutConnectMs ? this.config.timeoutConnectMs : DEFAULT_TIMEOUT_CONNECT_MS;
+		this.initTimeElapsedWOConn = 0;
+		this.timeElapsedWOConn = 0;
+		  
 		let elementValueFps = this.element.elementValues.find(e => e.elementTypeParam.id === this.config.fps);
 
 		if (elementValueFps) {
@@ -18,11 +25,11 @@ export default class DecoderSNAP extends Decoder {
 			this.fps = elementValueFps.value;
 		}
 		
-		this.timeCheckStreamMs = Math.floor(1000 / this.fps);
 		this.running = false;
 		this.loading = false;
 		this.error = false;
 		this.hndStream = undefined;
+		this.previousFrame = false;
 		
 		this.firstConnection = true;
 	}
@@ -51,10 +58,21 @@ export default class DecoderSNAP extends Decoder {
 			if (cnv) {
 				
 				self.running = true;
-				self.img.onerror = onErrorImage;
-				self.img.onload = onLoadImage;
+				self.img.src = Decoder.NO_VIDEO_IMAGE;
 				
-				updateImage();
+				if ($$("camviewer-buttons-" + self.uid)) {
+						
+					$$("camviewer-buttons-" + self.uid).hide();	
+				}
+				
+				setTimeout(function() {
+					
+					self.img.onerror = onErrorImage;
+					self.img.onload = onLoadImage;
+					
+					updateImage();
+						
+				}, 1000);
 			}
 		}
 		
@@ -79,6 +97,8 @@ export default class DecoderSNAP extends Decoder {
 			var ctx = cnv.getContext("2d");
 			
 			if (self.img != null && cnv) {
+				
+				//self.currentRetriesNoImage = !self.previousFrame ? 0 : self.currentRetriesNoImage;
 				
 				let ratioW = self.w / self.img.width;
 				let ratioH = self.h / self.img.height;
@@ -123,7 +143,7 @@ export default class DecoderSNAP extends Decoder {
 			
             if (self.running && self.timeCheckStreamMs > 0) {
 	
-                self.hndStream  = setTimeout(updateImage, self.timeCheckStreamMs);
+                self.hndStream = setTimeout(updateImage, self.timeCheckStreamMs);
             }
 		}
 		
@@ -133,10 +153,34 @@ export default class DecoderSNAP extends Decoder {
 
 	        if (self.img) {
 		
-				self.img.src = !self.error ? getNewUrl() : Decoder.NO_VIDEO_IMAGE;
+				if (!self.error) {
+
+					self.timeElapsedWOConn = 0;
+					self.initTimeElapsedWOConn = 0;
+										
+					self.img.src = getNewUrl();
+				}
+				else {
+					
+					if (self.initTimeElapsedWOConn == 0) {
+						
+						self.initTimeElapsedWOConn = Date.now();
+					}
+					
+					self.timeElapsedWOConn = Date.now() - self.initTimeElapsedWOConn;
+					
+					if (self.timeElapsedWOConn < self.timeoutConnectMs) {
+						
+						self.img.src = self.img.src;
+					}
+					else {
+						
+						self.img.src = Decoder.NO_VIDEO_IMAGE;
+					}
+				}
 			}
 			
-	        self.loading = true;
+			self.loading = true;
 	    }
 
 		function getNewUrl() {

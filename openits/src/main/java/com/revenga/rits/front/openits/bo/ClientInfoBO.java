@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.revenga.rits.front.openits.app.AppInfra;
 import com.revenga.rits.front.openits.model.ClientInfoUI;
+import com.revenga.rits.front.openits.model.ClientInfoUI.GitInfo;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -40,6 +42,53 @@ public class ClientInfoBO {
 		ClientInfoUI clientInfo = new ClientInfoUI();
 		
 		clientInfo.setVersion(appInfra.getVersion());
+		
+		String gitInfoStr = appInfra.getGitInfoStr();
+		int lineOffset = 0;
+		
+		if (!StringUtils.isEmpty(gitInfoStr)) {
+			
+			try (Scanner scanner = new Scanner(gitInfoStr)) {
+				
+				String commit = null;
+				String author = null;
+				String date = null;
+				String message = null;
+				StringBuilder sbCommitMessage = new StringBuilder();
+				
+				while (scanner.hasNextLine()) {
+					
+					lineOffset++;
+					
+					String line = scanner.nextLine().trim();
+					
+					if (!StringUtils.isEmpty(line)) {
+						
+						if (lineOffset == GitInfo.LINE_COMMIT) {
+							
+							commit = line;
+						}
+						else if (lineOffset == GitInfo.LINE_AUTHOR) {
+							
+							author = line;
+						}
+						else if (lineOffset == GitInfo.LINE_DATE) {
+							
+							date = line;
+						}
+						else {
+
+							sbCommitMessage.append(line);
+						}
+					}
+				}
+				
+				message = sbCommitMessage.toString();
+				
+				clientInfo.createGitInfo(commit, author, date, message);
+			}
+		}
+		
 		clientInfo.setUpTime(ManagementFactory.getRuntimeMXBean().getUptime());
 		
 		return clientInfo;

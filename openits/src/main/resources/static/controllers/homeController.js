@@ -2,6 +2,7 @@ import { util } from "../lib/util.js"
 import MainTab from "../component/general/mainTab.js";
 import MainToolbar from "../component/general/mainToolbar.js";
 import MenuToolbar from "../component/general/menuToolbar.js";
+import VersionTaskbar from "../component/general/versionTaskbar.js";
 import I18n from "../managers/i18n.js";
 import EntitiesManager from "../managers/entitiesManager.js";
 import WindowManager from "../managers/windowManager.js";
@@ -66,6 +67,7 @@ function initialize() {
 	var mainTab = new MainTab();
 	var mainToolbar = new MainToolbar();
 	var menuToolbar = new MenuToolbar(onLoad);
+	var versionTaskbar = new VersionTaskbar();
 	
 	function onLoad() {
 	
@@ -79,18 +81,19 @@ function initialize() {
 					id: TASKBAR_ID
 				},
 				{},
-				{
-					view: "label",
-					label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
-					align: "right",
-					width: 150
-				},
-				{
-					view: "label",
-					label: `<span class='open-its-version'>version 0.01</span>`,
-					align: "right",
-					width: 85
-				}
+				versionTaskbar.getView()
+//				{
+//					view: "label",
+//					label: `<img class='logo-revenga' src='./img/open_its_full.png'>`,
+//					align: "right",
+//					width: 150
+//				},
+//				{
+//					view: "label",
+//					label: `<span class='open-its-version'>version 0.01</span>`,
+//					align: "right",
+//					width: 85
+//				}
 			],
 			borderless: 0
 		};

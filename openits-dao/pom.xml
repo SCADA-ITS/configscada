@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.revenga.rits.front</groupId>
 	<artifactId>openits-dao</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9.0</version>
 	<name>openits-dao</name>
 	<description>Library Front DAO for Open-ITS</description>
 
