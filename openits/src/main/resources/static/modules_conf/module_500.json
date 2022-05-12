@@ -6,6 +6,8 @@
 		"equipmentViewer": 101401
 	},
 	"restEndpoints":{
-		"hierarchy": "elements/hierarchy"
+		"hierarchy": "elements/hierarchy",
+		"elements": "elements",
+		"elementId": "elements/${id}"
 	}
 }

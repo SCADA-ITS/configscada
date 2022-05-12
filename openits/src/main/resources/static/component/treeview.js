@@ -740,7 +740,7 @@ export default class TreeView {
 		
 				if (stompSubscriptorService) {
 		
-					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic, onMessage);
+					self.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, self.metadata.stomp.topic, onMessage);
 				}
 				
 				function onMessage(be, action, timestamp) {

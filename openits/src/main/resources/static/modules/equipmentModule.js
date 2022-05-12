@@ -6,7 +6,7 @@ import TreeView from "../component/treeview.js";
 import OptionDialogBox from "../component/optionDialogBox.js";
 
 const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
-const ELEMENT_TYPE_ALL = "-1";
+const TOPIC_ELEMENTS = "/topic/element.>";
 
 export default class EquipmentModule extends GenericMultiGridModule {
 
@@ -19,6 +19,9 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		this.listView = undefined;
 		this.treeView = undefined;
 		this.elementHierarchies = undefined;
+		this.idStompSubscriptor = undefined;
+		this.itemsTree = [];
+		this.elements = undefined;
 	}
 
 
@@ -81,353 +84,449 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 				self.elementHierarchies = hierarchyResponse.json();
 
-				webix.ui(self.drawContent(jsonEquipmentTypesWithGridAssignedCopy), $$("loading-" + self.uid));
+				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elements).then(function(elementsResponse) {
 
-				$$("switcher-views-" + self.uid).show();
-				$$("loading-switcher-" + self.uid).hide();
+					if (elementsResponse != null) {
 
-				let listEquipmentTypes = $$("listview-" + self.listView.uid);
+						self.elements = elementsResponse.json();
 
-				if (!webix.isUndefined(listEquipmentTypes)) {
+						webix.ui(drawContent(jsonEquipmentTypesWithGridAssignedCopy), $$("loading-" + self.uid));
 
-					listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
+						$$("switcher-views-" + self.uid).show();
+						$$("loading-switcher-" + self.uid).hide();
 
-						webix.extend($$(self.uid), webix.ProgressBar);
+						let listEquipmentTypes = $$("listview-" + self.listView.uid);
 
-						$$(self.uid).showProgress({
-							type: "bottom",
-							hide: false
-						});
+						if (!webix.isUndefined(listEquipmentTypes)) {
 
-						webix.delay(function() {
+							listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
 
-							self.callbackSelectedElemenTypeList(id[0]);
-						}, null, null, 1);
-					});
+								webix.extend($$(self.uid), webix.ProgressBar);
 
-					self.listView.select(self.listView.data[0].id);
-				}
+								$$(self.uid).showProgress({
+									type: "bottom",
+									hide: false
+								});
+
+								webix.delay(function() {
+
+									self.callbackSelectedElemenTypeList(id[0]);
+								}, null, null, 1);
+							});
+
+							self.listView.select(self.listView.data[0].id);
+						}
+					}
+				});
 			}
 		});
-	}
 
-	drawContent(jsonEquipmentTypesWithGridAssigned) {
+		function drawContent(jsonEquipmentTypesWithGridAssigned) {
 
-		let self = this;
-		let viewMain;
-		let rowsviewMainListEquipments = [];
+			let viewMain;
+			let rowsviewMainListEquipments = [];
 
-		rowsviewMainListEquipments.push({
-			id: "loading-switcher-" + self.uid,
-			hidden: false,
-			cols: [
-				util.ui.getViewDrawLoading(true)
-			]
-		});
-
-		if (self.elementHierarchies) {
-
-			rowsviewMainListEquipments.push(getSwitcherViews());
-			rowsviewMainListEquipments.push({ height: 1, borderless: false });
-			rowsviewMainListEquipments.push(getSwitcherButtons());
-
-		} else {
-
-			rowsviewMainListEquipments.push(getViewListEquipments());
-		}
-
-		viewMain = {
-			cols: [
-				{
-					id: "view-main-list-equipments-" + self.uid,
-
-					header: function() {
-
-						return `<div>
-								<span class='ico webix_icon mdi mdi-view-headline'></span>
-								<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
-							</div>`;
-					},
-					body: {
-						width: 350,
-						rows: rowsviewMainListEquipments
-					}
-				},
-				{ view: "resizer" },
-				{
-					cols: [
-						{
-							id: "loadingContent-" + self.uid,
-							rows: [util.ui.getViewDrawLoading()]
-						},
-						{
-							id: "multi-" + self.uid,
-							view: "multiview",
-							hidden: true,
-							keepViews: true,
-							animate: false,
-							cells: [
-								{
-									id: "table-content-" + self.uid
-								},
-								{
-									id: "equipment-content-" + self.uid
-								}
-							]
-						}
-					]
-				}
-			]
-		};
-
-		function getSwitcherViews() {
-
-			let switcher;
-
-			switcher = {
-				id: "switcher-views-" + self.uid,
-				hidden: true,
+			rowsviewMainListEquipments.push({
+				id: "loading-switcher-" + self.uid,
+				hidden: false,
 				cols: [
-					{
-						rows: [
-							getViewListEquipments(),
-							getViewTreeEquipments()
-						]
-					}
+					util.ui.getViewDrawLoading(true)
 				]
-			};
+			});
 
-			return switcher;
-		}
+			if (self.elementHierarchies) {
 
-		function getViewListEquipments() {
-
-			let listView = {};
-			listView.rows = [];
-			let viewListEquipments = {};
-
-			if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
-
-				let options = {};
-
-				options[ListView.Options.MODE] = ListView.DrawMode.DEFAULT;
-
-				let events = {};
-
-				events[ListView.EventTypes.ON_SELECT_ROW] = function(ids) {
-
-					self.callbackSelectedElemenTypeList(ids);
-				};
-
-				self.listView = new ListView(jsonEquipmentTypesWithGridAssigned, options, events);
-				viewListEquipments = self.listView.getView();
+				rowsviewMainListEquipments.push(getSwitcherViews());
+				rowsviewMainListEquipments.push({ height: 1, borderless: false });
+				rowsviewMainListEquipments.push(getSwitcherButtons());
 
 			} else {
 
-				viewListEquipments = self.getViewDrawLoading();
+				rowsviewMainListEquipments.push(getViewListEquipments());
 			}
 
-			listView = viewListEquipments;
+			viewMain = {
+				cols: [
+					{
+						id: "view-main-list-equipments-" + self.uid,
+						header: function() {
 
-			return listView;
-		}
+							return `<div>
+								<span class='ico webix_icon mdi mdi-view-headline'></span>
+								<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
+							</div>`;
+						},
+						body: {
+							width: 350,
+							rows: rowsviewMainListEquipments
+						}
+					},
+					{
+						id: "resizer-" + self.uid,
+						view: "resizer"
+					},
+					{
+						cols: [
+							{
+								id: "loadingContent-" + self.uid,
+								rows: [util.ui.getViewDrawLoading()]
+							},
+							{
+								id: "multi-" + self.uid,
+								view: "multiview",
+								hidden: true,
+								keepViews: true,
+								animate: false,
+								cells: [
+									{
+										id: "table-content-" + self.uid
+									},
+									{
+										id: "equipment-content-" + self.uid
+									}
+								]
+							}
+						]
+					}
+				],
+				on: {
+					onAfterExpand: function(obj) {
 
-		function getViewTreeEquipments() {
+						if ($$("equipment-content-" + self.uid)) {
 
-			let treeView = {};
-			let events = {};
+							let switcherValue = $$("switcher-" + self.uid).getValue();
 
-			events[TreeView.EventTypes.ON_SELECT_ANY] = function(item, callbackEnable) {
+							if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
 
-				self.callbackSelectedItemTree(item);
+								let elementSelected = self.treeView.getSelected();
+								let elementSelectedId = elementSelected[0].id_;
+								let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
+
+								if (element && !element.defaultModuleAction) {
+
+									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+									if (elementType && !elementType.defaultModuleAction) {
+
+										self.callbackSelectedItemTree(elementSelected);
+									}
+								}
+							}
+						}
+					},
+					onAfterCollapse: function() {
+
+						if ($$("equipment-content-" + self.uid)) {
+
+							let switcherValue = $$("switcher-" + self.uid).getValue();
+
+							if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
+
+								let elementSelected = self.treeView.getSelected();
+								let elementSelectedId = elementSelected[0].id_;
+								let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
+
+								if (element && !element.defaultModuleAction) {
+
+									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+									if (elementType && !elementType.defaultModuleAction) {
+
+										self.callbackSelectedItemTree(elementSelected);
+									}
+								}
+							}
+						}
+					}
+				}
 			};
 
-			let itemsTree = [];
-			let itemRelationships = [];
+			function getSwitcherViews() {
 
-			let elements = window.em.getAll(EntityType.ELEMENT);
+				let switcher;
 
-			if (Array.isArray(elements) && elements.length > 0) {
+				switcher = {
+					id: "switcher-views-" + self.uid,
+					hidden: true,
+					cols: [
+						{
+							rows: [
+								getViewListEquipments(),
+								getViewTreeEquipments()
+							]
+						}
+					]
+				};
 
-				itemsTree = elements.map(e => {
-
-					return {
-						id: e.id,
-						label: e.alias + " (" + i18n.t(e.elementType.labelAlias) + ")",
-						image: e.elementType.elementTypePhoto
-					}
-				});
+				return switcher;
 			}
 
-			if (Array.isArray(self.elementHierarchies) && self.elementHierarchies.length > 0) {
+			function getViewListEquipments() {
 
-				itemRelationships = self.elementHierarchies.map(e => {
+				let listView = {};
+				listView.rows = [];
+				let viewListEquipments = {};
 
-					return {
-						id: e.id,
-						nodeParentId: e.parent.id,
-						nodeChildId: e.child.id
-					}
-				});
-			}
+				if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
 
-			let treeData = util.tree.getNodes(itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
+					let options = {};
 
-			let root = [{
-				id: ELEMENT_TYPE_ALL,
-				value: i18n.t("LBL_ELEMENT_TYPE_ALL"),
-				data: treeData,
-				props: {
-					folder: true
+					options[ListView.Options.MODE] = ListView.DrawMode.DEFAULT;
+
+					let events = {};
+
+					events[ListView.EventTypes.ON_SELECT_ROW] = function(ids) {
+
+						self.callbackSelectedElemenTypeList(ids);
+					};
+
+					self.listView = new ListView(jsonEquipmentTypesWithGridAssigned, options, events);
+					viewListEquipments = self.listView.getView();
+
+				} else {
+
+					viewListEquipments = self.getViewDrawLoading();
 				}
-			}];
 
-			let metadata = {
-				id: -1,
-				label: "LBL_EQUIPMENTS",
-				treeOptionValues: [
-					{ value: false, treeOption: { id: 2 } },
-					{ value: true, treeOption: { id: 3 } },
-					{ value: true, treeOption: { id: 4 } },
-					{ value: true, treeOption: { id: 5 } },
-					{ value: true, treeOption: { id: 6 } },
-					{ value: false, treeOption: { id: 8 } }
-				],
-				treeCommands: []
+				listView = viewListEquipments;
+
+				return listView;
 			}
 
-			self.treeView = new TreeView(metadata, root, events);
+			function getViewTreeEquipments() {
 
-			treeView = self.treeView.getView();
-			treeView.hidden = true;
+				let treeView = {};
+				let events = {};
 
-			return treeView;
-		}
+				events[TreeView.EventTypes.ON_SELECT_ANY] = function(item, callbackEnable) {
 
-		function getSwitcherButtons() {
+					self.callbackSelectedItemTree(item);
+				};
 
-			let switcherButtonsView;
+				let itemRelationships = [];
 
-			switcherButtonsView = {
-				css: { "background-color": "var(--blue-soft-opacity-1)" },
-				height: 50,
-				cols: [
-					{ width: 10 },
-					{
-						rows: [
-							{ height: 5 },
-							{
-								view: "segmented",
-								css: "segment-custom-2",
-								value: "switcher-element-types-" + self.uid,
-								options: [
-									{
-										id: "switcher-element-types-" + self.uid,
-										value: `<div>
+				if (Array.isArray(self.elements) && self.elements.length > 0) {
+
+					self.itemsTree = self.elements.map(e => {
+
+						return {
+							id: e.id,
+							label: e.alias + " (" + i18n.t(e.elementType.labelAlias) + ")",
+							image: e.elementType.elementTypePhoto,
+							stateColor: util.element.getColor({ id: e.elementTypeState.id }),
+							stateLabel: i18n.t(e.elementTypeState.labelAlias),
+						}
+					});
+				}
+
+				if (Array.isArray(self.elementHierarchies) && self.elementHierarchies.length > 0) {
+
+					itemRelationships = self.elementHierarchies.map(e => {
+
+						return {
+							id: e.id,
+							nodeParentId: e.parent.id,
+							nodeChildId: e.child.id
+						}
+					});
+				}
+
+				let treeData = util.tree.getNodes(self.itemsTree, itemRelationships, { parentNodeId: "nodeParentId", childNodeId: "nodeChildId" }, false);
+
+				let metadata = {
+					id: -1,
+					label: "LBL_EQUIPMENTS",
+					treeOptionValues: [
+						{ value: false, treeOption: { id: 2 } },
+						{ value: true, treeOption: { id: 3 } },
+						{ value: true, treeOption: { id: 4 } },
+						{ value: true, treeOption: { id: 5 } },
+						{ value: true, treeOption: { id: 6 } },
+						{ value: false, treeOption: { id: 8 } }
+					],
+					treeCommands: [],
+					stomp: {
+						topic: TOPIC_ELEMENTS,
+						adapter: adapterElement2Tree
+					}
+				}
+
+				function adapterElement2Tree(data, getItemsById_, update) {
+
+					if (Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
+
+						let elementId = data.basicElementsVO[0].id;
+
+						if (Array.isArray(self.itemsTree) && self.itemsTree.length > 0) {
+
+							let elementAux = self.itemsTree.find(e => e.id === elementId);
+
+							if (elementAux) {
+
+								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementId, { id: elementAux.id })).then(function(elementsResponse) {
+
+									if (elementsResponse != null) {
+
+										let element = elementsResponse.json();
+										let currentItems = self.treeView.getItemsById_(elementId);
+
+										if (Array.isArray(currentItems) && currentItems.length > 0) {
+
+											for (let currentItem of currentItems) {
+
+												let stateColor = (element.elementTypeState.color) ? element.elementTypeState.color : util.element.getColor({ id: element.elementTypeState.id });
+
+												currentItem.props.stateColor = stateColor;
+												currentItem.props.stateLabel = i18n.t(element.elementTypeState.labelAlias);
+
+												self.treeView.updateById_(elementId, currentItem);
+											}
+										}
+									}
+								});
+							}
+						}
+					}
+				}
+
+				self.treeView = new TreeView(metadata, treeData, events);
+
+				treeView = self.treeView.getView();
+				treeView.hidden = true;
+
+				return treeView;
+			}
+
+			function getSwitcherButtons() {
+
+				let switcherButtonsView;
+
+				switcherButtonsView = {
+					css: { "background-color": "var(--blue-soft-opacity-1)" },
+					height: 50,
+					cols: [
+						{ width: 10 },
+						{
+							rows: [
+								{ height: 5 },
+								{
+									id: "switcher-" + self.uid,
+									view: "segmented",
+									css: "segment-custom-2",
+									value: "switcher-element-types-" + self.uid,
+									options: [
+										{
+											id: "switcher-element-types-" + self.uid,
+											value: `<div>
 													<span class='ico webix_icon mdi mdi-format-list-bulleted'></span>
 													<span>${i18n.t("LBL_LIST")}</span>
 												</div>`,
-									},
-									{
-										id: "switcher-element-hierarchy-" + self.uid,
-										value: `<div>
+										},
+										{
+											id: "switcher-element-hierarchy-" + self.uid,
+											value: `<div>
 													<span class='ico webix_icon mdi mdi-family-tree'></span>
 													<span>${i18n.t("LBL_TREE")}</span>
 												</div>`,
-									}
-								],
-								tooltip: function(obj) {
+										}
+									],
+									tooltip: function(obj) {
 
-									if (obj.id === "switcher-element-types-" + self.uid) {
+										if (obj.id === "switcher-element-types-" + self.uid) {
 
-										return i18n.t("LBL_SELECTION_BY_TYPE");
-									}
-									else if (obj.id === "switcher-element-hierarchy-" + self.uid) {
+											return i18n.t("LBL_SELECTION_BY_TYPE");
+										}
+										else if (obj.id === "switcher-element-hierarchy-" + self.uid) {
 
-										return i18n.t("LBL_SELECTION_BY_HIERARCHY");
-									}
-								},
-								on: {
-									onChange(newv, oldv) {
+											return i18n.t("LBL_SELECTION_BY_HIERARCHY");
+										}
+									},
+									on: {
+										onChange(newv, oldv) {
 
-										const VIEWS = {
-											TABLE: 0,
-											EQUIPMENT: 1
-										};
+											const VIEWS = {
+												TABLE: 0,
+												EQUIPMENT: 1
+											};
 
-										$$("loading-switcher-" + self.uid).show();
-										$$("switcher-views-" + self.uid).hide();
+											$$("loading-switcher-" + self.uid).show();
+											$$("switcher-views-" + self.uid).hide();
 
-										webix.delay(function() {
+											webix.delay(function() {
 
-											let contentViews = $$("multi-" + self.uid).getChildViews();
+												let contentViews = $$("multi-" + self.uid).getChildViews();
 
-											$$("switcher-views-" + self.uid).show();
-											$$("loading-switcher-" + self.uid).hide();
+												$$("switcher-views-" + self.uid).show();
+												$$("loading-switcher-" + self.uid).hide();
 
-											if (newv === "switcher-element-types-" + self.uid) {
+												if (newv === "switcher-element-types-" + self.uid) {
 
-												$$("listview-" + self.listView.uid).show();
-												$$("treeview-" + self.treeView.uid).hide();
+													$$("listview-" + self.listView.uid).show();
+													$$("treeview-" + self.treeView.uid).hide();
+													$$("resizer-" + self.uid).enable();
 
-												$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
+													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
 
-													return `<div>
+														return `<div>
 																<span class='ico webix_icon mdi mdi-view-headline'></span>
 																<span>${i18n.t("LBL_EQUIPMENT_TYPES")}</span>
 															</div>`;
-												});
+													});
 
-												$$("view-main-list-equipments-" + self.uid).refresh();
+													$$("view-main-list-equipments-" + self.uid).refresh();
 
-												contentViews[VIEWS.TABLE].show();
-												contentViews[VIEWS.EQUIPMENT].hide();
+													contentViews[VIEWS.TABLE].show();
+													contentViews[VIEWS.EQUIPMENT].hide();
 
-											} else if (newv === "switcher-element-hierarchy-" + self.uid) {
+												} else if (newv === "switcher-element-hierarchy-" + self.uid) {
 
-												$$("treeview-" + self.treeView.uid).show();
-												$$("listview-" + self.listView.uid).hide();
+													$$("treeview-" + self.treeView.uid).show();
+													$$("listview-" + self.listView.uid).hide();
+													$$("resizer-" + self.uid).disable();
 
-												$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
+													$$("view-main-list-equipments-" + self.uid).config.header = webix.template(function() {
 
-													return `<div>
+														return `<div>
 																<span class='ico webix_icon mdi mdi-view-headline'></span>
 																<span>${i18n.t("LBL_EQUIPMENT_TREE")}</span>
 															</div>`;
-												});
+													});
 
-												$$("view-main-list-equipments-" + self.uid).refresh();
+													$$("view-main-list-equipments-" + self.uid).refresh();
 
-												let itemSelected = self.treeView.getSelected();
+													let itemSelected = self.treeView.getSelected();
 
-												if (Array.isArray(itemSelected) && itemSelected.length > 0) {
+													if (Array.isArray(itemSelected) && itemSelected.length > 0) {
 
-													contentViews[VIEWS.EQUIPMENT].show();
+														contentViews[VIEWS.EQUIPMENT].show();
 
-												} else {
+													} else {
 
-													self.treeView.select(ELEMENT_TYPE_ALL);
-													contentViews[VIEWS.EQUIPMENT].show();
+														let firstItemId = $$("tree-" + self.treeView.uid).getFirstId();
+														self.treeView.select(firstItemId);
+														contentViews[VIEWS.EQUIPMENT].show();
+													}
+
+													contentViews[VIEWS.TABLE].hide();
 												}
-
-												contentViews[VIEWS.TABLE].hide();
-											}
-										});
+											});
+										}
 									}
-								}
-							},
-							{ height: 5 }
-						]
-					},
-					{ width: 10 }
-				]
-			};
+								},
+								{ height: 5 }
+							]
+						},
+						{ width: 10 }
+					]
+				};
 
-			return switcherButtonsView;
+				return switcherButtonsView;
+			}
+
+			return viewMain;
 		}
-
-		return viewMain;
 	}
+
 
 	callbackSelectedElemenTypeList(id) {
 
@@ -473,7 +572,6 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		let defaultModAction = undefined;
 		let modAction = self.config.action.equipmentViewer;
 		let equipmentSelected = [];
-		let containerWidth = $$(self.args.containerId).$width - 330;
 
 		$$("loadingContent-" + self.uid).show();
 		$$("multi-" + self.uid).hide();
@@ -566,6 +664,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 			if (mod) {
 
+				let containerWidth = $$("loadingContent-" + self.uid).$width;
 				let moduleAction = { id: modAction };
 
 				let args = {
