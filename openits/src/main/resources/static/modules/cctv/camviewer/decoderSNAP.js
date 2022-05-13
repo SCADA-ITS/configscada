@@ -98,8 +98,6 @@ export default class DecoderSNAP extends Decoder {
 			
 			if (self.img != null && cnv) {
 				
-				//self.currentRetriesNoImage = !self.previousFrame ? 0 : self.currentRetriesNoImage;
-				
 				let ratioW = self.w / self.img.width;
 				let ratioH = self.h / self.img.height;
 						
@@ -110,7 +108,11 @@ export default class DecoderSNAP extends Decoder {
 				
 				cnv.width = self.imgW;
         		cnv.height = self.imgH;
-        		ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);
+        		
+        		if (self.container && self.container.isVisible() && !document.hidden) {
+	
+					ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);		
+				}				
 
 				if (self.firstConnection && !self.error) {
 					
@@ -143,7 +145,7 @@ export default class DecoderSNAP extends Decoder {
 			
             if (self.running && self.timeCheckStreamMs > 0) {
 	
-                self.hndStream = setTimeout(updateImage, self.timeCheckStreamMs);
+				self.hndStream = setTimeout(updateImage, self.timeCheckStreamMs);	
             }
 		}
 		

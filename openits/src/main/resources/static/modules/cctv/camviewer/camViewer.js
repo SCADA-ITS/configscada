@@ -15,7 +15,7 @@ export default class CamViewer {
 	static get MODE_MULTI() { return 2 }
 
 	
-	constructor(config, element, w, h, mode, fit, fullScreen) {
+	constructor(config, element, w, h, mode, fit, fullScreen, container) {
 
 		this.uid = webix.uid();
 		this.config = config;
@@ -24,6 +24,7 @@ export default class CamViewer {
 		this.h = mode == CamViewer.MODE_SINGLE ? h - 60 : h;
 		this.mode = mode;
 		this.fit = fit ? fit : false;
+		this.container = container;
 
 		this.controlsVisible = false;
 		this.expandCam = false;

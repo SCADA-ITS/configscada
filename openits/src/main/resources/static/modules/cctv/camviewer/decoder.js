@@ -20,6 +20,7 @@ export default class Decoder {
 		this.h = camviewer.h;
 		this.fit = camviewer.fit;
 		this.uid = camviewer.uid;
+		this.container = camviewer.container;
 		this.imgW;
 		this.imgH;
 		

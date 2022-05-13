@@ -33,7 +33,7 @@ export default class CCTVSingle {
 							let w = container.$width;
 							let h = container.$height;
 							
-							let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_SINGLE, self.parent.config.single.fit, self.fullScreen);
+							let camViewer = new CamViewer(self.parent.config, element, w, h, CamViewer.MODE_SINGLE, self.parent.config.single.fit, self.fullScreen, container);
 			
 							let viewCamViewer = camViewer.getView();
 							
