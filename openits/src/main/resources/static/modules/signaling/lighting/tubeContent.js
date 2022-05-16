@@ -25,6 +25,7 @@ export default class TubeContent {
 		this.selectedTable = "action-panel-switcher-circuit" + this.parent.uid;
 		this.lightingModeValueParam = undefined;
 
+		this.circuitsGrid = undefined;
 		this.tubeCircuits = undefined;
 		this.tubeCircuitsDataTable = undefined;
 		this.tubeDalis = undefined;
@@ -86,142 +87,149 @@ export default class TubeContent {
 				self.selectedTable = args.tubeTableOption;
 			}
 
-			if (self.selectedTube.childs && Array.isArray(self.selectedTube.childs)) {
+			webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.parent.config.restEndpoints.grid, { id: self.parent.config.gridId })).then(function(dataGrid) {
 
-				loadDataCircuits();
-				loadDataDalis();
-				
-				self.restTubeEquipments = self.selectedTube.childs.filter(element => (element.elementType.id != self.parent.config.elementTypeIdCircuit) && (element.elementType.id != self.parent.config.elementTypeIdDali));
-			}
+				if (dataGrid != null) {
 
-			self.connectWS();
+					self.circuitsGrid = dataGrid.json();
 
-			drawContent(self.getView());
+					if (self.selectedTube.childs && Array.isArray(self.selectedTube.childs)) {
 
-			if (self.tubeCircuitsDataTable) {
+						loadDataCircuits();
+						loadDataDalis();
 
-				self.tubeCircuitsDataTable.callbacks();
+						self.restTubeEquipments = self.selectedTube.childs.filter(element => (element.elementType.id != self.parent.config.elementTypeIdCircuit) && (element.elementType.id != self.parent.config.elementTypeIdDali));
+					}
 
-				if (args.selectedPks) {
+					self.connectWS();
 
-					self.tubeCircuitsDataTable.select(args.selectedPks);
-				}
+					drawContent(self.getView());
 
-				if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
+					if (self.tubeCircuitsDataTable) {
 
-					self.enableGridButtons(self.tubeCircuitsDataTable, false);
-				}
-				else {
-					
-					self.enableGridButtons(self.tubeCircuitsDataTable, true);
-				}
-			}
+						self.tubeCircuitsDataTable.callbacks();
 
-			if (self.tubeDalisDataTable) {
+						if (args.selectedPks) {
 
-				self.tubeDalisDataTable.callbacks();
+							self.tubeCircuitsDataTable.select(args.selectedPks);
+						}
 
-				if (args.selectedPks) {
+						if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
 
-					self.tubeDalisDataTable.select(args.selectedPks);
-				}
+							self.enableGridButtons(self.tubeCircuitsDataTable, false);
+						}
+						else {
 
-				if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
+							self.enableGridButtons(self.tubeCircuitsDataTable, true);
+						}
+					}
 
-					self.enableGridButtons(self.tubeDalisDataTable, false);	
-				}
-				else {
-					
-					self.enableGridButtons(self.tubeDalisDataTable, true);
-				}
-			}
+					if (self.tubeDalisDataTable) {
 
-			function loadDataCircuits() {
+						self.tubeDalisDataTable.callbacks();
 
-				let circuits = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdCircuit);
+						if (args.selectedPks) {
 
-				if (circuits && Array.isArray(circuits) && circuits.length > 0) {
+							self.tubeDalisDataTable.select(args.selectedPks);
+						}
 
-					self.tubeCircuits = [];
+						if (self.lightingModeValueParam && self.parent.config.lightingModeOptions.find(option => option.id == self.lightingModeValueParam.value).disable) {
 
-					circuits.forEach(element => {
+							self.enableGridButtons(self.tubeDalisDataTable, false);
+						}
+						else {
 
-						let circuit = {};
+							self.enableGridButtons(self.tubeDalisDataTable, true);
+						}
+					}
 
-						circuit.id = element.id;
-						circuit.alias = element.alias;
-						circuit.state = (element.elementTypeState) ? element.elementTypeState.id : null;
+					function loadDataCircuits() {
 
-						if (element.elementValues && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+						let circuits = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdCircuit);
 
-							element.elementValues.forEach(elementValue => {
+						if (circuits && Array.isArray(circuits) && circuits.length > 0) {
 
-								circuit[elementValue.elementTypeParam.id] = elementValue.value;
+							self.tubeCircuits = [];
 
-								if (elementValue.elementTypeParam.id === self.parent.config.params.circuitState) {
+							circuits.forEach(element => {
 
-									let circuitStateLabel = CircuitState.find(e => e.value == elementValue.value);
+								let circuit = {};
 
-									if (circuitStateLabel) {
+								circuit.id = element.id;
+								circuit.alias = element.alias;
+								circuit.state = (element.elementTypeState) ? element.elementTypeState.id : null;
 
-										circuit["circuitStateLabel"] = i18n.t(circuitStateLabel.label);
+								if (element.elementValues && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+
+									element.elementValues.forEach(elementValue => {
+
+										circuit[elementValue.elementTypeParam.id] = elementValue.value;
+
+										if (elementValue.elementTypeParam.id === self.parent.config.params.circuitState) {
+
+											let circuitStateLabel = CircuitState.find(e => e.value == elementValue.value);
+
+											if (circuitStateLabel) {
+
+												circuit["circuitStateLabel"] = i18n.t(circuitStateLabel.label);
+											}
+										}
+									});
+								}
+
+								self.tubeCircuits.push(circuit);
+							});
+						}
+					}
+
+					function loadDataDalis() {
+
+						let dalis = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdDali);
+
+						if (dalis && Array.isArray(dalis) && dalis.length > 0) {
+
+							self.tubeDalis = [];
+
+							dalis.forEach(element => {
+
+								let dali = {};
+
+								dali.id = element.id;
+								dali.alias = element.alias;
+								dali.state = (element.elementTypeState) ? element.elementTypeState.id : null;
+
+								if (element.elementValues && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
+
+									element.elementValues.forEach(elementValue => {
+
+										dali[elementValue.elementTypeParam.id] = elementValue.value;
+									});
+								}
+
+								let daliState = dali[self.parent.config.params.daliState];
+								let daliRegimeConfig = JSON.parse(dali[self.parent.config.params.daliRegimeConfig]);
+
+								if (daliState && daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
+
+									let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState);
+
+									if (daliRegime) {
+
+										dali["daliStateAlias"] = daliRegime.alias;
 									}
 								}
+
+								self.tubeDalis.push(dali);
 							});
 						}
+					}
 
-						self.tubeCircuits.push(circuit);
-					});
+					if (self.equipmentMeasures) {
+
+						self.equipmentMeasures.loadData();
+					}
 				}
-			}
-
-			function loadDataDalis() {
-
-				let dalis = self.selectedTube.childs.filter(element => element.elementType.id == self.parent.config.elementTypeIdDali);
-
-				if (dalis && Array.isArray(dalis) && dalis.length > 0) {
-
-					self.tubeDalis = [];
-
-					dalis.forEach(element => {
-
-						let dali = {};
-
-						dali.id = element.id;
-						dali.alias = element.alias;
-						dali.state = (element.elementTypeState) ? element.elementTypeState.id : null;
-
-						if (element.elementValues && Array.isArray(element.elementValues) && element.elementValues.length > 0) {
-
-							element.elementValues.forEach(elementValue => {
-
-								dali[elementValue.elementTypeParam.id] = elementValue.value;
-							});
-						}
-
-						let daliState = dali[self.parent.config.params.daliState];
-						let daliRegimeConfig = JSON.parse(dali[self.parent.config.params.daliRegimeConfig]);
-
-						if (daliState && daliRegimeConfig && Array.isArray(daliRegimeConfig["regimes"])) {
-
-							let daliRegime = daliRegimeConfig["regimes"].find(e => e.id == daliState);
-
-							if (daliRegime) {
-
-								dali["daliStateAlias"] = daliRegime.alias;
-							}
-						}
-
-						self.tubeDalis.push(dali);
-					});
-				}
-			}
-
-			if(self.equipmentMeasures){
-				
-				self.equipmentMeasures.loadData();
-			}
-			
+			});
 		});
 	}
 
@@ -338,21 +346,21 @@ export default class TubeContent {
 
 					function changeMode(newModeId, callbackCloseDialog) {
 
-						let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+						let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
 						ms.show();
-						
+
 						function onAccept() {
-							
+
 							callbackCloseDialog(true);
 							let command = self.parent.config.commands.SEND_LIGHTING_MODE;
 							command.elementId = self.selectedTube.id;
 							command.commandElementValues[0].value = newModeId;
 
 							util.element.sendCommand([command], function(res) {
-								
+
 								if (res) {
-								
-									(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+
+									(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 								}
 
 							});
@@ -389,7 +397,7 @@ export default class TubeContent {
 				getBottom()
 			]
 		};
-		
+
 
 		function getRegime() {
 
@@ -512,7 +520,7 @@ export default class TubeContent {
 					}
 				]
 			};
-			
+
 			function getButtonChangeRegime() {
 
 				let buttonChangeRegime = { height: 38 };
@@ -631,7 +639,7 @@ export default class TubeContent {
 
 			return regime;
 		}
-		
+
 		function getContent() {
 
 			let viewContent = {};
@@ -661,7 +669,7 @@ export default class TubeContent {
 					header: i18n.t("LBL_DALIS"),
 					body: {
 						rows: getDalisTable()
-					}					
+					}
 				}
 			);
 
@@ -696,203 +704,24 @@ export default class TubeContent {
 		function getCircuitsTable() {
 
 			let viewCircuits;
-			
+
 			let data = self.tubeCircuits;
-			
+
 			if (Array.isArray(data) && data.length > 0) {
+
+				let metadata = webix.copy(self.circuitsGrid.metadata);
+
+				metadata.gridCommands.push({
+					id: 1,
+					default_: true,
+					icon: "mdi mdi-information-outline",
+					label: "LBL_INFO",
+					multiselect: false,
+					position: 1,
+					showText: false,
+					itemRequired: true
+				});
 				
-				const defaultGridOptionValues = [
-					{ gridOption: { id: 5 }, value: undefined },
-					{ gridOption: { id: 6 }, value: undefined },
-					{ gridOption: { id: 7 }, value: "false" },
-					{ gridOption: { id: 8 }, value: "false" },
-					{ gridOption: { id: 9 }, value: "true" },
-					{ gridOption: { id: 10 }, value: "true" },
-					{ gridOption: { id: 16 }, value: "img/grid/default.png" },
-					{ gridOption: { id: 21 }, value: "custom" },
-					{ gridOption: { id: 23 }, value: "true" }
-				];
-	
-				let metadata = {
-					filter: true,
-					label: "LBL_CIRCUIT",
-					visible: true,
-					gridOptionValues: defaultGridOptionValues,
-					gridFields: [
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: true,
-							parameterized: false,
-							position: 1,
-							required: true,
-							sourceField: "id",
-							visible: false,
-							widthPx: 1,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							parameterized: false,
-							position: 2,
-							required: true,
-							sourceField: "state",
-							visible: true,
-							widthPx: 30,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: [
-								{
-									icon: "./img/state/stateUnknown.png",
-									showValue: false,
-									value: "ElementTypeState:84:0",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_UNKNOWN"
-								},
-								{
-									icon: "./img/state/stateUp.png",
-									showValue: false,
-									value: "ElementTypeState:84:1",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_UP"
-								},
-								{
-									icon: "./img/state/stateDown.png",
-									showValue: false,
-									value: "ElementTypeState:84:2",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_DOWN"
-								},
-								{
-									icon: "./img/state/stateAlarm.png",
-									showValue: false,
-									value: "ElementTypeState:84:3",
-									labelValue: "LBL_ELEMENT_TYPE_STATE_ALARMS"
-								}
-							]
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_CIRCUIT",
-							labelTooltip: "LBL_CIRCUIT",
-							parameterized: false,
-							position: 3,
-							required: false,
-							sourceField: "alias",
-							visible: true,
-							widthPx: 200,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: []
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "",
-							labelTooltip: "LBL_CIRCUIT_STATE",
-							parameterized: false,
-							position: 4,
-							required: true,
-							sourceField: self.parent.config.params.circuitState,
-							visible: true,
-							widthPx: 1,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_CIRCUIT_STATE",
-							labelTooltip: "LBL_CIRCUIT_STATE",
-							parameterized: false,
-							position: 5,
-							required: true,
-							sourceField: "circuitStateLabel",
-							visible: true,
-							widthPx: 250,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							},
-							gridFieldIcons: [
-								{
-									showValue: false,
-									badgeColor: true,
-									avatar: false,
-									enabled: true
-								}
-							]
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							parameterized: false,
-							position: 6,
-							required: false,
-							sourceField: "circuitStateToSend",
-							visible: false,
-							widthPx: 1,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						},
-						{
-							extended: false,
-							filtered: false,
-							isEpochMilli: false,
-							isPk: false,
-							label: "LBL_CIRCUIT_STATE_TO_SEND",
-							labelTooltip: "LBL_CIRCUIT_STATE_TO_SEND",
-							parameterized: false,
-							position: 7,
-							required: true,
-							sourceField: "circuitStateToSendAlias",
-							visible: true,
-							widthPx: 400,
-							adjust: false,
-							gridFieldDataType: {
-								id: 1,
-								name: "string"
-							}
-						}
-					],
-					gridCommands: [
-						{
-							id: 1,
-							default_: true,
-							icon: "mdi mdi-information-outline",
-							label: "LBL_INFO",
-							multiselect: false,
-							position: 1,
-							showText: false,
-							itemRequired: true
-						}
-					]	
-				};
-	
 				if (self.parent.commandEquipmentPermission) {
 
 					metadata.gridCommands.push(
@@ -928,51 +757,51 @@ export default class TubeContent {
 						}
 					);
 				}
-				
+
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-	
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 2,
 					function: () => {
-	
+
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-	
+
 							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_ON;
 							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_ON");
 							self.tubeCircuitsDataTable.update(item);
 						});
-	
+
 						self.checkDisableChangeStatusButton();
 					}
 				});
-	
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 3,
 					function: () => {
-	
+
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-	
+
 							item.circuitStateToSend = CIRCUIT_COMMAND_SEND_OFF;
 							item.circuitStateToSendAlias = i18n.t("LBL_CIRCUIT_COMMAND_SEND_OFF");
 							self.tubeCircuitsDataTable.update(item);
 						});
-	
+
 						self.checkDisableChangeStatusButton();
 					}
 				});
-	
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 4,
 					function: () => {
-	
+
 						self.tubeCircuitsDataTable.getSelectedItems().forEach(item => {
-	
+
 							item.circuitStateToSend = null;
 							item.circuitStateToSendAlias = "-";
 							self.tubeCircuitsDataTable.update(item);
 						});
-	
+
 						self.checkDisableChangeStatusButton();
 					}
 				});
@@ -1002,13 +831,13 @@ export default class TubeContent {
 						}
 					}
 				});
-	
+
 				self.tubeCircuitsDataTable = new DataTable(null, null, metadata, data, events);
-				
+
 				viewCircuits = self.tubeCircuitsDataTable.getView();
 			}
 			else {
-				
+
 				viewCircuits = [util.ui.getViewNoData()];
 			}
 
@@ -1019,9 +848,9 @@ export default class TubeContent {
 
 			let viewDalis;
 			let data = self.tubeDalis;
-			
+
 			if (Array.isArray(data) && data.length > 0) {
-				
+
 				const defaultGridOptionValues = [
 					{ gridOption: { id: 5 }, value: undefined },
 					{ gridOption: { id: 6 }, value: undefined },
@@ -1033,7 +862,7 @@ export default class TubeContent {
 					{ gridOption: { id: 21 }, value: "custom" },
 					{ gridOption: { id: 23 }, value: "true" }
 				];
-	
+
 				let metadata = {
 					filter: true,
 					label: "LBL_DALI",
@@ -1170,7 +999,7 @@ export default class TubeContent {
 						}
 					]
 				};
-				
+
 				if (self.parent.commandEquipmentPermission) {
 
 					metadata.gridCommands.push(
@@ -1186,23 +1015,23 @@ export default class TubeContent {
 						}
 					);
 				}
-	
+
 				let events = {};
 				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-	
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 2,
 					function: () => {
-	
+
 						let options = [];
 						let selectedItem = self.tubeDalisDataTable.getSelectedItems()[0];
 						let dali = self.tubeDalis.find(d => d.id == selectedItem.id);
-	
+
 						let daliRegimeConfig = dali[self.parent.config.params.daliRegimeConfig];
 						daliRegimeConfig = JSON.parse(daliRegimeConfig);
-	
+
 						for (let regime of daliRegimeConfig.regimes) {
-							
+
 							options.push({
 								id: regime.id,
 								label: regime.alias,
@@ -1210,12 +1039,12 @@ export default class TubeContent {
 								default: regime.id == selectedItem[self.parent.config.params.daliState]
 							});
 						}
-	
+
 						let optionDialog = new OptionDialogBox(i18n.t("LBL_SELECT_ANY_OPTION"), options, changeRegime);
 						optionDialog.show();
 					}
 				});
-				
+
 				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
 					commandId: 1,
 					function: () => {
@@ -1241,37 +1070,37 @@ export default class TubeContent {
 						}
 					}
 				});
-	
+
 				self.tubeDalisDataTable = new DataTable(null, null, metadata, data, events);
-				
+
 				viewDalis = self.tubeDalisDataTable.getView();
-	
+
 				function changeRegime(newRegimeId, callbackCloseDialog) {
-	
-					let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
+
+					let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_OPTION_CONFIRM_DESCRIPTION"), onAccept, null);
 					ms.show();
-					
-					function onAccept(){
+
+					function onAccept() {
 
 						callbackCloseDialog(true);
 						let command = self.parent.config.commands.SEND_DALI_REGIME;
 						let dali = self.tubeDalis.find(d => d.id == self.tubeDalisDataTable.getSelectedItems()[0].id);
-	
+
 						command.elementId = dali.id;
 						command.commandElementValues[0].value = newRegimeId;
-	
+
 						util.element.sendCommand([command], function(res) {
-							
+
 							if (res) {
-							
-								(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();	
+
+								(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 							}
 						});
 					}
 				}
-				
+
 			} else {
-				
+
 				viewDalis = [util.ui.getViewNoData()];
 			}
 
@@ -1297,11 +1126,11 @@ export default class TubeContent {
 						hidden: (self.selectedTable === "action-panel-switcher-dali" + self.parent.uid) || !self.tubeCircuitsDataTable || !self.parent.commandEquipmentPermission,
 						click: function() {
 
-							let ms = new MessageBox (MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
+							let ms = new MessageBox(MessageBox.CONFIRM, i18n.t("LBL_LIGHTING_CHANGE_STATUS_CONFIRM_DESCRIPTION"), onAccept, null);
 							ms.show();
-							
+
 							function onAccept() {
-								
+
 								let responseSend = 0;
 								let allTableItems = self.tubeCircuitsDataTable.getAllItems();
 
@@ -1330,14 +1159,14 @@ export default class TubeContent {
 
 									executeCircuitCommand(CIRCUIT_COMMAND_SEND_OFF, circuitsOffCommand, onExecuted);
 								}
-								
+
 								function onExecuted() {
-									
+
 									if (++responseSend == circuitsOnCommand.length + circuitsOffCommand.length) {
-										
+
 										responseSend = 0;
-										
-										(new MessageBox (MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
+
+										(new MessageBox(MessageBox.INFO, i18n.t("LBL_COMMAND_SEND_SUCCESSFULLY"), null, null)).show();
 									}
 								}
 
@@ -1349,7 +1178,7 @@ export default class TubeContent {
 									command.commandElementValues[0].value = JSON.stringify(values);
 
 									util.element.sendCommand([command], function(res) {
-										
+
 										self.tubeCircuitsDataTable.getAllItems().forEach(row => {
 
 											row.circuitStateToSend = null;
@@ -1358,13 +1187,13 @@ export default class TubeContent {
 										});
 
 										self.checkDisableChangeStatusButton();
-										
+
 										if (res && onExecuted) {
-											
-											onExecuted();	
+
+											onExecuted();
 										}
 									});
-								}								
+								}
 							}
 						}
 					}
@@ -1463,37 +1292,37 @@ export default class TubeContent {
 				if (!lightingMode || self.parent.config.lightingModeOptions.find(option => option.id == lightingMode).disable) {
 
 					if (self.tubeCircuitsDataTable) {
-						
-						self.enableGridButtons(self.tubeCircuitsDataTable, false);	
+
+						self.enableGridButtons(self.tubeCircuitsDataTable, false);
 					}
-					
+
 					if (self.tubeDalisDataTable) {
-					
-						self.enableGridButtons(self.tubeDalisDataTable, false);		
+
+						self.enableGridButtons(self.tubeDalisDataTable, false);
 					}
 
 					if ($$("view-content-button-change-regime-" + self.parent.uid)) {
 
 						$$("view-content-button-change-regime-" + self.parent.uid).disable();
-					}					
+					}
 
 
 				} else {
 
 					if (self.tubeCircuitsDataTable) {
-						
+
 						self.enableGridButtons(self.tubeCircuitsDataTable, true);
 					}
-					
+
 					if (self.tubeDalisDataTable) {
-					
-						self.enableGridButtons(self.tubeDalisDataTable, true);	
+
+						self.enableGridButtons(self.tubeDalisDataTable, true);
 					}
 
 					if ($$("view-content-button-change-regime-" + self.parent.uid)) {
 
 						$$("view-content-button-change-regime-" + self.parent.uid).enable();
-					}										
+					}
 				}
 
 				self.checkDisableChangeStatusButton();
@@ -1674,16 +1503,16 @@ export default class TubeContent {
 
 		return lightingMode ? lightingMode.value : undefined;
 	}
-	
+
 	enableGridButtons(table, enable) {
 
 		const INFO_BUTTON_ID = 1;
-		
+
 		if (this.parent.args && this.parent.args.readOnly) {
-				
-			enable &= (this.parent.args.readOnly !== true);	
+
+			enable &= (this.parent.args.readOnly !== true);
 		}
-		
+
 		for (let command of table.metadata.gridCommands) {
 
 			if (enable) {

@@ -16,7 +16,8 @@
 		"elementById": "elements/${id}",
 		"elementByIds": "elements",
 		"command": "elements/send_command_element",
-		"elementsHierarchy": "elements/hierarchy"
+		"elementsHierarchy": "elements/hierarchy",
+		"grid": "grids/${id}"
 	},
 	"topics": {
 		"tube" : "/topic/element.ElementType:2000",
@@ -27,6 +28,7 @@
 	"adapters": {
 		"element": "ws.element.update"
 	},
+	"gridId": 1013,
 	"elementType": "ElementType:2002",
 	"elementTypeTube" :"ElementType:2000",
 	"elementTypeIdCircuit": "ElementType:84",
