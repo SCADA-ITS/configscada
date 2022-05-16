@@ -82,7 +82,7 @@ export default class VmsSignalingGraphicEditor extends VmsSignalingZoneEditor {
 			
 			viewOptionModes = {
 				
-				viewOptionModescols: [
+				cols: [
 					{
 						rows: [
 							{
