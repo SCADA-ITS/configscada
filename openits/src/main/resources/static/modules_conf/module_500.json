@@ -7,7 +7,7 @@
 	},
 	"restEndpoints":{
 		"hierarchy": "elements/hierarchy",
-		"elements": "elements",
+		"elements": "elements/withStates",
 		"elementId": "elements/${id}"
 	}
 }

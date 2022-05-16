@@ -84,7 +84,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 				self.elementHierarchies = hierarchyResponse.json();
 
-				webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.elements).then(function(elementsResponse) {
+				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elements, JSON.stringify([])).then(function(elementsResponse) {
 
 					if (elementsResponse != null) {
 
