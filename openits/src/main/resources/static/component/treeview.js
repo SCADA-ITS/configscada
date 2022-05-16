@@ -751,7 +751,7 @@ export default class TreeView {
 						timestamp: timestamp
 					}
 					
-					self.metadata.stomp.adapter(data, self.getItemsById_, self.update);
+					self.metadata.stomp.adapter(data);
 				}
 			}
 		}

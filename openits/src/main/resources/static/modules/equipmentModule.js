@@ -350,41 +350,34 @@ export default class EquipmentModule extends GenericMultiGridModule {
 						adapter: adapterElement2Tree
 					}
 				}
-
-				function adapterElement2Tree(data, getItemsById_, update) {
+				
+				function adapterElement2Tree(data) {
 
 					if (Array.isArray(data.basicElementsVO) && data.basicElementsVO.length > 0) {
 
-						let elementId = data.basicElementsVO[0].id;
+						let element = data.basicElementsVO[0];
+						
+						if (element.elementTypeState) {
+	
+							let items = self.treeView.getItemsById_(element.id);
 
-						if (Array.isArray(self.itemsTree) && self.itemsTree.length > 0) {
-
-							let elementAux = self.itemsTree.find(e => e.id === elementId);
-
-							if (elementAux) {
-
-								webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.elementId, { id: elementAux.id })).then(function(elementsResponse) {
-
-									if (elementsResponse != null) {
-
-										let element = elementsResponse.json();
-										let currentItems = self.treeView.getItemsById_(elementId);
-
-										if (Array.isArray(currentItems) && currentItems.length > 0) {
-
-											for (let currentItem of currentItems) {
-
-												let stateColor = (element.elementTypeState.color) ? element.elementTypeState.color : util.element.getColor({ id: element.elementTypeState.id });
-
-												currentItem.props.stateColor = stateColor;
-												currentItem.props.stateLabel = i18n.t(element.elementTypeState.labelAlias);
-
-												self.treeView.updateById_(elementId, currentItem);
-											}
-										}
+							if (Array.isArray(items) && items.length > 0) {
+								
+								items.forEach(item => {
+									
+									let newElementTypeState = window.em.getByField(EntityType.ELEMENT_TYPE_STATE, "id", element.elementTypeState.id);
+									
+									if (newElementTypeState.color != item.props.stateColor) {
+										
+										let newItem = webix.copy(item);
+										
+										newItem.props.stateColor = newElementTypeState.color;
+										newItem.props.stateLabel = i18n.t(newElementTypeState.labelAlias);
+										
+										self.treeView.update(newItem.id, newItem);
 									}
 								});
-							}
+							}							
 						}
 					}
 				}
