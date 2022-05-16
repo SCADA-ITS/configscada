@@ -36,7 +36,7 @@ export default class EquipmentViewerInfo {
 			rows: [
 				getViewMain(),
 				viewMeasures,
-				{ height : 10 }
+				{ height : 1 }
 			]
 		}
 
@@ -74,7 +74,7 @@ export default class EquipmentViewerInfo {
 					let viewDefaultImage = {
 						width: 500,
 						rows: [
-							{ height: 20 },
+							{ },
 							{},
 							{
 								id: "view-main-info-image-" + self.uid,
@@ -122,7 +122,7 @@ export default class EquipmentViewerInfo {
 						width: self.parent.containerWidth * 0.45,
 						//height: self.parent.containerHeight * 0.45,
 						rows: [
-							{ height: 20 },
+//							{ height: 20 },
 							{},
 							{
 								//id:  "view-main-info-image-" + self.uid,
@@ -144,7 +144,7 @@ export default class EquipmentViewerInfo {
 							{
 								id: "view-main-info-image-" + self.uid,
 								borderless: true,
-								height: 40,
+//								height: 40,
 								template: function(data) {
 
 									let color = util.element.getColor(self.element.elementTypeState);
@@ -165,7 +165,7 @@ export default class EquipmentViewerInfo {
 								}
 							},
 							{},
-							{ height: 20 }
+//							{ height: 20 }
 						]
 					};
 

@@ -4267,3 +4267,8 @@ audio {
 	color: #475466;
 	font-size: 13px; 
 }
+
+.equipment-control-radio .webix_el_group {
+	display:flex;	
+	justify-content: center;
+}

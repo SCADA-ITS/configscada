@@ -4,6 +4,7 @@ const MEASURE_ITEM_HEIGHT = 85;
 const MEASURE_ITEM_WIDTH = 200;
 
 const MEASURE_DEFAULT_ROWS = 2;
+const MEASURE_ROWS_HEIGHT = 117;
 
 const MEASURE_SEPARATOR = 16;
 const MEASURE_MARGINS = 40;
@@ -258,8 +259,10 @@ class MeasureGroup {
 					viewGridMeasures.rows[idxRow].cols.push(measureItem.getView());
 					
 					if (!(nextMeasureItem % colsMeasures)) {
+
+						viewGridMeasures.rows[idxRow].cols.push({});
 						
-						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft + (MEASURE_SEPARATOR / 2) + 1 });
+//						viewGridMeasures.rows[idxRow].cols.push({ width: marginLeft + (MEASURE_SEPARATOR / 2) + 1 });
 					}
 					else {
 						
@@ -267,26 +270,31 @@ class MeasureGroup {
 					}
 				}
 				
-				viewGridMeasures.rows.push({});
+				if (viewGridMeasures.rows.length === 1) {
+
+					viewGridMeasures.rows.push({ height: MEASURE_ROWS_HEIGHT });
+				}
 				
-				viewCarousel.cols.push(viewGridMeasures);
+				viewGridMeasures.rows[idxRow].cols.push({});
+				
+				viewCarousel.cells.push(viewGridMeasures);
 			}
 		}
 		
 		function getViewCarousel() {
 		
 			return {
-				view: "carousel",
+				view: "multiview",
 				borderless: true,
 			    id: VIEW_INFO_MEASURE_CAROUSEL + "-" + self.id + "-" + self.uid,
 				css: "equipment-viewer-carousel",
-				navigation:{
-				    type: "side",
-				    items: true,
-				    buttons: false
-				},
-			    cols: []
+			    cells: [{}]
 			};
+		}
+		
+		if(viewCarousel.cells.length > 1){
+		
+			viewCarousel.cells.shift();	
 		}
 		
 		return viewCarousel;
@@ -310,8 +318,9 @@ export default class EquipmentViewerInfoMeasure {
 		
 		let self = this;
 		let view = {};
-		let viewSegmented;
-		let viewMultiview;
+		let viewSegmented = {};
+		let viewMultiview = {};
+		let viewControls = {};
 		
 		this.measureWidth = MEASURE_ITEM_WIDTH;
 		
@@ -329,10 +338,11 @@ export default class EquipmentViewerInfoMeasure {
 			self.measuresGroups = getMeasuresGroupsFromElement();
 		}
 		
-		if (self.measuresGroups) {
+		if (Array.isArray(self.measuresGroups) && self.measuresGroups.length>0) {
 			
 			viewSegmented = getViewSegmented();
 			viewMultiview = getViewMultiview();
+			viewControls = getViewControls();
 			
 			let firstSelected = false;
 			
@@ -380,18 +390,53 @@ export default class EquipmentViewerInfoMeasure {
 					}
 				}
 			};
+			
+			let controlOptions = [];
+
+			if (viewMultiview.cells[0].cells) {
+
+				for (let cell of viewMultiview.cells[0].cells) {
+
+					controlOptions.push({
+						id: cell.id,
+						value: ""
+					});
+				}
+			}
+
+			viewControls.options = controlOptions;
+			
+			if(Array.isArray(controlOptions) && controlOptions.length>0){
+			
+				viewControls.value = controlOptions[0].id;	
+
+			}
+			
+			viewControls.on = {
+				onChange(newv, oldv) {
+
+					$$(newv).show();
+					$$(oldv).hide();
+				}
+			};
 		}
 		
 		view = {
 			id: "equipmentViewerInfoMeasure-main-" + self.uid,
 			rows: [
-				{ height: 10 },
+//				{ },
 				{
 					cols: [
 						{ width: 1 },
 						{
-							rows: [viewSegmented, { height: 1 }, viewMultiview]
-						},		
+							rows: [
+								viewSegmented,
+								{ height: 1 },
+								viewMultiview,
+								{ height: 1 },
+								viewControls								
+							]
+						},
 						{ width: 1 }
 					]
 				},
@@ -485,6 +530,18 @@ export default class EquipmentViewerInfoMeasure {
 				animate: false,
 			    id: VIEW_INFO_MEASURE_MULTIVIEW + "-" + self.uid,
 			    cells: []
+			};
+		}
+		
+		function getViewControls() {
+
+			return {
+				view: "radio",
+				css: "equipment-control-radio",
+				value: 1,
+				keepViews: true,
+				animate: true,
+				options: []
 			};
 		}
 		

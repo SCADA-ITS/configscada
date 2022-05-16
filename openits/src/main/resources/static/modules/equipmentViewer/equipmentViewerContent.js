@@ -392,10 +392,10 @@ export default class EquipmentViewerContent {
 
 			contentTabs.removeView("tab2remove" + self.uid);
 			
-			if(self.equipmentViewerInfo){
-				
-				self.equipmentViewerInfo.resizeMeasures();		
-			}
+//			if(self.equipmentViewerInfo){
+//				
+//				self.equipmentViewerInfo.resizeMeasures();		
+//			}
 			
 		
 			connectWS();
@@ -425,7 +425,7 @@ export default class EquipmentViewerContent {
 						body: {
 							id: "view-main-content-tab_body-" + e.moduleActionId + "-" + self.uid,
 							css: "bordered-layout",
-							rows: [{ }]
+							rows: []
 						}
 					});
 				});
@@ -448,7 +448,6 @@ export default class EquipmentViewerContent {
 				let newContentTab = {
 					id: "view-main-content-tab_body-" + moduleAction.id + "-" + self.uid,
 					css: "bordered-layout",
-					//height: 605,
 					cols: [view]
 				};
 
