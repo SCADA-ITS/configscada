@@ -1,0 +1,11 @@
+{
+	"moduleAction": {
+		"edit": 100201
+	},
+	"restEndpoints": {
+		"alarmConfig": "alarms/alarm_configs/element_type/${id}"
+	},
+	"action": {
+		"edit": 103501
+	}
+}

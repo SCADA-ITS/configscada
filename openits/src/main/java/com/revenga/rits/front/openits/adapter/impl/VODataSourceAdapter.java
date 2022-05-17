@@ -47,6 +47,7 @@ public class VODataSourceAdapter {
 	public static final int DATA_SOURCE_GET_ALARM_CONFIGS = getPropertyInt("get_alarm_configs");
 	public static final int DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_TYPE = getPropertyInt("get_alarm_configs_by_alarm_type");
 	public static final int DATA_SOURCE_GET_ALARM_CONFIGS_BY_ALARM_LEVEL = getPropertyInt("get_alarm_configs_by_alarm_level");
+	public static final int DATA_SOURCE_GET_ALARM_CONFIGS_BY_ELEMENT_TYPE = getPropertyInt("get_alarm_configs_by_element_type");
 	public static final int DATA_SOURCE_GET_ALARM_CONFIG = getPropertyInt("get_alarm_config");
 	public static final int DATA_SOURCE_GET_AUDIT_LOGS = getPropertyInt("get_audit_logs");
 	public static final int DATA_SOURCE_GET_AUDIT_LOG = getPropertyInt("get_audit_log");

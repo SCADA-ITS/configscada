@@ -43,6 +43,15 @@ public class AlarmConfigBO extends GenericBO {
 				alarmConfigs);
 	}
 
+	public List<Map<String, Object>> getAlarmConfigsByElementType(String elementTypeId) {
+
+		List<Map<String, Object>> alarmConfigs = voDataSourceAdapter
+				.getList(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_CONFIGS_BY_ELEMENT_TYPE, new Object[] { elementTypeId });
+
+		return vo2uiAdapter.convert(VODataSourceAdapter.DATA_SOURCE_GET_ALARM_CONFIGS_BY_ELEMENT_TYPE,
+				alarmConfigs);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> createAlarmConfig(Object input) {
 
