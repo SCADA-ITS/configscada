@@ -19,6 +19,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revenga.rits.front.openits.util.ConversionUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -151,7 +152,28 @@ public class GraphqlAdapter {
 
 				if (data.isArray()) {
 					
-					list = ConversionUtil.stringToListMap(data.toString());
+					JsonNode firstItem = data.get(0);
+					
+					if (firstItem.isObject()) {
+						
+						list = ConversionUtil.stringToListMap(data.toString());
+					}
+					else {
+						
+						list = new ArrayList<>();
+						
+						for (JsonNode elementNode : data) {
+							
+							Map<String, Object> map = new HashedMap<>();
+							ObjectMapper mapper = new ObjectMapper();
+							
+							Object obj = mapper.convertValue(elementNode, Object.class);
+
+							map.put(method, obj);
+							
+							list.add(map);
+						}
+					}
 				}
 				else if (data.isBoolean()) {
 					

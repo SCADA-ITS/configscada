@@ -104,7 +104,7 @@ public class ClientInfoBO {
 			
 			if (!StringUtils.isEmpty(dir)) {
 			
-				url = this.getClass().getClassLoader().getResource(STATIC_FOLDER + File.separator + URLDecoder.decode(dir, StandardCharsets.UTF_8));
+				url = this.getClass().getClassLoader().getResource(STATIC_FOLDER + File.separator + dir);
 			}
 			else {
 				

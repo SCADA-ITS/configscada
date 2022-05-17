@@ -112,6 +112,7 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 		
 		let self = this;
 		let incidentTypesLocations = new Map();
+		let incidentTypesStretchs = new Map();
 		
 		loadLocations(onReadyLocations);
 		
@@ -327,6 +328,19 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 									currentLocationsByIncidentTypes.push(locationItem)	
 								}
 							});
+							
+							let currentStretchsByIncidentTypes = incidentTypesStretchs.get(incidentTypeId);
+							
+							if (!Array.isArray(currentStretchsByIncidentTypes)) {
+								
+								currentStretchsByIncidentTypes = [incidentTypeStretch.stretch];
+								
+								incidentTypesStretchs.set(incidentTypeId, currentStretchsByIncidentTypes);
+							}
+							else {
+								
+								currentStretchsByIncidentTypes.push(incidentTypeStretch.stretch);
+							}
 						}
 					});
 				}	
@@ -388,6 +402,13 @@ export default class IncidentWizardDrawStepLocationFromMap extends IncidentWizar
 							drawLocations(incidentTypeId);
 							
 							self.parent.mapIncidentTypeSelected = window.em.getByField(EntityType.IMS_INCIDENT_TYPE, "id", incidentTypeId);
+							
+							let stretchsByIncident = incidentTypesStretchs.get(incidentTypeId);
+							
+							if (Array.isArray(stretchsByIncident)) {
+								
+								self.parent.incidentData.stretchIds = stretchsByIncident.map(e => { return e.id } );
+							}
 						}
 					}
 				}, treeOptions);

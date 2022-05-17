@@ -415,10 +415,15 @@ export default class IncidentWizardAction {
 		
 							let stretchs = dat.json();
 							
-							if (stretchs && onResponse) {
+							if (stretchs && Array.isArray(parent.incidentData.stretchIds)) {
 								
-								onResponse(stretchs);	
-							} 
+								stretchs = stretchs.filter(e => parent.incidentData.stretchIds.includes(e.id));
+								
+								if (onResponse) {
+								
+									onResponse(stretchs);	
+								}
+							}
 						}
 					}
 				);
@@ -735,6 +740,8 @@ export default class IncidentWizardAction {
 								parent.listViewStrechs.clear();
 		
 								parent.listViewStrechs.add(dataStrechs);
+								
+								parent.incidentData.stretchIds = strechs.map(e => { return e.id });
 							}
 							
 							resetStep();

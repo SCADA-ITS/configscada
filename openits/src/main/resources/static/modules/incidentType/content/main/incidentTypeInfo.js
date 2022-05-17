@@ -170,8 +170,13 @@ export default class IncidentTypeStretch {
 				dialogImages.width = 800;
 					
 				function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+					
+					//let url = appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.clientResources, { folder: encodeURIComponent(self.config.resources.incidentType) });
 				
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.clientResources, { folder: encodeURIComponent(self.config.resources.incidentType) })).then(function(response) {
+					//webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.clientResources, { folder: encodeURIComponent(self.config.resources.incidentType) })).then(function(response) {
+						
+					webix.ajax().headers(HEADER_POST).post(appConfig.restUrl + self.config.restEndpoints.clientResources, self.config.resources.incidentType).then(function(response) {
+					//webix.ajax().get(url).then(function(response) {
 						
 						if (response) {
 							

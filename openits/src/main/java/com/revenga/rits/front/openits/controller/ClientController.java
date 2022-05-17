@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,10 +38,10 @@ public class ClientController {
 		return new ResponseEntity<>(clientInfoBO.getInfo(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/resources/{folder}")
+	@PostMapping(value = "/resources")
 	@ApiOperation(value = "Get client info", notes = "Return client info")
 	public ResponseEntity<List<String>> getResources(
-			@ApiParam(name = "folder", type = "String", value = "folder", example = "img", required = true) @PathVariable String folder) {
+			@RequestBody String folder) {
 		
 		return new ResponseEntity<>(clientInfoBO.getResources(folder), HttpStatus.OK);
 	}

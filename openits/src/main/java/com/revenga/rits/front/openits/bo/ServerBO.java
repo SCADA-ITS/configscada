@@ -1,10 +1,14 @@
 package com.revenga.rits.front.openits.bo;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ import com.revenga.rits.front.openits.model.ServerTimeUI;
 public class ServerBO extends GenericBO {
 	
 	private static final String FIELD_GET_SERVER_TIME = "getServerTime";
+	
+	private static final String FIELD_RELATIVE_PATH= "relativePath";
+	private static final String FIELD_EXTENSION= "extension";
 	
 	@Autowired
 	GraphqlAdapter graphqlAdapter;
@@ -52,5 +59,24 @@ public class ServerBO extends GenericBO {
 		}
 		
 		return serverTimeUI;
+	}
+	
+	public List<Object> getResources(Map<String, String> resource) {
+		
+		List<Object> resourceList = new ArrayList<>();
+		String path = null;
+		String extension = null;
+
+		if (!MapUtils.isEmpty(resource)) {
+			
+			path = resource.get(FIELD_RELATIVE_PATH);
+			extension = resource.get(FIELD_EXTENSION);
+			
+			List<Map<String, Object>> resources = voDataSourceAdapter.getList(VODataSourceAdapter.DATA_SOURCE_GET_SERVER_RESOURCES, new Object[] { path, extension });
+			
+			resources.forEach(e -> resourceList.add(e.get("getResources")));
+		}
+
+		return resourceList;
 	}
 }

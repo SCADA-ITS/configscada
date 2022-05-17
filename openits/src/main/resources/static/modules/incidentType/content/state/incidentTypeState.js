@@ -27,7 +27,7 @@ export default class IncidentTypeState {
 		
 		view = {
 			id: "incident-type-tab-state-" + self.uid,
-			header: i18n.t("LBL_STATES_AND_TASKS"),
+			header: i18n.t("LBL_TASKS"),
 			body: getViewState()
 		}
 		
@@ -129,7 +129,7 @@ export default class IncidentTypeState {
 						{ gridOption: { id: 6 }, value: undefined },
 						{ gridOption: { id: 7 }, value: "false" },
 						{ gridOption: { id: 8 }, value: "false" },
-						{ gridOption: { id: 9 }, value: "true" },
+						{ gridOption: { id: 9 }, value: "false" },
 						{ gridOption: { id: 10 }, value: "false" },
 						{ gridOption: { id: 11 }, value: "false" },
 						{ gridOption: { id: 12 }, value: "false" },

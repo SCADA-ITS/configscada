@@ -2,8 +2,8 @@ import DataTable from "../../../../component/datatable.js";
 import { util } from "../../../../lib/util.js";
 
 const STRETCH_DETAIL_PANEL_WIDTH = 250;
-const FORM_LABEL_WIDTH = 100;
-const FORM_FIELD_WIDTH = 300;
+const FORM_LABEL_WIDTH = 200;
+const FORM_FIELD_WIDTH = 400;
 
 
 export default class IncidentTypeStretchDetail {

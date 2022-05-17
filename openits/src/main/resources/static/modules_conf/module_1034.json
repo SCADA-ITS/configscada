@@ -5,13 +5,17 @@
 	"restEndpoints": {
 		"incidentTypes": "incidents/imsIncidentTypes",
 		"incidentType": "incidents/imsIncidentType/${id}",
-		"clientResources": "client/resources/${folder}",
+		"clientResources": "client/resources",
 		"incidentTypeTasksByIncidentTypeAndIncidentState": "incidents/${incidentTypeId}/${incidentStateId}",
-		"incidentTypeTasksByIncidentType": "incidents/incidentTypeTasks/${incidentTypeId}"
+		"incidentTypeTasksByIncidentType": "incidents/incidentTypeTasks/${incidentTypeId}",
+		"incidentTypeTaskPlans": "incidents/${stretchId}/${incidentTypeId}/${incidentTypeTaskId}",
+		"serverResources": "server/resources"
 	},
 	"resources": {
 		"incidentType": "img/incident_type",
-		"defaultIncidentType": "undefined.png"
+		"defaultIncidentType": "undefined.png",
+		"incidentScripts": "incident-manager/groovy/",
+		"incidentExtension": "groovy"
 	},
 	"incidentStates": {
 		"closed": { "id": "ImsIncidentState:100", "labelAlias": "LBL_CLOSED" }, 

@@ -1,4 +1,5 @@
 import DataTable from "../../../../component/datatable.js";
+import IncidentTypeTaskDetail from "./incidentTypeTaskDetail.js";
 import { util } from "../../../../lib/util.js";
 
 const DEFAULT_INCIDENT_TYPE_STATE_ID = -1;
@@ -14,8 +15,12 @@ export default class IncidentTypeStateTask {
 		this.incidentTypeStateId = incidentTypeStateId;
 		this.uid = uid;
 		this.onUpdate = onUpdate;
+		
+		this.incidentTypeTasks = [];
 
-		this.dtTasks = undefined;		
+		this.dtTasks = undefined;
+		
+		this.lastTabViewId = undefined;
 	}
 	
 	getView() {
@@ -54,6 +59,8 @@ export default class IncidentTypeStateTask {
 				id: "incident-type-state-task-tasks-" + self.uid,
 				rows: getViewDatatableTasks()
 			}
+			
+			
 			
 			function getViewDatatableTasks() {
 					
@@ -331,7 +338,8 @@ export default class IncidentTypeStateTask {
 				events[DataTable.EventTypes.ON_SELECT_ROW] = function(rows) {
 
 					if (Array.isArray(rows) && rows.length > 0) {
-						
+					
+						onSelectIncidentTypeTask(rows[0]);	
 					}
 				};
 				
@@ -390,9 +398,86 @@ export default class IncidentTypeStateTask {
 			return viewTasks;	
 		}
 		
-		function newIncidentTypeTask() {
+		function onSelectIncidentTypeTask(incidentTypeTaskId) {
 				
-			// TODO
+			if (Array.isArray(self.incidentTypeTasks) && self.incidentTypeTasks.length > 0) {
+				
+				let incidentTypeTask = self.incidentTypeTasks.find(e => e.id === incidentTypeTaskId);
+				
+				if (incidentTypeTask) {
+					
+					let incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, incidentTypeTask, self.onUpdate, self.lastTabViewId, function(lastTabViewId) { self.lastTabViewId = lastTabViewId } );
+					
+					webix.ui(incidentTypeTaskDetail.getView(), $$("incident-type-state-task-detail-" + self.uid));
+						
+					incidentTypeTaskDetail.loadData();
+				}
+			}
+		}
+		
+		function newIncidentTypeTask() {
+			
+			let dialogIncidentTypeTaskTypes = webix.copy(SearchDialogBox.CALLBACK);
+			let label = i18n.t("LBL_TASK_TYPES");
+			let incidentTypeTaskTypes;
+			
+			dialogIncidentTypeTaskTypes.fillDialogEntity = fillDialogEntity;
+			dialogIncidentTypeTaskTypes.height = 600;
+			dialogIncidentTypeTaskTypes.width = 800;
+				
+			function fillDialogEntity(dialogEntity, onFilledDialogEntity) {
+			
+				incidentTypeTaskTypes = window.em.getAll(EntityType.IMS_TASK_TYPES);
+		
+				if (Array.isArray(incidentTypeTaskTypes) && incidentTypeTaskTypes.length > 0) {
+					
+					dialogEntity.data = [];
+	
+					dialogEntity.pkField = "id"
+					dialogEntity.fields = ["idIcon=", "alias=LBL_INCIDENT_TYPE_TASK_TYPE_ALIAS", "description=LBL_INCIDENT_TYPE_TASK_TYPE_DESCRIPTION"];
+					dialogEntity.sortFieldId = 2; 
+					
+					dialogEntity.icons = {
+						idIcon: []
+					}
+					
+					incidentTypeTaskTypes.forEach(incidentTypeTaskType => {
+						
+						dialogEntity.icons.idIcon.push({
+							id: incidentTypeTaskType.id,
+							icon: incidentTypeTaskType.icon
+						});
+						
+						dialogEntity.data.push({
+							id: incidentTypeTaskType.id,
+							idIcon: incidentTypeTaskType.id,
+							alias: i18n.t(incidentTypeTaskType.labelAlias),
+							description: i18n.t(incidentTypeTaskType.labelDescription)
+						});
+					});
+				}
+				
+				onFilledDialogEntity(dialogEntity);		
+			}
+			
+			let s = new SearchDialogBox(label, dialogIncidentTypeTaskTypes, function(items) {
+
+				if (Array.isArray(items) && items.length === 1) {
+
+					let incidentTypeTaskType = incidentTypeTaskTypes.find(e => e.id == items[0].id);
+
+					if (incidentTypeTaskType) {
+						
+						let incidentTypeTaskDetail = new IncidentTypeTaskDetail(self.config, self.uid, self.incidentType, undefined, self.onUpdate, self.lastTabViewId, function(lastTabViewId) {self.lastTabViewId = lastTabViewId });
+								
+						let position = 1;
+						
+						incidentTypeTaskDetail.create(incidentTypeTaskType, position);
+					}
+				}
+			});
+
+			s.show();
 		}
 		
 		function moveIncidentTypeTask(incidentTypeTaskId, moveincidentTypeTaskType) {
@@ -441,13 +526,27 @@ export default class IncidentTypeStateTask {
 		
 			let responseTasks = response ? response.json() : undefined;
 			
-			if (self.dtTasks) {
+			if (Array.isArray(responseTasks) && responseTasks.length > 0) {
 				
-				self.dtTasks.callbacks();
+				self.incidentTypeTasks = webix.copy(responseTasks);
 				
-				updateTasks(responseTasks);	
+				if (self.incidentTypeStateId == DEFAULT_INCIDENT_TYPE_STATE_ID) {
+					
+					self.incidentTypeTasks = self.incidentTypeTasks.filter(e => !e.incidentState);
+				}
+				
+				if (Array.isArray(self.incidentTypeTasks)) {
+					
+					self.incidentTypeTasks.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
+				}
+				
+				if (self.dtTasks) {
+				
+					self.dtTasks.callbacks();
+					
+					updateTasks();	
+				}
 			}
-			
 			
 			$$("incident-type-state-tasks-loading-" + self.uid).hide();
 			$$("incident-type-state-tasks-content-" + self.uid).show();
@@ -458,26 +557,16 @@ export default class IncidentTypeStateTask {
 			}
 		});
 		
-		function updateTasks(responseTasks) {
+		function updateTasks() {
 			
-			if (self.dtTasks && Array.isArray(responseTasks) && responseTasks.length > 0) {
-				
-				let responseTasksFiltered = webix.copy(responseTasks);
-				
-				if (self.incidentTypeStateId == DEFAULT_INCIDENT_TYPE_STATE_ID) {
+			if (self.dtTasks) {
 					
-					responseTasksFiltered = responseTasks.filter(e => !e.incidentState);
-				}
+				self.dtTasks.clear();
 				
-				if (Array.isArray(responseTasksFiltered)) {
-					
-					responseTasksFiltered.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
-					
-					self.dtTasks.clear();
+				if (Array.isArray(self.incidentTypeTasks) && self.incidentTypeTasks.length > 0) {
 					
 					let position = 0;
-					
-					let tasks = responseTasksFiltered.map(e => {
+					let tasks = self.incidentTypeTasks.map(e => {
 						
 						let automatism = e.onChange ? "yes" : "no";
 						
@@ -489,11 +578,11 @@ export default class IncidentTypeStateTask {
 						}	
 					
 						let executionType = i18n.t("LBL_INCIDENT_TASK_MANUAL");
-
+	
 						if (!e.delay) {
 							
 							if (e.auto) {
-
+	
 								executionType = i18n.t("LBL_INCIDENT_TASK_AUTO");
 							}	
 						}
@@ -501,7 +590,7 @@ export default class IncidentTypeStateTask {
 							
 							executionType = i18n.t("LBL_INCIDENT_TASK_DELAYED") + " " + e.delay + " " + i18n.t("LBL_INCIDENT_TASK_DELAYED_SECONDS");
 						}
-
+	
 						return {
 							
 							id: e.id,
@@ -521,7 +610,7 @@ export default class IncidentTypeStateTask {
 					
 					self.dtTasks.selectByIndex(0);	
 				}
-			}			
+			}
 		}
 	}
 }	

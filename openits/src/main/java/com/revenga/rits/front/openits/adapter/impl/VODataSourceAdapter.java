@@ -247,6 +247,7 @@ public class VODataSourceAdapter {
 	
 	public static final int DATA_SOURCE_GET_PROCESSES_INFO = getPropertyInt("get_processes_info");
 	public static final int DATA_SOURCE_GET_SERVER_TIME = getPropertyInt("get_server_time");
+	public static final int DATA_SOURCE_GET_SERVER_RESOURCES = getPropertyInt("get_server_resources");
 	
 	private static int getPropertyInt(final String prop) {
 		
