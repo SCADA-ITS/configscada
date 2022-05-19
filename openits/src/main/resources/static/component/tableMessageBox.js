@@ -22,7 +22,12 @@ export default class TableMessageBox {
 		let dialogEntity = webix.copy(SearchDialogBox.CUSTOM);
 		dialogEntity.data = this.table.data;
 		dialogEntity.fields = this.table.fields;
+		dialogEntity.pkField = this.table.pkField;
+		dialogEntity.sortFieldId = this.table.sortFieldId;
 		dialogEntity.messageType = this.messageType;
+		dialogEntity.height = this.table.height;
+		dialogEntity.width = this.table.width;
+		dialogEntity.multiselect = this.table.multiselect;
 
 		let s = new SearchDialogBox(this.title, dialogEntity, this.onAccept);
 		s.show();
