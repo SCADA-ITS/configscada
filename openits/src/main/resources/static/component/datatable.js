@@ -2715,33 +2715,37 @@ export default class DataTable {
 
 						eval("adapter." + adapterDataSource.value)(data, update);
 					}
-
-					let url = dataSource.dataSourceValues[0].value;
-					let topic = dataSource.dataSourceValues[1].value;
-
-					let params;
-
-					if (self.dataGridParams) {
-
-						params = "." + self.dataGridParams + ".>";
-					}
-					else {
-
-						params = ".>";
-					}
-
-					//this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
 					
-					let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
-	
-					if (stompSubscriptorService) {
+					if (Array.isArray(dataSource.dataSourceValues)) {
+						
+						let dataSourceValue = dataSource.dataSourceValues.find(e => e.dataSourceParam.id === 6); 
+						
+						if (dataSourceValue) {
+							
+							let topic = dataSourceValue.value;
+
+							let params;
+		
+							if (self.dataGridParams) {
+		
+								params = "." + self.dataGridParams + ".>";
+							}
+							else {
+		
+								params = ".>";
+							}
+		
+							//this.stomp.client = util.stomp.connect(url, topic + params, on_connected, on_message);
+							
+							let stompSubscriptorService = window.sm.getService(Services.STOMP_SUBSCRIPTOR_SERVICE);
 			
-						this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic + params, on_message);
+							if (stompSubscriptorService) {
+					
+								this.idStompSubscriptor = stompSubscriptorService.subscribe(appConfig.stompUrl, topic + params, on_message);
+							}	
+						}
 					}
-
-
 				}
-
 			}
 		}
 	}

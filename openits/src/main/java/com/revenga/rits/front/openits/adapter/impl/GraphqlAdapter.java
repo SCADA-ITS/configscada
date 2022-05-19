@@ -154,7 +154,7 @@ public class GraphqlAdapter {
 					
 					JsonNode firstItem = data.get(0);
 					
-					if (firstItem.isObject()) {
+					if (firstItem != null && firstItem.isObject()) {
 						
 						list = ConversionUtil.stringToListMap(data.toString());
 					}
