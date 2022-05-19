@@ -109,10 +109,20 @@ export default class DecoderSNAP extends Decoder {
 				cnv.width = self.imgW;
         		cnv.height = self.imgH;
         		
-        		if (self.container && self.container.isVisible() && !document.hidden) {
+        		if (!document.hidden) {
 	
-					ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);		
-				}				
+					if (self.container ) {
+					
+						if (self.container.isVisible()) {
+							
+							ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);	
+						}	
+					}
+					else {
+						
+						ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, 0, 0, self.imgW, self.imgH);
+					}
+				}
 
 				if (self.firstConnection && !self.error) {
 					
