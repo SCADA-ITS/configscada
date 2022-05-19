@@ -151,10 +151,15 @@ export default class MessageBox {
 
 		function execute(command) {
 
-			if (command) {
+			// Prevent z-index disorder. Bug preventing inputboxes contained in tabs from being selected
+			setTimeout(function() {
+		
+				if (command) {
 
-				command();
-			}
+					command();
+				}						
+
+			}, 1);
 
 			$$("alert-" + self.uid).close();
 		}
