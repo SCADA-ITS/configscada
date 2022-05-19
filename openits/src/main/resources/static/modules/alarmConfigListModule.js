@@ -55,18 +55,17 @@ export default class AlarmConfigListModule extends GenericGridModule {
 	loadData() {
 
 		let self = this;
-		let dataGridId = this.module.moduleValues.find(e => e.moduleParam.id === MODULE_TYPE_GENERIC_PARAM_GRID_ID).value;
 
 		webix.ui(drawContent(), $$(self.uid));
-
-		if (self.listView) {
-
-			self.listView.selectByIndex(0);
-		}
 
 		if (self.dataTable) {
 
 			self.dataTable.callbacks();
+		}
+
+		if (self.listView) {
+
+			self.listView.selectByIndex(0);
 		}
 
 		function drawContent() {
@@ -117,7 +116,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					$$("no-data-" + self.uid).show();
 					$$("table-" + self.uid).hide();
 
-					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfig, { id: ids[0] })).then(function(alarmsConfigSelectedResponse) {
+					webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigByElementType, { id: ids[0] })).then(function(alarmsConfigSelectedResponse) {
 
 						if (alarmsConfigSelectedResponse != null) {
 
@@ -130,12 +129,13 @@ export default class AlarmConfigListModule extends GenericGridModule {
 								for (let alarmConfigSelected of alarmsConfigSelected) {
 
 									alarmConfigToTable.push({
+										id: alarmConfigSelected.id,
 										labelAlias: i18n.t(alarmConfigSelected.labelAlias),
 										alarmTypeLabelAlias: alarmConfigSelected.alarmType.id,
 										alarmLevelLabelAlias: i18n.t(alarmConfigSelected.alarmLevel.labelAlias),
 										elementTypeLabelDescription: i18n.t(alarmConfigSelected.elementType.labelAlias),
 										alarmConfigMeasures: alarmConfigSelected.alarmConfigMeasures,
-										measures: alarmConfigSelected.alarmConfigMeasures ? true : false,
+										measures: (alarmConfigSelected.alarmConfigMeasures && alarmConfigSelected.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
 										elementType: alarmConfigSelected.elementType,
 										alarmLevel: alarmConfigSelected.alarmLevel,
 										alarmLevelId: alarmConfigSelected.alarmLevel.id,
@@ -167,7 +167,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 			function getTable() {
 
 				const defaultGridOptionValues = [
-					{ gridOption: { id: 1 }, value: "true" },
+					{ gridOption: { id: 1 }, value: "false" },
 					{ gridOption: { id: 2 }, value: "true" },
 					{ gridOption: { id: 3 }, value: 4 },
 					{ gridOption: { id: 4 }, value: "asc" },
@@ -523,38 +523,62 @@ export default class AlarmConfigListModule extends GenericGridModule {
 							showText: true,
 							position: 1,
 							multiselect: false,
-							itemRequired: true
+							itemRequired: true,
+							moduleAction: { id: 103501 }
 						}
-					]
+					],
+					refreshCallback: function() {
+
+						let alarmConfigSelected = self.dataTable.getSelectedItems();
+
+						if (Array.isArray(alarmConfigSelected) && alarmConfigSelected.length > 0) {
+
+							$$("no-data-" + self.uid).show();
+							$$("table-" + self.uid).hide();
+
+							webix.ajax().get(appConfig.restUrl + util.fillTemplate(self.config.restEndpoints.alarmConfigId, { id: alarmConfigSelected[0].id })).then(function(alarmsConfigUpdatedResponse) {
+
+								if (alarmsConfigUpdatedResponse != null) {
+
+									let alarmsConfigUpdated = alarmsConfigUpdatedResponse.json();
+
+									if (alarmsConfigUpdated) {
+
+										let alarmConfigToTable = [];
+
+										alarmConfigToTable.push({
+											id: alarmsConfigUpdated.id,
+											labelAlias: i18n.t(alarmsConfigUpdated.labelAlias),
+											alarmTypeLabelAlias: alarmsConfigUpdated.alarmType.id,
+											alarmLevelLabelAlias: i18n.t(alarmsConfigUpdated.alarmLevel.labelAlias),
+											elementTypeLabelDescription: i18n.t(alarmsConfigUpdated.elementType.labelAlias),
+											alarmConfigMeasures: alarmsConfigUpdated.alarmConfigMeasures,
+											measures: (alarmsConfigUpdated.alarmConfigMeasures && alarmsConfigUpdated.alarmConfigMeasures[0].alarmMeasureOperation) ? true : false,
+											elementType: alarmsConfigUpdated.elementType,
+											alarmLevel: alarmsConfigUpdated.alarmLevel,
+											alarmLevelId: alarmsConfigUpdated.alarmLevel.id,
+											alarmConfigId: alarmsConfigUpdated.id,
+											alarmType: alarmsConfigUpdated.alarmType,
+											mine: alarmsConfigUpdated.mine,
+											treatment: alarmsConfigUpdated.treatment,
+											alarmTargetElements: alarmsConfigUpdated.alarmTargetElements,
+											element: alarmsConfigUpdated.element
+										});
+
+										self.dataTable.update(alarmConfigToTable);
+
+										$$("table-" + self.uid).show();
+										$$("no-data-" + self.uid).hide();
+									}
+								}
+							});
+						}
+					}
 				};
 
 				let data = [];
 
-				let events = {};
-				events[DataTable.EventTypes.ON_COMMAND_EXEC] = [];
-
-				events[DataTable.EventTypes.ON_COMMAND_EXEC].push({
-					commandId: 1,
-					function: (dat) => {
-
-						let alarmConfigSelected = self.dataTable.getSelectedItems();
-						let module = util.module.getFromModuleAction(self.config.action.edit);
-
-						if (module) {
-
-							let moduleAction = { id: self.config.action.edit };
-
-							let args = {
-								selectedPks: alarmConfigSelected,
-								containerId: self.args.containerId,
-							};
-
-							util.module.open(module, moduleAction, VIEW_TYPE_WINDOW, null, args);
-						}
-					}
-				});
-
-				self.dataTable = new DataTable(dataGridId, null, metadata, data, events);
+				self.dataTable = new DataTable(null, null, metadata, data, null);
 
 				return self.dataTable.getView();
 			}

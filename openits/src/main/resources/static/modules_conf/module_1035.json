@@ -5,7 +5,7 @@
 	"restEndpoints": {
 	 	"thresholdOperations": "thresholdOperations",
 	 	"updateAlarmConfig": "alarms/updateAlarmConfig",
-	 	"deleteAlarmConfig": "alarms/deleteAlarmConfig/${id}"
+		"alarmConfig": "alarms/alarm_configs/${id}"
 	 },
 	 "levels": {
 		"critical": [ "AlarmLevel:5", "AlarmLevel:6" ],

@@ -3,7 +3,8 @@
 		"edit": 100201
 	},
 	"restEndpoints": {
-		"alarmConfig": "alarms/alarm_configs/element_type/${id}"
+		"alarmConfigByElementType": "alarms/alarm_configs/element_type/${id}",
+		"alarmConfigId": "alarms/alarm_configs/${id}"
 	},
 	"action": {
 		"edit": 103501

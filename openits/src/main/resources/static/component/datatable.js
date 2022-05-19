@@ -2431,75 +2431,96 @@ export default class DataTable {
 		let url = undefined;
 		let self = undefined;
 		let millis = undefined;
-
+		let metadata = undefined;
+		
 		if (obj != undefined) {
+
 			self = obj;
-		}
-		else {
+
+		} else {
+			
 			self = this;
+	
 		}
 
 		if (delay) {
+			
 			millis = delay;
-		} 
-		else {
+
+		} else {
+
 			millis = 0;
 		}
 		
 		let grid = $$("dt-" + self.uid);
+		metadata = self.metadata;
 		
-		grid.showProgress({
+		if (metadata && metadata.refreshCallback) {
+
+			webix.extend(grid, webix.ProgressBar);
+
+			grid.showProgress({
 
 				hide: false, type: "bottom"
-		});	
-		
-		webix.delay(function() {
+			});
 			
-			if (!webix.isUndefined(grid)) {
-			 
-				if (self.dataGridParams) {
-	
-					url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
-				}
-				else {
-	
-					url = appConfig.restUrl + "grids/" + self.dataGridId;
-				}
-	
-				webix.ajax(url).then(function(dat) {
-	
-					grid.clearAll();
-	
-					webix.delay(function() {
-	
-						if (dat && dat.json) {
-	
-							let data = dat.json();
-	
-							if (data && data.data) {
-	
-								self.translateFieldValues(data.data);
-								self.convertDate(data.data);
-	
-								grid.parse(data.data);
+			metadata.refreshCallback();
+			
+			grid.hideProgress();
 
-								self.filterDatatable();
-								self.restoreSort();
-								self.restoreFilters();
+		} else {
+
+			grid.showProgress({
+
+				hide: false, type: "bottom"
+			});
+
+			webix.delay(function() {
+
+				if (!webix.isUndefined(grid)) {
+
+					if (self.dataGridParams) {
+
+						url = appConfig.restUrl + "grids/" + self.dataGridId + "/" + self.dataGridParams;
+					}
+					else {
+
+						url = appConfig.restUrl + "grids/" + self.dataGridId;
+					}
+
+					webix.ajax(url).then(function(dat) {
+
+						grid.clearAll();
+
+						webix.delay(function() {
+
+							if (dat && dat.json) {
+
+								let data = dat.json();
+
+								if (data && data.data) {
+
+									self.translateFieldValues(data.data);
+									self.convertDate(data.data);
+
+									grid.parse(data.data);
+
+									self.filterDatatable();
+									self.restoreSort();
+									self.restoreFilters();
+								}
 							}
-						}
-	
-						if (self.getGridOptions(GridOptions.REFRESH_BUTTON)) {
-							
-							grid.hideProgress();
-						}
-			
-					}, null, null, 1);
-				});
-			}
-		}, null, null, millis)
 
+							if (self.getGridOptions(GridOptions.REFRESH_BUTTON)) {
 
+								grid.hideProgress();
+							}
+
+						}, null, null, 1);
+					});
+				}
+			}, null, null, millis);
+		}
 	}
 
 	print_callback() {
