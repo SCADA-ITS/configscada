@@ -187,7 +187,7 @@ export default class AlarmConfigListModule extends GenericGridModule {
 					{ gridOption: { id: 5 }, value: undefined },
 					{ gridOption: { id: 6 }, value: undefined },
 					{ gridOption: { id: 7 }, value: "true" },
-					{ gridOption: { id: 8 }, value: "true" },
+					{ gridOption: { id: 8 }, value: "false" },
 					{ gridOption: { id: 9 }, value: "true" },
 					{ gridOption: { id: 10 }, value: "true" },
 					{ gridOption: { id: 11 }, value: "true" },

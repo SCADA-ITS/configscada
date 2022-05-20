@@ -83,14 +83,16 @@ export default class AlarmConfigModule extends GenericModule {
 				css: { "box-sizing": "border-box" },
 				rows: [
 					getHeader(),
+					{ height: 15 },
 					{
 						cols: [
-							{ width: 6 },
+							{ width: 15 },
 							getTabs(),
-							{ width: 6 }
+							{ width: 15 }
 						]
 					},
-					getButtons()
+					getButtons(),
+					{ height: 15 }
 				]
 			};
 
@@ -132,12 +134,14 @@ export default class AlarmConfigModule extends GenericModule {
 				};
 
 				return header;
-			};
+			}
 
 
 			function getTabs() {
 
 				let tabs;
+				
+				let containerWidth = $$(self.args.containerId).$width;
 
 				tabs = {
 					view: "tabview",
@@ -164,6 +168,8 @@ export default class AlarmConfigModule extends GenericModule {
 				function getInfo() {
 
 					let infoDetails;
+					
+					
 
 					infoDetails = {
 						css: { "box-sizing": "border-box", "border-bottom": "1px solid #e2e2e2", "border-left": "1px solid #e2e2e2", "border-right": "1px solid #e2e2e2" },
@@ -174,48 +180,54 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 90 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALIAS")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALIAS")}</span></div>`,
+										label: i18n.t("LBL_ALIAS"),
 										align: "left",
 										height: 20
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_TYPE")}</span></div>`,
+										label: i18n.t("LBL_ELEMENT_TYPE"),
 										align: "left",
 										height: 20
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ELEMENT_ALIAS")}</span></div>`,
+										label: i18n.t("LBL_ELEMENT_ALIAS"),
 										align: "left",
 										height: 20
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_LEVEL")}</span></div>`,
+										label: i18n.t("LBL_ALARM_LEVEL"),
 										align: "left",
 										height: 20
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_CRITICAL_LEVEL")}</span></div>`,
+										label: i18n.t("LBL_CRITICAL_LEVEL"),
 										align: "left",
 										height: 20
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										css: "alarm-view-title-label",
-										label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
+										//css: "alarm-view-title-label",
+										//label: `<div><span class="alarm-view-title-label">${i18n.t("LBL_ALARM_TYPE")}</span></div>`,
+										label: i18n.t("LBL_ALARM_TYPE"),
 										align: "left",
 										height: 20
 									},
@@ -223,18 +235,19 @@ export default class AlarmConfigModule extends GenericModule {
 								]
 							},
 							{
+								width: containerWidth / 2 - 100,
 								rows: [
 									{ height: 90 },
 									{
 										view: "label",
-										label: `<span id="labelAlarm" class="alarm-view-text">${i18n.t(alarmConfigData.labelAlias)}</span>`,
+										label: `<span title="${i18n.t(alarmConfigData.labelAlias)}" id="labelAlarm" class="form-text-font">${i18n.t(alarmConfigData.labelAlias)}</span>`,
 										align: "left",
 										height: 20,
 									},
 									{ height: 24 },
 									{
 										view: "label",
-										label: `<span class="alarm-view-text">${i18n.t(alarmConfigData.elementType.labelAlias)}</span>`,
+										label: `<span title="${i18n.t(alarmConfigData.elementType.labelAlias)}" class="form-text-font">${i18n.t(alarmConfigData.elementType.labelAlias)}</span>`,
 										align: "left",
 										height: 20
 									},
@@ -245,11 +258,11 @@ export default class AlarmConfigModule extends GenericModule {
 
 											if (alarmConfigData.element) {
 
-												return `<span class="alarm-view-text">${i18n.t(alarmConfigData.element.labelAlias)}</span>`;
+												return `<span title="${i18n.t(alarmConfigData.element.labelAlias)}" class="form-text-font">${i18n.t(alarmConfigData.element.labelAlias)}</span>`;
 
 											} else {
 
-												return `<span class="alarm-view-text">-</span>`;
+												return `<span class="form-text-font">-</span>`;
 											}
 
 										}(),
@@ -259,7 +272,7 @@ export default class AlarmConfigModule extends GenericModule {
 									{ height: 24 },
 									{
 										view: "label",
-										label: `<span class="alarm-view-text">${i18n.t(alarmConfigData.alarmLevel.labelAlias)}</span>`,
+										label: `<span title="${i18n.t(alarmConfigData.alarmLevel.labelAlias)}" class="form-text-font">${i18n.t(alarmConfigData.alarmLevel.labelAlias)}</span>`,
 										align: "left",
 										height: 20
 									},
@@ -269,7 +282,8 @@ export default class AlarmConfigModule extends GenericModule {
 									getAlarmTypeIcon(),
 									{}
 								]
-							}
+							},
+							{ width: 40 }
 						]
 					};
 
@@ -283,21 +297,18 @@ export default class AlarmConfigModule extends GenericModule {
 						let view;
 
 						view = {
+							height: 20,
 							cols: [
 								{
 									width: 34,
 									borderless: true,
-									height: 27,
-									template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
+									template: `<img style="width:20px; height:20px; padding-right: 10px;" src="${icon}">`,
 								},
 								{
-									width: 365,
 									view: "label",
-									label: `<span class="alarm-view-text">${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}</span>`,
-									align: "left",
-									height: 27
-								},
-								{}
+									label: `<span title="${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}" class="form-text-font">${i18n.t("LBL_ALARM_TYPE")} ${numType}, ${i18n.t(vlabel)}</span>`,
+									align: "left"
+								}
 							]
 						};
 
@@ -321,21 +332,18 @@ export default class AlarmConfigModule extends GenericModule {
 						let view;
 
 						view = {
+							height: 20,
 							cols: [
 								{
 									width: 34,
 									borderless: true,
-									height: 27,
-									template: `<img style="max-width:100%; width:auto; width: -moz-available; width: -webkit-fill-available; height:auto; padding-right: 10px;" src="${icon}">`,
+									template: `<img style="width:20px; height:20px; padding-right: 10px;" src="${icon}">`,
 								},
 								{
-									width: 130,
 									view: "label",
-									label: `<span class="alarm-view-text">${i18n.t(vlabel)}</span>`,
-									align: "left",
-									height: 27
-								},
-								{}
+									label: `<span title="${i18n.t(vlabel)}" class="form-text-font">${i18n.t(vlabel)}</span>`,
+									align: "left"
+								}
 							]
 						};
 
@@ -369,8 +377,8 @@ export default class AlarmConfigModule extends GenericModule {
 
 					const defaultGridOptionValues = [
 						{ gridOption: { id: 1 }, value: "false" },
-						{ gridOption: { id: 2 }, value: "false" },
-						{ gridOption: { id: 3 }, value: "9" },
+						{ gridOption: { id: 2 }, value: "true" },
+						{ gridOption: { id: 3 }, value: "2" },
 						{ gridOption: { id: 4 }, value: "asc" },
 						{ gridOption: { id: 7 }, value: "false" },
 						{ gridOption: { id: 8 }, value: "false" },
@@ -630,6 +638,8 @@ export default class AlarmConfigModule extends GenericModule {
 									value: i18n.t(elementTypeParam.labelAlias)
 								});
 							}
+							
+							paramOptions.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
 
 							elementTypeParamRow = {
 								cols: [
@@ -684,6 +694,8 @@ export default class AlarmConfigModule extends GenericModule {
 												value: i18n.t(operation.labelAlias)
 											});
 										}
+										
+										self.operationsOptionsArr.sort((a, b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0));
 
 										let selectOperation = $$("change-condition-threshold-operation-row-" + self.uid);
 										let listOptions = selectOperation.getPopup().getList();
@@ -752,41 +764,7 @@ export default class AlarmConfigModule extends GenericModule {
 										on: {
 											onItemClick: function() {
 
-												let param = $$("change-condition-element-type-param-row-" + self.uid);
-												let input = $$("value1" + self.uid);
-												let paramValue = undefined;
-												let inputValue = undefined;
-												let dataType = undefined;
-
-												if (param) {
-
-													paramValue = param.getValue();
-
-													if (paramValue) {
-
-														let typeParam = self.elementTypeParamMeasures.find(tParam => tParam.id === paramValue);
-
-														if (typeParam) {
-
-															dataType = {
-																id: typeParam.dataType.id
-															};
-														}
-													}
-												}
-
-												if (input) {
-
-													inputValue = input.getValue();
-												}
-
-												let i = new InputDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_ONE"), i18n.t("LBL_ENTER_VALUE"), onAccept, false, inputValue, dataType);
-												i.show();
-
-												function onAccept(value) {
-
-													$$("value1" + self.uid).setValue(value);
-												}
+												onInputValue($$("value1" + self.uid));
 											}
 										}
 									},
@@ -817,42 +795,8 @@ export default class AlarmConfigModule extends GenericModule {
 										view: "icon", icon: "mdi mdi-pencil",
 										on: {
 											onItemClick: function() {
-
-												let param = $$("change-condition-element-type-param-row-" + self.uid);
-												let input = $$("value2" + self.uid);
-												let paramValue = undefined;
-												let inputValue = undefined;
-												let dataType = undefined;
-
-												if (param) {
-
-													paramValue = param.getValue();
-
-													if (paramValue) {
-
-														let typeParam = self.elementTypeParamMeasures.find(tParam => tParam.id === paramValue);
-
-														if (typeParam) {
-
-															dataType = {
-																id: typeParam.dataType.id
-															};
-														}
-													}
-												}
-
-												if (input) {
-
-													inputValue = input.getValue();
-												}
-
-												let i = new InputDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_ONE"), i18n.t("LBL_ENTER_VALUE"), onAccept, false, inputValue, dataType);
-												i.show();
-
-												function onAccept(value) {
-
-													$$("value2" + self.uid).setValue(value);
-												}
+												
+												onInputValue($$("value2" + self.uid));
 											}
 										}
 									},
@@ -861,6 +805,52 @@ export default class AlarmConfigModule extends GenericModule {
 							};
 
 							return thresholdVal2Row;
+						}
+						
+						function onInputValue(viewInput) {
+							
+							let param = $$("change-condition-element-type-param-row-" + self.uid);
+							let input = viewInput;
+							let paramValue = undefined;
+							let inputValue = undefined;
+							let dataType = undefined;
+
+							if (param) {
+
+								paramValue = param.getValue();
+
+								if (paramValue) {
+
+									let typeParam = self.elementTypeParamMeasures.find(tParam => tParam.id === paramValue);
+
+									if (typeParam) {
+
+										dataType = {
+											id: typeParam.dataType.id
+										};
+									}
+								}
+							}
+
+							if (input) {
+								
+								if (dataType.id != DataType.BOOLEAN) {
+									
+									inputValue = input.getValue();	
+								}
+								else {
+									
+									inputValue = input.getValue() ? IS_TRUE(input.getValue()) : false;
+								}
+							}
+
+							let i = new InputDialogBox(i18n.t("LBL_THRESHOLD_OPERATION_ONE"), i18n.t("LBL_ENTER_VALUE"), onAccept, false, inputValue, dataType);
+							i.show();
+
+							function onAccept(value) {
+
+								viewInput.setValue(value.toString());
+							}	
 						}
 
 						function getToolbarActions() {

@@ -2605,7 +2605,18 @@ p, input, textarea {
 	/*color: #333435;*/
 	/*color: var(--blue-strong);*/
 	color: #475466;
-  }
+}
+
+.form-text-font {
+	font-weight: normal;
+	overflow: hidden;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+}
 
 .alarm-view-rectangle-back {
 	/*margin: 10px 25px 22px 14px;*/

@@ -101,7 +101,7 @@ export default class InputDialogBox {
 
 									let valueToSend = txtDialogReconize.getValue();
 
-									if (valueToSend) {
+									if (valueToSend !== undefined) {
 
 										if (self.dataType.id === DataType.DECIMAL) {
 
