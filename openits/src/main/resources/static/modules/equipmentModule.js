@@ -1,5 +1,5 @@
 import { util } from "../lib/util.js";
-import GenericMultiGridModule from "../modules/genericModule.js";
+import GenericModule from "../modules/genericModule.js";
 import DataTable from "../component/datatable.js";
 import ListView from "../component/listview.js";
 import TreeView from "../component/treeview.js";
@@ -8,7 +8,7 @@ import OptionDialogBox from "../component/optionDialogBox.js";
 const MODULE_TYPE_GENERIC_MULTI_GRID_PARAM_ENTITY_TYPE = 7;
 const TOPIC_ELEMENTS = "/topic/element.>";
 
-export default class EquipmentModule extends GenericMultiGridModule {
+export default class EquipmentModule extends GenericModule {
 
 	constructor(module, moduleAction, args) {
 
@@ -25,35 +25,37 @@ export default class EquipmentModule extends GenericMultiGridModule {
 	}
 
 
-	getView() {
-
-		let self = this;
-
-		let view = {
-			css: "custom_window",
-			cols: [
-				{
-					css: { "background-color": "white" },
-					rows: [
-						{ height: 6 },
-						{
-							cols: [
-								{ width: 6 },
-								{
-									id: "loading-" + self.uid,
-									rows: [util.ui.getViewDrawLoading()]
-								},
-								{ width: 6 }
-							]
-						},
-						{ height: 6 }
-					]
-				}
-			]
-		};
-
-		return view;
-	}
+//	getView() {
+//
+//		let self = this;
+//
+//		let view;
+//		
+//		view = {
+//			css: "custom_window",
+//			cols: [
+//				{
+//					css: { "background-color": "white" },
+//					rows: [
+//						{ height: 6 },
+//						{
+//							cols: [
+//								{ width: 6 },
+//								{
+//									id: "loading-" + self.uid,
+//									rows: [util.ui.getViewDrawLoading()]
+//								},
+//								{ width: 6 }
+//							]
+//						},
+//						{ height: 6 }
+//					]
+//				}
+//			]
+//		};
+//
+//		return view;
+//	}
 
 
 	loadData() {
@@ -77,51 +79,68 @@ export default class EquipmentModule extends GenericMultiGridModule {
 		});
 
 		jsonEquipmentTypesWithGridAssignedCopy.sort((a, b) => (a.labelAlias > b.labelAlias) ? 1 : ((b.labelAlias > a.labelAlias) ? -1 : 0));
+		
+		if (self.config.treeElements) {
+			
+			webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.hierarchy).then(function(hierarchyResponse) {
 
-		webix.ajax().get(appConfig.restUrl + self.config.restEndpoints.hierarchy).then(function(hierarchyResponse) {
+				if (hierarchyResponse != null) {
+	
+					self.elementHierarchies = hierarchyResponse.json();
+				}
+				
+				loadElements();
+			});
+		}
+		else {
+			
+			loadElements();
+		}
+		
+		
+		function loadElements() {
+			
+			webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elements, JSON.stringify([])).then(function(elementsResponse) {
 
-			if (hierarchyResponse != null) {
+				if (elementsResponse != null) {
 
-				self.elementHierarchies = hierarchyResponse.json();
+					self.elements = elementsResponse.json();
 
-				webix.ajax().headers(CONTENT_TYPE_JSON).post(appConfig.restUrl + self.config.restEndpoints.elements, JSON.stringify([])).then(function(elementsResponse) {
+					//webix.ui(drawContent(), $$("loading-" + self.uid));
+					webix.ui(drawContent(), $$(self.uid));
 
-					if (elementsResponse != null) {
+					$$("loading-switcher-" + self.uid).hide();
+					
+					$$(self.uid).show();
+					$$("loading-" + self.uid).hide();
 
-						self.elements = elementsResponse.json();
 
-						webix.ui(drawContent(jsonEquipmentTypesWithGridAssignedCopy), $$("loading-" + self.uid));
+					let listEquipmentTypes = $$("listview-" + self.listView.uid);
 
-						$$("switcher-views-" + self.uid).show();
-						$$("loading-switcher-" + self.uid).hide();
+					if (!webix.isUndefined(listEquipmentTypes)) {
 
-						let listEquipmentTypes = $$("listview-" + self.listView.uid);
+						listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
 
-						if (!webix.isUndefined(listEquipmentTypes)) {
+							webix.extend($$(self.uid), webix.ProgressBar);
 
-							listEquipmentTypes.attachEvent("onAfterSelect", function(id) {
-
-								webix.extend($$(self.uid), webix.ProgressBar);
-
-								$$(self.uid).showProgress({
-									type: "bottom",
-									hide: false
-								});
-
-								webix.delay(function() {
-
-									self.callbackSelectedElemenTypeList(id[0]);
-								}, null, null, 1);
+							$$(self.uid).showProgress({
+								type: "bottom",
+								hide: false
 							});
 
-							self.listView.select(self.listView.data[0].id);
-						}
-					}
-				});
-			}
-		});
+							webix.delay(function() {
 
-		function drawContent(jsonEquipmentTypesWithGridAssigned) {
+								self.callbackSelectedElemenTypeList(id[0]);
+							}, null, null, 1);
+						});
+
+						self.listView.select(self.listView.data[0].id);
+					}
+				}
+			});
+		}
+
+		function drawContent() {
 
 			let viewMain;
 			let rowsviewMainListEquipments = [];
@@ -146,6 +165,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 			}
 
 			viewMain = {
+				id: self.uid,
 				cols: [
 					{
 						id: "view-main-list-equipments-" + self.uid,
@@ -190,56 +210,47 @@ export default class EquipmentModule extends GenericMultiGridModule {
 					}
 				],
 				on: {
-					onAfterExpand: function(obj) {
+					onAfterExpand: function() {
 
-						if ($$("equipment-content-" + self.uid)) {
-
-							let switcherValue = $$("switcher-" + self.uid).getValue();
-
-							if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
-
-								let elementSelected = self.treeView.getSelected();
-								let elementSelectedId = elementSelected[0].id_;
-								let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
-
-								if (element && !element.defaultModuleAction) {
-
-									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-
-									if (elementType && !elementType.defaultModuleAction) {
-
-										self.callbackSelectedItemTree(elementSelected);
-									}
-								}
-							}
-						}
+						onExpandCollapse();
 					},
 					onAfterCollapse: function() {
 
-						if ($$("equipment-content-" + self.uid)) {
-
-							let switcherValue = $$("switcher-" + self.uid).getValue();
-
-							if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
-
-								let elementSelected = self.treeView.getSelected();
-								let elementSelectedId = elementSelected[0].id_;
-								let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
-
-								if (element && !element.defaultModuleAction) {
-
-									let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
-
-									if (elementType && !elementType.defaultModuleAction) {
-
-										self.callbackSelectedItemTree(elementSelected);
-									}
-								}
-							}
-						}
+						onExpandCollapse();
 					}
 				}
 			};
+			
+			function onExpandCollapse() {
+				
+				if ($$("equipment-content-" + self.uid)) {
+
+					let switcher = $$("switcher-" + self.uid);
+					
+					if (switcher) {
+						
+						let switcherValue = switcher.getValue();
+
+						if (switcherValue === "switcher-element-hierarchy-" + self.uid) {
+
+							let elementSelected = self.treeView.getSelected();
+							let elementSelectedId = elementSelected[0].id_;
+							let element = window.em.getByField(EntityType.ELEMENT, "id", elementSelectedId);
+
+							if (element && !element.defaultModuleAction) {
+
+								let elementType = window.em.getByField(EntityType.ELEMENT_TYPE, "id", element.elementType.id);
+
+								if (elementType && !elementType.defaultModuleAction) {
+
+									self.callbackSelectedItemTree(elementSelected);
+								}
+							}
+						}	
+					}
+					
+				}
+			}
 
 			function getSwitcherViews() {
 
@@ -247,7 +258,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 
 				switcher = {
 					id: "switcher-views-" + self.uid,
-					hidden: true,
+					hidden: !self.config.treeElements,
 					cols: [
 						{
 							rows: [
@@ -267,7 +278,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 				listView.rows = [];
 				let viewListEquipments = {};
 
-				if (jsonEquipmentTypesWithGridAssigned != undefined && jsonEquipmentTypesWithGridAssigned.length > 0) {
+				if (jsonEquipmentTypesWithGridAssignedCopy != undefined && jsonEquipmentTypesWithGridAssignedCopy.length > 0) {
 
 					let options = {};
 
@@ -280,7 +291,7 @@ export default class EquipmentModule extends GenericMultiGridModule {
 						self.callbackSelectedElemenTypeList(ids);
 					};
 
-					self.listView = new ListView(jsonEquipmentTypesWithGridAssigned, options, events);
+					self.listView = new ListView(jsonEquipmentTypesWithGridAssignedCopy, options, events);
 					viewListEquipments = self.listView.getView();
 
 				} else {

@@ -61,7 +61,8 @@ export default class OptionDialogBox {
 					},
 					{ height: 10 },
 					{},
-					getToolbarActions()
+					getToolbarActions(),
+					{ height: 10 }
 				]
 			};
 

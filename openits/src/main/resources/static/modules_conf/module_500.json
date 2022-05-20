@@ -9,5 +9,6 @@
 		"hierarchy": "elements/hierarchy",
 		"elements": "elements/withStates",
 		"elementId": "elements/${id}"
-	}
+	},
+	"treeElements": true
 }
