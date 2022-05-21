@@ -4283,3 +4283,7 @@ audio {
 	display:flex;	
 	justify-content: center;
 }
+
+.textarea-inputdialogbox .webix_el_box {
+	height: 380px !important;	
+}

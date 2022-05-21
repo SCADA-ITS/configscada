@@ -2,6 +2,24 @@ import { util } from "../lib/util.js";
 
 const DEFAULT_MIN_INT_VALUE = -65535;
 const DEFAULT_MAX_INT_VALUE = 65535;
+const HEIGHT = {
+	ALPHANUMERIC: 250,
+	TIMESTAMP: 425,
+	OBJECT: 525
+};
+
+const ALERT_HEIGHT = {
+	ALPHA_OR_TIMESTAMP: 23,
+	NO_ALPHA_OR_TIMESTAMP: 57
+};
+
+const TEXTAREA_HEIGHT= 70;
+
+const WINDOW_HEIGHT={
+	TIMESTAMP: 400,
+	NO_TIMESTAMP: 258
+};
+
 
 export default class InputDialogBox {
 
@@ -14,19 +32,30 @@ export default class InputDialogBox {
 		this.currentValue = currentValue;
 		this.valid = true;
 		this.dataType = dataType && dataType.id ? dataType : { id: DataType.ALPHANUMERIC };
+		this.isObject = (currentValue && typeof(currentValue) === "object" && this.dataType.id === DataType.ALPHANUMERIC) ? true : false;
 		this.uid = webix.uid();
 	}
 
 	show() {
 
 		let self = this;
+		let height;			
+		let alertHeight = (self.dataType.id === DataType.ALPHANUMERIC || self.dataType.id === DataType.TIMESTAMP) ? ALERT_HEIGHT.ALPHA_OR_TIMESTAMP : ALERT_HEIGHT.NO_ALPHA_OR_TIMESTAMP;
+		let textareaHeight = TEXTAREA_HEIGHT;
 
-		let height = (self.dataType.id === DataType.TIMESTAMP) ? 425 : 250;
-		let alertHeight = (self.dataType.id === DataType.ALPHANUMERIC || self.dataType.id === DataType.TIMESTAMP) ? 23 : 57;
+		if (self.dataType.id === DataType.TIMESTAMP) {
+
+			height = HEIGHT.TIMESTAMP;
+		
+		} else {
+
+			height = self.isObject ? HEIGHT.OBJECT : HEIGHT.ALPHANUMERIC;
+		}
 
 		let body = {
 			width: 600,
 			height: height,
+			maxHeight: 600,
 			css: "dialog-input-custom",
 			rows: [
 				{
@@ -244,18 +273,43 @@ export default class InputDialogBox {
 			function getStringBody() {
 
 				let stringBody;
+				let currentValue;
+				
+				const CORRECTION_FACTORS = {
+					WINDOW_HEIGHT: 110,
+					BODY_HEIGHT: 40,
+					TEXTAREA_HEIGHT_ISOBJECT:80,
+					TEXTAREA_HEIGHT: 10,
+					LINE_HEIGHT: 18,					 					
+				};
+
+				if (self.isObject) {
+
+					currentValue = JSON.stringify(self.currentValue, null, 3);
+					let numOfLines = currentValue.split(/\n+/).length;
+
+					textareaHeight = numOfLines * CORRECTION_FACTORS.LINE_HEIGHT;					
+					textareaHeight = (textareaHeight > HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT) ? HEIGHT.OBJECT - CORRECTION_FACTORS.WINDOW_HEIGHT :textareaHeight;
+														
+				} else {
+
+					currentValue = self.currentValue;
+				}
 
 				stringBody = {
 					view: "form",
 					borderless: true,
-					height: 110,
+					height: self.isObject ? textareaHeight : textareaHeight + CORRECTION_FACTORS.BODY_HEIGHT,
 					cols: [{
 						view: "textarea",
 						id: "input-dialog-" + self.uid,
+						css: self.isObject ? "textarea-inputdialogbox" : "",
 						name: "input-dialog-" + self.uid,
-						height: 80,
+						height: self.isObject ? textareaHeight - CORRECTION_FACTORS.TEXTAREA_HEIGHT_ISOBJECT: textareaHeight + CORRECTION_FACTORS.TEXTAREA_HEIGHT,
 						//placeholder: self.text,
-						value: self.currentValue ? self.currentValue : undefined,
+						maxHeight: 400,
+						scroll: "auto",
+						value: currentValue ? currentValue : undefined,
 
 						validate: function(value) {
 
@@ -442,7 +496,12 @@ export default class InputDialogBox {
 			return valid;
 		}
 
-		let windowHeight = (self.dataType.id === DataType.TIMESTAMP) ? 400 : 258;
+		let windowHeight = (self.dataType.id === DataType.TIMESTAMP) ? WINDOW_HEIGHT.TIMESTAMP : WINDOW_HEIGHT.NO_TIMESTAMP;
+
+		if (self.isObject) {
+
+			windowHeight = windowHeight + textareaHeight;
+		}
 
 		util.ui.loadWindow(self.title, body, windowHeight, 600, true);
 
