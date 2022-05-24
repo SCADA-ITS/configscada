@@ -577,13 +577,12 @@ export default class IncidentTypeStateTask {
 					
 					self.incidentTypeTasks.sort((a, b) => (a.position > b.position) ? 1 : ((b.position > a.position) ? -1 : 0));
 				}
+			}
+			
+			if (self.dtTasks) {
 				
-				if (self.dtTasks) {
-				
-					self.dtTasks.callbacks();
-					
-					updateTasks();	
-				}
+				self.dtTasks.callbacks();
+				updateTasks();	
 			}
 			
 			$$("incident-type-state-tasks-loading-" + self.uid).hide();

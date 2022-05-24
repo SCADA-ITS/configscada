@@ -446,7 +446,9 @@ export default class IncidentTypeTaskDetailPlan {
 
 										id: e.id,
 										label: plan ? plan.alias : e.alias,
-										plan: e.plan,
+										aux: {
+											plan: e.plan,	
+										},
 										folder: !e.plan
 									}
 								});
@@ -481,11 +483,13 @@ export default class IncidentTypeTaskDetailPlan {
 				
 				function onAccept(selection) {
 
-					if (Array.isArray(selection) && selection.length > 0) {
+					if (Array.isArray(selection) && selection.length > 0 && selection[0].aux && selection[0].aux.plan) {
+						
+						let planSelected = selection[0].aux.plan;
 						
 						let newPlan = {
-							planId: selection[0].id,
-							plan: selection[0].alias,
+							planId: planSelected.id,
+							plan: planSelected.alias,
 							position: getNextPosition()
 						}
 						
